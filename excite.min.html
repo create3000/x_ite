@@ -79,7 +79,7 @@ main {
 	margin: 0px;
 	border: 0px;
 	padding: 4px;
-	width: 800px;
+	width: 880px;
 	background: #313131;
 	color: white;
 	vertical-align: middle;
@@ -195,10 +195,10 @@ main {
 }
 
 .bookmark .bookmark-link {
-	height: 50px;
 }
 
 .bookmark .bookmark-archive {
+	display: none;
 	position: absolute;
 	left: 5px;
 	bottom: 7px;
@@ -255,9 +255,11 @@ X3D (function ()
 	[
 		{ name: 'Worlds' },
 		{ name: 'Beyond Germany',        url: [ "http://media.create3000.de/x3d/beyond-germany/beyond-germany.x3dz" ] },
-		//{ name: 'Smarty Bubbles',        url: [ "tests/Components/Rendering/bubbles.x3d" ] },
-		//{ name: 'Flashing Lights',       url: [ "tests/Components/Lighting/lights/lights.x3d" ] },
-		//{ name: 'Moving Circles',        url: [ "tests/Components/Texturing/circles/circles.x3d" ] },
+		{ name: 'Milkyway and Beyond',   url: [ "http://media.create3000.de/x3d/paul-bourke/scene.x3d" ] },
+		{ name: 'Currencies',            url: [ "http://media.create3000.de/x3d/currencies/currencies.x3d" ] },
+		{ name: 'Smarty Bubbles',        url: [ "http://media.create3000.de/x3d/smarty-bubbles/bubbles.x3d" ] },
+		{ name: 'Flashing Lights',       url: [ "http://media.create3000.de/x3d/lights/lights.x3d" ] },
+		{ name: 'Moving Circles',        url: [ "http://media.create3000.de/x3d/circles/circles.x3d" ] },
 		{ name: 'Marble',                url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Marble/marble.x3d" ] },
 		{ name: 'X3D Logo Pieces',       url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/LogoPieces/index.x3d" ] },
 
@@ -317,10 +319,10 @@ X3D (function ()
 		{ name: 'Galaxies3d',           url: [ "http://www.pbs.org/wgbh/nova/universe/media/galaxies3d_uc.wrl", "http://www.pbs.org/wgbh/nova/universe/media/galaxies3d.wrl" ] },
 		{ name: 'Rosalila',             url: [ "http://chichcalan.com/rosalila/rosalila.wrl" ] },
 
-		{ name: 'CADGeometry' },
-		{ name: 'CADGeometry',   url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/CADGeometry/CADGeometry.wrl" ] },
-		{ name: 'CADLayer',      url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/CADGeometry/CADLayer.wrl" ] },
-		{ name: 'Setco',         url: [ "tests/Components/CADGeometry/setco.x3dz" ] },
+		{ name: 'CAD Geometry' },
+		{ name: 'CAD Geometry',   url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/CADGeometry/CADGeometry.wrl" ] },
+		{ name: 'CAD Layer',      url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/CADGeometry/CADLayer.wrl" ] },
+		{ name: 'Setco',          url: [ "tests/Components/CADGeometry/setco.x3dz" ] },
 		
 		{ name: 'Core' },
 		{ name: 'EXPORT',              url: [ "tests/Components/Core/EXPORT.x3d", "tests/Components/Core/EXPORT.x3dv" ] },
@@ -413,17 +415,17 @@ X3D (function ()
 
 
 		{ name: 'Interpolation' },
-		{ name: 'Interpolators',            url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/Interpolators.wrl" ] },
-		{ name: 'Normal Interpolator',      url: [ "tests/Components/Interpolation/NormalInterpolator.x3d" ] },
-		{ name: 'Position Interpolator',    url: [ "tests/Components/Interpolation/PositionInterpolator.x3d" ] },
-		{ name: 'Orientation Interpolator', url: [ "tests/Components/Interpolation/OrientationInterpolator.x3d" ] },
-		{ name: 'Spline Position',          url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SplinePositionInterpolator.wrl" ] },
-		{ name: 'Spline Position 2D',       url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SplinePositionInterpolator2.wrl" ] },
-		{ name: 'Spline Scalar',            url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SplineScalarInterpolator.wrl" ] },
-		{ name: 'Squad Orientation',        url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SquadOrientationInterpolator.wrl" ] },
+		{ name: 'Interpolators',                         url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/Interpolators.wrl" ] },
+		{ name: 'Normal Interpolator',                   url: [ "tests/Components/Interpolation/NormalInterpolator.x3d" ] },
+		{ name: 'Position Interpolator',                 url: [ "tests/Components/Interpolation/PositionInterpolator.x3d" ] },
+		{ name: 'Orientation Interpolator',              url: [ "tests/Components/Interpolation/OrientationInterpolator.x3d" ] },
+		{ name: 'Spline Position Interpolator',          url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SplinePositionInterpolator.wrl" ] },
+		{ name: 'Spline Position Interpolator 2D',       url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SplinePositionInterpolator2.wrl" ] },
+		{ name: 'Spline Scalar Interpolator',            url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SplineScalarInterpolator.wrl" ] },
+		{ name: 'Squad Orientation Interpolator',        url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SquadOrientationInterpolator.wrl" ] },
 		
 		{ name: 'Layering' },
-		{ name: 'LayerSet',             url: [ "tests/Components/Layering/LayerSet.x3d" ] },
+		{ name: 'Layer Set',            url: [ "tests/Components/Layering/LayerSet.x3d" ] },
 		{ name: 'Simple',               url: [ "tests/Components/Layering/Simple.x3d" ] },
 		{ name: 'Viewport',             url: [ "tests/Components/Layering/Viewport.x3d" ] },
 		{ name: 'Viewport Layer',       url: [ "tests/Components/Layering/ViewportLayer.x3d" ] },
@@ -438,11 +440,6 @@ X3D (function ()
 		{ name: 'Point Light',              url: [ "tests/Components/Lighting/PointLight.x3d", "tests/Components/Lighting/PointLight.x3dv" ] },
 		{ name: 'Spot Light',               url: [ "tests/Components/Lighting/SpotLight.x3d" ] },
 		{ name: 'Local Light',              url: [ "tests/Components/Lighting/LocalLight.x3d" ] },
-		//{ name: 'Mad Flat',               url: [ "tests/Components/Lighting/MadFlat.x3d" ] },
-		//{ name: 'Mad Flat 2',             url: [ "tests/Components/Lighting/MadFlat2.x3d" ] },
-		//{ name: 'Billboard Shadow',       url: [ "tests/Components/Lighting/BillboardShadow.x3d" ] },
-		//{ name: 'LOD Shadow',             url: [ "tests/Components/Lighting/LODShadow.x3d" ] },
-		//{ name: 'Geo LOD Shadow',         url: [ "tests/Components/Lighting/GeoLODShadow.x3d" ] },
 
 		{ name: 'Navigation' },
 		{ name: 'Gravitation',          url: [ "tests/Components/Navigation/Gravitation.x3d" ] },
