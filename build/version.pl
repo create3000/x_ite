@@ -11,7 +11,7 @@ chomp $CWD;
 
 say $CWD;
 
-my $VERSION = `cat src/"excite//Browser/VERSION.js`;
+my $VERSION = `cat src/excite/Browser/VERSION.js`;
 $VERSION =~ /"(.*?)"/;
 $VERSION = $1;
 
