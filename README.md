@@ -28,8 +28,6 @@ To display your X3D scene in a HTML5 page first save your scene as X3D XML Encod
 
 The HTML5 page is quite easy to create, the HTML5 code below shows you the minimum requirements. The path to the X3D scene is specified in the src attribute of the <X3DCanvas> tag. 
 
-**Note:** it is important to use a HTML5 page and to save it as .html file. 
-
     <!DOCTYPE html>
       <html>
        <head>
@@ -87,13 +85,40 @@ The HTML **<X3DCanvas> tag** defines the main content of the X3D document. The <
 
 ### src
 
-A String value with the URL that should be loaded on page load. If no URL is specified or the src field is empty an empty scene is displayed.
+A String value with the URL that should be loaded on page load. If no src attribute is specified or the src attribute is empty an empty scene is displayed.
+
+
+### url
+
+A MFString value with urls that should be loaded on page load. If no url attribute is specified or the attribute is empty an empty scene is displayed. If both src and url attribute are specified the src attribute takes precedence.
+
+
+### splashScreen
+
+A Boolean value (true or false) to indicate whether the splash screen should be displayed. The default value for the splashScreen attribute is true. The display of Learn more about how HTML and X3D can operate together.the splash screen can also be toggled via the browser option Â»SplashScreenÂ« in JavaScript. Call Browser.setBrowserOption(„SplashScreen“, booleanValue) to toggle the display of the splash screen.
+
+
+### notifications
+
+A Boolean value (true or false) to indicate whether the notification bubble should be displayed. The default value for the notifications attribute is true.
+
+
+### timings
+
+A Boolean value (true or false) to indicate whether the browser timings bubble should be displayed if the context menu option is enabled. The default value for the timings attribute is true. This attribute changes the facility if browsers timings can be displayed, if browser timings are really displayed is in the hand of the user if he toggles the context menu option to true.
+
+
+### contextMenu
+
+A Boolean value (true or false) to indicate whether a context menu should be displayed on right click. The default value for the contextMenu attribute is true.
 
 
 ### cache
 
-A Boolean value (true or false) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the cache attribute is true. It works by appending "_={timestamp}" to the GET parameters of every request.
-Example
+A Boolean value (true or false) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the cache attribute is true. It works by appending „_={timestamp}“ to the GET parameters of every request.
+
+
+## Example
 
 `<X3DCanvas cache="true" src="path/to/your/X3D/world.x3d"></X3DCanvas>`
 
