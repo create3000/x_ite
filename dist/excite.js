@@ -12431,19 +12431,19 @@ define("jquery/dist/jquery", function(){});
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -12522,19 +12522,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -12592,19 +12592,19 @@ define ('excite/Basic/X3DFieldDefinition',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -12702,19 +12702,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -12843,19 +12843,19 @@ function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -12952,19 +12952,19 @@ function ($, X3DObject)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -13385,19 +13385,19 @@ define ('excite/Bits/X3DConstants',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -13503,19 +13503,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -13824,19 +13824,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -14162,19 +14162,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -14633,19 +14633,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -14739,19 +14739,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -14997,19 +14997,19 @@ define ('standard/Math/Algorithm',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15252,19 +15252,19 @@ function ($, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15435,19 +15435,19 @@ function ($, Color3, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15623,19 +15623,19 @@ function ($, Color3, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15813,19 +15813,19 @@ function ($, X3DField, SFColor, X3DConstants, Color4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15916,19 +15916,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -16019,19 +16019,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -16122,19 +16122,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -16263,19 +16263,19 @@ function ($, X3DField)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -16384,19 +16384,19 @@ function ($, X3DField)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -16731,19 +16731,19 @@ function ($, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -16866,19 +16866,19 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -17290,19 +17290,19 @@ function ($, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -17521,19 +17521,19 @@ function ($, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -17713,19 +17713,19 @@ define ('standard/Math/Algorithms/eigendecomposition',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -18483,19 +18483,19 @@ function ($, Vector2, Vector3, Matrix2, eigendecomposition)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -18618,19 +18618,19 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec2, X3DConstants, Matrix3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -18774,19 +18774,19 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -19213,19 +19213,19 @@ function ($, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -19855,19 +19855,19 @@ function ($, Vector3, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -20262,19 +20262,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -21264,19 +21264,19 @@ function ($, Vector3, Vector4, Rotation4, Matrix3, eigendecomposition)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -21391,19 +21391,19 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec3, X3DConstants, Matrix4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -21666,19 +21666,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -21887,19 +21887,19 @@ function ($, SFVec3, X3DField, X3DConstants, Rotation4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -22020,19 +22020,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -22123,19 +22123,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -22292,19 +22292,19 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -22619,19 +22619,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -22901,19 +22901,19 @@ function ($, X3DField, ArrayFields, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -23024,19 +23024,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -23046,7 +23046,7 @@ function ($,
 ﻿
 define ('excite/Browser/VERSION',[],function ()
 {
-	return "4.0.1";
+	return "4.0.1 ";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -23078,19 +23078,19 @@ define ('excite/Browser/VERSION',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -23205,19 +23205,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24196,19 +24196,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24265,19 +24265,19 @@ define ('excite/Browser/Core/PrimitiveQuality',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24334,19 +24334,19 @@ define ('excite/Browser/Core/TextureQuality',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24652,19 +24652,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24753,19 +24753,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24875,19 +24875,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -25410,19 +25410,19 @@ define('text!locale/fr.po',[],function () { return 'msgid ""\nmsgstr ""\n"Projec
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -25538,19 +25538,19 @@ function (de, fr)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -27601,19 +27601,19 @@ e.webkitCancelFullScreen?(f="webkitfullscreenchange",g="webkitfullscreenerror"):
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28006,19 +28006,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28133,19 +28133,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28228,19 +28228,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28313,19 +28313,19 @@ function ($, X3DInfoArray, ComponentInfo)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28608,19 +28608,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28678,19 +28678,19 @@ function ($, X3DInfoArray)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28748,19 +28748,19 @@ function ($, X3DInfoArray)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28854,19 +28854,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -29092,19 +29092,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -29173,19 +29173,19 @@ function (Fields)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -29861,19 +29861,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -30448,19 +30448,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -30545,19 +30545,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -30615,19 +30615,19 @@ function ($, X3DInfoArray)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -30722,19 +30722,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -31049,19 +31049,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -31201,19 +31201,19 @@ function (Fields,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -31293,19 +31293,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -31428,19 +31428,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -31988,19 +31988,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -32086,19 +32086,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -32388,19 +32388,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -32660,19 +32660,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -35640,19 +35640,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -35741,19 +35741,19 @@ define ('lib/DataStorage',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36034,19 +36034,19 @@ function (Fields,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36154,19 +36154,19 @@ function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36232,19 +36232,19 @@ function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36325,19 +36325,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36402,19 +36402,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36479,19 +36479,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36738,19 +36738,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37007,19 +37007,19 @@ define ('excite/Browser/Networking/urls',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37205,19 +37205,19 @@ function (Fields,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37300,19 +37300,19 @@ define ('excite/Browser/Shaders/X3DShadersContext',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37385,19 +37385,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37655,19 +37655,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37731,19 +37731,19 @@ function (Appearance)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37808,19 +37808,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37879,19 +37879,19 @@ define ('excite/Bits/TraverseType',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -38084,19 +38084,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -39305,19 +39305,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -39571,19 +39571,19 @@ define('text!excite/Browser/Shaders/Bits/Random.h',[],function () { return '/* -
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public LicINFINITY, 88, 51, 68ense version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -39668,7 +39668,7 @@ function (Line3,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
  * NON-MILITARY USE ONLY
  *
@@ -39679,17 +39679,17 @@ function (Line3,
  *
  * Copyright 2016 Andreas Plesch.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -40332,19 +40332,19 @@ define ('excite/Parser/HTMLSupport',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -41319,19 +41319,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -44511,19 +44511,19 @@ exports.ungzip  = inflate;
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -44570,19 +44570,19 @@ function (VERSION)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -45078,19 +45078,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -45235,31 +45235,31 @@ function ($,
 
 
 
-define('text!excite/Browser/Shaders/PointSet.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n}\n';});
+define('text!excite/Browser/Shaders/PointSet.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Wireframe.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Transparency;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_GeometryType == x3d_GeometryLines ? x3d_LinewidthScaleFactor : x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = vec3 (p);\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_Transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tC .rgb = x3d_Color .rgb;\n\t\t\tC .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tC .rgb = x3d_EmissiveColor;\n\t\t\tC .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tC = x3d_Color;\n\t\telse\n\t\t\tC = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!excite/Browser/Shaders/Wireframe.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Transparency;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_GeometryType == x3d_GeometryLines ? x3d_LinewidthScaleFactor : x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = vec3 (p);\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_Transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tC .rgb = x3d_Color .rgb;\n\t\t\tC .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tC .rgb = x3d_EmissiveColor;\n\t\t\tC .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tC = x3d_Color;\n\t\telse\n\t\t\tC = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Wireframe.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = C .a;\n}\n';});
+define('text!excite/Browser/Shaders/Wireframe.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = C .a;\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Gouraud.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4  frontColor; // color\nvarying vec4  backColor;  // color\nvarying vec4  t;          // texCoord\nvarying vec3  v;          // point on geometry\n\nvec4\ngetMaterialColor (in vec3 N,\n                  in vec3 v,\n                  in float x3d_AmbientIntensity,\n                  in vec3  x3d_DiffuseColor,\n                  in vec3  x3d_SpecularColor,\n                  in vec3  x3d_EmissiveColor,\n                  in float x3d_Shininess,\n                  in float x3d_Transparency)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\tfloat alpha         = 1.0 - x3d_Transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = x3d_DiffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * x3d_AmbientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tint lightType = x3d_LightType [i];\n\n\t\tif (lightType == x3d_NoneLight)\n\t\t\tbreak;\n\n\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t{\n\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\tvec3 L = di ? -d : normalize (vL);\n\t\t\tvec3 H = normalize (L + V); // specular term\n\n\t\t\tvec3  diffuseTerm    = diffuseFactor * max (dot (N, L), 0.0);\n\t\t\tfloat specularFactor = x3d_Shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = x3d_SpecularColor * specularFactor;\n\n\t\t\tfloat attenuation = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spot        = 1.0;\n\n\t\t\tif (lightType == x3d_SpotLight)\n\t\t\t{\n\t\t\t\tfloat spotAngle   = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\t\t\tfloat cutOffAngle = x3d_LightCutOffAngle [i];\n\t\t\t\tfloat beamWidth   = x3d_LightBeamWidth [i];\n\t\t\t\t\n\t\t\t\tif (spotAngle >= cutOffAngle)\n\t\t\t\t\tspot = 0.0;\n\t\t\t\telse if (spotAngle <= beamWidth)\n\t\t\t\t\tspot = 1.0;\n\t\t\t\telse\n\t\t\t\t\tspot = (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n\t\t\t}\n\t\t\n\t\t\tvec3 lightFactor  = (attenuation * spot) * x3d_LightColor [i];\n\t\t\tvec3 ambientLight = (lightFactor * x3d_LightAmbientIntensity [i]) * ambientTerm;\n\n\t\t\tlightFactor *= x3d_LightIntensity [i];\n\t\t\tfinalColor  += ambientLight + lightFactor * (diffuseTerm + specularTerm);\n\t\t}\n\t}\n\n\tfinalColor += x3d_EmissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfloat ambientIntensity = x3d_AmbientIntensity;\n\t\tvec3  diffuseColor     = x3d_DiffuseColor;\n\t\tvec3  specularColor    = x3d_SpecularColor;\n\t\tvec3  emissiveColor    = x3d_EmissiveColor;\n\t\tfloat shininess        = x3d_Shininess;\n\t\tfloat transparency     = x3d_Transparency;\n\n\t\tfrontColor = getMaterialColor (N, v,\n\t\t                               ambientIntensity,\n\t\t                               diffuseColor,\n\t\t                               specularColor,\n\t\t                               emissiveColor,\n\t\t                               shininess,\n\t\t                               transparency);\n\n\t\tif (x3d_SeparateBackColor)\n\t\t{\n\t\t\tambientIntensity = x3d_BackAmbientIntensity;\n\t\t\tdiffuseColor     = x3d_BackDiffuseColor;\n\t\t\tspecularColor    = x3d_BackSpecularColor;\n\t\t\temissiveColor    = x3d_BackEmissiveColor;\n\t\t\tshininess        = x3d_BackShininess;\n\t\t\ttransparency     = x3d_BackTransparency;\n\t\t}\n\n\t\tbackColor = getMaterialColor (-N, v,\n\t\t                              ambientIntensity,\n\t\t                              diffuseColor,\n\t\t                              specularColor,\n\t\t                              emissiveColor,\n\t\t                              shininess,\n\t\t                              transparency);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!excite/Browser/Shaders/Gouraud.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4  frontColor; // color\nvarying vec4  backColor;  // color\nvarying vec4  t;          // texCoord\nvarying vec3  v;          // point on geometry\n\nvec4\ngetMaterialColor (in vec3 N,\n                  in vec3 v,\n                  in float x3d_AmbientIntensity,\n                  in vec3  x3d_DiffuseColor,\n                  in vec3  x3d_SpecularColor,\n                  in vec3  x3d_EmissiveColor,\n                  in float x3d_Shininess,\n                  in float x3d_Transparency)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\tfloat alpha         = 1.0 - x3d_Transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = x3d_DiffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * x3d_AmbientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tint lightType = x3d_LightType [i];\n\n\t\tif (lightType == x3d_NoneLight)\n\t\t\tbreak;\n\n\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t{\n\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\tvec3 L = di ? -d : normalize (vL);\n\t\t\tvec3 H = normalize (L + V); // specular term\n\n\t\t\tvec3  diffuseTerm    = diffuseFactor * max (dot (N, L), 0.0);\n\t\t\tfloat specularFactor = x3d_Shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = x3d_SpecularColor * specularFactor;\n\n\t\t\tfloat attenuation = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spot        = 1.0;\n\n\t\t\tif (lightType == x3d_SpotLight)\n\t\t\t{\n\t\t\t\tfloat spotAngle   = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\t\t\tfloat cutOffAngle = x3d_LightCutOffAngle [i];\n\t\t\t\tfloat beamWidth   = x3d_LightBeamWidth [i];\n\t\t\t\t\n\t\t\t\tif (spotAngle >= cutOffAngle)\n\t\t\t\t\tspot = 0.0;\n\t\t\t\telse if (spotAngle <= beamWidth)\n\t\t\t\t\tspot = 1.0;\n\t\t\t\telse\n\t\t\t\t\tspot = (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n\t\t\t}\n\t\t\n\t\t\tvec3 lightFactor  = (attenuation * spot) * x3d_LightColor [i];\n\t\t\tvec3 ambientLight = (lightFactor * x3d_LightAmbientIntensity [i]) * ambientTerm;\n\n\t\t\tlightFactor *= x3d_LightIntensity [i];\n\t\t\tfinalColor  += ambientLight + lightFactor * (diffuseTerm + specularTerm);\n\t\t}\n\t}\n\n\tfinalColor += x3d_EmissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfloat ambientIntensity = x3d_AmbientIntensity;\n\t\tvec3  diffuseColor     = x3d_DiffuseColor;\n\t\tvec3  specularColor    = x3d_SpecularColor;\n\t\tvec3  emissiveColor    = x3d_EmissiveColor;\n\t\tfloat shininess        = x3d_Shininess;\n\t\tfloat transparency     = x3d_Transparency;\n\n\t\tfrontColor = getMaterialColor (N, v,\n\t\t                               ambientIntensity,\n\t\t                               diffuseColor,\n\t\t                               specularColor,\n\t\t                               emissiveColor,\n\t\t                               shininess,\n\t\t                               transparency);\n\n\t\tif (x3d_SeparateBackColor)\n\t\t{\n\t\t\tambientIntensity = x3d_BackAmbientIntensity;\n\t\t\tdiffuseColor     = x3d_BackDiffuseColor;\n\t\t\tspecularColor    = x3d_BackSpecularColor;\n\t\t\temissiveColor    = x3d_BackEmissiveColor;\n\t\t\tshininess        = x3d_BackShininess;\n\t\t\ttransparency     = x3d_BackTransparency;\n\t\t}\n\n\t\tbackColor = getMaterialColor (-N, v,\n\t\t                              ambientIntensity,\n\t\t                              diffuseColor,\n\t\t                              specularColor,\n\t\t                              emissiveColor,\n\t\t                              shininess,\n\t\t                              transparency);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Gouraud.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_NoneTexture, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, finalColor .rgb, f0);\n\tgl_FragColor .a   = finalColor .a;\n}\n';});
+define('text!excite/Browser/Shaders/Gouraud.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_NoneTexture, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, finalColor .rgb, f0);\n\tgl_FragColor .a   = finalColor .a;\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Phong.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tif (x3d_Lighting)\n\t\tvN = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tC = x3d_Color;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
+define('text!excite/Browser/Shaders/Phong.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tif (x3d_Lighting)\n\t\tvN = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tC = x3d_Color;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Phong.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // true if a X3DTexture2DNode is attached, otherwise false\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n\tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n\n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor ()\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\t\tfloat ambientIntensity = frontColor ? x3d_AmbientIntensity : x3d_BackAmbientIntensity;\n\t\tvec3  diffuseColor     = frontColor ? x3d_DiffuseColor     : x3d_BackDiffuseColor;\n\t\tvec3  specularColor    = frontColor ? x3d_SpecularColor    : x3d_BackSpecularColor;\n\t\tvec3  emissiveColor    = frontColor ? x3d_EmissiveColor    : x3d_BackEmissiveColor;\n\t\tfloat shininess        = frontColor ? x3d_Shininess        : x3d_BackShininess;\n\t\tfloat transparency     = frontColor ? x3d_Transparency     : x3d_BackTransparency;\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t\t{\n\t\t\tint lightType = x3d_LightType [i];\n\n\t\t\tif (lightType == x3d_NoneLight)\n\t\t\t\tbreak;\n\n\t\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t\t{\n\t\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = shininess > 0.0 ? pow (max (dot (N, H), 0.0), shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor                  = lightType == x3d_SpotLight ? getSpotFactor (x3d_LightCutOffAngle [i], x3d_LightBeamWidth [i], L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor                = x3d_LightAmbientIntensity [i] * ambientTerm;\n\t\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + x3d_LightIntensity [i] * (diffuseTerm + specularTerm);\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (x3d_LightColor [i] * ambientDiffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn color;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn x3d_FogColor;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn mix (x3d_FogColor, color, (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange);\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn mix (x3d_FogColor, color, exp (-dV / (x3d_FogVisibilityRange - dV)));\n\n\treturn color;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = getMaterialColor ();\n\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n}\n';});
+define('text!excite/Browser/Shaders/Phong.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // true if a X3DTexture2DNode is attached, otherwise false\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n\tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n\n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor ()\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\t\tfloat ambientIntensity = frontColor ? x3d_AmbientIntensity : x3d_BackAmbientIntensity;\n\t\tvec3  diffuseColor     = frontColor ? x3d_DiffuseColor     : x3d_BackDiffuseColor;\n\t\tvec3  specularColor    = frontColor ? x3d_SpecularColor    : x3d_BackSpecularColor;\n\t\tvec3  emissiveColor    = frontColor ? x3d_EmissiveColor    : x3d_BackEmissiveColor;\n\t\tfloat shininess        = frontColor ? x3d_Shininess        : x3d_BackShininess;\n\t\tfloat transparency     = frontColor ? x3d_Transparency     : x3d_BackTransparency;\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t\t{\n\t\t\tint lightType = x3d_LightType [i];\n\n\t\t\tif (lightType == x3d_NoneLight)\n\t\t\t\tbreak;\n\n\t\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t\t{\n\t\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = shininess > 0.0 ? pow (max (dot (N, H), 0.0), shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor                  = lightType == x3d_SpotLight ? getSpotFactor (x3d_LightCutOffAngle [i], x3d_LightBeamWidth [i], L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor                = x3d_LightAmbientIntensity [i] * ambientTerm;\n\t\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + x3d_LightIntensity [i] * (diffuseTerm + specularTerm);\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (x3d_LightColor [i] * ambientDiffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn color;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn x3d_FogColor;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn mix (x3d_FogColor, color, (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange);\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn mix (x3d_FogColor, color, exp (-dV / (x3d_FogVisibilityRange - dV)));\n\n\treturn color;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = getMaterialColor ();\n\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Depth.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Vertex;\n\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
+define('text!excite/Browser/Shaders/Depth.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Vertex;\n\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Depth.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\npack (in float f)\n{\n\tvec4 color;\n\n\tf *= 255.0;\n\tcolor .r = floor (f);\n\n\tf -= color .r;\n\tf *= 255.0;\n\tcolor .g = floor (f);\n\n\tf -= color .g;\n\tf *= 255.0;\n\tcolor .b = floor (f);\n\n\tf -= color .b;\n\tf *= 255.0;\n\tcolor .a = floor (f);\n\n\treturn color / 255.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
+define('text!excite/Browser/Shaders/Depth.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\npack (in float f)\n{\n\tvec4 color;\n\n\tf *= 255.0;\n\tcolor .r = floor (f);\n\n\tf -= color .r;\n\tf *= 255.0;\n\tcolor .g = floor (f);\n\n\tf -= color .g;\n\tf *= 255.0;\n\tcolor .b = floor (f);\n\n\tf -= color .b;\n\tf *= 255.0;\n\tcolor .a = floor (f);\n\n\treturn color / 255.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -45290,19 +45290,19 @@ define('text!excite/Browser/Shaders/Depth.fs',[],function () { return 'data:text
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -45570,19 +45570,19 @@ function (Fields,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -45657,19 +45657,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -45744,19 +45744,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -45955,19 +45955,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -46073,19 +46073,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -49065,19 +49065,19 @@ module.exports = {
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -49279,19 +49279,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -49400,19 +49400,19 @@ define ('standard/Math/Algorithms/SAT',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -49933,19 +49933,19 @@ function (Triangle3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -50111,19 +50111,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -51216,19 +51216,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -51558,19 +51558,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52037,19 +52037,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52114,19 +52114,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52247,19 +52247,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52346,19 +52346,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52431,19 +52431,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52559,19 +52559,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52692,19 +52692,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52798,19 +52798,19 @@ function (Arc2DOptions,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52942,19 +52942,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53030,19 +53030,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53118,19 +53118,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53424,19 +53424,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53524,19 +53524,19 @@ function (BoxOptions,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53729,19 +53729,19 @@ function (jquery,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53932,19 +53932,19 @@ function (Vector3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -54163,19 +54163,19 @@ function ($, Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -54273,19 +54273,19 @@ define ('standard/Math/Algorithms/MergeSort',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -54582,19 +54582,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -54845,19 +54845,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -54959,19 +54959,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -55320,19 +55320,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -55501,19 +55501,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -55640,19 +55640,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -55788,19 +55788,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -55912,19 +55912,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -56041,19 +56041,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -56503,19 +56503,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -56627,19 +56627,19 @@ function (Vector3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -56858,19 +56858,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -57264,19 +57264,19 @@ define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (m
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -57626,19 +57626,19 @@ function ($, X3DViewer, Vector3, Rotation4, _)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58193,19 +58193,19 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58298,19 +58298,19 @@ function (X3DFlyViewer, Vector3, Rotation4, _)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58384,19 +58384,19 @@ function (X3DFlyViewer, _)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58507,19 +58507,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58688,19 +58688,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58783,19 +58783,19 @@ define ('standard/Math/Geometry/Spheroid3',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58884,19 +58884,19 @@ function (Spheroid3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -59152,19 +59152,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -59370,19 +59370,19 @@ function (Geodetic,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -59457,19 +59457,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -59673,19 +59673,19 @@ function (ReferenceEllipsoids,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -59955,19 +59955,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -60291,19 +60291,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -60586,19 +60586,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -60827,19 +60827,19 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3, _)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -60898,19 +60898,19 @@ function ($, X3DViewer, _)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -61041,19 +61041,19 @@ function ($, X3DViewer, _)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -61232,19 +61232,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -61332,19 +61332,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -61761,19 +61761,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -61886,19 +61886,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -61972,19 +61972,19 @@ define ('standard/Utility/ObjectCache',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62280,19 +62280,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62509,19 +62509,19 @@ function (Fields,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62586,19 +62586,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62771,19 +62771,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62847,19 +62847,19 @@ function (Viewport)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63038,19 +63038,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63102,10 +63102,10 @@ function ($, TextureProperties)
 });
 
 
-define('text!excite/Browser/Shaders/BackgroundSphereVertexShader.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = p .xyz;\n\tgl_Position = x3d_ProjectionMatrix * p;\n\tC           = x3d_Color;\n}\n';});
+define('text!excite/Browser/Shaders/BackgroundSphereVertexShader.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = p .xyz;\n\tgl_Position = x3d_ProjectionMatrix * p;\n\tC           = x3d_Color;\n}\n';});
 
 
-define('text!excite/Browser/Shaders/BackgroundSphereFragmentShader.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
+define('text!excite/Browser/Shaders/BackgroundSphereFragmentShader.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -63136,19 +63136,19 @@ define('text!excite/Browser/Shaders/BackgroundSphereFragmentShader.fs',[],functi
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63231,19 +63231,19 @@ function (ComposedShader,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63427,19 +63427,19 @@ function (ViewVolume,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63535,19 +63535,19 @@ function (DepthBuffer)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63624,19 +63624,19 @@ function (Fields)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63694,19 +63694,19 @@ define ('excite/Browser/Text/TextAlignment',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63999,19 +63999,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -64256,19 +64256,19 @@ function (Matrix3, Vector2)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -64912,19 +64912,19 @@ function (TextAlignment,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -66827,19 +66827,19 @@ function Node(i) {
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -67458,19 +67458,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -72503,19 +72503,19 @@ exports.sizeOf = sizeOf;
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -72627,19 +72627,19 @@ function (FontStyle,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -72721,19 +72721,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -72878,19 +72878,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -73054,19 +73054,19 @@ function (TextureProperties,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -73153,19 +73153,19 @@ function (Vector3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -73267,19 +73267,19 @@ define ('standard/Math/Algorithms/QuickSort',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -73676,19 +73676,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -73823,19 +73823,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -73899,19 +73899,19 @@ function (PointEmitter)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -74835,19 +74835,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -75024,19 +75024,19 @@ function ($, X3DBaseNode)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -75172,19 +75172,19 @@ function ($, X3DBaseNode)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -75297,19 +75297,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -75428,19 +75428,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -76109,19 +76109,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -76258,19 +76258,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -76495,19 +76495,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -76757,19 +76757,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -76919,19 +76919,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -77305,19 +77305,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -77408,19 +77408,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -77518,19 +77518,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -77747,19 +77747,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -77908,19 +77908,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -78197,19 +78197,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -78275,19 +78275,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -78345,19 +78345,19 @@ function ($, X3DInfoArray)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -78576,19 +78576,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -78935,19 +78935,19 @@ function ($, ComponentInfoArray, urls)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79032,19 +79032,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79159,19 +79159,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79243,19 +79243,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79375,19 +79375,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79572,19 +79572,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79771,19 +79771,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79949,19 +79949,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80176,19 +80176,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80402,19 +80402,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80609,19 +80609,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80807,19 +80807,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80927,19 +80927,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81082,19 +81082,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81200,19 +81200,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81311,19 +81311,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81388,19 +81388,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81498,19 +81498,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81577,19 +81577,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81712,19 +81712,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81860,19 +81860,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81937,19 +81937,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82045,19 +82045,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82221,19 +82221,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82336,19 +82336,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82472,19 +82472,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82571,19 +82571,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82688,19 +82688,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82823,19 +82823,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83012,19 +83012,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83191,19 +83191,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83280,19 +83280,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83408,19 +83408,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83556,19 +83556,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83808,19 +83808,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83959,19 +83959,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84142,19 +84142,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84291,19 +84291,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84422,19 +84422,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84550,19 +84550,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84676,19 +84676,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84946,19 +84946,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85199,19 +85199,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85349,19 +85349,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85483,19 +85483,19 @@ define ('excite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85576,19 +85576,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85697,19 +85697,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85820,19 +85820,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85919,19 +85919,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -86044,19 +86044,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -86166,19 +86166,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -86478,19 +86478,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -86555,19 +86555,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -86727,19 +86727,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -87036,19 +87036,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -87319,19 +87319,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -87730,19 +87730,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -87855,19 +87855,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -88484,19 +88484,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -88561,19 +88561,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -88690,19 +88690,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -88798,19 +88798,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -88945,19 +88945,19 @@ function (X3DBaseNode,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -89249,19 +89249,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -89439,19 +89439,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -89868,19 +89868,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90113,19 +90113,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90487,19 +90487,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90614,19 +90614,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90691,19 +90691,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90792,19 +90792,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90913,19 +90913,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -91068,19 +91068,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -91202,19 +91202,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -91496,19 +91496,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -91654,19 +91654,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -91803,19 +91803,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -91955,19 +91955,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -92257,19 +92257,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -92575,19 +92575,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -92727,19 +92727,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -92889,19 +92889,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -93006,19 +93006,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -93179,19 +93179,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -93297,19 +93297,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -93408,19 +93408,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -93549,19 +93549,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -93864,19 +93864,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -94082,19 +94082,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -94159,19 +94159,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -94812,19 +94812,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95001,19 +95001,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95120,19 +95120,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95237,19 +95237,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95461,19 +95461,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95582,19 +95582,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95659,19 +95659,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95855,19 +95855,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95982,19 +95982,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96107,19 +96107,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96181,19 +96181,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96286,19 +96286,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96391,19 +96391,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96496,19 +96496,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96601,19 +96601,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96706,19 +96706,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96811,19 +96811,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -97071,19 +97071,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -97148,19 +97148,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -97258,19 +97258,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -97399,19 +97399,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -97530,19 +97530,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -97657,19 +97657,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -97841,19 +97841,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -98198,19 +98198,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -99554,19 +99554,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -99804,19 +99804,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100118,19 +100118,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100481,19 +100481,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100677,19 +100677,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100801,19 +100801,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101048,19 +101048,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101179,19 +101179,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101290,19 +101290,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101401,19 +101401,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101514,19 +101514,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101627,19 +101627,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101751,19 +101751,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101894,19 +101894,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -102040,19 +102040,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -102175,19 +102175,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -102304,19 +102304,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -102784,19 +102784,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -102901,19 +102901,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -103096,19 +103096,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -103156,19 +103156,19 @@ define ('excite/Browser/Scripting/evaluate',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -103237,19 +103237,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -103762,19 +103762,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -103988,19 +103988,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104065,19 +104065,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104285,19 +104285,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104433,19 +104433,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104621,19 +104621,19 @@ function (Vector3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104865,19 +104865,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105053,19 +105053,19 @@ function (Vector4,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105169,19 +105169,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105230,19 +105230,19 @@ function (CatmullRomSplineInterpolatorTemplate,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105375,19 +105375,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105436,19 +105436,19 @@ function (CatmullRomSplineInterpolatorTemplate,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105581,19 +105581,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105683,19 +105683,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105828,19 +105828,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106194,19 +106194,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106313,19 +106313,19 @@ function (Rotation4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106450,19 +106450,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106595,19 +106595,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106848,19 +106848,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106996,19 +106996,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107117,19 +107117,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107240,19 +107240,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107434,19 +107434,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107590,19 +107590,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107718,19 +107718,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107846,19 +107846,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107992,19 +107992,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -108101,19 +108101,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -108211,19 +108211,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -108319,19 +108319,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -108521,19 +108521,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -108670,19 +108670,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -108789,19 +108789,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -108930,19 +108930,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -109083,19 +109083,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -109378,19 +109378,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -109630,19 +109630,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -109806,19 +109806,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -110123,19 +110123,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -110259,19 +110259,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -110359,19 +110359,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -111095,19 +111095,19 @@ function (Anchor,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -111779,19 +111779,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -112027,19 +112027,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.

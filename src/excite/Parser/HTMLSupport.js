@@ -3,7 +3,7 @@
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * This file is part of the Excite Project.
+ * This file is part of the Excite X3D Project.
  *
  * NON-MILITARY USE ONLY
  *
@@ -14,17 +14,17 @@
  *
  * Copyright 2016 Andreas Plesch.
  *
- * Excite is free software: you can redistribute it and/or modify it under the
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
