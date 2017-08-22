@@ -1,4 +1,4 @@
-[Excite](http://create3000.de/excite/) — Excite WebGL X3D Browser
+[Excite](http://create3000.de/excite-x3d/) — Excite WebGL X3D Browser
 ==================================================
 
 
@@ -7,17 +7,17 @@ Introduction
 
 Excite is a work in progress. The goal is a full standard WebGL X3D browser for all major web browsers.
 
-For more information and live preview please visit [http://create3000.de/excite/](http://create3000.de/excite/).
+For more information and live preview please visit [http://create3000.de/excite-x3d/](http://create3000.de/excite-x3d/).
 
 
 Links
 --------------------------------------
-* [Getting Started](http://create3000.de/excite/getting-started/)
-* [What’s New](http://create3000.de/excite/whats-new/)
-* [Supported Nodes](http://create3000.de/excite/supported-nodes/)
-* [Accessing the External Browser](http://create3000.de/excite/accessing-the-external-browser/)
-* [Excite XHTML DOM Integration](http://create3000.de/excite/excite-xhtml-dom-integration/)
-* [Custom Shaders](http://create3000.de/excite/shaders/)
+* [Getting Started](http://create3000.de/excite-x3d/getting-started/)
+* [What’s New](http://create3000.de/excite-x3d/whats-new/)
+* [Supported Nodes](http://create3000.de/excite-x3d/supported-nodes/)
+* [Accessing the External Browser](http://create3000.de/excite-x3d/accessing-the-external-browser/)
+* [Excite XHTML DOM Integration](http://create3000.de/excite-x3d/xhtml-dom-integration/)
+* [Custom Shaders](http://create3000.de/excite-x3d/shaders/)
 
 Embedding Excite within a Web Page
 --------------------------------------
@@ -32,8 +32,8 @@ The HTML5 page is quite easy to create, the HTML5 code below shows you the minim
       <html>
        <head>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/create3000/excite/3.3/excite.js/excite.css"/>
-        <script type="text/javascript" src="https://cdn.rawgit.com/create3000/excite/3.3/excite.js/excite.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/create3000/excite/4.0.1/excite.js/excite.css"/>
+        <script type="text/javascript" src="https://cdn.rawgit.com/create3000/excite/4.0.1/excite.js/excite.min.js"></script>
         <style>
         X3DCanvas {
           width: 768px;
