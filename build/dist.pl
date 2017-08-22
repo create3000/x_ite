@@ -15,11 +15,34 @@ my $VERSION = `cat src/excite/Browser/VERSION.js`;
 $VERSION =~ /"(.*?)"/;
 $VERSION = $1;
 
+sub check_version {
+	system "perl", "build/check-version.pl"
+}
+
 sub dist {
 	system "cp", "-v", "src/excite.css",    "dist/";
 	system "cp", "-v", "src/spinner.css",   "dist/";
 	system "cp", "-v", "-r", "src/images",  "dist/";
 	system "cp", "-v", "src/browser.html",  "dist/";
+}
+
+sub licenses {
+	my $min = `cat 'dist/excite.min.js'`;
+
+	$min =~ m!^((?:\s+|/\*.*?\*/|//.*?\n)+)!sg;
+
+	my $licenses = $1;
+
+	$min =~ s!^((?:\s+|/\*.*?\*/|//.*?\n)+)!/* See LICENCES.txt for a detailed listing of used licences. */\n!sg;
+
+	open MIN, ">", "dist/excite.min.js";
+	print MIN $min;
+	close MIN;
+
+	open LICENCES, ">", "dist/LICENCES.txt";
+	say LICENCES `cat src/LICENSE.txt`;
+	print LICENCES $licenses;
+	close LICENCES;
 }
 
 sub zip {
@@ -37,5 +60,7 @@ exit if $VERSION =~ /a$/;
 
 say "Making version '$VERSION' now.";
 
+check_version;
 dist;
+licenses;
 zip;

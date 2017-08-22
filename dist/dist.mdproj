@@ -37,6 +37,7 @@
     <None Include="excite.js" />
     <None Include="excite.zip" />
     <None Include="excite.min.js" />
+    <None Include="LICENCES.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

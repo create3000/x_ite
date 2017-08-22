@@ -16,7 +16,6 @@
     <None Include="Bookmarks.js" />
     <None Include="browser.html" />
     <None Include="spinner.css" />
-    <None Include="license.txt" />
     <None Include="require.config.js" />
     <None Include="excite\Base\Events.js" />
     <None Include="excite\Base\X3DChildObject.js" />
@@ -985,6 +984,7 @@
     <None Include="excite.css" />
     <None Include="excite.html" />
     <None Include="excite.js" />
+    <None Include="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="excite\" />
