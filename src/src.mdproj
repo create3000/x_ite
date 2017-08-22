@@ -13,7 +13,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="src.mdproj" />
-    <None Include="Bookmarks.js" />
     <None Include="browser.html" />
     <None Include="spinner.css" />
     <None Include="require.config.js" />
@@ -985,6 +984,7 @@
     <None Include="excite.html" />
     <None Include="excite.js" />
     <None Include="LICENSE.txt" />
+    <None Include="bookmarks.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="excite\" />

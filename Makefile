@@ -16,7 +16,7 @@ dist: all
 	perl -pi -e 's|\.\./excite.min.html|src/excite.html|sg'            excite.min.html
 	perl -pi -e 's|\>excite.min.html|>src/excite.html|sg'              excite.min.html
 	perl -pi -e 's|excite-dev|excite-min|sg'                           excite.min.html
-	perl -pi -e 's|"Bookmarks.js"|"src/Bookmarks.js"|sg'               excite.min.html
+	perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'               excite.min.html
 	perl -pi -e 's|\.\./tests/|tests/|sg'                              excite.min.html
 
 	perl build/dist.pl

@@ -27,19 +27,19 @@
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the Excite Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * Excite is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Excite is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -89,8 +89,9 @@ var Bookmarks = (function ()
 		setup: function ()
 		{
 			var
-				bookmarks    = this .bookmarks,
+				bookmarks    = this .bookmarks .slice (),
 				filesPerPage = this .filesPerPage,
+				index        = this .index,
 				pages        = [ ];
 
 			if (mobile)
@@ -99,9 +100,18 @@ var Bookmarks = (function ()
 			while (bookmarks .length)
 				pages .push (bookmarks .splice (0, filesPerPage || 20));
 	
+			this .index = Math .min (index, pages .length - 1);
 			this .pages = pages;
 
 			this .next (0);
+		},
+		setFilesPerPage: function (filesPerPage)
+		{
+			var first = this .filesPerPage * this .index;
+		
+			this .filesPerPage = filesPerPage;
+			this .index = parseInt (first / this .filesPerPage);
+			this .setup ();
 		},
 		restore: function (first)
 		{
@@ -112,12 +122,15 @@ var Bookmarks = (function ()
 			else
 				this .loadURL (first);
 		},
-		setSplit (value)
+		loadURL: function (url, li)
 		{
-			this .split = value;
-		},
-		loadURL: function (url)
-		{
+			$(this .element) .find (".bookmark-selected") .removeClass ("bookmark-selected");
+			
+			if (li)
+				li .addClass ("bookmark-selected");
+	
+			this .currentUrl = url;
+
 			this .browser .getDataStorage () ["Bookmarks.url"] = url;
 
 			this .browser .loadURL (new X3D .MFString (url), new X3D .MFString ());
@@ -132,37 +145,51 @@ var Bookmarks = (function ()
 
 			this .browser .getDataStorage () ["Bookmarks.pageIndex"] = this .index;
 
-			var ul = $("<ul></ul>") .addClass ("bookmark-page") .appendTo (this .element);
+			var ul = $("<ul></ul>") .addClass ("bookmark-list") .appendTo (this .element);
+
+			var previous = $("<li></li>")
+				.addClass ("bookmark")
+				.addClass ("bookmark-previous")
+				.appendTo (ul);
+				
+			$("<a></a>")
+				.attr ("href", "previous")
+				.click (this .next .bind (this, -1))
+				.html ("<span>previous</span>")
+				.appendTo (previous);
+
+			var currentUrl = this .browser .getDataStorage () ["Bookmarks.url"] ;
 
 			this .pages [this .index] .forEach (function (item)
 			{
-				var li = $("<li></li>") .appendTo (ul);
+				var li = $("<li></li>") .addClass ("bookmark") .appendTo (ul);
 
 				if (item .url)
 				{
-					if (this .split)
-					{
-						for (var i = 0; i < item .url .length; ++ i)
-						{
-							$("<a></a>")
-								.attr ("href", item .url [i])
-								.attr ("title", item .url [i])
-								.click (this .loadURL .bind (this, item .url [i]))
-								.text (i ? "*" : item .name)
-								.addClass (i ? "bookmark-link" : "bookmark-first-link")
-								.appendTo (li);
-						}
-					}
-					else
+					var
+						url     = item .url [0],
+						archive = item .archive;
+
+					$("<a></a>")
+						.attr ("href", url)
+						.attr ("title", url)
+						.click (this .loadURL .bind (this, item .url, li))
+						.text (item .name)
+						.addClass ("bookmark-link")
+						.appendTo (li);
+
+					if (archive)
 					{
 						$("<a></a>")
-							.attr ("href", item .url [0])
-							.attr ("title", item .url [0])
-							.click (this .loadURL .bind (this, item .url))
-							.text (item .name)
-							.addClass ("bookmark-link")
+							.attr ("href", archive)
+							.attr ("title", archive)
+							.text ("Download")
+							.addClass ("bookmark-archive")
 							.appendTo (li);
 					}
+
+					if (url == currentUrl)
+						li .addClass ("bookmark-selected");
 				}
 				else
 				{
@@ -174,32 +201,18 @@ var Bookmarks = (function ()
 				}
 			},
 			this);
-
-			$("<a></a>")
-				.attr ("href", "random")
-				.attr ("title", "Random World")
-				.click (this .random .bind (this))
-				.text ("Random World")
-				.appendTo ($("<p></p>") .appendTo (this .element));
 	
-			var p = $("<p></p>") .appendTo (this .element);
-	
-			$("<a></a>")
-				.attr ("href", "previous")
-				.attr ("title", "Previous Page")
-				.click (this .next .bind (this, -1))
-				.text ("◂ ◂")
-				.appendTo (p);
-
-			p .append ($("<span></span>") .text (" Page " + (this .index + 1) + " "));
+			var next = $("<li></li>")
+				.addClass ("bookmark")
+				.addClass ("bookmark-next")
+				.appendTo (ul);
 	
 			$("<a></a>")
 				.attr ("href", "next")
-				.attr ("title", "Next Page")
 				.click (this .next .bind (this, 1))
-				.text ("▸ ▸")
-				.appendTo (p);
-			
+				.html ("<span>next</span>")
+				.appendTo (next);
+
 			return false;
 		},
 		random: function ()
