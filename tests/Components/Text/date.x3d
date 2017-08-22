@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile='Full' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
+  <head>
+    <meta name='comment' content='World of Titania'/>
+    <meta name='created' content='Tue, 25 Aug 2015 18:42:23 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Titania V0.7.8, http://titania.create3000.de'/>
+    <meta name='icon' content='about:icon'/>
+    <meta name='modified' content='Wed, 26 Aug 2015 18:33:59 GMT'/>
+    <meta name='title' content='Random Text'/>
+  </head>
+  <Scene>
+    <Viewpoint
+        position='0 0 8.74054'
+        centerOfRotation='-1.38477 0.122227 0'/>
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material
+              diffuseColor='1 0 0'/>
+        </Appearance>
+        <Text DEF='Time'
+            string='"Date"'>
+          <FontStyle
+              family='"Ubuntu Mono", "CHOPS___.TTF", "SANS"'
+              style='BOLDITALIC'
+              size='0.5'
+              justify='"MIDDLE", "BEGIN"'/>
+        </Text>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='Timer'
+        loop='true'/>
+    <Script DEF='RandomText'>
+      <field accessType='inputOnly' type='SFTime' name='set_time'/>
+      <field accessType='initializeOnly' type='SFNode' name='time'>
+        <Text USE='Time'/>
+      </field>
+<![CDATA[vrmlscript:
+function makeid (size)
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < size; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+function set_time (value)
+{
+	var date    = new Date (value * 1000) .toUTCString ();
+	var browser = Browser .getName () + " " + Browser .getVersion ();
+
+	time .string = new MFString (date, browser, makeid (8));
+}
+  ]]> 
+    </Script>
+    <Background DEF='Sunset_1'
+        skyAngle='0.8, 1.2, 1.5, 1.55, 1.5708'
+        skyColor='0.0196078 0.0196078 0.0196078, 0.054902 0.0705882 0.0862745, 0.203922 0.243137 0.313726, 0.541176 0.462745 0.435294, 0.745098 0.541176 0.376471, 0.890196 0.537255 0.172549'
+        groundColor='0 0 0'/>
+    <ROUTE fromNode='Timer' fromField='cycleTime' toNode='RandomText' toField='set_time'/>
+  </Scene>
+</X3D>

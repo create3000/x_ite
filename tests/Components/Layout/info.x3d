@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile='Full' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
+  <head>
+    <meta name='comment' content='World of Titania'/>
+    <meta name='created' content='Fri, 05 Sep 2014 01:58:48 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Titania V1.2.2, http://titania.create3000.de'/>
+    <meta name='icon' content='../../ui/icons/icon-bw.svg'/>
+    <meta name='modified' content='Thu, 07 Jan 2016 11:57:59 GMT'/>
+    <meta name='title' content='about:info'/>
+  </head>
+  <Scene>
+    <ExternProtoDeclare name='Rotor' url='"library/Rotor.x3dv"'>
+      <field accessType='inputOutput' type='SFBool' name='enabled'/>
+      <field accessType='inputOutput' type='SFTime' name='cycleInterval'/>
+      <field accessType='inputOutput' type='SFVec3f' name='axis'/>
+      <field accessType='inputOutput' type='SFFloat' name='angle'/>
+      <field accessType='inputOutput' type='SFBool' name='loop'/>
+      <field accessType='inputOutput' type='SFTime' name='startTime'/>
+      <field accessType='inputOutput' type='SFTime' name='pauseTime'/>
+      <field accessType='inputOutput' type='SFTime' name='resumeTime'/>
+      <field accessType='inputOutput' type='SFTime' name='stopTime'/>
+      <field accessType='outputOnly' type='SFBool' name='isActive'/>
+      <field accessType='outputOnly' type='SFTime' name='cycleTime'/>
+      <field accessType='outputOnly' type='SFRotation' name='rotation_changed'/>
+    </ExternProtoDeclare>
+    <WorldInfo
+        title='info'>
+      <MetadataSet DEF='Titania'
+          name='Titania'
+          reference='http://titania.create3000.de'>
+        <MetadataSet DEF='NavigationInfo' containerField='value'
+            name='NavigationInfo'
+            reference='http://titania.create3000.de'>
+          <MetadataString DEF='type' containerField='value'
+              name='type'
+              reference='http://titania.create3000.de'
+              value='"EXAMINE"'/>
+        </MetadataSet>
+        <MetadataSet DEF='Viewpoint' containerField='value'
+            name='Viewpoint'
+            reference='http://titania.create3000.de'>
+          <MetadataDouble DEF='position' containerField='value'
+              name='position'
+              reference='http://titania.create3000.de'
+              value='-0.00152639835141599, -0.028887877240777, 9.99995899200439'/>
+          <MetadataDouble DEF='orientation' containerField='value'
+              name='orientation'
+              reference='http://titania.create3000.de'
+              value='0.992968380451202, -0.052313357591629, -0.106194339692593, 0.00292968773283064'/>
+          <MetadataDouble DEF='centerOfRotation' containerField='value'
+              name='centerOfRotation'
+              reference='http://titania.create3000.de'
+              value='0, 0, 0'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <NavigationInfo
+        type='"NONE"'/>
+    <LayerSet DEF='about:info'
+        order='1'>
+      <LayoutLayer>
+        <Layout/>
+        <Transform DEF='Background'
+            translation='0 0 -1'>
+          <Shape>
+            <Appearance>
+              <Material
+                  diffuseColor='0 0 0'/>
+            </Appearance>
+            <Rectangle2D
+                size='1 1'/>
+          </Shape>
+        </Transform>
+        <LayoutGroup DEF='SupportBox'>
+          <Layout
+              align='"CENTER", "TOP"'
+              offset='0, -0.32'
+              size='1, 0.19'
+              scaleMode='"FRACTION"'/>
+          <Shape DEF='HorizontalGrey'>
+            <Appearance>
+              <Material
+                  diffuseColor='0.760784 0.760784 0.760784'/>
+            </Appearance>
+            <Rectangle2D
+                size='1 1'/>
+          </Shape>
+        </LayoutGroup>
+        <LayoutGroup DEF='Page'>
+          <Layout
+              scaleMode='"STRETCH", "NONE"'/>
+          <Transform
+              scale='1.01 1 1'>
+            <Switch DEF='Image'
+                whichChoice='1'>
+              <Shape>
+                <Appearance>
+                  <ImageTexture
+                      url='"info.png"'
+                      repeatS='false'
+                      repeatT='false'/>
+                </Appearance>
+                <Rectangle2D
+                    size='1 1'/>
+              </Shape>
+            </Switch>
+            <Transform DEF='VerticalGrey'
+                translation='0.34 0.245 0'
+                scale='0.2 0.51 1'>
+              <Shape>
+                <Appearance>
+                  <Material
+                      diffuseColor='0.247059 0.247059 0.247059'/>
+                </Appearance>
+                <Rectangle2D
+                    size='1 1'/>
+              </Shape>
+            </Transform>
+            <Transform DEF='VerticalYellow'
+                translation='0.34 -0.255 0'
+                scale='0.2 0.49 1'>
+              <Shape>
+                <Appearance>
+                  <Material
+                      diffuseColor='1 0.890196 0.176471'/>
+                </Appearance>
+                <Rectangle2D
+                    size='1 1'/>
+              </Shape>
+            </Transform>
+            <LayoutGroup DEF='Content'>
+              <Layout
+                  size='0.1, 1'
+                  scaleMode='"STRETCH", "STRETCH"'/>
+              <Transform DEF='RotatingLogo'
+                  translation='-0.480889 0.469111 1'
+                  scale='0.022 0.022 0.022'>
+                <ProtoInstance name='Rotor' DEF='LogoRotor'>
+                  <fieldValue name='cycleInterval' value='10'/>
+                  <fieldValue name='axis' value='0 0 -1'/>
+                  <fieldValue name='loop' value='true'/>
+                </ProtoInstance>
+                <Transform DEF='Logo'
+                    rotation='0 0 -1 2.42353'
+                    center='5.6 -5.9 0'>
+                  <Inline
+                      url='"library/logo.x3dv"'/>
+                </Transform>
+              </Transform>
+              <Transform DEF='Titania_1'
+                  translation='-0.219 0.3611 1'>
+                <Shape>
+                  <Appearance>
+                    <Material
+                        diffuseColor='1 1 1'/>
+                  </Appearance>
+                  <Text DEF='BrowserNameText'
+                      string='"Titania"'>
+                    <FontStyle
+                        family='"PTN77F.ttf", "sans"'
+                        style='BOLD'
+                        size='0.12'/>
+                  </Text>
+                </Shape>
+              </Transform>
+              <Transform DEF='X3D-Browser'
+                  translation='-0.216884 0.26855 1'>
+                <Shape>
+                  <Appearance>
+                    <Material
+                        diffuseColor='1 1 1'/>
+                  </Appearance>
+                  <Text
+                      string='"X3D Browser"'>
+                    <FontStyle
+                        family='"PTN57F.ttf", "sans"'
+                        style='BOLD'
+                        size='0.08'/>
+                  </Text>
+                </Shape>
+              </Transform>
+              <Transform DEF='StayInteractive'
+                  translation='-0.213525 0.219 1'>
+                <Shape>
+                  <Appearance>
+                    <Material
+                        diffuseColor='1 1 1'/>
+                  </Appearance>
+                  <Text
+                      string='"Something special, something more!"'
+                      length='0.408361'>
+                    <FontStyle DEF='_1'
+                        family='"PTN57F.ttf", "sans"'
+                        style='BOLD'
+                        size='0.03'/>
+                  </Text>
+                </Shape>
+              </Transform>
+              <Anchor
+                  description='http://titania.create3000.de'>
+                <Transform DEF='Support'
+                    translation='-0.421689 0.1 1'>
+                  <Shape>
+                    <Appearance>
+                      <Material
+                          diffuseColor='0 0 0'/>
+                    </Appearance>
+                    <Text
+                        string='"For additional support please visit", "titania.create3000.de."'>
+                      <FontStyle
+                          family='"PTN57F.ttf", "sans"'
+                          style='NORMAL'
+                          size='0.04'
+                          spacing='1.2'/>
+                    </Text>
+                  </Shape>
+                </Transform>
+              </Anchor>
+              <Transform DEF='License'
+                  translation='0.262 0.267 1'>
+                <Shape>
+                  <Appearance>
+                    <Material
+                        diffuseColor='0 0 0'/>
+                  </Appearance>
+                  <Text
+                      string='"GNU GPL v3"'>
+                    <FontStyle
+                        family='"PTN77F.ttf", "sans"'
+                        style='BOLD'
+                        size='0.03'/>
+                  </Text>
+                </Shape>
+              </Transform>
+              <Transform DEF='Copyright'
+                  translation='0.262 0.217 1'>
+                <Shape>
+                  <Appearance>
+                    <Material
+                        diffuseColor='0 0 0'/>
+                  </Appearance>
+                  <Text
+                      string='"© 2010 - 2014"'
+                      length='0.15'>
+                    <FontStyle
+                        family='"PTN77F.ttf", "sans"'
+                        style='BOLD'
+                        size='0.03'/>
+                  </Text>
+                </Shape>
+              </Transform>
+              <Transform DEF='VersionNumber'
+                  translation='-0.438782 -0.385263 1'>
+                <Shape>
+                  <Appearance>
+                    <Material
+                        diffuseColor='1 1 1'/>
+                  </Appearance>
+                  <Text DEF='VersionNumberText'
+                      string='"1.2.2"'
+                      maxExtent='0.65'>
+                    <FontStyle
+                        family='"PTN77F.ttf", "sans"'
+                        style='BOLD'
+                        size='0.34'/>
+                  </Text>
+                </Shape>
+                <Script DEF='VersionNumberScript'>
+                  <field accessType='initializeOnly' type='SFNode' name='browser'>
+                    <Text USE='BrowserNameText'/>
+                  </field>
+                  <field accessType='initializeOnly' type='SFNode' name='version'>
+                    <Text USE='VersionNumberText'/>
+                  </field>
+<![CDATA[vrmlscript:
+function initialize ()
+{
+	browser .string = new MFString (Browser .name);
+	version .string = new MFString (Browser .version);
+}
+]]> 
+                </Script>
+              </Transform>
+            </LayoutGroup>
+          </Transform>
+        </LayoutGroup>
+      </LayoutLayer>
+    </LayerSet>
+    <Script DEF='EnterWorld'>
+<![CDATA[ecmascript:
+function initialize ()
+{
+	Browser .setBrowserOption ('Dashboard', false);
+}
+]]> 
+    </Script>
+    <ROUTE fromNode='LogoRotor' fromField='rotation_changed' toNode='Logo' toField='set_rotation'/>
+  </Scene>
+</X3D>

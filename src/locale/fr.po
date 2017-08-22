@@ -1,0 +1,224 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Excite\n"
+"POT-Creation-Date: 2015-12-23 04:58+0100\n"
+"PO-Revision-Date: 2015-12-23 05:07+0100\n"
+"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"X-Poedit-Basepath: ../cobweb\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: Browser/Core/BrowserTimings.js:96
+msgid "Less Properties"
+msgstr "Moins de propriétés"
+
+#: Browser/Core/BrowserTimings.js:98
+msgid "More Properties"
+msgstr "Plus de propriétés"
+
+#: Browser/Core/BrowserTimings.js:124
+msgid "Frame rate"
+msgstr "Fréquence"
+
+#: Browser/Core/BrowserTimings.js:124
+msgid "fps"
+msgstr "fps"
+
+#: Browser/Core/BrowserTimings.js:125
+msgid "Speed"
+msgstr "Vélocité"
+
+#: Browser/Core/BrowserTimings.js:125
+msgid "m/s"
+msgstr ""
+
+#: Browser/Core/BrowserTimings.js:125
+msgid "km/h"
+msgstr ""
+
+#: Browser/Core/BrowserTimings.js:150
+#, fuzzy
+msgid "Browser"
+msgstr "Excite X3D Navigateur"
+
+#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151
+#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153
+#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155
+#: Browser/Core/BrowserTimings.js:156
+msgid "ms"
+msgstr ""
+
+#: Browser/Core/BrowserTimings.js:151
+msgid "X3D"
+msgstr ""
+
+#: Browser/Core/BrowserTimings.js:152
+msgid "Routing"
+msgstr "Routes"
+
+#: Browser/Core/BrowserTimings.js:153
+msgid "Picking"
+msgstr "Pointeur"
+
+#: Browser/Core/BrowserTimings.js:154
+msgid "Camera"
+msgstr "Caméra"
+
+#: Browser/Core/BrowserTimings.js:155
+msgid "Collision"
+msgstr "Collision"
+
+#: Browser/Core/BrowserTimings.js:156
+msgid "Display"
+msgstr "Visualisation"
+
+#: Browser/Core/BrowserTimings.js:157
+msgid "Shapes"
+msgstr "Formes"
+
+#: Browser/Core/BrowserTimings.js:158
+msgid "Sensors"
+msgstr "Senseurs"
+
+#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210
+msgid "Browser Timings"
+msgstr "Calcul du temps"
+
+#: Browser/Core/ContextMenu.js:19
+msgid "Excite X3D Browser"
+msgstr "Excite X3D Navigateur"
+
+#: Browser/Core/ContextMenu.js:59
+msgid "Viewpoints"
+msgstr "Points de vue"
+
+#: Browser/Core/ContextMenu.js:87
+msgid "Available Viewers"
+msgstr "Visionneurs disponibles"
+
+#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107
+#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135
+msgid "Primitive Quality"
+msgstr "Qualité des objets simples"
+
+#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147
+msgid "High"
+msgstr "Haut"
+
+#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155
+msgid "high"
+msgstr "haut"
+
+#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161
+msgid "Medium"
+msgstr "Moyenne"
+
+#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169
+msgid "medium"
+msgstr "moyenne"
+
+#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175
+msgid "Low"
+msgstr "Faible"
+
+#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183
+msgid "low"
+msgstr "faible"
+
+#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155
+#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183
+msgid "Texture Quality"
+msgstr "Qualité des textures"
+
+#: Browser/Core/ContextMenu.js:191
+msgid "Display Rubberband"
+msgstr "Présenter le bande élastique"
+
+#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204
+msgid "Rubberband"
+msgstr "Bande élastique"
+
+#: Browser/Core/ContextMenu.js:202
+msgid "on"
+msgstr "marche"
+
+#: Browser/Core/ContextMenu.js:204
+msgid "off"
+msgstr "arrêt"
+
+#: Browser/Core/ContextMenu.js:225
+msgid "Mute Browser"
+msgstr "Rendre navigateur muet"
+
+#: Browser/Core/ContextMenu.js:233
+msgid "Browser muted"
+msgstr "Navigateur muet"
+
+#: Browser/Core/ContextMenu.js:233
+msgid "Browser unmuted"
+msgstr "Son de navigateur réactivé"
+
+#: Browser/Core/ContextMenu.js:239
+msgid "Leave Fullscreen"
+msgstr "Sortie en plein écran"
+
+#: Browser/Core/ContextMenu.js:239
+msgid "Fullscreen"
+msgstr "Plein écran"
+
+#: Browser/Core/ContextMenu.js:249
+msgid "About Excite"
+msgstr "À propos de Excite"
+
+#: Browser/Core/ContextMenu.js:342
+msgid "Examine Viewer"
+msgstr "Examiner"
+
+#: Browser/Core/ContextMenu.js:344
+msgid "Walk Viewer"
+msgstr "Aller"
+
+#: Browser/Core/ContextMenu.js:346
+msgid "Fly Viewer"
+msgstr "Voler"
+
+#: Browser/Core/ContextMenu.js:348
+msgid "Plane Viewer"
+msgstr "Visionneur de la plaine"
+
+#: Browser/Core/ContextMenu.js:350
+#, fuzzy
+msgid "Look At Viewer"
+msgstr "Regarder un objet de près"
+
+#: Browser/Core/ContextMenu.js:352
+msgid "None Viewer"
+msgstr "Pas de visionneur"
+
+#: Browser/Networking/X3DNetworkingContext.js:101
+#, javascript-format
+msgid "Loading %d file"
+msgstr "Télécharger %d fichier"
+
+#: Browser/Networking/X3DNetworkingContext.js:101
+#, javascript-format
+msgid "Loading %d files"
+msgstr "Télécharger %d fichiers"
+
+#: Browser/Networking/X3DNetworkingContext.js:104
+msgid "Loading done"
+msgstr "Téléchargement fini"
+
+#: Browser/X3DBrowser.js:313
+msgid "Failed loading world."
+msgstr "Le chargement des fichiers ayant échoué."
+
+#~ msgid "Look At"
+#~ msgstr "Regarder un objet de près"

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile='Full' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
+  <head>
+    <meta name='comment' content='World of Titania'/>
+    <meta name='created' content='Mon, 11 Jan 2016 23:02:48 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Titania V2.0.1, http://titania.create3000.de'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Core/IMPORT.x3d'/>
+    <meta name='modified' content='Sat, 24 Dec 2016 09:27:22 GMT'/>
+    <meta name='outputStyle' content='nicest'/>
+  </head>
+  <Scene>
+    <ExternProtoDeclare name='Rotor' url='"https://cdn.rawgit.com/create3000/Library/master/Prototypes/1/1.0/Engines/Rotor.x3d", "http://cdn.rawgit.com/create3000/Library/master/Prototypes/1/1.0/Engines/Rotor.x3d", "https://rawgit.com/create3000/Library/master/Prototypes/1/1.0/Engines/Rotor.x3d", "http://rawgit.com/create3000/Library/master/Prototypes/1/1.0/Engines/Rotor.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='enabled'/>
+      <field accessType='inputOutput' type='SFTime' name='cycleInterval'/>
+      <field accessType='inputOutput' type='SFVec3f' name='axis'/>
+      <field accessType='inputOutput' type='SFFloat' name='angle'/>
+      <field accessType='inputOutput' type='SFBool' name='loop'/>
+      <field accessType='inputOutput' type='SFTime' name='startTime'/>
+      <field accessType='inputOutput' type='SFTime' name='pauseTime'/>
+      <field accessType='inputOutput' type='SFTime' name='resumeTime'/>
+      <field accessType='inputOutput' type='SFTime' name='stopTime'/>
+      <field accessType='outputOnly' type='SFBool' name='isActive'/>
+      <field accessType='outputOnly' type='SFTime' name='cycleTime'/>
+      <field accessType='outputOnly' type='SFRotation' name='rotation_changed'/>
+    </ExternProtoDeclare>
+    <WorldInfo>
+      <MetadataSet DEF='Titania'
+          name='Titania'
+          reference='http://titania.create3000.de'>
+        <MetadataSet DEF='NavigationInfo' containerField='value'
+            name='NavigationInfo'
+            reference='http://titania.create3000.de'>
+          <MetadataString DEF='type' containerField='value'
+              name='type'
+              reference='http://titania.create3000.de'
+              value='"EXAMINE"'/>
+        </MetadataSet>
+        <MetadataSet DEF='Viewpoint' containerField='value'
+            name='Viewpoint'
+            reference='http://titania.create3000.de'>
+          <MetadataDouble DEF='position' containerField='value'
+              name='position'
+              reference='http://titania.create3000.de'
+              value='0, 0, 10'/>
+          <MetadataDouble DEF='orientation' containerField='value'
+              name='orientation'
+              reference='http://titania.create3000.de'
+              value='0, 0, 1, 0'/>
+          <MetadataDouble DEF='centerOfRotation' containerField='value'
+              name='centerOfRotation'
+              reference='http://titania.create3000.de'
+              value='0, 0, 0'/>
+        </MetadataSet>
+        <MetadataSet DEF='AngleGrid' containerField='value'
+            name='AngleGrid'
+            reference='http://titania.create3000.de'>
+          <MetadataBoolean DEF='enabled' containerField='value'
+              name='enabled'
+              reference='http://titania.create3000.de'
+              value='false'/>
+        </MetadataSet>
+        <MetadataSet DEF='Grid' containerField='value'
+            name='Grid'
+            reference='http://titania.create3000.de'>
+          <MetadataBoolean DEF='enabled_1' containerField='value'
+              name='enabled'
+              reference='http://titania.create3000.de'
+              value='true'/>
+        </MetadataSet>
+        <MetadataSet DEF='Selection' containerField='value'
+            name='Selection'
+            reference='http://titania.create3000.de'>
+          <MetadataSet DEF='children' containerField='value'
+              name='children'
+              reference='http://titania.create3000.de'>
+            <Inline DEF='_1' containerField='value'
+                url='"EXPORT.x3d"'/>
+          </MetadataSet>
+          <MetadataSet DEF='previous' containerField='value'
+              name='previous'
+              reference='http://titania.create3000.de'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <Transform DEF='Text'
+        translation='0 -2 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Text
+            string='"IMPORT"'
+            solid='true'>
+          <FontStyle
+              family='"TYPEWRITER"'
+              justify='"MIDDLE", "MIDDLE"'/>
+        </Text>
+      </Shape>
+    </Transform>
+    <Inline USE='_1'/>
+    <ProtoInstance name='Rotor' DEF='_2'>
+      <fieldValue name='axis' value='0 0 -1'/>
+    </ProtoInstance>
+    <Transform DEF='StartRotationButton'
+        translation='-1 -3 0'
+        scale='0.218041 0.218041 0.218041'>
+      <Shape>
+        <Appearance>
+          <Material DEF='Rococo20'
+              ambientIntensity='0.226102'
+              diffuseColor='0.52545 0.455896 0.904409'
+              specularColor='0.0955906 0.0955906 0.0955906'
+              shininess='0.078125'/>
+        </Appearance>
+        <Box/>
+      </Shape>
+      <TouchSensor DEF='_3'
+          description='Toggle Inline load field'/>
+      <BooleanFilter DEF='_4'/>
+      <BooleanToggle DEF='_5'
+          toggle='true'/>
+    </Transform>
+    <Transform DEF='RemoveRightRouteButton'
+        translation='1 -3 0'
+        scale='0.218041 0.218041 0.218041'>
+      <Shape>
+        <Appearance>
+          <Material DEF='Rococo12'
+              ambientIntensity='0.226102'
+              diffuseColor='0.904409 0.146366 0.208768'
+              specularColor='0.0955906 0.0955906 0.0955906'
+              shininess='0.078125'/>
+        </Appearance>
+        <Box/>
+      </Shape>
+      <TouchSensor DEF='_6'
+          description='Remove right route'/>
+      <Script DEF='RemoveRightRouteScript'>
+        <field accessType='inputOnly' type='SFTime' name='set_triggerTime'/>
+<![CDATA[ecmascript:
+
+function set_triggerTime ()
+{
+	try
+	{
+		var exportNode   = Browser .currentScene .getImportedNode ("Export");
+		var importAsNode = Browser .currentScene .getImportedNode ("ImportAs");
+	
+		Browser .deleteRoute (exportNode, "rotation", importAsNode, "rotation");
+	}
+	catch (error)
+	{
+		print ("Test message if Inline is unloaded: ", error .message);
+	}
+}]]>
+      </Script>
+    </Transform>
+    <Transform DEF='RemoveRightImportedNodeButton'
+        translation='2 -3 0'
+        scale='0.218041 0.218041 0.218041'>
+      <Shape>
+        <Appearance>
+          <Material DEF='Rococo12_1'
+              ambientIntensity='0.226102'
+              diffuseColor='0.388 0.0627924 0.0895634'
+              specularColor='0.0955906 0.0955906 0.0955906'
+              shininess='0.078125'/>
+        </Appearance>
+        <Box/>
+      </Shape>
+      <TouchSensor DEF='_7'
+          description='Remove right imported node'/>
+      <Script DEF='RemoveRightImportedNodeScript'>
+        <field accessType='inputOnly' type='SFTime' name='set_triggerTime'/>
+<![CDATA[ecmascript:
+
+function set_triggerTime (time)
+{
+	Browser .currentScene .removeImportedNode ("ImportAs");
+}]]>
+      </Script>
+    </Transform>
+    <IMPORT inlineDEF='_1' exportedDEF='Export'/>
+    <IMPORT inlineDEF='_1' exportedDEF='ExportAs' AS='ImportAs'/>
+    <IMPORT inlineDEF='_1' exportedDEF='Touch'/>
+    <ROUTE fromNode='Touch' fromField='touchTime' toNode='_2' toField='set_startTime'/>
+    <ROUTE fromNode='_2' fromField='rotation_changed' toNode='Export' toField='set_rotation'/>
+    <ROUTE fromNode='Export' fromField='rotation_changed' toNode='ImportAs' toField='set_rotation'/>
+    <ROUTE fromNode='_5' fromField='toggle_changed' toNode='_1' toField='set_load'/>
+    <ROUTE fromNode='_6' fromField='touchTime' toNode='RemoveRightRouteScript' toField='set_triggerTime'/>
+    <ROUTE fromNode='_3' fromField='isActive' toNode='_4' toField='set_boolean'/>
+    <ROUTE fromNode='_4' fromField='inputFalse' toNode='_5' toField='set_boolean'/>
+    <ROUTE fromNode='_7' fromField='touchTime' toNode='RemoveRightImportedNodeScript' toField='set_triggerTime'/>
+  </Scene>
+</X3D>

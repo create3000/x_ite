@@ -1,0 +1,8646 @@
+#X3D V3.0 utf8 Titania V3.0.0
+
+PROFILE Full
+
+META "comment" "World of Titania"
+META "created" "Mon, 27 Feb 2017 04:03:15 GMT"
+META "creator" "Holger Seelig"
+META "generator" "Titania V3.0.0, http://titania.create3000.de"
+META "identifier" "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Grouping/AddRemoveChildren.x3dv"
+META "modified" "Mon, 27 Feb 2017 04:03:15 GMT"
+META "outputStyle" "nicest"
+META "title" "Add & Remove Children"
+
+PROTO Cube [
+  inputOutput SFVec3f translation 0 0 0
+  inputOutput SFVec3f scale 0.0625 0.0625 0.0625
+]
+{
+  Transform {
+    translation IS translation
+    scale IS scale
+    children Shape {
+      appearance Appearance {
+        material Material { }
+      }
+      geometry Box {
+        size 1 1 1
+      }
+    }
+  }
+}
+
+WorldInfo {
+  metadata DEF Titania MetadataSet {
+    name "Titania"
+    reference "http://titania.create3000.de"
+    value [
+      DEF Selection MetadataSet {
+        name "Selection"
+        reference "http://titania.create3000.de"
+        value [
+          DEF previous MetadataSet {
+            name "previous"
+            reference "http://titania.create3000.de"
+            value DEF Space Group {
+              children [
+                DEF _1 Cube {
+                  translation 0.0625 0 0
+                }
+                DEF _2 Cube {
+                  translation 0.125 0 0
+                }
+                DEF _3 Cube {
+                  translation 0.25 0 0
+                }
+                DEF _4 Cube {
+                  translation 0.3125 0 0
+                }
+                DEF _5 Cube {
+                  translation 0.4375 0 0
+                }
+                DEF _6 Cube {
+                  translation 0.5 0 0
+                }
+                DEF _7 Cube {
+                  translation 0.625 0 0
+                }
+                DEF _8 Cube {
+                  translation 0.6875 0 0
+                }
+                DEF _9 Cube {
+                  translation 0.8125 0 0
+                }
+                DEF _10 Cube {
+                  translation 0.875 0 0
+                }
+                DEF _11 Cube {
+                  translation 0 0.0625 0
+                }
+                DEF _12 Cube {
+                  translation 0.0625 0.0625 0
+                }
+                DEF _13 Cube {
+                  translation 0.1875 0.0625 0
+                }
+                DEF _14 Cube {
+                  translation 0.25 0.0625 0
+                }
+                DEF _15 Cube {
+                  translation 0.375 0.0625 0
+                }
+                DEF _16 Cube {
+                  translation 0.4375 0.0625 0
+                }
+                DEF _17 Cube {
+                  translation 0.5625 0.0625 0
+                }
+                DEF _18 Cube {
+                  translation 0.625 0.0625 0
+                }
+                DEF _19 Cube {
+                  translation 0.75 0.0625 0
+                }
+                DEF _20 Cube {
+                  translation 0.8125 0.0625 0
+                }
+                DEF _21 Cube {
+                  translation 0.9375 0.0625 0
+                }
+                DEF _22 Cube {
+                  translation 0 0.125 0
+                }
+                DEF _23 Cube {
+                  translation 0.125 0.125 0
+                }
+                DEF _24 Cube {
+                  translation 0.1875 0.125 0
+                }
+                DEF _25 Cube {
+                  translation 0.3125 0.125 0
+                }
+                DEF _26 Cube {
+                  translation 0.375 0.125 0
+                }
+                DEF _27 Cube {
+                  translation 0.5 0.125 0
+                }
+                DEF _28 Cube {
+                  translation 0.5625 0.125 0
+                }
+                DEF _29 Cube {
+                  translation 0.6875 0.125 0
+                }
+                DEF _30 Cube {
+                  translation 0.75 0.125 0
+                }
+                DEF _31 Cube {
+                  translation 0.875 0.125 0
+                }
+                DEF _32 Cube {
+                  translation 0.9375 0.125 0
+                }
+                DEF _33 Cube {
+                  translation 0.0625 0.1875 0
+                }
+                DEF _34 Cube {
+                  translation 0.125 0.1875 0
+                }
+                DEF _35 Cube {
+                  translation 0.25 0.1875 0
+                }
+                DEF _36 Cube {
+                  translation 0.3125 0.1875 0
+                }
+                DEF _37 Cube {
+                  translation 0.4375 0.1875 0
+                }
+                DEF _38 Cube {
+                  translation 0.5 0.1875 0
+                }
+                DEF _39 Cube {
+                  translation 0.625 0.1875 0
+                }
+                DEF _40 Cube {
+                  translation 0.6875 0.1875 0
+                }
+                DEF _41 Cube {
+                  translation 0.8125 0.1875 0
+                }
+                DEF _42 Cube {
+                  translation 0.875 0.1875 0
+                }
+                DEF _43 Cube {
+                  translation 0 0.25 0
+                }
+                DEF _44 Cube {
+                  translation 0.0625 0.25 0
+                }
+                DEF _45 Cube {
+                  translation 0.1875 0.25 0
+                }
+                DEF _46 Cube {
+                  translation 0.25 0.25 0
+                }
+                DEF _47 Cube {
+                  translation 0.375 0.25 0
+                }
+                DEF _48 Cube {
+                  translation 0.4375 0.25 0
+                }
+                DEF _49 Cube {
+                  translation 0.5625 0.25 0
+                }
+                DEF _50 Cube {
+                  translation 0.625 0.25 0
+                }
+                DEF _51 Cube {
+                  translation 0.75 0.25 0
+                }
+                DEF _52 Cube {
+                  translation 0.8125 0.25 0
+                }
+                DEF _53 Cube {
+                  translation 0.9375 0.25 0
+                }
+                DEF _54 Cube {
+                  translation 0 0.3125 0
+                }
+                DEF _55 Cube {
+                  translation 0.125 0.3125 0
+                }
+                DEF _56 Cube {
+                  translation 0.1875 0.3125 0
+                }
+                DEF _57 Cube {
+                  translation 0.3125 0.3125 0
+                }
+                DEF _58 Cube {
+                  translation 0.375 0.3125 0
+                }
+                DEF _59 Cube {
+                  translation 0.5 0.3125 0
+                }
+                DEF _60 Cube {
+                  translation 0.5625 0.3125 0
+                }
+                DEF _61 Cube {
+                  translation 0.6875 0.3125 0
+                }
+                DEF _62 Cube {
+                  translation 0.75 0.3125 0
+                }
+                DEF _63 Cube {
+                  translation 0.875 0.3125 0
+                }
+                DEF _64 Cube {
+                  translation 0.9375 0.3125 0
+                }
+                DEF _65 Cube {
+                  translation 0.0625 0.375 0
+                }
+                DEF _66 Cube {
+                  translation 0.125 0.375 0
+                }
+                DEF _67 Cube {
+                  translation 0.25 0.375 0
+                }
+                DEF _68 Cube {
+                  translation 0.3125 0.375 0
+                }
+                DEF _69 Cube {
+                  translation 0.4375 0.375 0
+                }
+                DEF _70 Cube {
+                  translation 0.5 0.375 0
+                }
+                DEF _71 Cube {
+                  translation 0.625 0.375 0
+                }
+                DEF _72 Cube {
+                  translation 0.6875 0.375 0
+                }
+                DEF _73 Cube {
+                  translation 0.8125 0.375 0
+                }
+                DEF _74 Cube {
+                  translation 0.875 0.375 0
+                }
+                DEF _75 Cube {
+                  translation 0 0.4375 0
+                }
+                DEF _76 Cube {
+                  translation 0.0625 0.4375 0
+                }
+                DEF _77 Cube {
+                  translation 0.1875 0.4375 0
+                }
+                DEF _78 Cube {
+                  translation 0.25 0.4375 0
+                }
+                DEF _79 Cube {
+                  translation 0.375 0.4375 0
+                }
+                DEF _80 Cube {
+                  translation 0.4375 0.4375 0
+                }
+                DEF _81 Cube {
+                  translation 0.5625 0.4375 0
+                }
+                DEF _82 Cube {
+                  translation 0.625 0.4375 0
+                }
+                DEF _83 Cube {
+                  translation 0.75 0.4375 0
+                }
+                DEF _84 Cube {
+                  translation 0.8125 0.4375 0
+                }
+                DEF _85 Cube {
+                  translation 0.9375 0.4375 0
+                }
+                DEF _86 Cube {
+                  translation 0 0.5 0
+                }
+                DEF _87 Cube {
+                  translation 0.125 0.5 0
+                }
+                DEF _88 Cube {
+                  translation 0.1875 0.5 0
+                }
+                DEF _89 Cube {
+                  translation 0.3125 0.5 0
+                }
+                DEF _90 Cube {
+                  translation 0.375 0.5 0
+                }
+                DEF _91 Cube {
+                  translation 0.5 0.5 0
+                }
+                DEF _92 Cube {
+                  translation 0.5625 0.5 0
+                }
+                DEF _93 Cube {
+                  translation 0.6875 0.5 0
+                }
+                DEF _94 Cube {
+                  translation 0.75 0.5 0
+                }
+                DEF _95 Cube {
+                  translation 0.875 0.5 0
+                }
+                DEF _96 Cube {
+                  translation 0.9375 0.5 0
+                }
+                DEF _97 Cube {
+                  translation 0.0625 0.5625 0
+                }
+                DEF _98 Cube {
+                  translation 0.125 0.5625 0
+                }
+                DEF _99 Cube {
+                  translation 0.25 0.5625 0
+                }
+                DEF _100 Cube {
+                  translation 0.3125 0.5625 0
+                }
+                DEF _101 Cube {
+                  translation 0.4375 0.5625 0
+                }
+                DEF _102 Cube {
+                  translation 0.5 0.5625 0
+                }
+                DEF _103 Cube {
+                  translation 0.625 0.5625 0
+                }
+                DEF _104 Cube {
+                  translation 0.6875 0.5625 0
+                }
+                DEF _105 Cube {
+                  translation 0.8125 0.5625 0
+                }
+                DEF _106 Cube {
+                  translation 0.875 0.5625 0
+                }
+                DEF _107 Cube {
+                  translation 0 0.625 0
+                }
+                DEF _108 Cube {
+                  translation 0.0625 0.625 0
+                }
+                DEF _109 Cube {
+                  translation 0.1875 0.625 0
+                }
+                DEF _110 Cube {
+                  translation 0.25 0.625 0
+                }
+                DEF _111 Cube {
+                  translation 0.375 0.625 0
+                }
+                DEF _112 Cube {
+                  translation 0.4375 0.625 0
+                }
+                DEF _113 Cube {
+                  translation 0.5625 0.625 0
+                }
+                DEF _114 Cube {
+                  translation 0.625 0.625 0
+                }
+                DEF _115 Cube {
+                  translation 0.75 0.625 0
+                }
+                DEF _116 Cube {
+                  translation 0.8125 0.625 0
+                }
+                DEF _117 Cube {
+                  translation 0.9375 0.625 0
+                }
+                DEF _118 Cube {
+                  translation 0 0.6875 0
+                }
+                DEF _119 Cube {
+                  translation 0.125 0.6875 0
+                }
+                DEF _120 Cube {
+                  translation 0.1875 0.6875 0
+                }
+                DEF _121 Cube {
+                  translation 0.3125 0.6875 0
+                }
+                DEF _122 Cube {
+                  translation 0.375 0.6875 0
+                }
+                DEF _123 Cube {
+                  translation 0.5 0.6875 0
+                }
+                DEF _124 Cube {
+                  translation 0.5625 0.6875 0
+                }
+                DEF _125 Cube {
+                  translation 0.6875 0.6875 0
+                }
+                DEF _126 Cube {
+                  translation 0.75 0.6875 0
+                }
+                DEF _127 Cube {
+                  translation 0.875 0.6875 0
+                }
+                DEF _128 Cube {
+                  translation 0.9375 0.6875 0
+                }
+                DEF _129 Cube {
+                  translation 0.0625 0.75 0
+                }
+                DEF _130 Cube {
+                  translation 0.125 0.75 0
+                }
+                DEF _131 Cube {
+                  translation 0.25 0.75 0
+                }
+                DEF _132 Cube {
+                  translation 0.3125 0.75 0
+                }
+                DEF _133 Cube {
+                  translation 0.4375 0.75 0
+                }
+                DEF _134 Cube {
+                  translation 0.5 0.75 0
+                }
+                DEF _135 Cube {
+                  translation 0.625 0.75 0
+                }
+                DEF _136 Cube {
+                  translation 0.6875 0.75 0
+                }
+                DEF _137 Cube {
+                  translation 0.8125 0.75 0
+                }
+                DEF _138 Cube {
+                  translation 0.875 0.75 0
+                }
+                DEF _139 Cube {
+                  translation 0 0.8125 0
+                }
+                DEF _140 Cube {
+                  translation 0.0625 0.8125 0
+                }
+                DEF _141 Cube {
+                  translation 0.1875 0.8125 0
+                }
+                DEF _142 Cube {
+                  translation 0.25 0.8125 0
+                }
+                DEF _143 Cube {
+                  translation 0.375 0.8125 0
+                }
+                DEF _144 Cube {
+                  translation 0.4375 0.8125 0
+                }
+                DEF _145 Cube {
+                  translation 0.5625 0.8125 0
+                }
+                DEF _146 Cube {
+                  translation 0.625 0.8125 0
+                }
+                DEF _147 Cube {
+                  translation 0.75 0.8125 0
+                }
+                DEF _148 Cube {
+                  translation 0.8125 0.8125 0
+                }
+                DEF _149 Cube {
+                  translation 0.9375 0.8125 0
+                }
+                DEF _150 Cube {
+                  translation 0 0.875 0
+                }
+                DEF _151 Cube {
+                  translation 0.125 0.875 0
+                }
+                DEF _152 Cube {
+                  translation 0.1875 0.875 0
+                }
+                DEF _153 Cube {
+                  translation 0.3125 0.875 0
+                }
+                DEF _154 Cube {
+                  translation 0.375 0.875 0
+                }
+                DEF _155 Cube {
+                  translation 0.5 0.875 0
+                }
+                DEF _156 Cube {
+                  translation 0.5625 0.875 0
+                }
+                DEF _157 Cube {
+                  translation 0.6875 0.875 0
+                }
+                DEF _158 Cube {
+                  translation 0.75 0.875 0
+                }
+                DEF _159 Cube {
+                  translation 0.875 0.875 0
+                }
+                DEF _160 Cube {
+                  translation 0.9375 0.875 0
+                }
+                DEF _161 Cube {
+                  translation 0.0625 0.9375 0
+                }
+                DEF _162 Cube {
+                  translation 0.125 0.9375 0
+                }
+                DEF _163 Cube {
+                  translation 0.25 0.9375 0
+                }
+                DEF _164 Cube {
+                  translation 0.3125 0.9375 0
+                }
+                DEF _165 Cube {
+                  translation 0.4375 0.9375 0
+                }
+                DEF _166 Cube {
+                  translation 0.5 0.9375 0
+                }
+                DEF _167 Cube {
+                  translation 0.625 0.9375 0
+                }
+                DEF _168 Cube {
+                  translation 0.6875 0.9375 0
+                }
+                DEF _169 Cube {
+                  translation 0.8125 0.9375 0
+                }
+                DEF _170 Cube {
+                  translation 0.875 0.9375 0
+                }
+                DEF _171 Cube {
+                  translation 0 0 0.0625
+                }
+                DEF _172 Cube {
+                  translation 0.0625 0 0.0625
+                }
+                DEF _173 Cube {
+                  translation 0.1875 0 0.0625
+                }
+                DEF _174 Cube {
+                  translation 0.25 0 0.0625
+                }
+                DEF _175 Cube {
+                  translation 0.375 0 0.0625
+                }
+                DEF _176 Cube {
+                  translation 0.4375 0 0.0625
+                }
+                DEF _177 Cube {
+                  translation 0.5625 0 0.0625
+                }
+                DEF _178 Cube {
+                  translation 0.625 0 0.0625
+                }
+                DEF _179 Cube {
+                  translation 0.75 0 0.0625
+                }
+                DEF _180 Cube {
+                  translation 0.8125 0 0.0625
+                }
+                DEF _181 Cube {
+                  translation 0.9375 0 0.0625
+                }
+                DEF _182 Cube {
+                  translation 0 0.0625 0.0625
+                }
+                DEF _183 Cube {
+                  translation 0.125 0.0625 0.0625
+                }
+                DEF _184 Cube {
+                  translation 0.1875 0.0625 0.0625
+                }
+                DEF _185 Cube {
+                  translation 0.3125 0.0625 0.0625
+                }
+                DEF _186 Cube {
+                  translation 0.375 0.0625 0.0625
+                }
+                DEF _187 Cube {
+                  translation 0.5 0.0625 0.0625
+                }
+                DEF _188 Cube {
+                  translation 0.5625 0.0625 0.0625
+                }
+                DEF _189 Cube {
+                  translation 0.6875 0.0625 0.0625
+                }
+                DEF _190 Cube {
+                  translation 0.75 0.0625 0.0625
+                }
+                DEF _191 Cube {
+                  translation 0.875 0.0625 0.0625
+                }
+                DEF _192 Cube {
+                  translation 0.9375 0.0625 0.0625
+                }
+                DEF _193 Cube {
+                  translation 0.0625 0.125 0.0625
+                }
+                DEF _194 Cube {
+                  translation 0.125 0.125 0.0625
+                }
+                DEF _195 Cube {
+                  translation 0.25 0.125 0.0625
+                }
+                DEF _196 Cube {
+                  translation 0.3125 0.125 0.0625
+                }
+                DEF _197 Cube {
+                  translation 0.4375 0.125 0.0625
+                }
+                DEF _198 Cube {
+                  translation 0.5 0.125 0.0625
+                }
+                DEF _199 Cube {
+                  translation 0.625 0.125 0.0625
+                }
+                DEF _200 Cube {
+                  translation 0.6875 0.125 0.0625
+                }
+                DEF _201 Cube {
+                  translation 0.8125 0.125 0.0625
+                }
+                DEF _202 Cube {
+                  translation 0.875 0.125 0.0625
+                }
+                DEF _203 Cube {
+                  translation 0 0.1875 0.0625
+                }
+                DEF _204 Cube {
+                  translation 0.0625 0.1875 0.0625
+                }
+                DEF _205 Cube {
+                  translation 0.1875 0.1875 0.0625
+                }
+                DEF _206 Cube {
+                  translation 0.25 0.1875 0.0625
+                }
+                DEF _207 Cube {
+                  translation 0.375 0.1875 0.0625
+                }
+                DEF _208 Cube {
+                  translation 0.4375 0.1875 0.0625
+                }
+                DEF _209 Cube {
+                  translation 0.5625 0.1875 0.0625
+                }
+                DEF _210 Cube {
+                  translation 0.625 0.1875 0.0625
+                }
+                DEF _211 Cube {
+                  translation 0.75 0.1875 0.0625
+                }
+                DEF _212 Cube {
+                  translation 0.8125 0.1875 0.0625
+                }
+                DEF _213 Cube {
+                  translation 0.9375 0.1875 0.0625
+                }
+                DEF _214 Cube {
+                  translation 0 0.25 0.0625
+                }
+                DEF _215 Cube {
+                  translation 0.125 0.25 0.0625
+                }
+                DEF _216 Cube {
+                  translation 0.1875 0.25 0.0625
+                }
+                DEF _217 Cube {
+                  translation 0.3125 0.25 0.0625
+                }
+                DEF _218 Cube {
+                  translation 0.375 0.25 0.0625
+                }
+                DEF _219 Cube {
+                  translation 0.5 0.25 0.0625
+                }
+                DEF _220 Cube {
+                  translation 0.5625 0.25 0.0625
+                }
+                DEF _221 Cube {
+                  translation 0.6875 0.25 0.0625
+                }
+                DEF _222 Cube {
+                  translation 0.75 0.25 0.0625
+                }
+                DEF _223 Cube {
+                  translation 0.875 0.25 0.0625
+                }
+                DEF _224 Cube {
+                  translation 0.9375 0.25 0.0625
+                }
+                DEF _225 Cube {
+                  translation 0.0625 0.3125 0.0625
+                }
+                DEF _226 Cube {
+                  translation 0.125 0.3125 0.0625
+                }
+                DEF _227 Cube {
+                  translation 0.25 0.3125 0.0625
+                }
+                DEF _228 Cube {
+                  translation 0.3125 0.3125 0.0625
+                }
+                DEF _229 Cube {
+                  translation 0.4375 0.3125 0.0625
+                }
+                DEF _230 Cube {
+                  translation 0.5 0.3125 0.0625
+                }
+                DEF _231 Cube {
+                  translation 0.625 0.3125 0.0625
+                }
+                DEF _232 Cube {
+                  translation 0.6875 0.3125 0.0625
+                }
+                DEF _233 Cube {
+                  translation 0.8125 0.3125 0.0625
+                }
+                DEF _234 Cube {
+                  translation 0.875 0.3125 0.0625
+                }
+                DEF _235 Cube {
+                  translation 0 0.375 0.0625
+                }
+                DEF _236 Cube {
+                  translation 0.0625 0.375 0.0625
+                }
+                DEF _237 Cube {
+                  translation 0.1875 0.375 0.0625
+                }
+                DEF _238 Cube {
+                  translation 0.25 0.375 0.0625
+                }
+                DEF _239 Cube {
+                  translation 0.375 0.375 0.0625
+                }
+                DEF _240 Cube {
+                  translation 0.4375 0.375 0.0625
+                }
+                DEF _241 Cube {
+                  translation 0.5625 0.375 0.0625
+                }
+                DEF _242 Cube {
+                  translation 0.625 0.375 0.0625
+                }
+                DEF _243 Cube {
+                  translation 0.75 0.375 0.0625
+                }
+                DEF _244 Cube {
+                  translation 0.8125 0.375 0.0625
+                }
+                DEF _245 Cube {
+                  translation 0.9375 0.375 0.0625
+                }
+                DEF _246 Cube {
+                  translation 0 0.4375 0.0625
+                }
+                DEF _247 Cube {
+                  translation 0.125 0.4375 0.0625
+                }
+                DEF _248 Cube {
+                  translation 0.1875 0.4375 0.0625
+                }
+                DEF _249 Cube {
+                  translation 0.3125 0.4375 0.0625
+                }
+                DEF _250 Cube {
+                  translation 0.375 0.4375 0.0625
+                }
+                DEF _251 Cube {
+                  translation 0.5 0.4375 0.0625
+                }
+                DEF _252 Cube {
+                  translation 0.5625 0.4375 0.0625
+                }
+                DEF _253 Cube {
+                  translation 0.6875 0.4375 0.0625
+                }
+                DEF _254 Cube {
+                  translation 0.75 0.4375 0.0625
+                }
+                DEF _255 Cube {
+                  translation 0.875 0.4375 0.0625
+                }
+                DEF _256 Cube {
+                  translation 0.9375 0.4375 0.0625
+                }
+                DEF _257 Cube {
+                  translation 0.0625 0.5 0.0625
+                }
+                DEF _258 Cube {
+                  translation 0.125 0.5 0.0625
+                }
+                DEF _259 Cube {
+                  translation 0.25 0.5 0.0625
+                }
+                DEF _260 Cube {
+                  translation 0.3125 0.5 0.0625
+                }
+                DEF _261 Cube {
+                  translation 0.4375 0.5 0.0625
+                }
+                DEF _262 Cube {
+                  translation 0.5 0.5 0.0625
+                }
+                DEF _263 Cube {
+                  translation 0.625 0.5 0.0625
+                }
+                DEF _264 Cube {
+                  translation 0.6875 0.5 0.0625
+                }
+                DEF _265 Cube {
+                  translation 0.8125 0.5 0.0625
+                }
+                DEF _266 Cube {
+                  translation 0.875 0.5 0.0625
+                }
+                DEF _267 Cube {
+                  translation 0 0.5625 0.0625
+                }
+                DEF _268 Cube {
+                  translation 0.0625 0.5625 0.0625
+                }
+                DEF _269 Cube {
+                  translation 0.1875 0.5625 0.0625
+                }
+                DEF _270 Cube {
+                  translation 0.25 0.5625 0.0625
+                }
+                DEF _271 Cube {
+                  translation 0.375 0.5625 0.0625
+                }
+                DEF _272 Cube {
+                  translation 0.4375 0.5625 0.0625
+                }
+                DEF _273 Cube {
+                  translation 0.5625 0.5625 0.0625
+                }
+                DEF _274 Cube {
+                  translation 0.625 0.5625 0.0625
+                }
+                DEF _275 Cube {
+                  translation 0.75 0.5625 0.0625
+                }
+                DEF _276 Cube {
+                  translation 0.8125 0.5625 0.0625
+                }
+                DEF _277 Cube {
+                  translation 0.9375 0.5625 0.0625
+                }
+                DEF _278 Cube {
+                  translation 0 0.625 0.0625
+                }
+                DEF _279 Cube {
+                  translation 0.125 0.625 0.0625
+                }
+                DEF _280 Cube {
+                  translation 0.1875 0.625 0.0625
+                }
+                DEF _281 Cube {
+                  translation 0.3125 0.625 0.0625
+                }
+                DEF _282 Cube {
+                  translation 0.375 0.625 0.0625
+                }
+                DEF _283 Cube {
+                  translation 0.5 0.625 0.0625
+                }
+                DEF _284 Cube {
+                  translation 0.5625 0.625 0.0625
+                }
+                DEF _285 Cube {
+                  translation 0.6875 0.625 0.0625
+                }
+                DEF _286 Cube {
+                  translation 0.75 0.625 0.0625
+                }
+                DEF _287 Cube {
+                  translation 0.875 0.625 0.0625
+                }
+                DEF _288 Cube {
+                  translation 0.9375 0.625 0.0625
+                }
+                DEF _289 Cube {
+                  translation 0.0625 0.6875 0.0625
+                }
+                DEF _290 Cube {
+                  translation 0.125 0.6875 0.0625
+                }
+                DEF _291 Cube {
+                  translation 0.25 0.6875 0.0625
+                }
+                DEF _292 Cube {
+                  translation 0.3125 0.6875 0.0625
+                }
+                DEF _293 Cube {
+                  translation 0.4375 0.6875 0.0625
+                }
+                DEF _294 Cube {
+                  translation 0.5 0.6875 0.0625
+                }
+                DEF _295 Cube {
+                  translation 0.625 0.6875 0.0625
+                }
+                DEF _296 Cube {
+                  translation 0.6875 0.6875 0.0625
+                }
+                DEF _297 Cube {
+                  translation 0.8125 0.6875 0.0625
+                }
+                DEF _298 Cube {
+                  translation 0.875 0.6875 0.0625
+                }
+                DEF _299 Cube {
+                  translation 0 0.75 0.0625
+                }
+                DEF _300 Cube {
+                  translation 0.0625 0.75 0.0625
+                }
+                DEF _301 Cube {
+                  translation 0.1875 0.75 0.0625
+                }
+                DEF _302 Cube {
+                  translation 0.25 0.75 0.0625
+                }
+                DEF _303 Cube {
+                  translation 0.375 0.75 0.0625
+                }
+                DEF _304 Cube {
+                  translation 0.4375 0.75 0.0625
+                }
+                DEF _305 Cube {
+                  translation 0.5625 0.75 0.0625
+                }
+                DEF _306 Cube {
+                  translation 0.625 0.75 0.0625
+                }
+                DEF _307 Cube {
+                  translation 0.75 0.75 0.0625
+                }
+                DEF _308 Cube {
+                  translation 0.8125 0.75 0.0625
+                }
+                DEF _309 Cube {
+                  translation 0.9375 0.75 0.0625
+                }
+                DEF _310 Cube {
+                  translation 0 0.8125 0.0625
+                }
+                DEF _311 Cube {
+                  translation 0.125 0.8125 0.0625
+                }
+                DEF _312 Cube {
+                  translation 0.1875 0.8125 0.0625
+                }
+                DEF _313 Cube {
+                  translation 0.3125 0.8125 0.0625
+                }
+                DEF _314 Cube {
+                  translation 0.375 0.8125 0.0625
+                }
+                DEF _315 Cube {
+                  translation 0.5 0.8125 0.0625
+                }
+                DEF _316 Cube {
+                  translation 0.5625 0.8125 0.0625
+                }
+                DEF _317 Cube {
+                  translation 0.6875 0.8125 0.0625
+                }
+                DEF _318 Cube {
+                  translation 0.75 0.8125 0.0625
+                }
+                DEF _319 Cube {
+                  translation 0.875 0.8125 0.0625
+                }
+                DEF _320 Cube {
+                  translation 0.9375 0.8125 0.0625
+                }
+                DEF _321 Cube {
+                  translation 0.0625 0.875 0.0625
+                }
+                DEF _322 Cube {
+                  translation 0.125 0.875 0.0625
+                }
+                DEF _323 Cube {
+                  translation 0.25 0.875 0.0625
+                }
+                DEF _324 Cube {
+                  translation 0.3125 0.875 0.0625
+                }
+                DEF _325 Cube {
+                  translation 0.4375 0.875 0.0625
+                }
+                DEF _326 Cube {
+                  translation 0.5 0.875 0.0625
+                }
+                DEF _327 Cube {
+                  translation 0.625 0.875 0.0625
+                }
+                DEF _328 Cube {
+                  translation 0.6875 0.875 0.0625
+                }
+                DEF _329 Cube {
+                  translation 0.8125 0.875 0.0625
+                }
+                DEF _330 Cube {
+                  translation 0.875 0.875 0.0625
+                }
+                DEF _331 Cube {
+                  translation 0 0.9375 0.0625
+                }
+                DEF _332 Cube {
+                  translation 0.0625 0.9375 0.0625
+                }
+                DEF _333 Cube {
+                  translation 0.1875 0.9375 0.0625
+                }
+                DEF _334 Cube {
+                  translation 0.25 0.9375 0.0625
+                }
+                DEF _335 Cube {
+                  translation 0.375 0.9375 0.0625
+                }
+                DEF _336 Cube {
+                  translation 0.4375 0.9375 0.0625
+                }
+                DEF _337 Cube {
+                  translation 0.5625 0.9375 0.0625
+                }
+                DEF _338 Cube {
+                  translation 0.625 0.9375 0.0625
+                }
+                DEF _339 Cube {
+                  translation 0.75 0.9375 0.0625
+                }
+                DEF _340 Cube {
+                  translation 0.8125 0.9375 0.0625
+                }
+                DEF _341 Cube {
+                  translation 0.9375 0.9375 0.0625
+                }
+                DEF _342 Cube {
+                  translation 0 0 0.125
+                }
+                DEF _343 Cube {
+                  translation 0.125 0 0.125
+                }
+                DEF _344 Cube {
+                  translation 0.1875 0 0.125
+                }
+                DEF _345 Cube {
+                  translation 0.3125 0 0.125
+                }
+                DEF _346 Cube {
+                  translation 0.375 0 0.125
+                }
+                DEF _347 Cube {
+                  translation 0.5 0 0.125
+                }
+                DEF _348 Cube {
+                  translation 0.5625 0 0.125
+                }
+                DEF _349 Cube {
+                  translation 0.6875 0 0.125
+                }
+                DEF _350 Cube {
+                  translation 0.75 0 0.125
+                }
+                DEF _351 Cube {
+                  translation 0.875 0 0.125
+                }
+                DEF _352 Cube {
+                  translation 0.9375 0 0.125
+                }
+                DEF _353 Cube {
+                  translation 0.0625 0.0625 0.125
+                }
+                DEF _354 Cube {
+                  translation 0.125 0.0625 0.125
+                }
+                DEF _355 Cube {
+                  translation 0.25 0.0625 0.125
+                }
+                DEF _356 Cube {
+                  translation 0.3125 0.0625 0.125
+                }
+                DEF _357 Cube {
+                  translation 0.4375 0.0625 0.125
+                }
+                DEF _358 Cube {
+                  translation 0.5 0.0625 0.125
+                }
+                DEF _359 Cube {
+                  translation 0.625 0.0625 0.125
+                }
+                DEF _360 Cube {
+                  translation 0.6875 0.0625 0.125
+                }
+                DEF _361 Cube {
+                  translation 0.8125 0.0625 0.125
+                }
+                DEF _362 Cube {
+                  translation 0.875 0.0625 0.125
+                }
+                DEF _363 Cube {
+                  translation 0 0.125 0.125
+                }
+                DEF _364 Cube {
+                  translation 0.0625 0.125 0.125
+                }
+                DEF _365 Cube {
+                  translation 0.1875 0.125 0.125
+                }
+                DEF _366 Cube {
+                  translation 0.25 0.125 0.125
+                }
+                DEF _367 Cube {
+                  translation 0.375 0.125 0.125
+                }
+                DEF _368 Cube {
+                  translation 0.4375 0.125 0.125
+                }
+                DEF _369 Cube {
+                  translation 0.5625 0.125 0.125
+                }
+                DEF _370 Cube {
+                  translation 0.625 0.125 0.125
+                }
+                DEF _371 Cube {
+                  translation 0.75 0.125 0.125
+                }
+                DEF _372 Cube {
+                  translation 0.8125 0.125 0.125
+                }
+                DEF _373 Cube {
+                  translation 0.9375 0.125 0.125
+                }
+                DEF _374 Cube {
+                  translation 0 0.1875 0.125
+                }
+                DEF _375 Cube {
+                  translation 0.125 0.1875 0.125
+                }
+                DEF _376 Cube {
+                  translation 0.1875 0.1875 0.125
+                }
+                DEF _377 Cube {
+                  translation 0.3125 0.1875 0.125
+                }
+                DEF _378 Cube {
+                  translation 0.375 0.1875 0.125
+                }
+                DEF _379 Cube {
+                  translation 0.5 0.1875 0.125
+                }
+                DEF _380 Cube {
+                  translation 0.5625 0.1875 0.125
+                }
+                DEF _381 Cube {
+                  translation 0.6875 0.1875 0.125
+                }
+                DEF _382 Cube {
+                  translation 0.75 0.1875 0.125
+                }
+                DEF _383 Cube {
+                  translation 0.875 0.1875 0.125
+                }
+                DEF _384 Cube {
+                  translation 0.9375 0.1875 0.125
+                }
+                DEF _385 Cube {
+                  translation 0.0625 0.25 0.125
+                }
+                DEF _386 Cube {
+                  translation 0.125 0.25 0.125
+                }
+                DEF _387 Cube {
+                  translation 0.25 0.25 0.125
+                }
+                DEF _388 Cube {
+                  translation 0.3125 0.25 0.125
+                }
+                DEF _389 Cube {
+                  translation 0.4375 0.25 0.125
+                }
+                DEF _390 Cube {
+                  translation 0.5 0.25 0.125
+                }
+                DEF _391 Cube {
+                  translation 0.625 0.25 0.125
+                }
+                DEF _392 Cube {
+                  translation 0.6875 0.25 0.125
+                }
+                DEF _393 Cube {
+                  translation 0.8125 0.25 0.125
+                }
+                DEF _394 Cube {
+                  translation 0.875 0.25 0.125
+                }
+                DEF _395 Cube {
+                  translation 0 0.3125 0.125
+                }
+                DEF _396 Cube {
+                  translation 0.0625 0.3125 0.125
+                }
+                DEF _397 Cube {
+                  translation 0.1875 0.3125 0.125
+                }
+                DEF _398 Cube {
+                  translation 0.25 0.3125 0.125
+                }
+                DEF _399 Cube {
+                  translation 0.375 0.3125 0.125
+                }
+                DEF _400 Cube {
+                  translation 0.4375 0.3125 0.125
+                }
+                DEF _401 Cube {
+                  translation 0.5625 0.3125 0.125
+                }
+                DEF _402 Cube {
+                  translation 0.625 0.3125 0.125
+                }
+                DEF _403 Cube {
+                  translation 0.75 0.3125 0.125
+                }
+                DEF _404 Cube {
+                  translation 0.8125 0.3125 0.125
+                }
+                DEF _405 Cube {
+                  translation 0.9375 0.3125 0.125
+                }
+                DEF _406 Cube {
+                  translation 0 0.375 0.125
+                }
+                DEF _407 Cube {
+                  translation 0.125 0.375 0.125
+                }
+                DEF _408 Cube {
+                  translation 0.1875 0.375 0.125
+                }
+                DEF _409 Cube {
+                  translation 0.3125 0.375 0.125
+                }
+                DEF _410 Cube {
+                  translation 0.375 0.375 0.125
+                }
+                DEF _411 Cube {
+                  translation 0.5 0.375 0.125
+                }
+                DEF _412 Cube {
+                  translation 0.5625 0.375 0.125
+                }
+                DEF _413 Cube {
+                  translation 0.6875 0.375 0.125
+                }
+                DEF _414 Cube {
+                  translation 0.75 0.375 0.125
+                }
+                DEF _415 Cube {
+                  translation 0.875 0.375 0.125
+                }
+                DEF _416 Cube {
+                  translation 0.9375 0.375 0.125
+                }
+                DEF _417 Cube {
+                  translation 0.0625 0.4375 0.125
+                }
+                DEF _418 Cube {
+                  translation 0.125 0.4375 0.125
+                }
+                DEF _419 Cube {
+                  translation 0.25 0.4375 0.125
+                }
+                DEF _420 Cube {
+                  translation 0.3125 0.4375 0.125
+                }
+                DEF _421 Cube {
+                  translation 0.4375 0.4375 0.125
+                }
+                DEF _422 Cube {
+                  translation 0.5 0.4375 0.125
+                }
+                DEF _423 Cube {
+                  translation 0.625 0.4375 0.125
+                }
+                DEF _424 Cube {
+                  translation 0.6875 0.4375 0.125
+                }
+                DEF _425 Cube {
+                  translation 0.8125 0.4375 0.125
+                }
+                DEF _426 Cube {
+                  translation 0.875 0.4375 0.125
+                }
+                DEF _427 Cube {
+                  translation 0 0.5 0.125
+                }
+                DEF _428 Cube {
+                  translation 0.0625 0.5 0.125
+                }
+                DEF _429 Cube {
+                  translation 0.1875 0.5 0.125
+                }
+                DEF _430 Cube {
+                  translation 0.25 0.5 0.125
+                }
+                DEF _431 Cube {
+                  translation 0.375 0.5 0.125
+                }
+                DEF _432 Cube {
+                  translation 0.4375 0.5 0.125
+                }
+                DEF _433 Cube {
+                  translation 0.5625 0.5 0.125
+                }
+                DEF _434 Cube {
+                  translation 0.625 0.5 0.125
+                }
+                DEF _435 Cube {
+                  translation 0.75 0.5 0.125
+                }
+                DEF _436 Cube {
+                  translation 0.8125 0.5 0.125
+                }
+                DEF _437 Cube {
+                  translation 0.9375 0.5 0.125
+                }
+                DEF _438 Cube {
+                  translation 0 0.5625 0.125
+                }
+                DEF _439 Cube {
+                  translation 0.125 0.5625 0.125
+                }
+                DEF _440 Cube {
+                  translation 0.1875 0.5625 0.125
+                }
+                DEF _441 Cube {
+                  translation 0.3125 0.5625 0.125
+                }
+                DEF _442 Cube {
+                  translation 0.375 0.5625 0.125
+                }
+                DEF _443 Cube {
+                  translation 0.5 0.5625 0.125
+                }
+                DEF _444 Cube {
+                  translation 0.5625 0.5625 0.125
+                }
+                DEF _445 Cube {
+                  translation 0.6875 0.5625 0.125
+                }
+                DEF _446 Cube {
+                  translation 0.75 0.5625 0.125
+                }
+                DEF _447 Cube {
+                  translation 0.875 0.5625 0.125
+                }
+                DEF _448 Cube {
+                  translation 0.9375 0.5625 0.125
+                }
+                DEF _449 Cube {
+                  translation 0.0625 0.625 0.125
+                }
+                DEF _450 Cube {
+                  translation 0.125 0.625 0.125
+                }
+                DEF _451 Cube {
+                  translation 0.25 0.625 0.125
+                }
+                DEF _452 Cube {
+                  translation 0.3125 0.625 0.125
+                }
+                DEF _453 Cube {
+                  translation 0.4375 0.625 0.125
+                }
+                DEF _454 Cube {
+                  translation 0.5 0.625 0.125
+                }
+                DEF _455 Cube {
+                  translation 0.625 0.625 0.125
+                }
+                DEF _456 Cube {
+                  translation 0.6875 0.625 0.125
+                }
+                DEF _457 Cube {
+                  translation 0.8125 0.625 0.125
+                }
+                DEF _458 Cube {
+                  translation 0.875 0.625 0.125
+                }
+                DEF _459 Cube {
+                  translation 0 0.6875 0.125
+                }
+                DEF _460 Cube {
+                  translation 0.0625 0.6875 0.125
+                }
+                DEF _461 Cube {
+                  translation 0.1875 0.6875 0.125
+                }
+                DEF _462 Cube {
+                  translation 0.25 0.6875 0.125
+                }
+                DEF _463 Cube {
+                  translation 0.375 0.6875 0.125
+                }
+                DEF _464 Cube {
+                  translation 0.4375 0.6875 0.125
+                }
+                DEF _465 Cube {
+                  translation 0.5625 0.6875 0.125
+                }
+                DEF _466 Cube {
+                  translation 0.625 0.6875 0.125
+                }
+                DEF _467 Cube {
+                  translation 0.75 0.6875 0.125
+                }
+                DEF _468 Cube {
+                  translation 0.8125 0.6875 0.125
+                }
+                DEF _469 Cube {
+                  translation 0.9375 0.6875 0.125
+                }
+                DEF _470 Cube {
+                  translation 0 0.75 0.125
+                }
+                DEF _471 Cube {
+                  translation 0.125 0.75 0.125
+                }
+                DEF _472 Cube {
+                  translation 0.1875 0.75 0.125
+                }
+                DEF _473 Cube {
+                  translation 0.3125 0.75 0.125
+                }
+                DEF _474 Cube {
+                  translation 0.375 0.75 0.125
+                }
+                DEF _475 Cube {
+                  translation 0.5 0.75 0.125
+                }
+                DEF _476 Cube {
+                  translation 0.5625 0.75 0.125
+                }
+                DEF _477 Cube {
+                  translation 0.6875 0.75 0.125
+                }
+                DEF _478 Cube {
+                  translation 0.75 0.75 0.125
+                }
+                DEF _479 Cube {
+                  translation 0.875 0.75 0.125
+                }
+                DEF _480 Cube {
+                  translation 0.9375 0.75 0.125
+                }
+                DEF _481 Cube {
+                  translation 0.0625 0.8125 0.125
+                }
+                DEF _482 Cube {
+                  translation 0.125 0.8125 0.125
+                }
+                DEF _483 Cube {
+                  translation 0.25 0.8125 0.125
+                }
+                DEF _484 Cube {
+                  translation 0.3125 0.8125 0.125
+                }
+                DEF _485 Cube {
+                  translation 0.4375 0.8125 0.125
+                }
+                DEF _486 Cube {
+                  translation 0.5 0.8125 0.125
+                }
+                DEF _487 Cube {
+                  translation 0.625 0.8125 0.125
+                }
+                DEF _488 Cube {
+                  translation 0.6875 0.8125 0.125
+                }
+                DEF _489 Cube {
+                  translation 0.8125 0.8125 0.125
+                }
+                DEF _490 Cube {
+                  translation 0.875 0.8125 0.125
+                }
+                DEF _491 Cube {
+                  translation 0 0.875 0.125
+                }
+                DEF _492 Cube {
+                  translation 0.0625 0.875 0.125
+                }
+                DEF _493 Cube {
+                  translation 0.1875 0.875 0.125
+                }
+                DEF _494 Cube {
+                  translation 0.25 0.875 0.125
+                }
+                DEF _495 Cube {
+                  translation 0.375 0.875 0.125
+                }
+                DEF _496 Cube {
+                  translation 0.4375 0.875 0.125
+                }
+                DEF _497 Cube {
+                  translation 0.5625 0.875 0.125
+                }
+                DEF _498 Cube {
+                  translation 0.625 0.875 0.125
+                }
+                DEF _499 Cube {
+                  translation 0.75 0.875 0.125
+                }
+                DEF _500 Cube {
+                  translation 0.8125 0.875 0.125
+                }
+                DEF _501 Cube {
+                  translation 0.9375 0.875 0.125
+                }
+                DEF _502 Cube {
+                  translation 0 0.9375 0.125
+                }
+                DEF _503 Cube {
+                  translation 0.125 0.9375 0.125
+                }
+                DEF _504 Cube {
+                  translation 0.1875 0.9375 0.125
+                }
+                DEF _505 Cube {
+                  translation 0.3125 0.9375 0.125
+                }
+                DEF _506 Cube {
+                  translation 0.375 0.9375 0.125
+                }
+                DEF _507 Cube {
+                  translation 0.5 0.9375 0.125
+                }
+                DEF _508 Cube {
+                  translation 0.5625 0.9375 0.125
+                }
+                DEF _509 Cube {
+                  translation 0.6875 0.9375 0.125
+                }
+                DEF _510 Cube {
+                  translation 0.75 0.9375 0.125
+                }
+                DEF _511 Cube {
+                  translation 0.875 0.9375 0.125
+                }
+                DEF _512 Cube {
+                  translation 0.9375 0.9375 0.125
+                }
+                DEF _513 Cube {
+                  translation 0.0625 0 0.1875
+                }
+                DEF _514 Cube {
+                  translation 0.125 0 0.1875
+                }
+                DEF _515 Cube {
+                  translation 0.25 0 0.1875
+                }
+                DEF _516 Cube {
+                  translation 0.3125 0 0.1875
+                }
+                DEF _517 Cube {
+                  translation 0.4375 0 0.1875
+                }
+                DEF _518 Cube {
+                  translation 0.5 0 0.1875
+                }
+                DEF _519 Cube {
+                  translation 0.625 0 0.1875
+                }
+                DEF _520 Cube {
+                  translation 0.6875 0 0.1875
+                }
+                DEF _521 Cube {
+                  translation 0.8125 0 0.1875
+                }
+                DEF _522 Cube {
+                  translation 0.875 0 0.1875
+                }
+                DEF _523 Cube {
+                  translation 0 0.0625 0.1875
+                }
+                DEF _524 Cube {
+                  translation 0.0625 0.0625 0.1875
+                }
+                DEF _525 Cube {
+                  translation 0.1875 0.0625 0.1875
+                }
+                DEF _526 Cube {
+                  translation 0.25 0.0625 0.1875
+                }
+                DEF _527 Cube {
+                  translation 0.375 0.0625 0.1875
+                }
+                DEF _528 Cube {
+                  translation 0.4375 0.0625 0.1875
+                }
+                DEF _529 Cube {
+                  translation 0.5625 0.0625 0.1875
+                }
+                DEF _530 Cube {
+                  translation 0.625 0.0625 0.1875
+                }
+                DEF _531 Cube {
+                  translation 0.75 0.0625 0.1875
+                }
+                DEF _532 Cube {
+                  translation 0.8125 0.0625 0.1875
+                }
+                DEF _533 Cube {
+                  translation 0.9375 0.0625 0.1875
+                }
+                DEF _534 Cube {
+                  translation 0 0.125 0.1875
+                }
+                DEF _535 Cube {
+                  translation 0.125 0.125 0.1875
+                }
+                DEF _536 Cube {
+                  translation 0.1875 0.125 0.1875
+                }
+                DEF _537 Cube {
+                  translation 0.3125 0.125 0.1875
+                }
+                DEF _538 Cube {
+                  translation 0.375 0.125 0.1875
+                }
+                DEF _539 Cube {
+                  translation 0.5 0.125 0.1875
+                }
+                DEF _540 Cube {
+                  translation 0.5625 0.125 0.1875
+                }
+                DEF _541 Cube {
+                  translation 0.6875 0.125 0.1875
+                }
+                DEF _542 Cube {
+                  translation 0.75 0.125 0.1875
+                }
+                DEF _543 Cube {
+                  translation 0.875 0.125 0.1875
+                }
+                DEF _544 Cube {
+                  translation 0.9375 0.125 0.1875
+                }
+                DEF _545 Cube {
+                  translation 0.0625 0.1875 0.1875
+                }
+                DEF _546 Cube {
+                  translation 0.125 0.1875 0.1875
+                }
+                DEF _547 Cube {
+                  translation 0.25 0.1875 0.1875
+                }
+                DEF _548 Cube {
+                  translation 0.3125 0.1875 0.1875
+                }
+                DEF _549 Cube {
+                  translation 0.4375 0.1875 0.1875
+                }
+                DEF _550 Cube {
+                  translation 0.5 0.1875 0.1875
+                }
+                DEF _551 Cube {
+                  translation 0.625 0.1875 0.1875
+                }
+                DEF _552 Cube {
+                  translation 0.6875 0.1875 0.1875
+                }
+                DEF _553 Cube {
+                  translation 0.8125 0.1875 0.1875
+                }
+                DEF _554 Cube {
+                  translation 0.875 0.1875 0.1875
+                }
+                DEF _555 Cube {
+                  translation 0 0.25 0.1875
+                }
+                DEF _556 Cube {
+                  translation 0.0625 0.25 0.1875
+                }
+                DEF _557 Cube {
+                  translation 0.1875 0.25 0.1875
+                }
+                DEF _558 Cube {
+                  translation 0.25 0.25 0.1875
+                }
+                DEF _559 Cube {
+                  translation 0.375 0.25 0.1875
+                }
+                DEF _560 Cube {
+                  translation 0.4375 0.25 0.1875
+                }
+                DEF _561 Cube {
+                  translation 0.5625 0.25 0.1875
+                }
+                DEF _562 Cube {
+                  translation 0.625 0.25 0.1875
+                }
+                DEF _563 Cube {
+                  translation 0.75 0.25 0.1875
+                }
+                DEF _564 Cube {
+                  translation 0.8125 0.25 0.1875
+                }
+                DEF _565 Cube {
+                  translation 0.9375 0.25 0.1875
+                }
+                DEF _566 Cube {
+                  translation 0 0.3125 0.1875
+                }
+                DEF _567 Cube {
+                  translation 0.125 0.3125 0.1875
+                }
+                DEF _568 Cube {
+                  translation 0.1875 0.3125 0.1875
+                }
+                DEF _569 Cube {
+                  translation 0.3125 0.3125 0.1875
+                }
+                DEF _570 Cube {
+                  translation 0.375 0.3125 0.1875
+                }
+                DEF _571 Cube {
+                  translation 0.5 0.3125 0.1875
+                }
+                DEF _572 Cube {
+                  translation 0.5625 0.3125 0.1875
+                }
+                DEF _573 Cube {
+                  translation 0.6875 0.3125 0.1875
+                }
+                DEF _574 Cube {
+                  translation 0.75 0.3125 0.1875
+                }
+                DEF _575 Cube {
+                  translation 0.875 0.3125 0.1875
+                }
+                DEF _576 Cube {
+                  translation 0.9375 0.3125 0.1875
+                }
+                DEF _577 Cube {
+                  translation 0.0625 0.375 0.1875
+                }
+                DEF _578 Cube {
+                  translation 0.125 0.375 0.1875
+                }
+                DEF _579 Cube {
+                  translation 0.25 0.375 0.1875
+                }
+                DEF _580 Cube {
+                  translation 0.3125 0.375 0.1875
+                }
+                DEF _581 Cube {
+                  translation 0.4375 0.375 0.1875
+                }
+                DEF _582 Cube {
+                  translation 0.5 0.375 0.1875
+                }
+                DEF _583 Cube {
+                  translation 0.625 0.375 0.1875
+                }
+                DEF _584 Cube {
+                  translation 0.6875 0.375 0.1875
+                }
+                DEF _585 Cube {
+                  translation 0.8125 0.375 0.1875
+                }
+                DEF _586 Cube {
+                  translation 0.875 0.375 0.1875
+                }
+                DEF _587 Cube {
+                  translation 0 0.4375 0.1875
+                }
+                DEF _588 Cube {
+                  translation 0.0625 0.4375 0.1875
+                }
+                DEF _589 Cube {
+                  translation 0.1875 0.4375 0.1875
+                }
+                DEF _590 Cube {
+                  translation 0.25 0.4375 0.1875
+                }
+                DEF _591 Cube {
+                  translation 0.375 0.4375 0.1875
+                }
+                DEF _592 Cube {
+                  translation 0.4375 0.4375 0.1875
+                }
+                DEF _593 Cube {
+                  translation 0.5625 0.4375 0.1875
+                }
+                DEF _594 Cube {
+                  translation 0.625 0.4375 0.1875
+                }
+                DEF _595 Cube {
+                  translation 0.75 0.4375 0.1875
+                }
+                DEF _596 Cube {
+                  translation 0.8125 0.4375 0.1875
+                }
+                DEF _597 Cube {
+                  translation 0.9375 0.4375 0.1875
+                }
+                DEF _598 Cube {
+                  translation 0 0.5 0.1875
+                }
+                DEF _599 Cube {
+                  translation 0.125 0.5 0.1875
+                }
+                DEF _600 Cube {
+                  translation 0.1875 0.5 0.1875
+                }
+                DEF _601 Cube {
+                  translation 0.3125 0.5 0.1875
+                }
+                DEF _602 Cube {
+                  translation 0.375 0.5 0.1875
+                }
+                DEF _603 Cube {
+                  translation 0.5 0.5 0.1875
+                }
+                DEF _604 Cube {
+                  translation 0.5625 0.5 0.1875
+                }
+                DEF _605 Cube {
+                  translation 0.6875 0.5 0.1875
+                }
+                DEF _606 Cube {
+                  translation 0.75 0.5 0.1875
+                }
+                DEF _607 Cube {
+                  translation 0.875 0.5 0.1875
+                }
+                DEF _608 Cube {
+                  translation 0.9375 0.5 0.1875
+                }
+                DEF _609 Cube {
+                  translation 0.0625 0.5625 0.1875
+                }
+                DEF _610 Cube {
+                  translation 0.125 0.5625 0.1875
+                }
+                DEF _611 Cube {
+                  translation 0.25 0.5625 0.1875
+                }
+                DEF _612 Cube {
+                  translation 0.3125 0.5625 0.1875
+                }
+                DEF _613 Cube {
+                  translation 0.4375 0.5625 0.1875
+                }
+                DEF _614 Cube {
+                  translation 0.5 0.5625 0.1875
+                }
+                DEF _615 Cube {
+                  translation 0.625 0.5625 0.1875
+                }
+                DEF _616 Cube {
+                  translation 0.6875 0.5625 0.1875
+                }
+                DEF _617 Cube {
+                  translation 0.8125 0.5625 0.1875
+                }
+                DEF _618 Cube {
+                  translation 0.875 0.5625 0.1875
+                }
+                DEF _619 Cube {
+                  translation 0 0.625 0.1875
+                }
+                DEF _620 Cube {
+                  translation 0.0625 0.625 0.1875
+                }
+                DEF _621 Cube {
+                  translation 0.1875 0.625 0.1875
+                }
+                DEF _622 Cube {
+                  translation 0.25 0.625 0.1875
+                }
+                DEF _623 Cube {
+                  translation 0.375 0.625 0.1875
+                }
+                DEF _624 Cube {
+                  translation 0.4375 0.625 0.1875
+                }
+                DEF _625 Cube {
+                  translation 0.5625 0.625 0.1875
+                }
+                DEF _626 Cube {
+                  translation 0.625 0.625 0.1875
+                }
+                DEF _627 Cube {
+                  translation 0.75 0.625 0.1875
+                }
+                DEF _628 Cube {
+                  translation 0.8125 0.625 0.1875
+                }
+                DEF _629 Cube {
+                  translation 0.9375 0.625 0.1875
+                }
+                DEF _630 Cube {
+                  translation 0 0.6875 0.1875
+                }
+                DEF _631 Cube {
+                  translation 0.125 0.6875 0.1875
+                }
+                DEF _632 Cube {
+                  translation 0.1875 0.6875 0.1875
+                }
+                DEF _633 Cube {
+                  translation 0.3125 0.6875 0.1875
+                }
+                DEF _634 Cube {
+                  translation 0.375 0.6875 0.1875
+                }
+                DEF _635 Cube {
+                  translation 0.5 0.6875 0.1875
+                }
+                DEF _636 Cube {
+                  translation 0.5625 0.6875 0.1875
+                }
+                DEF _637 Cube {
+                  translation 0.6875 0.6875 0.1875
+                }
+                DEF _638 Cube {
+                  translation 0.75 0.6875 0.1875
+                }
+                DEF _639 Cube {
+                  translation 0.875 0.6875 0.1875
+                }
+                DEF _640 Cube {
+                  translation 0.9375 0.6875 0.1875
+                }
+                DEF _641 Cube {
+                  translation 0.0625 0.75 0.1875
+                }
+                DEF _642 Cube {
+                  translation 0.125 0.75 0.1875
+                }
+                DEF _643 Cube {
+                  translation 0.25 0.75 0.1875
+                }
+                DEF _644 Cube {
+                  translation 0.3125 0.75 0.1875
+                }
+                DEF _645 Cube {
+                  translation 0.4375 0.75 0.1875
+                }
+                DEF _646 Cube {
+                  translation 0.5 0.75 0.1875
+                }
+                DEF _647 Cube {
+                  translation 0.625 0.75 0.1875
+                }
+                DEF _648 Cube {
+                  translation 0.6875 0.75 0.1875
+                }
+                DEF _649 Cube {
+                  translation 0.8125 0.75 0.1875
+                }
+                DEF _650 Cube {
+                  translation 0.875 0.75 0.1875
+                }
+                DEF _651 Cube {
+                  translation 0 0.8125 0.1875
+                }
+                DEF _652 Cube {
+                  translation 0.0625 0.8125 0.1875
+                }
+                DEF _653 Cube {
+                  translation 0.1875 0.8125 0.1875
+                }
+                DEF _654 Cube {
+                  translation 0.25 0.8125 0.1875
+                }
+                DEF _655 Cube {
+                  translation 0.375 0.8125 0.1875
+                }
+                DEF _656 Cube {
+                  translation 0.4375 0.8125 0.1875
+                }
+                DEF _657 Cube {
+                  translation 0.5625 0.8125 0.1875
+                }
+                DEF _658 Cube {
+                  translation 0.625 0.8125 0.1875
+                }
+                DEF _659 Cube {
+                  translation 0.75 0.8125 0.1875
+                }
+                DEF _660 Cube {
+                  translation 0.8125 0.8125 0.1875
+                }
+                DEF _661 Cube {
+                  translation 0.9375 0.8125 0.1875
+                }
+                DEF _662 Cube {
+                  translation 0 0.875 0.1875
+                }
+                DEF _663 Cube {
+                  translation 0.125 0.875 0.1875
+                }
+                DEF _664 Cube {
+                  translation 0.1875 0.875 0.1875
+                }
+                DEF _665 Cube {
+                  translation 0.3125 0.875 0.1875
+                }
+                DEF _666 Cube {
+                  translation 0.375 0.875 0.1875
+                }
+                DEF _667 Cube {
+                  translation 0.5 0.875 0.1875
+                }
+                DEF _668 Cube {
+                  translation 0.5625 0.875 0.1875
+                }
+                DEF _669 Cube {
+                  translation 0.6875 0.875 0.1875
+                }
+                DEF _670 Cube {
+                  translation 0.75 0.875 0.1875
+                }
+                DEF _671 Cube {
+                  translation 0.875 0.875 0.1875
+                }
+                DEF _672 Cube {
+                  translation 0.9375 0.875 0.1875
+                }
+                DEF _673 Cube {
+                  translation 0.0625 0.9375 0.1875
+                }
+                DEF _674 Cube {
+                  translation 0.125 0.9375 0.1875
+                }
+                DEF _675 Cube {
+                  translation 0.25 0.9375 0.1875
+                }
+                DEF _676 Cube {
+                  translation 0.3125 0.9375 0.1875
+                }
+                DEF _677 Cube {
+                  translation 0.4375 0.9375 0.1875
+                }
+                DEF _678 Cube {
+                  translation 0.5 0.9375 0.1875
+                }
+                DEF _679 Cube {
+                  translation 0.625 0.9375 0.1875
+                }
+                DEF _680 Cube {
+                  translation 0.6875 0.9375 0.1875
+                }
+                DEF _681 Cube {
+                  translation 0.8125 0.9375 0.1875
+                }
+                DEF _682 Cube {
+                  translation 0.875 0.9375 0.1875
+                }
+                DEF _683 Cube {
+                  translation 0 0 0.25
+                }
+                DEF _684 Cube {
+                  translation 0.0625 0 0.25
+                }
+                DEF _685 Cube {
+                  translation 0.1875 0 0.25
+                }
+                DEF _686 Cube {
+                  translation 0.25 0 0.25
+                }
+                DEF _687 Cube {
+                  translation 0.375 0 0.25
+                }
+                DEF _688 Cube {
+                  translation 0.4375 0 0.25
+                }
+                DEF _689 Cube {
+                  translation 0.5625 0 0.25
+                }
+                DEF _690 Cube {
+                  translation 0.625 0 0.25
+                }
+                DEF _691 Cube {
+                  translation 0.75 0 0.25
+                }
+                DEF _692 Cube {
+                  translation 0.8125 0 0.25
+                }
+                DEF _693 Cube {
+                  translation 0.9375 0 0.25
+                }
+                DEF _694 Cube {
+                  translation 0 0.0625 0.25
+                }
+                DEF _695 Cube {
+                  translation 0.125 0.0625 0.25
+                }
+                DEF _696 Cube {
+                  translation 0.1875 0.0625 0.25
+                }
+                DEF _697 Cube {
+                  translation 0.3125 0.0625 0.25
+                }
+                DEF _698 Cube {
+                  translation 0.375 0.0625 0.25
+                }
+                DEF _699 Cube {
+                  translation 0.5 0.0625 0.25
+                }
+                DEF _700 Cube {
+                  translation 0.5625 0.0625 0.25
+                }
+                DEF _701 Cube {
+                  translation 0.6875 0.0625 0.25
+                }
+                DEF _702 Cube {
+                  translation 0.75 0.0625 0.25
+                }
+                DEF _703 Cube {
+                  translation 0.875 0.0625 0.25
+                }
+                DEF _704 Cube {
+                  translation 0.9375 0.0625 0.25
+                }
+                DEF _705 Cube {
+                  translation 0.0625 0.125 0.25
+                }
+                DEF _706 Cube {
+                  translation 0.125 0.125 0.25
+                }
+                DEF _707 Cube {
+                  translation 0.25 0.125 0.25
+                }
+                DEF _708 Cube {
+                  translation 0.3125 0.125 0.25
+                }
+                DEF _709 Cube {
+                  translation 0.4375 0.125 0.25
+                }
+                DEF _710 Cube {
+                  translation 0.5 0.125 0.25
+                }
+                DEF _711 Cube {
+                  translation 0.625 0.125 0.25
+                }
+                DEF _712 Cube {
+                  translation 0.6875 0.125 0.25
+                }
+                DEF _713 Cube {
+                  translation 0.8125 0.125 0.25
+                }
+                DEF _714 Cube {
+                  translation 0.875 0.125 0.25
+                }
+                DEF _715 Cube {
+                  translation 0 0.1875 0.25
+                }
+                DEF _716 Cube {
+                  translation 0.0625 0.1875 0.25
+                }
+                DEF _717 Cube {
+                  translation 0.1875 0.1875 0.25
+                }
+                DEF _718 Cube {
+                  translation 0.25 0.1875 0.25
+                }
+                DEF _719 Cube {
+                  translation 0.375 0.1875 0.25
+                }
+                DEF _720 Cube {
+                  translation 0.4375 0.1875 0.25
+                }
+                DEF _721 Cube {
+                  translation 0.5625 0.1875 0.25
+                }
+                DEF _722 Cube {
+                  translation 0.625 0.1875 0.25
+                }
+                DEF _723 Cube {
+                  translation 0.75 0.1875 0.25
+                }
+                DEF _724 Cube {
+                  translation 0.8125 0.1875 0.25
+                }
+                DEF _725 Cube {
+                  translation 0.9375 0.1875 0.25
+                }
+                DEF _726 Cube {
+                  translation 0 0.25 0.25
+                }
+                DEF _727 Cube {
+                  translation 0.125 0.25 0.25
+                }
+                DEF _728 Cube {
+                  translation 0.1875 0.25 0.25
+                }
+                DEF _729 Cube {
+                  translation 0.3125 0.25 0.25
+                }
+                DEF _730 Cube {
+                  translation 0.375 0.25 0.25
+                }
+                DEF _731 Cube {
+                  translation 0.5 0.25 0.25
+                }
+                DEF _732 Cube {
+                  translation 0.5625 0.25 0.25
+                }
+                DEF _733 Cube {
+                  translation 0.6875 0.25 0.25
+                }
+                DEF _734 Cube {
+                  translation 0.75 0.25 0.25
+                }
+                DEF _735 Cube {
+                  translation 0.875 0.25 0.25
+                }
+                DEF _736 Cube {
+                  translation 0.9375 0.25 0.25
+                }
+                DEF _737 Cube {
+                  translation 0.0625 0.3125 0.25
+                }
+                DEF _738 Cube {
+                  translation 0.125 0.3125 0.25
+                }
+                DEF _739 Cube {
+                  translation 0.25 0.3125 0.25
+                }
+                DEF _740 Cube {
+                  translation 0.3125 0.3125 0.25
+                }
+                DEF _741 Cube {
+                  translation 0.4375 0.3125 0.25
+                }
+                DEF _742 Cube {
+                  translation 0.5 0.3125 0.25
+                }
+                DEF _743 Cube {
+                  translation 0.625 0.3125 0.25
+                }
+                DEF _744 Cube {
+                  translation 0.6875 0.3125 0.25
+                }
+                DEF _745 Cube {
+                  translation 0.8125 0.3125 0.25
+                }
+                DEF _746 Cube {
+                  translation 0.875 0.3125 0.25
+                }
+                DEF _747 Cube {
+                  translation 0 0.375 0.25
+                }
+                DEF _748 Cube {
+                  translation 0.0625 0.375 0.25
+                }
+                DEF _749 Cube {
+                  translation 0.1875 0.375 0.25
+                }
+                DEF _750 Cube {
+                  translation 0.25 0.375 0.25
+                }
+                DEF _751 Cube {
+                  translation 0.375 0.375 0.25
+                }
+                DEF _752 Cube {
+                  translation 0.4375 0.375 0.25
+                }
+                DEF _753 Cube {
+                  translation 0.5625 0.375 0.25
+                }
+                DEF _754 Cube {
+                  translation 0.625 0.375 0.25
+                }
+                DEF _755 Cube {
+                  translation 0.75 0.375 0.25
+                }
+                DEF _756 Cube {
+                  translation 0.8125 0.375 0.25
+                }
+                DEF _757 Cube {
+                  translation 0.9375 0.375 0.25
+                }
+                DEF _758 Cube {
+                  translation 0 0.4375 0.25
+                }
+                DEF _759 Cube {
+                  translation 0.125 0.4375 0.25
+                }
+                DEF _760 Cube {
+                  translation 0.1875 0.4375 0.25
+                }
+                DEF _761 Cube {
+                  translation 0.3125 0.4375 0.25
+                }
+                DEF _762 Cube {
+                  translation 0.375 0.4375 0.25
+                }
+                DEF _763 Cube {
+                  translation 0.5 0.4375 0.25
+                }
+                DEF _764 Cube {
+                  translation 0.5625 0.4375 0.25
+                }
+                DEF _765 Cube {
+                  translation 0.6875 0.4375 0.25
+                }
+                DEF _766 Cube {
+                  translation 0.75 0.4375 0.25
+                }
+                DEF _767 Cube {
+                  translation 0.875 0.4375 0.25
+                }
+                DEF _768 Cube {
+                  translation 0.9375 0.4375 0.25
+                }
+                DEF _769 Cube {
+                  translation 0.0625 0.5 0.25
+                }
+                DEF _770 Cube {
+                  translation 0.125 0.5 0.25
+                }
+                DEF _771 Cube {
+                  translation 0.25 0.5 0.25
+                }
+                DEF _772 Cube {
+                  translation 0.3125 0.5 0.25
+                }
+                DEF _773 Cube {
+                  translation 0.4375 0.5 0.25
+                }
+                DEF _774 Cube {
+                  translation 0.5 0.5 0.25
+                }
+                DEF _775 Cube {
+                  translation 0.625 0.5 0.25
+                }
+                DEF _776 Cube {
+                  translation 0.6875 0.5 0.25
+                }
+                DEF _777 Cube {
+                  translation 0.8125 0.5 0.25
+                }
+                DEF _778 Cube {
+                  translation 0.875 0.5 0.25
+                }
+                DEF _779 Cube {
+                  translation 0 0.5625 0.25
+                }
+                DEF _780 Cube {
+                  translation 0.0625 0.5625 0.25
+                }
+                DEF _781 Cube {
+                  translation 0.1875 0.5625 0.25
+                }
+                DEF _782 Cube {
+                  translation 0.25 0.5625 0.25
+                }
+                DEF _783 Cube {
+                  translation 0.375 0.5625 0.25
+                }
+                DEF _784 Cube {
+                  translation 0.4375 0.5625 0.25
+                }
+                DEF _785 Cube {
+                  translation 0.5625 0.5625 0.25
+                }
+                DEF _786 Cube {
+                  translation 0.625 0.5625 0.25
+                }
+                DEF _787 Cube {
+                  translation 0.75 0.5625 0.25
+                }
+                DEF _788 Cube {
+                  translation 0.8125 0.5625 0.25
+                }
+                DEF _789 Cube {
+                  translation 0.9375 0.5625 0.25
+                }
+                DEF _790 Cube {
+                  translation 0 0.625 0.25
+                }
+                DEF _791 Cube {
+                  translation 0.125 0.625 0.25
+                }
+                DEF _792 Cube {
+                  translation 0.1875 0.625 0.25
+                }
+                DEF _793 Cube {
+                  translation 0.3125 0.625 0.25
+                }
+                DEF _794 Cube {
+                  translation 0.375 0.625 0.25
+                }
+                DEF _795 Cube {
+                  translation 0.5 0.625 0.25
+                }
+                DEF _796 Cube {
+                  translation 0.5625 0.625 0.25
+                }
+                DEF _797 Cube {
+                  translation 0.6875 0.625 0.25
+                }
+                DEF _798 Cube {
+                  translation 0.75 0.625 0.25
+                }
+                DEF _799 Cube {
+                  translation 0.875 0.625 0.25
+                }
+                DEF _800 Cube {
+                  translation 0.9375 0.625 0.25
+                }
+                DEF _801 Cube {
+                  translation 0.0625 0.6875 0.25
+                }
+                DEF _802 Cube {
+                  translation 0.125 0.6875 0.25
+                }
+                DEF _803 Cube {
+                  translation 0.25 0.6875 0.25
+                }
+                DEF _804 Cube {
+                  translation 0.3125 0.6875 0.25
+                }
+                DEF _805 Cube {
+                  translation 0.4375 0.6875 0.25
+                }
+                DEF _806 Cube {
+                  translation 0.5 0.6875 0.25
+                }
+                DEF _807 Cube {
+                  translation 0.625 0.6875 0.25
+                }
+                DEF _808 Cube {
+                  translation 0.6875 0.6875 0.25
+                }
+                DEF _809 Cube {
+                  translation 0.8125 0.6875 0.25
+                }
+                DEF _810 Cube {
+                  translation 0.875 0.6875 0.25
+                }
+                DEF _811 Cube {
+                  translation 0 0.75 0.25
+                }
+                DEF _812 Cube {
+                  translation 0.0625 0.75 0.25
+                }
+                DEF _813 Cube {
+                  translation 0.1875 0.75 0.25
+                }
+                DEF _814 Cube {
+                  translation 0.25 0.75 0.25
+                }
+                DEF _815 Cube {
+                  translation 0.375 0.75 0.25
+                }
+                DEF _816 Cube {
+                  translation 0.4375 0.75 0.25
+                }
+                DEF _817 Cube {
+                  translation 0.5625 0.75 0.25
+                }
+                DEF _818 Cube {
+                  translation 0.625 0.75 0.25
+                }
+                DEF _819 Cube {
+                  translation 0.75 0.75 0.25
+                }
+                DEF _820 Cube {
+                  translation 0.8125 0.75 0.25
+                }
+                DEF _821 Cube {
+                  translation 0.9375 0.75 0.25
+                }
+                DEF _822 Cube {
+                  translation 0 0.8125 0.25
+                }
+                DEF _823 Cube {
+                  translation 0.125 0.8125 0.25
+                }
+                DEF _824 Cube {
+                  translation 0.1875 0.8125 0.25
+                }
+                DEF _825 Cube {
+                  translation 0.3125 0.8125 0.25
+                }
+                DEF _826 Cube {
+                  translation 0.375 0.8125 0.25
+                }
+                DEF _827 Cube {
+                  translation 0.5 0.8125 0.25
+                }
+                DEF _828 Cube {
+                  translation 0.5625 0.8125 0.25
+                }
+                DEF _829 Cube {
+                  translation 0.6875 0.8125 0.25
+                }
+                DEF _830 Cube {
+                  translation 0.75 0.8125 0.25
+                }
+                DEF _831 Cube {
+                  translation 0.875 0.8125 0.25
+                }
+                DEF _832 Cube {
+                  translation 0.9375 0.8125 0.25
+                }
+                DEF _833 Cube {
+                  translation 0.0625 0.875 0.25
+                }
+                DEF _834 Cube {
+                  translation 0.125 0.875 0.25
+                }
+                DEF _835 Cube {
+                  translation 0.25 0.875 0.25
+                }
+                DEF _836 Cube {
+                  translation 0.3125 0.875 0.25
+                }
+                DEF _837 Cube {
+                  translation 0.4375 0.875 0.25
+                }
+                DEF _838 Cube {
+                  translation 0.5 0.875 0.25
+                }
+                DEF _839 Cube {
+                  translation 0.625 0.875 0.25
+                }
+                DEF _840 Cube {
+                  translation 0.6875 0.875 0.25
+                }
+                DEF _841 Cube {
+                  translation 0.8125 0.875 0.25
+                }
+                DEF _842 Cube {
+                  translation 0.875 0.875 0.25
+                }
+                DEF _843 Cube {
+                  translation 0 0.9375 0.25
+                }
+                DEF _844 Cube {
+                  translation 0.0625 0.9375 0.25
+                }
+                DEF _845 Cube {
+                  translation 0.1875 0.9375 0.25
+                }
+                DEF _846 Cube {
+                  translation 0.25 0.9375 0.25
+                }
+                DEF _847 Cube {
+                  translation 0.375 0.9375 0.25
+                }
+                DEF _848 Cube {
+                  translation 0.4375 0.9375 0.25
+                }
+                DEF _849 Cube {
+                  translation 0.5625 0.9375 0.25
+                }
+                DEF _850 Cube {
+                  translation 0.625 0.9375 0.25
+                }
+                DEF _851 Cube {
+                  translation 0.75 0.9375 0.25
+                }
+                DEF _852 Cube {
+                  translation 0.8125 0.9375 0.25
+                }
+                DEF _853 Cube {
+                  translation 0.9375 0.9375 0.25
+                }
+                DEF _854 Cube {
+                  translation 0 0 0.3125
+                }
+                DEF _855 Cube {
+                  translation 0.125 0 0.3125
+                }
+                DEF _856 Cube {
+                  translation 0.1875 0 0.3125
+                }
+                DEF _857 Cube {
+                  translation 0.3125 0 0.3125
+                }
+                DEF _858 Cube {
+                  translation 0.375 0 0.3125
+                }
+                DEF _859 Cube {
+                  translation 0.5 0 0.3125
+                }
+                DEF _860 Cube {
+                  translation 0.5625 0 0.3125
+                }
+                DEF _861 Cube {
+                  translation 0.6875 0 0.3125
+                }
+                DEF _862 Cube {
+                  translation 0.75 0 0.3125
+                }
+                DEF _863 Cube {
+                  translation 0.875 0 0.3125
+                }
+                DEF _864 Cube {
+                  translation 0.9375 0 0.3125
+                }
+                DEF _865 Cube {
+                  translation 0.0625 0.0625 0.3125
+                }
+                DEF _866 Cube {
+                  translation 0.125 0.0625 0.3125
+                }
+                DEF _867 Cube {
+                  translation 0.25 0.0625 0.3125
+                }
+                DEF _868 Cube {
+                  translation 0.3125 0.0625 0.3125
+                }
+                DEF _869 Cube {
+                  translation 0.4375 0.0625 0.3125
+                }
+                DEF _870 Cube {
+                  translation 0.5 0.0625 0.3125
+                }
+                DEF _871 Cube {
+                  translation 0.625 0.0625 0.3125
+                }
+                DEF _872 Cube {
+                  translation 0.6875 0.0625 0.3125
+                }
+                DEF _873 Cube {
+                  translation 0.8125 0.0625 0.3125
+                }
+                DEF _874 Cube {
+                  translation 0.875 0.0625 0.3125
+                }
+                DEF _875 Cube {
+                  translation 0 0.125 0.3125
+                }
+                DEF _876 Cube {
+                  translation 0.0625 0.125 0.3125
+                }
+                DEF _877 Cube {
+                  translation 0.1875 0.125 0.3125
+                }
+                DEF _878 Cube {
+                  translation 0.25 0.125 0.3125
+                }
+                DEF _879 Cube {
+                  translation 0.375 0.125 0.3125
+                }
+                DEF _880 Cube {
+                  translation 0.4375 0.125 0.3125
+                }
+                DEF _881 Cube {
+                  translation 0.5625 0.125 0.3125
+                }
+                DEF _882 Cube {
+                  translation 0.625 0.125 0.3125
+                }
+                DEF _883 Cube {
+                  translation 0.75 0.125 0.3125
+                }
+                DEF _884 Cube {
+                  translation 0.8125 0.125 0.3125
+                }
+                DEF _885 Cube {
+                  translation 0.9375 0.125 0.3125
+                }
+                DEF _886 Cube {
+                  translation 0 0.1875 0.3125
+                }
+                DEF _887 Cube {
+                  translation 0.125 0.1875 0.3125
+                }
+                DEF _888 Cube {
+                  translation 0.1875 0.1875 0.3125
+                }
+                DEF _889 Cube {
+                  translation 0.3125 0.1875 0.3125
+                }
+                DEF _890 Cube {
+                  translation 0.375 0.1875 0.3125
+                }
+                DEF _891 Cube {
+                  translation 0.5 0.1875 0.3125
+                }
+                DEF _892 Cube {
+                  translation 0.5625 0.1875 0.3125
+                }
+                DEF _893 Cube {
+                  translation 0.6875 0.1875 0.3125
+                }
+                DEF _894 Cube {
+                  translation 0.75 0.1875 0.3125
+                }
+                DEF _895 Cube {
+                  translation 0.875 0.1875 0.3125
+                }
+                DEF _896 Cube {
+                  translation 0.9375 0.1875 0.3125
+                }
+                DEF _897 Cube {
+                  translation 0.0625 0.25 0.3125
+                }
+                DEF _898 Cube {
+                  translation 0.125 0.25 0.3125
+                }
+                DEF _899 Cube {
+                  translation 0.25 0.25 0.3125
+                }
+                DEF _900 Cube {
+                  translation 0.3125 0.25 0.3125
+                }
+                DEF _901 Cube {
+                  translation 0.4375 0.25 0.3125
+                }
+                DEF _902 Cube {
+                  translation 0.5 0.25 0.3125
+                }
+                DEF _903 Cube {
+                  translation 0.625 0.25 0.3125
+                }
+                DEF _904 Cube {
+                  translation 0.6875 0.25 0.3125
+                }
+                DEF _905 Cube {
+                  translation 0.8125 0.25 0.3125
+                }
+                DEF _906 Cube {
+                  translation 0.875 0.25 0.3125
+                }
+                DEF _907 Cube {
+                  translation 0 0.3125 0.3125
+                }
+                DEF _908 Cube {
+                  translation 0.0625 0.3125 0.3125
+                }
+                DEF _909 Cube {
+                  translation 0.1875 0.3125 0.3125
+                }
+                DEF _910 Cube {
+                  translation 0.25 0.3125 0.3125
+                }
+                DEF _911 Cube {
+                  translation 0.375 0.3125 0.3125
+                }
+                DEF _912 Cube {
+                  translation 0.4375 0.3125 0.3125
+                }
+                DEF _913 Cube {
+                  translation 0.5625 0.3125 0.3125
+                }
+                DEF _914 Cube {
+                  translation 0.625 0.3125 0.3125
+                }
+                DEF _915 Cube {
+                  translation 0.75 0.3125 0.3125
+                }
+                DEF _916 Cube {
+                  translation 0.8125 0.3125 0.3125
+                }
+                DEF _917 Cube {
+                  translation 0.9375 0.3125 0.3125
+                }
+                DEF _918 Cube {
+                  translation 0 0.375 0.3125
+                }
+                DEF _919 Cube {
+                  translation 0.125 0.375 0.3125
+                }
+                DEF _920 Cube {
+                  translation 0.1875 0.375 0.3125
+                }
+                DEF _921 Cube {
+                  translation 0.3125 0.375 0.3125
+                }
+                DEF _922 Cube {
+                  translation 0.375 0.375 0.3125
+                }
+                DEF _923 Cube {
+                  translation 0.5 0.375 0.3125
+                }
+                DEF _924 Cube {
+                  translation 0.5625 0.375 0.3125
+                }
+                DEF _925 Cube {
+                  translation 0.6875 0.375 0.3125
+                }
+                DEF _926 Cube {
+                  translation 0.75 0.375 0.3125
+                }
+                DEF _927 Cube {
+                  translation 0.875 0.375 0.3125
+                }
+                DEF _928 Cube {
+                  translation 0.9375 0.375 0.3125
+                }
+                DEF _929 Cube {
+                  translation 0.0625 0.4375 0.3125
+                }
+                DEF _930 Cube {
+                  translation 0.125 0.4375 0.3125
+                }
+                DEF _931 Cube {
+                  translation 0.25 0.4375 0.3125
+                }
+                DEF _932 Cube {
+                  translation 0.3125 0.4375 0.3125
+                }
+                DEF _933 Cube {
+                  translation 0.4375 0.4375 0.3125
+                }
+                DEF _934 Cube {
+                  translation 0.5 0.4375 0.3125
+                }
+                DEF _935 Cube {
+                  translation 0.625 0.4375 0.3125
+                }
+                DEF _936 Cube {
+                  translation 0.6875 0.4375 0.3125
+                }
+                DEF _937 Cube {
+                  translation 0.8125 0.4375 0.3125
+                }
+                DEF _938 Cube {
+                  translation 0.875 0.4375 0.3125
+                }
+                DEF _939 Cube {
+                  translation 0 0.5 0.3125
+                }
+                DEF _940 Cube {
+                  translation 0.0625 0.5 0.3125
+                }
+                DEF _941 Cube {
+                  translation 0.1875 0.5 0.3125
+                }
+                DEF _942 Cube {
+                  translation 0.25 0.5 0.3125
+                }
+                DEF _943 Cube {
+                  translation 0.375 0.5 0.3125
+                }
+                DEF _944 Cube {
+                  translation 0.4375 0.5 0.3125
+                }
+                DEF _945 Cube {
+                  translation 0.5625 0.5 0.3125
+                }
+                DEF _946 Cube {
+                  translation 0.625 0.5 0.3125
+                }
+                DEF _947 Cube {
+                  translation 0.75 0.5 0.3125
+                }
+                DEF _948 Cube {
+                  translation 0.8125 0.5 0.3125
+                }
+                DEF _949 Cube {
+                  translation 0.9375 0.5 0.3125
+                }
+                DEF _950 Cube {
+                  translation 0 0.5625 0.3125
+                }
+                DEF _951 Cube {
+                  translation 0.125 0.5625 0.3125
+                }
+                DEF _952 Cube {
+                  translation 0.1875 0.5625 0.3125
+                }
+                DEF _953 Cube {
+                  translation 0.3125 0.5625 0.3125
+                }
+                DEF _954 Cube {
+                  translation 0.375 0.5625 0.3125
+                }
+                DEF _955 Cube {
+                  translation 0.5 0.5625 0.3125
+                }
+                DEF _956 Cube {
+                  translation 0.5625 0.5625 0.3125
+                }
+                DEF _957 Cube {
+                  translation 0.6875 0.5625 0.3125
+                }
+                DEF _958 Cube {
+                  translation 0.75 0.5625 0.3125
+                }
+                DEF _959 Cube {
+                  translation 0.875 0.5625 0.3125
+                }
+                DEF _960 Cube {
+                  translation 0.9375 0.5625 0.3125
+                }
+                DEF _961 Cube {
+                  translation 0.0625 0.625 0.3125
+                }
+                DEF _962 Cube {
+                  translation 0.125 0.625 0.3125
+                }
+                DEF _963 Cube {
+                  translation 0.25 0.625 0.3125
+                }
+                DEF _964 Cube {
+                  translation 0.3125 0.625 0.3125
+                }
+                DEF _965 Cube {
+                  translation 0.4375 0.625 0.3125
+                }
+                DEF _966 Cube {
+                  translation 0.5 0.625 0.3125
+                }
+                DEF _967 Cube {
+                  translation 0.625 0.625 0.3125
+                }
+                DEF _968 Cube {
+                  translation 0.6875 0.625 0.3125
+                }
+                DEF _969 Cube {
+                  translation 0.8125 0.625 0.3125
+                }
+                DEF _970 Cube {
+                  translation 0.875 0.625 0.3125
+                }
+                DEF _971 Cube {
+                  translation 0 0.6875 0.3125
+                }
+                DEF _972 Cube {
+                  translation 0.0625 0.6875 0.3125
+                }
+                DEF _973 Cube {
+                  translation 0.1875 0.6875 0.3125
+                }
+                DEF _974 Cube {
+                  translation 0.25 0.6875 0.3125
+                }
+                DEF _975 Cube {
+                  translation 0.375 0.6875 0.3125
+                }
+                DEF _976 Cube {
+                  translation 0.4375 0.6875 0.3125
+                }
+                DEF _977 Cube {
+                  translation 0.5625 0.6875 0.3125
+                }
+                DEF _978 Cube {
+                  translation 0.625 0.6875 0.3125
+                }
+                DEF _979 Cube {
+                  translation 0.75 0.6875 0.3125
+                }
+                DEF _980 Cube {
+                  translation 0.8125 0.6875 0.3125
+                }
+                DEF _981 Cube {
+                  translation 0.9375 0.6875 0.3125
+                }
+                DEF _982 Cube {
+                  translation 0 0.75 0.3125
+                }
+                DEF _983 Cube {
+                  translation 0.125 0.75 0.3125
+                }
+                DEF _984 Cube {
+                  translation 0.1875 0.75 0.3125
+                }
+                DEF _985 Cube {
+                  translation 0.3125 0.75 0.3125
+                }
+                DEF _986 Cube {
+                  translation 0.375 0.75 0.3125
+                }
+                DEF _987 Cube {
+                  translation 0.5 0.75 0.3125
+                }
+                DEF _988 Cube {
+                  translation 0.5625 0.75 0.3125
+                }
+                DEF _989 Cube {
+                  translation 0.6875 0.75 0.3125
+                }
+                DEF _990 Cube {
+                  translation 0.75 0.75 0.3125
+                }
+                DEF _991 Cube {
+                  translation 0.875 0.75 0.3125
+                }
+                DEF _992 Cube {
+                  translation 0.9375 0.75 0.3125
+                }
+                DEF _993 Cube {
+                  translation 0.0625 0.8125 0.3125
+                }
+                DEF _994 Cube {
+                  translation 0.125 0.8125 0.3125
+                }
+                DEF _995 Cube {
+                  translation 0.25 0.8125 0.3125
+                }
+                DEF _996 Cube {
+                  translation 0.3125 0.8125 0.3125
+                }
+                DEF _997 Cube {
+                  translation 0.4375 0.8125 0.3125
+                }
+                DEF _998 Cube {
+                  translation 0.5 0.8125 0.3125
+                }
+                DEF _999 Cube {
+                  translation 0.625 0.8125 0.3125
+                }
+                DEF _1000 Cube {
+                  translation 0.6875 0.8125 0.3125
+                }
+                DEF _1001 Cube {
+                  translation 0.8125 0.8125 0.3125
+                }
+                DEF _1002 Cube {
+                  translation 0.875 0.8125 0.3125
+                }
+                DEF _1003 Cube {
+                  translation 0 0.875 0.3125
+                }
+                DEF _1004 Cube {
+                  translation 0.0625 0.875 0.3125
+                }
+                DEF _1005 Cube {
+                  translation 0.1875 0.875 0.3125
+                }
+                DEF _1006 Cube {
+                  translation 0.25 0.875 0.3125
+                }
+                DEF _1007 Cube {
+                  translation 0.375 0.875 0.3125
+                }
+                DEF _1008 Cube {
+                  translation 0.4375 0.875 0.3125
+                }
+                DEF _1009 Cube {
+                  translation 0.5625 0.875 0.3125
+                }
+                DEF _1010 Cube {
+                  translation 0.625 0.875 0.3125
+                }
+                DEF _1011 Cube {
+                  translation 0.75 0.875 0.3125
+                }
+                DEF _1012 Cube {
+                  translation 0.8125 0.875 0.3125
+                }
+                DEF _1013 Cube {
+                  translation 0.9375 0.875 0.3125
+                }
+                DEF _1014 Cube {
+                  translation 0 0.9375 0.3125
+                }
+                DEF _1015 Cube {
+                  translation 0.125 0.9375 0.3125
+                }
+                DEF _1016 Cube {
+                  translation 0.1875 0.9375 0.3125
+                }
+                DEF _1017 Cube {
+                  translation 0.3125 0.9375 0.3125
+                }
+                DEF _1018 Cube {
+                  translation 0.375 0.9375 0.3125
+                }
+                DEF _1019 Cube {
+                  translation 0.5 0.9375 0.3125
+                }
+                DEF _1020 Cube {
+                  translation 0.5625 0.9375 0.3125
+                }
+                DEF _1021 Cube {
+                  translation 0.6875 0.9375 0.3125
+                }
+                DEF _1022 Cube {
+                  translation 0.75 0.9375 0.3125
+                }
+                DEF _1023 Cube {
+                  translation 0.875 0.9375 0.3125
+                }
+                DEF _1024 Cube {
+                  translation 0.9375 0.9375 0.3125
+                }
+                DEF _1025 Cube {
+                  translation 0.0625 0 0.375
+                }
+                DEF _1026 Cube {
+                  translation 0.125 0 0.375
+                }
+                DEF _1027 Cube {
+                  translation 0.25 0 0.375
+                }
+                DEF _1028 Cube {
+                  translation 0.3125 0 0.375
+                }
+                DEF _1029 Cube {
+                  translation 0.4375 0 0.375
+                }
+                DEF _1030 Cube {
+                  translation 0.5 0 0.375
+                }
+                DEF _1031 Cube {
+                  translation 0.625 0 0.375
+                }
+                DEF _1032 Cube {
+                  translation 0.6875 0 0.375
+                }
+                DEF _1033 Cube {
+                  translation 0.8125 0 0.375
+                }
+                DEF _1034 Cube {
+                  translation 0.875 0 0.375
+                }
+                DEF _1035 Cube {
+                  translation 0 0.0625 0.375
+                }
+                DEF _1036 Cube {
+                  translation 0.0625 0.0625 0.375
+                }
+                DEF _1037 Cube {
+                  translation 0.1875 0.0625 0.375
+                }
+                DEF _1038 Cube {
+                  translation 0.25 0.0625 0.375
+                }
+                DEF _1039 Cube {
+                  translation 0.375 0.0625 0.375
+                }
+                DEF _1040 Cube {
+                  translation 0.4375 0.0625 0.375
+                }
+                DEF _1041 Cube {
+                  translation 0.5625 0.0625 0.375
+                }
+                DEF _1042 Cube {
+                  translation 0.625 0.0625 0.375
+                }
+                DEF _1043 Cube {
+                  translation 0.75 0.0625 0.375
+                }
+                DEF _1044 Cube {
+                  translation 0.8125 0.0625 0.375
+                }
+                DEF _1045 Cube {
+                  translation 0.9375 0.0625 0.375
+                }
+                DEF _1046 Cube {
+                  translation 0 0.125 0.375
+                }
+                DEF _1047 Cube {
+                  translation 0.125 0.125 0.375
+                }
+                DEF _1048 Cube {
+                  translation 0.1875 0.125 0.375
+                }
+                DEF _1049 Cube {
+                  translation 0.3125 0.125 0.375
+                }
+                DEF _1050 Cube {
+                  translation 0.375 0.125 0.375
+                }
+                DEF _1051 Cube {
+                  translation 0.5 0.125 0.375
+                }
+                DEF _1052 Cube {
+                  translation 0.5625 0.125 0.375
+                }
+                DEF _1053 Cube {
+                  translation 0.6875 0.125 0.375
+                }
+                DEF _1054 Cube {
+                  translation 0.75 0.125 0.375
+                }
+                DEF _1055 Cube {
+                  translation 0.875 0.125 0.375
+                }
+                DEF _1056 Cube {
+                  translation 0.9375 0.125 0.375
+                }
+                DEF _1057 Cube {
+                  translation 0.0625 0.1875 0.375
+                }
+                DEF _1058 Cube {
+                  translation 0.125 0.1875 0.375
+                }
+                DEF _1059 Cube {
+                  translation 0.25 0.1875 0.375
+                }
+                DEF _1060 Cube {
+                  translation 0.3125 0.1875 0.375
+                }
+                DEF _1061 Cube {
+                  translation 0.4375 0.1875 0.375
+                }
+                DEF _1062 Cube {
+                  translation 0.5 0.1875 0.375
+                }
+                DEF _1063 Cube {
+                  translation 0.625 0.1875 0.375
+                }
+                DEF _1064 Cube {
+                  translation 0.6875 0.1875 0.375
+                }
+                DEF _1065 Cube {
+                  translation 0.8125 0.1875 0.375
+                }
+                DEF _1066 Cube {
+                  translation 0.875 0.1875 0.375
+                }
+                DEF _1067 Cube {
+                  translation 0 0.25 0.375
+                }
+                DEF _1068 Cube {
+                  translation 0.0625 0.25 0.375
+                }
+                DEF _1069 Cube {
+                  translation 0.1875 0.25 0.375
+                }
+                DEF _1070 Cube {
+                  translation 0.25 0.25 0.375
+                }
+                DEF _1071 Cube {
+                  translation 0.375 0.25 0.375
+                }
+                DEF _1072 Cube {
+                  translation 0.4375 0.25 0.375
+                }
+                DEF _1073 Cube {
+                  translation 0.5625 0.25 0.375
+                }
+                DEF _1074 Cube {
+                  translation 0.625 0.25 0.375
+                }
+                DEF _1075 Cube {
+                  translation 0.75 0.25 0.375
+                }
+                DEF _1076 Cube {
+                  translation 0.8125 0.25 0.375
+                }
+                DEF _1077 Cube {
+                  translation 0.9375 0.25 0.375
+                }
+                DEF _1078 Cube {
+                  translation 0 0.3125 0.375
+                }
+                DEF _1079 Cube {
+                  translation 0.125 0.3125 0.375
+                }
+                DEF _1080 Cube {
+                  translation 0.1875 0.3125 0.375
+                }
+                DEF _1081 Cube {
+                  translation 0.3125 0.3125 0.375
+                }
+                DEF _1082 Cube {
+                  translation 0.375 0.3125 0.375
+                }
+                DEF _1083 Cube {
+                  translation 0.5 0.3125 0.375
+                }
+                DEF _1084 Cube {
+                  translation 0.5625 0.3125 0.375
+                }
+                DEF _1085 Cube {
+                  translation 0.6875 0.3125 0.375
+                }
+              ]
+            }
+          }
+          DEF nodes MetadataSet {
+            name "nodes"
+            reference "http://titania.create3000.de"
+            value USE _1
+          }
+        ]
+      }
+      DEF NavigationInfo MetadataSet {
+        name "NavigationInfo"
+        reference "http://titania.create3000.de"
+        value DEF type MetadataString {
+          name "type"
+          reference "http://titania.create3000.de"
+          value "EXAMINE"
+        }
+      }
+      DEF Viewpoint MetadataSet {
+        name "Viewpoint"
+        reference "http://titania.create3000.de"
+        value [
+          DEF position MetadataDouble {
+            name "position"
+            reference "http://titania.create3000.de"
+            value [
+              1.93730998039246,
+              1.26081001758575,
+              1.81807994842529
+            ]
+          }
+          DEF orientation MetadataDouble {
+            name "orientation"
+            reference "http://titania.create3000.de"
+            value [
+              -0.538509032667305,
+              0.832463050499291,
+              0.130435007912514,
+              0.862355
+            ]
+          }
+          DEF centerOfRotation MetadataDouble {
+            name "centerOfRotation"
+            reference "http://titania.create3000.de"
+            value [
+              0.476249992847443,
+              0.0952500030398369,
+              0
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  title "AddRemoveChildren"
+}
+
+Viewpoint {
+  position 1.93731 1.26081 1.81808
+  orientation -0.538509032667305 0.832463050499291 0.130435007912514 0.862355
+  centerOfRotation 0.47625 0.09525 0
+}
+
+USE Space
+
+DEF Timer TimeSensor {
+  cycleInterval 0.05
+  loop TRUE
+}
+
+DEF Felület Script {
+  inputOnly      SFTime  set_time
+  initializeOnly SFInt32 xDimension 16
+  initializeOnly SFInt32 yDimension 16
+  initializeOnly SFInt32 zDimension 16
+  initializeOnly SFFloat xSpacing 0
+  initializeOnly SFFloat ySpacing 0
+  initializeOnly SFFloat zSpacing 0
+  initializeOnly MFNode  addChildren [
+    DEF _1086 Cube {
+      translation 0.625 0.3125 0.375
+    }
+    USE _1085
+  ]
+  initializeOnly MFNode  removeChildren USE _1086
+  initializeOnly MFNode  children [
+    Cube { }
+    USE _171
+    USE _342
+    Cube {
+      translation 0 0 0.1875
+    }
+    USE _683
+    USE _854
+    Cube {
+      translation 0 0 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _11
+    USE _182
+    Cube {
+      translation 0 0.0625 0.125
+    }
+    USE _523
+    USE _694
+    Cube {
+      translation 0 0.0625 0.3125
+    }
+    USE _1035
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _22
+    Cube {
+      translation 0 0.125 0.0625
+    }
+    USE _363
+    USE _534
+    Cube {
+      translation 0 0.125 0.25
+    }
+    USE _875
+    USE _1046
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0 0.1875 0
+    }
+    USE _203
+    USE _374
+    Cube {
+      translation 0 0.1875 0.1875
+    }
+    USE _715
+    USE _886
+    Cube {
+      translation 0 0.1875 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _43
+    USE _214
+    Cube {
+      translation 0 0.25 0.125
+    }
+    USE _555
+    USE _726
+    Cube {
+      translation 0 0.25 0.3125
+    }
+    USE _1067
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _54
+    Cube {
+      translation 0 0.3125 0.0625
+    }
+    USE _395
+    USE _566
+    Cube {
+      translation 0 0.3125 0.25
+    }
+    USE _907
+    USE _1078
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0 0.375 0
+    }
+    USE _235
+    USE _406
+    Cube {
+      translation 0 0.375 0.1875
+    }
+    USE _747
+    USE _918
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _75
+    USE _246
+    Cube {
+      translation 0 0.4375 0.125
+    }
+    USE _587
+    USE _758
+    Cube {
+      translation 0 0.4375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _86
+    Cube {
+      translation 0 0.5 0.0625
+    }
+    USE _427
+    USE _598
+    Cube {
+      translation 0 0.5 0.25
+    }
+    USE _939
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0 0.5625 0
+    }
+    USE _267
+    USE _438
+    Cube {
+      translation 0 0.5625 0.1875
+    }
+    USE _779
+    USE _950
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _107
+    USE _278
+    Cube {
+      translation 0 0.625 0.125
+    }
+    USE _619
+    USE _790
+    Cube {
+      translation 0 0.625 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _118
+    Cube {
+      translation 0 0.6875 0.0625
+    }
+    USE _459
+    USE _630
+    Cube {
+      translation 0 0.6875 0.25
+    }
+    USE _971
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0 0.75 0
+    }
+    USE _299
+    USE _470
+    Cube {
+      translation 0 0.75 0.1875
+    }
+    USE _811
+    USE _982
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _139
+    USE _310
+    Cube {
+      translation 0 0.8125 0.125
+    }
+    USE _651
+    USE _822
+    Cube {
+      translation 0 0.8125 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _150
+    Cube {
+      translation 0 0.875 0.0625
+    }
+    USE _491
+    USE _662
+    Cube {
+      translation 0 0.875 0.25
+    }
+    USE _1003
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0 0.9375 0
+    }
+    USE _331
+    USE _502
+    Cube {
+      translation 0 0.9375 0.1875
+    }
+    USE _843
+    USE _1014
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _1
+    USE _172
+    Cube {
+      translation 0.0625 0 0.125
+    }
+    USE _513
+    USE _684
+    Cube {
+      translation 0.0625 0 0.3125
+    }
+    USE _1025
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _12
+    Cube {
+      translation 0.0625 0.0625 0.0625
+    }
+    USE _353
+    USE _524
+    Cube {
+      translation 0.0625 0.0625 0.25
+    }
+    USE _865
+    USE _1036
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.0625 0.125 0
+    }
+    USE _193
+    USE _364
+    Cube {
+      translation 0.0625 0.125 0.1875
+    }
+    USE _705
+    USE _876
+    Cube {
+      translation 0.0625 0.125 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _33
+    USE _204
+    Cube {
+      translation 0.0625 0.1875 0.125
+    }
+    USE _545
+    USE _716
+    Cube {
+      translation 0.0625 0.1875 0.3125
+    }
+    USE _1057
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _44
+    Cube {
+      translation 0.0625 0.25 0.0625
+    }
+    USE _385
+    USE _556
+    Cube {
+      translation 0.0625 0.25 0.25
+    }
+    USE _897
+    USE _1068
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.0625 0.3125 0
+    }
+    USE _225
+    USE _396
+    Cube {
+      translation 0.0625 0.3125 0.1875
+    }
+    USE _737
+    USE _908
+    Cube {
+      translation 0.0625 0.3125 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _65
+    USE _236
+    Cube {
+      translation 0.0625 0.375 0.125
+    }
+    USE _577
+    USE _748
+    Cube {
+      translation 0.0625 0.375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _76
+    Cube {
+      translation 0.0625 0.4375 0.0625
+    }
+    USE _417
+    USE _588
+    Cube {
+      translation 0.0625 0.4375 0.25
+    }
+    USE _929
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.0625 0.5 0
+    }
+    USE _257
+    USE _428
+    Cube {
+      translation 0.0625 0.5 0.1875
+    }
+    USE _769
+    USE _940
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _97
+    USE _268
+    Cube {
+      translation 0.0625 0.5625 0.125
+    }
+    USE _609
+    USE _780
+    Cube {
+      translation 0.0625 0.5625 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _108
+    Cube {
+      translation 0.0625 0.625 0.0625
+    }
+    USE _449
+    USE _620
+    Cube {
+      translation 0.0625 0.625 0.25
+    }
+    USE _961
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.0625 0.6875 0
+    }
+    USE _289
+    USE _460
+    Cube {
+      translation 0.0625 0.6875 0.1875
+    }
+    USE _801
+    USE _972
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _129
+    USE _300
+    Cube {
+      translation 0.0625 0.75 0.125
+    }
+    USE _641
+    USE _812
+    Cube {
+      translation 0.0625 0.75 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _140
+    Cube {
+      translation 0.0625 0.8125 0.0625
+    }
+    USE _481
+    USE _652
+    Cube {
+      translation 0.0625 0.8125 0.25
+    }
+    USE _993
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.0625 0.875 0
+    }
+    USE _321
+    USE _492
+    Cube {
+      translation 0.0625 0.875 0.1875
+    }
+    USE _833
+    USE _1004
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _161
+    USE _332
+    Cube {
+      translation 0.0625 0.9375 0.125
+    }
+    USE _673
+    USE _844
+    Cube {
+      translation 0.0625 0.9375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _2
+    Cube {
+      translation 0.125 0 0.0625
+    }
+    USE _343
+    USE _514
+    Cube {
+      translation 0.125 0 0.25
+    }
+    USE _855
+    USE _1026
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.125 0.0625 0
+    }
+    USE _183
+    USE _354
+    Cube {
+      translation 0.125 0.0625 0.1875
+    }
+    USE _695
+    USE _866
+    Cube {
+      translation 0.125 0.0625 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _23
+    USE _194
+    Cube {
+      translation 0.125 0.125 0.125
+    }
+    USE _535
+    USE _706
+    Cube {
+      translation 0.125 0.125 0.3125
+    }
+    USE _1047
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _34
+    Cube {
+      translation 0.125 0.1875 0.0625
+    }
+    USE _375
+    USE _546
+    Cube {
+      translation 0.125 0.1875 0.25
+    }
+    USE _887
+    USE _1058
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.125 0.25 0
+    }
+    USE _215
+    USE _386
+    Cube {
+      translation 0.125 0.25 0.1875
+    }
+    USE _727
+    USE _898
+    Cube {
+      translation 0.125 0.25 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _55
+    USE _226
+    Cube {
+      translation 0.125 0.3125 0.125
+    }
+    USE _567
+    USE _738
+    Cube {
+      translation 0.125 0.3125 0.3125
+    }
+    USE _1079
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _66
+    Cube {
+      translation 0.125 0.375 0.0625
+    }
+    USE _407
+    USE _578
+    Cube {
+      translation 0.125 0.375 0.25
+    }
+    USE _919
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.125 0.4375 0
+    }
+    USE _247
+    USE _418
+    Cube {
+      translation 0.125 0.4375 0.1875
+    }
+    USE _759
+    USE _930
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _87
+    USE _258
+    Cube {
+      translation 0.125 0.5 0.125
+    }
+    USE _599
+    USE _770
+    Cube {
+      translation 0.125 0.5 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _98
+    Cube {
+      translation 0.125 0.5625 0.0625
+    }
+    USE _439
+    USE _610
+    Cube {
+      translation 0.125 0.5625 0.25
+    }
+    USE _951
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.125 0.625 0
+    }
+    USE _279
+    USE _450
+    Cube {
+      translation 0.125 0.625 0.1875
+    }
+    USE _791
+    USE _962
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _119
+    USE _290
+    Cube {
+      translation 0.125 0.6875 0.125
+    }
+    USE _631
+    USE _802
+    Cube {
+      translation 0.125 0.6875 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _130
+    Cube {
+      translation 0.125 0.75 0.0625
+    }
+    USE _471
+    USE _642
+    Cube {
+      translation 0.125 0.75 0.25
+    }
+    USE _983
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.125 0.8125 0
+    }
+    USE _311
+    USE _482
+    Cube {
+      translation 0.125 0.8125 0.1875
+    }
+    USE _823
+    USE _994
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _151
+    USE _322
+    Cube {
+      translation 0.125 0.875 0.125
+    }
+    USE _663
+    USE _834
+    Cube {
+      translation 0.125 0.875 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _162
+    Cube {
+      translation 0.125 0.9375 0.0625
+    }
+    USE _503
+    USE _674
+    Cube {
+      translation 0.125 0.9375 0.25
+    }
+    USE _1015
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.1875 0 0
+    }
+    USE _173
+    USE _344
+    Cube {
+      translation 0.1875 0 0.1875
+    }
+    USE _685
+    USE _856
+    Cube {
+      translation 0.1875 0 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _13
+    USE _184
+    Cube {
+      translation 0.1875 0.0625 0.125
+    }
+    USE _525
+    USE _696
+    Cube {
+      translation 0.1875 0.0625 0.3125
+    }
+    USE _1037
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _24
+    Cube {
+      translation 0.1875 0.125 0.0625
+    }
+    USE _365
+    USE _536
+    Cube {
+      translation 0.1875 0.125 0.25
+    }
+    USE _877
+    USE _1048
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.1875 0.1875 0
+    }
+    USE _205
+    USE _376
+    Cube {
+      translation 0.1875 0.1875 0.1875
+    }
+    USE _717
+    USE _888
+    Cube {
+      translation 0.1875 0.1875 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _45
+    USE _216
+    Cube {
+      translation 0.1875 0.25 0.125
+    }
+    USE _557
+    USE _728
+    Cube {
+      translation 0.1875 0.25 0.3125
+    }
+    USE _1069
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _56
+    Cube {
+      translation 0.1875 0.3125 0.0625
+    }
+    USE _397
+    USE _568
+    Cube {
+      translation 0.1875 0.3125 0.25
+    }
+    USE _909
+    USE _1080
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.1875 0.375 0
+    }
+    USE _237
+    USE _408
+    Cube {
+      translation 0.1875 0.375 0.1875
+    }
+    USE _749
+    USE _920
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _77
+    USE _248
+    Cube {
+      translation 0.1875 0.4375 0.125
+    }
+    USE _589
+    USE _760
+    Cube {
+      translation 0.1875 0.4375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _88
+    Cube {
+      translation 0.1875 0.5 0.0625
+    }
+    USE _429
+    USE _600
+    Cube {
+      translation 0.1875 0.5 0.25
+    }
+    USE _941
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.1875 0.5625 0
+    }
+    USE _269
+    USE _440
+    Cube {
+      translation 0.1875 0.5625 0.1875
+    }
+    USE _781
+    USE _952
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _109
+    USE _280
+    Cube {
+      translation 0.1875 0.625 0.125
+    }
+    USE _621
+    USE _792
+    Cube {
+      translation 0.1875 0.625 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _120
+    Cube {
+      translation 0.1875 0.6875 0.0625
+    }
+    USE _461
+    USE _632
+    Cube {
+      translation 0.1875 0.6875 0.25
+    }
+    USE _973
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.1875 0.75 0
+    }
+    USE _301
+    USE _472
+    Cube {
+      translation 0.1875 0.75 0.1875
+    }
+    USE _813
+    USE _984
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _141
+    USE _312
+    Cube {
+      translation 0.1875 0.8125 0.125
+    }
+    USE _653
+    USE _824
+    Cube {
+      translation 0.1875 0.8125 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _152
+    Cube {
+      translation 0.1875 0.875 0.0625
+    }
+    USE _493
+    USE _664
+    Cube {
+      translation 0.1875 0.875 0.25
+    }
+    USE _1005
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.1875 0.9375 0
+    }
+    USE _333
+    USE _504
+    Cube {
+      translation 0.1875 0.9375 0.1875
+    }
+    USE _845
+    USE _1016
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _3
+    USE _174
+    Cube {
+      translation 0.25 0 0.125
+    }
+    USE _515
+    USE _686
+    Cube {
+      translation 0.25 0 0.3125
+    }
+    USE _1027
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _14
+    Cube {
+      translation 0.25 0.0625 0.0625
+    }
+    USE _355
+    USE _526
+    Cube {
+      translation 0.25 0.0625 0.25
+    }
+    USE _867
+    USE _1038
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.25 0.125 0
+    }
+    USE _195
+    USE _366
+    Cube {
+      translation 0.25 0.125 0.1875
+    }
+    USE _707
+    USE _878
+    Cube {
+      translation 0.25 0.125 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _35
+    USE _206
+    Cube {
+      translation 0.25 0.1875 0.125
+    }
+    USE _547
+    USE _718
+    Cube {
+      translation 0.25 0.1875 0.3125
+    }
+    USE _1059
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _46
+    Cube {
+      translation 0.25 0.25 0.0625
+    }
+    USE _387
+    USE _558
+    Cube {
+      translation 0.25 0.25 0.25
+    }
+    USE _899
+    USE _1070
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.25 0.3125 0
+    }
+    USE _227
+    USE _398
+    Cube {
+      translation 0.25 0.3125 0.1875
+    }
+    USE _739
+    USE _910
+    Cube {
+      translation 0.25 0.3125 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _67
+    USE _238
+    Cube {
+      translation 0.25 0.375 0.125
+    }
+    USE _579
+    USE _750
+    Cube {
+      translation 0.25 0.375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _78
+    Cube {
+      translation 0.25 0.4375 0.0625
+    }
+    USE _419
+    USE _590
+    Cube {
+      translation 0.25 0.4375 0.25
+    }
+    USE _931
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.25 0.5 0
+    }
+    USE _259
+    USE _430
+    Cube {
+      translation 0.25 0.5 0.1875
+    }
+    USE _771
+    USE _942
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _99
+    USE _270
+    Cube {
+      translation 0.25 0.5625 0.125
+    }
+    USE _611
+    USE _782
+    Cube {
+      translation 0.25 0.5625 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _110
+    Cube {
+      translation 0.25 0.625 0.0625
+    }
+    USE _451
+    USE _622
+    Cube {
+      translation 0.25 0.625 0.25
+    }
+    USE _963
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.25 0.6875 0
+    }
+    USE _291
+    USE _462
+    Cube {
+      translation 0.25 0.6875 0.1875
+    }
+    USE _803
+    USE _974
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _131
+    USE _302
+    Cube {
+      translation 0.25 0.75 0.125
+    }
+    USE _643
+    USE _814
+    Cube {
+      translation 0.25 0.75 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _142
+    Cube {
+      translation 0.25 0.8125 0.0625
+    }
+    USE _483
+    USE _654
+    Cube {
+      translation 0.25 0.8125 0.25
+    }
+    USE _995
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.25 0.875 0
+    }
+    USE _323
+    USE _494
+    Cube {
+      translation 0.25 0.875 0.1875
+    }
+    USE _835
+    USE _1006
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _163
+    USE _334
+    Cube {
+      translation 0.25 0.9375 0.125
+    }
+    USE _675
+    USE _846
+    Cube {
+      translation 0.25 0.9375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _4
+    Cube {
+      translation 0.3125 0 0.0625
+    }
+    USE _345
+    USE _516
+    Cube {
+      translation 0.3125 0 0.25
+    }
+    USE _857
+    USE _1028
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.3125 0.0625 0
+    }
+    USE _185
+    USE _356
+    Cube {
+      translation 0.3125 0.0625 0.1875
+    }
+    USE _697
+    USE _868
+    Cube {
+      translation 0.3125 0.0625 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _25
+    USE _196
+    Cube {
+      translation 0.3125 0.125 0.125
+    }
+    USE _537
+    USE _708
+    Cube {
+      translation 0.3125 0.125 0.3125
+    }
+    USE _1049
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _36
+    Cube {
+      translation 0.3125 0.1875 0.0625
+    }
+    USE _377
+    USE _548
+    Cube {
+      translation 0.3125 0.1875 0.25
+    }
+    USE _889
+    USE _1060
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.3125 0.25 0
+    }
+    USE _217
+    USE _388
+    Cube {
+      translation 0.3125 0.25 0.1875
+    }
+    USE _729
+    USE _900
+    Cube {
+      translation 0.3125 0.25 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _57
+    USE _228
+    Cube {
+      translation 0.3125 0.3125 0.125
+    }
+    USE _569
+    USE _740
+    Cube {
+      translation 0.3125 0.3125 0.3125
+    }
+    USE _1081
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _68
+    Cube {
+      translation 0.3125 0.375 0.0625
+    }
+    USE _409
+    USE _580
+    Cube {
+      translation 0.3125 0.375 0.25
+    }
+    USE _921
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.3125 0.4375 0
+    }
+    USE _249
+    USE _420
+    Cube {
+      translation 0.3125 0.4375 0.1875
+    }
+    USE _761
+    USE _932
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _89
+    USE _260
+    Cube {
+      translation 0.3125 0.5 0.125
+    }
+    USE _601
+    USE _772
+    Cube {
+      translation 0.3125 0.5 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _100
+    Cube {
+      translation 0.3125 0.5625 0.0625
+    }
+    USE _441
+    USE _612
+    Cube {
+      translation 0.3125 0.5625 0.25
+    }
+    USE _953
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.3125 0.625 0
+    }
+    USE _281
+    USE _452
+    Cube {
+      translation 0.3125 0.625 0.1875
+    }
+    USE _793
+    USE _964
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _121
+    USE _292
+    Cube {
+      translation 0.3125 0.6875 0.125
+    }
+    USE _633
+    USE _804
+    Cube {
+      translation 0.3125 0.6875 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _132
+    Cube {
+      translation 0.3125 0.75 0.0625
+    }
+    USE _473
+    USE _644
+    Cube {
+      translation 0.3125 0.75 0.25
+    }
+    USE _985
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.3125 0.8125 0
+    }
+    USE _313
+    USE _484
+    Cube {
+      translation 0.3125 0.8125 0.1875
+    }
+    USE _825
+    USE _996
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _153
+    USE _324
+    Cube {
+      translation 0.3125 0.875 0.125
+    }
+    USE _665
+    USE _836
+    Cube {
+      translation 0.3125 0.875 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _164
+    Cube {
+      translation 0.3125 0.9375 0.0625
+    }
+    USE _505
+    USE _676
+    Cube {
+      translation 0.3125 0.9375 0.25
+    }
+    USE _1017
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.375 0 0
+    }
+    USE _175
+    USE _346
+    Cube {
+      translation 0.375 0 0.1875
+    }
+    USE _687
+    USE _858
+    Cube {
+      translation 0.375 0 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _15
+    USE _186
+    Cube {
+      translation 0.375 0.0625 0.125
+    }
+    USE _527
+    USE _698
+    Cube {
+      translation 0.375 0.0625 0.3125
+    }
+    USE _1039
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _26
+    Cube {
+      translation 0.375 0.125 0.0625
+    }
+    USE _367
+    USE _538
+    Cube {
+      translation 0.375 0.125 0.25
+    }
+    USE _879
+    USE _1050
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.375 0.1875 0
+    }
+    USE _207
+    USE _378
+    Cube {
+      translation 0.375 0.1875 0.1875
+    }
+    USE _719
+    USE _890
+    Cube {
+      translation 0.375 0.1875 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _47
+    USE _218
+    Cube {
+      translation 0.375 0.25 0.125
+    }
+    USE _559
+    USE _730
+    Cube {
+      translation 0.375 0.25 0.3125
+    }
+    USE _1071
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _58
+    Cube {
+      translation 0.375 0.3125 0.0625
+    }
+    USE _399
+    USE _570
+    Cube {
+      translation 0.375 0.3125 0.25
+    }
+    USE _911
+    USE _1082
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.375 0.375 0
+    }
+    USE _239
+    USE _410
+    Cube {
+      translation 0.375 0.375 0.1875
+    }
+    USE _751
+    USE _922
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _79
+    USE _250
+    Cube {
+      translation 0.375 0.4375 0.125
+    }
+    USE _591
+    USE _762
+    Cube {
+      translation 0.375 0.4375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _90
+    Cube {
+      translation 0.375 0.5 0.0625
+    }
+    USE _431
+    USE _602
+    Cube {
+      translation 0.375 0.5 0.25
+    }
+    USE _943
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.375 0.5625 0
+    }
+    USE _271
+    USE _442
+    Cube {
+      translation 0.375 0.5625 0.1875
+    }
+    USE _783
+    USE _954
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _111
+    USE _282
+    Cube {
+      translation 0.375 0.625 0.125
+    }
+    USE _623
+    USE _794
+    Cube {
+      translation 0.375 0.625 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _122
+    Cube {
+      translation 0.375 0.6875 0.0625
+    }
+    USE _463
+    USE _634
+    Cube {
+      translation 0.375 0.6875 0.25
+    }
+    USE _975
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.375 0.75 0
+    }
+    USE _303
+    USE _474
+    Cube {
+      translation 0.375 0.75 0.1875
+    }
+    USE _815
+    USE _986
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _143
+    USE _314
+    Cube {
+      translation 0.375 0.8125 0.125
+    }
+    USE _655
+    USE _826
+    Cube {
+      translation 0.375 0.8125 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _154
+    Cube {
+      translation 0.375 0.875 0.0625
+    }
+    USE _495
+    USE _666
+    Cube {
+      translation 0.375 0.875 0.25
+    }
+    USE _1007
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.375 0.9375 0
+    }
+    USE _335
+    USE _506
+    Cube {
+      translation 0.375 0.9375 0.1875
+    }
+    USE _847
+    USE _1018
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _5
+    USE _176
+    Cube {
+      translation 0.4375 0 0.125
+    }
+    USE _517
+    USE _688
+    Cube {
+      translation 0.4375 0 0.3125
+    }
+    USE _1029
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _16
+    Cube {
+      translation 0.4375 0.0625 0.0625
+    }
+    USE _357
+    USE _528
+    Cube {
+      translation 0.4375 0.0625 0.25
+    }
+    USE _869
+    USE _1040
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.4375 0.125 0
+    }
+    USE _197
+    USE _368
+    Cube {
+      translation 0.4375 0.125 0.1875
+    }
+    USE _709
+    USE _880
+    Cube {
+      translation 0.4375 0.125 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _37
+    USE _208
+    Cube {
+      translation 0.4375 0.1875 0.125
+    }
+    USE _549
+    USE _720
+    Cube {
+      translation 0.4375 0.1875 0.3125
+    }
+    USE _1061
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _48
+    Cube {
+      translation 0.4375 0.25 0.0625
+    }
+    USE _389
+    USE _560
+    Cube {
+      translation 0.4375 0.25 0.25
+    }
+    USE _901
+    USE _1072
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.4375 0.3125 0
+    }
+    USE _229
+    USE _400
+    Cube {
+      translation 0.4375 0.3125 0.1875
+    }
+    USE _741
+    USE _912
+    Cube {
+      translation 0.4375 0.3125 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _69
+    USE _240
+    Cube {
+      translation 0.4375 0.375 0.125
+    }
+    USE _581
+    USE _752
+    Cube {
+      translation 0.4375 0.375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _80
+    Cube {
+      translation 0.4375 0.4375 0.0625
+    }
+    USE _421
+    USE _592
+    Cube {
+      translation 0.4375 0.4375 0.25
+    }
+    USE _933
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.4375 0.5 0
+    }
+    USE _261
+    USE _432
+    Cube {
+      translation 0.4375 0.5 0.1875
+    }
+    USE _773
+    USE _944
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _101
+    USE _272
+    Cube {
+      translation 0.4375 0.5625 0.125
+    }
+    USE _613
+    USE _784
+    Cube {
+      translation 0.4375 0.5625 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _112
+    Cube {
+      translation 0.4375 0.625 0.0625
+    }
+    USE _453
+    USE _624
+    Cube {
+      translation 0.4375 0.625 0.25
+    }
+    USE _965
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.4375 0.6875 0
+    }
+    USE _293
+    USE _464
+    Cube {
+      translation 0.4375 0.6875 0.1875
+    }
+    USE _805
+    USE _976
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _133
+    USE _304
+    Cube {
+      translation 0.4375 0.75 0.125
+    }
+    USE _645
+    USE _816
+    Cube {
+      translation 0.4375 0.75 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _144
+    Cube {
+      translation 0.4375 0.8125 0.0625
+    }
+    USE _485
+    USE _656
+    Cube {
+      translation 0.4375 0.8125 0.25
+    }
+    USE _997
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.4375 0.875 0
+    }
+    USE _325
+    USE _496
+    Cube {
+      translation 0.4375 0.875 0.1875
+    }
+    USE _837
+    USE _1008
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _165
+    USE _336
+    Cube {
+      translation 0.4375 0.9375 0.125
+    }
+    USE _677
+    USE _848
+    Cube {
+      translation 0.4375 0.9375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _6
+    Cube {
+      translation 0.5 0 0.0625
+    }
+    USE _347
+    USE _518
+    Cube {
+      translation 0.5 0 0.25
+    }
+    USE _859
+    USE _1030
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.5 0.0625 0
+    }
+    USE _187
+    USE _358
+    Cube {
+      translation 0.5 0.0625 0.1875
+    }
+    USE _699
+    USE _870
+    Cube {
+      translation 0.5 0.0625 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _27
+    USE _198
+    Cube {
+      translation 0.5 0.125 0.125
+    }
+    USE _539
+    USE _710
+    Cube {
+      translation 0.5 0.125 0.3125
+    }
+    USE _1051
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _38
+    Cube {
+      translation 0.5 0.1875 0.0625
+    }
+    USE _379
+    USE _550
+    Cube {
+      translation 0.5 0.1875 0.25
+    }
+    USE _891
+    USE _1062
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.5 0.25 0
+    }
+    USE _219
+    USE _390
+    Cube {
+      translation 0.5 0.25 0.1875
+    }
+    USE _731
+    USE _902
+    Cube {
+      translation 0.5 0.25 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _59
+    USE _230
+    Cube {
+      translation 0.5 0.3125 0.125
+    }
+    USE _571
+    USE _742
+    Cube {
+      translation 0.5 0.3125 0.3125
+    }
+    USE _1083
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _70
+    Cube {
+      translation 0.5 0.375 0.0625
+    }
+    USE _411
+    USE _582
+    Cube {
+      translation 0.5 0.375 0.25
+    }
+    USE _923
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.5 0.4375 0
+    }
+    USE _251
+    USE _422
+    Cube {
+      translation 0.5 0.4375 0.1875
+    }
+    USE _763
+    USE _934
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _91
+    USE _262
+    Cube {
+      translation 0.5 0.5 0.125
+    }
+    USE _603
+    USE _774
+    Cube {
+      translation 0.5 0.5 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _102
+    Cube {
+      translation 0.5 0.5625 0.0625
+    }
+    USE _443
+    USE _614
+    Cube {
+      translation 0.5 0.5625 0.25
+    }
+    USE _955
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.5 0.625 0
+    }
+    USE _283
+    USE _454
+    Cube {
+      translation 0.5 0.625 0.1875
+    }
+    USE _795
+    USE _966
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _123
+    USE _294
+    Cube {
+      translation 0.5 0.6875 0.125
+    }
+    USE _635
+    USE _806
+    Cube {
+      translation 0.5 0.6875 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _134
+    Cube {
+      translation 0.5 0.75 0.0625
+    }
+    USE _475
+    USE _646
+    Cube {
+      translation 0.5 0.75 0.25
+    }
+    USE _987
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.5 0.8125 0
+    }
+    USE _315
+    USE _486
+    Cube {
+      translation 0.5 0.8125 0.1875
+    }
+    USE _827
+    USE _998
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _155
+    USE _326
+    Cube {
+      translation 0.5 0.875 0.125
+    }
+    USE _667
+    USE _838
+    Cube {
+      translation 0.5 0.875 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _166
+    Cube {
+      translation 0.5 0.9375 0.0625
+    }
+    USE _507
+    USE _678
+    Cube {
+      translation 0.5 0.9375 0.25
+    }
+    USE _1019
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.5625 0 0
+    }
+    USE _177
+    USE _348
+    Cube {
+      translation 0.5625 0 0.1875
+    }
+    USE _689
+    USE _860
+    Cube {
+      translation 0.5625 0 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _17
+    USE _188
+    Cube {
+      translation 0.5625 0.0625 0.125
+    }
+    USE _529
+    USE _700
+    Cube {
+      translation 0.5625 0.0625 0.3125
+    }
+    USE _1041
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _28
+    Cube {
+      translation 0.5625 0.125 0.0625
+    }
+    USE _369
+    USE _540
+    Cube {
+      translation 0.5625 0.125 0.25
+    }
+    USE _881
+    USE _1052
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.5625 0.1875 0
+    }
+    USE _209
+    USE _380
+    Cube {
+      translation 0.5625 0.1875 0.1875
+    }
+    USE _721
+    USE _892
+    Cube {
+      translation 0.5625 0.1875 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _49
+    USE _220
+    Cube {
+      translation 0.5625 0.25 0.125
+    }
+    USE _561
+    USE _732
+    Cube {
+      translation 0.5625 0.25 0.3125
+    }
+    USE _1073
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _60
+    Cube {
+      translation 0.5625 0.3125 0.0625
+    }
+    USE _401
+    USE _572
+    Cube {
+      translation 0.5625 0.3125 0.25
+    }
+    USE _913
+    USE _1084
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.5625 0.375 0
+    }
+    USE _241
+    USE _412
+    Cube {
+      translation 0.5625 0.375 0.1875
+    }
+    USE _753
+    USE _924
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _81
+    USE _252
+    Cube {
+      translation 0.5625 0.4375 0.125
+    }
+    USE _593
+    USE _764
+    Cube {
+      translation 0.5625 0.4375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _92
+    Cube {
+      translation 0.5625 0.5 0.0625
+    }
+    USE _433
+    USE _604
+    Cube {
+      translation 0.5625 0.5 0.25
+    }
+    USE _945
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.5625 0.5625 0
+    }
+    USE _273
+    USE _444
+    Cube {
+      translation 0.5625 0.5625 0.1875
+    }
+    USE _785
+    USE _956
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _113
+    USE _284
+    Cube {
+      translation 0.5625 0.625 0.125
+    }
+    USE _625
+    USE _796
+    Cube {
+      translation 0.5625 0.625 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _124
+    Cube {
+      translation 0.5625 0.6875 0.0625
+    }
+    USE _465
+    USE _636
+    Cube {
+      translation 0.5625 0.6875 0.25
+    }
+    USE _977
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.5625 0.75 0
+    }
+    USE _305
+    USE _476
+    Cube {
+      translation 0.5625 0.75 0.1875
+    }
+    USE _817
+    USE _988
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _145
+    USE _316
+    Cube {
+      translation 0.5625 0.8125 0.125
+    }
+    USE _657
+    USE _828
+    Cube {
+      translation 0.5625 0.8125 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _156
+    Cube {
+      translation 0.5625 0.875 0.0625
+    }
+    USE _497
+    USE _668
+    Cube {
+      translation 0.5625 0.875 0.25
+    }
+    USE _1009
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.5625 0.9375 0
+    }
+    USE _337
+    USE _508
+    Cube {
+      translation 0.5625 0.9375 0.1875
+    }
+    USE _849
+    USE _1020
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _7
+    USE _178
+    Cube {
+      translation 0.625 0 0.125
+    }
+    USE _519
+    USE _690
+    Cube {
+      translation 0.625 0 0.3125
+    }
+    USE _1031
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _18
+    Cube {
+      translation 0.625 0.0625 0.0625
+    }
+    USE _359
+    USE _530
+    Cube {
+      translation 0.625 0.0625 0.25
+    }
+    USE _871
+    USE _1042
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.625 0.125 0
+    }
+    USE _199
+    USE _370
+    Cube {
+      translation 0.625 0.125 0.1875
+    }
+    USE _711
+    USE _882
+    Cube {
+      translation 0.625 0.125 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _39
+    USE _210
+    Cube {
+      translation 0.625 0.1875 0.125
+    }
+    USE _551
+    USE _722
+    Cube {
+      translation 0.625 0.1875 0.3125
+    }
+    USE _1063
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _50
+    Cube {
+      translation 0.625 0.25 0.0625
+    }
+    USE _391
+    USE _562
+    Cube {
+      translation 0.625 0.25 0.25
+    }
+    USE _903
+    USE _1074
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.625 0.3125 0
+    }
+    USE _231
+    USE _402
+    Cube {
+      translation 0.625 0.3125 0.1875
+    }
+    USE _743
+    USE _914
+    USE _1086
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _71
+    USE _242
+    Cube {
+      translation 0.625 0.375 0.125
+    }
+    USE _583
+    USE _754
+    Cube {
+      translation 0.625 0.375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _82
+    Cube {
+      translation 0.625 0.4375 0.0625
+    }
+    USE _423
+    USE _594
+    Cube {
+      translation 0.625 0.4375 0.25
+    }
+    USE _935
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.625 0.5 0
+    }
+    USE _263
+    USE _434
+    Cube {
+      translation 0.625 0.5 0.1875
+    }
+    USE _775
+    USE _946
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _103
+    USE _274
+    Cube {
+      translation 0.625 0.5625 0.125
+    }
+    USE _615
+    USE _786
+    Cube {
+      translation 0.625 0.5625 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _114
+    Cube {
+      translation 0.625 0.625 0.0625
+    }
+    USE _455
+    USE _626
+    Cube {
+      translation 0.625 0.625 0.25
+    }
+    USE _967
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.625 0.6875 0
+    }
+    USE _295
+    USE _466
+    Cube {
+      translation 0.625 0.6875 0.1875
+    }
+    USE _807
+    USE _978
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _135
+    USE _306
+    Cube {
+      translation 0.625 0.75 0.125
+    }
+    USE _647
+    USE _818
+    Cube {
+      translation 0.625 0.75 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _146
+    Cube {
+      translation 0.625 0.8125 0.0625
+    }
+    USE _487
+    USE _658
+    Cube {
+      translation 0.625 0.8125 0.25
+    }
+    USE _999
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.625 0.875 0
+    }
+    USE _327
+    USE _498
+    Cube {
+      translation 0.625 0.875 0.1875
+    }
+    USE _839
+    USE _1010
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _167
+    USE _338
+    Cube {
+      translation 0.625 0.9375 0.125
+    }
+    USE _679
+    USE _850
+    Cube {
+      translation 0.625 0.9375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _8
+    Cube {
+      translation 0.6875 0 0.0625
+    }
+    USE _349
+    USE _520
+    Cube {
+      translation 0.6875 0 0.25
+    }
+    USE _861
+    USE _1032
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.6875 0.0625 0
+    }
+    USE _189
+    USE _360
+    Cube {
+      translation 0.6875 0.0625 0.1875
+    }
+    USE _701
+    USE _872
+    Cube {
+      translation 0.6875 0.0625 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _29
+    USE _200
+    Cube {
+      translation 0.6875 0.125 0.125
+    }
+    USE _541
+    USE _712
+    Cube {
+      translation 0.6875 0.125 0.3125
+    }
+    USE _1053
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _40
+    Cube {
+      translation 0.6875 0.1875 0.0625
+    }
+    USE _381
+    USE _552
+    Cube {
+      translation 0.6875 0.1875 0.25
+    }
+    USE _893
+    USE _1064
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.6875 0.25 0
+    }
+    USE _221
+    USE _392
+    Cube {
+      translation 0.6875 0.25 0.1875
+    }
+    USE _733
+    USE _904
+    Cube {
+      translation 0.6875 0.25 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _61
+    USE _232
+    Cube {
+      translation 0.6875 0.3125 0.125
+    }
+    USE _573
+    USE _744
+    Cube {
+      translation 0.6875 0.3125 0.3125
+    }
+    USE _1085
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _72
+    Cube {
+      translation 0.6875 0.375 0.0625
+    }
+    USE _413
+    USE _584
+    Cube {
+      translation 0.6875 0.375 0.25
+    }
+    USE _925
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.6875 0.4375 0
+    }
+    USE _253
+    USE _424
+    Cube {
+      translation 0.6875 0.4375 0.1875
+    }
+    USE _765
+    USE _936
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _93
+    USE _264
+    Cube {
+      translation 0.6875 0.5 0.125
+    }
+    USE _605
+    USE _776
+    Cube {
+      translation 0.6875 0.5 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _104
+    Cube {
+      translation 0.6875 0.5625 0.0625
+    }
+    USE _445
+    USE _616
+    Cube {
+      translation 0.6875 0.5625 0.25
+    }
+    USE _957
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.6875 0.625 0
+    }
+    USE _285
+    USE _456
+    Cube {
+      translation 0.6875 0.625 0.1875
+    }
+    USE _797
+    USE _968
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _125
+    USE _296
+    Cube {
+      translation 0.6875 0.6875 0.125
+    }
+    USE _637
+    USE _808
+    Cube {
+      translation 0.6875 0.6875 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _136
+    Cube {
+      translation 0.6875 0.75 0.0625
+    }
+    USE _477
+    USE _648
+    Cube {
+      translation 0.6875 0.75 0.25
+    }
+    USE _989
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.6875 0.8125 0
+    }
+    USE _317
+    USE _488
+    Cube {
+      translation 0.6875 0.8125 0.1875
+    }
+    USE _829
+    USE _1000
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _157
+    USE _328
+    Cube {
+      translation 0.6875 0.875 0.125
+    }
+    USE _669
+    USE _840
+    Cube {
+      translation 0.6875 0.875 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _168
+    Cube {
+      translation 0.6875 0.9375 0.0625
+    }
+    USE _509
+    USE _680
+    Cube {
+      translation 0.6875 0.9375 0.25
+    }
+    USE _1021
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.75 0 0
+    }
+    USE _179
+    USE _350
+    Cube {
+      translation 0.75 0 0.1875
+    }
+    USE _691
+    USE _862
+    Cube {
+      translation 0.75 0 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _19
+    USE _190
+    Cube {
+      translation 0.75 0.0625 0.125
+    }
+    USE _531
+    USE _702
+    Cube {
+      translation 0.75 0.0625 0.3125
+    }
+    USE _1043
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _30
+    Cube {
+      translation 0.75 0.125 0.0625
+    }
+    USE _371
+    USE _542
+    Cube {
+      translation 0.75 0.125 0.25
+    }
+    USE _883
+    USE _1054
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.75 0.1875 0
+    }
+    USE _211
+    USE _382
+    Cube {
+      translation 0.75 0.1875 0.1875
+    }
+    USE _723
+    USE _894
+    Cube {
+      translation 0.75 0.1875 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _51
+    USE _222
+    Cube {
+      translation 0.75 0.25 0.125
+    }
+    USE _563
+    USE _734
+    Cube {
+      translation 0.75 0.25 0.3125
+    }
+    USE _1075
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _62
+    Cube {
+      translation 0.75 0.3125 0.0625
+    }
+    USE _403
+    USE _574
+    Cube {
+      translation 0.75 0.3125 0.25
+    }
+    USE _915
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.75 0.375 0
+    }
+    USE _243
+    USE _414
+    Cube {
+      translation 0.75 0.375 0.1875
+    }
+    USE _755
+    USE _926
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _83
+    USE _254
+    Cube {
+      translation 0.75 0.4375 0.125
+    }
+    USE _595
+    USE _766
+    Cube {
+      translation 0.75 0.4375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _94
+    Cube {
+      translation 0.75 0.5 0.0625
+    }
+    USE _435
+    USE _606
+    Cube {
+      translation 0.75 0.5 0.25
+    }
+    USE _947
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.75 0.5625 0
+    }
+    USE _275
+    USE _446
+    Cube {
+      translation 0.75 0.5625 0.1875
+    }
+    USE _787
+    USE _958
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _115
+    USE _286
+    Cube {
+      translation 0.75 0.625 0.125
+    }
+    USE _627
+    USE _798
+    Cube {
+      translation 0.75 0.625 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _126
+    Cube {
+      translation 0.75 0.6875 0.0625
+    }
+    USE _467
+    USE _638
+    Cube {
+      translation 0.75 0.6875 0.25
+    }
+    USE _979
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.75 0.75 0
+    }
+    USE _307
+    USE _478
+    Cube {
+      translation 0.75 0.75 0.1875
+    }
+    USE _819
+    USE _990
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _147
+    USE _318
+    Cube {
+      translation 0.75 0.8125 0.125
+    }
+    USE _659
+    USE _830
+    Cube {
+      translation 0.75 0.8125 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _158
+    Cube {
+      translation 0.75 0.875 0.0625
+    }
+    USE _499
+    USE _670
+    Cube {
+      translation 0.75 0.875 0.25
+    }
+    USE _1011
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.75 0.9375 0
+    }
+    USE _339
+    USE _510
+    Cube {
+      translation 0.75 0.9375 0.1875
+    }
+    USE _851
+    USE _1022
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _9
+    USE _180
+    Cube {
+      translation 0.8125 0 0.125
+    }
+    USE _521
+    USE _692
+    Cube {
+      translation 0.8125 0 0.3125
+    }
+    USE _1033
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _20
+    Cube {
+      translation 0.8125 0.0625 0.0625
+    }
+    USE _361
+    USE _532
+    Cube {
+      translation 0.8125 0.0625 0.25
+    }
+    USE _873
+    USE _1044
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.8125 0.125 0
+    }
+    USE _201
+    USE _372
+    Cube {
+      translation 0.8125 0.125 0.1875
+    }
+    USE _713
+    USE _884
+    Cube {
+      translation 0.8125 0.125 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _41
+    USE _212
+    Cube {
+      translation 0.8125 0.1875 0.125
+    }
+    USE _553
+    USE _724
+    Cube {
+      translation 0.8125 0.1875 0.3125
+    }
+    USE _1065
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _52
+    Cube {
+      translation 0.8125 0.25 0.0625
+    }
+    USE _393
+    USE _564
+    Cube {
+      translation 0.8125 0.25 0.25
+    }
+    USE _905
+    USE _1076
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.8125 0.3125 0
+    }
+    USE _233
+    USE _404
+    Cube {
+      translation 0.8125 0.3125 0.1875
+    }
+    USE _745
+    USE _916
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _73
+    USE _244
+    Cube {
+      translation 0.8125 0.375 0.125
+    }
+    USE _585
+    USE _756
+    Cube {
+      translation 0.8125 0.375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _84
+    Cube {
+      translation 0.8125 0.4375 0.0625
+    }
+    USE _425
+    USE _596
+    Cube {
+      translation 0.8125 0.4375 0.25
+    }
+    USE _937
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.8125 0.5 0
+    }
+    USE _265
+    USE _436
+    Cube {
+      translation 0.8125 0.5 0.1875
+    }
+    USE _777
+    USE _948
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _105
+    USE _276
+    Cube {
+      translation 0.8125 0.5625 0.125
+    }
+    USE _617
+    USE _788
+    Cube {
+      translation 0.8125 0.5625 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _116
+    Cube {
+      translation 0.8125 0.625 0.0625
+    }
+    USE _457
+    USE _628
+    Cube {
+      translation 0.8125 0.625 0.25
+    }
+    USE _969
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.8125 0.6875 0
+    }
+    USE _297
+    USE _468
+    Cube {
+      translation 0.8125 0.6875 0.1875
+    }
+    USE _809
+    USE _980
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _137
+    USE _308
+    Cube {
+      translation 0.8125 0.75 0.125
+    }
+    USE _649
+    USE _820
+    Cube {
+      translation 0.8125 0.75 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _148
+    Cube {
+      translation 0.8125 0.8125 0.0625
+    }
+    USE _489
+    USE _660
+    Cube {
+      translation 0.8125 0.8125 0.25
+    }
+    USE _1001
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.8125 0.875 0
+    }
+    USE _329
+    USE _500
+    Cube {
+      translation 0.8125 0.875 0.1875
+    }
+    USE _841
+    USE _1012
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _169
+    USE _340
+    Cube {
+      translation 0.8125 0.9375 0.125
+    }
+    USE _681
+    USE _852
+    Cube {
+      translation 0.8125 0.9375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _10
+    Cube {
+      translation 0.875 0 0.0625
+    }
+    USE _351
+    USE _522
+    Cube {
+      translation 0.875 0 0.25
+    }
+    USE _863
+    USE _1034
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.875 0.0625 0
+    }
+    USE _191
+    USE _362
+    Cube {
+      translation 0.875 0.0625 0.1875
+    }
+    USE _703
+    USE _874
+    Cube {
+      translation 0.875 0.0625 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _31
+    USE _202
+    Cube {
+      translation 0.875 0.125 0.125
+    }
+    USE _543
+    USE _714
+    Cube {
+      translation 0.875 0.125 0.3125
+    }
+    USE _1055
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _42
+    Cube {
+      translation 0.875 0.1875 0.0625
+    }
+    USE _383
+    USE _554
+    Cube {
+      translation 0.875 0.1875 0.25
+    }
+    USE _895
+    USE _1066
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.875 0.25 0
+    }
+    USE _223
+    USE _394
+    Cube {
+      translation 0.875 0.25 0.1875
+    }
+    USE _735
+    USE _906
+    Cube {
+      translation 0.875 0.25 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _63
+    USE _234
+    Cube {
+      translation 0.875 0.3125 0.125
+    }
+    USE _575
+    USE _746
+    Cube {
+      translation 0.875 0.3125 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _74
+    Cube {
+      translation 0.875 0.375 0.0625
+    }
+    USE _415
+    USE _586
+    Cube {
+      translation 0.875 0.375 0.25
+    }
+    USE _927
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.875 0.4375 0
+    }
+    USE _255
+    USE _426
+    Cube {
+      translation 0.875 0.4375 0.1875
+    }
+    USE _767
+    USE _938
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _95
+    USE _266
+    Cube {
+      translation 0.875 0.5 0.125
+    }
+    USE _607
+    USE _778
+    Cube {
+      translation 0.875 0.5 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _106
+    Cube {
+      translation 0.875 0.5625 0.0625
+    }
+    USE _447
+    USE _618
+    Cube {
+      translation 0.875 0.5625 0.25
+    }
+    USE _959
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.875 0.625 0
+    }
+    USE _287
+    USE _458
+    Cube {
+      translation 0.875 0.625 0.1875
+    }
+    USE _799
+    USE _970
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _127
+    USE _298
+    Cube {
+      translation 0.875 0.6875 0.125
+    }
+    USE _639
+    USE _810
+    Cube {
+      translation 0.875 0.6875 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _138
+    Cube {
+      translation 0.875 0.75 0.0625
+    }
+    USE _479
+    USE _650
+    Cube {
+      translation 0.875 0.75 0.25
+    }
+    USE _991
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.875 0.8125 0
+    }
+    USE _319
+    USE _490
+    Cube {
+      translation 0.875 0.8125 0.1875
+    }
+    USE _831
+    USE _1002
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _159
+    USE _330
+    Cube {
+      translation 0.875 0.875 0.125
+    }
+    USE _671
+    USE _842
+    Cube {
+      translation 0.875 0.875 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _170
+    Cube {
+      translation 0.875 0.9375 0.0625
+    }
+    USE _511
+    USE _682
+    Cube {
+      translation 0.875 0.9375 0.25
+    }
+    USE _1023
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.9375 0 0
+    }
+    USE _181
+    USE _352
+    Cube {
+      translation 0.9375 0 0.1875
+    }
+    USE _693
+    USE _864
+    Cube {
+      translation 0.9375 0 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _21
+    USE _192
+    Cube {
+      translation 0.9375 0.0625 0.125
+    }
+    USE _533
+    USE _704
+    Cube {
+      translation 0.9375 0.0625 0.3125
+    }
+    USE _1045
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _32
+    Cube {
+      translation 0.9375 0.125 0.0625
+    }
+    USE _373
+    USE _544
+    Cube {
+      translation 0.9375 0.125 0.25
+    }
+    USE _885
+    USE _1056
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.9375 0.1875 0
+    }
+    USE _213
+    USE _384
+    Cube {
+      translation 0.9375 0.1875 0.1875
+    }
+    USE _725
+    USE _896
+    Cube {
+      translation 0.9375 0.1875 0.375
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _53
+    USE _224
+    Cube {
+      translation 0.9375 0.25 0.125
+    }
+    USE _565
+    USE _736
+    Cube {
+      translation 0.9375 0.25 0.3125
+    }
+    USE _1077
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _64
+    Cube {
+      translation 0.9375 0.3125 0.0625
+    }
+    USE _405
+    USE _576
+    Cube {
+      translation 0.9375 0.3125 0.25
+    }
+    USE _917
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.9375 0.375 0
+    }
+    USE _245
+    USE _416
+    Cube {
+      translation 0.9375 0.375 0.1875
+    }
+    USE _757
+    USE _928
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _85
+    USE _256
+    Cube {
+      translation 0.9375 0.4375 0.125
+    }
+    USE _597
+    USE _768
+    Cube {
+      translation 0.9375 0.4375 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _96
+    Cube {
+      translation 0.9375 0.5 0.0625
+    }
+    USE _437
+    USE _608
+    Cube {
+      translation 0.9375 0.5 0.25
+    }
+    USE _949
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.9375 0.5625 0
+    }
+    USE _277
+    USE _448
+    Cube {
+      translation 0.9375 0.5625 0.1875
+    }
+    USE _789
+    USE _960
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _117
+    USE _288
+    Cube {
+      translation 0.9375 0.625 0.125
+    }
+    USE _629
+    USE _800
+    Cube {
+      translation 0.9375 0.625 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _128
+    Cube {
+      translation 0.9375 0.6875 0.0625
+    }
+    USE _469
+    USE _640
+    Cube {
+      translation 0.9375 0.6875 0.25
+    }
+    USE _981
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.9375 0.75 0
+    }
+    USE _309
+    USE _480
+    Cube {
+      translation 0.9375 0.75 0.1875
+    }
+    USE _821
+    USE _992
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _149
+    USE _320
+    Cube {
+      translation 0.9375 0.8125 0.125
+    }
+    USE _661
+    USE _832
+    Cube {
+      translation 0.9375 0.8125 0.3125
+    }
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    USE _160
+    Cube {
+      translation 0.9375 0.875 0.0625
+    }
+    USE _501
+    USE _672
+    Cube {
+      translation 0.9375 0.875 0.25
+    }
+    USE _1013
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    NULL
+    Cube {
+      translation 0.9375 0.9375 0
+    }
+    USE _341
+    USE _512
+    Cube {
+      translation 0.9375 0.9375 0.1875
+    }
+    USE _853
+    USE _1024
+  ]
+  initializeOnly SFNode  space USE Space
+
+  url "vrmlscript:
+  
+var x = 0;
+var y = 0;
+var z = 0;
+
+function initialize ()
+{
+	var array = new MFString ('0', '1', '2');
+	print (array);
+	print (array [0])
+	print (array [1])
+	print (array [2])
+}
+
+function set_time (value, time)
+{
+	//print ('set_time: ' + space .children .length);
+	
+	addChildren    .length = 0;
+	removeChildren .length = 0;
+	
+	randomCubes ();
+
+	space .addChildren    = addChildren;
+	space .removeChildren = removeChildren;
+}
+
+function randomCubes ()
+{
+	for (var i = 0; i < 2; ++ i)
+	{
+		var index = get_index (x, y, z);
+
+		addCube (index, [x, y, z]);
+		
+		if (! (index % 3))
+			removeChildren [removeChildren .length] = children [index];
+	
+		if (++ x >= xDimension)
+		{
+			x = 0;
+			if (++ y >= yDimension)
+			{
+				y = 0;
+				if (++ z >= zDimension)
+				{
+					print ('clear');
+					z = 0;
+					
+					addChildren     .length = 0;
+					removeChildren  .length = 0;
+					children        .length = 0;
+					space .children .length = 0;
+				}
+			}
+		}
+	}
+}
+
+function addCube (index, point)
+{
+	var x = point [0];
+	var y = point [1];
+	var z = point [2];
+	
+	var cube = Browser .currentScene .createProto ('Cube');
+	children [index]   = cube;
+	addChildren [addChildren .length] = cube;
+	
+	cube .translation = new SFVec3f (x / xDimension + xSpacing * x, y / yDimension + ySpacing * y, z / zDimension + zSpacing * z);
+}
+
+function get_index (x, y, z)
+{
+	return (x * yDimension + y) * zDimension + z;
+}
+
+function random (value)
+{
+	return Math .round (Math .random () * value);
+}
+"
+  directOutput TRUE
+}
+
+ROUTE Timer.time TO Felület.set_time

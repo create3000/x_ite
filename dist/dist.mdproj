@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ItemType>GenericProject</ItemType>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1744EE21-91D1-4E66-9480-2D366977655F}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="dist.mdproj" />
+    <None Include="browser.html" />
+    <None Include="cobweb.css" />
+    <None Include="cobweb.js" />
+    <None Include="cobweb.min.js" />
+    <None Include="spinner.css" />
+    <None Include="images\ExamineViewer.png" />
+    <None Include="images\FlyViewer.png" />
+    <None Include="images\gtk-fullscreen.png" />
+    <None Include="images\gtk-leave-fullscreen.png" />
+    <None Include="images\gtk-zoom-fit.png" />
+    <None Include="images\gtk-zoom-in.png" />
+    <None Include="images\help-about.png" />
+    <None Include="images\icon.bw.png" />
+    <None Include="images\icon.png" />
+    <None Include="images\logo.bw.png" />
+    <None Include="images\logo.png" />
+    <None Include="images\NoneViewer.png" />
+    <None Include="images\PlaneViewer.png" />
+    <None Include="images\PrimitiveQuality.png" />
+    <None Include="images\TextureQuality.png" />
+    <None Include="images\Time.png" />
+    <None Include="images\Viewpoint.png" />
+    <None Include="images\WalkViewer.png" />
+    <None Include="cobweb.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
+</Project>

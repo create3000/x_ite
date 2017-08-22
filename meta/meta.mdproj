@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ItemType>GenericProject</ItemType>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EBC29A66-74D0-41DF-A37F-0E3A9CDEA50C}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="logo\icon.svg" />
+    <None Include="logo\logo.svg" />
+    <None Include="meta.mdproj" />
+    <None Include="resources\SupportedComponents.js" />
+    <None Include="resources\SupportedNodes.js" />
+    <None Include="resources\SupportedNodes.VRML.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="logo\" />
+    <Folder Include="resources\" />
+  </ItemGroup>
+</Project>

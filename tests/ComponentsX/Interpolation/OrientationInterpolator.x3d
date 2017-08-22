@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile='Full' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
+  <head>
+    <meta name='comment' content='World of Titania'/>
+    <meta name='created' content='Mon, 04 Jan 2016 06:29:42 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Titania V1.2.2, http://titania.create3000.de'/>
+    <meta name='modified' content='Mon, 04 Jan 2016 08:10:10 GMT'/>
+  </head>
+  <Scene>
+    <ExternProtoDeclare name='LineTrail' url='"https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/LineTrail.wrl"'>
+      <field accessType='inputOutput' type='SFBool' name='enabled'/>
+      <field accessType='inputOutput' type='SFTime' name='cycleInterval'/>
+      <field accessType='inputOutput' type='SFTime' name='resetTime'/>
+      <field accessType='inputOutput' type='SFVec3f' name='point'/>
+      <field accessType='initializeOnly' type='SFInt32' name='dimension'/>
+    </ExternProtoDeclare>
+    <WorldInfo
+        title='OrientationChaser'>
+      <MetadataSet DEF='Titania'
+          name='Titania'
+          reference='http://titania.create3000.de'>
+        <MetadataSet DEF='NavigationInfo' containerField='value'
+            name='NavigationInfo'
+            reference='http://titania.create3000.de'>
+          <MetadataString DEF='type' containerField='value'
+              name='type'
+              reference='http://titania.create3000.de'
+              value='"EXAMINE"'/>
+        </MetadataSet>
+        <MetadataSet DEF='Viewpoint' containerField='value'
+            name='Viewpoint'
+            reference='http://titania.create3000.de'>
+          <MetadataDouble DEF='position' containerField='value'
+              name='position'
+              reference='http://titania.create3000.de'
+              value='-1.26207339763641, -3.20390677452087, -3.62576198577881'/>
+          <MetadataDouble DEF='orientation' containerField='value'
+              name='orientation'
+              reference='http://titania.create3000.de'
+              value='0.00718989036977291, -0.937747418880463, 0.347243458032608, 2.86365866661072'/>
+          <MetadataDouble DEF='centerOfRotation' containerField='value'
+              name='centerOfRotation'
+              reference='http://titania.create3000.de'
+              value='0, 0, 0'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <NavigationInfo
+        type='"NONE", "ANY"'/>
+    <Background
+        skyColor='0.2 0.2 0.2'/>
+    <Viewpoint
+        position='0 0 5'/>
+    <Shape DEF='LineTrail'>
+      <Appearance>
+        <Material
+            emissiveColor='0 0.8 0.8'/>
+      </Appearance>
+      <ProtoInstance name='LineTrail' DEF='Trail' containerField='geometry'>
+        <fieldValue name='enabled' value='false'/>
+        <fieldValue name='cycleInterval' value='0.1'/>
+        <fieldValue name='point' value='0 0 1'/>
+        <fieldValue name='dimension' value='100'/>
+      </ProtoInstance>
+    </Shape>
+    <Transform DEF='Sphere'>
+      <Shape>
+        <Appearance>
+          <Material
+              transparency='0.5'/>
+        </Appearance>
+        <Sphere/>
+      </Shape>
+      <TouchSensor DEF='Touch'/>
+    </Transform>
+    <Transform DEF='Cone'>
+      <Transform DEF='Cone_1'
+          translation='0 0 0.192283'
+          rotation='1 0 0 1.5708'
+          scale='0.770473 0.770473 0.770473'>
+        <Shape>
+          <Appearance>
+            <Material DEF='ConeMaterial'/>
+          </Appearance>
+          <Cone/>
+        </Shape>
+      </Transform>
+      <Transform DEF='IndexedLineSet'>
+        <Shape>
+          <IndexedLineSet
+              colorPerVertex='false'
+              colorIndex='0, 1, 2'
+              coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1'>
+            <Color
+                color='1 0 0, 0 1 0, 0 0 1'/>
+            <Coordinate
+                point='-1 0 0, 1 0 0, 0 -1 0, 0 1 0, 0 0 -1, 0 0 1'/>
+          </IndexedLineSet>
+        </Shape>
+      </Transform>
+    </Transform>
+    <Script DEF='FollowerScript'>
+      <field accessType='inputOnly' type='SFTime' name='set_time'/>
+      <field accessType='inputOnly' type='SFBool' name='set_active'/>
+      <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
+      <field accessType='outputOnly' type='SFColor' name='color_changed'/>
+      <field accessType='outputOnly' type='SFVec3f' name='point_changed'/>
+      <field accessType='initializeOnly' type='SFNode' name='touchSensor'>
+        <TouchSensor USE='Touch'/>
+      </field>
+      <field accessType='initializeOnly' type='SFNode' name='timeSensor'>
+        <TimeSensor DEF='_1'
+            cycleInterval='2'/>
+      </field>
+      <field accessType='initializeOnly' type='SFNode' name='interpolator'>
+        <OrientationInterpolator DEF='_2'
+            key='0, 1'
+            keyValue='0 0 1 0, 0 0 1 0'/>
+      </field>
+<![CDATA[vrmlscript:
+
+function initialize ()
+{
+	timeSensor .stopTime  = 0;
+	timeSensor .startTime = 0;
+
+	interpolator .keyValue [0] = new SFRotation ();
+	interpolator .keyValue [1] = new SFRotation ();
+}
+
+function set_time (value, time)
+{
+	timeSensor .stopTime  = time;
+	timeSensor .startTime = time;
+
+	interpolator .keyValue [0] = interpolator .value_changed;
+	interpolator .keyValue [1] = new SFRotation (new SFVec3f (0.1, 0.1, 0.9), touchSensor .hitPoint_changed);
+}
+
+function set_active (value)
+{
+	if (value)
+		color_changed = new SFColor (0.8, 0, 0);
+	
+	else
+		color_changed = new SFColor (0.8, 0.8, 0.8);
+}
+
+function set_rotation (value)
+{
+	point_changed = value .multVec (new SFVec3f (0, 0, 1));
+}
+]]> 
+    </Script>
+    <ROUTE fromNode='Touch' fromField='touchTime' toNode='FollowerScript' toField='set_time'/>
+    <ROUTE fromNode='FollowerScript' fromField='color_changed' toNode='ConeMaterial' toField='set_diffuseColor'/>
+    <ROUTE fromNode='FollowerScript' fromField='point_changed' toNode='Trail' toField='set_point'/>
+    <ROUTE fromNode='_2' fromField='value_changed' toNode='FollowerScript' toField='set_rotation'/>
+    <ROUTE fromNode='_2' fromField='value_changed' toNode='Cone' toField='set_rotation'/>
+    <ROUTE fromNode='_1' fromField='isActive' toNode='Trail' toField='set_enabled'/>
+    <ROUTE fromNode='_1' fromField='isActive' toNode='FollowerScript' toField='set_active'/>
+    <ROUTE fromNode='_1' fromField='fraction_changed' toNode='_2' toField='set_fraction'/>
+  </Scene>
+</X3D>

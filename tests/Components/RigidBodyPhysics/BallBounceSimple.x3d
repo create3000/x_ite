@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.2//EN" "http://www.web3d.org/specifications/x3d-3.2.dtd">
+<X3D profile='Full' version='3.2' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.2.xsd'>
+  <head>
+    <component name='RigidBodyPhysics' level='2'/>
+    <meta name='comment' content='World of Titania'/>
+    <meta name='created' content='1 January 2008'/>
+    <meta name='creator' content='Alan Hudson and Justin Couch'/>
+    <meta name='description' content='Example scene for RigidBodyPhysics component'/>
+    <meta name='generator' content='Titania V2.0.1, http://titania.create3000.de'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/RigidBodyPhysics/BallBounceSimple.x3d'/>
+    <meta name='license' content='../license.html'/>
+    <meta name='modified' content='Thu, 15 Dec 2016 08:48:42 GMT'/>
+    <meta name='reference' content='originals/ball_bounce_simple.x3dv'/>
+    <meta name='reference' content='http://www.xj3d.org/extensions/index.html&#35;Physics'/>
+    <meta name='reference' content='http://www.web3d.org/x3d/specifications/ISO-IEC-FDIS-19775-1.2-X3D-AbstractSpecification/Part01/components/rigid_physics.html'/>
+    <meta name='title' content='BallBounceSimple.x3d'/>
+    <meta name='translated' content='26 December 2008'/>
+    <meta name='translator' content='Don Brutzman'/>
+    <meta name='warning' content='under development'/>
+  </head>
+  <Scene>
+    <WorldInfo
+        title='BallBounceSimple'>
+      <MetadataSet DEF='Titania'
+          name='Titania'
+          reference='http://titania.create3000.de'>
+        <MetadataSet DEF='NavigationInfo' containerField='value'
+            name='NavigationInfo'
+            reference='http://titania.create3000.de'>
+          <MetadataString DEF='type' containerField='value'
+              name='type'
+              reference='http://titania.create3000.de'
+              value='"EXAMINE"'/>
+        </MetadataSet>
+        <MetadataSet DEF='Viewpoint' containerField='value'
+            name='Viewpoint'
+            reference='http://titania.create3000.de'>
+          <MetadataDouble DEF='position' containerField='value'
+              name='position'
+              reference='http://titania.create3000.de'
+              value='2.03093099594116, 0.807206869125366, 5.5928750038147'/>
+          <MetadataDouble DEF='orientation' containerField='value'
+              name='orientation'
+              reference='http://titania.create3000.de'
+              value='-0.526168843648981, 0.850317189417353, 0.0103453059146783, 0.404083572121568'/>
+          <MetadataDouble DEF='centerOfRotation' containerField='value'
+              name='centerOfRotation'
+              reference='http://titania.create3000.de'
+              value='0, -0.455475002527237, 0'/>
+        </MetadataSet>
+        <MetadataSet DEF='Selection' containerField='value'
+            name='Selection'
+            reference='http://titania.create3000.de'>
+          <MetadataSet DEF='previous' containerField='value'
+              name='previous'
+              reference='http://titania.create3000.de'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <Viewpoint
+        position='2.03093 0.807207 5.59288'
+        orientation='-0.526168843648981 0.850317189417353 0.0103453059146783 0.404083572121568'
+        centerOfRotation='0 -0.455475 0'/>
+    <Group>
+      <CollidableShape DEF='BALL-GEOM'>
+        <Shape containerField='shape'>
+          <Appearance>
+            <Material DEF='Rococo20'
+                ambientIntensity='0.226102'
+                diffuseColor='0.52545 0.455896 0.904409'
+                specularColor='0.0955906 0.0955906 0.0955906'
+                shininess='0.078125'/>
+          </Appearance>
+          <Sphere
+              radius='0.1'/>
+        </Shape>
+      </CollidableShape>
+      <CollidableShape DEF='GROUND-GEOM'
+          translation='0 -1 0'>
+        <Shape DEF='_1' containerField='shape'>
+          <Appearance>
+            <Material DEF='Rococo6'
+                ambientIntensity='0.226102'
+                diffuseColor='0.904409 0.549305 0.224283'
+                specularColor='0.0955906 0.0955906 0.0955906'
+                emissiveColor='0.38 0.230798 0.0942356'
+                shininess='0.078125'/>
+          </Appearance>
+          <Box
+              size='4.38 0.0219 4.38'/>
+        </Shape>
+      </CollidableShape>
+    </Group>
+    <RigidBodyCollection DEF='BODY-COLLECTION'>
+      <RigidBody DEF='BODY-1'
+          finiteRotationAxis='0 1 0'
+          autoDisable='true'
+          disableLinearSpeed='0.1'>
+        <CollidableShape USE='BALL-GEOM' containerField='geometry'/>
+      </RigidBody>
+      <RigidBody DEF='BODY-1_1'
+          fixed='true'
+          position='0 -1 0'>
+        <CollidableShape USE='GROUND-GEOM' containerField='geometry'/>
+      </RigidBody>
+    </RigidBodyCollection>
+    <CollisionSensor DEF='COLLISION-OUTPUT'/>
+    <ROUTE fromNode='COLLISION-OUTPUT' fromField='contacts' toNode='BODY-COLLECTION' toField='set_contacts'/>
+  </Scene>
+</X3D>
