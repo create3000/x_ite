@@ -11,12 +11,21 @@ chomp $CWD;
 
 say $CWD;
 
-my $VERSION = `cat src/excite/Browser/VERSION.js`;
-$VERSION =~ /"(.*?)"/;
-$VERSION = $1;
+my $VERSION;
 
 sub check_version {
-	system "perl", "build/check-version.pl"
+	$VERSION = `cat package.json`;
+	$VERSION =~ /"version":\s*"(.*?)"/;
+	$VERSION = $1;
+
+	say "VERSION »$VERSION«";
+
+	my $BROWSER = `cat src/excite/Browser/VERSION.js`;
+	$BROWSER =~ s/"(.*?)"/"$VERSION"/;
+
+	open BROWSER, ">", "src/excite/Browser/VERSION.js";
+	print BROWSER $BROWSER;
+	close $BROWSER;
 }
 
 sub dist {
@@ -56,11 +65,11 @@ sub zip {
 	system "rm", "-v", "-r", $ZIP_DIR;
 }
 
+check_version;
 exit if $VERSION =~ /a$/;
 
 say "Making version '$VERSION' now.";
 
-check_version;
 dist;
 licenses;
 zip;

@@ -31,7 +31,7 @@ sub publish {
 	system "git", "push", "--delete", "origin", "$version";
 	system "git", "push", "--delete", "github", "$version";
 
-	system "git", "-f", "tag", "$version";
+	system "git", "tag", "$version";
 	system "git", "push", "origin", "--tags";
 	system "git", "push", "github", "--tags";
 }
