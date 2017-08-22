@@ -42,7 +42,7 @@ sub licenses {
 
 	my $licenses = $1;
 
-	$min =~ s!^((?:\s+|/\*.*?\*/|//.*?\n)+)!/* See LICENCES.txt for a detailed listing of used licences. */\n!sg;
+	$min =~ s!^((?:\s+|/\*.*?\*/|//.*?\n)+)!/* Excite X3D V$VERSION\n * See LICENCES.txt for a detailed listing of used licences. */\n!sg;
 
 	open MIN, ">", "dist/excite.min.js";
 	print MIN $min;

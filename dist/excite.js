@@ -23046,7 +23046,7 @@ function ($,
 ﻿
 define ('excite/Browser/VERSION',[],function ()
 {
-	return "4.0.1 ";
+	return "4.0.1";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
