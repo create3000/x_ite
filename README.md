@@ -1,6 +1,6 @@
-<img src="https://rawgit.com/create3000/excite/master/meta/logo/logo.svg" width="20" height="20"/>
+<img alt="Excite X3D" src="https://rawgit.com/create3000/excite/master/meta/logo/logo.svg" width="60" height="60"/>
 
-![alt Excite X3D](https://rawgit.com/create3000/excite/master/meta/logo/logo.svg =20x20) [Excite](http://create3000.de/excite-x3d/) — Excite X3D WebGL Browser
+[Excite](http://create3000.de/excite-x3d/) — Excite X3D WebGL Browser
 ==================================================
 
 
