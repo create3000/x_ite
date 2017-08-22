@@ -54,7 +54,7 @@ define ([
 ],
 function ($, X3DField, X3DConstants)
 {
-;"use strict";
+"use strict";
 
 	function SFBool (value)
 	{

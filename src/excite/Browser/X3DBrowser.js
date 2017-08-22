@@ -645,7 +645,7 @@ function ($,
 
 	Object .defineProperty (X3DBrowser .prototype, "name",
 	{
-		get: function () { return "Excite"; },
+		get: function () { return "Excite X3D"; },
 		enumerable: true,
 		configurable: false
 	});

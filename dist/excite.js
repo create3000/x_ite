@@ -14660,7 +14660,7 @@ define ('excite/Fields/SFBool',[
 ],
 function ($, X3DField, X3DConstants)
 {
-;"use strict";
+"use strict";
 
 	function SFBool (value)
 	{
@@ -16148,7 +16148,7 @@ define ('excite/Fields/SFMatrixPrototypeTemplate',[
 ],
 function ($, X3DField)
 {
-;"use strict";
+"use strict";
 
 	return function (Matrix, SFVec)
 	{
@@ -18514,7 +18514,7 @@ define ('excite/Fields/SFMatrix3',[
 ],
 function ($, X3DField, SFMatrixPrototypeTemplate, SFVec2, X3DConstants, Matrix3)
 {
-;"use strict";
+"use strict";
 
 	function SFMatrix3Template (TypeName, Type, SFVec2)
 	{
@@ -21294,7 +21294,7 @@ define ('excite/Fields/SFMatrix4',[
 ],
 function ($, X3DField, SFMatrixPrototypeTemplate, SFVec3, X3DConstants, Matrix4)
 {
-;"use strict";
+"use strict";
 
 	function SFMatrix4Template (TypeName, Type, SFVec3)
 	{
@@ -64025,7 +64025,7 @@ define ('standard/Math/Geometry/Box2',[
 ],
 function (Matrix3, Vector2)
 {
-;"use strict";
+"use strict";
 
 	var
 		x   = new Vector2 (0, 0),
@@ -111713,7 +111713,7 @@ function ($,
 
 	Object .defineProperty (X3DBrowser .prototype, "name",
 	{
-		get: function () { return "Excite"; },
+		get: function () { return "Excite X3D"; },
 		enumerable: true,
 		configurable: false
 	});

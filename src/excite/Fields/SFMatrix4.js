@@ -57,7 +57,7 @@ define ([
 ],
 function ($, X3DField, SFMatrixPrototypeTemplate, SFVec3, X3DConstants, Matrix4)
 {
-;"use strict";
+"use strict";
 
 	function SFMatrix4Template (TypeName, Type, SFVec3)
 	{

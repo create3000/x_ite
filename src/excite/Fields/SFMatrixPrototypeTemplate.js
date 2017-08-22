@@ -53,7 +53,7 @@ define ([
 ],
 function ($, X3DField)
 {
-;"use strict";
+"use strict";
 
 	return function (Matrix, SFVec)
 	{
