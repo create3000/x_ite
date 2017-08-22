@@ -2,4 +2,5 @@ AUTHORS
 ==================================================
 
 * Holger Seelig <holger.seelig@yahoo.de>
-* Andeas Plesch <andreasplesch@gmail.com> (advisor for the Geospatial component, XHTML DOM integration)
+* Andeas Plesch <andreasplesch@gmail.com> (advisor for the Geospatial component, XHTML DOM integration, and more)
+* John Carlson <yottzumm@gmail.com>
