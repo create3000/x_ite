@@ -1,5 +1,5 @@
 
-X3DCanvas .cobweb-splash-screen {
+X3DCanvas .excite-splash-screen {
 	display: none;
 	z-index: -100;
 	position: absolute;
@@ -13,7 +13,7 @@ X3DCanvas .cobweb-splash-screen {
 	background: radial-gradient(ellipse at center, rgb(130,130,130) 0%,rgb(65,65,65) 100%);
 }
 
-X3DCanvas .cobweb-spinner {
+X3DCanvas .excite-spinner {
 	position: absolute;
 	top: calc(50% - 70px);
 	left: calc(50% - 64px);
@@ -27,7 +27,7 @@ X3DCanvas .cobweb-spinner {
 	perspective: 780px;
 }
 
-X3DCanvas .cobweb-spinner > * {
+X3DCanvas .excite-spinner > * {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -43,47 +43,47 @@ X3DCanvas .cobweb-spinner > * {
 		-moz-border-radius: 50%;	
 }
 
-X3DCanvas .cobweb-spinner-one {
+X3DCanvas .excite-spinner-one {
 	left: 0%;
 	top: 0%;
-	animation: cobweb-spinner-rotate-one 1.15s linear infinite;
-		-o-animation: cobweb-spinner-rotate-one 1.15s linear infinite;
-		-ms-animation: cobweb-spinner-rotate-one 1.15s linear infinite;
-		-webkit-animation: cobweb-spinner-rotate-one 1.15s linear infinite;
-		-moz-animation: cobweb-spinner-rotate-one 1.15s linear infinite;
+	animation: excite-spinner-rotate-one 1.15s linear infinite;
+		-o-animation: excite-spinner-rotate-one 1.15s linear infinite;
+		-ms-animation: excite-spinner-rotate-one 1.15s linear infinite;
+		-webkit-animation: excite-spinner-rotate-one 1.15s linear infinite;
+		-moz-animation: excite-spinner-rotate-one 1.15s linear infinite;
 	border-bottom: 10px solid #ffe32d;
 }
 
-X3DCanvas .cobweb-spinner-two {
+X3DCanvas .excite-spinner-two {
 	right: 0%;
 	top: 0%;
-	animation: cobweb-spinner-rotate-two 1.15s linear infinite;
-		-o-animation: cobweb-spinner-rotate-two 1.15s linear infinite;
-		-ms-animation: cobweb-spinner-rotate-two 1.15s linear infinite;
-		-webkit-animation: cobweb-spinner-rotate-two 1.15s linear infinite;
-		-moz-animation: cobweb-spinner-rotate-two 1.15s linear infinite;
+	animation: excite-spinner-rotate-two 1.15s linear infinite;
+		-o-animation: excite-spinner-rotate-two 1.15s linear infinite;
+		-ms-animation: excite-spinner-rotate-two 1.15s linear infinite;
+		-webkit-animation: excite-spinner-rotate-two 1.15s linear infinite;
+		-moz-animation: excite-spinner-rotate-two 1.15s linear infinite;
 	border-right: 10px solid #ff9f2e;
 }
 
-X3DCanvas .cobweb-spinner-three {
+X3DCanvas .excite-spinner-three {
 	right: 0%;
 	bottom: 0%;
-	animation: cobweb-spinner-rotate-three 1.15s linear infinite;
-		-o-animation: cobweb-spinner-rotate-three 1.15s linear infinite;
-		-ms-animation: cobweb-spinner-rotate-three 1.15s linear infinite;
-		-webkit-animation: cobweb-spinner-rotate-three 1.15s linear infinite;
-		-moz-animation: cobweb-spinner-rotate-three 1.15s linear infinite;
+	animation: excite-spinner-rotate-three 1.15s linear infinite;
+		-o-animation: excite-spinner-rotate-three 1.15s linear infinite;
+		-ms-animation: excite-spinner-rotate-three 1.15s linear infinite;
+		-webkit-animation: excite-spinner-rotate-three 1.15s linear infinite;
+		-moz-animation: excite-spinner-rotate-three 1.15s linear infinite;
 	border-top: 10px solid #d71f1f;
 }
 
-X3DCanvas .cobweb-progress {
+X3DCanvas .excite-progress {
 	position: absolute;
 	top: calc(50% - 11pt);
 	left: calc(50% - 100px);
 	width: 200px;
 }
 
-X3DCanvas .cobweb-spinner-text {
+X3DCanvas .excite-spinner-text {
 	color: white;
 	font-size: 11pt;
 	text-align: center;
@@ -91,20 +91,20 @@ X3DCanvas .cobweb-spinner-text {
 	font-family: PT Sans, sans-serif;
 }
 
-X3DCanvas .cobweb-progressbar {
+X3DCanvas .excite-progressbar {
 	margin: 8px;
 	border-left:  2px solid rgba(255, 255, 255, 0.5);
 	border-right: 2px solid rgba(255, 255, 255, 0.5);
 	padding: 0 2px;
 }
 
-X3DCanvas .cobweb-progressbar div {
+X3DCanvas .excite-progressbar div {
 	width: 0%;
 	height: 6px;
 	background: rgba(255, 255, 255, 0.5);
 }
 
-@keyframes cobweb-spinner-rotate-one {
+@keyframes excite-spinner-rotate-one {
 	0% {
 		transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -113,7 +113,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-o-keyframes cobweb-spinner-rotate-one {
+@-o-keyframes excite-spinner-rotate-one {
 	0% {
 		-o-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -122,7 +122,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-ms-keyframes cobweb-spinner-rotate-one {
+@-ms-keyframes excite-spinner-rotate-one {
 	0% {
 		-ms-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -131,7 +131,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-webkit-keyframes cobweb-spinner-rotate-one {
+@-webkit-keyframes excite-spinner-rotate-one {
 	0% {
 		-webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -140,7 +140,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-moz-keyframes cobweb-spinner-rotate-one {
+@-moz-keyframes excite-spinner-rotate-one {
 	0% {
 		-moz-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -149,7 +149,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@keyframes cobweb-spinner-rotate-two {
+@keyframes excite-spinner-rotate-two {
 	0% {
 		transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -158,7 +158,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-o-keyframes cobweb-spinner-rotate-two {
+@-o-keyframes excite-spinner-rotate-two {
 	0% {
 		-o-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -167,7 +167,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-ms-keyframes cobweb-spinner-rotate-two {
+@-ms-keyframes excite-spinner-rotate-two {
 	0% {
 		-ms-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -176,7 +176,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-webkit-keyframes cobweb-spinner-rotate-two {
+@-webkit-keyframes excite-spinner-rotate-two {
 	0% {
 		-webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -185,7 +185,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-moz-keyframes cobweb-spinner-rotate-two {
+@-moz-keyframes excite-spinner-rotate-two {
 	0% {
 		-moz-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -194,7 +194,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@keyframes cobweb-spinner-rotate-three {
+@keyframes excite-spinner-rotate-three {
 	0% {
 		transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -203,7 +203,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-o-keyframes cobweb-spinner-rotate-three {
+@-o-keyframes excite-spinner-rotate-three {
 	0% {
 		-o-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -212,7 +212,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-ms-keyframes cobweb-spinner-rotate-three {
+@-ms-keyframes excite-spinner-rotate-three {
 	0% {
 		-ms-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -221,7 +221,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-webkit-keyframes cobweb-spinner-rotate-three {
+@-webkit-keyframes excite-spinner-rotate-three {
 	0% {
 		-webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -230,7 +230,7 @@ X3DCanvas .cobweb-progressbar div {
 	}
 }
 
-@-moz-keyframes cobweb-spinner-rotate-three {
+@-moz-keyframes excite-spinner-rotate-three {
 	0% {
 		-moz-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}

@@ -49,11 +49,11 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/PointingDeviceSensor/X3DDragSensorNode",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/PointingDeviceSensor/X3DDragSensorNode",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",

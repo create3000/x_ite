@@ -49,12 +49,12 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/Navigation/X3DViewpointNode",
-	"cobweb/Components/Interpolation/ScalarInterpolator",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/Navigation/X3DViewpointNode",
+	"excite/Components/Interpolation/ScalarInterpolator",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Geometry/Camera",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",

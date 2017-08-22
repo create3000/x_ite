@@ -49,12 +49,12 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/PointingDeviceSensor/X3DTouchSensorNode",
-	"cobweb/Components/Geospatial/X3DGeospatialObject",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/PointingDeviceSensor/X3DTouchSensorNode",
+	"excite/Components/Geospatial/X3DGeospatialObject",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],

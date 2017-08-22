@@ -49,7 +49,7 @@
 
 define ([
 	"jquery",
-	"cobweb/Basic/X3DBaseNode",
+	"excite/Basic/X3DBaseNode",
 	"lib/gettext",
 	"lib/jquery-contextMenu/dist/jquery.contextMenu",
 	"lib/jquery.fullscreen-min",
@@ -60,7 +60,7 @@ function ($,
 {
 "use strict";
 	
-	$("head") .append ('<style>.cobweb-menu-title:before { content: "' + _("Excite X3D Browser") + '" }</style>');
+	$("head") .append ('<style>.excite-menu-title:before { content: "' + _("Excite X3D Browser") + '" }</style>');
 
 	function ContextMenu (executionContext)
 	{
@@ -90,7 +90,7 @@ function ($,
 				return;
 
 			$.contextMenu ({
-				selector: ".cobweb-surface-" + this .getBrowser () .getId (), 
+				selector: ".excite-surface-" + this .getBrowser () .getId (), 
 				build: this .build .bind (this),
 			});
 		},
@@ -103,12 +103,12 @@ function ($,
 				fullscreen       = this .getBrowser () .getElement () .fullScreen ();
 
 			var menu = {
-				className: "cobweb-menu cobweb-menu-title",
+				className: "excite-menu excite-menu-title",
 				items: {
 					"separator0": "--------",
 					"viewpoints": {
 						name: _("Viewpoints"),
-						className: "context-menu-icon cobweb-icon-viewpoint",
+						className: "context-menu-icon excite-icon-viewpoint",
 						items: this .getViewpoints (),
 						callback: function (viewpoint)
 						{
@@ -124,7 +124,7 @@ function ($,
 					"separator1": "--------",
 					"viewer": {
 						name: _(this .getViewerName (currentViewer)),
-						className: "context-menu-icon cobweb-icon-" + currentViewer .toLowerCase () + "-viewer",
+						className: "context-menu-icon excite-icon-" + currentViewer .toLowerCase () + "-viewer",
 						callback: function (viewer)
 						{
 							$(".context-menu-list") .fadeOut (500);
@@ -141,7 +141,7 @@ function ($,
 					"separator2": "--------",
 					"primitive-quality": {
 						name: _("Primitive Quality"),
-						className: "context-menu-icon cobweb-icon-primitive-quality",
+						className: "context-menu-icon excite-icon-primitive-quality",
 						items: {
 							"high": {
 								name: _("High"),
@@ -189,7 +189,7 @@ function ($,
 					},
 					"texture-quality": {
 						name: _("Texture Quality"),
-						className: "context-menu-icon cobweb-icon-texture-quality",
+						className: "context-menu-icon excite-icon-texture-quality",
 						items: {
 							"high": {
 								name: _("High"),
@@ -283,7 +283,7 @@ function ($,
 					},
 					"fullscreen": {
 						name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
-						className: "context-menu-icon " + (fullscreen ? "cobweb-icon-leave-fullscreen" : "cobweb-icon-fullscreen"),
+						className: "context-menu-icon " + (fullscreen ? "excite-icon-leave-fullscreen" : "excite-icon-fullscreen"),
 						callback: function ()
 						{
 						   this .getBrowser () .getElement () .toggleFullScreen ();
@@ -293,10 +293,10 @@ function ($,
 					"separator3": "--------",
 					"about": {
 						name: _("About Excite"),
-						className: "context-menu-icon cobweb-icon-help-about",
+						className: "context-menu-icon excite-icon-help-about",
 						callback: function ()
 						{
-						   window .open ("http://create3000.de/cobweb/");
+						   window .open ("http://create3000.de/excite/");
 						},
 					},
 				}
@@ -363,7 +363,7 @@ function ($,
 
 				menu [viewer] = {
 					name: _(this .getViewerName (viewer)),
-					className: "context-menu-icon cobweb-icon-" + viewer .toLowerCase () + "-viewer",
+					className: "context-menu-icon excite-icon-" + viewer .toLowerCase () + "-viewer",
 					callback: function (viewer)
 					{
 						$(".context-menu-list") .fadeOut (500);

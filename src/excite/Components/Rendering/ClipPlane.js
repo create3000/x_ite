@@ -49,11 +49,11 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/Core/X3DChildNode",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/Core/X3DChildNode",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Geometry/Plane3",

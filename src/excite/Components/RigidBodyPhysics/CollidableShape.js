@@ -49,11 +49,11 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
+	"excite/Bits/X3DConstants",
 ],
 function ($,
           Fields,

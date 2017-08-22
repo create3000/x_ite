@@ -50,8 +50,8 @@
 define ([
 	"jquery",
 	"standard/Math/Numbers/Color3",
-	"cobweb/Basic/X3DField",
-	"cobweb/Bits/X3DConstants",
+	"excite/Basic/X3DField",
+	"excite/Bits/X3DConstants",
 ],
 function ($, Color3, X3DField, X3DConstants)
 {

@@ -49,18 +49,18 @@
 
 define ([
 	"jquery",
-	"cobweb/Browser/VERSION",
-	"cobweb/Base/Events",
-	"cobweb/Fields",
-	"cobweb/Browser/X3DBrowserContext",
-	"cobweb/Configuration/ComponentInfo",
-	"cobweb/Configuration/SupportedProfiles",
-	"cobweb/Configuration/SupportedComponents",
-	"cobweb/Configuration/SupportedNodes",
-	"cobweb/Execution/Scene",
-	"cobweb/InputOutput/FileLoader",
-	"cobweb/Parser/XMLParser",
-	"cobweb/Bits/X3DConstants",
+	"excite/Browser/VERSION",
+	"excite/Base/Events",
+	"excite/Fields",
+	"excite/Browser/X3DBrowserContext",
+	"excite/Configuration/ComponentInfo",
+	"excite/Configuration/SupportedProfiles",
+	"excite/Configuration/SupportedComponents",
+	"excite/Configuration/SupportedNodes",
+	"excite/Execution/Scene",
+	"excite/InputOutput/FileLoader",
+	"excite/Parser/XMLParser",
+	"excite/Bits/X3DConstants",
 	"lib/gettext",
 ],
 function ($,
@@ -398,7 +398,7 @@ function ($,
 				if (scene)
 					this .replaceWorld (scene);
 				else
-					setTimeout (function () { this .getSplashScreen () .find (".cobweb-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+					setTimeout (function () { this .getSplashScreen () .find (".excite-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 
 				// Must not remove load count, replaceWorld does a resetLoadCount when it sets setBrowserLoading to true.
 				// Don't set browser loading to false.
@@ -626,7 +626,7 @@ function ($,
 
 			console .log (string);
 
-			$(".cobweb-console") .append (string);
+			$(".excite-console") .append (string);
 		},
 		println: function ()
 		{
@@ -639,7 +639,7 @@ function ($,
 
 			string += "\n";
 
-			$(".cobweb-console") .append (string);
+			$(".excite-console") .append (string);
 		},
 	});
 

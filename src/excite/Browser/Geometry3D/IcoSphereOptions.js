@@ -48,12 +48,12 @@
 
 
 define ([
-	"cobweb/Fields",
-	"cobweb/Basic/X3DBaseNode",
-	"cobweb/Components/Geometry3D/IndexedFaceSet",
-	"cobweb/Components/Rendering/Coordinate",
-	"cobweb/Components/Texturing/TextureCoordinate",
-	"cobweb/Browser/Geometry3D/IcoSphere",
+	"excite/Fields",
+	"excite/Basic/X3DBaseNode",
+	"excite/Components/Geometry3D/IndexedFaceSet",
+	"excite/Components/Rendering/Coordinate",
+	"excite/Components/Texturing/TextureCoordinate",
+	"excite/Browser/Geometry3D/IcoSphere",
 ],
 function (Fields,
           X3DBaseNode,

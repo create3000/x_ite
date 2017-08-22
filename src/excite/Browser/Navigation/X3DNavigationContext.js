@@ -48,14 +48,14 @@
 
 
 define ([
-	"cobweb/Fields",
-	"cobweb/Browser/Navigation/ExamineViewer",
-	"cobweb/Browser/Navigation/WalkViewer",
-	"cobweb/Browser/Navigation/FlyViewer",
-	"cobweb/Browser/Navigation/PlaneViewer",
-	"cobweb/Browser/Navigation/NoneViewer",
-	"cobweb/Browser/Navigation/LookAtViewer",
-	"cobweb/Components/Lighting/DirectionalLight",
+	"excite/Fields",
+	"excite/Browser/Navigation/ExamineViewer",
+	"excite/Browser/Navigation/WalkViewer",
+	"excite/Browser/Navigation/FlyViewer",
+	"excite/Browser/Navigation/PlaneViewer",
+	"excite/Browser/Navigation/NoneViewer",
+	"excite/Browser/Navigation/LookAtViewer",
+	"excite/Components/Lighting/DirectionalLight",
 	"standard/Math/Numbers/Matrix4",
 ],
 function (Fields,

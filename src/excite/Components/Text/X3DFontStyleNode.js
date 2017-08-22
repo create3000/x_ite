@@ -49,15 +49,15 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Components/Core/X3DNode",
-	"cobweb/Components/Networking/X3DUrlObject",
-	"cobweb/Browser/Text/TextAlignment",
-	"cobweb/InputOutput/FileLoader",
-	"cobweb/Bits/X3DConstants",
-	"cobweb/Browser/Networking/urls",
+	"excite/Fields",
+	"excite/Components/Core/X3DNode",
+	"excite/Components/Networking/X3DUrlObject",
+	"excite/Browser/Text/TextAlignment",
+	"excite/InputOutput/FileLoader",
+	"excite/Bits/X3DConstants",
+	"excite/Browser/Networking/urls",
 	"standard/Networking/URI",
-	"cobweb/DEBUG",
+	"excite/DEBUG",
 ],
 function ($,
           Fields,
@@ -78,10 +78,10 @@ function ($,
 
 	var FontDirectories = [
 		"http://media.create3000.de/fonts/",
-		"https://cdn.rawgit.com/create3000/cobweb/master/cobweb.js/fonts/",
-		"http://cdn.rawgit.com/create3000/cobweb/master/cobweb.js/fonts/",
-		"https://rawgit.com/create3000/cobweb/master/cobweb.js/fonts/",
-		"http://rawgit.com/create3000/cobweb/master/cobweb.js/fonts/",
+		"https://cdn.rawgit.com/create3000/excite/master/excite/fonts/",
+		"http://cdn.rawgit.com/create3000/excite/master/excite/fonts/",
+		"https://rawgit.com/create3000/excite/master/excite/fonts/",
+		"http://rawgit.com/create3000/excite/master/excite/fonts/",
 	];
 
 	var Fonts =

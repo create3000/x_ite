@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
-	"cobweb/Components/Core/X3DSensorNode",
-	"cobweb/Bits/X3DConstants",
+	"excite/Components/Core/X3DSensorNode",
+	"excite/Bits/X3DConstants",
 ],
 function ($,
           X3DSensorNode, 

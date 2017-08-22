@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
-	"cobweb/Rendering/DepthBuffer",
-	"cobweb/Bits/TraverseType",
+	"excite/Rendering/DepthBuffer",
+	"excite/Bits/TraverseType",
 	"standard/Math/Algorithm",
 	"standard/Math/Algorithms/MergeSort",
 	"standard/Math/Geometry/Camera",

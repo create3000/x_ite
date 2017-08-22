@@ -49,12 +49,12 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/ParticleSystems/X3DParticleEmitterNode",
-	"cobweb/Bits/X3DConstants",
-	"cobweb/Bits/X3DCast",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/ParticleSystems/X3DParticleEmitterNode",
+	"excite/Bits/X3DConstants",
+	"excite/Bits/X3DCast",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",

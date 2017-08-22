@@ -49,7 +49,7 @@
 
 define ([
 	"jquery",
-	"cobweb/Bits/X3DConstants",
+	"excite/Bits/X3DConstants",
 ],
 function ($,
           X3DConstants)

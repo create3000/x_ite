@@ -48,7 +48,7 @@
 
 
 define ([
-	"cobweb/Browser/Text/TextAlignment",
+	"excite/Browser/Text/TextAlignment",
 	"standard/Math/Geometry/Box2",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Numbers/Vector2",

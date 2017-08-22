@@ -49,9 +49,9 @@
 
 define ([
 	"jquery",
-	"cobweb/Browser/PointingDeviceSensor/PointingDevice",
-	"cobweb/Bits/TraverseType",
-	"cobweb/Bits/X3DConstants",
+	"excite/Browser/PointingDeviceSensor/PointingDevice",
+	"excite/Bits/TraverseType",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Geometry/Line3",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector2",
@@ -107,7 +107,7 @@ function ($,
 		{
 			this .cursorType = value;
 
-			var div = this .getBrowser () .getElement () .find (".cobweb-surface");
+			var div = this .getBrowser () .getElement () .find (".excite-surface");
 
 			switch (value)
 			{

@@ -48,7 +48,7 @@
 
 ﻿
 define ([
-	"cobweb/Browser/Navigation/X3DFlyViewer",
+	"excite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"lib/gettext",

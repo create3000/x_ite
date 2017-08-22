@@ -48,15 +48,15 @@
 
 
 define ([
-	"cobweb/Fields",
-	"cobweb/Browser/Core/BrowserOptions",
-	"cobweb/Browser/Core/BrowserProperties",
-	"cobweb/Browser/Core/RenderingProperties",
-	"cobweb/Browser/Core/Notification",
-	"cobweb/Browser/Core/BrowserTimings",
-	"cobweb/Browser/Core/ContextMenu",
-	"cobweb/Execution/Scene",
-	"cobweb/Parser/Parser",
+	"excite/Fields",
+	"excite/Browser/Core/BrowserOptions",
+	"excite/Browser/Core/BrowserProperties",
+	"excite/Browser/Core/RenderingProperties",
+	"excite/Browser/Core/Notification",
+	"excite/Browser/Core/BrowserTimings",
+	"excite/Browser/Core/ContextMenu",
+	"excite/Execution/Scene",
+	"excite/Parser/Parser",
 	"lib/DataStorage",
 ],
 function (Fields,
@@ -106,17 +106,17 @@ function (Fields,
 
 		// Get canvas & context.
 
-		var browser      = $("<div></div>") .addClass ("cobweb-browser")  .prependTo (this .element);
-		var splashScreen = $("<div></div>") .addClass ("cobweb-splash-screen") .appendTo (browser);
-		var spinner      = $("<div></div>") .addClass ("cobweb-spinner")  .appendTo (splashScreen);
-		var progress     = $("<div></div>") .addClass ("cobweb-progress") .appendTo (splashScreen);
-		var surface      = $("<div></div>") .addClass ("cobweb-surface cobweb-surface-" + this .getId ()) .appendTo (browser);
+		var browser      = $("<div></div>") .addClass ("excite-browser")  .prependTo (this .element);
+		var splashScreen = $("<div></div>") .addClass ("excite-splash-screen") .appendTo (browser);
+		var spinner      = $("<div></div>") .addClass ("excite-spinner")  .appendTo (splashScreen);
+		var progress     = $("<div></div>") .addClass ("excite-progress") .appendTo (splashScreen);
+		var surface      = $("<div></div>") .addClass ("excite-surface excite-surface-" + this .getId ()) .appendTo (browser);
 
-		$("<div></div>") .addClass ("cobweb-spinner-one")   .appendTo (spinner);
-		$("<div></div>") .addClass ("cobweb-spinner-two")   .appendTo (spinner);
-		$("<div></div>") .addClass ("cobweb-spinner-three") .appendTo (spinner);
-		$("<div></div>") .addClass ("cobweb-spinner-text")  .appendTo (progress) .text ("Lade 0 Dateien");
-		$("<div></div>") .addClass ("cobweb-progressbar")   .appendTo (progress) .append ($("<div></div>"));
+		$("<div></div>") .addClass ("excite-spinner-one")   .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-spinner-two")   .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-spinner-three") .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-spinner-text")  .appendTo (progress) .text ("Lade 0 Dateien");
+		$("<div></div>") .addClass ("excite-progressbar")   .appendTo (progress) .append ($("<div></div>"));
 
 		this .splashScreen = splashScreen;
 		this .canvas       = $("<canvas></canvas>") .prependTo (surface);
@@ -139,7 +139,7 @@ function (Fields,
 		if (this .getBrowserOptions () .getSplashScreen ())
 			this .getSplashScreen () .fadeIn (0);
 
-		$(".cobweb-console") .empty ();
+		$(".excite-console") .empty ();
 	}
 
 	X3DCoreContext .prototype =

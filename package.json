@@ -1,0 +1,45 @@
+{
+	"name": "excite",
+	"version": "3.3.1",
+	"description": "Excite X3D Browser",
+	"main": "src/excite.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/create3000/excite.git"
+	},
+	"keywords": [
+		"X3D",
+		"WebGL",
+		"browser"
+	],
+	"author": "Holger Seelig <holger.seeligyahoo.de>",
+	"license": "GPL-3.0",
+	"homepage": "https://github.com/create3000/excite#readme",
+	"contributors": [
+		{
+			"name": "Holger Seelig",
+			"email": "holger.seeligyahoo.de",
+			"url": "http://create3000.de"
+		},
+		{
+			"name": "Andreas Plesh",
+			"email": "andreasplesch@gmail.com"
+		}
+	],
+	"bugs": {
+		"url": "https://github.com/create3000/excite/issues"
+	},
+	"devDependencies": {
+		"require": "latest",
+		"requirejs": "latest",
+		"jquery": "latest",
+		"jquery-mousewheel": "latest"
+	},
+	"scripts": {
+		"lint": "jshint **",
+		"build": "npm run build:js && npm run build:min.js",
+		"-prebuild:js": "npm run lint",
+		"build:js": "r.js -o require.build.js",
+		"build:min.js": "r.js -o require.build.min.js"
+	}
+}

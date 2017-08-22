@@ -48,9 +48,9 @@
 
 
 define ([
-	"cobweb/Components/Texturing/TextureProperties",
-	"cobweb/Components/Texturing/TextureTransform",
-	"cobweb/Components/Texturing/TextureCoordinate",
+	"excite/Components/Texturing/TextureProperties",
+	"excite/Components/Texturing/TextureTransform",
+	"excite/Components/Texturing/TextureCoordinate",
 ],
 function (TextureProperties,
           TextureTransform,

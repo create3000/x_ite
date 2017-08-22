@@ -48,7 +48,7 @@
 
 
 define ([
-	"cobweb/Components/Layering/Viewport",
+	"excite/Components/Layering/Viewport",
 ],
 function (Viewport)
 {

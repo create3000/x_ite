@@ -48,8 +48,8 @@
 
 
 define ([
-	"cobweb/Fields",
-	"cobweb/Execution/X3DScene",
+	"excite/Fields",
+	"excite/Execution/X3DScene",
 ],
 function (Fields,
           X3DScene)

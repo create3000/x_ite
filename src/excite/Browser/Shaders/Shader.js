@@ -48,9 +48,9 @@
 
 
 define ([
-	"text!cobweb/Browser/Shaders/Bits/Line3.h",
-	"text!cobweb/Browser/Shaders/Bits/Plane3.h",
-	"text!cobweb/Browser/Shaders/Bits/Random.h",
+	"text!excite/Browser/Shaders/Bits/Line3.h",
+	"text!excite/Browser/Shaders/Bits/Plane3.h",
+	"text!excite/Browser/Shaders/Bits/Random.h",
 ],
 function (Line3,
           Plane3,

@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
-	"cobweb/Bits/X3DCast",
-	"cobweb/Bits/X3DConstants",
+	"excite/Bits/X3DCast",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Geometry/Box3",
 ],

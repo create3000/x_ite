@@ -48,9 +48,9 @@
 
 
 define ([
-	"cobweb/Basic/X3DBaseNode",
-	"cobweb/Rendering/X3DRenderObject",
-	"cobweb/Bits/TraverseType",
+	"excite/Basic/X3DBaseNode",
+	"excite/Rendering/X3DRenderObject",
+	"excite/Bits/TraverseType",
 ],
 function (X3DBaseNode,
           X3DRenderObject,

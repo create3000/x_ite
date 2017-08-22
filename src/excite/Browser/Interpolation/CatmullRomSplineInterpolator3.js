@@ -48,7 +48,7 @@
 
 
 define ([
-	"cobweb/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",
+	"excite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",
 	"standard/Math/Numbers/Vector3",
 ],
 function (CatmullRomSplineInterpolatorTemplate,

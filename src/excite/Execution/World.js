@@ -49,12 +49,12 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields/SFNode",
-	"cobweb/Basic/X3DBaseNode",
-	"cobweb/Components/Layering/LayerSet",
-	"cobweb/Components/Layering/Layer",
-	"cobweb/Bits/X3DCast",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields/SFNode",
+	"excite/Basic/X3DBaseNode",
+	"excite/Components/Layering/LayerSet",
+	"excite/Components/Layering/Layer",
+	"excite/Bits/X3DCast",
+	"excite/Bits/X3DConstants",
 ],
 function ($,
           SFNode,

@@ -49,10 +49,10 @@
 
 define ([
 	"jquery",
-	"cobweb/Components/Core/X3DChildNode",
-	"cobweb/Components/Grouping/X3DBoundedObject",
-	"cobweb/Bits/X3DCast",
-	"cobweb/Bits/X3DConstants",
+	"excite/Components/Core/X3DChildNode",
+	"excite/Components/Grouping/X3DBoundedObject",
+	"excite/Bits/X3DCast",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
 ],
 function ($,

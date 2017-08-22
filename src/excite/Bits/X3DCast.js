@@ -48,7 +48,7 @@
 
 
 define ([
-	"cobweb/Fields",
+	"excite/Fields",
 ],
 function (Fields)
 {

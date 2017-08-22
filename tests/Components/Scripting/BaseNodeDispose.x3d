@@ -10,7 +10,7 @@
     <meta name='title' content='Scene.rootNodes.2'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='Pyramid' url='"Pyramid.x3d#Pyramid", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Scripting/Pyramid.x3d#Pyramid"'>
+    <ExternProtoDeclare name='Pyramid' url='"Pyramid.x3d#Pyramid", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/Scripting/Pyramid.x3d#Pyramid"'>
       <field accessType='inputOutput' type='SFNode' name='metadata'/>
     </ExternProtoDeclare>
     <ProtoDeclare name='Tube'>
@@ -56,7 +56,7 @@
         <TouchSensor DEF='InsertTouch'
             description='Add Node to Scene'/>
         <Inline DEF='Inline'
-            url='"../Geometry3D/box.x3d", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Geometry3D/box.x3d"'/>
+            url='"../Geometry3D/box.x3d", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/Geometry3D/box.x3d"'/>
         <Script DEF='InsertScript'
             directOutput='true'>
           <field accessType='inputOnly' type='SFTime' name='set_time'/>
@@ -125,7 +125,7 @@ function random3f (min, max)
         <TouchSensor DEF='ClearTouch'
             description='Dispose node'/>
         <Inline DEF='Inline_1'
-            url='"../Geometry3D/box.x3d", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Geometry3D/box.x3d"'/>
+            url='"../Geometry3D/box.x3d", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/Geometry3D/box.x3d"'/>
         <Script DEF='ClearScript'
             directOutput='true'>
           <field accessType='inputOnly' type='SFTime' name='set_time'/>

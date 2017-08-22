@@ -6,7 +6,7 @@
     <meta name='created' content='Fri, 01 Jan 2016 20:19:39 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Titania V1.4.9, http://titania.create3000.de'/>
-    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Shaders/images.x3d'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/excite/tests/Components/Shaders/images.x3d'/>
     <meta name='modified' content='Sat, 10 Sep 2016 10:08:37 GMT'/>
   </head>
   <Scene>
@@ -163,7 +163,7 @@ main ()
           <ComposedShader>
             <field accessType='inputOutput' type='SFNode' name='texture'>
               <ImageTexture DEF='_1'
-                  url='"../images/ubuntu.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/ubuntu.png"'
+                  url='"../images/ubuntu.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/ubuntu.png"'
                   repeatS='false'
                   repeatT='false'/>
             </field>

@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
-	"cobweb/Components/Core/X3DChildNode",
-	"cobweb/Bits/X3DConstants",
+	"excite/Components/Core/X3DChildNode",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
 function ($,

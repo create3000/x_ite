@@ -1166,7 +1166,7 @@ Transform {
         children Inline {
           url [
             "../Geometry3D/Beethoven.x3dz",
-            "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Geometry3D/Beethoven.x3dz"
+            "file:///home/holger/Projekte/Cobweb/excite/tests/Components/Geometry3D/Beethoven.x3dz"
           ]
         }
       }

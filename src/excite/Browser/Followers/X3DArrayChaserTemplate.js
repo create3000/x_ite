@@ -49,7 +49,7 @@
 
 define ([
 	"jquery",
-	"cobweb/Browser/Followers/X3DArrayFollowerTemplate",
+	"excite/Browser/Followers/X3DArrayFollowerTemplate",
 ],
 function ($,
           X3DArrayFollowerTemplate)

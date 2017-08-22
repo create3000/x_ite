@@ -48,7 +48,7 @@
 
 
 define ([
-	"cobweb/Browser/VERSION",
+	"excite/Browser/VERSION",
 ],
 function (VERSION)
 {

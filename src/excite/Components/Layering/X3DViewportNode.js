@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
-	"cobweb/Components/Grouping/X3DGroupingNode",
-	"cobweb/Bits/X3DConstants",
+	"excite/Components/Grouping/X3DGroupingNode",
+	"excite/Bits/X3DConstants",
 ],
 function ($,
           X3DGroupingNode, 

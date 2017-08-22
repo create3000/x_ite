@@ -49,10 +49,10 @@
 
 define ([
 	"jquery",
-	"cobweb/Browser/Text/X3DTextGeometry",
-	"cobweb/Browser/Text/TextAlignment",
-	"cobweb/Components/Texturing/PixelTexture",
-	"cobweb/Bits/TraverseType",
+	"excite/Browser/Text/X3DTextGeometry",
+	"excite/Browser/Text/TextAlignment",
+	"excite/Components/Texturing/PixelTexture",
+	"excite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",

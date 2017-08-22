@@ -49,10 +49,10 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Components/Texturing/X3DTextureNode",
-	"cobweb/Bits/X3DCast",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields",
+	"excite/Components/Texturing/X3DTextureNode",
+	"excite/Bits/X3DCast",
+	"excite/Bits/X3DConstants",
 ],
 function ($,
           Fields,

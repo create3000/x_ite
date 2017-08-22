@@ -48,7 +48,7 @@
 
 ﻿
 define ([
-	"cobweb/Browser/Navigation/X3DFlyViewer",
+	"excite/Browser/Navigation/X3DFlyViewer",
 	"lib/gettext",
 ],
 function (X3DFlyViewer, _)

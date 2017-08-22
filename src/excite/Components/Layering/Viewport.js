@@ -49,12 +49,12 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/Layering/X3DViewportNode",
-	"cobweb/Bits/X3DConstants",
-	"cobweb/Bits/TraverseType",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/Layering/X3DViewportNode",
+	"excite/Bits/X3DConstants",
+	"excite/Bits/TraverseType",
 	"standard/Utility/ObjectCache",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector4",

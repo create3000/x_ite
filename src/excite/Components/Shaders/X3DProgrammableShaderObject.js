@@ -49,9 +49,9 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Bits/X3DCast",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields",
+	"excite/Bits/X3DCast",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix3",
 ],
 function ($,

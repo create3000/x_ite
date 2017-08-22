@@ -49,11 +49,11 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
+	"excite/Bits/X3DConstants",
 ],
 function ($,
           Fields,

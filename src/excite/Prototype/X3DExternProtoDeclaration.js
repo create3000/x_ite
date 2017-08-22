@@ -49,13 +49,13 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/Networking/X3DUrlObject",
-	"cobweb/Prototype/X3DProtoDeclarationNode",
-	"cobweb/Bits/X3DConstants",
-	"cobweb/InputOutput/Generator",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/Networking/X3DUrlObject",
+	"excite/Prototype/X3DProtoDeclarationNode",
+	"excite/Bits/X3DConstants",
+	"excite/InputOutput/Generator",
 ],
 function ($,
           Fields,
@@ -162,7 +162,7 @@ function ($,
 
 			// Don't create scene cache, due to possible default nodes in proto SFNode fields and complete scenes.
 
-			var FileLoader = require ("cobweb/InputOutput/FileLoader");
+			var FileLoader = require ("excite/InputOutput/FileLoader");
 
 			new FileLoader (this) .createX3DFromURL (this .url_, null, this .setInternalSceneAsync .bind (this));
 		},

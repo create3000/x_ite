@@ -49,9 +49,9 @@
 
 define ([
 	"jquery",
-	"cobweb/Bits/X3DConstants",
-	"cobweb/Browser/Geospatial/Geospatial",
-	"cobweb/Bits/X3DCast",
+	"excite/Bits/X3DConstants",
+	"excite/Browser/Geospatial/Geospatial",
+	"excite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],

@@ -49,10 +49,10 @@
 
 define ([
 	"jquery",
-	"cobweb/Basic/X3DField",
-	"cobweb/Fields/SFMatrixPrototypeTemplate",
-	"cobweb/Fields/SFVec3",
-	"cobweb/Bits/X3DConstants",
+	"excite/Basic/X3DField",
+	"excite/Fields/SFMatrixPrototypeTemplate",
+	"excite/Fields/SFVec3",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
 function ($, X3DField, SFMatrixPrototypeTemplate, SFVec3, X3DConstants, Matrix4)

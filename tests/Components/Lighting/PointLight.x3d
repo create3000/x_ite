@@ -6,7 +6,7 @@
     <meta name='created' content='Sun, 08 Mar 2015 05:54:30 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Titania V2.0.1, http://titania.create3000.de'/>
-    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Lighting/PointLight.x3d'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/excite/tests/Components/Lighting/PointLight.x3d'/>
     <meta name='modified' content='Thu, 20 Oct 2016 10:59:35 GMT'/>
     <meta name='title' content='Beethoven'/>
   </head>
@@ -270,7 +270,7 @@
             </Transform>
             <Transform DEF='Beethoven'>
               <Inline
-                  url='"../Geometry3D/Beethoven.x3dz", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Geometry3D/Beethoven.x3dz"'/>
+                  url='"../Geometry3D/Beethoven.x3dz", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/Geometry3D/Beethoven.x3dz"'/>
             </Transform>
           </Transform>
         </Transform>

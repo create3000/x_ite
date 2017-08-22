@@ -51,7 +51,7 @@ define ([
 	"standard/Geospatial/ReferenceEllipsoids",
 	"standard/Geospatial/Geodetic",
 	"standard/Geospatial/UniversalTransverseMercator",
-	"cobweb/Browser/Geospatial/Geocentric",
+	"excite/Browser/Geospatial/Geocentric",
 ],
 function (ReferenceEllipsoids,
           Geodetic,

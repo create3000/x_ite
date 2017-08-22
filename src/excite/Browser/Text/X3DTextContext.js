@@ -48,7 +48,7 @@
 
 
 define ([
-	"cobweb/Components/Text/FontStyle",
+	"excite/Components/Text/FontStyle",
 	"lib/opentype.js/dist/opentype",
 ],
 function (FontStyle,

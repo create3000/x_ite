@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields/SFBool",
-	"cobweb/Basic/X3DBaseNode",
+	"excite/Fields/SFBool",
+	"excite/Basic/X3DBaseNode",
 	"lib/gettext",
 ],
 function ($,
@@ -95,7 +95,7 @@ function ($,
 			this .startTime     = 0;
 			this .frames        = 0;
 
-			this .element = $("<div></div>") .addClass ("cobweb-browser-timings") .appendTo (this .getBrowser () .getElement () .find (".cobweb-surface"));
+			this .element = $("<div></div>") .addClass ("excite-browser-timings") .appendTo (this .getBrowser () .getElement () .find (".excite-surface"));
 			this .table   = $("<table></table>") .appendTo (this .element);
 			this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
 			this .body    = $("<tbody></tbody>") .appendTo (this .table);
@@ -194,7 +194,7 @@ function ($,
 					transparentShapes += layer .numTransparentShapes;
 				}
 
-			   rows [1] .addClass ("cobweb-more");
+			   rows [1] .addClass ("excite-more");
 
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser")   + ":")) .append ($("<td></td>") .text (f2(systemTime)           .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D")       + ":")) .append ($("<td></td>") .text (f2(browser .browserTime) .toLocaleString (language, fixed) + " " + _("ms")));

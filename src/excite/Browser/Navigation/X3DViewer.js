@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
-	"cobweb/Basic/X3DBaseNode",
-	"cobweb/Components/Navigation/OrthoViewpoint",
+	"excite/Basic/X3DBaseNode",
+	"excite/Components/Navigation/OrthoViewpoint",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",

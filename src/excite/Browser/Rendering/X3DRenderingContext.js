@@ -50,18 +50,18 @@
 //https://github.com/sdecima/javascript-detect-element-resize
 
 define ([
-	"cobweb/Fields",
-	"cobweb/Components/Shaders/ComposedShader",
-	"cobweb/Components/Shaders/ShaderPart",
-	"text!cobweb/Browser/Shaders/PointSet.fs",
-	"text!cobweb/Browser/Shaders/Wireframe.vs",
-	"text!cobweb/Browser/Shaders/Wireframe.fs",
-	"text!cobweb/Browser/Shaders/Gouraud.vs",
-	"text!cobweb/Browser/Shaders/Gouraud.fs",
-	"text!cobweb/Browser/Shaders/Phong.vs",
-	"text!cobweb/Browser/Shaders/Phong.fs",
-	"text!cobweb/Browser/Shaders/Depth.vs",
-	"text!cobweb/Browser/Shaders/Depth.fs",
+	"excite/Fields",
+	"excite/Components/Shaders/ComposedShader",
+	"excite/Components/Shaders/ShaderPart",
+	"text!excite/Browser/Shaders/PointSet.fs",
+	"text!excite/Browser/Shaders/Wireframe.vs",
+	"text!excite/Browser/Shaders/Wireframe.fs",
+	"text!excite/Browser/Shaders/Gouraud.vs",
+	"text!excite/Browser/Shaders/Gouraud.fs",
+	"text!excite/Browser/Shaders/Phong.vs",
+	"text!excite/Browser/Shaders/Phong.fs",
+	"text!excite/Browser/Shaders/Depth.vs",
+	"text!excite/Browser/Shaders/Depth.fs",
 	"standard/Math/Numbers/Vector4",
 ],
 function (Fields,
@@ -269,9 +269,9 @@ function (Fields,
 		onfullscreen: function ()
 		{
 			if (this .getElement () .fullScreen ())
-				this .getElement () .addClass  ("cobweb-fullscreen");
+				this .getElement () .addClass  ("excite-fullscreen");
 			else
-				this .getElement () .removeClass ("cobweb-fullscreen");
+				this .getElement () .removeClass ("excite-fullscreen");
 		},
 	};
 

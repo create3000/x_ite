@@ -48,7 +48,7 @@
 
 
 define ([
-	"cobweb/Rendering/DepthBuffer",
+	"excite/Rendering/DepthBuffer",
 ],
 function (DepthBuffer)
 {

@@ -49,12 +49,12 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/Grouping/X3DTransformMatrix3DNode",
-	"cobweb/Components/Geospatial/X3DGeospatialObject",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/Grouping/X3DTransformMatrix3DNode",
+	"excite/Components/Geospatial/X3DGeospatialObject",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
 function ($,

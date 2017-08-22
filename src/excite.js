@@ -60,7 +60,7 @@
 	{
 		console .log (error);
 
-		require (["cobweb/Error"],
+		require (["excite/Error"],
 		function (Error)
 		{
 			Error (error, fallbacks);
@@ -82,7 +82,7 @@
 		callbacks = [ ],
 		fallbacks = [ ];
 
-	require (["cobweb/X3D"],
+	require (["excite/X3D"],
 	function (X3D)
 	{
 		// Now assign real X3D.

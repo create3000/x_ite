@@ -49,9 +49,9 @@
 
 define ([
 	"jquery",
-	"cobweb/Components/Core/X3DBindableNode",
-	"cobweb/Bits/TraverseType",
-	"cobweb/Bits/X3DConstants",
+	"excite/Components/Core/X3DBindableNode",
+	"excite/Bits/TraverseType",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector3",

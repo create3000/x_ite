@@ -48,11 +48,11 @@
 
 
 define ([
-	"cobweb/Components/Shaders/ComposedShader",
-	"cobweb/Components/Shaders/ShaderPart",
-	"cobweb/Components/Texturing/TextureProperties",
-	"text!cobweb/Browser/Shaders/BackgroundSphereVertexShader.vs",
-	"text!cobweb/Browser/Shaders/BackgroundSphereFragmentShader.fs",
+	"excite/Components/Shaders/ComposedShader",
+	"excite/Components/Shaders/ShaderPart",
+	"excite/Components/Texturing/TextureProperties",
+	"text!excite/Browser/Shaders/BackgroundSphereVertexShader.vs",
+	"text!excite/Browser/Shaders/BackgroundSphereFragmentShader.fs",
 ],
 function (ComposedShader,
           ShaderPart,

@@ -48,10 +48,10 @@
 
 
 define ([
-	"cobweb/Browser/Geometry3D/BoxOptions",
-	"cobweb/Browser/Geometry3D/ConeOptions",
-	"cobweb/Browser/Geometry3D/CylinderOptions",
-	"cobweb/Browser/Geometry3D/QuadSphereOptions",
+	"excite/Browser/Geometry3D/BoxOptions",
+	"excite/Browser/Geometry3D/ConeOptions",
+	"excite/Browser/Geometry3D/CylinderOptions",
+	"excite/Browser/Geometry3D/QuadSphereOptions",
 ],
 function (BoxOptions,
           ConeOptions,

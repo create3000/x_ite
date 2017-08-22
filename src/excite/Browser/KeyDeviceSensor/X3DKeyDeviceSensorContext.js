@@ -49,7 +49,7 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
+	"excite/Fields",
 ],
 function ($,
           Fields)

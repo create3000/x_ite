@@ -49,9 +49,9 @@
 
 define ([
 	"jquery",
-	"cobweb/Basic/X3DField",
-	"cobweb/Fields/SFColor",
-	"cobweb/Bits/X3DConstants",
+	"excite/Basic/X3DField",
+	"excite/Fields/SFColor",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Numbers/Color4",
 ],
 function ($, X3DField, SFColor, X3DConstants, Color4)

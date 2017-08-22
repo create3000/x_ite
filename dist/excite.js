@@ -12451,7 +12451,7 @@ define("jquery/dist/jquery", function(){});
  ******************************************************************************/
 
 
-define ('cobweb/Error',[
+define ('excite/Error',[
 	"jquery",
 ],
 function ($)
@@ -12485,7 +12485,7 @@ function ($)
 
 	function fallback (elements)
 	{
-		elements .children () .addClass ("cobweb-fallback");
+		elements .children () .addClass ("excite-fallback");
 	}
 
 	Error .fallback = fallback;
@@ -12542,7 +12542,7 @@ function ($)
  ******************************************************************************/
 
 
-define ('cobweb/Basic/X3DFieldDefinition',[],function ()
+define ('excite/Basic/X3DFieldDefinition',[],function ()
 {
 "use strict";
 
@@ -12612,7 +12612,7 @@ define ('cobweb/Basic/X3DFieldDefinition',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Basic/FieldDefinitionArray',[
+define ('excite/Basic/FieldDefinitionArray',[
 	"jquery",
 ],
 function ($)
@@ -12722,7 +12722,7 @@ function ($)
  ******************************************************************************/
 
 
-define ('cobweb/Base/X3DObject',[
+define ('excite/Base/X3DObject',[
 ],
 function ()
 {
@@ -12863,7 +12863,7 @@ function ()
  ******************************************************************************/
 
 
-define ('cobweb/Base/X3DChildObject',[
+define ('excite/Base/X3DChildObject',[
 	"jquery",
 	"excite/Base/X3DObject",
 ],
@@ -12972,7 +12972,7 @@ function ($, X3DObject)
  ******************************************************************************/
 
 
-define ('cobweb/Bits/X3DConstants',[],function ()
+define ('excite/Bits/X3DConstants',[],function ()
 {
 "use strict";
 
@@ -13405,7 +13405,7 @@ define ('cobweb/Bits/X3DConstants',[],function ()
  ******************************************************************************/
 
 ﻿
-define ('cobweb/Base/Events',[
+define ('excite/Base/Events',[
 	"jquery",
 ],
 function ($)
@@ -13523,7 +13523,7 @@ function ($)
  ******************************************************************************/
 
 
-define ('cobweb/Basic/X3DField',[
+define ('excite/Basic/X3DField',[
 	"jquery",
 	"excite/Base/X3DChildObject",
 	"excite/Bits/X3DConstants",
@@ -13845,7 +13845,7 @@ function ($,
 
 
 
-define ('cobweb/InputOutput/Generator',[
+define ('excite/InputOutput/Generator',[
 	"jquery",
 	"excite/Bits/X3DConstants",
 ],
@@ -14182,7 +14182,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Basic/X3DArrayField',[
+define ('excite/Basic/X3DArrayField',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Bits/X3DConstants",
@@ -14653,7 +14653,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFBool',[
+define ('excite/Fields/SFBool',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Bits/X3DConstants",
@@ -15272,7 +15272,7 @@ function ($, Algorithm)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFColor',[
+define ('excite/Fields/SFColor',[
 	"jquery",
 	"standard/Math/Numbers/Color3",
 	"excite/Basic/X3DField",
@@ -15643,7 +15643,7 @@ function ($, Color3, Algorithm)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFColorRGBA',[
+define ('excite/Fields/SFColorRGBA',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Fields/SFColor",
@@ -15833,7 +15833,7 @@ function ($, X3DField, SFColor, X3DConstants, Color4)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFDouble',[
+define ('excite/Fields/SFDouble',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Bits/X3DConstants",
@@ -15936,7 +15936,7 @@ function ($, X3DField, X3DConstants)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFFloat',[
+define ('excite/Fields/SFFloat',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Bits/X3DConstants",
@@ -16039,7 +16039,7 @@ function ($, X3DField, X3DConstants)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFInt32',[
+define ('excite/Fields/SFInt32',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Bits/X3DConstants",
@@ -16142,7 +16142,7 @@ function ($, X3DField, X3DConstants)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFMatrixPrototypeTemplate',[
+define ('excite/Fields/SFMatrixPrototypeTemplate',[
 	"jquery",
 	"excite/Basic/X3DField",
 ],
@@ -16283,7 +16283,7 @@ function ($, X3DField)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFVecPrototypeTemplate',[
+define ('excite/Fields/SFVecPrototypeTemplate',[
 	"jquery",
 	"excite/Basic/X3DField",
 ],
@@ -16751,7 +16751,7 @@ function ($, Algorithm)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFVec2',[
+define ('excite/Fields/SFVec2',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Fields/SFVecPrototypeTemplate",
@@ -18504,7 +18504,7 @@ function ($, Vector2, Vector3, Matrix2, eigendecomposition)
 
 
 
-define ('cobweb/Fields/SFMatrix3',[
+define ('excite/Fields/SFMatrix3',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Fields/SFMatrixPrototypeTemplate",
@@ -18638,7 +18638,7 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec2, X3DConstants, Matrix3)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFVec3',[
+define ('excite/Fields/SFVec3',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Fields/SFVecPrototypeTemplate",
@@ -21284,7 +21284,7 @@ function ($, Vector3, Vector4, Rotation4, Matrix3, eigendecomposition)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFMatrix4',[
+define ('excite/Fields/SFMatrix4',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Fields/SFMatrixPrototypeTemplate",
@@ -21411,7 +21411,7 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec3, X3DConstants, Matrix4)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFNode',[
+define ('excite/Fields/SFNode',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Bits/X3DConstants",
@@ -21686,7 +21686,7 @@ function ($, X3DField, X3DConstants)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFRotation',[
+define ('excite/Fields/SFRotation',[
 	"jquery",
 	"excite/Fields/SFVec3",
 	"excite/Basic/X3DField",
@@ -21907,7 +21907,7 @@ function ($, SFVec3, X3DField, X3DConstants, Rotation4)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFString',[
+define ('excite/Fields/SFString',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Bits/X3DConstants",
@@ -22040,7 +22040,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFTime',[
+define ('excite/Fields/SFTime',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Bits/X3DConstants",
@@ -22143,7 +22143,7 @@ function ($, X3DField, X3DConstants)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFVec4',[
+define ('excite/Fields/SFVec4',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Fields/SFVecPrototypeTemplate",
@@ -22312,7 +22312,7 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector4)
  ******************************************************************************/
 
 
-define ('cobweb/Fields/ArrayFields',[
+define ('excite/Fields/ArrayFields',[
 	"jquery",
 	"excite/Fields/SFBool",
 	"excite/Fields/SFColor",
@@ -22639,7 +22639,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Fields/SFImage',[
+define ('excite/Fields/SFImage',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Fields/ArrayFields",
@@ -22921,7 +22921,7 @@ function ($, X3DField, ArrayFields, X3DConstants)
  ******************************************************************************/
 
 
-define ('cobweb/Fields',[
+define ('excite/Fields',[
 	"jquery",
 	"excite/Fields/SFBool",
 	"excite/Fields/SFColor",
@@ -23044,7 +23044,7 @@ function ($,
  ******************************************************************************/
 
 ﻿
-define ('cobweb/Browser/VERSION',[],function ()
+define ('excite/Browser/VERSION',[],function ()
 {
 	return "3.3.1";
 });
@@ -23098,7 +23098,7 @@ define ('cobweb/Browser/VERSION',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Base/X3DEventObject',[
+define ('excite/Base/X3DEventObject',[
 	"jquery",
 	"excite/Base/X3DChildObject",
 	"excite/Base/Events",
@@ -23225,7 +23225,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Basic/X3DBaseNode',[
+define ('excite/Basic/X3DBaseNode',[
 	"jquery",
 	"excite/Base/X3DEventObject",
 	"excite/Base/Events",
@@ -24216,7 +24216,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Core/PrimitiveQuality',[],function ()
+define ('excite/Browser/Core/PrimitiveQuality',[],function ()
 {
 "use strict";
 	
@@ -24285,7 +24285,7 @@ define ('cobweb/Browser/Core/PrimitiveQuality',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Core/TextureQuality',[],function ()
+define ('excite/Browser/Core/TextureQuality',[],function ()
 {
 "use strict";
 	
@@ -24354,7 +24354,7 @@ define ('cobweb/Browser/Core/TextureQuality',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Core/BrowserOptions',[
+define ('excite/Browser/Core/BrowserOptions',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -24672,7 +24672,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Core/BrowserProperties',[
+define ('excite/Browser/Core/BrowserProperties',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -24773,7 +24773,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Core/RenderingProperties',[
+define ('excite/Browser/Core/RenderingProperties',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -24895,7 +24895,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Core/Notification',[
+define ('excite/Browser/Core/Notification',[
 	"jquery",
 	"excite/Fields/SFString",
 	"excite/Basic/X3DBaseNode",
@@ -24933,8 +24933,8 @@ function ($,
 			this .addChildObjects ("string", new SFString ());
 
 			this .element = $("<div></div>")
-				.addClass ("cobweb-notification")
-				.appendTo (this .getBrowser () .getElement () .find (".cobweb-surface"))
+				.addClass ("excite-notification")
+				.appendTo (this .getBrowser () .getElement () .find (".excite-surface"))
 				.animate ({ width: 0 });
 
 			$("<span></span>") .appendTo (this .element);
@@ -25376,10 +25376,10 @@ define('text/text',['module'], function (module) {
 define('text', ['text/text'], function (main) { return main; });
 
 
-define('text!locale/de.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: Cobweb\\n"\n"POT-Creation-Date: 2015-12-23 04:56+0100\\n"\n"PO-Revision-Date: 2015-12-23 04:57+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: de\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../cobweb\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\n#: Browser/Core/BrowserTimings.js:96\nmsgid "Less Properties"\nmsgstr "Weniger Eigenschaften"\n\n#: Browser/Core/BrowserTimings.js:98\nmsgid "More Properties"\nmsgstr "Mehr Eigenschaften"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "Frame rate"\nmsgstr "Bildrate"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "fps"\nmsgstr "BpS"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "Speed"\nmsgstr "Geschwindigkeit"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "m/s"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "km/h"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150\nmsgid "Browser"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151\n#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153\n#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155\n#: Browser/Core/BrowserTimings.js:156\nmsgid "ms"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:151\nmsgid "X3D"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:152\nmsgid "Routing"\nmsgstr "Routen"\n\n#: Browser/Core/BrowserTimings.js:153\nmsgid "Picking"\nmsgstr "Zeigegerät"\n\n#: Browser/Core/BrowserTimings.js:154\nmsgid "Camera"\nmsgstr "Kamera"\n\n#: Browser/Core/BrowserTimings.js:155\nmsgid "Collision"\nmsgstr "Kollision"\n\n#: Browser/Core/BrowserTimings.js:156\nmsgid "Display"\nmsgstr "Anzeige"\n\n#: Browser/Core/BrowserTimings.js:157\nmsgid "Shapes"\nmsgstr "Formen"\n\n#: Browser/Core/BrowserTimings.js:158\nmsgid "Sensors"\nmsgstr "Sensoren"\n\n#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210\nmsgid "Browser Timings"\nmsgstr "Zeitberechnung"\n\n#: Browser/Core/ContextMenu.js:19\nmsgid "Cobweb X3D Browser"\nmsgstr ""\n\n#: Browser/Core/ContextMenu.js:59\nmsgid "Viewpoints"\nmsgstr "Ansichtspunkte"\n\n#: Browser/Core/ContextMenu.js:87\nmsgid "Available Viewers"\nmsgstr "Verfügbare Betrachter"\n\n#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135\nmsgid "Primitive Quality"\nmsgstr "Qualität der Grundobjekte"\n\n#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147\nmsgid "High"\nmsgstr "Hoch"\n\n#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155\nmsgid "high"\nmsgstr "hoch"\n\n#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161\nmsgid "Medium"\nmsgstr "Mittel"\n\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169\nmsgid "medium"\nmsgstr "mittel"\n\n#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175\nmsgid "Low"\nmsgstr "Niedrig"\n\n#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183\nmsgid "low"\nmsgstr "niedrig"\n\n#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155\n#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183\nmsgid "Texture Quality"\nmsgstr "Textur Qualität"\n\n#: Browser/Core/ContextMenu.js:191\nmsgid "Display Rubberband"\nmsgstr "Gummiband anzeigen"\n\n#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204\nmsgid "Rubberband"\nmsgstr "Gummiband"\n\n#: Browser/Core/ContextMenu.js:202\nmsgid "on"\nmsgstr "an"\n\n#: Browser/Core/ContextMenu.js:204\nmsgid "off"\nmsgstr "aus"\n\n#: Browser/Core/ContextMenu.js:225\nmsgid "Mute Browser"\nmsgstr "Browser stumm schalten"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser muted"\nmsgstr "Browser stumm geschalten"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser unmuted"\nmsgstr "Browser Ton an"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Leave Fullscreen"\nmsgstr "Vollbild verlassen"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Fullscreen"\nmsgstr "Vollbild"\n\n#: Browser/Core/ContextMenu.js:249\nmsgid "About Cobweb"\nmsgstr "Über Cobweb"\n\n#: Browser/Core/ContextMenu.js:342\nmsgid "Examine Viewer"\nmsgstr "Untersuchen"\n\n#: Browser/Core/ContextMenu.js:344\nmsgid "Walk Viewer"\nmsgstr "Laufen"\n\n#: Browser/Core/ContextMenu.js:346\nmsgid "Fly Viewer"\nmsgstr "Fliegen"\n\n#: Browser/Core/ContextMenu.js:348\nmsgid "Plane Viewer"\nmsgstr "Ebenen Betrachter"\n\n#: Browser/Core/ContextMenu.js:350\n#, fuzzy\nmsgid "Look At Viewer"\nmsgstr "Auf Objekte zielen"\n\n#: Browser/Core/ContextMenu.js:352\nmsgid "None Viewer"\nmsgstr "Kein Betrachter"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d file"\nmsgstr "Lade %d Datei"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d files"\nmsgstr "Lade %d Dateien"\n\n#: Browser/Networking/X3DNetworkingContext.js:104\nmsgid "Loading done"\nmsgstr "Fertig mit Laden"\n\n#: Browser/X3DBrowser.js:313\nmsgid "Failed loading world."\nmsgstr "Laden der Dateien fehlgeschlagen."\n\n#~ msgid "Look At"\n#~ msgstr "Auf Objekte zielen"\n';});
+define('text!locale/de.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: Excite\\n"\n"POT-Creation-Date: 2015-12-23 04:56+0100\\n"\n"PO-Revision-Date: 2015-12-23 04:57+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: de\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../excite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\n#: Browser/Core/BrowserTimings.js:96\nmsgid "Less Properties"\nmsgstr "Weniger Eigenschaften"\n\n#: Browser/Core/BrowserTimings.js:98\nmsgid "More Properties"\nmsgstr "Mehr Eigenschaften"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "Frame rate"\nmsgstr "Bildrate"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "fps"\nmsgstr "BpS"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "Speed"\nmsgstr "Geschwindigkeit"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "m/s"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "km/h"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150\nmsgid "Browser"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151\n#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153\n#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155\n#: Browser/Core/BrowserTimings.js:156\nmsgid "ms"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:151\nmsgid "X3D"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:152\nmsgid "Routing"\nmsgstr "Routen"\n\n#: Browser/Core/BrowserTimings.js:153\nmsgid "Picking"\nmsgstr "Zeigegerät"\n\n#: Browser/Core/BrowserTimings.js:154\nmsgid "Camera"\nmsgstr "Kamera"\n\n#: Browser/Core/BrowserTimings.js:155\nmsgid "Collision"\nmsgstr "Kollision"\n\n#: Browser/Core/BrowserTimings.js:156\nmsgid "Display"\nmsgstr "Anzeige"\n\n#: Browser/Core/BrowserTimings.js:157\nmsgid "Shapes"\nmsgstr "Formen"\n\n#: Browser/Core/BrowserTimings.js:158\nmsgid "Sensors"\nmsgstr "Sensoren"\n\n#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210\nmsgid "Browser Timings"\nmsgstr "Zeitberechnung"\n\n#: Browser/Core/ContextMenu.js:19\nmsgid "Excite X3D Browser"\nmsgstr ""\n\n#: Browser/Core/ContextMenu.js:59\nmsgid "Viewpoints"\nmsgstr "Ansichtspunkte"\n\n#: Browser/Core/ContextMenu.js:87\nmsgid "Available Viewers"\nmsgstr "Verfügbare Betrachter"\n\n#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135\nmsgid "Primitive Quality"\nmsgstr "Qualität der Grundobjekte"\n\n#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147\nmsgid "High"\nmsgstr "Hoch"\n\n#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155\nmsgid "high"\nmsgstr "hoch"\n\n#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161\nmsgid "Medium"\nmsgstr "Mittel"\n\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169\nmsgid "medium"\nmsgstr "mittel"\n\n#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175\nmsgid "Low"\nmsgstr "Niedrig"\n\n#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183\nmsgid "low"\nmsgstr "niedrig"\n\n#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155\n#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183\nmsgid "Texture Quality"\nmsgstr "Textur Qualität"\n\n#: Browser/Core/ContextMenu.js:191\nmsgid "Display Rubberband"\nmsgstr "Gummiband anzeigen"\n\n#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204\nmsgid "Rubberband"\nmsgstr "Gummiband"\n\n#: Browser/Core/ContextMenu.js:202\nmsgid "on"\nmsgstr "an"\n\n#: Browser/Core/ContextMenu.js:204\nmsgid "off"\nmsgstr "aus"\n\n#: Browser/Core/ContextMenu.js:225\nmsgid "Mute Browser"\nmsgstr "Browser stumm schalten"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser muted"\nmsgstr "Browser stumm geschalten"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser unmuted"\nmsgstr "Browser Ton an"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Leave Fullscreen"\nmsgstr "Vollbild verlassen"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Fullscreen"\nmsgstr "Vollbild"\n\n#: Browser/Core/ContextMenu.js:249\nmsgid "About Excite"\nmsgstr "Über Excite"\n\n#: Browser/Core/ContextMenu.js:342\nmsgid "Examine Viewer"\nmsgstr "Untersuchen"\n\n#: Browser/Core/ContextMenu.js:344\nmsgid "Walk Viewer"\nmsgstr "Laufen"\n\n#: Browser/Core/ContextMenu.js:346\nmsgid "Fly Viewer"\nmsgstr "Fliegen"\n\n#: Browser/Core/ContextMenu.js:348\nmsgid "Plane Viewer"\nmsgstr "Ebenen Betrachter"\n\n#: Browser/Core/ContextMenu.js:350\n#, fuzzy\nmsgid "Look At Viewer"\nmsgstr "Auf Objekte zielen"\n\n#: Browser/Core/ContextMenu.js:352\nmsgid "None Viewer"\nmsgstr "Kein Betrachter"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d file"\nmsgstr "Lade %d Datei"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d files"\nmsgstr "Lade %d Dateien"\n\n#: Browser/Networking/X3DNetworkingContext.js:104\nmsgid "Loading done"\nmsgstr "Fertig mit Laden"\n\n#: Browser/X3DBrowser.js:313\nmsgid "Failed loading world."\nmsgstr "Laden der Dateien fehlgeschlagen."\n\n#~ msgid "Look At"\n#~ msgstr "Auf Objekte zielen"\n';});
 
 
-define('text!locale/fr.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: Cobweb\\n"\n"POT-Creation-Date: 2015-12-23 04:58+0100\\n"\n"PO-Revision-Date: 2015-12-23 05:07+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: fr\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../cobweb\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\n#: Browser/Core/BrowserTimings.js:96\nmsgid "Less Properties"\nmsgstr "Moins de propriétés"\n\n#: Browser/Core/BrowserTimings.js:98\nmsgid "More Properties"\nmsgstr "Plus de propriétés"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "Frame rate"\nmsgstr "Fréquence"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "fps"\nmsgstr "fps"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "Speed"\nmsgstr "Vélocité"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "m/s"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "km/h"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150\n#, fuzzy\nmsgid "Browser"\nmsgstr "Cobweb X3D Navigateur"\n\n#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151\n#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153\n#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155\n#: Browser/Core/BrowserTimings.js:156\nmsgid "ms"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:151\nmsgid "X3D"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:152\nmsgid "Routing"\nmsgstr "Routes"\n\n#: Browser/Core/BrowserTimings.js:153\nmsgid "Picking"\nmsgstr "Pointeur"\n\n#: Browser/Core/BrowserTimings.js:154\nmsgid "Camera"\nmsgstr "Caméra"\n\n#: Browser/Core/BrowserTimings.js:155\nmsgid "Collision"\nmsgstr "Collision"\n\n#: Browser/Core/BrowserTimings.js:156\nmsgid "Display"\nmsgstr "Visualisation"\n\n#: Browser/Core/BrowserTimings.js:157\nmsgid "Shapes"\nmsgstr "Formes"\n\n#: Browser/Core/BrowserTimings.js:158\nmsgid "Sensors"\nmsgstr "Senseurs"\n\n#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210\nmsgid "Browser Timings"\nmsgstr "Calcul du temps"\n\n#: Browser/Core/ContextMenu.js:19\nmsgid "Cobweb X3D Browser"\nmsgstr "Cobweb X3D Navigateur"\n\n#: Browser/Core/ContextMenu.js:59\nmsgid "Viewpoints"\nmsgstr "Points de vue"\n\n#: Browser/Core/ContextMenu.js:87\nmsgid "Available Viewers"\nmsgstr "Visionneurs disponibles"\n\n#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135\nmsgid "Primitive Quality"\nmsgstr "Qualité des objets simples"\n\n#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147\nmsgid "High"\nmsgstr "Haut"\n\n#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155\nmsgid "high"\nmsgstr "haut"\n\n#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161\nmsgid "Medium"\nmsgstr "Moyenne"\n\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169\nmsgid "medium"\nmsgstr "moyenne"\n\n#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175\nmsgid "Low"\nmsgstr "Faible"\n\n#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183\nmsgid "low"\nmsgstr "faible"\n\n#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155\n#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183\nmsgid "Texture Quality"\nmsgstr "Qualité des textures"\n\n#: Browser/Core/ContextMenu.js:191\nmsgid "Display Rubberband"\nmsgstr "Présenter le bande élastique"\n\n#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204\nmsgid "Rubberband"\nmsgstr "Bande élastique"\n\n#: Browser/Core/ContextMenu.js:202\nmsgid "on"\nmsgstr "marche"\n\n#: Browser/Core/ContextMenu.js:204\nmsgid "off"\nmsgstr "arrêt"\n\n#: Browser/Core/ContextMenu.js:225\nmsgid "Mute Browser"\nmsgstr "Rendre navigateur muet"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser muted"\nmsgstr "Navigateur muet"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser unmuted"\nmsgstr "Son de navigateur réactivé"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Leave Fullscreen"\nmsgstr "Sortie en plein écran"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Fullscreen"\nmsgstr "Plein écran"\n\n#: Browser/Core/ContextMenu.js:249\nmsgid "About Cobweb"\nmsgstr "À propos de Cobweb"\n\n#: Browser/Core/ContextMenu.js:342\nmsgid "Examine Viewer"\nmsgstr "Examiner"\n\n#: Browser/Core/ContextMenu.js:344\nmsgid "Walk Viewer"\nmsgstr "Aller"\n\n#: Browser/Core/ContextMenu.js:346\nmsgid "Fly Viewer"\nmsgstr "Voler"\n\n#: Browser/Core/ContextMenu.js:348\nmsgid "Plane Viewer"\nmsgstr "Visionneur de la plaine"\n\n#: Browser/Core/ContextMenu.js:350\n#, fuzzy\nmsgid "Look At Viewer"\nmsgstr "Regarder un objet de près"\n\n#: Browser/Core/ContextMenu.js:352\nmsgid "None Viewer"\nmsgstr "Pas de visionneur"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d file"\nmsgstr "Télécharger %d fichier"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d files"\nmsgstr "Télécharger %d fichiers"\n\n#: Browser/Networking/X3DNetworkingContext.js:104\nmsgid "Loading done"\nmsgstr "Téléchargement fini"\n\n#: Browser/X3DBrowser.js:313\nmsgid "Failed loading world."\nmsgstr "Le chargement des fichiers ayant échoué."\n\n#~ msgid "Look At"\n#~ msgstr "Regarder un objet de près"\n';});
+define('text!locale/fr.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: Excite\\n"\n"POT-Creation-Date: 2015-12-23 04:58+0100\\n"\n"PO-Revision-Date: 2015-12-23 05:07+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: fr\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../excite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\n#: Browser/Core/BrowserTimings.js:96\nmsgid "Less Properties"\nmsgstr "Moins de propriétés"\n\n#: Browser/Core/BrowserTimings.js:98\nmsgid "More Properties"\nmsgstr "Plus de propriétés"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "Frame rate"\nmsgstr "Fréquence"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "fps"\nmsgstr "fps"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "Speed"\nmsgstr "Vélocité"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "m/s"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "km/h"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150\n#, fuzzy\nmsgid "Browser"\nmsgstr "Excite X3D Navigateur"\n\n#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151\n#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153\n#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155\n#: Browser/Core/BrowserTimings.js:156\nmsgid "ms"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:151\nmsgid "X3D"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:152\nmsgid "Routing"\nmsgstr "Routes"\n\n#: Browser/Core/BrowserTimings.js:153\nmsgid "Picking"\nmsgstr "Pointeur"\n\n#: Browser/Core/BrowserTimings.js:154\nmsgid "Camera"\nmsgstr "Caméra"\n\n#: Browser/Core/BrowserTimings.js:155\nmsgid "Collision"\nmsgstr "Collision"\n\n#: Browser/Core/BrowserTimings.js:156\nmsgid "Display"\nmsgstr "Visualisation"\n\n#: Browser/Core/BrowserTimings.js:157\nmsgid "Shapes"\nmsgstr "Formes"\n\n#: Browser/Core/BrowserTimings.js:158\nmsgid "Sensors"\nmsgstr "Senseurs"\n\n#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210\nmsgid "Browser Timings"\nmsgstr "Calcul du temps"\n\n#: Browser/Core/ContextMenu.js:19\nmsgid "Excite X3D Browser"\nmsgstr "Excite X3D Navigateur"\n\n#: Browser/Core/ContextMenu.js:59\nmsgid "Viewpoints"\nmsgstr "Points de vue"\n\n#: Browser/Core/ContextMenu.js:87\nmsgid "Available Viewers"\nmsgstr "Visionneurs disponibles"\n\n#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135\nmsgid "Primitive Quality"\nmsgstr "Qualité des objets simples"\n\n#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147\nmsgid "High"\nmsgstr "Haut"\n\n#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155\nmsgid "high"\nmsgstr "haut"\n\n#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161\nmsgid "Medium"\nmsgstr "Moyenne"\n\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169\nmsgid "medium"\nmsgstr "moyenne"\n\n#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175\nmsgid "Low"\nmsgstr "Faible"\n\n#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183\nmsgid "low"\nmsgstr "faible"\n\n#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155\n#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183\nmsgid "Texture Quality"\nmsgstr "Qualité des textures"\n\n#: Browser/Core/ContextMenu.js:191\nmsgid "Display Rubberband"\nmsgstr "Présenter le bande élastique"\n\n#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204\nmsgid "Rubberband"\nmsgstr "Bande élastique"\n\n#: Browser/Core/ContextMenu.js:202\nmsgid "on"\nmsgstr "marche"\n\n#: Browser/Core/ContextMenu.js:204\nmsgid "off"\nmsgstr "arrêt"\n\n#: Browser/Core/ContextMenu.js:225\nmsgid "Mute Browser"\nmsgstr "Rendre navigateur muet"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser muted"\nmsgstr "Navigateur muet"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser unmuted"\nmsgstr "Son de navigateur réactivé"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Leave Fullscreen"\nmsgstr "Sortie en plein écran"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Fullscreen"\nmsgstr "Plein écran"\n\n#: Browser/Core/ContextMenu.js:249\nmsgid "About Excite"\nmsgstr "À propos de Excite"\n\n#: Browser/Core/ContextMenu.js:342\nmsgid "Examine Viewer"\nmsgstr "Examiner"\n\n#: Browser/Core/ContextMenu.js:344\nmsgid "Walk Viewer"\nmsgstr "Aller"\n\n#: Browser/Core/ContextMenu.js:346\nmsgid "Fly Viewer"\nmsgstr "Voler"\n\n#: Browser/Core/ContextMenu.js:348\nmsgid "Plane Viewer"\nmsgstr "Visionneur de la plaine"\n\n#: Browser/Core/ContextMenu.js:350\n#, fuzzy\nmsgid "Look At Viewer"\nmsgstr "Regarder un objet de près"\n\n#: Browser/Core/ContextMenu.js:352\nmsgid "None Viewer"\nmsgstr "Pas de visionneur"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d file"\nmsgstr "Télécharger %d fichier"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d files"\nmsgstr "Télécharger %d fichiers"\n\n#: Browser/Networking/X3DNetworkingContext.js:104\nmsgid "Loading done"\nmsgstr "Téléchargement fini"\n\n#: Browser/X3DBrowser.js:313\nmsgid "Failed loading world."\nmsgstr "Le chargement des fichiers ayant échoué."\n\n#~ msgid "Look At"\n#~ msgstr "Regarder un objet de près"\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -25558,7 +25558,7 @@ function (de, fr)
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Core/BrowserTimings',[
+define ('excite/Browser/Core/BrowserTimings',[
 	"jquery",
 	"excite/Fields/SFBool",
 	"excite/Basic/X3DBaseNode",
@@ -25606,7 +25606,7 @@ function ($,
 			this .startTime     = 0;
 			this .frames        = 0;
 
-			this .element = $("<div></div>") .addClass ("cobweb-browser-timings") .appendTo (this .getBrowser () .getElement () .find (".cobweb-surface"));
+			this .element = $("<div></div>") .addClass ("excite-browser-timings") .appendTo (this .getBrowser () .getElement () .find (".excite-surface"));
 			this .table   = $("<table></table>") .appendTo (this .element);
 			this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
 			this .body    = $("<tbody></tbody>") .appendTo (this .table);
@@ -25705,7 +25705,7 @@ function ($,
 					transparentShapes += layer .numTransparentShapes;
 				}
 
-			   rows [1] .addClass ("cobweb-more");
+			   rows [1] .addClass ("excite-more");
 
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser")   + ":")) .append ($("<td></td>") .text (f2(systemTime)           .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D")       + ":")) .append ($("<td></td>") .text (f2(browser .browserTime) .toLocaleString (language, fixed) + " " + _("ms")));
@@ -27621,7 +27621,7 @@ e.webkitCancelFullScreen?(f="webkitfullscreenchange",g="webkitfullscreenerror"):
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Core/ContextMenu',[
+define ('excite/Browser/Core/ContextMenu',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 	"lib/gettext",
@@ -27634,7 +27634,7 @@ function ($,
 {
 "use strict";
 	
-	$("head") .append ('<style>.cobweb-menu-title:before { content: "' + _("Cobweb X3D Browser") + '" }</style>');
+	$("head") .append ('<style>.excite-menu-title:before { content: "' + _("Excite X3D Browser") + '" }</style>');
 
 	function ContextMenu (executionContext)
 	{
@@ -27664,7 +27664,7 @@ function ($,
 				return;
 
 			$.contextMenu ({
-				selector: ".cobweb-surface-" + this .getBrowser () .getId (), 
+				selector: ".excite-surface-" + this .getBrowser () .getId (), 
 				build: this .build .bind (this),
 			});
 		},
@@ -27677,12 +27677,12 @@ function ($,
 				fullscreen       = this .getBrowser () .getElement () .fullScreen ();
 
 			var menu = {
-				className: "cobweb-menu cobweb-menu-title",
+				className: "excite-menu excite-menu-title",
 				items: {
 					"separator0": "--------",
 					"viewpoints": {
 						name: _("Viewpoints"),
-						className: "context-menu-icon cobweb-icon-viewpoint",
+						className: "context-menu-icon excite-icon-viewpoint",
 						items: this .getViewpoints (),
 						callback: function (viewpoint)
 						{
@@ -27698,7 +27698,7 @@ function ($,
 					"separator1": "--------",
 					"viewer": {
 						name: _(this .getViewerName (currentViewer)),
-						className: "context-menu-icon cobweb-icon-" + currentViewer .toLowerCase () + "-viewer",
+						className: "context-menu-icon excite-icon-" + currentViewer .toLowerCase () + "-viewer",
 						callback: function (viewer)
 						{
 							$(".context-menu-list") .fadeOut (500);
@@ -27715,7 +27715,7 @@ function ($,
 					"separator2": "--------",
 					"primitive-quality": {
 						name: _("Primitive Quality"),
-						className: "context-menu-icon cobweb-icon-primitive-quality",
+						className: "context-menu-icon excite-icon-primitive-quality",
 						items: {
 							"high": {
 								name: _("High"),
@@ -27763,7 +27763,7 @@ function ($,
 					},
 					"texture-quality": {
 						name: _("Texture Quality"),
-						className: "context-menu-icon cobweb-icon-texture-quality",
+						className: "context-menu-icon excite-icon-texture-quality",
 						items: {
 							"high": {
 								name: _("High"),
@@ -27857,7 +27857,7 @@ function ($,
 					},
 					"fullscreen": {
 						name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
-						className: "context-menu-icon " + (fullscreen ? "cobweb-icon-leave-fullscreen" : "cobweb-icon-fullscreen"),
+						className: "context-menu-icon " + (fullscreen ? "excite-icon-leave-fullscreen" : "excite-icon-fullscreen"),
 						callback: function ()
 						{
 						   this .getBrowser () .getElement () .toggleFullScreen ();
@@ -27866,11 +27866,11 @@ function ($,
 					},
 					"separator3": "--------",
 					"about": {
-						name: _("About Cobweb"),
-						className: "context-menu-icon cobweb-icon-help-about",
+						name: _("About Excite"),
+						className: "context-menu-icon excite-icon-help-about",
 						callback: function ()
 						{
-						   window .open ("http://create3000.de/cobweb/");
+						   window .open ("http://create3000.de/excite/");
 						},
 					},
 				}
@@ -27937,7 +27937,7 @@ function ($,
 
 				menu [viewer] = {
 					name: _(this .getViewerName (viewer)),
-					className: "context-menu-icon cobweb-icon-" + viewer .toLowerCase () + "-viewer",
+					className: "context-menu-icon excite-icon-" + viewer .toLowerCase () + "-viewer",
 					callback: function (viewer)
 					{
 						$(".context-menu-list") .fadeOut (500);
@@ -28026,7 +28026,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Configuration/X3DInfoArray',[
+define ('excite/Configuration/X3DInfoArray',[
 	"jquery",
 ],
 function ($)
@@ -28153,7 +28153,7 @@ function ($)
  ******************************************************************************/
 
 
-define ('cobweb/Configuration/ComponentInfo',[
+define ('excite/Configuration/ComponentInfo',[
 	"jquery",
 	"excite/Fields",
 	"excite/Bits/X3DConstants",
@@ -28248,7 +28248,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Configuration/ComponentInfoArray',[
+define ('excite/Configuration/ComponentInfoArray',[
 	"jquery",
 	"excite/Configuration/X3DInfoArray",
 	"excite/Configuration/ComponentInfo",
@@ -28333,7 +28333,7 @@ function ($, X3DInfoArray, ComponentInfo)
  ******************************************************************************/
 
 
-define ('cobweb/Execution/ImportedNode',[
+define ('excite/Execution/ImportedNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DBaseNode",
@@ -28628,7 +28628,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Prototype/ExternProtoDeclarationArray',[
+define ('excite/Prototype/ExternProtoDeclarationArray',[
 	"jquery",
 	"excite/Configuration/X3DInfoArray",
 ],
@@ -28698,7 +28698,7 @@ function ($, X3DInfoArray)
  ******************************************************************************/
 
 
-define ('cobweb/Prototype/ProtoDeclarationArray',[
+define ('excite/Prototype/ProtoDeclarationArray',[
 	"jquery",
 	"excite/Configuration/X3DInfoArray",
 ],
@@ -28768,7 +28768,7 @@ function ($, X3DInfoArray)
  ******************************************************************************/
 
 
-define ('cobweb/Routing/RouteArray',[
+define ('excite/Routing/RouteArray',[
 	"jquery",
 ],
 function ($)
@@ -28874,7 +28874,7 @@ function ($)
  ******************************************************************************/
 
 
-define ('cobweb/Routing/X3DRoute',[
+define ('excite/Routing/X3DRoute',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DBaseNode",
@@ -29112,7 +29112,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Bits/X3DCast',[
+define ('excite/Bits/X3DCast',[
 	"excite/Fields",
 ],
 function (Fields)
@@ -29881,7 +29881,7 @@ function ($)
  ******************************************************************************/
 
 
-define ('cobweb/Execution/X3DExecutionContext',[
+define ('excite/Execution/X3DExecutionContext',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -30468,7 +30468,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Configuration/UnitInfo',[
+define ('excite/Configuration/UnitInfo',[
 	"jquery",
 	"excite/InputOutput/Generator",
 ],
@@ -30565,7 +30565,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Configuration/UnitInfoArray',[
+define ('excite/Configuration/UnitInfoArray',[
 	"jquery",
 	"excite/Configuration/X3DInfoArray",
 ],
@@ -30635,7 +30635,7 @@ function ($, X3DInfoArray)
  ******************************************************************************/
 
 
-define ('cobweb/Execution/ExportedNode',[
+define ('excite/Execution/ExportedNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Base/X3DObject",
@@ -30742,7 +30742,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Execution/X3DScene',[
+define ('excite/Execution/X3DScene',[
 	"jquery",
 	"excite/Fields",
 	"excite/Execution/X3DExecutionContext",
@@ -31069,7 +31069,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Execution/Scene',[
+define ('excite/Execution/Scene',[
 	"excite/Fields",
 	"excite/Execution/X3DScene",
 ],
@@ -31221,7 +31221,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Networking/X3DUrlObject',[
+define ('excite/Components/Networking/X3DUrlObject',[
 	"jquery",
 	"excite/Fields",
 	"excite/Bits/X3DConstants",
@@ -31313,7 +31313,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/X3DNode',[
+define ('excite/Components/Core/X3DNode',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 	"excite/Bits/X3DConstants",
@@ -31448,7 +31448,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/X3DPrototypeInstance',[
+define ('excite/Components/Core/X3DPrototypeInstance',[
 	"jquery",
 	"excite/Basic/FieldDefinitionArray",
 	"excite/Fields",
@@ -32008,7 +32008,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Prototype/X3DProtoDeclarationNode',[
+define ('excite/Prototype/X3DProtoDeclarationNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Components/Core/X3DNode",
@@ -32106,7 +32106,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Prototype/X3DExternProtoDeclaration',[
+define ('excite/Prototype/X3DExternProtoDeclaration',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -32408,7 +32408,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Prototype/X3DProtoDeclaration',[
+define ('excite/Prototype/X3DProtoDeclaration',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -32680,7 +32680,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Parser/Parser',[
+define ('excite/Parser/Parser',[
 	"jquery",
 	"excite/Fields",
 	"excite/Prototype/X3DExternProtoDeclaration",
@@ -35761,7 +35761,7 @@ define ('lib/DataStorage',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Core/X3DCoreContext',[
+define ('excite/Browser/Core/X3DCoreContext',[
 	"excite/Fields",
 	"excite/Browser/Core/BrowserOptions",
 	"excite/Browser/Core/BrowserProperties",
@@ -35820,17 +35820,17 @@ function (Fields,
 
 		// Get canvas & context.
 
-		var browser      = $("<div></div>") .addClass ("cobweb-browser")  .prependTo (this .element);
-		var splashScreen = $("<div></div>") .addClass ("cobweb-splash-screen") .appendTo (browser);
-		var spinner      = $("<div></div>") .addClass ("cobweb-spinner")  .appendTo (splashScreen);
-		var progress     = $("<div></div>") .addClass ("cobweb-progress") .appendTo (splashScreen);
-		var surface      = $("<div></div>") .addClass ("cobweb-surface cobweb-surface-" + this .getId ()) .appendTo (browser);
+		var browser      = $("<div></div>") .addClass ("excite-browser")  .prependTo (this .element);
+		var splashScreen = $("<div></div>") .addClass ("excite-splash-screen") .appendTo (browser);
+		var spinner      = $("<div></div>") .addClass ("excite-spinner")  .appendTo (splashScreen);
+		var progress     = $("<div></div>") .addClass ("excite-progress") .appendTo (splashScreen);
+		var surface      = $("<div></div>") .addClass ("excite-surface excite-surface-" + this .getId ()) .appendTo (browser);
 
-		$("<div></div>") .addClass ("cobweb-spinner-one")   .appendTo (spinner);
-		$("<div></div>") .addClass ("cobweb-spinner-two")   .appendTo (spinner);
-		$("<div></div>") .addClass ("cobweb-spinner-three") .appendTo (spinner);
-		$("<div></div>") .addClass ("cobweb-spinner-text")  .appendTo (progress) .text ("Lade 0 Dateien");
-		$("<div></div>") .addClass ("cobweb-progressbar")   .appendTo (progress) .append ($("<div></div>"));
+		$("<div></div>") .addClass ("excite-spinner-one")   .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-spinner-two")   .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-spinner-three") .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-spinner-text")  .appendTo (progress) .text ("Lade 0 Dateien");
+		$("<div></div>") .addClass ("excite-progressbar")   .appendTo (progress) .append ($("<div></div>"));
 
 		this .splashScreen = splashScreen;
 		this .canvas       = $("<canvas></canvas>") .prependTo (surface);
@@ -35853,7 +35853,7 @@ function (Fields,
 		if (this .getBrowserOptions () .getSplashScreen ())
 			this .getSplashScreen () .fadeIn (0);
 
-		$(".cobweb-console") .empty ();
+		$(".excite-console") .empty ();
 	}
 
 	X3DCoreContext .prototype =
@@ -36054,7 +36054,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('cobweb/Routing/X3DRoutingContext',[
+define ('excite/Routing/X3DRoutingContext',[
 ],
 function ()
 {
@@ -36174,7 +36174,7 @@ function ()
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Scripting/X3DScriptingContext',[
+define ('excite/Browser/Scripting/X3DScriptingContext',[
 ],
 function ()
 {
@@ -36252,7 +36252,7 @@ function ()
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/X3DChildNode',[
+define ('excite/Components/Core/X3DChildNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Components/Core/X3DNode",
@@ -36345,7 +36345,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/X3DSensorNode',[
+define ('excite/Components/Core/X3DSensorNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Bits/X3DConstants",
@@ -36422,7 +36422,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Networking/X3DNetworkSensorNode',[
+define ('excite/Components/Networking/X3DNetworkSensorNode',[
 	"jquery",
 	"excite/Components/Core/X3DSensorNode",
 	"excite/Bits/X3DConstants",
@@ -36499,7 +36499,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Networking/LoadSensor',[
+define ('excite/Components/Networking/LoadSensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -36758,12 +36758,12 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Networking/urls',[],function ()
+define ('excite/Browser/Networking/urls',[],function ()
 {
 "use strict";
 
 	return {
-		providerUrl:       "http://titania.create3000.de/cobweb",
+		providerUrl:       "http://create3000.de/excite",
 		fallbackUrl:       "http://cors.create3000.de/",
 		fallbackExpression: new RegExp ("^http://cors.create3000.de/"),
 	};
@@ -37027,7 +37027,7 @@ define ('cobweb/Browser/Networking/urls',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Networking/X3DNetworkingContext',[
+define ('excite/Browser/Networking/X3DNetworkingContext',[
 	"excite/Fields",
 	"excite/Components/Networking/LoadSensor",
 	"excite/Browser/Networking/urls",
@@ -37162,8 +37162,8 @@ function (Fields,
 			if (! this .loading)
 				this .getNotification () .string_ = string;
 
-			this .getSplashScreen () .find (".cobweb-spinner-text") .text (string);
-			this .getSplashScreen () .find (".cobweb-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
+			this .getSplashScreen () .find (".excite-spinner-text") .text (string);
+			this .getSplashScreen () .find (".excite-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
 		},
 		resetLoadCount: function ()
 		{
@@ -37225,7 +37225,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Shaders/X3DShadersContext',[],function ()
+define ('excite/Browser/Shaders/X3DShadersContext',[],function ()
 {
 "use strict";
 
@@ -37320,7 +37320,7 @@ define ('cobweb/Browser/Shaders/X3DShadersContext',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shape/X3DAppearanceNode',[
+define ('excite/Components/Shape/X3DAppearanceNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Components/Core/X3DNode",
@@ -37405,7 +37405,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shape/Appearance',[
+define ('excite/Components/Shape/Appearance',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -37675,7 +37675,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Shape/X3DShapeContext',[
+define ('excite/Browser/Shape/X3DShapeContext',[
 	"excite/Components/Shape/Appearance",
 ],
 function (Appearance)
@@ -37751,7 +37751,7 @@ function (Appearance)
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shape/X3DAppearanceChildNode',[
+define ('excite/Components/Shape/X3DAppearanceChildNode',[
 	"jquery",
 	"excite/Components/Core/X3DNode",
 	"excite/Bits/X3DConstants",
@@ -37828,7 +37828,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Bits/TraverseType',[],function ()
+define ('excite/Bits/TraverseType',[],function ()
 {
 "use strict";
 
@@ -37899,7 +37899,7 @@ define ('cobweb/Bits/TraverseType',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shaders/X3DShaderNode',[
+define ('excite/Components/Shaders/X3DShaderNode',[
 	"jquery",
 	"excite/Components/Shape/X3DAppearanceChildNode",
 	"excite/Bits/X3DConstants",
@@ -38104,7 +38104,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shaders/X3DProgrammableShaderObject',[
+define ('excite/Components/Shaders/X3DProgrammableShaderObject',[
 	"jquery",
 	"excite/Fields",
 	"excite/Bits/X3DCast",
@@ -39325,7 +39325,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shaders/ComposedShader',[
+define ('excite/Components/Shaders/ComposedShader',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -39534,13 +39534,13 @@ function ($,
 });
 
 
-define('text!cobweb/Browser/Shaders/Bits/Line3.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n/* Line */\n\nstruct Line3 {\n\tvec3 point;\n\tvec3 direction;\n};\n\nLine3\nline3 (in vec3 point1, in vec3 point2)\n{\n\treturn Line3 (point1, normalize (point2 - point1));\n}\n';});
+define('text!excite/Browser/Shaders/Bits/Line3.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n/* Line */\n\nstruct Line3 {\n\tvec3 point;\n\tvec3 direction;\n};\n\nLine3\nline3 (in vec3 point1, in vec3 point2)\n{\n\treturn Line3 (point1, normalize (point2 - point1));\n}\n';});
 
 
-define('text!cobweb/Browser/Shaders/Bits/Plane3.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Line3.h"\n\n/* Plane */\n\nstruct Plane3\n{\n\tvec3  normal;\n\tfloat distanceFromOrigin;\n};\n\nPlane3\nplane3 (in vec3 point, in vec3 normal)\n{\n\treturn Plane3 (normal, dot (normal, point));\n}\n\n/* Plane intersect line */\nbool\nintersects (in Plane3 plane, in Line3 line, out vec3 point)\n{\n\tpoint = vec3 (0.0);\n\n\t// Check if the line is parallel to the plane.\n\tfloat theta = dot (line .direction, plane .normal);\n\n\t// Plane and line are parallel.\n\tif (theta == 0.0)\n\t\treturn false;\n\n\t// Plane and line are not parallel. The intersection point can be calculated now.\n\tfloat t = (plane .distanceFromOrigin - dot (plane .normal, line .point)) / theta;\n\n\tpoint = line .point + line .direction * t;\n\n\treturn true;\n}\n\n///  Returns the closest point on the plane to a given point @a point.\nvec3\nclosest_point (in Plane3 plane, in vec3 point)\n{\n\tvec3 closest_point;\n\tintersects (plane, Line3 (point, plane .normal), closest_point);\n\treturn closest_point;\n}\n';});
+define('text!excite/Browser/Shaders/Bits/Plane3.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Line3.h"\n\n/* Plane */\n\nstruct Plane3\n{\n\tvec3  normal;\n\tfloat distanceFromOrigin;\n};\n\nPlane3\nplane3 (in vec3 point, in vec3 normal)\n{\n\treturn Plane3 (normal, dot (normal, point));\n}\n\n/* Plane intersect line */\nbool\nintersects (in Plane3 plane, in Line3 line, out vec3 point)\n{\n\tpoint = vec3 (0.0);\n\n\t// Check if the line is parallel to the plane.\n\tfloat theta = dot (line .direction, plane .normal);\n\n\t// Plane and line are parallel.\n\tif (theta == 0.0)\n\t\treturn false;\n\n\t// Plane and line are not parallel. The intersection point can be calculated now.\n\tfloat t = (plane .distanceFromOrigin - dot (plane .normal, line .point)) / theta;\n\n\tpoint = line .point + line .direction * t;\n\n\treturn true;\n}\n\n///  Returns the closest point on the plane to a given point @a point.\nvec3\nclosest_point (in Plane3 plane, in vec3 point)\n{\n\tvec3 closest_point;\n\tintersects (plane, Line3 (point, plane .normal), closest_point);\n\treturn closest_point;\n}\n';});
 
 
-define('text!cobweb/Browser/Shaders/Bits/Random.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\nconst int RAND_MAX = int (0x7fffffff);\nconst int RAND_MIN = int (0x80000000);\n\nint seedValue = 0;\n\nvoid\nseed (in int value)\n{\n\tseedValue = value;\n}\n\n// Return a uniform distributed random floating point number in the interval [-1, 1].\nfloat\nrandom1 ()\n{\n\treturn float (seedValue = seedValue * 1103515245 + 12345) / float (RAND_MAX);\n}\n\nvec2\nrandom2 ()\n{\n\treturn vec2 (random1 (), random1 ());\n}\n\nvec3\nrandom3 ()\n{\n\treturn vec3 (random1 (), random1 (), random1 ());\n}\n';});
+define('text!excite/Browser/Shaders/Bits/Random.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\nconst int RAND_MAX = int (0x7fffffff);\nconst int RAND_MIN = int (0x80000000);\n\nint seedValue = 0;\n\nvoid\nseed (in int value)\n{\n\tseedValue = value;\n}\n\n// Return a uniform distributed random floating point number in the interval [-1, 1].\nfloat\nrandom1 ()\n{\n\treturn float (seedValue = seedValue * 1103515245 + 12345) / float (RAND_MAX);\n}\n\nvec2\nrandom2 ()\n{\n\treturn vec2 (random1 (), random1 ());\n}\n\nvec3\nrandom3 ()\n{\n\treturn vec3 (random1 (), random1 (), random1 ());\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -39591,10 +39591,10 @@ define('text!cobweb/Browser/Shaders/Bits/Random.h',[],function () { return '/* -
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Shaders/Shader',[
-	"text!cobweb/Browser/Shaders/Bits/Line3.h",
-	"text!cobweb/Browser/Shaders/Bits/Plane3.h",
-	"text!cobweb/Browser/Shaders/Bits/Random.h",
+define ('excite/Browser/Shaders/Shader',[
+	"text!excite/Browser/Shaders/Bits/Line3.h",
+	"text!excite/Browser/Shaders/Bits/Plane3.h",
+	"text!excite/Browser/Shaders/Bits/Random.h",
 ],
 function (Line3,
           Plane3,
@@ -39697,7 +39697,7 @@ function (Line3,
  ******************************************************************************/
 
 
-define ('cobweb/Parser/HTMLSupport',[],function ()
+define ('excite/Parser/HTMLSupport',[],function ()
 {
 "use strict";
 
@@ -40352,7 +40352,7 @@ define ('cobweb/Parser/HTMLSupport',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Parser/XMLParser',[
+define ('excite/Parser/XMLParser',[
 	"jquery",
 	"excite/Basic/X3DField",
 	"excite/Basic/X3DArrayField",
@@ -44531,7 +44531,7 @@ exports.ungzip  = inflate;
  ******************************************************************************/
 
 
-define ('cobweb/DEBUG',[
+define ('excite/DEBUG',[
 	"excite/Browser/VERSION",
 ],
 function (VERSION)
@@ -44590,7 +44590,7 @@ function (VERSION)
  ******************************************************************************/
 
 
-define ('cobweb/InputOutput/FileLoader',[
+define ('excite/InputOutput/FileLoader',[
 	"jquery",
 	"excite/Base/X3DObject",
 	"excite/Fields",
@@ -45098,7 +45098,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shaders/ShaderPart',[
+define ('excite/Components/Shaders/ShaderPart',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -45235,31 +45235,31 @@ function ($,
 
 
 
-define('text!cobweb/Browser/Shaders/PointSet.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n}\n';});
+define('text!excite/Browser/Shaders/PointSet.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n}\n';});
 
 
-define('text!cobweb/Browser/Shaders/Wireframe.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Transparency;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_GeometryType == x3d_GeometryLines ? x3d_LinewidthScaleFactor : x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = vec3 (p);\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_Transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tC .rgb = x3d_Color .rgb;\n\t\t\tC .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tC .rgb = x3d_EmissiveColor;\n\t\t\tC .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tC = x3d_Color;\n\t\telse\n\t\t\tC = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!excite/Browser/Shaders/Wireframe.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Transparency;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_GeometryType == x3d_GeometryLines ? x3d_LinewidthScaleFactor : x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = vec3 (p);\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_Transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tC .rgb = x3d_Color .rgb;\n\t\t\tC .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tC .rgb = x3d_EmissiveColor;\n\t\t\tC .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tC = x3d_Color;\n\t\telse\n\t\t\tC = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!cobweb/Browser/Shaders/Wireframe.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = C .a;\n}\n';});
+define('text!excite/Browser/Shaders/Wireframe.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = C .a;\n}\n';});
 
 
-define('text!cobweb/Browser/Shaders/Gouraud.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4  frontColor; // color\nvarying vec4  backColor;  // color\nvarying vec4  t;          // texCoord\nvarying vec3  v;          // point on geometry\n\nvec4\ngetMaterialColor (in vec3 N,\n                  in vec3 v,\n                  in float x3d_AmbientIntensity,\n                  in vec3  x3d_DiffuseColor,\n                  in vec3  x3d_SpecularColor,\n                  in vec3  x3d_EmissiveColor,\n                  in float x3d_Shininess,\n                  in float x3d_Transparency)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\tfloat alpha         = 1.0 - x3d_Transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = x3d_DiffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * x3d_AmbientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tint lightType = x3d_LightType [i];\n\n\t\tif (lightType == x3d_NoneLight)\n\t\t\tbreak;\n\n\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t{\n\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\tvec3 L = di ? -d : normalize (vL);\n\t\t\tvec3 H = normalize (L + V); // specular term\n\n\t\t\tvec3  diffuseTerm    = diffuseFactor * max (dot (N, L), 0.0);\n\t\t\tfloat specularFactor = x3d_Shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = x3d_SpecularColor * specularFactor;\n\n\t\t\tfloat attenuation = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spot        = 1.0;\n\n\t\t\tif (lightType == x3d_SpotLight)\n\t\t\t{\n\t\t\t\tfloat spotAngle   = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\t\t\tfloat cutOffAngle = x3d_LightCutOffAngle [i];\n\t\t\t\tfloat beamWidth   = x3d_LightBeamWidth [i];\n\t\t\t\t\n\t\t\t\tif (spotAngle >= cutOffAngle)\n\t\t\t\t\tspot = 0.0;\n\t\t\t\telse if (spotAngle <= beamWidth)\n\t\t\t\t\tspot = 1.0;\n\t\t\t\telse\n\t\t\t\t\tspot = (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n\t\t\t}\n\t\t\n\t\t\tvec3 lightFactor  = (attenuation * spot) * x3d_LightColor [i];\n\t\t\tvec3 ambientLight = (lightFactor * x3d_LightAmbientIntensity [i]) * ambientTerm;\n\n\t\t\tlightFactor *= x3d_LightIntensity [i];\n\t\t\tfinalColor  += ambientLight + lightFactor * (diffuseTerm + specularTerm);\n\t\t}\n\t}\n\n\tfinalColor += x3d_EmissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfloat ambientIntensity = x3d_AmbientIntensity;\n\t\tvec3  diffuseColor     = x3d_DiffuseColor;\n\t\tvec3  specularColor    = x3d_SpecularColor;\n\t\tvec3  emissiveColor    = x3d_EmissiveColor;\n\t\tfloat shininess        = x3d_Shininess;\n\t\tfloat transparency     = x3d_Transparency;\n\n\t\tfrontColor = getMaterialColor (N, v,\n\t\t                               ambientIntensity,\n\t\t                               diffuseColor,\n\t\t                               specularColor,\n\t\t                               emissiveColor,\n\t\t                               shininess,\n\t\t                               transparency);\n\n\t\tif (x3d_SeparateBackColor)\n\t\t{\n\t\t\tambientIntensity = x3d_BackAmbientIntensity;\n\t\t\tdiffuseColor     = x3d_BackDiffuseColor;\n\t\t\tspecularColor    = x3d_BackSpecularColor;\n\t\t\temissiveColor    = x3d_BackEmissiveColor;\n\t\t\tshininess        = x3d_BackShininess;\n\t\t\ttransparency     = x3d_BackTransparency;\n\t\t}\n\n\t\tbackColor = getMaterialColor (-N, v,\n\t\t                              ambientIntensity,\n\t\t                              diffuseColor,\n\t\t                              specularColor,\n\t\t                              emissiveColor,\n\t\t                              shininess,\n\t\t                              transparency);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!excite/Browser/Shaders/Gouraud.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4  frontColor; // color\nvarying vec4  backColor;  // color\nvarying vec4  t;          // texCoord\nvarying vec3  v;          // point on geometry\n\nvec4\ngetMaterialColor (in vec3 N,\n                  in vec3 v,\n                  in float x3d_AmbientIntensity,\n                  in vec3  x3d_DiffuseColor,\n                  in vec3  x3d_SpecularColor,\n                  in vec3  x3d_EmissiveColor,\n                  in float x3d_Shininess,\n                  in float x3d_Transparency)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\tfloat alpha         = 1.0 - x3d_Transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = x3d_DiffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * x3d_AmbientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tint lightType = x3d_LightType [i];\n\n\t\tif (lightType == x3d_NoneLight)\n\t\t\tbreak;\n\n\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t{\n\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\tvec3 L = di ? -d : normalize (vL);\n\t\t\tvec3 H = normalize (L + V); // specular term\n\n\t\t\tvec3  diffuseTerm    = diffuseFactor * max (dot (N, L), 0.0);\n\t\t\tfloat specularFactor = x3d_Shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = x3d_SpecularColor * specularFactor;\n\n\t\t\tfloat attenuation = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spot        = 1.0;\n\n\t\t\tif (lightType == x3d_SpotLight)\n\t\t\t{\n\t\t\t\tfloat spotAngle   = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\t\t\tfloat cutOffAngle = x3d_LightCutOffAngle [i];\n\t\t\t\tfloat beamWidth   = x3d_LightBeamWidth [i];\n\t\t\t\t\n\t\t\t\tif (spotAngle >= cutOffAngle)\n\t\t\t\t\tspot = 0.0;\n\t\t\t\telse if (spotAngle <= beamWidth)\n\t\t\t\t\tspot = 1.0;\n\t\t\t\telse\n\t\t\t\t\tspot = (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n\t\t\t}\n\t\t\n\t\t\tvec3 lightFactor  = (attenuation * spot) * x3d_LightColor [i];\n\t\t\tvec3 ambientLight = (lightFactor * x3d_LightAmbientIntensity [i]) * ambientTerm;\n\n\t\t\tlightFactor *= x3d_LightIntensity [i];\n\t\t\tfinalColor  += ambientLight + lightFactor * (diffuseTerm + specularTerm);\n\t\t}\n\t}\n\n\tfinalColor += x3d_EmissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfloat ambientIntensity = x3d_AmbientIntensity;\n\t\tvec3  diffuseColor     = x3d_DiffuseColor;\n\t\tvec3  specularColor    = x3d_SpecularColor;\n\t\tvec3  emissiveColor    = x3d_EmissiveColor;\n\t\tfloat shininess        = x3d_Shininess;\n\t\tfloat transparency     = x3d_Transparency;\n\n\t\tfrontColor = getMaterialColor (N, v,\n\t\t                               ambientIntensity,\n\t\t                               diffuseColor,\n\t\t                               specularColor,\n\t\t                               emissiveColor,\n\t\t                               shininess,\n\t\t                               transparency);\n\n\t\tif (x3d_SeparateBackColor)\n\t\t{\n\t\t\tambientIntensity = x3d_BackAmbientIntensity;\n\t\t\tdiffuseColor     = x3d_BackDiffuseColor;\n\t\t\tspecularColor    = x3d_BackSpecularColor;\n\t\t\temissiveColor    = x3d_BackEmissiveColor;\n\t\t\tshininess        = x3d_BackShininess;\n\t\t\ttransparency     = x3d_BackTransparency;\n\t\t}\n\n\t\tbackColor = getMaterialColor (-N, v,\n\t\t                              ambientIntensity,\n\t\t                              diffuseColor,\n\t\t                              specularColor,\n\t\t                              emissiveColor,\n\t\t                              shininess,\n\t\t                              transparency);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!cobweb/Browser/Shaders/Gouraud.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_NoneTexture, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, finalColor .rgb, f0);\n\tgl_FragColor .a   = finalColor .a;\n}\n';});
+define('text!excite/Browser/Shaders/Gouraud.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_NoneTexture, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, finalColor .rgb, f0);\n\tgl_FragColor .a   = finalColor .a;\n}\n';});
 
 
-define('text!cobweb/Browser/Shaders/Phong.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tif (x3d_Lighting)\n\t\tvN = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tC = x3d_Color;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
+define('text!excite/Browser/Shaders/Phong.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tif (x3d_Lighting)\n\t\tvN = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tC = x3d_Color;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
 
 
-define('text!cobweb/Browser/Shaders/Phong.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // true if a X3DTexture2DNode is attached, otherwise false\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n\tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n\n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor ()\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\t\tfloat ambientIntensity = frontColor ? x3d_AmbientIntensity : x3d_BackAmbientIntensity;\n\t\tvec3  diffuseColor     = frontColor ? x3d_DiffuseColor     : x3d_BackDiffuseColor;\n\t\tvec3  specularColor    = frontColor ? x3d_SpecularColor    : x3d_BackSpecularColor;\n\t\tvec3  emissiveColor    = frontColor ? x3d_EmissiveColor    : x3d_BackEmissiveColor;\n\t\tfloat shininess        = frontColor ? x3d_Shininess        : x3d_BackShininess;\n\t\tfloat transparency     = frontColor ? x3d_Transparency     : x3d_BackTransparency;\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t\t{\n\t\t\tint lightType = x3d_LightType [i];\n\n\t\t\tif (lightType == x3d_NoneLight)\n\t\t\t\tbreak;\n\n\t\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t\t{\n\t\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = shininess > 0.0 ? pow (max (dot (N, H), 0.0), shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor                  = lightType == x3d_SpotLight ? getSpotFactor (x3d_LightCutOffAngle [i], x3d_LightBeamWidth [i], L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor                = x3d_LightAmbientIntensity [i] * ambientTerm;\n\t\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + x3d_LightIntensity [i] * (diffuseTerm + specularTerm);\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (x3d_LightColor [i] * ambientDiffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn color;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn x3d_FogColor;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn mix (x3d_FogColor, color, (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange);\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn mix (x3d_FogColor, color, exp (-dV / (x3d_FogVisibilityRange - dV)));\n\n\treturn color;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = getMaterialColor ();\n\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n}\n';});
+define('text!excite/Browser/Shaders/Phong.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // true if a X3DTexture2DNode is attached, otherwise false\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n\tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n\n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor ()\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\t\tfloat ambientIntensity = frontColor ? x3d_AmbientIntensity : x3d_BackAmbientIntensity;\n\t\tvec3  diffuseColor     = frontColor ? x3d_DiffuseColor     : x3d_BackDiffuseColor;\n\t\tvec3  specularColor    = frontColor ? x3d_SpecularColor    : x3d_BackSpecularColor;\n\t\tvec3  emissiveColor    = frontColor ? x3d_EmissiveColor    : x3d_BackEmissiveColor;\n\t\tfloat shininess        = frontColor ? x3d_Shininess        : x3d_BackShininess;\n\t\tfloat transparency     = frontColor ? x3d_Transparency     : x3d_BackTransparency;\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t\t{\n\t\t\tint lightType = x3d_LightType [i];\n\n\t\t\tif (lightType == x3d_NoneLight)\n\t\t\t\tbreak;\n\n\t\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t\t{\n\t\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = shininess > 0.0 ? pow (max (dot (N, H), 0.0), shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor                  = lightType == x3d_SpotLight ? getSpotFactor (x3d_LightCutOffAngle [i], x3d_LightBeamWidth [i], L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor                = x3d_LightAmbientIntensity [i] * ambientTerm;\n\t\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + x3d_LightIntensity [i] * (diffuseTerm + specularTerm);\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (x3d_LightColor [i] * ambientDiffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn color;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn x3d_FogColor;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn mix (x3d_FogColor, color, (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange);\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn mix (x3d_FogColor, color, exp (-dV / (x3d_FogVisibilityRange - dV)));\n\n\treturn color;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = getMaterialColor ();\n\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n}\n';});
 
 
-define('text!cobweb/Browser/Shaders/Depth.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Vertex;\n\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
+define('text!excite/Browser/Shaders/Depth.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Vertex;\n\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
 
 
-define('text!cobweb/Browser/Shaders/Depth.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\npack (in float f)\n{\n\tvec4 color;\n\n\tf *= 255.0;\n\tcolor .r = floor (f);\n\n\tf -= color .r;\n\tf *= 255.0;\n\tcolor .g = floor (f);\n\n\tf -= color .g;\n\tf *= 255.0;\n\tcolor .b = floor (f);\n\n\tf -= color .b;\n\tf *= 255.0;\n\tcolor .a = floor (f);\n\n\treturn color / 255.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
+define('text!excite/Browser/Shaders/Depth.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\npack (in float f)\n{\n\tvec4 color;\n\n\tf *= 255.0;\n\tcolor .r = floor (f);\n\n\tf -= color .r;\n\tf *= 255.0;\n\tcolor .g = floor (f);\n\n\tf -= color .g;\n\tf *= 255.0;\n\tcolor .b = floor (f);\n\n\tf -= color .b;\n\tf *= 255.0;\n\tcolor .a = floor (f);\n\n\treturn color / 255.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -45312,19 +45312,19 @@ define('text!cobweb/Browser/Shaders/Depth.fs',[],function () { return 'data:text
 
 //https://github.com/sdecima/javascript-detect-element-resize
 
-define ('cobweb/Browser/Rendering/X3DRenderingContext',[
+define ('excite/Browser/Rendering/X3DRenderingContext',[
 	"excite/Fields",
 	"excite/Components/Shaders/ComposedShader",
 	"excite/Components/Shaders/ShaderPart",
-	"text!cobweb/Browser/Shaders/PointSet.fs",
-	"text!cobweb/Browser/Shaders/Wireframe.vs",
-	"text!cobweb/Browser/Shaders/Wireframe.fs",
-	"text!cobweb/Browser/Shaders/Gouraud.vs",
-	"text!cobweb/Browser/Shaders/Gouraud.fs",
-	"text!cobweb/Browser/Shaders/Phong.vs",
-	"text!cobweb/Browser/Shaders/Phong.fs",
-	"text!cobweb/Browser/Shaders/Depth.vs",
-	"text!cobweb/Browser/Shaders/Depth.fs",
+	"text!excite/Browser/Shaders/PointSet.fs",
+	"text!excite/Browser/Shaders/Wireframe.vs",
+	"text!excite/Browser/Shaders/Wireframe.fs",
+	"text!excite/Browser/Shaders/Gouraud.vs",
+	"text!excite/Browser/Shaders/Gouraud.fs",
+	"text!excite/Browser/Shaders/Phong.vs",
+	"text!excite/Browser/Shaders/Phong.fs",
+	"text!excite/Browser/Shaders/Depth.vs",
+	"text!excite/Browser/Shaders/Depth.fs",
 	"standard/Math/Numbers/Vector4",
 ],
 function (Fields,
@@ -45532,9 +45532,9 @@ function (Fields,
 		onfullscreen: function ()
 		{
 			if (this .getElement () .fullScreen ())
-				this .getElement () .addClass  ("cobweb-fullscreen");
+				this .getElement () .addClass  ("excite-fullscreen");
 			else
-				this .getElement () .removeClass ("cobweb-fullscreen");
+				this .getElement () .removeClass ("excite-fullscreen");
 		},
 	};
 
@@ -45590,7 +45590,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geometry2D/Arc2DOptions',[
+define ('excite/Browser/Geometry2D/Arc2DOptions',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 	"excite/Fields",
@@ -45677,7 +45677,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geometry2D/ArcClose2DOptions',[
+define ('excite/Browser/Geometry2D/ArcClose2DOptions',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 	"excite/Fields",
@@ -45975,7 +45975,7 @@ function ($)
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geometry2D/Circle2DOptions',[
+define ('excite/Browser/Geometry2D/Circle2DOptions',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 	"excite/Fields",
@@ -46093,7 +46093,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geometry2D/Disk2DOptions',[
+define ('excite/Browser/Geometry2D/Disk2DOptions',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 	"excite/Fields",
@@ -50131,7 +50131,7 @@ function (Vector3,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/X3DGeometryNode',[
+define ('excite/Components/Rendering/X3DGeometryNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Components/Core/X3DNode",
@@ -51236,7 +51236,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/X3DComposedGeometryNode',[
+define ('excite/Components/Rendering/X3DComposedGeometryNode',[
 	"jquery",
 	"excite/Components/Rendering/X3DGeometryNode",
 	"excite/Bits/X3DCast",
@@ -51580,7 +51580,7 @@ function ($,
 
 // https://github.com/r3mi/poly2tri.js
 
-define ('cobweb/Components/Geometry3D/IndexedFaceSet',[
+define ('excite/Components/Geometry3D/IndexedFaceSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -52057,7 +52057,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/X3DGeometricPropertyNode',[
+define ('excite/Components/Rendering/X3DGeometricPropertyNode',[
 	"jquery",
 	"excite/Components/Core/X3DNode",
 	"excite/Bits/X3DConstants",
@@ -52134,7 +52134,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/X3DCoordinateNode',[
+define ('excite/Components/Rendering/X3DCoordinateNode',[
 	"jquery",
 	"excite/Components/Rendering/X3DGeometricPropertyNode",
 	"excite/Bits/X3DConstants",
@@ -52267,7 +52267,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/Coordinate',[
+define ('excite/Components/Rendering/Coordinate',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -52366,7 +52366,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing/X3DTextureCoordinateNode',[
+define ('excite/Components/Texturing/X3DTextureCoordinateNode',[
 	"jquery",
 	"excite/Components/Rendering/X3DGeometricPropertyNode",
 	"excite/Bits/X3DConstants",
@@ -52451,7 +52451,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing/TextureCoordinate',[
+define ('excite/Components/Texturing/TextureCoordinate',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -52579,7 +52579,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geometry2D/Rectangle2DOptions',[
+define ('excite/Browser/Geometry2D/Rectangle2DOptions',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 	"excite/Components/Geometry3D/IndexedFaceSet",
@@ -52712,7 +52712,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geometry2D/X3DGeometry2DContext',[
+define ('excite/Browser/Geometry2D/X3DGeometry2DContext',[
 	"excite/Browser/Geometry2D/Arc2DOptions",
 	"excite/Browser/Geometry2D/ArcClose2DOptions",
 	"excite/Browser/Geometry2D/Circle2DOptions",
@@ -52818,7 +52818,7 @@ function (Arc2DOptions,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geometry3D/BoxOptions',[
+define ('excite/Browser/Geometry3D/BoxOptions',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 	"excite/Components/Geometry3D/IndexedFaceSet",
@@ -52962,7 +52962,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geometry3D/ConeOptions',[
+define ('excite/Browser/Geometry3D/ConeOptions',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DBaseNode",
@@ -53050,7 +53050,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geometry3D/CylinderOptions',[
+define ('excite/Browser/Geometry3D/CylinderOptions',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DBaseNode",
@@ -53138,7 +53138,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geometry3D/QuadSphereOptions',[
+define ('excite/Browser/Geometry3D/QuadSphereOptions',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DBaseNode",
@@ -53444,7 +53444,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geometry3D/X3DGeometry3DContext',[
+define ('excite/Browser/Geometry3D/X3DGeometry3DContext',[
 	"excite/Browser/Geometry3D/BoxOptions",
 	"excite/Browser/Geometry3D/ConeOptions",
 	"excite/Browser/Geometry3D/CylinderOptions",
@@ -53544,7 +53544,7 @@ function (BoxOptions,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/PointingDeviceSensor/PointingDevice',[
+define ('excite/Browser/PointingDeviceSensor/PointingDevice',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 ],
@@ -54293,7 +54293,7 @@ define ('standard/Math/Algorithms/MergeSort',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext',[
+define ('excite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext',[
 	"jquery",
 	"excite/Browser/PointingDeviceSensor/PointingDevice",
 	"excite/Bits/TraverseType",
@@ -54353,7 +54353,7 @@ function ($,
 		{
 			this .cursorType = value;
 
-			var div = this .getBrowser () .getElement () .find (".cobweb-surface");
+			var div = this .getBrowser () .getElement () .find (".excite-surface");
 
 			switch (value)
 			{
@@ -54602,7 +54602,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext',[
+define ('excite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext',[
 	"jquery",
 	"excite/Fields",
 ],
@@ -54865,7 +54865,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/X3DBindableNode',[
+define ('excite/Components/Core/X3DBindableNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Bits/X3DConstants",
@@ -54979,7 +54979,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Time/X3DTimeDependentNode',[
+define ('excite/Components/Time/X3DTimeDependentNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Components/Core/X3DChildNode",
@@ -55340,7 +55340,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Time/TimeSensor',[
+define ('excite/Components/Time/TimeSensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -55521,7 +55521,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/X3DInterpolatorNode',[
+define ('excite/Components/Interpolation/X3DInterpolatorNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Bits/X3DConstants",
@@ -55660,7 +55660,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/EaseInEaseOut',[
+define ('excite/Components/Interpolation/EaseInEaseOut',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -55808,7 +55808,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/PositionInterpolator',[
+define ('excite/Components/Interpolation/PositionInterpolator',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -55932,7 +55932,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/OrientationInterpolator',[
+define ('excite/Components/Interpolation/OrientationInterpolator',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -56061,7 +56061,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Navigation/X3DViewpointNode',[
+define ('excite/Components/Navigation/X3DViewpointNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Components/Core/X3DBindableNode",
@@ -56647,7 +56647,7 @@ function (Vector3)
  ******************************************************************************/
 
 
-define ('cobweb/Components/Navigation/OrthoViewpoint',[
+define ('excite/Components/Navigation/OrthoViewpoint',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -56878,7 +56878,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Navigation/X3DViewer',[
+define ('excite/Browser/Navigation/X3DViewer',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 	"excite/Components/Navigation/OrthoViewpoint",
@@ -57284,7 +57284,7 @@ define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (m
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Navigation/ExamineViewer',[
+define ('excite/Browser/Navigation/ExamineViewer',[
 	"jquery",
 	"excite/Browser/Navigation/X3DViewer",
 	"standard/Math/Numbers/Vector3",
@@ -57646,7 +57646,7 @@ function ($, X3DViewer, Vector3, Rotation4, _)
  ******************************************************************************/
 
 ﻿
-define ('cobweb/Browser/Navigation/X3DFlyViewer',[
+define ('excite/Browser/Navigation/X3DFlyViewer',[
 	"jquery",
 	"excite/Browser/Navigation/X3DViewer",
 	"standard/Math/Numbers/Vector3",
@@ -58213,7 +58213,7 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
  ******************************************************************************/
 
 ﻿
-define ('cobweb/Browser/Navigation/WalkViewer',[
+define ('excite/Browser/Navigation/WalkViewer',[
 	"excite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
@@ -58318,7 +58318,7 @@ function (X3DFlyViewer, Vector3, Rotation4, _)
  ******************************************************************************/
 
 ﻿
-define ('cobweb/Browser/Navigation/FlyViewer',[
+define ('excite/Browser/Navigation/FlyViewer',[
 	"excite/Browser/Navigation/X3DFlyViewer",
 	"lib/gettext",
 ],
@@ -58404,7 +58404,7 @@ function (X3DFlyViewer, _)
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/ScalarInterpolator',[
+define ('excite/Components/Interpolation/ScalarInterpolator',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -58527,7 +58527,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Navigation/Viewpoint',[
+define ('excite/Components/Navigation/Viewpoint',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -59390,7 +59390,7 @@ function (Geodetic,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geospatial/Geocentric',[
+define ('excite/Browser/Geospatial/Geocentric',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
@@ -59477,7 +59477,7 @@ function (Vector3,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Geospatial/Geospatial',[
+define ('excite/Browser/Geospatial/Geospatial',[
 	"standard/Geospatial/ReferenceEllipsoids",
 	"standard/Geospatial/Geodetic",
 	"standard/Geospatial/UniversalTransverseMercator",
@@ -59693,7 +59693,7 @@ function (ReferenceEllipsoids,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/X3DGeospatialObject',[
+define ('excite/Components/Geospatial/X3DGeospatialObject',[
 	"jquery",
 	"excite/Bits/X3DConstants",
 	"excite/Browser/Geospatial/Geospatial",
@@ -59975,7 +59975,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Navigation/NavigationInfo',[
+define ('excite/Components/Navigation/NavigationInfo',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -60311,7 +60311,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/GeoViewpoint',[
+define ('excite/Components/Geospatial/GeoViewpoint',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -60606,7 +60606,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Navigation/PlaneViewer',[
+define ('excite/Browser/Navigation/PlaneViewer',[
 	"jquery",
 	"excite/Browser/Navigation/X3DViewer",
 	"excite/Components/Navigation/Viewpoint",
@@ -60847,7 +60847,7 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3, _)
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Navigation/NoneViewer',[
+define ('excite/Browser/Navigation/NoneViewer',[
 	"jquery",
 	"excite/Browser/Navigation/X3DViewer",
 	"lib/gettext",
@@ -60918,7 +60918,7 @@ function ($, X3DViewer, _)
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Navigation/LookAtViewer',[
+define ('excite/Browser/Navigation/LookAtViewer',[
 	"jquery",
 	"excite/Browser/Navigation/X3DViewer",
 	"lib/gettext",
@@ -61061,7 +61061,7 @@ function ($, X3DViewer, _)
  ******************************************************************************/
 
 
-define ('cobweb/Components/Lighting/X3DLightNode',[
+define ('excite/Components/Lighting/X3DLightNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Bits/TraverseType",
@@ -61252,7 +61252,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Grouping/X3DBoundedObject',[
+define ('excite/Components/Grouping/X3DBoundedObject',[
 	"jquery",
 	"excite/Bits/X3DCast",
 	"excite/Bits/X3DConstants",
@@ -61352,7 +61352,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Grouping/X3DGroupingNode',[
+define ('excite/Components/Grouping/X3DGroupingNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Components/Core/X3DChildNode",
@@ -61992,7 +61992,7 @@ define ('standard/Utility/ObjectCache',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Components/Lighting/DirectionalLight',[
+define ('excite/Components/Lighting/DirectionalLight',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -62300,7 +62300,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Navigation/X3DNavigationContext',[
+define ('excite/Browser/Navigation/X3DNavigationContext',[
 	"excite/Fields",
 	"excite/Browser/Navigation/ExamineViewer",
 	"excite/Browser/Navigation/WalkViewer",
@@ -62529,7 +62529,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Layering/X3DViewportNode',[
+define ('excite/Components/Layering/X3DViewportNode',[
 	"jquery",
 	"excite/Components/Grouping/X3DGroupingNode",
 	"excite/Bits/X3DConstants",
@@ -62606,7 +62606,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Layering/Viewport',[
+define ('excite/Components/Layering/Viewport',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -62791,7 +62791,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Layering/X3DLayeringContext',[
+define ('excite/Browser/Layering/X3DLayeringContext',[
 	"excite/Components/Layering/Viewport",
 ],
 function (Viewport)
@@ -62867,7 +62867,7 @@ function (Viewport)
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing/TextureProperties',[
+define ('excite/Components/Texturing/TextureProperties',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -63058,7 +63058,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Layout/X3DLayoutContext',[
+define ('excite/Browser/Layout/X3DLayoutContext',[
 	"jquery",
 	"excite/Components/Texturing/TextureProperties",
 ],
@@ -63102,10 +63102,10 @@ function ($, TextureProperties)
 });
 
 
-define('text!cobweb/Browser/Shaders/BackgroundSphereVertexShader.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = p .xyz;\n\tgl_Position = x3d_ProjectionMatrix * p;\n\tC           = x3d_Color;\n}\n';});
+define('text!excite/Browser/Shaders/BackgroundSphereVertexShader.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = p .xyz;\n\tgl_Position = x3d_ProjectionMatrix * p;\n\tC           = x3d_Color;\n}\n';});
 
 
-define('text!cobweb/Browser/Shaders/BackgroundSphereFragmentShader.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
+define('text!excite/Browser/Shaders/BackgroundSphereFragmentShader.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite Project.\n// \n//  Excite is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -63156,12 +63156,12 @@ define('text!cobweb/Browser/Shaders/BackgroundSphereFragmentShader.fs',[],functi
  ******************************************************************************/
 
 
-define ('cobweb/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext',[
+define ('excite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext',[
 	"excite/Components/Shaders/ComposedShader",
 	"excite/Components/Shaders/ShaderPart",
 	"excite/Components/Texturing/TextureProperties",
-	"text!cobweb/Browser/Shaders/BackgroundSphereVertexShader.vs",
-	"text!cobweb/Browser/Shaders/BackgroundSphereFragmentShader.fs",
+	"text!excite/Browser/Shaders/BackgroundSphereVertexShader.vs",
+	"text!excite/Browser/Shaders/BackgroundSphereFragmentShader.fs",
 ],
 function (ComposedShader,
           ShaderPart,
@@ -63251,7 +63251,7 @@ function (ComposedShader,
  ******************************************************************************/
 
 
-define ('cobweb/Rendering/DepthBuffer',[
+define ('excite/Rendering/DepthBuffer',[
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
@@ -63447,7 +63447,7 @@ function (ViewVolume,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Lighting/X3DLightingContext',[
+define ('excite/Browser/Lighting/X3DLightingContext',[
 	"excite/Rendering/DepthBuffer",
 ],
 function (DepthBuffer)
@@ -63555,7 +63555,7 @@ function (DepthBuffer)
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Sound/X3DSoundContext',[
+define ('excite/Browser/Sound/X3DSoundContext',[
 	"excite/Fields",
 ],
 function (Fields)
@@ -63644,7 +63644,7 @@ function (Fields)
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Text/TextAlignment',[],function ()
+define ('excite/Browser/Text/TextAlignment',[],function ()
 {
 "use strict";
 	
@@ -63714,7 +63714,7 @@ define ('cobweb/Browser/Text/TextAlignment',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Components/Text/X3DFontStyleNode',[
+define ('excite/Components/Text/X3DFontStyleNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Components/Core/X3DNode",
@@ -63745,10 +63745,10 @@ function ($,
 
 	var FontDirectories = [
 		"http://media.create3000.de/fonts/",
-		"https://cdn.rawgit.com/create3000/cobweb/master/cobweb.js/fonts/",
-		"http://cdn.rawgit.com/create3000/cobweb/master/cobweb.js/fonts/",
-		"https://rawgit.com/create3000/cobweb/master/cobweb.js/fonts/",
-		"http://rawgit.com/create3000/cobweb/master/cobweb.js/fonts/",
+		"https://cdn.rawgit.com/create3000/excite/master/excite/fonts/",
+		"http://cdn.rawgit.com/create3000/excite/master/excite/fonts/",
+		"https://rawgit.com/create3000/excite/master/excite/fonts/",
+		"http://rawgit.com/create3000/excite/master/excite/fonts/",
 	];
 
 	var Fonts =
@@ -64276,7 +64276,7 @@ function (Matrix3, Vector2)
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Text/X3DTextGeometry',[
+define ('excite/Browser/Text/X3DTextGeometry',[
 	"excite/Browser/Text/TextAlignment",
 	"standard/Math/Geometry/Box2",
 	"standard/Math/Geometry/Box3",
@@ -66847,7 +66847,7 @@ function Node(i) {
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Text/PolygonText',[
+define ('excite/Browser/Text/PolygonText',[
 	"jquery",
 	"excite/Browser/Core/PrimitiveQuality",
 	"excite/Browser/Text/X3DTextGeometry",
@@ -67478,7 +67478,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Text/FontStyle',[
+define ('excite/Components/Text/FontStyle',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -72523,7 +72523,7 @@ exports.sizeOf = sizeOf;
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Text/X3DTextContext',[
+define ('excite/Browser/Text/X3DTextContext',[
 	"excite/Components/Text/FontStyle",
 	"lib/opentype.js/dist/opentype",
 ],
@@ -72647,7 +72647,7 @@ function (FontStyle,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing/X3DTextureTransformNode',[
+define ('excite/Components/Texturing/X3DTextureTransformNode',[
 	"jquery",
 	"excite/Components/Shape/X3DAppearanceChildNode",
 	"excite/Bits/X3DConstants",
@@ -72741,7 +72741,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing/TextureTransform',[
+define ('excite/Components/Texturing/TextureTransform',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -72898,7 +72898,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Texturing/X3DTexturingContext',[
+define ('excite/Browser/Texturing/X3DTexturingContext',[
 	"excite/Components/Texturing/TextureProperties",
 	"excite/Components/Texturing/TextureTransform",
 	"excite/Components/Texturing/TextureCoordinate",
@@ -73074,7 +73074,7 @@ function (TextureProperties,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Time/X3DTimeContext',[
+define ('excite/Browser/Time/X3DTimeContext',[
 	"standard/Math/Numbers/Vector3",
 ],
 function (Vector3)
@@ -73287,7 +73287,7 @@ define ('standard/Math/Algorithms/QuickSort',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/X3DParticleEmitterNode',[
+define ('excite/Components/ParticleSystems/X3DParticleEmitterNode',[
 	"jquery",
 	"excite/Components/Core/X3DNode",
 	"excite/Bits/X3DConstants",
@@ -73696,7 +73696,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/PointEmitter',[
+define ('excite/Components/ParticleSystems/PointEmitter',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -73843,7 +73843,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/ParticleSystems/X3DParticleSystemsContext',[
+define ('excite/Browser/ParticleSystems/X3DParticleSystemsContext',[
 	"excite/Components/ParticleSystems/PointEmitter",
 ],
 function (PointEmitter)
@@ -73919,7 +73919,7 @@ function (PointEmitter)
  ******************************************************************************/
 
 
-define ('cobweb/Rendering/X3DRenderObject',[
+define ('excite/Rendering/X3DRenderObject',[
 	"jquery",
 	"excite/Rendering/DepthBuffer",
 	"excite/Bits/TraverseType",
@@ -74855,7 +74855,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Execution/BindableStack',[
+define ('excite/Execution/BindableStack',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 ],
@@ -75044,7 +75044,7 @@ function ($, X3DBaseNode)
  ******************************************************************************/
 
 
-define ('cobweb/Execution/BindableList',[
+define ('excite/Execution/BindableList',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 ],
@@ -75192,7 +75192,7 @@ function ($, X3DBaseNode)
  ******************************************************************************/
 
 
-define ('cobweb/Components/EnvironmentalEffects/X3DFogObject',[
+define ('excite/Components/EnvironmentalEffects/X3DFogObject',[
 	"jquery",
 	"excite/Bits/X3DConstants",
 ],
@@ -75317,7 +75317,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EnvironmentalEffects/Fog',[
+define ('excite/Components/EnvironmentalEffects/Fog',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -75448,7 +75448,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EnvironmentalEffects/X3DBackgroundNode',[
+define ('excite/Components/EnvironmentalEffects/X3DBackgroundNode',[
 	"jquery",
 	"excite/Components/Core/X3DBindableNode",
 	"excite/Bits/TraverseType",
@@ -76129,7 +76129,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing/X3DTextureNode',[
+define ('excite/Components/Texturing/X3DTextureNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Components/Shape/X3DAppearanceChildNode",
@@ -76278,7 +76278,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing/X3DTexture2DNode',[
+define ('excite/Components/Texturing/X3DTexture2DNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Components/Texturing/X3DTextureNode",
@@ -76515,7 +76515,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing/ImageTexture',[
+define ('excite/Components/Texturing/ImageTexture',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -76777,7 +76777,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EnvironmentalEffects/Background',[
+define ('excite/Components/EnvironmentalEffects/Background',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -76939,7 +76939,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Layering/X3DLayerNode',[
+define ('excite/Components/Layering/X3DLayerNode',[
 	"jquery",
 	"excite/Components/Core/X3DNode",
 	"excite/Rendering/X3DRenderObject",
@@ -77325,7 +77325,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Grouping/Group',[
+define ('excite/Components/Grouping/Group',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -77428,7 +77428,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Layering/Layer',[
+define ('excite/Components/Layering/Layer',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -77538,7 +77538,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Layering/LayerSet',[
+define ('excite/Components/Layering/LayerSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -77767,7 +77767,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Execution/World',[
+define ('excite/Execution/World',[
 	"jquery",
 	"excite/Fields/SFNode",
 	"excite/Basic/X3DBaseNode",
@@ -77928,7 +77928,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/X3DBrowserContext',[
+define ('excite/Browser/X3DBrowserContext',[
 	"jquery",
 	"excite/Fields/SFTime",
 	"excite/Basic/X3DBaseNode",
@@ -78217,7 +78217,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Configuration/ProfileInfo',[
+define ('excite/Configuration/ProfileInfo',[
 	"jquery",
 ],
 function ($)
@@ -78295,7 +78295,7 @@ function ($)
  ******************************************************************************/
 
 
-define ('cobweb/Configuration/ProfileInfoArray',[
+define ('excite/Configuration/ProfileInfoArray',[
 	"jquery",
 	"excite/Configuration/X3DInfoArray",
 ],
@@ -78365,7 +78365,7 @@ function ($, X3DInfoArray)
  ******************************************************************************/
 
 
-define ('cobweb/Configuration/SupportedProfiles',[
+define ('excite/Configuration/SupportedProfiles',[
 	"jquery",
 	"excite/Configuration/ProfileInfo",
 	"excite/Configuration/ProfileInfoArray",
@@ -78596,7 +78596,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Configuration/SupportedComponents',[
+define ('excite/Configuration/SupportedComponents',[
 	"jquery",
 	"excite/Configuration/ComponentInfoArray",
 	"excite/Browser/Networking/urls",
@@ -78955,7 +78955,7 @@ function ($, ComponentInfoArray, urls)
  ******************************************************************************/
 
 
-define ('cobweb/Browser/PointingDeviceSensor/PointingDeviceSensorContainer',[
+define ('excite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer',[
 	"jquery",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
@@ -79052,7 +79052,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode',[
+define ('excite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode',[
 	"jquery",
 	"excite/Components/Core/X3DSensorNode",
 	"excite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer",
@@ -79179,7 +79179,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/PointingDeviceSensor/X3DTouchSensorNode',[
+define ('excite/Components/PointingDeviceSensor/X3DTouchSensorNode',[
 	"jquery",
 	"excite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
 	"excite/Bits/X3DConstants",
@@ -79263,7 +79263,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/PointingDeviceSensor/TouchSensor',[
+define ('excite/Components/PointingDeviceSensor/TouchSensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -79395,7 +79395,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Networking/Anchor',[
+define ('excite/Components/Networking/Anchor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -79592,7 +79592,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/X3DLineGeometryNode',[
+define ('excite/Components/Rendering/X3DLineGeometryNode',[
 	"jquery",
 	"excite/Components/Rendering/X3DGeometryNode",
 	"excite/Bits/X3DConstants",
@@ -79791,7 +79791,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry2D/Arc2D',[
+define ('excite/Components/Geometry2D/Arc2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -79969,7 +79969,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry2D/ArcClose2D',[
+define ('excite/Components/Geometry2D/ArcClose2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -80196,7 +80196,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Sound/X3DSoundSourceNode',[
+define ('excite/Components/Sound/X3DSoundSourceNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Components/Time/X3DTimeDependentNode",
@@ -80422,7 +80422,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Sound/AudioClip',[
+define ('excite/Components/Sound/AudioClip',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -80629,7 +80629,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Navigation/Billboard',[
+define ('excite/Components/Navigation/Billboard',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -80827,7 +80827,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EventUtilities/BooleanFilter',[
+define ('excite/Components/EventUtilities/BooleanFilter',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -80947,7 +80947,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EventUtilities/X3DSequencerNode',[
+define ('excite/Components/EventUtilities/X3DSequencerNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Bits/X3DConstants",
@@ -81102,7 +81102,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EventUtilities/BooleanSequencer',[
+define ('excite/Components/EventUtilities/BooleanSequencer',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -81220,7 +81220,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EventUtilities/BooleanToggle',[
+define ('excite/Components/EventUtilities/BooleanToggle',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -81331,7 +81331,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EventUtilities/X3DTriggerNode',[
+define ('excite/Components/EventUtilities/X3DTriggerNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Bits/X3DConstants",
@@ -81408,7 +81408,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EventUtilities/BooleanTrigger',[
+define ('excite/Components/EventUtilities/BooleanTrigger',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -81518,7 +81518,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/X3DParticlePhysicsModelNode',[
+define ('excite/Components/ParticleSystems/X3DParticlePhysicsModelNode',[
 	"jquery",
 	"excite/Components/Core/X3DNode",
 	"excite/Bits/X3DConstants",
@@ -81597,7 +81597,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/BoundedPhysicsModel',[
+define ('excite/Components/ParticleSystems/BoundedPhysicsModel',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -81732,7 +81732,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry3D/Box',[
+define ('excite/Components/Geometry3D/Box',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -81880,7 +81880,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/CADGeometry/X3DProductStructureChildNode',[
+define ('excite/Components/CADGeometry/X3DProductStructureChildNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Bits/X3DConstants",
@@ -81957,7 +81957,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/CADGeometry/CADAssembly',[
+define ('excite/Components/CADGeometry/CADAssembly',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -82065,7 +82065,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/CADGeometry/CADFace',[
+define ('excite/Components/CADGeometry/CADFace',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -82241,7 +82241,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/CADGeometry/CADLayer',[
+define ('excite/Components/CADGeometry/CADLayer',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -82356,7 +82356,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Grouping/X3DTransformMatrix3DNode',[
+define ('excite/Components/Grouping/X3DTransformMatrix3DNode',[
 	"jquery",
 	"excite/Components/Grouping/X3DGroupingNode",
 	"excite/Bits/X3DConstants",
@@ -82492,7 +82492,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Grouping/X3DTransformNode',[
+define ('excite/Components/Grouping/X3DTransformNode',[
 	"jquery",
 	"excite/Components/Grouping/X3DTransformMatrix3DNode",
 	"excite/Bits/X3DConstants",
@@ -82591,7 +82591,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/CADGeometry/CADPart',[
+define ('excite/Components/CADGeometry/CADPart',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -82708,7 +82708,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry2D/Circle2D',[
+define ('excite/Components/Geometry2D/Circle2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -82843,7 +82843,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/ClipPlane',[
+define ('excite/Components/Rendering/ClipPlane',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -83032,7 +83032,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Navigation/Collision',[
+define ('excite/Components/Navigation/Collision',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -83211,7 +83211,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/X3DColorNode',[
+define ('excite/Components/Rendering/X3DColorNode',[
 	"jquery",
 	"excite/Components/Rendering/X3DGeometricPropertyNode",
 	"excite/Bits/X3DConstants",
@@ -83300,7 +83300,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/Color',[
+define ('excite/Components/Rendering/Color',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -83428,7 +83428,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/X3DFollowerNode',[
+define ('excite/Components/Followers/X3DFollowerNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Bits/X3DConstants",
@@ -83576,7 +83576,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/X3DChaserNode',[
+define ('excite/Components/Followers/X3DChaserNode',[
 	"jquery",
 	"excite/Components/Followers/X3DFollowerNode",
 	"excite/Bits/X3DConstants",
@@ -83828,7 +83828,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/ColorChaser',[
+define ('excite/Components/Followers/ColorChaser',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -83979,7 +83979,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/X3DDamperNode',[
+define ('excite/Components/Followers/X3DDamperNode',[
 	"jquery",
 	"excite/Components/Followers/X3DFollowerNode",
 	"excite/Bits/X3DConstants",
@@ -84162,7 +84162,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/ColorDamper',[
+define ('excite/Components/Followers/ColorDamper',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -84311,7 +84311,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/ColorInterpolator',[
+define ('excite/Components/Interpolation/ColorInterpolator',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -84442,7 +84442,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/ColorRGBA',[
+define ('excite/Components/Rendering/ColorRGBA',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -84570,7 +84570,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/CubeMapTexturing/X3DEnvironmentTextureNode',[
+define ('excite/Components/CubeMapTexturing/X3DEnvironmentTextureNode',[
 	"jquery",
 	"excite/Components/Texturing/X3DTextureNode",
 	"excite/Bits/X3DConstants",
@@ -84696,7 +84696,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/CubeMapTexturing/ComposedCubeMapTexture',[
+define ('excite/Components/CubeMapTexturing/ComposedCubeMapTexture',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -84966,7 +84966,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry3D/Cone',[
+define ('excite/Components/Geometry3D/Cone',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -85219,7 +85219,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/ConeEmitter',[
+define ('excite/Components/ParticleSystems/ConeEmitter',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -85369,7 +85369,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
+define ('excite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
 {
 "use strict";
 
@@ -85503,7 +85503,7 @@ define ('cobweb/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Followers/X3DArrayChaserTemplate',[
+define ('excite/Browser/Followers/X3DArrayChaserTemplate',[
 	"jquery",
 	"excite/Browser/Followers/X3DArrayFollowerTemplate",
 ],
@@ -85596,7 +85596,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/CoordinateChaser',[
+define ('excite/Components/Followers/CoordinateChaser',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -85717,7 +85717,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/CoordinateDamper',[
+define ('excite/Components/Followers/CoordinateDamper',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -85840,7 +85840,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/NURBS/CoordinateDouble',[
+define ('excite/Components/NURBS/CoordinateDouble',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -85939,7 +85939,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/CoordinateInterpolator',[
+define ('excite/Components/Interpolation/CoordinateInterpolator',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -86064,7 +86064,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/CoordinateInterpolator2D',[
+define ('excite/Components/Interpolation/CoordinateInterpolator2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -86186,7 +86186,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry3D/Cylinder',[
+define ('excite/Components/Geometry3D/Cylinder',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -86498,7 +86498,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/PointingDeviceSensor/X3DDragSensorNode',[
+define ('excite/Components/PointingDeviceSensor/X3DDragSensorNode',[
 	"jquery",
 	"excite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
 	"excite/Bits/X3DConstants",
@@ -86747,7 +86747,7 @@ function (Vector3,
  ******************************************************************************/
 
 
-define ('cobweb/Components/PointingDeviceSensor/CylinderSensor',[
+define ('excite/Components/PointingDeviceSensor/CylinderSensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -87056,7 +87056,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry2D/Disk2D',[
+define ('excite/Components/Geometry2D/Disk2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -87339,7 +87339,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry3D/ElevationGrid',[
+define ('excite/Components/Geometry3D/ElevationGrid',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -87750,7 +87750,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/ExplosionEmitter',[
+define ('excite/Components/ParticleSystems/ExplosionEmitter',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -87875,7 +87875,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry3D/Extrusion',[
+define ('excite/Components/Geometry3D/Extrusion',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -88504,7 +88504,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shaders/X3DVertexAttributeNode',[
+define ('excite/Components/Shaders/X3DVertexAttributeNode',[
 	"jquery",
 	"excite/Components/Rendering/X3DGeometricPropertyNode",
 	"excite/Bits/X3DConstants",
@@ -88581,7 +88581,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shaders/FloatVertexAttribute',[
+define ('excite/Components/Shaders/FloatVertexAttribute',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -88710,7 +88710,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/ForcePhysicsModel',[
+define ('excite/Components/ParticleSystems/ForcePhysicsModel',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -88818,7 +88818,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Rendering/DependentRenderer',[
+define ('excite/Rendering/DependentRenderer',[
 	"excite/Basic/X3DBaseNode",
 	"excite/Rendering/X3DRenderObject",
 	"excite/Bits/TraverseType",
@@ -88965,7 +88965,7 @@ function (X3DBaseNode,
  ******************************************************************************/
 
 
-define ('cobweb/Components/CubeMapTexturing/GeneratedCubeMapTexture',[
+define ('excite/Components/CubeMapTexturing/GeneratedCubeMapTexture',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -89269,7 +89269,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/GeoCoordinate',[
+define ('excite/Components/Geospatial/GeoCoordinate',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -89459,7 +89459,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/GeoElevationGrid',[
+define ('excite/Components/Geospatial/GeoElevationGrid',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -89888,7 +89888,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Networking/Inline',[
+define ('excite/Components/Networking/Inline',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -90133,7 +90133,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/GeoLOD',[
+define ('excite/Components/Geospatial/GeoLOD',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -90507,7 +90507,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/GeoLocation',[
+define ('excite/Components/Geospatial/GeoLocation',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -90634,7 +90634,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/X3DInfoNode',[
+define ('excite/Components/Core/X3DInfoNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Bits/X3DConstants",
@@ -90711,7 +90711,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/GeoMetadata',[
+define ('excite/Components/Geospatial/GeoMetadata',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -90812,7 +90812,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/GeoOrigin',[
+define ('excite/Components/Geospatial/GeoOrigin',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -90933,7 +90933,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/GeoPositionInterpolator',[
+define ('excite/Components/Geospatial/GeoPositionInterpolator',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -91088,7 +91088,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode',[
+define ('excite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode',[
 	"jquery",
 	"excite/Fields",
 	"excite/Components/Core/X3DSensorNode",
@@ -91222,7 +91222,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EnvironmentalSensor/ProximitySensor',[
+define ('excite/Components/EnvironmentalSensor/ProximitySensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -91516,7 +91516,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/GeoProximitySensor',[
+define ('excite/Components/Geospatial/GeoProximitySensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -91674,7 +91674,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/GeoTouchSensor',[
+define ('excite/Components/Geospatial/GeoTouchSensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -91823,7 +91823,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geospatial/GeoTransform',[
+define ('excite/Components/Geospatial/GeoTransform',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -91975,7 +91975,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/CubeMapTexturing/ImageCubeMapTexture',[
+define ('excite/Components/CubeMapTexturing/ImageCubeMapTexture',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -92277,7 +92277,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/IndexedLineSet',[
+define ('excite/Components/Rendering/IndexedLineSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -92595,7 +92595,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/CADGeometry/IndexedQuadSet',[
+define ('excite/Components/CADGeometry/IndexedQuadSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -92747,7 +92747,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/IndexedTriangleFanSet',[
+define ('excite/Components/Rendering/IndexedTriangleFanSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -92909,7 +92909,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/IndexedTriangleSet',[
+define ('excite/Components/Rendering/IndexedTriangleSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -93026,7 +93026,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/IndexedTriangleStripSet',[
+define ('excite/Components/Rendering/IndexedTriangleStripSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -93199,7 +93199,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EventUtilities/IntegerSequencer',[
+define ('excite/Components/EventUtilities/IntegerSequencer',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -93317,7 +93317,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EventUtilities/IntegerTrigger',[
+define ('excite/Components/EventUtilities/IntegerTrigger',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -93428,7 +93428,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode',[
+define ('excite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode',[
 	"jquery",
 	"excite/Components/Core/X3DSensorNode",
 	"excite/Bits/X3DConstants",
@@ -93569,7 +93569,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/KeyDeviceSensor/KeySensor',[
+define ('excite/Components/KeyDeviceSensor/KeySensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -93884,7 +93884,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Navigation/LOD',[
+define ('excite/Components/Navigation/LOD',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -94102,7 +94102,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Layout/X3DLayoutNode',[
+define ('excite/Components/Layout/X3DLayoutNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Bits/X3DConstants",
@@ -94179,7 +94179,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Layout/Layout',[
+define ('excite/Components/Layout/Layout',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -94832,7 +94832,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Layout/LayoutGroup',[
+define ('excite/Components/Layout/LayoutGroup',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -95021,7 +95021,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Layout/LayoutLayer',[
+define ('excite/Components/Layout/LayoutLayer',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -95140,7 +95140,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shape/LineProperties',[
+define ('excite/Components/Shape/LineProperties',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -95257,7 +95257,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/LineSet',[
+define ('excite/Components/Rendering/LineSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -95481,7 +95481,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EnvironmentalEffects/LocalFog',[
+define ('excite/Components/EnvironmentalEffects/LocalFog',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -95602,7 +95602,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shape/X3DMaterialNode',[
+define ('excite/Components/Shape/X3DMaterialNode',[
 	"jquery",
 	"excite/Components/Shape/X3DAppearanceChildNode",
 	"excite/Bits/X3DConstants",
@@ -95679,7 +95679,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shape/Material',[
+define ('excite/Components/Shape/Material',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -95875,7 +95875,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shaders/Matrix3VertexAttribute',[
+define ('excite/Components/Shaders/Matrix3VertexAttribute',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -96002,7 +96002,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shaders/Matrix4VertexAttribute',[
+define ('excite/Components/Shaders/Matrix4VertexAttribute',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -96127,7 +96127,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/X3DMetadataObject',[
+define ('excite/Components/Core/X3DMetadataObject',[
 	"jquery",
 	"excite/Bits/X3DConstants",
 ],
@@ -96201,7 +96201,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/MetadataBoolean',[
+define ('excite/Components/Core/MetadataBoolean',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -96306,7 +96306,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/MetadataDouble',[
+define ('excite/Components/Core/MetadataDouble',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -96411,7 +96411,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/MetadataFloat',[
+define ('excite/Components/Core/MetadataFloat',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -96516,7 +96516,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/MetadataInteger',[
+define ('excite/Components/Core/MetadataInteger',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -96621,7 +96621,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/MetadataSet',[
+define ('excite/Components/Core/MetadataSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -96726,7 +96726,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/MetadataString',[
+define ('excite/Components/Core/MetadataString',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -96831,7 +96831,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing/MovieTexture',[
+define ('excite/Components/Texturing/MovieTexture',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -97091,7 +97091,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/X3DNormalNode',[
+define ('excite/Components/Rendering/X3DNormalNode',[
 	"jquery",
 	"excite/Components/Rendering/X3DGeometricPropertyNode",
 	"excite/Bits/X3DConstants",
@@ -97168,7 +97168,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/Normal',[
+define ('excite/Components/Rendering/Normal',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -97278,7 +97278,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/NormalInterpolator',[
+define ('excite/Components/Interpolation/NormalInterpolator',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -97419,7 +97419,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/OrientationChaser',[
+define ('excite/Components/Followers/OrientationChaser',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -97550,7 +97550,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/OrientationDamper',[
+define ('excite/Components/Followers/OrientationDamper',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -97677,7 +97677,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shape/X3DShapeNode',[
+define ('excite/Components/Shape/X3DShapeNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Components/Grouping/X3DBoundedObject",
@@ -98218,7 +98218,7 @@ function (Vector3,
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/ParticleSystem',[
+define ('excite/Components/ParticleSystems/ParticleSystem',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -99574,7 +99574,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing/PixelTexture',[
+define ('excite/Components/Texturing/PixelTexture',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -99824,7 +99824,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/PointingDeviceSensor/PlaneSensor',[
+define ('excite/Components/PointingDeviceSensor/PlaneSensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -100138,7 +100138,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Lighting/PointLight',[
+define ('excite/Components/Lighting/PointLight',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -100501,7 +100501,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/PointSet',[
+define ('excite/Components/Rendering/PointSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -100697,7 +100697,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry2D/Polyline2D',[
+define ('excite/Components/Geometry2D/Polyline2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -100821,7 +100821,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/PolylineEmitter',[
+define ('excite/Components/ParticleSystems/PolylineEmitter',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -101068,7 +101068,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry2D/Polypoint2D',[
+define ('excite/Components/Geometry2D/Polypoint2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -101199,7 +101199,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/PositionChaser',[
+define ('excite/Components/Followers/PositionChaser',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -101310,7 +101310,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/PositionChaser2D',[
+define ('excite/Components/Followers/PositionChaser2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -101421,7 +101421,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/PositionDamper',[
+define ('excite/Components/Followers/PositionDamper',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -101534,7 +101534,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/PositionDamper2D',[
+define ('excite/Components/Followers/PositionDamper2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -101647,7 +101647,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/PositionInterpolator2D',[
+define ('excite/Components/Interpolation/PositionInterpolator2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -101771,7 +101771,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/CADGeometry/QuadSet',[
+define ('excite/Components/CADGeometry/QuadSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -101914,7 +101914,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry2D/Rectangle2D',[
+define ('excite/Components/Geometry2D/Rectangle2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -102060,7 +102060,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/ScalarChaser',[
+define ('excite/Components/Followers/ScalarChaser',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -102195,7 +102195,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/ScalarDamper',[
+define ('excite/Components/Followers/ScalarDamper',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -102324,7 +102324,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Layout/ScreenText',[
+define ('excite/Browser/Layout/ScreenText',[
 	"jquery",
 	"excite/Browser/Text/X3DTextGeometry",
 	"excite/Browser/Text/TextAlignment",
@@ -102804,7 +102804,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Layout/ScreenFontStyle',[
+define ('excite/Components/Layout/ScreenFontStyle',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -102921,7 +102921,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Layout/ScreenGroup',[
+define ('excite/Components/Layout/ScreenGroup',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -103116,7 +103116,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Scripting/evaluate',[],function ()
+define ('excite/Browser/Scripting/evaluate',[],function ()
 {
 	return function (/* __global__, __text__ */)
 	{
@@ -103176,7 +103176,7 @@ define ('cobweb/Browser/Scripting/evaluate',[],function ()
  ******************************************************************************/
 
 
-define ('cobweb/Components/Scripting/X3DScriptNode',[
+define ('excite/Components/Scripting/X3DScriptNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Components/Networking/X3DUrlObject",
@@ -103257,7 +103257,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Scripting/Script',[
+define ('excite/Components/Scripting/Script',[
 	"jquery",
 	"excite/Basic/X3DFieldDefinition",
 	"excite/Basic/FieldDefinitionArray",
@@ -103782,7 +103782,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shape/Shape',[
+define ('excite/Components/Shape/Shape',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -104008,7 +104008,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Sound/X3DSoundNode',[
+define ('excite/Components/Sound/X3DSoundNode',[
 	"jquery",
 	"excite/Components/Core/X3DChildNode",
 	"excite/Bits/X3DConstants",
@@ -104085,7 +104085,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Sound/Sound',[
+define ('excite/Components/Sound/Sound',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -104305,7 +104305,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry3D/Sphere',[
+define ('excite/Components/Geometry3D/Sphere',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -104641,7 +104641,7 @@ function (Vector3)
  ******************************************************************************/
 
 
-define ('cobweb/Components/PointingDeviceSensor/SphereSensor',[
+define ('excite/Components/PointingDeviceSensor/SphereSensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -104885,7 +104885,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Interpolation/CatmullRomSplineInterpolator',[
+define ('excite/Browser/Interpolation/CatmullRomSplineInterpolator',[
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
 ],
@@ -105073,7 +105073,7 @@ function (Vector4,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate',[
+define ('excite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate',[
 	"jquery",
 	"excite/Browser/Interpolation/CatmullRomSplineInterpolator"
 ],
@@ -105189,7 +105189,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Interpolation/CatmullRomSplineInterpolator3',[
+define ('excite/Browser/Interpolation/CatmullRomSplineInterpolator3',[
 	"excite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",
 	"standard/Math/Numbers/Vector3",
 ],
@@ -105250,7 +105250,7 @@ function (CatmullRomSplineInterpolatorTemplate,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/SplinePositionInterpolator',[
+define ('excite/Components/Interpolation/SplinePositionInterpolator',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -105395,7 +105395,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Interpolation/CatmullRomSplineInterpolator2',[
+define ('excite/Browser/Interpolation/CatmullRomSplineInterpolator2',[
 	"excite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",
 	"standard/Math/Numbers/Vector2",
 ],
@@ -105456,7 +105456,7 @@ function (CatmullRomSplineInterpolatorTemplate,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/SplinePositionInterpolator2D',[
+define ('excite/Components/Interpolation/SplinePositionInterpolator2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -105601,7 +105601,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Interpolation/CatmullRomSplineInterpolator1',[
+define ('excite/Browser/Interpolation/CatmullRomSplineInterpolator1',[
 	"jquery",
 	"excite/Browser/Interpolation/CatmullRomSplineInterpolator"
 ],
@@ -105703,7 +105703,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/SplineScalarInterpolator',[
+define ('excite/Components/Interpolation/SplineScalarInterpolator',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -105848,7 +105848,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Lighting/SpotLight',[
+define ('excite/Components/Lighting/SpotLight',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -106214,7 +106214,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/Interpolation/SquatInterpolator',[
+define ('excite/Browser/Interpolation/SquatInterpolator',[
 	"standard/Math/Numbers/Rotation4",
 ],
 function (Rotation4)
@@ -106333,7 +106333,7 @@ function (Rotation4)
  ******************************************************************************/
 
 
-define ('cobweb/Components/Interpolation/SquadOrientationInterpolator',[
+define ('excite/Components/Interpolation/SquadOrientationInterpolator',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -106470,7 +106470,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Grouping/StaticGroup',[
+define ('excite/Components/Grouping/StaticGroup',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -106615,7 +106615,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/SurfaceEmitter',[
+define ('excite/Components/ParticleSystems/SurfaceEmitter',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -106868,7 +106868,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Grouping/Switch',[
+define ('excite/Components/Grouping/Switch',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -107016,7 +107016,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/TexCoordChaser2D',[
+define ('excite/Components/Followers/TexCoordChaser2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -107137,7 +107137,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Followers/TexCoordDamper2D',[
+define ('excite/Components/Followers/TexCoordDamper2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -107260,7 +107260,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Text/Text',[
+define ('excite/Components/Text/Text',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -107454,7 +107454,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EnvironmentalEffects/TextureBackground',[
+define ('excite/Components/EnvironmentalEffects/TextureBackground',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -107610,7 +107610,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing3D/TextureCoordinate3D',[
+define ('excite/Components/Texturing3D/TextureCoordinate3D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -107738,7 +107738,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing3D/TextureCoordinate4D',[
+define ('excite/Components/Texturing3D/TextureCoordinate4D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -107866,7 +107866,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing3D/TextureTransform3D',[
+define ('excite/Components/Texturing3D/TextureTransform3D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -108012,7 +108012,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Texturing3D/TextureTransformMatrix3D',[
+define ('excite/Components/Texturing3D/TextureTransformMatrix3D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -108121,7 +108121,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EventUtilities/TimeTrigger',[
+define ('excite/Components/EventUtilities/TimeTrigger',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -108231,7 +108231,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Grouping/Transform',[
+define ('excite/Components/Grouping/Transform',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -108339,7 +108339,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EnvironmentalSensor/TransformSensor',[
+define ('excite/Components/EnvironmentalSensor/TransformSensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -108541,7 +108541,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/TriangleFanSet',[
+define ('excite/Components/Rendering/TriangleFanSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -108690,7 +108690,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/TriangleSet',[
+define ('excite/Components/Rendering/TriangleSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -108809,7 +108809,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Geometry2D/TriangleSet2D',[
+define ('excite/Components/Geometry2D/TriangleSet2D',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -108950,7 +108950,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Rendering/TriangleStripSet',[
+define ('excite/Components/Rendering/TriangleStripSet',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -109103,7 +109103,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Shape/TwoSidedMaterial',[
+define ('excite/Components/Shape/TwoSidedMaterial',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -109398,7 +109398,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Navigation/ViewpointGroup',[
+define ('excite/Components/Navigation/ViewpointGroup',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -109650,7 +109650,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/EnvironmentalSensor/VisibilitySensor',[
+define ('excite/Components/EnvironmentalSensor/VisibilitySensor',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -109826,7 +109826,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/VolumeEmitter',[
+define ('excite/Components/ParticleSystems/VolumeEmitter',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -110143,7 +110143,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/ParticleSystems/WindPhysicsModel',[
+define ('excite/Components/ParticleSystems/WindPhysicsModel',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -110279,7 +110279,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Components/Core/WorldInfo',[
+define ('excite/Components/Core/WorldInfo',[
 	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DFieldDefinition",
@@ -110379,7 +110379,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/Configuration/SupportedNodes',[
+define ('excite/Configuration/SupportedNodes',[
 	"excite/Components/Networking/Anchor", // VRML
 	"excite/Components/Shape/Appearance", // VRML
 	"excite/Components/Geometry2D/Arc2D",
@@ -111115,7 +111115,7 @@ function (Anchor,
  ******************************************************************************/
 
 
-define ('cobweb/Browser/X3DBrowser',[
+define ('excite/Browser/X3DBrowser',[
 	"jquery",
 	"excite/Browser/VERSION",
 	"excite/Base/Events",
@@ -111466,7 +111466,7 @@ function ($,
 				if (scene)
 					this .replaceWorld (scene);
 				else
-					setTimeout (function () { this .getSplashScreen () .find (".cobweb-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+					setTimeout (function () { this .getSplashScreen () .find (".excite-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 
 				// Must not remove load count, replaceWorld does a resetLoadCount when it sets setBrowserLoading to true.
 				// Don't set browser loading to false.
@@ -111694,7 +111694,7 @@ function ($,
 
 			console .log (string);
 
-			$(".cobweb-console") .append (string);
+			$(".excite-console") .append (string);
 		},
 		println: function ()
 		{
@@ -111707,7 +111707,7 @@ function ($,
 
 			string += "\n";
 
-			$(".cobweb-console") .append (string);
+			$(".excite-console") .append (string);
 		},
 	});
 
@@ -111799,7 +111799,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('cobweb/X3D',[
+define ('excite/X3D',[
 	"jquery",
 	"excite/Error",
 	"excite/Basic/X3DFieldDefinition",
@@ -111866,7 +111866,7 @@ function ($,
 	//		for (var i = 0; i < arguments .length; ++ i)
 	//			string += arguments [i];
 	//
-	//		$(".cobweb-console") .append (string);
+	//		$(".excite-console") .append (string);
 	//	}
 	//
 	//	console .log   = print;
@@ -112097,5 +112097,5 @@ function ($,
 	fallback);
 
 }) ();
-define("cobweb", function(){});
+define("excite", function(){});
 

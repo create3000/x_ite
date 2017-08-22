@@ -81,7 +81,7 @@ function ($)
 
 	function fallback (elements)
 	{
-		elements .children () .addClass ("cobweb-fallback");
+		elements .children () .addClass ("excite-fallback");
 	}
 
 	Error .fallback = fallback;

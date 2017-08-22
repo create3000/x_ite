@@ -15,12 +15,8 @@
     <None Include="logo\icon.svg" />
     <None Include="logo\logo.svg" />
     <None Include="meta.mdproj" />
-    <None Include="resources\SupportedComponents.js" />
-    <None Include="resources\SupportedNodes.js" />
-    <None Include="resources\SupportedNodes.VRML.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="logo\" />
-    <Folder Include="resources\" />
   </ItemGroup>
 </Project>

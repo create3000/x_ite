@@ -49,9 +49,9 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields/SFVec3",
-	"cobweb/Basic/X3DField",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields/SFVec3",
+	"excite/Basic/X3DField",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Numbers/Rotation4",
 ],
 function ($, SFVec3, X3DField, X3DConstants, Rotation4)

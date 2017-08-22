@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
-	"cobweb/Basic/X3DBaseNode",
-	"cobweb/Fields",
+	"excite/Basic/X3DBaseNode",
+	"excite/Fields",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector3",
 ],

@@ -49,10 +49,10 @@
 
 define ([
 	"jquery",
-	"cobweb/Configuration/ProfileInfo",
-	"cobweb/Configuration/ProfileInfoArray",
-	"cobweb/Configuration/ComponentInfoArray",
-	"cobweb/Browser/Networking/urls",
+	"excite/Configuration/ProfileInfo",
+	"excite/Configuration/ProfileInfoArray",
+	"excite/Configuration/ComponentInfoArray",
+	"excite/Browser/Networking/urls",
 ],
 function ($,
           ProfileInfo,

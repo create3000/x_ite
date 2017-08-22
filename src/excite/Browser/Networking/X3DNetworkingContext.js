@@ -48,9 +48,9 @@
 
 
 define ([
-	"cobweb/Fields",
-	"cobweb/Components/Networking/LoadSensor",
-	"cobweb/Browser/Networking/urls",
+	"excite/Fields",
+	"excite/Components/Networking/LoadSensor",
+	"excite/Browser/Networking/urls",
 	"standard/Networking/URI",
 	"lib/sprintf.js/src/sprintf",
 	"lib/gettext",
@@ -182,8 +182,8 @@ function (Fields,
 			if (! this .loading)
 				this .getNotification () .string_ = string;
 
-			this .getSplashScreen () .find (".cobweb-spinner-text") .text (string);
-			this .getSplashScreen () .find (".cobweb-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
+			this .getSplashScreen () .find (".excite-spinner-text") .text (string);
+			this .getSplashScreen () .find (".excite-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
 		},
 		resetLoadCount: function ()
 		{

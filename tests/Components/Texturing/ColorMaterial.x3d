@@ -164,7 +164,7 @@
       <Shape>
         <Appearance>
           <ImageTexture
-              url='"../images/does-not-exits.png", "../images/logo.96.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.96.png"'
+              url='"../images/does-not-exits.png", "../images/logo.96.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.96.png"'
               repeatS='false'
               repeatT='false'/>
           <TextureTransform
@@ -180,7 +180,7 @@
         <Shape>
           <Appearance>
             <ImageTexture
-                url='"../images/logo.1.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.1.png"'
+                url='"../images/logo.1.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.1.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -203,7 +203,7 @@
         <Shape>
           <Appearance>
             <ImageTexture
-                url='"../images/logo.2.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.2.png"'
+                url='"../images/logo.2.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.2.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -227,7 +227,7 @@
         <Shape>
           <Appearance>
             <ImageTexture
-                url='"../images/logo.3.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.3.png"'
+                url='"../images/logo.3.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.3.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -250,7 +250,7 @@
         <Shape>
           <Appearance>
             <ImageTexture
-                url='"../images/logo.4.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.4.png"'
+                url='"../images/logo.4.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.4.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -279,7 +279,7 @@
                 diffuseColor='1 1 1'
                 transparency='0.677215'/>
             <ImageTexture
-                url='"../images/logo.1.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.1.png"'
+                url='"../images/logo.1.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.1.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -304,7 +304,7 @@
           <Appearance>
             <Material USE='_4'/>
             <ImageTexture
-                url='"../images/logo.2.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.2.png"'
+                url='"../images/logo.2.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.2.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -328,7 +328,7 @@
           <Appearance>
             <Material USE='_4'/>
             <ImageTexture
-                url='"../images/logo.3.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.3.png"'
+                url='"../images/logo.3.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.3.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -352,7 +352,7 @@
           <Appearance>
             <Material USE='_4'/>
             <ImageTexture
-                url='"../images/logo.4.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.4.png"'
+                url='"../images/logo.4.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.4.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -378,7 +378,7 @@
         <Shape>
           <Appearance>
             <ImageTexture
-                url='"../images/logo.1.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.1.png"'
+                url='"../images/logo.1.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.1.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -400,7 +400,7 @@
         <Shape>
           <Appearance>
             <ImageTexture
-                url='"../images/logo.2.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.2.png"'
+                url='"../images/logo.2.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.2.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -422,7 +422,7 @@
         <Shape>
           <Appearance>
             <ImageTexture
-                url='"../images/logo.3.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.3.png"'
+                url='"../images/logo.3.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.3.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -444,7 +444,7 @@
         <Shape>
           <Appearance>
             <ImageTexture
-                url='"../images/logo.4.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.4.png"'
+                url='"../images/logo.4.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.4.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -472,7 +472,7 @@
                 diffuseColor='1 1 1'
                 transparency='0.601266'/>
             <ImageTexture
-                url='"../images/logo.1.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.1.png"'
+                url='"../images/logo.1.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.1.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -495,7 +495,7 @@
           <Appearance>
             <Material USE='_6'/>
             <ImageTexture
-                url='"../images/logo.2.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.2.png"'
+                url='"../images/logo.2.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.2.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -518,7 +518,7 @@
           <Appearance>
             <Material USE='_6'/>
             <ImageTexture
-                url='"../images/logo.3.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.3.png"'
+                url='"../images/logo.3.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.3.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>
@@ -541,7 +541,7 @@
           <Appearance>
             <Material USE='_6'/>
             <ImageTexture
-                url='"../images/logo.4.png", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/logo.4.png"'
+                url='"../images/logo.4.png", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/logo.4.png"'
                 repeatS='false'
                 repeatT='false'/>
           </Appearance>

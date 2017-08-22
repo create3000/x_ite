@@ -6,11 +6,11 @@
     <meta name='created' content='Sat, 30 Apr 2016 02:18:39 GMT'/>
     <meta name='creator' content='holger'/>
     <meta name='generator' content='Titania V1.4.4, http://titania.create3000.de'/>
-    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/ParticleSystems/DolphinLineSurfaceEmitter.x3d'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/excite/tests/Components/ParticleSystems/DolphinLineSurfaceEmitter.x3d'/>
     <meta name='modified' content='Tue, 17 May 2016 08:14:35 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='Dolphin' url='"Dolphin.x3d#Dolphin", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/ParticleSystems/Dolphin.x3d#Dolphin"'>
+    <ExternProtoDeclare name='Dolphin' url='"Dolphin.x3d#Dolphin", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/ParticleSystems/Dolphin.x3d#Dolphin"'>
       <field accessType='inputOnly' type='SFFloat' name='set_fraction'/>
       <field accessType='initializeOnly' type='SFBool' name='solid'/>
     </ExternProtoDeclare>

@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
-	"cobweb/Components/Grouping/X3DGroupingNode",
-	"cobweb/Bits/X3DConstants",
+	"excite/Components/Grouping/X3DGroupingNode",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",

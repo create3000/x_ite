@@ -6,11 +6,11 @@
     <meta name='created' content='Mon, 18 Apr 2016 18:51:12 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Titania V1.4.1, http://titania.create3000.de'/>
-    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/ParticleSystems/PointEmitter.x3d'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/excite/tests/Components/ParticleSystems/PointEmitter.x3d'/>
     <meta name='modified' content='Wed, 20 Apr 2016 01:44:22 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='Grid' url='"GridTool.x3dv#Grid", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/ParticleSystems/GridTool.x3dv#Grid"'>
+    <ExternProtoDeclare name='Grid' url='"GridTool.x3dv#Grid", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/ParticleSystems/GridTool.x3dv#Grid"'>
       <field accessType='inputOutput' type='SFVec3f' name='translation'/>
       <field accessType='inputOutput' type='SFRotation' name='rotation'/>
       <field accessType='inputOutput' type='SFVec3f' name='scale'/>

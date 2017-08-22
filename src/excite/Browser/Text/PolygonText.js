@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
-	"cobweb/Browser/Core/PrimitiveQuality",
-	"cobweb/Browser/Text/X3DTextGeometry",
+	"excite/Browser/Core/PrimitiveQuality",
+	"excite/Browser/Text/X3DTextGeometry",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Triangle2",

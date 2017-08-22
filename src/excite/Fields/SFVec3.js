@@ -49,9 +49,9 @@
 
 define ([
 	"jquery",
-	"cobweb/Basic/X3DField",
-	"cobweb/Fields/SFVecPrototypeTemplate",
-	"cobweb/Bits/X3DConstants",
+	"excite/Basic/X3DField",
+	"excite/Fields/SFVecPrototypeTemplate",
+	"excite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector3)

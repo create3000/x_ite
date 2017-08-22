@@ -48,7 +48,7 @@
 
 
 define ([
-	"cobweb/Components/Shape/Appearance",
+	"excite/Components/Shape/Appearance",
 ],
 function (Appearance)
 {

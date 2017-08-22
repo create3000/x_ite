@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields/SFString",
-	"cobweb/Basic/X3DBaseNode",
+	"excite/Fields/SFString",
+	"excite/Basic/X3DBaseNode",
 ],
 function ($,
           SFString,
@@ -85,8 +85,8 @@ function ($,
 			this .addChildObjects ("string", new SFString ());
 
 			this .element = $("<div></div>")
-				.addClass ("cobweb-notification")
-				.appendTo (this .getBrowser () .getElement () .find (".cobweb-surface"))
+				.addClass ("excite-notification")
+				.appendTo (this .getBrowser () .getElement () .find (".excite-surface"))
 				.animate ({ width: 0 });
 
 			$("<span></span>") .appendTo (this .element);

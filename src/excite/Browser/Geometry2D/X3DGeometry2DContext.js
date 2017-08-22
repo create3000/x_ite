@@ -48,11 +48,11 @@
 
 
 define ([
-	"cobweb/Browser/Geometry2D/Arc2DOptions",
-	"cobweb/Browser/Geometry2D/ArcClose2DOptions",
-	"cobweb/Browser/Geometry2D/Circle2DOptions",
-	"cobweb/Browser/Geometry2D/Disk2DOptions",
-	"cobweb/Browser/Geometry2D/Rectangle2DOptions",
+	"excite/Browser/Geometry2D/Arc2DOptions",
+	"excite/Browser/Geometry2D/ArcClose2DOptions",
+	"excite/Browser/Geometry2D/Circle2DOptions",
+	"excite/Browser/Geometry2D/Disk2DOptions",
+	"excite/Browser/Geometry2D/Rectangle2DOptions",
 ],
 function (Arc2DOptions,
           ArcClose2DOptions,

@@ -6,7 +6,7 @@
     <meta name='created' content='Tue, 08 Nov 2016 15:02:44 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Titania V2.0.1, http://titania.create3000.de'/>
-    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Texturing/ColorManagement.x3d'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/excite/tests/Components/Texturing/ColorManagement.x3d'/>
     <meta name='modified' content='Tue, 08 Nov 2016 15:03:38 GMT'/>
   </head>
   <Scene>
@@ -65,7 +65,7 @@
               <Shape>
                 <Appearance>
                   <ImageTexture
-                      url='"../images/farbmanagement_test.jpg", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/images/farbmanagement_test.jpg"'
+                      url='"../images/farbmanagement_test.jpg", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/images/farbmanagement_test.jpg"'
                       repeatS='false'
                       repeatT='false'/>
                 </Appearance>

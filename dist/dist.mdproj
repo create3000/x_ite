@@ -14,9 +14,6 @@
   <ItemGroup>
     <None Include="dist.mdproj" />
     <None Include="browser.html" />
-    <None Include="cobweb.css" />
-    <None Include="cobweb.js" />
-    <None Include="cobweb.min.js" />
     <None Include="spinner.css" />
     <None Include="images\ExamineViewer.png" />
     <None Include="images\FlyViewer.png" />
@@ -36,7 +33,10 @@
     <None Include="images\Time.png" />
     <None Include="images\Viewpoint.png" />
     <None Include="images\WalkViewer.png" />
-    <None Include="cobweb.zip" />
+    <None Include="excite.css" />
+    <None Include="excite.js" />
+    <None Include="excite.zip" />
+    <None Include="excite.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

@@ -6,11 +6,11 @@
     <meta name='created' content='Mon, 13 Jun 2016 09:49:17 GMT'/>
     <meta name='creator' content='holger'/>
     <meta name='generator' content='Titania V1.4.5, http://titania.create3000.de'/>
-    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Scripting/Proto.x3d'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/Cobweb/excite/tests/Components/Scripting/Proto.x3d'/>
     <meta name='modified' content='Mon, 13 Jun 2016 10:46:38 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='TestExternProto' url='"ExternProto.x3d#TestExternProto", "file:///home/holger/Projekte/Cobweb/cobweb.js/tests/Components/Scripting/ExternProto.x3d#TestExternProto"'>
+    <ExternProtoDeclare name='TestExternProto' url='"ExternProto.x3d#TestExternProto", "file:///home/holger/Projekte/Cobweb/excite/tests/Components/Scripting/ExternProto.x3d#TestExternProto"'>
       <field accessType='inputOutput' type='SFBool' name='enabled'/>
       <field accessType='outputOnly' type='SFBool' name='isActive'/>
     </ExternProtoDeclare>

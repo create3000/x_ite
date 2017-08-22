@@ -16,21 +16,21 @@ X3DCanvas {
 	height: 150px;
 }
 
-X3DCanvas.cobweb-fullscreen {
+X3DCanvas.excite-fullscreen {
 	width: 100% !important;
 	height: 100% !important;
 }
 
-X3DCanvas > *:not(.cobweb-fallback) {
+X3DCanvas > *:not(.excite-fallback) {
 	display: none;
 }
 
-.cobweb-console {
+.excite-console {
 	font-family: monospace;
 	white-space: pre;
 }
 
-X3DCanvas .cobweb-browser {
+X3DCanvas .excite-browser {
 	z-index: 0;
 	display: block;
 	position: absolute;
@@ -43,7 +43,7 @@ X3DCanvas .cobweb-browser {
 	border: 0px;
 }
 
-X3DCanvas .cobweb-surface {
+X3DCanvas .excite-surface {
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
@@ -61,7 +61,7 @@ X3DCanvas canvas {
 	height: 100%;
 }
 
-X3DCanvas .cobweb-notification {
+X3DCanvas .excite-notification {
 	display: none;
 	padding: 2px 5px 5px 5px;
 	position: absolute;
@@ -82,12 +82,12 @@ X3DCanvas .cobweb-notification {
 	pointer-events: none;
 }
 
-X3DCanvas .cobweb-notification span {
+X3DCanvas .excite-notification span {
 	padding: 0px 24px 0px 20px;
 	background: url(images/icon.bw.png) no-repeat 0px center;
 }
 
-X3DCanvas .cobweb-browser-timings {
+X3DCanvas .excite-browser-timings {
 	display: none;
 	position: absolute;
 	bottom: -4px;
@@ -109,13 +109,13 @@ X3DCanvas .cobweb-browser-timings {
 	pointer-events: none;
 }
 
-X3DCanvas .cobweb-browser-timings table,
-X3DCanvas .cobweb-browser-timings thead,
-X3DCanvas .cobweb-browser-timings tbody,
-X3DCanvas .cobweb-browser-timings tfoot,
-X3DCanvas .cobweb-browser-timings tr,
-X3DCanvas .cobweb-browser-timings th,
-X3DCanvas .cobweb-browser-timings td {
+X3DCanvas .excite-browser-timings table,
+X3DCanvas .excite-browser-timings thead,
+X3DCanvas .excite-browser-timings tbody,
+X3DCanvas .excite-browser-timings tfoot,
+X3DCanvas .excite-browser-timings tr,
+X3DCanvas .excite-browser-timings th,
+X3DCanvas .excite-browser-timings td {
 	outline: 0;
 	margin: 0;
 	border: 0;
@@ -128,42 +128,42 @@ X3DCanvas .cobweb-browser-timings td {
 	text-align: left;
 }
 
-X3DCanvas .cobweb-browser-timings table {
+X3DCanvas .excite-browser-timings table {
 	background: url(images/Time.png) no-repeat;
 }
 
-X3DCanvas .cobweb-browser-timings tr,
-X3DCanvas .cobweb-browser-timings th,
-X3DCanvas .cobweb-browser-timings td {
+X3DCanvas .excite-browser-timings tr,
+X3DCanvas .excite-browser-timings th,
+X3DCanvas .excite-browser-timings td {
 	border-collapse: separate;
 }
 
-X3DCanvas .cobweb-browser-timings thead th {
+X3DCanvas .excite-browser-timings thead th {
 	padding-left: 20px;
 	padding-bottom: 5px;
 }
 
-X3DCanvas .cobweb-browser-timings thead th {
+X3DCanvas .excite-browser-timings thead th {
 	font-weight: bold;
 }
 
-X3DCanvas .cobweb-browser-timings td:first-child {
+X3DCanvas .excite-browser-timings td:first-child {
 	padding-right: 10px;
 }
 
-X3DCanvas .cobweb-browser-timings tr.cobweb-more td {
+X3DCanvas .excite-browser-timings tr.excite-more td {
 	padding-bottom: 5px;
 }
 
-X3DCanvas .cobweb-browser-timings td {
+X3DCanvas .excite-browser-timings td {
 	padding-bottom: 2px;
 }
 
-X3DCanvas .cobweb-browser-timings tfoot td {
+X3DCanvas .excite-browser-timings tfoot td {
 	padding-top: 4px;
 }
 
-X3DCanvas .cobweb-browser-timings button {
+X3DCanvas .excite-browser-timings button {
 	border: 0;
 	padding: 2px;
 	background: rgba(0,0,0,0.38196601);
@@ -176,7 +176,7 @@ X3DCanvas .cobweb-browser-timings button {
 	cursor: default;
 }
 
-X3DCanvas .cobweb-browser-timings button:hover {
+X3DCanvas .excite-browser-timings button:hover {
 	cursor: pointer;
 }
 
@@ -197,20 +197,20 @@ X3DCanvas .cobweb-browser-timings button:hover {
  */
 
 /* menu title */
-.cobweb-menu.cobweb-menu-title:before {
+.excite-menu.excite-menu-title:before {
     content: "Excite X3D Browser";
     display: block;
     padding: 4px 32px 4px 8px;
     font-weight: bold;
 }
 
-.cobweb-menu .context-menu-selected {
+.excite-menu .context-menu-selected {
 	font-weight: bold;
 	font-style: italic;
 }
 
-.cobweb-menu.context-menu-list,
-.cobweb-menu .context-menu-list {
+.excite-menu.context-menu-list,
+.excite-menu .context-menu-list {
 	position: absolute;
 	display: inline-block;
 	min-width: 120px;
@@ -228,7 +228,7 @@ X3DCanvas .cobweb-browser-timings button:hover {
 	        box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 }
 
-.cobweb-menu .context-menu-item {
+.excite-menu .context-menu-item {
 	position: relative;
 	background-color: #222;
 	border-top: 1px solid #222;
@@ -240,36 +240,36 @@ X3DCanvas .cobweb-browser-timings button:hover {
 	        user-select: none;
 }
 
-.cobweb-menu .context-menu-separator {
+.excite-menu .context-menu-separator {
 	padding-bottom: 0;
 	border-bottom: 1px solid #111;
 }
 
-.cobweb-menu .context-menu-item > label > input,
-.cobweb-menu .context-menu-item > label > textarea {
+.excite-menu .context-menu-item > label > input,
+.excite-menu .context-menu-item > label > textarea {
 	-webkit-user-select: text;
 	   -moz-user-select: text;
 	    -ms-user-select: text;
  	       user-select: text;
 }
 
-.cobweb-menu .context-menu-item.hover {
+.excite-menu .context-menu-item.hover {
 	cursor: pointer;
 	background-color: #444;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 }
 
-.cobweb-menu .context-menu-item.disabled {
+.excite-menu .context-menu-item.disabled {
 	color: #666;
 }
 
-.cobweb-menu .context-menu-input.hover,
-.cobweb-menu .context-menu-item.disabled.hover {
+.excite-menu .context-menu-input.hover,
+.excite-menu .context-menu-item.disabled.hover {
 	cursor: default;
 }
 
-.cobweb-menu .context-menu-submenu:after {
+.excite-menu .context-menu-submenu:after {
 	content: "";
 	position: absolute;
 	display: block;
@@ -291,19 +291,19 @@ X3DCanvas .cobweb-browser-timings button:hover {
    .context-menu-item.icon:before {}
  */
 
-.cobweb-menu .context-menu-item.context-menu-icon {
+.excite-menu .context-menu-item.context-menu-icon {
 	background-repeat: no-repeat;
 	background-position: 3px 2px;
 }
 
 /* vertically align inside labels */
-.cobweb-menu .context-menu-input > label > * {
+.excite-menu .context-menu-input > label > * {
 	vertical-align: top;
 }
 
 /* position checkboxes and radios as icons */
-.cobweb-menu .context-menu-input > label > input[type="checkbox"],
-.cobweb-menu .context-menu-input > label > input[type="radio"] {
+.excite-menu .context-menu-input > label > input[type="checkbox"],
+.excite-menu .context-menu-input > label > input[type="radio"] {
 	display: inline;
 	margin: 0;
 	margin-left: -20px;
@@ -311,14 +311,14 @@ X3DCanvas .cobweb-browser-timings button:hover {
 	padding: 0;
 }
 
-.cobweb-menu .context-menu-input > label > span {
+.excite-menu .context-menu-input > label > span {
 	margin-left: 4px;
 }
 
-.cobweb-menu .context-menu-input > label,
-.cobweb-menu .context-menu-input > label > input[type="text"],
-.cobweb-menu .context-menu-input > label > textarea,
-.cobweb-menu .context-menu-input > label > select {
+.excite-menu .context-menu-input > label,
+.excite-menu .context-menu-input > label > input[type="text"],
+.excite-menu .context-menu-input > label > textarea,
+.excite-menu .context-menu-input > label > select {
 	display: block;
 	width: 100%;
 	-webkit-box-sizing: border-box;
@@ -326,79 +326,79 @@ X3DCanvas .cobweb-browser-timings button:hover {
 	        box-sizing: border-box;
 }
 
-.cobweb-menu .context-menu-input > label > textarea {
+.excite-menu .context-menu-input > label > textarea {
 	height: 100px;
 }
 
-.cobweb-menu .context-menu-item > .context-menu-list {
+.excite-menu .context-menu-item > .context-menu-list {
 	top: 5px;
 	/* re-positioned by js */
 	right: -5px;
 	display: none;
 }
 
-.cobweb-menu .context-menu-item.visible > .context-menu-list {
+.excite-menu .context-menu-item.visible > .context-menu-list {
 	display: block;
 }
 
-.cobweb-menu .context-menu-accesskey {
+.excite-menu .context-menu-accesskey {
 	text-decoration: underline;
 }
 
 /* Icons */
 
-.cobweb-icon-viewpoint {
+.excite-icon-viewpoint {
 	background: url("images/Viewpoint.png");
 }
 
-.cobweb-icon-examine-viewer {
+.excite-icon-examine-viewer {
 	background: url("images/ExamineViewer.png");
 }
 
-.cobweb-icon-walk-viewer {
+.excite-icon-walk-viewer {
 	background: url("images/WalkViewer.png");
 }
 
-.cobweb-icon-fly-viewer {
+.excite-icon-fly-viewer {
 	background: url("images/FlyViewer.png");
 }
 
-.cobweb-icon-lookat-viewer {
+.excite-icon-lookat-viewer {
 	background: url("images/gtk-zoom-in.png");
 }
 
-.cobweb-icon-plane-viewer {
+.excite-icon-plane-viewer {
 	background: url("images/PlaneViewer.png");
 }
 
-.cobweb-icon-none-viewer {
+.excite-icon-none-viewer {
 	background: url("images/NoneViewer.png");
 }
 
-.cobweb-icon-zoom-fit {
+.excite-icon-zoom-fit {
 	background: url("images/gtk-zoom-fit.png");
 }
 
-.cobweb-icon-zoom-in {
+.excite-icon-zoom-in {
 	background: url("images/gtk-zoom-in.png");
 }
 
-.cobweb-icon-primitive-quality {
+.excite-icon-primitive-quality {
 	background: url("images/PrimitiveQuality.png");
 }
 
-.cobweb-icon-texture-quality {
+.excite-icon-texture-quality {
 	background: url("images/TextureQuality.png");
 }
 
-.cobweb-icon-fullscreen {
+.excite-icon-fullscreen {
 	background: url("images/gtk-fullscreen.png");
 }
 
-.cobweb-icon-leave-fullscreen {
+.excite-icon-leave-fullscreen {
 	background: url("images/gtk-leave-fullscreen.png");
 }
 
-.cobweb-icon-help-about {
+.excite-icon-help-about {
 	background: url("images/help-about.png");
 }

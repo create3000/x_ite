@@ -49,12 +49,12 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/Interpolation/X3DInterpolatorNode",
-	"cobweb/Browser/Interpolation/SquatInterpolator",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/Interpolation/X3DInterpolatorNode",
+	"excite/Browser/Interpolation/SquatInterpolator",
+	"excite/Bits/X3DConstants",
 ],
 function ($,
           Fields,

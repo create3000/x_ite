@@ -49,12 +49,12 @@
 
 define ([
 	"jquery",
-	"cobweb/Fields",
-	"cobweb/Basic/X3DFieldDefinition",
-	"cobweb/Basic/FieldDefinitionArray",
-	"cobweb/Components/Text/X3DFontStyleNode",
-	"cobweb/Browser/Text/PolygonText",
-	"cobweb/Bits/X3DConstants",
+	"excite/Fields",
+	"excite/Basic/X3DFieldDefinition",
+	"excite/Basic/FieldDefinitionArray",
+	"excite/Components/Text/X3DFontStyleNode",
+	"excite/Browser/Text/PolygonText",
+	"excite/Bits/X3DConstants",
 ],
 function ($,
           Fields,

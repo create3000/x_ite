@@ -49,9 +49,9 @@
 
 define ([
 	"jquery",
-	"cobweb/Browser/Navigation/X3DViewer",
-	"cobweb/Components/Navigation/Viewpoint",
-	"cobweb/Components/Geospatial/GeoViewpoint",
+	"excite/Browser/Navigation/X3DViewer",
+	"excite/Components/Navigation/Viewpoint",
+	"excite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector3",
 	"lib/gettext",
 	"jquery-mousewheel",

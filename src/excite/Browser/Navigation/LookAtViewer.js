@@ -49,7 +49,7 @@
 
 define ([
 	"jquery",
-	"cobweb/Browser/Navigation/X3DViewer",
+	"excite/Browser/Navigation/X3DViewer",
 	"lib/gettext",
 	"jquery-mousewheel",
 ],

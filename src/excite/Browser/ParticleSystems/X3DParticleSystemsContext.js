@@ -48,7 +48,7 @@
 
 
 define ([
-	"cobweb/Components/ParticleSystems/PointEmitter",
+	"excite/Components/ParticleSystems/PointEmitter",
 ],
 function (PointEmitter)
 {
