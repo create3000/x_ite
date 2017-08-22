@@ -1,4 +1,4 @@
-[Excite](http://create3000.de/excite-x3d/) — Excite X3D WebGL Browser
+![alt Excite X3D](https://rawgit.com/create3000/excite/master/meta/logo/logo.svg) [Excite](http://create3000.de/excite-x3d/) — Excite X3D WebGL Browser
 ==================================================
 
 

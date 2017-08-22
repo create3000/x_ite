@@ -1,17 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Excite.sln">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/excite.html" Line="1" Column="1" />
-      <File FileName="src/excite.js" Line="1" Column="1" />
-      <File FileName="src/excite/X3D.js" Line="1" Column="1" />
-      <File FileName="require.build.js" Line="1" Column="1" />
-      <File FileName="require.build.min.js" Line="1" Column="1" />
-      <File FileName="excite.min.html" Line="1" Column="1" />
-      <File FileName="src/excite/Browser/VERSION.js" Line="34" Column="25" />
-      <File FileName="Excite.sln" Line="1" Column="1" />
-      <File FileName="Excite.userprefs" Line="19" Column="14" />
+      <File FileName="src/excite.html" Line="259" Column="15" />
+      <File FileName="src/bookmarks.js" Line="10" Column="58" />
+      <File FileName="README.md" Line="18" Column="20" />
+      <File FileName="AUTHORS.md" Line="7" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
