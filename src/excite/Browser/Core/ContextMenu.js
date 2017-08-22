@@ -292,7 +292,7 @@ function ($,
 					},
 					"separator3": "--------",
 					"about": {
-						name: _("About Excite"),
+						name: _("About Excite X3D"),
 						className: "context-menu-icon excite-icon-help-about",
 						callback: function ()
 						{

@@ -174,8 +174,8 @@ msgid "Fullscreen"
 msgstr "Plein écran"
 
 #: Browser/Core/ContextMenu.js:249
-msgid "About Excite"
-msgstr "À propos de Excite"
+msgid "About Excite X3D"
+msgstr "À propos de Excite X3D"
 
 #: Browser/Core/ContextMenu.js:342
 msgid "Examine Viewer"

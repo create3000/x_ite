@@ -80,7 +80,7 @@ For example, we could provide a text description of the X3D element or provide a
 Attributes of the X3DCanvas Tag
 --------------------------------------
 
-The HTML **<X3DCanvas> tag** defines the main content of the X3D document. The <X3DCanvas> tag has two attributes that define different behaviours. All of these attributes are optional. 
+The HTML **X3DCanvas tag** defines the main content of the X3D document. The X3DCanvas tag has two attributes that define different behaviours. All of these attributes are optional. 
 
 
 ### src
