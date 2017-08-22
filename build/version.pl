@@ -31,7 +31,7 @@ sub publish {
 	system "git", "push", "--delete", "origin", "$version";
 	system "git", "push", "--delete", "github", "$version";
 
-	system "git", "tag", "$version";
+	system "git", "-f", "tag", "$version";
 	system "git", "push", "origin", "--tags";
 	system "git", "push", "github", "--tags";
 }
@@ -49,6 +49,6 @@ if ($result == 0)
 	say "Publishing version '$VERSION' now.";
 
 	commit;
-	publish ($VERSION);
+	publish ("$VERSION");
 	publish ("latest");
 }
