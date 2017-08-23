@@ -37,9 +37,10 @@
 	},
 	"scripts": {
 		"lint": "jshint **",
-		"build": "npm run build:js && npm run build:min.js",
+		"build": "npm run build:js && npm run build:min.js && npm run build:css",
 		"-prebuild:js": "npm run lint",
 		"build:js": "r.js -o require.build.js",
-		"build:min.js": "r.js -o require.build.min.js"
+		"build:min.js": "r.js -o require.build.min.js",
+		"build:css": "r.js -o cssIn=src/excite.css out=dist/excite.css"
 	}
 }

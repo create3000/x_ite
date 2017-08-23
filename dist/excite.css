@@ -1,10 +1,221 @@
-/* Excite CSS StyleSheet */
 
 @charset "utf-8";
-
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
-@import url(spinner.css);
-
+X3DCanvas .excite-splash-screen {
+	display: none;
+	z-index: -100;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgb(65,65,65);
+	background: -moz-radial-gradient(center, ellipse cover, rgb(130,130,130) 0%, rgb(65,65,65) 100%);
+	background: -webkit-radial-gradient(center, ellipse cover, rgb(130,130,130) 0%,rgb(65,65,65) 100%);
+	background: radial-gradient(ellipse at center, rgb(130,130,130) 0%,rgb(65,65,65) 100%);
+}
+X3DCanvas .excite-spinner {
+	position: absolute;
+	top: calc(50% - 70px);
+	left: calc(50% - 64px);
+	width: 128px;
+	height: 128px;
+	border-radius: 50%;
+		-o-border-radius: 50%;
+		-ms-border-radius: 50%;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+	perspective: 780px;
+}
+X3DCanvas .excite-spinner > * {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+		-o-box-sizing: border-box;
+		-ms-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+	border-radius: 50%;
+		-o-border-radius: 50%;
+		-ms-border-radius: 50%;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;	
+}
+X3DCanvas .excite-spinner-one {
+	left: 0%;
+	top: 0%;
+	animation: excite-spinner-rotate-one 1.15s linear infinite;
+		-o-animation: excite-spinner-rotate-one 1.15s linear infinite;
+		-ms-animation: excite-spinner-rotate-one 1.15s linear infinite;
+		-webkit-animation: excite-spinner-rotate-one 1.15s linear infinite;
+		-moz-animation: excite-spinner-rotate-one 1.15s linear infinite;
+	border-bottom: 10px solid #ffe32d;
+}
+X3DCanvas .excite-spinner-two {
+	right: 0%;
+	top: 0%;
+	animation: excite-spinner-rotate-two 1.15s linear infinite;
+		-o-animation: excite-spinner-rotate-two 1.15s linear infinite;
+		-ms-animation: excite-spinner-rotate-two 1.15s linear infinite;
+		-webkit-animation: excite-spinner-rotate-two 1.15s linear infinite;
+		-moz-animation: excite-spinner-rotate-two 1.15s linear infinite;
+	border-right: 10px solid #ff9f2e;
+}
+X3DCanvas .excite-spinner-three {
+	right: 0%;
+	bottom: 0%;
+	animation: excite-spinner-rotate-three 1.15s linear infinite;
+		-o-animation: excite-spinner-rotate-three 1.15s linear infinite;
+		-ms-animation: excite-spinner-rotate-three 1.15s linear infinite;
+		-webkit-animation: excite-spinner-rotate-three 1.15s linear infinite;
+		-moz-animation: excite-spinner-rotate-three 1.15s linear infinite;
+	border-top: 10px solid #d71f1f;
+}
+X3DCanvas .excite-progress {
+	position: absolute;
+	top: calc(50% - 11pt);
+	left: calc(50% - 100px);
+	width: 200px;
+}
+X3DCanvas .excite-spinner-text {
+	color: white;
+	font-size: 11pt;
+	text-align: center;
+	text-shadow: 1px 1px 0px black;
+	font-family: PT Sans, sans-serif;
+}
+X3DCanvas .excite-progressbar {
+	margin: 8px;
+	border-left:  2px solid rgba(255, 255, 255, 0.5);
+	border-right: 2px solid rgba(255, 255, 255, 0.5);
+	padding: 0 2px;
+}
+X3DCanvas .excite-progressbar div {
+	width: 0%;
+	height: 6px;
+	background: rgba(255, 255, 255, 0.5);
+}
+@keyframes excite-spinner-rotate-one {
+	0% {
+		transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+	}
+	100% {
+		transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+	}
+}
+@-o-keyframes excite-spinner-rotate-one {
+	0% {
+		-o-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+	}
+	100% {
+		-o-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+	}
+}
+@-ms-keyframes excite-spinner-rotate-one {
+	0% {
+		-ms-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+	}
+	100% {
+		-ms-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+	}
+}
+@-webkit-keyframes excite-spinner-rotate-one {
+	0% {
+		-webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+	}
+	100% {
+		-webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+	}
+}
+@-moz-keyframes excite-spinner-rotate-one {
+	0% {
+		-moz-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+	}
+	100% {
+		-moz-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+	}
+}
+@keyframes excite-spinner-rotate-two {
+	0% {
+		transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+	}
+	100% {
+		transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+	}
+}
+@-o-keyframes excite-spinner-rotate-two {
+	0% {
+		-o-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+	}
+	100% {
+		-o-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+	}
+}
+@-ms-keyframes excite-spinner-rotate-two {
+	0% {
+		-ms-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+	}
+	100% {
+		-ms-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+	}
+}
+@-webkit-keyframes excite-spinner-rotate-two {
+	0% {
+		-webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+	}
+	100% {
+		-webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+	}
+}
+@-moz-keyframes excite-spinner-rotate-two {
+	0% {
+		-moz-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+	}
+	100% {
+		-moz-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+	}
+}
+@keyframes excite-spinner-rotate-three {
+	0% {
+		transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+	}
+	100% {
+		transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+	}
+}
+@-o-keyframes excite-spinner-rotate-three {
+	0% {
+		-o-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+	}
+	100% {
+		-o-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+	}
+}
+@-ms-keyframes excite-spinner-rotate-three {
+	0% {
+		-ms-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+	}
+	100% {
+		-ms-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+	}
+}
+@-webkit-keyframes excite-spinner-rotate-three {
+	0% {
+		-webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+	}
+	100% {
+		-webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+	}
+}
+@-moz-keyframes excite-spinner-rotate-three {
+	0% {
+		-moz-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+	}
+	100% {
+		-moz-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+	}
+}
 X3DCanvas {
 	overflow: hidden;
 	position: relative;
@@ -15,21 +226,17 @@ X3DCanvas {
 	width: 300px;
 	height: 150px;
 }
-
 X3DCanvas.excite-fullscreen {
 	width: 100% !important;
 	height: 100% !important;
 }
-
 X3DCanvas > *:not(.excite-fallback) {
 	display: none;
 }
-
 .excite-console {
 	font-family: monospace;
 	white-space: pre;
 }
-
 X3DCanvas .excite-browser {
 	z-index: 0;
 	display: block;
@@ -42,7 +249,6 @@ X3DCanvas .excite-browser {
 	padding: 0px;
 	border: 0px;
 }
-
 X3DCanvas .excite-surface {
 	margin: 0px;
 	padding: 0px;
@@ -50,7 +256,6 @@ X3DCanvas .excite-surface {
 	height: 100%;
 	margin-right: 0px;
 }
-
 X3DCanvas canvas {
 	display: block;
 	outline: none;
@@ -60,7 +265,6 @@ X3DCanvas canvas {
 	width: 100%;
 	height: 100%;
 }
-
 X3DCanvas .excite-notification {
 	display: none;
 	padding: 2px 5px 5px 5px;
@@ -68,25 +272,23 @@ X3DCanvas .excite-notification {
 	top: 20px;
 	right: -4px;
 	background: rgba(0,0,0,0.61803);
-	background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); 
+	background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); 
+	background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); 
 	border: 4px solid rgba(60,60,60,0.61803);
 	border-radius: 5px;
-	-webkit-background-clip: padding-box; /* for Safari */
-	background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+	-webkit-background-clip: padding-box; 
+	background-clip: padding-box; 
 	color: white;
 	font-family: PT Sans, sans-serif;
 	font-size: 10pt;
 	white-space: pre;
 	pointer-events: none;
 }
-
 X3DCanvas .excite-notification span {
 	padding: 0px 24px 0px 20px;
 	background: url(images/icon.bw.png) no-repeat 0px center;
 }
-
 X3DCanvas .excite-browser-timings {
 	display: none;
 	position: absolute;
@@ -94,13 +296,13 @@ X3DCanvas .excite-browser-timings {
 	left: -4px;
 	padding: 10px 15px 14px 14px;
 	background: rgba(0,0,0,0.61803);
-	background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); 
+	background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); 
+	background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); 
 	border: 4px solid rgba(60,60,60,0.61803);
 	border-radius: 5px;
-	-webkit-background-clip: padding-box; /* for Safari */
-	background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+	-webkit-background-clip: padding-box; 
+	background-clip: padding-box; 
 	color: white;
 	font-family: PT Sans, sans-serif;
 	font-size: 9pt;
@@ -108,7 +310,6 @@ X3DCanvas .excite-browser-timings {
 	white-space: pre;
 	pointer-events: none;
 }
-
 X3DCanvas .excite-browser-timings table,
 X3DCanvas .excite-browser-timings thead,
 X3DCanvas .excite-browser-timings tbody,
@@ -127,42 +328,33 @@ X3DCanvas .excite-browser-timings td {
 	line-height: 1;
 	text-align: left;
 }
-
 X3DCanvas .excite-browser-timings table {
 	background: url(images/Time.png) no-repeat;
 }
-
 X3DCanvas .excite-browser-timings tr,
 X3DCanvas .excite-browser-timings th,
 X3DCanvas .excite-browser-timings td {
 	border-collapse: separate;
 }
-
 X3DCanvas .excite-browser-timings thead th {
 	padding-left: 20px;
 	padding-bottom: 5px;
 }
-
 X3DCanvas .excite-browser-timings thead th {
 	font-weight: bold;
 }
-
 X3DCanvas .excite-browser-timings td:first-child {
 	padding-right: 10px;
 }
-
 X3DCanvas .excite-browser-timings tr.excite-more td {
 	padding-bottom: 5px;
 }
-
 X3DCanvas .excite-browser-timings td {
 	padding-bottom: 2px;
 }
-
 X3DCanvas .excite-browser-timings tfoot td {
 	padding-top: 4px;
 }
-
 X3DCanvas .excite-browser-timings button {
 	border: 0;
 	padding: 2px;
@@ -175,11 +367,9 @@ X3DCanvas .excite-browser-timings button {
 	pointer-events: all;
 	cursor: default;
 }
-
 X3DCanvas .excite-browser-timings button:hover {
 	cursor: pointer;
 }
-
 /*!
  * jQuery contextMenu - Plugin for simple contextMenu handling
  *
@@ -192,23 +382,18 @@ X3DCanvas .excite-browser-timings button:hover {
  *
  * Licensed under
  *   MIT License http://www.opensource.org/licenses/mit-license
-
  * Date: 2015-09-20T18:47:54.927Z
  */
-
-/* menu title */
 .excite-menu.excite-menu-title:before {
     content: "Excite X3D Browser";
     display: block;
     padding: 4px 32px 4px 8px;
     font-weight: bold;
 }
-
 .excite-menu .context-menu-selected {
 	font-weight: bold;
 	font-style: italic;
 }
-
 .excite-menu.context-menu-list,
 .excite-menu .context-menu-list {
 	position: absolute;
@@ -227,7 +412,6 @@ X3DCanvas .excite-browser-timings button:hover {
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 	        box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 }
-
 .excite-menu .context-menu-item {
 	position: relative;
 	background-color: #222;
@@ -239,12 +423,10 @@ X3DCanvas .excite-browser-timings button:hover {
 	    -ms-user-select: none;
 	        user-select: none;
 }
-
 .excite-menu .context-menu-separator {
 	padding-bottom: 0;
 	border-bottom: 1px solid #111;
 }
-
 .excite-menu .context-menu-item > label > input,
 .excite-menu .context-menu-item > label > textarea {
 	-webkit-user-select: text;
@@ -252,23 +434,19 @@ X3DCanvas .excite-browser-timings button:hover {
 	    -ms-user-select: text;
  	       user-select: text;
 }
-
 .excite-menu .context-menu-item.hover {
 	cursor: pointer;
 	background-color: #444;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 }
-
 .excite-menu .context-menu-item.disabled {
 	color: #666;
 }
-
 .excite-menu .context-menu-input.hover,
 .excite-menu .context-menu-item.disabled.hover {
 	cursor: default;
 }
-
 .excite-menu .context-menu-submenu:after {
 	content: "";
 	position: absolute;
@@ -276,32 +454,20 @@ X3DCanvas .excite-browser-timings button:hover {
 	right: 0;
 	top: 5px;
 	margin-right: 2px;
-	/* CSS triangle */
+	
 	width: 0;
 	height: 0;
 	border-style: solid;
 	border-width: 4px 0 4px 5px;
 	border-color: transparent transparent transparent #eee;
 }
-
-/* icons
-   #protip:
-   In case you want to use sprites for icons (which I would suggest you do) have a look at
-   http://css-tricks.com/13224-pseudo-spriting/ to get an idea of how to implement 
-   .context-menu-item.icon:before {}
- */
-
 .excite-menu .context-menu-item.context-menu-icon {
 	background-repeat: no-repeat;
 	background-position: 3px 2px;
 }
-
-/* vertically align inside labels */
 .excite-menu .context-menu-input > label > * {
 	vertical-align: top;
 }
-
-/* position checkboxes and radios as icons */
 .excite-menu .context-menu-input > label > input[type="checkbox"],
 .excite-menu .context-menu-input > label > input[type="radio"] {
 	display: inline;
@@ -310,11 +476,9 @@ X3DCanvas .excite-browser-timings button:hover {
 	margin-right: 3px;
 	padding: 0;
 }
-
 .excite-menu .context-menu-input > label > span {
 	margin-left: 4px;
 }
-
 .excite-menu .context-menu-input > label,
 .excite-menu .context-menu-input > label > input[type="text"],
 .excite-menu .context-menu-input > label > textarea,
@@ -325,80 +489,60 @@ X3DCanvas .excite-browser-timings button:hover {
 	   -moz-box-sizing: border-box;
 	        box-sizing: border-box;
 }
-
 .excite-menu .context-menu-input > label > textarea {
 	height: 100px;
 }
-
 .excite-menu .context-menu-item > .context-menu-list {
 	top: 5px;
-	/* re-positioned by js */
+	
 	right: -5px;
 	display: none;
 }
-
 .excite-menu .context-menu-item.visible > .context-menu-list {
 	display: block;
 }
-
 .excite-menu .context-menu-accesskey {
 	text-decoration: underline;
 }
-
-/* Icons */
-
 .excite-icon-viewpoint {
 	background: url("images/Viewpoint.png");
 }
-
 .excite-icon-examine-viewer {
 	background: url("images/ExamineViewer.png");
 }
-
 .excite-icon-walk-viewer {
 	background: url("images/WalkViewer.png");
 }
-
 .excite-icon-fly-viewer {
 	background: url("images/FlyViewer.png");
 }
-
 .excite-icon-lookat-viewer {
 	background: url("images/gtk-zoom-in.png");
 }
-
 .excite-icon-plane-viewer {
 	background: url("images/PlaneViewer.png");
 }
-
 .excite-icon-none-viewer {
 	background: url("images/NoneViewer.png");
 }
-
 .excite-icon-zoom-fit {
 	background: url("images/gtk-zoom-fit.png");
 }
-
 .excite-icon-zoom-in {
 	background: url("images/gtk-zoom-in.png");
 }
-
 .excite-icon-primitive-quality {
 	background: url("images/PrimitiveQuality.png");
 }
-
 .excite-icon-texture-quality {
 	background: url("images/TextureQuality.png");
 }
-
 .excite-icon-fullscreen {
 	background: url("images/gtk-fullscreen.png");
 }
-
 .excite-icon-leave-fullscreen {
 	background: url("images/gtk-leave-fullscreen.png");
 }
-
 .excite-icon-help-about {
 	background: url("images/help-about.png");
 }

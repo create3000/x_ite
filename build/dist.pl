@@ -29,8 +29,6 @@ sub check_version {
 }
 
 sub dist {
-	system "cp", "-v", "src/excite.css",    "dist/";
-	system "cp", "-v", "src/spinner.css",   "dist/";
 	system "cp", "-v", "-r", "src/images",  "dist/";
 	system "cp", "-v", "src/browser.html",  "dist/";
 }
