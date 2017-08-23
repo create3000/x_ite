@@ -14,7 +14,6 @@
   <ItemGroup>
     <None Include="dist.mdproj" />
     <None Include="browser.html" />
-    <None Include="spinner.css" />
     <None Include="images\ExamineViewer.png" />
     <None Include="images\FlyViewer.png" />
     <None Include="images\gtk-fullscreen.png" />
