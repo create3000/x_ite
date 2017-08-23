@@ -47,12 +47,26 @@
  ******************************************************************************/
 
 
-define ([
-	"excite/Browser/VERSION",
-],
-function (VERSION)
+define (function ()
 {
 "use strict";
 
-	return VERSION .match (/^\d+\.\d+\.\d+a$/);
+   return function shuffle (array)
+	{
+		var i = array .length;
+	
+		while (i > 1)
+		{
+			var
+				a = -- i,
+				b = Math .floor (Math .random () * a),
+				t = array [a];
+	
+			array [a] = array [b];
+			array [b] = t;
+		}
+	
+		return array;
+	};
 });
+

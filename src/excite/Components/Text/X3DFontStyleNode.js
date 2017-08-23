@@ -56,7 +56,9 @@ define ([
 	"excite/InputOutput/FileLoader",
 	"excite/Bits/X3DConstants",
 	"excite/Browser/Networking/urls",
+	"standard/Utility/Shuffle",
 	"standard/Networking/URI",
+	"excite/Browser/VERSION",
 	"excite/DEBUG",
 ],
 function ($,
@@ -67,7 +69,9 @@ function ($,
           FileLoader,
           X3DConstants,
           urls,
+          shuffle,
           URI,
+          VERSION,
           DEBUG)
 {
 "use strict";
@@ -76,13 +80,16 @@ function ($,
     * Font paths for default SERIF, SANS and TYPWRITER families.
     */
 
+	var version = DEBUG ? "latest" : VERSION;
+
 	var FontDirectories = [
 		"http://media.create3000.de/fonts/",
-		"https://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
-		"http://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
-		"https://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
-		"http://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
+		"https://cdn.rawgit.com/create3000/excite/" + version + "/src/fonts/",
+		"https://cdn.jsdelivr.net/gh/create3000/excite@" + version + "/src/fonts/",
+		"https://rawgit.com/create3000/excite/" + version + "/src/fonts/",
 	];
+
+	shuffle (FontDirectories);
 
 	var Fonts =
 	{
@@ -270,15 +277,6 @@ function ($,
 		setError: function (error)
 		{
 			var URL = this .URL .toString ();
-
-			if (DEBUG)
-			{
-				if (! (this .URL .isLocal () || this .URL .host === "localhost"))
-				{
-					if (! URL .match (urls .fallbackExpression))
-						this .familyStack .unshift (urls .fallbackUrl + URL);
-				}
-			}
 
 			if (this .URL .scheme !== "data")
 				console .warn ("Error loading font '" + this .URL .toString () + "':", error);

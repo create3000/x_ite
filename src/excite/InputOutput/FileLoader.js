@@ -474,8 +474,11 @@ function ($,
 				URL = this .browser .getLocation () .getRelativePath (URL);
 			else
 			{
-				if (! sURL .match (urls .fallbackExpression))
-					this .url .unshift (urls .fallbackUrl + URL);
+				if (DEBUG)
+				{
+					if (! sURL .match (urls .fallbackExpression))
+						this .url .unshift (urls .fallbackUrl + URL);
+				}
 			}
 
 			return URL;

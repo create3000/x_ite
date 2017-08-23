@@ -985,6 +985,7 @@
     <None Include="excite.js" />
     <None Include="LICENSE.txt" />
     <None Include="bookmarks.js" />
+    <None Include="standard\Utility\Shuffle.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="excite\" />
