@@ -63745,10 +63745,10 @@ function ($,
 
 	var FontDirectories = [
 		"http://media.create3000.de/fonts/",
-		"https://cdn.rawgit.com/create3000/excite/master/excite/fonts/",
-		"http://cdn.rawgit.com/create3000/excite/master/excite/fonts/",
-		"https://rawgit.com/create3000/excite/master/excite/fonts/",
-		"http://rawgit.com/create3000/excite/master/excite/fonts/",
+		"https://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
+		"http://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
+		"https://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
+		"http://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
 	];
 
 	var Fonts =
