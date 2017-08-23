@@ -216,19 +216,33 @@ main {
 }
 
 .bookmark-previous {
-	background-image: url(images/previous.png);
-	background-repeat: no-repeat;
-	background-position: 4px 6px;
 	margin-right: 30px;
+	padding: 10px
+}
+
+.bookmark-previous a {
+	padding: 0px;
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 30px 55px 30px 0px;
+	border-color: transparent #222 transparent transparent;
 }
 
 .bookmark-next {
-	background-image: url(images/next.png);
-	background-repeat: no-repeat;
-	background-position: 6px 6px;
 	position: absolute;
-	margin: 0px;
 	right: 0px;
+	margin: 0px;
+	padding: 10px
+}
+
+.bookmark-next a {
+	padding: 0px;
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 30px 0 30px 55px;
+	border-color: transparent transparent transparent #222;
 }
 
 .bookmark-previous span,
