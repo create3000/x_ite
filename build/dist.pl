@@ -30,7 +30,8 @@ sub check_version {
 
 sub dist {
 	system "cp", "-v", "-r", "src/images",  "dist/";
-	system "cp", "-v", "src/browser.html",  "dist/";
+	system "cp", "-v", "src/example.html",  "dist/";
+	system "perl", "-pi", "-e", "s|/latest/|/$VERSION/|sg", "dist/example.html";
 }
 
 sub licenses {

@@ -13,7 +13,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="dist.mdproj" />
-    <None Include="browser.html" />
     <None Include="images\ExamineViewer.png" />
     <None Include="images\FlyViewer.png" />
     <None Include="images\gtk-fullscreen.png" />
@@ -37,6 +36,7 @@
     <None Include="excite.zip" />
     <None Include="excite.min.js" />
     <None Include="LICENCES.txt" />
+    <None Include="example.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
