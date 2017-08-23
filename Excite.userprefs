@@ -2,10 +2,10 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
   <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/excite.html" Line="259" Column="15" />
-      <File FileName="src/bookmarks.js" Line="10" Column="58" />
-      <File FileName="README.md" Line="18" Column="20" />
-      <File FileName="AUTHORS.md" Line="7" Column="1" />
+      <File FileName="src/excite.html" Line="594" Column="57" />
+      <File FileName="src/bookmarks.js" Line="55" Column="1" />
+      <File FileName="src/excite/Components/Text/X3DFontStyleNode.js" Line="266" Column="1" />
+      <File FileName="src/excite/Browser/X3DBrowser.js" Line="375" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

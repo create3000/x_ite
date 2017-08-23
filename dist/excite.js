@@ -44538,7 +44538,7 @@ function (VERSION)
 {
 "use strict";
 
-	return VERSION .match (/^\d+\.\d+a$/);
+	return VERSION .match (/^\d+\.\d+\.\d+a$/);
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -45017,8 +45017,11 @@ function ($,
 				URL = this .browser .getLocation () .getRelativePath (URL);
 			else
 			{
-				if (! sURL .match (urls .fallbackExpression))
-					this .url .unshift (urls .fallbackUrl + URL);
+				if (DEBUG)
+				{
+					if (! sURL .match (urls .fallbackExpression))
+						this .url .unshift (urls .fallbackUrl + URL);
+				}
 			}
 
 			return URL;
@@ -63714,6 +63717,79 @@ define ('excite/Browser/Text/TextAlignment',[],function ()
  ******************************************************************************/
 
 
+define ('standard/Utility/Shuffle',[],function ()
+{
+"use strict";
+
+   return function shuffle (array)
+	{
+		var i = array .length;
+	
+		while (i > 1)
+		{
+			var
+				a = -- i,
+				b = Math .floor (Math .random () * a),
+				t = array [a];
+	
+			array [a] = array [b];
+			array [b] = t;
+		}
+	
+		return array;
+	};
+});
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the Excite X3D Project.
+ *
+ * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('excite/Components/Text/X3DFontStyleNode',[
 	"jquery",
 	"excite/Fields",
@@ -63723,7 +63799,9 @@ define ('excite/Components/Text/X3DFontStyleNode',[
 	"excite/InputOutput/FileLoader",
 	"excite/Bits/X3DConstants",
 	"excite/Browser/Networking/urls",
+	"standard/Utility/Shuffle",
 	"standard/Networking/URI",
+	"excite/Browser/VERSION",
 	"excite/DEBUG",
 ],
 function ($,
@@ -63734,7 +63812,9 @@ function ($,
           FileLoader,
           X3DConstants,
           urls,
+          shuffle,
           URI,
+          VERSION,
           DEBUG)
 {
 "use strict";
@@ -63743,13 +63823,16 @@ function ($,
     * Font paths for default SERIF, SANS and TYPWRITER families.
     */
 
+	var version = DEBUG ? "latest" : VERSION;
+
 	var FontDirectories = [
 		"http://media.create3000.de/fonts/",
-		"https://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
-		"http://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
-		"https://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
-		"http://cdn.rawgit.com/create3000/excite/latest/src/fonts/",
+		"https://cdn.rawgit.com/create3000/excite/" + version + "/src/fonts/",
+		"https://cdn.jsdelivr.net/gh/create3000/excite@" + version + "/src/fonts/",
+		"https://rawgit.com/create3000/excite/" + version + "/src/fonts/",
 	];
+
+	shuffle (FontDirectories);
 
 	var Fonts =
 	{
@@ -63937,15 +64020,6 @@ function ($,
 		setError: function (error)
 		{
 			var URL = this .URL .toString ();
-
-			if (DEBUG)
-			{
-				if (! (this .URL .isLocal () || this .URL .host === "localhost"))
-				{
-					if (! URL .match (urls .fallbackExpression))
-						this .familyStack .unshift (urls .fallbackUrl + URL);
-				}
-			}
 
 			if (this .URL .scheme !== "data")
 				console .warn ("Error loading font '" + this .URL .toString () + "':", error);

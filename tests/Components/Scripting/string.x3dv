@@ -1,5 +1,0 @@
-#X3D V3.3 utf8 Titania V1.2.2
-
-DEF NewScript Script {
-  url "ecmascript: "
-}
