@@ -48,27 +48,27 @@ $REVISION = `cat package.json`;
 $REVISION =~ /"revision":\s*"(.*?)"/;
 $REVISION = $1 + 1;
 
-my $result = system "zenity", "--question", "--text=Do you really want to publish Excite X3D v$VERSION r$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
+my $result = system "zenity", "--question", "--text=Do you really want to publish Excite X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
 
 if ($result == 0)
 {
-	say "Publishing Excite X3D v$VERSION r$REVISION now.";
+	say "Publishing Excite X3D v$VERSION-$REVISION now.";
 
 	system "perl", "-pi", "-e", "s|\"revision\":\\s*\"(.*?)\"|\"revision\": \"$REVISION\"|sg", "package.json";
 
 	my $css = `cat dist/excite.css`;
 	open CSS, ">", "dist/excite.css";
-	print CSS "/* Excite X3D v$VERSION r$REVISION */", $css;
+	print CSS "/* Excite X3D v$VERSION-$REVISION */", $css;
 	close CSS;
 
 	my $js = `cat dist/excite.js`;
 	open JS, ">", "dist/excite.js";
-	print JS "/* Excite X3D v$VERSION r$REVISION */\n\n", $js;
+	print JS "/* Excite X3D v$VERSION-$REVISION */\n\n", $js;
 	close JS;
 
 	my $js = `cat dist/excite.min.js`;
 	open JS, ">", "dist/excite.min.js";
-	print JS "/* Excite X3D v$VERSION r$REVISION\n * See LICENCES.txt for a detailed listing of used licences. */\n", $js;
+	print JS "/* Excite X3D v$VERSION-$REVISION\n * See LICENCES.txt for a detailed listing of used licences. */\n", $js;
 	close JS;
 
 	commit;
