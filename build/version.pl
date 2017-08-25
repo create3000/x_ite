@@ -16,10 +16,15 @@ $VERSION = `cat package.json`;
 $VERSION =~ /"version":\s*"(.*?)"/;
 $VERSION = $1;
 
+my $REVISION;
+$REVISION = `cat package.json`;
+$REVISION =~ /"revision":\s*"(.*?)"/;
+$REVISION = $1 + 1;
+
 sub commit {
 	my $version = shift;
 
-	system "git", "commit", "-am", "Published version $VERSION.";
+	system "git", "commit", "-am", "Published version $VERSION-$REVISION";
 	system "git", "push";
 	system "git", "push", "origin";
 	system "git", "push", "github";
@@ -42,11 +47,6 @@ if ($VERSION =~ /a$/)
 	system "zenity", "--error", "--text=Cannot publish version $VERSION!", "--ok-label=Ok";
 	exit;
 }
-
-my $REVISION;
-$REVISION = `cat package.json`;
-$REVISION =~ /"revision":\s*"(.*?)"/;
-$REVISION = $1 + 1;
 
 my $result = system "zenity", "--question", "--text=Do you really want to publish Excite X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
 
