@@ -84,7 +84,7 @@ if ($result == 0)
 	system "mkdir", "-p", $ftp;
 	system "rsync", "-r", "-t", "-p", "-o", "-g", "-x", "-v", "--progress", "--delete", "-l", "-H", "/home/holger/Projekte/Excite/dist/", $ftp;
 
-	my $latest = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/media/htdocs/excite/latest/dist/";
+	my $latest = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/excite/latest/dist/";
 
 	system "mkdir", "-p", $latest;
 	system "rsync", "-r", "-t", "-p", "-o", "-g", "-x", "-v", "--progress", "--delete", "-l", "-H", "/home/holger/Projekte/Excite/dist/", $latest;
