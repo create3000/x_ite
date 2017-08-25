@@ -71,11 +71,15 @@ if ($result == 0)
 	print JS "/* Excite X3D v$VERSION-$REVISION\n * See LICENCES.txt for a detailed listing of used licences. */\n", $js;
 	close JS;
 
+	# GitHub
+
 	commit;
 	publish ("$VERSION");
 	publish ("latest");
 
-	my $ftp = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/media/htdocs/excite/$VERSION/dist/";
+	# FTP
+
+	my $ftp = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/excite/$VERSION/dist/";
 
 	system "mkdir", "-p", $ftp;
 	system "rsync", "-r", "-t", "-p", "-o", "-g", "-x", "-v", "--progress", "--delete", "-l", "-H", "/home/holger/Projekte/Excite/dist/", $ftp;
