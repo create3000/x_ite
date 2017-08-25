@@ -85,8 +85,8 @@ function ($,
 			this .addChildObjects ("string", new SFString ());
 
 			this .element = $("<div></div>")
-				.addClass ("excite-notification")
-				.appendTo (this .getBrowser () .getElement () .find (".excite-surface"))
+				.addClass ("excite-private-notification")
+				.appendTo (this .getBrowser () .getElement () .find (".excite-private-surface"))
 				.animate ({ width: 0 });
 
 			$("<span></span>") .appendTo (this .element);

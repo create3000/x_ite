@@ -182,8 +182,8 @@ function (Fields,
 			if (! this .loading)
 				this .getNotification () .string_ = string;
 
-			this .getSplashScreen () .find (".excite-spinner-text") .text (string);
-			this .getSplashScreen () .find (".excite-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
+			this .getSplashScreen () .find (".excite-private-spinner-text") .text (string);
+			this .getSplashScreen () .find (".excite-private-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
 		},
 		resetLoadCount: function ()
 		{

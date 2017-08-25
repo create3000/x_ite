@@ -12485,7 +12485,7 @@ function ($)
 
 	function fallback (elements)
 	{
-		elements .children () .addClass ("excite-fallback");
+		elements .children () .addClass ("excite-private-fallback");
 	}
 
 	Error .fallback = fallback;
@@ -24933,8 +24933,8 @@ function ($,
 			this .addChildObjects ("string", new SFString ());
 
 			this .element = $("<div></div>")
-				.addClass ("excite-notification")
-				.appendTo (this .getBrowser () .getElement () .find (".excite-surface"))
+				.addClass ("excite-private-notification")
+				.appendTo (this .getBrowser () .getElement () .find (".excite-private-surface"))
 				.animate ({ width: 0 });
 
 			$("<span></span>") .appendTo (this .element);
@@ -25606,7 +25606,7 @@ function ($,
 			this .startTime     = 0;
 			this .frames        = 0;
 
-			this .element = $("<div></div>") .addClass ("excite-browser-timings") .appendTo (this .getBrowser () .getElement () .find (".excite-surface"));
+			this .element = $("<div></div>") .addClass ("excite-private-browser-timings") .appendTo (this .getBrowser () .getElement () .find (".excite-private-surface"));
 			this .table   = $("<table></table>") .appendTo (this .element);
 			this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
 			this .body    = $("<tbody></tbody>") .appendTo (this .table);
@@ -25705,7 +25705,7 @@ function ($,
 					transparentShapes += layer .numTransparentShapes;
 				}
 
-			   rows [1] .addClass ("excite-more");
+			   rows [1] .addClass ("excite-private-more");
 
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser")   + ":")) .append ($("<td></td>") .text (f2(systemTime)           .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D")       + ":")) .append ($("<td></td>") .text (f2(browser .browserTime) .toLocaleString (language, fixed) + " " + _("ms")));
@@ -27634,7 +27634,7 @@ function ($,
 {
 "use strict";
 	
-	$("head") .append ('<style>.excite-menu-title:before { content: "' + _("Excite X3D Browser") + '" }</style>');
+	$("head") .append ('<style>.excite-private-menu-title:before { content: "' + _("Excite X3D Browser") + '" }</style>');
 
 	function ContextMenu (executionContext)
 	{
@@ -27664,7 +27664,7 @@ function ($,
 				return;
 
 			$.contextMenu ({
-				selector: ".excite-surface-" + this .getBrowser () .getId (), 
+				selector: ".excite-private-surface-" + this .getBrowser () .getId (), 
 				build: this .build .bind (this),
 			});
 		},
@@ -27677,12 +27677,12 @@ function ($,
 				fullscreen       = this .getBrowser () .getElement () .fullScreen ();
 
 			var menu = {
-				className: "excite-menu excite-menu-title",
+				className: "excite-private-menu excite-private-menu-title",
 				items: {
 					"separator0": "--------",
 					"viewpoints": {
 						name: _("Viewpoints"),
-						className: "context-menu-icon excite-icon-viewpoint",
+						className: "context-menu-icon excite-private-icon-viewpoint",
 						items: this .getViewpoints (),
 						callback: function (viewpoint)
 						{
@@ -27698,7 +27698,7 @@ function ($,
 					"separator1": "--------",
 					"viewer": {
 						name: _(this .getViewerName (currentViewer)),
-						className: "context-menu-icon excite-icon-" + currentViewer .toLowerCase () + "-viewer",
+						className: "context-menu-icon excite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
 						callback: function (viewer)
 						{
 							$(".context-menu-list") .fadeOut (500);
@@ -27715,7 +27715,7 @@ function ($,
 					"separator2": "--------",
 					"primitive-quality": {
 						name: _("Primitive Quality"),
-						className: "context-menu-icon excite-icon-primitive-quality",
+						className: "context-menu-icon excite-private-icon-primitive-quality",
 						items: {
 							"high": {
 								name: _("High"),
@@ -27763,7 +27763,7 @@ function ($,
 					},
 					"texture-quality": {
 						name: _("Texture Quality"),
-						className: "context-menu-icon excite-icon-texture-quality",
+						className: "context-menu-icon excite-private-icon-texture-quality",
 						items: {
 							"high": {
 								name: _("High"),
@@ -27857,7 +27857,7 @@ function ($,
 					},
 					"fullscreen": {
 						name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
-						className: "context-menu-icon " + (fullscreen ? "excite-icon-leave-fullscreen" : "excite-icon-fullscreen"),
+						className: "context-menu-icon " + (fullscreen ? "excite-private-icon-leave-fullscreen" : "excite-private-icon-fullscreen"),
 						callback: function ()
 						{
 						   this .getBrowser () .getElement () .toggleFullScreen ();
@@ -27867,7 +27867,7 @@ function ($,
 					"separator3": "--------",
 					"about": {
 						name: _("About Excite X3D"),
-						className: "context-menu-icon excite-icon-help-about",
+						className: "context-menu-icon excite-private-icon-help-about",
 						callback: function ()
 						{
 						   window .open ("http://create3000.de/excite/");
@@ -27937,7 +27937,7 @@ function ($,
 
 				menu [viewer] = {
 					name: _(this .getViewerName (viewer)),
-					className: "context-menu-icon excite-icon-" + viewer .toLowerCase () + "-viewer",
+					className: "context-menu-icon excite-private-icon-" + viewer .toLowerCase () + "-viewer",
 					callback: function (viewer)
 					{
 						$(".context-menu-list") .fadeOut (500);
@@ -35820,17 +35820,17 @@ function (Fields,
 
 		// Get canvas & context.
 
-		var browser      = $("<div></div>") .addClass ("excite-browser")  .prependTo (this .element);
-		var splashScreen = $("<div></div>") .addClass ("excite-splash-screen") .appendTo (browser);
-		var spinner      = $("<div></div>") .addClass ("excite-spinner")  .appendTo (splashScreen);
-		var progress     = $("<div></div>") .addClass ("excite-progress") .appendTo (splashScreen);
-		var surface      = $("<div></div>") .addClass ("excite-surface excite-surface-" + this .getId ()) .appendTo (browser);
+		var browser      = $("<div></div>") .addClass ("excite-private-browser")  .prependTo (this .element);
+		var splashScreen = $("<div></div>") .addClass ("excite-private-splash-screen") .appendTo (browser);
+		var spinner      = $("<div></div>") .addClass ("excite-private-spinner")  .appendTo (splashScreen);
+		var progress     = $("<div></div>") .addClass ("excite-private-progress") .appendTo (splashScreen);
+		var surface      = $("<div></div>") .addClass ("excite-private-surface excite-surface-" + this .getId ()) .appendTo (browser);
 
-		$("<div></div>") .addClass ("excite-spinner-one")   .appendTo (spinner);
-		$("<div></div>") .addClass ("excite-spinner-two")   .appendTo (spinner);
-		$("<div></div>") .addClass ("excite-spinner-three") .appendTo (spinner);
-		$("<div></div>") .addClass ("excite-spinner-text")  .appendTo (progress) .text ("Lade 0 Dateien");
-		$("<div></div>") .addClass ("excite-progressbar")   .appendTo (progress) .append ($("<div></div>"));
+		$("<div></div>") .addClass ("excite-private-spinner-one")   .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-private-spinner-two")   .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-private-spinner-three") .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-private-spinner-text")  .appendTo (progress) .text ("Lade 0 Dateien");
+		$("<div></div>") .addClass ("excite-private-progressbar")   .appendTo (progress) .append ($("<div></div>"));
 
 		this .splashScreen = splashScreen;
 		this .canvas       = $("<canvas></canvas>") .prependTo (surface);
@@ -37162,8 +37162,8 @@ function (Fields,
 			if (! this .loading)
 				this .getNotification () .string_ = string;
 
-			this .getSplashScreen () .find (".excite-spinner-text") .text (string);
-			this .getSplashScreen () .find (".excite-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
+			this .getSplashScreen () .find (".excite-private-spinner-text") .text (string);
+			this .getSplashScreen () .find (".excite-private-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
 		},
 		resetLoadCount: function ()
 		{
@@ -45535,9 +45535,9 @@ function (Fields,
 		onfullscreen: function ()
 		{
 			if (this .getElement () .fullScreen ())
-				this .getElement () .addClass  ("excite-fullscreen");
+				this .getElement () .addClass  ("excite-private-fullscreen");
 			else
-				this .getElement () .removeClass ("excite-fullscreen");
+				this .getElement () .removeClass ("excite-private-fullscreen");
 		},
 	};
 
@@ -54356,7 +54356,7 @@ function ($,
 		{
 			this .cursorType = value;
 
-			var div = this .getBrowser () .getElement () .find (".excite-surface");
+			var div = this .getBrowser () .getElement () .find (".excite-private-surface");
 
 			switch (value)
 			{
@@ -111540,7 +111540,7 @@ function ($,
 				if (scene)
 					this .replaceWorld (scene);
 				else
-					setTimeout (function () { this .getSplashScreen () .find (".excite-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+					setTimeout (function () { this .getSplashScreen () .find (".excite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 
 				// Must not remove load count, replaceWorld does a resetLoadCount when it sets setBrowserLoading to true.
 				// Don't set browser loading to false.

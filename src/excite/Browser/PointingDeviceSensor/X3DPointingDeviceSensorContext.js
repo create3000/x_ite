@@ -107,7 +107,7 @@ function ($,
 		{
 			this .cursorType = value;
 
-			var div = this .getBrowser () .getElement () .find (".excite-surface");
+			var div = this .getBrowser () .getElement () .find (".excite-private-surface");
 
 			switch (value)
 			{

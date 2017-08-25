@@ -269,9 +269,9 @@ function (Fields,
 		onfullscreen: function ()
 		{
 			if (this .getElement () .fullScreen ())
-				this .getElement () .addClass  ("excite-fullscreen");
+				this .getElement () .addClass  ("excite-private-fullscreen");
 			else
-				this .getElement () .removeClass ("excite-fullscreen");
+				this .getElement () .removeClass ("excite-private-fullscreen");
 		},
 	};
 

@@ -1,5 +1,5 @@
 
-X3DCanvas .excite-splash-screen {
+X3DCanvas .excite-private-splash-screen {
 	display: none;
 	z-index: -100;
 	position: absolute;
@@ -13,7 +13,7 @@ X3DCanvas .excite-splash-screen {
 	background: radial-gradient(ellipse at center, rgb(130,130,130) 0%,rgb(65,65,65) 100%);
 }
 
-X3DCanvas .excite-spinner {
+X3DCanvas .excite-private-spinner {
 	position: absolute;
 	top: calc(50% - 70px);
 	left: calc(50% - 64px);
@@ -27,7 +27,7 @@ X3DCanvas .excite-spinner {
 	perspective: 780px;
 }
 
-X3DCanvas .excite-spinner > * {
+X3DCanvas .excite-private-spinner > * {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -43,47 +43,47 @@ X3DCanvas .excite-spinner > * {
 		-moz-border-radius: 50%;	
 }
 
-X3DCanvas .excite-spinner-one {
+X3DCanvas .excite-private-spinner-one {
 	left: 0%;
 	top: 0%;
-	animation: excite-spinner-rotate-one 1.15s linear infinite;
-		-o-animation: excite-spinner-rotate-one 1.15s linear infinite;
-		-ms-animation: excite-spinner-rotate-one 1.15s linear infinite;
-		-webkit-animation: excite-spinner-rotate-one 1.15s linear infinite;
-		-moz-animation: excite-spinner-rotate-one 1.15s linear infinite;
+	animation: excite-private-spinner-rotate-one 1.15s linear infinite;
+		-o-animation: excite-private-spinner-rotate-one 1.15s linear infinite;
+		-ms-animation: excite-private-spinner-rotate-one 1.15s linear infinite;
+		-webkit-animation: excite-private-spinner-rotate-one 1.15s linear infinite;
+		-moz-animation: excite-private-spinner-rotate-one 1.15s linear infinite;
 	border-bottom: 10px solid #ffe32d;
 }
 
-X3DCanvas .excite-spinner-two {
+X3DCanvas .excite-private-spinner-two {
 	right: 0%;
 	top: 0%;
-	animation: excite-spinner-rotate-two 1.15s linear infinite;
-		-o-animation: excite-spinner-rotate-two 1.15s linear infinite;
-		-ms-animation: excite-spinner-rotate-two 1.15s linear infinite;
-		-webkit-animation: excite-spinner-rotate-two 1.15s linear infinite;
-		-moz-animation: excite-spinner-rotate-two 1.15s linear infinite;
+	animation: excite-private-spinner-rotate-two 1.15s linear infinite;
+		-o-animation: excite-private-spinner-rotate-two 1.15s linear infinite;
+		-ms-animation: excite-private-spinner-rotate-two 1.15s linear infinite;
+		-webkit-animation: excite-private-spinner-rotate-two 1.15s linear infinite;
+		-moz-animation: excite-private-spinner-rotate-two 1.15s linear infinite;
 	border-right: 10px solid #ff9f2e;
 }
 
-X3DCanvas .excite-spinner-three {
+X3DCanvas .excite-private-spinner-three {
 	right: 0%;
 	bottom: 0%;
-	animation: excite-spinner-rotate-three 1.15s linear infinite;
-		-o-animation: excite-spinner-rotate-three 1.15s linear infinite;
-		-ms-animation: excite-spinner-rotate-three 1.15s linear infinite;
-		-webkit-animation: excite-spinner-rotate-three 1.15s linear infinite;
-		-moz-animation: excite-spinner-rotate-three 1.15s linear infinite;
+	animation: excite-private-spinner-rotate-three 1.15s linear infinite;
+		-o-animation: excite-private-spinner-rotate-three 1.15s linear infinite;
+		-ms-animation: excite-private-spinner-rotate-three 1.15s linear infinite;
+		-webkit-animation: excite-private-spinner-rotate-three 1.15s linear infinite;
+		-moz-animation: excite-private-spinner-rotate-three 1.15s linear infinite;
 	border-top: 10px solid #d71f1f;
 }
 
-X3DCanvas .excite-progress {
+X3DCanvas .excite-private-progress {
 	position: absolute;
 	top: calc(50% - 11pt);
 	left: calc(50% - 100px);
 	width: 200px;
 }
 
-X3DCanvas .excite-spinner-text {
+X3DCanvas .excite-private-spinner-text {
 	color: white;
 	font-size: 11pt;
 	text-align: center;
@@ -91,20 +91,20 @@ X3DCanvas .excite-spinner-text {
 	font-family: PT Sans, sans-serif;
 }
 
-X3DCanvas .excite-progressbar {
+X3DCanvas .excite-private-progressbar {
 	margin: 8px;
 	border-left:  2px solid rgba(255, 255, 255, 0.5);
 	border-right: 2px solid rgba(255, 255, 255, 0.5);
 	padding: 0 2px;
 }
 
-X3DCanvas .excite-progressbar div {
+X3DCanvas .excite-private-progressbar div {
 	width: 0%;
 	height: 6px;
 	background: rgba(255, 255, 255, 0.5);
 }
 
-@keyframes excite-spinner-rotate-one {
+@keyframes excite-private-spinner-rotate-one {
 	0% {
 		transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -113,7 +113,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-o-keyframes excite-spinner-rotate-one {
+@-o-keyframes excite-private-spinner-rotate-one {
 	0% {
 		-o-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -122,7 +122,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-ms-keyframes excite-spinner-rotate-one {
+@-ms-keyframes excite-private-spinner-rotate-one {
 	0% {
 		-ms-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -131,7 +131,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-webkit-keyframes excite-spinner-rotate-one {
+@-webkit-keyframes excite-private-spinner-rotate-one {
 	0% {
 		-webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -140,7 +140,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-moz-keyframes excite-spinner-rotate-one {
+@-moz-keyframes excite-private-spinner-rotate-one {
 	0% {
 		-moz-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -149,7 +149,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@keyframes excite-spinner-rotate-two {
+@keyframes excite-private-spinner-rotate-two {
 	0% {
 		transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -158,7 +158,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-o-keyframes excite-spinner-rotate-two {
+@-o-keyframes excite-private-spinner-rotate-two {
 	0% {
 		-o-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -167,7 +167,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-ms-keyframes excite-spinner-rotate-two {
+@-ms-keyframes excite-private-spinner-rotate-two {
 	0% {
 		-ms-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -176,7 +176,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-webkit-keyframes excite-spinner-rotate-two {
+@-webkit-keyframes excite-private-spinner-rotate-two {
 	0% {
 		-webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -185,7 +185,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-moz-keyframes excite-spinner-rotate-two {
+@-moz-keyframes excite-private-spinner-rotate-two {
 	0% {
 		-moz-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -194,7 +194,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@keyframes excite-spinner-rotate-three {
+@keyframes excite-private-spinner-rotate-three {
 	0% {
 		transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -203,7 +203,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-o-keyframes excite-spinner-rotate-three {
+@-o-keyframes excite-private-spinner-rotate-three {
 	0% {
 		-o-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -212,7 +212,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-ms-keyframes excite-spinner-rotate-three {
+@-ms-keyframes excite-private-spinner-rotate-three {
 	0% {
 		-ms-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -221,7 +221,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-webkit-keyframes excite-spinner-rotate-three {
+@-webkit-keyframes excite-private-spinner-rotate-three {
 	0% {
 		-webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -230,7 +230,7 @@ X3DCanvas .excite-progressbar div {
 	}
 }
 
-@-moz-keyframes excite-spinner-rotate-three {
+@-moz-keyframes excite-private-spinner-rotate-three {
 	0% {
 		-moz-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}

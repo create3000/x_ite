@@ -16,21 +16,21 @@ X3DCanvas {
 	height: 150px;
 }
 
-X3DCanvas.excite-fullscreen {
+X3DCanvas.excite-private-fullscreen {
 	width: 100% !important;
 	height: 100% !important;
 }
 
-X3DCanvas > *:not(.excite-fallback) {
+X3DCanvas > *:not(.excite-private-fallback) {
 	display: none;
 }
 
-.excite-console {
+.excite-private-console {
 	font-family: monospace;
 	white-space: pre;
 }
 
-X3DCanvas .excite-browser {
+X3DCanvas .excite-private-browser {
 	z-index: 0;
 	display: block;
 	position: absolute;
@@ -43,7 +43,7 @@ X3DCanvas .excite-browser {
 	border: 0px;
 }
 
-X3DCanvas .excite-surface {
+X3DCanvas .excite-private-surface {
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
@@ -61,7 +61,7 @@ X3DCanvas canvas {
 	height: 100%;
 }
 
-X3DCanvas .excite-notification {
+X3DCanvas .excite-private-notification {
 	display: none;
 	padding: 2px 5px 5px 5px;
 	position: absolute;
@@ -82,12 +82,12 @@ X3DCanvas .excite-notification {
 	pointer-events: none;
 }
 
-X3DCanvas .excite-notification span {
+X3DCanvas .excite-private-notification span {
 	padding: 0px 24px 0px 20px;
 	background: url(images/icon.bw.png) no-repeat 0px center;
 }
 
-X3DCanvas .excite-browser-timings {
+X3DCanvas .excite-private-browser-timings {
 	display: none;
 	position: absolute;
 	bottom: -4px;
@@ -109,13 +109,13 @@ X3DCanvas .excite-browser-timings {
 	pointer-events: none;
 }
 
-X3DCanvas .excite-browser-timings table,
-X3DCanvas .excite-browser-timings thead,
-X3DCanvas .excite-browser-timings tbody,
-X3DCanvas .excite-browser-timings tfoot,
-X3DCanvas .excite-browser-timings tr,
-X3DCanvas .excite-browser-timings th,
-X3DCanvas .excite-browser-timings td {
+X3DCanvas .excite-private-browser-timings table,
+X3DCanvas .excite-private-browser-timings thead,
+X3DCanvas .excite-private-browser-timings tbody,
+X3DCanvas .excite-private-browser-timings tfoot,
+X3DCanvas .excite-private-browser-timings tr,
+X3DCanvas .excite-private-browser-timings th,
+X3DCanvas .excite-private-browser-timings td {
 	outline: 0;
 	margin: 0;
 	border: 0;
@@ -128,42 +128,42 @@ X3DCanvas .excite-browser-timings td {
 	text-align: left;
 }
 
-X3DCanvas .excite-browser-timings table {
+X3DCanvas .excite-private-browser-timings table {
 	background: url(images/Time.png) no-repeat;
 }
 
-X3DCanvas .excite-browser-timings tr,
-X3DCanvas .excite-browser-timings th,
-X3DCanvas .excite-browser-timings td {
+X3DCanvas .excite-private-browser-timings tr,
+X3DCanvas .excite-private-browser-timings th,
+X3DCanvas .excite-private-browser-timings td {
 	border-collapse: separate;
 }
 
-X3DCanvas .excite-browser-timings thead th {
+X3DCanvas .excite-private-browser-timings thead th {
 	padding-left: 20px;
 	padding-bottom: 5px;
 }
 
-X3DCanvas .excite-browser-timings thead th {
+X3DCanvas .excite-private-browser-timings thead th {
 	font-weight: bold;
 }
 
-X3DCanvas .excite-browser-timings td:first-child {
+X3DCanvas .excite-private-browser-timings td:first-child {
 	padding-right: 10px;
 }
 
-X3DCanvas .excite-browser-timings tr.excite-more td {
+X3DCanvas .excite-private-browser-timings tr.excite-private-more td {
 	padding-bottom: 5px;
 }
 
-X3DCanvas .excite-browser-timings td {
+X3DCanvas .excite-private-browser-timings td {
 	padding-bottom: 2px;
 }
 
-X3DCanvas .excite-browser-timings tfoot td {
+X3DCanvas .excite-private-browser-timings tfoot td {
 	padding-top: 4px;
 }
 
-X3DCanvas .excite-browser-timings button {
+X3DCanvas .excite-private-browser-timings button {
 	border: 0;
 	padding: 2px;
 	background: rgba(0,0,0,0.38196601);
@@ -176,7 +176,7 @@ X3DCanvas .excite-browser-timings button {
 	cursor: default;
 }
 
-X3DCanvas .excite-browser-timings button:hover {
+X3DCanvas .excite-private-browser-timings button:hover {
 	cursor: pointer;
 }
 
@@ -197,20 +197,20 @@ X3DCanvas .excite-browser-timings button:hover {
  */
 
 /* menu title */
-.excite-menu.excite-menu-title:before {
+.excite-private-menu.excite-private-menu-title:before {
     content: "Excite X3D Browser";
     display: block;
     padding: 4px 32px 4px 8px;
     font-weight: bold;
 }
 
-.excite-menu .context-menu-selected {
+.excite-private-menu .context-menu-selected {
 	font-weight: bold;
 	font-style: italic;
 }
 
-.excite-menu.context-menu-list,
-.excite-menu .context-menu-list {
+.excite-private-menu.context-menu-list,
+.excite-private-menu .context-menu-list {
 	position: absolute;
 	display: inline-block;
 	min-width: 120px;
@@ -228,7 +228,7 @@ X3DCanvas .excite-browser-timings button:hover {
 	        box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 }
 
-.excite-menu .context-menu-item {
+.excite-private-menu .context-menu-item {
 	position: relative;
 	background-color: #222;
 	border-top: 1px solid #222;
@@ -240,36 +240,36 @@ X3DCanvas .excite-browser-timings button:hover {
 	        user-select: none;
 }
 
-.excite-menu .context-menu-separator {
+.excite-private-menu .context-menu-separator {
 	padding-bottom: 0;
 	border-bottom: 1px solid #111;
 }
 
-.excite-menu .context-menu-item > label > input,
-.excite-menu .context-menu-item > label > textarea {
+.excite-private-menu .context-menu-item > label > input,
+.excite-private-menu .context-menu-item > label > textarea {
 	-webkit-user-select: text;
 	   -moz-user-select: text;
 	    -ms-user-select: text;
  	       user-select: text;
 }
 
-.excite-menu .context-menu-item.hover {
+.excite-private-menu .context-menu-item.hover {
 	cursor: pointer;
 	background-color: #444;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 }
 
-.excite-menu .context-menu-item.disabled {
+.excite-private-menu .context-menu-item.disabled {
 	color: #666;
 }
 
-.excite-menu .context-menu-input.hover,
-.excite-menu .context-menu-item.disabled.hover {
+.excite-private-menu .context-menu-input.hover,
+.excite-private-menu .context-menu-item.disabled.hover {
 	cursor: default;
 }
 
-.excite-menu .context-menu-submenu:after {
+.excite-private-menu .context-menu-submenu:after {
 	content: "";
 	position: absolute;
 	display: block;
@@ -291,19 +291,19 @@ X3DCanvas .excite-browser-timings button:hover {
    .context-menu-item.icon:before {}
  */
 
-.excite-menu .context-menu-item.context-menu-icon {
+.excite-private-menu .context-menu-item.context-menu-icon {
 	background-repeat: no-repeat;
 	background-position: 3px 2px;
 }
 
 /* vertically align inside labels */
-.excite-menu .context-menu-input > label > * {
+.excite-private-menu .context-menu-input > label > * {
 	vertical-align: top;
 }
 
 /* position checkboxes and radios as icons */
-.excite-menu .context-menu-input > label > input[type="checkbox"],
-.excite-menu .context-menu-input > label > input[type="radio"] {
+.excite-private-menu .context-menu-input > label > input[type="checkbox"],
+.excite-private-menu .context-menu-input > label > input[type="radio"] {
 	display: inline;
 	margin: 0;
 	margin-left: -20px;
@@ -311,14 +311,14 @@ X3DCanvas .excite-browser-timings button:hover {
 	padding: 0;
 }
 
-.excite-menu .context-menu-input > label > span {
+.excite-private-menu .context-menu-input > label > span {
 	margin-left: 4px;
 }
 
-.excite-menu .context-menu-input > label,
-.excite-menu .context-menu-input > label > input[type="text"],
-.excite-menu .context-menu-input > label > textarea,
-.excite-menu .context-menu-input > label > select {
+.excite-private-menu .context-menu-input > label,
+.excite-private-menu .context-menu-input > label > input[type="text"],
+.excite-private-menu .context-menu-input > label > textarea,
+.excite-private-menu .context-menu-input > label > select {
 	display: block;
 	width: 100%;
 	-webkit-box-sizing: border-box;
@@ -326,79 +326,79 @@ X3DCanvas .excite-browser-timings button:hover {
 	        box-sizing: border-box;
 }
 
-.excite-menu .context-menu-input > label > textarea {
+.excite-private-menu .context-menu-input > label > textarea {
 	height: 100px;
 }
 
-.excite-menu .context-menu-item > .context-menu-list {
+.excite-private-menu .context-menu-item > .context-menu-list {
 	top: 5px;
 	/* re-positioned by js */
 	right: -5px;
 	display: none;
 }
 
-.excite-menu .context-menu-item.visible > .context-menu-list {
+.excite-private-menu .context-menu-item.visible > .context-menu-list {
 	display: block;
 }
 
-.excite-menu .context-menu-accesskey {
+.excite-private-menu .context-menu-accesskey {
 	text-decoration: underline;
 }
 
 /* Icons */
 
-.excite-icon-viewpoint {
+.excite-private-icon-viewpoint {
 	background: url("images/Viewpoint.png");
 }
 
-.excite-icon-examine-viewer {
+.excite-private-icon-examine-viewer {
 	background: url("images/ExamineViewer.png");
 }
 
-.excite-icon-walk-viewer {
+.excite-private-icon-walk-viewer {
 	background: url("images/WalkViewer.png");
 }
 
-.excite-icon-fly-viewer {
+.excite-private-icon-fly-viewer {
 	background: url("images/FlyViewer.png");
 }
 
-.excite-icon-lookat-viewer {
+.excite-private-icon-lookat-viewer {
 	background: url("images/gtk-zoom-in.png");
 }
 
-.excite-icon-plane-viewer {
+.excite-private-icon-plane-viewer {
 	background: url("images/PlaneViewer.png");
 }
 
-.excite-icon-none-viewer {
+.excite-private-icon-none-viewer {
 	background: url("images/NoneViewer.png");
 }
 
-.excite-icon-zoom-fit {
+.excite-private-icon-zoom-fit {
 	background: url("images/gtk-zoom-fit.png");
 }
 
-.excite-icon-zoom-in {
+.excite-private-icon-zoom-in {
 	background: url("images/gtk-zoom-in.png");
 }
 
-.excite-icon-primitive-quality {
+.excite-private-icon-primitive-quality {
 	background: url("images/PrimitiveQuality.png");
 }
 
-.excite-icon-texture-quality {
+.excite-private-icon-texture-quality {
 	background: url("images/TextureQuality.png");
 }
 
-.excite-icon-fullscreen {
+.excite-private-icon-fullscreen {
 	background: url("images/gtk-fullscreen.png");
 }
 
-.excite-icon-leave-fullscreen {
+.excite-private-icon-leave-fullscreen {
 	background: url("images/gtk-leave-fullscreen.png");
 }
 
-.excite-icon-help-about {
+.excite-private-icon-help-about {
 	background: url("images/help-about.png");
 }

@@ -398,7 +398,7 @@ function ($,
 				if (scene)
 					this .replaceWorld (scene);
 				else
-					setTimeout (function () { this .getSplashScreen () .find (".excite-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+					setTimeout (function () { this .getSplashScreen () .find (".excite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 
 				// Must not remove load count, replaceWorld does a resetLoadCount when it sets setBrowserLoading to true.
 				// Don't set browser loading to false.

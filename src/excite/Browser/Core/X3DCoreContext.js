@@ -106,17 +106,17 @@ function (Fields,
 
 		// Get canvas & context.
 
-		var browser      = $("<div></div>") .addClass ("excite-browser")  .prependTo (this .element);
-		var splashScreen = $("<div></div>") .addClass ("excite-splash-screen") .appendTo (browser);
-		var spinner      = $("<div></div>") .addClass ("excite-spinner")  .appendTo (splashScreen);
-		var progress     = $("<div></div>") .addClass ("excite-progress") .appendTo (splashScreen);
-		var surface      = $("<div></div>") .addClass ("excite-surface excite-surface-" + this .getId ()) .appendTo (browser);
+		var browser      = $("<div></div>") .addClass ("excite-private-browser")  .prependTo (this .element);
+		var splashScreen = $("<div></div>") .addClass ("excite-private-splash-screen") .appendTo (browser);
+		var spinner      = $("<div></div>") .addClass ("excite-private-spinner")  .appendTo (splashScreen);
+		var progress     = $("<div></div>") .addClass ("excite-private-progress") .appendTo (splashScreen);
+		var surface      = $("<div></div>") .addClass ("excite-private-surface excite-surface-" + this .getId ()) .appendTo (browser);
 
-		$("<div></div>") .addClass ("excite-spinner-one")   .appendTo (spinner);
-		$("<div></div>") .addClass ("excite-spinner-two")   .appendTo (spinner);
-		$("<div></div>") .addClass ("excite-spinner-three") .appendTo (spinner);
-		$("<div></div>") .addClass ("excite-spinner-text")  .appendTo (progress) .text ("Lade 0 Dateien");
-		$("<div></div>") .addClass ("excite-progressbar")   .appendTo (progress) .append ($("<div></div>"));
+		$("<div></div>") .addClass ("excite-private-spinner-one")   .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-private-spinner-two")   .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-private-spinner-three") .appendTo (spinner);
+		$("<div></div>") .addClass ("excite-private-spinner-text")  .appendTo (progress) .text ("Lade 0 Dateien");
+		$("<div></div>") .addClass ("excite-private-progressbar")   .appendTo (progress) .append ($("<div></div>"));
 
 		this .splashScreen = splashScreen;
 		this .canvas       = $("<canvas></canvas>") .prependTo (surface);
