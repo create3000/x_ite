@@ -110,7 +110,7 @@ function (Fields,
 		var splashScreen = $("<div></div>") .addClass ("excite-private-splash-screen") .appendTo (browser);
 		var spinner      = $("<div></div>") .addClass ("excite-private-spinner")  .appendTo (splashScreen);
 		var progress     = $("<div></div>") .addClass ("excite-private-progress") .appendTo (splashScreen);
-		var surface      = $("<div></div>") .addClass ("excite-private-surface excite-surface-" + this .getId ()) .appendTo (browser);
+		var surface      = $("<div></div>") .addClass ("excite-private-surface excite-private-surface-" + this .getId ()) .appendTo (browser);
 
 		$("<div></div>") .addClass ("excite-private-spinner-one")   .appendTo (spinner);
 		$("<div></div>") .addClass ("excite-private-spinner-two")   .appendTo (spinner);
