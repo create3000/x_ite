@@ -82,10 +82,10 @@ if ($result == 0)
 	my $ftp = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/excite/$VERSION/dist/";
 
 	system "mkdir", "-p", $ftp;
-	system "rsync", "-r", "-o", "-g", "-x", "-v", "--progress", "--delete", "-l", "-H", "/home/holger/Projekte/Excite/dist/", $ftp;
+	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/Excite/dist/", $ftp;
 
 	my $latest = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/excite/latest/dist/";
 
 	system "mkdir", "-p", $latest;
-	system "rsync", "-r", "-o", "-g", "-x", "-v", "--progress", "--delete", "-l", "-H", "/home/holger/Projekte/Excite/dist/", $latest;
+	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/Excite/dist/", $latest;
 }
