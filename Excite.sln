@@ -28,11 +28,15 @@ Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "dist", "dist\dist.mdproj", 
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "build", "build\build.mdproj", "{60A2FE2E-A2D4-43EE-88D9-3BF425E15671}"
 EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "fonts", "fonts\fonts.mdproj", "{045BE32F-EC7E-4E2E-A065-2331CFDCA289}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Default|Any CPU = Default|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{045BE32F-EC7E-4E2E-A065-2331CFDCA289}.Default|Any CPU.ActiveCfg = Default|Any CPU
+		{045BE32F-EC7E-4E2E-A065-2331CFDCA289}.Default|Any CPU.Build.0 = Default|Any CPU
 		{1744EE21-91D1-4E66-9480-2D366977655F}.Default|Any CPU.ActiveCfg = Default|Any CPU
 		{1744EE21-91D1-4E66-9480-2D366977655F}.Default|Any CPU.Build.0 = Default|Any CPU
 		{45DFA11C-B569-4954-B1E1-DA0CF12C452A}.Default|Any CPU.ActiveCfg = Default|Any CPU

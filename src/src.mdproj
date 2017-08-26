@@ -967,18 +967,6 @@
     <None Include="images\Time.png" />
     <None Include="images\Viewpoint.png" />
     <None Include="images\WalkViewer.png" />
-    <None Include="fonts\DroidSerif-Bold.ttf" />
-    <None Include="fonts\DroidSerif-BoldItalic.ttf" />
-    <None Include="fonts\DroidSerif-Italic.ttf" />
-    <None Include="fonts\DroidSerif-Regular.ttf" />
-    <None Include="fonts\Ubuntu-B.ttf" />
-    <None Include="fonts\Ubuntu-BI.ttf" />
-    <None Include="fonts\UbuntuMono-B.ttf" />
-    <None Include="fonts\UbuntuMono-BI.ttf" />
-    <None Include="fonts\UbuntuMono-R.ttf" />
-    <None Include="fonts\UbuntuMono-RI.ttf" />
-    <None Include="fonts\Ubuntu-R.ttf" />
-    <None Include="fonts\Ubuntu-RI.ttf" />
     <None Include="excite.css" />
     <None Include="excite.html" />
     <None Include="excite.js" />
@@ -993,6 +981,5 @@
     <Folder Include="locale\" />
     <Folder Include="lib\" />
     <Folder Include="images\" />
-    <Folder Include="fonts\" />
   </ItemGroup>
 </Project>

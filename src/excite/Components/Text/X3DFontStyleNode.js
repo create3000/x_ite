@@ -84,9 +84,9 @@ function ($,
 
 	var FontDirectories = [
 		"http://media.create3000.de/fonts/",
-		"https://cdn.rawgit.com/create3000/excite/" + version + "/src/fonts/",
-		"https://cdn.jsdelivr.net/gh/create3000/excite@" + version + "/src/fonts/",
-		"https://rawgit.com/create3000/excite/" + version + "/src/fonts/",
+		"https://cdn.rawgit.com/create3000/excite/" + version + "/fonts/",
+		"https://cdn.jsdelivr.net/gh/create3000/excite@" + version + "/fonts/",
+		"https://rawgit.com/create3000/excite/" + version + "/fonts/",
 	];
 
 	shuffle (FontDirectories);
