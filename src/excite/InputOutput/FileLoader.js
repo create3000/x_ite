@@ -56,7 +56,7 @@ define ([
 	"excite/Parser/XMLParser",
 	"standard/Networking/URI",
 	"lib/BinaryTransport",
-	"lib/pako/dist/pako_inflate",
+	"pako_inflate",
 	"excite/DEBUG",
 ],
 function ($,

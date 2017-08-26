@@ -17,6 +17,11 @@ require .config ({
 			"main": "jquery.mousewheel.js"
 		},
 		{
+			"name": "pako_inflate",
+			"location": "../node_modules/pako",
+			"main": "dist/pako_inflate.js"
+		},
+		{
 			"name": "poly2tri",
 			"location": "../node_modules/poly2tri",
 			"main": "dist/poly2tri.js"
