@@ -1,4 +1,4 @@
-/* Excite X3D v4.0.1-17 */
+/* Excite X3D v4.0.2-18 */
 
 /** vim: et:ts=4:sw=4:sts=4
  * @license RequireJS 2.3.5 Copyright jQuery Foundation and other contributors.
@@ -63829,9 +63829,9 @@ function ($,
 
 	var FontDirectories = [
 		"http://media.create3000.de/fonts/",
-		"https://cdn.rawgit.com/create3000/excite/" + version + "/src/fonts/",
-		"https://cdn.jsdelivr.net/gh/create3000/excite@" + version + "/src/fonts/",
-		"https://rawgit.com/create3000/excite/" + version + "/src/fonts/",
+		"https://cdn.rawgit.com/create3000/excite/" + version + "/fonts/",
+		"https://cdn.jsdelivr.net/gh/create3000/excite@" + version + "/fonts/",
+		"https://rawgit.com/create3000/excite/" + version + "/fonts/",
 	];
 
 	shuffle (FontDirectories);
