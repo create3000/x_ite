@@ -1,3 +1,5 @@
+/* Excite X3D v4.0.2-24 */
+
 /** vim: et:ts=4:sw=4:sts=4
  * @license RequireJS 2.3.5 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, https://github.com/requirejs/requirejs/blob/master/LICENSE
@@ -12770,6 +12772,10 @@ function ()
 		getTainted: function ()
 		{
 			return this ._tainted;
+		},
+		hasInterest: function (callback, object)
+		{
+			return Boolean (this ._interests [object .getId () + callback]);
 		},
 		addInterest: function (callback, object)
 		{
@@ -56944,20 +56950,6 @@ function ($, X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 		{
 			return this .getBrowser () .getActiveLayer () .getViewpoint ();
 		},
-		getScrollDirection: function (event)
-		{
-			var direction = 0;
-
-			// IE & Opera
-			if (event .originalEvent .wheelDelta)
-				return -event .originalEvent .wheelDelta / 120;
-
-			// Mozilla
-			else if (event .originalEvent .detail)
-				return event .originalEvent .detail / 3;
-
-			return direction;
-		},
 		getPointOnCenterPlane: function (x, y, result)
 		{
 			try
@@ -57311,10 +57303,9 @@ define ('excite/Browser/Navigation/ExamineViewer',[
 	"excite/Browser/Navigation/X3DViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
-	"locale/gettext",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, Vector3, Rotation4, _)
+function ($, X3DViewer, Vector3, Rotation4)
 {
 "use strict";
 
@@ -57550,10 +57541,6 @@ function ($, X3DViewer, Vector3, Rotation4, _)
 			event .preventDefault ();
 			event .stopImmediatePropagation ();
 
-			// Determine scroll direction.
-
-			var direction = this .getScrollDirection (event);
-
 			// Change viewpoint position.
 
 			var viewpoint = this .getActiveViewpoint ();
@@ -57564,10 +57551,10 @@ function ($, X3DViewer, Vector3, Rotation4, _)
 
 			viewpoint .getUserOrientation () .multVecRot (positionOffset .set (0, 0, step .abs ()));
 
-			if (direction < 0)
+			if (event .deltaY > 0)
 				viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .subtract (positionOffset);		
 			
-			else if (direction > 0)
+			else if (event .deltaY < 0)
 				viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .add (positionOffset);
 		},
 		getPositionOffset: function ()
@@ -57705,6 +57692,7 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 		orientation        = new Rotation4 (0, 0, 1, 0),
 		orientationOffset  = new Rotation4 (0, 0, 1, 0),
 		rubberBandRotation = new Rotation4 (0, 0, 1, 0),
+		delta              = new Rotation4 (0, 0, 1, 0),
 		up                 = new Rotation4 (0, 0, 1, 0),
 		geoRotation        = new Rotation4 (0, 0, 1, 0);
 	
@@ -57925,29 +57913,17 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 			event .preventDefault ();
 			event .stopImmediatePropagation ();
 
-			// Determine scroll direction.
-
-			var direction = this .getScrollDirection (event);
-
 			// Change viewpoint position.
 
 			var viewpoint = this .getActiveViewpoint ();
 
 			viewpoint .transitionStop ();
 
-			if (direction < 0)
-			{
-				this .sourceRotation .assign (viewpoint .orientationOffset_ .getValue ());
-				this .destinationRotation = this .sourceRotation .multRight (rotation .setAxisAngle (viewpoint .getUserOrientation () .multVecRot (axis .set (-1, 0, 0)), ROLL_ANGLE));
-				this .addRoll ();
-			}
+			if (event .deltaY > 0)
+				this .addRoll (-ROLL_ANGLE);
 
-			else if (direction > 0)
-			{
-				this .sourceRotation .assign (viewpoint .orientationOffset_ .getValue ());
-				this .destinationRotation = this .sourceRotation .multRight (rotation .setAxisAngle (viewpoint .getUserOrientation () .multVecRot (axis .set (1, 0, 0)), ROLL_ANGLE));
-				this .addRoll ();
-			}
+			else if (event .deltaY < 0)
+				this .addRoll (ROLL_ANGLE);
 		},
 		fly: function ()
 		{
@@ -58065,14 +58041,23 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 
 			this .startTime = performance .now ();
 		},
-		addRoll: function ()
+		addRoll: function (rollAngle)
 		{
-			if (this .startTime)
-				return;
-			
+			var viewpoint = this .getActiveViewpoint ();
+
+			if (this .getBrowser () .prepareEvents () .hasInterest ("roll", this))
+				delta .assign (viewpoint .orientationOffset_ .getValue ()) .inverse () .multLeft (this .destinationRotation);
+			else
+				delta .set (0, 0, 1, 0);
+
+			rotation .setAxisAngle (viewpoint .getUserOrientation () .multVecRot (axis .set (1, 0, 0)), rollAngle + delta .angle);
+
 			this .getBrowser () .prepareEvents () .addInterest ("roll", this);
 			this .getBrowser () .addBrowserEvent ();
-			
+
+			this .sourceRotation .assign (viewpoint .orientationOffset_ .getValue ());
+			this .destinationRotation .assign (this .sourceRotation) .multRight (rotation);
+		
 			this .startTime = performance .now ();
 		},
 		display: function (interest, type)
@@ -58239,9 +58224,8 @@ define ('excite/Browser/Navigation/WalkViewer',[
 	"excite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
-	"locale/gettext",
 ],
-function (X3DFlyViewer, Vector3, Rotation4, _)
+function (X3DFlyViewer, Vector3, Rotation4)
 {
 "use strict";
 	
@@ -58342,9 +58326,8 @@ function (X3DFlyViewer, Vector3, Rotation4, _)
 ﻿
 define ('excite/Browser/Navigation/FlyViewer',[
 	"excite/Browser/Navigation/X3DFlyViewer",
-	"locale/gettext",
 ],
-function (X3DFlyViewer, _)
+function (X3DFlyViewer)
 {
 "use strict";
 	
@@ -60634,10 +60617,9 @@ define ('excite/Browser/Navigation/PlaneViewer',[
 	"excite/Components/Navigation/Viewpoint",
 	"excite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector3",
-	"locale/gettext",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3, _)
+function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3)
 {
 "use strict";
 	
@@ -60768,10 +60750,6 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3, _)
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
-			// Determine scroll direction.
-
-			var direction = this .getScrollDirection (event);
-
 			// Change viewpoint position.
 
 			var
@@ -60780,10 +60758,10 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3, _)
 
 			viewpoint .transitionStop ();
 
-			if (direction < 0)      // Move backwards.
+			if (event .deltaY > 0)      // Move backwards.
 				viewpoint .fieldOfViewScale_ = Math .max (0.00001, viewpoint .fieldOfViewScale_ .getValue () * (1 - SCROLL_FACTOR));
 
-			else if (direction > 0) // Move forwards.
+			else if (event .deltaY < 0) // Move forwards.
 			{
 				viewpoint .fieldOfViewScale_ = viewpoint .fieldOfViewScale_ .getValue () * (1 + SCROLL_FACTOR);
 
@@ -60872,9 +60850,8 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3, _)
 define ('excite/Browser/Navigation/NoneViewer',[
 	"jquery",
 	"excite/Browser/Navigation/X3DViewer",
-	"locale/gettext",
 ],
-function ($, X3DViewer, _)
+function ($, X3DViewer)
 {
 "use strict";
 	
@@ -60943,10 +60920,9 @@ function ($, X3DViewer, _)
 define ('excite/Browser/Navigation/LookAtViewer',[
 	"jquery",
 	"excite/Browser/Navigation/X3DViewer",
-	"locale/gettext",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, _)
+function ($, X3DViewer)
 {
 "use strict";
 
