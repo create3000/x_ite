@@ -1,7 +1,7 @@
 {
 	"name": "excite",
 	"version": "4.0.2",
-	"revision": "18",
+	"revision": "19",
 	"description": "Excite X3D Browser",
 	"main": "src/excite.js",
 	"repository": {
@@ -38,7 +38,7 @@
 		"pako": "latest",
 		"poly2tri": "latest",
 		"earcut": "latest",
-		"opentype": "latest",
+		"opentype.js": "latest",
 		"sprintf-js": "latest"
 	},
 	"scripts": {
