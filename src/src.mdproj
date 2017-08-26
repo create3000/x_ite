@@ -699,7 +699,6 @@
     <None Include="bookmarks.js" />
     <None Include="standard\Utility\Shuffle.js" />
     <None Include="example.html" />
-    <None Include="standard\Math\Algorithms\Bezier.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="excite\" />
