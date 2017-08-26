@@ -50,9 +50,8 @@
 define ([
 	"jquery",
 	"excite/Browser/Navigation/X3DViewer",
-	"lib/gettext",
 ],
-function ($, X3DViewer, _)
+function ($, X3DViewer)
 {
 "use strict";
 	

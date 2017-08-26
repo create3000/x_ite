@@ -61,7 +61,7 @@ define ([
 	"excite/InputOutput/FileLoader",
 	"excite/Parser/XMLParser",
 	"excite/Bits/X3DConstants",
-	"lib/gettext",
+	"locale/gettext",
 ],
 function ($,
           VERSION,

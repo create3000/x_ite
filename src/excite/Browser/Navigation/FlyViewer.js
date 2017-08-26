@@ -49,9 +49,8 @@
 ﻿
 define ([
 	"excite/Browser/Navigation/X3DFlyViewer",
-	"lib/gettext",
 ],
-function (X3DFlyViewer, _)
+function (X3DFlyViewer)
 {
 "use strict";
 	

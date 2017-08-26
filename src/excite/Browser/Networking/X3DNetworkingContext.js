@@ -53,7 +53,7 @@ define ([
 	"excite/Browser/Networking/urls",
 	"standard/Networking/URI",
 	"sprintf",
-	"lib/gettext",
+	"locale/gettext",
 ],
 function (Fields,
           LoadSensor,

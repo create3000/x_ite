@@ -55,7 +55,7 @@ define ([
 	"excite/Parser/Parser",
 	"excite/Parser/XMLParser",
 	"standard/Networking/URI",
-	"lib/BinaryTransport",
+	"standard/Networking/BinaryTransport",
 	"pako_inflate",
 	"excite/DEBUG",
 ],

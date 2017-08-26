@@ -57,7 +57,7 @@ define ([
 	"excite/Browser/Core/ContextMenu",
 	"excite/Execution/Scene",
 	"excite/Parser/Parser",
-	"lib/DataStorage",
+	"standard/Utility/DataStorage",
 ],
 function (Fields,
           BrowserOptions,

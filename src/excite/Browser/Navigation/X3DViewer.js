@@ -91,20 +91,6 @@ function ($, X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 		{
 			return this .getBrowser () .getActiveLayer () .getViewpoint ();
 		},
-		getScrollDirection: function (event)
-		{
-			var direction = 0;
-
-			// IE & Opera
-			if (event .originalEvent .wheelDelta)
-				return -event .originalEvent .wheelDelta / 120;
-
-			// Mozilla
-			else if (event .originalEvent .detail)
-				return event .originalEvent .detail / 3;
-
-			return direction;
-		},
 		getPointOnCenterPlane: function (x, y, result)
 		{
 			try

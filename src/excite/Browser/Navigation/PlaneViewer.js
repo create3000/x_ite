@@ -53,10 +53,9 @@ define ([
 	"excite/Components/Navigation/Viewpoint",
 	"excite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector3",
-	"lib/gettext",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3, _)
+function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3)
 {
 "use strict";
 	
@@ -187,10 +186,6 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3, _)
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
-			// Determine scroll direction.
-
-			var direction = this .getScrollDirection (event);
-
 			// Change viewpoint position.
 
 			var
@@ -199,10 +194,10 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3, _)
 
 			viewpoint .transitionStop ();
 
-			if (direction < 0)      // Move backwards.
+			if (event .deltaY > 0)      // Move backwards.
 				viewpoint .fieldOfViewScale_ = Math .max (0.00001, viewpoint .fieldOfViewScale_ .getValue () * (1 - SCROLL_FACTOR));
 
-			else if (direction > 0) // Move forwards.
+			else if (event .deltaY < 0) // Move forwards.
 			{
 				viewpoint .fieldOfViewScale_ = viewpoint .fieldOfViewScale_ .getValue () * (1 + SCROLL_FACTOR);
 

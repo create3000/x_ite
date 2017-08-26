@@ -379,7 +379,7 @@ function ($,
 							curve       = curves [i],
 							orientation = this .getCurveOrientation (curve);
 
-						if (orientation < 0)
+						if (orientation <= 0)
 							contours .push (curve);
 					   else
 							holes .push (curve);
@@ -424,7 +424,7 @@ function ($,
 						{
 							var contour = contours [c];
 
-							// Copy contour, as isPointInPolygon will shuffle the points.
+							// Copy contour, because isPointInPolygon will shuffle the points.
 							if (this .isPointInPolygon (contour .slice (), hole [0]))
 							{
 								contour .holes .push (hole);

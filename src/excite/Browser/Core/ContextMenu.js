@@ -50,7 +50,7 @@
 define ([
 	"jquery",
 	"excite/Basic/X3DBaseNode",
-	"lib/gettext",
+	"locale/gettext",
 	"lib/jquery-contextMenu/dist/jquery.contextMenu",
 	"lib/jquery.fullscreen-min",
 ],

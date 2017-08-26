@@ -51,9 +51,8 @@ define ([
 	"excite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
-	"lib/gettext",
 ],
-function (X3DFlyViewer, Vector3, Rotation4, _)
+function (X3DFlyViewer, Vector3, Rotation4)
 {
 "use strict";
 	

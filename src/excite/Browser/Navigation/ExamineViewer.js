@@ -52,10 +52,9 @@ define ([
 	"excite/Browser/Navigation/X3DViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
-	"lib/gettext",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, Vector3, Rotation4, _)
+function ($, X3DViewer, Vector3, Rotation4)
 {
 "use strict";
 
@@ -291,10 +290,6 @@ function ($, X3DViewer, Vector3, Rotation4, _)
 			event .preventDefault ();
 			event .stopImmediatePropagation ();
 
-			// Determine scroll direction.
-
-			var direction = this .getScrollDirection (event);
-
 			// Change viewpoint position.
 
 			var viewpoint = this .getActiveViewpoint ();
@@ -305,10 +300,10 @@ function ($, X3DViewer, Vector3, Rotation4, _)
 
 			viewpoint .getUserOrientation () .multVecRot (positionOffset .set (0, 0, step .abs ()));
 
-			if (direction < 0)
+			if (event .deltaY > 0)
 				viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .subtract (positionOffset);		
 			
-			else if (direction > 0)
+			else if (event .deltaY < 0)
 				viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .add (positionOffset);
 		},
 		getPositionOffset: function ()

@@ -32,6 +32,11 @@ require .config ({
 			"main": "dist/earcut.dev.js"
 		},
 		{
+			"name": "opentype",
+			"location": "../node_modules/opentype.js",
+			"main": "dist/opentype.js"
+		},
+		{
 			"name": "bezier",
 			"location": "../node_modules/bezier-js",
 			"main": "bezier.js"

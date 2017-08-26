@@ -50,10 +50,9 @@
 define ([
 	"jquery",
 	"excite/Browser/Navigation/X3DViewer",
-	"lib/gettext",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, _)
+function ($, X3DViewer)
 {
 "use strict";
 

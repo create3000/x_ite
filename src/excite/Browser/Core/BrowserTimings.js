@@ -51,7 +51,7 @@ define ([
 	"jquery",
 	"excite/Fields/SFBool",
 	"excite/Basic/X3DBaseNode",
-	"lib/gettext",
+	"locale/gettext",
 ],
 function ($,
           SFBool,

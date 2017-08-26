@@ -84,6 +84,7 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 		orientation        = new Rotation4 (0, 0, 1, 0),
 		orientationOffset  = new Rotation4 (0, 0, 1, 0),
 		rubberBandRotation = new Rotation4 (0, 0, 1, 0),
+		delta              = new Rotation4 (0, 0, 1, 0),
 		up                 = new Rotation4 (0, 0, 1, 0),
 		geoRotation        = new Rotation4 (0, 0, 1, 0);
 	
@@ -304,29 +305,17 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 			event .preventDefault ();
 			event .stopImmediatePropagation ();
 
-			// Determine scroll direction.
-
-			var direction = this .getScrollDirection (event);
-
 			// Change viewpoint position.
 
 			var viewpoint = this .getActiveViewpoint ();
 
 			viewpoint .transitionStop ();
 
-			if (direction < 0)
-			{
-				this .sourceRotation .assign (viewpoint .orientationOffset_ .getValue ());
-				this .destinationRotation = this .sourceRotation .multRight (rotation .setAxisAngle (viewpoint .getUserOrientation () .multVecRot (axis .set (-1, 0, 0)), ROLL_ANGLE));
-				this .addRoll ();
-			}
+			if (event .deltaY > 0)
+				this .addRoll (-ROLL_ANGLE);
 
-			else if (direction > 0)
-			{
-				this .sourceRotation .assign (viewpoint .orientationOffset_ .getValue ());
-				this .destinationRotation = this .sourceRotation .multRight (rotation .setAxisAngle (viewpoint .getUserOrientation () .multVecRot (axis .set (1, 0, 0)), ROLL_ANGLE));
-				this .addRoll ();
-			}
+			else if (event .deltaY < 0)
+				this .addRoll (ROLL_ANGLE);
 		},
 		fly: function ()
 		{
@@ -444,14 +433,23 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 
 			this .startTime = performance .now ();
 		},
-		addRoll: function ()
+		addRoll: function (rollAngle)
 		{
-			if (this .startTime)
-				return;
-			
+			var viewpoint = this .getActiveViewpoint ();
+
+			if (this .getBrowser () .prepareEvents () .hasInterest ("roll", this))
+				delta .assign (viewpoint .orientationOffset_ .getValue ()) .inverse () .multLeft (this .destinationRotation);
+			else
+				delta .set (0, 0, 1, 0);
+
+			rotation .setAxisAngle (viewpoint .getUserOrientation () .multVecRot (axis .set (1, 0, 0)), rollAngle + delta .angle);
+
 			this .getBrowser () .prepareEvents () .addInterest ("roll", this);
 			this .getBrowser () .addBrowserEvent ();
-			
+
+			this .sourceRotation .assign (viewpoint .orientationOffset_ .getValue ());
+			this .destinationRotation .assign (this .sourceRotation) .multRight (rotation);
+		
 			this .startTime = performance .now ();
 		},
 		display: function (interest, type)

@@ -96,6 +96,10 @@ function ()
 		{
 			return this ._tainted;
 		},
+		hasInterest: function (callback, object)
+		{
+			return Boolean (this ._interests [object .getId () + callback]);
+		},
 		addInterest: function (callback, object)
 		{
 			if (! this .hasOwnProperty ("_interests"))

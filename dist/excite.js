@@ -1,5 +1,3 @@
-/* Excite X3D v4.0.2-23 */
-
 /** vim: et:ts=4:sw=4:sts=4
  * @license RequireJS 2.3.5 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, https://github.com/requirejs/requirejs/blob/master/LICENSE
@@ -25432,7 +25430,7 @@ define('text!locale/fr.po',[],function () { return 'msgid ""\nmsgstr ""\n"Projec
  ******************************************************************************/
 
 
-define ('lib/gettext',[
+define ('locale/gettext',[
 	"text!locale/de.po",
 	"text!locale/fr.po",
 ],
@@ -25564,7 +25562,7 @@ define ('excite/Browser/Core/BrowserTimings',[
 	"jquery",
 	"excite/Fields/SFBool",
 	"excite/Basic/X3DBaseNode",
-	"lib/gettext",
+	"locale/gettext",
 ],
 function ($,
           SFBool,
@@ -27626,7 +27624,7 @@ e.webkitCancelFullScreen?(f="webkitfullscreenchange",g="webkitfullscreenerror"):
 define ('excite/Browser/Core/ContextMenu',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
-	"lib/gettext",
+	"locale/gettext",
 	"lib/jquery-contextMenu/dist/jquery.contextMenu",
 	"lib/jquery.fullscreen-min",
 ],
@@ -35662,7 +35660,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('lib/DataStorage',[],function ()
+define ('standard/Utility/DataStorage',[],function ()
 {
 "use strict";
 
@@ -35773,7 +35771,7 @@ define ('excite/Browser/Core/X3DCoreContext',[
 	"excite/Browser/Core/ContextMenu",
 	"excite/Execution/Scene",
 	"excite/Parser/Parser",
-	"lib/DataStorage",
+	"standard/Utility/DataStorage",
 ],
 function (Fields,
           BrowserOptions,
@@ -36832,7 +36830,7 @@ define ('excite/Browser/Networking/X3DNetworkingContext',[
 	"excite/Browser/Networking/urls",
 	"standard/Networking/URI",
 	"sprintf",
-	"lib/gettext",
+	"locale/gettext",
 ],
 function (Fields,
           LoadSensor,
@@ -41138,7 +41136,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('lib/BinaryTransport',[],function ()
+define ('standard/Networking/BinaryTransport',[],function ()
 {
 "use strict";
 
@@ -44618,7 +44616,7 @@ define ('excite/InputOutput/FileLoader',[
 	"excite/Parser/Parser",
 	"excite/Parser/XMLParser",
 	"standard/Networking/URI",
-	"lib/BinaryTransport",
+	"standard/Networking/BinaryTransport",
 	"pako_inflate",
 	"excite/DEBUG",
 ],
@@ -57313,7 +57311,7 @@ define ('excite/Browser/Navigation/ExamineViewer',[
 	"excite/Browser/Navigation/X3DViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
-	"lib/gettext",
+	"locale/gettext",
 	"jquery-mousewheel",
 ],
 function ($, X3DViewer, Vector3, Rotation4, _)
@@ -58241,7 +58239,7 @@ define ('excite/Browser/Navigation/WalkViewer',[
 	"excite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
-	"lib/gettext",
+	"locale/gettext",
 ],
 function (X3DFlyViewer, Vector3, Rotation4, _)
 {
@@ -58344,7 +58342,7 @@ function (X3DFlyViewer, Vector3, Rotation4, _)
 ﻿
 define ('excite/Browser/Navigation/FlyViewer',[
 	"excite/Browser/Navigation/X3DFlyViewer",
-	"lib/gettext",
+	"locale/gettext",
 ],
 function (X3DFlyViewer, _)
 {
@@ -60636,7 +60634,7 @@ define ('excite/Browser/Navigation/PlaneViewer',[
 	"excite/Components/Navigation/Viewpoint",
 	"excite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector3",
-	"lib/gettext",
+	"locale/gettext",
 	"jquery-mousewheel",
 ],
 function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3, _)
@@ -60874,7 +60872,7 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3, _)
 define ('excite/Browser/Navigation/NoneViewer',[
 	"jquery",
 	"excite/Browser/Navigation/X3DViewer",
-	"lib/gettext",
+	"locale/gettext",
 ],
 function ($, X3DViewer, _)
 {
@@ -60945,7 +60943,7 @@ function ($, X3DViewer, _)
 define ('excite/Browser/Navigation/LookAtViewer',[
 	"jquery",
 	"excite/Browser/Navigation/X3DViewer",
-	"lib/gettext",
+	"locale/gettext",
 	"jquery-mousewheel",
 ],
 function ($, X3DViewer, _)
@@ -66096,7 +66094,7 @@ function ($,
 							curve       = curves [i],
 							orientation = this .getCurveOrientation (curve);
 
-						if (orientation < 0)
+						if (orientation <= 0)
 							contours .push (curve);
 					   else
 							holes .push (curve);
@@ -66141,7 +66139,7 @@ function ($,
 						{
 							var contour = contours [c];
 
-							// Copy contour, as isPointInPolygon will shuffle the points.
+							// Copy contour, because isPointInPolygon will shuffle the points.
 							if (this .isPointInPolygon (contour .slice (), hole [0]))
 							{
 								contour .holes .push (hole);
@@ -110046,7 +110044,7 @@ define ('excite/Browser/X3DBrowser',[
 	"excite/InputOutput/FileLoader",
 	"excite/Parser/XMLParser",
 	"excite/Bits/X3DConstants",
-	"lib/gettext",
+	"locale/gettext",
 ],
 function ($,
           VERSION,

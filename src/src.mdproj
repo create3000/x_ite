@@ -494,9 +494,6 @@
     <None Include="locale\fr.mo" />
     <None Include="locale\fr.po" />
     <None Include="locale\de.po" />
-    <None Include="lib\BinaryTransport.js" />
-    <None Include="lib\DataStorage.js" />
-    <None Include="lib\gettext.js" />
     <None Include="lib\jquery.fullscreen-min.js" />
     <None Include="lib\jquery-contextMenu\bower.json" />
     <None Include="lib\jquery-contextMenu\contextMenu.jquery.json" />
@@ -699,6 +696,9 @@
     <None Include="bookmarks.js" />
     <None Include="standard\Utility\Shuffle.js" />
     <None Include="example.html" />
+    <None Include="locale\gettext.js" />
+    <None Include="standard\Networking\BinaryTransport.js" />
+    <None Include="standard\Utility\DataStorage.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="excite\" />
