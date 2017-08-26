@@ -30,6 +30,11 @@ require .config ({
 			"name": "earcut",
 			"location": "../node_modules/earcut",
 			"main": "dist/earcut.dev.js"
+		},
+		{
+			"name": "sprintf",
+			"location": "../node_modules/sprintf-js",
+			"main": "dist/sprintf.min.js"
 		}
 	],
 	"shim": { }

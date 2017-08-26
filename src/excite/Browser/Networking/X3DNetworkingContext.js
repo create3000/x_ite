@@ -52,7 +52,7 @@ define ([
 	"excite/Components/Networking/LoadSensor",
 	"excite/Browser/Networking/urls",
 	"standard/Networking/URI",
-	"lib/sprintf.js/src/sprintf",
+	"sprintf",
 	"lib/gettext",
 ],
 function (Fields,

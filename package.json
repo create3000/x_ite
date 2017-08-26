@@ -38,7 +38,8 @@
 		"pako": "latest",
 		"poly2tri": "latest",
 		"earcut": "latest",
-		"opentype": "latest"
+		"opentype": "latest",
+		"sprintf-js": "latest"
 	},
 	"scripts": {
 		"lint": "jshint **",

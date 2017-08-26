@@ -54,7 +54,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Triangle2",
-	"lib/bezierjs/bezier",
+	"standard/Math/Algorithms/Bezier",
 	"poly2tri",
 	"earcut",
 ],
@@ -327,25 +327,23 @@ function ($,
 							points .push ({ x: command .x, y: -command .y });
 							break;
 						}
-						case "C": // Bezier
+						case "C": // Cubic
 						{
-							var
-								curve = new Bezier (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
-								lut   = curve .getLUT (dimension);
-
-							for (var l = 1, ll = lut .length; l < ll; ++ l)
-								points .push (lut [l]);
+							for (var d = 0, dl = dimension + 1; d < dl; ++ d)
+							{
+								points .push ({ x: Bezier .cubic ( x,  command .x1,  command .x2,  command .x, d / dimension),
+								                y: Bezier .cubic (-y, -command .y1, -command .y2, -command .y, d / dimension) });
+							}
 
 							break;
 						}
-						case "Q": // Cubíc
+						case "Q": // Quadratic
 						{
-							var
-								curve = new Bezier (x, -y, command .x1, -command .y1, command .x, -command .y),
-								lut   = curve .getLUT (dimension);
-
-							for (var l = 1, ll = lut .length; l < ll; ++ l)
-								points .push (lut [l]);
+							for (var d = 0, dl = dimension + 1; d < dl; ++ d)
+							{
+								points .push ({ x: Bezier .quadratic ( x,  command .x1,  command .x, d / dimension),
+								                y: Bezier .quadratic (-y, -command .y1, -command .y, d / dimension) });
+							}
 							
 							break;
 						}
@@ -402,7 +400,7 @@ function ($,
 			// Determine the holes for every contour.
 
 			contours .map (this .removeCollinearPoints);
-			holes .map (this .removeCollinearPoints);
+			holes    .map (this .removeCollinearPoints);
 
 			switch (contours .length)
 			{

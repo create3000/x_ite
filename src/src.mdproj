@@ -494,26 +494,6 @@
     <None Include="locale\fr.mo" />
     <None Include="locale\fr.po" />
     <None Include="locale\de.po" />
-    <None Include="lib\bezierjs\bezier.js" />
-    <None Include="lib\bezierjs\index.html" />
-    <None Include="lib\bezierjs\js\draw.js" />
-    <None Include="lib\bezierjs\js\interaction.js" />
-    <None Include="lib\bezierjs\js\loader.js" />
-    <None Include="lib\bezierjs\lib\bezier.js" />
-    <None Include="lib\bezierjs\lib\index.js" />
-    <None Include="lib\bezierjs\package.json" />
-    <None Include="lib\bezierjs\README.md" />
-    <None Include="lib\bezierjs\style.css" />
-    <None Include="lib\bezierjs\test\autodraw\Abstractor.js" />
-    <None Include="lib\bezierjs\test\autodraw\CircleAbstractor.js" />
-    <None Include="lib\bezierjs\test\autodraw\common.js" />
-    <None Include="lib\bezierjs\test\autodraw\Handler.js" />
-    <None Include="lib\bezierjs\test\autodraw\index.html" />
-    <None Include="lib\bezierjs\test\autodraw\javascript.js" />
-    <None Include="lib\bezierjs\test\autodraw\merge.js" />
-    <None Include="lib\bezierjs\test\autodraw\RDP.js" />
-    <None Include="lib\bezierjs\test\autodraw\stylesheet.css" />
-    <None Include="lib\bezierjs\test.js" />
     <None Include="lib\BinaryTransport.js" />
     <None Include="lib\DataStorage.js" />
     <None Include="lib\gettext.js" />
@@ -694,19 +674,6 @@
     <None Include="lib\opentype.js\test\tables\name.js" />
     <None Include="lib\opentype.js\test\testutil.js" />
     <None Include="lib\opentype.js\test\types.js" />
-    <None Include="lib\sprintf.js\bower.json" />
-    <None Include="lib\sprintf.js\demo\angular.html" />
-    <None Include="lib\sprintf.js\dist\angular-sprintf.min.js" />
-    <None Include="lib\sprintf.js\dist\angular-sprintf.min.map" />
-    <None Include="lib\sprintf.js\dist\sprintf.min.js" />
-    <None Include="lib\sprintf.js\dist\sprintf.min.map" />
-    <None Include="lib\sprintf.js\gruntfile.js" />
-    <None Include="lib\sprintf.js\LICENSE" />
-    <None Include="lib\sprintf.js\package.json" />
-    <None Include="lib\sprintf.js\README.md" />
-    <None Include="lib\sprintf.js\src\angular-sprintf.js" />
-    <None Include="lib\sprintf.js\src\sprintf.js" />
-    <None Include="lib\sprintf.js\test\test.js" />
     <None Include="images\ExamineViewer.png" />
     <None Include="images\FlyViewer.png" />
     <None Include="images\gtk-fullscreen.png" />
@@ -732,6 +699,7 @@
     <None Include="bookmarks.js" />
     <None Include="standard\Utility\Shuffle.js" />
     <None Include="example.html" />
+    <None Include="standard\Math\Algorithms\Bezier.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="excite\" />
