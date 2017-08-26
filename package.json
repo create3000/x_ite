@@ -34,7 +34,10 @@
 		"require": "latest",
 		"requirejs": "latest",
 		"jquery": "latest",
-		"jquery-mousewheel": "latest"
+		"jquery-mousewheel": "latest",
+		"poly2tri": "latest",
+		"earcut": "latest",
+		"opentype": "latest"
 	},
 	"scripts": {
 		"lint": "jshint **",
