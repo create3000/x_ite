@@ -50,10 +50,17 @@
 {
 "use strict";
 
-	function X3D (callback, fallback)
+	function Excite (callback, fallback)
 	{
-		callbacks .push (callback);
-		fallbacks .push (fallback);
+		if (Excite .X3D)
+		{
+			Excite .X3D (callback, fallback);
+		}
+		else
+		{
+			callbacks .push (callback);
+			fallbacks .push (fallback);
+		}
 	}
 
 	function fallback (error)
@@ -64,14 +71,12 @@
 		function (Error)
 		{
 			Error (error, fallbacks);
-
-			delete window .X3D;
 		});
 	}
 
 	function noConflict ()
 	{
-		if (window .X3D === X3D)
+		if (window .X3D === Excite)
 		{
 			if (X3D_ === undefined)
 				delete window .X3D;
@@ -79,7 +84,7 @@
 				window .X3D = X3D_;
 		}
 
-		return X3D;
+		return Excite;
 	}
 
 	require (["jquery"],
@@ -88,16 +93,14 @@
 		$ .noConflict (true);
 	});
 
-	var
-		tempX3D = X3D,
-		X3D_    = window .X3D;
+	var X3D_ = window .X3D;
 
-	X3D .noConfict = noConflict;
-	X3D .require   = require;
-	X3D .define    = define;
+	Excite .noConfict = noConflict;
+	Excite .require   = require;
+	Excite .define    = define;
 
 	// Now assign temporary X3D.
-	window .X3D = X3D;
+	window .X3D = Excite;
 
 	if (window .Proxy === undefined)
 		return fallback ("Proxy is not defined");
@@ -109,24 +112,11 @@
 	require (["excite/X3D"],
 	function (X3D)
 	{
-		function noConflict ()
-		{
-			if (window .X3D === X3D)
-			{
-				if (X3D_ === undefined)
-					delete window .X3D;
-				else
-					window .X3D = X3D_;
-			}
-
-			return X3D;
-		}
-
 		// Now assign real X3D.
-		X3D .noConfict = noConflict;
+		Excite .X3D = X3D;
 
-		if (tempX3D === window .X3D)
-			window .X3D = X3D;
+		for (var key in X3D)
+			Excite [key] = X3D [key];
 
 		// Initialize all X3DCanvas tags.
 		X3D (); 
