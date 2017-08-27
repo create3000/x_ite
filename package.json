@@ -1,7 +1,7 @@
 {
 	"name": "excite",
 	"version": "4.0.2",
-	"revision": "26",
+	"revision": "27",
 	"description": "Excite X3D Browser",
 	"main": "src/excite.js",
 	"repository": {
@@ -48,6 +48,6 @@
 		"-prebuild:js": "npm run lint",
 		"build:js": "r.js -o require.build.js",
 		"build:min.js": "r.js -o require.build.min.js",
-		"build:css": "r.js -o cssIn=src/excite.css out=dist/excite.css"
+		"build:css": "r.js -o cssIn=src/excite.css out=excite.css"
 	}
 }

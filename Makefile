@@ -1,4 +1,8 @@
 
+configure:
+	sudo npm install
+	sudo npm install requirejs-text
+
 all:
 	echo
 

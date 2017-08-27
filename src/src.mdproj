@@ -690,7 +690,6 @@
     <None Include="images\Viewpoint.png" />
     <None Include="images\WalkViewer.png" />
     <None Include="excite.css" />
-    <None Include="excite.html" />
     <None Include="excite.js" />
     <None Include="LICENSE.txt" />
     <None Include="bookmarks.js" />

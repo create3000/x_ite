@@ -72,7 +72,7 @@
 	require (["jquery"],
 	function ($)
 	{
-		$ .noConflict ();
+		$ .noConflict (true);
 	});
 
 	X3D .require = require;
