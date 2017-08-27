@@ -1,4 +1,4 @@
-/* Excite X3D v4.0.2-34 */
+/* Excite X3D v4.0.2-35 */
 
 (function () {
 
@@ -110963,9 +110963,9 @@ function ($,
 
 	function Excite (callback, fallback)
 	{
-		if (Excite .X3D)
+		if (PrivateX3D)
 		{
-			Excite .X3D (callback, fallback);
+			PrivateX3D (callback, fallback);
 		}
 		else
 		{
@@ -110988,12 +110988,7 @@ function ($,
 	function noConflict ()
 	{
 		if (window .X3D === Excite)
-		{
-			if (X3D_ === undefined)
-				delete window .X3D;
-			else
-				window .X3D = X3D_;
-		}
+			window .X3D = X3D_;
 
 		return Excite;
 	}
@@ -111004,7 +110999,9 @@ function ($,
 		$ .noConflict (true);
 	});
 
-	var X3D_ = window .X3D;
+	var
+		X3D_       = window .X3D,
+		PrivateX3D = null;
 
 	Excite .noConfict = noConflict;
 	Excite .require   = require;
@@ -111024,7 +111021,7 @@ function ($,
 	function (X3D)
 	{
 		// Now assign real X3D.
-		Excite .X3D = X3D;
+		PrivateX3D = X3D;
 
 		for (var key in X3D)
 			Excite [key] = X3D [key];
