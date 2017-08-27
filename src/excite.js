@@ -69,14 +69,30 @@
 		});
 	}
 
+	function noConflict ()
+	{
+		if (window .X3D === X3D)
+		{
+			if (X3D_ === undefined)
+				delete window .X3D;
+			else
+				window .X3D = X3D_;
+		}
+
+		return X3D;
+	}
+
 	require (["jquery"],
 	function ($)
 	{
 		$ .noConflict (true);
 	});
 
-	X3D .require = require;
-	X3D .define  = define;
+	var X3D_ = window .X3D;
+
+	X3D .noConfict = noConflict;
+	X3D .require   = require;
+	X3D .define    = define;
 
 	// Now assign temporary X3D.
 	window .X3D = X3D;
@@ -91,8 +107,22 @@
 	require (["excite/X3D"],
 	function (X3D)
 	{
+		function noConflict ()
+		{
+			if (window .X3D === X3D)
+			{
+				if (X3D_ === undefined)
+					delete window .X3D;
+				else
+					window .X3D = X3D_;
+			}
+
+			return X3D;
+		}
+
 		// Now assign real X3D.
-		window .X3D = X3D;
+		X3D .noConfict = noConflict;
+		window .X3D    = X3D;
 
 		// Initialize all X3DCanvas tags.
 		X3D (); 

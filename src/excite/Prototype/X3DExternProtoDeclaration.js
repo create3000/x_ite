@@ -202,7 +202,7 @@ function ($,
 		},
 		setError: function (error)
 		{
-			console .log (error);
+			console .error ("Error loading extern prototype:", error);
 
 			this .setLoadState (X3DConstants .FAILED_STATE);
 
