@@ -48,9 +48,10 @@
 
 ﻿
 define ([
+	"jquery",
 	"excite/Browser/Navigation/X3DFlyViewer",
 ],
-function (X3DFlyViewer)
+function ($, X3DFlyViewer)
 {
 "use strict";
 	

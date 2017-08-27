@@ -47,5 +47,5 @@ require .config ({
 			"main": "dist/sprintf.min.js"
 		}
 	],
-	"shim": { }
+	"shim": { },
 });

@@ -50,6 +50,7 @@
 //https://github.com/sdecima/javascript-detect-element-resize
 
 define ([
+	"jquery",
 	"excite/Fields",
 	"excite/Components/Shaders/ComposedShader",
 	"excite/Components/Shaders/ShaderPart",
@@ -64,7 +65,8 @@ define ([
 	"text!excite/Browser/Shaders/Depth.fs",
 	"standard/Math/Numbers/Vector4",
 ],
-function (Fields,
+function ($,
+          Fields,
           ComposedShader,
           ShaderPart,
           pointSetFS,

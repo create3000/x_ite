@@ -51,7 +51,7 @@ define ([
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 ],
-function (jquery,
+function ($,
           X3DBaseNode)
 {
 "use strict";

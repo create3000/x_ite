@@ -48,11 +48,13 @@
 
 
 define ([
+	"jquery",
 	"excite/Basic/X3DBaseNode",
 	"excite/Rendering/X3DRenderObject",
 	"excite/Bits/TraverseType",
 ],
-function (X3DBaseNode,
+function ($,
+          X3DBaseNode,
           X3DRenderObject,
           TraverseType)
 {

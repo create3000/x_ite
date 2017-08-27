@@ -48,6 +48,7 @@
 
 
 define ([
+	"jquery",
 	"excite/Fields",
 	"excite/Browser/Core/BrowserOptions",
 	"excite/Browser/Core/BrowserProperties",
@@ -59,7 +60,8 @@ define ([
 	"excite/Parser/Parser",
 	"standard/Utility/DataStorage",
 ],
-function (Fields,
+function ($,
+          Fields,
           BrowserOptions,
           BrowserProperties,
           RenderingProperties,

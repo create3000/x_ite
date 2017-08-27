@@ -63,7 +63,7 @@ function (Fields,
           _)
 {
 "use strict";
-	
+
 	function getBaseURI (element)
 	{
 		var baseURI = element .baseURI;

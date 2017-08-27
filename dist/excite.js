@@ -1,5 +1,6 @@
-/* Excite X3D v4.0.2-25 */
+/* Excite X3D v4.0.2-26 */
 
+(function () {
 /** vim: et:ts=4:sw=4:sts=4
  * @license RequireJS 2.3.5 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, https://github.com/requirejs/requirejs/blob/master/LICENSE
@@ -31076,10 +31077,12 @@ function ($,
 
 
 define ('excite/Execution/Scene',[
+	"jquery",
 	"excite/Fields",
 	"excite/Execution/X3DScene",
 ],
-function (Fields,
+function ($,
+          Fields,
           X3DScene)
 {
 "use strict";
@@ -35768,6 +35771,7 @@ define ('standard/Utility/DataStorage',[],function ()
 
 
 define ('excite/Browser/Core/X3DCoreContext',[
+	"jquery",
 	"excite/Fields",
 	"excite/Browser/Core/BrowserOptions",
 	"excite/Browser/Core/BrowserProperties",
@@ -35779,7 +35783,8 @@ define ('excite/Browser/Core/X3DCoreContext',[
 	"excite/Parser/Parser",
 	"standard/Utility/DataStorage",
 ],
-function (Fields,
+function ($,
+          Fields,
           BrowserOptions,
           BrowserProperties,
           RenderingProperties,
@@ -36846,7 +36851,7 @@ function (Fields,
           _)
 {
 "use strict";
-	
+
 	function getBaseURI (element)
 	{
 		var baseURI = element .baseURI;
@@ -45340,6 +45345,7 @@ define('text!excite/Browser/Shaders/Depth.fs',[],function () { return 'data:text
 //https://github.com/sdecima/javascript-detect-element-resize
 
 define ('excite/Browser/Rendering/X3DRenderingContext',[
+	"jquery",
 	"excite/Fields",
 	"excite/Components/Shaders/ComposedShader",
 	"excite/Components/Shaders/ShaderPart",
@@ -45354,7 +45360,8 @@ define ('excite/Browser/Rendering/X3DRenderingContext',[
 	"text!excite/Browser/Shaders/Depth.fs",
 	"standard/Math/Numbers/Vector4",
 ],
-function (Fields,
+function ($,
+          Fields,
           ComposedShader,
           ShaderPart,
           pointSetFS,
@@ -53576,7 +53583,7 @@ define ('excite/Browser/PointingDeviceSensor/PointingDevice',[
 	"jquery",
 	"excite/Basic/X3DBaseNode",
 ],
-function (jquery,
+function ($,
           X3DBaseNode)
 {
 "use strict";
@@ -58221,11 +58228,12 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 
 ﻿
 define ('excite/Browser/Navigation/WalkViewer',[
+	"jquery",
 	"excite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function (X3DFlyViewer, Vector3, Rotation4)
+function ($, X3DFlyViewer, Vector3, Rotation4)
 {
 "use strict";
 	
@@ -58325,9 +58333,10 @@ function (X3DFlyViewer, Vector3, Rotation4)
 
 ﻿
 define ('excite/Browser/Navigation/FlyViewer',[
+	"jquery",
 	"excite/Browser/Navigation/X3DFlyViewer",
 ],
-function (X3DFlyViewer)
+function ($, X3DFlyViewer)
 {
 "use strict";
 	
@@ -87710,11 +87719,13 @@ function ($,
 
 
 define ('excite/Rendering/DependentRenderer',[
+	"jquery",
 	"excite/Basic/X3DBaseNode",
 	"excite/Rendering/X3DRenderObject",
 	"excite/Bits/TraverseType",
 ],
-function (X3DBaseNode,
+function ($,
+          X3DBaseNode,
           X3DRenderObject,
           TraverseType)
 {
@@ -110960,6 +110971,12 @@ function ($,
 		});
 	}
 
+	require (["jquery"],
+	function ($)
+	{
+		$ .noConflict ();
+	});
+
 	X3D .require = require;
 	X3D .define  = define;
 
@@ -110990,3 +111007,4 @@ function ($,
 }) ();
 define("excite", function(){});
 
+}());

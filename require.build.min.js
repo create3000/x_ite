@@ -7,5 +7,6 @@
 	"mainConfigFile": "src/require.config.js",
 	"include": [
 		"../node_modules/requirejs/require.js"
-	]
+	],
+	"wrap": true,
 })

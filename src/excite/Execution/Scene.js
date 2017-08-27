@@ -48,10 +48,12 @@
 
 
 define ([
+	"jquery",
 	"excite/Fields",
 	"excite/Execution/X3DScene",
 ],
-function (Fields,
+function ($,
+          Fields,
           X3DScene)
 {
 "use strict";

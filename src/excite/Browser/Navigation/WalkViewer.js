@@ -48,11 +48,12 @@
 
 ﻿
 define ([
+	"jquery",
 	"excite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function (X3DFlyViewer, Vector3, Rotation4)
+function ($, X3DFlyViewer, Vector3, Rotation4)
 {
 "use strict";
 	

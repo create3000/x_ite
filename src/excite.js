@@ -69,6 +69,12 @@
 		});
 	}
 
+	require (["jquery"],
+	function ($)
+	{
+		$ .noConflict ();
+	});
+
 	X3D .require = require;
 	X3D .define  = define;
 
