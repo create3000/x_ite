@@ -48,6 +48,7 @@
 
 
 define ([
+	"jquery",
 	"excite/Fields",
 	"excite/Basic/X3DBaseNode",
 	"excite/Components/Geometry3D/IndexedFaceSet",
@@ -55,7 +56,8 @@ define ([
 	"excite/Components/Texturing/TextureCoordinate",
 	"excite/Browser/Geometry3D/IcoSphere",
 ],
-function (Fields,
+function ($,
+          Fields,
           X3DBaseNode,
           IndexedFaceSet,
           Coordinate,

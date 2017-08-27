@@ -48,10 +48,12 @@
 
 
 define ([
+	"jquery",
 	"excite/Components/Text/FontStyle",
 	"lib/opentype.js/dist/opentype",
 ],
-function (FontStyle,
+function ($,
+          FontStyle,
           opentype)
 {
 "use strict";

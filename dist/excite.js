@@ -1,4 +1,4 @@
-/* Excite X3D v4.0.2-28 */
+/* Excite X3D v4.0.2-29 */
 
 (function () {
 
@@ -71431,10 +71431,12 @@ exports.sizeOf = sizeOf;
 
 
 define ('excite/Browser/Text/X3DTextContext',[
+	"jquery",
 	"excite/Components/Text/FontStyle",
 	"lib/opentype.js/dist/opentype",
 ],
-function (FontStyle,
+function ($,
+          FontStyle,
           opentype)
 {
 "use strict";
