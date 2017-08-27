@@ -88,7 +88,9 @@
 		$ .noConflict (true);
 	});
 
-	var X3D_ = window .X3D;
+	var
+		tempX3D = X3D,
+		X3D_    = window .X3D;
 
 	X3D .noConfict = noConflict;
 	X3D .require   = require;
@@ -122,7 +124,9 @@
 
 		// Now assign real X3D.
 		X3D .noConfict = noConflict;
-		window .X3D    = X3D;
+
+		if (tempX3D === window .X3D)
+			window .X3D = X3D;
 
 		// Initialize all X3DCanvas tags.
 		X3D (); 
