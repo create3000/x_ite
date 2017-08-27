@@ -698,7 +698,6 @@
     <None Include="locale\gettext.js" />
     <None Include="standard\Networking\BinaryTransport.js" />
     <None Include="standard\Utility\DataStorage.js" />
-    <None Include="EmptyTextFile.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="excite\" />

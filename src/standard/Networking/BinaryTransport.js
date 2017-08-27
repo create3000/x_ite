@@ -70,7 +70,7 @@ define (function ()
 						// Apply custom fields if provided
 						if ( options.xhrFields )
 						{
-							for (i in options.xhrFields)
+							for (var i in options.xhrFields)
 								xhr [i] = options .xhrFields [i];
 						}
 

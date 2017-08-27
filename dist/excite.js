@@ -1,5 +1,3 @@
-/* Excite X3D v4.0.2-36 */
-
 (function () {
 
 	var exciteNoConfict = {
@@ -41176,7 +41174,7 @@ define ('standard/Networking/BinaryTransport',[],function ()
 						// Apply custom fields if provided
 						if ( options.xhrFields )
 						{
-							for (i in options.xhrFields)
+							for (var i in options.xhrFields)
 								xhr [i] = options .xhrFields [i];
 						}
 
