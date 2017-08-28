@@ -366,7 +366,7 @@ function ($,
 				throw new Error ("Unknown named or imported node '" + name + "'.");
 			}
 		},
-		setRootNodes: function () { },
+		setRootNodes: function (rootNode) { },
 		getRootNodes: function ()
 		{
 			return this .rootNodes_;

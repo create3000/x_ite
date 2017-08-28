@@ -58,6 +58,7 @@ define ([
 	"excite/Configuration/SupportedComponents",
 	"excite/Configuration/SupportedNodes",
 	"excite/Execution/Scene",
+	"excite/Execution/X3DScene",
 	"excite/InputOutput/FileLoader",
 	"excite/Parser/XMLParser",
 	"excite/Bits/X3DConstants",
@@ -73,6 +74,7 @@ function ($,
           SupportedComponents,
           SupportedNodes,
           Scene,
+          X3DScene,
           FileLoader,
           XMLParser,
           X3DConstants,
@@ -237,7 +239,21 @@ function ($,
 
 			// Replace world.
 
-			if (! scene)
+			if (scene instanceof Fields .MFNode)
+			{
+				// VRML version of replaceWorld has a MFNode value as argument.
+
+				var rootNodes = scene;
+
+				scene = this .createScene ();
+
+				for (var i = 0, length = rootNodes .length; i < length; ++ i)
+					scene .isLive () .addInterest (rootNodes [i] .getValue () .getExecutionContext () .isLive ());
+
+				scene .setRootNodes (rootNodes);
+			}
+
+			if (scene instanceof X3DScene)
 				scene = this .createScene ();
 			
 			// bindWorld
