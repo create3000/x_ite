@@ -571,6 +571,13 @@ X3D (function ()
 		{ name: 'Color Management', url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Texturing/ColorManagement.x3d" ] },
 	]; 
 
+	function loadURL ()
+	{
+		var Browser = X3D .getBrowser ("#browser");
+	
+		Browser .loadURL (new X3D .MFString ($(".location-entry") .val ()), new X3D .MFString ());
+	}
+
 	for (var i = 0, length = pages .length; i < length; ++ i)
 		pages [i] .mobile = true;
 
@@ -582,19 +589,13 @@ X3D (function ()
 	bookmarks .restore ("https://rawgit.com/create3000/Library/master/Tests/Components/Layout/info.x3d");
 
 	$(".version") .text (Browser .name + " V" + Browser .version);
+	$(".location-go") .click (loadURL);
 },
 function (error)
 {
 	console .error ("Please forgive me, your browser may not support all features required by Excite!");
 	console .error (error);
 });
-
-function loadURL ()
-{
-	var Browser = X3D .getBrowser ("#browser");
-
-	Browser .loadURL (new X3D .MFString ($(".location-entry") .val ()), new X3D .MFString ());
-}
 	</script>
 </head>
 <body>
@@ -618,7 +619,7 @@ function loadURL ()
 				</X3DCanvas>
 				<div class="location-bar">
 					<input class="location-entry" value="http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>
-					<button class="location-go" onclick="loadURL ()">Load URL</button>
+					<button class="location-go">Load URL</button>
 				</div>
 				<div class="links">
 					<a href="src/excite.html">src/excite.html</a><a href="http://rawgit.com/create3000/excite/master/excite.min.html">github</a>

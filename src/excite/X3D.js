@@ -145,6 +145,9 @@ function ($,
 	{
 		dom = $(dom);
 
+		if (dom .data ("browser"))
+			return;
+
 		var browser = new X3DBrowser (dom);
 
 		dom .data ("browser", browser);
