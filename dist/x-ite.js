@@ -1,8 +1,8 @@
-/* X-ITE v4.0.2-48 */
+/* X-ITE v4.0.2-49 */
 
 (function () {
 
-	var x-iteNoConfict = {
+	var xiteNoConfict = {
 		sprintf:  window .sprintf,
 		vsprintf: window .vsprintf,
 	};
@@ -111072,12 +111072,12 @@ function ($,
 define("x-ite", function(){});
 
 
-	for (var key in x-iteNoConfict)
+	for (var key in xiteNoConfict)
 	{
-		if (x-iteNoConfict [key] === undefined)
+		if (xiteNoConfict [key] === undefined)
 			delete window [key];
 		else
-			window [key] = x-iteNoConfict [key];
+			window [key] = xiteNoConfict [key];
 	}
 
 }());
