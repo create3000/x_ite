@@ -118,7 +118,7 @@ function ($,
 
 			this .getLoadSensor () .loadTime_ .addInterest ("realize", this);
 
-			this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
+			this .print ("Welcome to " + this .name + " Browser " + this .version + ":\n" +
 			                "        Current Graphics Renderer\n" +
 			                "                Name: " + this .getVendor () + " " + this .getWebGLVersion () + "\n" +
 			                "                Shading language: " + this .getShadingLanguageVersion () + "\n" +

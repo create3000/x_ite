@@ -15,6 +15,8 @@
     <None Include="logo\icon.svg" />
     <None Include="logo\logo.svg" />
     <None Include="meta.mdproj" />
+    <None Include="EmptyTextFile.txt" />
+    <None Include="web3d.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="logo\" />

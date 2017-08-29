@@ -1,7 +1,7 @@
 {
 	"name": "excite",
 	"version": "4.0.2",
-	"revision": "37",
+	"revision": "38",
 	"description": "Excite X3D Browser",
 	"main": "src/excite.js",
 	"repository": {
