@@ -66,9 +66,9 @@ if ($result == 0)
 	print JS "/* X_ITE v$VERSION-$REVISION */\n\n", $js;
 	close JS;
 
-	my $js = `cat dist/x_ite.min.js`;
+	my $js_min = `cat dist/x_ite.min.js`;
 	open JS, ">", "dist/x_ite.min.js";
-	print JS "/* X_ITE X3D v$VERSION-$REVISION\n * See LICENCES.txt for a detailed listing of used licences. */\n", $js;
+	print JS "/* X_ITE X3D v$VERSION-$REVISION\n * See LICENCES.txt for a detailed listing of used licences. */\n", $js_min;
 	close JS;
 
 	# GitHub
@@ -81,9 +81,9 @@ if ($result == 0)
 
 	my $ftp = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/x_ite";
 
-	system "mkdir", "-p", $ftp;
+	system "mkdir", "-p", "$ftp/$VERSION/dist/";
 	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$VERSION/dist/";
 
-	system "mkdir", "-p", $latest;
+	system "mkdir", "-p", "$ftp/latest/dist/";
 	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/latest/dist/";
 }
