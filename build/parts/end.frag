@@ -1,10 +1,10 @@
 
-	for (var key in exciteNoConfict)
+	for (var key in x-iteNoConfict)
 	{
-		if (exciteNoConfict [key] === undefined)
+		if (x-iteNoConfict [key] === undefined)
 			delete window [key];
 		else
-			window [key] = exciteNoConfict [key];
+			window [key] = x-iteNoConfict [key];
 	}
 
 }());

@@ -1,7 +1,7 @@
-/* Excite X3D v4.0.2-45 *//* Excite X3D v4.0.2-44 *//* Excite X3D v4.0.2-43 *//* Excite X3D v4.0.2-42 *//* Excite X3D v4.0.2-41 *//* Excite X3D v4.0.2-40 *//* Excite X3D v4.0.2-39 *//* Excite X3D v4.0.2-38 *//* Excite X3D v4.0.2-37 *//* Excite X3D v4.0.2-36 *//* Excite X3D v4.0.2-35 *//* Excite X3D v4.0.2-34 *//* Excite X3D v4.0.2-33 *//* Excite X3D v4.0.2-32 *//* Excite X3D v4.0.2-31 *//* Excite X3D v4.0.2-30 *//* Excite X3D v4.0.2-29 *//* Excite X3D v4.0.2-28 *//* Excite X3D v4.0.2-27 */
+/* X-ITE v4.0.2-46 *//* X-ITE v4.0.2-45 *//* X-ITE v4.0.2-44 *//* X-ITE v4.0.2-43 *//* X-ITE v4.0.2-42 *//* X-ITE v4.0.2-41 *//* X-ITE v4.0.2-40 *//* X-ITE v4.0.2-39 *//* X-ITE v4.0.2-38 *//* X-ITE v4.0.2-37 *//* X-ITE v4.0.2-36 *//* X-ITE v4.0.2-35 *//* X-ITE v4.0.2-34 *//* X-ITE v4.0.2-33 *//* X-ITE v4.0.2-32 *//* X-ITE v4.0.2-31 *//* X-ITE v4.0.2-30 *//* X-ITE v4.0.2-29 *//* X-ITE v4.0.2-28 *//* X-ITE v4.0.2-27 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
-X3DCanvas .excite-private-splash-screen {
+X3DCanvas .x-ite-private-splash-screen {
 	display: none;
 	z-index: -100;
 	position: absolute;
@@ -14,7 +14,7 @@ X3DCanvas .excite-private-splash-screen {
 	background: -webkit-radial-gradient(center, ellipse cover, rgb(130,130,130) 0%,rgb(65,65,65) 100%);
 	background: radial-gradient(ellipse at center, rgb(130,130,130) 0%,rgb(65,65,65) 100%);
 }
-X3DCanvas .excite-private-spinner {
+X3DCanvas .x-ite-private-spinner {
 	position: absolute;
 	top: calc(50% - 70px);
 	left: calc(50% - 64px);
@@ -27,7 +27,7 @@ X3DCanvas .excite-private-spinner {
 		-moz-border-radius: 50%;
 	perspective: 780px;
 }
-X3DCanvas .excite-private-spinner > * {
+X3DCanvas .x-ite-private-spinner > * {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -42,61 +42,61 @@ X3DCanvas .excite-private-spinner > * {
 		-webkit-border-radius: 50%;
 		-moz-border-radius: 50%;	
 }
-X3DCanvas .excite-private-spinner-one {
+X3DCanvas .x-ite-private-spinner-one {
 	left: 0%;
 	top: 0%;
-	animation: excite-private-spinner-rotate-one 1.15s linear infinite;
-		-o-animation: excite-private-spinner-rotate-one 1.15s linear infinite;
-		-ms-animation: excite-private-spinner-rotate-one 1.15s linear infinite;
-		-webkit-animation: excite-private-spinner-rotate-one 1.15s linear infinite;
-		-moz-animation: excite-private-spinner-rotate-one 1.15s linear infinite;
+	animation: x-ite-private-spinner-rotate-one 1.15s linear infinite;
+		-o-animation: x-ite-private-spinner-rotate-one 1.15s linear infinite;
+		-ms-animation: x-ite-private-spinner-rotate-one 1.15s linear infinite;
+		-webkit-animation: x-ite-private-spinner-rotate-one 1.15s linear infinite;
+		-moz-animation: x-ite-private-spinner-rotate-one 1.15s linear infinite;
 	border-bottom: 10px solid #ffe32d;
 }
-X3DCanvas .excite-private-spinner-two {
+X3DCanvas .x-ite-private-spinner-two {
 	right: 0%;
 	top: 0%;
-	animation: excite-private-spinner-rotate-two 1.15s linear infinite;
-		-o-animation: excite-private-spinner-rotate-two 1.15s linear infinite;
-		-ms-animation: excite-private-spinner-rotate-two 1.15s linear infinite;
-		-webkit-animation: excite-private-spinner-rotate-two 1.15s linear infinite;
-		-moz-animation: excite-private-spinner-rotate-two 1.15s linear infinite;
+	animation: x-ite-private-spinner-rotate-two 1.15s linear infinite;
+		-o-animation: x-ite-private-spinner-rotate-two 1.15s linear infinite;
+		-ms-animation: x-ite-private-spinner-rotate-two 1.15s linear infinite;
+		-webkit-animation: x-ite-private-spinner-rotate-two 1.15s linear infinite;
+		-moz-animation: x-ite-private-spinner-rotate-two 1.15s linear infinite;
 	border-right: 10px solid #ff9f2e;
 }
-X3DCanvas .excite-private-spinner-three {
+X3DCanvas .x-ite-private-spinner-three {
 	right: 0%;
 	bottom: 0%;
-	animation: excite-private-spinner-rotate-three 1.15s linear infinite;
-		-o-animation: excite-private-spinner-rotate-three 1.15s linear infinite;
-		-ms-animation: excite-private-spinner-rotate-three 1.15s linear infinite;
-		-webkit-animation: excite-private-spinner-rotate-three 1.15s linear infinite;
-		-moz-animation: excite-private-spinner-rotate-three 1.15s linear infinite;
+	animation: x-ite-private-spinner-rotate-three 1.15s linear infinite;
+		-o-animation: x-ite-private-spinner-rotate-three 1.15s linear infinite;
+		-ms-animation: x-ite-private-spinner-rotate-three 1.15s linear infinite;
+		-webkit-animation: x-ite-private-spinner-rotate-three 1.15s linear infinite;
+		-moz-animation: x-ite-private-spinner-rotate-three 1.15s linear infinite;
 	border-top: 10px solid #d71f1f;
 }
-X3DCanvas .excite-private-progress {
+X3DCanvas .x-ite-private-progress {
 	position: absolute;
 	top: calc(50% - 11pt);
 	left: calc(50% - 100px);
 	width: 200px;
 }
-X3DCanvas .excite-private-spinner-text {
+X3DCanvas .x-ite-private-spinner-text {
 	color: white;
 	font-size: 11pt;
 	text-align: center;
 	text-shadow: 1px 1px 0px black;
 	font-family: PT Sans, sans-serif;
 }
-X3DCanvas .excite-private-progressbar {
+X3DCanvas .x-ite-private-progressbar {
 	margin: 8px;
 	border-left:  2px solid rgba(255, 255, 255, 0.5);
 	border-right: 2px solid rgba(255, 255, 255, 0.5);
 	padding: 0 2px;
 }
-X3DCanvas .excite-private-progressbar div {
+X3DCanvas .x-ite-private-progressbar div {
 	width: 0%;
 	height: 6px;
 	background: rgba(255, 255, 255, 0.5);
 }
-@keyframes excite-private-spinner-rotate-one {
+@keyframes x-ite-private-spinner-rotate-one {
 	0% {
 		transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -104,7 +104,7 @@ X3DCanvas .excite-private-progressbar div {
 		transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
 	}
 }
-@-o-keyframes excite-private-spinner-rotate-one {
+@-o-keyframes x-ite-private-spinner-rotate-one {
 	0% {
 		-o-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -112,7 +112,7 @@ X3DCanvas .excite-private-progressbar div {
 		-o-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
 	}
 }
-@-ms-keyframes excite-private-spinner-rotate-one {
+@-ms-keyframes x-ite-private-spinner-rotate-one {
 	0% {
 		-ms-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -120,7 +120,7 @@ X3DCanvas .excite-private-progressbar div {
 		-ms-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
 	}
 }
-@-webkit-keyframes excite-private-spinner-rotate-one {
+@-webkit-keyframes x-ite-private-spinner-rotate-one {
 	0% {
 		-webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -128,7 +128,7 @@ X3DCanvas .excite-private-progressbar div {
 		-webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
 	}
 }
-@-moz-keyframes excite-private-spinner-rotate-one {
+@-moz-keyframes x-ite-private-spinner-rotate-one {
 	0% {
 		-moz-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
 	}
@@ -136,7 +136,7 @@ X3DCanvas .excite-private-progressbar div {
 		-moz-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
 	}
 }
-@keyframes excite-private-spinner-rotate-two {
+@keyframes x-ite-private-spinner-rotate-two {
 	0% {
 		transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -144,7 +144,7 @@ X3DCanvas .excite-private-progressbar div {
 		transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
 	}
 }
-@-o-keyframes excite-private-spinner-rotate-two {
+@-o-keyframes x-ite-private-spinner-rotate-two {
 	0% {
 		-o-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -152,7 +152,7 @@ X3DCanvas .excite-private-progressbar div {
 		-o-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
 	}
 }
-@-ms-keyframes excite-private-spinner-rotate-two {
+@-ms-keyframes x-ite-private-spinner-rotate-two {
 	0% {
 		-ms-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -160,7 +160,7 @@ X3DCanvas .excite-private-progressbar div {
 		-ms-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
 	}
 }
-@-webkit-keyframes excite-private-spinner-rotate-two {
+@-webkit-keyframes x-ite-private-spinner-rotate-two {
 	0% {
 		-webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -168,7 +168,7 @@ X3DCanvas .excite-private-progressbar div {
 		-webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
 	}
 }
-@-moz-keyframes excite-private-spinner-rotate-two {
+@-moz-keyframes x-ite-private-spinner-rotate-two {
 	0% {
 		-moz-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
 	}
@@ -176,7 +176,7 @@ X3DCanvas .excite-private-progressbar div {
 		-moz-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
 	}
 }
-@keyframes excite-private-spinner-rotate-three {
+@keyframes x-ite-private-spinner-rotate-three {
 	0% {
 		transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -184,7 +184,7 @@ X3DCanvas .excite-private-progressbar div {
 		transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
 	}
 }
-@-o-keyframes excite-private-spinner-rotate-three {
+@-o-keyframes x-ite-private-spinner-rotate-three {
 	0% {
 		-o-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -192,7 +192,7 @@ X3DCanvas .excite-private-progressbar div {
 		-o-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
 	}
 }
-@-ms-keyframes excite-private-spinner-rotate-three {
+@-ms-keyframes x-ite-private-spinner-rotate-three {
 	0% {
 		-ms-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -200,7 +200,7 @@ X3DCanvas .excite-private-progressbar div {
 		-ms-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
 	}
 }
-@-webkit-keyframes excite-private-spinner-rotate-three {
+@-webkit-keyframes x-ite-private-spinner-rotate-three {
 	0% {
 		-webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -208,7 +208,7 @@ X3DCanvas .excite-private-progressbar div {
 		-webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
 	}
 }
-@-moz-keyframes excite-private-spinner-rotate-three {
+@-moz-keyframes x-ite-private-spinner-rotate-three {
 	0% {
 		-moz-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
 	}
@@ -226,18 +226,18 @@ X3DCanvas {
 	width: 300px;
 	height: 150px;
 }
-X3DCanvas.excite-private-fullscreen {
+X3DCanvas.x-ite-private-fullscreen {
 	width: 100% !important;
 	height: 100% !important;
 }
-X3DCanvas > *:not(.excite-private-fallback) {
+X3DCanvas > *:not(.x-ite-private-fallback) {
 	display: none;
 }
-.excite-private-console {
+.x-ite-private-console {
 	font-family: monospace;
 	white-space: pre;
 }
-X3DCanvas .excite-private-browser {
+X3DCanvas .x-ite-private-browser {
 	z-index: 0;
 	display: block;
 	position: absolute;
@@ -249,7 +249,7 @@ X3DCanvas .excite-private-browser {
 	padding: 0px;
 	border: 0px;
 }
-X3DCanvas .excite-private-surface {
+X3DCanvas .x-ite-private-surface {
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
@@ -265,7 +265,7 @@ X3DCanvas canvas {
 	width: 100%;
 	height: 100%;
 }
-X3DCanvas .excite-private-notification {
+X3DCanvas .x-ite-private-notification {
 	display: none;
 	padding: 2px 5px 5px 5px;
 	position: absolute;
@@ -285,11 +285,11 @@ X3DCanvas .excite-private-notification {
 	white-space: pre;
 	pointer-events: none;
 }
-X3DCanvas .excite-private-notification span {
+X3DCanvas .x-ite-private-notification span {
 	padding: 0px 24px 0px 20px;
 	background: url(images/icon.bw.png) no-repeat 0px center;
 }
-X3DCanvas .excite-private-browser-timings {
+X3DCanvas .x-ite-private-browser-timings {
 	display: none;
 	position: absolute;
 	bottom: -4px;
@@ -310,13 +310,13 @@ X3DCanvas .excite-private-browser-timings {
 	white-space: pre;
 	pointer-events: none;
 }
-X3DCanvas .excite-private-browser-timings table,
-X3DCanvas .excite-private-browser-timings thead,
-X3DCanvas .excite-private-browser-timings tbody,
-X3DCanvas .excite-private-browser-timings tfoot,
-X3DCanvas .excite-private-browser-timings tr,
-X3DCanvas .excite-private-browser-timings th,
-X3DCanvas .excite-private-browser-timings td {
+X3DCanvas .x-ite-private-browser-timings table,
+X3DCanvas .x-ite-private-browser-timings thead,
+X3DCanvas .x-ite-private-browser-timings tbody,
+X3DCanvas .x-ite-private-browser-timings tfoot,
+X3DCanvas .x-ite-private-browser-timings tr,
+X3DCanvas .x-ite-private-browser-timings th,
+X3DCanvas .x-ite-private-browser-timings td {
 	outline: 0;
 	margin: 0;
 	border: 0;
@@ -328,34 +328,34 @@ X3DCanvas .excite-private-browser-timings td {
 	line-height: 1;
 	text-align: left;
 }
-X3DCanvas .excite-private-browser-timings table {
+X3DCanvas .x-ite-private-browser-timings table {
 	background: url(images/Time.png) no-repeat;
 }
-X3DCanvas .excite-private-browser-timings tr,
-X3DCanvas .excite-private-browser-timings th,
-X3DCanvas .excite-private-browser-timings td {
+X3DCanvas .x-ite-private-browser-timings tr,
+X3DCanvas .x-ite-private-browser-timings th,
+X3DCanvas .x-ite-private-browser-timings td {
 	border-collapse: separate;
 }
-X3DCanvas .excite-private-browser-timings thead th {
+X3DCanvas .x-ite-private-browser-timings thead th {
 	padding-left: 20px;
 	padding-bottom: 5px;
 }
-X3DCanvas .excite-private-browser-timings thead th {
+X3DCanvas .x-ite-private-browser-timings thead th {
 	font-weight: bold;
 }
-X3DCanvas .excite-private-browser-timings td:first-child {
+X3DCanvas .x-ite-private-browser-timings td:first-child {
 	padding-right: 10px;
 }
-X3DCanvas .excite-private-browser-timings tr.excite-private-more td {
+X3DCanvas .x-ite-private-browser-timings tr.x-ite-private-more td {
 	padding-bottom: 5px;
 }
-X3DCanvas .excite-private-browser-timings td {
+X3DCanvas .x-ite-private-browser-timings td {
 	padding-bottom: 2px;
 }
-X3DCanvas .excite-private-browser-timings tfoot td {
+X3DCanvas .x-ite-private-browser-timings tfoot td {
 	padding-top: 4px;
 }
-X3DCanvas .excite-private-browser-timings button {
+X3DCanvas .x-ite-private-browser-timings button {
 	border: 0;
 	padding: 2px;
 	background: rgba(0,0,0,0.38196601);
@@ -367,7 +367,7 @@ X3DCanvas .excite-private-browser-timings button {
 	pointer-events: all;
 	cursor: default;
 }
-X3DCanvas .excite-private-browser-timings button:hover {
+X3DCanvas .x-ite-private-browser-timings button:hover {
 	cursor: pointer;
 }
 /*!
@@ -384,18 +384,18 @@ X3DCanvas .excite-private-browser-timings button:hover {
  *   MIT License http://www.opensource.org/licenses/mit-license
  * Date: 2015-09-20T18:47:54.927Z
  */
-.excite-private-menu.excite-private-menu-title:before {
-    content: "Excite X3D Browser";
+.x-ite-private-menu.x-ite-private-menu-title:before {
+    content: "X-ITE Browser";
     display: block;
     padding: 4px 32px 4px 8px;
     font-weight: bold;
 }
-.excite-private-menu .context-menu-selected {
+.x-ite-private-menu .context-menu-selected {
 	font-weight: bold;
 	font-style: italic;
 }
-.excite-private-menu.context-menu-list,
-.excite-private-menu .context-menu-list {
+.x-ite-private-menu.context-menu-list,
+.x-ite-private-menu .context-menu-list {
 	position: absolute;
 	display: inline-block;
 	min-width: 120px;
@@ -412,7 +412,7 @@ X3DCanvas .excite-private-browser-timings button:hover {
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 	        box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 }
-.excite-private-menu .context-menu-item {
+.x-ite-private-menu .context-menu-item {
 	position: relative;
 	background-color: #222;
 	border-top: 1px solid #222;
@@ -423,31 +423,31 @@ X3DCanvas .excite-private-browser-timings button:hover {
 	    -ms-user-select: none;
 	        user-select: none;
 }
-.excite-private-menu .context-menu-separator {
+.x-ite-private-menu .context-menu-separator {
 	padding-bottom: 0;
 	border-bottom: 1px solid #111;
 }
-.excite-private-menu .context-menu-item > label > input,
-.excite-private-menu .context-menu-item > label > textarea {
+.x-ite-private-menu .context-menu-item > label > input,
+.x-ite-private-menu .context-menu-item > label > textarea {
 	-webkit-user-select: text;
 	   -moz-user-select: text;
 	    -ms-user-select: text;
  	       user-select: text;
 }
-.excite-private-menu .context-menu-item.hover {
+.x-ite-private-menu .context-menu-item.hover {
 	cursor: pointer;
 	background-color: #444;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 }
-.excite-private-menu .context-menu-item.disabled {
+.x-ite-private-menu .context-menu-item.disabled {
 	color: #666;
 }
-.excite-private-menu .context-menu-input.hover,
-.excite-private-menu .context-menu-item.disabled.hover {
+.x-ite-private-menu .context-menu-input.hover,
+.x-ite-private-menu .context-menu-item.disabled.hover {
 	cursor: default;
 }
-.excite-private-menu .context-menu-submenu:after {
+.x-ite-private-menu .context-menu-submenu:after {
 	content: "";
 	position: absolute;
 	display: block;
@@ -461,88 +461,88 @@ X3DCanvas .excite-private-browser-timings button:hover {
 	border-width: 4px 0 4px 5px;
 	border-color: transparent transparent transparent #eee;
 }
-.excite-private-menu .context-menu-item.context-menu-icon {
+.x-ite-private-menu .context-menu-item.context-menu-icon {
 	background-repeat: no-repeat;
 	background-position: 3px 2px;
 }
-.excite-private-menu .context-menu-input > label > * {
+.x-ite-private-menu .context-menu-input > label > * {
 	vertical-align: top;
 }
-.excite-private-menu .context-menu-input > label > input[type="checkbox"],
-.excite-private-menu .context-menu-input > label > input[type="radio"] {
+.x-ite-private-menu .context-menu-input > label > input[type="checkbox"],
+.x-ite-private-menu .context-menu-input > label > input[type="radio"] {
 	display: inline;
 	margin: 0;
 	margin-left: -20px;
 	margin-right: 3px;
 	padding: 0;
 }
-.excite-private-menu .context-menu-input > label > span {
+.x-ite-private-menu .context-menu-input > label > span {
 	margin-left: 4px;
 }
-.excite-private-menu .context-menu-input > label,
-.excite-private-menu .context-menu-input > label > input[type="text"],
-.excite-private-menu .context-menu-input > label > textarea,
-.excite-private-menu .context-menu-input > label > select {
+.x-ite-private-menu .context-menu-input > label,
+.x-ite-private-menu .context-menu-input > label > input[type="text"],
+.x-ite-private-menu .context-menu-input > label > textarea,
+.x-ite-private-menu .context-menu-input > label > select {
 	display: block;
 	width: 100%;
 	-webkit-box-sizing: border-box;
 	   -moz-box-sizing: border-box;
 	        box-sizing: border-box;
 }
-.excite-private-menu .context-menu-input > label > textarea {
+.x-ite-private-menu .context-menu-input > label > textarea {
 	height: 100px;
 }
-.excite-private-menu .context-menu-item > .context-menu-list {
+.x-ite-private-menu .context-menu-item > .context-menu-list {
 	top: 5px;
 	
 	right: -5px;
 	display: none;
 }
-.excite-private-menu .context-menu-item.visible > .context-menu-list {
+.x-ite-private-menu .context-menu-item.visible > .context-menu-list {
 	display: block;
 }
-.excite-private-menu .context-menu-accesskey {
+.x-ite-private-menu .context-menu-accesskey {
 	text-decoration: underline;
 }
-.excite-private-icon-viewpoint {
+.x-ite-private-icon-viewpoint {
 	background: url("images/Viewpoint.png");
 }
-.excite-private-icon-examine-viewer {
+.x-ite-private-icon-examine-viewer {
 	background: url("images/ExamineViewer.png");
 }
-.excite-private-icon-walk-viewer {
+.x-ite-private-icon-walk-viewer {
 	background: url("images/WalkViewer.png");
 }
-.excite-private-icon-fly-viewer {
+.x-ite-private-icon-fly-viewer {
 	background: url("images/FlyViewer.png");
 }
-.excite-private-icon-lookat-viewer {
+.x-ite-private-icon-lookat-viewer {
 	background: url("images/gtk-zoom-in.png");
 }
-.excite-private-icon-plane-viewer {
+.x-ite-private-icon-plane-viewer {
 	background: url("images/PlaneViewer.png");
 }
-.excite-private-icon-none-viewer {
+.x-ite-private-icon-none-viewer {
 	background: url("images/NoneViewer.png");
 }
-.excite-private-icon-zoom-fit {
+.x-ite-private-icon-zoom-fit {
 	background: url("images/gtk-zoom-fit.png");
 }
-.excite-private-icon-zoom-in {
+.x-ite-private-icon-zoom-in {
 	background: url("images/gtk-zoom-in.png");
 }
-.excite-private-icon-primitive-quality {
+.x-ite-private-icon-primitive-quality {
 	background: url("images/PrimitiveQuality.png");
 }
-.excite-private-icon-texture-quality {
+.x-ite-private-icon-texture-quality {
 	background: url("images/TextureQuality.png");
 }
-.excite-private-icon-fullscreen {
+.x-ite-private-icon-fullscreen {
 	background: url("images/gtk-fullscreen.png");
 }
-.excite-private-icon-leave-fullscreen {
+.x-ite-private-icon-leave-fullscreen {
 	background: url("images/gtk-leave-fullscreen.png");
 }
-.excite-private-icon-help-about {
+.x-ite-private-icon-help-about {
 	background: url("images/help-about.png");
 }

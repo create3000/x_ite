@@ -1,8 +1,8 @@
-/* Excite X3D v4.0.2-45 */
+/* X-ITE v4.0.2-46 */
 
 (function () {
 
-	var exciteNoConfict = {
+	var x-iteNoConfict = {
 		sprintf:  window .sprintf,
 		vsprintf: window .vsprintf,
 	};
@@ -12440,19 +12440,19 @@ define("jquery/dist/jquery", function(){});
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -12460,7 +12460,7 @@ define("jquery/dist/jquery", function(){});
  ******************************************************************************/
 
 
-define ('excite/Error',[
+define ('x-ite/Error',[
 	"jquery",
 ],
 function ($)
@@ -12494,7 +12494,7 @@ function ($)
 
 	function fallback (elements)
 	{
-		elements .children () .addClass ("excite-private-fallback");
+		elements .children () .addClass ("x-ite-private-fallback");
 	}
 
 	Error .fallback = fallback;
@@ -12531,19 +12531,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -12551,7 +12551,7 @@ function ($)
  ******************************************************************************/
 
 
-define ('excite/Basic/X3DFieldDefinition',[],function ()
+define ('x-ite/Basic/X3DFieldDefinition',[],function ()
 {
 "use strict";
 
@@ -12601,19 +12601,19 @@ define ('excite/Basic/X3DFieldDefinition',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -12621,7 +12621,7 @@ define ('excite/Basic/X3DFieldDefinition',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Basic/FieldDefinitionArray',[
+define ('x-ite/Basic/FieldDefinitionArray',[
 	"jquery",
 ],
 function ($)
@@ -12711,19 +12711,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -12731,7 +12731,7 @@ function ($)
  ******************************************************************************/
 
 
-define ('excite/Base/X3DObject',[
+define ('x-ite/Base/X3DObject',[
 ],
 function ()
 {
@@ -12856,19 +12856,19 @@ function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -12876,9 +12876,9 @@ function ()
  ******************************************************************************/
 
 
-define ('excite/Base/X3DChildObject',[
+define ('x-ite/Base/X3DChildObject',[
 	"jquery",
-	"excite/Base/X3DObject",
+	"x-ite/Base/X3DObject",
 ],
 function ($, X3DObject)
 {
@@ -12965,19 +12965,19 @@ function ($, X3DObject)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -12985,7 +12985,7 @@ function ($, X3DObject)
  ******************************************************************************/
 
 
-define ('excite/Bits/X3DConstants',[],function ()
+define ('x-ite/Bits/X3DConstants',[],function ()
 {
 "use strict";
 
@@ -13398,19 +13398,19 @@ define ('excite/Bits/X3DConstants',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -13418,7 +13418,7 @@ define ('excite/Bits/X3DConstants',[],function ()
  ******************************************************************************/
 
 ﻿
-define ('excite/Base/Events',[
+define ('x-ite/Base/Events',[
 	"jquery",
 ],
 function ($)
@@ -13516,19 +13516,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -13536,11 +13536,11 @@ function ($)
  ******************************************************************************/
 
 
-define ('excite/Basic/X3DField',[
+define ('x-ite/Basic/X3DField',[
 	"jquery",
-	"excite/Base/X3DChildObject",
-	"excite/Bits/X3DConstants",
-	"excite/Base/Events",
+	"x-ite/Base/X3DChildObject",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Base/Events",
 ],
 function ($,
 	       X3DChildObject,
@@ -13837,19 +13837,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -13858,9 +13858,9 @@ function ($,
 
 
 
-define ('excite/InputOutput/Generator',[
+define ('x-ite/InputOutput/Generator',[
 	"jquery",
-	"excite/Bits/X3DConstants",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DConstants)
@@ -14175,19 +14175,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -14195,11 +14195,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Basic/X3DArrayField',[
+define ('x-ite/Basic/X3DArrayField',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/Generator",
+	"x-ite/Basic/X3DField",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           X3DField,
@@ -14646,19 +14646,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -14666,10 +14666,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Fields/SFBool',[
+define ('x-ite/Fields/SFBool',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($, X3DField, X3DConstants)
 {
@@ -14752,19 +14752,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15010,19 +15010,19 @@ define ('standard/Math/Algorithm',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15265,19 +15265,19 @@ function ($, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15285,11 +15285,11 @@ function ($, Algorithm)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFColor',[
+define ('x-ite/Fields/SFColor',[
 	"jquery",
 	"standard/Math/Numbers/Color3",
-	"excite/Basic/X3DField",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($, Color3, X3DField, X3DConstants)
 {
@@ -15448,19 +15448,19 @@ function ($, Color3, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15636,19 +15636,19 @@ function ($, Color3, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15656,11 +15656,11 @@ function ($, Color3, Algorithm)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFColorRGBA',[
+define ('x-ite/Fields/SFColorRGBA',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Fields/SFColor",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Fields/SFColor",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Color4",
 ],
 function ($, X3DField, SFColor, X3DConstants, Color4)
@@ -15826,19 +15826,19 @@ function ($, X3DField, SFColor, X3DConstants, Color4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15846,10 +15846,10 @@ function ($, X3DField, SFColor, X3DConstants, Color4)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFDouble',[
+define ('x-ite/Fields/SFDouble',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($, X3DField, X3DConstants)
 {
@@ -15929,19 +15929,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -15949,10 +15949,10 @@ function ($, X3DField, X3DConstants)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFFloat',[
+define ('x-ite/Fields/SFFloat',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($, X3DField, X3DConstants)
 {
@@ -16032,19 +16032,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -16052,10 +16052,10 @@ function ($, X3DField, X3DConstants)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFInt32',[
+define ('x-ite/Fields/SFInt32',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($, X3DField, X3DConstants)
 {
@@ -16135,19 +16135,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -16155,9 +16155,9 @@ function ($, X3DField, X3DConstants)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFMatrixPrototypeTemplate',[
+define ('x-ite/Fields/SFMatrixPrototypeTemplate',[
 	"jquery",
-	"excite/Basic/X3DField",
+	"x-ite/Basic/X3DField",
 ],
 function ($, X3DField)
 {
@@ -16276,19 +16276,19 @@ function ($, X3DField)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -16296,9 +16296,9 @@ function ($, X3DField)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFVecPrototypeTemplate',[
+define ('x-ite/Fields/SFVecPrototypeTemplate',[
 	"jquery",
-	"excite/Basic/X3DField",
+	"x-ite/Basic/X3DField",
 ],
 function ($, X3DField)
 {
@@ -16397,19 +16397,19 @@ function ($, X3DField)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -16744,19 +16744,19 @@ function ($, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -16764,11 +16764,11 @@ function ($, Algorithm)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFVec2',[
+define ('x-ite/Fields/SFVec2',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Fields/SFVecPrototypeTemplate",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Fields/SFVecPrototypeTemplate",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
 function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
@@ -16879,19 +16879,19 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -17303,19 +17303,19 @@ function ($, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -17534,19 +17534,19 @@ function ($, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -17726,19 +17726,19 @@ define ('standard/Math/Algorithms/eigendecomposition',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -18496,19 +18496,19 @@ function ($, Vector2, Vector3, Matrix2, eigendecomposition)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -18517,12 +18517,12 @@ function ($, Vector2, Vector3, Matrix2, eigendecomposition)
 
 
 
-define ('excite/Fields/SFMatrix3',[
+define ('x-ite/Fields/SFMatrix3',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Fields/SFMatrixPrototypeTemplate",
-	"excite/Fields/SFVec2",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Fields/SFMatrixPrototypeTemplate",
+	"x-ite/Fields/SFVec2",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix3",
 ],
 function ($, X3DField, SFMatrixPrototypeTemplate, SFVec2, X3DConstants, Matrix3)
@@ -18631,19 +18631,19 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec2, X3DConstants, Matrix3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -18651,11 +18651,11 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec2, X3DConstants, Matrix3)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFVec3',[
+define ('x-ite/Fields/SFVec3',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Fields/SFVecPrototypeTemplate",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Fields/SFVecPrototypeTemplate",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector3)
@@ -18787,19 +18787,19 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -19226,19 +19226,19 @@ function ($, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -19868,19 +19868,19 @@ function ($, Vector3, Algorithm)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -20275,19 +20275,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -21277,19 +21277,19 @@ function ($, Vector3, Vector4, Rotation4, Matrix3, eigendecomposition)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -21297,12 +21297,12 @@ function ($, Vector3, Vector4, Rotation4, Matrix3, eigendecomposition)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFMatrix4',[
+define ('x-ite/Fields/SFMatrix4',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Fields/SFMatrixPrototypeTemplate",
-	"excite/Fields/SFVec3",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Fields/SFMatrixPrototypeTemplate",
+	"x-ite/Fields/SFVec3",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
 function ($, X3DField, SFMatrixPrototypeTemplate, SFVec3, X3DConstants, Matrix4)
@@ -21404,19 +21404,19 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec3, X3DConstants, Matrix4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -21424,10 +21424,10 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec3, X3DConstants, Matrix4)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFNode',[
+define ('x-ite/Fields/SFNode',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($, X3DField, X3DConstants)
 {
@@ -21679,19 +21679,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -21699,11 +21699,11 @@ function ($, X3DField, X3DConstants)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFRotation',[
+define ('x-ite/Fields/SFRotation',[
 	"jquery",
-	"excite/Fields/SFVec3",
-	"excite/Basic/X3DField",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields/SFVec3",
+	"x-ite/Basic/X3DField",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Rotation4",
 ],
 function ($, SFVec3, X3DField, X3DConstants, Rotation4)
@@ -21900,19 +21900,19 @@ function ($, SFVec3, X3DField, X3DConstants, Rotation4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -21920,11 +21920,11 @@ function ($, SFVec3, X3DField, X3DConstants, Rotation4)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFString',[
+define ('x-ite/Fields/SFString',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/Generator",
+	"x-ite/Basic/X3DField",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           X3DField,
@@ -22033,19 +22033,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -22053,10 +22053,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Fields/SFTime',[
+define ('x-ite/Fields/SFTime',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($, X3DField, X3DConstants)
 {
@@ -22136,19 +22136,19 @@ function ($, X3DField, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -22156,11 +22156,11 @@ function ($, X3DField, X3DConstants)
  ******************************************************************************/
 
 
-define ('excite/Fields/SFVec4',[
+define ('x-ite/Fields/SFVec4',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Fields/SFVecPrototypeTemplate",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Fields/SFVecPrototypeTemplate",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector4",
 ],
 function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector4)
@@ -22305,19 +22305,19 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -22325,27 +22325,27 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector4)
  ******************************************************************************/
 
 
-define ('excite/Fields/ArrayFields',[
+define ('x-ite/Fields/ArrayFields',[
 	"jquery",
-	"excite/Fields/SFBool",
-	"excite/Fields/SFColor",
-	"excite/Fields/SFColorRGBA",
-	"excite/Fields/SFDouble",
-	"excite/Fields/SFFloat",
-	"excite/Fields/SFImage",
-	"excite/Fields/SFInt32",
-	"excite/Fields/SFMatrix3",
-	"excite/Fields/SFMatrix4",
-	"excite/Fields/SFNode",
-	"excite/Fields/SFRotation",
-	"excite/Fields/SFString",
-	"excite/Fields/SFTime",
-	"excite/Fields/SFVec2",
-	"excite/Fields/SFVec3",
-	"excite/Fields/SFVec4",
-	"excite/Basic/X3DArrayField",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/Generator",
+	"x-ite/Fields/SFBool",
+	"x-ite/Fields/SFColor",
+	"x-ite/Fields/SFColorRGBA",
+	"x-ite/Fields/SFDouble",
+	"x-ite/Fields/SFFloat",
+	"x-ite/Fields/SFImage",
+	"x-ite/Fields/SFInt32",
+	"x-ite/Fields/SFMatrix3",
+	"x-ite/Fields/SFMatrix4",
+	"x-ite/Fields/SFNode",
+	"x-ite/Fields/SFRotation",
+	"x-ite/Fields/SFString",
+	"x-ite/Fields/SFTime",
+	"x-ite/Fields/SFVec2",
+	"x-ite/Fields/SFVec3",
+	"x-ite/Fields/SFVec4",
+	"x-ite/Basic/X3DArrayField",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           SFBool,
@@ -22632,19 +22632,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -22652,11 +22652,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Fields/SFImage',[
+define ('x-ite/Fields/SFImage',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Fields/ArrayFields",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Fields/ArrayFields",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($, X3DField, ArrayFields, X3DConstants)
 {
@@ -22914,19 +22914,19 @@ function ($, X3DField, ArrayFields, X3DConstants)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -22934,25 +22934,25 @@ function ($, X3DField, ArrayFields, X3DConstants)
  ******************************************************************************/
 
 
-define ('excite/Fields',[
+define ('x-ite/Fields',[
 	"jquery",
-	"excite/Fields/SFBool",
-	"excite/Fields/SFColor",
-	"excite/Fields/SFColorRGBA",
-	"excite/Fields/SFDouble",
-	"excite/Fields/SFFloat",
-	"excite/Fields/SFImage",
-	"excite/Fields/SFInt32",
-	"excite/Fields/SFMatrix3",
-	"excite/Fields/SFMatrix4",
-	"excite/Fields/SFNode",
-	"excite/Fields/SFRotation",
-	"excite/Fields/SFString",
-	"excite/Fields/SFTime",
-	"excite/Fields/SFVec2",
-	"excite/Fields/SFVec3",
-	"excite/Fields/SFVec4",
-	"excite/Fields/ArrayFields",
+	"x-ite/Fields/SFBool",
+	"x-ite/Fields/SFColor",
+	"x-ite/Fields/SFColorRGBA",
+	"x-ite/Fields/SFDouble",
+	"x-ite/Fields/SFFloat",
+	"x-ite/Fields/SFImage",
+	"x-ite/Fields/SFInt32",
+	"x-ite/Fields/SFMatrix3",
+	"x-ite/Fields/SFMatrix4",
+	"x-ite/Fields/SFNode",
+	"x-ite/Fields/SFRotation",
+	"x-ite/Fields/SFString",
+	"x-ite/Fields/SFTime",
+	"x-ite/Fields/SFVec2",
+	"x-ite/Fields/SFVec3",
+	"x-ite/Fields/SFVec4",
+	"x-ite/Fields/ArrayFields",
 ],
 function ($,
           SFBool,
@@ -23037,19 +23037,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -23057,7 +23057,7 @@ function ($,
  ******************************************************************************/
 
 ﻿
-define ('excite/Browser/VERSION',[],function ()
+define ('x-ite/Browser/VERSION',[],function ()
 {
 	return "4.0.2";
 });
@@ -23091,19 +23091,19 @@ define ('excite/Browser/VERSION',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -23111,10 +23111,10 @@ define ('excite/Browser/VERSION',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Base/X3DEventObject',[
+define ('x-ite/Base/X3DEventObject',[
 	"jquery",
-	"excite/Base/X3DChildObject",
-	"excite/Base/Events",
+	"x-ite/Base/X3DChildObject",
+	"x-ite/Base/Events",
 ],
 function ($,
 	       X3DChildObject,
@@ -23218,19 +23218,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -23238,15 +23238,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Basic/X3DBaseNode',[
+define ('x-ite/Basic/X3DBaseNode',[
 	"jquery",
-	"excite/Base/X3DEventObject",
-	"excite/Base/Events",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Fields",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/Generator",
+	"x-ite/Base/X3DEventObject",
+	"x-ite/Base/Events",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Fields",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           X3DEventObject,
@@ -24209,19 +24209,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24229,7 +24229,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Core/PrimitiveQuality',[],function ()
+define ('x-ite/Browser/Core/PrimitiveQuality',[],function ()
 {
 "use strict";
 	
@@ -24278,19 +24278,19 @@ define ('excite/Browser/Core/PrimitiveQuality',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24298,7 +24298,7 @@ define ('excite/Browser/Core/PrimitiveQuality',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Browser/Core/TextureQuality',[],function ()
+define ('x-ite/Browser/Core/TextureQuality',[],function ()
 {
 "use strict";
 	
@@ -24347,19 +24347,19 @@ define ('excite/Browser/Core/TextureQuality',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24367,15 +24367,15 @@ define ('excite/Browser/Core/TextureQuality',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Browser/Core/BrowserOptions',[
+define ('x-ite/Browser/Core/BrowserOptions',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Basic/X3DBaseNode",
-	"excite/Bits/X3DConstants",
-	"excite/Browser/Core/PrimitiveQuality",
-	"excite/Browser/Core/TextureQuality",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Browser/Core/PrimitiveQuality",
+	"x-ite/Browser/Core/TextureQuality",
 ],
 function ($,
           Fields,
@@ -24422,7 +24422,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -24665,19 +24665,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24685,13 +24685,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Core/BrowserProperties',[
+define ('x-ite/Browser/Core/BrowserProperties',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Basic/X3DBaseNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -24726,7 +24726,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -24766,19 +24766,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24786,13 +24786,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Core/RenderingProperties',[
+define ('x-ite/Browser/Core/RenderingProperties',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Basic/X3DBaseNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -24828,7 +24828,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -24888,19 +24888,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -24908,10 +24908,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Core/Notification',[
+define ('x-ite/Browser/Core/Notification',[
 	"jquery",
-	"excite/Fields/SFString",
-	"excite/Basic/X3DBaseNode",
+	"x-ite/Fields/SFString",
+	"x-ite/Basic/X3DBaseNode",
 ],
 function ($,
           SFString,
@@ -24946,8 +24946,8 @@ function ($,
 			this .addChildObjects ("string", new SFString ());
 
 			this .element = $("<div></div>")
-				.addClass ("excite-private-notification")
-				.appendTo (this .getBrowser () .getElement () .find (".excite-private-surface"))
+				.addClass ("x-ite-private-notification")
+				.appendTo (this .getBrowser () .getElement () .find (".x-ite-private-surface"))
 				.animate ({ width: 0 });
 
 			$("<span></span>") .appendTo (this .element);
@@ -25389,10 +25389,10 @@ define('text/text',['module'], function (module) {
 define('text', ['text/text'], function (main) { return main; });
 
 
-define('text!locale/de.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: Excite\\n"\n"POT-Creation-Date: 2015-12-23 04:56+0100\\n"\n"PO-Revision-Date: 2015-12-23 04:57+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: de\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../excite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\n#: Browser/Core/BrowserTimings.js:96\nmsgid "Less Properties"\nmsgstr "Weniger Eigenschaften"\n\n#: Browser/Core/BrowserTimings.js:98\nmsgid "More Properties"\nmsgstr "Mehr Eigenschaften"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "Frame rate"\nmsgstr "Bildrate"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "fps"\nmsgstr "BpS"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "Speed"\nmsgstr "Geschwindigkeit"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "m/s"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "km/h"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150\nmsgid "Browser"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151\n#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153\n#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155\n#: Browser/Core/BrowserTimings.js:156\nmsgid "ms"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:151\nmsgid "X3D"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:152\nmsgid "Routing"\nmsgstr "Routen"\n\n#: Browser/Core/BrowserTimings.js:153\nmsgid "Picking"\nmsgstr "Zeigegerät"\n\n#: Browser/Core/BrowserTimings.js:154\nmsgid "Camera"\nmsgstr "Kamera"\n\n#: Browser/Core/BrowserTimings.js:155\nmsgid "Collision"\nmsgstr "Kollision"\n\n#: Browser/Core/BrowserTimings.js:156\nmsgid "Display"\nmsgstr "Anzeige"\n\n#: Browser/Core/BrowserTimings.js:157\nmsgid "Shapes"\nmsgstr "Formen"\n\n#: Browser/Core/BrowserTimings.js:158\nmsgid "Sensors"\nmsgstr "Sensoren"\n\n#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210\nmsgid "Browser Timings"\nmsgstr "Zeitberechnung"\n\n#: Browser/Core/ContextMenu.js:19\nmsgid "Excite X3D Browser"\nmsgstr ""\n\n#: Browser/Core/ContextMenu.js:59\nmsgid "Viewpoints"\nmsgstr "Ansichtspunkte"\n\n#: Browser/Core/ContextMenu.js:87\nmsgid "Available Viewers"\nmsgstr "Verfügbare Betrachter"\n\n#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135\nmsgid "Primitive Quality"\nmsgstr "Qualität der Grundobjekte"\n\n#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147\nmsgid "High"\nmsgstr "Hoch"\n\n#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155\nmsgid "high"\nmsgstr "hoch"\n\n#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161\nmsgid "Medium"\nmsgstr "Mittel"\n\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169\nmsgid "medium"\nmsgstr "mittel"\n\n#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175\nmsgid "Low"\nmsgstr "Niedrig"\n\n#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183\nmsgid "low"\nmsgstr "niedrig"\n\n#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155\n#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183\nmsgid "Texture Quality"\nmsgstr "Textur Qualität"\n\n#: Browser/Core/ContextMenu.js:191\nmsgid "Display Rubberband"\nmsgstr "Gummiband anzeigen"\n\n#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204\nmsgid "Rubberband"\nmsgstr "Gummiband"\n\n#: Browser/Core/ContextMenu.js:202\nmsgid "on"\nmsgstr "an"\n\n#: Browser/Core/ContextMenu.js:204\nmsgid "off"\nmsgstr "aus"\n\n#: Browser/Core/ContextMenu.js:225\nmsgid "Mute Browser"\nmsgstr "Browser stumm schalten"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser muted"\nmsgstr "Browser stumm geschalten"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser unmuted"\nmsgstr "Browser Ton an"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Leave Fullscreen"\nmsgstr "Vollbild verlassen"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Fullscreen"\nmsgstr "Vollbild"\n\n#: Browser/Core/ContextMenu.js:249\nmsgid "About Excite X3D"\nmsgstr "Über Excite X3D"\n\n#: Browser/Core/ContextMenu.js:342\nmsgid "Examine Viewer"\nmsgstr "Untersuchen"\n\n#: Browser/Core/ContextMenu.js:344\nmsgid "Walk Viewer"\nmsgstr "Laufen"\n\n#: Browser/Core/ContextMenu.js:346\nmsgid "Fly Viewer"\nmsgstr "Fliegen"\n\n#: Browser/Core/ContextMenu.js:348\nmsgid "Plane Viewer"\nmsgstr "Ebenen Betrachter"\n\n#: Browser/Core/ContextMenu.js:350\n#, fuzzy\nmsgid "Look At Viewer"\nmsgstr "Auf Objekte zielen"\n\n#: Browser/Core/ContextMenu.js:352\nmsgid "None Viewer"\nmsgstr "Kein Betrachter"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d file"\nmsgstr "Lade %d Datei"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d files"\nmsgstr "Lade %d Dateien"\n\n#: Browser/Networking/X3DNetworkingContext.js:104\nmsgid "Loading done"\nmsgstr "Fertig mit Laden"\n\n#: Browser/X3DBrowser.js:313\nmsgid "Failed loading world."\nmsgstr "Laden der Dateien fehlgeschlagen."\n\n#~ msgid "Look At"\n#~ msgstr "Auf Objekte zielen"\n';});
+define('text!locale/de.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: X-ITE\\n"\n"POT-Creation-Date: 2015-12-23 04:56+0100\\n"\n"PO-Revision-Date: 2015-12-23 04:57+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: de\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../x-ite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\n#: Browser/Core/BrowserTimings.js:96\nmsgid "Less Properties"\nmsgstr "Weniger Eigenschaften"\n\n#: Browser/Core/BrowserTimings.js:98\nmsgid "More Properties"\nmsgstr "Mehr Eigenschaften"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "Frame rate"\nmsgstr "Bildrate"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "fps"\nmsgstr "BpS"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "Speed"\nmsgstr "Geschwindigkeit"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "m/s"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "km/h"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150\nmsgid "Browser"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151\n#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153\n#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155\n#: Browser/Core/BrowserTimings.js:156\nmsgid "ms"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:151\nmsgid "X3D"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:152\nmsgid "Routing"\nmsgstr "Routen"\n\n#: Browser/Core/BrowserTimings.js:153\nmsgid "Picking"\nmsgstr "Zeigegerät"\n\n#: Browser/Core/BrowserTimings.js:154\nmsgid "Camera"\nmsgstr "Kamera"\n\n#: Browser/Core/BrowserTimings.js:155\nmsgid "Collision"\nmsgstr "Kollision"\n\n#: Browser/Core/BrowserTimings.js:156\nmsgid "Display"\nmsgstr "Anzeige"\n\n#: Browser/Core/BrowserTimings.js:157\nmsgid "Shapes"\nmsgstr "Formen"\n\n#: Browser/Core/BrowserTimings.js:158\nmsgid "Sensors"\nmsgstr "Sensoren"\n\n#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210\nmsgid "Browser Timings"\nmsgstr "Zeitberechnung"\n\n#: Browser/Core/ContextMenu.js:19\nmsgid "X-ITE Browser"\nmsgstr ""\n\n#: Browser/Core/ContextMenu.js:59\nmsgid "Viewpoints"\nmsgstr "Ansichtspunkte"\n\n#: Browser/Core/ContextMenu.js:87\nmsgid "Available Viewers"\nmsgstr "Verfügbare Betrachter"\n\n#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135\nmsgid "Primitive Quality"\nmsgstr "Qualität der Grundobjekte"\n\n#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147\nmsgid "High"\nmsgstr "Hoch"\n\n#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155\nmsgid "high"\nmsgstr "hoch"\n\n#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161\nmsgid "Medium"\nmsgstr "Mittel"\n\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169\nmsgid "medium"\nmsgstr "mittel"\n\n#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175\nmsgid "Low"\nmsgstr "Niedrig"\n\n#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183\nmsgid "low"\nmsgstr "niedrig"\n\n#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155\n#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183\nmsgid "Texture Quality"\nmsgstr "Textur Qualität"\n\n#: Browser/Core/ContextMenu.js:191\nmsgid "Display Rubberband"\nmsgstr "Gummiband anzeigen"\n\n#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204\nmsgid "Rubberband"\nmsgstr "Gummiband"\n\n#: Browser/Core/ContextMenu.js:202\nmsgid "on"\nmsgstr "an"\n\n#: Browser/Core/ContextMenu.js:204\nmsgid "off"\nmsgstr "aus"\n\n#: Browser/Core/ContextMenu.js:225\nmsgid "Mute Browser"\nmsgstr "Browser stumm schalten"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser muted"\nmsgstr "Browser stumm geschalten"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser unmuted"\nmsgstr "Browser Ton an"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Leave Fullscreen"\nmsgstr "Vollbild verlassen"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Fullscreen"\nmsgstr "Vollbild"\n\n#: Browser/Core/ContextMenu.js:249\nmsgid "About X-ITE"\nmsgstr "Über X-ITE"\n\n#: Browser/Core/ContextMenu.js:342\nmsgid "Examine Viewer"\nmsgstr "Untersuchen"\n\n#: Browser/Core/ContextMenu.js:344\nmsgid "Walk Viewer"\nmsgstr "Laufen"\n\n#: Browser/Core/ContextMenu.js:346\nmsgid "Fly Viewer"\nmsgstr "Fliegen"\n\n#: Browser/Core/ContextMenu.js:348\nmsgid "Plane Viewer"\nmsgstr "Ebenen Betrachter"\n\n#: Browser/Core/ContextMenu.js:350\n#, fuzzy\nmsgid "Look At Viewer"\nmsgstr "Auf Objekte zielen"\n\n#: Browser/Core/ContextMenu.js:352\nmsgid "None Viewer"\nmsgstr "Kein Betrachter"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d file"\nmsgstr "Lade %d Datei"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d files"\nmsgstr "Lade %d Dateien"\n\n#: Browser/Networking/X3DNetworkingContext.js:104\nmsgid "Loading done"\nmsgstr "Fertig mit Laden"\n\n#: Browser/X3DBrowser.js:313\nmsgid "Failed loading world."\nmsgstr "Laden der Dateien fehlgeschlagen."\n\n#~ msgid "Look At"\n#~ msgstr "Auf Objekte zielen"\n';});
 
 
-define('text!locale/fr.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: Excite\\n"\n"POT-Creation-Date: 2015-12-23 04:58+0100\\n"\n"PO-Revision-Date: 2015-12-23 05:07+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: fr\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../excite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\n#: Browser/Core/BrowserTimings.js:96\nmsgid "Less Properties"\nmsgstr "Moins de propriétés"\n\n#: Browser/Core/BrowserTimings.js:98\nmsgid "More Properties"\nmsgstr "Plus de propriétés"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "Frame rate"\nmsgstr "Fréquence"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "fps"\nmsgstr "fps"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "Speed"\nmsgstr "Vélocité"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "m/s"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "km/h"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150\n#, fuzzy\nmsgid "Browser"\nmsgstr "Excite X3D Navigateur"\n\n#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151\n#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153\n#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155\n#: Browser/Core/BrowserTimings.js:156\nmsgid "ms"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:151\nmsgid "X3D"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:152\nmsgid "Routing"\nmsgstr "Routes"\n\n#: Browser/Core/BrowserTimings.js:153\nmsgid "Picking"\nmsgstr "Pointeur"\n\n#: Browser/Core/BrowserTimings.js:154\nmsgid "Camera"\nmsgstr "Caméra"\n\n#: Browser/Core/BrowserTimings.js:155\nmsgid "Collision"\nmsgstr "Collision"\n\n#: Browser/Core/BrowserTimings.js:156\nmsgid "Display"\nmsgstr "Visualisation"\n\n#: Browser/Core/BrowserTimings.js:157\nmsgid "Shapes"\nmsgstr "Formes"\n\n#: Browser/Core/BrowserTimings.js:158\nmsgid "Sensors"\nmsgstr "Senseurs"\n\n#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210\nmsgid "Browser Timings"\nmsgstr "Calcul du temps"\n\n#: Browser/Core/ContextMenu.js:19\nmsgid "Excite X3D Browser"\nmsgstr "Excite X3D Navigateur"\n\n#: Browser/Core/ContextMenu.js:59\nmsgid "Viewpoints"\nmsgstr "Points de vue"\n\n#: Browser/Core/ContextMenu.js:87\nmsgid "Available Viewers"\nmsgstr "Visionneurs disponibles"\n\n#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135\nmsgid "Primitive Quality"\nmsgstr "Qualité des objets simples"\n\n#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147\nmsgid "High"\nmsgstr "Haut"\n\n#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155\nmsgid "high"\nmsgstr "haut"\n\n#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161\nmsgid "Medium"\nmsgstr "Moyenne"\n\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169\nmsgid "medium"\nmsgstr "moyenne"\n\n#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175\nmsgid "Low"\nmsgstr "Faible"\n\n#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183\nmsgid "low"\nmsgstr "faible"\n\n#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155\n#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183\nmsgid "Texture Quality"\nmsgstr "Qualité des textures"\n\n#: Browser/Core/ContextMenu.js:191\nmsgid "Display Rubberband"\nmsgstr "Présenter le bande élastique"\n\n#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204\nmsgid "Rubberband"\nmsgstr "Bande élastique"\n\n#: Browser/Core/ContextMenu.js:202\nmsgid "on"\nmsgstr "marche"\n\n#: Browser/Core/ContextMenu.js:204\nmsgid "off"\nmsgstr "arrêt"\n\n#: Browser/Core/ContextMenu.js:225\nmsgid "Mute Browser"\nmsgstr "Rendre navigateur muet"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser muted"\nmsgstr "Navigateur muet"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser unmuted"\nmsgstr "Son de navigateur réactivé"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Leave Fullscreen"\nmsgstr "Sortie en plein écran"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Fullscreen"\nmsgstr "Plein écran"\n\n#: Browser/Core/ContextMenu.js:249\nmsgid "About Excite X3D"\nmsgstr "À propos de Excite X3D"\n\n#: Browser/Core/ContextMenu.js:342\nmsgid "Examine Viewer"\nmsgstr "Examiner"\n\n#: Browser/Core/ContextMenu.js:344\nmsgid "Walk Viewer"\nmsgstr "Aller"\n\n#: Browser/Core/ContextMenu.js:346\nmsgid "Fly Viewer"\nmsgstr "Voler"\n\n#: Browser/Core/ContextMenu.js:348\nmsgid "Plane Viewer"\nmsgstr "Visionneur de la plaine"\n\n#: Browser/Core/ContextMenu.js:350\n#, fuzzy\nmsgid "Look At Viewer"\nmsgstr "Regarder un objet de près"\n\n#: Browser/Core/ContextMenu.js:352\nmsgid "None Viewer"\nmsgstr "Pas de visionneur"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d file"\nmsgstr "Télécharger %d fichier"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d files"\nmsgstr "Télécharger %d fichiers"\n\n#: Browser/Networking/X3DNetworkingContext.js:104\nmsgid "Loading done"\nmsgstr "Téléchargement fini"\n\n#: Browser/X3DBrowser.js:313\nmsgid "Failed loading world."\nmsgstr "Le chargement des fichiers ayant échoué."\n\n#~ msgid "Look At"\n#~ msgstr "Regarder un objet de près"\n';});
+define('text!locale/fr.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: X-ITE\\n"\n"POT-Creation-Date: 2015-12-23 04:58+0100\\n"\n"PO-Revision-Date: 2015-12-23 05:07+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: fr\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../x-ite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\n#: Browser/Core/BrowserTimings.js:96\nmsgid "Less Properties"\nmsgstr "Moins de propriétés"\n\n#: Browser/Core/BrowserTimings.js:98\nmsgid "More Properties"\nmsgstr "Plus de propriétés"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "Frame rate"\nmsgstr "Fréquence"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "fps"\nmsgstr "fps"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "Speed"\nmsgstr "Vélocité"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "m/s"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "km/h"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150\n#, fuzzy\nmsgid "Browser"\nmsgstr "X-ITE Navigateur"\n\n#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151\n#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153\n#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155\n#: Browser/Core/BrowserTimings.js:156\nmsgid "ms"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:151\nmsgid "X3D"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:152\nmsgid "Routing"\nmsgstr "Routes"\n\n#: Browser/Core/BrowserTimings.js:153\nmsgid "Picking"\nmsgstr "Pointeur"\n\n#: Browser/Core/BrowserTimings.js:154\nmsgid "Camera"\nmsgstr "Caméra"\n\n#: Browser/Core/BrowserTimings.js:155\nmsgid "Collision"\nmsgstr "Collision"\n\n#: Browser/Core/BrowserTimings.js:156\nmsgid "Display"\nmsgstr "Visualisation"\n\n#: Browser/Core/BrowserTimings.js:157\nmsgid "Shapes"\nmsgstr "Formes"\n\n#: Browser/Core/BrowserTimings.js:158\nmsgid "Sensors"\nmsgstr "Senseurs"\n\n#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210\nmsgid "Browser Timings"\nmsgstr "Calcul du temps"\n\n#: Browser/Core/ContextMenu.js:19\nmsgid "X-ITE Browser"\nmsgstr "X-ITE Navigateur"\n\n#: Browser/Core/ContextMenu.js:59\nmsgid "Viewpoints"\nmsgstr "Points de vue"\n\n#: Browser/Core/ContextMenu.js:87\nmsgid "Available Viewers"\nmsgstr "Visionneurs disponibles"\n\n#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135\nmsgid "Primitive Quality"\nmsgstr "Qualité des objets simples"\n\n#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147\nmsgid "High"\nmsgstr "Haut"\n\n#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155\nmsgid "high"\nmsgstr "haut"\n\n#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161\nmsgid "Medium"\nmsgstr "Moyenne"\n\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169\nmsgid "medium"\nmsgstr "moyenne"\n\n#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175\nmsgid "Low"\nmsgstr "Faible"\n\n#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183\nmsgid "low"\nmsgstr "faible"\n\n#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155\n#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183\nmsgid "Texture Quality"\nmsgstr "Qualité des textures"\n\n#: Browser/Core/ContextMenu.js:191\nmsgid "Display Rubberband"\nmsgstr "Présenter le bande élastique"\n\n#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204\nmsgid "Rubberband"\nmsgstr "Bande élastique"\n\n#: Browser/Core/ContextMenu.js:202\nmsgid "on"\nmsgstr "marche"\n\n#: Browser/Core/ContextMenu.js:204\nmsgid "off"\nmsgstr "arrêt"\n\n#: Browser/Core/ContextMenu.js:225\nmsgid "Mute Browser"\nmsgstr "Rendre navigateur muet"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser muted"\nmsgstr "Navigateur muet"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser unmuted"\nmsgstr "Son de navigateur réactivé"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Leave Fullscreen"\nmsgstr "Sortie en plein écran"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Fullscreen"\nmsgstr "Plein écran"\n\n#: Browser/Core/ContextMenu.js:249\nmsgid "About X-ITE"\nmsgstr "À propos de X-ITE"\n\n#: Browser/Core/ContextMenu.js:342\nmsgid "Examine Viewer"\nmsgstr "Examiner"\n\n#: Browser/Core/ContextMenu.js:344\nmsgid "Walk Viewer"\nmsgstr "Aller"\n\n#: Browser/Core/ContextMenu.js:346\nmsgid "Fly Viewer"\nmsgstr "Voler"\n\n#: Browser/Core/ContextMenu.js:348\nmsgid "Plane Viewer"\nmsgstr "Visionneur de la plaine"\n\n#: Browser/Core/ContextMenu.js:350\n#, fuzzy\nmsgid "Look At Viewer"\nmsgstr "Regarder un objet de près"\n\n#: Browser/Core/ContextMenu.js:352\nmsgid "None Viewer"\nmsgstr "Pas de visionneur"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d file"\nmsgstr "Télécharger %d fichier"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d files"\nmsgstr "Télécharger %d fichiers"\n\n#: Browser/Networking/X3DNetworkingContext.js:104\nmsgid "Loading done"\nmsgstr "Téléchargement fini"\n\n#: Browser/X3DBrowser.js:313\nmsgid "Failed loading world."\nmsgstr "Le chargement des fichiers ayant échoué."\n\n#~ msgid "Look At"\n#~ msgstr "Regarder un objet de près"\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -25423,19 +25423,19 @@ define('text!locale/fr.po',[],function () { return 'msgid ""\nmsgstr ""\n"Projec
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -25551,19 +25551,19 @@ function (de, fr)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -25571,10 +25571,10 @@ function (de, fr)
  ******************************************************************************/
 
 
-define ('excite/Browser/Core/BrowserTimings',[
+define ('x-ite/Browser/Core/BrowserTimings',[
 	"jquery",
-	"excite/Fields/SFBool",
-	"excite/Basic/X3DBaseNode",
+	"x-ite/Fields/SFBool",
+	"x-ite/Basic/X3DBaseNode",
 	"locale/gettext",
 ],
 function ($,
@@ -25602,7 +25602,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -25619,7 +25619,7 @@ function ($,
 			this .startTime     = 0;
 			this .frames        = 0;
 
-			this .element = $("<div></div>") .addClass ("excite-private-browser-timings") .appendTo (this .getBrowser () .getElement () .find (".excite-private-surface"));
+			this .element = $("<div></div>") .addClass ("x-ite-private-browser-timings") .appendTo (this .getBrowser () .getElement () .find (".x-ite-private-surface"));
 			this .table   = $("<table></table>") .appendTo (this .element);
 			this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
 			this .body    = $("<tbody></tbody>") .appendTo (this .table);
@@ -25718,7 +25718,7 @@ function ($,
 					transparentShapes += layer .numTransparentShapes;
 				}
 
-			   rows [1] .addClass ("excite-private-more");
+			   rows [1] .addClass ("x-ite-private-more");
 
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser")   + ":")) .append ($("<td></td>") .text (f2(systemTime)           .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D")       + ":")) .append ($("<td></td>") .text (f2(browser .browserTime) .toLocaleString (language, fixed) + " " + _("ms")));
@@ -27614,19 +27614,19 @@ e.webkitCancelFullScreen?(f="webkitfullscreenchange",g="webkitfullscreenerror"):
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -27634,9 +27634,9 @@ e.webkitCancelFullScreen?(f="webkitfullscreenchange",g="webkitfullscreenerror"):
  ******************************************************************************/
 
 
-define ('excite/Browser/Core/ContextMenu',[
+define ('x-ite/Browser/Core/ContextMenu',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
+	"x-ite/Basic/X3DBaseNode",
 	"locale/gettext",
 	"lib/jquery-contextMenu/dist/jquery.contextMenu",
 	"lib/jquery.fullscreen-min",
@@ -27647,7 +27647,7 @@ function ($,
 {
 "use strict";
 	
-	$("head") .append ('<style>.excite-private-menu-title:before { content: "' + _("Excite X3D Browser") + '" }</style>');
+	$("head") .append ('<style>.x-ite-private-menu-title:before { content: "' + _("X-ITE Browser") + '" }</style>');
 
 	function ContextMenu (executionContext)
 	{
@@ -27663,7 +27663,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -27677,7 +27677,7 @@ function ($,
 				return;
 
 			$.contextMenu ({
-				selector: ".excite-private-surface-" + this .getBrowser () .getId (), 
+				selector: ".x-ite-private-surface-" + this .getBrowser () .getId (), 
 				build: this .build .bind (this),
 			});
 		},
@@ -27690,12 +27690,12 @@ function ($,
 				fullscreen       = this .getBrowser () .getElement () .fullScreen ();
 
 			var menu = {
-				className: "excite-private-menu excite-private-menu-title",
+				className: "x-ite-private-menu x-ite-private-menu-title",
 				items: {
 					"separator0": "--------",
 					"viewpoints": {
 						name: _("Viewpoints"),
-						className: "context-menu-icon excite-private-icon-viewpoint",
+						className: "context-menu-icon x-ite-private-icon-viewpoint",
 						items: this .getViewpoints (),
 						callback: function (viewpoint)
 						{
@@ -27711,7 +27711,7 @@ function ($,
 					"separator1": "--------",
 					"viewer": {
 						name: _(this .getViewerName (currentViewer)),
-						className: "context-menu-icon excite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
+						className: "context-menu-icon x-ite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
 						callback: function (viewer)
 						{
 							$(".context-menu-list") .fadeOut (500);
@@ -27728,7 +27728,7 @@ function ($,
 					"separator2": "--------",
 					"primitive-quality": {
 						name: _("Primitive Quality"),
-						className: "context-menu-icon excite-private-icon-primitive-quality",
+						className: "context-menu-icon x-ite-private-icon-primitive-quality",
 						items: {
 							"high": {
 								name: _("High"),
@@ -27776,7 +27776,7 @@ function ($,
 					},
 					"texture-quality": {
 						name: _("Texture Quality"),
-						className: "context-menu-icon excite-private-icon-texture-quality",
+						className: "context-menu-icon x-ite-private-icon-texture-quality",
 						items: {
 							"high": {
 								name: _("High"),
@@ -27870,7 +27870,7 @@ function ($,
 					},
 					"fullscreen": {
 						name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
-						className: "context-menu-icon " + (fullscreen ? "excite-private-icon-leave-fullscreen" : "excite-private-icon-fullscreen"),
+						className: "context-menu-icon " + (fullscreen ? "x-ite-private-icon-leave-fullscreen" : "x-ite-private-icon-fullscreen"),
 						callback: function ()
 						{
 						   this .getBrowser () .getElement () .toggleFullScreen ();
@@ -27879,11 +27879,11 @@ function ($,
 					},
 					"separator3": "--------",
 					"about": {
-						name: _("About Excite X3D"),
-						className: "context-menu-icon excite-private-icon-help-about",
+						name: _("About X-ITE"),
+						className: "context-menu-icon x-ite-private-icon-help-about",
 						callback: function ()
 						{
-						   window .open ("http://create3000.de/excite/");
+						   window .open ("http://create3000.de/x-ite/");
 						},
 					},
 				}
@@ -27950,7 +27950,7 @@ function ($,
 
 				menu [viewer] = {
 					name: _(this .getViewerName (viewer)),
-					className: "context-menu-icon excite-private-icon-" + viewer .toLowerCase () + "-viewer",
+					className: "context-menu-icon x-ite-private-icon-" + viewer .toLowerCase () + "-viewer",
 					callback: function (viewer)
 					{
 						$(".context-menu-list") .fadeOut (500);
@@ -28019,19 +28019,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28039,7 +28039,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Configuration/X3DInfoArray',[
+define ('x-ite/Configuration/X3DInfoArray',[
 	"jquery",
 ],
 function ($)
@@ -28146,19 +28146,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28166,11 +28166,11 @@ function ($)
  ******************************************************************************/
 
 
-define ('excite/Configuration/ComponentInfo',[
+define ('x-ite/Configuration/ComponentInfo',[
 	"jquery",
-	"excite/Fields",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/Generator",
+	"x-ite/Fields",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           Fields,
@@ -28241,19 +28241,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28261,10 +28261,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Configuration/ComponentInfoArray',[
+define ('x-ite/Configuration/ComponentInfoArray',[
 	"jquery",
-	"excite/Configuration/X3DInfoArray",
-	"excite/Configuration/ComponentInfo",
+	"x-ite/Configuration/X3DInfoArray",
+	"x-ite/Configuration/ComponentInfo",
 ],
 function ($, X3DInfoArray, ComponentInfo)
 {
@@ -28326,19 +28326,19 @@ function ($, X3DInfoArray, ComponentInfo)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28346,12 +28346,12 @@ function ($, X3DInfoArray, ComponentInfo)
  ******************************************************************************/
 
 
-define ('excite/Execution/ImportedNode',[
+define ('x-ite/Execution/ImportedNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DBaseNode",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/Generator",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           Fields,
@@ -28382,7 +28382,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -28621,19 +28621,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28641,9 +28641,9 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Prototype/ExternProtoDeclarationArray',[
+define ('x-ite/Prototype/ExternProtoDeclarationArray',[
 	"jquery",
-	"excite/Configuration/X3DInfoArray",
+	"x-ite/Configuration/X3DInfoArray",
 ],
 function ($, X3DInfoArray)
 {
@@ -28691,19 +28691,19 @@ function ($, X3DInfoArray)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28711,9 +28711,9 @@ function ($, X3DInfoArray)
  ******************************************************************************/
 
 
-define ('excite/Prototype/ProtoDeclarationArray',[
+define ('x-ite/Prototype/ProtoDeclarationArray',[
 	"jquery",
-	"excite/Configuration/X3DInfoArray",
+	"x-ite/Configuration/X3DInfoArray",
 ],
 function ($, X3DInfoArray)
 {
@@ -28761,19 +28761,19 @@ function ($, X3DInfoArray)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28781,7 +28781,7 @@ function ($, X3DInfoArray)
  ******************************************************************************/
 
 
-define ('excite/Routing/RouteArray',[
+define ('x-ite/Routing/RouteArray',[
 	"jquery",
 ],
 function ($)
@@ -28867,19 +28867,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -28887,12 +28887,12 @@ function ($)
  ******************************************************************************/
 
 
-define ('excite/Routing/X3DRoute',[
+define ('x-ite/Routing/X3DRoute',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DBaseNode",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/Generator",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           Fields,
@@ -28929,7 +28929,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -29105,19 +29105,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -29125,8 +29125,8 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Bits/X3DCast',[
-	"excite/Fields",
+define ('x-ite/Bits/X3DCast',[
+	"x-ite/Fields",
 ],
 function (Fields)
 {
@@ -29186,19 +29186,19 @@ function (Fields)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -29874,19 +29874,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -29894,23 +29894,23 @@ function ($)
  ******************************************************************************/
 
 
-define ('excite/Execution/X3DExecutionContext',[
+define ('x-ite/Execution/X3DExecutionContext',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Basic/X3DBaseNode",
-	"excite/Configuration/ComponentInfoArray",
-	"excite/Execution/ImportedNode",
-	"excite/Prototype/ExternProtoDeclarationArray",
-	"excite/Prototype/ProtoDeclarationArray",
-	"excite/Routing/RouteArray",
-	"excite/Routing/X3DRoute",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Configuration/ComponentInfoArray",
+	"x-ite/Execution/ImportedNode",
+	"x-ite/Prototype/ExternProtoDeclarationArray",
+	"x-ite/Prototype/ProtoDeclarationArray",
+	"x-ite/Routing/RouteArray",
+	"x-ite/Routing/X3DRoute",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 	"standard/Networking/URI",
 	"standard/Math/Algorithm",
-	"excite/InputOutput/Generator",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           Fields,
@@ -30472,19 +30472,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -30492,9 +30492,9 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Configuration/UnitInfo',[
+define ('x-ite/Configuration/UnitInfo',[
 	"jquery",
-	"excite/InputOutput/Generator",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           Generator)
@@ -30569,19 +30569,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -30589,9 +30589,9 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Configuration/UnitInfoArray',[
+define ('x-ite/Configuration/UnitInfoArray',[
 	"jquery",
-	"excite/Configuration/X3DInfoArray",
+	"x-ite/Configuration/X3DInfoArray",
 ],
 function ($, X3DInfoArray)
 {
@@ -30639,19 +30639,19 @@ function ($, X3DInfoArray)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -30659,11 +30659,11 @@ function ($, X3DInfoArray)
  ******************************************************************************/
 
 
-define ('excite/Execution/ExportedNode',[
+define ('x-ite/Execution/ExportedNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Base/X3DObject",
-	"excite/InputOutput/Generator",
+	"x-ite/Fields",
+	"x-ite/Base/X3DObject",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           Fields,
@@ -30746,19 +30746,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -30766,15 +30766,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Execution/X3DScene',[
+define ('x-ite/Execution/X3DScene',[
 	"jquery",
-	"excite/Fields",
-	"excite/Execution/X3DExecutionContext",
-	"excite/Configuration/UnitInfo",
-	"excite/Configuration/UnitInfoArray",
-	"excite/Execution/ExportedNode",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/Generator",
+	"x-ite/Fields",
+	"x-ite/Execution/X3DExecutionContext",
+	"x-ite/Configuration/UnitInfo",
+	"x-ite/Configuration/UnitInfoArray",
+	"x-ite/Execution/ExportedNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           Fields,
@@ -31077,19 +31077,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -31097,10 +31097,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Execution/Scene',[
+define ('x-ite/Execution/Scene',[
 	"jquery",
-	"excite/Fields",
-	"excite/Execution/X3DScene",
+	"x-ite/Fields",
+	"x-ite/Execution/X3DScene",
 ],
 function ($,
           Fields,
@@ -31231,19 +31231,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -31251,10 +31251,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Networking/X3DUrlObject',[
+define ('x-ite/Components/Networking/X3DUrlObject',[
 	"jquery",
-	"excite/Fields",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -31323,19 +31323,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -31343,10 +31343,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/X3DNode',[
+define ('x-ite/Components/Core/X3DNode',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DBaseNode,
@@ -31458,19 +31458,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -31478,15 +31478,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/X3DPrototypeInstance',[
+define ('x-ite/Components/Core/X3DPrototypeInstance',[
 	"jquery",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Fields",
-	"excite/Base/X3DChildObject",
-	"excite/Components/Core/X3DNode",
-	"excite/Execution/X3DExecutionContext",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/Generator",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Fields",
+	"x-ite/Base/X3DChildObject",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Execution/X3DExecutionContext",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           FieldDefinitionArray,
@@ -32018,19 +32018,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -32038,12 +32038,12 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Prototype/X3DProtoDeclarationNode',[
+define ('x-ite/Prototype/X3DProtoDeclarationNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Core/X3DNode",
-	"excite/Components/Core/X3DPrototypeInstance",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Components/Core/X3DPrototypeInstance",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -32116,19 +32116,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -32136,15 +32136,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Prototype/X3DExternProtoDeclaration',[
+define ('x-ite/Prototype/X3DExternProtoDeclaration',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Networking/X3DUrlObject",
-	"excite/Prototype/X3DProtoDeclarationNode",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/Generator",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Networking/X3DUrlObject",
+	"x-ite/Prototype/X3DProtoDeclarationNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           Fields,
@@ -32185,7 +32185,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -32251,7 +32251,7 @@ function ($,
 
 			// Don't create scene cache, due to possible default nodes in proto SFNode fields and complete scenes.
 
-			var FileLoader = require ("excite/InputOutput/FileLoader");
+			var FileLoader = require ("x-ite/InputOutput/FileLoader");
 
 			new FileLoader (this) .createX3DFromURL (this .url_, null, this .setInternalSceneAsync .bind (this));
 		},
@@ -32418,19 +32418,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -32438,15 +32438,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Prototype/X3DProtoDeclaration',[
+define ('x-ite/Prototype/X3DProtoDeclaration',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Execution/X3DExecutionContext",
-	"excite/Prototype/X3DProtoDeclarationNode",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/Generator",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Execution/X3DExecutionContext",
+	"x-ite/Prototype/X3DProtoDeclarationNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/Generator",
 ],
 function ($,
           Fields,
@@ -32482,7 +32482,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -32690,19 +32690,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -32710,12 +32710,12 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Parser/Parser',[
+define ('x-ite/Parser/Parser',[
 	"jquery",
-	"excite/Fields",
-	"excite/Prototype/X3DExternProtoDeclaration",
-	"excite/Prototype/X3DProtoDeclaration",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Prototype/X3DExternProtoDeclaration",
+	"x-ite/Prototype/X3DProtoDeclaration",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -35670,19 +35670,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -35771,19 +35771,19 @@ define ('standard/Utility/DataStorage',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -35791,17 +35791,17 @@ define ('standard/Utility/DataStorage',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Browser/Core/X3DCoreContext',[
+define ('x-ite/Browser/Core/X3DCoreContext',[
 	"jquery",
-	"excite/Fields",
-	"excite/Browser/Core/BrowserOptions",
-	"excite/Browser/Core/BrowserProperties",
-	"excite/Browser/Core/RenderingProperties",
-	"excite/Browser/Core/Notification",
-	"excite/Browser/Core/BrowserTimings",
-	"excite/Browser/Core/ContextMenu",
-	"excite/Execution/Scene",
-	"excite/Parser/Parser",
+	"x-ite/Fields",
+	"x-ite/Browser/Core/BrowserOptions",
+	"x-ite/Browser/Core/BrowserProperties",
+	"x-ite/Browser/Core/RenderingProperties",
+	"x-ite/Browser/Core/Notification",
+	"x-ite/Browser/Core/BrowserTimings",
+	"x-ite/Browser/Core/ContextMenu",
+	"x-ite/Execution/Scene",
+	"x-ite/Parser/Parser",
 	"standard/Utility/DataStorage",
 ],
 function ($,
@@ -35852,17 +35852,17 @@ function ($,
 
 		// Get canvas & context.
 
-		var browser      = $("<div></div>") .addClass ("excite-private-browser")  .prependTo (this .element);
-		var splashScreen = $("<div></div>") .addClass ("excite-private-splash-screen") .appendTo (browser);
-		var spinner      = $("<div></div>") .addClass ("excite-private-spinner")  .appendTo (splashScreen);
-		var progress     = $("<div></div>") .addClass ("excite-private-progress") .appendTo (splashScreen);
-		var surface      = $("<div></div>") .addClass ("excite-private-surface excite-private-surface-" + this .getId ()) .appendTo (browser);
+		var browser      = $("<div></div>") .addClass ("x-ite-private-browser")  .prependTo (this .element);
+		var splashScreen = $("<div></div>") .addClass ("x-ite-private-splash-screen") .appendTo (browser);
+		var spinner      = $("<div></div>") .addClass ("x-ite-private-spinner")  .appendTo (splashScreen);
+		var progress     = $("<div></div>") .addClass ("x-ite-private-progress") .appendTo (splashScreen);
+		var surface      = $("<div></div>") .addClass ("x-ite-private-surface x-ite-private-surface-" + this .getId ()) .appendTo (browser);
 
-		$("<div></div>") .addClass ("excite-private-spinner-one")   .appendTo (spinner);
-		$("<div></div>") .addClass ("excite-private-spinner-two")   .appendTo (spinner);
-		$("<div></div>") .addClass ("excite-private-spinner-three") .appendTo (spinner);
-		$("<div></div>") .addClass ("excite-private-spinner-text")  .appendTo (progress) .text ("Lade 0 Dateien");
-		$("<div></div>") .addClass ("excite-private-progressbar")   .appendTo (progress) .append ($("<div></div>"));
+		$("<div></div>") .addClass ("x-ite-private-spinner-one")   .appendTo (spinner);
+		$("<div></div>") .addClass ("x-ite-private-spinner-two")   .appendTo (spinner);
+		$("<div></div>") .addClass ("x-ite-private-spinner-three") .appendTo (spinner);
+		$("<div></div>") .addClass ("x-ite-private-spinner-text")  .appendTo (progress) .text ("Lade 0 Dateien");
+		$("<div></div>") .addClass ("x-ite-private-progressbar")   .appendTo (progress) .append ($("<div></div>"));
 
 		this .splashScreen = splashScreen;
 		this .canvas       = $("<canvas></canvas>") .prependTo (surface);
@@ -35885,7 +35885,7 @@ function ($,
 		if (this .getBrowserOptions () .getSplashScreen ())
 			this .getSplashScreen () .fadeIn (0);
 
-		$(".excite-console") .empty ();
+		$(".x-ite-console") .empty ();
 	}
 
 	X3DCoreContext .prototype =
@@ -36066,19 +36066,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36086,7 +36086,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Routing/X3DRoutingContext',[
+define ('x-ite/Routing/X3DRoutingContext',[
 ],
 function ()
 {
@@ -36186,19 +36186,19 @@ function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36206,7 +36206,7 @@ function ()
  ******************************************************************************/
 
 
-define ('excite/Browser/Scripting/X3DScriptingContext',[
+define ('x-ite/Browser/Scripting/X3DScriptingContext',[
 ],
 function ()
 {
@@ -36264,19 +36264,19 @@ function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36284,11 +36284,11 @@ function ()
  ******************************************************************************/
 
 
-define ('excite/Components/Core/X3DChildNode',[
+define ('x-ite/Components/Core/X3DChildNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Core/X3DNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -36357,19 +36357,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36377,10 +36377,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/X3DSensorNode',[
+define ('x-ite/Components/Core/X3DSensorNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DChildNode, 
@@ -36434,19 +36434,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36454,10 +36454,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Networking/X3DNetworkSensorNode',[
+define ('x-ite/Components/Networking/X3DNetworkSensorNode',[
 	"jquery",
-	"excite/Components/Core/X3DSensorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DSensorNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DSensorNode, 
@@ -36511,19 +36511,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36531,14 +36531,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Networking/LoadSensor',[
+define ('x-ite/Components/Networking/LoadSensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Networking/X3DNetworkSensorNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Networking/X3DNetworkSensorNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -36770,19 +36770,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36790,12 +36790,12 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Networking/urls',[],function ()
+define ('x-ite/Browser/Networking/urls',[],function ()
 {
 "use strict";
 
 	return {
-		providerUrl:       "http://create3000.de/excite",
+		providerUrl:       "http://create3000.de/x-ite",
 		fallbackUrl:       "http://cors.create3000.de/",
 		fallbackExpression: new RegExp ("^http://cors.create3000.de/"),
 	};
@@ -36836,19 +36836,19 @@ define('sprintf', ['sprintf/dist/sprintf.min'], function (main) { return main; }
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -36856,10 +36856,10 @@ define('sprintf', ['sprintf/dist/sprintf.min'], function (main) { return main; }
  ******************************************************************************/
 
 
-define ('excite/Browser/Networking/X3DNetworkingContext',[
-	"excite/Fields",
-	"excite/Components/Networking/LoadSensor",
-	"excite/Browser/Networking/urls",
+define ('x-ite/Browser/Networking/X3DNetworkingContext',[
+	"x-ite/Fields",
+	"x-ite/Components/Networking/LoadSensor",
+	"x-ite/Browser/Networking/urls",
 	"standard/Networking/URI",
 	"sprintf",
 	"locale/gettext",
@@ -36991,8 +36991,8 @@ function (Fields,
 			if (! this .loading)
 				this .getNotification () .string_ = string;
 
-			this .getSplashScreen () .find (".excite-private-spinner-text") .text (string);
-			this .getSplashScreen () .find (".excite-private-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
+			this .getSplashScreen () .find (".x-ite-private-spinner-text") .text (string);
+			this .getSplashScreen () .find (".x-ite-private-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
 		},
 		resetLoadCount: function ()
 		{
@@ -37034,19 +37034,19 @@ function (Fields,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37054,7 +37054,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('excite/Browser/Shaders/X3DShadersContext',[],function ()
+define ('x-ite/Browser/Shaders/X3DShadersContext',[],function ()
 {
 "use strict";
 
@@ -37129,19 +37129,19 @@ define ('excite/Browser/Shaders/X3DShadersContext',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37149,11 +37149,11 @@ define ('excite/Browser/Shaders/X3DShadersContext',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Components/Shape/X3DAppearanceNode',[
+define ('x-ite/Components/Shape/X3DAppearanceNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Core/X3DNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -37214,19 +37214,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37234,14 +37234,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shape/Appearance',[
+define ('x-ite/Components/Shape/Appearance',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Shape/X3DAppearanceNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Shape/X3DAppearanceNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -37484,19 +37484,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37504,8 +37504,8 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Shape/X3DShapeContext',[
-	"excite/Components/Shape/Appearance",
+define ('x-ite/Browser/Shape/X3DShapeContext',[
+	"x-ite/Components/Shape/Appearance",
 ],
 function (Appearance)
 {
@@ -37560,19 +37560,19 @@ function (Appearance)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37580,10 +37580,10 @@ function (Appearance)
  ******************************************************************************/
 
 
-define ('excite/Components/Shape/X3DAppearanceChildNode',[
+define ('x-ite/Components/Shape/X3DAppearanceChildNode',[
 	"jquery",
-	"excite/Components/Core/X3DNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DNode, 
@@ -37637,19 +37637,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37657,7 +37657,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Bits/TraverseType',[],function ()
+define ('x-ite/Bits/TraverseType',[],function ()
 {
 "use strict";
 
@@ -37708,19 +37708,19 @@ define ('excite/Bits/TraverseType',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37728,11 +37728,11 @@ define ('excite/Bits/TraverseType',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Components/Shaders/X3DShaderNode',[
+define ('x-ite/Components/Shaders/X3DShaderNode',[
 	"jquery",
-	"excite/Components/Shape/X3DAppearanceChildNode",
-	"excite/Bits/X3DConstants",
-	"excite/Bits/TraverseType",
+	"x-ite/Components/Shape/X3DAppearanceChildNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Bits/TraverseType",
 ],
 function ($,
           X3DAppearanceChildNode, 
@@ -37913,19 +37913,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -37933,11 +37933,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shaders/X3DProgrammableShaderObject',[
+define ('x-ite/Components/Shaders/X3DProgrammableShaderObject',[
 	"jquery",
-	"excite/Fields",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix3",
 ],
 function ($,
@@ -39134,19 +39134,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -39154,16 +39154,16 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shaders/ComposedShader',[
+define ('x-ite/Components/Shaders/ComposedShader',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Shaders/X3DShaderNode",
-	"excite/Components/Shaders/X3DProgrammableShaderObject",
-	"excite/Components/Networking/LoadSensor",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Shaders/X3DShaderNode",
+	"x-ite/Components/Shaders/X3DProgrammableShaderObject",
+	"x-ite/Components/Networking/LoadSensor",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -39363,13 +39363,13 @@ function ($,
 });
 
 
-define('text!excite/Browser/Shaders/Bits/Line3.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n/* Line */\n\nstruct Line3 {\n\tvec3 point;\n\tvec3 direction;\n};\n\nLine3\nline3 (in vec3 point1, in vec3 point2)\n{\n\treturn Line3 (point1, normalize (point2 - point1));\n}\n';});
+define('text!x-ite/Browser/Shaders/Bits/Line3.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n/* Line */\n\nstruct Line3 {\n\tvec3 point;\n\tvec3 direction;\n};\n\nLine3\nline3 (in vec3 point1, in vec3 point2)\n{\n\treturn Line3 (point1, normalize (point2 - point1));\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Bits/Plane3.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Line3.h"\n\n/* Plane */\n\nstruct Plane3\n{\n\tvec3  normal;\n\tfloat distanceFromOrigin;\n};\n\nPlane3\nplane3 (in vec3 point, in vec3 normal)\n{\n\treturn Plane3 (normal, dot (normal, point));\n}\n\n/* Plane intersect line */\nbool\nintersects (in Plane3 plane, in Line3 line, out vec3 point)\n{\n\tpoint = vec3 (0.0);\n\n\t// Check if the line is parallel to the plane.\n\tfloat theta = dot (line .direction, plane .normal);\n\n\t// Plane and line are parallel.\n\tif (theta == 0.0)\n\t\treturn false;\n\n\t// Plane and line are not parallel. The intersection point can be calculated now.\n\tfloat t = (plane .distanceFromOrigin - dot (plane .normal, line .point)) / theta;\n\n\tpoint = line .point + line .direction * t;\n\n\treturn true;\n}\n\n///  Returns the closest point on the plane to a given point @a point.\nvec3\nclosest_point (in Plane3 plane, in vec3 point)\n{\n\tvec3 closest_point;\n\tintersects (plane, Line3 (point, plane .normal), closest_point);\n\treturn closest_point;\n}\n';});
+define('text!x-ite/Browser/Shaders/Bits/Plane3.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Line3.h"\n\n/* Plane */\n\nstruct Plane3\n{\n\tvec3  normal;\n\tfloat distanceFromOrigin;\n};\n\nPlane3\nplane3 (in vec3 point, in vec3 normal)\n{\n\treturn Plane3 (normal, dot (normal, point));\n}\n\n/* Plane intersect line */\nbool\nintersects (in Plane3 plane, in Line3 line, out vec3 point)\n{\n\tpoint = vec3 (0.0);\n\n\t// Check if the line is parallel to the plane.\n\tfloat theta = dot (line .direction, plane .normal);\n\n\t// Plane and line are parallel.\n\tif (theta == 0.0)\n\t\treturn false;\n\n\t// Plane and line are not parallel. The intersection point can be calculated now.\n\tfloat t = (plane .distanceFromOrigin - dot (plane .normal, line .point)) / theta;\n\n\tpoint = line .point + line .direction * t;\n\n\treturn true;\n}\n\n///  Returns the closest point on the plane to a given point @a point.\nvec3\nclosest_point (in Plane3 plane, in vec3 point)\n{\n\tvec3 closest_point;\n\tintersects (plane, Line3 (point, plane .normal), closest_point);\n\treturn closest_point;\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Bits/Random.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\nconst int RAND_MAX = int (0x7fffffff);\nconst int RAND_MIN = int (0x80000000);\n\nint seedValue = 0;\n\nvoid\nseed (in int value)\n{\n\tseedValue = value;\n}\n\n// Return a uniform distributed random floating point number in the interval [-1, 1].\nfloat\nrandom1 ()\n{\n\treturn float (seedValue = seedValue * 1103515245 + 12345) / float (RAND_MAX);\n}\n\nvec2\nrandom2 ()\n{\n\treturn vec2 (random1 (), random1 ());\n}\n\nvec3\nrandom3 ()\n{\n\treturn vec3 (random1 (), random1 (), random1 ());\n}\n';});
+define('text!x-ite/Browser/Shaders/Bits/Random.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\nconst int RAND_MAX = int (0x7fffffff);\nconst int RAND_MIN = int (0x80000000);\n\nint seedValue = 0;\n\nvoid\nseed (in int value)\n{\n\tseedValue = value;\n}\n\n// Return a uniform distributed random floating point number in the interval [-1, 1].\nfloat\nrandom1 ()\n{\n\treturn float (seedValue = seedValue * 1103515245 + 12345) / float (RAND_MAX);\n}\n\nvec2\nrandom2 ()\n{\n\treturn vec2 (random1 (), random1 ());\n}\n\nvec3\nrandom3 ()\n{\n\treturn vec3 (random1 (), random1 (), random1 ());\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -39400,19 +39400,19 @@ define('text!excite/Browser/Shaders/Bits/Random.h',[],function () { return '/* -
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public LicINFINITY, 88, 51, 68ense version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -39420,10 +39420,10 @@ define('text!excite/Browser/Shaders/Bits/Random.h',[],function () { return '/* -
  ******************************************************************************/
 
 
-define ('excite/Browser/Shaders/Shader',[
-	"text!excite/Browser/Shaders/Bits/Line3.h",
-	"text!excite/Browser/Shaders/Bits/Plane3.h",
-	"text!excite/Browser/Shaders/Bits/Random.h",
+define ('x-ite/Browser/Shaders/Shader',[
+	"text!x-ite/Browser/Shaders/Bits/Line3.h",
+	"text!x-ite/Browser/Shaders/Bits/Plane3.h",
+	"text!x-ite/Browser/Shaders/Bits/Random.h",
 ],
 function (Line3,
           Plane3,
@@ -39497,7 +39497,7 @@ function (Line3,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
  * NON-MILITARY USE ONLY
  *
@@ -39508,17 +39508,17 @@ function (Line3,
  *
  * Copyright 2016 Andreas Plesch.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -39526,7 +39526,7 @@ function (Line3,
  ******************************************************************************/
 
 
-define ('excite/Parser/HTMLSupport',[],function ()
+define ('x-ite/Parser/HTMLSupport',[],function ()
 {
 "use strict";
 
@@ -40161,19 +40161,19 @@ define ('excite/Parser/HTMLSupport',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -40181,18 +40181,18 @@ define ('excite/Parser/HTMLSupport',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Parser/XMLParser',[
+define ('x-ite/Parser/XMLParser',[
 	"jquery",
-	"excite/Basic/X3DField",
-	"excite/Basic/X3DArrayField",
-	"excite/Basic/X3DBaseNode",
-	"excite/Components/Core/X3DPrototypeInstance",
-	"excite/Fields",
-	"excite/Parser/Parser",
-	"excite/Parser/HTMLSupport",
-	"excite/Prototype/X3DExternProtoDeclaration",
-	"excite/Prototype/X3DProtoDeclaration",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DField",
+	"x-ite/Basic/X3DArrayField",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Components/Core/X3DPrototypeInstance",
+	"x-ite/Fields",
+	"x-ite/Parser/Parser",
+	"x-ite/Parser/HTMLSupport",
+	"x-ite/Prototype/X3DExternProtoDeclaration",
+	"x-ite/Prototype/X3DProtoDeclaration",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DField,
@@ -41148,19 +41148,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -44561,19 +44561,19 @@ define('pako_inflate', ['pako_inflate/dist/pako_inflate'], function (main) { ret
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -44581,8 +44581,8 @@ define('pako_inflate', ['pako_inflate/dist/pako_inflate'], function (main) { ret
  ******************************************************************************/
 
 
-define ('excite/DEBUG',[
-	"excite/Browser/VERSION",
+define ('x-ite/DEBUG',[
+	"x-ite/Browser/VERSION",
 ],
 function (VERSION)
 {
@@ -44620,19 +44620,19 @@ function (VERSION)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -44640,17 +44640,17 @@ function (VERSION)
  ******************************************************************************/
 
 
-define ('excite/InputOutput/FileLoader',[
+define ('x-ite/InputOutput/FileLoader',[
 	"jquery",
-	"excite/Base/X3DObject",
-	"excite/Fields",
-	"excite/Browser/Networking/urls",
-	"excite/Parser/Parser",
-	"excite/Parser/XMLParser",
+	"x-ite/Base/X3DObject",
+	"x-ite/Fields",
+	"x-ite/Browser/Networking/urls",
+	"x-ite/Parser/Parser",
+	"x-ite/Parser/XMLParser",
 	"standard/Networking/URI",
 	"standard/Networking/BinaryTransport",
 	"pako_inflate",
-	"excite/DEBUG",
+	"x-ite/DEBUG",
 ],
 function ($,
           X3DObject,
@@ -45131,19 +45131,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -45151,16 +45151,16 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shaders/ShaderPart',[
+define ('x-ite/Components/Shaders/ShaderPart',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Browser/Shaders/Shader",
-	"excite/Components/Core/X3DNode",
-	"excite/Components/Networking/X3DUrlObject",
-	"excite/InputOutput/FileLoader",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Browser/Shaders/Shader",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Components/Networking/X3DUrlObject",
+	"x-ite/InputOutput/FileLoader",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -45288,31 +45288,31 @@ function ($,
 
 
 
-define('text!excite/Browser/Shaders/PointSet.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n}\n';});
+define('text!x-ite/Browser/Shaders/PointSet.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the X-ITE Project.\n// \n//  X-ITE is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Wireframe.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Transparency;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_GeometryType == x3d_GeometryLines ? x3d_LinewidthScaleFactor : x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = vec3 (p);\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_Transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tC .rgb = x3d_Color .rgb;\n\t\t\tC .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tC .rgb = x3d_EmissiveColor;\n\t\t\tC .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tC = x3d_Color;\n\t\telse\n\t\t\tC = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!x-ite/Browser/Shaders/Wireframe.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the X-ITE Project.\n// \n//  X-ITE is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Transparency;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_GeometryType == x3d_GeometryLines ? x3d_LinewidthScaleFactor : x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = vec3 (p);\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_Transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tC .rgb = x3d_Color .rgb;\n\t\t\tC .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tC .rgb = x3d_EmissiveColor;\n\t\t\tC .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tC = x3d_Color;\n\t\telse\n\t\t\tC = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Wireframe.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = C .a;\n}\n';});
+define('text!x-ite/Browser/Shaders/Wireframe.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the X-ITE Project.\n// \n//  X-ITE is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform float x3d_LinewidthScaleFactor;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);\n\tgl_FragColor .a   = C .a;\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Gouraud.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4  frontColor; // color\nvarying vec4  backColor;  // color\nvarying vec4  t;          // texCoord\nvarying vec3  v;          // point on geometry\n\nvec4\ngetMaterialColor (in vec3 N,\n                  in vec3 v,\n                  in float x3d_AmbientIntensity,\n                  in vec3  x3d_DiffuseColor,\n                  in vec3  x3d_SpecularColor,\n                  in vec3  x3d_EmissiveColor,\n                  in float x3d_Shininess,\n                  in float x3d_Transparency)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\tfloat alpha         = 1.0 - x3d_Transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = x3d_DiffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * x3d_AmbientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tint lightType = x3d_LightType [i];\n\n\t\tif (lightType == x3d_NoneLight)\n\t\t\tbreak;\n\n\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t{\n\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\tvec3 L = di ? -d : normalize (vL);\n\t\t\tvec3 H = normalize (L + V); // specular term\n\n\t\t\tvec3  diffuseTerm    = diffuseFactor * max (dot (N, L), 0.0);\n\t\t\tfloat specularFactor = x3d_Shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = x3d_SpecularColor * specularFactor;\n\n\t\t\tfloat attenuation = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spot        = 1.0;\n\n\t\t\tif (lightType == x3d_SpotLight)\n\t\t\t{\n\t\t\t\tfloat spotAngle   = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\t\t\tfloat cutOffAngle = x3d_LightCutOffAngle [i];\n\t\t\t\tfloat beamWidth   = x3d_LightBeamWidth [i];\n\t\t\t\t\n\t\t\t\tif (spotAngle >= cutOffAngle)\n\t\t\t\t\tspot = 0.0;\n\t\t\t\telse if (spotAngle <= beamWidth)\n\t\t\t\t\tspot = 1.0;\n\t\t\t\telse\n\t\t\t\t\tspot = (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n\t\t\t}\n\t\t\n\t\t\tvec3 lightFactor  = (attenuation * spot) * x3d_LightColor [i];\n\t\t\tvec3 ambientLight = (lightFactor * x3d_LightAmbientIntensity [i]) * ambientTerm;\n\n\t\t\tlightFactor *= x3d_LightIntensity [i];\n\t\t\tfinalColor  += ambientLight + lightFactor * (diffuseTerm + specularTerm);\n\t\t}\n\t}\n\n\tfinalColor += x3d_EmissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfloat ambientIntensity = x3d_AmbientIntensity;\n\t\tvec3  diffuseColor     = x3d_DiffuseColor;\n\t\tvec3  specularColor    = x3d_SpecularColor;\n\t\tvec3  emissiveColor    = x3d_EmissiveColor;\n\t\tfloat shininess        = x3d_Shininess;\n\t\tfloat transparency     = x3d_Transparency;\n\n\t\tfrontColor = getMaterialColor (N, v,\n\t\t                               ambientIntensity,\n\t\t                               diffuseColor,\n\t\t                               specularColor,\n\t\t                               emissiveColor,\n\t\t                               shininess,\n\t\t                               transparency);\n\n\t\tif (x3d_SeparateBackColor)\n\t\t{\n\t\t\tambientIntensity = x3d_BackAmbientIntensity;\n\t\t\tdiffuseColor     = x3d_BackDiffuseColor;\n\t\t\tspecularColor    = x3d_BackSpecularColor;\n\t\t\temissiveColor    = x3d_BackEmissiveColor;\n\t\t\tshininess        = x3d_BackShininess;\n\t\t\ttransparency     = x3d_BackTransparency;\n\t\t}\n\n\t\tbackColor = getMaterialColor (-N, v,\n\t\t                              ambientIntensity,\n\t\t                              diffuseColor,\n\t\t                              specularColor,\n\t\t                              emissiveColor,\n\t\t                              shininess,\n\t\t                              transparency);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!x-ite/Browser/Shaders/Gouraud.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the X-ITE Project.\n// \n//  X-ITE is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4  frontColor; // color\nvarying vec4  backColor;  // color\nvarying vec4  t;          // texCoord\nvarying vec3  v;          // point on geometry\n\nvec4\ngetMaterialColor (in vec3 N,\n                  in vec3 v,\n                  in float x3d_AmbientIntensity,\n                  in vec3  x3d_DiffuseColor,\n                  in vec3  x3d_SpecularColor,\n                  in vec3  x3d_EmissiveColor,\n                  in float x3d_Shininess,\n                  in float x3d_Transparency)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\tfloat alpha         = 1.0 - x3d_Transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = x3d_DiffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * x3d_AmbientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tint lightType = x3d_LightType [i];\n\n\t\tif (lightType == x3d_NoneLight)\n\t\t\tbreak;\n\n\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t{\n\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\tvec3 L = di ? -d : normalize (vL);\n\t\t\tvec3 H = normalize (L + V); // specular term\n\n\t\t\tvec3  diffuseTerm    = diffuseFactor * max (dot (N, L), 0.0);\n\t\t\tfloat specularFactor = x3d_Shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = x3d_SpecularColor * specularFactor;\n\n\t\t\tfloat attenuation = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spot        = 1.0;\n\n\t\t\tif (lightType == x3d_SpotLight)\n\t\t\t{\n\t\t\t\tfloat spotAngle   = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\t\t\tfloat cutOffAngle = x3d_LightCutOffAngle [i];\n\t\t\t\tfloat beamWidth   = x3d_LightBeamWidth [i];\n\t\t\t\t\n\t\t\t\tif (spotAngle >= cutOffAngle)\n\t\t\t\t\tspot = 0.0;\n\t\t\t\telse if (spotAngle <= beamWidth)\n\t\t\t\t\tspot = 1.0;\n\t\t\t\telse\n\t\t\t\t\tspot = (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n\t\t\t}\n\t\t\n\t\t\tvec3 lightFactor  = (attenuation * spot) * x3d_LightColor [i];\n\t\t\tvec3 ambientLight = (lightFactor * x3d_LightAmbientIntensity [i]) * ambientTerm;\n\n\t\t\tlightFactor *= x3d_LightIntensity [i];\n\t\t\tfinalColor  += ambientLight + lightFactor * (diffuseTerm + specularTerm);\n\t\t}\n\t}\n\n\tfinalColor += x3d_EmissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfloat ambientIntensity = x3d_AmbientIntensity;\n\t\tvec3  diffuseColor     = x3d_DiffuseColor;\n\t\tvec3  specularColor    = x3d_SpecularColor;\n\t\tvec3  emissiveColor    = x3d_EmissiveColor;\n\t\tfloat shininess        = x3d_Shininess;\n\t\tfloat transparency     = x3d_Transparency;\n\n\t\tfrontColor = getMaterialColor (N, v,\n\t\t                               ambientIntensity,\n\t\t                               diffuseColor,\n\t\t                               specularColor,\n\t\t                               emissiveColor,\n\t\t                               shininess,\n\t\t                               transparency);\n\n\t\tif (x3d_SeparateBackColor)\n\t\t{\n\t\t\tambientIntensity = x3d_BackAmbientIntensity;\n\t\t\tdiffuseColor     = x3d_BackDiffuseColor;\n\t\t\tspecularColor    = x3d_BackSpecularColor;\n\t\t\temissiveColor    = x3d_BackEmissiveColor;\n\t\t\tshininess        = x3d_BackShininess;\n\t\t\ttransparency     = x3d_BackTransparency;\n\t\t}\n\n\t\tbackColor = getMaterialColor (-N, v,\n\t\t                              ambientIntensity,\n\t\t                              diffuseColor,\n\t\t                              specularColor,\n\t\t                              emissiveColor,\n\t\t                              shininess,\n\t\t                              transparency);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Gouraud.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_NoneTexture, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, finalColor .rgb, f0);\n\tgl_FragColor .a   = finalColor .a;\n}\n';});
+define('text!x-ite/Browser/Shaders/Gouraud.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the X-ITE Project.\n// \n//  X-ITE is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_NoneTexture, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn 1.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_FogVisibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tfloat f0 = getFogInterpolant ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = mix (x3d_FogColor, finalColor .rgb, f0);\n\tgl_FragColor .a   = finalColor .a;\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Phong.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tif (x3d_Lighting)\n\t\tvN = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tC = x3d_Color;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
+define('text!x-ite/Browser/Shaders/Phong.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the X-ITE Project.\n// \n//  X-ITE is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tif (x3d_Lighting)\n\t\tvN = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tC = x3d_Color;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Phong.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // true if a X3DTexture2DNode is attached, otherwise false\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n\tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n\n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor ()\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\t\tfloat ambientIntensity = frontColor ? x3d_AmbientIntensity : x3d_BackAmbientIntensity;\n\t\tvec3  diffuseColor     = frontColor ? x3d_DiffuseColor     : x3d_BackDiffuseColor;\n\t\tvec3  specularColor    = frontColor ? x3d_SpecularColor    : x3d_BackSpecularColor;\n\t\tvec3  emissiveColor    = frontColor ? x3d_EmissiveColor    : x3d_BackEmissiveColor;\n\t\tfloat shininess        = frontColor ? x3d_Shininess        : x3d_BackShininess;\n\t\tfloat transparency     = frontColor ? x3d_Transparency     : x3d_BackTransparency;\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t\t{\n\t\t\tint lightType = x3d_LightType [i];\n\n\t\t\tif (lightType == x3d_NoneLight)\n\t\t\t\tbreak;\n\n\t\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t\t{\n\t\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = shininess > 0.0 ? pow (max (dot (N, H), 0.0), shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor                  = lightType == x3d_SpotLight ? getSpotFactor (x3d_LightCutOffAngle [i], x3d_LightBeamWidth [i], L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor                = x3d_LightAmbientIntensity [i] * ambientTerm;\n\t\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + x3d_LightIntensity [i] * (diffuseTerm + specularTerm);\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (x3d_LightColor [i] * ambientDiffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn color;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn x3d_FogColor;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn mix (x3d_FogColor, color, (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange);\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn mix (x3d_FogColor, color, exp (-dV / (x3d_FogVisibilityRange - dV)));\n\n\treturn color;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = getMaterialColor ();\n\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n}\n';});
+define('text!x-ite/Browser/Shaders/Phong.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the X-ITE Project.\n// \n//  X-ITE is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform int x3d_GeometryType;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform int   x3d_FogType;\nuniform vec3  x3d_FogColor;\nuniform float x3d_FogVisibilityRange;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int   x3d_LightType [x3d_MaxLights];\nuniform bool  x3d_LightOn [x3d_MaxLights];\nuniform vec3  x3d_LightColor [x3d_MaxLights];\nuniform float x3d_LightIntensity [x3d_MaxLights];\nuniform float x3d_LightAmbientIntensity [x3d_MaxLights];\nuniform vec3  x3d_LightAttenuation [x3d_MaxLights];\nuniform vec3  x3d_LightLocation [x3d_MaxLights];\nuniform vec3  x3d_LightDirection [x3d_MaxLights];\nuniform float x3d_LightRadius [x3d_MaxLights];\nuniform float x3d_LightBeamWidth [x3d_MaxLights];\nuniform float x3d_LightCutOffAngle [x3d_MaxLights];\n\nuniform bool x3d_SeparateBackColor;\n\nuniform float x3d_AmbientIntensity;\nuniform vec3  x3d_DiffuseColor;\nuniform vec3  x3d_SpecularColor;\nuniform vec3  x3d_EmissiveColor;\nuniform float x3d_Shininess;\nuniform float x3d_Transparency;\n\nuniform float x3d_BackAmbientIntensity;\nuniform vec3  x3d_BackDiffuseColor;\nuniform vec3  x3d_BackSpecularColor;\nuniform vec3  x3d_BackEmissiveColor;\nuniform float x3d_BackShininess;\nuniform float x3d_BackTransparency;\n\nuniform int         x3d_TextureType [x3d_MaxTextures]; // true if a X3DTexture2DNode is attached, otherwise false\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n\tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n\n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor ()\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\t\tfloat ambientIntensity = frontColor ? x3d_AmbientIntensity : x3d_BackAmbientIntensity;\n\t\tvec3  diffuseColor     = frontColor ? x3d_DiffuseColor     : x3d_BackDiffuseColor;\n\t\tvec3  specularColor    = frontColor ? x3d_SpecularColor    : x3d_BackSpecularColor;\n\t\tvec3  emissiveColor    = frontColor ? x3d_EmissiveColor    : x3d_BackEmissiveColor;\n\t\tfloat shininess        = frontColor ? x3d_Shininess        : x3d_BackShininess;\n\t\tfloat transparency     = frontColor ? x3d_Transparency     : x3d_BackTransparency;\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t\t{\n\t\t\tint lightType = x3d_LightType [i];\n\n\t\t\tif (lightType == x3d_NoneLight)\n\t\t\t\tbreak;\n\n\t\t\tvec3  vL = x3d_LightLocation [i] - v;\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = lightType == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= x3d_LightRadius [i])\n\t\t\t{\n\t\t\t\tvec3 d = x3d_LightDirection [i];\n\t\t\t\tvec3 c = x3d_LightAttenuation [i];\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = shininess > 0.0 ? pow (max (dot (N, H), 0.0), shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor                  = lightType == x3d_SpotLight ? getSpotFactor (x3d_LightCutOffAngle [i], x3d_LightBeamWidth [i], L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor                = x3d_LightAmbientIntensity [i] * ambientTerm;\n\t\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + x3d_LightIntensity [i] * (diffuseTerm + specularTerm);\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (x3d_LightColor [i] * ambientDiffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_NoneTexture)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\tif (x3d_FogType == x3d_NoneFog)\n\t\treturn color;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_FogVisibilityRange)\n\t\treturn x3d_FogColor;\n\n\tif (x3d_FogType == x3d_LinearFog)\n\t\treturn mix (x3d_FogColor, color, (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange);\n\n\tif (x3d_FogType == x3d_ExponentialFog)\n\t\treturn mix (x3d_FogColor, color, exp (-dV / (x3d_FogVisibilityRange - dV)));\n\n\treturn color;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = getMaterialColor ();\n\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Depth.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Vertex;\n\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
+define('text!x-ite/Browser/Shaders/Depth.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the X-ITE Project.\n// \n//  X-ITE is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Vertex;\n\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
 
 
-define('text!excite/Browser/Shaders/Depth.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\npack (in float f)\n{\n\tvec4 color;\n\n\tf *= 255.0;\n\tcolor .r = floor (f);\n\n\tf -= color .r;\n\tf *= 255.0;\n\tcolor .g = floor (f);\n\n\tf -= color .g;\n\tf *= 255.0;\n\tcolor .b = floor (f);\n\n\tf -= color .b;\n\tf *= 255.0;\n\tcolor .a = floor (f);\n\n\treturn color / 255.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
+define('text!x-ite/Browser/Shaders/Depth.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the X-ITE Project.\n// \n//  X-ITE is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\npack (in float f)\n{\n\tvec4 color;\n\n\tf *= 255.0;\n\tcolor .r = floor (f);\n\n\tf -= color .r;\n\tf *= 255.0;\n\tcolor .g = floor (f);\n\n\tf -= color .g;\n\tf *= 255.0;\n\tcolor .b = floor (f);\n\n\tf -= color .b;\n\tf *= 255.0;\n\tcolor .a = floor (f);\n\n\treturn color / 255.0;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -45343,19 +45343,19 @@ define('text!excite/Browser/Shaders/Depth.fs',[],function () { return 'data:text
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -45365,20 +45365,20 @@ define('text!excite/Browser/Shaders/Depth.fs',[],function () { return 'data:text
 
 //https://github.com/sdecima/javascript-detect-element-resize
 
-define ('excite/Browser/Rendering/X3DRenderingContext',[
+define ('x-ite/Browser/Rendering/X3DRenderingContext',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Shaders/ComposedShader",
-	"excite/Components/Shaders/ShaderPart",
-	"text!excite/Browser/Shaders/PointSet.fs",
-	"text!excite/Browser/Shaders/Wireframe.vs",
-	"text!excite/Browser/Shaders/Wireframe.fs",
-	"text!excite/Browser/Shaders/Gouraud.vs",
-	"text!excite/Browser/Shaders/Gouraud.fs",
-	"text!excite/Browser/Shaders/Phong.vs",
-	"text!excite/Browser/Shaders/Phong.fs",
-	"text!excite/Browser/Shaders/Depth.vs",
-	"text!excite/Browser/Shaders/Depth.fs",
+	"x-ite/Fields",
+	"x-ite/Components/Shaders/ComposedShader",
+	"x-ite/Components/Shaders/ShaderPart",
+	"text!x-ite/Browser/Shaders/PointSet.fs",
+	"text!x-ite/Browser/Shaders/Wireframe.vs",
+	"text!x-ite/Browser/Shaders/Wireframe.fs",
+	"text!x-ite/Browser/Shaders/Gouraud.vs",
+	"text!x-ite/Browser/Shaders/Gouraud.fs",
+	"text!x-ite/Browser/Shaders/Phong.vs",
+	"text!x-ite/Browser/Shaders/Phong.fs",
+	"text!x-ite/Browser/Shaders/Depth.vs",
+	"text!x-ite/Browser/Shaders/Depth.fs",
 	"standard/Math/Numbers/Vector4",
 ],
 function ($,
@@ -45587,9 +45587,9 @@ function ($,
 		onfullscreen: function ()
 		{
 			if (this .getElement () .fullScreen ())
-				this .getElement () .addClass  ("excite-private-fullscreen");
+				this .getElement () .addClass  ("x-ite-private-fullscreen");
 			else
-				this .getElement () .removeClass ("excite-private-fullscreen");
+				this .getElement () .removeClass ("x-ite-private-fullscreen");
 		},
 	};
 
@@ -45625,19 +45625,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -45645,10 +45645,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geometry2D/Arc2DOptions',[
+define ('x-ite/Browser/Geometry2D/Arc2DOptions',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
-	"excite/Fields",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Fields",
 ],
 function ($,
           X3DBaseNode,
@@ -45672,7 +45672,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -45712,19 +45712,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -45732,10 +45732,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geometry2D/ArcClose2DOptions',[
+define ('x-ite/Browser/Geometry2D/ArcClose2DOptions',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
-	"excite/Fields",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Fields",
 ],
 function ($,
           X3DBaseNode,
@@ -45759,7 +45759,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -45799,19 +45799,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -46010,19 +46010,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -46030,10 +46030,10 @@ function ($)
  ******************************************************************************/
 
 
-define ('excite/Browser/Geometry2D/Circle2DOptions',[
+define ('x-ite/Browser/Geometry2D/Circle2DOptions',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
-	"excite/Fields",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Fields",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector3",
 ],
@@ -46063,7 +46063,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -46128,19 +46128,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -46148,10 +46148,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geometry2D/Disk2DOptions',[
+define ('x-ite/Browser/Geometry2D/Disk2DOptions',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
-	"excite/Fields",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Fields",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector3",
 ],
@@ -46186,7 +46186,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -49121,19 +49121,19 @@ define('poly2tri', ['poly2tri/dist/poly2tri'], function (main) { return main; })
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -49335,19 +49335,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -49456,19 +49456,19 @@ define ('standard/Math/Algorithms/SAT',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -49989,19 +49989,19 @@ function (Triangle3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -50167,19 +50167,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -50187,11 +50187,11 @@ function (Vector3,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/X3DGeometryNode',[
+define ('x-ite/Components/Rendering/X3DGeometryNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Core/X3DNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -51272,19 +51272,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -51292,11 +51292,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/X3DComposedGeometryNode',[
+define ('x-ite/Components/Rendering/X3DComposedGeometryNode',[
 	"jquery",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -51614,19 +51614,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -51636,13 +51636,13 @@ function ($,
 
 // https://github.com/r3mi/poly2tri.js
 
-define ('excite/Components/Geometry3D/IndexedFaceSet',[
+define ('x-ite/Components/Geometry3D/IndexedFaceSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DComposedGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DComposedGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Triangle3",
@@ -52093,19 +52093,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52113,10 +52113,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/X3DGeometricPropertyNode',[
+define ('x-ite/Components/Rendering/X3DGeometricPropertyNode',[
 	"jquery",
-	"excite/Components/Core/X3DNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DNode, 
@@ -52170,19 +52170,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52190,10 +52190,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/X3DCoordinateNode',[
+define ('x-ite/Components/Rendering/X3DCoordinateNode',[
 	"jquery",
-	"excite/Components/Rendering/X3DGeometricPropertyNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Rendering/X3DGeometricPropertyNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
 ],
@@ -52303,19 +52303,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52323,13 +52323,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/Coordinate',[
+define ('x-ite/Components/Rendering/Coordinate',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DCoordinateNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DCoordinateNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -52402,19 +52402,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52422,10 +52422,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing/X3DTextureCoordinateNode',[
+define ('x-ite/Components/Texturing/X3DTextureCoordinateNode',[
 	"jquery",
-	"excite/Components/Rendering/X3DGeometricPropertyNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Rendering/X3DGeometricPropertyNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DGeometricPropertyNode, 
@@ -52487,19 +52487,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52507,13 +52507,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing/TextureCoordinate',[
+define ('x-ite/Components/Texturing/TextureCoordinate',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Texturing/X3DTextureCoordinateNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Texturing/X3DTextureCoordinateNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector4",
 ],
 function ($,
@@ -52615,19 +52615,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52635,12 +52635,12 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geometry2D/Rectangle2DOptions',[
+define ('x-ite/Browser/Geometry2D/Rectangle2DOptions',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
-	"excite/Components/Geometry3D/IndexedFaceSet",
-	"excite/Components/Rendering/Coordinate",
-	"excite/Components/Texturing/TextureCoordinate",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Components/Geometry3D/IndexedFaceSet",
+	"x-ite/Components/Rendering/Coordinate",
+	"x-ite/Components/Texturing/TextureCoordinate",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
@@ -52668,7 +52668,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -52748,19 +52748,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52768,12 +52768,12 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geometry2D/X3DGeometry2DContext',[
-	"excite/Browser/Geometry2D/Arc2DOptions",
-	"excite/Browser/Geometry2D/ArcClose2DOptions",
-	"excite/Browser/Geometry2D/Circle2DOptions",
-	"excite/Browser/Geometry2D/Disk2DOptions",
-	"excite/Browser/Geometry2D/Rectangle2DOptions",
+define ('x-ite/Browser/Geometry2D/X3DGeometry2DContext',[
+	"x-ite/Browser/Geometry2D/Arc2DOptions",
+	"x-ite/Browser/Geometry2D/ArcClose2DOptions",
+	"x-ite/Browser/Geometry2D/Circle2DOptions",
+	"x-ite/Browser/Geometry2D/Disk2DOptions",
+	"x-ite/Browser/Geometry2D/Rectangle2DOptions",
 ],
 function (Arc2DOptions,
           ArcClose2DOptions,
@@ -52854,19 +52854,19 @@ function (Arc2DOptions,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -52874,12 +52874,12 @@ function (Arc2DOptions,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geometry3D/BoxOptions',[
+define ('x-ite/Browser/Geometry3D/BoxOptions',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
-	"excite/Components/Geometry3D/IndexedFaceSet",
-	"excite/Components/Rendering/Coordinate",
-	"excite/Components/Texturing/TextureCoordinate",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Components/Geometry3D/IndexedFaceSet",
+	"x-ite/Components/Rendering/Coordinate",
+	"x-ite/Components/Texturing/TextureCoordinate",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
@@ -52907,7 +52907,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -52998,19 +52998,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53018,10 +53018,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geometry3D/ConeOptions',[
+define ('x-ite/Browser/Geometry3D/ConeOptions',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DBaseNode",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DBaseNode",
 ],
 function ($,
           Fields,
@@ -53046,7 +53046,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -53086,19 +53086,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53106,10 +53106,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geometry3D/CylinderOptions',[
+define ('x-ite/Browser/Geometry3D/CylinderOptions',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DBaseNode",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DBaseNode",
 ],
 function ($,
           Fields,
@@ -53134,7 +53134,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -53174,19 +53174,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53194,13 +53194,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geometry3D/QuadSphereOptions',[
+define ('x-ite/Browser/Geometry3D/QuadSphereOptions',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DBaseNode",
-	"excite/Components/Geometry3D/IndexedFaceSet",
-	"excite/Components/Rendering/Coordinate",
-	"excite/Components/Texturing/TextureCoordinate",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Components/Geometry3D/IndexedFaceSet",
+	"x-ite/Components/Rendering/Coordinate",
+	"x-ite/Components/Texturing/TextureCoordinate",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -53234,7 +53234,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -53480,19 +53480,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53500,11 +53500,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geometry3D/X3DGeometry3DContext',[
-	"excite/Browser/Geometry3D/BoxOptions",
-	"excite/Browser/Geometry3D/ConeOptions",
-	"excite/Browser/Geometry3D/CylinderOptions",
-	"excite/Browser/Geometry3D/QuadSphereOptions",
+define ('x-ite/Browser/Geometry3D/X3DGeometry3DContext',[
+	"x-ite/Browser/Geometry3D/BoxOptions",
+	"x-ite/Browser/Geometry3D/ConeOptions",
+	"x-ite/Browser/Geometry3D/CylinderOptions",
+	"x-ite/Browser/Geometry3D/QuadSphereOptions",
 ],
 function (BoxOptions,
           ConeOptions,
@@ -53580,19 +53580,19 @@ function (BoxOptions,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53600,9 +53600,9 @@ function (BoxOptions,
  ******************************************************************************/
 
 
-define ('excite/Browser/PointingDeviceSensor/PointingDevice',[
+define ('x-ite/Browser/PointingDeviceSensor/PointingDevice',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
+	"x-ite/Basic/X3DBaseNode",
 ],
 function ($,
           X3DBaseNode)
@@ -53785,19 +53785,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -53988,19 +53988,19 @@ function (Vector3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -54219,19 +54219,19 @@ function ($, Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -54329,19 +54329,19 @@ define ('standard/Math/Algorithms/MergeSort',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -54349,11 +54349,11 @@ define ('standard/Math/Algorithms/MergeSort',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext',[
+define ('x-ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext',[
 	"jquery",
-	"excite/Browser/PointingDeviceSensor/PointingDevice",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Browser/PointingDeviceSensor/PointingDevice",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Line3",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector2",
@@ -54409,7 +54409,7 @@ function ($,
 		{
 			this .cursorType = value;
 
-			var div = this .getBrowser () .getElement () .find (".excite-private-surface");
+			var div = this .getBrowser () .getElement () .find (".x-ite-private-surface");
 
 			switch (value)
 			{
@@ -54638,19 +54638,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -54658,9 +54658,9 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext',[
+define ('x-ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext',[
 	"jquery",
-	"excite/Fields",
+	"x-ite/Fields",
 ],
 function ($,
           Fields)
@@ -54901,19 +54901,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -54921,10 +54921,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/X3DBindableNode',[
+define ('x-ite/Components/Core/X3DBindableNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DChildNode, 
@@ -55015,19 +55015,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -55035,11 +55035,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Time/X3DTimeDependentNode',[
+define ('x-ite/Components/Time/X3DTimeDependentNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -55376,19 +55376,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -55396,14 +55396,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Time/TimeSensor',[
+define ('x-ite/Components/Time/TimeSensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DSensorNode",
-	"excite/Components/Time/X3DTimeDependentNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DSensorNode",
+	"x-ite/Components/Time/X3DTimeDependentNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -55557,19 +55557,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -55577,10 +55577,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/X3DInterpolatorNode',[
+define ('x-ite/Components/Interpolation/X3DInterpolatorNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
 function ($,
@@ -55696,19 +55696,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -55716,13 +55716,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/EaseInEaseOut',[
+define ('x-ite/Components/Interpolation/EaseInEaseOut',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -55844,19 +55844,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -55864,13 +55864,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/PositionInterpolator',[
+define ('x-ite/Components/Interpolation/PositionInterpolator',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -55968,19 +55968,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -55988,13 +55988,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/OrientationInterpolator',[
+define ('x-ite/Components/Interpolation/OrientationInterpolator',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Rotation4"
 ],
 function ($,
@@ -56097,19 +56097,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -56117,16 +56117,16 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Navigation/X3DViewpointNode',[
+define ('x-ite/Components/Navigation/X3DViewpointNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Core/X3DBindableNode",
-	"excite/Components/Time/TimeSensor",
-	"excite/Components/Interpolation/EaseInEaseOut",
-	"excite/Components/Interpolation/PositionInterpolator",
-	"excite/Components/Interpolation/OrientationInterpolator",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Components/Core/X3DBindableNode",
+	"x-ite/Components/Time/TimeSensor",
+	"x-ite/Components/Interpolation/EaseInEaseOut",
+	"x-ite/Components/Interpolation/PositionInterpolator",
+	"x-ite/Components/Interpolation/OrientationInterpolator",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
@@ -56559,19 +56559,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -56683,19 +56683,19 @@ function (Vector3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -56703,13 +56703,13 @@ function (Vector3)
  ******************************************************************************/
 
 
-define ('excite/Components/Navigation/OrthoViewpoint',[
+define ('x-ite/Components/Navigation/OrthoViewpoint',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Navigation/X3DViewpointNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Navigation/X3DViewpointNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Camera",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -56914,19 +56914,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -56934,10 +56934,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Navigation/X3DViewer',[
+define ('x-ite/Browser/Navigation/X3DViewer',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
-	"excite/Components/Navigation/OrthoViewpoint",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Components/Navigation/OrthoViewpoint",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
@@ -57306,19 +57306,19 @@ define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (m
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -57326,9 +57326,9 @@ define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (m
  ******************************************************************************/
 
 
-define ('excite/Browser/Navigation/ExamineViewer',[
+define ('x-ite/Browser/Navigation/ExamineViewer',[
 	"jquery",
-	"excite/Browser/Navigation/X3DViewer",
+	"x-ite/Browser/Navigation/X3DViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"jquery-mousewheel",
@@ -57663,19 +57663,19 @@ function ($, X3DViewer, Vector3, Rotation4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -57683,9 +57683,9 @@ function ($, X3DViewer, Vector3, Rotation4)
  ******************************************************************************/
 
 ﻿
-define ('excite/Browser/Navigation/X3DFlyViewer',[
+define ('x-ite/Browser/Navigation/X3DFlyViewer',[
 	"jquery",
-	"excite/Browser/Navigation/X3DViewer",
+	"x-ite/Browser/Navigation/X3DViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -58228,19 +58228,19 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58248,9 +58248,9 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
  ******************************************************************************/
 
 ﻿
-define ('excite/Browser/Navigation/WalkViewer',[
+define ('x-ite/Browser/Navigation/WalkViewer',[
 	"jquery",
-	"excite/Browser/Navigation/X3DFlyViewer",
+	"x-ite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
@@ -58333,19 +58333,19 @@ function ($, X3DFlyViewer, Vector3, Rotation4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58353,9 +58353,9 @@ function ($, X3DFlyViewer, Vector3, Rotation4)
  ******************************************************************************/
 
 ﻿
-define ('excite/Browser/Navigation/FlyViewer',[
+define ('x-ite/Browser/Navigation/FlyViewer',[
 	"jquery",
-	"excite/Browser/Navigation/X3DFlyViewer",
+	"x-ite/Browser/Navigation/X3DFlyViewer",
 ],
 function ($, X3DFlyViewer)
 {
@@ -58419,19 +58419,19 @@ function ($, X3DFlyViewer)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58439,13 +58439,13 @@ function ($, X3DFlyViewer)
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/ScalarInterpolator',[
+define ('x-ite/Components/Interpolation/ScalarInterpolator',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
 function ($,
@@ -58542,19 +58542,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58562,14 +58562,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Navigation/Viewpoint',[
+define ('x-ite/Components/Navigation/Viewpoint',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Navigation/X3DViewpointNode",
-	"excite/Components/Interpolation/ScalarInterpolator",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Navigation/X3DViewpointNode",
+	"x-ite/Components/Interpolation/ScalarInterpolator",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Camera",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
@@ -58723,19 +58723,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58818,19 +58818,19 @@ define ('standard/Math/Geometry/Spheroid3',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -58919,19 +58919,19 @@ function (Spheroid3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -59187,19 +59187,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -59405,19 +59405,19 @@ function (Geodetic,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -59425,7 +59425,7 @@ function (Geodetic,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geospatial/Geocentric',[
+define ('x-ite/Browser/Geospatial/Geocentric',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
@@ -59492,19 +59492,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -59512,11 +59512,11 @@ function (Vector3,
  ******************************************************************************/
 
 
-define ('excite/Browser/Geospatial/Geospatial',[
+define ('x-ite/Browser/Geospatial/Geospatial',[
 	"standard/Geospatial/ReferenceEllipsoids",
 	"standard/Geospatial/Geodetic",
 	"standard/Geospatial/UniversalTransverseMercator",
-	"excite/Browser/Geospatial/Geocentric",
+	"x-ite/Browser/Geospatial/Geocentric",
 ],
 function (ReferenceEllipsoids,
           Geodetic,
@@ -59708,19 +59708,19 @@ function (ReferenceEllipsoids,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -59728,11 +59728,11 @@ function (ReferenceEllipsoids,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/X3DGeospatialObject',[
+define ('x-ite/Components/Geospatial/X3DGeospatialObject',[
 	"jquery",
-	"excite/Bits/X3DConstants",
-	"excite/Browser/Geospatial/Geospatial",
-	"excite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Browser/Geospatial/Geospatial",
+	"x-ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
@@ -59990,19 +59990,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -60010,14 +60010,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Navigation/NavigationInfo',[
+define ('x-ite/Components/Navigation/NavigationInfo',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DBindableNode",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DBindableNode",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -60326,19 +60326,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -60346,16 +60346,16 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/GeoViewpoint',[
+define ('x-ite/Components/Geospatial/GeoViewpoint',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Navigation/X3DViewpointNode",
-	"excite/Components/Geospatial/X3DGeospatialObject",
-	"excite/Components/Interpolation/ScalarInterpolator",
-	"excite/Components/Navigation/NavigationInfo",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Navigation/X3DViewpointNode",
+	"x-ite/Components/Geospatial/X3DGeospatialObject",
+	"x-ite/Components/Interpolation/ScalarInterpolator",
+	"x-ite/Components/Navigation/NavigationInfo",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Camera",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
@@ -60621,19 +60621,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -60641,11 +60641,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Navigation/PlaneViewer',[
+define ('x-ite/Browser/Navigation/PlaneViewer',[
 	"jquery",
-	"excite/Browser/Navigation/X3DViewer",
-	"excite/Components/Navigation/Viewpoint",
-	"excite/Components/Geospatial/GeoViewpoint",
+	"x-ite/Browser/Navigation/X3DViewer",
+	"x-ite/Components/Navigation/Viewpoint",
+	"x-ite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector3",
 	"jquery-mousewheel",
 ],
@@ -60857,19 +60857,19 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -60877,9 +60877,9 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3)
  ******************************************************************************/
 
 
-define ('excite/Browser/Navigation/NoneViewer',[
+define ('x-ite/Browser/Navigation/NoneViewer',[
 	"jquery",
-	"excite/Browser/Navigation/X3DViewer",
+	"x-ite/Browser/Navigation/X3DViewer",
 ],
 function ($, X3DViewer)
 {
@@ -60927,19 +60927,19 @@ function ($, X3DViewer)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -60947,9 +60947,9 @@ function ($, X3DViewer)
  ******************************************************************************/
 
 
-define ('excite/Browser/Navigation/LookAtViewer',[
+define ('x-ite/Browser/Navigation/LookAtViewer',[
 	"jquery",
-	"excite/Browser/Navigation/X3DViewer",
+	"x-ite/Browser/Navigation/X3DViewer",
 	"jquery-mousewheel",
 ],
 function ($, X3DViewer)
@@ -61069,19 +61069,19 @@ function ($, X3DViewer)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -61089,11 +61089,11 @@ function ($, X3DViewer)
  ******************************************************************************/
 
 
-define ('excite/Components/Lighting/X3DLightNode',[
+define ('x-ite/Components/Lighting/X3DLightNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
@@ -61260,19 +61260,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -61280,10 +61280,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Grouping/X3DBoundedObject',[
+define ('x-ite/Components/Grouping/X3DBoundedObject',[
 	"jquery",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Geometry/Box3",
 ],
@@ -61360,19 +61360,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -61380,13 +61380,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Grouping/X3DGroupingNode',[
+define ('x-ite/Components/Grouping/X3DGroupingNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Components/Grouping/X3DBoundedObject",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Components/Grouping/X3DBoundedObject",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
 function ($,
@@ -61789,19 +61789,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -61914,19 +61914,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62000,19 +62000,19 @@ define ('standard/Utility/ObjectCache',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62020,15 +62020,15 @@ define ('standard/Utility/ObjectCache',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Components/Lighting/DirectionalLight',[
+define ('x-ite/Components/Lighting/DirectionalLight',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Lighting/X3DLightNode",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Lighting/X3DLightNode",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Geometry/Camera",
 	"standard/Math/Geometry/ViewVolume",
@@ -62308,19 +62308,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62328,15 +62328,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Navigation/X3DNavigationContext',[
-	"excite/Fields",
-	"excite/Browser/Navigation/ExamineViewer",
-	"excite/Browser/Navigation/WalkViewer",
-	"excite/Browser/Navigation/FlyViewer",
-	"excite/Browser/Navigation/PlaneViewer",
-	"excite/Browser/Navigation/NoneViewer",
-	"excite/Browser/Navigation/LookAtViewer",
-	"excite/Components/Lighting/DirectionalLight",
+define ('x-ite/Browser/Navigation/X3DNavigationContext',[
+	"x-ite/Fields",
+	"x-ite/Browser/Navigation/ExamineViewer",
+	"x-ite/Browser/Navigation/WalkViewer",
+	"x-ite/Browser/Navigation/FlyViewer",
+	"x-ite/Browser/Navigation/PlaneViewer",
+	"x-ite/Browser/Navigation/NoneViewer",
+	"x-ite/Browser/Navigation/LookAtViewer",
+	"x-ite/Components/Lighting/DirectionalLight",
 	"standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
@@ -62537,19 +62537,19 @@ function (Fields,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62557,10 +62557,10 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('excite/Components/Layering/X3DViewportNode',[
+define ('x-ite/Components/Layering/X3DViewportNode',[
 	"jquery",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DGroupingNode, 
@@ -62614,19 +62614,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62634,14 +62634,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Layering/Viewport',[
+define ('x-ite/Components/Layering/Viewport',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Layering/X3DViewportNode",
-	"excite/Bits/X3DConstants",
-	"excite/Bits/TraverseType",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Layering/X3DViewportNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Bits/TraverseType",
 	"standard/Utility/ObjectCache",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector4",
@@ -62799,19 +62799,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62819,8 +62819,8 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Layering/X3DLayeringContext',[
-	"excite/Components/Layering/Viewport",
+define ('x-ite/Browser/Layering/X3DLayeringContext',[
+	"x-ite/Components/Layering/Viewport",
 ],
 function (Viewport)
 {
@@ -62875,19 +62875,19 @@ function (Viewport)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -62895,13 +62895,13 @@ function (Viewport)
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing/TextureProperties',[
+define ('x-ite/Components/Texturing/TextureProperties',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -63066,19 +63066,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63086,9 +63086,9 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Layout/X3DLayoutContext',[
+define ('x-ite/Browser/Layout/X3DLayoutContext',[
 	"jquery",
-	"excite/Components/Texturing/TextureProperties",
+	"x-ite/Components/Texturing/TextureProperties",
 ],
 function ($, TextureProperties)
 {
@@ -63130,10 +63130,10 @@ function ($, TextureProperties)
 });
 
 
-define('text!excite/Browser/Shaders/BackgroundSphereVertexShader.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = p .xyz;\n\tgl_Position = x3d_ProjectionMatrix * p;\n\tC           = x3d_Color;\n}\n';});
+define('text!x-ite/Browser/Shaders/BackgroundSphereVertexShader.vs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the X-ITE Project.\n// \n//  X-ITE is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = p .xyz;\n\tgl_Position = x3d_ProjectionMatrix * p;\n\tC           = x3d_Color;\n}\n';});
 
 
-define('text!excite/Browser/Shaders/BackgroundSphereFragmentShader.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the Excite X3D Project.\n// \n//  Excite X3D is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
+define('text!x-ite/Browser/Shaders/BackgroundSphereFragmentShader.fs',[],function () { return 'data:text/plain;charset=utf-8,\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n//\n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.\n// \n//  All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  The copyright notice above does not evidence any actual of intended\n//  publication of such source code, and is an unpublished work by create3000.\n//  This material contains CONFIDENTIAL INFORMATION that is the property of\n//  create3000.\n// \n//  No permission is granted to copy, distribute, or create derivative works from\n//  the contents of this software, in whole or in part, without the prior written\n//  permission of create3000.\n// \n//  NON-MILITARY USE ONLY\n// \n//  All create3000 software are effectively free software with a non-military use\n//  restriction. It is free. Well commented source is provided. You may reuse the\n//  source in any way you please with the exception anything that uses it must be\n//  marked to indicate is contains \'non-military use only\' components.\n// \n//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.\n// \n//  Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.\n// \n//  This file is part of the X-ITE Project.\n// \n//  X-ITE is free software: you can redistribute it and/or modify it under the\n//  terms of the GNU General Public License version 3 only, as published by the\n//  Free Software Foundation.\n// \n//  X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY\n//  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n//  A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more\n//  details (a copy is included in the LICENSE file that accompanied this code).\n// \n//  You should have received a copy of the GNU General Public License version 3\n//  along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a\n//  copy of the GPLv3 License.\n// \n//  For Silvio, Joy and Adi.\n\n\nprecision mediump float;\n\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (x3d_ClipPlane [i] == x3d_NoneClipPlane)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -63164,19 +63164,19 @@ define('text!excite/Browser/Shaders/BackgroundSphereFragmentShader.fs',[],functi
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63184,12 +63184,12 @@ define('text!excite/Browser/Shaders/BackgroundSphereFragmentShader.fs',[],functi
  ******************************************************************************/
 
 
-define ('excite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext',[
-	"excite/Components/Shaders/ComposedShader",
-	"excite/Components/Shaders/ShaderPart",
-	"excite/Components/Texturing/TextureProperties",
-	"text!excite/Browser/Shaders/BackgroundSphereVertexShader.vs",
-	"text!excite/Browser/Shaders/BackgroundSphereFragmentShader.fs",
+define ('x-ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext',[
+	"x-ite/Components/Shaders/ComposedShader",
+	"x-ite/Components/Shaders/ShaderPart",
+	"x-ite/Components/Texturing/TextureProperties",
+	"text!x-ite/Browser/Shaders/BackgroundSphereVertexShader.vs",
+	"text!x-ite/Browser/Shaders/BackgroundSphereFragmentShader.fs",
 ],
 function (ComposedShader,
           ShaderPart,
@@ -63259,19 +63259,19 @@ function (ComposedShader,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63279,7 +63279,7 @@ function (ComposedShader,
  ******************************************************************************/
 
 
-define ('excite/Rendering/DepthBuffer',[
+define ('x-ite/Rendering/DepthBuffer',[
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
@@ -63455,19 +63455,19 @@ function (ViewVolume,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63475,8 +63475,8 @@ function (ViewVolume,
  ******************************************************************************/
 
 
-define ('excite/Browser/Lighting/X3DLightingContext',[
-	"excite/Rendering/DepthBuffer",
+define ('x-ite/Browser/Lighting/X3DLightingContext',[
+	"x-ite/Rendering/DepthBuffer",
 ],
 function (DepthBuffer)
 {
@@ -63563,19 +63563,19 @@ function (DepthBuffer)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63583,8 +63583,8 @@ function (DepthBuffer)
  ******************************************************************************/
 
 
-define ('excite/Browser/Sound/X3DSoundContext',[
-	"excite/Fields",
+define ('x-ite/Browser/Sound/X3DSoundContext',[
+	"x-ite/Fields",
 ],
 function (Fields)
 {
@@ -63652,19 +63652,19 @@ function (Fields)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63672,7 +63672,7 @@ function (Fields)
  ******************************************************************************/
 
 
-define ('excite/Browser/Text/TextAlignment',[],function ()
+define ('x-ite/Browser/Text/TextAlignment',[],function ()
 {
 "use strict";
 	
@@ -63722,19 +63722,19 @@ define ('excite/Browser/Text/TextAlignment',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63795,19 +63795,19 @@ define ('standard/Utility/Shuffle',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -63815,19 +63815,19 @@ define ('standard/Utility/Shuffle',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Components/Text/X3DFontStyleNode',[
+define ('x-ite/Components/Text/X3DFontStyleNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Core/X3DNode",
-	"excite/Components/Networking/X3DUrlObject",
-	"excite/Browser/Text/TextAlignment",
-	"excite/InputOutput/FileLoader",
-	"excite/Bits/X3DConstants",
-	"excite/Browser/Networking/urls",
+	"x-ite/Fields",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Components/Networking/X3DUrlObject",
+	"x-ite/Browser/Text/TextAlignment",
+	"x-ite/InputOutput/FileLoader",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Browser/Networking/urls",
 	"standard/Utility/Shuffle",
 	"standard/Networking/URI",
-	"excite/Browser/VERSION",
-	"excite/DEBUG",
+	"x-ite/Browser/VERSION",
+	"x-ite/DEBUG",
 ],
 function ($,
           Fields,
@@ -63852,9 +63852,9 @@ function ($,
 
 	var FontDirectories = [
 		"http://media.create3000.de/fonts/",
-		"https://cdn.rawgit.com/create3000/excite/" + version + "/fonts/",
-		"https://cdn.jsdelivr.net/gh/create3000/excite@" + version + "/fonts/",
-		"https://rawgit.com/create3000/excite/" + version + "/fonts/",
+		"https://cdn.rawgit.com/create3000/x-ite/" + version + "/fonts/",
+		"https://cdn.jsdelivr.net/gh/create3000/x-ite@" + version + "/fonts/",
+		"https://rawgit.com/create3000/x-ite/" + version + "/fonts/",
 	];
 
 	shuffle (FontDirectories);
@@ -64098,19 +64098,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -64355,19 +64355,19 @@ function (Matrix3, Vector2)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -64375,8 +64375,8 @@ function (Matrix3, Vector2)
  ******************************************************************************/
 
 
-define ('excite/Browser/Text/X3DTextGeometry',[
-	"excite/Browser/Text/TextAlignment",
+define ('x-ite/Browser/Text/X3DTextGeometry',[
+	"x-ite/Browser/Text/TextAlignment",
 	"standard/Math/Geometry/Box2",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Numbers/Vector2",
@@ -65011,19 +65011,19 @@ function (TextAlignment,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -65749,19 +65749,19 @@ define('earcut', ['earcut/dist/earcut.dev'], function (main) { return main; });
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -65769,10 +65769,10 @@ define('earcut', ['earcut/dist/earcut.dev'], function (main) { return main; });
  ******************************************************************************/
 
 
-define ('excite/Browser/Text/PolygonText',[
+define ('x-ite/Browser/Text/PolygonText',[
 	"jquery",
-	"excite/Browser/Core/PrimitiveQuality",
-	"excite/Browser/Text/X3DTextGeometry",
+	"x-ite/Browser/Core/PrimitiveQuality",
+	"x-ite/Browser/Text/X3DTextGeometry",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Triangle2",
@@ -66380,19 +66380,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -66400,14 +66400,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Text/FontStyle',[
+define ('x-ite/Components/Text/FontStyle',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Text/X3DFontStyleNode",
-	"excite/Browser/Text/PolygonText",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Text/X3DFontStyleNode",
+	"x-ite/Browser/Text/PolygonText",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -71425,19 +71425,19 @@ exports.sizeOf = sizeOf;
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -71445,9 +71445,9 @@ exports.sizeOf = sizeOf;
  ******************************************************************************/
 
 
-define ('excite/Browser/Text/X3DTextContext',[
+define ('x-ite/Browser/Text/X3DTextContext',[
 	"jquery",
-	"excite/Components/Text/FontStyle",
+	"x-ite/Components/Text/FontStyle",
 	"lib/opentype.js/dist/opentype",
 ],
 function ($,
@@ -71551,19 +71551,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -71571,10 +71571,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing/X3DTextureTransformNode',[
+define ('x-ite/Components/Texturing/X3DTextureTransformNode',[
 	"jquery",
-	"excite/Components/Shape/X3DAppearanceChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Shape/X3DAppearanceChildNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
 function ($,
@@ -71645,19 +71645,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -71665,13 +71665,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing/TextureTransform',[
+define ('x-ite/Components/Texturing/TextureTransform',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Texturing/X3DTextureTransformNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Texturing/X3DTextureTransformNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Matrix3",
 ],
@@ -71802,19 +71802,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -71822,10 +71822,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Texturing/X3DTexturingContext',[
-	"excite/Components/Texturing/TextureProperties",
-	"excite/Components/Texturing/TextureTransform",
-	"excite/Components/Texturing/TextureCoordinate",
+define ('x-ite/Browser/Texturing/X3DTexturingContext',[
+	"x-ite/Components/Texturing/TextureProperties",
+	"x-ite/Components/Texturing/TextureTransform",
+	"x-ite/Components/Texturing/TextureCoordinate",
 ],
 function (TextureProperties,
           TextureTransform,
@@ -71978,19 +71978,19 @@ function (TextureProperties,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -71998,7 +71998,7 @@ function (TextureProperties,
  ******************************************************************************/
 
 
-define ('excite/Browser/Time/X3DTimeContext',[
+define ('x-ite/Browser/Time/X3DTimeContext',[
 	"standard/Math/Numbers/Vector3",
 ],
 function (Vector3)
@@ -72077,19 +72077,19 @@ function (Vector3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -72191,19 +72191,19 @@ define ('standard/Math/Algorithms/QuickSort',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -72211,10 +72211,10 @@ define ('standard/Math/Algorithms/QuickSort',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/X3DParticleEmitterNode',[
+define ('x-ite/Components/ParticleSystems/X3DParticleEmitterNode',[
 	"jquery",
-	"excite/Components/Core/X3DNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Geometry/Line3",
@@ -72600,19 +72600,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -72620,13 +72620,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/PointEmitter',[
+define ('x-ite/Components/ParticleSystems/PointEmitter',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/ParticleSystems/X3DParticleEmitterNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/ParticleSystems/X3DParticleEmitterNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -72747,19 +72747,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -72767,8 +72767,8 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/ParticleSystems/X3DParticleSystemsContext',[
-	"excite/Components/ParticleSystems/PointEmitter",
+define ('x-ite/Browser/ParticleSystems/X3DParticleSystemsContext',[
+	"x-ite/Components/ParticleSystems/PointEmitter",
 ],
 function (PointEmitter)
 {
@@ -72823,19 +72823,19 @@ function (PointEmitter)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -72843,10 +72843,10 @@ function (PointEmitter)
  ******************************************************************************/
 
 
-define ('excite/Rendering/X3DRenderObject',[
+define ('x-ite/Rendering/X3DRenderObject',[
 	"jquery",
-	"excite/Rendering/DepthBuffer",
-	"excite/Bits/TraverseType",
+	"x-ite/Rendering/DepthBuffer",
+	"x-ite/Bits/TraverseType",
 	"standard/Math/Algorithm",
 	"standard/Math/Algorithms/MergeSort",
 	"standard/Math/Geometry/Camera",
@@ -73759,19 +73759,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -73779,9 +73779,9 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Execution/BindableStack',[
+define ('x-ite/Execution/BindableStack',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
+	"x-ite/Basic/X3DBaseNode",
 ],
 function ($, X3DBaseNode)
 {
@@ -73804,7 +73804,7 @@ function ($, X3DBaseNode)
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -73948,19 +73948,19 @@ function ($, X3DBaseNode)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -73968,9 +73968,9 @@ function ($, X3DBaseNode)
  ******************************************************************************/
 
 
-define ('excite/Execution/BindableList',[
+define ('x-ite/Execution/BindableList',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
+	"x-ite/Basic/X3DBaseNode",
 ],
 function ($, X3DBaseNode)
 {
@@ -74008,7 +74008,7 @@ function ($, X3DBaseNode)
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -74096,19 +74096,19 @@ function ($, X3DBaseNode)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -74116,9 +74116,9 @@ function ($, X3DBaseNode)
  ******************************************************************************/
 
 
-define ('excite/Components/EnvironmentalEffects/X3DFogObject',[
+define ('x-ite/Components/EnvironmentalEffects/X3DFogObject',[
 	"jquery",
-	"excite/Bits/X3DConstants",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DConstants)
@@ -74221,19 +74221,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -74241,15 +74241,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EnvironmentalEffects/Fog',[
+define ('x-ite/Components/EnvironmentalEffects/Fog',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DBindableNode",
-	"excite/Components/EnvironmentalEffects/X3DFogObject",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DBindableNode",
+	"x-ite/Components/EnvironmentalEffects/X3DFogObject",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -74352,19 +74352,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -74372,11 +74372,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EnvironmentalEffects/X3DBackgroundNode',[
+define ('x-ite/Components/EnvironmentalEffects/X3DBackgroundNode',[
 	"jquery",
-	"excite/Components/Core/X3DBindableNode",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DBindableNode",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector3",
@@ -75033,19 +75033,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -75053,11 +75053,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing/X3DTextureNode',[
+define ('x-ite/Components/Texturing/X3DTextureNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Shape/X3DAppearanceChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Components/Shape/X3DAppearanceChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -75182,19 +75182,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -75202,12 +75202,12 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing/X3DTexture2DNode',[
+define ('x-ite/Components/Texturing/X3DTexture2DNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Texturing/X3DTextureNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Components/Texturing/X3DTextureNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -75419,19 +75419,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -75439,18 +75439,18 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing/ImageTexture',[
+define ('x-ite/Components/Texturing/ImageTexture',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Texturing/X3DTexture2DNode",
-	"excite/Components/Networking/X3DUrlObject",
-	"excite/Bits/X3DConstants",
-	"excite/Browser/Networking/urls",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Texturing/X3DTexture2DNode",
+	"x-ite/Components/Networking/X3DUrlObject",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Browser/Networking/urls",
 	"standard/Networking/URI",
 	"standard/Math/Algorithm",
-	"excite/DEBUG",
+	"x-ite/DEBUG",
 ],
 function ($,
           Fields,
@@ -75681,19 +75681,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -75701,14 +75701,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EnvironmentalEffects/Background',[
+define ('x-ite/Components/EnvironmentalEffects/Background',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/EnvironmentalEffects/X3DBackgroundNode",
-	"excite/Components/Texturing/ImageTexture",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/EnvironmentalEffects/X3DBackgroundNode",
+	"x-ite/Components/Texturing/ImageTexture",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -75843,19 +75843,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -75863,19 +75863,19 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Layering/X3DLayerNode',[
+define ('x-ite/Components/Layering/X3DLayerNode',[
 	"jquery",
-	"excite/Components/Core/X3DNode",
-	"excite/Rendering/X3DRenderObject",
-	"excite/Components/Layering/X3DViewportNode",
-	"excite/Execution/BindableStack",
-	"excite/Execution/BindableList",
-	"excite/Components/Navigation/NavigationInfo",
-	"excite/Components/EnvironmentalEffects/Fog",
-	"excite/Components/EnvironmentalEffects/Background",
-	"excite/Bits/X3DCast",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Rendering/X3DRenderObject",
+	"x-ite/Components/Layering/X3DViewportNode",
+	"x-ite/Execution/BindableStack",
+	"x-ite/Execution/BindableList",
+	"x-ite/Components/Navigation/NavigationInfo",
+	"x-ite/Components/EnvironmentalEffects/Fog",
+	"x-ite/Components/EnvironmentalEffects/Background",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Camera",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
@@ -76229,19 +76229,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -76249,13 +76249,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Grouping/Group',[
+define ('x-ite/Components/Grouping/Group',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -76332,19 +76332,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -76352,15 +76352,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Layering/Layer',[
+define ('x-ite/Components/Layering/Layer',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Layering/X3DLayerNode",
-	"excite/Components/Navigation/Viewpoint",
-	"excite/Components/Grouping/Group",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Layering/X3DLayerNode",
+	"x-ite/Components/Navigation/Viewpoint",
+	"x-ite/Components/Grouping/Group",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -76442,19 +76442,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -76462,16 +76462,16 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Layering/LayerSet',[
+define ('x-ite/Components/Layering/LayerSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DNode",
-	"excite/Components/Layering/Layer",
-	"excite/Bits/X3DCast",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Components/Layering/Layer",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -76671,19 +76671,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -76691,14 +76691,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Execution/World',[
+define ('x-ite/Execution/World',[
 	"jquery",
-	"excite/Fields/SFNode",
-	"excite/Basic/X3DBaseNode",
-	"excite/Components/Layering/LayerSet",
-	"excite/Components/Layering/Layer",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields/SFNode",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Components/Layering/LayerSet",
+	"x-ite/Components/Layering/Layer",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           SFNode,
@@ -76832,19 +76832,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -76852,33 +76852,33 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/X3DBrowserContext',[
+define ('x-ite/Browser/X3DBrowserContext',[
 	"jquery",
-	"excite/Fields/SFTime",
-	"excite/Basic/X3DBaseNode",
-	"excite/Browser/Core/X3DCoreContext",
-	"excite/Routing/X3DRoutingContext",
-	"excite/Browser/Scripting/X3DScriptingContext",
-	"excite/Browser/Networking/X3DNetworkingContext",
-	"excite/Browser/Shaders/X3DShadersContext",
-	"excite/Browser/Shape/X3DShapeContext",
-	"excite/Browser/Rendering/X3DRenderingContext",
-	"excite/Browser/Geometry2D/X3DGeometry2DContext",
-	"excite/Browser/Geometry3D/X3DGeometry3DContext",
-	"excite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext",
-	"excite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext",
-	"excite/Browser/Navigation/X3DNavigationContext",
-	"excite/Browser/Layering/X3DLayeringContext",
-	"excite/Browser/Layout/X3DLayoutContext",
-	"excite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext",
-	"excite/Browser/Lighting/X3DLightingContext",
-	"excite/Browser/Sound/X3DSoundContext",
-	"excite/Browser/Text/X3DTextContext",
-	"excite/Browser/Texturing/X3DTexturingContext",
-	"excite/Browser/Time/X3DTimeContext",
-	"excite/Browser/ParticleSystems/X3DParticleSystemsContext",
-	"excite/Execution/World",
-	"excite/Bits/TraverseType",
+	"x-ite/Fields/SFTime",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Browser/Core/X3DCoreContext",
+	"x-ite/Routing/X3DRoutingContext",
+	"x-ite/Browser/Scripting/X3DScriptingContext",
+	"x-ite/Browser/Networking/X3DNetworkingContext",
+	"x-ite/Browser/Shaders/X3DShadersContext",
+	"x-ite/Browser/Shape/X3DShapeContext",
+	"x-ite/Browser/Rendering/X3DRenderingContext",
+	"x-ite/Browser/Geometry2D/X3DGeometry2DContext",
+	"x-ite/Browser/Geometry3D/X3DGeometry3DContext",
+	"x-ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext",
+	"x-ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext",
+	"x-ite/Browser/Navigation/X3DNavigationContext",
+	"x-ite/Browser/Layering/X3DLayeringContext",
+	"x-ite/Browser/Layout/X3DLayoutContext",
+	"x-ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext",
+	"x-ite/Browser/Lighting/X3DLightingContext",
+	"x-ite/Browser/Sound/X3DSoundContext",
+	"x-ite/Browser/Text/X3DTextContext",
+	"x-ite/Browser/Texturing/X3DTexturingContext",
+	"x-ite/Browser/Time/X3DTimeContext",
+	"x-ite/Browser/ParticleSystems/X3DParticleSystemsContext",
+	"x-ite/Execution/World",
+	"x-ite/Bits/TraverseType",
 ],
 function ($,
           SFTime,
@@ -77121,19 +77121,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -77141,7 +77141,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Configuration/ProfileInfo',[
+define ('x-ite/Configuration/ProfileInfo',[
 	"jquery",
 ],
 function ($)
@@ -77199,19 +77199,19 @@ function ($)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -77219,9 +77219,9 @@ function ($)
  ******************************************************************************/
 
 
-define ('excite/Configuration/ProfileInfoArray',[
+define ('x-ite/Configuration/ProfileInfoArray',[
 	"jquery",
-	"excite/Configuration/X3DInfoArray",
+	"x-ite/Configuration/X3DInfoArray",
 ],
 function ($, X3DInfoArray)
 {
@@ -77269,19 +77269,19 @@ function ($, X3DInfoArray)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -77289,12 +77289,12 @@ function ($, X3DInfoArray)
  ******************************************************************************/
 
 
-define ('excite/Configuration/SupportedProfiles',[
+define ('x-ite/Configuration/SupportedProfiles',[
 	"jquery",
-	"excite/Configuration/ProfileInfo",
-	"excite/Configuration/ProfileInfoArray",
-	"excite/Configuration/ComponentInfoArray",
-	"excite/Browser/Networking/urls",
+	"x-ite/Configuration/ProfileInfo",
+	"x-ite/Configuration/ProfileInfoArray",
+	"x-ite/Configuration/ComponentInfoArray",
+	"x-ite/Browser/Networking/urls",
 ],
 function ($,
           ProfileInfo,
@@ -77500,19 +77500,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -77520,10 +77520,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Configuration/SupportedComponents',[
+define ('x-ite/Configuration/SupportedComponents',[
 	"jquery",
-	"excite/Configuration/ComponentInfoArray",
-	"excite/Browser/Networking/urls",
+	"x-ite/Configuration/ComponentInfoArray",
+	"x-ite/Browser/Networking/urls",
 ],
 function ($, ComponentInfoArray, urls)
 {
@@ -77817,8 +77817,8 @@ function ($, ComponentInfoArray, urls)
 
 		supportedComponents .addComponentInfo (
 		{
-			title:      "Excite",
-			name:       "Excite",
+			title:      "X-ITE",
+			name:       "X-ITE",
 			level:       1,
 			providerUrl: urls .provider,
 		});
@@ -77859,19 +77859,19 @@ function ($, ComponentInfoArray, urls)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -77879,7 +77879,7 @@ function ($, ComponentInfoArray, urls)
  ******************************************************************************/
 
 
-define ('excite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer',[
+define ('x-ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer',[
 	"jquery",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
@@ -77956,19 +77956,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -77976,11 +77976,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode',[
+define ('x-ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode',[
 	"jquery",
-	"excite/Components/Core/X3DSensorNode",
-	"excite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DSensorNode",
+	"x-ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DSensorNode,
@@ -78083,19 +78083,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -78103,10 +78103,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/PointingDeviceSensor/X3DTouchSensorNode',[
+define ('x-ite/Components/PointingDeviceSensor/X3DTouchSensorNode',[
 	"jquery",
-	"excite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DPointingDeviceSensorNode, 
@@ -78167,19 +78167,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -78187,13 +78187,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/PointingDeviceSensor/TouchSensor',[
+define ('x-ite/Components/PointingDeviceSensor/TouchSensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/PointingDeviceSensor/X3DTouchSensorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
 function ($,
@@ -78299,19 +78299,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -78319,17 +78319,17 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Networking/Anchor',[
+define ('x-ite/Components/Networking/Anchor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Components/Networking/X3DUrlObject",
-	"excite/Components/PointingDeviceSensor/TouchSensor",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/FileLoader",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Components/Networking/X3DUrlObject",
+	"x-ite/Components/PointingDeviceSensor/TouchSensor",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/FileLoader",
 ],
 function ($,
           Fields,
@@ -78496,19 +78496,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -78516,10 +78516,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/X3DLineGeometryNode',[
+define ('x-ite/Components/Rendering/X3DLineGeometryNode',[
 	"jquery",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
 function ($,
@@ -78695,19 +78695,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -78715,13 +78715,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry2D/Arc2D',[
+define ('x-ite/Components/Geometry2D/Arc2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DLineGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DLineGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
@@ -78873,19 +78873,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -78893,13 +78893,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry2D/ArcClose2D',[
+define ('x-ite/Components/Geometry2D/ArcClose2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
@@ -79100,19 +79100,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79120,11 +79120,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Sound/X3DSoundSourceNode',[
+define ('x-ite/Components/Sound/X3DSoundSourceNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Components/Time/X3DTimeDependentNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Components/Time/X3DTimeDependentNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DChildNode,
@@ -79326,19 +79326,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79346,17 +79346,17 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Sound/AudioClip',[
+define ('x-ite/Components/Sound/AudioClip',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Sound/X3DSoundSourceNode",
-	"excite/Components/Networking/X3DUrlObject",
-	"excite/Bits/X3DConstants",
-	"excite/Browser/Networking/urls",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Sound/X3DSoundSourceNode",
+	"x-ite/Components/Networking/X3DUrlObject",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Browser/Networking/urls",
 	"standard/Networking/URI",
-	"excite/DEBUG",
+	"x-ite/DEBUG",
 ],
 function ($,
           Fields,
@@ -79533,19 +79533,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79553,14 +79553,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Navigation/Billboard',[
+define ('x-ite/Components/Navigation/Billboard',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/X3DConstants",
-	"excite/Bits/TraverseType",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -79731,19 +79731,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79751,13 +79751,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EventUtilities/BooleanFilter',[
+define ('x-ite/Components/EventUtilities/BooleanFilter',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -79851,19 +79851,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -79871,10 +79871,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EventUtilities/X3DSequencerNode',[
+define ('x-ite/Components/EventUtilities/X3DSequencerNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
 function ($,
@@ -80006,19 +80006,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80026,13 +80026,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EventUtilities/BooleanSequencer',[
+define ('x-ite/Components/EventUtilities/BooleanSequencer',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/EventUtilities/X3DSequencerNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/EventUtilities/X3DSequencerNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -80124,19 +80124,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80144,13 +80144,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EventUtilities/BooleanToggle',[
+define ('x-ite/Components/EventUtilities/BooleanToggle',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -80235,19 +80235,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80255,10 +80255,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EventUtilities/X3DTriggerNode',[
+define ('x-ite/Components/EventUtilities/X3DTriggerNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DChildNode, 
@@ -80312,19 +80312,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80332,13 +80332,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EventUtilities/BooleanTrigger',[
+define ('x-ite/Components/EventUtilities/BooleanTrigger',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/EventUtilities/X3DTriggerNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/EventUtilities/X3DTriggerNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -80422,19 +80422,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80442,10 +80442,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/X3DParticlePhysicsModelNode',[
+define ('x-ite/Components/ParticleSystems/X3DParticlePhysicsModelNode',[
 	"jquery",
-	"excite/Components/Core/X3DNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DNode, 
@@ -80501,19 +80501,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80521,14 +80521,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/BoundedPhysicsModel',[
+define ('x-ite/Components/ParticleSystems/BoundedPhysicsModel',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-	"excite/Bits/X3DConstants",
-	"excite/Bits/X3DCast",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Bits/X3DCast",
 ],
 function ($,
           Fields,
@@ -80636,19 +80636,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80656,13 +80656,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry3D/Box',[
+define ('x-ite/Components/Geometry3D/Box',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -80784,19 +80784,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80804,10 +80804,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/CADGeometry/X3DProductStructureChildNode',[
+define ('x-ite/Components/CADGeometry/X3DProductStructureChildNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DChildNode, 
@@ -80861,19 +80861,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80881,14 +80881,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/CADGeometry/CADAssembly',[
+define ('x-ite/Components/CADGeometry/CADAssembly',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Components/CADGeometry/X3DProductStructureChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Components/CADGeometry/X3DProductStructureChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -80969,19 +80969,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -80989,15 +80989,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/CADGeometry/CADFace',[
+define ('x-ite/Components/CADGeometry/CADFace',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/CADGeometry/X3DProductStructureChildNode",
-	"excite/Components/Grouping/X3DBoundedObject",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/CADGeometry/X3DProductStructureChildNode",
+	"x-ite/Components/Grouping/X3DBoundedObject",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -81145,19 +81145,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81165,13 +81165,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/CADGeometry/CADLayer',[
+define ('x-ite/Components/CADGeometry/CADLayer',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -81260,19 +81260,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81280,10 +81280,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Grouping/X3DTransformMatrix3DNode',[
+define ('x-ite/Components/Grouping/X3DTransformMatrix3DNode',[
 	"jquery",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -81396,19 +81396,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81416,10 +81416,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Grouping/X3DTransformNode',[
+define ('x-ite/Components/Grouping/X3DTransformNode',[
 	"jquery",
-	"excite/Components/Grouping/X3DTransformMatrix3DNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Grouping/X3DTransformMatrix3DNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DTransformMatrix3DNode, 
@@ -81495,19 +81495,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81515,14 +81515,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/CADGeometry/CADPart',[
+define ('x-ite/Components/CADGeometry/CADPart',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DTransformNode",
-	"excite/Components/CADGeometry/X3DProductStructureChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DTransformNode",
+	"x-ite/Components/CADGeometry/X3DProductStructureChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -81612,19 +81612,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81632,13 +81632,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry2D/Circle2D',[
+define ('x-ite/Components/Geometry2D/Circle2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DLineGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DLineGeometryNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -81747,19 +81747,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81767,13 +81767,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/ClipPlane',[
+define ('x-ite/Components/Rendering/ClipPlane',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Geometry/Plane3",
@@ -81936,19 +81936,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -81956,16 +81956,16 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Navigation/Collision',[
+define ('x-ite/Components/Navigation/Collision',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Components/Core/X3DSensorNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Components/Core/X3DSensorNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -82115,19 +82115,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82135,10 +82135,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/X3DColorNode',[
+define ('x-ite/Components/Rendering/X3DColorNode',[
 	"jquery",
-	"excite/Components/Rendering/X3DGeometricPropertyNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Rendering/X3DGeometricPropertyNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DGeometricPropertyNode, 
@@ -82204,19 +82204,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82224,13 +82224,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/Color',[
+define ('x-ite/Components/Rendering/Color',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DColorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DColorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector4",
 ],
@@ -82332,19 +82332,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82352,10 +82352,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/X3DFollowerNode',[
+define ('x-ite/Components/Followers/X3DFollowerNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DChildNode, 
@@ -82480,19 +82480,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82500,10 +82500,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/X3DChaserNode',[
+define ('x-ite/Components/Followers/X3DChaserNode',[
 	"jquery",
-	"excite/Components/Followers/X3DFollowerNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Followers/X3DFollowerNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DFollowerNode, 
@@ -82732,19 +82732,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82752,13 +82752,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/ColorChaser',[
+define ('x-ite/Components/Followers/ColorChaser',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DChaserNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DChaserNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector3",
 ],
@@ -82883,19 +82883,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -82903,10 +82903,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/X3DDamperNode',[
+define ('x-ite/Components/Followers/X3DDamperNode',[
 	"jquery",
-	"excite/Components/Followers/X3DFollowerNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Followers/X3DFollowerNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
 function ($,
@@ -83066,19 +83066,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83086,13 +83086,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/ColorDamper',[
+define ('x-ite/Components/Followers/ColorDamper',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DDamperNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DDamperNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector3",
 ],
@@ -83215,19 +83215,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83235,13 +83235,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/ColorInterpolator',[
+define ('x-ite/Components/Interpolation/ColorInterpolator',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Color3",
 ],
 function ($,
@@ -83346,19 +83346,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83366,13 +83366,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/ColorRGBA',[
+define ('x-ite/Components/Rendering/ColorRGBA',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DColorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DColorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Color4",
 	"standard/Math/Numbers/Vector4",
 ],
@@ -83474,19 +83474,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83494,10 +83494,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/CubeMapTexturing/X3DEnvironmentTextureNode',[
+define ('x-ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode',[
 	"jquery",
-	"excite/Components/Texturing/X3DTextureNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Texturing/X3DTextureNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DTextureNode, 
@@ -83600,19 +83600,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83620,14 +83620,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/CubeMapTexturing/ComposedCubeMapTexture',[
+define ('x-ite/Components/CubeMapTexturing/ComposedCubeMapTexture',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -83870,19 +83870,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -83890,13 +83890,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry3D/Cone',[
+define ('x-ite/Components/Geometry3D/Cone',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -84123,19 +84123,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84143,13 +84143,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/ConeEmitter',[
+define ('x-ite/Components/ParticleSystems/ConeEmitter',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/ParticleSystems/X3DParticleEmitterNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/ParticleSystems/X3DParticleEmitterNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
@@ -84273,19 +84273,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84293,7 +84293,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
+define ('x-ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
 {
 "use strict";
 
@@ -84407,19 +84407,19 @@ define ('excite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84427,9 +84427,9 @@ define ('excite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Browser/Followers/X3DArrayChaserTemplate',[
+define ('x-ite/Browser/Followers/X3DArrayChaserTemplate',[
 	"jquery",
-	"excite/Browser/Followers/X3DArrayFollowerTemplate",
+	"x-ite/Browser/Followers/X3DArrayFollowerTemplate",
 ],
 function ($,
           X3DArrayFollowerTemplate)
@@ -84500,19 +84500,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84520,14 +84520,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/CoordinateChaser',[
+define ('x-ite/Components/Followers/CoordinateChaser',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DChaserNode",
-	"excite/Browser/Followers/X3DArrayChaserTemplate",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DChaserNode",
+	"x-ite/Browser/Followers/X3DArrayChaserTemplate",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -84621,19 +84621,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84641,14 +84641,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/CoordinateDamper',[
+define ('x-ite/Components/Followers/CoordinateDamper',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DDamperNode",
-	"excite/Browser/Followers/X3DArrayFollowerTemplate",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DDamperNode",
+	"x-ite/Browser/Followers/X3DArrayFollowerTemplate",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -84744,19 +84744,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84764,13 +84764,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/NURBS/CoordinateDouble',[
+define ('x-ite/Components/NURBS/CoordinateDouble',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DCoordinateNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DCoordinateNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -84843,19 +84843,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84863,13 +84863,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/CoordinateInterpolator',[
+define ('x-ite/Components/Interpolation/CoordinateInterpolator',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -84968,19 +84968,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -84988,13 +84988,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/CoordinateInterpolator2D',[
+define ('x-ite/Components/Interpolation/CoordinateInterpolator2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -85090,19 +85090,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85110,13 +85110,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry3D/Cylinder',[
+define ('x-ite/Components/Geometry3D/Cylinder',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -85402,19 +85402,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85422,10 +85422,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/PointingDeviceSensor/X3DDragSensorNode',[
+define ('x-ite/Components/PointingDeviceSensor/X3DDragSensorNode',[
 	"jquery",
-	"excite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DPointingDeviceSensorNode, 
@@ -85479,19 +85479,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85651,19 +85651,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85671,13 +85671,13 @@ function (Vector3,
  ******************************************************************************/
 
 
-define ('excite/Components/PointingDeviceSensor/CylinderSensor',[
+define ('x-ite/Components/PointingDeviceSensor/CylinderSensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/PointingDeviceSensor/X3DDragSensorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/PointingDeviceSensor/X3DDragSensorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -85960,19 +85960,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -85980,14 +85980,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry2D/Disk2D',[
+define ('x-ite/Components/Geometry2D/Disk2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Components/Rendering/X3DLineGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Components/Rendering/X3DLineGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -86243,19 +86243,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -86263,14 +86263,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry3D/ElevationGrid',[
+define ('x-ite/Components/Geometry3D/ElevationGrid',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -86654,19 +86654,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -86674,13 +86674,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/ExplosionEmitter',[
+define ('x-ite/Components/ParticleSystems/ExplosionEmitter',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/ParticleSystems/X3DParticleEmitterNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/ParticleSystems/X3DParticleEmitterNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -86779,19 +86779,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -86799,13 +86799,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry3D/Extrusion',[
+define ('x-ite/Components/Geometry3D/Extrusion',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -87408,19 +87408,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -87428,10 +87428,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shaders/X3DVertexAttributeNode',[
+define ('x-ite/Components/Shaders/X3DVertexAttributeNode',[
 	"jquery",
-	"excite/Components/Rendering/X3DGeometricPropertyNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Rendering/X3DGeometricPropertyNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DGeometricPropertyNode, 
@@ -87485,19 +87485,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -87505,13 +87505,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shaders/FloatVertexAttribute',[
+define ('x-ite/Components/Shaders/FloatVertexAttribute',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Shaders/X3DVertexAttributeNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Shaders/X3DVertexAttributeNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
 function ($,
@@ -87614,19 +87614,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -87634,13 +87634,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/ForcePhysicsModel',[
+define ('x-ite/Components/ParticleSystems/ForcePhysicsModel',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -87722,19 +87722,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -87742,11 +87742,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Rendering/DependentRenderer',[
+define ('x-ite/Rendering/DependentRenderer',[
 	"jquery",
-	"excite/Basic/X3DBaseNode",
-	"excite/Rendering/X3DRenderObject",
-	"excite/Bits/TraverseType",
+	"x-ite/Basic/X3DBaseNode",
+	"x-ite/Rendering/X3DRenderObject",
+	"x-ite/Bits/TraverseType",
 ],
 function ($,
           X3DBaseNode,
@@ -87871,19 +87871,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -87891,16 +87891,16 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/CubeMapTexturing/GeneratedCubeMapTexture',[
+define ('x-ite/Components/CubeMapTexturing/GeneratedCubeMapTexture',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
-	"excite/Rendering/DependentRenderer",
-	"excite/Rendering/DepthBuffer",
-	"excite/Bits/X3DConstants",
-	"excite/Bits/TraverseType",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
+	"x-ite/Rendering/DependentRenderer",
+	"x-ite/Rendering/DepthBuffer",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Bits/TraverseType",
 	"standard/Math/Geometry/Camera",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Rotation4",
@@ -88175,19 +88175,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -88195,14 +88195,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/GeoCoordinate',[
+define ('x-ite/Components/Geospatial/GeoCoordinate',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DCoordinateNode",
-	"excite/Components/Geospatial/X3DGeospatialObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DCoordinateNode",
+	"x-ite/Components/Geospatial/X3DGeospatialObject",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
 ],
@@ -88365,19 +88365,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -88385,15 +88385,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/GeoElevationGrid',[
+define ('x-ite/Components/Geospatial/GeoElevationGrid',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Components/Geospatial/X3DGeospatialObject",
-	"excite/Bits/X3DConstants",
-	"excite/Bits/X3DCast",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Components/Geospatial/X3DGeospatialObject",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Bits/X3DCast",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -88794,19 +88794,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -88814,17 +88814,17 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Networking/Inline',[
+define ('x-ite/Components/Networking/Inline',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Components/Networking/X3DUrlObject",
-	"excite/Components/Grouping/X3DBoundedObject",
-	"excite/Components/Grouping/Group",
-	"excite/Bits/X3DConstants",
-	"excite/InputOutput/FileLoader",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Components/Networking/X3DUrlObject",
+	"x-ite/Components/Grouping/X3DBoundedObject",
+	"x-ite/Components/Grouping/Group",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/InputOutput/FileLoader",
 ],
 function ($,
           Fields,
@@ -89039,19 +89039,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -89059,18 +89059,18 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/GeoLOD',[
+define ('x-ite/Components/Geospatial/GeoLOD',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Components/Grouping/X3DBoundedObject",
-	"excite/Components/Geospatial/X3DGeospatialObject",
-	"excite/Bits/X3DConstants",
-	"excite/Bits/TraverseType",
-	"excite/Components/Grouping/Group",
-	"excite/Components/Networking/Inline",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Components/Grouping/X3DBoundedObject",
+	"x-ite/Components/Geospatial/X3DGeospatialObject",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Components/Grouping/Group",
+	"x-ite/Components/Networking/Inline",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
@@ -89413,19 +89413,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -89433,14 +89433,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/GeoLocation',[
+define ('x-ite/Components/Geospatial/GeoLocation',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DTransformMatrix3DNode",
-	"excite/Components/Geospatial/X3DGeospatialObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DTransformMatrix3DNode",
+	"x-ite/Components/Geospatial/X3DGeospatialObject",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
 function ($,
@@ -89540,19 +89540,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -89560,10 +89560,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/X3DInfoNode',[
+define ('x-ite/Components/Core/X3DInfoNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DChildNode, 
@@ -89617,19 +89617,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -89637,13 +89637,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/GeoMetadata',[
+define ('x-ite/Components/Geospatial/GeoMetadata',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DInfoNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DInfoNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -89718,19 +89718,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -89738,14 +89738,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/GeoOrigin',[
+define ('x-ite/Components/Geospatial/GeoOrigin',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DNode",
-	"excite/Bits/X3DConstants",
-	"excite/Browser/Geospatial/Geospatial",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Browser/Geospatial/Geospatial",
 ],
 function ($,
           Fields,
@@ -89839,19 +89839,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -89859,15 +89859,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/GeoPositionInterpolator',[
+define ('x-ite/Components/Geospatial/GeoPositionInterpolator',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Components/Geospatial/X3DGeospatialObject",
-	"excite/Browser/Geospatial/Geocentric",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Components/Geospatial/X3DGeospatialObject",
+	"x-ite/Browser/Geospatial/Geocentric",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -89994,19 +89994,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90014,11 +90014,11 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode',[
+define ('x-ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode',[
 	"jquery",
-	"excite/Fields",
-	"excite/Components/Core/X3DSensorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Components/Core/X3DSensorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -90128,19 +90128,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90148,14 +90148,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EnvironmentalSensor/ProximitySensor',[
+define ('x-ite/Components/EnvironmentalSensor/ProximitySensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -90422,19 +90422,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90442,15 +90442,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/GeoProximitySensor',[
+define ('x-ite/Components/Geospatial/GeoProximitySensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-	"excite/Components/Geospatial/X3DGeospatialObject",
-	"excite/Components/EnvironmentalSensor/ProximitySensor",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
+	"x-ite/Components/Geospatial/X3DGeospatialObject",
+	"x-ite/Components/EnvironmentalSensor/ProximitySensor",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -90580,19 +90580,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90600,14 +90600,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/GeoTouchSensor',[
+define ('x-ite/Components/Geospatial/GeoTouchSensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/PointingDeviceSensor/X3DTouchSensorNode",
-	"excite/Components/Geospatial/X3DGeospatialObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
+	"x-ite/Components/Geospatial/X3DGeospatialObject",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
@@ -90729,19 +90729,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90749,14 +90749,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geospatial/GeoTransform',[
+define ('x-ite/Components/Geospatial/GeoTransform',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DTransformMatrix3DNode",
-	"excite/Components/Geospatial/X3DGeospatialObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DTransformMatrix3DNode",
+	"x-ite/Components/Geospatial/X3DGeospatialObject",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
 function ($,
@@ -90881,19 +90881,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -90901,19 +90901,19 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/CubeMapTexturing/ImageCubeMapTexture',[
+define ('x-ite/Components/CubeMapTexturing/ImageCubeMapTexture',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
-	"excite/Components/Networking/X3DUrlObject",
-	"excite/Bits/X3DConstants",
-	"excite/Browser/Networking/urls",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
+	"x-ite/Components/Networking/X3DUrlObject",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Browser/Networking/urls",
 	"standard/Networking/URI",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Algorithm",
-	"excite/DEBUG",
+	"x-ite/DEBUG",
 ],
 function ($,
           Fields,
@@ -91183,19 +91183,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -91203,14 +91203,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/IndexedLineSet',[
+define ('x-ite/Components/Rendering/IndexedLineSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DLineGeometryNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DLineGeometryNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -91501,19 +91501,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -91521,13 +91521,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/CADGeometry/IndexedQuadSet',[
+define ('x-ite/Components/CADGeometry/IndexedQuadSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DComposedGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DComposedGeometryNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -91653,19 +91653,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -91673,13 +91673,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/IndexedTriangleFanSet',[
+define ('x-ite/Components/Rendering/IndexedTriangleFanSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DComposedGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DComposedGeometryNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -91815,19 +91815,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -91835,13 +91835,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/IndexedTriangleSet',[
+define ('x-ite/Components/Rendering/IndexedTriangleSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DComposedGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DComposedGeometryNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -91932,19 +91932,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -91952,13 +91952,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/IndexedTriangleStripSet',[
+define ('x-ite/Components/Rendering/IndexedTriangleStripSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DComposedGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DComposedGeometryNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -92105,19 +92105,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -92125,13 +92125,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EventUtilities/IntegerSequencer',[
+define ('x-ite/Components/EventUtilities/IntegerSequencer',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/EventUtilities/X3DSequencerNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/EventUtilities/X3DSequencerNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -92223,19 +92223,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -92243,13 +92243,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EventUtilities/IntegerTrigger',[
+define ('x-ite/Components/EventUtilities/IntegerTrigger',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/EventUtilities/X3DTriggerNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/EventUtilities/X3DTriggerNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -92334,19 +92334,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -92354,10 +92354,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode',[
+define ('x-ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode',[
 	"jquery",
-	"excite/Components/Core/X3DSensorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DSensorNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DSensorNode, 
@@ -92475,19 +92475,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -92495,13 +92495,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/KeyDeviceSensor/KeySensor',[
+define ('x-ite/Components/KeyDeviceSensor/KeySensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -92790,19 +92790,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -92810,15 +92810,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Navigation/LOD',[
+define ('x-ite/Components/Navigation/LOD',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
@@ -93008,19 +93008,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -93028,10 +93028,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Layout/X3DLayoutNode',[
+define ('x-ite/Components/Layout/X3DLayoutNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DChildNode,
@@ -93085,19 +93085,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -93105,14 +93105,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Layout/Layout',[
+define ('x-ite/Components/Layout/Layout',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Layout/X3DLayoutNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Layout/X3DLayoutNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
@@ -93738,19 +93738,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -93758,15 +93758,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Layout/LayoutGroup',[
+define ('x-ite/Components/Layout/LayoutGroup',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
 function ($,
@@ -93927,19 +93927,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -93947,15 +93947,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Layout/LayoutLayer',[
+define ('x-ite/Components/Layout/LayoutLayer',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Layering/X3DLayerNode",
-	"excite/Components/Layout/LayoutGroup",
-	"excite/Components/Navigation/OrthoViewpoint",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Layering/X3DLayerNode",
+	"x-ite/Components/Layout/LayoutGroup",
+	"x-ite/Components/Navigation/OrthoViewpoint",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -94046,19 +94046,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -94066,13 +94066,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shape/LineProperties',[
+define ('x-ite/Components/Shape/LineProperties',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Shape/X3DAppearanceChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Shape/X3DAppearanceChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -94163,19 +94163,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -94183,14 +94183,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/LineSet',[
+define ('x-ite/Components/Rendering/LineSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DLineGeometryNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DLineGeometryNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -94387,19 +94387,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -94407,14 +94407,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EnvironmentalEffects/LocalFog',[
+define ('x-ite/Components/EnvironmentalEffects/LocalFog',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Components/EnvironmentalEffects/X3DFogObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Components/EnvironmentalEffects/X3DFogObject",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -94508,19 +94508,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -94528,10 +94528,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shape/X3DMaterialNode',[
+define ('x-ite/Components/Shape/X3DMaterialNode',[
 	"jquery",
-	"excite/Components/Shape/X3DAppearanceChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Shape/X3DAppearanceChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DAppearanceChildNode, 
@@ -94585,19 +94585,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -94605,13 +94605,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shape/Material',[
+define ('x-ite/Components/Shape/Material',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Shape/X3DMaterialNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Shape/X3DMaterialNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
 function ($,
@@ -94781,19 +94781,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -94801,13 +94801,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shaders/Matrix3VertexAttribute',[
+define ('x-ite/Components/Shaders/Matrix3VertexAttribute',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Shaders/X3DVertexAttributeNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Shaders/X3DVertexAttributeNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix3",
 ],
 function ($,
@@ -94908,19 +94908,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -94928,13 +94928,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shaders/Matrix4VertexAttribute',[
+define ('x-ite/Components/Shaders/Matrix4VertexAttribute',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Shaders/X3DVertexAttributeNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Shaders/X3DVertexAttributeNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -95033,19 +95033,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95053,9 +95053,9 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/X3DMetadataObject',[
+define ('x-ite/Components/Core/X3DMetadataObject',[
 	"jquery",
-	"excite/Bits/X3DConstants",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DConstants)
@@ -95107,19 +95107,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95127,14 +95127,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/MetadataBoolean',[
+define ('x-ite/Components/Core/MetadataBoolean',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DNode",
-	"excite/Components/Core/X3DMetadataObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Components/Core/X3DMetadataObject",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -95212,19 +95212,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95232,14 +95232,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/MetadataDouble',[
+define ('x-ite/Components/Core/MetadataDouble',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DNode",
-	"excite/Components/Core/X3DMetadataObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Components/Core/X3DMetadataObject",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -95317,19 +95317,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95337,14 +95337,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/MetadataFloat',[
+define ('x-ite/Components/Core/MetadataFloat',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DNode",
-	"excite/Components/Core/X3DMetadataObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Components/Core/X3DMetadataObject",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -95422,19 +95422,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95442,14 +95442,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/MetadataInteger',[
+define ('x-ite/Components/Core/MetadataInteger',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DNode",
-	"excite/Components/Core/X3DMetadataObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Components/Core/X3DMetadataObject",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -95527,19 +95527,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95547,14 +95547,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/MetadataSet',[
+define ('x-ite/Components/Core/MetadataSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DNode",
-	"excite/Components/Core/X3DMetadataObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Components/Core/X3DMetadataObject",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -95632,19 +95632,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95652,14 +95652,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/MetadataString',[
+define ('x-ite/Components/Core/MetadataString',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DNode",
-	"excite/Components/Core/X3DMetadataObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DNode",
+	"x-ite/Components/Core/X3DMetadataObject",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -95737,19 +95737,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -95757,19 +95757,19 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing/MovieTexture',[
+define ('x-ite/Components/Texturing/MovieTexture',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Texturing/X3DTexture2DNode",
-	"excite/Components/Sound/X3DSoundSourceNode",
-	"excite/Components/Networking/X3DUrlObject",
-	"excite/Bits/X3DConstants",
-	"excite/Browser/Networking/urls",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Texturing/X3DTexture2DNode",
+	"x-ite/Components/Sound/X3DSoundSourceNode",
+	"x-ite/Components/Networking/X3DUrlObject",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Browser/Networking/urls",
 	"standard/Networking/URI",
 	"standard/Math/Algorithm",
-	"excite/DEBUG",
+	"x-ite/DEBUG",
 ],
 function ($,
           Fields,
@@ -95997,19 +95997,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96017,10 +96017,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/X3DNormalNode',[
+define ('x-ite/Components/Rendering/X3DNormalNode',[
 	"jquery",
-	"excite/Components/Rendering/X3DGeometricPropertyNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Rendering/X3DGeometricPropertyNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DGeometricPropertyNode, 
@@ -96074,19 +96074,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96094,13 +96094,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/Normal',[
+define ('x-ite/Components/Rendering/Normal',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DNormalNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DNormalNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -96184,19 +96184,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96204,13 +96204,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/NormalInterpolator',[
+define ('x-ite/Components/Interpolation/NormalInterpolator',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
@@ -96325,19 +96325,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96345,13 +96345,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/OrientationChaser',[
+define ('x-ite/Components/Followers/OrientationChaser',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DChaserNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DChaserNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Rotation4",
 ],
 function ($,
@@ -96456,19 +96456,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96476,13 +96476,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/OrientationDamper',[
+define ('x-ite/Components/Followers/OrientationDamper',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DDamperNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DDamperNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Rotation4",
 ],
 function ($,
@@ -96583,19 +96583,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -96603,12 +96603,12 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shape/X3DShapeNode',[
+define ('x-ite/Components/Shape/X3DShapeNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Components/Grouping/X3DBoundedObject",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Components/Grouping/X3DBoundedObject",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
 ],
 function ($,
@@ -96767,19 +96767,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -97124,19 +97124,19 @@ function (Vector3,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -97144,15 +97144,15 @@ function (Vector3,
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/ParticleSystem',[
+define ('x-ite/Components/ParticleSystems/ParticleSystem',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Shape/X3DShapeNode",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
-	"excite/Bits/X3DCast",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Shape/X3DShapeNode",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Bits/X3DCast",
 	"standard/Math/Numbers/Color4",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
@@ -98480,19 +98480,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -98500,13 +98500,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing/PixelTexture',[
+define ('x-ite/Components/Texturing/PixelTexture',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Texturing/X3DTexture2DNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Texturing/X3DTexture2DNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix3",
@@ -98730,19 +98730,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -98750,13 +98750,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/PointingDeviceSensor/PlaneSensor',[
+define ('x-ite/Components/PointingDeviceSensor/PlaneSensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/PointingDeviceSensor/X3DDragSensorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/PointingDeviceSensor/X3DDragSensorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
@@ -99044,19 +99044,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -99064,15 +99064,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Lighting/PointLight',[
+define ('x-ite/Components/Lighting/PointLight',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Lighting/X3DLightNode",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Lighting/X3DLightNode",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Geometry/Camera",
 	"standard/Math/Geometry/ViewVolume",
@@ -99407,19 +99407,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -99427,14 +99427,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/PointSet',[
+define ('x-ite/Components/Rendering/PointSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DLineGeometryNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DLineGeometryNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -99603,19 +99603,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -99623,13 +99623,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry2D/Polyline2D',[
+define ('x-ite/Components/Geometry2D/Polyline2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DLineGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DLineGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -99727,19 +99727,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -99747,14 +99747,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/PolylineEmitter',[
+define ('x-ite/Components/ParticleSystems/PolylineEmitter',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/ParticleSystems/X3DParticleEmitterNode",
-	"excite/Components/Rendering/IndexedLineSet",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/ParticleSystems/X3DParticleEmitterNode",
+	"x-ite/Components/Rendering/IndexedLineSet",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
@@ -99974,19 +99974,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -99994,13 +99994,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry2D/Polypoint2D',[
+define ('x-ite/Components/Geometry2D/Polypoint2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DLineGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DLineGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -100105,19 +100105,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100125,13 +100125,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/PositionChaser',[
+define ('x-ite/Components/Followers/PositionChaser',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DChaserNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DChaserNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -100216,19 +100216,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100236,13 +100236,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/PositionChaser2D',[
+define ('x-ite/Components/Followers/PositionChaser2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DChaserNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DChaserNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
 function ($,
@@ -100327,19 +100327,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100347,13 +100347,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/PositionDamper',[
+define ('x-ite/Components/Followers/PositionDamper',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DDamperNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DDamperNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -100440,19 +100440,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100460,13 +100460,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/PositionDamper2D',[
+define ('x-ite/Components/Followers/PositionDamper2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DDamperNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DDamperNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
 function ($,
@@ -100553,19 +100553,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100573,13 +100573,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/PositionInterpolator2D',[
+define ('x-ite/Components/Interpolation/PositionInterpolator2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
 function ($,
@@ -100677,19 +100677,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100697,13 +100697,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/CADGeometry/QuadSet',[
+define ('x-ite/Components/CADGeometry/QuadSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DComposedGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DComposedGeometryNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -100820,19 +100820,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100840,13 +100840,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry2D/Rectangle2D',[
+define ('x-ite/Components/Geometry2D/Rectangle2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
@@ -100966,19 +100966,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -100986,13 +100986,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/ScalarChaser',[
+define ('x-ite/Components/Followers/ScalarChaser',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DChaserNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DChaserNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
 function ($,
@@ -101101,19 +101101,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101121,13 +101121,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/ScalarDamper',[
+define ('x-ite/Components/Followers/ScalarDamper',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DDamperNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DDamperNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
 function ($,
@@ -101230,19 +101230,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101250,12 +101250,12 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Layout/ScreenText',[
+define ('x-ite/Browser/Layout/ScreenText',[
 	"jquery",
-	"excite/Browser/Text/X3DTextGeometry",
-	"excite/Browser/Text/TextAlignment",
-	"excite/Components/Texturing/PixelTexture",
-	"excite/Bits/TraverseType",
+	"x-ite/Browser/Text/X3DTextGeometry",
+	"x-ite/Browser/Text/TextAlignment",
+	"x-ite/Components/Texturing/PixelTexture",
+	"x-ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
@@ -101710,19 +101710,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101730,14 +101730,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Layout/ScreenFontStyle',[
+define ('x-ite/Components/Layout/ScreenFontStyle',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Text/X3DFontStyleNode",
-	"excite/Browser/Layout/ScreenText",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Text/X3DFontStyleNode",
+	"x-ite/Browser/Layout/ScreenText",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -101827,19 +101827,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -101847,14 +101847,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Layout/ScreenGroup',[
+define ('x-ite/Components/Layout/ScreenGroup',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/X3DConstants",
-	"excite/Bits/TraverseType",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -102022,19 +102022,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -102042,7 +102042,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Scripting/evaluate',[],function ()
+define ('x-ite/Browser/Scripting/evaluate',[],function ()
 {
 	return function (/* __global__, __text__ */)
 	{
@@ -102082,19 +102082,19 @@ define ('excite/Browser/Scripting/evaluate',[],function ()
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -102102,11 +102102,11 @@ define ('excite/Browser/Scripting/evaluate',[],function ()
  ******************************************************************************/
 
 
-define ('excite/Components/Scripting/X3DScriptNode',[
+define ('x-ite/Components/Scripting/X3DScriptNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Components/Networking/X3DUrlObject",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Components/Networking/X3DUrlObject",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DChildNode, 
@@ -102163,19 +102163,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -102183,32 +102183,32 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Scripting/Script',[
+define ('x-ite/Components/Scripting/Script',[
 	"jquery",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Basic/X3DField",
-	"excite/Basic/X3DArrayField",
-	"excite/Fields",
-	"excite/Browser/X3DBrowser",
-	"excite/Configuration/ComponentInfo",
-	"excite/Configuration/ComponentInfoArray",
-	"excite/Configuration/ProfileInfo",
-	"excite/Configuration/ProfileInfoArray",
-	"excite/Configuration/UnitInfo",
-	"excite/Configuration/UnitInfoArray",
-	"excite/Execution/X3DExecutionContext",
-	"excite/Execution/X3DScene",
-	"excite/Prototype/ExternProtoDeclarationArray",
-	"excite/Prototype/ProtoDeclarationArray",
-	"excite/Prototype/X3DExternProtoDeclaration",
-	"excite/Prototype/X3DProtoDeclaration",
-	"excite/Routing/RouteArray",
-	"excite/Routing/X3DRoute",
-	"excite/Browser/Scripting/evaluate",
-	"excite/Components/Scripting/X3DScriptNode",
-	"excite/InputOutput/FileLoader",
-	"excite/Bits/X3DConstants",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Basic/X3DField",
+	"x-ite/Basic/X3DArrayField",
+	"x-ite/Fields",
+	"x-ite/Browser/X3DBrowser",
+	"x-ite/Configuration/ComponentInfo",
+	"x-ite/Configuration/ComponentInfoArray",
+	"x-ite/Configuration/ProfileInfo",
+	"x-ite/Configuration/ProfileInfoArray",
+	"x-ite/Configuration/UnitInfo",
+	"x-ite/Configuration/UnitInfoArray",
+	"x-ite/Execution/X3DExecutionContext",
+	"x-ite/Execution/X3DScene",
+	"x-ite/Prototype/ExternProtoDeclarationArray",
+	"x-ite/Prototype/ProtoDeclarationArray",
+	"x-ite/Prototype/X3DExternProtoDeclaration",
+	"x-ite/Prototype/X3DProtoDeclaration",
+	"x-ite/Routing/RouteArray",
+	"x-ite/Routing/X3DRoute",
+	"x-ite/Browser/Scripting/evaluate",
+	"x-ite/Components/Scripting/X3DScriptNode",
+	"x-ite/InputOutput/FileLoader",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DFieldDefinition,
@@ -102688,19 +102688,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -102708,14 +102708,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shape/Shape',[
+define ('x-ite/Components/Shape/Shape',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Shape/X3DShapeNode",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Shape/X3DShapeNode",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 	"standard/Math/Geometry/Line3",
 	"standard/Math/Numbers/Vector3",
@@ -102914,19 +102914,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -102934,10 +102934,10 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Sound/X3DSoundNode',[
+define ('x-ite/Components/Sound/X3DSoundNode',[
 	"jquery",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           X3DChildNode, 
@@ -102991,19 +102991,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -103011,15 +103011,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Sound/Sound',[
+define ('x-ite/Components/Sound/Sound',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Sound/X3DSoundNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Sound/X3DSoundNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
@@ -103211,19 +103211,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -103231,13 +103231,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry3D/Sphere',[
+define ('x-ite/Components/Geometry3D/Sphere',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -103359,19 +103359,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -103547,19 +103547,19 @@ function (Vector3)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -103567,13 +103567,13 @@ function (Vector3)
  ******************************************************************************/
 
 
-define ('excite/Components/PointingDeviceSensor/SphereSensor',[
+define ('x-ite/Components/PointingDeviceSensor/SphereSensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/PointingDeviceSensor/X3DDragSensorNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/PointingDeviceSensor/X3DDragSensorNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -103791,19 +103791,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -103811,7 +103811,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Interpolation/CatmullRomSplineInterpolator',[
+define ('x-ite/Browser/Interpolation/CatmullRomSplineInterpolator',[
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
 ],
@@ -103979,19 +103979,19 @@ function (Vector4,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -103999,9 +103999,9 @@ function (Vector4,
  ******************************************************************************/
 
 
-define ('excite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate',[
+define ('x-ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate',[
 	"jquery",
-	"excite/Browser/Interpolation/CatmullRomSplineInterpolator"
+	"x-ite/Browser/Interpolation/CatmullRomSplineInterpolator"
 ],
 function ($,
           CatmullRomSplineInterpolator)
@@ -104095,19 +104095,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104115,8 +104115,8 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Interpolation/CatmullRomSplineInterpolator3',[
-	"excite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",
+define ('x-ite/Browser/Interpolation/CatmullRomSplineInterpolator3',[
+	"x-ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",
 	"standard/Math/Numbers/Vector3",
 ],
 function (CatmullRomSplineInterpolatorTemplate,
@@ -104156,19 +104156,19 @@ function (CatmullRomSplineInterpolatorTemplate,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104176,14 +104176,14 @@ function (CatmullRomSplineInterpolatorTemplate,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/SplinePositionInterpolator',[
+define ('x-ite/Components/Interpolation/SplinePositionInterpolator',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Browser/Interpolation/CatmullRomSplineInterpolator3",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Browser/Interpolation/CatmullRomSplineInterpolator3",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -104301,19 +104301,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104321,8 +104321,8 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Interpolation/CatmullRomSplineInterpolator2',[
-	"excite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",
+define ('x-ite/Browser/Interpolation/CatmullRomSplineInterpolator2',[
+	"x-ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",
 	"standard/Math/Numbers/Vector2",
 ],
 function (CatmullRomSplineInterpolatorTemplate,
@@ -104362,19 +104362,19 @@ function (CatmullRomSplineInterpolatorTemplate,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104382,14 +104382,14 @@ function (CatmullRomSplineInterpolatorTemplate,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/SplinePositionInterpolator2D',[
+define ('x-ite/Components/Interpolation/SplinePositionInterpolator2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Browser/Interpolation/CatmullRomSplineInterpolator2",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Browser/Interpolation/CatmullRomSplineInterpolator2",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -104507,19 +104507,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104527,9 +104527,9 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Interpolation/CatmullRomSplineInterpolator1',[
+define ('x-ite/Browser/Interpolation/CatmullRomSplineInterpolator1',[
 	"jquery",
-	"excite/Browser/Interpolation/CatmullRomSplineInterpolator"
+	"x-ite/Browser/Interpolation/CatmullRomSplineInterpolator"
 ],
 function ($,
           CatmullRomSplineInterpolator)
@@ -104609,19 +104609,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104629,14 +104629,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/SplineScalarInterpolator',[
+define ('x-ite/Components/Interpolation/SplineScalarInterpolator',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Browser/Interpolation/CatmullRomSplineInterpolator1",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Browser/Interpolation/CatmullRomSplineInterpolator1",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -104754,19 +104754,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -104774,15 +104774,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Lighting/SpotLight',[
+define ('x-ite/Components/Lighting/SpotLight',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Lighting/X3DLightNode",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Lighting/X3DLightNode",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Geometry/Camera",
 	"standard/Math/Geometry/ViewVolume",
@@ -105120,19 +105120,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105140,7 +105140,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Browser/Interpolation/SquatInterpolator',[
+define ('x-ite/Browser/Interpolation/SquatInterpolator',[
 	"standard/Math/Numbers/Rotation4",
 ],
 function (Rotation4)
@@ -105239,19 +105239,19 @@ function (Rotation4)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105259,14 +105259,14 @@ function (Rotation4)
  ******************************************************************************/
 
 
-define ('excite/Components/Interpolation/SquadOrientationInterpolator',[
+define ('x-ite/Components/Interpolation/SquadOrientationInterpolator',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Interpolation/X3DInterpolatorNode",
-	"excite/Browser/Interpolation/SquatInterpolator",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Interpolation/X3DInterpolatorNode",
+	"x-ite/Browser/Interpolation/SquatInterpolator",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -105376,19 +105376,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105396,15 +105396,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Grouping/StaticGroup',[
+define ('x-ite/Components/Grouping/StaticGroup',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Components/Grouping/X3DBoundedObject",
-	"excite/Components/Grouping/Group",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Components/Grouping/X3DBoundedObject",
+	"x-ite/Components/Grouping/Group",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
 ],
 function ($,
@@ -105521,19 +105521,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105541,14 +105541,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/SurfaceEmitter',[
+define ('x-ite/Components/ParticleSystems/SurfaceEmitter',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/ParticleSystems/X3DParticleEmitterNode",
-	"excite/Bits/X3DConstants",
-	"excite/Bits/X3DCast",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/ParticleSystems/X3DParticleEmitterNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Bits/X3DCast",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
@@ -105774,19 +105774,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105794,14 +105794,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Grouping/Switch',[
+define ('x-ite/Components/Grouping/Switch',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DGroupingNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DGroupingNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -105922,19 +105922,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -105942,14 +105942,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/TexCoordChaser2D',[
+define ('x-ite/Components/Followers/TexCoordChaser2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DChaserNode",
-	"excite/Browser/Followers/X3DArrayChaserTemplate",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DChaserNode",
+	"x-ite/Browser/Followers/X3DArrayChaserTemplate",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
 function ($,
@@ -106043,19 +106043,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106063,14 +106063,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Followers/TexCoordDamper2D',[
+define ('x-ite/Components/Followers/TexCoordDamper2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Followers/X3DDamperNode",
-	"excite/Browser/Followers/X3DArrayFollowerTemplate",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Followers/X3DDamperNode",
+	"x-ite/Browser/Followers/X3DArrayFollowerTemplate",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
 function ($,
@@ -106166,19 +106166,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106186,14 +106186,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Text/Text',[
+define ('x-ite/Components/Text/Text',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -106360,19 +106360,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106380,14 +106380,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EnvironmentalEffects/TextureBackground',[
+define ('x-ite/Components/EnvironmentalEffects/TextureBackground',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/EnvironmentalEffects/X3DBackgroundNode",
-	"excite/Bits/X3DCast",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/EnvironmentalEffects/X3DBackgroundNode",
+	"x-ite/Bits/X3DCast",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -106516,19 +106516,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106536,13 +106536,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing3D/TextureCoordinate3D',[
+define ('x-ite/Components/Texturing3D/TextureCoordinate3D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Texturing/X3DTextureCoordinateNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Texturing/X3DTextureCoordinateNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -106644,19 +106644,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106664,13 +106664,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing3D/TextureCoordinate4D',[
+define ('x-ite/Components/Texturing3D/TextureCoordinate4D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Texturing/X3DTextureCoordinateNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Texturing/X3DTextureCoordinateNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -106772,19 +106772,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106792,13 +106792,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing3D/TextureTransform3D',[
+define ('x-ite/Components/Texturing3D/TextureTransform3D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Texturing/X3DTextureTransformNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Texturing/X3DTextureTransformNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
@@ -106918,19 +106918,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -106938,13 +106938,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Texturing3D/TextureTransformMatrix3D',[
+define ('x-ite/Components/Texturing3D/TextureTransformMatrix3D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Texturing/X3DTextureTransformNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Texturing/X3DTextureTransformNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -107027,19 +107027,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107047,13 +107047,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EventUtilities/TimeTrigger',[
+define ('x-ite/Components/EventUtilities/TimeTrigger',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/EventUtilities/X3DTriggerNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/EventUtilities/X3DTriggerNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -107137,19 +107137,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107157,13 +107157,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Grouping/Transform',[
+define ('x-ite/Components/Grouping/Transform',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Grouping/X3DTransformNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Grouping/X3DTransformNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -107245,19 +107245,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107265,14 +107265,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EnvironmentalSensor/TransformSensor',[
+define ('x-ite/Components/EnvironmentalSensor/TransformSensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-	"excite/Bits/X3DConstants",
-	"excite/Bits/X3DCast",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
+	"x-ite/Bits/X3DConstants",
+	"x-ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Geometry/Box3",
@@ -107447,19 +107447,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107467,13 +107467,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/TriangleFanSet',[
+define ('x-ite/Components/Rendering/TriangleFanSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DComposedGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DComposedGeometryNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -107596,19 +107596,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107616,13 +107616,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/TriangleSet',[
+define ('x-ite/Components/Rendering/TriangleSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DComposedGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DComposedGeometryNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -107715,19 +107715,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107735,13 +107735,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Geometry2D/TriangleSet2D',[
+define ('x-ite/Components/Geometry2D/TriangleSet2D',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DGeometryNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -107856,19 +107856,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -107876,13 +107876,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Rendering/TriangleStripSet',[
+define ('x-ite/Components/Rendering/TriangleStripSet',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Rendering/X3DComposedGeometryNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Rendering/X3DComposedGeometryNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -108009,19 +108009,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -108029,13 +108029,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Shape/TwoSidedMaterial',[
+define ('x-ite/Components/Shape/TwoSidedMaterial',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Shape/X3DMaterialNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Shape/X3DMaterialNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
 function ($,
@@ -108304,19 +108304,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -108324,15 +108324,15 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Navigation/ViewpointGroup',[
+define ('x-ite/Components/Navigation/ViewpointGroup',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DChildNode",
-	"excite/Components/EnvironmentalSensor/ProximitySensor",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DChildNode",
+	"x-ite/Components/EnvironmentalSensor/ProximitySensor",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -108556,19 +108556,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -108576,14 +108576,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/EnvironmentalSensor/VisibilitySensor',[
+define ('x-ite/Components/EnvironmentalSensor/VisibilitySensor',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-	"excite/Bits/TraverseType",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
+	"x-ite/Bits/TraverseType",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
@@ -108732,19 +108732,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -108752,14 +108752,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/VolumeEmitter',[
+define ('x-ite/Components/ParticleSystems/VolumeEmitter',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/ParticleSystems/X3DParticleEmitterNode",
-	"excite/Components/Geometry3D/IndexedFaceSet",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/ParticleSystems/X3DParticleEmitterNode",
+	"x-ite/Components/Geometry3D/IndexedFaceSet",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Geometry/Line3",
@@ -109049,19 +109049,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -109069,13 +109069,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/ParticleSystems/WindPhysicsModel',[
+define ('x-ite/Components/ParticleSystems/WindPhysicsModel',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
+	"x-ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
@@ -109185,19 +109185,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -109205,13 +109205,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Components/Core/WorldInfo',[
+define ('x-ite/Components/Core/WorldInfo',[
 	"jquery",
-	"excite/Fields",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Components/Core/X3DInfoNode",
-	"excite/Bits/X3DConstants",
+	"x-ite/Fields",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Components/Core/X3DInfoNode",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
@@ -109285,19 +109285,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -109305,228 +109305,228 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/Configuration/SupportedNodes',[
-	"excite/Components/Networking/Anchor", // VRML
-	"excite/Components/Shape/Appearance", // VRML
-	"excite/Components/Geometry2D/Arc2D",
-	"excite/Components/Geometry2D/ArcClose2D",
-	"excite/Components/Sound/AudioClip",
-	"excite/Components/EnvironmentalEffects/Background", // VRML
-	//"excite/Components/RigidBodyPhysics/BallJoint",
-	"excite/Components/Navigation/Billboard", // VRML
-	"excite/Components/EventUtilities/BooleanFilter",
-	"excite/Components/EventUtilities/BooleanSequencer",
-	"excite/Components/EventUtilities/BooleanToggle",
-	"excite/Components/EventUtilities/BooleanTrigger",
-	"excite/Components/ParticleSystems/BoundedPhysicsModel",
-	"excite/Components/Geometry3D/Box", // VRML
-	"excite/Components/CADGeometry/CADAssembly",
-	"excite/Components/CADGeometry/CADFace",
-	"excite/Components/CADGeometry/CADLayer",
-	"excite/Components/CADGeometry/CADPart",
-	"excite/Components/Geometry2D/Circle2D",
-	"excite/Components/Rendering/ClipPlane",
-	//"excite/Components/RigidBodyPhysics/CollidableOffset",
-	//"excite/Components/RigidBodyPhysics/CollidableShape",
-	"excite/Components/Navigation/Collision", // VRML
-	//"excite/Components/RigidBodyPhysics/CollisionCollection",
-	//"excite/Components/RigidBodyPhysics/CollisionSensor",
-	//"excite/Components/RigidBodyPhysics/CollisionSpace",
-	"excite/Components/Rendering/Color", // VRML
-	"excite/Components/Followers/ColorChaser",
-	"excite/Components/Followers/ColorDamper",
-	"excite/Components/Interpolation/ColorInterpolator", // VRML
-	"excite/Components/Rendering/ColorRGBA",
-	"excite/Components/CubeMapTexturing/ComposedCubeMapTexture",
-	"excite/Components/Shaders/ComposedShader",
-	//"excite/Components/Texturing3D/ComposedTexture3D",
-	"excite/Components/Geometry3D/Cone", // VRML
-	"excite/Components/ParticleSystems/ConeEmitter",
-	//"excite/Components/RigidBodyPhysics/Contact",
-	//"excite/Components/NURBS/Contour2D",
-	//"excite/Components/NURBS/ContourPolyline2D",
-	"excite/Components/Rendering/Coordinate", // VRML
-	"excite/Components/Followers/CoordinateChaser",
-	"excite/Components/Followers/CoordinateDamper",
-	"excite/Components/NURBS/CoordinateDouble",
-	"excite/Components/Interpolation/CoordinateInterpolator", // VRML
-	"excite/Components/Interpolation/CoordinateInterpolator2D",
-	"excite/Components/Geometry3D/Cylinder", // VRML
-	"excite/Components/PointingDeviceSensor/CylinderSensor", // VRML
-	//"excite/Components/DIS/DISEntityManager",
-	//"excite/Components/DIS/DISEntityTypeMapping",
-	"excite/Components/Lighting/DirectionalLight", // VRML
-	"excite/Components/Geometry2D/Disk2D",
-	//"excite/Components/RigidBodyPhysics/DoubleAxisHingeJoint",
-	"excite/Components/Interpolation/EaseInEaseOut",
-	"excite/Components/Geometry3D/ElevationGrid", // VRML
-	//"excite/Components/DIS/EspduTransform",
-	"excite/Components/ParticleSystems/ExplosionEmitter",
-	"excite/Components/Geometry3D/Extrusion", // VRML
-	//"excite/Components/Shape/FillProperties",
-	"excite/Components/Shaders/FloatVertexAttribute",
-	"excite/Components/EnvironmentalEffects/Fog", // VRML
-	//"excite/Components/EnvironmentalEffects/FogCoordinate",
-	"excite/Components/Text/FontStyle", // VRML
-	"excite/Components/ParticleSystems/ForcePhysicsModel",
-	"excite/Components/CubeMapTexturing/GeneratedCubeMapTexture",
-	"excite/Components/Geospatial/GeoCoordinate",
-	"excite/Components/Geospatial/GeoElevationGrid",
-	"excite/Components/Geospatial/GeoLOD",
-	"excite/Components/Geospatial/GeoLocation",
-	"excite/Components/Geospatial/GeoMetadata",
-	"excite/Components/Geospatial/GeoOrigin",
-	"excite/Components/Geospatial/GeoPositionInterpolator",
-	"excite/Components/Geospatial/GeoProximitySensor",
-	"excite/Components/Geospatial/GeoTouchSensor",
-	"excite/Components/Geospatial/GeoTransform",
-	"excite/Components/Geospatial/GeoViewpoint",
-	"excite/Components/Grouping/Group", // VRML
-	//"excite/Components/H-Anim/HAnimDisplacer",
-	//"excite/Components/H-Anim/HAnimHumanoid",
-	//"excite/Components/H-Anim/HAnimJoint",
-	//"excite/Components/H-Anim/HAnimSegment",
-	//"excite/Components/H-Anim/HAnimSite",
-	"excite/Components/CubeMapTexturing/ImageCubeMapTexture",
-	"excite/Components/Texturing/ImageTexture", // VRML
-	//"excite/Components/Texturing3D/ImageTexture3D",
-	"excite/Components/Geometry3D/IndexedFaceSet", // VRML
-	"excite/Components/Rendering/IndexedLineSet", // VRML
-	"excite/Components/CADGeometry/IndexedQuadSet",
-	"excite/Components/Rendering/IndexedTriangleFanSet",
-	"excite/Components/Rendering/IndexedTriangleSet",
-	"excite/Components/Rendering/IndexedTriangleStripSet",
-	"excite/Components/Networking/Inline", // VRML
-	"excite/Components/EventUtilities/IntegerSequencer",
-	"excite/Components/EventUtilities/IntegerTrigger",
-	"excite/Components/KeyDeviceSensor/KeySensor",
-	"excite/Components/Navigation/LOD", // VRML
-	"excite/Components/Layering/Layer",
-	"excite/Components/Layering/LayerSet",
-	"excite/Components/Layout/Layout",
-	"excite/Components/Layout/LayoutGroup",
-	"excite/Components/Layout/LayoutLayer",
-	//"excite/Components/Picking/LinePickSensor",
-	"excite/Components/Shape/LineProperties",
-	"excite/Components/Rendering/LineSet",
-	"excite/Components/Networking/LoadSensor",
-	"excite/Components/EnvironmentalEffects/LocalFog",
-	"excite/Components/Shape/Material", // VRML
-	"excite/Components/Shaders/Matrix3VertexAttribute",
-	"excite/Components/Shaders/Matrix4VertexAttribute",
-	"excite/Components/Core/MetadataBoolean",
-	"excite/Components/Core/MetadataDouble",
-	"excite/Components/Core/MetadataFloat",
-	"excite/Components/Core/MetadataInteger",
-	"excite/Components/Core/MetadataSet",
-	"excite/Components/Core/MetadataString",
-	//"excite/Components/RigidBodyPhysics/MotorJoint",
-	"excite/Components/Texturing/MovieTexture", // VRML
-	//"excite/Components/Texturing/MultiTexture",
-	//"excite/Components/Texturing/MultiTextureCoordinate",
-	//"excite/Components/Texturing/MultiTextureTransform",
-	"excite/Components/Navigation/NavigationInfo", // VRML
-	"excite/Components/Rendering/Normal", // VRML
-	"excite/Components/Interpolation/NormalInterpolator", // VRML
-	//"excite/Components/NURBS/NurbsCurve",
-	//"excite/Components/NURBS/NurbsCurve2D",
-	//"excite/Components/NURBS/NurbsOrientationInterpolator",
-	//"excite/Components/NURBS/NurbsPatchSurface",
-	//"excite/Components/NURBS/NurbsPositionInterpolator",
-	//"excite/Components/NURBS/NurbsSet",
-	//"excite/Components/NURBS/NurbsSurfaceInterpolator",
-	//"excite/Components/NURBS/NurbsSweptSurface",
-	//"excite/Components/NURBS/NurbsSwungSurface",
-	//"excite/Components/NURBS/NurbsTextureCoordinate",
-	//"excite/Components/NURBS/NurbsTrimmedSurface",
-	"excite/Components/Followers/OrientationChaser",
-	"excite/Components/Followers/OrientationDamper",
-	"excite/Components/Interpolation/OrientationInterpolator", // VRML
-	"excite/Components/Navigation/OrthoViewpoint",
-	//"excite/Components/Shaders/PackagedShader",
-	"excite/Components/ParticleSystems/ParticleSystem",
-	//"excite/Components/Picking/PickableGroup",
-	"excite/Components/Texturing/PixelTexture", // VRML
-	//"excite/Components/Texturing3D/PixelTexture3D",
-	"excite/Components/PointingDeviceSensor/PlaneSensor", // VRML
-	"excite/Components/ParticleSystems/PointEmitter",
-	"excite/Components/Lighting/PointLight", // VRML
-	//"excite/Components/Picking/PointPickSensor",
-	"excite/Components/Rendering/PointSet", // VRML
-	"excite/Components/Geometry2D/Polyline2D",
-	"excite/Components/ParticleSystems/PolylineEmitter",
-	"excite/Components/Geometry2D/Polypoint2D",
-	"excite/Components/Followers/PositionChaser",
-	"excite/Components/Followers/PositionChaser2D",
-	"excite/Components/Followers/PositionDamper",
-	"excite/Components/Followers/PositionDamper2D",
-	"excite/Components/Interpolation/PositionInterpolator", // VRML
-	"excite/Components/Interpolation/PositionInterpolator2D",
-	//"excite/Components/Picking/PrimitivePickSensor",
-	//"excite/Components/Shaders/ProgramShader",
-	"excite/Components/EnvironmentalSensor/ProximitySensor", // VRML
-	"excite/Components/CADGeometry/QuadSet",
-	//"excite/Components/DIS/ReceiverPdu",
-	"excite/Components/Geometry2D/Rectangle2D",
-	//"excite/Components/RigidBodyPhysics/RigidBody",
-	//"excite/Components/RigidBodyPhysics/RigidBodyCollection",
-	"excite/Components/Followers/ScalarChaser",
-	"excite/Components/Followers/ScalarDamper",
-	"excite/Components/Interpolation/ScalarInterpolator", // VRML
-	"excite/Components/Layout/ScreenFontStyle",
-	"excite/Components/Layout/ScreenGroup",
-	"excite/Components/Scripting/Script", // VRML
-	"excite/Components/Shaders/ShaderPart",
-	//"excite/Components/Shaders/ShaderProgram",
-	"excite/Components/Shape/Shape", // VRML
-	//"excite/Components/DIS/SignalPdu",
-	//"excite/Components/RigidBodyPhysics/SingleAxisHingeJoint",
-	//"excite/Components/RigidBodyPhysics/SliderJoint",
-	"excite/Components/Sound/Sound", // VRML
-	"excite/Components/Geometry3D/Sphere", // VRML
-	"excite/Components/PointingDeviceSensor/SphereSensor", // VRML
-	"excite/Components/Interpolation/SplinePositionInterpolator",
-	"excite/Components/Interpolation/SplinePositionInterpolator2D",
-	"excite/Components/Interpolation/SplineScalarInterpolator",
-	"excite/Components/Lighting/SpotLight", // VRML
-	"excite/Components/Interpolation/SquadOrientationInterpolator",
-	"excite/Components/Grouping/StaticGroup",
-	//"excite/Components/KeyDeviceSensor/StringSensor",
-	"excite/Components/ParticleSystems/SurfaceEmitter",
-	"excite/Components/Grouping/Switch", // VRML
-	"excite/Components/Followers/TexCoordChaser2D",
-	"excite/Components/Followers/TexCoordDamper2D",
-	"excite/Components/Text/Text", // VRML
-	"excite/Components/EnvironmentalEffects/TextureBackground",
-	"excite/Components/Texturing/TextureCoordinate", // VRML
-	"excite/Components/Texturing3D/TextureCoordinate3D",
-	"excite/Components/Texturing3D/TextureCoordinate4D",
-	//"excite/Components/Texturing/TextureCoordinateGenerator",
-	"excite/Components/Texturing/TextureProperties",
-	"excite/Components/Texturing/TextureTransform", // VRML
-	"excite/Components/Texturing3D/TextureTransform3D",
-	"excite/Components/Texturing3D/TextureTransformMatrix3D",
-	"excite/Components/Time/TimeSensor", // VRML
-	"excite/Components/EventUtilities/TimeTrigger",
-	//"excite/Components/Titania/TouchGroup",
-	"excite/Components/PointingDeviceSensor/TouchSensor", // VRML
-	"excite/Components/Grouping/Transform", // VRML
-	"excite/Components/EnvironmentalSensor/TransformSensor",
-	//"excite/Components/DIS/TransmitterPdu",
-	"excite/Components/Rendering/TriangleFanSet",
-	"excite/Components/Rendering/TriangleSet",
-	"excite/Components/Geometry2D/TriangleSet2D",
-	"excite/Components/Rendering/TriangleStripSet",
-	"excite/Components/Shape/TwoSidedMaterial",
-	//"excite/Components/RigidBodyPhysics/UniversalJoint",
-	"excite/Components/Navigation/Viewpoint", // VRML
-	"excite/Components/Navigation/ViewpointGroup",
-	"excite/Components/Layering/Viewport",
-	"excite/Components/EnvironmentalSensor/VisibilitySensor", // VRML
-	"excite/Components/ParticleSystems/VolumeEmitter",
-	//"excite/Components/Picking/VolumePickSensor",
-	"excite/Components/ParticleSystems/WindPhysicsModel",
-	"excite/Components/Core/WorldInfo", // VRML
+define ('x-ite/Configuration/SupportedNodes',[
+	"x-ite/Components/Networking/Anchor", // VRML
+	"x-ite/Components/Shape/Appearance", // VRML
+	"x-ite/Components/Geometry2D/Arc2D",
+	"x-ite/Components/Geometry2D/ArcClose2D",
+	"x-ite/Components/Sound/AudioClip",
+	"x-ite/Components/EnvironmentalEffects/Background", // VRML
+	//"x-ite/Components/RigidBodyPhysics/BallJoint",
+	"x-ite/Components/Navigation/Billboard", // VRML
+	"x-ite/Components/EventUtilities/BooleanFilter",
+	"x-ite/Components/EventUtilities/BooleanSequencer",
+	"x-ite/Components/EventUtilities/BooleanToggle",
+	"x-ite/Components/EventUtilities/BooleanTrigger",
+	"x-ite/Components/ParticleSystems/BoundedPhysicsModel",
+	"x-ite/Components/Geometry3D/Box", // VRML
+	"x-ite/Components/CADGeometry/CADAssembly",
+	"x-ite/Components/CADGeometry/CADFace",
+	"x-ite/Components/CADGeometry/CADLayer",
+	"x-ite/Components/CADGeometry/CADPart",
+	"x-ite/Components/Geometry2D/Circle2D",
+	"x-ite/Components/Rendering/ClipPlane",
+	//"x-ite/Components/RigidBodyPhysics/CollidableOffset",
+	//"x-ite/Components/RigidBodyPhysics/CollidableShape",
+	"x-ite/Components/Navigation/Collision", // VRML
+	//"x-ite/Components/RigidBodyPhysics/CollisionCollection",
+	//"x-ite/Components/RigidBodyPhysics/CollisionSensor",
+	//"x-ite/Components/RigidBodyPhysics/CollisionSpace",
+	"x-ite/Components/Rendering/Color", // VRML
+	"x-ite/Components/Followers/ColorChaser",
+	"x-ite/Components/Followers/ColorDamper",
+	"x-ite/Components/Interpolation/ColorInterpolator", // VRML
+	"x-ite/Components/Rendering/ColorRGBA",
+	"x-ite/Components/CubeMapTexturing/ComposedCubeMapTexture",
+	"x-ite/Components/Shaders/ComposedShader",
+	//"x-ite/Components/Texturing3D/ComposedTexture3D",
+	"x-ite/Components/Geometry3D/Cone", // VRML
+	"x-ite/Components/ParticleSystems/ConeEmitter",
+	//"x-ite/Components/RigidBodyPhysics/Contact",
+	//"x-ite/Components/NURBS/Contour2D",
+	//"x-ite/Components/NURBS/ContourPolyline2D",
+	"x-ite/Components/Rendering/Coordinate", // VRML
+	"x-ite/Components/Followers/CoordinateChaser",
+	"x-ite/Components/Followers/CoordinateDamper",
+	"x-ite/Components/NURBS/CoordinateDouble",
+	"x-ite/Components/Interpolation/CoordinateInterpolator", // VRML
+	"x-ite/Components/Interpolation/CoordinateInterpolator2D",
+	"x-ite/Components/Geometry3D/Cylinder", // VRML
+	"x-ite/Components/PointingDeviceSensor/CylinderSensor", // VRML
+	//"x-ite/Components/DIS/DISEntityManager",
+	//"x-ite/Components/DIS/DISEntityTypeMapping",
+	"x-ite/Components/Lighting/DirectionalLight", // VRML
+	"x-ite/Components/Geometry2D/Disk2D",
+	//"x-ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint",
+	"x-ite/Components/Interpolation/EaseInEaseOut",
+	"x-ite/Components/Geometry3D/ElevationGrid", // VRML
+	//"x-ite/Components/DIS/EspduTransform",
+	"x-ite/Components/ParticleSystems/ExplosionEmitter",
+	"x-ite/Components/Geometry3D/Extrusion", // VRML
+	//"x-ite/Components/Shape/FillProperties",
+	"x-ite/Components/Shaders/FloatVertexAttribute",
+	"x-ite/Components/EnvironmentalEffects/Fog", // VRML
+	//"x-ite/Components/EnvironmentalEffects/FogCoordinate",
+	"x-ite/Components/Text/FontStyle", // VRML
+	"x-ite/Components/ParticleSystems/ForcePhysicsModel",
+	"x-ite/Components/CubeMapTexturing/GeneratedCubeMapTexture",
+	"x-ite/Components/Geospatial/GeoCoordinate",
+	"x-ite/Components/Geospatial/GeoElevationGrid",
+	"x-ite/Components/Geospatial/GeoLOD",
+	"x-ite/Components/Geospatial/GeoLocation",
+	"x-ite/Components/Geospatial/GeoMetadata",
+	"x-ite/Components/Geospatial/GeoOrigin",
+	"x-ite/Components/Geospatial/GeoPositionInterpolator",
+	"x-ite/Components/Geospatial/GeoProximitySensor",
+	"x-ite/Components/Geospatial/GeoTouchSensor",
+	"x-ite/Components/Geospatial/GeoTransform",
+	"x-ite/Components/Geospatial/GeoViewpoint",
+	"x-ite/Components/Grouping/Group", // VRML
+	//"x-ite/Components/H-Anim/HAnimDisplacer",
+	//"x-ite/Components/H-Anim/HAnimHumanoid",
+	//"x-ite/Components/H-Anim/HAnimJoint",
+	//"x-ite/Components/H-Anim/HAnimSegment",
+	//"x-ite/Components/H-Anim/HAnimSite",
+	"x-ite/Components/CubeMapTexturing/ImageCubeMapTexture",
+	"x-ite/Components/Texturing/ImageTexture", // VRML
+	//"x-ite/Components/Texturing3D/ImageTexture3D",
+	"x-ite/Components/Geometry3D/IndexedFaceSet", // VRML
+	"x-ite/Components/Rendering/IndexedLineSet", // VRML
+	"x-ite/Components/CADGeometry/IndexedQuadSet",
+	"x-ite/Components/Rendering/IndexedTriangleFanSet",
+	"x-ite/Components/Rendering/IndexedTriangleSet",
+	"x-ite/Components/Rendering/IndexedTriangleStripSet",
+	"x-ite/Components/Networking/Inline", // VRML
+	"x-ite/Components/EventUtilities/IntegerSequencer",
+	"x-ite/Components/EventUtilities/IntegerTrigger",
+	"x-ite/Components/KeyDeviceSensor/KeySensor",
+	"x-ite/Components/Navigation/LOD", // VRML
+	"x-ite/Components/Layering/Layer",
+	"x-ite/Components/Layering/LayerSet",
+	"x-ite/Components/Layout/Layout",
+	"x-ite/Components/Layout/LayoutGroup",
+	"x-ite/Components/Layout/LayoutLayer",
+	//"x-ite/Components/Picking/LinePickSensor",
+	"x-ite/Components/Shape/LineProperties",
+	"x-ite/Components/Rendering/LineSet",
+	"x-ite/Components/Networking/LoadSensor",
+	"x-ite/Components/EnvironmentalEffects/LocalFog",
+	"x-ite/Components/Shape/Material", // VRML
+	"x-ite/Components/Shaders/Matrix3VertexAttribute",
+	"x-ite/Components/Shaders/Matrix4VertexAttribute",
+	"x-ite/Components/Core/MetadataBoolean",
+	"x-ite/Components/Core/MetadataDouble",
+	"x-ite/Components/Core/MetadataFloat",
+	"x-ite/Components/Core/MetadataInteger",
+	"x-ite/Components/Core/MetadataSet",
+	"x-ite/Components/Core/MetadataString",
+	//"x-ite/Components/RigidBodyPhysics/MotorJoint",
+	"x-ite/Components/Texturing/MovieTexture", // VRML
+	//"x-ite/Components/Texturing/MultiTexture",
+	//"x-ite/Components/Texturing/MultiTextureCoordinate",
+	//"x-ite/Components/Texturing/MultiTextureTransform",
+	"x-ite/Components/Navigation/NavigationInfo", // VRML
+	"x-ite/Components/Rendering/Normal", // VRML
+	"x-ite/Components/Interpolation/NormalInterpolator", // VRML
+	//"x-ite/Components/NURBS/NurbsCurve",
+	//"x-ite/Components/NURBS/NurbsCurve2D",
+	//"x-ite/Components/NURBS/NurbsOrientationInterpolator",
+	//"x-ite/Components/NURBS/NurbsPatchSurface",
+	//"x-ite/Components/NURBS/NurbsPositionInterpolator",
+	//"x-ite/Components/NURBS/NurbsSet",
+	//"x-ite/Components/NURBS/NurbsSurfaceInterpolator",
+	//"x-ite/Components/NURBS/NurbsSweptSurface",
+	//"x-ite/Components/NURBS/NurbsSwungSurface",
+	//"x-ite/Components/NURBS/NurbsTextureCoordinate",
+	//"x-ite/Components/NURBS/NurbsTrimmedSurface",
+	"x-ite/Components/Followers/OrientationChaser",
+	"x-ite/Components/Followers/OrientationDamper",
+	"x-ite/Components/Interpolation/OrientationInterpolator", // VRML
+	"x-ite/Components/Navigation/OrthoViewpoint",
+	//"x-ite/Components/Shaders/PackagedShader",
+	"x-ite/Components/ParticleSystems/ParticleSystem",
+	//"x-ite/Components/Picking/PickableGroup",
+	"x-ite/Components/Texturing/PixelTexture", // VRML
+	//"x-ite/Components/Texturing3D/PixelTexture3D",
+	"x-ite/Components/PointingDeviceSensor/PlaneSensor", // VRML
+	"x-ite/Components/ParticleSystems/PointEmitter",
+	"x-ite/Components/Lighting/PointLight", // VRML
+	//"x-ite/Components/Picking/PointPickSensor",
+	"x-ite/Components/Rendering/PointSet", // VRML
+	"x-ite/Components/Geometry2D/Polyline2D",
+	"x-ite/Components/ParticleSystems/PolylineEmitter",
+	"x-ite/Components/Geometry2D/Polypoint2D",
+	"x-ite/Components/Followers/PositionChaser",
+	"x-ite/Components/Followers/PositionChaser2D",
+	"x-ite/Components/Followers/PositionDamper",
+	"x-ite/Components/Followers/PositionDamper2D",
+	"x-ite/Components/Interpolation/PositionInterpolator", // VRML
+	"x-ite/Components/Interpolation/PositionInterpolator2D",
+	//"x-ite/Components/Picking/PrimitivePickSensor",
+	//"x-ite/Components/Shaders/ProgramShader",
+	"x-ite/Components/EnvironmentalSensor/ProximitySensor", // VRML
+	"x-ite/Components/CADGeometry/QuadSet",
+	//"x-ite/Components/DIS/ReceiverPdu",
+	"x-ite/Components/Geometry2D/Rectangle2D",
+	//"x-ite/Components/RigidBodyPhysics/RigidBody",
+	//"x-ite/Components/RigidBodyPhysics/RigidBodyCollection",
+	"x-ite/Components/Followers/ScalarChaser",
+	"x-ite/Components/Followers/ScalarDamper",
+	"x-ite/Components/Interpolation/ScalarInterpolator", // VRML
+	"x-ite/Components/Layout/ScreenFontStyle",
+	"x-ite/Components/Layout/ScreenGroup",
+	"x-ite/Components/Scripting/Script", // VRML
+	"x-ite/Components/Shaders/ShaderPart",
+	//"x-ite/Components/Shaders/ShaderProgram",
+	"x-ite/Components/Shape/Shape", // VRML
+	//"x-ite/Components/DIS/SignalPdu",
+	//"x-ite/Components/RigidBodyPhysics/SingleAxisHingeJoint",
+	//"x-ite/Components/RigidBodyPhysics/SliderJoint",
+	"x-ite/Components/Sound/Sound", // VRML
+	"x-ite/Components/Geometry3D/Sphere", // VRML
+	"x-ite/Components/PointingDeviceSensor/SphereSensor", // VRML
+	"x-ite/Components/Interpolation/SplinePositionInterpolator",
+	"x-ite/Components/Interpolation/SplinePositionInterpolator2D",
+	"x-ite/Components/Interpolation/SplineScalarInterpolator",
+	"x-ite/Components/Lighting/SpotLight", // VRML
+	"x-ite/Components/Interpolation/SquadOrientationInterpolator",
+	"x-ite/Components/Grouping/StaticGroup",
+	//"x-ite/Components/KeyDeviceSensor/StringSensor",
+	"x-ite/Components/ParticleSystems/SurfaceEmitter",
+	"x-ite/Components/Grouping/Switch", // VRML
+	"x-ite/Components/Followers/TexCoordChaser2D",
+	"x-ite/Components/Followers/TexCoordDamper2D",
+	"x-ite/Components/Text/Text", // VRML
+	"x-ite/Components/EnvironmentalEffects/TextureBackground",
+	"x-ite/Components/Texturing/TextureCoordinate", // VRML
+	"x-ite/Components/Texturing3D/TextureCoordinate3D",
+	"x-ite/Components/Texturing3D/TextureCoordinate4D",
+	//"x-ite/Components/Texturing/TextureCoordinateGenerator",
+	"x-ite/Components/Texturing/TextureProperties",
+	"x-ite/Components/Texturing/TextureTransform", // VRML
+	"x-ite/Components/Texturing3D/TextureTransform3D",
+	"x-ite/Components/Texturing3D/TextureTransformMatrix3D",
+	"x-ite/Components/Time/TimeSensor", // VRML
+	"x-ite/Components/EventUtilities/TimeTrigger",
+	//"x-ite/Components/Titania/TouchGroup",
+	"x-ite/Components/PointingDeviceSensor/TouchSensor", // VRML
+	"x-ite/Components/Grouping/Transform", // VRML
+	"x-ite/Components/EnvironmentalSensor/TransformSensor",
+	//"x-ite/Components/DIS/TransmitterPdu",
+	"x-ite/Components/Rendering/TriangleFanSet",
+	"x-ite/Components/Rendering/TriangleSet",
+	"x-ite/Components/Geometry2D/TriangleSet2D",
+	"x-ite/Components/Rendering/TriangleStripSet",
+	"x-ite/Components/Shape/TwoSidedMaterial",
+	//"x-ite/Components/RigidBodyPhysics/UniversalJoint",
+	"x-ite/Components/Navigation/Viewpoint", // VRML
+	"x-ite/Components/Navigation/ViewpointGroup",
+	"x-ite/Components/Layering/Viewport",
+	"x-ite/Components/EnvironmentalSensor/VisibilitySensor", // VRML
+	"x-ite/Components/ParticleSystems/VolumeEmitter",
+	//"x-ite/Components/Picking/VolumePickSensor",
+	"x-ite/Components/ParticleSystems/WindPhysicsModel",
+	"x-ite/Components/Core/WorldInfo", // VRML
 ],
 function (Anchor,
           Appearance,
@@ -110021,19 +110021,19 @@ function (Anchor,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -110041,21 +110041,21 @@ function (Anchor,
  ******************************************************************************/
 
 
-define ('excite/Browser/X3DBrowser',[
+define ('x-ite/Browser/X3DBrowser',[
 	"jquery",
-	"excite/Browser/VERSION",
-	"excite/Base/Events",
-	"excite/Fields",
-	"excite/Browser/X3DBrowserContext",
-	"excite/Configuration/ComponentInfo",
-	"excite/Configuration/SupportedProfiles",
-	"excite/Configuration/SupportedComponents",
-	"excite/Configuration/SupportedNodes",
-	"excite/Execution/Scene",
-	"excite/Execution/X3DScene",
-	"excite/InputOutput/FileLoader",
-	"excite/Parser/XMLParser",
-	"excite/Bits/X3DConstants",
+	"x-ite/Browser/VERSION",
+	"x-ite/Base/Events",
+	"x-ite/Fields",
+	"x-ite/Browser/X3DBrowserContext",
+	"x-ite/Configuration/ComponentInfo",
+	"x-ite/Configuration/SupportedProfiles",
+	"x-ite/Configuration/SupportedComponents",
+	"x-ite/Configuration/SupportedNodes",
+	"x-ite/Execution/Scene",
+	"x-ite/Execution/X3DScene",
+	"x-ite/InputOutput/FileLoader",
+	"x-ite/Parser/XMLParser",
+	"x-ite/Bits/X3DConstants",
 	"locale/gettext",
 ],
 function ($,
@@ -110098,7 +110098,7 @@ function ($,
 		},
 		getComponentName: function ()
 		{
-			return "Excite";
+			return "X-ITE";
 		},
 		getContainerField: function ()
 		{
@@ -110408,7 +110408,7 @@ function ($,
 				if (scene)
 					this .replaceWorld (scene);
 				else
-					setTimeout (function () { this .getSplashScreen () .find (".excite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+					setTimeout (function () { this .getSplashScreen () .find (".x-ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 
 				// Must not remove load count, replaceWorld does a resetLoadCount when it sets setBrowserLoading to true.
 				// Don't set browser loading to false.
@@ -110636,7 +110636,7 @@ function ($,
 
 			console .log (string);
 
-			$(".excite-console") .append (string);
+			$(".x-ite-console") .append (string);
 		},
 		println: function ()
 		{
@@ -110649,7 +110649,7 @@ function ($,
 
 			string += "\n";
 
-			$(".excite-console") .append (string);
+			$(".x-ite-console") .append (string);
 		},
 	});
 
@@ -110721,19 +110721,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -110741,30 +110741,30 @@ function ($,
  ******************************************************************************/
 
 
-define ('excite/X3D',[
+define ('x-ite/X3D',[
 	"jquery",
-	"excite/Error",
-	"excite/Basic/X3DFieldDefinition",
-	"excite/Basic/FieldDefinitionArray",
-	"excite/Basic/X3DField",
-	"excite/Basic/X3DArrayField",
-	"excite/Fields",
-	"excite/Browser/X3DBrowser",
-	"excite/Configuration/ComponentInfo",
-	"excite/Configuration/ComponentInfoArray",
-	"excite/Configuration/ProfileInfo",
-	"excite/Configuration/ProfileInfoArray",
-	"excite/Configuration/UnitInfo",
-	"excite/Configuration/UnitInfoArray",
-	"excite/Execution/X3DExecutionContext",
-	"excite/Execution/X3DScene",
-	"excite/Prototype/ExternProtoDeclarationArray",
-	"excite/Prototype/ProtoDeclarationArray",
-	"excite/Prototype/X3DExternProtoDeclaration",
-	"excite/Prototype/X3DProtoDeclaration",
-	"excite/Routing/RouteArray",
-	"excite/Routing/X3DRoute",
-	"excite/Bits/X3DConstants",
+	"x-ite/Error",
+	"x-ite/Basic/X3DFieldDefinition",
+	"x-ite/Basic/FieldDefinitionArray",
+	"x-ite/Basic/X3DField",
+	"x-ite/Basic/X3DArrayField",
+	"x-ite/Fields",
+	"x-ite/Browser/X3DBrowser",
+	"x-ite/Configuration/ComponentInfo",
+	"x-ite/Configuration/ComponentInfoArray",
+	"x-ite/Configuration/ProfileInfo",
+	"x-ite/Configuration/ProfileInfoArray",
+	"x-ite/Configuration/UnitInfo",
+	"x-ite/Configuration/UnitInfoArray",
+	"x-ite/Execution/X3DExecutionContext",
+	"x-ite/Execution/X3DScene",
+	"x-ite/Prototype/ExternProtoDeclarationArray",
+	"x-ite/Prototype/ProtoDeclarationArray",
+	"x-ite/Prototype/X3DExternProtoDeclaration",
+	"x-ite/Prototype/X3DProtoDeclaration",
+	"x-ite/Routing/RouteArray",
+	"x-ite/Routing/X3DRoute",
+	"x-ite/Bits/X3DConstants",
 ],
 function ($,
           Error,
@@ -110808,7 +110808,7 @@ function ($,
 	//		for (var i = 0; i < arguments .length; ++ i)
 	//			string += arguments [i];
 	//
-	//		$(".excite-console") .append (string);
+	//		$(".x-ite-console") .append (string);
 	//	}
 	//
 	//	console .log   = print;
@@ -110972,19 +110972,19 @@ function ($,
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -110995,7 +110995,7 @@ function ($,
 {
 "use strict";
 
-	function Excite (callback, fallback)
+	function X_ITE (callback, fallback)
 	{
 		if (PrivateX3D)
 		{
@@ -111012,7 +111012,7 @@ function ($,
 	{
 		console .log (error);
 
-		require (["excite/Error"],
+		require (["x-ite/Error"],
 		function (Error)
 		{
 			Error (error, fallbacks);
@@ -111021,10 +111021,10 @@ function ($,
 
 	function noConflict ()
 	{
-		if (window .X3D === Excite)
+		if (window .X3D === X-ITE)
 			window .X3D = X3D_;
 
-		return Excite;
+		return X_ITE;
 	}
 
 	require (["jquery"],
@@ -111037,12 +111037,12 @@ function ($,
 		X3D_       = window .X3D,
 		PrivateX3D = null;
 
-	Excite .noConfict = noConflict;
-	Excite .require   = require;
-	Excite .define    = define;
+	X_ITE .noConfict = noConflict;
+	X_ITE .require   = require;
+	X_ITE .define    = define;
 
 	// Now assign temporary X3D.
-	window .X3D = Excite;
+	window .X3D = X_ITE;
 
 	if (window .Proxy === undefined)
 		return fallback ("Proxy is not defined");
@@ -111051,14 +111051,14 @@ function ($,
 		callbacks = [ ],
 		fallbacks = [ ];
 
-	require (["excite/X3D"],
+	require (["x-ite/X3D"],
 	function (X3D)
 	{
 		// Now assign real X3D.
 		PrivateX3D = X3D;
 
 		for (var key in X3D)
-			Excite [key] = X3D [key];
+			X_ITE [key] = X3D [key];
 
 		// Initialize all X3DCanvas tags.
 		X3D (); 
@@ -111069,15 +111069,15 @@ function ($,
 	fallback);
 
 }) ();
-define("excite", function(){});
+define("x-ite", function(){});
 
 
-	for (var key in exciteNoConfict)
+	for (var key in x-iteNoConfict)
 	{
-		if (exciteNoConfict [key] === undefined)
+		if (x-iteNoConfict [key] === undefined)
 			delete window [key];
 		else
-			window [key] = exciteNoConfict [key];
+			window [key] = x-iteNoConfict [key];
 	}
 
 }());

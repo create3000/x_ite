@@ -1,12 +1,12 @@
 {
-	"name": "excite",
+	"name": "x-ite",
 	"version": "4.0.2",
-	"revision": "45",
-	"description": "Excite X3D Browser",
-	"main": "src/excite.js",
+	"revision": "46",
+	"description": "X-ITE Browser",
+	"main": "src/x-ite.js",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/create3000/excite.git"
+		"url": "git+https://github.com/create3000/x-ite.git"
 	},
 	"keywords": [
 		"X3D",
@@ -15,7 +15,7 @@
 	],
 	"author": "Holger Seelig <holger.seeligyahoo.de>",
 	"license": "GPL-3.0",
-	"homepage": "https://github.com/create3000/excite#readme",
+	"homepage": "https://github.com/create3000/x-ite#readme",
 	"contributors": [
 		{
 			"name": "Holger Seelig",
@@ -28,7 +28,7 @@
 		}
 	],
 	"bugs": {
-		"url": "https://github.com/create3000/excite/issues"
+		"url": "https://github.com/create3000/x-ite/issues"
 	},
 	"devDependencies": {
 		"require": "latest",
@@ -48,6 +48,6 @@
 		"-prebuild:js": "npm run lint",
 		"build:js": "r.js -o require.build.js",
 		"build:min.js": "r.js -o require.build.min.js",
-		"build:css": "r.js -o cssIn=src/excite.css out=excite.css"
+		"build:css": "r.js -o cssIn=src/x-ite.css out=x-ite.css"
 	}
 }

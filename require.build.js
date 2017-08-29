@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "src",
-	name: "excite",
-	out: "dist/excite.js",
+	name: "x-ite",
+	out: "dist/x-ite.js",
 	optimize: "none",
 	mainConfigFile: "src/require.config.js",
 	include: [
