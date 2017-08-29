@@ -1,7 +1,7 @@
 {
 	"name": "x-ite",
 	"version": "4.0.2",
-	"revision": "46",
+	"revision": "47",
 	"description": "X-ITE Browser",
 	"main": "src/x-ite.js",
 	"repository": {
