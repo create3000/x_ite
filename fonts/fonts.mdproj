@@ -9,7 +9,7 @@
     <ProjectGuid>{045BE32F-EC7E-4E2E-A065-2331CFDCA289}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
-    <OutputPath>.\</OutputPath>
+    <OutputPath>.</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <None Include="fonts.mdproj" />
