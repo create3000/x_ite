@@ -31,12 +31,12 @@
     <None Include="images\Time.png" />
     <None Include="images\Viewpoint.png" />
     <None Include="images\WalkViewer.png" />
-    <None Include="excite.css" />
-    <None Include="excite.js" />
-    <None Include="excite.zip" />
-    <None Include="excite.min.js" />
     <None Include="LICENCES.txt" />
     <None Include="example.html" />
+    <None Include="x-ite.css" />
+    <None Include="x-ite.js" />
+    <None Include="x-ite.zip" />
+    <None Include="x-ite.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

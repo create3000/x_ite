@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+	<meta charset="utf-8"/>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.js"></script>
+	<script type="text/javascript" src="bookmarks.js"></script>
+
+	<!-- COBWEB START -->
+	<link rel="stylesheet" type="text/css" href="x-ite.css"/>
+	<script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+	<script type="text/javascript" src="require.config.js"></script>
+	<script type="text/javascript" src="x-ite.js"></script>
+	<!-- COBWEB END -->
+
+	<style>
+@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
+
+html, body {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	height: 100%;
+}
+
+body {
+	padding-bottom: 100px;
+	background: black;
+	color: white;
+	font-family: PT Sans, sans;
+	line-height: 1.3;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	outline: 0;
+}
+
+p a {
+	color: white;
+	text-shadow: 0px 0px 3px black;
+}
+
+header > div ,
+main > div {
+	margin: 0px auto;
+	padding: 20px 30px 10px 30px;
+	width: 1000px;
+}
+
+main {
+	background: #414141;
+}
+
+.version {
+	margin: 10px 40px 10px 20px;
+	font-weight: bold;
+	font-size: 52px;
+}
+
+.browser {
+	display: block;
+	margin: 10px 0px;
+	width: auto;
+	width: 100%;
+	height: 563px;
+	box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.75);
+}
+
+.fallback {
+	display: block;
+	margin: 300px 30px 0 30px;
+	text-align: center;
+}
+
+.location-entry {
+	display: block;
+	float: left;
+	box-sizing: border-box;
+	margin: 0px;
+	border: 0px;
+	padding: 4px;
+	width: 880px;
+	background: #313131;
+	color: white;
+	vertical-align: middle;
+	font-family: PT Sans;
+	font-size: 10pt;
+}
+
+.location-go {
+	display: block;
+	float: left;
+	box-sizing: border-box;
+	margin: 0px;
+	margin-left: 5px;
+	border: 0px;
+	padding: 4px;
+	width: 115px;
+	background: #313131;
+	color: white;
+	vertical-align: middle;
+	font-family: PT Sans;
+	font-size: 10pt;
+}
+
+.location-go:hover {
+	background: #363636;
+}
+
+.location-go:active {
+	background: #515151;
+}
+
+.links {
+	margin: 10px 0px;
+	text-align: right;
+}
+
+.links a {
+	padding: 0px 5px;
+	border-left: 1px solid white;
+}
+
+.links  a:first-child {
+	border-left: none;
+}
+
+.links a:last-child {
+	border-right: 0px;
+}
+
+.clearfix,
+.location-bar:after,
+.links:after {
+    content: ".";
+    clear: both;
+    display: block;
+    visibility: hidden;
+    height: 0px;
+}
+
+.tests {
+	margin: 10px 0px;
+}
+
+.bookmarks {
+	position: relative;
+	height: 80px;
+}
+
+.bookmark-list {
+	position: absolute;
+	right: 0px;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 80px;
+	list-style-type: none;
+}
+
+.bookmark {
+	position: relative;
+	float: left;
+	box-sizing: border-box;
+	margin-right: 20px;
+	width: 80px;
+	height: 80px;
+	background: #111012;
+	color: white;
+	font-family: PT Sans;
+	font-size: 9pt;
+}
+
+.bookmark-section {
+	color: #0e7da6;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.bookmark span {
+	position: absolute;
+	display: block;
+	padding: 5px;
+}
+
+.bookmark a {
+	box-sizing: border-box;
+	display: block;
+	outline: none;
+	padding: 5px;
+	width: 100%;
+	height: 100%;
+	color: white;
+	text-decoration: none;
+}
+
+.bookmark .bookmark-link {
+}
+
+.bookmark .bookmark-archive {
+	display: none;
+	position: absolute;
+	left: 5px;
+	bottom: 7px;
+	padding: 0px 0px 0px 14px;
+	height: 15px;
+	background: url(images/archive-12.png) no-repeat 0px 1px;
+}
+
+.bookmark-selected .bookmark-archive {
+	background-image: url(images/archive-12-yellow.png);
+}
+
+.bookmark .bookmark-archive:hover {
+	text-decoration: underline;
+}
+
+.bookmark-previous {
+	margin-right: 30px;
+	padding: 10px
+}
+
+.bookmark-previous a {
+	padding: 0px;
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 30px 55px 30px 0px;
+	border-color: transparent #aaa transparent transparent;
+}
+
+.bookmark-next {
+	position: absolute;
+	right: 0px;
+	margin: 0px;
+	padding: 10px
+}
+
+.bookmark-next a {
+	padding: 0px;
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 30px 0 30px 55px;
+	border-color: transparent transparent transparent #aaa;
+}
+
+.bookmark-previous span,
+.bookmark-next span {
+	display: none;
+}
+
+.bookmark-selected,
+.bookmark:hover {
+	background-color: #242125;
+}
+
+.bookmark-selected a {
+	font-weight: bold;
+	color: #e7e8a0;
+}
+
+	</style>
+
+	<script type="text/javascript">
+X3D (function ()
+{
+	var pages =
+	[
+		{ name: 'Worlds' },
+		{ name: 'Beyond Germany',        url: [ "http://media.create3000.de/x3d/beyond-germany/beyond-germany.x3dz" ] },
+		{ name: 'Milkyway and Beyond',   url: [ "http://media.create3000.de/x3d/paul-bourke/scene.x3d" ] },
+		{ name: 'Currencies',            url: [ "http://media.create3000.de/x3d/currencies/currencies.x3d" ] },
+		{ name: 'Moving Circles',        url: [ "http://media.create3000.de/x3d/circles/circles.x3d" ] },
+		{ name: 'Smarty Bubbles',        url: [ "http://media.create3000.de/x3d/smarty-bubbles/bubbles.x3d" ] },
+		{ name: 'Flashing Lights',       url: [ "http://media.create3000.de/x3d/lights/lights.x3d" ] },
+		{ name: 'Boyz Noise 2',          url: [ "http://media.create3000.de/x3d/noise/noise2.x3d" ] },
+		{ name: 'Sliding Puzzle',        url: [ "http://media.create3000.de/x3d/puzzle/puzzle.x3d" ] },
+		{ name: 'Marble',                url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Marble/marble.x3d" ] },
+		{ name: 'X3D Logo Pieces',       url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/LogoPieces/index.x3d" ] },
+
+		{ name: 'VRML' },
+		{ name: 'Appartment',            url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Appartment/index.x3d",         "https://cdn.rawgit.com/create3000/Library/master/Examples/Appartment/index.wrl" ] },
+		{ name: 'Approach',              url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Approach/stage/index.x3d",     "https://cdn.rawgit.com/create3000/Library/master/Examples/Approach/stage/index.wrl" ] },
+		{ name: 'Arcadia',               url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Arcadia/stage/index.x3d",      "https://cdn.rawgit.com/create3000/Library/master/Examples/Arcadia/stage/index.wrl" ] },
+		{ name: 'Astronomy',             url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Astronomy/stage/astrnmy.x3d",  "https://cdn.rawgit.com/create3000/Library/master/Examples/Astronomy/stage/astrnmy.wrl" ] },
+		{ name: 'BIC Man',               url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/BIC/index.x3d",                "https://cdn.rawgit.com/create3000/Library/master/Examples/BIC/index.wrl" ] },
+		{ name: 'BIC Building',          url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/BIC/building.x3d",             "https://cdn.rawgit.com/create3000/Library/master/Examples/BIC/building.wrl" ] },
+		{ name: 'BIC Buero',             url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/BIC/buero.x3d",                "https://cdn.rawgit.com/create3000/Library/master/Examples/BIC/buero.wrl" ] },
+		{ name: 'BIC Info',              url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/BIC/info.x3d",                 "https://cdn.rawgit.com/create3000/Library/master/Examples/BIC/info.wrl" ] },
+		{ name: 'Smashing Boxes',        url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Boxes/boxes.x3d" ] },
+		{ name: 'Capone',                url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Capone/index.wrl" ] },
+		{ name: 'Lost Cathedral',        url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Cathedral/stage/index.x3d",    "https://cdn.rawgit.com/create3000/Library/master/Examples/Cathedral/stage/index.wrl" ] },
+		{ name: 'Chomp!',                url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Chomp/chomp.x3d",              "https://cdn.rawgit.com/create3000/Library/master/Examples/Chomp/chomp.wrl" ] },
+		{ name: 'Anatomy',               url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Compel/anatomy/anatomy.wrl" ] },
+		{ name: 'Jungle',                url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Compel/jungle/jungle.wrl" ] },
+		{ name: 'Huey Huey',             url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Compel/huey.wrl" ] },
+		{ name: 'Foldup',                url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Compel/foldup.wrl" ] },
+		{ name: 'Ripple',                url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Compel/ripple.wrl" ] },
+		{ name: 'DLMF',                  url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/DLMF/5.3.F4.x3d",              "https://cdn.rawgit.com/create3000/Library/master/Examples/DLMF/5.3.F4.wrl" ] },
+		{ name: 'Dolphin',               url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Dolphin/index.x3d",            "https://cdn.rawgit.com/create3000/Library/master/Examples/Dolphin/index.wrl" ] },
+		{ name: 'Gears',                 url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Gears/gears.x3d",              "https://cdn.rawgit.com/create3000/Library/master/Examples/Gears/gears.x3dv" ] },
+		{ name: 'Hamburger',             url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/ICTS/hamburger.x3d",           "https://cdn.rawgit.com/create3000/Library/master/Examples/ICTS/hamburger.wrl" ] },
+		{ name: 'ICTS',                  url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/ICTS/index.x3d",               "https://cdn.rawgit.com/create3000/Library/master/Examples/ICTS/index.wrl" ] },
+		{ name: 'The Secret Labyrinth',  url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/ICTS/labyrinth.x3d",           "https://cdn.rawgit.com/create3000/Library/master/Examples/ICTS/labyrinth.wrl" ] },
+		{ name: 'Backyard Soccer',       url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/ICTS/soccer.x3d",              "https://cdn.rawgit.com/create3000/Library/master/Examples/ICTS/soccer.x3dv" ] },
+
+		{ name: 'ICTSpace',              url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/ICTSpace/index.wrl" ] },
+		{ name: 'Lust For Life',         url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/LustForLife/stage/index.x3d",  "https://cdn.rawgit.com/create3000/Library/master/Examples/LustForLife/stage/index.wrl" ] },
+		{ name: 'Metal Beast',           url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/MetalBeast/index.wrl" ] },
+		{ name: 'Microbes',              url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Mikroben/index.wrl" ] },
+		{ name: 'Catchy Loopings',       url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Misc/shape5_a.x3d" ] },
+		{ name: 'Star World',            url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Misc/starworld.x3d" ] },
+		{ name: 'Torus Breath',          url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Misc/torusbreath2.x3d" ] },
+		{ name: 'Moebius',               url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Moebius/index.wrl" ] },
+		{ name: 'Movie Truck',           url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/MovieTruck/stage/index.x3d",   "https://cdn.rawgit.com/create3000/Library/master/Examples/MovieTruck/stage/index.wrl" ] },
+		{ name: 'Magic Mushrooms',       url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Mushrooms/index.x3d",          "https://cdn.rawgit.com/create3000/Library/master/Examples/Mushrooms/index.wrl" ] },
+		{ name: 'NIST Logo',             url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/NIST-Logo/index.x3d",          "https://cdn.rawgit.com/create3000/Library/master/Examples/NIST-Logo/index.x3dv" ] },
+		{ name: '4 Pong',                url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Pong/index.x3d",               "https://cdn.rawgit.com/create3000/Library/master/Examples/Pong/index.wrl" ] },
+		{ name: 'Old Leipzig Rathaus',   url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Rathaus/stage/index.x3d",      "https://cdn.rawgit.com/create3000/Library/master/Examples/Rathaus/stage/index.wrl" ] },
+		{ name: 'Schacht',               url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Schacht/index.x3d",            "https://cdn.rawgit.com/create3000/Library/master/Examples/Schacht/index.wrl" ] },
+		{ name: 'Terrain',               url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Terrain/index.x3d",            "https://cdn.rawgit.com/create3000/Library/master/Examples/Terrain/index.wrl" ] },
+		{ name: 'Tiki World',            url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/TikiWorld/stage/index.x3d",    "https://cdn.rawgit.com/create3000/Library/master/Examples/TikiWorld/stage/index.wrl" ] },
+		{ name: 'Treasure Island',       url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/TreasureIsland/index.x3d",     "https://cdn.rawgit.com/create3000/Library/master/Examples/TreasureIsland/index.wrl" ] },
+		{ name: 'Mediafacade Berlin',    url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/Vattenfall/index.x3d",         "https://cdn.rawgit.com/create3000/Library/master/Examples/Vattenfall/index.wrl" ] },
+		{ name: 'VRML Banner',           url: [ "https://cdn.rawgit.com/create3000/Library/master/Examples/VRMLBanner/vrmlbanner.x3d",    "https://cdn.rawgit.com/create3000/Library/master/Examples/VRMLBanner/vrmlbanner.wrl" ] },
+		
+		{ name: 'Pinball Table',               url: [ "http://www.web3d.org/x3d/content/examples/Basic/StudentProjects/PinballTable.x3d" ] },
+		{ name: 'Kelp Forest',                 url: [ "http://x3dgraphics.com/examples/X3dForWebAuthors/KelpForestExhibit/KelpForestMain.x3d" ] },
+		{ name: 'SSF Interior',                url: [ "http://alprojectsvr.bluemoonpics.com/2001/ss5int/ss5int.wrl" ] },
+		{ name: 'Discovery One Centrifuge',    url: [ "http://alprojectsvr.bluemoonpics.com/2001/centrifuge/centrifuge.wrl" ] },
+		{ name: 'Sphere Walk Top',             url: [ "http://alprojectsvr.bluemoonpics.com/sphere%20walk%20top.wrl" ] },
+		{ name: 'Helicopter Simulation',       url: [ "http://blogofrog.com/files/vrml/ch47bsim402.wrz" ] },
+
+		{ name: 'Galaxies3d',           url: [ "http://www.pbs.org/wgbh/nova/universe/media/galaxies3d_uc.wrl", "http://www.pbs.org/wgbh/nova/universe/media/galaxies3d.wrl" ] },
+		{ name: 'Rosalila',             url: [ "http://chichcalan.com/rosalila/rosalila.wrl" ] },
+
+		{ name: 'CAD Geometry' },
+		{ name: 'CAD Geometry',   url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/CADGeometry/CADGeometry.wrl" ] },
+		{ name: 'CAD Layer',      url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/CADGeometry/CADLayer.wrl" ] },
+		{ name: 'Setco',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/CADGeometry/setco.x3dz" ] },
+		
+		{ name: 'Core' },
+		{ name: 'EXPORT',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Core/EXPORT.x3d", "https://rawgit.com/create3000/Library/master/Tests/Components/Core/EXPORT.x3dv" ] },
+		{ name: 'IMPORT',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Core/IMPORT.x3d", "https://rawgit.com/create3000/Library/master/Tests/Components/Core/IMPORT.x3dv" ] },
+		{ name: 'scene',               url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Core/scene.x3d" ] },
+		     
+		{ name: 'PROTO' },
+		{ name: 'Nested Protos',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/PROTO/NestedProtos.x3d" ] },
+		{ name: '27 Cubes',            url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/PROTO/27cubes.x3d" ] },
+
+		{ name: 'Composed Cube Map Texture' },
+		{ name: 'Composed Cube Map Texture',  url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ComposedCubeMapTexture/ComposedCubeMapTexture.x3d" ] },
+		{ name: 'Movie Texture',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ComposedCubeMapTexture/ComposedCubeMapMovieTexture.x3d" ] },
+		{ name: 'Image Cube Map Texture',     url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ComposedCubeMapTexture/ImageCubeMapTexture.x3d" ] },
+		{ name: 'Generated Cube Map Texture', url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ComposedCubeMapTexture/GeneratedCubeMapTexture.x3d" ] },
+
+		{ name: 'Environmental Effects' },
+		{ name: 'Local Fog',          url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/EnvironmentalEffects/LocalFog.wrl" ] },
+		{ name: 'Texture Background', url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/EnvironmentalEffects/TextureBackground.wrl" ] },
+		{ name: 'Image Background',   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/EnvironmentalEffects/ImageBackground.x3d" ] },
+
+		{ name: 'Environmental Sensor' },
+		{ name: 'Visibility Sensor',        url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/EnvironmentalSensor/VisibilitySensor.x3d" ] },
+	   { name: 'Proximity Sensor',         url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/EnvironmentalSensor/ProximitySensor.x3d" ] },
+	   { name: 'Transform Sensor',         url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/EnvironmentalSensor/TransformSensor.x3d" ] },
+
+		{ name: 'Event Utilities' },
+		{ name: 'Boolean Filter',     url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/EventUtilities/BooleanFilter.wrl" ] },
+		{ name: 'Boolean Sequencer',  url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/EventUtilities/BooleanSequencer.wrl" ] },
+		{ name: 'Boolean Toggle',     url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/EventUtilities/BooleanToggle.wrl" ] },
+		{ name: 'Boolean Trigger',    url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/EventUtilities/BooleanTrigger.wrl" ] },
+		{ name: 'Integer Sequencer',  url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/EventUtilities/IntegerSequencer.wrl" ] },
+		{ name: 'Integer Trigger',    url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/EventUtilities/IntegerTrigger.wrl" ] },
+		{ name: 'Time Trigger',       url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/EventUtilities/TimeTrigger.wrl" ] },
+		{ name: 'Sequencer',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/EventUtilities/Sequencer.x3d" ] },
+
+		{ name: 'Follower' },
+		{ name: 'Scalar Damper',        url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/ScalarDamper.x3d" ] },
+		{ name: 'Position Damper',      url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/PositionDamper.wrl" ] },
+		{ name: 'Position Damper 2D',   url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/PositionDamper2D.wrl" ] },
+		{ name: 'Color Damper',         url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/ColorDamper.wrl" ] },
+		{ name: 'Orientation Damper',   url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/OrientationDamper.wrl" ] },
+		{ name: 'Coordinate Damper',    url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/CoordinateDamper.wrl" ] },
+		{ name: 'Tex Coord Damper',     url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/TexCoordDamper.x3d" ] },
+		{ name: 'Scalar Chaser',        url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/ScalarChaser.x3d" ] },
+		{ name: 'Position Chaser',      url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/PositionChaser.wrl" ] },
+		{ name: 'Position Chaser 2D',   url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/PositionChaser2D.wrl" ] },
+		{ name: 'Color Chaser',         url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/ColorChaser.wrl" ] },
+		{ name: 'Orientation Chaser',   url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/OrientationChaser.wrl" ] },
+		{ name: 'Coordinate Chaser',    url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/CoordinateChaser.wrl" ] },
+		{ name: 'Tex Coord Chaser 2D',  url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/TexCoordChaser2D.x3d" ] },
+		{ name: '3rd Person View',      url: [ "http://www.web3d.org/x3d/content/examples/Basic/Followers/3rdPersonViewChaser.x3d" ] },
+
+		{ name: 'Geospatial' },
+		{ name: 'Geo Location',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/GeoLocation.x3dz" ] },
+		{ name: 'Geo Transform',             url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/GeoTransform.x3d" ] },
+		{ name: 'Geo Coordinate',            url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/GeoCoordinate.x3d" ] },
+		{ name: 'Geo Viewpoint',             url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/GeoViewpoint.x3dz" ] },
+		{ name: 'Scene YUp',                 url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/GeoViewpoint.rotateYUp.x3dz" ] },
+		{ name: 'YUp',                       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/YUp.x3d" ] },
+		{ name: 'Geo Elevation Grid',        url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/GeoElevationGrid.x3dz" ] },
+		{ name: 'Geo Elevation Grid UTM',    url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/GeoElevationGrid.UTM.x3d" ] },
+		{ name: 'Geo LOD',                   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/GeoLOD.x3d" ] },
+		{ name: 'Geo Touch Sensor',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/GeoTouchSensor.x3dz" ] },
+		{ name: 'Geo Proximity Sensor',      url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/GeoProximitySensor.x3d" ] },
+		{ name: 'Geo Position Interpolator', url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/GeoPositionInterpolator.x3d" ] },
+		{ name: 'Geospatial',                url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/Geospatial.x3dz" ] },
+		{ name: 'Globe',                     url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geospatial/Globe.x3d" ] },
+		{ name: 'CFM5',                      url: [ "https://9a1a1f7091a1f53adbc002bf8336127f7d36bb15.googledrive.com/host/0BwIhFzkLaQ9XQ1NnaV93bWRHQzg/CFM5.x3d" ] },
+
+		{ name: 'Grouping' },
+		{ name: 'Static Group',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Grouping/StaticGroup.x3d" ] },
+		{ name: 'Add Remove Children',   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Grouping/AddRemoveChildren.x3dv" ] },
+
+		{ name: 'Geometry 2D' },
+		{ name: 'Geometry 2D',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geometry2D/Geometry2D.x3d" ] },
+
+		{ name: 'Geometry 3D' },
+		{ name: 'Geometry 3D',             url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geometry3D/Geometry3D.x3d" ] },
+		{ name: 'Smash',                   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geometry3D/Smash.x3d" ] },
+		{ name: 'Cube',                    url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geometry3D/Cube.x3dv" ] },
+		{ name: 'Box',                     url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geometry3D/box.x3d" ] },
+		{ name: '1728',                    url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Geometry3D/1728.x3dv" ] },
+
+		{ name: 'Extrusion' },
+		{ name: 'Extrude 1',                url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geometry3D/Extrusion/extrude1.x3d" ] },
+		{ name: 'Gears 42P Extrusion',      url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geometry3D/Extrusion/gears42P.x3d" ] },
+		{ name: 'Extrusion Rotations',      url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geometry3D/Extrusion/Rotations.x3d" ] },
+		{ name: 'Half Spheres',             url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geometry3D/Extrusion/HalfSpheres.x3d" ] },
+
+
+		{ name: 'Interpolation' },
+		{ name: 'Interpolators',                         url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/Interpolators.wrl" ] },
+		{ name: 'Normal Interpolator',                   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Interpolation/NormalInterpolator.x3d" ] },
+		{ name: 'Position Interpolator',                 url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Interpolation/PositionInterpolator.x3d" ] },
+		{ name: 'Orientation Interpolator',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Interpolation/OrientationInterpolator.x3d" ] },
+		{ name: 'Spline Position Interpolator',          url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SplinePositionInterpolator.wrl" ] },
+		{ name: 'Spline Position Interpolator 2D',       url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SplinePositionInterpolator2.wrl" ] },
+		{ name: 'Spline Scalar Interpolator',            url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SplineScalarInterpolator.wrl" ] },
+		{ name: 'Squad Orientation Interpolator',        url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SquadOrientationInterpolator.wrl" ] },
+		
+		{ name: 'Layering' },
+		{ name: 'Layer Set',            url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Layering/LayerSet.x3d" ] },
+		{ name: 'Simple',               url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Layering/Simple.x3d" ] },
+		{ name: 'Viewport',             url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Layering/Viewport.x3d" ] },
+		{ name: 'Viewport Layer',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Layering/ViewportLayer.x3d" ] },
+
+		{ name: 'Layout' },
+		{ name: 'Screen Group',      url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Layout/ScreenGroup.x3d", "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Layout/ScreenGroup.wrl" ] },
+		{ name: 'Screen Text',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Layout/ScreenFontStyle.x3d" ] },
+		{ name: 'Layout Info',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Layout/info.x3d" ] },
+
+		{ name: 'Lighting' },
+		{ name: 'Point Light',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Lighting/PointLight.x3d", "https://rawgit.com/create3000/Library/master/Tests/Components/Lighting/PointLight.x3dv" ] },
+		{ name: 'Spot Light',               url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Lighting/SpotLight.x3d" ] },
+		{ name: 'Local Light',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Lighting/LocalLight.x3d" ] },
+
+		{ name: 'Navigation' },
+		{ name: 'Gravitation',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Navigation/Gravitation.x3d" ] },
+		{ name: 'Billboard',            url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Navigation/Billboard.x3d" ] },
+		{ name: 'Depth',                url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Navigation/Depth.x3d" ] },
+		{ name: 'Walk Viewer',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Navigation/WalkViewer.x3d" ] },
+		{ name: 'Viewpoint Jump',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Navigation/ViewpointJump.x3d" ] },
+
+		{ name: 'Networking' },
+		{ name: 'Anchor',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Networking/Anchor.x3d" ] },
+		{ name: 'Load Sensor',         url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Networking/LoadSensor.x3d" ] },
+		{ name: 'Snowman',             url: [ "http://x3dgraphics.com/examples/X3dForWebAuthors/Chapter05-AppearanceMaterialTextures/PixelTextureSnowman.x3d" ] },
+
+		{ name: 'Particle Systems' },
+		{ name: 'Point Emitter',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/PointEmitter.x3d" ] },
+		{ name: 'Smoke',                  url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/Smoke.x3d" ] },
+		{ name: 'Fire',                   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/Fire.x3d" ] },
+		{ name: 'Cone Emitter',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/ConeEmitter.x3d" ] },
+		{ name: 'Explosion Emitter',      url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/ExplosionEmitter.x3d" ] },
+		{ name: 'Polyline Emitter',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/PolylineEmitter.x3d" ] },
+		{ name: 'Earth',                  url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/Earth.x3dz" ] },
+		{ name: 'Surface Emitter',        url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/SurfaceEmitter.x3d" ] },
+		{ name: 'Dolphin Sprite',         url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/DolphinSurfaceEmitter.x3d" ] },
+		{ name: 'Dolphin Quad',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/DolphinQuadSurfaceEmitter.x3d" ] },
+		{ name: 'Dolphin Line',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/DolphinLineSurfaceEmitter.x3d" ] },
+		{ name: 'Dolphin Point',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/DolphinPointSurfaceEmitter.x3d" ] },
+		{ name: 'Volume Emitter',         url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/VolumeEmitter.x3d" ] },
+		{ name: 'Volume Emitter U',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/VolumeEmitter-U.x3d" ] },
+		{ name: 'Dolphin Point Volume',   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/DolphinPointVolumeEmitter.x3d" ] },
+		{ name: 'Open Volume',            url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/OpenVolume.x3d" ] },
+		{ name: 'Bounded Physics Model',  url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/BoundedPhysicsModel.x3d" ] },
+		{ name: 'Waterfall',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/Waterfall.x3d" ] },
+		{ name: 'Geometry',               url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/Geometry.x3d" ] },
+		{ name: 'Geometry Line',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/GeometryLine.x3d" ] },
+		{ name: 'Bubbles',                url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/Bubbles.x3d" ] },
+
+		{ name: 'Pointing Device Sensor' },
+		{ name: 'Lamp',                     url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/PointingDeviceSensor/lamp.x3d" ] },
+		{ name: 'Line Sensor',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/PointingDeviceSensor/LineSensor.x3d" ] },
+		{ name: 'Plane Sensor',             url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/PointingDeviceSensor/PlaneSensor.x3d" ] },
+		{ name: 'Sphere Sensor',            url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/PointingDeviceSensor/SphereSensor.x3d" ] },
+		{ name: 'Cloned Sensors',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/PointingDeviceSensor/ClonedSensors.x3d" ] },
+		{ name: 'Touch',                    url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/PointingDeviceSensor/test.x3d" ] },
+
+		{ name: 'Rendering' },
+		{ name: 'Clip Plane',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Rendering/ClipPlane.x3d", "http://www.web3d.org/x3d/content/examples/Basic/CAD/ClipPlaneExample.x3d" ] },
+		{ name: 'Cubes',                   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Rendering/cubes.x3d" ] },
+		{ name: 'Indexed Line Set',        url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Rendering/IndexedLineSet.x3d" ] },
+		{ name: 'Glowing World',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Rendering/world.x3d" ] },
+		{ name: 'L-System',                url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Rendering/L-System.x3dz" ] },
+
+		{ name: 'Scripting' },
+		{ name: 'Color Spheres',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/ColorSpheres.x3d" ] },
+		{ name: 'Add Remove Route',        url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/AddRemoveRoute.x3d" ] },
+		{ name: 'Add Remove Root Node',    url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/AddRemoveRootNode.x3d" ] },
+		{ name: 'Base Node Dispose',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/BaseNodeDispose.x3d" ] },
+		{ name: 'Create Vrml From String', url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/createVrmlFromString.x3d" ] },
+		{ name: 'Create X3D From String',  url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/createX3DFromString.x3d" ] },
+		{ name: 'Load Viewpoints',         url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/load-viewpoints.x3d" ] },
+		{ name: 'Proto',                   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/Proto.x3d" ] },
+		{ name: 'Rotation',                url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/rotation.x3dv" ] },
+		{ name: 'SFNode',                  url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/SFNode.x3d" ] },
+		{ name: 'string',                  url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/string.x3dv" ] },
+		{ name: 'Scripting',               url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/test.x3d" ] },
+		{ name: 'To XML String',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/toXMLString.x3d" ] },
+		{ name: 'To XML String 2',         url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Core/Comment.x3d" ] },
+		{ name: 'To JSON String',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/toXMLString.json" ] },
+		{ name: 'MURCIELAGO 640',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/MURCIELAGO640.json" ] },
+
+		{ name: 'Shaders' },
+		{ name: 'Shader Pipeline', url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/Pipeline.x3d" ] },
+		{ name: 'Shader Images',   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/images.x3d" ] },
+		{ name: 'Shader Fields',   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/Fields.x3d" ] },
+		{ name: 'SFRotation',      url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/ComposedShaderUniformRotation.x3d" ] },
+		{ name: 'Water Quality',   url: [ "http://media.create3000.de/x3d/water/water.x3d" ] },
+		{ name: 'Water Quality 2', url: [ "http://media.create3000.de/x3d/water/water2.x3d" ] },
+		{ name: 'Waves',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/Waves.x3d" ] },
+		{ name: 'Mountains',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/Mountains.x3d" ] },
+		{ name: 'Mandelbox',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/Mandelbox.x3d" ] },
+
+		{ name: 'Vertex Attributes' },
+		{ name: 'Float',         url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/FloatVertexAttribute.x3d" ] },
+		{ name: 'Matrix3',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/Matrix3VertexAttribute.x3d" ] },
+		{ name: 'Matrix4',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/Matrix4VertexAttribute.x3d" ] },
+		{ name: 'Line Float',    url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/LineFloatVertexAttribute.x3d" ] },
+		{ name: 'Line Matrix3',  url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/LineMatrix3VertexAttribute.x3d" ] },
+		{ name: 'Line Matrix4',  url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/LineMatrix4VertexAttribute.x3d" ] },
+		{ name: 'Point Float',   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/PointFloatVertexAttribute.x3d" ] },
+		{ name: 'Point Matrix3', url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/PointMatrix3VertexAttribute.x3d" ] },
+		{ name: 'Point Matrix4', url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shaders/PointMatrix4VertexAttribute.x3d" ] },
+
+		{ name: 'Shape' },
+		{ name: 'Line Properties',      url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shape/LineProperties.x3d" ] },
+		{ name: 'Connectors',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shape/Connectors.x3d" ] },
+		{ name: 'Copper Gold',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Shape/CopperGold.x3d" ] },
+
+		{ name: 'Sound' },
+		{ name: 'Sound',                url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Sound/AudioClip.x3d" ] },
+
+		{ name: 'Text' },
+		{ name: 'Text',                 url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Text/test.x3d" ] },
+		{ name: 'Date',                 url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Text/date.x3d" ] },
+		{ name: 'Horizontal Text',      url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Text/horizontal.x3d" ] },
+		{ name: 'Vertical Text',        url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Text/vertical.x3d" ] },
+		{ name: 'Far Away',             url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Text/scrolling-text.x3d" ] },
+
+		{ name: 'Texturing' },
+		{ name: 'Ubuntu',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Texturing/ubuntu.x3d" ] },
+		{ name: 'Color Material',   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Texturing/ColorMaterial.x3d" ] },
+		{ name: 'Movie Texture',    url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Texturing/MovieTexture.x3d" ] },
+		{ name: 'Color Management', url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Texturing/ColorManagement.x3d" ] },
+	]; 
+
+	function loadURL ()
+	{
+		var Browser = X3D .getBrowser ("#browser");
+	
+		Browser .loadURL (new X3D .MFString ($(".location-entry") .val ()), new X3D .MFString ());
+	}
+
+	for (var i = 0, length = pages .length; i < length; ++ i)
+		pages [i] .mobile = true;
+
+	var
+		Browser   = X3D .getBrowser ("#browser"),
+		bookmarks = new Bookmarks (Browser, $(".bookmarks"), pages, 8);
+
+	bookmarks .setup ();
+	bookmarks .restore ("https://rawgit.com/create3000/Library/master/Tests/Components/Layout/info.x3d");
+
+	$(".version") .text (Browser .name + " V" + Browser .version);
+	$(".location-go") .click (loadURL);
+},
+function (error)
+{
+	console .error ("Please forgive me, your browser may not support all features required by X-ITE!");
+	console .error (error);
+});
+	</script>
+</head>
+<body>
+	<div class="page">
+		<header>
+			<div>
+				<h1 class="version"></h1>
+			</div>
+		</header>
+		<main>
+			<div>
+				<X3DCanvas id="browser" class="browser" cache="false">
+					<p class="fallback">
+						Sorry,<br/>
+						it wasn't me!<br/>
+						<br/>
+						Your browser may not support all features required by X-ITE! You can use Firefox, Chrome,
+						or Microsoft Edge, because this is currently the choice of the choice. We will continuously
+						keep you informed on technical developments and as soon as X-ITE is running in other browser too.
+					</p>
+				</X3DCanvas>
+				<div class="location-bar">
+					<input class="location-entry" value="http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>
+					<button class="location-go">Load URL</button>
+				</div>
+				<div class="links">
+					<a href="../x-ite.min.html">x-ite.min.html</a><a href="http://rawgit.com/create3000/x-ite/master/x-ite.min.html">github</a>
+				</div>
+				<div class="tests">
+					<div class="bookmarks"></div>
+				</div>
+			</div>
+		</main>
+	</page>
+</body>
+</html>

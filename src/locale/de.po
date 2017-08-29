@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Excite\n"
+"Project-Id-Version: X-ITE\n"
 "POT-Creation-Date: 2015-12-23 04:56+0100\n"
 "PO-Revision-Date: 2015-12-23 04:57+0100\n"
 "Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.4\n"
-"X-Poedit-Basepath: ../excite\n"
+"X-Poedit-Basepath: ../x-ite\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -91,7 +91,7 @@ msgid "Browser Timings"
 msgstr "Zeitberechnung"
 
 #: Browser/Core/ContextMenu.js:19
-msgid "Excite X3D Browser"
+msgid "X-ITE Browser"
 msgstr ""
 
 #: Browser/Core/ContextMenu.js:59
@@ -173,8 +173,8 @@ msgid "Fullscreen"
 msgstr "Vollbild"
 
 #: Browser/Core/ContextMenu.js:249
-msgid "About Excite X3D"
-msgstr "Über Excite X3D"
+msgid "About X-ITE"
+msgstr "Über X-ITE"
 
 #: Browser/Core/ContextMenu.js:342
 msgid "Examine Viewer"

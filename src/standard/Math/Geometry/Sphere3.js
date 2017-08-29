@@ -27,19 +27,19 @@
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Excite X3D Project.
+ * This file is part of the X-ITE Project.
  *
- * Excite X3D is free software: you can redistribute it and/or modify it under the
+ * X-ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Excite X3D is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X-ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Excite X3D.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X-ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
