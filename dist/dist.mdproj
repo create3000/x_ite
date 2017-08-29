@@ -33,10 +33,10 @@
     <None Include="images\WalkViewer.png" />
     <None Include="LICENCES.txt" />
     <None Include="example.html" />
-    <None Include="x-ite.css" />
-    <None Include="x-ite.js" />
-    <None Include="x-ite.zip" />
-    <None Include="x-ite.min.js" />
+    <None Include="x_ite.css" />
+    <None Include="x_ite.js" />
+    <None Include="x_ite.zip" />
+    <None Include="x_ite.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

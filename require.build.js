@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "src",
-	name: "x-ite",
-	out: "dist/x-ite.js",
+	name: "x_ite",
+	out: "dist/x_ite.js",
 	optimize: "none",
 	mainConfigFile: "src/require.config.js",
 	include: [

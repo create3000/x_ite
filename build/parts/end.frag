@@ -1,10 +1,10 @@
 
-	for (var key in xiteNoConfict)
+	for (var key in x_iteNoConfict)
 	{
-		if (xiteNoConfict [key] === undefined)
+		if (x_iteNoConfict [key] === undefined)
 			delete window [key];
 		else
-			window [key] = xiteNoConfict [key];
+			window [key] = x_iteNoConfict [key];
 	}
 
 }());

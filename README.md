@@ -1,27 +1,27 @@
-<img alt="X-ITE" src="https://rawgit.com/create3000/x-ite/master/meta/logo/logo.svg" width="60" height="60"/>
+<img alt="X_ITE" src="https://rawgit.com/create3000/x_ite/master/meta/logo/logo.svg" width="60" height="60"/>
 
-[X-ITE](http://create3000.de/x-ite/) — X-ITE WebGL Browser
+[X_ITE](http://create3000.de/x_ite/) — X_ITE WebGL Browser
 ==================================================
 
 
 Introduction
 --------------------------------------
 
-X-ITE is a work in progress. The goal is a full standard WebGL X3D browser for all major web browsers.
+X_ITE is a work in progress. The goal is a full standard WebGL X3D browser for all major web browsers.
 
-For more information and live preview please visit [http://create3000.de/x-ite/](http://create3000.de/x-ite/).
+For more information and live preview please visit [http://create3000.de/x_ite/](http://create3000.de/x_ite/).
 
 
 Links
 --------------------------------------
-* [Getting Started](http://create3000.de/x-ite/getting-started/)
-* [What’s New](http://create3000.de/x-ite/whats-new/)
-* [Supported Nodes](http://create3000.de/x-ite/supported-nodes/)
-* [Accessing the External Browser](http://create3000.de/x-ite/accessing-the-external-browser/)
-* [XHTML DOM Integration](http://create3000.de/x-ite/xhtml-dom-integration/)
-* [Custom Shaders](http://create3000.de/x-ite/shaders/)
+* [Getting Started](http://create3000.de/x_ite/getting-started/)
+* [What’s New](http://create3000.de/x_ite/whats-new/)
+* [Supported Nodes](http://create3000.de/x_ite/supported-nodes/)
+* [Accessing the External Browser](http://create3000.de/x_ite/accessing-the-external-browser/)
+* [XHTML DOM Integration](http://create3000.de/x_ite/xhtml-dom-integration/)
+* [Custom Shaders](http://create3000.de/x_ite/shaders/)
 
-Embedding X-ITE within a Web Page
+Embedding X_ITE within a Web Page
 --------------------------------------
 
 To display your X3D scene in a HTML5 page first save your scene as X3D XML Encoded file or as X3D Classic Encoded file, i.e. create a file with the extension .x3d ,.x3dv or .wrl. 
@@ -32,8 +32,8 @@ The HTML5 page is quite easy to create, the HTML5 code below shows you the minim
       <html>
        <head>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/create3000/x-ite/latest/x-ite.js/x-ite.css"/>
-        <script type="text/javascript" src="https://cdn.rawgit.com/create3000/x-ite/latest/x-ite.js/x-ite.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/create3000/x_ite/latest/x_ite.js/x_ite.css"/>
+        <script type="text/javascript" src="https://cdn.rawgit.com/create3000/x_ite/latest/x_ite.js/x_ite.min.js"></script>
         <style>
         X3DCanvas {
           width: 768px;
@@ -43,19 +43,19 @@ The HTML5 page is quite easy to create, the HTML5 code below shows you the minim
       </head>
       <body>
         <X3DCanvas src="path/to/your/X3D/world.x3d">
-          <p>Your browser may not support all features required by X-ITE!</p>
+          <p>Your browser may not support all features required by X_ITE!</p>
         </X3DCanvas>
       </body>
     </html>
 
-To get X-ITE working you must include the CSS file »x-ite.css« and the JavaScript file »x-ite.min.js «. After x-ite is successfully loaded a new HTML tag <X3DCanvas> is available on your page.
+To get X_ITE working you must include the CSS file »x_ite.css« and the JavaScript file »x_ite.min.js «. After x_ite is successfully loaded a new HTML tag <X3DCanvas> is available on your page.
 
 You can style the <X3DCanvas> tag as every HTML tag with CSS as well as you can place it everywhere within the DOM tree. 
 
 
 ### Supported File Formats
 
-As of version 1.19, X-ITE can now parse either X3D XML Encoding or X3D Classic Encoding. This gives authors the capability to display their existing projects like .wrl worlds, too.
+As of version 1.19, X_ITE can now parse either X3D XML Encoding or X3D Classic Encoding. This gives authors the capability to display their existing projects like .wrl worlds, too.
 
 Additionally files can be compressed using GZip compression.
 
@@ -125,12 +125,12 @@ A Boolean value (true or false) to indicate whether files transferred over the i
 
 Programmer's Style Guide
 --------------------------------------
-Programmers who want to work on X-ITE shall first read the [Style Guide](STYLE_GUIDE.md).
+Programmers who want to work on X_ITE shall first read the [Style Guide](STYLE_GUIDE.md).
 
 
 Tests
 --------------------------------------
-[X-ITE Test Page](http://rawgit.com/create3000/x-ite/master/x-ite.min.html)
+[X_ITE Test Page](http://rawgit.com/create3000/x_ite/master/x_ite.min.html)
 
 
 Authors
@@ -140,5 +140,5 @@ All authors contributed to this project can be found in the [list of authors](AU
 
 License
 --------------------------------------
-X-ITE is free software: you can redistribute it and/or modify it under the terms of 
+X_ITE is free software: you can redistribute it and/or modify it under the terms of 
 the [GNU General Public License version 3](LICENSE.md) only, as published by the Free Software Foundation.

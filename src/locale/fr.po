@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: X-ITE\n"
+"Project-Id-Version: X_ITE\n"
 "POT-Creation-Date: 2015-12-23 04:58+0100\n"
 "PO-Revision-Date: 2015-12-23 05:07+0100\n"
 "Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.4\n"
-"X-Poedit-Basepath: ../x-ite\n"
+"X-Poedit-Basepath: ../x_ite\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -46,7 +46,7 @@ msgstr ""
 #: Browser/Core/BrowserTimings.js:150
 #, fuzzy
 msgid "Browser"
-msgstr "X-ITE Navigateur"
+msgstr "X_ITE Navigateur"
 
 #: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151
 #: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153
@@ -92,8 +92,8 @@ msgid "Browser Timings"
 msgstr "Calcul du temps"
 
 #: Browser/Core/ContextMenu.js:19
-msgid "X-ITE Browser"
-msgstr "X-ITE Navigateur"
+msgid "X_ITE Browser"
+msgstr "X_ITE Navigateur"
 
 #: Browser/Core/ContextMenu.js:59
 msgid "Viewpoints"
@@ -174,8 +174,8 @@ msgid "Fullscreen"
 msgstr "Plein écran"
 
 #: Browser/Core/ContextMenu.js:249
-msgid "About X-ITE"
-msgstr "À propos de X-ITE"
+msgid "About X_ITE"
+msgstr "À propos de X_ITE"
 
 #: Browser/Core/ContextMenu.js:342
 msgid "Examine Viewer"

@@ -20,10 +20,10 @@ sub check_version {
 
 	say "VERSION »$VERSION«";
 
-	my $BROWSER = `cat src/x-ite/Browser/VERSION.js`;
+	my $BROWSER = `cat src/x_ite/Browser/VERSION.js`;
 	$BROWSER =~ s/"(.*?)"/"$VERSION"/;
 
-	open BROWSER, ">", "src/x-ite/Browser/VERSION.js";
+	open BROWSER, ">", "src/x_ite/Browser/VERSION.js";
 	print BROWSER $BROWSER;
 	close $BROWSER;
 }
@@ -35,7 +35,7 @@ sub dist {
 }
 
 sub licenses {
-	my $min = `cat 'dist/x-ite.min.js'`;
+	my $min = `cat 'dist/x_ite.min.js'`;
 
 	$min =~ m!^((?:\s+|/\*.*?\*/|//.*?\n)+)!sg;
 
@@ -43,7 +43,7 @@ sub licenses {
 
 	$min =~ s!^((?:\s+|/\*.*?\*/|//.*?\n)+)!!sg;
 
-	open MIN, ">", "dist/x-ite.min.js";
+	open MIN, ">", "dist/x_ite.min.js";
 	print MIN $min;
 	close MIN;
 
@@ -54,12 +54,12 @@ sub licenses {
 }
 
 sub zip {
-	my $ZIP_DIR = "x-ite-$VERSION";
+	my $ZIP_DIR = "x_ite-$VERSION";
 
 	system "cp", "-r", "dist", $ZIP_DIR;
 
 	system "zip", "-x", "*.mdproj", "-x", "*.zip", "-r", "$ZIP_DIR.zip", $ZIP_DIR;
-	system "mv", "-v", "$ZIP_DIR.zip", "dist/x-ite.zip";
+	system "mv", "-v", "$ZIP_DIR.zip", "dist/x_ite.zip";
 
 	system "rm", "-v", "-r", $ZIP_DIR;
 }

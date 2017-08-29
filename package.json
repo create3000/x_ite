@@ -1,12 +1,12 @@
 {
-	"name": "x-ite",
+	"name": "x_ite",
 	"version": "4.0.2",
 	"revision": "49",
-	"description": "X-ITE Browser",
-	"main": "src/x-ite.js",
+	"description": "X_ITE X3D Browser",
+	"main": "src/x_ite.js",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/create3000/x-ite.git"
+		"url": "git+https://github.com/create3000/x_ite.git"
 	},
 	"keywords": [
 		"X3D",
@@ -15,7 +15,7 @@
 	],
 	"author": "Holger Seelig <holger.seeligyahoo.de>",
 	"license": "GPL-3.0",
-	"homepage": "https://github.com/create3000/x-ite#readme",
+	"homepage": "https://github.com/create3000/x_ite#readme",
 	"contributors": [
 		{
 			"name": "Holger Seelig",
@@ -28,7 +28,7 @@
 		}
 	],
 	"bugs": {
-		"url": "https://github.com/create3000/x-ite/issues"
+		"url": "https://github.com/create3000/x_ite/issues"
 	},
 	"devDependencies": {
 		"require": "latest",
@@ -48,6 +48,6 @@
 		"-prebuild:js": "npm run lint",
 		"build:js": "r.js -o require.build.js",
 		"build:min.js": "r.js -o require.build.min.js",
-		"build:css": "r.js -o cssIn=src/x-ite.css out=x-ite.css"
+		"build:css": "r.js -o cssIn=src/x_ite.css out=dist/x_ite.css"
 	}
 }

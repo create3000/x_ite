@@ -9,24 +9,24 @@ all:
 dist: all
 	npm run build
 
-	perl -pi -e 's|text/text!|text!|sg' dist/x-ite.js
-	perl -pi -e 's|text/text!|text!|sg' dist/x-ite.min.js
+	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
+	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.min.js
 
-	cp src/x-ite.html x-ite.min.html
-	perl -pi -e 's|\s*<script type="text/javascript" src="\.\./node_modules/requirejs/require.js"></script>\n||sg' x-ite.min.html
-	perl -pi -e 's|\s*<script type="text/javascript" src="require.config.js"></script>\n||sg'                      x-ite.min.html
-	perl -pi -e 's|"x-ite.js"|"dist/x-ite.min.js"|sg'                x-ite.min.html
-	perl -pi -e 's|"x-ite.css"|"dist/x-ite.css"|sg'                  x-ite.min.html
-	perl -pi -e 's|\.\./x-ite.min.html|src/x-ite.html|sg'            x-ite.min.html
-	perl -pi -e 's|\>x-ite.min.html|>src/x-ite.html|sg'              x-ite.min.html
-	perl -pi -e 's|x-ite-dev|x-ite-min|sg'                           x-ite.min.html
-	perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'               x-ite.min.html
-	perl -pi -e 's|\.\./tests/|tests/|sg'                              x-ite.min.html
+	cp src/x_ite.html x_ite.min.html
+	perl -pi -e 's|\s*<script type="text/javascript" src="\.\./node_modules/requirejs/require.js"></script>\n||sg' x_ite.min.html
+	perl -pi -e 's|\s*<script type="text/javascript" src="require.config.js"></script>\n||sg'                      x_ite.min.html
+	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'                x_ite.min.html
+	perl -pi -e 's|"x_ite.css"|"dist/x_ite.css"|sg'                  x_ite.min.html
+	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'            x_ite.min.html
+	perl -pi -e 's|\>x_ite.min.html|>src/x_ite.html|sg'              x_ite.min.html
+	perl -pi -e 's|x_ite-dev|x_ite-min|sg'                           x_ite.min.html
+	perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'             x_ite.min.html
+	perl -pi -e 's|\.\./tests/|tests/|sg'                            x_ite.min.html
 
 	perl build/dist.pl
 
 	echo
-	ls -la dist/x-ite.min.js
+	ls -la dist/x_ite.min.js
 	echo
 
 
@@ -35,6 +35,6 @@ version: dist
 
 
 clean:
-	rm x-ite.min.html
-	rm x-ite.uncompressed.js
-	rm x-ite.min.js
+	rm x_ite.min.html
+	rm x_ite.uncompressed.js
+	rm x_ite.min.js
