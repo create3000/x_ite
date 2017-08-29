@@ -175,6 +175,10 @@ function ($,
 		{
 			return this .components;
 		},
+		getUnits: function ()
+		{
+			return this .getExecutionContext () .getUnits ();
+		},
 		createNode: function (typeName, setup)
 		{
 			var interfaceDeclaration = this .getBrowser () .supportedNodes [typeName];
@@ -366,7 +370,7 @@ function ($,
 				throw new Error ("Unknown named or imported node '" + name + "'.");
 			}
 		},
-		setRootNodes: function (rootNode) { },
+		setRootNodes: function () { },
 		getRootNodes: function ()
 		{
 			return this .rootNodes_;
@@ -570,6 +574,13 @@ function ($,
 	Object .defineProperty (X3DExecutionContext .prototype, "worldURL",
 	{
 		get: function () { return this .getWorldURL (); },
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "units",
+	{
+		get: function () { return this .getUnits (); },
 		enumerable: true,
 		configurable: false
 	});

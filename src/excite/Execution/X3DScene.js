@@ -74,12 +74,12 @@ function ($,
 
 		this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
-		this .units = new UnitInfoArray ();
+		this .unitArray = new UnitInfoArray ();
 
-		this .units .add ("angle",  new UnitInfo ("angle",  "radian",   1));
-		this .units .add ("force",  new UnitInfo ("force",  "newton",   1));
-		this .units .add ("length", new UnitInfo ("length", "metre",    1));
-		this .units .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
+		this .unitArray .add ("angle",  new UnitInfo ("angle",  "radian",   1));
+		this .unitArray .add ("force",  new UnitInfo ("force",  "newton",   1));
+		this .unitArray .add ("length", new UnitInfo ("length", "metre",    1));
+		this .unitArray .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
 		this .metaData      = { };
 		this .exportedNodes = { };
@@ -107,7 +107,7 @@ function ($,
 		},
 		updateUnit: function (category, name, conversionFactor)
 		{
-			var unit = this .units .get (category);
+			var unit = this .unitArray .get (category);
 
 			if (! unit)
 				return;
@@ -117,7 +117,7 @@ function ($,
 		},
 		getUnits: function ()
 		{
-			return this .units;
+			return this .unitArray;
 		},
 		setMetaData: function (name, value)
 		{
@@ -125,6 +125,10 @@ function ($,
 				return;
 
 			this .metaData [name] = String (value);
+		},
+		removeMetaData: function (name)
+		{
+			delete this .metaData [name];
 		},
 		getMetaData: function (name)
 		{

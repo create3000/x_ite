@@ -1,3 +1,5 @@
+/* Excite X3D v4.0.2-37 */
+
 (function () {
 
 	var exciteNoConfict = {
@@ -30020,6 +30022,10 @@ function ($,
 		{
 			return this .components;
 		},
+		getUnits: function ()
+		{
+			return this .getExecutionContext () .getUnits ();
+		},
 		createNode: function (typeName, setup)
 		{
 			var interfaceDeclaration = this .getBrowser () .supportedNodes [typeName];
@@ -30211,7 +30217,7 @@ function ($,
 				throw new Error ("Unknown named or imported node '" + name + "'.");
 			}
 		},
-		setRootNodes: function (rootNode) { },
+		setRootNodes: function () { },
 		getRootNodes: function ()
 		{
 			return this .rootNodes_;
@@ -30415,6 +30421,13 @@ function ($,
 	Object .defineProperty (X3DExecutionContext .prototype, "worldURL",
 	{
 		get: function () { return this .getWorldURL (); },
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "units",
+	{
+		get: function () { return this .getUnits (); },
 		enumerable: true,
 		configurable: false
 	});
@@ -30780,12 +30793,12 @@ function ($,
 
 		this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
-		this .units = new UnitInfoArray ();
+		this .unitArray = new UnitInfoArray ();
 
-		this .units .add ("angle",  new UnitInfo ("angle",  "radian",   1));
-		this .units .add ("force",  new UnitInfo ("force",  "newton",   1));
-		this .units .add ("length", new UnitInfo ("length", "metre",    1));
-		this .units .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
+		this .unitArray .add ("angle",  new UnitInfo ("angle",  "radian",   1));
+		this .unitArray .add ("force",  new UnitInfo ("force",  "newton",   1));
+		this .unitArray .add ("length", new UnitInfo ("length", "metre",    1));
+		this .unitArray .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
 		this .metaData      = { };
 		this .exportedNodes = { };
@@ -30813,7 +30826,7 @@ function ($,
 		},
 		updateUnit: function (category, name, conversionFactor)
 		{
-			var unit = this .units .get (category);
+			var unit = this .unitArray .get (category);
 
 			if (! unit)
 				return;
@@ -30823,7 +30836,7 @@ function ($,
 		},
 		getUnits: function ()
 		{
-			return this .units;
+			return this .unitArray;
 		},
 		setMetaData: function (name, value)
 		{
@@ -30831,6 +30844,10 @@ function ($,
 				return;
 
 			this .metaData [name] = String (value);
+		},
+		removeMetaData: function (name)
+		{
+			delete this .metaData [name];
 		},
 		getMetaData: function (name)
 		{
@@ -110230,7 +110247,7 @@ function ($,
 				scene .setRootNodes (rootNodes);
 			}
 
-			if (scene instanceof X3DScene)
+			if (! (scene instanceof X3DScene))
 				scene = this .createScene ();
 			
 			// bindWorld
@@ -110456,6 +110473,10 @@ function ($,
 
 			return scene;
 		},
+		getBrowserProperty: function (name)
+		{
+			return this .getBrowserProperties () .getField (name) .getValue ();
+		},
 		setBrowserOption: function (name, value)
 		{
 			this .getBrowserOptions () .getField (name) .setValue (value);
@@ -110463,10 +110484,6 @@ function ($,
 		getBrowserOption: function (name)
 		{
 			return this .getBrowserOptions () .getField (name) .getValue ();
-		},
-		getBrowserProperty: function (name)
-		{
-			return this .getBrowserProperties () .getField (name) .getValue ();
 		},
 		getRenderingProperty: function (name)
 		{

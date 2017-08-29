@@ -253,7 +253,7 @@ function ($,
 				scene .setRootNodes (rootNodes);
 			}
 
-			if (scene instanceof X3DScene)
+			if (! (scene instanceof X3DScene))
 				scene = this .createScene ();
 			
 			// bindWorld
@@ -479,6 +479,10 @@ function ($,
 
 			return scene;
 		},
+		getBrowserProperty: function (name)
+		{
+			return this .getBrowserProperties () .getField (name) .getValue ();
+		},
 		setBrowserOption: function (name, value)
 		{
 			this .getBrowserOptions () .getField (name) .setValue (value);
@@ -486,10 +490,6 @@ function ($,
 		getBrowserOption: function (name)
 		{
 			return this .getBrowserOptions () .getField (name) .getValue ();
-		},
-		getBrowserProperty: function (name)
-		{
-			return this .getBrowserProperties () .getField (name) .getValue ();
 		},
 		getRenderingProperty: function (name)
 		{
