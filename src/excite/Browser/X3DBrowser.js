@@ -661,7 +661,7 @@ function ($,
 
 	Object .defineProperty (X3DBrowser .prototype, "name",
 	{
-		get: function () { return "Excite"; },
+		get: function () { return "X-ITE"; },
 		enumerable: true,
 		configurable: false
 	});

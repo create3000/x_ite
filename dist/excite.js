@@ -1,4 +1,4 @@
-/* Excite X3D v4.0.2-39 */
+/* Excite X3D v4.0.2-40 */
 
 (function () {
 
@@ -110655,7 +110655,7 @@ function ($,
 
 	Object .defineProperty (X3DBrowser .prototype, "name",
 	{
-		get: function () { return "Excite"; },
+		get: function () { return "X-ITE"; },
 		enumerable: true,
 		configurable: false
 	});
