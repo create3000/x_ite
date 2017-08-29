@@ -1,4 +1,4 @@
-/* Excite X3D v4.0.2-44 */
+/* Excite X3D v4.0.2-45 */
 
 (function () {
 

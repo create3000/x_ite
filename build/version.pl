@@ -48,11 +48,11 @@ if ($VERSION =~ /a$/)
 	exit;
 }
 
-my $result = system "zenity", "--question", "--text=Do you really want to publish Excite X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
+my $result = system "zenity", "--question", "--text=Do you really want to publish X-ITE X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
 
 if ($result == 0)
 {
-	say "Publishing Excite X3D v$VERSION-$REVISION now.";
+	say "Publishing X-ITE X3D v$VERSION-$REVISION now.";
 
 	system "perl", "-pi", "-e", "s|\"revision\":\\s*\"(.*?)\"|\"revision\": \"$REVISION\"|sg", "package.json";
 
@@ -68,7 +68,7 @@ if ($result == 0)
 
 	my $js = `cat dist/excite.min.js`;
 	open JS, ">", "dist/excite.min.js";
-	print JS "/* Excite X3D v$VERSION-$REVISION\n * See LICENCES.txt for a detailed listing of used licences. */\n", $js;
+	print JS "/* X-ITE X3D v$VERSION-$REVISION\n * See LICENCES.txt for a detailed listing of used licences. */\n", $js;
 	close JS;
 
 	# GitHub
@@ -79,13 +79,13 @@ if ($result == 0)
 
 	# FTP
 
-	my $ftp = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/excite/$VERSION/dist/";
+	my $ftp = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/x-ite/$VERSION/dist/";
 
 	system "mkdir", "-p", $ftp;
-	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/Excite/dist/", $ftp;
+	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X-ITE/dist/", $ftp;
 
-	my $latest = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/excite/latest/dist/";
+	my $latest = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/x-ite/latest/dist/";
 
 	system "mkdir", "-p", $latest;
-	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/Excite/dist/", $latest;
+	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X-ITE/dist/", $latest;
 }
