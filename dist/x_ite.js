@@ -1,4 +1,4 @@
-/* X_ITE v4.0.2-51 */
+/* X_ITE v4.0.2-52 */
 
 (function () {
 
@@ -44934,6 +44934,8 @@ function ($,
 
 			// Test for data URL here.
 
+			this .URL = this .transform (URL);
+
 			try
 			{
 				var result = dataURL .exec (URL);
@@ -44952,7 +44954,7 @@ function ($,
 						data = unescape (data);
 
 					if (this .target .length && this .target !== "_self" && this .foreign)
-						return this .foreign (this .URL .toString (), this .target);
+						return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
 
 					this .callback (data);
 					return;
@@ -44963,8 +44965,6 @@ function ($,
 				this .loadDocumentError (exception);
 				return;
 			}
-
-			this .URL = this .transform (URL);
 
 			// Handle target
 
@@ -44977,7 +44977,7 @@ function ($,
 			{
 				if (this .foreign)
 				{
-					return this .foreign (URL .replace (urls .fallbackExpression, ""), this .target);
+					return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
 				}
 			}
 

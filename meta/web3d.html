@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-	<meta http-equiv="Pragma" content="no-cache"/>
-	<meta http-equiv="Expires" content="0"/>
 	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=1300"/>
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.js"></script>
 	<script type="text/javascript" src="https://cdn.rawgit.com/kayahr/jquery-fullscreen-plugin/1.1.4/jquery.fullscreen-min.js"></script>
@@ -19,7 +17,6 @@ html, body {
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
-	height: 100%;
 }
 
 html {
@@ -27,7 +24,7 @@ html {
 }
 
 body {
-	padding-bottom: 100px;
+	padding-bottom: 30px;
 	background: black;
 	color: white;
 	font-family: PT Sans, sans;
@@ -40,11 +37,11 @@ main > div,
 footer > div {
 	margin: 0px auto;
 	padding: 10px 0px 10px 0px;
-	width: 1000px;
+	width: 50vw;
 }
 
 main {
-	background: #414141;
+	background: #3d4145;
 }
 
 h1 {
@@ -60,23 +57,38 @@ h2 {
 a {
 	outline: none;
 	text-decoration: none;
-	color: #e7e8a0;
+	color: #3c9fc2;
 }
 
-a::before {
-    content: '';
-    width: 0px;
-    height: 0px;
-    border-style: solid;
-    border-width: 5px 0px 5px 8px;
-    border-color: transparent transparent transparent #e7e8a0;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 4px;
+.references a:hover,
+footer a:hover {
+	text-decoration: underline;
 }
 
-footer h1 a:before {
-	display: none;
+.references a {
+	border-left: 1px dotted;
+	margin-right: 5px;
+}
+
+.references a:before {
+	content: '';
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 5px 0px 5px 8px;
+	border-color: transparent transparent transparent #3c9fc2;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+	margin-right: 4px;
+}
+
+.references a:first-child {
+	border-left: 0px;
+}
+
+.references a:first-child:before {
+	margin-left: 0px;
 }
 
 .fullscreen {
@@ -100,12 +112,22 @@ pre {
 	display: none;
 }
 
+.create3000 img {
+	border: 1px dotted white;
+	padding: 4px;
+	width: auto;
+}
+
+.create3000 img:hover {
+	background: #222;
+}
+
 .browser {
 	display: block;
 	margin: 10px 0px;
 	width: auto;
 	width: 100%;
-	height: 563px;
+	height: 27.75vw;
 	box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.75);
 }
 
@@ -118,6 +140,92 @@ pre {
 .links {
 	float: right;
 }
+
+@media only screen and (max-width: 1366px) {
+
+	html {
+		font-size: 0.9pt;
+	}
+
+	body {
+		padding-bottom: 24px;
+	}
+	
+	header > div ,
+	main > div,
+	footer > div {
+		padding: 8px 0px 8px 0px;
+	}
+
+	h1 {
+		margin: 8px 32px 8px 0px;
+		font-size: 18rem;
+	}
+	
+	h2 {
+		margin: 8px 32px 8px 0px;
+		font-size: 24rem;
+	}
+
+	a:before {
+		border-width: 4px 0px 4px 6px;
+		margin-left: 8px;
+      margin-right: 3px;
+	}
+
+	.create3000 > * {
+		margin-left: 4px;
+	}
+	
+	.create3000 img {
+		padding: 3px;
+		height: 9px;
+	}
+
+	.browser {
+		margin: 8px 0px;
+	}
+	
+	.fallback {
+		margin: 240px 30px 0 24px;
+	}
+}
+
+
+@media only screen and (max-width: 1280px) {
+
+	html {
+		font-size: 0.8pt;
+	}
+
+	body {
+		padding-bottom: 20px;
+	}
+	
+	header > div ,
+	main > div,
+	footer > div {
+		padding: 5px 0px 5px 0px;
+	}
+
+	h1 {
+		margin: 5px 30px 5px 0px;
+		font-size: 18rem;
+	}
+	
+	h2 {
+		margin: 5px 30px 5px 0px;
+		font-size: 24rem;
+	}
+
+	.browser {
+		margin: 5px 0px;
+	}
+	
+	.fallback {
+		margin: 240px 30px 0 24px;
+	}
+}
 	</style>
 
 	<script type="text/javascript">
@@ -129,7 +237,7 @@ X3D (function ()
 {
 	var Browser = X3D .getBrowser ("#browser");
 
-	$(".version") .text (Browser .name + " V" + Browser .version);
+	$(".version") .text (Browser .name + " v" + Browser .version);
 },
 function (error)
 {
@@ -145,15 +253,16 @@ function (error)
 				<h2>CadDesignPatternExampleBushing.x3d</h2>
 				<p><span class="webfont">Design pattern examples demonstrating proper hierarchy of CAD nodes: CADLayer, CADAssembly, CADPart, and then CADFace.</span></p>
 				<div class="create3000">
-					<a href="http://create3000.de/x_ite/"><img title="Visit X_ITE Project Page"
+					<a href="http://create3000.de/x_ite/" target="_blank"><img title="Visit X_ITE Project Page"
 					        alt="Visit X_ITE Project Page"
-					        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAALAAAACwBozq4RwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAFlSURBVBiVdZE9S0JhHMXPc30syzSjhhASM23Rq00GQkRRnyECR5eGpvoGBRUEEQ5JLdEUFDW0RGshCUIRGRW9mKi9mJmlXbwv/puCKD3j4Xc4Bw4A4Mxma6NVcYRuxBlKu32oIwEA9IwNFy/UTUiYQkXYoIynqy7MiJixn0ulhBIrb6sdVGBRuu+z1IShA9N1w9QS4KFM+NP/uavktCc1mx7r/T/pMeia1uJi/rcn74lh7dAjPQz0rNw6HK0AwABA2nEfCBW0NI4nAr8DdO2ZpQwLZRak19KFvCwAQIND8Bb35djfxsuhwtJXTs1ZJw1O+4TZyunB566mNeHjVL37gfKTTjMz6daa7Xy0oV0oMheqBhfFGaW9i3RFwVJWOTL59YZqGX6qwEIyJXmnsA4jjsFxzjrPXjgU0qDB0kR88D0ifxTjaqT8Zph1JxLy31kcUcw/b0nJwonSrRLNeVOpQq1DAOAbNWmZiGHLF2YAAAAASUVORK5CYII="/></a>
+					        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADBSURBVBiVddAxLoRRFIbh75eIUiRDN5XCFkg0Eq1Er1BpFAoFC1BYhGJ2oFHIWIGolEqVhIhpR4hH4YibMfNV97z3vSfn3C4VrCc5TvLYdd1Jw4+SbCa5TwOX8I5P9IptVf2G1bTB0E/2sIInfGE3k8FByQNc1fnsn1jyMj7wWuIQc7PkDg/+0m/vJ1+dJllLMqp6Y1bX7dr8GYfV+XKa2MdLbb6DXs0+xmIrLuCuOp03/KbYfitfFLzF/JRvvP5l32CK4837n5ZaAAAAAElFTkSuQmCC"/></a>
 					<img class="fullscreen"
-					     title="Display X_ITE Browser in Fullscreen"
+					     title="Enter Fullscreen Mode"
 					     alt="Fullscreen"
 					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4QQNFQk1i7oCawAAALhJREFUGJWV0TFKA2EQBeBn1iqptBJvEFsVjxR0LyB4txQSRCzEeAexsLCJydr4WWQWwjbGBwPzv3nDP/Mm+EBXscAhggb3xW/wGaxt8Y2rEvZxWTx0wWqn4R3HJTzCW/FrbEZJnpKcJ3lJcpLkOlvMkpwmeU1ykeSxny0Yox2M0WLS73CA7ItRkqbycZJ2UL9JMqm8CeaY4rmWuatvb+u9xBnm/3Ij+PrD527X5178g4fBBRfFQ/cL8YlBv40R0JoAAAAASUVORK5CYII="/>
             </div>
 				<p class="references">
+					<a href="CadDesignPatternExampleBushing.x3d">Original X3D Scene</a>
 					<a href="CadDesignPatternExampleBushing.x3d">Original X3D Scene</a>
 				</p>
 			</div>
