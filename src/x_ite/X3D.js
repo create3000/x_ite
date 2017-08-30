@@ -145,7 +145,7 @@ function ($,
 	{
 		dom = $(dom);
 
-		if (dom .data ("browser"))
+		if (dom .find (".x_ite-private-browser") .length)
 			return;
 
 		var browser = new X3DBrowser (dom);
