@@ -12,11 +12,19 @@ chomp $CWD;
 say $CWD;
 
 my $VERSION;
+my $ALPHA;
+my $REVISION;
 
 sub check_version {
 	$VERSION = `cat package.json`;
 	$VERSION =~ /"version":\s*"(.*?)"/;
 	$VERSION = $1;
+
+	$ALPHA = $VERSION =~ /a$/;
+	
+	$REVISION = `cat package.json`;
+	$REVISION =~ /"revision":\s*"(.*?)"/;
+	$REVISION = $1 + 1;
 
 	say "VERSION »$VERSION«";
 
@@ -29,6 +37,21 @@ sub check_version {
 }
 
 sub dist {
+	my $css = `cat dist/x_ite.css`;
+	open CSS, ">", "dist/x_ite.css";
+	print CSS "/* X_ITE v$VERSION-$REVISION */", $css;
+	close CSS;
+
+	my $js = `cat dist/x_ite.js`;
+	open JS, ">", "dist/x_ite.js";
+	print JS "/* X_ITE v$VERSION-$REVISION */\n\n", $js;
+	close JS;
+
+	my $js_min = `cat dist/x_ite.min.js`;
+	open JS, ">", "dist/x_ite.min.js";
+	print JS "/* X_ITE X3D v$VERSION-$REVISION\n * See LICENCES.txt for a detailed listing of used licences. */\n", $js_min;
+	close JS;
+
 	system "cp", "-v", "-r", "src/images",  "dist/";
 	system "cp", "-v", "src/example.html",  "dist/";
 	system "perl", "-pi", "-e", "s|/latest/|/$VERSION/|sg", "dist/example.html";
@@ -69,6 +92,6 @@ exit if $VERSION =~ /a$/;
 
 say "Making version '$VERSION' now.";
 
-dist;
 licenses;
+dist;
 zip;

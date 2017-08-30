@@ -16,6 +16,8 @@ $VERSION = `cat package.json`;
 $VERSION =~ /"version":\s*"(.*?)"/;
 $VERSION = $1;
 
+my $ALPHA = $VERSION =~ /a$/;
+
 my $REVISION;
 $REVISION = `cat package.json`;
 $REVISION =~ /"revision":\s*"(.*?)"/;
@@ -42,40 +44,24 @@ sub publish {
 	system "git", "push", "github", "--tags";
 }
 
-if ($VERSION =~ /a$/)
-{
-	system "zenity", "--error", "--text=Cannot publish version $VERSION!", "--ok-label=Ok";
-	exit;
-}
-
 my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
 
 if ($result == 0)
 {
 	say "Publishing X_ITE X3D v$VERSION-$REVISION now.";
 
+	# Increment revision number.
 	system "perl", "-pi", "-e", "s|\"revision\":\\s*\"(.*?)\"|\"revision\": \"$REVISION\"|sg", "package.json";
-
-	my $css = `cat dist/x_ite.css`;
-	open CSS, ">", "dist/x_ite.css";
-	print CSS "/* X_ITE v$VERSION-$REVISION */", $css;
-	close CSS;
-
-	my $js = `cat dist/x_ite.js`;
-	open JS, ">", "dist/x_ite.js";
-	print JS "/* X_ITE v$VERSION-$REVISION */\n\n", $js;
-	close JS;
-
-	my $js_min = `cat dist/x_ite.min.js`;
-	open JS, ">", "dist/x_ite.min.js";
-	print JS "/* X_ITE X3D v$VERSION-$REVISION\n * See LICENCES.txt for a detailed listing of used licences. */\n", $js_min;
-	close JS;
 
 	# GitHub
 
 	commit;
-	publish ("$VERSION");
-	publish ("latest");
+
+	unless ($ALPHA)
+	{
+		publish ("$VERSION");
+		publish ("latest");
+	}
 
 	# FTP
 
@@ -84,6 +70,8 @@ if ($result == 0)
 	system "mkdir", "-p", "$ftp/$VERSION/dist/";
 	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$VERSION/dist/";
 
-	system "mkdir", "-p", "$ftp/latest/dist/";
-	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/latest/dist/";
+	my $release = $ALPHA ? "alpha" : "latest";
+
+	system "mkdir", "-p", "$ftp/$release/dist/";
+	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$release/dist/";
 }
