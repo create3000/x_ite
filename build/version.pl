@@ -67,8 +67,11 @@ if ($result == 0)
 
 	my $ftp = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/x_ite";
 
-	system "mkdir", "-p", "$ftp/$VERSION/dist/";
-	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$VERSION/dist/";
+	unless ($ALPHA)
+	{
+		system "mkdir", "-p", "$ftp/$VERSION/dist/";
+		system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$VERSION/dist/";
+	}
 
 	my $release = $ALPHA ? "alpha" : "latest";
 
