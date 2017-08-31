@@ -699,6 +699,7 @@
     <None Include="x_ite\Routing\X3DRoute.js" />
     <None Include="x_ite\Routing\X3DRoutingContext.js" />
     <None Include="x_ite\X3D.js" />
+    <None Include="images\logo.128.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

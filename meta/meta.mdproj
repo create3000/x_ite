@@ -23,7 +23,7 @@
     <None Include="crayon\reserved.txt" />
     <None Include="crayon\statement.txt" />
     <None Include="crayon\type.txt" />
-    <None Include="crayon\vrml.txt" />
+    <None Include="crayon\x3d.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="logo\" />

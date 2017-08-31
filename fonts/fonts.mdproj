@@ -6,10 +6,10 @@
     <ItemType>GenericProject</ItemType>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{045BE32F-EC7E-4E2E-A065-2331CFDCA289}</ProjectGuid>
+    <ProjectGuid>{DE313E0D-57BC-4793-AC63-84785C3C4763}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
-    <OutputPath>.</OutputPath>
+    <OutputPath>.\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <None Include="fonts.mdproj" />

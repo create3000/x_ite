@@ -7,8 +7,8 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.js"></script>
 	<script type="text/javascript" src="https://cdn.rawgit.com/kayahr/jquery-fullscreen-plugin/1.1.4/jquery.fullscreen-min.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/latest/dist/x_ite.css"/>
-	<script type="text/javascript" src="http://code.create3000.de/x_ite/latest/dist/x_ite.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/alpha/dist/x_ite.css"/>
+	<script type="text/javascript" src="http://code.create3000.de/x_ite/alpha/dist/x_ite.min.js"></script>
 
 	<style>
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic|Ubuntu+Mono:400);
@@ -60,35 +60,8 @@ a {
 	color: #3c9fc2;
 }
 
-.references a:hover,
 footer a:hover {
 	text-decoration: underline;
-}
-
-.references a {
-	border-left: 1px dotted;
-	margin-right: 5px;
-}
-
-.references a:before {
-	content: '';
-	width: 0px;
-	height: 0px;
-	border-style: solid;
-	border-width: 5px 0px 5px 8px;
-	border-color: transparent transparent transparent #3c9fc2;
-	display: inline-block;
-	vertical-align: middle;
-	margin-left: 10px;
-	margin-right: 4px;
-}
-
-.references a:first-child {
-	border-left: 0px;
-}
-
-.references a:first-child:before {
-	margin-left: 0px;
 }
 
 .fullscreen {
@@ -100,25 +73,17 @@ pre {
 	font-size: 10pt;
 }
 
-.create3000 {
-	float: right;
-}
-
-.create3000 > * {
-	margin-left: 5px;
-}
-
-.create3000 a:before {
+.buttons a:before {
 	display: none;
 }
 
-.create3000 img {
+.buttons img {
 	border: 1px dotted white;
 	padding: 4px;
 	width: auto;
 }
 
-.create3000 img:hover {
+.buttons img:hover {
 	background: #222;
 }
 
@@ -173,11 +138,11 @@ pre {
       margin-right: 3px;
 	}
 
-	.create3000 > * {
+	.buttons > * {
 		margin-left: 4px;
 	}
 	
-	.create3000 img {
+	.buttons img {
 		padding: 3px;
 		height: 9px;
 	}
@@ -250,26 +215,29 @@ function (error)
 	<div class="page">
 		<header>
 			<div>
-				<h2>CadDesignPatternExampleBushing.x3d</h2>
-				<p><span class="webfont">Design pattern examples demonstrating proper hierarchy of CAD nodes: CADLayer, CADAssembly, CADPart, and then CADFace.</span></p>
-				<div class="create3000">
-					<a href="http://create3000.de/x_ite/" target="_blank"><img title="Visit X_ITE Project Page"
-					        alt="Visit X_ITE Project Page"
-					        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADBSURBVBiVddAxLoRRFIbh75eIUiRDN5XCFkg0Eq1Er1BpFAoFC1BYhGJ2oFHIWIGolEqVhIhpR4hH4YibMfNV97z3vSfn3C4VrCc5TvLYdd1Jw4+SbCa5TwOX8I5P9IptVf2G1bTB0E/2sIInfGE3k8FByQNc1fnsn1jyMj7wWuIQc7PkDg/+0m/vJ1+dJllLMqp6Y1bX7dr8GYfV+XKa2MdLbb6DXs0+xmIrLuCuOp03/KbYfitfFLzF/JRvvP5l32CK4837n5ZaAAAAAElFTkSuQmCC"/></a>
+				<h2>TextureBackgroundKelpForestMain.x3d</h2>
+				<p><span class="webfont">Added an image panorama with the Background node to the Kelp Forest world.</span></p>
+				<p class="buttons">
+					<a href="CadDesignPatternExampleBushing.x3d" title="Download Original X3D Scene">
+						<img class="download"
+						     alt="Download Original X3D Scene"
+						     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAABeSURBVBiVpdA7CoAwEAVAVyux9r7ewIvYCd7AxkuNhQoh+CH4uiXDW7JV9ScYHBnyt7qkqAin60f3Ge9wjSmDM5qn9hbrCTd0OQDJ3GNBn5u4YETEy38Ok7Z+peh0O28BdqE+KBKpAAAAAElFTkSuQmCC"/>
+					</a>
 					<img class="fullscreen"
 					     title="Enter Fullscreen Mode"
 					     alt="Fullscreen"
 					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4QQNFQk1i7oCawAAALhJREFUGJWV0TFKA2EQBeBn1iqptBJvEFsVjxR0LyB4txQSRCzEeAexsLCJydr4WWQWwjbGBwPzv3nDP/Mm+EBXscAhggb3xW/wGaxt8Y2rEvZxWTx0wWqn4R3HJTzCW/FrbEZJnpKcJ3lJcpLkOlvMkpwmeU1ykeSxny0Yox2M0WLS73CA7ItRkqbycZJ2UL9JMqm8CeaY4rmWuatvb+u9xBnm/3Ij+PrD527X5178g4fBBRfFQ/cL8YlBv40R0JoAAAAASUVORK5CYII="/>
-            </div>
-				<p class="references">
-					<a href="CadDesignPatternExampleBushing.x3d">Original X3D Scene</a>
-					<a href="CadDesignPatternExampleBushing.x3d">Original X3D Scene</a>
+					<a href="http://create3000.de/x_ite/" target="_blank">
+						<img title="Visit X_ITE Project Page"
+					        alt="Visit X_ITE Project Page"
+					        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADBSURBVBiVddAxLoRRFIbh75eIUiRDN5XCFkg0Eq1Er1BpFAoFC1BYhGJ2oFHIWIGolEqVhIhpR4hH4YibMfNV97z3vSfn3C4VrCc5TvLYdd1Jw4+SbCa5TwOX8I5P9IptVf2G1bTB0E/2sIInfGE3k8FByQNc1fnsn1jyMj7wWuIQc7PkDg/+0m/vJ1+dJllLMqp6Y1bX7dr8GYfV+XKa2MdLbb6DXs0+xmIrLuCuOp03/KbYfitfFLzF/JRvvP5l32CK4837n5ZaAAAAAElFTkSuQmCC"/>
+					</a>
 				</p>
 			</div>
 		</header>
 		<main>
 			<div>
-				<X3DCanvas id="browser" class="browser" src="https://rawgit.com/create3000/Library/master/Examples/X_ITE/info.x3d">
+				<X3DCanvas id="browser" class="browser" src="http://x3dgraphics.com/examples/X3dForWebAuthors/Chapter11LightingEnvironmentalEffects/TextureBackgroundKelpForestMain.x3d">
 					<p class="fallback">
 						Sorry,<br/>
 						it wasn't me!<br/>

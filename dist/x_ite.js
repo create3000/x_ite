@@ -23057,7 +23057,7 @@ function ($,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.0.2";
+	return "4.0.3a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -35856,11 +35856,8 @@ function ($,
 		var progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
 		var surface      = $("<div></div>") .addClass ("x_ite-private-surface x_ite-private-surface-" + this .getId ()) .appendTo (browser);
 
-		$("<div></div>") .addClass ("x_ite-private-spinner-one")   .appendTo (spinner);
-		$("<div></div>") .addClass ("x_ite-private-spinner-two")   .appendTo (spinner);
-		$("<div></div>") .addClass ("x_ite-private-spinner-three") .appendTo (spinner);
-		$("<div></div>") .addClass ("x_ite-private-spinner-text")  .appendTo (progress) .text ("Lade 0 Dateien");
-		$("<div></div>") .addClass ("x_ite-private-progressbar")   .appendTo (progress) .append ($("<div></div>"));
+		$("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress) .text ("Lade 0 Dateien");
+		$("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
 
 		this .splashScreen = splashScreen;
 		this .canvas       = $("<canvas></canvas>") .prependTo (surface);
