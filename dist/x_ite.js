@@ -1,3 +1,5 @@
+/* X_ITE v4.0.3a-61 */
+
 (function () {
 
 	var x_iteNoConfict = {

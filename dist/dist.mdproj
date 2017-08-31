@@ -37,6 +37,7 @@
     <None Include="x_ite.js" />
     <None Include="x_ite.zip" />
     <None Include="x_ite.min.js" />
+    <None Include="images\logo.128.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
