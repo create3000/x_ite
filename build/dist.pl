@@ -52,7 +52,8 @@ sub dist {
 	print JS "/* X_ITE X3D v$VERSION-$REVISION\n * See LICENCES.txt for a detailed listing of used licences. */\n", $js_min;
 	close JS;
 
-	system "cp", "-v", "-r", "src/images",  "dist/";
+	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "src/images", "dist/images/";
+
 	system "cp", "-v", "src/example.html",  "dist/";
 	system "perl", "-pi", "-e", "s|/latest/|/$VERSION/|sg", "dist/example.html";
 }
