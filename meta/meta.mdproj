@@ -17,8 +17,16 @@
     <None Include="meta.mdproj" />
     <None Include="EmptyTextFile.txt" />
     <None Include="web3d.html" />
+    <None Include="crayon\access-type.txt" />
+    <None Include="crayon\fields.txt" />
+    <None Include="crayon\field-type.txt" />
+    <None Include="crayon\reserved.txt" />
+    <None Include="crayon\statement.txt" />
+    <None Include="crayon\type.txt" />
+    <None Include="crayon\vrml.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="logo\" />
+    <Folder Include="crayon\" />
   </ItemGroup>
 </Project>

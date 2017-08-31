@@ -1,0 +1,5 @@
+initializeOnly
+inputOnly
+outputOnly
+inputOutput
+
