@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-67 */
+/* X_ITE v4.0.3a-68 */
 
 (function () {
 
@@ -12494,8 +12494,8 @@ function ($)
 
 	function fallback (elements)
 	{
-		elements .addClass ("x_ite-private-browser-fallback");
-		elements .children () .addClass ("x_ite-private-fallback");
+		elements .addClass ("x_ite-browser-fallback");
+		elements .children () .addClass ("x_ite-fallback");
 	}
 
 	Error .fallback = fallback;
