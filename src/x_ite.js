@@ -99,6 +99,7 @@
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
 
+	// IE fix.
 	document .createElement ("X3DCanvas");
 
 	if (window .Proxy === undefined)

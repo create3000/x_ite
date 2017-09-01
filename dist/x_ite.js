@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-63 */
+/* X_ITE v4.0.3a-64 */
 
 (function () {
 
@@ -111041,6 +111041,7 @@ function ($,
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
 
+	// IE fix.
 	document .createElement ("X3DCanvas");
 
 	if (window .Proxy === undefined)
