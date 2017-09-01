@@ -81,6 +81,7 @@ function ($)
 
 	function fallback (elements)
 	{
+		elements .addClass ("x_ite-private-browser-fallback");
 		elements .children () .addClass ("x_ite-private-fallback");
 	}
 
