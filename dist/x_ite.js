@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-62 */
+/* X_ITE v4.0.3a-63 */
 
 (function () {
 
@@ -111040,6 +111040,8 @@ function ($,
 
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
+
+	document .createElement ("X3DCanvas");
 
 	if (window .Proxy === undefined)
 		return fallback ("Proxy is not defined");

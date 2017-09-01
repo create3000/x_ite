@@ -99,6 +99,8 @@
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
 
+	document .createElement ("X3DCanvas");
+
 	if (window .Proxy === undefined)
 		return fallback ("Proxy is not defined");
 
