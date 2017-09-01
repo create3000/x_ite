@@ -100,8 +100,7 @@
 	window .X3D = X_ITE;
 
 	// IE fix.
-	if ($.browser .msie)
-		document .createElement ("X3DCanvas");
+	document .createElement ("X3DCanvas");
 
 	if (window .Proxy === undefined)
 		return fallback ("Proxy is not defined");

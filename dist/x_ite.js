@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-65 */
+/* X_ITE v4.0.3a-66 */
 
 (function () {
 
@@ -111042,8 +111042,7 @@ function ($,
 	window .X3D = X_ITE;
 
 	// IE fix.
-	if ($.browser .msie)
-		document .createElement ("X3DCanvas");
+	document .createElement ("X3DCanvas");
 
 	if (window .Proxy === undefined)
 		return fallback ("Proxy is not defined");
