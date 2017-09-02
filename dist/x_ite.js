@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-69 */
+/* X_ITE v4.0.3a-70 */
 
 (function () {
 
@@ -30801,7 +30801,7 @@ function ($,
 		this .unitArray .add ("length", new UnitInfo ("length", "metre",    1));
 		this .unitArray .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
-		this .metaData      = { };
+		this .metadata      = { };
 		this .exportedNodes = { };
 
 		this .setLive (false);
@@ -30844,19 +30844,19 @@ function ($,
 			if (! name .length)
 				return;
 
-			this .metaData [name] = String (value);
+			this .metadata [name] = String (value);
 		},
 		removeMetaData: function (name)
 		{
-			delete this .metaData [name];
+			delete this .metadata [name];
 		},
 		getMetaData: function (name)
 		{
-			return this .metaData [name];
+			return this .metadata [name];
 		},
-		getMetaDatas: function ()
+		getMetadata: function ()
 		{
-			return this .metaData;
+			return $.extend ({ }, this .metadata);
 		},
 		addExportedNode: function (exportedName, node)
 		{
@@ -30980,7 +30980,7 @@ function ($,
 				}
 			}
 		
-			var metaDatas = this .getMetaDatas ();
+			var metaDatas = this .metadata;
 
 			for (var key in metaDatas)
 			{
