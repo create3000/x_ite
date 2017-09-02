@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-71 */
+/* X_ITE v4.0.3a-72 */
 
 (function () {
 
@@ -25639,7 +25639,7 @@ function ($,
 		},
 		getEnabled: function ()
 		{
-			this .enabled_ .getValue ();
+			return this .enabled_ .getValue ();
 		},
 		set_enabled__: function (enabled)
 		{

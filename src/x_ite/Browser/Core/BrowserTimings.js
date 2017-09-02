@@ -114,7 +114,7 @@ function ($,
 		},
 		getEnabled: function ()
 		{
-			this .enabled_ .getValue ();
+			return this .enabled_ .getValue ();
 		},
 		set_enabled__: function (enabled)
 		{
