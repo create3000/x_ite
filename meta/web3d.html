@@ -37,14 +37,14 @@ body {
 }
 
 header > div ,
-main > div,
+div.main > div,
 footer > div {
 	margin: 0px auto;
 	padding: 10px 0px 10px 0px;
 	width: 50vw;
 }
 
-main {
+div.main {
 	background: #3d4145;
 }
 
@@ -73,11 +73,6 @@ footer a:hover {
 	cursor: pointer;
 }
 
-pre {
-	font-family: Ubuntu Mono;
-	font-size: 10pt;
-}
-
 .buttons a:before {
 	display: none;
 }
@@ -101,9 +96,16 @@ pre {
 	box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.75);
 }
 
+.x_ite-browser-fallback {
+	background: rgba(0,0,0,0.61803);
+	background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
 .fallback {
 	display: block;
-	margin: 300px 30px 0 30px;
+	padding: 15vw 30px 0 30px;
 	text-align: center;
 }
 
@@ -115,12 +117,49 @@ pre {
 	display: none;
 }
 
+.meta-data table {
+	border-collapse: collapse;
+}
+
+.meta-data thead {
+	color: #e7e8a0;
+}
+
+.meta-data tr {
+	border-bottom: 1px dotted;
+}
+
+.meta-data tbody tr:last-child {
+	border-bottom: 0px;
+}
+
+.meta-data th,
 .meta-data td {
-	padding: 3px;
+	padding: 5px;
 }
 
 .featherlight .featherlight-content {
 	background: rgba(255, 255, 255, 0.1);
+}
+
+.x_ite-console {
+	display: none;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	position: fixed;
+	bottom: 0px;
+	border-top: 2px solid #888;
+	padding-top: 10px;
+	height: 20vh;
+	width: 100%;
+	background: rgba(0,0,0, 0.8);
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;
+	font-family: Ubuntu Mono;
+	font-size: 10pt;
 }
 
 @media only screen and (max-width: 1366px) {
@@ -169,7 +208,8 @@ pre {
 	}
 	
 	.fallback {
-		margin: 240px 30px 0 24px;
+		padding: 15vw 30px 0 24px;
+		font-size: 1.1vw;
 	}
 }
 
@@ -205,50 +245,79 @@ pre {
 	}
 	
 	.fallback {
-		margin: 240px 30px 0 24px;
+		padding: 15vw 30px 0 24px;
 	}
 }
 	</style>
 
 	<script type="text/javascript">
-$(function () {
-	$(".fullscreen-button") .click (function () { $("#browser") .fullScreen (true); });
-
-	$(".meta-data-button") .click (function ()
-	{
-		var
-			Browser = X3D .getBrowser ("#browser"),
-			currentScene = Browser .currentScene,
-			metadata     = currentScene .getMetaDatas (),
-			names        = [ ],
-			tbody        = $(".meta-data-table tbody");
-
-		for (var name in metadata)
-			names .push (name);
-
-		names .sort ();
-
-		tbody .empty ();
-
-		for (var i = 0; i < names .length; ++ i)
-		{
-			var
-				name = names [i],
-				tr   = $("<tr>") .appendTo (tbody);
-
-			$("<td>") .text (name) .appendTo (tr);
-			$("<td>") .text (metadata [name]) .appendTo (tr);
-		}
-
-		$.featherlight ($(".meta-data"));
-	});
-});
-
 X3D (function ()
 {
 	var Browser = X3D .getBrowser ("#browser");
 
 	$(".version") .text (Browser .name + " v" + Browser .version);
+
+	$(function ()
+	{
+		$(".fullscreen-button") .click (function () { $("#browser") .fullScreen (true); });
+	
+		$(".meta-data-button") .click (function ()
+		{
+			var
+				Browser = X3D .getBrowser ("#browser"),
+				currentScene = Browser .currentScene,
+				metadata     = currentScene .getMetadata (),
+				names        = [ ],
+				tbody        = $(".meta-data-table tbody");
+	
+			for (var name in metadata)
+				names .push (name);
+	
+			names .sort ();
+	
+			tbody .empty ();
+	
+			for (var i = 0; i < names .length; ++ i)
+			{
+				var
+					name = names [i],
+					tr   = $("<tr>") .appendTo (tbody);
+	
+				$("<td>") .text (name) .appendTo (tr);
+				$("<td>") .text (metadata [name]) .appendTo (tr);
+			}
+	
+			$.featherlight ($(".meta-data"));
+		});
+
+		var scrollId;
+
+		$(".console-button") .click (function ()
+		{
+			var clicked = false;
+		
+			function updateScroll ()
+			{
+				if (clicked)
+					return;
+
+				var element = $(".x_ite-console");
+	
+				element .scrollTop ($(".x_ite-console") .prop ("scrollHeight"));
+			}
+
+			var hidden = ($(".x_ite-console") .css ("display") == "none");
+
+			if (hidden)
+				scrollId = setInterval (updateScroll, 200);
+			else
+				clearInterval (scrollId);
+
+			$(".x_ite-console") .click (function () { clicked = true; });
+
+			$(".x_ite-console") .css ("display", hidden ? "block" : "none");
+		});
+	});
 },
 function (error)
 {
@@ -270,9 +339,13 @@ function (error)
 						     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAABeSURBVBiVpdA7CoAwEAVAVyux9r7ewIvYCd7AxkuNhQoh+CH4uiXDW7JV9ScYHBnyt7qkqAin60f3Ge9wjSmDM5qn9hbrCTd0OQDJ3GNBn5u4YETEy38Ok7Z+peh0O28BdqE+KBKpAAAAAElFTkSuQmCC"/>
 					</a>
 					<img class="meta-data-button"
-					     title="Show Metadata"
-					     alt="Fullscreen"
+					     title="Display Metadata"
+					     alt="Display Metadata"
 					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACZSURBVBiVlY/BEYMwDARPmEp40AUuxv24HJdAB3yowRX4480jmBBgMmRn9NDqRrIliXMNw8CyLKzryjiOnxkbTXjvyTk3Tc4Z7/01HEKglAJASomUEgClFEII6Hi+EWPEOYdzjhjj7m0LSu+0JMnMNM+zaq2apmn3HbA3R2qtF2/be2VmX5uPNN+fB7/oHicl9Xen7/7w9+YXXwqVP4gZDjMAAAAASUVORK5CYII="/>
+					<img class="console-button"
+					     title="Display Console"
+					     alt="Display Console"
+					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAABwSURBVBiVrZHBCQMxDAT38nUPqsBF+S3swtyTXYo1eSSBBHKcA1kQCKHRCumQhDZ1k6SU0l63mTHnpLXG0+U8SilEBBGBu18Bwt13gUfSewdgrUXO+Q+Tf9rZzBhjUGu9voYkUkofxTMdL+Jd8P2pd112oTm/RoWXAAAAAElFTkSuQmCC"/>
 					<img class="fullscreen-button"
 					     title="Enter Fullscreen Mode"
 					     alt="Fullscreen"
@@ -281,29 +354,26 @@ function (error)
 						<img class="x_ite-button"
 						     title="Visit X_ITE Project Page"
 					        alt="Visit X_ITE Project Page"
-					        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEcSURBVBiVdZExq4JwFMXP/1lDuLgFQja26ers4NIYLYKro1N7S1tj38Ag/ABObo5NoUVbm+IHkKyW/3nD471nhAcOXA4/LpdzAYC/NgyDo9GI3azrL3QUhiGiKIIQAn0iACqKwqqqKKXker3u2/4zuK7L+/3OIAgopaTnef3wfr9nHMcEwN1ux8fjQdu2P2FVVdk0DReLBQFwOBwyyzLWdc3JZPIO+77PpmnemhiPxyzLkqfTiaqq/sNpmvJwOHzcaNs2n88nkyShoigc6LoOx3GwXC4BANPpFJZlwTRNWJaF1+uF+XyOzWYDsVqtuN1ucTweMZvNoGkapJS43W4oigLn8xmXywV5nkOkaUohxF9YFAWu1yvatv14yDcEVbYr/Id2zAAAAABJRU5ErkJggg=="/>
+					        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAESSURBVBiVfY8xisIAFEQnsIUiQrQTtPEAMV3KXCIgHiCVlTfwICK21iIpLFIaUoSkUBAldQ6gghp8W7nuKu7AFDP/wWckiYf7/T6u6/K7e/EzLJdLiqKg3W7/DzcaDS6XCwBJklCtVj/Dvu8DsF6vAZhOp5/hMAw5nU7U63WCIABgOBy+w61Wi7Ismc/nSKLZbJLnOdfr9XWwGI1GAHie93OwbZvz+UxRFHQ6nSccRRHH45Farfbn7Xg8BiCOYyqVCka32+VwOCiOY00mE1mWJcuy1Ov1ZJqmHprNZvoaDAYyDEOO48hxHEnS7XbTfr/XYrHQZrPRdrtVFEUyVqsV9/tdaZoqyzJlWabdbqeyLPWqb1iG0itKsSHgAAAAAElFTkSuQmCC"/>
 					</a>
 				</p>
 			</div>
 		</header>
-		<main>
+		<div class="main">
 			<div>
-				<X3DCanvas id="browser" class="browser" src="http://x3dgraphics.com/examples/X3dForWebAuthors/Chapter11LightingEnvironmentalEffects/TextureBackgroundKelpForestMain.x3d">
-					<p class="fallback">
-						Sorry,<br/>
-						it wasn't me!<br/>
+				<X3DCanvas id="browser" class="browser" src="http://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/ECMAScriptSaiPerFrameNotification.x3d">
+					<p class="fallback">Sorry!<br/>
 						<br/>
-						Your browser may not support all features required by X_ITE! You can use Firefox, Chrome,
-						or Microsoft Edge, because this is currently the choice of the choice. We will continuously
-						keep you informed on technical developments and as soon as X_ITE is running in other browser too.
+						Your browser may not support all features required by <a href="http://create3000.de/x_ite/" target="_blank">X_ITE!</a>
+						Please use the latest release of Microsoft Edge, Firefox, Chrome, or Safari.
+						Make sure to regulary update your browser to make your Internet experience more secure and pleasant.
 					</p>
 				</X3DCanvas>
 			</div>
-		</main>
+		</div>
 		<footer>
 			<div>
 				<h1><a class="version" href="http://create3000.de/x_ite/" title="Visit X_ITE Project Page"></a></h1>
-				<pre class="x_ite-console"></pre>
 			</div>
 		</footer>
 	</page>
@@ -320,5 +390,6 @@ function (error)
 			</tbody>
 		</table>
 	</div>
+	<pre class="x_ite-console"></pre>
 </body>
 </html>
