@@ -24,6 +24,7 @@
     <None Include="crayon\statement.txt" />
     <None Include="crayon\type.txt" />
     <None Include="crayon\x3d.txt" />
+    <None Include="logo\logo.s.svg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="logo\" />
