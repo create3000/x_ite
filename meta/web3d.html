@@ -73,10 +73,6 @@ footer a:hover {
 	cursor: pointer;
 }
 
-.buttons a:before {
-	display: none;
-}
-
 .buttons img {
 	border: 1px dotted white;
 	padding: 4px;
@@ -186,12 +182,6 @@ footer a:hover {
 	h2 {
 		margin: 8px 32px 8px 0px;
 		font-size: 24rem;
-	}
-
-	a:before {
-		border-width: 4px 0px 4px 6px;
-		margin-left: 8px;
-      margin-right: 3px;
 	}
 
 	.buttons > * {
@@ -346,15 +336,15 @@ function (error)
 					<img class="meta-data-button"
 					     title="Display Metadata"
 					     alt="Display Metadata"
-					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACZSURBVBiVlY/BEYMwDARPmEp40AUuxv24HJdAB3yowRX4480jmBBgMmRn9NDqRrIliXMNw8CyLKzryjiOnxkbTXjvyTk3Tc4Z7/01HEKglAJASomUEgClFEII6Hi+EWPEOYdzjhjj7m0LSu+0JMnMNM+zaq2apmn3HbA3R2qtF2/be2VmX5uPNN+fB7/oHicl9Xen7/7w9+YXXwqVP4gZDjMAAAAASUVORK5CYII="/>
+					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkCBCMPn8oKUQAAAHlJREFUGJWVj8ENgDAMA11gEh5sAcOwT8dhBDbgwwxMwIfjk4hSigSWLDXX1FYFqOAWWIAV6JyLS744AFvCN2OP5RHYbZ7MGBvzelcEanN0GAAl8iFImiUdknrnlR1uL0xHzgNXdMiSH41N4eJV1ddFTy5Vl/7wL/kEvN6r+wEWMW4AAAAASUVORK5CYII="/>
 					<img class="console-button"
 					     title="Display Console"
 					     alt="Display Console"
-					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAABwSURBVBiVrZHBCQMxDAT38nUPqsBF+S3swtyTXYo1eSSBBHKcA1kQCKHRCumQhDZ1k6SU0l63mTHnpLXG0+U8SilEBBGBu18Bwt13gUfSewdgrUXO+Q+Tf9rZzBhjUGu9voYkUkofxTMdL+Jd8P2pd112oTm/RoWXAAAAAElFTkSuQmCC"/>
+					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkCBCMsPa17IwAAAGZJREFUGJWtkcsJgDAQRCde00MqsCjPQQuzHc+24dE8D24gYNQIDgz7YXZZZh2gVnQWfas4SFokTa9qYACSMQK6Y05iy0BZzJzYgf6XzZ9uDsAKjE9CQM6e4iVtpUk157L44miteQCojOICJe0RRAAAAABJRU5ErkJggg=="/>
 					<img class="clock-button"
 					     title="Browser Timings"
 					     alt="Browser Timings"
-					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAELSURBVBiVbZG9joJAGEVvNJHWN8Ax0UofgzHzVpPY2/FXUQo8FaGiZWzA5mxhZHWzt/xy7i3OJ0lIwhhDWZb0fc88z/R9T1EUGGN4M5LE5XLh8XjwX0IIWGtfsDFmAe/3O2maApCmKXVdL4XdbofKslxASXjvAfDeI4mmaQDI85yVc06SdL1e9Zn1ev11d85J8zwDsNlsvpafzye3240oigCYponVMAySpMPhIEmqqkpVVUmSQgg6Ho+SpGEYpKIoAKjr+lMR+/2e7XZL27YAZFn2shFCAKBpGk6nE1EUcT6fF3AcR+I4fnm21i6FvxnHkSRJfp8iiTiOyfOcruuYpomu68iy7L2IJH4AibQYvvzXt5MAAAAASUVORK5CYII="/>
+					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkCBCQOp4ysAAAAAMhJREFUGJVtkb1OQkEQhb9cE2w08Q0QE63gMcTwBvAkWprQ04FQUfLzVMSKhIprAzafhecmK/Ekk5k5c2Z3ZxaVWEddqJ/qOX4eHpVG+KJ++T9qtd+IO4VwpU4TT9V10XBfAW/ADbAGRsCBXxyAIbAFboHXChikOOYvri74ARlGtZX3vyf/VifqdfJTBezT+Ri/jAHUwFPiPVmPGYbCHtQ7dZv6rNlGHWKjdnN1rxAe1XZzSr9ouMRRfS4/BbWtfqg79RQ/C4/KD5u2QiGZLQpkAAAAAElFTkSuQmCC"/>
 					<img class="fullscreen-button"
 					     title="Enter Fullscreen Mode"
 					     alt="Fullscreen"
@@ -363,7 +353,7 @@ function (error)
 						<img class="x_ite-button"
 						     title="Visit X_ITE Project Page"
 					        alt="Visit X_ITE Project Page"
-					        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAESSURBVBiVfY8xisIAFEQnsIUiQrQTtPEAMV3KXCIgHiCVlTfwICK21iIpLFIaUoSkUBAldQ6gghp8W7nuKu7AFDP/wWckiYf7/T6u6/K7e/EzLJdLiqKg3W7/DzcaDS6XCwBJklCtVj/Dvu8DsF6vAZhOp5/hMAw5nU7U63WCIABgOBy+w61Wi7Ismc/nSKLZbJLnOdfr9XWwGI1GAHie93OwbZvz+UxRFHQ6nSccRRHH45Farfbn7Xg8BiCOYyqVCka32+VwOCiOY00mE1mWJcuy1Ov1ZJqmHprNZvoaDAYyDEOO48hxHEnS7XbTfr/XYrHQZrPRdrtVFEUyVqsV9/tdaZoqyzJlWabdbqeyLPWqb1iG0itKsSHgAAAAAElFTkSuQmCC"/>
+					        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkCBCQj4lPwdQAAAMtJREFUGJV9kTFKA1EURc+ARYIIiV1AmywgprPMJgLiAlKlcgcuRCStdRALi5DKkCLEQkEMqWcBKqiDJ0Ve8R2GuXB5vM95l/f/z1QSXQA5MKdKaup7NVdPSueo/+C2+u1eK7VZB48CfIp6WwfP1E/1SH2IgXEV3FEL9S76Y3Wr/qiDMnwVScMkqa9+xYVPU3ihfqiHpT2vI2SpNjK1C2yAJXAD9MJnQCt55ckBcAlkwHkY4Bd4B6bAC/AKLDL1EfgD1sBz+A0oyh+4A6TyGLtCRPLnAAAAAElFTkSuQmCC"/>
 					</a>
 				</p>
 			</div>
