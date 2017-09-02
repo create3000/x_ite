@@ -257,11 +257,11 @@ function ($,
 					"browser-timings": this .getBrowser () .getBrowserOptions () .getTimings () ? {
 						name: _("Browser Timings"),
 						type: "checkbox",
-						selected: this .getBrowser () .getBrowserTimings () .enabled_ .getValue (),
+						selected: this .getBrowser () .getBrowserTimings () .getEnabled (),
 						events: {
 							click: function ()
 							{
-								this .getBrowser () .getBrowserTimings () .enabled_ = ! this .getBrowser () .getBrowserTimings () .enabled_ .getValue ();
+								this .getBrowser () .getBrowserTimings () .setEnabled (! this .getBrowser () .getBrowserTimings () .getEnabled ());
 								this .getBrowser () .getCanvas () .focus ();
 							}
 							.bind (this),

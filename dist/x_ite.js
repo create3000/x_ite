@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-70 */
+/* X_ITE v4.0.3a-71 */
 
 (function () {
 
@@ -25633,6 +25633,14 @@ function ($,
 			if (this .getBrowser () .getDataStorage () ["BrowserTimings.enabled"])
 				this .enabled_ = true;
 		},
+		setEnabled: function (value)
+		{
+			this .enabled_ = value;
+		},
+		getEnabled: function ()
+		{
+			this .enabled_ .getValue ();
+		},
 		set_enabled__: function (enabled)
 		{
 			if (! this .getBrowser () .getBrowserOptions () .getTimings ())
@@ -27845,11 +27853,11 @@ function ($,
 					"browser-timings": this .getBrowser () .getBrowserOptions () .getTimings () ? {
 						name: _("Browser Timings"),
 						type: "checkbox",
-						selected: this .getBrowser () .getBrowserTimings () .enabled_ .getValue (),
+						selected: this .getBrowser () .getBrowserTimings () .getEnabled (),
 						events: {
 							click: function ()
 							{
-								this .getBrowser () .getBrowserTimings () .enabled_ = ! this .getBrowser () .getBrowserTimings () .enabled_ .getValue ();
+								this .getBrowser () .getBrowserTimings () .setEnabled (! this .getBrowser () .getBrowserTimings () .getEnabled ());
 								this .getBrowser () .getCanvas () .focus ();
 							}
 							.bind (this),
@@ -54806,7 +54814,7 @@ function ($,
 				case 187: // Plus // Opera
 				{
 					if (this .getControlKey ())
-						this .getBrowserTimings () .enabled_ = ! this .getBrowserTimings () .enabled_ .getValue ();
+						this .getBrowserTimings () .setEnabled (! this .getBrowserTimings () .getEnabled ());
 					break;
 				}
 				case 36: // Pos 1

@@ -259,8 +259,6 @@ X3D (function ()
 
 	$(function ()
 	{
-		$(".fullscreen-button") .click (function () { $("#browser") .fullScreen (true); });
-	
 		$(".meta-data-button") .click (function ()
 		{
 			var
@@ -317,6 +315,13 @@ X3D (function ()
 
 			$(".x_ite-console") .css ("display", hidden ? "block" : "none");
 		});
+
+		$(".clock-button") .click (function ()
+		{
+			Browser .getBrowserTimings () .setEnabled (! Browser .getBrowserTimings () .getEnabled ());
+		});
+
+		$(".fullscreen-button") .click (function () { $("#browser") .fullScreen (true); });	
 	});
 },
 function (error)
@@ -346,6 +351,10 @@ function (error)
 					     title="Display Console"
 					     alt="Display Console"
 					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAABwSURBVBiVrZHBCQMxDAT38nUPqsBF+S3swtyTXYo1eSSBBHKcA1kQCKHRCumQhDZ1k6SU0l63mTHnpLXG0+U8SilEBBGBu18Bwt13gUfSewdgrUXO+Q+Tf9rZzBhjUGu9voYkUkofxTMdL+Jd8P2pd112oTm/RoWXAAAAAElFTkSuQmCC"/>
+					<img class="clock-button"
+					     title="Browser Timings"
+					     alt="Browser Timings"
+					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAELSURBVBiVbZG9joJAGEVvNJHWN8Ax0UofgzHzVpPY2/FXUQo8FaGiZWzA5mxhZHWzt/xy7i3OJ0lIwhhDWZb0fc88z/R9T1EUGGN4M5LE5XLh8XjwX0IIWGtfsDFmAe/3O2maApCmKXVdL4XdbofKslxASXjvAfDeI4mmaQDI85yVc06SdL1e9Zn1ev11d85J8zwDsNlsvpafzye3240oigCYponVMAySpMPhIEmqqkpVVUmSQgg6Ho+SpGEYpKIoAKjr+lMR+/2e7XZL27YAZFn2shFCAKBpGk6nE1EUcT6fF3AcR+I4fnm21i6FvxnHkSRJfp8iiTiOyfOcruuYpomu68iy7L2IJH4AibQYvvzXt5MAAAAASUVORK5CYII="/>
 					<img class="fullscreen-button"
 					     title="Enter Fullscreen Mode"
 					     alt="Fullscreen"

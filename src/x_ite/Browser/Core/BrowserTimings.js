@@ -108,6 +108,14 @@ function ($,
 			if (this .getBrowser () .getDataStorage () ["BrowserTimings.enabled"])
 				this .enabled_ = true;
 		},
+		setEnabled: function (value)
+		{
+			this .enabled_ = value;
+		},
+		getEnabled: function ()
+		{
+			this .enabled_ .getValue ();
+		},
 		set_enabled__: function (enabled)
 		{
 			if (! this .getBrowser () .getBrowserOptions () .getTimings ())

@@ -270,7 +270,7 @@
      inkscape:cx="10.125972"
      inkscape:cy="4.5291894"
      inkscape:document-units="px"
-     inkscape:current-layer="g5798"
+     inkscape:current-layer="svg4045"
      showgrid="true"
      inkscape:window-width="1855"
      inkscape:window-height="1056"
@@ -388,11 +388,17 @@
     </g>
   </g>
   <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Clock"
+     transform="translate(0,-1013)" />
+  <g
      transform="translate(0,-1013)"
-     style="display:inline;opacity:1"
+     style="display:none;opacity:1"
      inkscape:label="Console"
      id="g5800"
-     inkscape:groupmode="layer">
+     inkscape:groupmode="layer"
+     sodipodi:insensitive="true">
     <g
        transform="translate(-37.3484,9.695411)"
        id="g5798">
@@ -449,4 +455,16 @@
        x="0"
        y="1014" />
   </g>
+  <circle
+     style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="path5808"
+     cx="5.5000005"
+     cy="5.5000005"
+     r="4.5" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 5.5,2 v 3.5 l 2,1"
+     id="path5810"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="ccc" />
 </svg>

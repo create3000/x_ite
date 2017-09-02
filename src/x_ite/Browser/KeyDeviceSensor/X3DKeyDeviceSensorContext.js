@@ -197,7 +197,7 @@ function ($,
 				case 187: // Plus // Opera
 				{
 					if (this .getControlKey ())
-						this .getBrowserTimings () .enabled_ = ! this .getBrowserTimings () .enabled_ .getValue ();
+						this .getBrowserTimings () .setEnabled (! this .getBrowserTimings () .getEnabled ());
 					break;
 				}
 				case 36: // Pos 1
