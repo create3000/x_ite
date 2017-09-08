@@ -119,7 +119,7 @@ function ($,
 			this .touchSensorNode .description_ = this .description_;
 			this .touchSensorNode .setup ();
 
-			// Modify set_active__ to get immediate response to user action (click event).
+			// Modify set_active__ to get immediate response to user action (click event), otherwise links are not opened in this window.
 
 			var
 				anchor       = this,

@@ -700,6 +700,22 @@
     <None Include="x_ite\Routing\X3DRoutingContext.js" />
     <None Include="x_ite\X3D.js" />
     <None Include="images\logo.128.png" />
+    <None Include="x_ite\Components\VolumeRendering\BlendedVolumeStyle.js" />
+    <None Include="x_ite\Components\VolumeRendering\BoundaryEnhancementVolumeStyle.js" />
+    <None Include="x_ite\Components\VolumeRendering\CartoonVolumeStyle.js" />
+    <None Include="x_ite\Components\VolumeRendering\ComposedVolumeStyle.js" />
+    <None Include="x_ite\Components\VolumeRendering\EdgeEnhancementVolumeStyle.js" />
+    <None Include="x_ite\Components\VolumeRendering\IsoSurfaceVolumeData.js" />
+    <None Include="x_ite\Components\VolumeRendering\OpacityMapVolumeStyle.js" />
+    <None Include="x_ite\Components\VolumeRendering\ProjectionVolumeStyle.js" />
+    <None Include="x_ite\Components\VolumeRendering\SegmentedVolumeData.js" />
+    <None Include="x_ite\Components\VolumeRendering\ShadedVolumeStyle.js" />
+    <None Include="x_ite\Components\VolumeRendering\SilhouetteEnhancementVolumeStyle.js" />
+    <None Include="x_ite\Components\VolumeRendering\ToneMappedVolumeStyle.js" />
+    <None Include="x_ite\Components\VolumeRendering\VolumeData.js" />
+    <None Include="x_ite\Components\VolumeRendering\X3DComposableVolumeRenderStyleNode.js" />
+    <None Include="x_ite\Components\VolumeRendering\X3DVolumeDataNode.js" />
+    <None Include="x_ite\Components\VolumeRendering\X3DVolumeRenderStyleNode.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
@@ -707,5 +723,6 @@
     <Folder Include="lib\" />
     <Folder Include="images\" />
     <Folder Include="x_ite\" />
+    <Folder Include="x_ite\Components\VolumeRendering\" />
   </ItemGroup>
 </Project>

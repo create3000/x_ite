@@ -380,7 +380,7 @@ function ($,
 
 			// Handle well known foreign content depending on suffix or if path looks like directory.
 
-			if (uri .isDirectory () || uri .suffix .match (foreignSuffixes))
+			if (this .URL .isDirectory () || this .URL .suffix .match (foreignSuffixes))
 			{
 				if (this .foreign)
 				{
