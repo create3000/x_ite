@@ -327,7 +327,7 @@ function ($,
 				.replace (/</g, "&lt;")
 				.replace (/>/g, "&gt;")
 				.replace (/'/g, "&apos;")
-				.replace (/"/g, "&quot;");
+				.replace (/"/g, "\\\"");
 		},
 		escapeCDATA: function (string)
 		{

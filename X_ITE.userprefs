@@ -1,12 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/NURBS/Contour2D.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="meta/web3d.html" Line="1" Column="1" />
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Bits/X3DConstants.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Parser/HTMLSupport.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/NURBS/Contour2D.js" Line="1" Column="1" />
+      <File FileName="build/dist.pl" Line="73" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
