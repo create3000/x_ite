@@ -5,12 +5,12 @@
     NAME                X3D
     VERSION             1.0.0
 
-    COMMENT             #.*?\n
+    COMMENT             #.*?$
     #PREPROCESSOR		   (?default)
-    STRING              ".*?(?<!\\)"
+    STRING              (?<!\\)".*?(?<!\\)"
  
     STATEMENT           \b(?alt:statement.txt)\b
-    TYPE                (?:\b(?alt:type.txt)\b(?=\s*\{))
+    TYPE                (?:\b(?alt:type-names.txt)\b(?=\s*\{))
     RESERVED            \b(?alt:reserved.txt)\b
     MODIFIER            \b(?alt:access-type.txt)\b
     TAG                 \b(?alt:field-type.txt)\b
