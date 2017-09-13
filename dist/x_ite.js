@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-73 */
+/* X_ITE v4.0.3a-74 */
 
 (function () {
 
@@ -64966,9 +64966,7 @@ function (TextAlignment,
 
 				this .getGlyphExtents (glyph, primitiveQuality, glyphMin, glyphMax);
 
-				var advanceWidth = g + 1 < length ? glyph .advanceWidth : glyphMax .x * font .unitsPerEm;
-
-				xMax += advanceWidth + kerning;
+				xMax += glyph .advanceWidth + kerning;
 				yMin  = Math .min (yMin, glyphMin .y);
 				yMax  = Math .max (yMax, glyphMax .y);
 			}
