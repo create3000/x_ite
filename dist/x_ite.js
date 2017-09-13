@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-74 */
+/* X_ITE v4.0.3a-75 */
 
 (function () {
 
@@ -35888,7 +35888,7 @@ function ($,
 		$("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
 
 		this .splashScreen = splashScreen;
-		this .canvas       = $("<canvas></canvas>") .prependTo (surface);
+		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
 		this .context      = getContext (this .canvas [0]);
 
 		this .privateScene = new Scene (this); // Scene for default nodes.
@@ -45610,9 +45610,9 @@ function ($,
 		onfullscreen: function ()
 		{
 			if (this .getElement () .fullScreen ())
-				this .getElement () .addClass  ("x_ite-private-fullscreen");
+				this .getElement () .addClass  ("x_ite-fullscreen");
 			else
-				this .getElement () .removeClass ("x_ite-private-fullscreen");
+				this .getElement () .removeClass ("x_ite-fullscreen");
 		},
 	};
 
