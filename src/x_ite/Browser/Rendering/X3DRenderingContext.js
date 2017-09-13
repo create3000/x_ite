@@ -271,9 +271,9 @@ function ($,
 		onfullscreen: function ()
 		{
 			if (this .getElement () .fullScreen ())
-				this .getElement () .addClass  ("x_ite-private-fullscreen");
+				this .getElement () .addClass  ("x_ite-fullscreen");
 			else
-				this .getElement () .removeClass ("x_ite-private-fullscreen");
+				this .getElement () .removeClass ("x_ite-fullscreen");
 		},
 	};
 

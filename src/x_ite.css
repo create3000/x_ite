@@ -16,7 +16,7 @@ X3DCanvas {
 	height: 150px;
 }
 
-X3DCanvas.x_ite-private-fullscreen {
+X3DCanvas.x_ite-fullscreen {
 	width: 100% !important;
 	height: 100% !important;
 }
@@ -25,7 +25,7 @@ X3DCanvas > *:not(.x_ite-fallback) {
 	display: none;
 }
 
-.x_ite-private-console {
+.x_ite-console {
 	font-family: monospace;
 	white-space: pre;
 }
@@ -51,7 +51,7 @@ X3DCanvas .x_ite-private-surface {
 	margin-right: 0px;
 }
 
-X3DCanvas canvas {
+X3DCanvas canvas.x_ite-private-canvas {
 	display: block;
 	outline: none;
 	margin: 0px;

@@ -118,7 +118,7 @@ function ($,
 		$("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
 
 		this .splashScreen = splashScreen;
-		this .canvas       = $("<canvas></canvas>") .prependTo (surface);
+		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
 		this .context      = getContext (this .canvas [0]);
 
 		this .privateScene = new Scene (this); // Scene for default nodes.
