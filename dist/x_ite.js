@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-77 */
+/* X_ITE v4.0.3a-78 */
 
 (function () {
 
@@ -14147,7 +14147,6 @@ function ($,
 		{
 			return string
 				.replace (/&/g, "&amp;")
-				.replace (/#/g, "&#35;")
 				.replace (/\\/g, "&#92;")
 				.replace (/\t/g, "&#x9;")
 				.replace (/\n/g, "&#xA;")
