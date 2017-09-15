@@ -251,6 +251,29 @@ function ($,
 				return field .valueOf ();
 			}
 		},
+		splice: function (index, deleteCount)
+		{
+			var
+				array  = this .getValue (),
+				result = new (this .constructor) ();
+
+			if (index > array .length)
+				index = array .length;
+
+			if (index + deleteCount > array .length)
+				deleteCount = array .length - index;
+
+			for (var i = index, length = index + deleteCount; i < length; ++ i)
+				result .push (array [i]);
+
+			if (deleteCount)
+				this .erase (index, index + deleteCount);
+
+			if (arguments .length > 2)
+				this .insert (index, arguments, 2, arguments .length);
+
+			return result;
+		},
 		insert: function (index, array, first, last)
 		{
 			var args = [index, 0];

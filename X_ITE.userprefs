@@ -1,9 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/InputOutput/Generator.js">
     <Files>
       <File FileName="meta/web3d.html" Line="1" Column="1" />
       <File FileName="src/x_ite.html" Line="1" Column="1" />
+      <File FileName="src/x_ite/InputOutput/Generator.js" Line="332" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
