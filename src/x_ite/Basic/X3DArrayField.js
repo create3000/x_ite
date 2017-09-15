@@ -253,9 +253,7 @@ function ($,
 		},
 		splice: function (index, deleteCount)
 		{
-			var
-				array  = this .getValue (),
-				result = new (this .constructor) ();
+			var array  = this .getValue ();
 
 			if (index > array .length)
 				index = array .length;
@@ -263,11 +261,7 @@ function ($,
 			if (index + deleteCount > array .length)
 				deleteCount = array .length - index;
 
-			for (var i = index, length = index + deleteCount; i < length; ++ i)
-				result .push (array [i]);
-
-			if (deleteCount)
-				this .erase (index, index + deleteCount);
+			var result = new (this .constructor) (this .erase (index, index + deleteCount));
 
 			if (arguments .length > 2)
 				this .insert (index, arguments, 2, arguments .length);
@@ -374,6 +368,8 @@ function ($,
 				this .removeChild (values [i]);
 			
 			this .addEvent ();
+
+			return values;
 		},
 		resize: function (size, value, silent)
 		{

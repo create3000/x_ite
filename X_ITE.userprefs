@@ -1,10 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/InputOutput/Generator.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="meta/web3d.html" Line="1" Column="1" />
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/InputOutput/Generator.js" Line="332" Column="4" />
+      <File FileName="src/x_ite/Basic/X3DArrayField.js" Line="259" Column="1" />
+      <File FileName="src/x_ite/Fields/ArrayFields.js" Line="325" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
