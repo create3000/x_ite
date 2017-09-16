@@ -119,7 +119,12 @@ function (Vector4,
 							Dtot += this .abs (this .subtract (keyValue [i] .getValue (), keyValue [i + 1] .getValue ()));
 		
 						for (var i = 0, length = T .length - 1; i < length; ++ i)
-							T [i] = this .multiply (T [i], Dtot / this .abs (T [i]));
+						{
+							var Tia = this .abs (T [i]);
+
+							if (Tia)
+								T [i] = this .multiply (T [i], Dtot / Tia);
+						}
 					}
 				}
 
