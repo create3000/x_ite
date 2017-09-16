@@ -93,6 +93,8 @@ function ($,
 		this .supportedComponents  = SupportedComponents (this);
 		this .supportedProfiles    = SupportedProfiles (this);
 		this .components           = { };
+
+		this .replaceWorld (this .createScene ());
 	};
 
 	X3DBrowser .prototype = $.extend (Object .create (X3DBrowserContext .prototype),
@@ -112,11 +114,32 @@ function ($,
 		},
 		initialize: function ()
 		{
-			this .replaceWorld (this .createScene ());
-
 			X3DBrowserContext .prototype .initialize .call (this);
 
-			this .getLoadSensor () .loadTime_ .addInterest ("realize", this);
+			this .getLoadSensor () .isLoaded_ .addInterest ("set_loaded", this);
+		},
+		set_loaded: function (loaded)
+		{
+			this .getLoadSensor () .isLoaded_ .removeInterest ("realize", this);
+			this .getLoadSensor () .enabled_ = false;
+
+			var urlCharacters = this .getElement () [0] .getAttribute ("src");
+
+			if (urlCharacters)
+				urlCharacters = '"' + urlCharacters + '"';
+			else
+				urlCharacters = this .getElement () [0] .getAttribute ("url");
+
+			if (urlCharacters)
+			{
+	         this .initialized () .set (this .getCurrentTime ());
+
+				this .load (urlCharacters);
+			}
+			else
+				this .initialized () .setValue (this .getCurrentTime ());
+
+			// Print welcome message.
 
 			this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
 			                "        Current Graphics Renderer\n" +
@@ -134,21 +157,6 @@ function ($,
 			                "                Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
 			                "                Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
 			                "                Max vertex attribs: " + this .getMaxVertexAttribs () + "\n");
-
-			
-		},
-		realize: function ()
-		{
-			this .getLoadSensor () .loadTime_ .removeInterest ("realize", this);
-
-			var urlCharacters = this .getElement () [0] .getAttribute ("src");
-
-			if (urlCharacters)
-				urlCharacters = '"' + urlCharacters + '"';
-			else
-				urlCharacters = this .getElement () [0] .getAttribute ("url");
-
-			this .load (urlCharacters);
 		},
 		getName: function ()
 		{
@@ -269,7 +277,8 @@ function ($,
 
 			this .setExecutionContext (scene);
 
-			this .initialized () .setValue (this .getCurrentTime ());
+			if (this .initialized () .getValue ())
+				this .initialized () .setValue (this .getCurrentTime ());
 		},
 		set_loadCount__: function (loadCount)
 		{
