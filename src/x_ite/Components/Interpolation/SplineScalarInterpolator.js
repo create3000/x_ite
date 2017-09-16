@@ -129,7 +129,7 @@ function ($,
 
 			this .set_normalizeVelocity__ ();
 		},
-		normalizeVelocity_: function ()
+		set_normalizeVelocity__: function ()
 		{
 			this .spline .generate (this .closed_            .getValue (),
 			                        this .key_               .getValue (),

@@ -4,9 +4,11 @@
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Interpolation/SplineScalarInterpolator.js" Line="131" Column="1" />
-      <File FileName="src/x_ite/Components/Interpolation/SplinePositionInterpolator.js" Line="131" Column="1" />
-      <File FileName="src/x_ite/Components/Interpolation/SplinePositionInterpolator2D.js" Line="131" Column="1" />
+      <File FileName="src/x_ite/Components/Interpolation/SplineScalarInterpolator.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Interpolation/SplinePositionInterpolator.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Interpolation/SplinePositionInterpolator2D.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolator.js" Line="126" Column="51" />
+      <File FileName="src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolator1.js" Line="83" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
