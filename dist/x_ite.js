@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-85 */
+/* X_ITE v4.0.3a-86 */
 
 (function () {
 
@@ -104327,7 +104327,7 @@ function ($,
 
 			this .set_normalizeVelocity__ ();
 		},
-		normalizeVelocity_: function ()
+		set_normalizeVelocity__: function ()
 		{
 			this .spline .generate (this .closed_            .getValue (),
 			                        this .key_               .getValue (),
@@ -104790,7 +104790,7 @@ function ($,
 
 			this .set_normalizeVelocity__ ();
 		},
-		normalizeVelocity_: function ()
+		set_normalizeVelocity__: function ()
 		{
 			this .spline .generate (this .closed_            .getValue (),
 			                        this .key_               .getValue (),
