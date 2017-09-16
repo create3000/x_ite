@@ -166,6 +166,10 @@ function ($,
 
 			this .observer .observe (this .element [0], { attributes: true, childList: false, characterData: false, subtree: false });
 		},
+		getDebug: function ()
+		{
+			return this .getElement () .attr ("debug") == "true";
+		},
 		getNumber: function ()
 		{
 			return this .number;

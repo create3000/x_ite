@@ -126,64 +126,82 @@ function ($,
 				}
 				case 49: // 1
 				{
-					if (this .getControlKey ())
+					if (this .getDebug ())
 					{
-						this .setBrowserOption ("Shading", "POINTSET");
-						this .getNotification () .string_ = "Shading: Pointset";
+						if (this .getControlKey ())
+						{
+							this .setBrowserOption ("Shading", "POINTSET");
+							this .getNotification () .string_ = "Shading: Pointset";
+						}
 					}
 
 					break;
 				}
 				case 50: // 2
 				{
-					if (this .getControlKey ())
+					if (this .getDebug ())
 					{
-						this .setBrowserOption ("Shading", "WIREFRAME");
-						this .getNotification () .string_ = "Shading: Wireframe";
+						if (this .getControlKey ())
+						{
+							this .setBrowserOption ("Shading", "WIREFRAME");
+							this .getNotification () .string_ = "Shading: Wireframe";
+						}
 					}
 
 					break;
 				}
 				case 51: // 3
 				{
-					if (this .getControlKey ())
+					if (this .getDebug ())
 					{
-						this .setBrowserOption ("Shading", "FLAT");
-						this .getNotification () .string_ = "Shading: Flat";
+						if (this .getControlKey ())
+						{
+							this .setBrowserOption ("Shading", "FLAT");
+							this .getNotification () .string_ = "Shading: Flat";
+						}
 					}
 
 					break;
 				}
 				case 52: // 4
 				{
-					if (this .getControlKey ())
+					if (this .getDebug ())
 					{
-						this .setBrowserOption ("Shading", "GOURAUD");
-						this .getNotification () .string_ = "Shading: Gouraud";
+						if (this .getControlKey ())
+						{
+							this .setBrowserOption ("Shading", "GOURAUD");
+							this .getNotification () .string_ = "Shading: Gouraud";
+						}
 					}
 
 					break;
 				}
 				case 53: // 5
 				{
-					if (this .getControlKey ())
+					if (this .getDebug ())
 					{
-						this .setBrowserOption ("Shading", "PHONG");
-						this .getNotification () .string_ = "Shading: Phong";
+						if (this .getControlKey ())
+						{
+							this .setBrowserOption ("Shading", "PHONG");
+							this .getNotification () .string_ = "Shading: Phong";
+						}
 					}
 
 					break;
 				}
 				case 83: // s
 				{
-					if (this .getControlKey ())
+					if (this .getDebug ())
 					{
-						if (this .isLive () .getValue ())
-							this .endUpdate ();
-						else
-							this .beginUpdate ();
-						
-						this .getNotification () .string_ = this .isLive () .getValue () ? "Begin Update" : "End Update";
+						if (this .getControlKey ())
+						{
+							if (this .isLive () .getValue ())
+								this .endUpdate ();
+							else
+								this .beginUpdate ();
+							
+							this .getNotification () .string_ = this .isLive () .getValue () ? "Begin Update" : "End Update";
+						}
 					}
 
 					break;
