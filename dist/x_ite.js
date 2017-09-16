@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-81 */
+/* X_ITE v4.0.3a-82 */
 
 (function () {
 
@@ -35950,13 +35950,14 @@ function ($,
 
 			// Observe Element's attributes.
 
+			this .debug    = this .getElement () .attr ("debug") == "true";
 			this .observer = new MutationObserver (this .processMutations .bind (this));
 
 			this .observer .observe (this .element [0], { attributes: true, childList: false, characterData: false, subtree: false });
 		},
 		getDebug: function ()
 		{
-			return this .getElement () .attr ("debug") == "true";
+			return this .debug;
 		},
 		getNumber: function ()
 		{
