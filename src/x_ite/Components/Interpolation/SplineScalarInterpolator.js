@@ -104,8 +104,9 @@ function ($,
 		{
 			X3DInterpolatorNode .prototype .initialize .call (this);
 		
-			this .keyValue_    .addInterest ("set_keyValue__", this);
-			this .keyVelocity_ .addInterest ("set_keyVelocity__", this);
+			this .keyValue_          .addInterest ("set_keyValue__",          this);
+			this .keyVelocity_       .addInterest ("set_keyVelocity__",       this);
+			this .normalizeVelocity_ .addInterest ("set_normalizeVelocity__", this);
 		},
 		set_keyValue__: function ()
 		{
@@ -126,6 +127,10 @@ function ($,
 					this .keyVelocity_ .resize (this .key_ .length, new Fields .SFFloat ());
 			}
 
+			this .set_normalizeVelocity__ ();
+		},
+		normalizeVelocity_: function ()
+		{
 			this .spline .generate (this .closed_            .getValue (),
 			                        this .key_               .getValue (),
 			                        this .keyValue_          .getValue (),

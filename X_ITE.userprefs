@@ -1,12 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="meta/web3d.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Interpolation/SquadOrientationInterpolator.js">
     <Files>
-      <File FileName="meta/web3d.html" Line="1" Column="1" />
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/InputOutput/Generator.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DArrayField.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Fields/ArrayFields.js" Line="1" Column="1" />
+      <File FileName="src/x_ite.html" Line="613" Column="58" />
+      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="144" Column="81" />
+      <File FileName="src/x_ite/Components/Interpolation/SplineScalarInterpolator.js" Line="124" Column="77" />
+      <File FileName="src/x_ite/Components/Interpolation/SplinePositionInterpolator.js" Line="124" Column="77" />
+      <File FileName="src/x_ite/Components/Interpolation/SplinePositionInterpolator2D.js" Line="124" Column="77" />
+      <File FileName="src/x_ite/Components/Interpolation/SquadOrientationInterpolator.js" Line="118" Column="45" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
