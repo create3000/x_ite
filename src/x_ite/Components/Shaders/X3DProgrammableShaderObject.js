@@ -93,7 +93,6 @@ function ($,
 	{
 		constructor: X3DProgrammableShaderObject,
 		x3d_NoneClipPlane: new Float32Array ([ 88, 51, 68, 33 ]), // X3D!
-		fogNode: null,
 		numGlobalLights: 0,
 		normalMatrixArray: new Float32Array (9),
 		initialize: function ()
@@ -912,11 +911,7 @@ function ($,
 
 			// Fog, there is always one
 
-			if (context .fogNode !== this .fogNode)
-			{
-				this .fogNode = context .fogNode;
-				context .fogNode .setShaderUniforms (gl, this, context .renderer);
-			}
+			context .fogNode .setShaderUniforms (gl, this, context .renderer);
 
 			// LineProperties
 

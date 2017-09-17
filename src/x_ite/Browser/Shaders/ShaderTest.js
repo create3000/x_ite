@@ -78,7 +78,7 @@ function (DepthBuffer,
 		 2, -2, 0, 1,
 	];
 
-	function shaderTest (browser, shaderNode)
+	function verifyShader (browser, shaderNode)
 	{
 		var
 			gl           = browser .getContext (),
@@ -96,7 +96,7 @@ function (DepthBuffer,
 		gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
 		gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
 
-		gl .uniform4fv (shaderNode .x3d_ClipPlane [0], shaderNode .x3d_NoneClipPlane);
+		shaderNode .setClipPlanes (gl, [ ]);
 
 		gl .uniform1i (shaderNode .x3d_FogType,       0);
 		gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
@@ -140,5 +140,5 @@ function (DepthBuffer,
 		return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
 	}
 
-	return shaderTest;
+	return verifyShader;
 });

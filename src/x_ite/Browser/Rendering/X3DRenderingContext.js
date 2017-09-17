@@ -79,7 +79,7 @@ function ($,
           phongFS,
           depthVS,
           depthFS,
-          testShader,
+          verifyShader,
           Vector4)
 {
 "use strict";
@@ -133,7 +133,7 @@ function ($,
 		},
 		set_phong_shader_valid__: function (valid)
 		{
-			if (valid .getValue () && testShader (this, this .phongShader))
+			if (valid .getValue () && verifyShader (this, this .phongShader))
 				return;
 
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
