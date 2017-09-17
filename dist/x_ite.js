@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-88 */
+/* X_ITE v4.0.3a-89 */
 
 (function () {
 
@@ -38025,7 +38025,6 @@ function ($,
 	{
 		constructor: X3DProgrammableShaderObject,
 		x3d_NoneClipPlane: new Float32Array ([ 88, 51, 68, 33 ]), // X3D!
-		fogNode: null,
 		numGlobalLights: 0,
 		normalMatrixArray: new Float32Array (9),
 		initialize: function ()
@@ -38844,11 +38843,7 @@ function ($,
 
 			// Fog, there is always one
 
-			if (context .fogNode !== this .fogNode)
-			{
-				this .fogNode = context .fogNode;
-				context .fogNode .setShaderUniforms (gl, this, context .renderer);
-			}
+			context .fogNode .setShaderUniforms (gl, this, context .renderer);
 
 			// LineProperties
 
@@ -49421,7 +49416,7 @@ function (DepthBuffer,
 		 2, -2, 0, 1,
 	];
 
-	function shaderTest (browser, shaderNode)
+	function verifyShader (browser, shaderNode)
 	{
 		var
 			gl           = browser .getContext (),
@@ -49439,7 +49434,7 @@ function (DepthBuffer,
 		gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
 		gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
 
-		gl .uniform4fv (shaderNode .x3d_ClipPlane [0], shaderNode .x3d_NoneClipPlane);
+		shaderNode .setClipPlanes (gl, [ ]);
 
 		gl .uniform1i (shaderNode .x3d_FogType,       0);
 		gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
@@ -49483,7 +49478,7 @@ function (DepthBuffer,
 		return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
 	}
 
-	return shaderTest;
+	return verifyShader;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -49567,7 +49562,7 @@ function ($,
           phongFS,
           depthVS,
           depthFS,
-          testShader,
+          verifyShader,
           Vector4)
 {
 "use strict";
@@ -49621,7 +49616,7 @@ function ($,
 		},
 		set_phong_shader_valid__: function (valid)
 		{
-			if (valid .getValue () && testShader (this, this .phongShader))
+			if (valid .getValue () && verifyShader (this, this .phongShader))
 				return;
 
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
