@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-87 */
+/* X_ITE v4.0.3a-88 */
 
 (function () {
 
@@ -45409,622 +45409,158 @@ define('text!x_ite/Browser/Shaders/Depth.fs',[],function () { return 'data:text/
  ******************************************************************************/
 
 
-//https://github.com/sdecima/javascript-detect-element-resize
-
-define ('x_ite/Browser/Rendering/X3DRenderingContext',[
-	"jquery",
-	"x_ite/Fields",
-	"x_ite/Components/Shaders/ComposedShader",
-	"x_ite/Components/Shaders/ShaderPart",
-	"text!x_ite/Browser/Shaders/PointSet.fs",
-	"text!x_ite/Browser/Shaders/Wireframe.vs",
-	"text!x_ite/Browser/Shaders/Wireframe.fs",
-	"text!x_ite/Browser/Shaders/Gouraud.vs",
-	"text!x_ite/Browser/Shaders/Gouraud.fs",
-	"text!x_ite/Browser/Shaders/Phong.vs",
-	"text!x_ite/Browser/Shaders/Phong.fs",
-	"text!x_ite/Browser/Shaders/Depth.vs",
-	"text!x_ite/Browser/Shaders/Depth.fs",
-	"standard/Math/Numbers/Vector4",
+define ('standard/Math/Geometry/Line3',[
+	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
-          ComposedShader,
-          ShaderPart,
-          pointSetFS,
-          wireframeVS,
-          wireframeFS,
-          gouraudVS,
-          gouraudFS,
-          phongVS,
-          phongFS,
-          depthVS,
-          depthFS,
-          Vector4)
+function (Vector3)
 {
 "use strict";
 
-	function X3DRenderingContext ()
+	function Line3 (point, direction)
 	{
-		this .addChildObjects ("viewport", new Fields .MFInt32 (0, 0, 300, 150));
-
-		this .clipPlanes = [ ]; // Clip planes dumpster
+		this .point     = point     .copy ();
+		this .direction = direction .copy ();
 	}
 
-	X3DRenderingContext .prototype =
+	Line3 .prototype =
 	{
-		initialize: function ()
-		{
-			// Configure context.
-
-			var gl = this .getContext ();
-
-			gl .enable (gl .SCISSOR_TEST);
-			gl .cullFace (gl .BACK);
-			gl .enable (gl .DEPTH_TEST);
-			gl .depthFunc (gl .LEQUAL);
-			gl .clearDepth (1);
-
-			gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
-			gl .enable (gl .BLEND);
-
-			// Configure viewport.
-
-			$(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
-
-			setInterval (this .reshape .bind (this), 401); // Detect canvas resize.
-
-			this .reshape ();
-
-			// Create shaders.
-
-			this .depthShader = this .createShader (this, "DepthShader",     depthVS,     depthFS);
-			this .pointShader = this .createShader (this, "PointShader",     wireframeVS, pointSetFS);
-			this .lineShader  = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS);
-
-			this .pointShader .setGeometryType (0);
-			this .lineShader  .setGeometryType (1);
-
-			this .setShading ("GOURAUD");
-		},
-		getVendor: function ()
-		{
-			return this .getContext () .getParameter (this .getContext () .VENDOR);
-		},
-		getWebGLVersion: function ()
-		{
-			return this .getContext () .getParameter (this .getContext () .VERSION);
-		},
-		getAntialiased: function ()
-		{
-			return this .getContext () .getParameter (this .getContext () .SAMPLES) > 0;
-		},
-		getMaxClipPlanes: function ()
-		{
-			return 6;
-		},
-		getDepthSize: function ()
-		{
-			var gl = this .context;
-
-			return gl .getParameter (gl .DEPTH_BITS);
-		},
-		getColorDepth: function ()
-		{
-			var gl = this .context;
-
-			var colorDepth = 0;
-			colorDepth += gl .getParameter (gl .RED_BITS);
-			colorDepth += gl .getParameter (gl .BLUE_BITS);
-			colorDepth += gl .getParameter (gl .GREEN_BITS);
-			colorDepth += gl .getParameter (gl .ALPHA_BITS);
-
-			return colorDepth;
-		},
-		getViewport: function ()
-		{
-			return this .viewport_;
-		},
-		createShader: function (browser, name, vs, fs)
-		{
-			var vertexShader = new ShaderPart (browser .getPrivateScene ());
-			vertexShader .url_ .push (vs);
-			vertexShader .setup ();
-
-			var fragmentShader = new ShaderPart (browser .getPrivateScene ());
-			fragmentShader .type_ = "FRAGMENT";
-			fragmentShader .url_ .push (fs);
-			fragmentShader .setup ();
-	
-			var shader = new ComposedShader (browser .getPrivateScene ());
-			shader .setName (name);
-			shader .language_ = "GLSL";
-			shader .parts_ .push (vertexShader);
-			shader .parts_ .push (fragmentShader);
-			shader .setCustom (false);
-			shader .setup ();
-
-			this .getLoadSensor () .watchList_ .push (vertexShader);
-			this .getLoadSensor () .watchList_ .push (fragmentShader);
-
-			return shader;
-		},
-		setShading: function (type)
-		{
-			var gl = this .context;
-
-			switch (type)
-			{
-				case "PHONG":
-				{
-					if (! this .phongShader)
-						this .phongShader = this .createShader (this, "PhongShader", phongVS, phongFS);
-
-					this .defaultShader = this .phongShader;
-					break;
-				}
-				default:
-				{
-					if (! this .gouraudShader)
-						this .gouraudShader = this .createShader (this, "GouraudShader", gouraudVS, gouraudFS);
-
-					this .defaultShader = this .gouraudShader;
-					break;
-				}
-			}
-
-			// Configure custom shaders
-
-			this .pointShader   .setGeometryType (0);
-			this .lineShader    .setGeometryType (1);
-			this .defaultShader .setGeometryType (3);
-
-			var shaders = this .getShaders ();
-
-			for (var id in shaders)
-				shaders [id] .setShading (type);
-		},
-		getDefaultShader: function ()
-		{
-			return this .defaultShader;
-		},
-		getPointShader: function ()
-		{
-			return this .pointShader;
-		},
-		getLineShader: function ()
-		{
-			return this .lineShader;
-		},
-		getGouraudShader: function ()
-		{
-			// There must always be a gouraud shader available.
-			return this .gouraudShader;
-		},
-		getDepthShader: function ()
-		{
-			return this .depthShader;
-		},
-		getClipPlanes: function ()
-		{
-			return this .clipPlanes;
-		},
-		reshape: function ()
-		{
-			var
-			   canvas = this .canvas,
-				width  = canvas .width (),
-				height = canvas .height ();
-
-			canvas = canvas [0];
-
-			if (width !== canvas .width || height !== canvas .height)
-			{
-				this .viewport_ .setValue ([0, 0, width, height]);
-				this .context .viewport (0, 0, width, height);
-				this .context .scissor  (0, 0, width, height);
-
-				canvas .width  = width;
-				canvas .height = height;
-
-				this .addBrowserEvent ();
-			}
-		},
-		onfullscreen: function ()
-		{
-			if (this .getElement () .fullScreen ())
-				this .getElement () .addClass  ("x_ite-fullscreen");
-			else
-				this .getElement () .removeClass ("x_ite-fullscreen");
-		},
-	};
-
-	return X3DRenderingContext;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Geometry2D/Arc2DOptions',[
-	"jquery",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Fields",
-],
-function ($,
-          X3DBaseNode,
-          Fields)
-{
-"use strict";
-	
-	function ArcClose2DOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-
-		this .addChildObjects ("dimension", new Fields .SFInt32 (32))
-	}
-
-	ArcClose2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: ArcClose2DOptions,
-		getTypeName: function ()
-		{
-			return "ArcClose2DOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "arcClose2DOptions";
-		},
-	});
-
-	return ArcClose2DOptions;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Geometry2D/ArcClose2DOptions',[
-	"jquery",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Fields",
-],
-function ($,
-          X3DBaseNode,
-          Fields)
-{
-"use strict";
-	
-	function Arc2DOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-
-		this .addChildObjects ("dimension", new Fields .SFInt32 (32))
-	}
-
-	Arc2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: Arc2DOptions,
-		getTypeName: function ()
-		{
-			return "Arc2DOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "arc2DOptions";
-		},
-	});
-
-	return Arc2DOptions;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Numbers/Complex',[
-	"jquery",
-],
-function ($)
-{
-"use strict";
-
-	function Complex (real, imag)
-	{
-		this .real = real
-		this .imag = imag;
-	}
-
-	Complex .prototype =
-	{
-		constructor: Complex,
+		constructor: Line3,
+		// Static vectors for line / triangle intersection.
+		u: new Vector3 (0, 0, 0),
+		pvec: new Vector3 (0, 0, 0),
+		tvec: new Vector3 (0, 0, 0),
 		copy: function ()
 		{
-			var copy = Object .create (Complex .prototype);
-			copy .real = this .real;
-			copy .imag = this .imag;
+			var copy = Object .create (Line3 .prototype);
+			copy .point     = this .point .copy ();
+			copy .direction = this .direction .copy ();
 			return copy;
 		},
-		assign: function (complex)
+		assign: function (line)
 		{
-			this .real = complex .real;
-			this .imag = complex .imag;
+			this .point     .assign (line .point);
+			this .direction .assign (line .direction);
 			return this;
 		},
-		equals: function (complex)
+		set: function (point, direction)
 		{
-			return this .real === complex .real &&
-			       this .imag === complex .imag;
-		},
-		setRadius: function (radius)
-		{
-			return this .setPolar (radius, this .getAngle ());
-		},
-		getRadius: function ()
-		{
-			if (this .real)
-			{
-				if (this .imag)
-					return Math .sqrt (this .real * this .real + this .imag * this .imag);
-
-				return Math .abs (this .real);
-			}
-
-			return Math .abs (this .imag);
-		},
-		setAngle: function (angle)
-		{
-			return this .setPolar (this .getRadius (), angle);
-		},
-		getAngle: function ()
-		{
-			return Math .atan2 (this .imag, this .real);
-		},
-		setPolar: function (radius, angle)
-		{
-			this .real = radius * Math .cos (angle);
-			this .imag = radius * Math .sin (angle);
-		},
-		conjugate: function ()
-		{
-			this .imag = -this .imag;
+			this .point     .assign (point);
+			this .direction .assign (direction);
 			return this;
 		},
-		negate: function ()
+		setPoints: function (point1, point2)
 		{
-			this .real = -this .real;
-			this .imag = -this .imag;
+			this .point .assign (point1);
+			this .direction .assign (point2) .subtract (point1) .normalize ();
 			return this;
 		},
-		inverse: function ()
+		multMatrixLine: function (matrix)
 		{
-			var d = this .real * this .real + this .imag * this .imag;
-
-			this .real /=  d;
-			this .imag /= -d;
+			matrix .multMatrixVec (this .point);
+			matrix .multMatrixDir (this .direction) .normalize ();
 			return this;
 		},
-		add: function (value)
+		multLineMatrix: function (matrix)
 		{
-			this .real += value .real;
-			this .imag += value .imag;
+			matrix .multVecMatrix (this .point);
+			matrix .multDirMatrix (this .direction) .normalize ();
 			return this;
 		},
-		subtract: function (value)
-		{
-			this .real -= value .real;
-			this .imag -= value .imag;
-			return this;
-		},
-		multiply: function (value)
-		{
-			this .real *= value;
-			this .imag *= value;
-			return this;
-		},
-		multComp: function ()
+		getClosestPointToPoint: function (point, result)
 		{
 			var
-				real = this .real, imag = this .imag;
+				r = result .assign (point) .subtract (this .point),
+				d = r .dot (this .direction);
 
-			this .real = real * value .real - imag * value .imag;
-			this .imag = real * value .imag + imag * value .real;
-			return this;
+			return result .assign (this .direction) .multiply (d) .add (this .point);
 		},
-		//divide: function (value)
-		//{
-		//	return this;
-		//},
-		divComp: function (value)
+		getClosestPointToLine: function (line, point)
 		{
 			var
-				ar = this .real, ai = this .imag,
-				br = value .real, bi = value .imag;
+				p1 = this .point,
+				p2 = line .point,
+				d1 = this .direction,
+				d2 = line .direction;
 
-			var d = br * br + bi * bi;
+			var t = Vector3 .dot (d1, d2);
 
-			this .real = (ar * br + ai * bi) / d;
-			this .imag = (ai * br - ar * bi) / d;
-			return this;
+			if (Math .abs (t) >= 1)
+				return false;  // lines are parallel
+
+			var u = this .u .assign (p2) .subtract (p1);
+
+			t = (Vector3 .dot (u, d1) - t * Vector3 .dot (u, d2)) / (1 - t * t);
+
+			point .assign (d1) .multiply (t) .add (p1);
+			return true;
+		},
+		getPerpendicularVector: function (point)
+		{
+			var d = Vector3 .subtract (this .point, point);
+
+			return d .subtract (this .direction .copy () .multiply (Vector3 .dot (d, this .direction)));
+		},
+		intersectsTriangle: function (A, B, C, uvt)
+		{
+			// Find vectors for two edges sharing vert0.
+			var
+				edge1 = B .subtract (A),
+				edge2 = C .subtract (A);
+
+			// Begin calculating determinant - also used to calculate U parameter.
+			var pvec = this .pvec .assign (this .direction) .cross (edge2);
+
+			// If determinant is near zero, ray lies in plane of triangle.
+			var det = edge1 .dot (pvec);
+
+			// Non culling intersection.
+
+			if (det === 0)
+				return false;
+
+			var inv_det = 1 / det;
+
+			// Calculate distance from vert0 to ray point.
+			var tvec = this .tvec .assign (this .point) .subtract (A);
+
+			// Calculate U parameter and test bounds.
+			var u = tvec .dot (pvec) * inv_det;
+
+			if (u < 0 || u > 1)
+				return false;
+
+			// Prepare to test V parameter.
+			var qvec = tvec .cross (edge1);
+
+			// Calculate V parameter and test bounds.
+			var v = this .direction .dot (qvec) * inv_det;
+
+			if (v < 0 || u + v > 1)
+				return false;
+
+			var t = edge2 .dot (qvec) * inv_det;
+
+			uvt .u = u;
+			uvt .v = v;
+			uvt .t = t;
+
+			return true;
 		},
 		toString: function ()
 		{
-			if (this .imag)
-				return this .real + " " + this .imag + "i";
-
-			return String (this .real);
+			return this .point + ", " + this .direction;
 		},
 	};
 
-	$.extend (Complex,
+	Line3 .Points = function (point1, point2)
 	{
-		Polar: function (radius, angle)
-		{
-			var complex = Object .create (Complex .prototype);
-			complex .real = radius * Math .cos (angle);
-			complex .imag = radius * Math .sin (angle);
-			return complex;
-		},
-		multiply: function (lhs, rhs)
-		{
-			var copy = Object .create (this .prototype);
-			copy .real = lhs .real * rhs;
-			copy .imag = lhs .imag * rhs;
-			return copy;
-		},
-		multComp: function (lhs, rhs)
-		{
-			var copy = Object .create (this .prototype);
-			copy .real = lhs .real * rhs .real - lsh .imag * rhs .imag;
-			copy .imag = lhs .real * rhs .imag + lsh .imag * rhs .real;
-			return copy;
-		},
-	});
+		var line = Object .create (Line3 .prototype);
+		line .point     = point1 .copy ();
+		line .direction = Vector3 .subtract (point2, point1) .normalize ();
+		return line;
+	};
 
-	return Complex;
+	return Line3;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -46076,231 +45612,133 @@ function ($)
  ******************************************************************************/
 
 
-define ('x_ite/Browser/Geometry2D/Circle2DOptions',[
-	"jquery",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Fields",
-	"standard/Math/Numbers/Complex",
+define ('standard/Math/Geometry/Plane3',[
 	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          X3DBaseNode,
-          Fields,
-          Complex,
-          Vector3)
+function (Vector3,
+          Matrix4)
 {
 "use strict";
-	
-	function Circle2DOptions (executionContext)
+
+	var
+		normal    = new Vector3 (0, 0, 0),
+		point     = new Vector3 (0, 0, 0),
+		invMatrix = new Matrix4 ();
+
+	function Plane3 (point, normal)
 	{
-		X3DBaseNode .call (this, executionContext);
-
-		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
-
-		this .vertices = [ ];
+		this .normal             = normal .copy ();
+		this .distanceFromOrigin = normal .dot (point);
 	}
 
-	Circle2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	Plane3 .prototype =
 	{
-		constructor: Circle2DOptions,
-		getTypeName: function ()
+		constructor: Plane3,
+		copy: function ()
 		{
-			return "Circle2DOptions";
+			var copy = Object .create (Plane3 .prototype);
+			copy .normal             = this .normal .copy ();
+			copy .distanceFromOrigin = this .distanceFromOrigin;
+			return copy;
 		},
-		getComponentName: function ()
+		assign: function (plane)
 		{
-			return "X_ITE";
+			this .normal .assign (plane .normal);
+			this .distanceFromOrigin = plane .distanceFromOrigin;
+			return this;
 		},
-		getContainerField: function ()
+		set: function (point, normal)
 		{
-			return "circle2DOptions";
+			this .normal .assign (normal);
+			this .distanceFromOrigin = normal .dot (point);	   
+			return this;
 		},
-		initialize: function ()
+		multRight: function (matrix)
+		//throw
 		{
-			this .addInterest ("build", this);
+			// Taken from Inventor:
+		
+			// Find the point on the plane along the normal from the origin
+			point .assign (this .normal) .multiply (this .distanceFromOrigin);
+		
+			// Transform the plane normal by the matrix
+			// to get the new normal. Use the inverse transpose
+			// of the matrix so that normals are not scaled incorrectly.
+			// n' = n * !~m = ~m * n
+			invMatrix .assign (matrix) .inverse ();
+			invMatrix .multMatrixDir (normal .assign (this .normal)) .normalize ();
+		
+			// Transform the point by the matrix
+			matrix .multVecMatrix (point);
+		
+			// The new distance is the projected distance of the vector to the
+			// transformed point onto the (unit) transformed normal. This is
+			// just a dot product.
+			this .normal .assign (normal);
+			this .distanceFromOrigin = normal .dot (point);
 
-			this .build ();
+			return this;
 		},
-		getVertices: function ()
+		multLeft: function (matrix)
+		//throw
 		{
-			return this .vertices;
+			// Taken from Inventor:
+		
+			// Find the point on the plane along the normal from the origin
+			point .assign (this .normal) .multiply (this .distanceFromOrigin);
+		
+			// Transform the plane normal by the matrix
+			// to get the new normal. Use the inverse transpose
+			// of the matrix so that normals are not scaled incorrectly.
+			// n' = !~m * n = n * ~m
+			invMatrix .assign (matrix) .inverse ();
+			invMatrix .multDirMatrix (normal .assign (this .normal)) .normalize ();
+		
+			// Transform the point by the matrix
+			matrix .multḾatrixVec (point);
+		
+			// The new distance is the projected distance of the vector to the
+			// transformed point onto the (unit) transformed normal. This is
+			// just a dot product.
+			this .normal .assign (normal);
+			this .distanceFromOrigin = normal .dot (point);
+
+			return this;
 		},
-		build: function ()
+		getDistanceToPoint: function (point)
+		{
+			return Vector3 .dot (point, this .normal) - this .distanceFromOrigin;
+		},
+		intersectsLine: function (line, intersection)
 		{
 			var
-				dimension = this .dimension_ .getValue (),
-				angle     = Math .PI * 2 / dimension;
+				point     = line .point,
+				direction = line .direction;
 		
-			this .vertices .length = 0;
+			// Check if the line is parallel to the plane.
+			var theta = direction .dot (this .normal);
 
-			for (var n = 0; n < dimension; ++ n)
-			{
-				var point = Complex .Polar (1, angle * n);
-		
-				this .vertices .push (point .real, point .imag, 0, 1);
-			}
+			// Plane and line are parallel.
+			if (theta === 0)
+				return false;
+
+			// Plane and line are not parallel. The intersection point can be calculated now.
+			var t = (this .distanceFromOrigin - this .normal .dot (point)) / theta;
+
+			intersection .x = point .x + direction .x * t;
+			intersection .y = point .y + direction .y * t;
+			intersection .z = point .z + direction .z * t;
+
+			return true;
 		},
-	});
-
-	return Circle2DOptions;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Geometry2D/Disk2DOptions',[
-	"jquery",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Fields",
-	"standard/Math/Numbers/Complex",
-	"standard/Math/Numbers/Vector3",
-],
-function ($,
-          X3DBaseNode,
-          Fields,
-          Complex,
-          Vector3)
-{
-"use strict";
-	
-	var half = new Complex (0.5, 0.5);
-
-	function Disk2DOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-
-		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
-
-		this .circleVertices = [ ];
-		this .diskTexCoords  = [ ];
-		this .diskNormals    = [ ];
-		this .diskVertices   = [ ];
-	}
-
-	Disk2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: Disk2DOptions,
-		getTypeName: function ()
+		toString: function ()
 		{
-			return "Disk2DOptions";
+			return this .normal .toString () + " " + this .distanceFromOrigin;
 		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "circle2DOptions";
-		},
-		initialize: function ()
-		{
-			this .addInterest ("build", this);
+	};
 
-			this .build ();
-		},
-		getCircleVertices: function ()
-		{
-			return this .circleVertices;
-		},
-		getDiskTexCoords: function ()
-		{
-			return this .diskTexCoords;
-		},
-		getDiskNormals: function ()
-		{
-			return this .diskNormals;
-		},
-		getDiskVertices: function ()
-		{
-			return this .diskVertices;
-		},
-		build: function ()
-		{
-			var
-				dimension = this .dimension_ .getValue (),
-				angle     = Math .PI * 2 / dimension;
-		
-			this .circleVertices .length = 0;
-			this .diskTexCoords  .length = 0;
-			this .diskNormals    .length = 0;
-			this .diskVertices   .length = 0;
-
-			for (var n = 0; n < dimension; ++ n)
-			{
-				var
-					theta1    = angle * n,
-					theta2    = angle * (n + 1),
-					texCoord1 = Complex .Polar (0.5, theta1) .add (half),
-					texCoord2 = Complex .Polar (0.5, theta2) .add (half),
-					point1    = Complex .Polar (1, theta1),
-					point2    = Complex .Polar (1, theta2);
-		
-				// Circle
-
-				this .circleVertices .push (point1 .real, point1 .imag, 0, 1);
-
-				// Disk
-
-				this .diskTexCoords .push (0.5, 0.5, 0, 1,
-				                           texCoord1 .real, texCoord1 .imag, 0, 1,
-				                           texCoord2 .real, texCoord2 .imag, 0, 1);
-
-				this .diskNormals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
-
-				this .diskVertices .push (0, 0, 0, 1,
-				                          point1 .real, point1 .imag, 0, 1,
-				                          point2 .real, point2 .imag, 0, 1);
-			}
-		},
-	});
-
-	return Disk2DOptions;
+	return Plane3;
 });
 
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('poly2tri/dist/poly2tri',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.poly2tri = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
@@ -49401,6 +48839,1654 @@ function (Vector3,
  ******************************************************************************/
 
 
+define ('standard/Math/Geometry/ViewVolume',[
+	"jquery",
+	"standard/Math/Geometry/Line3",
+	"standard/Math/Geometry/Plane3",
+	"standard/Math/Geometry/Triangle3",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Vector4",
+	"standard/Math/Numbers/Matrix4",
+],
+function ($, Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
+{
+"use strict";
+
+	var
+		p1     = new Vector3 (0, 0, 0),
+		p2     = new Vector3 (0, 0, 0),
+		p3     = new Vector3 (0, 0, 0),
+		p4     = new Vector3 (0, 0, 0),
+		p5     = new Vector3 (0, 0, 0),
+		p6     = new Vector3 (0, 0, 0),
+		near   = new Vector3 (0, 0, 0),
+		far    = new Vector3 (0, 0, 0),
+		matrix = new Matrix4 (),
+		normal = new Vector3 (0, 0, 0),
+		vin    = new Vector4 (0, 0, 0, 0);
+
+	function ViewVolume ()
+	{
+		this .viewport = new Vector4 (0, 0, 0, 0);
+		this .scissor  = new Vector4 (0, 0, 0, 0);
+		
+		this .planes = [
+			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // front
+			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // left
+			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // right
+			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // top
+			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // bottom
+			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // back
+		];
+	}
+
+	ViewVolume .prototype =
+	{
+		constructor: ViewVolume,
+		set: function (projectionMatrix, viewport, scissor)
+		{
+			try
+			{
+				this .viewport .assign (viewport);
+				this .scissor  .assign (scissor);
+
+				var
+					x1 = scissor [0],
+					x2 = scissor [0] + scissor [2],
+					y1 = scissor [1],
+					y2 = scissor [1] + scissor [3];
+
+				matrix .assign (projectionMatrix) .inverse ();
+
+				ViewVolume .unProjectPointMatrix (x1, y2, 1, matrix, viewport, p1),
+				ViewVolume .unProjectPointMatrix (x1, y1, 1, matrix, viewport, p2),
+				ViewVolume .unProjectPointMatrix (x1, y1, 0, matrix, viewport, p3),
+				ViewVolume .unProjectPointMatrix (x2, y1, 0, matrix, viewport, p4),
+				ViewVolume .unProjectPointMatrix (x2, y2, 0, matrix, viewport, p5),
+				ViewVolume .unProjectPointMatrix (x2, y2, 1, matrix, viewport, p6);
+
+				this .planes [0] .set (p4, Triangle3 .normal (p3, p4, p5, normal));  // front
+				this .planes [1] .set (p2, Triangle3 .normal (p1, p2, p3, normal));  // left
+				this .planes [2] .set (p5, Triangle3 .normal (p6, p5, p4, normal));  // right
+				this .planes [3] .set (p6, Triangle3 .normal (p5, p6, p1, normal));  // top
+				this .planes [4] .set (p3, Triangle3 .normal (p4, p3, p2, normal));  // bottom
+				this .planes [5] .set (p1, Triangle3 .normal (p2, p1, p6, normal));  // back  
+
+				this .valid = true;
+			}
+			catch (error)
+			{
+				this .valid = false;
+				console .log (error);
+			}
+
+			return this;
+		},
+		getViewport: function ()
+		{
+			return this .viewport;
+		},
+		getScissor: function ()
+		{
+			return this .scissor;
+		},
+		intersectsSphere: function (radius, center)
+		{
+			var planes = this .planes;
+		
+			if (planes [0] .getDistanceToPoint (center) > radius)
+				return false;
+
+			if (planes [1] .getDistanceToPoint (center) > radius)
+				return false;
+
+			if (planes [2] .getDistanceToPoint (center) > radius)
+				return false;
+
+			if (planes [3] .getDistanceToPoint (center) > radius)
+				return false;
+
+			if (planes [4] .getDistanceToPoint (center) > radius)
+				return false;
+
+			if (planes [5] .getDistanceToPoint (center) > radius)
+				return false;
+
+			return true;
+		},
+	};
+
+	$.extend (ViewVolume,
+	{
+		unProjectPoint: function (winx, winy, winz, modelViewMatrix, projectionMatrix, viewport, point)
+		{
+			matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
+
+			return this .unProjectPointMatrix (winx, winy, winz, matrix, viewport, point);
+		},
+		unProjectPointMatrix: function (winx, winy, winz, invModelViewProjection, viewport, point)
+		{
+			// Transformation of normalized coordinates between -1 and 1
+			vin .set ((winx - viewport [0]) / viewport [2] * 2 - 1,
+			          (winy - viewport [1]) / viewport [3] * 2 - 1,
+			          2 * winz - 1,
+			          1);
+
+			//Objects coordinates
+			invModelViewProjection .multVecMatrix (vin);
+
+			if (vin .w === 0)
+				throw new Error ("Couldn't unproject point: divisor is 0.");
+
+			var d = 1 / vin .w;
+
+			return point .set (vin .x * d, vin .y * d, vin .z * d);
+		},
+		unProjectRay: function (winx, winy, modelViewMatrix, projectionMatrix, viewport, result)
+		{
+			matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
+
+			ViewVolume .unProjectPointMatrix (winx, winy, 0.0, matrix, viewport, near);
+			ViewVolume .unProjectPointMatrix (winx, winy, 0.9, matrix, viewport, far);
+
+			return result .setPoints (near, far);
+		},
+		projectPoint: function (point, modelViewMatrix, projectionMatrix, viewport, vout)
+		{
+			vin .set (point .x, point .y, point .z, 1);
+
+			projectionMatrix .multVecMatrix (modelViewMatrix .multVecMatrix (vin));
+
+			if (vin .w === 0)
+				throw new Error ("Couldn't project point: divisor is 0.");
+
+			var d = 1 / (2 * vin .w);
+
+			return vout .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
+			                  (vin .y * d + 0.5) * viewport [3] + viewport [1],
+			                  (vin .z * d + 0.5));
+		},
+		projectLine: function (line, modelViewMatrix, projectionMatrix, viewport, result)
+		{
+			ViewVolume .projectPoint (line .point, modelViewMatrix, projectionMatrix, viewport, near);
+			ViewVolume .projectPoint (Vector3 .multiply (line .direction, 1e9) .add (line .point), modelViewMatrix, projectionMatrix, viewport, far);
+
+			near .z = 0;
+			far  .z = 0;
+
+			return result .setPoints (near, far);
+		},
+	});
+
+	return ViewVolume;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Rendering/DepthBuffer',[
+	"standard/Math/Geometry/ViewVolume",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Matrix4",
+],
+function (ViewVolume,
+          Vector3,
+          Matrix4)
+{
+"use strict";
+
+	function DepthBuffer (browser, width, height)
+	{
+		var gl = browser .getContext ();
+
+		this .browser             = browser;
+		this .width               = width;
+		this .height              = height;
+		this .array               = new Uint8Array (width * height * 4);
+		this .invProjectionMatrix = new Matrix4 ();
+		this .point               = new Vector3 (0, 0, 0);
+
+		// The frame buffer.
+
+		this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+		this .buffer     = gl .createFramebuffer ();
+
+		gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
+
+		// The depth texture
+
+		this .depthTexture = gl .createTexture ();
+
+		gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
+		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+		gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+
+		gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .depthTexture, 0);
+
+		// The depth buffer
+
+		var depthBuffer = gl .createRenderbuffer ();
+
+		gl .bindRenderbuffer (gl .RENDERBUFFER, depthBuffer);
+		gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, width, height);
+		gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, depthBuffer);
+
+		// Always check that our framebuffer is ok
+
+		var complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
+
+		gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+
+		if (complete)
+			return;
+
+		throw new Error ("Couldn't create frame buffer.");
+	}
+
+	DepthBuffer .prototype =
+	{
+		constructor: DepthBuffer,
+		getWidth: function ()
+		{
+			return this .width;
+		},
+		getHeight: function ()
+		{
+			return this .height;
+		},
+		getDepthTexture: function ()
+		{
+			return this .depthTexture;
+		},
+		readPixels: function ()
+		{
+			var
+				gl     = this .browser .getContext (),
+				array  = this .array,
+				width  = this .width,
+				height = this .height;
+
+			gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
+
+			return array;
+		},
+		getDepth: function (projectionMatrix, viewport)
+		{
+			try
+			{
+				var
+					gl                  = this .browser .getContext (),
+					array               = this .array,
+					width               = this .width,
+					height              = this .height,
+					invProjectionMatrix = this .invProjectionMatrix .assign (projectionMatrix) .inverse (),
+					winx                = 0,
+					winy                = 0,
+					winz                = Number .POSITIVE_INFINITY;
+
+				gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
+
+				for (var wy = 0, i = 0; wy < height; ++ wy)
+				{
+					for (var wx = 0; wx < width; ++ wx, i += 4)
+					{
+						var wz = array [i] / 255 + array [i + 1] / 65025 + array [i + 2] / 16581375 + array [i + 3] / 4228250625;
+
+						if (wz < winz)
+						{
+							winx = wx;
+							winy = wy;
+							winz = wz;
+						}
+					}
+				}
+
+				ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, this .point);
+
+				return this .point .z;
+			}
+			catch (error)
+			{
+				return 0;
+			}
+		},
+		bind: function ()
+		{
+			var gl = this .browser .getContext ();
+
+			this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+
+			gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
+		},
+		unbind: function ()
+		{
+			var gl = this .browser .getContext ();
+			gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+		},
+	};
+
+	return DepthBuffer;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Math/Geometry/Camera',[
+	"standard/Math/Numbers/Vector3",
+],
+function (Vector3)
+{
+"use strict";
+
+	var
+		min = new Vector3 (0, 0, 0),
+		max = new Vector3 (0, 0, 0);
+
+	return {
+		frustum: function (l, r, b, t, n, f, matrix)
+		{
+			var
+				r_l = r - l,
+				t_b = t - b,
+				f_n = f - n,
+				n_2 = 2 * n,
+
+				A = (r + l) / r_l,
+				B = (t + b) / t_b,
+				C = -(f + n) / f_n,
+				D = -n_2 * f / f_n,
+				E = n_2 / r_l,
+				F = n_2 / t_b;
+
+			return matrix .set (E, 0, 0, 0,
+			                    0, F, 0, 0,
+			                    A, B, C, -1,
+			                    0, 0, D, 0);
+		},
+		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
+		{
+			var ratio = Math .tan (fieldOfView / 2) * zNear;
+
+			if (width > height)
+			{
+				var aspect = width * ratio / height;
+				return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
+			}
+			else
+			{
+				var aspect = height * ratio / width;
+				return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
+			}
+		},
+		ortho: function (l, r, b, t, n, f, matrix)
+		{
+			var
+				r_l = r - l,
+				t_b = t - b,
+				f_n = f - n,
+
+				A =  2 / r_l,
+				B =  2 / t_b,
+				C = -2 / f_n,
+				D = -(r + l) / r_l,
+				E = -(t + b) / t_b,
+				F = -(f + n) / f_n;
+
+			return matrix .set (A, 0, 0, 0,
+			                    0, B, 0, 0,
+			                    0, 0, C, 0,
+			                    D, E, F, 1);
+		},
+		orthoBox: function (box, matrix)
+		{
+			box .getExtents (min, max);
+
+			return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
+		},
+	};
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Shaders/ShaderTest',[
+	"x_ite/Rendering/DepthBuffer",
+	"standard/Math/Numbers/Vector4",
+	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Camera",
+],
+function (DepthBuffer,
+          Vector4,
+          Matrix4,
+          Camera)
+{
+"use strict";
+
+	var normals = [
+		0, 0, 1,
+		0, 0, 1,
+		0, 0, 1,
+		0, 0, 1,
+		0, 0, 1,
+		0, 0, 1,
+	];
+
+	var vertices = [
+		 2,  2, 0, 1,
+		-2,  2, 0, 1,
+		-2, -2, 0, 1,
+		 2,  2, 0, 1,
+		-2, -2, 0, 1,
+		 2, -2, 0, 1,
+	];
+
+	function shaderTest (browser, shaderNode)
+	{
+		var
+			gl           = browser .getContext (),
+			frameBuffer  = new DepthBuffer (browser, 16, 16),
+         normalBuffer = gl .createBuffer (),
+         vertexBuffer = gl .createBuffer ();
+
+
+		frameBuffer .bind ();
+		shaderNode .useProgram (gl);
+		gl .viewport (0, 0, 16, 16);
+
+		gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
+		gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
+		gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
+		gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
+
+		gl .uniform4fv (shaderNode .x3d_ClipPlane [0], shaderNode .x3d_NoneClipPlane);
+
+		gl .uniform1i (shaderNode .x3d_FogType,       0);
+		gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
+		gl .uniform1i (shaderNode .x3d_Lighting,      true);
+
+		gl .uniform1i (shaderNode .x3d_SeparateBackColor, false);
+		gl .uniform1f (shaderNode .x3d_AmbientIntensity,  0);
+		gl .uniform3f (shaderNode .x3d_DiffuseColor,      1, 0, 0);
+		gl .uniform3f (shaderNode .x3d_SpecularColor,     1, 0, 0);
+		gl .uniform3f (shaderNode .x3d_EmissiveColor,     1, 0, 0);
+		gl .uniform1f (shaderNode .x3d_Shininess,         0);
+		gl .uniform1f (shaderNode .x3d_Transparency,      0);
+
+		gl .uniform1i (shaderNode .x3d_LightType [0],             1);
+		gl .uniform3f (shaderNode .x3d_LightColor [0],            1, 0, 0);
+		gl .uniform1f (shaderNode .x3d_LightIntensity [0],        1);
+		gl .uniform1f (shaderNode .x3d_LightAmbientIntensity [0], 1);
+		gl .uniform3f (shaderNode .x3d_LightDirection [0],        0, 0, -1);
+		gl .uniform1i (shaderNode .x3d_LightType [1],             0);
+
+		shaderNode .textureTypeArray [0] = 0;
+		gl .uniform1iv (shaderNode .x3d_TextureType, shaderNode .textureTypeArray);
+
+		gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, new Float32Array (Camera .ortho (-1, 1, -1, 1, -1, 1, new Matrix4 ())));
+		gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, new Float32Array (new Matrix4 ()));
+		gl .uniformMatrix4fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (new Matrix4 ()));
+
+		gl .disable (gl .BLEND);
+		gl .frontFace (gl .CCW);
+		gl .cullFace (gl .BACK);
+
+		shaderNode .enableNormalAttribute (gl, normalBuffer);
+		shaderNode .enableVertexAttribute (gl, vertexBuffer);
+
+		gl .drawArrays (gl .TRIANGLES, 0, 6);
+
+		var data = frameBuffer .readPixels ();
+
+		frameBuffer .unbind ();
+
+		return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
+	}
+
+	return shaderTest;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+//https://github.com/sdecima/javascript-detect-element-resize
+
+define ('x_ite/Browser/Rendering/X3DRenderingContext',[
+	"jquery",
+	"x_ite/Fields",
+	"x_ite/Components/Shaders/ComposedShader",
+	"x_ite/Components/Shaders/ShaderPart",
+	"text!x_ite/Browser/Shaders/PointSet.fs",
+	"text!x_ite/Browser/Shaders/Wireframe.vs",
+	"text!x_ite/Browser/Shaders/Wireframe.fs",
+	"text!x_ite/Browser/Shaders/Gouraud.vs",
+	"text!x_ite/Browser/Shaders/Gouraud.fs",
+	"text!x_ite/Browser/Shaders/Phong.vs",
+	"text!x_ite/Browser/Shaders/Phong.fs",
+	"text!x_ite/Browser/Shaders/Depth.vs",
+	"text!x_ite/Browser/Shaders/Depth.fs",
+	"x_ite/Browser/Shaders/ShaderTest",
+	"standard/Math/Numbers/Vector4",
+],
+function ($,
+          Fields,
+          ComposedShader,
+          ShaderPart,
+          pointSetFS,
+          wireframeVS,
+          wireframeFS,
+          gouraudVS,
+          gouraudFS,
+          phongVS,
+          phongFS,
+          depthVS,
+          depthFS,
+          testShader,
+          Vector4)
+{
+"use strict";
+
+	function X3DRenderingContext ()
+	{
+		this .addChildObjects ("viewport", new Fields .MFInt32 (0, 0, 300, 150));
+
+		this .clipPlanes = [ ]; // Clip planes dumpster
+	}
+
+	X3DRenderingContext .prototype =
+	{
+		initialize: function ()
+		{
+			// Configure context.
+
+			var gl = this .getContext ();
+
+			gl .enable (gl .SCISSOR_TEST);
+			gl .cullFace (gl .BACK);
+			gl .enable (gl .DEPTH_TEST);
+			gl .depthFunc (gl .LEQUAL);
+			gl .clearDepth (1);
+
+			gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+			gl .enable (gl .BLEND);
+
+			// Configure viewport.
+
+			$(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
+
+			setInterval (this .reshape .bind (this), 401); // Detect canvas resize.
+
+			this .reshape ();
+
+			// Create shaders.
+
+			this .depthShader   = this .createShader (this, "DepthShader",     depthVS,     depthFS);
+			this .pointShader   = this .createShader (this, "PointShader",     wireframeVS, pointSetFS);
+			this .lineShader    = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS);
+			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS);
+			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS);
+
+			this .pointShader .setGeometryType (0);
+			this .lineShader  .setGeometryType (1);
+
+			this .setShading ("GOURAUD");
+
+			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
+		},
+		set_phong_shader_valid__: function (valid)
+		{
+			if (valid .getValue () && testShader (this, this .phongShader))
+				return;
+
+			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
+
+			this .phongShader = this .gouraudShader;
+		},
+		getVendor: function ()
+		{
+			return this .getContext () .getParameter (this .getContext () .VENDOR);
+		},
+		getWebGLVersion: function ()
+		{
+			return this .getContext () .getParameter (this .getContext () .VERSION);
+		},
+		getAntialiased: function ()
+		{
+			return this .getContext () .getParameter (this .getContext () .SAMPLES) > 0;
+		},
+		getMaxClipPlanes: function ()
+		{
+			return 6;
+		},
+		getDepthSize: function ()
+		{
+			var gl = this .context;
+
+			return gl .getParameter (gl .DEPTH_BITS);
+		},
+		getColorDepth: function ()
+		{
+			var gl = this .context;
+
+			var colorDepth = 0;
+			colorDepth += gl .getParameter (gl .RED_BITS);
+			colorDepth += gl .getParameter (gl .BLUE_BITS);
+			colorDepth += gl .getParameter (gl .GREEN_BITS);
+			colorDepth += gl .getParameter (gl .ALPHA_BITS);
+
+			return colorDepth;
+		},
+		getViewport: function ()
+		{
+			return this .viewport_;
+		},
+		createShader: function (browser, name, vs, fs)
+		{
+			var vertexShader = new ShaderPart (browser .getPrivateScene ());
+			vertexShader .url_ .push (vs);
+			vertexShader .setup ();
+
+			var fragmentShader = new ShaderPart (browser .getPrivateScene ());
+			fragmentShader .type_ = "FRAGMENT";
+			fragmentShader .url_ .push (fs);
+			fragmentShader .setup ();
+	
+			var shader = new ComposedShader (browser .getPrivateScene ());
+			shader .setName (name);
+			shader .language_ = "GLSL";
+			shader .parts_ .push (vertexShader);
+			shader .parts_ .push (fragmentShader);
+			shader .setCustom (false);
+			shader .setup ();
+
+			this .getLoadSensor () .watchList_ .push (vertexShader);
+			this .getLoadSensor () .watchList_ .push (fragmentShader);
+
+			return shader;
+		},
+		setShading: function (type)
+		{
+			var gl = this .context;
+
+			switch (type)
+			{
+				case "PHONG":
+				{
+					this .defaultShader = this .phongShader;
+					break;
+				}
+				default:
+				{
+					this .defaultShader = this .gouraudShader;
+					break;
+				}
+			}
+
+			// Configure custom shaders
+
+			this .pointShader   .setGeometryType (0);
+			this .lineShader    .setGeometryType (1);
+			this .defaultShader .setGeometryType (3);
+
+			var shaders = this .getShaders ();
+
+			for (var id in shaders)
+				shaders [id] .setShading (type);
+		},
+		getDefaultShader: function ()
+		{
+			return this .defaultShader;
+		},
+		getPointShader: function ()
+		{
+			return this .pointShader;
+		},
+		getLineShader: function ()
+		{
+			return this .lineShader;
+		},
+		getGouraudShader: function ()
+		{
+			// There must always be a gouraud shader available.
+			return this .gouraudShader;
+		},
+		getDepthShader: function ()
+		{
+			return this .depthShader;
+		},
+		getClipPlanes: function ()
+		{
+			return this .clipPlanes;
+		},
+		reshape: function ()
+		{
+			var
+			   canvas = this .canvas,
+				width  = canvas .width (),
+				height = canvas .height ();
+
+			canvas = canvas [0];
+
+			if (width !== canvas .width || height !== canvas .height)
+			{
+				this .viewport_ .setValue ([0, 0, width, height]);
+				this .context .viewport (0, 0, width, height);
+				this .context .scissor  (0, 0, width, height);
+
+				canvas .width  = width;
+				canvas .height = height;
+
+				this .addBrowserEvent ();
+			}
+		},
+		onfullscreen: function ()
+		{
+			if (this .getElement () .fullScreen ())
+				this .getElement () .addClass  ("x_ite-fullscreen");
+			else
+				this .getElement () .removeClass ("x_ite-fullscreen");
+		},
+	};
+
+	return X3DRenderingContext;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Geometry2D/Arc2DOptions',[
+	"jquery",
+	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Fields",
+],
+function ($,
+          X3DBaseNode,
+          Fields)
+{
+"use strict";
+	
+	function ArcClose2DOptions (executionContext)
+	{
+		X3DBaseNode .call (this, executionContext);
+
+		this .addChildObjects ("dimension", new Fields .SFInt32 (32))
+	}
+
+	ArcClose2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	{
+		constructor: ArcClose2DOptions,
+		getTypeName: function ()
+		{
+			return "ArcClose2DOptions";
+		},
+		getComponentName: function ()
+		{
+			return "X_ITE";
+		},
+		getContainerField: function ()
+		{
+			return "arcClose2DOptions";
+		},
+	});
+
+	return ArcClose2DOptions;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Geometry2D/ArcClose2DOptions',[
+	"jquery",
+	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Fields",
+],
+function ($,
+          X3DBaseNode,
+          Fields)
+{
+"use strict";
+	
+	function Arc2DOptions (executionContext)
+	{
+		X3DBaseNode .call (this, executionContext);
+
+		this .addChildObjects ("dimension", new Fields .SFInt32 (32))
+	}
+
+	Arc2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	{
+		constructor: Arc2DOptions,
+		getTypeName: function ()
+		{
+			return "Arc2DOptions";
+		},
+		getComponentName: function ()
+		{
+			return "X_ITE";
+		},
+		getContainerField: function ()
+		{
+			return "arc2DOptions";
+		},
+	});
+
+	return Arc2DOptions;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Math/Numbers/Complex',[
+	"jquery",
+],
+function ($)
+{
+"use strict";
+
+	function Complex (real, imag)
+	{
+		this .real = real
+		this .imag = imag;
+	}
+
+	Complex .prototype =
+	{
+		constructor: Complex,
+		copy: function ()
+		{
+			var copy = Object .create (Complex .prototype);
+			copy .real = this .real;
+			copy .imag = this .imag;
+			return copy;
+		},
+		assign: function (complex)
+		{
+			this .real = complex .real;
+			this .imag = complex .imag;
+			return this;
+		},
+		equals: function (complex)
+		{
+			return this .real === complex .real &&
+			       this .imag === complex .imag;
+		},
+		setRadius: function (radius)
+		{
+			return this .setPolar (radius, this .getAngle ());
+		},
+		getRadius: function ()
+		{
+			if (this .real)
+			{
+				if (this .imag)
+					return Math .sqrt (this .real * this .real + this .imag * this .imag);
+
+				return Math .abs (this .real);
+			}
+
+			return Math .abs (this .imag);
+		},
+		setAngle: function (angle)
+		{
+			return this .setPolar (this .getRadius (), angle);
+		},
+		getAngle: function ()
+		{
+			return Math .atan2 (this .imag, this .real);
+		},
+		setPolar: function (radius, angle)
+		{
+			this .real = radius * Math .cos (angle);
+			this .imag = radius * Math .sin (angle);
+		},
+		conjugate: function ()
+		{
+			this .imag = -this .imag;
+			return this;
+		},
+		negate: function ()
+		{
+			this .real = -this .real;
+			this .imag = -this .imag;
+			return this;
+		},
+		inverse: function ()
+		{
+			var d = this .real * this .real + this .imag * this .imag;
+
+			this .real /=  d;
+			this .imag /= -d;
+			return this;
+		},
+		add: function (value)
+		{
+			this .real += value .real;
+			this .imag += value .imag;
+			return this;
+		},
+		subtract: function (value)
+		{
+			this .real -= value .real;
+			this .imag -= value .imag;
+			return this;
+		},
+		multiply: function (value)
+		{
+			this .real *= value;
+			this .imag *= value;
+			return this;
+		},
+		multComp: function ()
+		{
+			var
+				real = this .real, imag = this .imag;
+
+			this .real = real * value .real - imag * value .imag;
+			this .imag = real * value .imag + imag * value .real;
+			return this;
+		},
+		//divide: function (value)
+		//{
+		//	return this;
+		//},
+		divComp: function (value)
+		{
+			var
+				ar = this .real, ai = this .imag,
+				br = value .real, bi = value .imag;
+
+			var d = br * br + bi * bi;
+
+			this .real = (ar * br + ai * bi) / d;
+			this .imag = (ai * br - ar * bi) / d;
+			return this;
+		},
+		toString: function ()
+		{
+			if (this .imag)
+				return this .real + " " + this .imag + "i";
+
+			return String (this .real);
+		},
+	};
+
+	$.extend (Complex,
+	{
+		Polar: function (radius, angle)
+		{
+			var complex = Object .create (Complex .prototype);
+			complex .real = radius * Math .cos (angle);
+			complex .imag = radius * Math .sin (angle);
+			return complex;
+		},
+		multiply: function (lhs, rhs)
+		{
+			var copy = Object .create (this .prototype);
+			copy .real = lhs .real * rhs;
+			copy .imag = lhs .imag * rhs;
+			return copy;
+		},
+		multComp: function (lhs, rhs)
+		{
+			var copy = Object .create (this .prototype);
+			copy .real = lhs .real * rhs .real - lsh .imag * rhs .imag;
+			copy .imag = lhs .real * rhs .imag + lsh .imag * rhs .real;
+			return copy;
+		},
+	});
+
+	return Complex;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Geometry2D/Circle2DOptions',[
+	"jquery",
+	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Fields",
+	"standard/Math/Numbers/Complex",
+	"standard/Math/Numbers/Vector3",
+],
+function ($,
+          X3DBaseNode,
+          Fields,
+          Complex,
+          Vector3)
+{
+"use strict";
+	
+	function Circle2DOptions (executionContext)
+	{
+		X3DBaseNode .call (this, executionContext);
+
+		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
+
+		this .vertices = [ ];
+	}
+
+	Circle2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	{
+		constructor: Circle2DOptions,
+		getTypeName: function ()
+		{
+			return "Circle2DOptions";
+		},
+		getComponentName: function ()
+		{
+			return "X_ITE";
+		},
+		getContainerField: function ()
+		{
+			return "circle2DOptions";
+		},
+		initialize: function ()
+		{
+			this .addInterest ("build", this);
+
+			this .build ();
+		},
+		getVertices: function ()
+		{
+			return this .vertices;
+		},
+		build: function ()
+		{
+			var
+				dimension = this .dimension_ .getValue (),
+				angle     = Math .PI * 2 / dimension;
+		
+			this .vertices .length = 0;
+
+			for (var n = 0; n < dimension; ++ n)
+			{
+				var point = Complex .Polar (1, angle * n);
+		
+				this .vertices .push (point .real, point .imag, 0, 1);
+			}
+		},
+	});
+
+	return Circle2DOptions;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Geometry2D/Disk2DOptions',[
+	"jquery",
+	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Fields",
+	"standard/Math/Numbers/Complex",
+	"standard/Math/Numbers/Vector3",
+],
+function ($,
+          X3DBaseNode,
+          Fields,
+          Complex,
+          Vector3)
+{
+"use strict";
+	
+	var half = new Complex (0.5, 0.5);
+
+	function Disk2DOptions (executionContext)
+	{
+		X3DBaseNode .call (this, executionContext);
+
+		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
+
+		this .circleVertices = [ ];
+		this .diskTexCoords  = [ ];
+		this .diskNormals    = [ ];
+		this .diskVertices   = [ ];
+	}
+
+	Disk2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	{
+		constructor: Disk2DOptions,
+		getTypeName: function ()
+		{
+			return "Disk2DOptions";
+		},
+		getComponentName: function ()
+		{
+			return "X_ITE";
+		},
+		getContainerField: function ()
+		{
+			return "circle2DOptions";
+		},
+		initialize: function ()
+		{
+			this .addInterest ("build", this);
+
+			this .build ();
+		},
+		getCircleVertices: function ()
+		{
+			return this .circleVertices;
+		},
+		getDiskTexCoords: function ()
+		{
+			return this .diskTexCoords;
+		},
+		getDiskNormals: function ()
+		{
+			return this .diskNormals;
+		},
+		getDiskVertices: function ()
+		{
+			return this .diskVertices;
+		},
+		build: function ()
+		{
+			var
+				dimension = this .dimension_ .getValue (),
+				angle     = Math .PI * 2 / dimension;
+		
+			this .circleVertices .length = 0;
+			this .diskTexCoords  .length = 0;
+			this .diskNormals    .length = 0;
+			this .diskVertices   .length = 0;
+
+			for (var n = 0; n < dimension; ++ n)
+			{
+				var
+					theta1    = angle * n,
+					theta2    = angle * (n + 1),
+					texCoord1 = Complex .Polar (0.5, theta1) .add (half),
+					texCoord2 = Complex .Polar (0.5, theta2) .add (half),
+					point1    = Complex .Polar (1, theta1),
+					point2    = Complex .Polar (1, theta2);
+		
+				// Circle
+
+				this .circleVertices .push (point1 .real, point1 .imag, 0, 1);
+
+				// Disk
+
+				this .diskTexCoords .push (0.5, 0.5, 0, 1,
+				                           texCoord1 .real, texCoord1 .imag, 0, 1,
+				                           texCoord2 .real, texCoord2 .imag, 0, 1);
+
+				this .diskNormals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
+
+				this .diskVertices .push (0, 0, 0, 1,
+				                          point1 .real, point1 .imag, 0, 1,
+				                          point2 .real, point2 .imag, 0, 1);
+			}
+		},
+	});
+
+	return Disk2DOptions;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('standard/Math/Algorithms/SAT',[],function ()
 {
 "use strict";
@@ -50004,184 +51090,6 @@ function (Triangle3,
 	});
 
 	return Box3;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Geometry/Plane3',[
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
-],
-function (Vector3,
-          Matrix4)
-{
-"use strict";
-
-	var
-		normal    = new Vector3 (0, 0, 0),
-		point     = new Vector3 (0, 0, 0),
-		invMatrix = new Matrix4 ();
-
-	function Plane3 (point, normal)
-	{
-		this .normal             = normal .copy ();
-		this .distanceFromOrigin = normal .dot (point);
-	}
-
-	Plane3 .prototype =
-	{
-		constructor: Plane3,
-		copy: function ()
-		{
-			var copy = Object .create (Plane3 .prototype);
-			copy .normal             = this .normal .copy ();
-			copy .distanceFromOrigin = this .distanceFromOrigin;
-			return copy;
-		},
-		assign: function (plane)
-		{
-			this .normal .assign (plane .normal);
-			this .distanceFromOrigin = plane .distanceFromOrigin;
-			return this;
-		},
-		set: function (point, normal)
-		{
-			this .normal .assign (normal);
-			this .distanceFromOrigin = normal .dot (point);	   
-			return this;
-		},
-		multRight: function (matrix)
-		//throw
-		{
-			// Taken from Inventor:
-		
-			// Find the point on the plane along the normal from the origin
-			point .assign (this .normal) .multiply (this .distanceFromOrigin);
-		
-			// Transform the plane normal by the matrix
-			// to get the new normal. Use the inverse transpose
-			// of the matrix so that normals are not scaled incorrectly.
-			// n' = n * !~m = ~m * n
-			invMatrix .assign (matrix) .inverse ();
-			invMatrix .multMatrixDir (normal .assign (this .normal)) .normalize ();
-		
-			// Transform the point by the matrix
-			matrix .multVecMatrix (point);
-		
-			// The new distance is the projected distance of the vector to the
-			// transformed point onto the (unit) transformed normal. This is
-			// just a dot product.
-			this .normal .assign (normal);
-			this .distanceFromOrigin = normal .dot (point);
-
-			return this;
-		},
-		multLeft: function (matrix)
-		//throw
-		{
-			// Taken from Inventor:
-		
-			// Find the point on the plane along the normal from the origin
-			point .assign (this .normal) .multiply (this .distanceFromOrigin);
-		
-			// Transform the plane normal by the matrix
-			// to get the new normal. Use the inverse transpose
-			// of the matrix so that normals are not scaled incorrectly.
-			// n' = !~m * n = n * ~m
-			invMatrix .assign (matrix) .inverse ();
-			invMatrix .multDirMatrix (normal .assign (this .normal)) .normalize ();
-		
-			// Transform the point by the matrix
-			matrix .multḾatrixVec (point);
-		
-			// The new distance is the projected distance of the vector to the
-			// transformed point onto the (unit) transformed normal. This is
-			// just a dot product.
-			this .normal .assign (normal);
-			this .distanceFromOrigin = normal .dot (point);
-
-			return this;
-		},
-		getDistanceToPoint: function (point)
-		{
-			return Vector3 .dot (point, this .normal) - this .distanceFromOrigin;
-		},
-		intersectsLine: function (line, intersection)
-		{
-			var
-				point     = line .point,
-				direction = line .direction;
-		
-			// Check if the line is parallel to the plane.
-			var theta = direction .dot (this .normal);
-
-			// Plane and line are parallel.
-			if (theta === 0)
-				return false;
-
-			// Plane and line are not parallel. The intersection point can be calculated now.
-			var t = (this .distanceFromOrigin - this .normal .dot (point)) / theta;
-
-			intersection .x = point .x + direction .x * t;
-			intersection .y = point .y + direction .y * t;
-			intersection .z = point .z + direction .z * t;
-
-			return true;
-		},
-		toString: function ()
-		{
-			return this .normal .toString () + " " + this .distanceFromOrigin;
-		},
-	};
-
-	return Plane3;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -53851,440 +54759,6 @@ function ($,
  ******************************************************************************/
 
 
-define ('standard/Math/Geometry/Line3',[
-	"standard/Math/Numbers/Vector3",
-],
-function (Vector3)
-{
-"use strict";
-
-	function Line3 (point, direction)
-	{
-		this .point     = point     .copy ();
-		this .direction = direction .copy ();
-	}
-
-	Line3 .prototype =
-	{
-		constructor: Line3,
-		// Static vectors for line / triangle intersection.
-		u: new Vector3 (0, 0, 0),
-		pvec: new Vector3 (0, 0, 0),
-		tvec: new Vector3 (0, 0, 0),
-		copy: function ()
-		{
-			var copy = Object .create (Line3 .prototype);
-			copy .point     = this .point .copy ();
-			copy .direction = this .direction .copy ();
-			return copy;
-		},
-		assign: function (line)
-		{
-			this .point     .assign (line .point);
-			this .direction .assign (line .direction);
-			return this;
-		},
-		set: function (point, direction)
-		{
-			this .point     .assign (point);
-			this .direction .assign (direction);
-			return this;
-		},
-		setPoints: function (point1, point2)
-		{
-			this .point .assign (point1);
-			this .direction .assign (point2) .subtract (point1) .normalize ();
-			return this;
-		},
-		multMatrixLine: function (matrix)
-		{
-			matrix .multMatrixVec (this .point);
-			matrix .multMatrixDir (this .direction) .normalize ();
-			return this;
-		},
-		multLineMatrix: function (matrix)
-		{
-			matrix .multVecMatrix (this .point);
-			matrix .multDirMatrix (this .direction) .normalize ();
-			return this;
-		},
-		getClosestPointToPoint: function (point, result)
-		{
-			var
-				r = result .assign (point) .subtract (this .point),
-				d = r .dot (this .direction);
-
-			return result .assign (this .direction) .multiply (d) .add (this .point);
-		},
-		getClosestPointToLine: function (line, point)
-		{
-			var
-				p1 = this .point,
-				p2 = line .point,
-				d1 = this .direction,
-				d2 = line .direction;
-
-			var t = Vector3 .dot (d1, d2);
-
-			if (Math .abs (t) >= 1)
-				return false;  // lines are parallel
-
-			var u = this .u .assign (p2) .subtract (p1);
-
-			t = (Vector3 .dot (u, d1) - t * Vector3 .dot (u, d2)) / (1 - t * t);
-
-			point .assign (d1) .multiply (t) .add (p1);
-			return true;
-		},
-		getPerpendicularVector: function (point)
-		{
-			var d = Vector3 .subtract (this .point, point);
-
-			return d .subtract (this .direction .copy () .multiply (Vector3 .dot (d, this .direction)));
-		},
-		intersectsTriangle: function (A, B, C, uvt)
-		{
-			// Find vectors for two edges sharing vert0.
-			var
-				edge1 = B .subtract (A),
-				edge2 = C .subtract (A);
-
-			// Begin calculating determinant - also used to calculate U parameter.
-			var pvec = this .pvec .assign (this .direction) .cross (edge2);
-
-			// If determinant is near zero, ray lies in plane of triangle.
-			var det = edge1 .dot (pvec);
-
-			// Non culling intersection.
-
-			if (det === 0)
-				return false;
-
-			var inv_det = 1 / det;
-
-			// Calculate distance from vert0 to ray point.
-			var tvec = this .tvec .assign (this .point) .subtract (A);
-
-			// Calculate U parameter and test bounds.
-			var u = tvec .dot (pvec) * inv_det;
-
-			if (u < 0 || u > 1)
-				return false;
-
-			// Prepare to test V parameter.
-			var qvec = tvec .cross (edge1);
-
-			// Calculate V parameter and test bounds.
-			var v = this .direction .dot (qvec) * inv_det;
-
-			if (v < 0 || u + v > 1)
-				return false;
-
-			var t = edge2 .dot (qvec) * inv_det;
-
-			uvt .u = u;
-			uvt .v = v;
-			uvt .t = t;
-
-			return true;
-		},
-		toString: function ()
-		{
-			return this .point + ", " + this .direction;
-		},
-	};
-
-	Line3 .Points = function (point1, point2)
-	{
-		var line = Object .create (Line3 .prototype);
-		line .point     = point1 .copy ();
-		line .direction = Vector3 .subtract (point2, point1) .normalize ();
-		return line;
-	};
-
-	return Line3;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Geometry/ViewVolume',[
-	"jquery",
-	"standard/Math/Geometry/Line3",
-	"standard/Math/Geometry/Plane3",
-	"standard/Math/Geometry/Triangle3",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Vector4",
-	"standard/Math/Numbers/Matrix4",
-],
-function ($, Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
-{
-"use strict";
-
-	var
-		p1     = new Vector3 (0, 0, 0),
-		p2     = new Vector3 (0, 0, 0),
-		p3     = new Vector3 (0, 0, 0),
-		p4     = new Vector3 (0, 0, 0),
-		p5     = new Vector3 (0, 0, 0),
-		p6     = new Vector3 (0, 0, 0),
-		near   = new Vector3 (0, 0, 0),
-		far    = new Vector3 (0, 0, 0),
-		matrix = new Matrix4 (),
-		normal = new Vector3 (0, 0, 0),
-		vin    = new Vector4 (0, 0, 0, 0);
-
-	function ViewVolume ()
-	{
-		this .viewport = new Vector4 (0, 0, 0, 0);
-		this .scissor  = new Vector4 (0, 0, 0, 0);
-		
-		this .planes = [
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // front
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // left
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // right
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // top
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // bottom
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // back
-		];
-	}
-
-	ViewVolume .prototype =
-	{
-		constructor: ViewVolume,
-		set: function (projectionMatrix, viewport, scissor)
-		{
-			try
-			{
-				this .viewport .assign (viewport);
-				this .scissor  .assign (scissor);
-
-				var
-					x1 = scissor [0],
-					x2 = scissor [0] + scissor [2],
-					y1 = scissor [1],
-					y2 = scissor [1] + scissor [3];
-
-				matrix .assign (projectionMatrix) .inverse ();
-
-				ViewVolume .unProjectPointMatrix (x1, y2, 1, matrix, viewport, p1),
-				ViewVolume .unProjectPointMatrix (x1, y1, 1, matrix, viewport, p2),
-				ViewVolume .unProjectPointMatrix (x1, y1, 0, matrix, viewport, p3),
-				ViewVolume .unProjectPointMatrix (x2, y1, 0, matrix, viewport, p4),
-				ViewVolume .unProjectPointMatrix (x2, y2, 0, matrix, viewport, p5),
-				ViewVolume .unProjectPointMatrix (x2, y2, 1, matrix, viewport, p6);
-
-				this .planes [0] .set (p4, Triangle3 .normal (p3, p4, p5, normal));  // front
-				this .planes [1] .set (p2, Triangle3 .normal (p1, p2, p3, normal));  // left
-				this .planes [2] .set (p5, Triangle3 .normal (p6, p5, p4, normal));  // right
-				this .planes [3] .set (p6, Triangle3 .normal (p5, p6, p1, normal));  // top
-				this .planes [4] .set (p3, Triangle3 .normal (p4, p3, p2, normal));  // bottom
-				this .planes [5] .set (p1, Triangle3 .normal (p2, p1, p6, normal));  // back  
-
-				this .valid = true;
-			}
-			catch (error)
-			{
-				this .valid = false;
-				console .log (error);
-			}
-
-			return this;
-		},
-		getViewport: function ()
-		{
-			return this .viewport;
-		},
-		getScissor: function ()
-		{
-			return this .scissor;
-		},
-		intersectsSphere: function (radius, center)
-		{
-			var planes = this .planes;
-		
-			if (planes [0] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [1] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [2] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [3] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [4] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [5] .getDistanceToPoint (center) > radius)
-				return false;
-
-			return true;
-		},
-	};
-
-	$.extend (ViewVolume,
-	{
-		unProjectPoint: function (winx, winy, winz, modelViewMatrix, projectionMatrix, viewport, point)
-		{
-			matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
-
-			return this .unProjectPointMatrix (winx, winy, winz, matrix, viewport, point);
-		},
-		unProjectPointMatrix: function (winx, winy, winz, invModelViewProjection, viewport, point)
-		{
-			// Transformation of normalized coordinates between -1 and 1
-			vin .set ((winx - viewport [0]) / viewport [2] * 2 - 1,
-			          (winy - viewport [1]) / viewport [3] * 2 - 1,
-			          2 * winz - 1,
-			          1);
-
-			//Objects coordinates
-			invModelViewProjection .multVecMatrix (vin);
-
-			if (vin .w === 0)
-				throw new Error ("Couldn't unproject point: divisor is 0.");
-
-			var d = 1 / vin .w;
-
-			return point .set (vin .x * d, vin .y * d, vin .z * d);
-		},
-		unProjectRay: function (winx, winy, modelViewMatrix, projectionMatrix, viewport, result)
-		{
-			matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
-
-			ViewVolume .unProjectPointMatrix (winx, winy, 0.0, matrix, viewport, near);
-			ViewVolume .unProjectPointMatrix (winx, winy, 0.9, matrix, viewport, far);
-
-			return result .setPoints (near, far);
-		},
-		projectPoint: function (point, modelViewMatrix, projectionMatrix, viewport, vout)
-		{
-			vin .set (point .x, point .y, point .z, 1);
-
-			projectionMatrix .multVecMatrix (modelViewMatrix .multVecMatrix (vin));
-
-			if (vin .w === 0)
-				throw new Error ("Couldn't project point: divisor is 0.");
-
-			var d = 1 / (2 * vin .w);
-
-			return vout .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
-			                  (vin .y * d + 0.5) * viewport [3] + viewport [1],
-			                  (vin .z * d + 0.5));
-		},
-		projectLine: function (line, modelViewMatrix, projectionMatrix, viewport, result)
-		{
-			ViewVolume .projectPoint (line .point, modelViewMatrix, projectionMatrix, viewport, near);
-			ViewVolume .projectPoint (Vector3 .multiply (line .direction, 1e9) .add (line .point), modelViewMatrix, projectionMatrix, viewport, far);
-
-			near .z = 0;
-			far  .z = 0;
-
-			return result .setPoints (near, far);
-		},
-	});
-
-	return ViewVolume;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('standard/Math/Algorithms/MergeSort',[],function ()
 {
 "use strict";
@@ -56595,130 +57069,6 @@ function ($,
 });
 
 
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Geometry/Camera',[
-	"standard/Math/Numbers/Vector3",
-],
-function (Vector3)
-{
-"use strict";
-
-	var
-		min = new Vector3 (0, 0, 0),
-		max = new Vector3 (0, 0, 0);
-
-	return {
-		frustum: function (l, r, b, t, n, f, matrix)
-		{
-			var
-				r_l = r - l,
-				t_b = t - b,
-				f_n = f - n,
-				n_2 = 2 * n,
-
-				A = (r + l) / r_l,
-				B = (t + b) / t_b,
-				C = -(f + n) / f_n,
-				D = -n_2 * f / f_n,
-				E = n_2 / r_l,
-				F = n_2 / t_b;
-
-			return matrix .set (E, 0, 0, 0,
-			                    0, F, 0, 0,
-			                    A, B, C, -1,
-			                    0, 0, D, 0);
-		},
-		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
-		{
-			var ratio = Math .tan (fieldOfView / 2) * zNear;
-
-			if (width > height)
-			{
-				var aspect = width * ratio / height;
-				return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
-			}
-			else
-			{
-				var aspect = height * ratio / width;
-				return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
-			}
-		},
-		ortho: function (l, r, b, t, n, f, matrix)
-		{
-			var
-				r_l = r - l,
-				t_b = t - b,
-				f_n = f - n,
-
-				A =  2 / r_l,
-				B =  2 / t_b,
-				C = -2 / f_n,
-				D = -(r + l) / r_l,
-				E = -(t + b) / t_b,
-				F = -(f + n) / f_n;
-
-			return matrix .set (A, 0, 0, 0,
-			                    0, B, 0, 0,
-			                    0, 0, C, 0,
-			                    D, E, F, 1);
-		},
-		orthoBox: function (box, matrix)
-		{
-			box .getExtents (min, max);
-
-			return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
-		},
-	};
-});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -63294,202 +63644,6 @@ function (ComposedShader,
 	};
 
 	return X3DEnvironmentalEffectsContext;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Rendering/DepthBuffer',[
-	"standard/Math/Geometry/ViewVolume",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
-],
-function (ViewVolume,
-          Vector3,
-          Matrix4)
-{
-"use strict";
-
-	function DepthBuffer (browser, width, height)
-	{
-		var gl = browser .getContext ();
-
-		this .browser             = browser;
-		this .width               = width;
-		this .height              = height;
-		this .array               = new Uint8Array (width * height * 4);
-		this .invProjectionMatrix = new Matrix4 ();
-		this .point               = new Vector3 (0, 0, 0);
-
-		// The frame buffer.
-
-		this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
-		this .buffer     = gl .createFramebuffer ();
-
-		gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
-
-		// The depth texture
-
-		this .depthTexture = gl .createTexture ();
-
-		gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
-		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
-		gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
-
-		gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .depthTexture, 0);
-
-		// The depth buffer
-
-		var depthBuffer = gl .createRenderbuffer ();
-
-		gl .bindRenderbuffer (gl .RENDERBUFFER, depthBuffer);
-		gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, width, height);
-		gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, depthBuffer);
-
-		// Always check that our framebuffer is ok
-
-		var complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
-
-		gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
-
-		if (complete)
-			return;
-
-		throw new Error ("Couldn't create frame buffer.");
-	}
-
-	DepthBuffer .prototype =
-	{
-		constructor: DepthBuffer,
-		getWidth: function ()
-		{
-			return this .width;
-		},
-		getHeight: function ()
-		{
-			return this .height;
-		},
-		getDepthTexture: function ()
-		{
-			return this .depthTexture;
-		},
-		readPixels: function ()
-		{
-			var
-				gl     = this .browser .getContext (),
-				array  = this .array,
-				width  = this .width,
-				height = this .height;
-
-			gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
-
-			return array;
-		},
-		getDepth: function (projectionMatrix, viewport)
-		{
-			try
-			{
-				var
-					gl                  = this .browser .getContext (),
-					array               = this .array,
-					width               = this .width,
-					height              = this .height,
-					invProjectionMatrix = this .invProjectionMatrix .assign (projectionMatrix) .inverse (),
-					winx                = 0,
-					winy                = 0,
-					winz                = Number .POSITIVE_INFINITY;
-
-				gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
-
-				for (var wy = 0, i = 0; wy < height; ++ wy)
-				{
-					for (var wx = 0; wx < width; ++ wx, i += 4)
-					{
-						var wz = array [i] / 255 + array [i + 1] / 65025 + array [i + 2] / 16581375 + array [i + 3] / 4228250625;
-
-						if (wz < winz)
-						{
-							winx = wx;
-							winy = wy;
-							winz = wz;
-						}
-					}
-				}
-
-				ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, this .point);
-
-				return this .point .z;
-			}
-			catch (error)
-			{
-				return 0;
-			}
-		},
-		bind: function ()
-		{
-			var gl = this .browser .getContext ();
-
-			this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
-
-			gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
-		},
-		unbind: function ()
-		{
-			var gl = this .browser .getContext ();
-			gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
-		},
-	};
-
-	return DepthBuffer;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -110231,11 +110385,11 @@ function ($,
 		{
 			X3DBrowserContext .prototype .initialize .call (this);
 
-			this .getLoadSensor () .isLoaded_ .addInterest ("set_loaded", this);
+			this .getLoadSensor () .isLoaded_ .addInterest ("set_loaded__", this);
 		},
-		set_loaded: function (loaded)
+		set_loaded__: function (loaded)
 		{
-			this .getLoadSensor () .isLoaded_ .removeInterest ("realize", this);
+			this .getLoadSensor () .isLoaded_ .removeInterest ("set_loaded__", this);
 			this .getLoadSensor () .enabled_ = false;
 
 			var urlCharacters = this .getElement () [0] .getAttribute ("src");
