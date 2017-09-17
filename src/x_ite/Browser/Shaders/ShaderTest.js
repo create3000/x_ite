@@ -50,11 +50,13 @@
 define ([
 	"x_ite/Rendering/DepthBuffer",
 	"standard/Math/Numbers/Vector4",
+	"standard/Math/Numbers/Matrix3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Camera",
 ],
 function (DepthBuffer,
           Vector4,
+          Matrix3,
           Matrix4,
           Camera)
 {
@@ -122,7 +124,7 @@ function (DepthBuffer,
 
 		gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, new Float32Array (Camera .ortho (-1, 1, -1, 1, -1, 1, new Matrix4 ())));
 		gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, new Float32Array (new Matrix4 ()));
-		gl .uniformMatrix4fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (new Matrix4 ()));
+		gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (new Matrix3 ()));
 
 		gl .disable (gl .BLEND);
 		gl .frontFace (gl .CCW);

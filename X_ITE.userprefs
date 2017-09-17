@@ -1,13 +1,14 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Interpolation/SplineScalarInterpolator.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Interpolation/SplinePositionInterpolator.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Interpolation/SplinePositionInterpolator2D.js" Line="1" Column="1" />
+      <File FileName="src/x_ite.html" Line="614" Column="70" />
       <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js" Line="618" Column="42" />
+      <File FileName="src/x_ite/Browser/Shaders/ShaderTest.js" Line="143" Column="21" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="913" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="61" Column="19" />
+      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="926" Column="24" />
+      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="136" Column="42" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

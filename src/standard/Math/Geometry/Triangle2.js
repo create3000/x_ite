@@ -58,6 +58,9 @@ define (function ()
 
 		   var det = (b.y - c.y) * (a.x - c.x) + (c.x - b.x) * (a.y - c.y);
 
+			if (det == 0)
+				return false;
+
 		   var u = ((b.y - c.y) * (point .x - c.x) + (c.x - b.x) * (point .y - c.y)) / det;
 
 		   if (u < 0 || u > 1)

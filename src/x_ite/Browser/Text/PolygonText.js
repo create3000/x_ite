@@ -360,82 +360,24 @@ function ($,
 
 			// Determine contours and holes.
 
-			var
-				contours = [ ],
-				holes    = [ ];
+			curves .map (this .removeCollinearPoints);
 
-			switch (curves .length)
-			{
-			   case 0:
-					break;
-			   case 1:
-					contours = curves;
-					break;
-				default:
-				{
-					for (var i = 0, cl = curves .length; i < cl; ++ i)
-					{
-						var
-							curve       = curves [i],
-							orientation = this .getCurveOrientation (curve);
-
-						if (orientation <= 0)
-							contours .push (curve);
-					   else
-							holes .push (curve);
-					}
-
-					break;
-				}
-			}
+			var contours = this .getContours (curves);
 
 			/*
-			if (glyph .name [0] == "O")
+			if (glyph .name [0] == "g")
+			{
 				console .log (glyph .name, "\n",
 				              "font: ", font, "\n",
 				              "glyph: ", glyph, "\n",
 				              "paths: ", paths, "\n",
-				              "contours: ", contours, "\n",
-				              "holes: ", holes);
-			*/
-			   
-			// Determine the holes for every contour.
+				              "curves: ", curves .length,
+				              "contours: ", contours .length);
 
-			contours .map (this .removeCollinearPoints);
-			holes    .map (this .removeCollinearPoints);
-
-			switch (contours .length)
-			{
-				case 0:
-					break;
-				case 1:
-					contours [0] .holes = holes;
-					break;
-				default:
-				{
-					for (var c = 0, cl = contours .length; c < cl; ++ c)
-						contours [c] .holes = [ ];
-
-					for (var h = 0, hl = holes .length; h < hl; ++ h)
-					{
-						var hole = holes [h];
-
-						for (var c = 0, cl = contours .length; c < cl; ++ c)
-						{
-							var contour = contours [c];
-
-							// Copy contour, because isPointInPolygon will shuffle the points.
-							if (this .isPointInPolygon (contour .slice (), hole [0]))
-							{
-								contour .holes .push (hole);
-								break;
-							}
-						}
-					}
-
-				   break;
-				}
+				for (var c = 0; c < contours .length; ++ c)
+					console .log ("Contour #:", c, "Holes: ", contours [c] .holes .length);
 			}
+			*/
 
 			// Triangulate contours.
 
@@ -454,7 +396,7 @@ function ($,
 					return 5;
 			}
 		},
-		getCurveOrientation: function (curve)
+		/*getCurveOrientation: function (curve)
 		{
 			// From Wikipedia:
 
@@ -477,70 +419,71 @@ function ($,
 				c = curve [(minIndex + 2) % length];
 
 		   return (b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y);
-		},
-		/*isPointInPolygon: function (polygon, point)
-		{
-			// earcut version
-			// not always working!!!
-
-			try
-			{
-				// Triangulate polygon.
-
-				var coords = [ ];
-
-				for (var p = 0; p < contour .length; ++ p)
-					coords .push (contour [p] .x, contour [p] .y);
-
-				var t = earcut (coords, holesIndices);
-
-				for (var i = 0; i < t .length; i += 3)
-				{
-				   var  
-						a = polygon [t [i]],
-						b = polygon [t [i + 1]],
-						c = polygon [t [i + 2]];
-					
-					if (Triangle2 .isPointInTriangle (a, b, c, point))
-						return true;
-				}
-
-				return false;
-			}
-			catch (error)
-			{
-				//console .warn (error);
-			}
 		},*/
-		isPointInPolygon: function (polygon, point)
+		getContours: function (curves)
 		{
-			// poly2tri version
-
 			try
 			{
-				// Triangulate polygon.
-
-				var
-					context = new poly2tri .SweepContext (polygon),
-					ts      = context .triangulate () .getTriangles ();
-
-				for (var i = 0, length = ts .length; i < length; ++ i)
+				for (var c = 0, cl = curves .length; c < cl; ++ c)
 				{
-					var  
-						a = ts [i] .getPoint (0),
-						b = ts [i] .getPoint (1),
-						c = ts [i] .getPoint (2);
-					
-					if (Triangle2 .isPointInTriangle (a, b, c, point))
-						return true;
+					var
+						curve   = curves [c],
+						context = new poly2tri .SweepContext (curve .slice ()),
+						polygon = context .triangulate () .getTriangles ();
+
+					curve .holes = [ ];
+
+					for (var h = 0, hl = curves .length; h < hl; ++ h)
+					{
+						if (h == c)
+							continue;
+
+						var hole = curves [h];
+
+						if (this .isCurveHole (polygon, hole))
+						{
+							hole .hole = true;
+							curve .holes .push (hole);
+						}
+					}
 				}
 
-				return false;
+				var contours = [ ];
+
+				for (var c = 0, cl = curves .length; c < cl; ++ c)
+				{
+					var curve = curves [c];
+
+					if (curve .hole)
+						continue;
+
+					contours .push (curve);
+				}
+
+				return contours;
 			}
 			catch (error)
 			{
-				//console .warn (error);
+				console .warn ("X_ITE (PoylgonText.getContours): can't triangulate glyph.", error);
+				return [ ];
 			}
+		},
+		isCurveHole: function (polygon, curve)
+		{
+			// Polygon must be a triangulated curve.
+
+			for (var i = 0, length = polygon .length; i < length; ++ i)
+			{
+				var  
+					a = polygon [i] .getPoint (0),
+					b = polygon [i] .getPoint (1),
+					c = polygon [i] .getPoint (2);
+
+				if (Triangle2 .isPointInTriangle (a, b, c, curve [0]))
+					return true;
+			}
+
+			return false;
 		},
 		removeCollinearPoints: function (polygon)
 		{
