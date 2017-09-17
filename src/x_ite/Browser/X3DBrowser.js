@@ -116,11 +116,11 @@ function ($,
 		{
 			X3DBrowserContext .prototype .initialize .call (this);
 
-			this .getLoadSensor () .isLoaded_ .addInterest ("set_loaded", this);
+			this .getLoadSensor () .isLoaded_ .addInterest ("set_loaded__", this);
 		},
-		set_loaded: function (loaded)
+		set_loaded__: function (loaded)
 		{
-			this .getLoadSensor () .isLoaded_ .removeInterest ("realize", this);
+			this .getLoadSensor () .isLoaded_ .removeInterest ("set_loaded__", this);
 			this .getLoadSensor () .enabled_ = false;
 
 			var urlCharacters = this .getElement () [0] .getAttribute ("src");

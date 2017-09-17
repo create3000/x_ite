@@ -63,6 +63,7 @@ define ([
 	"text!x_ite/Browser/Shaders/Phong.fs",
 	"text!x_ite/Browser/Shaders/Depth.vs",
 	"text!x_ite/Browser/Shaders/Depth.fs",
+	"x_ite/Browser/Shaders/ShaderTest",
 	"standard/Math/Numbers/Vector4",
 ],
 function ($,
@@ -78,6 +79,7 @@ function ($,
           phongFS,
           depthVS,
           depthFS,
+          testShader,
           Vector4)
 {
 "use strict";
@@ -116,14 +118,27 @@ function ($,
 
 			// Create shaders.
 
-			this .depthShader = this .createShader (this, "DepthShader",     depthVS,     depthFS);
-			this .pointShader = this .createShader (this, "PointShader",     wireframeVS, pointSetFS);
-			this .lineShader  = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS);
+			this .depthShader   = this .createShader (this, "DepthShader",     depthVS,     depthFS);
+			this .pointShader   = this .createShader (this, "PointShader",     wireframeVS, pointSetFS);
+			this .lineShader    = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS);
+			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS);
+			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS);
 
 			this .pointShader .setGeometryType (0);
 			this .lineShader  .setGeometryType (1);
 
 			this .setShading ("GOURAUD");
+
+			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
+		},
+		set_phong_shader_valid__: function (valid)
+		{
+			if (valid .getValue () && testShader (this, this .phongShader))
+				return;
+
+			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
+
+			this .phongShader = this .gouraudShader;
 		},
 		getVendor: function ()
 		{
@@ -195,17 +210,11 @@ function ($,
 			{
 				case "PHONG":
 				{
-					if (! this .phongShader)
-						this .phongShader = this .createShader (this, "PhongShader", phongVS, phongFS);
-
 					this .defaultShader = this .phongShader;
 					break;
 				}
 				default:
 				{
-					if (! this .gouraudShader)
-						this .gouraudShader = this .createShader (this, "GouraudShader", gouraudVS, gouraudFS);
-
 					this .defaultShader = this .gouraudShader;
 					break;
 				}

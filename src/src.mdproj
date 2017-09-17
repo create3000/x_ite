@@ -716,6 +716,7 @@
     <None Include="x_ite\Components\VolumeRendering\X3DComposableVolumeRenderStyleNode.js" />
     <None Include="x_ite\Components\VolumeRendering\X3DVolumeDataNode.js" />
     <None Include="x_ite\Components\VolumeRendering\X3DVolumeRenderStyleNode.js" />
+    <None Include="x_ite\Browser\Shaders\ShaderTest.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
