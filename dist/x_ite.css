@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-90 */
+/* X_ITE v4.0.3a-91 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
@@ -16,10 +16,10 @@ X3DCanvas .x_ite-private-splash-screen {
 }
 X3DCanvas .x_ite-private-spinner {
 	position: absolute;
-	top: calc(50% - 70px);
-	left: calc(50% - 64px);
-	width: 128px;
-	height: 128px;
+	top: calc(50% - (138px / 2));
+	left: calc(50% - (134px / 2));
+	width: 138px;
+	height: 134px;
 	background: url(images/logo.128.png) no-repeat;
 	-webkit-animation: spinner-animation-spin 32s linear infinite;
 	-moz-animation: spinner-animation-spin 32s linear infinite;
