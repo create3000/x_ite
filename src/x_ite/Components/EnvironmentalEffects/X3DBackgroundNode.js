@@ -634,8 +634,6 @@ function ($,
 			gl .uniform1i (shaderNode .x3d_FogType,       0);
 			gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
 			gl .uniform1i (shaderNode .x3d_Lighting,      false);
-			gl .uniform1i (shaderNode .texturing,         true);
-			gl .uniform1i (shaderNode .x3d_TextureType,   2);
 
 			gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix,    false, this .textureMatrixArray);
 			gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
