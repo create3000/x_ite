@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-99 */
+/* X_ITE v4.0.3a-100 */
 
 (function () {
 
@@ -12496,6 +12496,7 @@ function ($)
 	{
 		elements .addClass ("x_ite-browser-fallback");
 		elements .children () .addClass ("x_ite-fallback");
+		elements .children () .removeClass ("x_ite-fallback-hidden");
 	}
 
 	Error .fallback = fallback;
@@ -111107,6 +111108,8 @@ function ($,
 		$(function ()
 		{
 			var elements = $("X3DCanvas");
+
+			elements .children () .addClass ("x_ite-fallback-hidden");
 
 			try
 			{
