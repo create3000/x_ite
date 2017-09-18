@@ -308,6 +308,11 @@ function ($,
 				delete menu .items .viewpoints;
 			}
 
+			if ($.isEmptyObject (menu .items ["available-viewers"] .items))
+			{
+				delete menu .items ["available-viewers"];
+			}
+
 			return menu;
 		},
 		getViewpoints: function ()
