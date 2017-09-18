@@ -83,6 +83,7 @@ function ($)
 	{
 		elements .addClass ("x_ite-browser-fallback");
 		elements .children () .addClass ("x_ite-fallback");
+		elements .children () .removeClass ("x_ite-fallback-hidden");
 	}
 
 	Error .fallback = fallback;

@@ -179,6 +179,8 @@ function ($,
 		{
 			var elements = $("X3DCanvas");
 
+			elements .children () .addClass ("x_ite-fallback-hidden");
+
 			try
 			{
 				var browsers = $.map (elements, createBrowserFromElement);
