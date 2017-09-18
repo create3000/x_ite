@@ -25,7 +25,7 @@ X3DCanvas > *:not(.x_ite-fallback) {
 	display: none;
 }
 
-X3DCanvas > .x_ite-fallback-hiden {
+X3DCanvas > .x_ite-fallback-hidden {
 	display: none !important;
 }
 

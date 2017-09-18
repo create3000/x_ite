@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-100 */
+/* X_ITE v4.0.3a-101 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
@@ -69,7 +69,7 @@ X3DCanvas.x_ite-fullscreen {
 X3DCanvas > *:not(.x_ite-fallback) {
 	display: none;
 }
-X3DCanvas > .x_ite-fallback-hiden {
+X3DCanvas > .x_ite-fallback-hidden {
 	display: none !important;
 }
 .x_ite-console {
