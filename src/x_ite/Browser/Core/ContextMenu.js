@@ -308,7 +308,7 @@ function ($,
 				delete menu .items .viewpoints;
 			}
 
-			if ($.isEmptyObject (menu .items ["available-viewers"] .items))
+			if ($.isEmptyObject (menu .items ["available-viewers"]))
 			{
 				delete menu .items ["available-viewers"];
 			}
