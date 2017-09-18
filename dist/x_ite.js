@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-93 */
+/* X_ITE v4.0.3a-94 */
 
 (function () {
 
@@ -66360,6 +66360,27 @@ function ($,
 
 		   return (b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y);
 		},*/
+		removeCollinearPoints: function (curve)
+		{
+			function isCollinear (a, b, c)
+			{
+				return Math .abs ((a.y - b.y) * (a.x - c.x) - (a.y - c.y) * (a.x - b.x)) < 1e-8;
+			}
+
+			for (var i = 0, k = 0, length = curve .length; i < length; ++ i)
+			{
+				var
+					i0 = (i - 1 + length) % length,
+					i1 = (i + 1) % length;
+
+				if (isCollinear (curve [i0], curve [i], curve [i1]))
+					continue;
+
+				curve [k ++] = curve [i];
+			}
+
+		   curve .length = k;
+		},
 		getContours: function (curves)
 		{
 			for (var c = 0, cl = curves .length; c < cl; ++ c)
@@ -66425,59 +66446,40 @@ function ($,
 
 			return false;
 		},
-		removeCollinearPoints: function (polygon)
-		{
-			function isCollinear (a, b, c)
-			{
-				return Math .abs ((a.y - b.y) * (a.x - c.x) - (a.y - c.y) * (a.x - b.x)) < 1e-8;
-			}
-
-			for (var i = 0, k = 0, length = polygon .length; i < length; ++ i)
-			{
-				var
-					i0 = (i - 1 + length) % length,
-					i1 = (i + 1) % length;
-
-				if (isCollinear (polygon [i0], polygon [i], polygon [i1]))
-					continue;
-
-				polygon [k ++] = polygon [i];
-			}
-
-		   polygon .length = k;
-		},
-		triangulate: function (polygon, holes, triangles)
+		triangulate: function (contour, holes, triangles)
 		{
 		   try
 			{
-				// Triangulate polygon.
+				// Triangulate contour.
 				var
-					context = new poly2tri .SweepContext (polygon) .addHoles (holes),
-					ts      = context .triangulate () .getTriangles ();
+					context = new poly2tri .SweepContext (contour) .addHoles (holes),
+					poylgon = context .triangulate () .getTriangles ();
 
-				for (var i = 0, length = ts .length; i < length; ++ i)
+				for (var i = 0, length = poylgon .length; i < length; ++ i)
 				{
-					triangles .push (ts [i] .getPoint (0), ts [i] .getPoint (1), ts [i] .getPoint (2));
+					triangles .push (poylgon [i] .getPoint (0),
+					                 poylgon [i] .getPoint (1),
+					                 poylgon [i] .getPoint (2));
 				}
 			}
 			catch (error)
 			{
 				//console .warn (error);
-				this .earcutTriangulate (polygon, holes, triangles);
+				this .earcutTriangulate (contour, holes, triangles);
 			}
 		},
-		earcutTriangulate: function (polygon, holes, triangles)
+		earcutTriangulate: function (contour, holes, triangles)
 		{
 		   try
 			{
-				// Triangulate polygon.
+				// Triangulate contour.
 
 				var
 					coords       = [ ],
 					holesIndices = [ ];
 
-				for (var p = 0, pl = polygon .length; p < pl; ++ p)
-					coords .push (polygon [p] .x, polygon [p] .y);
+				for (var p = 0, pl = contour .length; p < pl; ++ p)
+					coords .push (contour [p] .x, contour [p] .y);
 
 				for (var h = 0, hsl = holes .length; h < hsl; ++ h)
 				{
@@ -66487,14 +66489,14 @@ function ($,
 					{
 						holesIndices .push (coords .length / 2);
 						coords .push (hole [p] .x, hole [p] .y);
-						polygon .push (hole [p]);
+						contour .push (hole [p]);
 					}
 				}
 
 				var t = earcut (coords, holesIndices);
 
 				for (var i = 0, tl = t .length; i < tl; ++ i)
-					triangles .push (polygon [t [i]]);
+					triangles .push (contour [t [i]]);
 			}
 			catch (error)
 			{
