@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-97 */
+/* X_ITE v4.0.3a-98 */
 
 (function () {
 
@@ -27765,7 +27765,7 @@ function ($,
 						}
 						.bind (this, currentViewer),
 					},
-					"available-viewer": {
+					"available-viewers": {
 						name: _("Available Viewers"),
 						items: this .getAvailableViewers (),
 					},
@@ -27939,7 +27939,7 @@ function ($,
 				delete menu .items .viewpoints;
 			}
 
-			if ($.isEmptyObject (menu .items ["available-viewers"]))
+			if ($.isEmptyObject (menu .items ["available-viewers"] .items))
 			{
 				delete menu .items ["available-viewers"];
 			}

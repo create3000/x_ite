@@ -134,7 +134,7 @@ function ($,
 						}
 						.bind (this, currentViewer),
 					},
-					"available-viewer": {
+					"available-viewers": {
 						name: _("Available Viewers"),
 						items: this .getAvailableViewers (),
 					},
@@ -308,7 +308,7 @@ function ($,
 				delete menu .items .viewpoints;
 			}
 
-			if ($.isEmptyObject (menu .items ["available-viewers"]))
+			if ($.isEmptyObject (menu .items ["available-viewers"] .items))
 			{
 				delete menu .items ["available-viewers"];
 			}
