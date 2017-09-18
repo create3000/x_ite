@@ -1,14 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Core/ContextMenu.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="614" Column="70" />
-      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js" Line="618" Column="42" />
-      <File FileName="src/x_ite/Browser/Shaders/ShaderTest.js" Line="143" Column="21" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="913" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="61" Column="19" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="926" Column="24" />
-      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="136" Column="42" />
+      <File FileName="src/x_ite.html" Line="382" Column="131" />
+      <File FileName="src/x_ite/Components/Text/FontStyle.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Text/PolygonText.js" Line="521" Column="32" />
+      <File FileName="src/x_ite/Browser/Text/X3DTextContext.js" Line="53" Column="3" />
+      <File FileName="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js" Line="164" Column="35" />
+      <File FileName="src/x_ite/Browser/Core/ContextMenu.js" Line="311" Column="46" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

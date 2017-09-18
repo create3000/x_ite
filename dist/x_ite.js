@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-98 */
+/* X_ITE v4.0.3a-99 */
 
 (function () {
 
@@ -103303,6 +103303,7 @@ function ($,
 			catch (error)
 			{
 			   console .log (error);
+				this .sourceNode .setVolume (0);
 			}
 		},
 		getEllipsoidParameter: function (modelViewMatrix, back, front, value)

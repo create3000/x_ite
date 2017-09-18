@@ -173,6 +173,7 @@ function ($,
 			catch (error)
 			{
 			   console .log (error);
+				this .sourceNode .setVolume (0);
 			}
 		},
 		getEllipsoidParameter: function (modelViewMatrix, back, front, value)
