@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-91 */
+/* X_ITE v4.0.3a-92 */
 
 (function () {
 
@@ -66362,9 +66362,9 @@ function ($,
 		},*/
 		getContours: function (curves)
 		{
-			try
+			for (var c = 0, cl = curves .length; c < cl; ++ c)
 			{
-				for (var c = 0, cl = curves .length; c < cl; ++ c)
+				try
 				{
 					var
 						curve   = curves [c],
@@ -66387,26 +66387,26 @@ function ($,
 						}
 					}
 				}
-
-				var contours = [ ];
-
-				for (var c = 0, cl = curves .length; c < cl; ++ c)
+				catch (error)
 				{
-					var curve = curves [c];
-
-					if (curve .hole)
-						continue;
-
-					contours .push (curve);
+					console .error ("X_ITE (PoylgonText.getContours): can't triangulate glyph.", error);
+					return [ ];
 				}
+			}
 
-				return contours;
-			}
-			catch (error)
+			var contours = [ ];
+
+			for (var c = 0, cl = curves .length; c < cl; ++ c)
 			{
-				console .warn ("X_ITE (PoylgonText.getContours): can't triangulate glyph.", error);
-				return [ ];
+				var curve = curves [c];
+
+				if (curve .hole)
+					continue;
+
+				contours .push (curve);
 			}
+
+			return contours;
 		},
 		isCurveHole: function (polygon, curve)
 		{
