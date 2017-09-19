@@ -227,7 +227,7 @@ getFogInterpolant ()
 	if (x3d_FogType == x3d_NoneFog)
 		return 1.0;
 
-	if (x3d_FogVisibilityRange <= 0)
+	if (x3d_FogVisibilityRange <= 0.0)
 		return 0.0;
 
 	float dV = length (v);
