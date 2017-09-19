@@ -82,8 +82,9 @@ function ($)
 	function fallback (elements)
 	{
 		elements .addClass ("x_ite-browser-fallback");
-		elements .children () .addClass ("x_ite-fallback");
-		elements .children () .removeClass ("x_ite-fallback-hidden");
+		elements .children (".x_ite-private-browser") .hide ();
+		elements .children (":not(.x_ite-private-browser)") .addClass ("x_ite-fallback");
+		elements .children (":not(.x_ite-private-browser)") .show ();
 	}
 
 	Error .fallback = fallback;
