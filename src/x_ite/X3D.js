@@ -179,7 +179,7 @@ function ($,
 		{
 			var elements = $("X3DCanvas");
 
-			elements .children () .hide ();
+			elements .children () .addClass ("x_ite-fallback-hidden");
 
 			try
 			{

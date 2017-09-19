@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-108 */
+/* X_ITE v4.0.3a-109 */
 
 (function () {
 
@@ -12495,9 +12495,8 @@ function ($)
 	function fallback (elements)
 	{
 		elements .addClass ("x_ite-browser-fallback");
-		elements .children (".x_ite-private-browser") .hide ();
-		elements .children (":not(.x_ite-private-browser)") .addClass ("x_ite-fallback");
-		elements .children (":not(.x_ite-private-browser)") .show ();
+		elements .children () .addClass ("x_ite-fallback");
+		elements .children () .removeClass ("x_ite-fallback-hidden");
 	}
 
 	Error .fallback = fallback;
@@ -111148,7 +111147,7 @@ function ($,
 		{
 			var elements = $("X3DCanvas");
 
-			elements .children () .hide ();
+			elements .children () .addClass ("x_ite-fallback-hidden");
 
 			try
 			{
