@@ -55,7 +55,7 @@ void
 main ()
 {
 	clip ();
-
+	
 	gl_FragColor .rgb = mix (x3d_FogColor, C .rgb, getFogInterpolant ());
 	gl_FragColor .a   = C .a;
 }
