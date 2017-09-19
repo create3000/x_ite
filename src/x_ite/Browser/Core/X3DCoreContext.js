@@ -133,11 +133,6 @@ function ($,
 		this .dataStorage = new DataStorage ("X3DBrowser(" + this .number + ").");
 		this .mobile      = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
-		this .getCanvas () .fadeOut (0);
-
-		if (this .getBrowserOptions () .getSplashScreen ())
-			this .getSplashScreen () .fadeIn (0);
-
 		$(".x_ite-console") .empty ();
 	}
 

@@ -267,7 +267,9 @@ function ($,
 			// bindWorld
 			this .description = "";
 
-			this .setBrowserLoading (true);
+			if (this .initialized () .getValue ())
+				this .setBrowserLoading (true);
+
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 	
 			for (var id in scene .getLoadingObjects ())

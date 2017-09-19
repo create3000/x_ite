@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-110 */
+/* X_ITE v4.0.3a-111 */
 
 (function () {
 
@@ -12495,8 +12495,9 @@ function ($)
 	function fallback (elements)
 	{
 		elements .addClass ("x_ite-browser-fallback");
-		elements .children () .addClass ("x_ite-fallback");
-		elements .children () .removeClass ("x_ite-fallback-hidden");
+		elements .children (".x_ite-private-browser") .hide ();
+		elements .children (":not(.x_ite-private-browser)") .addClass ("x_ite-fallback");
+		elements .children (":not(.x_ite-private-browser)") .show ();
 	}
 
 	Error .fallback = fallback;
@@ -35927,11 +35928,6 @@ function ($,
 		this .dataStorage = new DataStorage ("X3DBrowser(" + this .number + ").");
 		this .mobile      = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
-		this .getCanvas () .fadeOut (0);
-
-		if (this .getBrowserOptions () .getSplashScreen ())
-			this .getSplashScreen () .fadeIn (0);
-
 		$(".x_ite-console") .empty ();
 	}
 
@@ -36959,6 +36955,11 @@ function (Fields,
 			this .defaultScene .setPrivate (true);
 			this .defaultScene .setLive (true);
 			this .defaultScene .setup ();
+
+			this .getCanvas () .fadeOut (0);
+	
+			if (this .getBrowserOptions () .getSplashScreen ())
+				this .getSplashScreen () .fadeIn (0);
 		},
 		getProviderUrl: function ()
 		{
@@ -110526,7 +110527,9 @@ function ($,
 			// bindWorld
 			this .description = "";
 
-			this .setBrowserLoading (true);
+			if (this .initialized () .getValue ())
+				this .setBrowserLoading (true);
+
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 	
 			for (var id in scene .getLoadingObjects ())
@@ -111147,7 +111150,7 @@ function ($,
 		{
 			var elements = $("X3DCanvas");
 
-			elements .children () .addClass ("x_ite-fallback-hidden");
+			elements .children () .hide ();
 
 			try
 			{

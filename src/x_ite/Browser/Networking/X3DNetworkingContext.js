@@ -98,6 +98,11 @@ function (Fields,
 			this .defaultScene .setPrivate (true);
 			this .defaultScene .setLive (true);
 			this .defaultScene .setup ();
+
+			this .getCanvas () .fadeOut (0);
+	
+			if (this .getBrowserOptions () .getSplashScreen ())
+				this .getSplashScreen () .fadeIn (0);
 		},
 		getProviderUrl: function ()
 		{
