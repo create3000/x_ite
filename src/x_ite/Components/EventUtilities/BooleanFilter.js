@@ -107,7 +107,7 @@ function ($,
 				this .inputTrue_ = true;
 		
 			else
-				this .inputFalse_ = true;
+				this .inputFalse_ = false;
 		
 			this .inputNegate_ = ! value;
 		},

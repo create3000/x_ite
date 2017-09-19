@@ -93,6 +93,8 @@ function ($,
 		this .supportedComponents  = SupportedComponents (this);
 		this .supportedProfiles    = SupportedProfiles (this);
 		this .components           = { };
+
+		this .replaceWorld (this .createScene ());
 	};
 
 	X3DBrowser .prototype = $.extend (Object .create (X3DBrowserContext .prototype),
@@ -112,8 +114,6 @@ function ($,
 		},
 		initialize: function ()
 		{
-			this .replaceWorld (this .createScene ());
-
 			X3DBrowserContext .prototype .initialize .call (this);
 
 			this .getLoadSensor () .isLoaded_ .addInterest ("set_loaded__", this);
