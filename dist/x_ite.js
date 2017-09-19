@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-102 */
+/* X_ITE v4.0.3a-103 */
 
 (function () {
 
@@ -27940,7 +27940,7 @@ function ($,
 				delete menu .items .viewpoints;
 			}
 
-			if ($.isEmptyObject (menu .items ["available-viewers"] .items))
+			if (Object .keys (menu .items ["available-viewers"] .items) .length < 2)
 			{
 				delete menu .items ["available-viewers"];
 			}
