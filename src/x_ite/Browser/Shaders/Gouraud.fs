@@ -14,7 +14,7 @@ uniform float x3d_LinewidthScaleFactor;
 uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
-uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_NoneTexture, x3d_TextureType2D, or x3d_TextureTypeCubeMapTexture
+uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_NoneTexture, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture
 uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 
