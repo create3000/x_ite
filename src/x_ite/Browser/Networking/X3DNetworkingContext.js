@@ -85,6 +85,11 @@ function (Fields,
 		this .loading        = false;
 		this .location       = getBaseURI (this .getElement () [0]);
 		this .defaultScene   = this .createScene (); // Inline node's empty scene.
+
+		this .getCanvas () .fadeOut (0);
+
+		if (this .getBrowserOptions () .getSplashScreen ())
+			this .getSplashScreen () .fadeIn (0);
 	}
 
 	X3DNetworkingContext .prototype =
@@ -98,11 +103,6 @@ function (Fields,
 			this .defaultScene .setPrivate (true);
 			this .defaultScene .setLive (true);
 			this .defaultScene .setup ();
-
-			this .getCanvas () .fadeOut (0);
-	
-			if (this .getBrowserOptions () .getSplashScreen ())
-				this .getSplashScreen () .fadeIn (0);
 		},
 		getProviderUrl: function ()
 		{

@@ -93,8 +93,6 @@ function ($,
 		this .supportedComponents  = SupportedComponents (this);
 		this .supportedProfiles    = SupportedProfiles (this);
 		this .components           = { };
-
-		this .replaceWorld (this .createScene ());
 	};
 
 	X3DBrowser .prototype = $.extend (Object .create (X3DBrowserContext .prototype),
@@ -114,6 +112,8 @@ function ($,
 		},
 		initialize: function ()
 		{
+			this .replaceWorld (this .createScene ());
+
 			X3DBrowserContext .prototype .initialize .call (this);
 
 			this .getLoadSensor () .isLoaded_ .addInterest ("set_loaded__", this);
@@ -267,9 +267,7 @@ function ($,
 			// bindWorld
 			this .description = "";
 
-			if (this .initialized () .getValue ())
-				this .setBrowserLoading (true);
-
+			this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 	
 			for (var id in scene .getLoadingObjects ())

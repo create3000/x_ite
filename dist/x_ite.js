@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-111 */
+/* X_ITE v4.0.3a-112 */
 
 (function () {
 
@@ -36942,6 +36942,11 @@ function (Fields,
 		this .loading        = false;
 		this .location       = getBaseURI (this .getElement () [0]);
 		this .defaultScene   = this .createScene (); // Inline node's empty scene.
+
+		this .getCanvas () .fadeOut (0);
+
+		if (this .getBrowserOptions () .getSplashScreen ())
+			this .getSplashScreen () .fadeIn (0);
 	}
 
 	X3DNetworkingContext .prototype =
@@ -36955,11 +36960,6 @@ function (Fields,
 			this .defaultScene .setPrivate (true);
 			this .defaultScene .setLive (true);
 			this .defaultScene .setup ();
-
-			this .getCanvas () .fadeOut (0);
-	
-			if (this .getBrowserOptions () .getSplashScreen ())
-				this .getSplashScreen () .fadeIn (0);
 		},
 		getProviderUrl: function ()
 		{
@@ -110353,8 +110353,6 @@ function ($,
 		this .supportedComponents  = SupportedComponents (this);
 		this .supportedProfiles    = SupportedProfiles (this);
 		this .components           = { };
-
-		this .replaceWorld (this .createScene ());
 	};
 
 	X3DBrowser .prototype = $.extend (Object .create (X3DBrowserContext .prototype),
@@ -110374,6 +110372,8 @@ function ($,
 		},
 		initialize: function ()
 		{
+			this .replaceWorld (this .createScene ());
+
 			X3DBrowserContext .prototype .initialize .call (this);
 
 			this .getLoadSensor () .isLoaded_ .addInterest ("set_loaded__", this);
@@ -110527,9 +110527,7 @@ function ($,
 			// bindWorld
 			this .description = "";
 
-			if (this .initialized () .getValue ())
-				this .setBrowserLoading (true);
-
+			this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 	
 			for (var id in scene .getLoadingObjects ())
