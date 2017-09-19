@@ -169,12 +169,12 @@ function ($,
 				failed   += urlObject .checkLoadState () == X3DConstants .FAILED_STATE;
 			}
 
-			var progress = complete / urlObjects .length;
+			var
+				loaded   = complete == urlObjects .length,
+				progress = complete / urlObjects .length;
 
-			if (this .aborted || failed || complete == urlObjects .length)
+			if (this .aborted || failed || loaded)
 			{
-				var loaded = complete == urlObjects .length;
-
 				this .clearTimeout ();
 
 				this .isActive_ = false;

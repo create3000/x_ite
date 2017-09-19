@@ -125,11 +125,11 @@ function ($,
 			this .group .setup ();
 			this .group .isCameraObject_ .addFieldInterest (this .isCameraObject_);
 
-			this .load_   .addInterest ("set_load__", this);
-			this .url_    .addInterest ("set_url__", this);
+			this .load_   .addInterest ("set_load__",   this);
+			this .url_    .addInterest ("set_url__",    this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
-			this .requestAsyncLoad ();
+			this .set_url__ ();
 		},
 		set_live__: function ()
 		{

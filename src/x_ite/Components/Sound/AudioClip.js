@@ -78,6 +78,8 @@ function ($,
 		X3DUrlObject       .call (this, executionContext);
 
 		this .addType (X3DConstants .AudioClip);
+		
+		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .urlStack = new Fields .MFString ();
 	}
@@ -121,7 +123,8 @@ function ($,
 			X3DSoundSourceNode .prototype .initialize .call (this);
 			X3DUrlObject       .prototype .initialize .call (this);
 
-			this .url_ .addInterest ("set_url__", this);
+			this .url_    .addInterest ("set_url__",    this);
+			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .audio = $("<audio></audio>");
 			this .audio .on ("error", this .setError .bind (this));
@@ -131,9 +134,13 @@ function ($,
 			this .audio [0] .volume      = 0;
 			this .audio [0] .crossOrigin = "Anonymous";
 
-			this .requestAsyncLoad ();
+			this .set_url__ ();
 		},
 		set_url__: function ()
+		{
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 

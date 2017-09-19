@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-104 */
+/* X_ITE v4.0.3a-105 */
 
 (function () {
 
@@ -36705,12 +36705,12 @@ function ($,
 				failed   += urlObject .checkLoadState () == X3DConstants .FAILED_STATE;
 			}
 
-			var progress = complete / urlObjects .length;
+			var
+				loaded   = complete == urlObjects .length,
+				progress = complete / urlObjects .length;
 
-			if (this .aborted || failed || complete == urlObjects .length)
+			if (this .aborted || failed || loaded)
 			{
-				var loaded = complete == urlObjects .length;
-
 				this .clearTimeout ();
 
 				this .isActive_ = false;
@@ -45236,9 +45236,11 @@ function ($,
 		X3DNode      .call (this, executionContext);
 		X3DUrlObject .call (this, executionContext);
 
-		this .valid = false;
-
 		this .addType (X3DConstants .ShaderPart);
+		
+		this .addChildObjects ("buffer", new Fields .SFTime ());
+
+		this .valid = false;
 	}
 
 	ShaderPart .prototype = $.extend (Object .create (X3DNode .prototype),
@@ -45270,6 +45272,19 @@ function ($,
 			var gl = this .getBrowser () .getContext ();
 
 			this .shader = gl .createShader (gl [this .getShaderType ()]);
+
+			this .url_    .addInterest ("set_url__",    this);
+			this .buffer_ .addInterest ("set_buffer__", this);
+
+			this .set_url__ ();
+		},
+		set_url__: function ()
+		{
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
 		},
@@ -75634,6 +75649,8 @@ function ($,
 		X3DUrlObject     .call (this, executionContext);
 
 		this .addType (X3DConstants .ImageTexture);
+		
+		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .urlStack = new Fields .MFString ();
 	}
@@ -75666,7 +75683,8 @@ function ($,
 			X3DTexture2DNode .prototype .initialize .call (this);
 			X3DUrlObject     .prototype .initialize .call (this);
 
-			this .url_ .addInterest ("set_url__", this);
+			this .url_     .addInterest ("set_url__",   this);
+			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .canvas = $("<canvas></canvas>");
 
@@ -75677,9 +75695,13 @@ function ($,
 
 			this .image [0] .crossOrigin = "Anonymous";
 
-			this .requestAsyncLoad ();
+			this .set_url__ ();
 		},
 		set_url__: function ()
+		{
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
@@ -79539,6 +79561,8 @@ function ($,
 		X3DUrlObject       .call (this, executionContext);
 
 		this .addType (X3DConstants .AudioClip);
+		
+		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .urlStack = new Fields .MFString ();
 	}
@@ -79582,7 +79606,8 @@ function ($,
 			X3DSoundSourceNode .prototype .initialize .call (this);
 			X3DUrlObject       .prototype .initialize .call (this);
 
-			this .url_ .addInterest ("set_url__", this);
+			this .url_    .addInterest ("set_url__",    this);
+			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .audio = $("<audio></audio>");
 			this .audio .on ("error", this .setError .bind (this));
@@ -79592,9 +79617,13 @@ function ($,
 			this .audio [0] .volume      = 0;
 			this .audio [0] .crossOrigin = "Anonymous";
 
-			this .requestAsyncLoad ();
+			this .set_url__ ();
 		},
 		set_url__: function ()
+		{
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
@@ -89054,11 +89083,11 @@ function ($,
 			this .group .setup ();
 			this .group .isCameraObject_ .addFieldInterest (this .isCameraObject_);
 
-			this .load_   .addInterest ("set_load__", this);
-			this .url_    .addInterest ("set_url__", this);
+			this .load_   .addInterest ("set_load__",   this);
+			this .url_    .addInterest ("set_url__",    this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
-			this .requestAsyncLoad ();
+			this .set_url__ ();
 		},
 		set_live__: function ()
 		{
@@ -95955,6 +95984,8 @@ function ($,
 		X3DUrlObject       .call (this, executionContext);
 
 		this .addType (X3DConstants .MovieTexture);
+		
+		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .urlStack = new Fields .MFString ();
 	}
@@ -96003,7 +96034,8 @@ function ($,
 			X3DSoundSourceNode .prototype .initialize .call (this);
 			X3DUrlObject       .prototype .initialize .call (this);
 
-			this .url_ .addInterest ("set_url__", this);
+			this .url_    .addInterest ("set_url__",    this);
+			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .canvas = $("<canvas></canvas>");
 
@@ -96015,9 +96047,13 @@ function ($,
 			this .video [0] .volume      = 0;
 			this .video [0] .crossOrigin = "Anonymous";
 
-			this .requestAsyncLoad ();
+			this .set_url__ ();
 		},
 		set_url__: function ()
+		{
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
@@ -102401,6 +102437,8 @@ function ($,
 	function Script (executionContext)
 	{
 		X3DScriptNode .call (this, executionContext);
+		
+		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .addType (X3DConstants .Script);
 	}
@@ -102430,7 +102468,18 @@ function ($,
 		{
 			X3DScriptNode .prototype .initialize .call (this);
 
-			this .url_ .addInterest ("set_url__", this);
+			this .url_    .addInterest ("set_url__",    this);
+			this .buffer_ .addInterest ("set_buffer__", this);
+
+			this .set_url__ ();
+		},
+		set_url__: function ()
+		{
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
 		},
@@ -102474,12 +102523,6 @@ function ($,
 				}
 			}
 			.bind (this));
-		},
-		set_url__: function ()
-		{
-			this .setLoadState (X3DConstants .NOT_STATED_STATE);
-
-			this .requestAsyncLoad ();
 		},
 		getContext: function (text)
 		{

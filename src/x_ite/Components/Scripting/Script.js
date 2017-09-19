@@ -103,6 +103,8 @@ function ($,
 	function Script (executionContext)
 	{
 		X3DScriptNode .call (this, executionContext);
+		
+		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .addType (X3DConstants .Script);
 	}
@@ -132,7 +134,18 @@ function ($,
 		{
 			X3DScriptNode .prototype .initialize .call (this);
 
-			this .url_ .addInterest ("set_url__", this);
+			this .url_    .addInterest ("set_url__",    this);
+			this .buffer_ .addInterest ("set_buffer__", this);
+
+			this .set_url__ ();
+		},
+		set_url__: function ()
+		{
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
 		},
@@ -176,12 +189,6 @@ function ($,
 				}
 			}
 			.bind (this));
-		},
-		set_url__: function ()
-		{
-			this .setLoadState (X3DConstants .NOT_STATED_STATE);
-
-			this .requestAsyncLoad ();
 		},
 		getContext: function (text)
 		{

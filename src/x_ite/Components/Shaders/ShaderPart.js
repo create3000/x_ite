@@ -85,9 +85,11 @@ function ($,
 		X3DNode      .call (this, executionContext);
 		X3DUrlObject .call (this, executionContext);
 
-		this .valid = false;
-
 		this .addType (X3DConstants .ShaderPart);
+		
+		this .addChildObjects ("buffer", new Fields .SFTime ());
+
+		this .valid = false;
 	}
 
 	ShaderPart .prototype = $.extend (Object .create (X3DNode .prototype),
@@ -119,6 +121,19 @@ function ($,
 			var gl = this .getBrowser () .getContext ();
 
 			this .shader = gl .createShader (gl [this .getShaderType ()]);
+
+			this .url_    .addInterest ("set_url__",    this);
+			this .buffer_ .addInterest ("set_buffer__", this);
+
+			this .set_url__ ();
+		},
+		set_url__: function ()
+		{
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
 		},

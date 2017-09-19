@@ -80,6 +80,8 @@ function ($,
 		X3DUrlObject     .call (this, executionContext);
 
 		this .addType (X3DConstants .ImageTexture);
+		
+		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .urlStack = new Fields .MFString ();
 	}
@@ -112,7 +114,8 @@ function ($,
 			X3DTexture2DNode .prototype .initialize .call (this);
 			X3DUrlObject     .prototype .initialize .call (this);
 
-			this .url_ .addInterest ("set_url__", this);
+			this .url_     .addInterest ("set_url__",   this);
+			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .canvas = $("<canvas></canvas>");
 
@@ -123,9 +126,13 @@ function ($,
 
 			this .image [0] .crossOrigin = "Anonymous";
 
-			this .requestAsyncLoad ();
+			this .set_url__ ();
 		},
 		set_url__: function ()
+		{
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
