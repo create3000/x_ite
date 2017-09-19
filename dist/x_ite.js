@@ -1,4 +1,4 @@
-/* X_ITE v4.0.3a-112 */
+/* X_ITE v4.0.3a-113 */
 
 (function () {
 
@@ -80003,7 +80003,7 @@ function ($,
 				this .inputTrue_ = true;
 		
 			else
-				this .inputFalse_ = true;
+				this .inputFalse_ = false;
 		
 			this .inputNegate_ = ! value;
 		},
@@ -110353,6 +110353,8 @@ function ($,
 		this .supportedComponents  = SupportedComponents (this);
 		this .supportedProfiles    = SupportedProfiles (this);
 		this .components           = { };
+
+		this .replaceWorld (this .createScene ());
 	};
 
 	X3DBrowser .prototype = $.extend (Object .create (X3DBrowserContext .prototype),
@@ -110372,8 +110374,6 @@ function ($,
 		},
 		initialize: function ()
 		{
-			this .replaceWorld (this .createScene ());
-
 			X3DBrowserContext .prototype .initialize .call (this);
 
 			this .getLoadSensor () .isLoaded_ .addInterest ("set_loaded__", this);
