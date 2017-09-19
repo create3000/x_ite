@@ -1,13 +1,16 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Networking/Inline.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Shaders/Phong.fs">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Networking/Inline.js" Line="147" Column="28" />
-      <File FileName="src/x_ite/Components/Shaders/ShaderPart.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/MovieTexture.js" Line="161" Column="1" />
-      <File FileName="src/x_ite/Components/Sound/AudioClip.js" Line="149" Column="1" />
-      <File FileName="src/x_ite/Components/Scripting/Script.js" Line="151" Column="5" />
+      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Networking/X3DNetworkingContext.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/EventUtilities/BooleanFilter.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/PointSet.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Wireframe.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="246" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

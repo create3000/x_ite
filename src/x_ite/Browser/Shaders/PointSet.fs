@@ -29,8 +29,13 @@ clip ()
 float
 getFogInterpolant ()
 {
+	// Returns 0.0 for fog color and 1.0 for material color.
+
 	if (x3d_FogType == x3d_NoneFog)
 		return 1.0;
+
+	if (x3d_FogVisibilityRange <= 0)
+		return 0.0;
 
 	float dV = length (v);
 
