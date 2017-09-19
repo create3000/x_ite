@@ -1,4 +1,3 @@
-data:text/plain;charset=utf-8,
 // -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
 precision mediump float;
@@ -52,10 +51,9 @@ main ()
 {
 	clip ();
 
-	float f0 = getFogInterpolant ();
 	float lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;
 	float t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;
 
-	gl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);
+	gl_FragColor .rgb = mix (x3d_FogColor, C .rgb, getFogInterpolant ());
 	gl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));
 }

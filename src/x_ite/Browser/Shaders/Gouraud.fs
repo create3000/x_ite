@@ -1,4 +1,3 @@
-data:text/plain;charset=utf-8,
 // -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
 precision mediump float;
@@ -37,26 +36,6 @@ clip ()
 	}
 }
 
-float
-getFogInterpolant ()
-{
-	if (x3d_FogType == x3d_NoneFog)
-		return 1.0;
-
-	float dV = length (v);
-
-	if (dV >= x3d_FogVisibilityRange)
-		return 0.0;
-
-	if (x3d_FogType == x3d_LinearFog)
-		return (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;
-
-	if (x3d_FogType == x3d_ExponentialFog)
-		return exp (-dV / (x3d_FogVisibilityRange - dV));
-
-	return 1.0;
-}
-
 vec4
 getTextureColor ()
 {
@@ -81,12 +60,30 @@ getTextureColor ()
 	return vec4 (1.0, 1.0, 1.0, 1.0);
 }
 
+float
+getFogInterpolant ()
+{
+	if (x3d_FogType == x3d_NoneFog)
+		return 1.0;
+
+	float dV = length (v);
+
+	if (dV >= x3d_FogVisibilityRange)
+		return 0.0;
+
+	if (x3d_FogType == x3d_LinearFog)
+		return (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;
+
+	if (x3d_FogType == x3d_ExponentialFog)
+		return exp (-dV / (x3d_FogVisibilityRange - dV));
+
+	return 1.0;
+}
+
 void
 main ()
 {
  	clip ();
-
-	float f0 = getFogInterpolant ();
 
 	vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
 
@@ -103,6 +100,6 @@ main ()
 		}
 	}
 
-	gl_FragColor .rgb = mix (x3d_FogColor, finalColor .rgb, f0);
+	gl_FragColor .rgb = mix (x3d_FogColor, finalColor .rgb, getFogInterpolant ());
 	gl_FragColor .a   = finalColor .a;
 }

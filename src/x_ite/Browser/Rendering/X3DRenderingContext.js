@@ -181,12 +181,12 @@ function ($,
 		createShader: function (browser, name, vs, fs)
 		{
 			var vertexShader = new ShaderPart (browser .getPrivateScene ());
-			vertexShader .url_ .push (vs);
+			vertexShader .url_ .push ("data:text/plain;charset=utf-8," + vs);
 			vertexShader .setup ();
 
 			var fragmentShader = new ShaderPart (browser .getPrivateScene ());
 			fragmentShader .type_ = "FRAGMENT";
-			fragmentShader .url_ .push (fs);
+			fragmentShader .url_ .push ("data:text/plain;charset=utf-8," + fs);
 			fragmentShader .setup ();
 	
 			var shader = new ComposedShader (browser .getPrivateScene ());

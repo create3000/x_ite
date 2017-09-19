@@ -112,12 +112,7 @@ function (DepthBuffer,
 		gl .uniform1f (shaderNode .x3d_Shininess,         0);
 		gl .uniform1f (shaderNode .x3d_Transparency,      0);
 
-		gl .uniform1i (shaderNode .x3d_LightType [0],             1);
-		gl .uniform3f (shaderNode .x3d_LightColor [0],            1, 0, 0);
-		gl .uniform1f (shaderNode .x3d_LightIntensity [0],        1);
-		gl .uniform1f (shaderNode .x3d_LightAmbientIntensity [0], 1);
-		gl .uniform3f (shaderNode .x3d_LightDirection [0],        0, 0, -1);
-		gl .uniform1i (shaderNode .x3d_LightType [1],             0);
+		gl .uniform1i (shaderNode .x3d_LightType [0], 0);
 
 		shaderNode .textureTypeArray [0] = 0;
 		gl .uniform1iv (shaderNode .x3d_TextureType, shaderNode .textureTypeArray);

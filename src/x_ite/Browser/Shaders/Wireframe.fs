@@ -1,4 +1,3 @@
-data:text/plain;charset=utf-8,
 // -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
 precision mediump float;
@@ -52,8 +51,6 @@ main ()
 {
 	clip ();
 
-	float f0 = getFogInterpolant ();
-
-	gl_FragColor .rgb = mix (x3d_FogColor, C .rgb, f0);
+	gl_FragColor .rgb = mix (x3d_FogColor, C .rgb, getFogInterpolant ());
 	gl_FragColor .a   = C .a;
 }

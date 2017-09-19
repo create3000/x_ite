@@ -1,4 +1,3 @@
-data:text/plain;charset=utf-8,
 // -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
 precision mediump float;
@@ -220,24 +219,24 @@ getMaterialColor ()
 	}
 }
 
-vec3
-getFogColor (in vec3 color)
+float
+getFogInterpolant ()
 {
 	if (x3d_FogType == x3d_NoneFog)
-		return color;
+		return 1.0;
 
 	float dV = length (v);
 
 	if (dV >= x3d_FogVisibilityRange)
-		return x3d_FogColor;
+		return 0.0;
 
 	if (x3d_FogType == x3d_LinearFog)
-		return mix (x3d_FogColor, color, (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange);
+		return (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;
 
 	if (x3d_FogType == x3d_ExponentialFog)
-		return mix (x3d_FogColor, color, exp (-dV / (x3d_FogVisibilityRange - dV)));
+		return exp (-dV / (x3d_FogVisibilityRange - dV));
 
-	return color;
+	return 1.0;
 }
 
 void
@@ -247,5 +246,5 @@ main ()
 
 	gl_FragColor = getMaterialColor ();
 
-	gl_FragColor .rgb = getFogColor (gl_FragColor .rgb);
+	gl_FragColor .rgb = mix (x3d_FogColor, gl_FragColor .rgb, getFogInterpolant ());
 }
