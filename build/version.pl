@@ -73,7 +73,12 @@ if ($result == 0)
 		system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$VERSION/dist/";
 	}
 
-	my $release = $ALPHA ? "alpha" : "latest";
+	my $release = "alpha";
+
+	system "mkdir", "-p", "$ftp/$release/dist/";
+	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$release/dist/";
+
+	$release = "latest";
 
 	system "mkdir", "-p", "$ftp/$release/dist/";
 	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$release/dist/";

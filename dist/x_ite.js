@@ -1,4 +1,4 @@
-/* X_ITE v4.0.5a-125 */
+/* X_ITE v4.0.5-126 */
 
 (function () {
 
@@ -14509,7 +14509,10 @@ function ($,
 						}
 					}
 				}
-	
+		
+				if (first !== last)
+					this .addEvent ();
+
 				return first;
 			}
 
@@ -14532,6 +14535,9 @@ function ($,
 					}
 				}
 			}
+
+			if (first !== last)
+				this .addEvent ();
 
 			return first;
 		},
@@ -23105,7 +23111,7 @@ function ($,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.0.4";
+	return "4.0.5";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
