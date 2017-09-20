@@ -91,12 +91,20 @@ function ($,
 		},
 		setValue: function (value)
 		{
+			// Sets internal value and generates event.
 			this .set (value instanceof this .constructor ? value .getValue () : value);
 			this .addEvent ();
 		},
 		set: function (value)
 		{
+			// Sets internal value without generating event.
 			this ._value = value;
+		},
+		assign: function (field)
+		{
+			// Assigns field to this field.
+			this .set (field .getValue ());
+			this .addEvent ();
 		},
 		getValue: function ()
 		{

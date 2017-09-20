@@ -1,13 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="package.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Basic/X3DField.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/PointSet.fs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Wireframe.fs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite.html" Line="621" Column="12" />
       <File FileName="package.json" Line="18" Column="23" />
+      <File FileName="src/x_ite/Basic/X3DField.js" Line="92" Column="11" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
