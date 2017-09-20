@@ -1,10 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Basic/X3DField.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Basic/X3DArrayField.js">
     <Files>
       <File FileName="src/x_ite.html" Line="621" Column="12" />
-      <File FileName="package.json" Line="18" Column="23" />
-      <File FileName="src/x_ite/Basic/X3DField.js" Line="92" Column="11" />
+      <File FileName="src/x_ite/Basic/X3DField.js" Line="94" Column="33" />
+      <File FileName="src/x_ite/Basic/X3DArrayField.js" Line="362" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

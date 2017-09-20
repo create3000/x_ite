@@ -334,7 +334,10 @@ function ($,
 						}
 					}
 				}
-	
+		
+				if (first !== last)
+					this .addEvent ();
+
 				return first;
 			}
 
@@ -357,6 +360,9 @@ function ($,
 					}
 				}
 			}
+
+			if (first !== last)
+				this .addEvent ();
 
 			return first;
 		},
