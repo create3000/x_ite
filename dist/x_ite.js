@@ -1,4 +1,4 @@
-/* X_ITE v4.0.5-126 */
+/* X_ITE v4.0.6a-127 */
 
 (function () {
 
@@ -16392,9 +16392,17 @@ function ($, X3DField)
 			{
 				return new (this .constructor) (Type .multiply (this .getValue (), value));
 			},
+			multVec: function (vector)
+			{
+				return new (this .constructor) (Type .multVec (this .getValue (), vector .getValue ()));
+			},
 			divide: function (value)
 			{
 				return new (this .constructor) (Type .divide (this .getValue (), value));
+			},
+			divVec: function (vector)
+			{
+				return new (this .constructor) (Type .divVec (this .getValue (), vector .getValue ()));
 			},
 			dot: function (vector)
 			{

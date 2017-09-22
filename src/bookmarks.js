@@ -56,21 +56,21 @@ var Bookmarks = (function ()
 	function shuffle (array)
 	{
 		var i = array .length;
-	
+
 		while (i > 1)
 		{
 			var
 				a = -- i,
 				b = Math .floor (Math .random () * a),
 				t = array [a];
-	
+
 			array [a] = array [b];
 			array [b] = t;
 		}
-	
+
 		return array;
 	}
-	
+
 	function Bookmarks (browser, element, bookmarks, filesPerPage)
 	{
 		var index = browser .getDataStorage () ["Bookmarks.pageIndex"];
@@ -81,9 +81,8 @@ var Bookmarks = (function ()
 		this .filesPerPage    = filesPerPage;
 		this .index           = index || 0;
 		this .randomBookmarks = [ ];
-
 	}
-	
+
 	Bookmarks .prototype =
 	{
 		setup: function ()
@@ -96,10 +95,10 @@ var Bookmarks = (function ()
 
 			if (mobile)
 				bookmarks = bookmarks .filter (function (bookmark) { return bookmark .mobile; });
-	
+
 			while (bookmarks .length)
 				pages .push (bookmarks .splice (0, filesPerPage || 20));
-	
+
 			this .index = Math .min (index, pages .length - 1);
 			this .pages = pages;
 
@@ -108,7 +107,7 @@ var Bookmarks = (function ()
 		setFilesPerPage: function (filesPerPage)
 		{
 			var first = this .filesPerPage * this .index;
-		
+
 			this .filesPerPage = filesPerPage;
 			this .index = parseInt (first / this .filesPerPage);
 			this .setup ();
@@ -125,10 +124,10 @@ var Bookmarks = (function ()
 		loadURL: function (url, li)
 		{
 			$(this .element) .find (".bookmark-selected") .removeClass ("bookmark-selected");
-			
+
 			if (li)
 				li .addClass ("bookmark-selected");
-	
+
 			this .currentUrl = url;
 
 			this .browser .getDataStorage () ["Bookmarks.url"] = url;
@@ -140,7 +139,7 @@ var Bookmarks = (function ()
 		next: function (n)
 		{
 			this .element .empty ();
-	
+
 			this .index = (this .index + this .pages .length + n) % this .pages .length;
 
 			this .browser .getDataStorage () ["Bookmarks.pageIndex"] = this .index;
@@ -151,7 +150,7 @@ var Bookmarks = (function ()
 				.addClass ("bookmark")
 				.addClass ("bookmark-previous")
 				.appendTo (ul);
-				
+
 			$("<a></a>")
 				.attr ("href", "previous")
 				.click (this .next .bind (this, -1))
@@ -201,12 +200,12 @@ var Bookmarks = (function ()
 				}
 			},
 			this);
-	
+
 			var next = $("<li></li>")
 				.addClass ("bookmark")
 				.addClass ("bookmark-next")
 				.appendTo (ul);
-	
+
 			$("<a></a>")
 				.attr ("href", "next")
 				.click (this .next .bind (this, 1))
@@ -222,14 +221,14 @@ var Bookmarks = (function ()
 				for (var p = 0; p < this .pages .length; ++ p)
 				{
 					var page = this .pages [p];
-	
+
 					for (var w = 0; w < page .length; ++ w)
 					{
 						if (page [w] .url)
 							this .randomBookmarks .push (page [w]);
 					}
 				}
-	
+
 				shuffle (this .randomBookmarks);
 			}
 
