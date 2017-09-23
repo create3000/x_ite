@@ -1,4 +1,4 @@
-/* X_ITE v4.0.6a-127 */
+/* X_ITE v4.0.6a-128 */
 
 (function () {
 
@@ -23119,7 +23119,7 @@ function ($,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.0.5";
+	return "4.0.6a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -75068,13 +75068,14 @@ function ($,
 				// Get background scale.
 
 				var
-					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 0.99999, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z,
+					nearValue       = renderObject .getNavigationInfo () .getNearValue (),
+					farValue        = renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ()),
 					rotation        = this .rotation,
 					modelViewMatrix = this .modelViewMatrix .assign (this .transformationMatrix);
 
 				// Get projection matrix.
 
-				this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
+				this .projectionMatrixArray .set (renderObject .getViewpoint () .getProjectionMatrixWithLimits (nearValue, farValue * 1.2, viewport, true));
 
 				// Rotate and scale background.
 
