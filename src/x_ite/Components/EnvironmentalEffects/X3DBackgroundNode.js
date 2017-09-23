@@ -548,7 +548,7 @@ function ($,
 
 				// Get projection matrix.
 
-				this .projectionMatrixArray .set (renderObject .getViewpoint () .getProjectionMatrixWithLimits (nearValue, farValue * 1.2, viewport, true));
+				this .projectionMatrixArray .set (renderObject .getViewpoint () .getProjectionMatrixWithLimits (nearValue, farValue * 1.3, viewport, true));
 
 				// Rotate and scale background.
 
