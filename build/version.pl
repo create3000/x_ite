@@ -23,7 +23,8 @@ $REVISION = `cat package.json`;
 $REVISION =~ /"revision":\s*"(.*?)"/;
 $REVISION = $1 + 1;
 
-sub commit {
+sub commit
+{
 	my $version = shift;
 
 	system "git", "commit", "-am", "Published version $VERSION-$REVISION";
@@ -32,7 +33,8 @@ sub commit {
 	system "git", "push", "github";
 }
 
-sub publish {
+sub publish
+{
 	my $version = shift;
 
 	system "git", "tag", "--delete", "$version";
@@ -42,6 +44,17 @@ sub publish {
 	system "git", "tag", "$version";
 	system "git", "push", "origin", "--tags";
 	system "git", "push", "github", "--tags";
+}
+
+sub rsync
+{
+	my $release = shift;
+	my $ftp      = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/x_ite";
+
+	say "Uploading $release";
+
+	system "mkdir", "-p", "$ftp/$release/dist/";
+	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$release/dist/";
 }
 
 my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
@@ -65,21 +78,11 @@ if ($result == 0)
 
 	# FTP
 
-	my $ftp = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/x_ite";
+	rsync ("alpha");
 
 	unless ($ALPHA)
 	{
-		system "mkdir", "-p", "$ftp/$VERSION/dist/";
-		system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$VERSION/dist/";
+		rsync ("latest");
+		rsync ($VERSION);
 	}
-
-	my $release = "alpha";
-
-	system "mkdir", "-p", "$ftp/$release/dist/";
-	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$release/dist/";
-
-	$release = "latest";
-
-	system "mkdir", "-p", "$ftp/$release/dist/";
-	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$release/dist/";
 }
