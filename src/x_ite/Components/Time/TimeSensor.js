@@ -156,13 +156,18 @@ function ($,
 
 			this .time_ = time;
 		},
+		set_cycleInterval: function ()
+		{
+			this .interval = this .cycleInterval_ .getValue () * this .scale;
+			this .cycle    = this .getBrowser () .getCurrentTime () - this .interval * this .fraction_changed_ .getValue ();
+		},
 		set_start: function ()
 		{
 			this .first  = this .range_ [0];
 			this .last   = this .range_ [2];
 			this .scale  = this .last - this .first;
 
-			var offset = (this .range_ [1] -  this .first) *  this .cycleInterval_ .getValue ();
+			var offset = (this .range_ [1] -  this .first) * this .cycleInterval_ .getValue ();
 
 			this .interval = this .cycleInterval_ .getValue () * this .scale;
 			this .cycle    = this .getBrowser () .getCurrentTime () - offset;

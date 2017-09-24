@@ -1,14 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Geospatial/GeoViewpoint.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js" Line="551" Column="107" />
+      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js" Line="551" Column="126" />
       <File FileName="src/x_ite/Components/Navigation/X3DViewpointNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Navigation/Viewpoint.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Geospatial/GeoViewpoint.js" Line="281" Column="1" />
       <File FileName="src/x_ite/Browser/Navigation/X3DViewer.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Navigation/OrthoViewpoint.js" Line="1" Column="1" />
+      <File FileName="build/version.pl" Line="54" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
