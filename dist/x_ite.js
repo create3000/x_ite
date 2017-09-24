@@ -1,4 +1,4 @@
-/* X_ITE v4.0.6a-131 */
+/* X_ITE v4.0.6a-132 */
 
 (function () {
 
@@ -55996,7 +55996,7 @@ function ($,
 
 		this .addType (X3DConstants .TimeSensor);
 
-		this .addChildObjects ("range", new Fields .MFFloat (0, 0, 1));
+		this .addChildObjects ("range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
 		
 		this .cycle    = 0;
 		this .interval = 0;
@@ -56041,6 +56041,20 @@ function ($,
 		{
 			X3DSensorNode        .prototype .initialize .call (this);
 			X3DTimeDependentNode .prototype .initialize .call (this);
+
+			this .cycleInterval_ .addInterest ("set_cycleInterval__", this);
+			this .range_         .addInterest ("set_range__",         this);
+		},
+		setRange: function (currentFraction, firstFraction, lastFraction)
+		{
+			this .first  = firstFraction;
+			this .last   = lastFraction;
+			this .scale  = this .last - this .first;
+
+			var offset = (currentFraction -  this .first) * this .cycleInterval_ .getValue ();
+
+			this .interval = this .cycleInterval_ .getValue () * this .scale;
+			this .cycle    = this .getBrowser () .getCurrentTime () - offset;
 		},
 		prepareEvents: function ()
 		{
@@ -56056,11 +56070,10 @@ function ($,
 					{
 						this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-						var t = (time - this .cycle) / this .interval;
+						this .set_fraction (time);
 
-						this .fraction_changed_ = this .first + (t - Math .floor (t)) * this .scale;
-						this .elapsedTime_      = this .getElapsedTime ();
-						this .cycleTime_        = time;
+						this .elapsedTime_ = this .getElapsedTime ();
+						this .cycleTime_   = time;
 					}
 				}
 				else
@@ -56071,36 +56084,40 @@ function ($,
 			}
 			else
 			{
-				var t = (time - this .cycle) / this .interval;
+				this .set_fraction (time);
 
-				this .fraction_changed_ = this .first + (t - Math .floor (t)) * this .scale;
-				this .elapsedTime_      = this .getElapsedTime ();
+				this .elapsedTime_ = this .getElapsedTime ();
 			}
 
 			this .time_ = time;
 		},
-		set_cycleInterval: function ()
+		set_cycleInterval__: function ()
 		{
-			this .interval = this .cycleInterval_ .getValue () * this .scale;
-			this .cycle    = this .getBrowser () .getCurrentTime () - this .interval * this .fraction_changed_ .getValue ();
+			this .setRange (this .fraction_changed_ .getValue (), this .range_ [1], this .range_ [2]);
+		},
+		set_range__: function ()
+		{
+			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+
+			if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+				this .set_fraction (this .getBrowser () .getCurrentTime ());
 		},
 		set_start: function ()
 		{
-			this .first  = this .range_ [0];
-			this .last   = this .range_ [2];
-			this .scale  = this .last - this .first;
+			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
 
-			var offset = (this .range_ [1] -  this .first) * this .cycleInterval_ .getValue ();
-
-			this .interval = this .cycleInterval_ .getValue () * this .scale;
-			this .cycle    = this .getBrowser () .getCurrentTime () - offset;
-
-			this .fraction_changed_ = this .range_ [1];
+			this .fraction_changed_ = this .range_ [0];
 			this .time_             = this .getBrowser () .getCurrentTime ();
 		},			
 		set_resume: function (pauseInterval)
 		{
 			this .cycle += pauseInterval;
+		},
+		set_fraction: function (time)
+		{
+			var t = (time - this .cycle) / this .interval;
+
+			this .fraction_changed_ = this .first + (t - Math .floor (t)) * this .scale;
 		},
 	});
 
