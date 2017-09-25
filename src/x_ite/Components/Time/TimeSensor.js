@@ -133,7 +133,39 @@ function ($,
 			this .interval = this .cycleInterval_ .getValue () * this .scale;
 			this .cycle    = this .getBrowser () .getCurrentTime () - offset;
 		},
-		prepareEvents: function ()
+		set_cycleInterval__: function ()
+		{
+			if (this .isActive_ .getValue ())
+				this .setRange (this .fraction_changed_ .getValue (), this .range_ [1], this .range_ [2]);
+		},
+		set_range__: function ()
+		{
+			if (this .isActive_ .getValue ())
+			{
+				this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+
+				if (! this .isPaused_ .getValue ())
+					this .set_fraction (this .getBrowser () .getCurrentTime ());
+			}
+		},
+		set_start: function ()
+		{
+			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+
+			this .fraction_changed_ = this .range_ [0];
+			this .time_             = this .getBrowser () .getCurrentTime ();
+		},			
+		set_resume: function (pauseInterval)
+		{
+			this .setRange (this .fraction_changed_ .getValue (), this .range_ [1], this .range_ [2]);
+		},
+		set_fraction: function (time)
+		{
+			var t = (time - this .cycle) / this .interval;
+
+			this .fraction_changed_ = this .first + (t - Math .floor (t)) * this .scale;
+		},
+		set_time: function ()
 		{
 			// The event order below is very important.
 
@@ -167,34 +199,6 @@ function ($,
 			}
 
 			this .time_ = time;
-		},
-		set_cycleInterval__: function ()
-		{
-			this .setRange (this .fraction_changed_ .getValue (), this .range_ [1], this .range_ [2]);
-		},
-		set_range__: function ()
-		{
-			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
-
-			if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
-				this .set_fraction (this .getBrowser () .getCurrentTime ());
-		},
-		set_start: function ()
-		{
-			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
-
-			this .fraction_changed_ = this .range_ [0];
-			this .time_             = this .getBrowser () .getCurrentTime ();
-		},			
-		set_resume: function (pauseInterval)
-		{
-			this .cycle += pauseInterval;
-		},
-		set_fraction: function (time)
-		{
-			var t = (time - this .cycle) / this .interval;
-
-			this .fraction_changed_ = this .first + (t - Math .floor (t)) * this .scale;
 		},
 	});
 

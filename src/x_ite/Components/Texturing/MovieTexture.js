@@ -250,9 +250,9 @@ function ($,
 				this .setError ();
 			}
 		},
-		prepareEvents: function ()
+		set_time: function ()
 		{
-		   X3DSoundSourceNode .prototype .prepareEvents .call (this);
+		   X3DSoundSourceNode .prototype .set_time .call (this);
 
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE)
 				this .updateTexture (this .getMedia () [0], true);

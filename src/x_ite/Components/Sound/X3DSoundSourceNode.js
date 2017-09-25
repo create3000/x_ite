@@ -212,7 +212,7 @@ function ($,
 					this .stop ();
 			}
 		},
-		prepareEvents: function ()
+		set_time: function ()
 		{
 			this .set_ended ();
 

@@ -86,18 +86,20 @@ function ($,
 			X3DChildNode .prototype .initialize .call (this);
 
 			this .addChildObjects ("initialized", new Fields .SFTime (),
-			                       "isEvenLive",  new Fields .SFBool ());
+				                    "currentTime", new Fields .SFTime (),
+				                    "isEvenLive",  new Fields .SFBool ());
 
 			this .isLive ()   .addInterest ("set_live__", this);
 			this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode
 
-			this .initialized_ .addInterest ("set_loop__", this);
-			this .enabled_     .addInterest ("set_enabled__", this);
-			this .loop_        .addInterest ("set_loop__", this);
-			this .startTime_   .addInterest ("set_startTime__", this);
-			this .pauseTime_   .addInterest ("set_pauseTime__", this);
+			this .initialized_ .addInterest ("set_loop__",       this);
+			this .enabled_     .addInterest ("set_enabled__",    this);
+			this .loop_        .addInterest ("set_loop__",       this);
+			this .startTime_   .addInterest ("set_startTime__",  this);
+			this .pauseTime_   .addInterest ("set_pauseTime__",  this);
 			this .resumeTime_  .addInterest ("set_resumeTime__", this);
-			this .stopTime_    .addInterest ("set_stopTime__", this);
+			this .stopTime_    .addInterest ("set_stopTime__",   this);
+			this .currentTime_ .addInterest ("set_time",         this); // without __
 
 			this .startTimeValue  = this .startTime_  .getValue ();
 			this .pauseTimeValue  = this .pauseTime_  .getValue ();
@@ -119,6 +121,10 @@ function ($,
 			///  Determines the live state of this node.
 
 			return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
+		},
+		set_prepareEvents__: function ()
+		{
+			this .currentTime_ = this .getBrowser () .getCurrentTime ();
 		},
 		set_live__: function ()
 		{
@@ -248,7 +254,7 @@ function ($,
 
 				if (this .isLive () .getValue ())
 				{
-					this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
+					this .getBrowser () .prepareEvents () .addInterest ("set_prepareEvents__" ,this);
 				}
 				else if (! this .disabled)
 				{
@@ -279,7 +285,7 @@ function ($,
 
 			this .set_pause ();
 
-			this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents", this);
+			this .getBrowser () .prepareEvents () .removeInterest ("set_prepareEvents__" ,this);
 		},
 		do_resume: function ()
 		{
@@ -302,7 +308,7 @@ function ($,
 
 			this .set_resume (interval);
 
-			this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
+			this .getBrowser () .prepareEvents () .addInterest ("set_prepareEvents__" ,this);
 			this .getBrowser () .addBrowserEvent ();
 		},
 		do_stop: function ()
@@ -325,7 +331,7 @@ function ($,
 				this .isActive_ = false;
 
 				if (this .isLive () .getValue ())
-					this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents", this);
+					this .getBrowser () .prepareEvents () .removeInterest ("set_prepareEvents__" ,this);
 			}
 		},
 		timeout: function (callback)
@@ -347,11 +353,11 @@ function ($,
 			clearTimeout (this [name]);
 			this [name] = null;
 		},
-		prepareEvents: function () { },
 		set_start: function () { },
 		set_pause: function () { },
 		set_resume: function () { },
 		set_stop: function () { },
+		set_time: function () { },
 	});
 
 	return X3DTimeDependentNode;

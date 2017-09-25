@@ -1,6 +1,6 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Time/TimeSensor.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js" Line="1" Column="1" />
@@ -10,7 +10,7 @@
       <File FileName="src/x_ite/Browser/Navigation/X3DViewer.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Navigation/OrthoViewpoint.js" Line="1" Column="1" />
       <File FileName="build/version.pl" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Time/TimeSensor.js" Line="159" Column="1" />
+      <File FileName="src/x_ite/Components/Time/TimeSensor.js" Line="190" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
