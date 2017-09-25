@@ -1,4 +1,4 @@
-/* X_ITE v4.0.6a-133 */
+/* X_ITE v4.0.6a-134 */
 
 (function () {
 
@@ -55648,18 +55648,20 @@ function ($,
 			X3DChildNode .prototype .initialize .call (this);
 
 			this .addChildObjects ("initialized", new Fields .SFTime (),
-			                       "isEvenLive",  new Fields .SFBool ());
+				                    "currentTime", new Fields .SFTime (),
+				                    "isEvenLive",  new Fields .SFBool ());
 
 			this .isLive ()   .addInterest ("set_live__", this);
 			this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode
 
-			this .initialized_ .addInterest ("set_loop__", this);
-			this .enabled_     .addInterest ("set_enabled__", this);
-			this .loop_        .addInterest ("set_loop__", this);
-			this .startTime_   .addInterest ("set_startTime__", this);
-			this .pauseTime_   .addInterest ("set_pauseTime__", this);
+			this .initialized_ .addInterest ("set_loop__",       this);
+			this .enabled_     .addInterest ("set_enabled__",    this);
+			this .loop_        .addInterest ("set_loop__",       this);
+			this .startTime_   .addInterest ("set_startTime__",  this);
+			this .pauseTime_   .addInterest ("set_pauseTime__",  this);
 			this .resumeTime_  .addInterest ("set_resumeTime__", this);
-			this .stopTime_    .addInterest ("set_stopTime__", this);
+			this .stopTime_    .addInterest ("set_stopTime__",   this);
+			this .currentTime_ .addInterest ("set_time",         this); // without __
 
 			this .startTimeValue  = this .startTime_  .getValue ();
 			this .pauseTimeValue  = this .pauseTime_  .getValue ();
@@ -55681,6 +55683,10 @@ function ($,
 			///  Determines the live state of this node.
 
 			return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
+		},
+		set_prepareEvents__: function ()
+		{
+			this .currentTime_ = this .getBrowser () .getCurrentTime ();
 		},
 		set_live__: function ()
 		{
@@ -55810,7 +55816,7 @@ function ($,
 
 				if (this .isLive () .getValue ())
 				{
-					this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
+					this .getBrowser () .prepareEvents () .addInterest ("set_prepareEvents__" ,this);
 				}
 				else if (! this .disabled)
 				{
@@ -55841,7 +55847,7 @@ function ($,
 
 			this .set_pause ();
 
-			this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents", this);
+			this .getBrowser () .prepareEvents () .removeInterest ("set_prepareEvents__" ,this);
 		},
 		do_resume: function ()
 		{
@@ -55864,7 +55870,7 @@ function ($,
 
 			this .set_resume (interval);
 
-			this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
+			this .getBrowser () .prepareEvents () .addInterest ("set_prepareEvents__" ,this);
 			this .getBrowser () .addBrowserEvent ();
 		},
 		do_stop: function ()
@@ -55887,7 +55893,7 @@ function ($,
 				this .isActive_ = false;
 
 				if (this .isLive () .getValue ())
-					this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents", this);
+					this .getBrowser () .prepareEvents () .removeInterest ("set_prepareEvents__" ,this);
 			}
 		},
 		timeout: function (callback)
@@ -55909,11 +55915,11 @@ function ($,
 			clearTimeout (this [name]);
 			this [name] = null;
 		},
-		prepareEvents: function () { },
 		set_start: function () { },
 		set_pause: function () { },
 		set_resume: function () { },
 		set_stop: function () { },
+		set_time: function () { },
 	});
 
 	return X3DTimeDependentNode;
@@ -56056,7 +56062,39 @@ function ($,
 			this .interval = this .cycleInterval_ .getValue () * this .scale;
 			this .cycle    = this .getBrowser () .getCurrentTime () - offset;
 		},
-		prepareEvents: function ()
+		set_cycleInterval__: function ()
+		{
+			if (this .isActive_ .getValue ())
+				this .setRange (this .fraction_changed_ .getValue (), this .range_ [1], this .range_ [2]);
+		},
+		set_range__: function ()
+		{
+			if (this .isActive_ .getValue ())
+			{
+				this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+
+				if (! this .isPaused_ .getValue ())
+					this .set_fraction (this .getBrowser () .getCurrentTime ());
+			}
+		},
+		set_start: function ()
+		{
+			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+
+			this .fraction_changed_ = this .range_ [0];
+			this .time_             = this .getBrowser () .getCurrentTime ();
+		},			
+		set_resume: function (pauseInterval)
+		{
+			this .setRange (this .fraction_changed_ .getValue (), this .range_ [1], this .range_ [2]);
+		},
+		set_fraction: function (time)
+		{
+			var t = (time - this .cycle) / this .interval;
+
+			this .fraction_changed_ = this .first + (t - Math .floor (t)) * this .scale;
+		},
+		set_time: function ()
 		{
 			// The event order below is very important.
 
@@ -56090,34 +56128,6 @@ function ($,
 			}
 
 			this .time_ = time;
-		},
-		set_cycleInterval__: function ()
-		{
-			this .setRange (this .fraction_changed_ .getValue (), this .range_ [1], this .range_ [2]);
-		},
-		set_range__: function ()
-		{
-			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
-
-			if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
-				this .set_fraction (this .getBrowser () .getCurrentTime ());
-		},
-		set_start: function ()
-		{
-			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
-
-			this .fraction_changed_ = this .range_ [0];
-			this .time_             = this .getBrowser () .getCurrentTime ();
-		},			
-		set_resume: function (pauseInterval)
-		{
-			this .cycle += pauseInterval;
-		},
-		set_fraction: function (time)
-		{
-			var t = (time - this .cycle) / this .interval;
-
-			this .fraction_changed_ = this .first + (t - Math .floor (t)) * this .scale;
 		},
 	});
 
@@ -79515,7 +79525,7 @@ function ($,
 					this .stop ();
 			}
 		},
-		prepareEvents: function ()
+		set_time: function ()
 		{
 			this .set_ended ();
 
@@ -96197,9 +96207,9 @@ function ($,
 				this .setError ();
 			}
 		},
-		prepareEvents: function ()
+		set_time: function ()
 		{
-		   X3DSoundSourceNode .prototype .prepareEvents .call (this);
+		   X3DSoundSourceNode .prototype .set_time .call (this);
 
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE)
 				this .updateTexture (this .getMedia () [0], true);

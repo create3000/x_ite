@@ -10,7 +10,7 @@
       <File FileName="src/x_ite/Browser/Navigation/X3DViewer.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Navigation/OrthoViewpoint.js" Line="1" Column="1" />
       <File FileName="build/version.pl" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Time/TimeSensor.js" Line="190" Column="4" />
+      <File FileName="src/x_ite/Components/Time/TimeSensor.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
