@@ -270,7 +270,7 @@ function ($,
 			{
 				if (this .isActive_ .getValue () && this .maxParticles_ .getValue ())
 				{
-					this .getBrowser () .sensors () .addInterest ("animateParticles", this);
+					this .getBrowser () .sensorEvents () .addInterest ("animateParticles", this);
 		
 					if (this .pauseTime)
 					{
@@ -283,7 +283,7 @@ function ($,
 			{
 				if (this .isActive_ .getValue () && this .maxParticles_ .getValue ())
 				{
-					this .getBrowser () .sensors () .removeInterest ("animateParticles", this);
+					this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
 		
 					if (this .pauseTime === 0)
 						this .pauseTime = performance .now () / 1000;
@@ -298,7 +298,7 @@ function ($,
 				{
 					if (this .isLive () .getValue ())
 					{
-						this .getBrowser () .sensors () .addInterest ("animateParticles", this);
+						this .getBrowser () .sensorEvents () .addInterest ("animateParticles", this);
 			
 						this .pauseTime = 0;
 					}
@@ -314,7 +314,7 @@ function ($,
 				{
 					if (this .isLive () .getValue ())
 					{
-						this .getBrowser () .sensors () .removeInterest ("animateParticles", this);
+						this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
 					}
 	
 					this .isActive_ = false;

@@ -136,11 +136,11 @@ function ($,
 		{
 			if (this .isLive () .getValue () && this .targetObjectNode && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
 			{
-				this .getBrowser () .sensors () .addInterest ("update", this);
+				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}
 			else
 			{
-				this .getBrowser () .sensors () .removeInterest ("update", this);
+				this .getBrowser () .sensorEvents () .removeInterest ("update", this);
 					
 				if (this .isActive_ .getValue ())
 				{

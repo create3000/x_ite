@@ -133,7 +133,7 @@ function ($,
 		                       "shutdown",      new SFTime (),
 		                       "prepareEvents", new SFTime (),
 		                       "timeEvents",    new SFTime (),
-		                       "sensors",       new SFTime (),
+		                       "sensorEvents",  new SFTime (),
 		                       "finished",      new SFTime ());
 
 		this .changedTime     = 0;
@@ -212,9 +212,9 @@ function ($,
 		{
 			return this .timeEvents_;
 		},
-		sensors: function ()
+		sensorEvents: function ()
 		{
-			return this .sensors_;
+			return this .sensorEvents_;
 		},
 		finished: function ()
 		{
@@ -273,7 +273,7 @@ function ($,
 				this .world .traverse (TraverseType .COLLISION, null);
 			this .collisionTime = performance .now () - t2;
 
-			this .sensors_ .processInterests ();
+			this .sensorEvents_ .processInterests ();
 			this .processEvents ();
 
 			// XXX: The depth buffer must be cleared here, although it is cleared in each layer, otherwise there is a

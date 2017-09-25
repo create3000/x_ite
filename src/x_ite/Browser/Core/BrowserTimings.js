@@ -191,7 +191,7 @@ function ($,
 					collisionTime     = browser .collisionTime + navigationTime,
 					routingTime       = browser .browserTime - (browser .cameraTime + browser .collisionTime + browser .displayTime + navigationTime),
 					prepareEvents     = Object .keys (browser .prepareEvents () .getInterests ()) .length - 1,
-					sensors           = Object .keys (browser .sensors () .getInterests ()) .length,
+					sensors           = Object .keys (browser .sensorEvents () .getInterests ()) .length,
 					opaqueShapes      = 0,
 					transparentShapes = 0;
 
