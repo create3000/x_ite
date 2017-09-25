@@ -1,4 +1,4 @@
-/* X_ITE v4.0.6a-135 */
+/* X_ITE v4.0.6a-136 */
 
 (function () {
 
@@ -25775,7 +25775,7 @@ function ($,
 					collisionTime     = browser .collisionTime + navigationTime,
 					routingTime       = browser .browserTime - (browser .cameraTime + browser .collisionTime + browser .displayTime + navigationTime),
 					prepareEvents     = Object .keys (browser .prepareEvents () .getInterests ()) .length - 1,
-					sensors           = Object .keys (browser .sensors () .getInterests ()) .length,
+					sensors           = Object .keys (browser .sensorEvents () .getInterests ()) .length,
 					opaqueShapes      = 0,
 					transparentShapes = 0;
 
@@ -55617,7 +55617,7 @@ define ('x_ite/Components/Time/X3DTimeDependentNode',[
 ],
 function ($,
           Fields,
-          X3DChildNode, 
+          X3DChildNode,
           X3DConstants)
 {
 "use strict";
@@ -55648,7 +55648,6 @@ function ($,
 			X3DChildNode .prototype .initialize .call (this);
 
 			this .addChildObjects ("initialized", new Fields .SFTime (),
-				                    "currentTime", new Fields .SFTime (),
 				                    "isEvenLive",  new Fields .SFBool ());
 
 			this .isLive ()   .addInterest ("set_live__", this);
@@ -55661,7 +55660,6 @@ function ($,
 			this .pauseTime_   .addInterest ("set_pauseTime__",  this);
 			this .resumeTime_  .addInterest ("set_resumeTime__", this);
 			this .stopTime_    .addInterest ("set_stopTime__",   this);
-			this .currentTime_ .addInterest ("set_time",         this); // without __
 
 			this .startTimeValue  = this .startTime_  .getValue ();
 			this .pauseTimeValue  = this .pauseTime_  .getValue ();
@@ -55683,10 +55681,6 @@ function ($,
 			///  Determines the live state of this node.
 
 			return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
-		},
-		set_prepareEvents__: function ()
-		{
-			this .currentTime_ = this .getBrowser () .getCurrentTime ();
 		},
 		set_live__: function ()
 		{
@@ -55816,7 +55810,7 @@ function ($,
 
 				if (this .isLive () .getValue ())
 				{
-					this .getBrowser () .prepareEvents () .addInterest ("set_prepareEvents__" ,this);
+					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
 				}
 				else if (! this .disabled)
 				{
@@ -55847,7 +55841,7 @@ function ($,
 
 			this .set_pause ();
 
-			this .getBrowser () .prepareEvents () .removeInterest ("set_prepareEvents__" ,this);
+			this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
 		},
 		do_resume: function ()
 		{
@@ -55870,7 +55864,7 @@ function ($,
 
 			this .set_resume (interval);
 
-			this .getBrowser () .prepareEvents () .addInterest ("set_prepareEvents__" ,this);
+			this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
 			this .getBrowser () .addBrowserEvent ();
 		},
 		do_stop: function ()
@@ -55893,7 +55887,7 @@ function ($,
 				this .isActive_ = false;
 
 				if (this .isLive () .getValue ())
-					this .getBrowser () .prepareEvents () .removeInterest ("set_prepareEvents__" ,this);
+					this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
 			}
 		},
 		timeout: function (callback)
@@ -55924,8 +55918,6 @@ function ($,
 
 	return X3DTimeDependentNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -56006,6 +55998,7 @@ function ($,
 		
 		this .cycle    = 0;
 		this .interval = 0;
+		this .fraction = 0;
 		this .first    = 0;
 		this .last     = 1;
 		this .scale    = 1;
@@ -56053,9 +56046,10 @@ function ($,
 		},
 		setRange: function (currentFraction, firstFraction, lastFraction)
 		{
-			this .first  = firstFraction;
-			this .last   = lastFraction;
-			this .scale  = this .last - this .first;
+			this .fraction = currentFraction;
+			this .first    = firstFraction;
+			this .last     = lastFraction;
+			this .scale    = this .last - this .first;
 
 			var offset = (currentFraction -  this .first) * this .cycleInterval_ .getValue ();
 
@@ -56065,7 +56059,7 @@ function ($,
 		set_cycleInterval__: function ()
 		{
 			if (this .isActive_ .getValue ())
-				this .setRange (this .fraction_changed_ .getValue (), this .range_ [1], this .range_ [2]);
+				this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
 		},
 		set_range__: function ()
 		{
@@ -56086,13 +56080,13 @@ function ($,
 		},			
 		set_resume: function (pauseInterval)
 		{
-			this .setRange (this .fraction_changed_ .getValue (), this .range_ [1], this .range_ [2]);
+			this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
 		},
 		set_fraction: function (time)
 		{
 			var t = (time - this .cycle) / this .interval;
 
-			this .fraction_changed_ = this .first + (t - Math .floor (t)) * this .scale;
+			this .fraction_changed_ = this .fraction = this .first + (t - Math .floor (t)) * this .scale;
 		},
 		set_time: function ()
 		{
@@ -77177,7 +77171,8 @@ function ($,
 		this .addChildObjects ("initialized",   new SFTime (),
 		                       "shutdown",      new SFTime (),
 		                       "prepareEvents", new SFTime (),
-		                       "sensors",       new SFTime (),
+		                       "timeEvents",    new SFTime (),
+		                       "sensorEvents",  new SFTime (),
 		                       "finished",      new SFTime ());
 
 		this .changedTime     = 0;
@@ -77252,9 +77247,13 @@ function ($,
 		{
 			return this .prepareEvents_;
 		},
-		sensors: function ()
+		timeEvents: function ()
 		{
-			return this .sensors_;
+			return this .timeEvents_;
+		},
+		sensorEvents: function ()
+		{
+			return this .sensorEvents_;
 		},
 		finished: function ()
 		{
@@ -77301,6 +77300,9 @@ function ($,
 			this .prepareEvents_ .processInterests ();
 			this .processEvents ();
 
+			this .timeEvents_ .processInterests ();
+			this .processEvents ();
+
 			var t1 = performance .now ();
 			this .world .traverse (TraverseType .CAMERA, null);
 			this .cameraTime = performance .now () - t1;
@@ -77310,7 +77312,7 @@ function ($,
 				this .world .traverse (TraverseType .COLLISION, null);
 			this .collisionTime = performance .now () - t2;
 
-			this .sensors_ .processInterests ();
+			this .sensorEvents_ .processInterests ();
 			this .processEvents ();
 
 			// XXX: The depth buffer must be cleared here, although it is cleared in each layer, otherwise there is a
@@ -90306,11 +90308,11 @@ function ($,
 		{
 			if (this .isLive () .getValue () && this .traversed_ .getValue () && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
 			{
-				this .getBrowser () .sensors () .addInterest ("update", this);
+				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}
 			else
 			{
-				this .getBrowser () .sensors () .removeInterest ("update", this);
+				this .getBrowser () .sensorEvents () .removeInterest ("update", this);
 				
 				if (this .isActive_ .getValue ())
 				{
@@ -97621,7 +97623,7 @@ function ($,
 			{
 				if (this .isActive_ .getValue () && this .maxParticles_ .getValue ())
 				{
-					this .getBrowser () .sensors () .addInterest ("animateParticles", this);
+					this .getBrowser () .sensorEvents () .addInterest ("animateParticles", this);
 		
 					if (this .pauseTime)
 					{
@@ -97634,7 +97636,7 @@ function ($,
 			{
 				if (this .isActive_ .getValue () && this .maxParticles_ .getValue ())
 				{
-					this .getBrowser () .sensors () .removeInterest ("animateParticles", this);
+					this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
 		
 					if (this .pauseTime === 0)
 						this .pauseTime = performance .now () / 1000;
@@ -97649,7 +97651,7 @@ function ($,
 				{
 					if (this .isLive () .getValue ())
 					{
-						this .getBrowser () .sensors () .addInterest ("animateParticles", this);
+						this .getBrowser () .sensorEvents () .addInterest ("animateParticles", this);
 			
 						this .pauseTime = 0;
 					}
@@ -97665,7 +97667,7 @@ function ($,
 				{
 					if (this .isLive () .getValue ())
 					{
-						this .getBrowser () .sensors () .removeInterest ("animateParticles", this);
+						this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
 					}
 	
 					this .isActive_ = false;
@@ -107636,11 +107638,11 @@ function ($,
 		{
 			if (this .isLive () .getValue () && this .targetObjectNode && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
 			{
-				this .getBrowser () .sensors () .addInterest ("update", this);
+				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}
 			else
 			{
-				this .getBrowser () .sensors () .removeInterest ("update", this);
+				this .getBrowser () .sensorEvents () .removeInterest ("update", this);
 					
 				if (this .isActive_ .getValue ())
 				{
