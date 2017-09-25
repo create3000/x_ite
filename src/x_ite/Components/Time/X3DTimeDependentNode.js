@@ -55,7 +55,7 @@ define ([
 ],
 function ($,
           Fields,
-          X3DChildNode, 
+          X3DChildNode,
           X3DConstants)
 {
 "use strict";
@@ -86,7 +86,6 @@ function ($,
 			X3DChildNode .prototype .initialize .call (this);
 
 			this .addChildObjects ("initialized", new Fields .SFTime (),
-				                    "currentTime", new Fields .SFTime (),
 				                    "isEvenLive",  new Fields .SFBool ());
 
 			this .isLive ()   .addInterest ("set_live__", this);
@@ -99,7 +98,6 @@ function ($,
 			this .pauseTime_   .addInterest ("set_pauseTime__",  this);
 			this .resumeTime_  .addInterest ("set_resumeTime__", this);
 			this .stopTime_    .addInterest ("set_stopTime__",   this);
-			this .currentTime_ .addInterest ("set_time",         this); // without __
 
 			this .startTimeValue  = this .startTime_  .getValue ();
 			this .pauseTimeValue  = this .pauseTime_  .getValue ();
@@ -121,10 +119,6 @@ function ($,
 			///  Determines the live state of this node.
 
 			return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
-		},
-		set_prepareEvents__: function ()
-		{
-			this .currentTime_ = this .getBrowser () .getCurrentTime ();
 		},
 		set_live__: function ()
 		{
@@ -254,7 +248,7 @@ function ($,
 
 				if (this .isLive () .getValue ())
 				{
-					this .getBrowser () .prepareEvents () .addInterest ("set_prepareEvents__" ,this);
+					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
 				}
 				else if (! this .disabled)
 				{
@@ -285,7 +279,7 @@ function ($,
 
 			this .set_pause ();
 
-			this .getBrowser () .prepareEvents () .removeInterest ("set_prepareEvents__" ,this);
+			this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
 		},
 		do_resume: function ()
 		{
@@ -308,7 +302,7 @@ function ($,
 
 			this .set_resume (interval);
 
-			this .getBrowser () .prepareEvents () .addInterest ("set_prepareEvents__" ,this);
+			this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
 			this .getBrowser () .addBrowserEvent ();
 		},
 		do_stop: function ()
@@ -331,7 +325,7 @@ function ($,
 				this .isActive_ = false;
 
 				if (this .isLive () .getValue ())
-					this .getBrowser () .prepareEvents () .removeInterest ("set_prepareEvents__" ,this);
+					this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
 			}
 		},
 		timeout: function (callback)
@@ -362,5 +356,3 @@ function ($,
 
 	return X3DTimeDependentNode;
 });
-
-

@@ -132,6 +132,7 @@ function ($,
 		this .addChildObjects ("initialized",   new SFTime (),
 		                       "shutdown",      new SFTime (),
 		                       "prepareEvents", new SFTime (),
+		                       "timeEvents",    new SFTime (),
 		                       "sensors",       new SFTime (),
 		                       "finished",      new SFTime ());
 
@@ -207,6 +208,10 @@ function ($,
 		{
 			return this .prepareEvents_;
 		},
+		timeEvents: function ()
+		{
+			return this .timeEvents_;
+		},
 		sensors: function ()
 		{
 			return this .sensors_;
@@ -254,6 +259,9 @@ function ($,
 			this .advanceTime (time);
 
 			this .prepareEvents_ .processInterests ();
+			this .processEvents ();
+
+			this .timeEvents_ .processInterests ();
 			this .processEvents ();
 
 			var t1 = performance .now ();

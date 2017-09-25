@@ -77,6 +77,7 @@ function ($,
 		
 		this .cycle    = 0;
 		this .interval = 0;
+		this .fraction = 0;
 		this .first    = 0;
 		this .last     = 1;
 		this .scale    = 1;
@@ -124,9 +125,10 @@ function ($,
 		},
 		setRange: function (currentFraction, firstFraction, lastFraction)
 		{
-			this .first  = firstFraction;
-			this .last   = lastFraction;
-			this .scale  = this .last - this .first;
+			this .fraction = currentFraction;
+			this .first    = firstFraction;
+			this .last     = lastFraction;
+			this .scale    = this .last - this .first;
 
 			var offset = (currentFraction -  this .first) * this .cycleInterval_ .getValue ();
 
@@ -136,7 +138,7 @@ function ($,
 		set_cycleInterval__: function ()
 		{
 			if (this .isActive_ .getValue ())
-				this .setRange (this .fraction_changed_ .getValue (), this .range_ [1], this .range_ [2]);
+				this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
 		},
 		set_range__: function ()
 		{
@@ -157,13 +159,13 @@ function ($,
 		},			
 		set_resume: function (pauseInterval)
 		{
-			this .setRange (this .fraction_changed_ .getValue (), this .range_ [1], this .range_ [2]);
+			this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
 		},
 		set_fraction: function (time)
 		{
 			var t = (time - this .cycle) / this .interval;
 
-			this .fraction_changed_ = this .first + (t - Math .floor (t)) * this .scale;
+			this .fraction_changed_ = this .fraction = this .first + (t - Math .floor (t)) * this .scale;
 		},
 		set_time: function ()
 		{
