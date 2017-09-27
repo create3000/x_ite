@@ -1,4 +1,4 @@
-/* X_ITE v4.0.6-137 */
+/* X_ITE v4.0.6-138 */
 
 (function () {
 
@@ -23119,7 +23119,7 @@ function ($,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.0.6a";
+	return "4.0.6";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
