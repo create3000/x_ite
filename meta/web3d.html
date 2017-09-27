@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<meta name="viewport" content="width=1300"/>
+	<meta name="viewport" content="width=765"/>
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.js"></script>
 	<script type="text/javascript" src="https://cdn.rawgit.com/kayahr/jquery-fullscreen-plugin/1.1.4/jquery.fullscreen-min.js"></script>
@@ -11,8 +11,8 @@
 	<script type="text/javascript" src="https://cdn.rawgit.com/noelboss/featherlight/1.7.8/release/featherlight.min.js"></script>
 
 	<!-- X_ICTE requirements -->
-	<link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/alpha/dist/x_ite.css"/>
-	<script type="text/javascript" src="http://code.create3000.de/x_ite/alpha/dist/x_ite.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/latest/dist/x_ite.css"/>
+	<script type="text/javascript" src="http://code.create3000.de/x_ite/latest/dist/x_ite.min.js"></script>
 
 	<style>
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic|Ubuntu+Mono:400);
@@ -41,7 +41,7 @@ div.main > div,
 footer > div {
 	margin: 0px auto;
 	padding: 10px 0px 10px 0px;
-	width: 50vw;
+	width: 63vw;
 }
 
 div.main {
@@ -68,19 +68,32 @@ footer a:hover {
 	text-decoration: underline;
 }
 
-.fullscreen-button,
-.meta-data-button {
-	cursor: pointer;
+.buttons {
+	width: 100%;
+}
+
+.buttons td {
+}
+
+.buttons a {
+	box-sizing: border-box;
+	display: inline-block;
+	width: 100%;
+	padding: 10px 15px;
+	background: #FFDE51;
+	color: black;
+	text-align: center;
+}
+
+.buttons a:hover {
+	background: #fff1b3;
 }
 
 .buttons img {
-	border: 1px dotted white;
+	border: 1px dotted black;
 	padding: 4px;
 	width: auto;
-}
-
-.buttons img:hover {
-	background: #222;
+	vertical-align: bottom;
 }
 
 .browser {
@@ -88,7 +101,7 @@ footer a:hover {
 	margin: 10px 0px;
 	width: auto;
 	width: 100%;
-	height: 27.75vw;
+	height: 35vw;
 	box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.75);
 }
 
@@ -183,10 +196,6 @@ footer a:hover {
 		margin: 8px 32px 8px 0px;
 		font-size: 24rem;
 	}
-
-	.buttons > * {
-		margin-left: 4px;
-	}
 	
 	.buttons img {
 		padding: 3px;
@@ -232,6 +241,7 @@ footer a:hover {
 
 	.browser {
 		margin: 5px 0px;
+		height: 30vw;
 	}
 	
 	.fallback {
@@ -245,7 +255,7 @@ X3D (function ()
 {
 	var Browser = X3D .getBrowser ("#browser");
 
-	$(".version") .text (Browser .name + " v" + Browser .version);
+	$(".version") .text (Browser .name + " X3D Browser - Version " + Browser .version);
 
 	$(function ()
 	{
@@ -264,7 +274,7 @@ X3D (function ()
 			names .sort ();
 	
 			tbody .empty ();
-	
+
 			for (var i = 0; i < names .length; ++ i)
 			{
 				var
@@ -325,42 +335,54 @@ function (error)
 	<div class="page">
 		<header>
 			<div>
-				<h2>TextureBackgroundKelpForestMain.x3d</h2>
-				<p><span class="webfont">Added an image panorama with the Background node to the Kelp Forest world.</span></p>
-				<p class="buttons">
-					<a href="CadDesignPatternExampleBushing.x3d" title="Download Original X3D Scene">
-						<img class="download-button"
-						     alt="Download Original X3D Scene"
-						     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAABeSURBVBiVpdA7CoAwEAVAVyux9r7ewIvYCd7AxkuNhQoh+CH4uiXDW7JV9ScYHBnyt7qkqAin60f3Ge9wjSmDM5qn9hbrCTd0OQDJ3GNBn5u4YETEy38Ok7Z+peh0O28BdqE+KBKpAAAAAElFTkSuQmCC"/>
-					</a>
-					<img class="meta-data-button"
-					     title="Display Metadata"
-					     alt="Display Metadata"
-					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkCBCMPn8oKUQAAAHlJREFUGJWVj8ENgDAMA11gEh5sAcOwT8dhBDbgwwxMwIfjk4hSigSWLDXX1FYFqOAWWIAV6JyLS744AFvCN2OP5RHYbZ7MGBvzelcEanN0GAAl8iFImiUdknrnlR1uL0xHzgNXdMiSH41N4eJV1ddFTy5Vl/7wL/kEvN6r+wEWMW4AAAAASUVORK5CYII="/>
-					<img class="console-button"
-					     title="Display Console"
-					     alt="Display Console"
-					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkCBCMsPa17IwAAAGZJREFUGJWtkcsJgDAQRCde00MqsCjPQQuzHc+24dE8D24gYNQIDgz7YXZZZh2gVnQWfas4SFokTa9qYACSMQK6Y05iy0BZzJzYgf6XzZ9uDsAKjE9CQM6e4iVtpUk157L44miteQCojOICJe0RRAAAAABJRU5ErkJggg=="/>
-					<img class="clock-button"
-					     title="Browser Timings"
-					     alt="Browser Timings"
-					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkCBCQOp4ysAAAAAMhJREFUGJVtkb1OQkEQhb9cE2w08Q0QE63gMcTwBvAkWprQ04FQUfLzVMSKhIprAzafhecmK/Ekk5k5c2Z3ZxaVWEddqJ/qOX4eHpVG+KJ++T9qtd+IO4VwpU4TT9V10XBfAW/ADbAGRsCBXxyAIbAFboHXChikOOYvri74ARlGtZX3vyf/VifqdfJTBezT+Ri/jAHUwFPiPVmPGYbCHtQ7dZv6rNlGHWKjdnN1rxAe1XZzSr9ouMRRfS4/BbWtfqg79RQ/C4/KD5u2QiGZLQpkAAAAAElFTkSuQmCC"/>
-					<img class="fullscreen-button"
-					     title="Enter Fullscreen Mode"
-					     alt="Fullscreen"
-					     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4QQNFQk1i7oCawAAALhJREFUGJWV0TFKA2EQBeBn1iqptBJvEFsVjxR0LyB4txQSRCzEeAexsLCJydr4WWQWwjbGBwPzv3nDP/Mm+EBXscAhggb3xW/wGaxt8Y2rEvZxWTx0wWqn4R3HJTzCW/FrbEZJnpKcJ3lJcpLkOlvMkpwmeU1ykeSxny0Yox2M0WLS73CA7ItRkqbycZJ2UL9JMqm8CeaY4rmWuatvb+u9xBnm/3Ij+PrD527X5178g4fBBRfFQ/cL8YlBv40R0JoAAAAASUVORK5CYII="/>
-					<a href="http://create3000.de/x_ite/" target="_blank">
-						<img class="x_ite-button"
-						     title="Visit X_ITE Project Page"
-					        alt="Visit X_ITE Project Page"
-					        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkCBCQj4lPwdQAAAMtJREFUGJV9kTFKA1EURc+ARYIIiV1AmywgprPMJgLiAlKlcgcuRCStdRALi5DKkCLEQkEMqWcBKqiDJ0Ve8R2GuXB5vM95l/f/z1QSXQA5MKdKaup7NVdPSueo/+C2+u1eK7VZB48CfIp6WwfP1E/1SH2IgXEV3FEL9S76Y3Wr/qiDMnwVScMkqa9+xYVPU3ihfqiHpT2vI2SpNjK1C2yAJXAD9MJnQCt55ckBcAlkwHkY4Bd4B6bAC/AKLDL1EfgD1sBz+A0oyh+4A6TyGLtCRPLnAAAAAElFTkSuQmCC"/>
-					</a>
-				</p>
+				<h2>CadDesignPatternExampleBushing.x3d</h2>
+				<p>Added an image panorama with the Background node to the Kelp Forest world.</p>
+				<table class="buttons">
+					<tr>
+						<td>
+							<a class="download-button" href="CadDesignPatternExampleBushing.x3d" title="Download Original X3D Scene">
+								<img alt="Download Original X3D Scene"
+									  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkbAjcFeC1QvQAAAFtJREFUGJVjYKAQNDAwMPyH0iiAiRRTSFKMDPqh1qPjfly2rEFTuJmBgYEZl+mcDAwMR6EKTzEwMHCjK4CZAgOiDAwM26A0ihpGJIWMePzzH6bgPx5FKICkoAMAvmQW/hjXrhcAAAAASUVORK5CYII="/> Download
+							</a>
+						</td>
+						<td>
+							<a class="meta-data-button" href="#" title="Display Metadata">
+								<img class="meta-data-button"
+									  alt="Display Metadata"
+									  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkbAjcZbCwM8gAAAGxJREFUGJWljsENgCAMRZ/oJB4cw2HYh3GcwLiBF2dgAi7ipSRNAWPiT35SXlt+oa0ZOIELWHQji4tWICoehVXDHkjy3sRZmLfxZTEAozg00quUA9g1d70t4LZ8UMDWNpGp0ejKfR18O+P/zw/eYyQGXrfRSgAAAABJRU5ErkJggg=="/> Metadata
+							</a>
+						</td>
+						<td>
+							<a class="console-button" href="#" title="Toggle Display of Console">
+								<img alt="Display Console"
+									  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkbAjcrpPtdcgAAAFZJREFUGJWt0LENgDAMBdGHKNkhEzAUdcRijAIzsAqEJh1BJAhLv7F89sl8qKFmqEfAioTtDZhw5sSaC7EVWLLKgfGXzVOLQsCOucaV+59TKd0DnErNC14KGSds97ZOAAAAAElFTkSuQmCC"/> Console
+							</a>
+						</td>
+						<td>
+							<a class="clock-button" href="#" title="Toggle Display of Browser Timings">
+								<img alt="Browser Timings"
+									  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkbAjgGZrwdyAAAAK1JREFUGJVt0LFOglEMBeAvmODqGyAmMuFjAOGtSNjdAJkYFZ6KMLGCC7D8DJ4/Xm9s0rQ99/S0vfxaH2sccE38CP7HJvhG84+fMS4VW+InFskX+CoanmV0S4RZ6lnqbepVB9OA82q1hwqfyjENupXyDe94TH3p4BjSa+ImLrsOkh/5+Z4mx5T2gifs8r5sf+McYIthRr8VxBN6rcq4aKj9hFE1VQ8r7HFJXJaKd3XJPLT3ldd3AAAAAElFTkSuQmCC"/> Timings
+							</a>
+						</td>
+						<td>
+							<a class="fullscreen-button" href="#" title="Enter Fullscreen Mode">
+								<img alt="Fullscreen"
+									  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4QkbAjgacr1BhwAAAJFJREFUGJWV0TEKwkAUBNAHWmmlt9BevJO5gODdIkiwVDyEWFjYaEwaY+EPJCkiGdhiZ+cP82fhjiJOhrEfRjgE/8YDclQosdbGKvgqhjwbAzfMQzjDNfg83KVY4BwPuxBv437BEvs6G0yQdGIkmDZ2GIY+503Xuc58+pM5ZWAbL/09Fxo91+IPjto/mAVfofgCFIE5ev1J000AAAAASUVORK5CYII="/> Fullscreen
+							</a>
+						</td>
+						<td>
+							<a class="x_ite-button" href="http://create3000.de/x_ite/" target="_blank" title="Visit X_ITE Project Page">
+								<img alt="Visit X_ITE Project Page"
+									  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4QkbAjgtygDkiAAAALZJREFUGJWNz79KwgEUxfHPjxqMEDJcglx8AHVr7CWC8AGcnHqDHkTCtTnEwcFRaYgaDEQR3HwAFfqDNXSH30/iVwcOl3v53gPnQFbXKGPpH+phhfO/wBLe8IUnHOXBrQBHMe/y4CE2KKIfD+3fwDN84j72Uyzwjst9+CaSrlK3BrZ+ClfS8BhrHO+F3EbIIwoJqpjHoYNauI6T1GP3EE0kuAjDB2Z4wASvGCcYYIdnvISnUTijbyCeKOqbjQtuAAAAAElFTkSuQmCC"/> X_ITE
+							</a>
+						</td>
+					</tr>
+				</table>
 			</div>
 		</header>
 		<div class="main">
 			<div>
-				<X3DCanvas id="browser" class="browser" src="http://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/ECMAScriptSaiPerFrameNotification.x3d">
+				<X3DCanvas id="browser" class="browser" src="http://www.web3d.org/x3d/content/examples/Basic/CAD/CadDesignPatternExampleBushing.x3d">
 					<p class="fallback">Sorry!<br/>
 						<br/>
 						Your browser may not support all features required by <a href="http://create3000.de/x_ite/" target="_blank">X_ITE!</a>

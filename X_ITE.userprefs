@@ -1,8 +1,14 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode.js" Line="101" Column="38" />
+      <File FileName="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js" Line="143" Column="38" />
+      <File FileName="src/x_ite/Browser/Core/BrowserTimings.js" Line="194" Column="61" />
+      <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="311" Column="8" />
+      <File FileName="src/x_ite/Browser/X3DBrowserContext.js" Line="276" Column="22" />
+      <File FileName="src/x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext.js" Line="289" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
