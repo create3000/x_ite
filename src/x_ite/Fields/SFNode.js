@@ -95,7 +95,7 @@ function ($, X3DField, X3DConstants)
 					field      = target .getValue () .getField (key),
 					accessType = field .getAccessType ();
 
-				if (accessType & X3DConstants .inputOnly)
+				if (accessType !== X3DConstants .outputOnly)
 					field .setValue (value);
 
 	 			return true;

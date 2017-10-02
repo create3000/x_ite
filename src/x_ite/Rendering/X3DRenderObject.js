@@ -608,7 +608,7 @@ function ($,
 		   {
 				// Terrain following and gravitation
 
-				if (this .getBrowser () .getActiveLayer () .getNavigationInfo () === this .getNavigationInfo ())
+				if (this .getBrowser () .getActiveLayer () === this)
 				{
 					if (this .getBrowser () .getCurrentViewer () !== "WALK")
 						return;
