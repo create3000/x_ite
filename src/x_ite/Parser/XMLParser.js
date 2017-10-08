@@ -700,9 +700,9 @@ function ($,
 				if (! localNodeName)
 					localNodeName = exportedNodeName;
 
-				var namedNode = this .getExecutionContext () .getNamedNode (inlineNodeName);
+				var inlineNode = this .getExecutionContext () .getNamedNode (inlineNodeName);
 
-				this .getExecutionContext () .updateImportedNode (namedNode, exportedNodeName, localNodeName);
+				this .getExecutionContext () .updateImportedNode (inlineNode, exportedNodeName, localNodeName);
 			}
 			catch (error)
 			{

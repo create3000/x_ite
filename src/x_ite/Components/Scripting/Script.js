@@ -522,7 +522,6 @@ function ($,
 		{
 			console .error ("JavaScript Error in Script '" + this .getName () + "', function '" + callback + "'\nworld url is '" + this .getExecutionContext () .getURL () + "':");
 			console .error (error);
-			console .error (this .url_ .toString ());
 		},
 	});
 

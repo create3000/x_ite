@@ -192,8 +192,8 @@ function ($,
 
 				if (proto)
 				{
-					//this .copyImportedNodes (proto);
-					this .copyRoutes (proto .routes);
+					this .copyImportedNodes (proto, proto .importedNodes);
+					this .copyRoutes (proto, proto .routes);
 				}
 
 				// TODO: connect getRootNodes () to X3DChildObject .prototype .addEvent .call (this);
@@ -249,7 +249,27 @@ function ($,
 				rootNodes2 .push (value);
 			}
 		},
-		copyRoutes: function (routes)
+		copyImportedNodes: function (executionContext, importedNodes)
+		{
+			for (var importedName in importedNodes)
+			{
+				try
+				{
+					var
+						importedNode = importedNodes [importedName],
+						inlineNode   = this .getNamedNode (importedNode .getInlineNode () .getName ()),
+						exportedName = importedNode .getExportedName (),
+						importedName = importedNode .getImportedName ();
+
+					this .addImportedNode (inlineNode, exportedName, importedName);
+				}
+				catch (error)
+				{
+					console .error ("Bad IMPORT specification in copy: ", error);
+				}
+			}
+		},
+		copyRoutes: function (executionContext, routes)
 		{
 			for (var i = 0, length = routes .length; i < length; ++ i)
 			{
@@ -257,8 +277,8 @@ function ($,
 				{
 					var
 						route           = routes [i],
-						sourceNode      = this .getExecutionContext () .getLocalNode (route .getExecutionContext () .getLocalName (route .sourceNode)),
-						destinationNode = this .getExecutionContext () .getLocalNode (route .getExecutionContext () .getLocalName (route .destinationNode));
+						sourceNode      = this .getLocalNode (executionContext .getLocalName (route .sourceNode)),
+						destinationNode = this .getLocalNode (executionContext .getLocalName (route .destinationNode));
 
 					// new Route ... addUninitializedNode ...
 					this .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
