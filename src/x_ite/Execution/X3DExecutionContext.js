@@ -327,6 +327,25 @@ function ($,
 			if (importedName .length === 0)
 				throw new Error ("Couldn't update imported node: imported name is empty.");
 
+			// Update existing imported node.
+
+			for (var key in this .importedNodes)
+			{
+				var importedNode = this .importedNodes [key];
+				
+				if (importedNode .getInlineNode () === inlineNode && importedNode .getExportedName () === exportedName)
+				{
+					delete this .importedNodes [key];
+					
+					this .importedNodes [importedName] = importedNode;
+					
+					importedNode .setImportedName (importedName);
+					return;
+				}
+			}
+
+			// Add new imported node.
+
 			this .removeImportedNode (importedName);
 
 			this .importedNodes [importedName] = new ImportedNode (this, inlineNode, exportedName, importedName);
@@ -370,6 +389,29 @@ function ($,
 				throw new Error ("Unknown named or imported node '" + name + "'.");
 			}
 		},
+		getLocalName: function (node)
+		{
+			if (! (node instanceof Fields .SFNode))
+				throw new Error ("Couldn't get local name: node is NULL.");
+				
+			if (node .getValue () .getExecutionContext () === this)
+				return node .getValue () .getName ();
+
+			for (var key in this .importedNodes)
+			{
+				try
+				{
+					var importedNode = this .importedNodes [key];
+				
+					if (importedNode .getExportedNode () === node)
+						return key;
+				}
+				catch (error)
+				{ }
+			}
+
+			throw new Error ("Couldn't get local name: node is shared.");
+		},
 		setRootNodes: function () { },
 		getRootNodes: function ()
 		{
@@ -393,48 +435,84 @@ function ($,
 		},
 		addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
 		{
+			sourceField      = String (sourceField);
+			destinationField = String (destinationField);
+
+			if (! (sourceNode instanceof Fields .SFNode))
+				throw new Error ("Bad ROUTE specification: source node must be of type SFNode.");
+
+			if (! (destinationNode instanceof Fields .SFNode))
+				throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
+
+			sourceNode      = sourceNode      .getValue ();
+			destinationNode = destinationNode .getValue ();
+
+			if (! sourceNode)
+				throw new Error ("Bad ROUTE specification: source node is NULL.");
+
+			if (! destinationNode)
+				throw new Error ("Bad ROUTE specification: destination node is NULL.");
+
+			// Imported nodes handling.
+
+			var
+				importedSourceNode      = sourceNode      instanceof ImportedNode ? sourceNode      : null,
+				importedDestinationNode = destinationNode instanceof ImportedNode ? destinationNode : null;
+
 			try
 			{
-				sourceField      = String (sourceField);
-				destinationField = String (destinationField);
+				// If sourceNode is shared node try to find the corresponding ImportedNode.
+				if (sourceNode .getExecutionContext () !== this)
+					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
+			}
+			catch (error)
+			{
+				// Source node is shared but not imported.
+			}
 
-				if (! (sourceNode instanceof Fields .SFNode))
-					throw new Error ("Bad ROUTE specification: source node must be of type SFNode.");
+			try
+			{
+				// If destinationNode is shared node try to find the corresponding ImportedNode.
+				if (destinationNode .getExecutionContext () !== this)
+					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
+			}
+			catch (error)
+			{
+				// Destination node is shared but not imported.
+			}
 
-				if (! (destinationNode instanceof Fields .SFNode))
-					throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
+			if (importedSourceNode instanceof ImportedNode)
+				importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
 
-				sourceNode      = sourceNode      .getValue ();
-				destinationNode = destinationNode .getValue ();
+			if (importedDestinationNode instanceof ImportedNode)
+				importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
 
-				if (! sourceNode)
-					throw new Error ("Bad ROUTE specification: source node is NULL.");
+			// If either sourceNode or destinationNode is an ImportedNode return here without value.
+			if (importedSourceNode === sourceNode || importedDestinationNode === destinationNode)
+				return;
 
-				if (! destinationNode)
-					throw new Error ("Bad ROUTE specification: destination node is NULL.");
+			// Create route and return.
 
-				if (sourceNode instanceof ImportedNode || destinationNode instanceof ImportedNode)
-				{
-					if (sourceNode instanceof ImportedNode)
-						sourceNode .addRoute (sourceNode, sourceField, destinationNode, destinationField);
-
-					if (destinationNode instanceof ImportedNode)
-						destinationNode .addRoute (sourceNode, sourceField, destinationNode, destinationField);
-
-					return;
-				}
+			return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+		},
+		addSimpleRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+		{
+			try
+			{
+				// Private function.
+				// Create route and return.
 
 				sourceField      = sourceNode      .getField (sourceField),
 				destinationField = destinationNode .getField (destinationField);
 
 				if (! sourceField .isOutput ())
-					throw new Error ("Bad ROUTE specification: Field named '" + sourceField .getName () + "' in node named '" + sourceNode .getName () + "' of type " + sourceNode .getTypeName () + " is not an output field.");
+					throw new Error ("Field named '" + sourceField .getName () + "' in node named '" + sourceNode .getName () + "' of type " + sourceNode .getTypeName () + " is not an output field.");
 
 				if (! destinationField .isInput ())
-					throw new Error ("Bad ROUTE specification: Field named '" + destinationField .getName () + "' in node named '" + destinationNode .getName () + "' of type " + destinationNode .getTypeName () + " is not an input field.");
+					throw new Error ("Field named '" + destinationField .getName () + "' in node named '" + destinationNode .getName () + "' of type " + destinationNode .getTypeName () + " is not an input field.");
 
 				if (sourceField .getType () !== destinationField .getType ())
-					throw new Error ("Bad ROUTE specification: ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
+					throw new Error ("ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
 
 				var id = sourceField .getId () + "." + destinationField .getId ();
 

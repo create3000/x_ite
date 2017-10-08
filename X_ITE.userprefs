@@ -1,12 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Rendering/X3DRenderObject.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/InputOutput/Generator.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="285" Column="69" />
+      <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Scripting/Script.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/X3DBrowserContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="609" Column="1" />
+      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Fields/SFNode.js" Line="16" Column="34" />
+      <File FileName="src/x_ite/Execution/ImportedNode.js" Line="226" Column="29" />
+      <File FileName="src/x_ite/InputOutput/Generator.js" Line="159" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

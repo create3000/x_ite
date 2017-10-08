@@ -255,13 +255,13 @@ function ($,
 			{
 				try
 				{
-					var route = routes [i];
+					var
+						route           = routes [i],
+						sourceNode      = this .getExecutionContext () .getLocalNode (route .getExecutionContext () .getLocalName (route .sourceNode)),
+						destinationNode = this .getExecutionContext () .getLocalNode (route .getExecutionContext () .getLocalName (route .destinationNode));
 
 					// new Route ... addUninitializedNode ...
-					this .addRoute (this .getNamedNode (route .sourceNode .getNodeName ()),
-					                route .sourceField,
-					                this .getNamedNode (route .destinationNode .getNodeName ()),
-					                route .destinationField);
+					this .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
 				}
 				catch (error)
 				{

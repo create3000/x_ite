@@ -101,6 +101,10 @@ function ($,
 		{
 			return this .inlineNode .getInternalScene () .getExportedNode (this .exportedName);
 		},
+		setImportedName: function (value)
+		{
+			this .importedName = value;
+		},
 		getImportedName: function ()
 		{
 			return this .importedName;
@@ -119,10 +123,10 @@ function ($,
 				destinationField: destinationField,
 			};
 
-			// Try to resolve source or destination node.
+			// Try to resolve source or destination node routes.
 
 			if (this .inlineNode .checkLoadState () === X3DConstants .COMPLETE_STATE)
-				return this .resolveRoute (id);
+				this .resolveRoute (id);
 		},
 		resolveRoute: function (id)
 		{
@@ -144,7 +148,7 @@ function ($,
 				if (destinationNode instanceof ImportedNode)
 					destinationNode = destinationNode .getExportedNode () .getValue ();
 
-				return route ._route = this .getExecutionContext () .addRoute (new Fields .SFNode (sourceNode), sourceField, new Fields .SFNode (destinationNode), destinationField);
+				route ._route = this .getExecutionContext () .addSimpleRoute (new Fields .SFNode (sourceNode), sourceField, new Fields .SFNode (destinationNode), destinationField);
 			}
 			catch (error)
 			{
@@ -178,19 +182,12 @@ function ($,
 				}
 				case X3DConstants .COMPLETE_STATE:
 				{
+					var routes = this .routes;
+
 					this .deleteRoutes ();
 
-					try
-					{
-						var routes = this .routes;
-
-						for (var id in routes)
-							this .resolveRoute (id);
-					}
-					catch (error)
-					{
-						console .error (error);
-					}
+					for (var id in routes)
+						this .resolveRoute (id);
 
 					break;
 				}
@@ -246,13 +243,14 @@ function ($,
 							if (sourceNode instanceof ImportedNode)
 								var sourceNodeName = sourceNode .getImportedName ();
 							else
-								var sourceNodeName = sourceNode .getName ();
+								var sourceNodeName = Generator .Name (sourceNode);
 	
 							if (destinationNode instanceof ImportedNode)
 								var destinationNodeName = destinationNode .getImportedName ();
 							else
-								var sourceNodeName = destinationNode .getName ();
+								var destinationNodeName = Generator .Name (destinationNode);
 	
+							stream .string += "\n";
 							stream .string += "\n";
 							stream .string += Generator .Indent ();
 							stream .string += "<ROUTE";
