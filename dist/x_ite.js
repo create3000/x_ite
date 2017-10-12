@@ -1,4 +1,4 @@
-/* X_ITE v4.0.7a-143 */
+/* X_ITE v4.0.7a-144 */
 
 (function () {
 
@@ -74375,6 +74375,17 @@ function ($, X3DBaseNode)
 		{
 			if (! equals (this .collected, this .array))
 			{
+				for (var i = 0, length = this .array .length; i < length; ++ i)
+				{
+					var node = this .array [i];
+
+					if (this .collected .indexOf (node) < 0)
+					{
+						if (node .isBound_ .getValue ())
+							node .set_bind_ = false;							
+					}
+				}
+
 				// Swap arrays.
 
 				var tmp = this .array;

@@ -3,6 +3,7 @@
   <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="18" Column="1" />
+      <File FileName="src/x_ite/Components/Time/TimeSensor.js" Line="183" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
