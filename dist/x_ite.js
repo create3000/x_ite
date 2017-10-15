@@ -56142,12 +56142,12 @@ function ($,
 		},
 		setRange: function (currentFraction, firstFraction, lastFraction)
 		{
-			this .fraction = currentFraction;
+			this .fraction = currentFraction >= 1 ? 0 : currentFraction;
 			this .first    = firstFraction;
 			this .last     = lastFraction;
 			this .scale    = this .last - this .first;
 
-			var offset = (currentFraction -  this .first) * this .cycleInterval_ .getValue ();
+			var offset = (this .fraction -  this .first) * this .cycleInterval_ .getValue ();
 
 			this .interval = this .cycleInterval_ .getValue () * this .scale;
 			this .cycle    = this .getBrowser () .getCurrentTime () - offset;
@@ -56198,14 +56198,15 @@ function ($,
 					{
 						this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-						this .fraction_changed_ = this .last;
-						this .elapsedTime_      = this .getElapsedTime ();
-						this .cycleTime_        = time;
+						this .fraction_changed_ = this .fraction = this .last;
+						
+						this .elapsedTime_ = this .getElapsedTime ();
+						this .cycleTime_   = time;
 					}
 				}
 				else
 				{
-					this .fraction_changed_ = this .last;
+					this .fraction_changed_ = this .fraction = this .last;
 					this .stop ();
 				}
 			}
