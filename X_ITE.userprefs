@@ -1,14 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="package.json">
     <Files>
       <File FileName="src/x_ite.html" Line="17" Column="16" />
       <File FileName="src/x_ite/Components/Time/TimeSensor.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Execution/BindableList.js" Line="1" Column="1" />
+      <File FileName="package.json" Line="5" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-</Properties> 
+</Properties>
