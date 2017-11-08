@@ -106,6 +106,10 @@ function ($,
 		{
 			return this .visible_;
 		},
+		remove: function ()
+		{
+			this .set_children__ ();
+		},
 	});
 
 	return CADLayer;

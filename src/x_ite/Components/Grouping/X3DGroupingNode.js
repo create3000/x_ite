@@ -199,9 +199,9 @@ function ($,
 			                                this .removeChildren_, 0, this .removeChildren_ .length),
 			                        this .children_ .length);
 
+			this .remove (this .removeChildren_);
+
 			this .removeChildren_ .set ([ ]);
-			
-			this .set_children__ ();
 		},
 		set_children__: function ()
 		{
@@ -270,6 +270,114 @@ function ($,
 
 									this .maybeCameraObjects .push (innerNode);
 									this .childNodes .push (innerNode);
+									break;
+								}
+								case X3DConstants .BooleanFilter:
+								case X3DConstants .BooleanToggle:
+								case X3DConstants .NurbsOrientationInterpolator:
+								case X3DConstants .NurbsPositionInterpolator:
+								case X3DConstants .NurbsSurfaceInterpolator:
+								case X3DConstants .TimeSensor:
+								case X3DConstants .X3DFollowerNode:
+								case X3DConstants .X3DInfoNode:
+								case X3DConstants .X3DInterpolatorNode:
+								case X3DConstants .X3DLayoutNode:
+								case X3DConstants .X3DScriptNode:
+								case X3DConstants .X3DSequencerNode:
+								case X3DConstants .X3DTriggerNode:
+									break;
+								default:
+									continue;
+							}
+
+							break;
+						}
+					}
+					catch (error)
+					{ }
+				}
+			}
+
+			this .set_cameraObjects__ ();
+		},
+		remove: function (children)
+		{
+			for (var i = 0, length = children .length; i < length; ++ i)
+			{
+				var child = children [i];
+
+				if (child)
+				{
+					try
+					{
+						var
+							innerNode = child .getValue () .getInnerNode (),
+							type      = innerNode .getType ();
+
+						for (var t = type .length - 1; t >= 0; -- t)
+						{
+							switch (type [t])
+							{
+								case X3DConstants .X3DPointingDeviceSensorNode:
+								{
+									var index = this .pointingDeviceSensors .indexOf (innerNode);
+
+									if (index >= 0)
+										this .pointingDeviceSensors .splice (index, 1);
+
+									break;
+								}
+								case X3DConstants .ClipPlane:
+								{
+									var index = this .clipPlanes .indexOf (innerNode);
+
+									if (index >= 0)
+										this .clipPlanes .splice (index, 1);
+
+									break;
+								}
+								case X3DConstants .LocalFog:
+								{
+									var index = this .localFogs .indexOf (innerNode);
+
+									if (index >= 0)
+										this .localFogs .splice (index, 1);
+
+									break;
+								}
+								case X3DConstants .X3DLightNode:
+								{
+									var index = this .lights .indexOf (innerNode);
+
+									if (index >= 0)
+										this .lights .splice (index, 1);
+
+									break;
+								}
+								case X3DConstants .X3DBindableNode:
+								{
+									var index = this .maybeCameraObjects .indexOf (innerNode);
+
+									if (index >= 0)
+										this .maybeCameraObjects .splice (index, 1);
+
+									break;				
+								}
+								case X3DConstants .X3DBackgroundNode:
+								case X3DConstants .X3DChildNode:
+								{
+									innerNode .isCameraObject_ .removeInterest ("set_cameraObjects__", this);
+
+									var index = this .maybeCameraObjects .indexOf (innerNode);
+
+									if (index >= 0)
+										this .maybeCameraObjects .splice (index, 1);
+
+									var index = this .childNodes .indexOf (innerNode);
+
+									if (index >= 0)
+										this .childNodes .splice (index, 1);
+
 									break;
 								}
 								case X3DConstants .BooleanFilter:
