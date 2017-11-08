@@ -62080,8 +62080,10 @@ function ($,
 				this .children_ .addInterest ("connectChildren", this);
 			}
 
+			var first = this .children_ .length;
+
 			this .children_ .insert (this .children_ .length, this .addChildren_, 0, this .addChildren_ .length);
-			this .add (this .addChildren_);
+			this .add (first, this .addChildren_);
 
 			this .addChildren_ .set ([ ]);
 			this .addChildren_ .setTainted (false);
@@ -62111,14 +62113,14 @@ function ($,
 		set_children__: function ()
 		{
 			this .clear ();
-			this .add (this .children_);
+			this .add (0, this .children_);
 		},
 		connectChildren: function ()
 		{
 			this .children_ .removeInterest ("connectChildren", this);
 			this .children_ .addInterest ("set_children__", this);
 		},
-		add: function (children)
+		add: function (first, children)
 		{
 			if (this .hidden)
 				return;
@@ -62127,11 +62129,11 @@ function ($,
 				visible    = this .getVisible (),
 				numVisible = visible .length;
 
-			for (var i = 0, length = children .length; i < length; ++ i)
+			for (var i = 0, v = first, length = children .length; i < length; ++ i, ++ v)
 			{
 				var child = children [i];
 
-				if (child && (i >= numVisible || visible [i]))
+				if (child && (v >= numVisible || visible [v]))
 				{
 					try
 					{
