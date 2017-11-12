@@ -110,7 +110,7 @@ function ($, X3DField, SFColor, X3DConstants, Color4)
 			this .getValue () .setHSVA (h, s, v, a);
 			this .addEvent ();
 		},
-		toString: SFColor .prototype .toString,
+		toStream: SFColor .prototype .toStream,
 		toXMLStream: SFColor .prototype .toXMLStream,
 	});
 

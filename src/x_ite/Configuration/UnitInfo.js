@@ -68,7 +68,9 @@ function ($,
 		constructor: UnitInfo,
 		toXMLStream: function (stream)
 		{
-			stream .string += Generator .Indent ();
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
 			stream .string += "<unit";
 			stream .string += " ";
 			stream .string += "category='";
@@ -76,7 +78,7 @@ function ($,
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "name='";
-			stream .string += Generator .XMLEncode (this .name);
+			stream .string += generator .XMLEncode (this .name);
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "conversionFactor='";

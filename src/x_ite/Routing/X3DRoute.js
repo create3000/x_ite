@@ -151,18 +151,19 @@ function ($,
 		toXMLStream: function (stream)
 		{
 			var
-				sourceNodeName      = Generator .LocalName (this .getSourceNode ()),
-				destinationNodeName = Generator .LocalName (this .getDestinationNode ());
+				generator           = Generator .Get (stream),
+				sourceNodeName      = generator .LocalName (this .getSourceNode ()),
+				destinationNodeName = generator .LocalName (this .getDestinationNode ());
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<ROUTE";
 			stream .string += " ";
 			stream .string += "fromNode='";
-			stream .string += Generator .XMLEncode (sourceNodeName);
+			stream .string += generator .XMLEncode (sourceNodeName);
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "fromField='";
-			stream .string += Generator .XMLEncode (this ._sourceField .getName ());
+			stream .string += generator .XMLEncode (this ._sourceField .getName ());
 
 			if (this ._sourceField .getAccessType () === X3DConstants .inputOutput)
 				stream .string += "_changed";
@@ -170,7 +171,7 @@ function ($,
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "toNode='";
-			stream .string += Generator .XMLEncode (destinationNodeName);
+			stream .string += generator .XMLEncode (destinationNodeName);
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "toField='";
@@ -178,7 +179,7 @@ function ($,
 			if (this ._destinationField .getAccessType () === X3DConstants .inputOutput)
 				stream .string += "set_";
 
-			stream .string += Generator .XMLEncode (this ._destinationField .getName ());
+			stream .string += generator .XMLEncode (this ._destinationField .getName ());
 			stream .string += "'";
 			stream .string += "/>";
 		},

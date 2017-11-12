@@ -244,23 +244,32 @@ function ($, X3DField, X3DConstants)
 
 			return null;	
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
 			var node = this .getValue ();
 
-			return node ? node .toString () : "NULL";
+			if (node)
+				node .toStream (stream);
+			else
+				stream .string += "NULL";
 		},
-		toVRMLString: function ()
+		toVRMLStream: function (stream)
 		{
 			var node = this .getValue ();
 
-			return node ? node .toVRMLString () : "NULL";
+			if (node)
+				node .toVRMLStream (stream);
+			else
+				stream .string += "NULL";
 		},
 		toXMLStream: function (stream)
 		{
 			var node = this .getValue ();
 
-			stream .string += node ? node .toXMLString () : "NULL";
+			if (node)
+				node .toXMLStream (stream);
+			else
+				stream .string += "NULL";
 		},
 		dispose: function ()
 		{

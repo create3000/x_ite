@@ -215,11 +215,13 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += Generator .Indent ();
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
 			stream .string += "<ExternProtoDeclare";
 			stream .string += " ";
 			stream .string += "name='";
-			stream .string += Generator .XMLEncode (this .getName ());
+			stream .string += generator .XMLEncode (this .getName ());
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "url='";
@@ -229,7 +231,7 @@ function ($,
 			stream .string += "'";
 			stream .string += ">\n";
 
-			Generator .IncIndent ();
+			generator .IncIndent ();
 
 			var fields = this .getUserDefinedFields ();
 
@@ -237,11 +239,11 @@ function ($,
 			{
 				var field = fields [name];
 
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "<field";
 				stream .string += " ";
 				stream .string += "accessType='";
-				stream .string += Generator .AccessType (field .getAccessType ());
+				stream .string += generator .AccessType (field .getAccessType ());
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "type='";
@@ -249,14 +251,14 @@ function ($,
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "name='";
-				stream .string += Generator .XMLEncode (field .getName ());
+				stream .string += generator .XMLEncode (field .getName ());
 				stream .string += "'";
 				stream .string += "/>\n";
 			}
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "</ExternProtoDeclare>";
 		},
 	});

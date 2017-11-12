@@ -135,13 +135,13 @@ function ($, SFVec3, X3DField, X3DConstants, Rotation4)
 		{
 			return new SFRotation (Rotation4 .slerp (this .getValue (), rotation .getValue (), t));
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
-			return this .getValue () .toString ();
+			stream .string += this .getValue () .toString ();
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += this .getValue () .toString ();
+			this .toStream (stream);
 		},
 	});
 

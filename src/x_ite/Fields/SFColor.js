@@ -114,13 +114,13 @@ function ($, Color3, X3DField, X3DConstants)
 			this .getValue () .setHSV (h, s, v);
 			this .addEvent ();
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
-			return this .getValue () .toString ();
+			stream .string += this .getValue () .toString ();
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += this .getValue () .toString ();
+			this .toStream (stream);
 		},
 	});
 

@@ -121,39 +121,41 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += Generator .Indent ();
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
 			stream .string += "<ProtoDeclare";
 			stream .string += " ";
 			stream .string += "name='";
-			stream .string += Generator .XMLEncode (this .getName ());
+			stream .string += generator .XMLEncode (this .getName ());
 			stream .string += "'";
 			stream .string += ">";
 			stream .string += "\n";
 		
 			// <ProtoInterface>
 
-			Generator .EnterScope ();
+			generator .EnterScope ();
 		
 			var userDefinedFields = this .getUserDefinedFields ();
 
 			if (! $.isEmptyObject (userDefinedFields))
 			{
-				Generator .IncIndent ();
+				generator .IncIndent ();
 
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "<ProtoInterface>\n";
 
-				Generator .IncIndent ();
+				generator .IncIndent ();
 
 				for (var name in userDefinedFields)
 				{
 					var field = userDefinedFields [name];
 
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "<field";
 					stream .string += " ";
 					stream .string += "accessType='";
-					stream .string += Generator .AccessType (field .getAccessType ());
+					stream .string += generator .AccessType (field .getAccessType ());
 					stream .string += "'";
 					stream .string += " ";
 					stream .string += "type='";
@@ -161,7 +163,7 @@ function ($,
 					stream .string += "'";
 					stream .string += " ";
 					stream .string += "name='";
-					stream .string += Generator .XMLEncode (field .getName ());
+					stream .string += generator .XMLEncode (field .getName ());
 					stream .string += "'";
 
 					if (field .isDefaultValue ())
@@ -175,22 +177,22 @@ function ($,
 							case X3DConstants .SFNode:
 							case X3DConstants .MFNode:
 							{
-								Generator .PushContainerField (null);
+								generator .PushContainerField (null);
 		
 								stream .string += ">\n";
 
-								Generator .IncIndent ();
+								generator .IncIndent ();
 
 								field .toXMLStream (stream);
 
 								stream .string += "\n";
 
-								Generator .DecIndent ();
+								generator .DecIndent ();
 
-								stream .string += Generator .Indent ();
+								stream .string += generator .Indent ();
 								stream .string += "</field>\n";
 
-								Generator .PopContainerField ();
+								generator .PopContainerField ();
 								break;
 							}
 							default:
@@ -208,39 +210,39 @@ function ($,
 					}
 				}
 		
-				Generator .DecIndent ();
+				generator .DecIndent ();
 
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "</ProtoInterface>\n";
 
-				Generator .DecIndent ();
+				generator .DecIndent ();
 			}
 		
-			Generator .LeaveScope ();
+			generator .LeaveScope ();
 		
 			// </ProtoInterface>
 
 			// <ProtoBody>
 		
-			Generator .IncIndent ();
+			generator .IncIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<ProtoBody>\n";
 
-			Generator .IncIndent ();
+			generator .IncIndent ();
 
 			X3DExecutionContext .prototype .toXMLStream .call (this, stream);
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "</ProtoBody>\n";
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 		
 			// </ProtoBody>
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "</ProtoDeclare>";
 		},
 	});

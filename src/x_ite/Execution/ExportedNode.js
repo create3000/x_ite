@@ -81,20 +81,22 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var localName = Generator .LocalName (this .localNode);
+			var
+				generator = Generator .Get (stream),
+				localName = generator .LocalName (this .localNode);
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<EXPORT";
 			stream .string += " ";
 			stream .string += "localDEF='";
-			stream .string += Generator .XMLEncode (localName);
+			stream .string += generator .XMLEncode (localName);
 			stream .string += "'";
 
 			if (this .exportedName !== localName)
 			{
 				stream .string += " ";
 				stream .string += "AS='";
-				stream .string += Generator .XMLEncode (this .exportedName);
+				stream .string += generator .XMLEncode (this .exportedName);
 				stream .string += "'";
 			}
 

@@ -77,7 +77,9 @@ function ($,
 		constructor: ComponentInfo,
 		toXMLStream: function (stream)
 		{
-			stream .string += Generator .Indent ();
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
 			stream .string += "<component";
 			stream .string += " ";
 			stream .string += "name='";

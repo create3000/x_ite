@@ -183,11 +183,13 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var length = this .length;
+			var
+				generator = Generator .Get (stream),
+				length    = this .length;
 
 			if (length)
 			{
-				Generator .EnterScope ();
+				generator .EnterScope ();
 
 				var value = this .getValue ();
 
@@ -202,7 +204,7 @@ function ($,
 					}
 					else
 					{
-						stream .string += Generator .Indent ();
+						stream .string += generator .Indent ();
 						stream .string += "<!-- NULL -->\n";
 					}
 				}
@@ -215,11 +217,11 @@ function ($,
 				}
 				else
 				{
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "<!-- NULL -->";
 				}
 
-				Generator .LeaveScope ();
+				generator .LeaveScope ();
 			}
 		},
 	});

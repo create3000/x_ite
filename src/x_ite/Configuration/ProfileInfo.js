@@ -70,8 +70,7 @@ function ($)
 	{
 		constructor: ProfileInfo,
 		toXMLStream: function (stream)
-		{
-		},
+		{ },
 	});
 
 	return ProfileInfo;

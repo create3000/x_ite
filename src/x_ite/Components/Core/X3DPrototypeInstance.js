@@ -291,33 +291,35 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			if (Generator .IsSharedNode (this))
+			var generator = Generator .Get (stream);
+
+			if (generator .IsSharedNode (this))
 			{
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "<!-- NULL -->";		
 				return;
 			}
 
-			Generator .EnterScope ();
+			generator .EnterScope ();
 
-			var name = Generator .Name (this);
+			var name = generator .Name (this);
 
 			if (name .length)
 			{
-				if (Generator .ExistsNode (this))
+				if (generator .ExistsNode (this))
 				{
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "<ProtoInstance";
 					stream .string += " ";
 					stream .string += "name='";
-					stream .string += Generator .XMLEncode (this .getTypeName ());
+					stream .string += generator .XMLEncode (this .getTypeName ());
 					stream .string += "'";
 					stream .string += " ";
 					stream .string += "USE='";
-					stream .string += Generator .XMLEncode (name);
+					stream .string += generator .XMLEncode (name);
 					stream .string += "'";
 
-					var containerField = Generator .ContainerField ();
+					var containerField = generator .ContainerField ();
 
 					if (containerField)
 					{
@@ -325,36 +327,36 @@ function ($,
 						{
 							stream .string += " ";
 							stream .string += "containerField='";
-							stream .string += Generator .XMLEncode (containerField .getName ());
+							stream .string += generator .XMLEncode (containerField .getName ());
 							stream .string += "'";
 						}
 					}
 
 					stream .string += "/>";
 
-					Generator .LeaveScope ();
+					generator .LeaveScope ();
 					return;
 				}
 			}
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<ProtoInstance";
 			stream .string += " ";
 			stream .string += "name='";
-			stream .string += Generator .XMLEncode (this .getTypeName ());
+			stream .string += generator .XMLEncode (this .getTypeName ());
 			stream .string += "'";
 
 			if (name .length)
 			{
-				Generator .AddNode (this);
+				generator .AddNode (this);
 
 				stream .string += " ";
 				stream .string += "DEF='";
-				stream .string += Generator .XMLEncode (name);
+				stream .string += generator .XMLEncode (name);
 				stream .string += "'";
 			}
 
-			var containerField = Generator .ContainerField ();
+			var containerField = generator .ContainerField ();
 
 			if (containerField)
 			{
@@ -362,7 +364,7 @@ function ($,
 				{
 					stream .string += " ";
 					stream .string += "containerField='";
-					stream .string += Generator .XMLEncode (containerField .getName ());
+					stream .string += generator .XMLEncode (containerField .getName ());
 					stream .string += "'";
 				}
 			}
@@ -391,7 +393,7 @@ function ($,
 			{
 				stream .string += ">\n";
 
-				Generator .IncIndent ();
+				generator .IncIndent ();
 
 				var references = [ ];
 
@@ -404,7 +406,7 @@ function ($,
 
 					var mustOutputValue = false;
 
-					if (Generator .ExecutionContext ())
+					if (generator .ExecutionContext ())
 					{
 						if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
 						{
@@ -425,7 +427,7 @@ function ($,
 					// If we have no execution context we are not in a proto and must not generate IS references the same is true
 					// if the node is a shared node as the node does not belong to the execution context.
 
-					if ($.isEmptyObject (field .getReferences ()) || ! Generator .ExecutionContext () || mustOutputValue)
+					if ($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext () || mustOutputValue)
 					{
 						if (mustOutputValue)
 							references .push (field);
@@ -434,11 +436,11 @@ function ($,
 						{
 							case X3DConstants .MFNode:
 							{
-								stream .string += Generator .Indent ();
+								stream .string += generator .Indent ();
 								stream .string += "<fieldValue";
 								stream .string += " ";
 								stream .string += "name='";
-								stream .string += Generator .XMLEncode (field .getName ());
+								stream .string += generator .XMLEncode (field .getName ());
 								stream .string += "'";
 
 								if (field .length === 0)
@@ -449,15 +451,15 @@ function ($,
 								{
 									stream .string += ">\n";
 
-									Generator .IncIndent ();
+									generator .IncIndent ();
 
 									field .toXMLStream (stream);
 
 									stream .string += "\n";
 
-									Generator .DecIndent ();
+									generator .DecIndent ();
 
-									stream .string += Generator .Indent ();
+									stream .string += generator .Indent ();
 									stream .string += "</fieldValue>\n";
 								}
 
@@ -467,23 +469,23 @@ function ($,
 							{
 								if (field .getValue () !== null)
 								{
-									stream .string += Generator .Indent ();
+									stream .string += generator .Indent ();
 									stream .string += "<fieldValue";
 									stream .string += " ";
 									stream .string += "name='";
-									stream .string += Generator .XMLEncode (field .getName ())
+									stream .string += generator .XMLEncode (field .getName ())
 									stream .string += "'";
 									stream .string += ">\n";
 									
-									Generator .IncIndent ();
+									generator .IncIndent ();
 
 									field .toXMLStream (stream);
 
 									stream .string += "\n";
 
-									Generator .DecIndent ();
+									generator .DecIndent ();
 
-									stream .string += Generator .Indent ();
+									stream .string += generator .Indent ();
 									stream .string += "</fieldValue>\n";		
 									break;
 								}
@@ -492,11 +494,11 @@ function ($,
 							}
 							default:
 							{
-								stream .string += Generator .Indent ();
+								stream .string += generator .Indent ();
 								stream .string += "<fieldValue";
 								stream .string += " ";
 								stream .string += "name='";
-								stream .string += Generator .XMLEncode (field .getName ())
+								stream .string += generator .XMLEncode (field .getName ())
 								stream .string += "'";
 								stream .string += " ";
 								stream .string += "value='";
@@ -517,11 +519,11 @@ function ($,
 
 				if (references .length)
 				{
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "<IS>";
 					stream .string += "\n";
 
-					Generator .IncIndent ();
+					generator .IncIndent ();
 		
 					for (var i = 0, length = references .length; i < length; ++ i)
 					{
@@ -533,23 +535,23 @@ function ($,
 						{
 							var protoField = protoFields [id];
 
-							stream .string += Generator .Indent ();
+							stream .string += generator .Indent ();
 							stream .string += "<connect";
 							stream .string += " ";
 							stream .string += "nodeField='";
-							stream .string += Generator .XMLEncode (field .getName ());
+							stream .string += generator .XMLEncode (field .getName ());
 							stream .string += "'";
 							stream .string += " ";
 							stream .string += "protoField='";
-							stream .string += Generator .XMLEncode (protoField .getName ());
+							stream .string += generator .XMLEncode (protoField .getName ());
 							stream .string += "'";
 							stream .string += "/>\n";
 						}
 					}
 
-					Generator .DecIndent ();
+					generator .DecIndent ();
 
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "</IS>\n";
 				}
 
@@ -563,13 +565,13 @@ function ($,
 					}
 				}
 
-				Generator .DecIndent ();
+				generator .DecIndent ();
 
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "</ProtoInstance>";
 			}
 
-			Generator .LeaveScope ();
+			generator .LeaveScope ();
 		},
 	});
 

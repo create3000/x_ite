@@ -148,7 +148,7 @@ function ($,
 				if (destinationNode instanceof ImportedNode)
 					destinationNode = destinationNode .getExportedNode () .getValue ();
 
-				route ._route = this .getExecutionContext () .addSimpleRoute (new Fields .SFNode (sourceNode), sourceField, new Fields .SFNode (destinationNode), destinationField);
+				route ._route = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
 			}
 			catch (error)
 			{
@@ -195,24 +195,26 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			if (Generator .ExistsNode (this .getInlineNode ()))
+			var generator = Generator .Get (stream);
+
+			if (generator .ExistsNode (this .getInlineNode ()))
 			{
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "<IMPORT";
 				stream .string += " ";
 				stream .string += "inlineDEF='";
-				stream .string += Generator .XMLEncode (Generator .Name (this .getInlineNode ()));
+				stream .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "exportedDEF='";
-				stream .string += Generator .XMLEncode (this .getExportedName ());
+				stream .string += generator .XMLEncode (this .getExportedName ());
 				stream .string += "'";
 
 				if (this .getImportedName () !== this .getExportedName ())
 				{
 					stream .string += " ";
 					stream .string += "AS='";
-					stream .string += Generator .XMLEncode (this .getImportedName ());
+					stream .string += generator .XMLEncode (this .getImportedName ());
 					stream .string += "'";
 				}
 
@@ -220,8 +222,8 @@ function ($,
 
 				try
 				{
-					Generator .AddRouteNode (this);
-					Generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
+					generator .AddRouteNode (this);
+					generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
 				}
 				catch (error)
 				{
@@ -238,37 +240,37 @@ function ($,
 							destinationNode  = route .destinationNode,
 							destinationField = route .destinationField;
 
-						if (Generator .ExistsRouteNode (sourceNode) && Generator .ExistsRouteNode (destinationNode))
+						if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
 						{
 							if (sourceNode instanceof ImportedNode)
 								var sourceNodeName = sourceNode .getImportedName ();
 							else
-								var sourceNodeName = Generator .Name (sourceNode);
+								var sourceNodeName = generator .Name (sourceNode);
 	
 							if (destinationNode instanceof ImportedNode)
 								var destinationNodeName = destinationNode .getImportedName ();
 							else
-								var destinationNodeName = Generator .Name (destinationNode);
+								var destinationNodeName = generator .Name (destinationNode);
 	
 							stream .string += "\n";
 							stream .string += "\n";
-							stream .string += Generator .Indent ();
+							stream .string += generator .Indent ();
 							stream .string += "<ROUTE";
 							stream .string += " ";
 							stream .string += "fromNode='";
-							stream .string += Generator .XMLEncode (sourceNodeName);
+							stream .string += generator .XMLEncode (sourceNodeName);
 							stream .string += "'";
 							stream .string += " ";
 							stream .string += "fromField='";
-							stream .string += Generator .XMLEncode (sourceField);
+							stream .string += generator .XMLEncode (sourceField);
 							stream .string += "'";
 							stream .string += " ";
 							stream .string += "toNode='";
-							stream .string += Generator .XMLEncode (destinationNodeName);
+							stream .string += generator .XMLEncode (destinationNodeName);
 							stream .string += "'";
 							stream .string += " ";
 							stream .string += "toField='";
-							stream .string += Generator .XMLEncode (destinationField);
+							stream .string += generator .XMLEncode (destinationField);
 							stream .string += "'";
 							stream .string += "/>";
 						}

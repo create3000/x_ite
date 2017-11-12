@@ -601,9 +601,11 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			Generator .PushExecutionContext (this);
-			Generator. EnterScope ();
-			Generator .ImportedNodes (this .getImportedNodes ());
+			var generator = Generator .Get (stream);
+
+			generator .PushExecutionContext (this);
+			generator .EnterScope ();
+			generator .ImportedNodes (this .getImportedNodes ());
 
 			// Output extern protos
 
@@ -644,8 +646,8 @@ function ($,
 
 			this .getRoutes () .toXMLStream (stream);
 
-			Generator .LeaveScope ();
-			Generator .PopExecutionContext ();
+			generator .LeaveScope ();
+			generator .PopExecutionContext ();
 		},
 	});
 

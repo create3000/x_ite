@@ -127,13 +127,13 @@ function ($, X3DField)
 			{
 				return new SFVec (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
 			},
-			toString: function ()
+			toStream: function (stream)
 			{
-				return this .getValue () .toString ();
+				stream .string += this .getValue () .toString ();
 			},
 			toXMLStream: function (stream)
 			{
-				stream .string += this .getValue () .toString ();
+				this .toStream (stream);
 			},
 		});
 	};

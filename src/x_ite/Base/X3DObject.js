@@ -127,6 +127,14 @@ function ()
 			for (var key in interests)
 				interests [key] ();
 		},
+		toString: function ()
+		{
+			var stream = { string: "" };
+
+			this .toStream (stream);
+
+			return stream .string;
+		},
 		toVRMLString: function ()
 		{ },
 		toXMLString: function ()

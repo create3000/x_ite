@@ -88,9 +88,9 @@ function ($, X3DField, X3DConstants)
 			X3DField .prototype .set .call (this, ~~value);
 		},
 		valueOf: X3DField .prototype .getValue,
-		toString: function (base)
+		toStream: function (stream, base)
 		{
-			return this .getValue () .toString (base);
+			stream .string += this .getValue () .toString (base);
 		},
 		toXMLStream: function (stream)
 		{

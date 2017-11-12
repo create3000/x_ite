@@ -207,7 +207,9 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var specificationVersion = this .getSpecificationVersion ();
+			var
+				generator            = Generator .Get (stream),
+				specificationVersion = this .getSpecificationVersion ();
 
 			if (specificationVersion === "2.0")
 				specificationVersion = "3.3";
@@ -235,12 +237,12 @@ function ($,
 			stream .string += specificationVersion;
 			stream .string += ".xsd'>\n";
 
-			Generator .IncIndent ();
+			generator .IncIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<head>\n";
 
-			Generator .IncIndent ();
+			generator .IncIndent ();
 		
 			// <head>
 
@@ -264,37 +266,37 @@ function ($,
 
 			for (var key in metaDatas)
 			{
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "<meta";
 				stream .string += " ";
 				stream .string += "name='";
-				stream .string += Generator .XMLEncode (key);
+				stream .string += generator .XMLEncode (key);
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "content='";
-				stream .string += Generator .XMLEncode (metaDatas [key]);
+				stream .string += generator .XMLEncode (metaDatas [key]);
 				stream .string += "'";
 				stream .string += "/>\n";
 			}
 		
 			// </head>
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "</head>\n";
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<Scene>\n";
 
-			Generator .IncIndent ();
+			generator .IncIndent ();
 		
 			// <Scene>
 
 			var exportedNodes = this .getExportedNodes ();
 
-			Generator .PushExecutionContext (this);
-			Generator .EnterScope ();
-			Generator .ExportedNodes (exportedNodes);
+			generator .PushExecutionContext (this);
+			generator .EnterScope ();
+			generator .ExportedNodes (exportedNodes);
 
 			X3DExecutionContext .prototype .toXMLStream .call (this, stream);
 		
@@ -310,17 +312,17 @@ function ($,
 				{ }
 			}
 
-			Generator .LeaveScope ();
-			Generator .PopExecutionContext ();
+			generator .LeaveScope ();
+			generator .PopExecutionContext ();
 
 			// </Scene>
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "</Scene>\n";
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 
 			stream .string += "</X3D>\n";
 		},

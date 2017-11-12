@@ -115,13 +115,13 @@ function ($, X3DField)
 			{
 				return this .getValue () .abs ();
 			},
-			toString: function ()
+			toStream: function (stream)
 			{
-				return this .getValue () .toString ();
+				stream .string += this .getValue () .toString ();
 			},
 			toXMLStream: function (stream)
 			{
-				stream .string += this .getValue () .toString ();
+				this .toStream (stream);
 			},
 		});
 	};

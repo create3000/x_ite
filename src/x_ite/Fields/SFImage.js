@@ -193,20 +193,21 @@ function ($, X3DField, ArrayFields, X3DConstants)
 		{
 			return X3DConstants .SFImage;
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
-		   var
-				string = this .width + " " + this .height + " " + this .comp,
-				array  = this .array .getValue ();
+		   var array = this .array .getValue ();
+
+			stream .string += this .width + " " + this .height + " " + this .comp;
 
 			for (var i = 0, length = this .width * this .height; i < length; ++ i)
-				string += " 0x" + array [i] .toString (16);
-
-			return string;
+			{
+				stream .string += " 0x";
+				array [i] .toStream (stream, 16);
+			}
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += this .toString ();
+			this .toStream (stream);
 		},
 	});
 

@@ -108,13 +108,13 @@ function ($,
 			X3DField .prototype .set .call (this, String (value));
 		},
 		valueOf: X3DField .prototype .getValue,
-		toString: function ()
+		toStream: function (stream)
 		{
-			return '"'+ SFString .escape (this .getValue ()) + '"';
+			stream .string += '"'+ SFString .escape (this .getValue ()) + '"';
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += Generator .XMLEncode (this .getValue ());
+			stream .string += Generator .Get (stream) .XMLEncode (this .getValue ());
 		},
 	});
 

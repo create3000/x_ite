@@ -416,48 +416,46 @@ function ($,
 		{
 			value .removeParent (this);
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
 			var
-				array  = this .getValue (),
-				string = "";
+				genrator = Genrator .Get (stream),
+				array    = this .getValue ();
 
 			switch (array .length)
 			{
 				case 0:
 				{
-					string += "[ ]";
+					stream .string += "[ ]";
 					break;
 				}
 				case 1:
 				{
-					string += array [0] .toString ();
+					stream .string += array [0] .toStream (stream);
 					break;
 				}
 				default:
 				{
-					string += "[\n";
-					Generator .IncIndent ();
+					stream .string += "[\n";
+					generator .IncIndent ();
 				
 					for (var i = 0, length = array .length - 1; i < length; ++ i)
 					{
-						string += Generator .Indent ();
-						string += array [i] .toString ();
-						string += ",\n"
+						stream .string += generator .Indent ();
+						stream .string += array [i] .toStream (stream);
+						stream .string += ",\n"
 					}
 
-					string += Generator .Indent ();
-					string += array [length] .toString ();
-					string += "\n";
+					stream .string += generator .Indent ();
+					stream .string += array [length] .toStream (stream);
+					stream .string += "\n";
 
-					Generator .DecIndent ();
-					string += Generator .Indent ();
-					string += "]";
+					generator .DecIndent ();
+					stream .string += generator .Indent ();
+					stream .string += "]";
 					break;
 				}
 			}
-
-			return string;
 		},
 		toXMLStream: function (stream)
 		{

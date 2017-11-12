@@ -91,9 +91,9 @@ function ($, X3DField, X3DConstants)
 		{
 			return this .getValue ();
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
-			return this .getValue () ? "TRUE" : "FALSE";
+			stream .string += this .getValue () ? "TRUE" : "FALSE";
 		},
 		toXMLStream: function (stream)
 		{

@@ -57,7 +57,11 @@ function ($,
 {
 "use strict";
 
-	return {
+	function Generator () { }
+
+	Generator .prototype =
+	{
+		constructor: Generator,
 		indent: "",
 		indentChar: "  ",
 		executionContextStack: [ null ],
@@ -333,4 +337,14 @@ function ($,
 			return string .replace (/\]\]\>/g, "\\]\\]\\>");
 		},
 	};
+
+	Generator .Get = function (stream)
+	{
+		if (! stream .generator)
+			stream .generator = new Generator ();
+
+		return stream .generator;
+	};
+
+	return Generator;
 });
