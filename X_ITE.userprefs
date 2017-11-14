@@ -1,16 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Fields/SFImage.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DBaseNode.js" Line="596" Column="3" />
-      <File FileName="src/x_ite/Execution/ImportedNode.js" Line="151" Column="51" />
-      <File FileName="src/x_ite/InputOutput/Generator.js" Line="342" Column="3" />
-      <File FileName="src/x_ite/Execution/X3DExecutionContext.js" Line="503" Column="32" />
-      <File FileName="src/x_ite/Components/EventUtilities/BooleanFilter.js" Line="99" Column="1" />
-      <File FileName="src/x_ite/Fields/SFColor.js" Line="122" Column="4" />
-      <File FileName="src/x_ite/Fields/SFColorRGBA.js" Line="116" Column="1" />
-      <File FileName="src/x_ite/Fields/SFImage.js" Line="204" Column="5" />
+      <File FileName="src/x_ite.html" Line="360" Column="73" />
+      <File FileName="src/x_ite/Components/Grouping/X3DTransformNode.js" Line="67" Column="1" />
+      <File FileName="src/x_ite/Execution/X3DScene.js" Line="179" Column="5" />
+      <File FileName="src/x_ite/InputOutput/Generator.js" Line="356" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

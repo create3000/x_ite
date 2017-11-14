@@ -199,7 +199,7 @@ function ($,
 
 				field .setValue (arguments [i]);
 	
-				this .addChildObject (field);
+				this .addChild (field);
 
 				array .unshift (field);
 			}
@@ -230,7 +230,7 @@ function ($,
 
 				field .setValue (arguments [i]);
 
-				this .addChildObject (field);
+				this .addChild (field);
 
 				array .push (field);
 			}
@@ -278,7 +278,7 @@ function ($,
 
 				field .setValue (array [i]);
 
-				this .addChildObject (field);
+				this .addChild (field);
 				args .push (field);
 			}
 
@@ -400,7 +400,7 @@ function ($,
 					if (value !== undefined)
 						field .setValue (value);
 
-					this .addChildObject (field);
+					this .addChild (field);
 					array .push (field);
 				}
 
@@ -408,7 +408,7 @@ function ($,
 					this .addEvent ();
 			}
 		},
-		addChildObject: function (value)
+		addChild: function (value)
 		{
 			value .addParent (this);
 		},

@@ -50,12 +50,14 @@
 define ([
 	"jquery",
 	"x_ite/Fields",
+	"x_ite/Parser/X3DParser",
 	"x_ite/Prototype/X3DExternProtoDeclaration",
 	"x_ite/Prototype/X3DProtoDeclaration",
 	"x_ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
+          X3DParser,
           X3DExternProtoDeclaration,
           X3DProtoDeclaration,
           X3DConstants)
@@ -260,12 +262,12 @@ function ($,
 
 	function Parser (scene, isXML)
 	{
-		this .scene             = scene;
-		this .isXML             = isXML;
-		this .executionContexts = [ ];
+		X3DParser .call (this, scene);
+
+		this .isXML = isXML;
 	}
 
-	Parser .prototype =
+	Parser .prototype = $.extend (Object .create (X3DParser .prototype),
 	{
 		accessTypes:
 		{
@@ -326,30 +328,6 @@ function ($,
 			this .lineNumber = 1;
 			this .lastIndex  = 0;
 		},
-		getBrowser: function ()
-		{
-			return this .scene .getBrowser ();
-		},
-		getExecutionContext: function ()
-		{
-			return this .executionContexts [this .executionContexts .length - 1];
-		},
-		pushExecutionContext: function (executionContext)
-		{
-			return this .executionContexts .push (executionContext);
-		},
-		popExecutionContext: function ()
-		{
-			this .executionContexts .pop ();
-		},
-		isInsideProtoDefinition: function ()
-		{
-			return this .executionContexts .length > 1;
-		},
-		addRootNode: function (node)
-		{
-			this .getExecutionContext () .rootNodes .push (node);
-		},
 		exception: function (string)
 		{
 			if (this .getBrowser () .isStrict ())
@@ -361,8 +339,8 @@ function ($,
 		{
 			try
 			{
-				this .scene .setEncoding ("VRML");
-				this .scene .setProfile (this .getBrowser () .getProfile ("Full"));
+				this .getScene () .setEncoding ("VRML");
+				this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
 				this .setInput (input);
 				this .x3dScene ();
@@ -397,7 +375,7 @@ function ($,
 			var message = "\n"
 				+ "********************************************************************************" + "\n"
 				+ "Parser error at line " + this .lineNumber + ":" + linePos  + "\n"
-				+ "in '" + this .scene .getURL () + "'" + "\n"
+				+ "in '" + this .getScene () .getURL () + "'" + "\n"
 				+ "\n"
 				+ lastLine + "\n"
 				+ line + "\n"
@@ -473,7 +451,7 @@ function ($,
 		},
 		x3dScene: function ()
 		{
-			this .pushExecutionContext (this .scene);
+			this .pushExecutionContext (this .getScene ());
 
 			this .headerStatement ();
 			this .profileStatement ();
@@ -482,7 +460,7 @@ function ($,
 			this .metaStatements ();
 			this .statements ();
 
-			this .popExecutionContext (this .scene);
+			this .popExecutionContext (this .getScene ());
 
 			if (this .lastIndex < this .input .length)
 				throw new Error ("Unknown statement.");
@@ -493,8 +471,8 @@ function ($,
 
 			if (result)
 			{
-				this .scene .specificationVersion = result [2];
-				this .scene .encoding             = "VRML";
+				this .getScene () .specificationVersion = result [2];
+				this .getScene () .encoding             = "VRML";
 				return true;
 			}
 
@@ -510,7 +488,7 @@ function ($,
 				{
 					var profile = this .getBrowser () .getProfile (this .result [1]);
 
-					this .scene .setProfile (profile);
+					this .getScene () .setProfile (profile);
 					return;
 				}
 
@@ -523,7 +501,7 @@ function ($,
 
 			while (component)
 			{
-				this .scene .addComponent (component);
+				this .getScene () .addComponent (component);
 
 				component = this .componentStatement ();
 			}
@@ -589,7 +567,7 @@ function ($,
 
 						   try
 						   {
-								this .scene .updateUnit (categoryNameId, unitNameId, unitConversionFactor);
+								this .getScene () .updateUnit (categoryNameId, unitNameId, unitConversionFactor);
 								return true;
 							}
 							catch (error)
@@ -633,7 +611,7 @@ function ($,
 					{
 						var metavalue = this .value;
 
-						this .scene .setMetaData (metakey, metavalue);
+						this .getScene () .setMetaData (metakey, metavalue);
 						return true;
 					}
 		
@@ -667,7 +645,7 @@ function ($,
 		
 					this .comments ();
 		
-					var node = this .scene .getLocalNode (localNodeNameId);
+					var node = this .getScene () .getLocalNode (localNodeNameId);
 		
 					if (Grammar .AS .parse (this))
 					{
@@ -679,7 +657,7 @@ function ($,
 					else
 						exportedNodeNameId = localNodeNameId;
 		
-					this .scene .updateExportedNode (exportedNodeNameId, node);
+					this .getScene () .updateExportedNode (exportedNodeNameId, node);
 					return true;
 				}
 		
@@ -1889,7 +1867,7 @@ function ($,
 		{
 			if (this .double ())
 			{
-				field .set (this .value);
+				field .set (this .fromUnit (field .getUnit (), this .value));
 				return true;
 			}
 
@@ -1927,11 +1905,14 @@ function ($,
 				array = field .getValue (),
 				value = new Fields .SFDouble ();
 
+			value .setUnit (field .getUnit ());
+
 			while (this .sfdoubleValue (value))
 			{
 				value .addParent (field);
 				array .push (value);
 				value = new Fields .SFDouble ();
+				value .setUnit (field .getUnit ());
 			}
 		},
 		sffloatValue: function (field)
@@ -1970,11 +1951,14 @@ function ($,
 				array = field .getValue (),
 				value = new Fields .SFFloat ();
 
+			value .setUnit (field .getUnit ());
+
 			while (this .sffloatValue (value))
 			{
 				value .addParent (field);
 				array .push (value);
 				value = new Fields .SFFloat ();
+				value .setUnit (field .getUnit ());
 			}
 		},
 		sfimageValue: function (field)
@@ -2476,7 +2460,7 @@ function ($,
 						{
 							var angle = this .value;
 
-							field .getValue () .set (x, y, z, angle);
+							field .getValue () .set (x, y, z, this .fromUnit ("angle", angle));
 							return true;
 						}
 					}
@@ -2517,11 +2501,14 @@ function ($,
 				array = field .getValue (),
 				value = new Fields .SFRotation ();
 
+			value .setUnit ("angle");
+
 			while (this .sfrotationValue (value))
 			{
 				value .addParent (field);
 				array .push (value);
 				value = new Fields .SFRotation ();
+				value .setUnit ("angle");
 			}
 		},
 		sfstringValue: function (field)
@@ -2624,9 +2611,12 @@ function ($,
 				
 				if (this .double ())
 				{
-					var y = this .value;
-					
-					field .getValue () .set (x, y);
+					var
+						y        = this .value,
+						category = field .getUnit ();
+
+					field .getValue () .set (this .fromUnit (category, x),
+					                         this .fromUnit (category, y));
 					return true;
 				}
 			}
@@ -2665,11 +2655,14 @@ function ($,
 				array = field .getValue (),
 				value = new Fields .SFVec2d ();
 
+			value .setUnit (field .getUnit ());
+
 			while (this .sfvec2dValue (value))
 			{
 				value .addParent (field);
 				array .push (value);
 				value = new Fields .SFVec2d ();
+				value .setUnit (field .getUnit ());
 			}
 		},
 		sfvec2fValue: function (field)
@@ -2708,11 +2701,14 @@ function ($,
 				array = field .getValue (),
 				value = new Fields .SFVec2f ();
 
+			value .setUnit (field .getUnit ());
+
 			while (this .sfvec2fValue (value))
 			{
 				value .addParent (field);
 				array .push (value);
 				value = new Fields .SFVec2f ();
+				value .setUnit (field .getUnit ());
 			}
 		},
 		sfvec3dValue: function (field)
@@ -2727,9 +2723,13 @@ function ($,
 					
 					if (this .double ())
 					{
-						var z = this .value;
+						var
+							z        = this .value,
+							category = field .getUnit ();
 
-						field .getValue () .set (x, y, z);
+						field .getValue () .set (this .fromUnit (category, x),
+						                         this .fromUnit (category, y),
+						                         this .fromUnit (category, z));
 						return true;
 					}
 				}
@@ -2769,11 +2769,14 @@ function ($,
 				array = field .getValue (),
 				value = new Fields .SFVec3d ();
 
+			value .setUnit (field .getUnit ());
+
 			while (this .sfvec3dValue (value))
 			{
 				value .addParent (field);
 				array .push (value);
 				value = new Fields .SFVec3d ();
+				value .setUnit (field .getUnit ());
 			}
 		},
 		sfvec3fValue: function (field)
@@ -2812,11 +2815,14 @@ function ($,
 				array = field .getValue (),
 				value = new Fields .SFVec3f ();
 
+			value .setUnit (field .getUnit ());
+
 			while (this .sfvec3fValue (value))
 			{
 				value .addParent (field);
 				array .push (value);
 				value = new Fields .SFVec3f ();
+				value .setUnit (field .getUnit ());
 			}
 		},
 		sfvec4dValue: function (field)
@@ -2835,9 +2841,14 @@ function ($,
 
 						if (this .double ())
 						{
-							var w = this .value;
+							var
+								w        = this .value,
+								category = field .getUnit ();
 
-							field .getValue () .set (x, y, z, w);
+							field .getValue () .set (this .fromUnit (category, x),
+							                         this .fromUnit (category, y),
+							                         this .fromUnit (category, z),
+							                         this .fromUnit (category, w));
 							return true;
 						}
 					}
@@ -2878,11 +2889,14 @@ function ($,
 				array = field .getValue (),
 				value = new Fields .SFVec4d ();
 
+			value .setUnit (field .getUnit ());
+
 			while (this .sfvec4dValue (value))
 			{
 				value .addParent (field);
 				array .push (value);
 				value = new Fields .SFVec4d ();
+				value .setUnit (field .getUnit ());
 			}
 		},
 		sfvec4fValue: function (field)
@@ -2921,14 +2935,17 @@ function ($,
 				array = field .getValue (),
 				value = new Fields .SFVec4f ();
 
+			value .setUnit (field .getUnit ());
+
 			while (this .sfvec4fValue (value))
 			{
 				value .addParent (field);
 				array .push (value);
 				value = new Fields .SFVec4f ();
+				value .setUnit (field .getUnit ());
 			}
 		},
-	};
+	});
 
 	Parser .prototype .fieldTypes = [ ];
 	Parser .prototype .fieldTypes [X3DConstants .SFBool]      = Parser .prototype .sfboolValue;

@@ -208,10 +208,6 @@ function ($,
 				console .error (error .message);
 			}
 		},
-		getExtendedEventHandling: function ()
-		{
-			return false;
-		},
 		getInnerNode: function ()
 		{
 			var rootNodes = this .getRootNodes () .getValue ();
@@ -225,6 +221,18 @@ function ($,
 			}
 
 			throw new Error ("Root node not available.");
+		},
+		fromUnit: function (category, value)
+		{
+			return this .protoNode .getProtoDeclaration () .fromUnit (category, value);
+		},
+		toUnit: function (category, value)
+		{
+			return this .protoNode .getProtoDeclaration () .toUnit (category, value);
+		},
+		getExtendedEventHandling: function ()
+		{
+			return false;
 		},
 		importExternProtos: function (externprotos)
 		{

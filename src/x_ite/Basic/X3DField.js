@@ -79,6 +79,7 @@ function ($,
 		_inputRoutes: { },
 		_outputRoutes: { },
 		_accessType: X3DConstants .initializeOnly,
+		_unit: null,
 		_set: false,
 		_uniformLocation: null,
 		clone: function ()
@@ -137,6 +138,14 @@ function ($,
 		isWritable: function ()
 		{
 			return this .getAccessType () !== X3DConstants .initializeOnly;
+		},
+		setUnit: function (value)
+		{
+			return this ._unit = value;
+		},
+		getUnit: function ()
+		{
+			return this ._unit;
 		},
 		setSet: function (value)
 		{

@@ -57,24 +57,28 @@ function ($,
 {
 "use strict";
 
-	function Generator () { }
+	function Generator ()
+	{
+		this .indent                = "";
+		this .indentChar            = "  ";
+		this .executionContextStack = [ null ];
+		this .importedNodesIndex    = { };
+		this .exportedNodesIndex    = { };
+		this .nodes                 = { };
+		this .names                 = { };
+		this .namesByNode           = { };
+		this .importedNames         = { };
+		this .routeNodes            = { };
+		this .level                 = 0;
+		this .newName               = 0;
+		this .containerFields       = [ ];
+		this .units                 = true;
+		this .unitCategories        = [ ];
+	}
 
 	Generator .prototype =
 	{
 		constructor: Generator,
-		indent: "",
-		indentChar: "  ",
-		executionContextStack: [ null ],
-		importedNodesIndex: { },
-		exportedNodesIndex: { },
-		nodes: { },
-		names: { },
-		namesByNode: { },
-		importedNames: { },
-		routeNodes: { },
-		level: 0,
-		newName: 0,
-		containerFields: [ ],
 		Indent: function ()
 		{
 			return this .indent;
@@ -318,6 +322,43 @@ function ($,
 				case X3DConstants .inputOutput:
 					return "inputOutput";
 			}
+		},
+		SetUnits: function (value)
+		{
+			this .units = value;
+		},
+		GetUnits: function ()
+		{
+			return this .units;
+		},
+		PushUnitCategory: function (category)
+		{
+			this .unitCategories .push (category);
+		},
+		PopUnitCategory: function ()
+		{
+			this .unitCategories .pop ();
+		},
+		Unit: function (category)
+		{
+			var length = this .unitCategories .length;
+
+			if (length == 0)
+				return category;
+
+			return this .unitCategories [length - 1];
+		},
+		ToUnit: function (category, value)
+		{
+			if (this .units)
+			{
+				var executionContext = this .ExecutionContext ();
+			
+				if (executionContext)
+					return executionContext .toUnit (category, value);
+			}
+
+			return value;
 		},
 		XMLEncode: function (string)
 		{

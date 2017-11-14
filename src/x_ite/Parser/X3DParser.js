@@ -47,28 +47,85 @@
  ******************************************************************************/
 
 
-define ([
-	"jquery",
-	"x_ite/Components/Grouping/X3DGroupingNode",
-	"x_ite/Bits/X3DConstants",
-],
-function ($,
-          X3DGroupingNode, 
-          X3DConstants)
+define (function ()
 {
 "use strict";
 
-	function X3DViewportNode (executionContext)
+	function X3DParser (scene)
 	{
-		X3DGroupingNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DViewportNode);
+		this .scene             = scene;
+		this .executionContexts = [ scene ];
+		this .units             = true;
 	}
 
-	X3DViewportNode .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
-	{
-		constructor: X3DViewportNode,
-	});
+	X3DParser .prototype = {
+		constructor: X3DParser,
+		getScene: function ()
+		{
+			return this .scene;
+		},
+		getBrowser: function ()
+		{
+			return this .scene .getBrowser ();
+		},
+		getExecutionContext: function ()
+		{
+			return this .executionContexts [this .executionContexts .length - 1];
+		},
+		pushExecutionContext: function (executionContext)
+		{
+			return this .executionContexts .push (executionContext);
+		},
+		popExecutionContext: function ()
+		{
+			this .executionContexts .pop ();
+		},
+		isInsideProtoDefinition: function ()
+		{
+			return this .executionContexts .length > 1;
+		},
+		addRootNode: function (node)
+		{
+			this .getExecutionContext () .rootNodes .push (node);
+		},
+		setUnits: function (generator)
+		{
+			if ((typeof arguments [0]) == "boolean")
+			{
+				this .units = arguments [0];
+				return;
+			}
 
-	return X3DViewportNode;
+			var
+				version = /Titania\s+V(\d+)/,
+				match   = generator .match (version);
+
+			if (match)
+			{
+				var major = parseInt (match [1]);
+
+				// Before version 4 units are wrongly implemented.
+				if (major < 4)
+				{
+					this .units = false;
+					return;
+				}
+			}
+		
+			this .units = true;
+		},
+		getUnits: function ()
+		{
+			return this .units;
+		},
+		fromUnit: function (category, value)
+		{
+			if (this .units)
+				return this .getExecutionContext () .fromUnit (category, value);
+
+			return value;
+		},
+	};
+
+	return X3DParser;
 });

@@ -55,6 +55,7 @@ define ([
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Fields",
 	"x_ite/Parser/Parser",
+	"x_ite/Parser/X3DParser",
 	"x_ite/Parser/HTMLSupport",
 	"x_ite/Prototype/X3DExternProtoDeclaration",
 	"x_ite/Prototype/X3DProtoDeclaration",
@@ -67,6 +68,7 @@ function ($,
           X3DPrototypeInstance,
           Fields,
           Parser,
+          X3DParser,
           HTMLSupport,   
           X3DExternProtoDeclaration,
           X3DProtoDeclaration,
@@ -84,21 +86,29 @@ function ($,
 
 	function XMLParser (scene)
 	{
-		this .scene             = scene;
-		this .executionContexts = [ scene ];
+		X3DParser .call (this, scene);
+
 		this .protoDeclarations = [ ];
 		this .parents           = [ ];
-		this .parser            = new Parser (this .scene, true);
+		this .parser            = new Parser (scene, true);
 		this .url               = new Fields .MFString ();
+
+		try
+		{
+			this .setUnits (this .scene .getMetaData ("generator"));
+			this .parser .setUnits (this .getUnits ());
+		}
+		catch (error)
+		{ }
 	}
 
-	XMLParser .prototype =
+	XMLParser .prototype = $.extend (Object .create (X3DParser .prototype),
 	{
 		constructor: XMLParser,
 		parseIntoScene: function (xmlElement)
 		{
-			this .scene .setEncoding ("XML");
-			this .scene .setProfile (this .getBrowser () .getProfile ("Full"));
+			this .getScene () .setEncoding ("XML");
+			this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
 			this .xmlElement (xmlElement);
 		},
@@ -152,7 +162,7 @@ function ($,
 					profileNameId = xmlElement .getAttribute ("profile"),
 					profile       = this .getBrowser () .getProfile (profileNameId || "Full");
 
-				this .scene .setProfile (profile);
+				this .getScene () .setProfile (profile);
 			}
 			catch (error)
 			{
@@ -164,7 +174,7 @@ function ($,
 			var specificationVersion = xmlElement .getAttribute ("version");
 
 			if (specificationVersion)
-				this .scene .specificationVersion = specificationVersion;
+				this .getScene () .specificationVersion = specificationVersion;
 
 			// Process child nodes
 
@@ -193,6 +203,14 @@ function ($,
 	
 			for (var i = 0; i < childNodes .length; ++ i)
 				this .headElementChild (childNodes [i]);
+
+			try
+			{
+				this .setUnits (this .scene .getMetaData ("generator"));
+				this .parser .setUnits (this .getUnits ());
+			}
+			catch (error)
+			{ }
 		},
 		headElementChild: function (xmlElement)
 		{
@@ -228,7 +246,7 @@ function ($,
 
 				var component = this .getBrowser () .getComponent (componentNameIdCharacters, componentSupportLevel);
 	
-				this .scene .addComponent (component);
+				this .getScene () .addComponent (component);
 			}
 			catch (error)
 			{
@@ -251,7 +269,7 @@ function ($,
 			if (conversionFactor === null)
 				return console .warn ("XML Parser Error: Bad unit statement: Expected conversionFactor attribute.");
 
-			this .scene .updateUnit (category, name, parseFloat (conversionFactor));
+			this .getScene () .updateUnit (category, name, parseFloat (conversionFactor));
 		},
 		metaElement: function (xmlElement)
 		{
@@ -265,7 +283,7 @@ function ($,
 			if (metavalue === null)
 				return console .warn ("XML Parser Error: Bad meta statement: Expected content attribute.");
 
-			this .scene .setMetaData (metakey, metavalue);
+			this .getScene () .setMetaData (metakey, metavalue);
 		},
 		sceneElement: function (xmlElement)
 		{
@@ -713,7 +731,7 @@ function ($,
 		{
 			try
 			{
-				if (this .scene !== this .getExecutionContext ())
+				if (this .getScene () !== this .getExecutionContext ())
 					return;
 
 				var
@@ -728,7 +746,7 @@ function ($,
 
 				var localNode = this .getExecutionContext () .getLocalNode (localNodeName);
 
-				this .scene .updateExportedNode (exportedNodeName, localNode);
+				this .getScene () .updateExportedNode (exportedNodeName, localNode);
 			}
 			catch (error)
 			{
@@ -826,8 +844,12 @@ function ($,
 
 			field .setSet (true);
 
+			this .parser .pushExecutionContext (this .getExecutionContext ());
+
 			this .parser .setInput (value);
 			this .fieldTypes [field .getType ()] .call (this .parser, field);
+
+			this .parser .popExecutionContext ();
 		},
 		addNode: function (xmlElement, node)
 		{
@@ -886,22 +908,6 @@ function ($,
 				//console .warn (error .message);
 			}
 		},
-		getBrowser: function ()
-		{
-			return this .scene .getBrowser ();
-		},
-		getExecutionContext: function ()
-		{
-			return this .executionContexts [this .executionContexts .length - 1];
-		},
-		pushExecutionContext: function (executionContext)
-		{
-			return this .executionContexts .push (executionContext);
-		},
-		popExecutionContext: function ()
-		{
-			this .executionContexts .pop ();
-		},
 		getParents: function ()
 		{
 			return this .parents;
@@ -935,7 +941,7 @@ function ($,
 			
 			return HTMLSupport .attributeLowerCaseToCamelCase [name] ;
 		},
-	};
+	});
 
 	XMLParser .prototype .fieldTypes = [ ];
 	XMLParser .prototype .fieldTypes [X3DConstants .SFBool]      = Parser .prototype .sfboolValue;

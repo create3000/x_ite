@@ -107,6 +107,8 @@ function ($,
 		},
 		updateUnit: function (category, name, conversionFactor)
 		{
+			// Private function.
+
 			var unit = this .unitArray .get (category);
 
 			if (! unit)
@@ -118,6 +120,62 @@ function ($,
 		getUnits: function ()
 		{
 			return this .unitArray;
+		},
+		fromUnit: function (category, value)
+		{
+			switch (category)
+			{
+				// Base units
+
+			   case "angle":
+			   case "force":
+			   case "length":
+			   case "mass":
+					return value * this .getUnits () [category] .conversionFactor;
+
+				// Derived units
+
+				case "acceleration:":
+					return value * this .getUnits () ["length"] .conversionFactor;
+				case "angularRate":
+					return value * this .getUnits () ["angle"] .conversionFactor;
+				case "area":
+					return value * Math .pow (this .getUnits () ["length"] .conversionFactor, 2);
+				case "speed":
+					return value * this .getUnits () ["length"] .conversionFactor;
+				case "volume":
+					return value * Math .pow (this .getUnits () ["length"] .conversionFactor, 3);
+			}
+
+			return value;
+		},
+		toUnit: function (category, value)
+		{
+			switch (category)
+			{
+				// Base units
+
+			   case "angle":
+			   case "force":
+			   case "length":
+			   case "mass":
+					return value / this .getUnits () [category] .conversionFactor;
+			
+				// Derived units
+
+				case "acceleration:":
+					return value / this .getUnits () ["length"] .conversionFactor;
+				case "angularRate":
+					return value / this .getUnits () ["angle"] .conversionFactor;
+				case "area":
+					return value / Math .pow (this .getUnits () ["length"] .conversionFactor, 2);
+				case "speed":
+					return value / this .getUnits () ["length"] .conversionFactor;
+				case "volume":
+					return value / Math .pow (this .getUnits () ["length"] .conversionFactor, 3);
+			}
+
+			return value;
 		},
 		setMetaData: function (name, value)
 		{

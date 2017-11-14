@@ -103,10 +103,6 @@ function ($,
 
 			this .loadState_ = X3DConstants .COMPLETE_STATE;
 		},
-		hasUserDefinedFields: function ()
-		{
-			return true;
-		},
 		getURL: function ()
 		{
 			return this .getExecutionContext () .getURL ();
@@ -118,6 +114,18 @@ function ($,
 		checkLoadState: function ()
 		{
 			return this .loadState_ .getValue ();
+		},
+		fromUnit: function (category, value)
+		{
+			return this .getExecutionContext () .fromUnit (category, value);
+		},
+		toUnit: function (category, value)
+		{
+			return this .getExecutionContext () .toUnit (category, value);
+		},
+		hasUserDefinedFields: function ()
+		{
+			return true;
 		},
 		toXMLStream: function (stream)
 		{

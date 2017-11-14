@@ -58,7 +58,11 @@ function ($,
 
 	function UnitInfo (category, name, conversionFactor)
 	{
-		this .category         = category;
+		Object .defineProperty (this, "category", {
+		    value: category,
+		    writable: false,
+		});
+
 		this .name             = name;
 		this .conversionFactor = conversionFactor;
 	}
