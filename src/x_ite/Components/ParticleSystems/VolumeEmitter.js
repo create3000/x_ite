@@ -103,6 +103,10 @@ function ($,
 
 		this .addType (X3DConstants .VolumeEmitter);
 
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
+
 		this .direction           = new Vector3 (0, 0, 0);
 		this .volumeNode          = new IndexedFaceSet (executionContext);
 		this .areaSoFarArray      = [ 0 ];

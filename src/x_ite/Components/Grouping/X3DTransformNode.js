@@ -63,6 +63,9 @@ function ($,
 		X3DTransformMatrix3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DTransformNode);
+
+		this .translation_ .setUnit ("length");
+		this .center_      .setUnit ("length");
 	}
 
 	X3DTransformNode .prototype = $.extend (Object .create (X3DTransformMatrix3DNode .prototype),

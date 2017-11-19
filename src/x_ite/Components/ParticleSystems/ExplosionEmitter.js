@@ -70,6 +70,11 @@ function ($,
 
 		this .addType (X3DConstants .ExplosionEmitter);
 
+		this .position_    .setUnit ("length");
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
+
 		this .getRandomVelocity = this .getSphericalRandomVelocity;
 	}
 

@@ -80,6 +80,8 @@ function ($,
 		X3DGeospatialObject .call (this, executionContext);
 
 		this .addType (X3DConstants .GeoTouchSensor);
+
+		this .hitPoint_changed_ .setUnit ("length");
 	}
 
 	GeoTouchSensor .prototype = $.extend (Object .create (X3DTouchSensorNode .prototype),

@@ -66,6 +66,9 @@ function ($,
 	{
 		this .addType (X3DConstants .X3DBoundedObject);
 
+		this .bboxSize_   .setUnit ("length");
+		this .bboxCenter_ .setUnit ("length");
+
 		this .childBBox = new Box3 ();
 	}
 

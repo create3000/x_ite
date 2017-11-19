@@ -73,6 +73,9 @@ function ($,
 		X3DLineGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Disk2D);
+
+		this .innerRadius_ .setUnit ("length");
+		this .outerRadius_ .setUnit ("length");
 	}
 
 	Disk2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),

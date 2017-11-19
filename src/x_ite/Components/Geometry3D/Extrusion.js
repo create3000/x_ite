@@ -83,6 +83,10 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Extrusion);
+
+		this .creaseAngle_  .setUnit ("angle");
+		this .crossSection_ .setUnit ("length");
+		this .spine_        .setUnit ("length");
 	}
 
 	Extrusion .prototype = $.extend (Object .create (X3DGeometryNode .prototype),

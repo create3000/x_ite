@@ -69,6 +69,8 @@ function ($,
 		X3DGeometricPropertyNode .call (this, executionContext);
 
 		this .addType (X3DConstants .FogCoordinate);
+
+		this .depth_ .setUnit ("length");
 	}
 
 	FogCoordinate .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),

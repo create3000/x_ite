@@ -82,6 +82,12 @@ function ($,
 
 		this .addType (X3DConstants .Sound);
 
+		this .location_ .setUnit ("length");
+		this .minBack_  .setUnit ("length");
+		this .minFront_ .setUnit ("length");
+		this .maxBack_  .setUnit ("length");
+		this .maxFront_ .setUnit ("length");
+
 		this .min = { radius: 0, distance: 0 };
 		this .max = { radius: 0, distance: 0 };
 	}

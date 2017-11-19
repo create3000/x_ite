@@ -301,6 +301,9 @@ function ($,
 		X3DLightNode .call (this, executionContext);
 
 		this .addType (X3DConstants .PointLight);
+
+		this .location_ .setUnit ("length");
+		this .radius_   .setUnit ("length");
 	}
 
 	PointLight .prototype = $.extend (Object .create (X3DLightNode .prototype),

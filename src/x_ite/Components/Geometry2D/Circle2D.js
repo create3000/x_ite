@@ -71,6 +71,8 @@ function ($,
 		this .addType (X3DConstants .Circle2D);
 
 		this .setGeometryType (1);
+
+		this .radius_ .setUnit ("length");
 	}
 
 	Circle2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),

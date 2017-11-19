@@ -92,6 +92,10 @@ function ($,
 
 		this .addType (X3DConstants .X3DParticleEmitterNode);
 
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
+
 		this .rotations           = [ ];
 		this .intersections       = [ ];
 		this .intersectionNormals = [ ];

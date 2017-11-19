@@ -75,6 +75,9 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Cone);
+
+		this .height_       .setUnit ("length");
+		this .bottomRadius_ .setUnit ("length");
 	}
 
 	Cone .prototype = $.extend (Object .create (X3DGeometryNode .prototype),

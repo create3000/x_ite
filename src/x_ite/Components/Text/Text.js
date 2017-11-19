@@ -71,6 +71,12 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Text);
+
+		this .length_     .setUnit ("length");
+		this .maxExtent_  .setUnit ("length");
+		this .origin_     .setUnit ("length");
+		this .textBounds_ .setUnit ("length");
+		this .lineBounds_ .setUnit ("length");
 	}
 
 	Text .prototype = $.extend (Object .create (X3DGeometryNode .prototype),

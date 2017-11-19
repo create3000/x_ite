@@ -78,6 +78,8 @@ function ($,
 		X3DGeospatialObject      .call (this, executionContext);
 
 		this .addType (X3DConstants .GeoTransform);
+
+		this .translation_ .setUnit ("length");
 	}
 
 	GeoTransform .prototype = $.extend (Object .create (X3DTransformMatrix3DNode .prototype),

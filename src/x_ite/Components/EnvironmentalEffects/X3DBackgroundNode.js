@@ -159,6 +159,9 @@ function ($,
 
 		this .addType (X3DConstants .X3DBackgroundNode);
 
+		this .skyAngle_    .setUnit ("angle");
+		this .groundAngle_ .setUnit ("angle");
+
 		this .hidden                = false;
 		this .projectionMatrixArray = new Float32Array (16);
 		this .transformationMatrix  = new Matrix4 ();

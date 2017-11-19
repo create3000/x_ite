@@ -78,6 +78,10 @@ function ($,
 
 		this .addType (X3DConstants .PolylineEmitter);
 
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
+
 		this .direction        = new Vector3 (0, 0, 0);
 		this .polylineNode     = new IndexedLineSet (executionContext);
 		this .polylines        = [ ];

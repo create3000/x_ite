@@ -77,6 +77,8 @@ function ($,
 
 		this .addType (X3DConstants .GeoPositionInterpolator);
 
+		this .value_changed_ .setUnit ("length");
+
 		this .geocentric = new Geocentric ();
 	}
 

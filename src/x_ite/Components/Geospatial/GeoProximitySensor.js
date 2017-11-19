@@ -79,6 +79,9 @@ function ($,
 
 		this .addType (X3DConstants .GeoProximitySensor);
 
+		this .position_changed_         .setUnit ("length");
+		this .centerOfRotation_changed_ .setUnit ("length");
+
 		this .proximitySensor = new ProximitySensor (executionContext);
 
 		this .setCameraObject (this .proximitySensor .getCameraObject ());

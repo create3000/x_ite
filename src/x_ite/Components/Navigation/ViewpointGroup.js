@@ -75,7 +75,10 @@ function ($,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .ViewpointGroup);
-	   
+
+		this .size_   .setUnit ("length");
+		this .center_ .setUnit ("length");
+
 		this .proximitySensor  = new ProximitySensor (executionContext);
 		this .cameraObjects    = [ ];
 		this .viewpointGroups  = [ ];

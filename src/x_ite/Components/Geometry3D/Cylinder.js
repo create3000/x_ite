@@ -75,6 +75,9 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Cylinder);
+
+		this .height_ .setUnit ("length");
+		this .radius_ .setUnit ("length");
 	}
 
 	Cylinder .prototype = $.extend (Object .create (X3DGeometryNode .prototype),

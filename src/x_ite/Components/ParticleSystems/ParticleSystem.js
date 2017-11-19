@@ -123,6 +123,8 @@ function ($,
 
 		this .addType (X3DConstants .ParticleSystem);
 
+		this .particleSize_ .setUnit ("length");
+
 		this .createParticles          = true;
 		this .particles                = [ ];
 		this .velocities               = [ ];

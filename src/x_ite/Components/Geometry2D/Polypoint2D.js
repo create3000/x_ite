@@ -76,6 +76,8 @@ function ($,
 
 		this .setGeometryType (0);
 
+		this .point_ .setUnit ("length");
+
 		this .transparent_ = true;
 	}
 

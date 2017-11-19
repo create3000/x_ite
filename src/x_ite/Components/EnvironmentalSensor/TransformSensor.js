@@ -84,6 +84,8 @@ function ($,
 
 		this .addType (X3DConstants .TransformSensor);
 
+		this .position_changed_ .setUnit ("length");
+
 		this .bbox             = new Box3 ();
 		this .targetObjectNode = null;
 	}

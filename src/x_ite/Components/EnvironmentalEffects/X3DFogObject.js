@@ -60,6 +60,8 @@ function ($,
 	{
 		this .addType (X3DConstants .X3DFogObject);
 
+		this .visibilityRange_ .setUnit ("length");
+
 		this .hidden = false;
 	}
 

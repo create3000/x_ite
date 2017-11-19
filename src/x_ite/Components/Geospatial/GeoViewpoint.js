@@ -107,6 +107,9 @@ function ($,
 
 		this .addType (X3DConstants .GeoViewpoint);
 
+		this .centerOfRotation_ .setUnit ("length");
+		this .fieldOfView_      .setUnit ("angle");
+
 		this .navigationInfoNode      = new NavigationInfo (executionContext);
 		this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
 		this .projectionMatrix        = new Matrix4 ();

@@ -70,6 +70,9 @@ function ($,
 
 		this .addChildObjects ("traversed", new Fields .SFBool (true));
 
+		this .size_   .setUnit ("length");
+		this .center_ .setUnit ("length");
+
 		this .currentTraversed = true;
 	}
 

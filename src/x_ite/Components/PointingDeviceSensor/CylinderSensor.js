@@ -83,6 +83,11 @@ function ($,
 		X3DDragSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .CylinderSensor);
+
+		this .diskAngle_ .setUnit ("angle");
+		this .minAngle_  .setUnit ("angle");
+		this .maxAngle_  .setUnit ("angle");
+		this .offset_    .setUnit ("angle");
 	}
 
 	CylinderSensor .prototype = $.extend (Object .create (X3DDragSensorNode .prototype),

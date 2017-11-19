@@ -69,6 +69,8 @@ function ($,
 		X3DCoordinateNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Coordinate);
+
+		this .point_ .setUnit ("length");
 	}
 
 	Coordinate .prototype = $.extend (Object .create (X3DCoordinateNode .prototype),

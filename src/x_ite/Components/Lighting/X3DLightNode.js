@@ -74,6 +74,8 @@ function ($,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DLightNode);
+
+		this .shadowDiffusion_ .setUnit ("length");
 	}
 
 	X3DLightNode .prototype = $.extend (Object .create (X3DChildNode .prototype),

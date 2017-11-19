@@ -77,6 +77,8 @@ function ($,
 		this .addType (X3DConstants .Rectangle2D);
 
 		this .setGeometryType (2);
+
+		this .size_ .setUnit ("length");
 	}
 
 	Rectangle2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),

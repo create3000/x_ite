@@ -78,6 +78,11 @@ function ($,
 
 		this .addType (X3DConstants .ElevationGrid);
 
+		this .xSpacing_    .setUnit ("length");
+		this .zSpacing_    .setUnit ("length");
+		this .creaseAngle_ .setUnit ("angle");
+		this .height_      .setUnit ("length");
+
 		this .colorNode    = null;
 		this .texCoordNode = null;
 		this .normalNode   = null;

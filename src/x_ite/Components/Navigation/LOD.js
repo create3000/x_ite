@@ -85,6 +85,9 @@ function ($,
 
 		this .addAlias ("level", this .children_); // VRML2
 
+		this .center_ .setUnit ("length");
+		this .range_  .setUnit ("length");
+
 		this .frameRate        = 60;
 		this .keepCurrentLevel = false;
 	}

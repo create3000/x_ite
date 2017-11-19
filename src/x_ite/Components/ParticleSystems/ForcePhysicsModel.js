@@ -69,6 +69,8 @@ function ($,
 		X3DParticlePhysicsModelNode .call (this, executionContext);
 
 		this .addType (X3DConstants .ForcePhysicsModel);
+
+		this .force_ .setUnit ("force");
 	}
 
 	ForcePhysicsModel .prototype = $.extend (Object .create (X3DParticlePhysicsModelNode .prototype),

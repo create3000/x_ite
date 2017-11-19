@@ -77,6 +77,10 @@ function ($,
 		this .addType (X3DConstants .Arc2D);
 
 		this .setGeometryType (1);
+
+		this .startAngle_ .setUnit ("angle");
+		this .endAngle_   .setUnit ("angle");
+		this .radius_     .setUnit ("length");
 	}
 
 	Arc2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),

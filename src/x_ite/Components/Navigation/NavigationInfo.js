@@ -81,6 +81,10 @@ function ($,
 				
 		this .addChildObjects ("availableViewers", new Fields .MFString (),
 		                       "viewer",           new Fields .SFString ("EXAMINE"));
+
+		this .avatarSize_      .setUnit ("length");
+		this .speed_           .setUnit ("speed");
+		this .visibilityLimit_ .setUnit ("speed");
 	}
 
 	NavigationInfo .prototype = $.extend (Object .create (X3DBindableNode .prototype),

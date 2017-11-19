@@ -90,6 +90,8 @@ function ($,
 
 		this .addType (X3DConstants .GeoLOD);
 
+		this .range_ .setUnit ("length");
+
 		this .rootGroup        = new Group (this .getBrowser () .getPrivateScene ());
 		this .rootInline       = new Inline (executionContext);
 		this .child1Inline     = new Inline (executionContext);

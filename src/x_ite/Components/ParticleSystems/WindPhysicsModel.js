@@ -75,6 +75,8 @@ function ($,
 		X3DParticlePhysicsModelNode .call (this, executionContext);
 
 		this .addType (X3DConstants .WindPhysicsModel);
+
+		this .speed_ .setUnit ("speed");
 	}
 
 	WindPhysicsModel .prototype = $.extend (Object .create (X3DParticlePhysicsModelNode .prototype),

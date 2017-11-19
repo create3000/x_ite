@@ -97,7 +97,7 @@ define (function ()
 			}
 
 			var
-				version = /Titania\s+V(\d+)/,
+				version = /Titania\s+V(\d+).*/,
 				match   = generator .match (version);
 
 			if (match)

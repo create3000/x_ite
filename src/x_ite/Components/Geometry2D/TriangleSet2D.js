@@ -77,6 +77,8 @@ function ($,
 		this .addType (X3DConstants .TriangleSet2D);
 
 		this .setGeometryType (2);
+
+		this .vertices_ .setUnit ("length");
 	}
 
 	TriangleSet2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),

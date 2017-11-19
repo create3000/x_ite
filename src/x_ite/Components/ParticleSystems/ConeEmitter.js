@@ -74,6 +74,12 @@ function ($,
 
 		this .addType (X3DConstants .ConeEmitter);
 
+		this .position_    .setUnit ("length");
+		this .angle_       .setUnit ("angle");
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
+
 		this .rotation = new Rotation4 (0, 0, 1, 0);
 	}
 

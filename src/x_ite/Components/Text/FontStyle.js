@@ -71,6 +71,8 @@ function ($,
 		X3DFontStyleNode .call (this, executionContext);
 
 		this .addType (X3DConstants .FontStyle);
+
+		this .size_ .setUnit ("length");
 	}
 
 	FontStyle .prototype = $.extend (Object .create (X3DFontStyleNode .prototype),

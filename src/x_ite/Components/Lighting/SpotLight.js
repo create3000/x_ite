@@ -288,6 +288,11 @@ function ($,
 		X3DLightNode .call (this, executionContext);
 
 		this .addType (X3DConstants .SpotLight);
+
+		this .location_    .setUnit ("length");
+		this .radius_      .setUnit ("length");
+		this .beamWidth_   .setUnit ("angle");
+		this .cutOffAngle_ .setUnit ("angle");
 	}
 
 	SpotLight .prototype = $.extend (Object .create (X3DLightNode .prototype),

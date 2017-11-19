@@ -63,6 +63,8 @@ function ($,
 		X3DPointingDeviceSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DDragSensorNode);
+
+		this .trackPoint_changed_ .setUnit ("length");
 	}
 
 	X3DDragSensorNode .prototype = $.extend (Object .create (X3DPointingDeviceSensorNode .prototype),

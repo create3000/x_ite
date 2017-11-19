@@ -84,6 +84,10 @@ function ($,
 
 		this .addType (X3DConstants .SurfaceEmitter);
 
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
+
 		this .surfaceNode    = null;
 		this .areaSoFarArray = [ 0 ];
 	}

@@ -73,6 +73,8 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Box);
+
+		this .size_ .setUnit ("length");
 	}
 
 	Box .prototype = $.extend (Object .create (X3DGeometryNode .prototype),

@@ -69,6 +69,8 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Sphere);
+
+		this .radius_ .setUnit ("length");
 	}
 
 	Sphere .prototype = $.extend (Object .create (X3DGeometryNode .prototype),

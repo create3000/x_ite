@@ -73,6 +73,8 @@ function ($,
 		X3DTouchSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TouchSensor);
+
+		this .hitPoint_changed_ .setUnit ("length");
 	}
 
 	TouchSensor .prototype = $.extend (Object .create (X3DTouchSensorNode .prototype),

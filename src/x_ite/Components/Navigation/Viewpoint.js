@@ -83,6 +83,10 @@ function ($,
 
 		this .addType (X3DConstants .Viewpoint);
 
+		this .position_         .setUnit ("length");
+		this .centerOfRotation_ .setUnit ("length");
+		this .fieldOfView_      .setUnit ("angle");
+
 		this .projectionMatrix        = new Matrix4 ();
 		this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
 	}

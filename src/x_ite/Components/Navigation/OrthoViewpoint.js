@@ -82,6 +82,10 @@ function ($,
 
 		this .addType (X3DConstants .OrthoViewpoint);
 
+		this .position_         .setUnit ("length");
+		this .centerOfRotation_ .setUnit ("length");
+		this .fieldOfView_      .setUnit ("length");
+
 		this .projectionMatrix = new Matrix4 ();
 	}
 

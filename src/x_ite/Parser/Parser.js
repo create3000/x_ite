@@ -458,6 +458,14 @@ function ($,
 			this .componentStatements ();
 			this .unitStatements ();
 			this .metaStatements ();
+
+			try
+			{
+				this .setUnits (this .getScene () .getMetaData ("generator"));
+			}
+			catch (error)
+			{ }
+
 			this .statements ();
 
 			this .popExecutionContext (this .getScene ());
@@ -1786,15 +1794,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFColor ();
-
-			while (this .sfcolorValue (value))
+			while (this .sfcolorValue (this .SFColor))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFColor ();
+				field .push (this .SFColor);
 			}
 		},
 		sfcolorrgbaValue: function (field)
@@ -1852,15 +1854,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFColorRGBA ();
-
-			while (this .sfcolorrgbaValue (value))
+			while (this .sfcolorrgbaValue (this .SFColorRGBA))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFColorRGBA ();
+				field .push (this .SFColorRGBA);
 			}
 		},
 		sfdoubleValue: function (field)
@@ -1876,6 +1872,8 @@ function ($,
 		mfdoubleValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFDouble .setUnit (field .getUnit ());
 
 			if (this .sfdoubleValue (this .SFDouble))
 			{
@@ -1901,18 +1899,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFDouble ();
+			this .SFDouble .setUnit (field .getUnit ());
 
-			value .setUnit (field .getUnit ());
-
-			while (this .sfdoubleValue (value))
+			while (this .sfdoubleValue (this .SFDouble))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFDouble ();
-				value .setUnit (field .getUnit ());
+				field .push (this .SFDouble);
 			}
 		},
 		sffloatValue: function (field)
@@ -1922,6 +1913,8 @@ function ($,
 		mffloatValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFFloat .setUnit (field .getUnit ());
 
 			if (this .sffloatValue (this .SFFloat))
 			{
@@ -1947,18 +1940,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFFloat ();
+			this .SFFloat .setUnit (field .getUnit ());
 
-			value .setUnit (field .getUnit ());
-
-			while (this .sffloatValue (value))
+			while (this .sffloatValue (this .SFFloat))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFFloat ();
-				value .setUnit (field .getUnit ());
+				field .push (this .SFFloat);
 			}
 		},
 		sfimageValue: function (field)
@@ -2025,15 +2011,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFImage ();
-
-			while (this .sfimageValue (value))
+			while (this .sfimageValue (this .SFImage))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFImage ();
+				field .push (this .SFImage);
 			}
 		},
 		sfint32Value: function (field)
@@ -2074,15 +2054,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFInt32 ();
-
-			while (this .sfint32Value (value))
+			while (this .sfint32Value (this .SFInt32))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFInt32 ();
+				field .push (this .SFInt32);
 			}
 		},			
 		sfmatrix3dValue: function (field)
@@ -2167,15 +2141,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFMatrix3d ();
-
-			while (this .sfmatrix3dValue (value))
+			while (this .sfmatrix3dValue (this .SFMatrix3d))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFMatrix3d ();
+				field .push (this .SFMatrix3d);
 			}
 		},
 		sfmatrix3fValue: function (field)
@@ -2210,15 +2178,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFMatrix3f ();
-
-			while (this .sfmatrix3fValue (value))
+			while (this .sfmatrix3fValue (this .SFMatrix3f))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFMatrix3f ();
+				field .push (this .SFMatrix3f);
 			}
 		},
 		sfmatrix4dValue: function (field)
@@ -2339,15 +2301,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFMatrix4d ();
-
-			while (this .sfmatrix4dValue (value))
+			while (this .sfmatrix4dValue (this .SFMatrix4d))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFMatrix4d ();
+				field .push (this .SFMatrix4d);
 			}
 		},
 		sfmatrix4fValue: function (field)
@@ -2382,15 +2338,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFMatrix4f ();
-
-			while (this .sfmatrix4fValue (value))
+			while (this .sfmatrix4fValue (this .SFMatrix4f))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFMatrix4f ();
+				field .push (this .SFMatrix4f);
 			}
 		},
 		sfnodeValue: function (field)
@@ -2497,18 +2447,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFRotation ();
-
-			value .setUnit ("angle");
-
-			while (this .sfrotationValue (value))
+			while (this .sfrotationValue (this .SFRotation))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFRotation ();
-				value .setUnit ("angle");
+				field .push (this .SFRotation);
 			}
 		},
 		sfstringValue: function (field)
@@ -2549,15 +2490,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFString ();
-
-			while (this .sfstringValue (value))
+			while (this .sfstringValue (this .SFString))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFString ();
+				field .push (this .SFString);
 			}
 		},
 		sftimeValue: function (field)
@@ -2592,15 +2527,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFTime ();
-
-			while (this .sftimeValue (value))
+			while (this .sftimeValue (this .SFTime))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFTime ();
+				field .push (this .SFTime);
 			}
 		},
 		sfvec2dValue: function (field)
@@ -2627,6 +2556,8 @@ function ($,
 		{
 			field .length = 0;
 
+			this .SFVec2d .setUnit (field .getUnit ());
+
 			if (this .sfvec2dValue (this .SFVec2d))
 			{
 				field .push (this .SFVec2d);
@@ -2651,18 +2582,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec2d ();
+			this .SFVec2d .setUnit (field .getUnit ());
 
-			value .setUnit (field .getUnit ());
-
-			while (this .sfvec2dValue (value))
+			while (this .sfvec2dValue (this .SFVec2d))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec2d ();
-				value .setUnit (field .getUnit ());
+				field .push (this .SFVec2d);
 			}
 		},
 		sfvec2fValue: function (field)
@@ -2672,6 +2596,8 @@ function ($,
 		mfvec2fValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFVec2f .setUnit (field .getUnit ());
 
 			if (this .sfvec2fValue (this .SFVec2f))
 			{
@@ -2697,18 +2623,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec2f ();
+			this .SFVec2f .setUnit (field .getUnit ());
 
-			value .setUnit (field .getUnit ());
-
-			while (this .sfvec2fValue (value))
+			while (this .sfvec2fValue (this .SFVec2f))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec2f ();
-				value .setUnit (field .getUnit ());
+				field .push (this .SFVec2f);
 			}
 		},
 		sfvec3dValue: function (field)
@@ -2741,6 +2660,8 @@ function ($,
 		{
 			field .length = 0;
 
+			this .SFVec3d .setUnit (field .getUnit ());
+
 			if (this .sfvec3dValue (this .SFVec3d))
 			{
 				field .push (this .SFVec3d);
@@ -2765,18 +2686,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec3d ();
+			this .SFVec3d .setUnit (field .getUnit ());
 
-			value .setUnit (field .getUnit ());
-
-			while (this .sfvec3dValue (value))
+			while (this .sfvec3dValue (this .SFVec3d))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec3d ();
-				value .setUnit (field .getUnit ());
+				field .push (this .SFVec3d);
 			}
 		},
 		sfvec3fValue: function (field)
@@ -2786,6 +2700,8 @@ function ($,
 		mfvec3fValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFVec3f .setUnit (field .getUnit ());
 
 			if (this .sfvec3fValue (this .SFVec3f))
 			{
@@ -2811,18 +2727,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec3f ();
+			this .SFVec3f .setUnit (field .getUnit ());
 
-			value .setUnit (field .getUnit ());
-
-			while (this .sfvec3fValue (value))
+			while (this .sfvec3fValue (this .SFVec3f))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec3f ();
-				value .setUnit (field .getUnit ());
+				field .push (this .SFVec3f);
 			}
 		},
 		sfvec4dValue: function (field)
@@ -2861,6 +2770,8 @@ function ($,
 		{
 			field .length = 0;
 
+			this .SFVec4d .setUnit (field .getUnit ());
+
 			if (this .sfvec4dValue (this .SFVec4d))
 			{
 				field .push (this .SFVec4d);
@@ -2885,18 +2796,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec4d ();
+			this .SFVec4d .setUnit (field .getUnit ());
 
-			value .setUnit (field .getUnit ());
-
-			while (this .sfvec4dValue (value))
+			while (this .sfvec4dValue (this .SFVec4d))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec4d ();
-				value .setUnit (field .getUnit ());
+				field .push (this .SFVec4d);
 			}
 		},
 		sfvec4fValue: function (field)
@@ -2906,6 +2810,8 @@ function ($,
 		mfvec4fValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFVec4f .setUnit (field .getUnit ());
 
 			if (this .sfvec4fValue (this .SFVec4f))
 			{
@@ -2931,18 +2837,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec4f ();
+			this .SFVec4f .setUnit (field .getUnit ());
 
-			value .setUnit (field .getUnit ());
-
-			while (this .sfvec4fValue (value))
+			while (this .sfvec4fValue (this .SFVec4f))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec4f ();
-				value .setUnit (field .getUnit ());
+				field .push (this .SFVec4f);
 			}
 		},
 	});

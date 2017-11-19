@@ -81,6 +81,9 @@ function ($,
 
 		this .addType (X3DConstants .GeoElevationGrid);
 
+		this .creaseAngle_ .setUnit ("angle");
+		this .height_      .setUnit ("length");
+
 		this .colorNode    = null;
 		this .texCoordNode = null;
 		this .normalNode   = null;

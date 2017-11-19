@@ -76,6 +76,8 @@ function ($,
 
 		this .addType (X3DConstants .TextureTransform);
 
+		this .rotation_ .setUnit ("angle");
+
 		this .matrix3 = new Matrix3 ();
 	}
 

@@ -419,8 +419,8 @@ function ($,
 		toStream: function (stream)
 		{
 			var
-				genrator = Genrator .Get (stream),
-				array    = this .getValue ();
+				generator = Generator .Get (stream),
+				array     = this .getValue ();
 
 			switch (array .length)
 			{
@@ -431,7 +431,7 @@ function ($,
 				}
 				case 1:
 				{
-					stream .string += array [0] .toStream (stream);
+					array [0] .toStream (stream);
 					break;
 				}
 				default:
@@ -442,12 +442,12 @@ function ($,
 					for (var i = 0, length = array .length - 1; i < length; ++ i)
 					{
 						stream .string += generator .Indent ();
-						stream .string += array [i] .toStream (stream);
+						array [i] .toStream (stream);
 						stream .string += ",\n"
 					}
 
 					stream .string += generator .Indent ();
-					stream .string += array [length] .toStream (stream);
+					array [length] .toStream (stream);
 					stream .string += "\n";
 
 					generator .DecIndent ();

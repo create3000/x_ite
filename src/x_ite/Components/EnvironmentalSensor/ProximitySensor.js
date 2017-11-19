@@ -82,6 +82,9 @@ function ($,
 
 		this .setCameraObject (true);
 
+		this .centerOfRotation_changed_ .setUnit ("length");
+		this .position_changed_         .setUnit ("length");
+
 		this .viewpoint              = null;
 		this .modelViewMatrix        = new Matrix4 ();
 		this .invModelViewMatrix     = new Matrix4 ();

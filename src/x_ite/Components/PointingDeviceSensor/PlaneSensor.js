@@ -90,6 +90,11 @@ function ($,
 		X3DDragSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .PlaneSensor);
+
+		this .offset_              .setUnit ("length");
+		this .minPosition_         .setUnit ("length");
+		this .maxPosition_         .setUnit ("length");
+		this .translation_changed_ .setUnit ("length");
 	}
 
 	PlaneSensor .prototype = $.extend (Object .create (X3DDragSensorNode .prototype),

@@ -83,6 +83,8 @@ function ($,
 		X3DComposedGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .IndexedFaceSet);
+
+		this .creaseAngle_ .setUnit ("angle");
 	}
 
 	IndexedFaceSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),

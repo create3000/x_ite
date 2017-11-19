@@ -79,6 +79,10 @@ function ($,
 		this .addType (X3DConstants .ArcClose2D);
 
 		this .setGeometryType (2);
+
+		this .startAngle_ .setUnit ("angle");
+		this .endAngle_   .setUnit ("angle");
+		this .radius_     .setUnit ("length");
 	}
 
 	ArcClose2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),

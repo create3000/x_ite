@@ -95,7 +95,7 @@ function ($,
 
 		try
 		{
-			this .setUnits (this .scene .getMetaData ("generator"));
+			this .setUnits (this .getScene () .getMetaData ("generator"));
 			this .parser .setUnits (this .getUnits ());
 		}
 		catch (error)
@@ -206,7 +206,7 @@ function ($,
 
 			try
 			{
-				this .setUnits (this .scene .getMetaData ("generator"));
+				this .setUnits (this .getScene () .getMetaData ("generator"));
 				this .parser .setUnits (this .getUnits ());
 			}
 			catch (error)

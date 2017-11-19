@@ -131,20 +131,20 @@ function ($,
 			   case "force":
 			   case "length":
 			   case "mass":
-					return value * this .getUnits () [category] .conversionFactor;
+					return value * this .getUnits () .get (category) .conversionFactor;
 
 				// Derived units
 
 				case "acceleration:":
-					return value * this .getUnits () ["length"] .conversionFactor;
+					return value * this .getUnits () .get ("length") .conversionFactor;
 				case "angularRate":
-					return value * this .getUnits () ["angle"] .conversionFactor;
+					return value * this .getUnits () .get ("angle") .conversionFactor;
 				case "area":
-					return value * Math .pow (this .getUnits () ["length"] .conversionFactor, 2);
+					return value * Math .pow (this .getUnits () .get ("length") .conversionFactor, 2);
 				case "speed":
-					return value * this .getUnits () ["length"] .conversionFactor;
+					return value * this .getUnits () .get ("length") .conversionFactor;
 				case "volume":
-					return value * Math .pow (this .getUnits () ["length"] .conversionFactor, 3);
+					return value * Math .pow (this .getUnits () .get ("length") .conversionFactor, 3);
 			}
 
 			return value;
