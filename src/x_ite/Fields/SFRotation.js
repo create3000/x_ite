@@ -52,9 +52,10 @@ define ([
 	"x_ite/Fields/SFVec3",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($, SFVec3, X3DField, X3DConstants, Rotation4)
+function ($, SFVec3, X3DField, X3DConstants, Generator, Rotation4)
 {
 "use strict";
 
@@ -137,7 +138,14 @@ function ($, SFVec3, X3DField, X3DConstants, Rotation4)
 		},
 		toStream: function (stream)
 		{
-			stream .string += this .getValue () .toString ();
+			var
+				generator = Generator .Get (stream),
+				r         = this .getValue () .get ();
+
+			stream .string +=  r .x + " " +
+			                   r .y + " " +
+			                   r .z + " " +
+			                   generator .ToUnit ("angle", r .w);
 		},
 		toXMLStream: function (stream)
 		{

@@ -431,11 +431,17 @@ function ($,
 				}
 				case 1:
 				{
+					generator .PushUnitCategory (this .getUnit ());
+
 					array [0] .toStream (stream);
+
+					generator .PopUnitCategory ();
 					break;
 				}
 				default:
 				{
+					generator .PushUnitCategory (this .getUnit ());
+
 					stream .string += "[\n";
 					generator .IncIndent ();
 				
@@ -453,6 +459,8 @@ function ($,
 					generator .DecIndent ();
 					stream .string += generator .Indent ();
 					stream .string += "]";
+
+					generator .PopUnitCategory ();
 					break;
 				}
 			}
@@ -463,15 +471,21 @@ function ($,
 
 			if (length)
 			{
-				var value = this .getValue ();
+				var
+					generator = Generator .Get (stream),
+					array     = this .getValue ();
+
+				generator .PushUnitCategory (this .getUnit ());
 
 				for (var i = 0, n = length - 1; i < n; ++ i)
 				{
-					value [i] .toXMLStream (stream);
+					array [i] .toXMLStream (stream);
 					stream .string += ", ";
 				}
 
-				value [n] .toXMLStream (stream);
+				array [n] .toXMLStream (stream);
+
+				generator .PopUnitCategory ();
 			}
 		},
 		dispose: function ()

@@ -51,8 +51,9 @@ define ([
 	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField, X3DConstants)
+function ($, X3DField, X3DConstants, Generator)
 {
 "use strict";
 
@@ -90,7 +91,11 @@ function ($, X3DField, X3DConstants)
 		valueOf: X3DField .prototype .getValue,
 		toStream: function (stream)
 		{
-			stream .string += String (this .getValue ());
+			var
+				generator = Generator .Get (stream),
+				category  = generator .Unit (this .getUnit ());
+
+			stream .string += String (generator .ToUnit (category, this .getValue ()));
 		},
 		toXMLStream: function (stream)
 		{

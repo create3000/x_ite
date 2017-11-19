@@ -51,8 +51,9 @@ define ([
 	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField, X3DConstants)
+function ($, X3DField, X3DConstants, Generator)
 {
 "use strict";
 
@@ -253,6 +254,10 @@ function ($, X3DField, X3DConstants)
 			else
 				stream .string += "NULL";
 		},
+		toVRMLString: function ()
+		{
+			
+		},
 		toVRMLStream: function (stream)
 		{
 			var node = this .getValue ();
@@ -261,6 +266,21 @@ function ($, X3DField, X3DConstants)
 				node .toVRMLStream (stream);
 			else
 				stream .string += "NULL";
+		},
+		toXMLString: function ()
+		{
+			var
+				stream    = { string: "" },
+				generator = Generator .Get (stream),
+				node      = this .getValue ();
+
+			generator .PushExecutionContext (node .getExecutionContext ());
+
+			this .toXMLStream (stream);
+
+			generator .PopExecutionContext ();
+
+			return stream .string;
 		},
 		toXMLStream: function (stream)
 		{
