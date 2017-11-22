@@ -181,7 +181,7 @@ function ($,
 					{
 						this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-						this .fraction_changed_ = this .fraction = this .first;
+						this .set_fraction (time);
 						
 						this .elapsedTime_ = this .getElapsedTime ();
 						this .cycleTime_   = time;

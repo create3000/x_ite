@@ -1,4 +1,4 @@
-/* X_ITE v4.1.0-147 */
+/* X_ITE v4.1.0-148 */
 
 (function () {
 
@@ -56501,7 +56501,7 @@ function ($,
 					{
 						this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-						this .fraction_changed_ = this .fraction = this .first;
+						this .set_fraction (time);
 						
 						this .elapsedTime_ = this .getElapsedTime ();
 						this .cycleTime_   = time;
