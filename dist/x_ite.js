@@ -1,4 +1,4 @@
-/* X_ITE v4.0.8a-145 */
+/* X_ITE v4.1.0-145 */
 
 (function () {
 
@@ -12814,6 +12814,14 @@ function ()
 			for (var key in interests)
 				interests [key] ();
 		},
+		toString: function ()
+		{
+			var stream = { string: "" };
+
+			this .toStream (stream);
+
+			return stream .string;
+		},
 		toVRMLString: function ()
 		{ },
 		toXMLString: function ()
@@ -13588,6 +13596,7 @@ function ($,
 		_inputRoutes: { },
 		_outputRoutes: { },
 		_accessType: X3DConstants .initializeOnly,
+		_unit: null,
 		_set: false,
 		_uniformLocation: null,
 		clone: function ()
@@ -13646,6 +13655,14 @@ function ($,
 		isWritable: function ()
 		{
 			return this .getAccessType () !== X3DConstants .initializeOnly;
+		},
+		setUnit: function (value)
+		{
+			return this ._unit = value;
+		},
+		getUnit: function ()
+		{
+			return this ._unit;
 		},
 		setSet: function (value)
 		{
@@ -13895,20 +13912,28 @@ function ($,
 {
 "use strict";
 
-	return {
-		indent: "",
-		indentChar: "  ",
-		executionContextStack: [ null ],
-		importedNodesIndex: { },
-		exportedNodesIndex: { },
-		nodes: { },
-		names: { },
-		namesByNode: { },
-		importedNames: { },
-		routeNodes: { },
-		level: 0,
-		newName: 0,
-		containerFields: [ ],
+	function Generator ()
+	{
+		this .indent                = "";
+		this .indentChar            = "  ";
+		this .executionContextStack = [ null ];
+		this .importedNodesIndex    = { };
+		this .exportedNodesIndex    = { };
+		this .nodes                 = { };
+		this .names                 = { };
+		this .namesByNode           = { };
+		this .importedNames         = { };
+		this .routeNodes            = { };
+		this .level                 = 0;
+		this .newName               = 0;
+		this .containerFields       = [ ];
+		this .units                 = true;
+		this .unitCategories        = [ ];
+	}
+
+	Generator .prototype =
+	{
+		constructor: Generator,
 		Indent: function ()
 		{
 			return this .indent;
@@ -14153,6 +14178,43 @@ function ($,
 					return "inputOutput";
 			}
 		},
+		SetUnits: function (value)
+		{
+			this .units = value;
+		},
+		GetUnits: function ()
+		{
+			return this .units;
+		},
+		PushUnitCategory: function (category)
+		{
+			this .unitCategories .push (category);
+		},
+		PopUnitCategory: function ()
+		{
+			this .unitCategories .pop ();
+		},
+		Unit: function (category)
+		{
+			var length = this .unitCategories .length;
+
+			if (length == 0)
+				return category;
+
+			return this .unitCategories [length - 1];
+		},
+		ToUnit: function (category, value)
+		{
+			if (this .units)
+			{
+				var executionContext = this .ExecutionContext ();
+			
+				if (executionContext)
+					return executionContext .toUnit (category, value);
+			}
+
+			return value;
+		},
 		XMLEncode: function (string)
 		{
 			return string
@@ -14171,6 +14233,16 @@ function ($,
 			return string .replace (/\]\]\>/g, "\\]\\]\\>");
 		},
 	};
+
+	Generator .Get = function (stream)
+	{
+		if (! stream .generator)
+			stream .generator = new Generator ();
+
+		return stream .generator;
+	};
+
+	return Generator;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -14374,7 +14446,7 @@ function ($,
 
 				field .setValue (arguments [i]);
 	
-				this .addChildObject (field);
+				this .addChild (field);
 
 				array .unshift (field);
 			}
@@ -14405,7 +14477,7 @@ function ($,
 
 				field .setValue (arguments [i]);
 
-				this .addChildObject (field);
+				this .addChild (field);
 
 				array .push (field);
 			}
@@ -14453,7 +14525,7 @@ function ($,
 
 				field .setValue (array [i]);
 
-				this .addChildObject (field);
+				this .addChild (field);
 				args .push (field);
 			}
 
@@ -14575,7 +14647,7 @@ function ($,
 					if (value !== undefined)
 						field .setValue (value);
 
-					this .addChildObject (field);
+					this .addChild (field);
 					array .push (field);
 				}
 
@@ -14583,7 +14655,7 @@ function ($,
 					this .addEvent ();
 			}
 		},
-		addChildObject: function (value)
+		addChild: function (value)
 		{
 			value .addParent (this);
 		},
@@ -14591,48 +14663,54 @@ function ($,
 		{
 			value .removeParent (this);
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
 			var
-				array  = this .getValue (),
-				string = "";
+				generator = Generator .Get (stream),
+				array     = this .getValue ();
 
 			switch (array .length)
 			{
 				case 0:
 				{
-					string += "[ ]";
+					stream .string += "[ ]";
 					break;
 				}
 				case 1:
 				{
-					string += array [0] .toString ();
+					generator .PushUnitCategory (this .getUnit ());
+
+					array [0] .toStream (stream);
+
+					generator .PopUnitCategory ();
 					break;
 				}
 				default:
 				{
-					string += "[\n";
-					Generator .IncIndent ();
+					generator .PushUnitCategory (this .getUnit ());
+
+					stream .string += "[\n";
+					generator .IncIndent ();
 				
 					for (var i = 0, length = array .length - 1; i < length; ++ i)
 					{
-						string += Generator .Indent ();
-						string += array [i] .toString ();
-						string += ",\n"
+						stream .string += generator .Indent ();
+						array [i] .toStream (stream);
+						stream .string += ",\n"
 					}
 
-					string += Generator .Indent ();
-					string += array [length] .toString ();
-					string += "\n";
+					stream .string += generator .Indent ();
+					array [length] .toStream (stream);
+					stream .string += "\n";
 
-					Generator .DecIndent ();
-					string += Generator .Indent ();
-					string += "]";
+					generator .DecIndent ();
+					stream .string += generator .Indent ();
+					stream .string += "]";
+
+					generator .PopUnitCategory ();
 					break;
 				}
 			}
-
-			return string;
 		},
 		toXMLStream: function (stream)
 		{
@@ -14640,15 +14718,21 @@ function ($,
 
 			if (length)
 			{
-				var value = this .getValue ();
+				var
+					generator = Generator .Get (stream),
+					array     = this .getValue ();
+
+				generator .PushUnitCategory (this .getUnit ());
 
 				for (var i = 0, n = length - 1; i < n; ++ i)
 				{
-					value [i] .toXMLStream (stream);
+					array [i] .toXMLStream (stream);
 					stream .string += ", ";
 				}
 
-				value [n] .toXMLStream (stream);
+				array [n] .toXMLStream (stream);
+
+				generator .PopUnitCategory ();
 			}
 		},
 		dispose: function ()
@@ -14762,9 +14846,9 @@ function ($, X3DField, X3DConstants)
 		{
 			return this .getValue ();
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
-			return this .getValue () ? "TRUE" : "FALSE";
+			stream .string += this .getValue () ? "TRUE" : "FALSE";
 		},
 		toXMLStream: function (stream)
 		{
@@ -15404,13 +15488,13 @@ function ($, Color3, X3DField, X3DConstants)
 			this .getValue () .setHSV (h, s, v);
 			this .addEvent ();
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
-			return this .getValue () .toString ();
+			stream .string += this .getValue () .toString ();
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += this .getValue () .toString ();
+			this .toStream (stream);
 		},
 	});
 
@@ -15771,7 +15855,7 @@ function ($, X3DField, SFColor, X3DConstants, Color4)
 			this .getValue () .setHSVA (h, s, v, a);
 			this .addEvent ();
 		},
-		toString: SFColor .prototype .toString,
+		toStream: SFColor .prototype .toStream,
 		toXMLStream: SFColor .prototype .toXMLStream,
 	});
 
@@ -15902,8 +15986,9 @@ define ('x_ite/Fields/SFDouble',[
 	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField, X3DConstants)
+function ($, X3DField, X3DConstants, Generator)
 {
 "use strict";
 
@@ -15939,13 +16024,17 @@ function ($, X3DField, X3DConstants)
 			X3DField .prototype .set .call (this, +value);
 		},
 		valueOf: X3DField .prototype .getValue,
-		toString: function ()
+		toStream: function (stream)
 		{
-			return String (this .getValue ());
+			var
+				generator = Generator .Get (stream),
+				category  = generator .Unit (this .getUnit ());
+
+			stream .string += String (generator .ToUnit (category, this .getValue ()));
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += String (this .getValue ());
+			this .toStream (stream);
 		},
 	});
 
@@ -16005,8 +16094,9 @@ define ('x_ite/Fields/SFFloat',[
 	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField, X3DConstants)
+function ($, X3DField, X3DConstants, Generator)
 {
 "use strict";
 
@@ -16042,13 +16132,17 @@ function ($, X3DField, X3DConstants)
 			X3DField .prototype .set .call (this, +value);
 		},
 		valueOf: X3DField .prototype .getValue,
-		toString: function ()
+		toStream: function (stream)
 		{
-			return String (this .getValue ());
+			var
+				generator = Generator .Get (stream),
+				category  = generator .Unit (this .getUnit ());
+
+			stream .string += String (generator .ToUnit (category, this .getValue ()));
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += String (this .getValue ());
+			this .toStream (stream);
 		},
 	});
 
@@ -16145,9 +16239,9 @@ function ($, X3DField, X3DConstants)
 			X3DField .prototype .set .call (this, ~~value);
 		},
 		valueOf: X3DField .prototype .getValue,
-		toString: function (base)
+		toStream: function (stream, base)
 		{
-			return this .getValue () .toString (base);
+			stream .string += this .getValue () .toString (base);
 		},
 		toXMLStream: function (stream)
 		{
@@ -16287,13 +16381,13 @@ function ($, X3DField)
 			{
 				return new SFVec (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
 			},
-			toString: function ()
+			toStream: function (stream)
 			{
-				return this .getValue () .toString ();
+				stream .string += this .getValue () .toString ();
 			},
 			toXMLStream: function (stream)
 			{
-				stream .string += this .getValue () .toString ();
+				this .toStream (stream);
 			},
 		});
 	};
@@ -16351,8 +16445,9 @@ function ($, X3DField)
 define ('x_ite/Fields/SFVecPrototypeTemplate',[
 	"jquery",
 	"x_ite/Basic/X3DField",
+	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField)
+function ($, X3DField, Generator)
 {
 "use strict";
 
@@ -16416,13 +16511,24 @@ function ($, X3DField)
 			{
 				return this .getValue () .abs ();
 			},
-			toString: function ()
+			toStream: function (stream)
 			{
-				return this .getValue () .toString ();
+				var
+					generator = Generator .Get (stream),
+					value     = this .getValue (),
+					category  = generator .Unit (this .getUnit ());
+
+				for (var i = 0, l = value .length - 1; i < l; ++ i)
+				{
+					stream .string += String (generator .ToUnit (category, value [i]));
+					stream .string += " ";
+				}
+
+				stream .string += String (generator .ToUnit (category, value [i]));
 			},
 			toXMLStream: function (stream)
 			{
-				stream .string += this .getValue () .toString ();
+				this .toStream (stream);
 			},
 		});
 	};
@@ -21488,8 +21594,9 @@ define ('x_ite/Fields/SFNode',[
 	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField, X3DConstants)
+function ($, X3DField, X3DConstants, Generator)
 {
 "use strict";
 
@@ -21681,23 +21788,51 @@ function ($, X3DField, X3DConstants)
 
 			return null;	
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
 			var node = this .getValue ();
 
-			return node ? node .toString () : "NULL";
+			if (node)
+				node .toStream (stream);
+			else
+				stream .string += "NULL";
 		},
 		toVRMLString: function ()
 		{
+			
+		},
+		toVRMLStream: function (stream)
+		{
 			var node = this .getValue ();
 
-			return node ? node .toVRMLString () : "NULL";
+			if (node)
+				node .toVRMLStream (stream);
+			else
+				stream .string += "NULL";
+		},
+		toXMLString: function ()
+		{
+			var
+				stream    = { string: "" },
+				generator = Generator .Get (stream),
+				node      = this .getValue ();
+
+			generator .PushExecutionContext (node .getExecutionContext ());
+
+			this .toXMLStream (stream);
+
+			generator .PopExecutionContext ();
+
+			return stream .string;
 		},
 		toXMLStream: function (stream)
 		{
 			var node = this .getValue ();
 
-			stream .string += node ? node .toXMLString () : "NULL";
+			if (node)
+				node .toXMLStream (stream);
+			else
+				stream .string += "NULL";
 		},
 		dispose: function ()
 		{
@@ -21764,9 +21899,10 @@ define ('x_ite/Fields/SFRotation',[
 	"x_ite/Fields/SFVec3",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($, SFVec3, X3DField, X3DConstants, Rotation4)
+function ($, SFVec3, X3DField, X3DConstants, Generator, Rotation4)
 {
 "use strict";
 
@@ -21847,13 +21983,20 @@ function ($, SFVec3, X3DField, X3DConstants, Rotation4)
 		{
 			return new SFRotation (Rotation4 .slerp (this .getValue (), rotation .getValue (), t));
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
-			return this .getValue () .toString ();
+			var
+				generator = Generator .Get (stream),
+				r         = this .getValue () .get ();
+
+			stream .string +=  r .x + " " +
+			                   r .y + " " +
+			                   r .z + " " +
+			                   generator .ToUnit ("angle", r .w);
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += this .getValue () .toString ();
+			this .toStream (stream);
 		},
 	});
 
@@ -22041,13 +22184,13 @@ function ($,
 			X3DField .prototype .set .call (this, String (value));
 		},
 		valueOf: X3DField .prototype .getValue,
-		toString: function ()
+		toStream: function (stream)
 		{
-			return '"'+ SFString .escape (this .getValue ()) + '"';
+			stream .string += '"'+ SFString .escape (this .getValue ()) + '"';
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += Generator .XMLEncode (this .getValue ());
+			stream .string += Generator .Get (stream) .XMLEncode (this .getValue ());
 		},
 	});
 
@@ -22154,13 +22297,13 @@ function ($, X3DField, X3DConstants)
 			X3DField .prototype .set .call (this, +value);
 		},
 		valueOf: X3DField .prototype .getValue,
-		toString: function ()
+		toStream: function (stream)
 		{
-			return String (this .getValue ());
+			stream .string += String (this .getValue ());
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += String (this .getValue ());
+			this .toStream (stream);
 		},
 	});
 
@@ -22521,11 +22664,13 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var length = this .length;
+			var
+				generator = Generator .Get (stream),
+				length    = this .length;
 
 			if (length)
 			{
-				Generator .EnterScope ();
+				generator .EnterScope ();
 
 				var value = this .getValue ();
 
@@ -22540,7 +22685,7 @@ function ($,
 					}
 					else
 					{
-						stream .string += Generator .Indent ();
+						stream .string += generator .Indent ();
 						stream .string += "<!-- NULL -->\n";
 					}
 				}
@@ -22553,11 +22698,11 @@ function ($,
 				}
 				else
 				{
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "<!-- NULL -->";
 				}
 
-				Generator .LeaveScope ();
+				generator .LeaveScope ();
 			}
 		},
 	});
@@ -22858,20 +23003,21 @@ function ($, X3DField, ArrayFields, X3DConstants)
 		{
 			return X3DConstants .SFImage;
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
-		   var
-				string = this .width + " " + this .height + " " + this .comp,
-				array  = this .array .getValue ();
+		   var array = this .array .getValue ();
+
+			stream .string += this .width + " " + this .height + " " + this .comp;
 
 			for (var i = 0, length = this .width * this .height; i < length; ++ i)
-				string += " 0x" + array [i] .toString (16);
-
-			return string;
+			{
+				stream .string += " 0x";
+				array [i] .toStream (stream, 16);
+			}
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += this .toString ();
+			this .toStream (stream);
 		},
 	});
 
@@ -23840,36 +23986,38 @@ function ($,
 			this ._cloneCount -= count;
 		},
 		traverse: function () { },
-		toString: function ()
+		toStream: function (stream)
 		{
-			return this .getTypeName () + " { }";
+			stream .string += this .getTypeName () + " { }";
 		},
 		toXMLStream: function (stream)
 		{
-			if (Generator .IsSharedNode (this))
+			var generator = Generator .Get (stream);
+
+			if (generator .IsSharedNode (this))
 			{
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "<!-- NULL -->";		
 				return;
 			}
 
-			Generator .EnterScope ();
+			generator .EnterScope ();
 
-			var name = Generator .Name (this);
+			var name = generator .Name (this);
 
 			if (name .length)
 			{
-				if (Generator .ExistsNode (this))
+				if (generator .ExistsNode (this))
 				{
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "<";
 					stream .string += this .getTypeName ();
 					stream .string += " ";
 					stream .string += "USE='";
-					stream .string += Generator .XMLEncode (name);
+					stream .string += generator .XMLEncode (name);
 					stream .string += "'";
 
-					var containerField = Generator .ContainerField ();
+					var containerField = generator .ContainerField ();
 
 					if (containerField)
 					{
@@ -23877,33 +24025,33 @@ function ($,
 						{
 							stream .string += " ";
 							stream .string += "containerField='";
-							stream .string += Generator .XMLEncode (containerField .getName ());
+							stream .string += generator .XMLEncode (containerField .getName ());
 							stream .string += "'";
 						}
 					}
 
 					stream .string += "/>";
 
-					Generator .LeaveScope ();
+					generator .LeaveScope ();
 					return;
 				}
 			}
 		
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<";
 			stream .string += this .getTypeName ();
 
 			if (name .length)
 			{
-				Generator .AddNode (this);
+				generator .AddNode (this);
 
 				stream .string += " ";
 				stream .string += "DEF='";
-				stream .string += Generator .XMLEncode (name);
+				stream .string += generator .XMLEncode (name);
 				stream .string += "'";
 			}
 
-			var containerField = Generator .ContainerField ();
+			var containerField = generator .ContainerField ();
 
 			if (containerField)
 			{
@@ -23911,7 +24059,7 @@ function ($,
 				{
 					stream .string += " ";
 					stream .string += "containerField='";
-					stream .string += Generator .XMLEncode (containerField .getName ());
+					stream .string += generator .XMLEncode (containerField .getName ());
 					stream .string += "'";
 				}
 			}
@@ -23929,8 +24077,8 @@ function ($,
 			if (cdata && cdata .length === 0)
 				cdata = null;
 
-			Generator .IncIndent ();
-			Generator .IncIndent ();
+			generator .IncIndent ();
+			generator .IncIndent ();
 
 			for (var i = 0, length = fields .length; i < length; ++ i)
 			{
@@ -23941,7 +24089,7 @@ function ($,
 
 				var mustOutputValue = false;
 
-				if (Generator .ExecutionContext ())
+				if (generator .ExecutionContext ())
 				{
 					if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
 					{
@@ -23962,7 +24110,7 @@ function ($,
 				// If we have no execution context we are not in a proto and must not generate IS references the same is true
 				// if the node is a shared node as the node does not belong to the execution context.
 
-				if ($.isEmptyObject (field .getReferences ()) || ! Generator .ExecutionContext () || mustOutputValue)
+				if ($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext () || mustOutputValue)
 				{
 					if (mustOutputValue)
 						references .push (field);
@@ -23983,7 +24131,7 @@ function ($,
 									break;
 
 								stream .string += "\n";
-								stream .string += Generator .Indent ();
+								stream .string += generator .Indent ();
 								stream .string += field .getName ();
 								stream .string += "='";
 
@@ -24001,8 +24149,8 @@ function ($,
 				}
 			}
 
-			Generator .DecIndent ();
-			Generator .DecIndent ();
+			generator .DecIndent ();
+			generator .DecIndent ();
 	
 			if ((! this .hasUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && ! cdata)
 			{
@@ -24012,7 +24160,7 @@ function ($,
 			{
 				stream .string += ">\n";
 
-				Generator .IncIndent ();
+				generator .IncIndent ();
 
 				if (this .hasUserDefinedFields ())
 				{
@@ -24020,11 +24168,11 @@ function ($,
 					{
 						var field = userDefinedFields [name];
 
-						stream .string += Generator .Indent ();
+						stream .string += generator .Indent ();
 						stream .string += "<field";
 						stream .string += " ";
 						stream .string += "accessType='";
-						stream .string += Generator .AccessType (field .getAccessType ());
+						stream .string += generator .AccessType (field .getAccessType ());
 						stream .string += "'";
 						stream .string += " ";
 						stream .string += "type='";
@@ -24032,7 +24180,7 @@ function ($,
 						stream .string += "'";
 						stream .string += " ";
 						stream .string += "name='";
-						stream .string += Generator .XMLEncode (field .getName ());
+						stream .string += generator .XMLEncode (field .getName ());
 						stream .string += "'";
 
 						// If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
@@ -24055,9 +24203,9 @@ function ($,
 								mustOutputValue = true;
 						}
 
-						if (($.isEmptyObject (field .getReferences ()) || ! Generator .ExecutionContext ()) || mustOutputValue)
+						if (($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext ()) || mustOutputValue)
 						{
-							if (mustOutputValue && Generator .ExecutionContext ())
+							if (mustOutputValue && generator .ExecutionContext ())
 								references .push (field);
 		
 							if (! field .isInitializable () || field .isDefaultValue ())
@@ -24073,22 +24221,22 @@ function ($,
 									case X3DConstants .SFNode:
 									case X3DConstants .MFNode:
 									{
-										Generator .PushContainerField (null);
+										generator .PushContainerField (null);
 
 										stream .string += ">\n";
 
-										Generator .IncIndent ();
+										generator .IncIndent ();
 
 										field .toXMLStream (stream);
 
 										stream .string += "\n";
 
-										Generator .DecIndent ();
+										generator .DecIndent ();
 
-										stream .string += Generator .Indent ();
+										stream .string += generator .Indent ();
 										stream .string += "</field>\n";
 
-										Generator .PopContainerField ();
+										generator .PopContainerField ();
 										break;
 									}
 									default:
@@ -24107,7 +24255,7 @@ function ($,
 						}
 						else
 						{
-							if (Generator .ExecutionContext ())
+							if (generator .ExecutionContext ())
 								references .push (field);
 
 							stream .string += "/>\n";
@@ -24117,11 +24265,11 @@ function ($,
 		
 				if (references .length)
 				{
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "<IS>";
 					stream .string += "\n";
 
-					Generator .IncIndent ();
+					generator .IncIndent ();
 		
 					for (var i = 0, length = references .length; i < length; ++ i)
 					{
@@ -24133,23 +24281,23 @@ function ($,
 						{
 							var protoField = protoFields [id];
 
-							stream .string += Generator .Indent ();
+							stream .string += generator .Indent ();
 							stream .string += "<connect";
 							stream .string += " ";
 							stream .string += "nodeField='";
-							stream .string += Generator .XMLEncode (field .getName ());
+							stream .string += generator .XMLEncode (field .getName ());
 							stream .string += "'";
 							stream .string += " ";
 							stream .string += "protoField='";
-							stream .string += Generator .XMLEncode (protoField .getName ());
+							stream .string += generator .XMLEncode (protoField .getName ());
 							stream .string += "'";
 							stream .string += "/>\n";
 						}
 					}
 
-					Generator .DecIndent ();
+					generator .DecIndent ();
 
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "</IS>\n";
 				}
 
@@ -24157,13 +24305,13 @@ function ($,
 				{
 					var field = childNodes [i];
 
-					Generator .PushContainerField (field);
+					generator .PushContainerField (field);
 
 					field .toXMLStream (stream);
 
 					stream .string += "\n";
 
-					Generator .PopContainerField ();
+					generator .PopContainerField ();
 				}
 
 				if (cdata)
@@ -24173,20 +24321,20 @@ function ($,
 						var value = cdata [i];
 
 						stream .string += "<![CDATA[";
-						stream .string += Generator .escapeCDATA (value);
+						stream .string += generator .escapeCDATA (value);
 						stream .string += "]]>\n";
 					}
 				}
 
-				Generator .DecIndent ();
+				generator .DecIndent ();
 
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "</";
 				stream .string += this .getTypeName ();
 				stream .string += ">";
 			}
 
-			Generator .LeaveScope ();
+			generator .LeaveScope ();
 		},
 		dispose: function ()
 		{
@@ -28269,7 +28417,9 @@ function ($,
 		constructor: ComponentInfo,
 		toXMLStream: function (stream)
 		{
-			stream .string += Generator .Indent ();
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
 			stream .string += "<component";
 			stream .string += " ";
 			stream .string += "name='";
@@ -28520,7 +28670,7 @@ function ($,
 				if (destinationNode instanceof ImportedNode)
 					destinationNode = destinationNode .getExportedNode () .getValue ();
 
-				route ._route = this .getExecutionContext () .addSimpleRoute (new Fields .SFNode (sourceNode), sourceField, new Fields .SFNode (destinationNode), destinationField);
+				route ._route = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
 			}
 			catch (error)
 			{
@@ -28567,24 +28717,26 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			if (Generator .ExistsNode (this .getInlineNode ()))
+			var generator = Generator .Get (stream);
+
+			if (generator .ExistsNode (this .getInlineNode ()))
 			{
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "<IMPORT";
 				stream .string += " ";
 				stream .string += "inlineDEF='";
-				stream .string += Generator .XMLEncode (Generator .Name (this .getInlineNode ()));
+				stream .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "exportedDEF='";
-				stream .string += Generator .XMLEncode (this .getExportedName ());
+				stream .string += generator .XMLEncode (this .getExportedName ());
 				stream .string += "'";
 
 				if (this .getImportedName () !== this .getExportedName ())
 				{
 					stream .string += " ";
 					stream .string += "AS='";
-					stream .string += Generator .XMLEncode (this .getImportedName ());
+					stream .string += generator .XMLEncode (this .getImportedName ());
 					stream .string += "'";
 				}
 
@@ -28592,8 +28744,8 @@ function ($,
 
 				try
 				{
-					Generator .AddRouteNode (this);
-					Generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
+					generator .AddRouteNode (this);
+					generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
 				}
 				catch (error)
 				{
@@ -28610,37 +28762,37 @@ function ($,
 							destinationNode  = route .destinationNode,
 							destinationField = route .destinationField;
 
-						if (Generator .ExistsRouteNode (sourceNode) && Generator .ExistsRouteNode (destinationNode))
+						if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
 						{
 							if (sourceNode instanceof ImportedNode)
 								var sourceNodeName = sourceNode .getImportedName ();
 							else
-								var sourceNodeName = Generator .Name (sourceNode);
+								var sourceNodeName = generator .Name (sourceNode);
 	
 							if (destinationNode instanceof ImportedNode)
 								var destinationNodeName = destinationNode .getImportedName ();
 							else
-								var destinationNodeName = Generator .Name (destinationNode);
+								var destinationNodeName = generator .Name (destinationNode);
 	
 							stream .string += "\n";
 							stream .string += "\n";
-							stream .string += Generator .Indent ();
+							stream .string += generator .Indent ();
 							stream .string += "<ROUTE";
 							stream .string += " ";
 							stream .string += "fromNode='";
-							stream .string += Generator .XMLEncode (sourceNodeName);
+							stream .string += generator .XMLEncode (sourceNodeName);
 							stream .string += "'";
 							stream .string += " ";
 							stream .string += "fromField='";
-							stream .string += Generator .XMLEncode (sourceField);
+							stream .string += generator .XMLEncode (sourceField);
 							stream .string += "'";
 							stream .string += " ";
 							stream .string += "toNode='";
-							stream .string += Generator .XMLEncode (destinationNodeName);
+							stream .string += generator .XMLEncode (destinationNodeName);
 							stream .string += "'";
 							stream .string += " ";
 							stream .string += "toField='";
-							stream .string += Generator .XMLEncode (destinationField);
+							stream .string += generator .XMLEncode (destinationField);
 							stream .string += "'";
 							stream .string += "/>";
 						}
@@ -29062,18 +29214,19 @@ function ($,
 		toXMLStream: function (stream)
 		{
 			var
-				sourceNodeName      = Generator .LocalName (this .getSourceNode ()),
-				destinationNodeName = Generator .LocalName (this .getDestinationNode ());
+				generator           = Generator .Get (stream),
+				sourceNodeName      = generator .LocalName (this .getSourceNode ()),
+				destinationNodeName = generator .LocalName (this .getDestinationNode ());
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<ROUTE";
 			stream .string += " ";
 			stream .string += "fromNode='";
-			stream .string += Generator .XMLEncode (sourceNodeName);
+			stream .string += generator .XMLEncode (sourceNodeName);
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "fromField='";
-			stream .string += Generator .XMLEncode (this ._sourceField .getName ());
+			stream .string += generator .XMLEncode (this ._sourceField .getName ());
 
 			if (this ._sourceField .getAccessType () === X3DConstants .inputOutput)
 				stream .string += "_changed";
@@ -29081,7 +29234,7 @@ function ($,
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "toNode='";
-			stream .string += Generator .XMLEncode (destinationNodeName);
+			stream .string += generator .XMLEncode (destinationNodeName);
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "toField='";
@@ -29089,7 +29242,7 @@ function ($,
 			if (this ._destinationField .getAccessType () === X3DConstants .inputOutput)
 				stream .string += "set_";
 
-			stream .string += Generator .XMLEncode (this ._destinationField .getName ());
+			stream .string += generator .XMLEncode (this ._destinationField .getName ());
 			stream .string += "'";
 			stream .string += "/>";
 		},
@@ -30519,9 +30672,11 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			Generator .PushExecutionContext (this);
-			Generator. EnterScope ();
-			Generator .ImportedNodes (this .getImportedNodes ());
+			var generator = Generator .Get (stream);
+
+			generator .PushExecutionContext (this);
+			generator .EnterScope ();
+			generator .ImportedNodes (this .getImportedNodes ());
 
 			// Output extern protos
 
@@ -30562,8 +30717,8 @@ function ($,
 
 			this .getRoutes () .toXMLStream (stream);
 
-			Generator .LeaveScope ();
-			Generator .PopExecutionContext ();
+			generator .LeaveScope ();
+			generator .PopExecutionContext ();
 		},
 	});
 
@@ -30652,7 +30807,11 @@ function ($,
 
 	function UnitInfo (category, name, conversionFactor)
 	{
-		this .category         = category;
+		Object .defineProperty (this, "category", {
+		    value: category,
+		    writable: false,
+		});
+
 		this .name             = name;
 		this .conversionFactor = conversionFactor;
 	}
@@ -30662,7 +30821,9 @@ function ($,
 		constructor: UnitInfo,
 		toXMLStream: function (stream)
 		{
-			stream .string += Generator .Indent ();
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
 			stream .string += "<unit";
 			stream .string += " ";
 			stream .string += "category='";
@@ -30670,7 +30831,7 @@ function ($,
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "name='";
-			stream .string += Generator .XMLEncode (this .name);
+			stream .string += generator .XMLEncode (this .name);
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "conversionFactor='";
@@ -30842,20 +31003,22 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var localName = Generator .LocalName (this .localNode);
+			var
+				generator = Generator .Get (stream),
+				localName = generator .LocalName (this .localNode);
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<EXPORT";
 			stream .string += " ";
 			stream .string += "localDEF='";
-			stream .string += Generator .XMLEncode (localName);
+			stream .string += generator .XMLEncode (localName);
 			stream .string += "'";
 
 			if (this .exportedName !== localName)
 			{
 				stream .string += " ";
 				stream .string += "AS='";
-				stream .string += Generator .XMLEncode (this .exportedName);
+				stream .string += generator .XMLEncode (this .exportedName);
 				stream .string += "'";
 			}
 
@@ -30975,6 +31138,8 @@ function ($,
 		},
 		updateUnit: function (category, name, conversionFactor)
 		{
+			// Private function.
+
 			var unit = this .unitArray .get (category);
 
 			if (! unit)
@@ -30986,6 +31151,62 @@ function ($,
 		getUnits: function ()
 		{
 			return this .unitArray;
+		},
+		fromUnit: function (category, value)
+		{
+			switch (category)
+			{
+				// Base units
+
+			   case "angle":
+			   case "force":
+			   case "length":
+			   case "mass":
+					return value * this .getUnits () .get (category) .conversionFactor;
+
+				// Derived units
+
+				case "acceleration:":
+					return value * this .getUnits () .get ("length") .conversionFactor;
+				case "angularRate":
+					return value * this .getUnits () .get ("angle") .conversionFactor;
+				case "area":
+					return value * Math .pow (this .getUnits () .get ("length") .conversionFactor, 2);
+				case "speed":
+					return value * this .getUnits () .get ("length") .conversionFactor;
+				case "volume":
+					return value * Math .pow (this .getUnits () .get ("length") .conversionFactor, 3);
+			}
+
+			return value;
+		},
+		toUnit: function (category, value)
+		{
+			switch (category)
+			{
+				// Base units
+
+			   case "angle":
+			   case "force":
+			   case "length":
+			   case "mass":
+					return value / this .getUnits () .get (category) .conversionFactor;
+			
+				// Derived units
+
+				case "acceleration:":
+					return value / this .getUnits () .get ("length") .conversionFactor;
+				case "angularRate":
+					return value / this .getUnits () .get ("angle") .conversionFactor;
+				case "area":
+					return value / Math .pow (this .getUnits () .get ("length") .conversionFactor, 2);
+				case "speed":
+					return value / this .getUnits () .get ("length") .conversionFactor;
+				case "volume":
+					return value / Math .pow (this .getUnits () .get ("length") .conversionFactor, 3);
+			}
+
+			return value;
 		},
 		setMetaData: function (name, value)
 		{
@@ -31075,7 +31296,9 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var specificationVersion = this .getSpecificationVersion ();
+			var
+				generator            = Generator .Get (stream),
+				specificationVersion = this .getSpecificationVersion ();
 
 			if (specificationVersion === "2.0")
 				specificationVersion = "3.3";
@@ -31103,12 +31326,12 @@ function ($,
 			stream .string += specificationVersion;
 			stream .string += ".xsd'>\n";
 
-			Generator .IncIndent ();
+			generator .IncIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<head>\n";
 
-			Generator .IncIndent ();
+			generator .IncIndent ();
 		
 			// <head>
 
@@ -31132,37 +31355,37 @@ function ($,
 
 			for (var key in metaDatas)
 			{
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "<meta";
 				stream .string += " ";
 				stream .string += "name='";
-				stream .string += Generator .XMLEncode (key);
+				stream .string += generator .XMLEncode (key);
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "content='";
-				stream .string += Generator .XMLEncode (metaDatas [key]);
+				stream .string += generator .XMLEncode (metaDatas [key]);
 				stream .string += "'";
 				stream .string += "/>\n";
 			}
 		
 			// </head>
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "</head>\n";
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<Scene>\n";
 
-			Generator .IncIndent ();
+			generator .IncIndent ();
 		
 			// <Scene>
 
 			var exportedNodes = this .getExportedNodes ();
 
-			Generator .PushExecutionContext (this);
-			Generator .EnterScope ();
-			Generator .ExportedNodes (exportedNodes);
+			generator .PushExecutionContext (this);
+			generator .EnterScope ();
+			generator .ExportedNodes (exportedNodes);
 
 			X3DExecutionContext .prototype .toXMLStream .call (this, stream);
 		
@@ -31178,17 +31401,17 @@ function ($,
 				{ }
 			}
 
-			Generator .LeaveScope ();
-			Generator .PopExecutionContext ();
+			generator .LeaveScope ();
+			generator .PopExecutionContext ();
 
 			// </Scene>
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "</Scene>\n";
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 
 			stream .string += "</X3D>\n";
 		},
@@ -31349,6 +31572,138 @@ function ($,
 	});
 
 	return Scene;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Parser/X3DParser',[],function ()
+{
+"use strict";
+
+	function X3DParser (scene)
+	{
+		this .scene             = scene;
+		this .executionContexts = [ scene ];
+		this .units             = true;
+	}
+
+	X3DParser .prototype = {
+		constructor: X3DParser,
+		getScene: function ()
+		{
+			return this .scene;
+		},
+		getBrowser: function ()
+		{
+			return this .scene .getBrowser ();
+		},
+		getExecutionContext: function ()
+		{
+			return this .executionContexts [this .executionContexts .length - 1];
+		},
+		pushExecutionContext: function (executionContext)
+		{
+			return this .executionContexts .push (executionContext);
+		},
+		popExecutionContext: function ()
+		{
+			this .executionContexts .pop ();
+		},
+		isInsideProtoDefinition: function ()
+		{
+			return this .executionContexts .length > 1;
+		},
+		addRootNode: function (node)
+		{
+			this .getExecutionContext () .rootNodes .push (node);
+		},
+		setUnits: function (generator)
+		{
+			if ((typeof arguments [0]) == "boolean")
+			{
+				this .units = arguments [0];
+				return;
+			}
+
+			var
+				version = /Titania\s+V(\d+).*/,
+				match   = generator .match (version);
+
+			if (match)
+			{
+				var major = parseInt (match [1]);
+
+				// Before version 4 units are wrongly implemented.
+				if (major < 4)
+				{
+					this .units = false;
+					return;
+				}
+			}
+		
+			this .units = true;
+		},
+		getUnits: function ()
+		{
+			return this .units;
+		},
+		fromUnit: function (category, value)
+		{
+			if (this .units)
+				return this .getExecutionContext () .fromUnit (category, value);
+
+			return value;
+		},
+	};
+
+	return X3DParser;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -31788,10 +32143,6 @@ function ($,
 				console .error (error .message);
 			}
 		},
-		getExtendedEventHandling: function ()
-		{
-			return false;
-		},
 		getInnerNode: function ()
 		{
 			var rootNodes = this .getRootNodes () .getValue ();
@@ -31805,6 +32156,18 @@ function ($,
 			}
 
 			throw new Error ("Root node not available.");
+		},
+		fromUnit: function (category, value)
+		{
+			return this .protoNode .getProtoDeclaration () .fromUnit (category, value);
+		},
+		toUnit: function (category, value)
+		{
+			return this .protoNode .getProtoDeclaration () .toUnit (category, value);
+		},
+		getExtendedEventHandling: function ()
+		{
+			return false;
 		},
 		importExternProtos: function (externprotos)
 		{
@@ -31871,33 +32234,35 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			if (Generator .IsSharedNode (this))
+			var generator = Generator .Get (stream);
+
+			if (generator .IsSharedNode (this))
 			{
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "<!-- NULL -->";		
 				return;
 			}
 
-			Generator .EnterScope ();
+			generator .EnterScope ();
 
-			var name = Generator .Name (this);
+			var name = generator .Name (this);
 
 			if (name .length)
 			{
-				if (Generator .ExistsNode (this))
+				if (generator .ExistsNode (this))
 				{
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "<ProtoInstance";
 					stream .string += " ";
 					stream .string += "name='";
-					stream .string += Generator .XMLEncode (this .getTypeName ());
+					stream .string += generator .XMLEncode (this .getTypeName ());
 					stream .string += "'";
 					stream .string += " ";
 					stream .string += "USE='";
-					stream .string += Generator .XMLEncode (name);
+					stream .string += generator .XMLEncode (name);
 					stream .string += "'";
 
-					var containerField = Generator .ContainerField ();
+					var containerField = generator .ContainerField ();
 
 					if (containerField)
 					{
@@ -31905,36 +32270,36 @@ function ($,
 						{
 							stream .string += " ";
 							stream .string += "containerField='";
-							stream .string += Generator .XMLEncode (containerField .getName ());
+							stream .string += generator .XMLEncode (containerField .getName ());
 							stream .string += "'";
 						}
 					}
 
 					stream .string += "/>";
 
-					Generator .LeaveScope ();
+					generator .LeaveScope ();
 					return;
 				}
 			}
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<ProtoInstance";
 			stream .string += " ";
 			stream .string += "name='";
-			stream .string += Generator .XMLEncode (this .getTypeName ());
+			stream .string += generator .XMLEncode (this .getTypeName ());
 			stream .string += "'";
 
 			if (name .length)
 			{
-				Generator .AddNode (this);
+				generator .AddNode (this);
 
 				stream .string += " ";
 				stream .string += "DEF='";
-				stream .string += Generator .XMLEncode (name);
+				stream .string += generator .XMLEncode (name);
 				stream .string += "'";
 			}
 
-			var containerField = Generator .ContainerField ();
+			var containerField = generator .ContainerField ();
 
 			if (containerField)
 			{
@@ -31942,7 +32307,7 @@ function ($,
 				{
 					stream .string += " ";
 					stream .string += "containerField='";
-					stream .string += Generator .XMLEncode (containerField .getName ());
+					stream .string += generator .XMLEncode (containerField .getName ());
 					stream .string += "'";
 				}
 			}
@@ -31971,7 +32336,7 @@ function ($,
 			{
 				stream .string += ">\n";
 
-				Generator .IncIndent ();
+				generator .IncIndent ();
 
 				var references = [ ];
 
@@ -31984,7 +32349,7 @@ function ($,
 
 					var mustOutputValue = false;
 
-					if (Generator .ExecutionContext ())
+					if (generator .ExecutionContext ())
 					{
 						if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
 						{
@@ -32005,7 +32370,7 @@ function ($,
 					// If we have no execution context we are not in a proto and must not generate IS references the same is true
 					// if the node is a shared node as the node does not belong to the execution context.
 
-					if ($.isEmptyObject (field .getReferences ()) || ! Generator .ExecutionContext () || mustOutputValue)
+					if ($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext () || mustOutputValue)
 					{
 						if (mustOutputValue)
 							references .push (field);
@@ -32014,11 +32379,11 @@ function ($,
 						{
 							case X3DConstants .MFNode:
 							{
-								stream .string += Generator .Indent ();
+								stream .string += generator .Indent ();
 								stream .string += "<fieldValue";
 								stream .string += " ";
 								stream .string += "name='";
-								stream .string += Generator .XMLEncode (field .getName ());
+								stream .string += generator .XMLEncode (field .getName ());
 								stream .string += "'";
 
 								if (field .length === 0)
@@ -32029,15 +32394,15 @@ function ($,
 								{
 									stream .string += ">\n";
 
-									Generator .IncIndent ();
+									generator .IncIndent ();
 
 									field .toXMLStream (stream);
 
 									stream .string += "\n";
 
-									Generator .DecIndent ();
+									generator .DecIndent ();
 
-									stream .string += Generator .Indent ();
+									stream .string += generator .Indent ();
 									stream .string += "</fieldValue>\n";
 								}
 
@@ -32047,23 +32412,23 @@ function ($,
 							{
 								if (field .getValue () !== null)
 								{
-									stream .string += Generator .Indent ();
+									stream .string += generator .Indent ();
 									stream .string += "<fieldValue";
 									stream .string += " ";
 									stream .string += "name='";
-									stream .string += Generator .XMLEncode (field .getName ())
+									stream .string += generator .XMLEncode (field .getName ())
 									stream .string += "'";
 									stream .string += ">\n";
 									
-									Generator .IncIndent ();
+									generator .IncIndent ();
 
 									field .toXMLStream (stream);
 
 									stream .string += "\n";
 
-									Generator .DecIndent ();
+									generator .DecIndent ();
 
-									stream .string += Generator .Indent ();
+									stream .string += generator .Indent ();
 									stream .string += "</fieldValue>\n";		
 									break;
 								}
@@ -32072,11 +32437,11 @@ function ($,
 							}
 							default:
 							{
-								stream .string += Generator .Indent ();
+								stream .string += generator .Indent ();
 								stream .string += "<fieldValue";
 								stream .string += " ";
 								stream .string += "name='";
-								stream .string += Generator .XMLEncode (field .getName ())
+								stream .string += generator .XMLEncode (field .getName ())
 								stream .string += "'";
 								stream .string += " ";
 								stream .string += "value='";
@@ -32097,11 +32462,11 @@ function ($,
 
 				if (references .length)
 				{
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "<IS>";
 					stream .string += "\n";
 
-					Generator .IncIndent ();
+					generator .IncIndent ();
 		
 					for (var i = 0, length = references .length; i < length; ++ i)
 					{
@@ -32113,23 +32478,23 @@ function ($,
 						{
 							var protoField = protoFields [id];
 
-							stream .string += Generator .Indent ();
+							stream .string += generator .Indent ();
 							stream .string += "<connect";
 							stream .string += " ";
 							stream .string += "nodeField='";
-							stream .string += Generator .XMLEncode (field .getName ());
+							stream .string += generator .XMLEncode (field .getName ());
 							stream .string += "'";
 							stream .string += " ";
 							stream .string += "protoField='";
-							stream .string += Generator .XMLEncode (protoField .getName ());
+							stream .string += generator .XMLEncode (protoField .getName ());
 							stream .string += "'";
 							stream .string += "/>\n";
 						}
 					}
 
-					Generator .DecIndent ();
+					generator .DecIndent ();
 
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "</IS>\n";
 				}
 
@@ -32143,13 +32508,13 @@ function ($,
 					}
 				}
 
-				Generator .DecIndent ();
+				generator .DecIndent ();
 
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "</ProtoInstance>";
 			}
 
-			Generator .LeaveScope ();
+			generator .LeaveScope ();
 		},
 	});
 
@@ -32473,11 +32838,13 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			stream .string += Generator .Indent ();
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
 			stream .string += "<ExternProtoDeclare";
 			stream .string += " ";
 			stream .string += "name='";
-			stream .string += Generator .XMLEncode (this .getName ());
+			stream .string += generator .XMLEncode (this .getName ());
 			stream .string += "'";
 			stream .string += " ";
 			stream .string += "url='";
@@ -32487,7 +32854,7 @@ function ($,
 			stream .string += "'";
 			stream .string += ">\n";
 
-			Generator .IncIndent ();
+			generator .IncIndent ();
 
 			var fields = this .getUserDefinedFields ();
 
@@ -32495,11 +32862,11 @@ function ($,
 			{
 				var field = fields [name];
 
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "<field";
 				stream .string += " ";
 				stream .string += "accessType='";
-				stream .string += Generator .AccessType (field .getAccessType ());
+				stream .string += generator .AccessType (field .getAccessType ());
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "type='";
@@ -32507,14 +32874,14 @@ function ($,
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "name='";
-				stream .string += Generator .XMLEncode (field .getName ());
+				stream .string += generator .XMLEncode (field .getName ());
 				stream .string += "'";
 				stream .string += "/>\n";
 			}
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "</ExternProtoDeclare>";
 		},
 	});
@@ -32663,10 +33030,6 @@ function ($,
 
 			this .loadState_ = X3DConstants .COMPLETE_STATE;
 		},
-		hasUserDefinedFields: function ()
-		{
-			return true;
-		},
 		getURL: function ()
 		{
 			return this .getExecutionContext () .getURL ();
@@ -32679,41 +33042,55 @@ function ($,
 		{
 			return this .loadState_ .getValue ();
 		},
+		fromUnit: function (category, value)
+		{
+			return this .getExecutionContext () .fromUnit (category, value);
+		},
+		toUnit: function (category, value)
+		{
+			return this .getExecutionContext () .toUnit (category, value);
+		},
+		hasUserDefinedFields: function ()
+		{
+			return true;
+		},
 		toXMLStream: function (stream)
 		{
-			stream .string += Generator .Indent ();
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
 			stream .string += "<ProtoDeclare";
 			stream .string += " ";
 			stream .string += "name='";
-			stream .string += Generator .XMLEncode (this .getName ());
+			stream .string += generator .XMLEncode (this .getName ());
 			stream .string += "'";
 			stream .string += ">";
 			stream .string += "\n";
 		
 			// <ProtoInterface>
 
-			Generator .EnterScope ();
+			generator .EnterScope ();
 		
 			var userDefinedFields = this .getUserDefinedFields ();
 
 			if (! $.isEmptyObject (userDefinedFields))
 			{
-				Generator .IncIndent ();
+				generator .IncIndent ();
 
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "<ProtoInterface>\n";
 
-				Generator .IncIndent ();
+				generator .IncIndent ();
 
 				for (var name in userDefinedFields)
 				{
 					var field = userDefinedFields [name];
 
-					stream .string += Generator .Indent ();
+					stream .string += generator .Indent ();
 					stream .string += "<field";
 					stream .string += " ";
 					stream .string += "accessType='";
-					stream .string += Generator .AccessType (field .getAccessType ());
+					stream .string += generator .AccessType (field .getAccessType ());
 					stream .string += "'";
 					stream .string += " ";
 					stream .string += "type='";
@@ -32721,7 +33098,7 @@ function ($,
 					stream .string += "'";
 					stream .string += " ";
 					stream .string += "name='";
-					stream .string += Generator .XMLEncode (field .getName ());
+					stream .string += generator .XMLEncode (field .getName ());
 					stream .string += "'";
 
 					if (field .isDefaultValue ())
@@ -32735,22 +33112,22 @@ function ($,
 							case X3DConstants .SFNode:
 							case X3DConstants .MFNode:
 							{
-								Generator .PushContainerField (null);
+								generator .PushContainerField (null);
 		
 								stream .string += ">\n";
 
-								Generator .IncIndent ();
+								generator .IncIndent ();
 
 								field .toXMLStream (stream);
 
 								stream .string += "\n";
 
-								Generator .DecIndent ();
+								generator .DecIndent ();
 
-								stream .string += Generator .Indent ();
+								stream .string += generator .Indent ();
 								stream .string += "</field>\n";
 
-								Generator .PopContainerField ();
+								generator .PopContainerField ();
 								break;
 							}
 							default:
@@ -32768,39 +33145,39 @@ function ($,
 					}
 				}
 		
-				Generator .DecIndent ();
+				generator .DecIndent ();
 
-				stream .string += Generator .Indent ();
+				stream .string += generator .Indent ();
 				stream .string += "</ProtoInterface>\n";
 
-				Generator .DecIndent ();
+				generator .DecIndent ();
 			}
 		
-			Generator .LeaveScope ();
+			generator .LeaveScope ();
 		
 			// </ProtoInterface>
 
 			// <ProtoBody>
 		
-			Generator .IncIndent ();
+			generator .IncIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "<ProtoBody>\n";
 
-			Generator .IncIndent ();
+			generator .IncIndent ();
 
 			X3DExecutionContext .prototype .toXMLStream .call (this, stream);
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "</ProtoBody>\n";
 
-			Generator .DecIndent ();
+			generator .DecIndent ();
 		
 			// </ProtoBody>
 
-			stream .string += Generator .Indent ();
+			stream .string += generator .Indent ();
 			stream .string += "</ProtoDeclare>";
 		},
 	});
@@ -32882,12 +33259,14 @@ function ($,
 define ('x_ite/Parser/Parser',[
 	"jquery",
 	"x_ite/Fields",
+	"x_ite/Parser/X3DParser",
 	"x_ite/Prototype/X3DExternProtoDeclaration",
 	"x_ite/Prototype/X3DProtoDeclaration",
 	"x_ite/Bits/X3DConstants",
 ],
 function ($,
           Fields,
+          X3DParser,
           X3DExternProtoDeclaration,
           X3DProtoDeclaration,
           X3DConstants)
@@ -33092,12 +33471,12 @@ function ($,
 
 	function Parser (scene, isXML)
 	{
-		this .scene             = scene;
-		this .isXML             = isXML;
-		this .executionContexts = [ ];
+		X3DParser .call (this, scene);
+
+		this .isXML = isXML;
 	}
 
-	Parser .prototype =
+	Parser .prototype = $.extend (Object .create (X3DParser .prototype),
 	{
 		accessTypes:
 		{
@@ -33158,30 +33537,6 @@ function ($,
 			this .lineNumber = 1;
 			this .lastIndex  = 0;
 		},
-		getBrowser: function ()
-		{
-			return this .scene .getBrowser ();
-		},
-		getExecutionContext: function ()
-		{
-			return this .executionContexts [this .executionContexts .length - 1];
-		},
-		pushExecutionContext: function (executionContext)
-		{
-			return this .executionContexts .push (executionContext);
-		},
-		popExecutionContext: function ()
-		{
-			this .executionContexts .pop ();
-		},
-		isInsideProtoDefinition: function ()
-		{
-			return this .executionContexts .length > 1;
-		},
-		addRootNode: function (node)
-		{
-			this .getExecutionContext () .rootNodes .push (node);
-		},
 		exception: function (string)
 		{
 			if (this .getBrowser () .isStrict ())
@@ -33193,8 +33548,8 @@ function ($,
 		{
 			try
 			{
-				this .scene .setEncoding ("VRML");
-				this .scene .setProfile (this .getBrowser () .getProfile ("Full"));
+				this .getScene () .setEncoding ("VRML");
+				this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
 				this .setInput (input);
 				this .x3dScene ();
@@ -33229,7 +33584,7 @@ function ($,
 			var message = "\n"
 				+ "********************************************************************************" + "\n"
 				+ "Parser error at line " + this .lineNumber + ":" + linePos  + "\n"
-				+ "in '" + this .scene .getURL () + "'" + "\n"
+				+ "in '" + this .getScene () .getURL () + "'" + "\n"
 				+ "\n"
 				+ lastLine + "\n"
 				+ line + "\n"
@@ -33305,16 +33660,24 @@ function ($,
 		},
 		x3dScene: function ()
 		{
-			this .pushExecutionContext (this .scene);
+			this .pushExecutionContext (this .getScene ());
 
 			this .headerStatement ();
 			this .profileStatement ();
 			this .componentStatements ();
 			this .unitStatements ();
 			this .metaStatements ();
+
+			try
+			{
+				this .setUnits (this .getScene () .getMetaData ("generator"));
+			}
+			catch (error)
+			{ }
+
 			this .statements ();
 
-			this .popExecutionContext (this .scene);
+			this .popExecutionContext (this .getScene ());
 
 			if (this .lastIndex < this .input .length)
 				throw new Error ("Unknown statement.");
@@ -33325,8 +33688,8 @@ function ($,
 
 			if (result)
 			{
-				this .scene .specificationVersion = result [2];
-				this .scene .encoding             = "VRML";
+				this .getScene () .specificationVersion = result [2];
+				this .getScene () .encoding             = "VRML";
 				return true;
 			}
 
@@ -33342,7 +33705,7 @@ function ($,
 				{
 					var profile = this .getBrowser () .getProfile (this .result [1]);
 
-					this .scene .setProfile (profile);
+					this .getScene () .setProfile (profile);
 					return;
 				}
 
@@ -33355,7 +33718,7 @@ function ($,
 
 			while (component)
 			{
-				this .scene .addComponent (component);
+				this .getScene () .addComponent (component);
 
 				component = this .componentStatement ();
 			}
@@ -33421,7 +33784,7 @@ function ($,
 
 						   try
 						   {
-								this .scene .updateUnit (categoryNameId, unitNameId, unitConversionFactor);
+								this .getScene () .updateUnit (categoryNameId, unitNameId, unitConversionFactor);
 								return true;
 							}
 							catch (error)
@@ -33465,7 +33828,7 @@ function ($,
 					{
 						var metavalue = this .value;
 
-						this .scene .setMetaData (metakey, metavalue);
+						this .getScene () .setMetaData (metakey, metavalue);
 						return true;
 					}
 		
@@ -33499,7 +33862,7 @@ function ($,
 		
 					this .comments ();
 		
-					var node = this .scene .getLocalNode (localNodeNameId);
+					var node = this .getScene () .getLocalNode (localNodeNameId);
 		
 					if (Grammar .AS .parse (this))
 					{
@@ -33511,7 +33874,7 @@ function ($,
 					else
 						exportedNodeNameId = localNodeNameId;
 		
-					this .scene .updateExportedNode (exportedNodeNameId, node);
+					this .getScene () .updateExportedNode (exportedNodeNameId, node);
 					return true;
 				}
 		
@@ -34640,15 +35003,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFColor ();
-
-			while (this .sfcolorValue (value))
+			while (this .sfcolorValue (this .SFColor))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFColor ();
+				field .push (this .SFColor);
 			}
 		},
 		sfcolorrgbaValue: function (field)
@@ -34706,22 +35063,16 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFColorRGBA ();
-
-			while (this .sfcolorrgbaValue (value))
+			while (this .sfcolorrgbaValue (this .SFColorRGBA))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFColorRGBA ();
+				field .push (this .SFColorRGBA);
 			}
 		},
 		sfdoubleValue: function (field)
 		{
 			if (this .double ())
 			{
-				field .set (this .value);
+				field .set (this .fromUnit (field .getUnit (), this .value));
 				return true;
 			}
 
@@ -34730,6 +35081,8 @@ function ($,
 		mfdoubleValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFDouble .setUnit (field .getUnit ());
 
 			if (this .sfdoubleValue (this .SFDouble))
 			{
@@ -34755,15 +35108,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFDouble ();
+			this .SFDouble .setUnit (field .getUnit ());
 
-			while (this .sfdoubleValue (value))
+			while (this .sfdoubleValue (this .SFDouble))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFDouble ();
+				field .push (this .SFDouble);
 			}
 		},
 		sffloatValue: function (field)
@@ -34773,6 +35122,8 @@ function ($,
 		mffloatValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFFloat .setUnit (field .getUnit ());
 
 			if (this .sffloatValue (this .SFFloat))
 			{
@@ -34798,15 +35149,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFFloat ();
+			this .SFFloat .setUnit (field .getUnit ());
 
-			while (this .sffloatValue (value))
+			while (this .sffloatValue (this .SFFloat))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFFloat ();
+				field .push (this .SFFloat);
 			}
 		},
 		sfimageValue: function (field)
@@ -34873,15 +35220,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFImage ();
-
-			while (this .sfimageValue (value))
+			while (this .sfimageValue (this .SFImage))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFImage ();
+				field .push (this .SFImage);
 			}
 		},
 		sfint32Value: function (field)
@@ -34922,15 +35263,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFInt32 ();
-
-			while (this .sfint32Value (value))
+			while (this .sfint32Value (this .SFInt32))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFInt32 ();
+				field .push (this .SFInt32);
 			}
 		},			
 		sfmatrix3dValue: function (field)
@@ -35015,15 +35350,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFMatrix3d ();
-
-			while (this .sfmatrix3dValue (value))
+			while (this .sfmatrix3dValue (this .SFMatrix3d))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFMatrix3d ();
+				field .push (this .SFMatrix3d);
 			}
 		},
 		sfmatrix3fValue: function (field)
@@ -35058,15 +35387,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFMatrix3f ();
-
-			while (this .sfmatrix3fValue (value))
+			while (this .sfmatrix3fValue (this .SFMatrix3f))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFMatrix3f ();
+				field .push (this .SFMatrix3f);
 			}
 		},
 		sfmatrix4dValue: function (field)
@@ -35187,15 +35510,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFMatrix4d ();
-
-			while (this .sfmatrix4dValue (value))
+			while (this .sfmatrix4dValue (this .SFMatrix4d))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFMatrix4d ();
+				field .push (this .SFMatrix4d);
 			}
 		},
 		sfmatrix4fValue: function (field)
@@ -35230,15 +35547,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFMatrix4f ();
-
-			while (this .sfmatrix4fValue (value))
+			while (this .sfmatrix4fValue (this .SFMatrix4f))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFMatrix4f ();
+				field .push (this .SFMatrix4f);
 			}
 		},
 		sfnodeValue: function (field)
@@ -35308,7 +35619,7 @@ function ($,
 						{
 							var angle = this .value;
 
-							field .getValue () .set (x, y, z, angle);
+							field .getValue () .set (x, y, z, this .fromUnit ("angle", angle));
 							return true;
 						}
 					}
@@ -35345,15 +35656,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFRotation ();
-
-			while (this .sfrotationValue (value))
+			while (this .sfrotationValue (this .SFRotation))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFRotation ();
+				field .push (this .SFRotation);
 			}
 		},
 		sfstringValue: function (field)
@@ -35394,15 +35699,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFString ();
-
-			while (this .sfstringValue (value))
+			while (this .sfstringValue (this .SFString))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFString ();
+				field .push (this .SFString);
 			}
 		},
 		sftimeValue: function (field)
@@ -35437,15 +35736,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFTime ();
-
-			while (this .sftimeValue (value))
+			while (this .sftimeValue (this .SFTime))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFTime ();
+				field .push (this .SFTime);
 			}
 		},
 		sfvec2dValue: function (field)
@@ -35456,9 +35749,12 @@ function ($,
 				
 				if (this .double ())
 				{
-					var y = this .value;
-					
-					field .getValue () .set (x, y);
+					var
+						y        = this .value,
+						category = field .getUnit ();
+
+					field .getValue () .set (this .fromUnit (category, x),
+					                         this .fromUnit (category, y));
 					return true;
 				}
 			}
@@ -35468,6 +35764,8 @@ function ($,
 		mfvec2dValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFVec2d .setUnit (field .getUnit ());
 
 			if (this .sfvec2dValue (this .SFVec2d))
 			{
@@ -35493,15 +35791,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec2d ();
+			this .SFVec2d .setUnit (field .getUnit ());
 
-			while (this .sfvec2dValue (value))
+			while (this .sfvec2dValue (this .SFVec2d))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec2d ();
+				field .push (this .SFVec2d);
 			}
 		},
 		sfvec2fValue: function (field)
@@ -35511,6 +35805,8 @@ function ($,
 		mfvec2fValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFVec2f .setUnit (field .getUnit ());
 
 			if (this .sfvec2fValue (this .SFVec2f))
 			{
@@ -35536,15 +35832,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec2f ();
+			this .SFVec2f .setUnit (field .getUnit ());
 
-			while (this .sfvec2fValue (value))
+			while (this .sfvec2fValue (this .SFVec2f))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec2f ();
+				field .push (this .SFVec2f);
 			}
 		},
 		sfvec3dValue: function (field)
@@ -35559,9 +35851,13 @@ function ($,
 					
 					if (this .double ())
 					{
-						var z = this .value;
+						var
+							z        = this .value,
+							category = field .getUnit ();
 
-						field .getValue () .set (x, y, z);
+						field .getValue () .set (this .fromUnit (category, x),
+						                         this .fromUnit (category, y),
+						                         this .fromUnit (category, z));
 						return true;
 					}
 				}
@@ -35572,6 +35868,8 @@ function ($,
 		mfvec3dValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFVec3d .setUnit (field .getUnit ());
 
 			if (this .sfvec3dValue (this .SFVec3d))
 			{
@@ -35597,15 +35895,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec3d ();
+			this .SFVec3d .setUnit (field .getUnit ());
 
-			while (this .sfvec3dValue (value))
+			while (this .sfvec3dValue (this .SFVec3d))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec3d ();
+				field .push (this .SFVec3d);
 			}
 		},
 		sfvec3fValue: function (field)
@@ -35615,6 +35909,8 @@ function ($,
 		mfvec3fValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFVec3f .setUnit (field .getUnit ());
 
 			if (this .sfvec3fValue (this .SFVec3f))
 			{
@@ -35640,15 +35936,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec3f ();
+			this .SFVec3f .setUnit (field .getUnit ());
 
-			while (this .sfvec3fValue (value))
+			while (this .sfvec3fValue (this .SFVec3f))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec3f ();
+				field .push (this .SFVec3f);
 			}
 		},
 		sfvec4dValue: function (field)
@@ -35667,9 +35959,14 @@ function ($,
 
 						if (this .double ())
 						{
-							var w = this .value;
+							var
+								w        = this .value,
+								category = field .getUnit ();
 
-							field .getValue () .set (x, y, z, w);
+							field .getValue () .set (this .fromUnit (category, x),
+							                         this .fromUnit (category, y),
+							                         this .fromUnit (category, z),
+							                         this .fromUnit (category, w));
 							return true;
 						}
 					}
@@ -35681,6 +35978,8 @@ function ($,
 		mfvec4dValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFVec4d .setUnit (field .getUnit ());
 
 			if (this .sfvec4dValue (this .SFVec4d))
 			{
@@ -35706,15 +36005,11 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec4d ();
+			this .SFVec4d .setUnit (field .getUnit ());
 
-			while (this .sfvec4dValue (value))
+			while (this .sfvec4dValue (this .SFVec4d))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec4d ();
+				field .push (this .SFVec4d);
 			}
 		},
 		sfvec4fValue: function (field)
@@ -35724,6 +36019,8 @@ function ($,
 		mfvec4fValue: function (field)
 		{
 			field .length = 0;
+
+			this .SFVec4f .setUnit (field .getUnit ());
 
 			if (this .sfvec4fValue (this .SFVec4f))
 			{
@@ -35749,18 +36046,14 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFVec4f ();
+			this .SFVec4f .setUnit (field .getUnit ());
 
-			while (this .sfvec4fValue (value))
+			while (this .sfvec4fValue (this .SFVec4f))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFVec4f ();
+				field .push (this .SFVec4f);
 			}
 		},
-	};
+	});
 
 	Parser .prototype .fieldTypes = [ ];
 	Parser .prototype .fieldTypes [X3DConstants .SFBool]      = Parser .prototype .sfboolValue;
@@ -40355,6 +40648,7 @@ define ('x_ite/Parser/XMLParser',[
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Fields",
 	"x_ite/Parser/Parser",
+	"x_ite/Parser/X3DParser",
 	"x_ite/Parser/HTMLSupport",
 	"x_ite/Prototype/X3DExternProtoDeclaration",
 	"x_ite/Prototype/X3DProtoDeclaration",
@@ -40367,6 +40661,7 @@ function ($,
           X3DPrototypeInstance,
           Fields,
           Parser,
+          X3DParser,
           HTMLSupport,   
           X3DExternProtoDeclaration,
           X3DProtoDeclaration,
@@ -40384,21 +40679,29 @@ function ($,
 
 	function XMLParser (scene)
 	{
-		this .scene             = scene;
-		this .executionContexts = [ scene ];
+		X3DParser .call (this, scene);
+
 		this .protoDeclarations = [ ];
 		this .parents           = [ ];
-		this .parser            = new Parser (this .scene, true);
+		this .parser            = new Parser (scene, true);
 		this .url               = new Fields .MFString ();
+
+		try
+		{
+			this .setUnits (this .getScene () .getMetaData ("generator"));
+			this .parser .setUnits (this .getUnits ());
+		}
+		catch (error)
+		{ }
 	}
 
-	XMLParser .prototype =
+	XMLParser .prototype = $.extend (Object .create (X3DParser .prototype),
 	{
 		constructor: XMLParser,
 		parseIntoScene: function (xmlElement)
 		{
-			this .scene .setEncoding ("XML");
-			this .scene .setProfile (this .getBrowser () .getProfile ("Full"));
+			this .getScene () .setEncoding ("XML");
+			this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
 			this .xmlElement (xmlElement);
 		},
@@ -40452,7 +40755,7 @@ function ($,
 					profileNameId = xmlElement .getAttribute ("profile"),
 					profile       = this .getBrowser () .getProfile (profileNameId || "Full");
 
-				this .scene .setProfile (profile);
+				this .getScene () .setProfile (profile);
 			}
 			catch (error)
 			{
@@ -40464,7 +40767,7 @@ function ($,
 			var specificationVersion = xmlElement .getAttribute ("version");
 
 			if (specificationVersion)
-				this .scene .specificationVersion = specificationVersion;
+				this .getScene () .specificationVersion = specificationVersion;
 
 			// Process child nodes
 
@@ -40493,6 +40796,14 @@ function ($,
 	
 			for (var i = 0; i < childNodes .length; ++ i)
 				this .headElementChild (childNodes [i]);
+
+			try
+			{
+				this .setUnits (this .getScene () .getMetaData ("generator"));
+				this .parser .setUnits (this .getUnits ());
+			}
+			catch (error)
+			{ }
 		},
 		headElementChild: function (xmlElement)
 		{
@@ -40528,7 +40839,7 @@ function ($,
 
 				var component = this .getBrowser () .getComponent (componentNameIdCharacters, componentSupportLevel);
 	
-				this .scene .addComponent (component);
+				this .getScene () .addComponent (component);
 			}
 			catch (error)
 			{
@@ -40551,7 +40862,7 @@ function ($,
 			if (conversionFactor === null)
 				return console .warn ("XML Parser Error: Bad unit statement: Expected conversionFactor attribute.");
 
-			this .scene .updateUnit (category, name, parseFloat (conversionFactor));
+			this .getScene () .updateUnit (category, name, parseFloat (conversionFactor));
 		},
 		metaElement: function (xmlElement)
 		{
@@ -40565,7 +40876,7 @@ function ($,
 			if (metavalue === null)
 				return console .warn ("XML Parser Error: Bad meta statement: Expected content attribute.");
 
-			this .scene .setMetaData (metakey, metavalue);
+			this .getScene () .setMetaData (metakey, metavalue);
 		},
 		sceneElement: function (xmlElement)
 		{
@@ -41013,7 +41324,7 @@ function ($,
 		{
 			try
 			{
-				if (this .scene !== this .getExecutionContext ())
+				if (this .getScene () !== this .getExecutionContext ())
 					return;
 
 				var
@@ -41028,7 +41339,7 @@ function ($,
 
 				var localNode = this .getExecutionContext () .getLocalNode (localNodeName);
 
-				this .scene .updateExportedNode (exportedNodeName, localNode);
+				this .getScene () .updateExportedNode (exportedNodeName, localNode);
 			}
 			catch (error)
 			{
@@ -41126,8 +41437,12 @@ function ($,
 
 			field .setSet (true);
 
+			this .parser .pushExecutionContext (this .getExecutionContext ());
+
 			this .parser .setInput (value);
 			this .fieldTypes [field .getType ()] .call (this .parser, field);
+
+			this .parser .popExecutionContext ();
 		},
 		addNode: function (xmlElement, node)
 		{
@@ -41186,22 +41501,6 @@ function ($,
 				//console .warn (error .message);
 			}
 		},
-		getBrowser: function ()
-		{
-			return this .scene .getBrowser ();
-		},
-		getExecutionContext: function ()
-		{
-			return this .executionContexts [this .executionContexts .length - 1];
-		},
-		pushExecutionContext: function (executionContext)
-		{
-			return this .executionContexts .push (executionContext);
-		},
-		popExecutionContext: function ()
-		{
-			this .executionContexts .pop ();
-		},
 		getParents: function ()
 		{
 			return this .parents;
@@ -41235,7 +41534,7 @@ function ($,
 			
 			return HTMLSupport .attributeLowerCaseToCamelCase [name] ;
 		},
-	};
+	});
 
 	XMLParser .prototype .fieldTypes = [ ];
 	XMLParser .prototype .fieldTypes [X3DConstants .SFBool]      = Parser .prototype .sfboolValue;
@@ -52756,6 +53055,8 @@ function ($,
 		X3DComposedGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .IndexedFaceSet);
+
+		this .creaseAngle_ .setUnit ("angle");
 	}
 
 	IndexedFaceSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
@@ -53431,6 +53732,8 @@ function ($,
 		X3DCoordinateNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Coordinate);
+
+		this .point_ .setUnit ("length");
 	}
 
 	Coordinate .prototype = $.extend (Object .create (X3DCoordinateNode .prototype),
@@ -57312,6 +57615,10 @@ function ($,
 
 		this .addType (X3DConstants .OrthoViewpoint);
 
+		this .position_         .setUnit ("length");
+		this .centerOfRotation_ .setUnit ("length");
+		this .fieldOfView_      .setUnit ("length");
+
 		this .projectionMatrix = new Matrix4 ();
 	}
 
@@ -59172,6 +59479,10 @@ function ($,
 
 		this .addType (X3DConstants .Viewpoint);
 
+		this .position_         .setUnit ("length");
+		this .centerOfRotation_ .setUnit ("length");
+		this .fieldOfView_      .setUnit ("angle");
+
 		this .projectionMatrix        = new Matrix4 ();
 		this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
 	}
@@ -60618,6 +60929,10 @@ function ($,
 				
 		this .addChildObjects ("availableViewers", new Fields .MFString (),
 		                       "viewer",           new Fields .SFString ("EXAMINE"));
+
+		this .avatarSize_      .setUnit ("length");
+		this .speed_           .setUnit ("speed");
+		this .visibilityLimit_ .setUnit ("speed");
 	}
 
 	NavigationInfo .prototype = $.extend (Object .create (X3DBindableNode .prototype),
@@ -60979,6 +61294,9 @@ function ($,
 		X3DGeospatialObject .call (this, executionContext);
 
 		this .addType (X3DConstants .GeoViewpoint);
+
+		this .centerOfRotation_ .setUnit ("length");
+		this .fieldOfView_      .setUnit ("angle");
 
 		this .navigationInfoNode      = new NavigationInfo (executionContext);
 		this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
@@ -61690,6 +62008,8 @@ function ($,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DLightNode);
+
+		this .shadowDiffusion_ .setUnit ("length");
 	}
 
 	X3DLightNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
@@ -61872,6 +62192,9 @@ function ($,
 	function X3DBoundedObject (executionContext)
 	{
 		this .addType (X3DConstants .X3DBoundedObject);
+
+		this .bboxSize_   .setUnit ("length");
+		this .bboxCenter_ .setUnit ("length");
 
 		this .childBBox = new Box3 ();
 	}
@@ -63266,8 +63589,6 @@ function ($,
 
 	return X3DViewportNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -66858,6 +67179,8 @@ function ($,
 		X3DFontStyleNode .call (this, executionContext);
 
 		this .addType (X3DConstants .FontStyle);
+
+		this .size_ .setUnit ("length");
 	}
 
 	FontStyle .prototype = $.extend (Object .create (X3DFontStyleNode .prototype),
@@ -72128,6 +72451,8 @@ function ($,
 
 		this .addType (X3DConstants .TextureTransform);
 
+		this .rotation_ .setUnit ("angle");
+
 		this .matrix3 = new Matrix3 ();
 	}
 
@@ -72690,6 +73015,10 @@ function ($,
 
 		this .addType (X3DConstants .X3DParticleEmitterNode);
 
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
+
 		this .rotations           = [ ];
 		this .intersections       = [ ];
 		this .intersectionNormals = [ ];
@@ -73078,6 +73407,11 @@ function ($,
 		X3DParticleEmitterNode .call (this, executionContext);
 
 		this .addType (X3DConstants .PointEmitter);
+
+		this .position_    .setUnit ("length");
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
 
 		this .direction = new Vector3 (0, 0, 0);
 	}
@@ -74574,6 +74908,8 @@ function ($,
 	{
 		this .addType (X3DConstants .X3DFogObject);
 
+		this .visibilityRange_ .setUnit ("length");
+
 		this .hidden = false;
 	}
 
@@ -74928,6 +75264,9 @@ function ($,
 		X3DBindableNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DBackgroundNode);
+
+		this .skyAngle_    .setUnit ("angle");
+		this .groundAngle_ .setUnit ("angle");
 
 		this .hidden                = false;
 		this .projectionMatrixArray = new Float32Array (16);
@@ -77623,8 +77962,7 @@ function ($)
 	{
 		constructor: ProfileInfo,
 		toXMLStream: function (stream)
-		{
-		},
+		{ },
 	});
 
 	return ProfileInfo;
@@ -78672,6 +79010,8 @@ function ($,
 		X3DTouchSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TouchSensor);
+
+		this .hitPoint_changed_ .setUnit ("length");
 	}
 
 	TouchSensor .prototype = $.extend (Object .create (X3DTouchSensorNode .prototype),
@@ -79204,6 +79544,10 @@ function ($,
 		this .addType (X3DConstants .Arc2D);
 
 		this .setGeometryType (1);
+
+		this .startAngle_ .setUnit ("angle");
+		this .endAngle_   .setUnit ("angle");
+		this .radius_     .setUnit ("length");
 	}
 
 	Arc2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
@@ -79384,6 +79728,10 @@ function ($,
 		this .addType (X3DConstants .ArcClose2D);
 
 		this .setGeometryType (2);
+
+		this .startAngle_ .setUnit ("angle");
+		this .endAngle_   .setUnit ("angle");
+		this .radius_     .setUnit ("length");
 	}
 
 	ArcClose2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
@@ -81148,6 +81496,8 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Box);
+
+		this .size_ .setUnit ("length");
 	}
 
 	Box .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
@@ -81902,6 +82252,9 @@ function ($,
 		X3DTransformMatrix3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DTransformNode);
+
+		this .translation_ .setUnit ("length");
+		this .center_      .setUnit ("length");
 	}
 
 	X3DTransformNode .prototype = $.extend (Object .create (X3DTransformMatrix3DNode .prototype),
@@ -82126,6 +82479,8 @@ function ($,
 		this .addType (X3DConstants .Circle2D);
 
 		this .setGeometryType (1);
+
+		this .radius_ .setUnit ("length");
 	}
 
 	Circle2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
@@ -84388,6 +84743,9 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Cone);
+
+		this .height_       .setUnit ("length");
+		this .bottomRadius_ .setUnit ("length");
 	}
 
 	Cone .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
@@ -84639,6 +84997,12 @@ function ($,
 		X3DParticleEmitterNode .call (this, executionContext);
 
 		this .addType (X3DConstants .ConeEmitter);
+
+		this .position_    .setUnit ("length");
+		this .angle_       .setUnit ("angle");
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
 
 		this .rotation = new Rotation4 (0, 0, 1, 0);
 	}
@@ -85608,6 +85972,9 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Cylinder);
+
+		this .height_ .setUnit ("length");
+		this .radius_ .setUnit ("length");
 	}
 
 	Cylinder .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
@@ -85908,6 +86275,8 @@ function ($,
 		X3DPointingDeviceSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DDragSensorNode);
+
+		this .trackPoint_changed_ .setUnit ("length");
 	}
 
 	X3DDragSensorNode .prototype = $.extend (Object .create (X3DPointingDeviceSensorNode .prototype),
@@ -86177,6 +86546,11 @@ function ($,
 		X3DDragSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .CylinderSensor);
+
+		this .diskAngle_ .setUnit ("angle");
+		this .minAngle_  .setUnit ("angle");
+		this .maxAngle_  .setUnit ("angle");
+		this .offset_    .setUnit ("angle");
 	}
 
 	CylinderSensor .prototype = $.extend (Object .create (X3DDragSensorNode .prototype),
@@ -86476,6 +86850,9 @@ function ($,
 		X3DLineGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Disk2D);
+
+		this .innerRadius_ .setUnit ("length");
+		this .outerRadius_ .setUnit ("length");
 	}
 
 	Disk2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
@@ -86763,6 +87140,11 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .ElevationGrid);
+
+		this .xSpacing_    .setUnit ("length");
+		this .zSpacing_    .setUnit ("length");
+		this .creaseAngle_ .setUnit ("angle");
+		this .height_      .setUnit ("length");
 
 		this .colorNode    = null;
 		this .texCoordNode = null;
@@ -87167,6 +87549,11 @@ function ($,
 
 		this .addType (X3DConstants .ExplosionEmitter);
 
+		this .position_    .setUnit ("length");
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
+
 		this .getRandomVelocity = this .getSphericalRandomVelocity;
 	}
 
@@ -87305,6 +87692,10 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Extrusion);
+
+		this .creaseAngle_  .setUnit ("angle");
+		this .crossSection_ .setUnit ("length");
+		this .spine_        .setUnit ("length");
 	}
 
 	Extrusion .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
@@ -88126,6 +88517,8 @@ function ($,
 		X3DParticlePhysicsModelNode .call (this, executionContext);
 
 		this .addType (X3DConstants .ForcePhysicsModel);
+
+		this .force_ .setUnit ("force");
 	}
 
 	ForcePhysicsModel .prototype = $.extend (Object .create (X3DParticlePhysicsModelNode .prototype),
@@ -88889,6 +89282,9 @@ function ($,
 
 		this .addType (X3DConstants .GeoElevationGrid);
 
+		this .creaseAngle_ .setUnit ("angle");
+		this .height_      .setUnit ("length");
+
 		this .colorNode    = null;
 		this .texCoordNode = null;
 		this .normalNode   = null;
@@ -89571,6 +89967,8 @@ function ($,
 		X3DGeospatialObject .call (this, executionContext);
 
 		this .addType (X3DConstants .GeoLOD);
+
+		this .range_ .setUnit ("length");
 
 		this .rootGroup        = new Group (this .getBrowser () .getPrivateScene ());
 		this .rootInline       = new Inline (executionContext);
@@ -90359,6 +90757,8 @@ function ($,
 
 		this .addType (X3DConstants .GeoPositionInterpolator);
 
+		this .value_changed_ .setUnit ("length");
+
 		this .geocentric = new Geocentric ();
 	}
 
@@ -90507,6 +90907,9 @@ function ($,
 
 		this .addChildObjects ("traversed", new Fields .SFBool (true));
 
+		this .size_   .setUnit ("length");
+		this .center_ .setUnit ("length");
+
 		this .currentTraversed = true;
 	}
 
@@ -90652,6 +91055,9 @@ function ($,
 		this .addType (X3DConstants .ProximitySensor);
 
 		this .setCameraObject (true);
+
+		this .centerOfRotation_changed_ .setUnit ("length");
+		this .position_changed_         .setUnit ("length");
 
 		this .viewpoint              = null;
 		this .modelViewMatrix        = new Matrix4 ();
@@ -90944,6 +91350,9 @@ function ($,
 
 		this .addType (X3DConstants .GeoProximitySensor);
 
+		this .position_changed_         .setUnit ("length");
+		this .centerOfRotation_changed_ .setUnit ("length");
+
 		this .proximitySensor = new ProximitySensor (executionContext);
 
 		this .setCameraObject (this .proximitySensor .getCameraObject ());
@@ -91103,6 +91512,8 @@ function ($,
 		X3DGeospatialObject .call (this, executionContext);
 
 		this .addType (X3DConstants .GeoTouchSensor);
+
+		this .hitPoint_changed_ .setUnit ("length");
 	}
 
 	GeoTouchSensor .prototype = $.extend (Object .create (X3DTouchSensorNode .prototype),
@@ -91250,6 +91661,8 @@ function ($,
 		X3DGeospatialObject      .call (this, executionContext);
 
 		this .addType (X3DConstants .GeoTransform);
+
+		this .translation_ .setUnit ("length");
 	}
 
 	GeoTransform .prototype = $.extend (Object .create (X3DTransformMatrix3DNode .prototype),
@@ -93317,6 +93730,9 @@ function ($,
 		this .addType (X3DConstants .LOD);
 
 		this .addAlias ("level", this .children_); // VRML2
+
+		this .center_ .setUnit ("length");
+		this .range_  .setUnit ("length");
 
 		this .frameRate        = 60;
 		this .keepCurrentLevel = false;
@@ -97697,6 +98113,8 @@ function ($,
 
 		this .addType (X3DConstants .ParticleSystem);
 
+		this .particleSize_ .setUnit ("length");
+
 		this .createParticles          = true;
 		this .particles                = [ ];
 		this .velocities               = [ ];
@@ -99270,6 +99688,11 @@ function ($,
 		X3DDragSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .PlaneSensor);
+
+		this .offset_              .setUnit ("length");
+		this .minPosition_         .setUnit ("length");
+		this .maxPosition_         .setUnit ("length");
+		this .translation_changed_ .setUnit ("length");
 	}
 
 	PlaneSensor .prototype = $.extend (Object .create (X3DDragSensorNode .prototype),
@@ -99795,6 +100218,9 @@ function ($,
 		X3DLightNode .call (this, executionContext);
 
 		this .addType (X3DConstants .PointLight);
+
+		this .location_ .setUnit ("length");
+		this .radius_   .setUnit ("length");
 	}
 
 	PointLight .prototype = $.extend (Object .create (X3DLightNode .prototype),
@@ -100128,6 +100554,8 @@ function ($,
 		this .addType (X3DConstants .Polyline2D);
 
 		this .setGeometryType (1);
+
+		this .lineSegments_ .setUnit ("length");
 	}
 
 	Polyline2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
@@ -100254,6 +100682,10 @@ function ($,
 		X3DParticleEmitterNode .call (this, executionContext);
 
 		this .addType (X3DConstants .PolylineEmitter);
+
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
 
 		this .direction        = new Vector3 (0, 0, 0);
 		this .polylineNode     = new IndexedLineSet (executionContext);
@@ -100499,6 +100931,8 @@ function ($,
 		this .addType (X3DConstants .Polypoint2D);
 
 		this .setGeometryType (0);
+
+		this .point_ .setUnit ("length");
 
 		this .transparent_ = true;
 	}
@@ -101347,6 +101781,8 @@ function ($,
 		this .addType (X3DConstants .Rectangle2D);
 
 		this .setGeometryType (2);
+
+		this .size_ .setUnit ("length");
 	}
 
 	Rectangle2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
@@ -103529,6 +103965,12 @@ function ($,
 
 		this .addType (X3DConstants .Sound);
 
+		this .location_ .setUnit ("length");
+		this .minBack_  .setUnit ("length");
+		this .minFront_ .setUnit ("length");
+		this .maxBack_  .setUnit ("length");
+		this .maxFront_ .setUnit ("length");
+
 		this .min = { radius: 0, distance: 0 };
 		this .max = { radius: 0, distance: 0 };
 	}
@@ -103737,6 +104179,8 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Sphere);
+
+		this .radius_ .setUnit ("length");
 	}
 
 	Sphere .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
@@ -105519,6 +105963,11 @@ function ($,
 		X3DLightNode .call (this, executionContext);
 
 		this .addType (X3DConstants .SpotLight);
+
+		this .location_    .setUnit ("length");
+		this .radius_      .setUnit ("length");
+		this .beamWidth_   .setUnit ("angle");
+		this .cutOffAngle_ .setUnit ("angle");
 	}
 
 	SpotLight .prototype = $.extend (Object .create (X3DLightNode .prototype),
@@ -106081,6 +106530,10 @@ function ($,
 		X3DParticleEmitterNode .call (this, executionContext);
 
 		this .addType (X3DConstants .SurfaceEmitter);
+
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
 
 		this .surfaceNode    = null;
 		this .areaSoFarArray = [ 0 ];
@@ -106714,6 +107167,12 @@ function ($,
 		X3DGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Text);
+
+		this .length_     .setUnit ("length");
+		this .maxExtent_  .setUnit ("length");
+		this .origin_     .setUnit ("length");
+		this .textBounds_ .setUnit ("length");
+		this .lineBounds_ .setUnit ("length");
 	}
 
 	Text .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
@@ -107806,6 +108265,8 @@ function ($,
 
 		this .addType (X3DConstants .TransformSensor);
 
+		this .position_changed_ .setUnit ("length");
+
 		this .bbox             = new Box3 ();
 		this .targetObjectNode = null;
 	}
@@ -108269,6 +108730,8 @@ function ($,
 		this .addType (X3DConstants .TriangleSet2D);
 
 		this .setGeometryType (2);
+
+		this .vertices_ .setUnit ("length");
 	}
 
 	TriangleSet2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
@@ -108856,7 +109319,10 @@ function ($,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .ViewpointGroup);
-	   
+
+		this .size_   .setUnit ("length");
+		this .center_ .setUnit ("length");
+
 		this .proximitySensor  = new ProximitySensor (executionContext);
 		this .cameraObjects    = [ ];
 		this .viewpointGroups  = [ ];
@@ -109312,6 +109778,10 @@ function ($,
 
 		this .addType (X3DConstants .VolumeEmitter);
 
+		this .speed_       .setUnit ("speed");
+		this .mass_        .setUnit ("mass");
+		this .surfaceArea_ .setUnit ("area");
+
 		this .direction           = new Vector3 (0, 0, 0);
 		this .volumeNode          = new IndexedFaceSet (executionContext);
 		this .areaSoFarArray      = [ 0 ];
@@ -109601,6 +110071,8 @@ function ($,
 		X3DParticlePhysicsModelNode .call (this, executionContext);
 
 		this .addType (X3DConstants .WindPhysicsModel);
+
+		this .speed_ .setUnit ("speed");
 	}
 
 	WindPhysicsModel .prototype = $.extend (Object .create (X3DParticlePhysicsModelNode .prototype),
