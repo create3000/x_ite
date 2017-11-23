@@ -141,10 +141,6 @@ function ($,
 		},
 		set_url__: function ()
 		{
-			this .buffer_ .addEvent ();
-		},
-		set_buffer__: function ()
-		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
@@ -170,6 +166,11 @@ function ($,
 				return;
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
 			this .getScene () .addInitLoadCount (this);
 
 			new FileLoader (this) .loadScript (this .url_,

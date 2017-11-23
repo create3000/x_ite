@@ -150,10 +150,6 @@ function ($,
 		},
 		set_url__: function ()
 		{
-			this .buffer_ .addEvent ();
-		},
-		set_buffer__: function ()
-		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
@@ -165,6 +161,10 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
 			this .setMedia (null);
 			this .urlStack .setValue (this .url_);
 			this .video .bind ("canplaythrough", this .setVideo .bind (this));

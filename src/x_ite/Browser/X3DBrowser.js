@@ -275,6 +275,7 @@ function ($,
 
 			scene .setLive (this .isLive () .getValue ())
 
+			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
 
 			if (this .initialized () .getValue ())

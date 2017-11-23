@@ -114,7 +114,7 @@ function ($,
 			X3DTexture2DNode .prototype .initialize .call (this);
 			X3DUrlObject     .prototype .initialize .call (this);
 
-			this .url_     .addInterest ("set_url__",   this);
+			this .url_    .addInterest ("set_url__",   this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .canvas = $("<canvas></canvas>");
@@ -130,10 +130,6 @@ function ($,
 		},
 		set_url__: function ()
 		{
-			this .buffer_ .addEvent ();
-		},
-		set_buffer__: function ()
-		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
@@ -145,6 +141,10 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
 			this .urlStack .setValue (this .url_);
 			this .loadNext ();
 		},

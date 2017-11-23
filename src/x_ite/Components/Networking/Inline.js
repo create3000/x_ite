@@ -141,16 +141,15 @@ function ($,
 		set_load__: function ()
 		{
 			if (this .load_ .getValue ())
-				this .buffer_ .addEvent ();
-
+			{
+				this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+	
+				this .requestAsyncLoad ();
+			}
 			else
 				this .requestUnload ();
 		},
 		set_url__: function ()
-		{
-			this .buffer_ .addEvent ();
-		},
-		set_buffer__: function ()
 		{
 			if (! this .load_ .getValue ())
 				return;
@@ -183,6 +182,11 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
+			// buffer prevents double load of the scene if load and url field are set at the same time.
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
 			new FileLoader (this) .createX3DFromURL (this .url_, null, this .setInternalSceneAsync .bind (this));
 		},
 		requestUnload: function ()

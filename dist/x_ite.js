@@ -1,4 +1,4 @@
-/* X_ITE v4.1.0-148 */
+/* X_ITE v4.1.1-149 */
 
 (function () {
 
@@ -45698,10 +45698,6 @@ function ($,
 		},
 		set_url__: function ()
 		{
-			this .buffer_ .addEvent ();
-		},
-		set_buffer__: function ()
-		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
@@ -45734,6 +45730,10 @@ function ($,
 	
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 			
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
 			this .valid = false;
 
 			new FileLoader (this) .loadDocument (this .url_, null,
@@ -76289,7 +76289,7 @@ function ($,
 			X3DTexture2DNode .prototype .initialize .call (this);
 			X3DUrlObject     .prototype .initialize .call (this);
 
-			this .url_     .addInterest ("set_url__",   this);
+			this .url_    .addInterest ("set_url__",   this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .canvas = $("<canvas></canvas>");
@@ -76305,10 +76305,6 @@ function ($,
 		},
 		set_url__: function ()
 		{
-			this .buffer_ .addEvent ();
-		},
-		set_buffer__: function ()
-		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
@@ -76320,6 +76316,10 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
 			this .urlStack .setValue (this .url_);
 			this .loadNext ();
 		},
@@ -80244,10 +80244,6 @@ function ($,
 		},
 		set_url__: function ()
 		{
-			this .buffer_ .addEvent ();
-		},
-		set_buffer__: function ()
-		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
@@ -80259,6 +80255,10 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
 			this .setMedia (null);
 			this .urlStack .setValue (this .url_);
 			this .audio .bind ("canplaythrough", this .setAudio .bind (this));
@@ -89774,16 +89774,15 @@ function ($,
 		set_load__: function ()
 		{
 			if (this .load_ .getValue ())
-				this .buffer_ .addEvent ();
-
+			{
+				this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+	
+				this .requestAsyncLoad ();
+			}
 			else
 				this .requestUnload ();
 		},
 		set_url__: function ()
-		{
-			this .buffer_ .addEvent ();
-		},
-		set_buffer__: function ()
 		{
 			if (! this .load_ .getValue ())
 				return;
@@ -89816,6 +89815,11 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
+			// buffer prevents double load of the scene if load and url field are set at the same time.
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
 			new FileLoader (this) .createX3DFromURL (this .url_, null, this .setInternalSceneAsync .bind (this));
 		},
 		requestUnload: function ()
@@ -96746,10 +96750,6 @@ function ($,
 		},
 		set_url__: function ()
 		{
-			this .buffer_ .addEvent ();
-		},
-		set_buffer__: function ()
-		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
@@ -96761,6 +96761,10 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
 			this .setMedia (null);
 			this .urlStack .setValue (this .url_);
 			this .video .bind ("canplaythrough", this .setVideo .bind (this));
@@ -103190,10 +103194,6 @@ function ($,
 		},
 		set_url__: function ()
 		{
-			this .buffer_ .addEvent ();
-		},
-		set_buffer__: function ()
-		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestAsyncLoad ();
@@ -103219,6 +103219,11 @@ function ($,
 				return;
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
 			this .getScene () .addInitLoadCount (this);
 
 			new FileLoader (this) .loadScript (this .url_,
@@ -111284,6 +111289,7 @@ function ($,
 
 			scene .setLive (this .isLive () .getValue ())
 
+			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
 
 			if (this .initialized () .getValue ())
