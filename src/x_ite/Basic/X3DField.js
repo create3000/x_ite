@@ -181,6 +181,7 @@ function ($,
 			switch (this .getAccessType () & reference .getAccessType ())
 			{
 				case X3DConstants .initializeOnly:
+					reference .addFieldInterest (this);
 					this .set (reference .getValue ());
 					return;
 				case X3DConstants .inputOnly:
