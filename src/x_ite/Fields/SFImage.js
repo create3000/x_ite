@@ -50,14 +50,11 @@
 define ([
 	"jquery",
 	"x_ite/Basic/X3DField",
-	"x_ite/Fields/ArrayFields",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($, X3DField, ArrayFields, X3DConstants)
+function ($, X3DField, X3DConstants)
 {
 "use strict";
-
-	var MFInt32 = ArrayFields .MFInt32;
 
 	/*
 	 *  Image
@@ -65,6 +62,8 @@ function ($, X3DField, ArrayFields, X3DConstants)
 
 	function Image (width, height, comp, array)
 	{
+	   var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
+	   
 		this .width  = width;
 		this .height = height;
 		this .comp   = comp;
@@ -146,6 +145,8 @@ function ($, X3DField, ArrayFields, X3DConstants)
 	{
 	   if (this instanceof SFImage)
 	   {
+	   	var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
+	   
 			if (arguments .length === 4)
 				X3DField .call (this, new Image (+width, +height, +comp, array));
 			else

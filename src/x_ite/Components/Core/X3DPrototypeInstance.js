@@ -377,23 +377,9 @@ function ($,
 				}
 			}
 		
-			var
-				fields   = this .getChangedFields (),
-				metadata = this .metadata_;
+			var fields = this .getChangedFields ();
 
-			try
-			{
-				metadata = this .getField ("metadata");
-			}
-			catch (error)
-			{ }
-
-			if (metadata === this .metadata_)
-			{
-				fields = fields .filter (function (value) { return value !== this .metadata_; } .bind (this));
-			}
-
-			if (fields .length === 0 && (metadata === this .metadata_ ? true || ! metadata .getValue () : true))
+			if (fields .length === 0)
 			{
 				stream .string += "/>";
 			}
@@ -561,16 +547,6 @@ function ($,
 
 					stream .string += generator .Indent ();
 					stream .string += "</IS>\n";
-				}
-
-				if (metadata === this .metadata_)
-				{
-					if (metadata .getValue ())
-					{
-						metadata .toXMLStream (stream);
-
-						stream .string += "\n";
-					}
 				}
 
 				generator .DecIndent ();
