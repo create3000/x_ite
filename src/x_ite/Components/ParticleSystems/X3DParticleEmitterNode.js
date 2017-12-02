@@ -192,7 +192,7 @@ function ($,
 		{
 			rotation .setFromToVec (Vector3 .zAxis, direction);
 
-			return rotation .multVecRot (this .getRandomNormalAngle (angle, normal));
+			return rotation .multVecRot (this .getRandomNormalWithAngle (angle, normal));
 		},
 		getRandomSurfaceNormal: function (normal)
 		{
@@ -243,7 +243,7 @@ function ($,
 
 					if (createParticles)
 					{
-						this .getRandomPosition (particle .position)
+						this .getRandomPosition (particle .position);
 						this .getRandomVelocity (particle .velocity);
 					}
 					else

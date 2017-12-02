@@ -207,18 +207,18 @@ function ($,
 			this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shader__", this);
 			//this .getBrowser () .getDefaultShader () .addInterest ("set_shader__", this);
 
-			this .enabled_           .addInterest ("set_enabled__", this);
-			this .createParticles_   .addInterest ("set_createParticles__", this);
-			this .geometryType_      .addInterest ("set_geometryType__", this);
-			this .maxParticles_      .addInterest ("set_enabled__", this);
-			this .particleLifetime_  .addInterest ("set_particleLifetime__", this);
+			this .enabled_           .addInterest ("set_enabled__",           this);
+			this .createParticles_   .addInterest ("set_createParticles__",   this);
+			this .geometryType_      .addInterest ("set_geometryType__",      this);
+			this .maxParticles_      .addInterest ("set_enabled__",           this);
+			this .particleLifetime_  .addInterest ("set_particleLifetime__",  this);
 			this .lifetimeVariation_ .addInterest ("set_lifetimeVariation__", this);
-			this .emitter_           .addInterest ("set_emitter__", this);
-			this .physics_           .addInterest ("set_physics__", this);
-			this .colorKey_          .addInterest ("set_color__", this);
-			this .colorRamp_         .addInterest ("set_colorRamp__", this);
-			this .texCoordKey_       .addInterest ("set_texCoord__", this);
-			this .texCoordRamp_      .addInterest ("set_texCoordRamp__", this);
+			this .emitter_           .addInterest ("set_emitter__",           this);
+			this .physics_           .addInterest ("set_physics__",           this);
+			this .colorKey_          .addInterest ("set_color__",             this);
+			this .colorRamp_         .addInterest ("set_colorRamp__",         this);
+			this .texCoordKey_       .addInterest ("set_texCoord__",          this);
+			this .texCoordRamp_      .addInterest ("set_texCoordRamp__",      this);
 
 			this .colorBuffer     = gl .createBuffer ();
 			this .texCoordBuffers = [ gl .createBuffer () ];
@@ -255,8 +255,10 @@ function ($,
 			switch (this .geometryType)
 			{
 				case POINT:
+				{
 					this .setTransparent (true);
 					break;
+				}
 				default:
 				{
 					this .setTransparent ((this .getAppearance () && this .getAppearance () .transparent_ .getValue ()) ||
@@ -337,7 +339,7 @@ function ($,
 
 			// geometryType
 
-			this .geometryType = GeometryTypes [this .geometryType_ .getValue ()]
+			this .geometryType = GeometryTypes [this .geometryType_ .getValue ()];
 
 			if (! this .geometryType)
 				this .geometryType = POINT;
@@ -372,7 +374,6 @@ function ($,
 
 					this .texCoordCount = 2;
 					this .vertexCount   = 2;
-					this .shaderNode    = this .getBrowser () .getLineShader ()
 					break;
 				}
 				case TRIANGLE:
@@ -462,13 +463,13 @@ function ($,
 				case POINT:
 				{
 					this .shaderGeometryType = 0;
-					this .shaderNode         = this .getBrowser () .getPointShader ()
+					this .shaderNode         = this .getBrowser () .getPointShader ();
 					break;
 				}
 				case LINE:
 				{
 					this .shaderGeometryType = 1;
-					this .shaderNode         = this .getBrowser () .getLineShader ()
+					this .shaderNode         = this .getBrowser () .getLineShader ();
 					break;
 				}
 				case TRIANGLE:
@@ -476,13 +477,13 @@ function ($,
 				case SPRITE:
 				{
 					this .shaderGeometryType = 3;
-					this .shaderNode         = this .getBrowser () .getDefaultShader ()
+					this .shaderNode         = this .getBrowser () .getDefaultShader ();
 					break;
 				}
 				case GEOMETRY:
 				{
 					this .shaderGeometryType = 3; // determine from geometry node.
-					this .shaderNode         = this .getBrowser () .getDefaultShader ()
+					this .shaderNode         = this .getBrowser () .getDefaultShader ();
 					break;
 				}
 			}
@@ -758,7 +759,7 @@ function ($,
 
 			this .updateGeometry (null);
 
-			this .getBrowser () .addBrowserEvent (this);
+			this .getBrowser () .addBrowserEvent ();
 		},
 		updateGeometry: function (modelViewMatrix)
 		{
@@ -870,15 +871,16 @@ function ($,
 					position = particle .position,
 					i8       = i * 8;
 
-				normal .assign (particle .velocity) .normalize ();
+				// Length of line / 2.
+				normal .assign (particle .velocity) .normalize () .multiply (sy1_2);
 
-				vertexArray [i8]     = position .x - normal .x * sy1_2;
-				vertexArray [i8 + 1] = position .y - normal .y * sy1_2;
-				vertexArray [i8 + 2] = position .z - normal .z * sy1_2;
+				vertexArray [i8]     = position .x - normal .x;
+				vertexArray [i8 + 1] = position .y - normal .y;
+				vertexArray [i8 + 2] = position .z - normal .z;
 
-				vertexArray [i8 + 4] = position .x + normal .x * sy1_2;
-				vertexArray [i8 + 5] = position .y + normal .y * sy1_2;
-				vertexArray [i8 + 6] = position .z + normal .z * sy1_2;
+				vertexArray [i8 + 4] = position .x + normal .x;
+				vertexArray [i8 + 5] = position .y + normal .y;
+				vertexArray [i8 + 6] = position .z + normal .z;
 			}
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
@@ -1197,8 +1199,6 @@ function ($,
 			{
 				if (this .getGeometry ())
 					this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
-				else
-					return;
 			}
 		},
 		depth: function (context, shaderNode)
@@ -1234,20 +1234,23 @@ function ($,
 		{
 			try
 			{
+				if (this .numParticles <= 0)
+					return;
+
 				// Traverse appearance before everything.
-	
+
 				this .getAppearance () .display (context);
-	
+
 				// Update geometry if SPRITE.
-	
+
 				this .updateGeometry (context .modelViewMatrix);
-	
+
 				// Display geometry.
-	
+
 				if (this .geometryType === GEOMETRY)
 				{
 					var geometryNode = this .getGeometry ();
-	
+
 					if (geometryNode)
 						geometryNode .displayParticles (context, this .particles, this .numParticles);
 				}
@@ -1261,9 +1264,6 @@ function ($,
 					if (shaderNode === browser .getDefaultShader ())
 						shaderNode = this .shaderNode;
 		
-					if (this .numParticles <= 0)
-						return;
-	
 					// Setup shader.
 	
 					context .geometryType  = this .shaderGeometryType;
