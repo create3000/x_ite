@@ -136,7 +136,7 @@ function (Vector3,
 
 				if (intersectionNormals)
 				{
-					if (i >= intersections .length)
+					if (i >= intersectionNormals .length)
 						intersectionNormals .push (new Vector3 (0, 0, 0));
 
 					intersectionNormals [i] .set (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],

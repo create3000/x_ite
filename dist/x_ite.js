@@ -1,4 +1,4 @@
-/* X_ITE v4.1.2a-152 */
+/* X_ITE v4.1.2a-153 */
 
 (function () {
 
@@ -97750,10 +97750,9 @@ function (Vector3,
 				                        t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
 				                        t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
-
 				if (intersectionNormals)
 				{
-					if (i >= intersections .length)
+					if (i >= intersectionNormals .length)
 						intersectionNormals .push (new Vector3 (0, 0, 0));
 
 					intersectionNormals [i] .set (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],
