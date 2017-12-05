@@ -1,4 +1,4 @@
-/* X_ITE v4.1.2a-150 */
+/* X_ITE v4.1.2a-151 */
 
 (function () {
 
@@ -23268,7 +23268,7 @@ function ($,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.1.1";
+	return "4.1.2a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -52571,7 +52571,7 @@ function ($,
 	
 							Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
 	
-							if (materialNode || shaderNode .getCustom ())
+							if (lighting)
 							{
 								// Set normal matrix.
 								normalMatrix [0] = modelViewMatrix [0]; normalMatrix [1] = modelViewMatrix [4]; normalMatrix [2] = modelViewMatrix [ 8];
@@ -97754,9 +97754,12 @@ function (Vector3,
 				                        t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
 
-				intersectionNormals [i] .set (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],
-				                              t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-				                              t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+				if (intersectionNormals)
+				{
+					intersectionNormals [i] .set (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],
+					                              t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+					                              t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+				}
 			}
 		},
 	};
@@ -106606,7 +106609,7 @@ function ($,
 				areaSoFarArray = this .areaSoFarArray,
 				length         = areaSoFarArray .length,
 				fraction       = Math .random () * areaSoFarArray [length - 1],
-				index0         = 0
+				index0         = 0;
 
 			if (length == 1 || fraction <= areaSoFarArray [0])
 			{
@@ -109766,12 +109769,11 @@ function ($,
 		this .mass_        .setUnit ("mass");
 		this .surfaceArea_ .setUnit ("area");
 
-		this .direction           = new Vector3 (0, 0, 0);
-		this .volumeNode          = new IndexedFaceSet (executionContext);
-		this .areaSoFarArray      = [ 0 ];
-		this .intersections       = [ ];
-		this .intersectionNormals = [ ];
-		this .sorter              = new QuickSort (this .intersections, PlaneCompare);
+		this .direction      = new Vector3 (0, 0, 0);
+		this .volumeNode     = new IndexedFaceSet (executionContext);
+		this .areaSoFarArray = [ 0 ];
+		this .intersections  = [ ];
+		this .sorter         = new QuickSort (this .intersections, PlaneCompare);
 	}
 
 	VolumeEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
@@ -109930,7 +109932,7 @@ function ($,
 
 			var
 				intersections    = this .intersections,
-				numIntersections = this .bvh .intersectsLine (line, intersections, this .intersectionNormals);
+				numIntersections = this .bvh .intersectsLine (line, intersections);
 
 			numIntersections -= numIntersections % 2; // We need an even count of intersections.
 
@@ -109948,6 +109950,7 @@ function ($,
 					point1 = intersections [index + 1],
 					t      = Math .random ();
 	
+				// lerp
 				position .x = point0 .x + (point1 .x - point0 .x) * t;
 				position .y = point0 .y + (point1 .y - point0 .y) * t;
 				position .z = point0 .z + (point1 .z - point0 .z) * t;
