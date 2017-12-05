@@ -1,4 +1,4 @@
-/* X_ITE v4.1.2a-151 */
+/* X_ITE v4.1.2a-152 */
 
 (function () {
 
@@ -97744,10 +97744,7 @@ function (Vector3,
 				var i = intersections .size ++;
 
 				if (i >= intersections .length)
-				{
-					intersections       .push (new Vector3 (0, 0, 0));
-					intersectionNormals .push (new Vector3 (0, 0, 0));
-				}
+					intersections .push (new Vector3 (0, 0, 0));
 
 				intersections [i] .set (t * vertices [i4 + 0] + u * vertices [i4 + 4] + v * vertices [i4 +  8],
 				                        t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
@@ -97756,6 +97753,9 @@ function (Vector3,
 
 				if (intersectionNormals)
 				{
+					if (i >= intersections .length)
+						intersectionNormals .push (new Vector3 (0, 0, 0));
+
 					intersectionNormals [i] .set (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],
 					                              t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
 					                              t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
