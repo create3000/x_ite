@@ -175,7 +175,7 @@ function ($,
 				areaSoFarArray = this .areaSoFarArray,
 				length         = areaSoFarArray .length,
 				fraction       = Math .random () * areaSoFarArray [length - 1],
-				index0         = 0
+				index0         = 0;
 
 			if (length == 1 || fraction <= areaSoFarArray [0])
 			{

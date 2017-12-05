@@ -1067,7 +1067,7 @@ function ($,
 	
 							Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
 	
-							if (materialNode || shaderNode .getCustom ())
+							if (lighting)
 							{
 								// Set normal matrix.
 								normalMatrix [0] = modelViewMatrix [0]; normalMatrix [1] = modelViewMatrix [4]; normalMatrix [2] = modelViewMatrix [ 8];
