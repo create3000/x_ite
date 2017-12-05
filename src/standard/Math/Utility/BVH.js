@@ -138,9 +138,12 @@ function (Vector3,
 				                        t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
 
-				intersectionNormals [i] .set (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],
-				                              t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-				                              t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+				if (intersectionNormals)
+				{
+					intersectionNormals [i] .set (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],
+					                              t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+					                              t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+				}
 			}
 		},
 	};
