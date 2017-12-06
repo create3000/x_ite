@@ -86,6 +86,7 @@ function ($,
 		projectionMatrixArray       = new Float32Array (16),
 		modelViewMatrix             = new Matrix4 (),
 		cameraSpaceProjectionMatrix = new Matrix4 (),
+		cameraSpaceMatrixArray      = new Float32Array (16),
 		localOrientation            = new Rotation4 (0, 0, 1, 0),
 		yAxis                       = new Vector3 (0, 1, 0),
 		zAxis                       = new Vector3 (0, 0, 1),
@@ -833,15 +834,16 @@ function ($,
 
 			// Sorted blend
 
-			viewportArray         .set (viewport);
-			projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+			viewportArray          .set (viewport);
+			cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+			projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
-			browser .getPointShader   () .setGlobalUniforms (this, gl, projectionMatrixArray, viewportArray);
-			browser .getLineShader    () .setGlobalUniforms (this, gl, projectionMatrixArray, viewportArray);
-			browser .getDefaultShader () .setGlobalUniforms (this, gl, projectionMatrixArray, viewportArray);
+			browser .getPointShader   () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			browser .getLineShader    () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			browser .getDefaultShader () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 
 			for (var id in shaders)
-				shaders [id] .setGlobalUniforms (this, gl, projectionMatrixArray, viewportArray);
+				shaders [id] .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 
 			// Render opaque objects first
 
