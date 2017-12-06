@@ -544,14 +544,13 @@ function ($,
 				// Get background scale.
 
 				var
-					nearValue       = renderObject .getNavigationInfo () .getNearValue (),
-					farValue        = renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ()),
+					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 0.99999, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z,
 					rotation        = this .rotation,
 					modelViewMatrix = this .modelViewMatrix .assign (this .transformationMatrix);
 
 				// Get projection matrix.
 
-				this .projectionMatrixArray .set (renderObject .getViewpoint () .getProjectionMatrixWithLimits (nearValue, farValue * 1.3, viewport, true));
+				this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
 
 				// Rotate and scale background.
 
