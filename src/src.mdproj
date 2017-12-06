@@ -718,6 +718,7 @@
     <None Include="x_ite\Components\VolumeRendering\X3DVolumeRenderStyleNode.js" />
     <None Include="x_ite\Browser\Shaders\ShaderTest.js" />
     <None Include="x_ite\Parser\X3DParser.js" />
+    <None Include="standard\Math\Algorithms\PartialSort.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

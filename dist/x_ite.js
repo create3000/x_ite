@@ -1,4 +1,4 @@
-/* X_ITE v4.1.2a-156 */
+/* X_ITE v4.1.2a-157 */
 
 (function () {
 
@@ -97667,6 +97667,104 @@ function ($,
  ******************************************************************************/
 
 
+define ('standard/Math/Algorithms/PartialSort',[],function ()
+{
+"use strict";
+
+	var shrinkFactor = 1 - Math .pow (Math .E, -Math .PHI); // 0.801711847137793
+
+	function PartialSort (array, compare)
+	{
+		this .array = array;
+		
+		if (compare)
+			this .compare = compare;
+	}
+
+	PartialSort .prototype =
+	{
+		compare: function (lhs, rhs)
+		{
+			return lhs < rhs;
+		},
+		sort: function (first, last)
+		{
+			if (last - first > 1)
+				this .partialsort (first, last);
+		},
+		partialsort: function (lo, hi)
+		{
+			var gap = this .last, exchanged, i;
+			
+			if (gap > 1)
+				gap = Math .floor (gap * shrinkFactor);
+				
+			for (i = 0, last = this .last - gap; i < last; ++ i)
+			{
+				var j = i + gap;
+
+				if (this .compare (this .array [j], this .array [i]))
+				{
+					var t = array [i];
+					array [i] = array [j];
+					array [j] = t;
+				}
+			}
+		},
+	};
+
+	return PartialSort;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('standard/Math/Utility/BVH',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Geometry/Plane3",
@@ -98040,7 +98138,7 @@ define ('x_ite/Components/ParticleSystems/ParticleSystem',[
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Numbers/Matrix3",
-	"standard/Math/Algorithms/QuickSort",
+	"standard/Math/Algorithms/PartialSort",
 	"standard/Math/Algorithm",
 	"standard/Math/Utility/BVH",
 ],
@@ -98057,7 +98155,7 @@ function ($,
           Vector4,
           Matrix4,
           Matrix3,
-          QuickSort,
+          PartialSort,
           Algorithm,
           BVH)
 {
@@ -98135,7 +98233,7 @@ function ($,
 		this .vertexCount              = 0;
 		this .shaderNode               = this .getBrowser () .getPointShader ();
 		this .rotation                 = new Matrix3 ();
-		this .particleSorter           = new QuickSort (this .particles, compareDistance);
+		this .particleSorter           = new PartialSort (this .particles, compareDistance);
 		this .sortParticles            = false;
 	}
 
@@ -98883,17 +98981,17 @@ function ($,
 	
 				// Sort particles
 	
-//				if (this .sortParticles) // always false
-//				{
-//					for (var i = 0; i < numParticles; ++ i)
-//					{
-//						var particle = particles [i];
-//						particle .distance = modelViewMatrix .getDepth (particle .position);
-//					}
-//					
-//					// Expensisive function!!!
-//					this .particleSorter .sort (0, numParticles);
-//				}
+				if (this .sortParticles) // always false
+				{
+					for (var i = 0; i < numParticles; ++ i)
+					{
+						var particle = particles [i];
+						particle .distance = modelViewMatrix .getDepth (particle .position);
+					}
+					
+					// Expensisive function!!!
+					this .particleSorter .sort (0, numParticles);
+				}
 	
 				// Colors
 	

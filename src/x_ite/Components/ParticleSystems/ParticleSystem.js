@@ -61,7 +61,7 @@ define ([
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Numbers/Matrix3",
-	"standard/Math/Algorithms/QuickSort",
+	"standard/Math/Algorithms/PartialSort",
 	"standard/Math/Algorithm",
 	"standard/Math/Utility/BVH",
 ],
@@ -78,7 +78,7 @@ function ($,
           Vector4,
           Matrix4,
           Matrix3,
-          QuickSort,
+          PartialSort,
           Algorithm,
           BVH)
 {
@@ -156,7 +156,7 @@ function ($,
 		this .vertexCount              = 0;
 		this .shaderNode               = this .getBrowser () .getPointShader ();
 		this .rotation                 = new Matrix3 ();
-		this .particleSorter           = new QuickSort (this .particles, compareDistance);
+		this .particleSorter           = new PartialSort (this .particles, compareDistance);
 		this .sortParticles            = false;
 	}
 
@@ -904,17 +904,17 @@ function ($,
 	
 				// Sort particles
 	
-//				if (this .sortParticles) // always false
-//				{
-//					for (var i = 0; i < numParticles; ++ i)
-//					{
-//						var particle = particles [i];
-//						particle .distance = modelViewMatrix .getDepth (particle .position);
-//					}
-//					
-//					// Expensisive function!!!
-//					this .particleSorter .sort (0, numParticles);
-//				}
+				if (this .sortParticles) // always false
+				{
+					for (var i = 0; i < numParticles; ++ i)
+					{
+						var particle = particles [i];
+						particle .distance = modelViewMatrix .getDepth (particle .position);
+					}
+					
+					// Expensisive function!!!
+					this .particleSorter .sort (0, numParticles);
+				}
 	
 				// Colors
 	
