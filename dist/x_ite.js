@@ -1,4 +1,4 @@
-/* X_ITE v4.1.2a-153 */
+/* X_ITE v4.1.2a-154 */
 
 (function () {
 
@@ -38509,11 +38509,12 @@ function ($,
 
 			this .x3d_Texture = gl .getUniformLocation (program, "x3d_Texture"); // depreciated
 
-			this .x3d_Viewport         = gl .getUniformLocation (program, "x3d_Viewport");
-			this .x3d_ProjectionMatrix = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
-			this .x3d_ModelViewMatrix  = gl .getUniformLocation (program, "x3d_ModelViewMatrix");
-			this .x3d_NormalMatrix     = gl .getUniformLocation (program, "x3d_NormalMatrix");
-			this .x3d_TextureMatrix    = gl .getUniformLocation (program, "x3d_TextureMatrix");
+			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
+			this .x3d_CameraSpaceMatrix = gl .getUniformLocation (program, "x3d_CameraSpaceMatrix");
+			this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
+			this .x3d_ModelViewMatrix   = gl .getUniformLocation (program, "x3d_ModelViewMatrix");
+			this .x3d_NormalMatrix      = gl .getUniformLocation (program, "x3d_NormalMatrix");
+			this .x3d_TextureMatrix     = gl .getUniformLocation (program, "x3d_TextureMatrix");
 			
 			this .x3d_Color    = gl .getAttribLocation (program, "x3d_Color");
 			this .x3d_TexCoord = gl .getAttribLocation (program, "x3d_TexCoord");
@@ -39190,7 +39191,7 @@ function ($,
 			else
 				gl .uniform4fv (this .x3d_ClipPlane [0], this .x3d_NoneClipPlane);
 		},
-		setGlobalUniforms: function (renderObject, gl, projectionMatrixArray, viewportArray)
+		setGlobalUniforms: function (renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
 			var globalLights = renderObject .getGlobalLights ();
 
@@ -39200,7 +39201,8 @@ function ($,
 
 			// Set projection matrix
 
-			gl .uniformMatrix4fv (this .x3d_ProjectionMatrix, false, projectionMatrixArray);
+			gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, cameraSpaceMatrixArray);
+			gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, projectionMatrixArray);
 
 			// Set global lights
 
@@ -39764,7 +39766,7 @@ function ($,
 					this .isValid_ = false;
 			}
 		},
-		setGlobalUniforms: function (renderObject, gl, projectionMatrixArray, viewportArray)
+		setGlobalUniforms: function (renderObject, gl,cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
 			if (currentShaderNode !== this)
 			{
@@ -39773,7 +39775,7 @@ function ($,
 				gl .useProgram (this .program);
 			}
 			
-			X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, renderObject, gl, projectionMatrixArray, viewportArray);
+			X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 		},
 		setLocalUniforms: function (gl, context)
 		{
@@ -73629,6 +73631,7 @@ function ($,
 		projectionMatrixArray       = new Float32Array (16),
 		modelViewMatrix             = new Matrix4 (),
 		cameraSpaceProjectionMatrix = new Matrix4 (),
+		cameraSpaceMatrixArray      = new Float32Array (16),
 		localOrientation            = new Rotation4 (0, 0, 1, 0),
 		yAxis                       = new Vector3 (0, 1, 0),
 		zAxis                       = new Vector3 (0, 0, 1),
@@ -74376,15 +74379,16 @@ function ($,
 
 			// Sorted blend
 
-			viewportArray         .set (viewport);
-			projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+			viewportArray          .set (viewport);
+			cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+			projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
-			browser .getPointShader   () .setGlobalUniforms (this, gl, projectionMatrixArray, viewportArray);
-			browser .getLineShader    () .setGlobalUniforms (this, gl, projectionMatrixArray, viewportArray);
-			browser .getDefaultShader () .setGlobalUniforms (this, gl, projectionMatrixArray, viewportArray);
+			browser .getPointShader   () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			browser .getLineShader    () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			browser .getDefaultShader () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 
 			for (var id in shaders)
-				shaders [id] .setGlobalUniforms (this, gl, projectionMatrixArray, viewportArray);
+				shaders [id] .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 
 			// Render opaque objects first
 
