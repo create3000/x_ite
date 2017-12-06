@@ -680,7 +680,7 @@ function ($,
 
 			var
 				DELAY = 15, // Delay in frames when dt full applys.
-				dt    = 1 / this .getBrowser () .getCurrentFrameRate ();
+				dt    = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ());
 
 			// var deltaTime is only for the emitter, this.deltaTime is for the forces.
 			var deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
