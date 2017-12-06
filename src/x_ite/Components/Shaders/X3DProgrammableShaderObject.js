@@ -181,12 +181,12 @@ function ($,
 			this .x3d_Texture = gl .getUniformLocation (program, "x3d_Texture"); // depreciated
 
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
-			this .x3d_CameraSpaceMatrix = gl .getUniformLocation (program, "x3d_CameraSpaceMatrix");
 			this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
 			this .x3d_ModelViewMatrix   = gl .getUniformLocation (program, "x3d_ModelViewMatrix");
 			this .x3d_NormalMatrix      = gl .getUniformLocation (program, "x3d_NormalMatrix");
 			this .x3d_TextureMatrix     = gl .getUniformLocation (program, "x3d_TextureMatrix");
-			
+			this .x3d_CameraSpaceMatrix = gl .getUniformLocation (program, "x3d_CameraSpaceMatrix");
+		
 			this .x3d_Color    = gl .getAttribLocation (program, "x3d_Color");
 			this .x3d_TexCoord = gl .getAttribLocation (program, "x3d_TexCoord");
 			this .x3d_Normal   = gl .getAttribLocation (program, "x3d_Normal");
@@ -872,8 +872,8 @@ function ($,
 
 			// Set projection matrix
 
-			gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, cameraSpaceMatrixArray);
 			gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, projectionMatrixArray);
+			gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, cameraSpaceMatrixArray);
 
 			// Set global lights
 
