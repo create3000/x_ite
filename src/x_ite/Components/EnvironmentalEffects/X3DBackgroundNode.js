@@ -164,7 +164,7 @@ function ($,
 
 		this .hidden                = false;
 		this .projectionMatrixArray = new Float32Array (16);
-		this .transformationMatrix  = new Matrix4 ();
+		this .modelMatrix           = new Matrix4 ();
 		this .modelViewMatrixArray  = new Float32Array (16);
 		this .clipPlanes            = [ ];
 		this .colors                = [ ];
@@ -506,7 +506,7 @@ function ($,
 				{
 					renderObject .getLayer () .getBackgrounds () .push (this);
 
-					this .transformationMatrix .assign (renderObject .getModelViewMatrix () .get ());
+					this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
 					break;
 				}
 				case TraverseType .DISPLAY:
@@ -546,7 +546,7 @@ function ($,
 				var
 					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 0.99999, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z,
 					rotation        = this .rotation,
-					modelViewMatrix = this .modelViewMatrix .assign (this .transformationMatrix);
+					modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
 
 				// Get projection matrix.
 

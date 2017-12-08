@@ -1,9 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="683" Column="76" />
+      <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js" Line="549" Column="72" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

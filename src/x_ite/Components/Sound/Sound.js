@@ -108,7 +108,7 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "priority",   new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "source",     new Fields .SFNode ()),
 		]),
-		transformationMatrix: new Matrix4 (),
+		modelMatrix: new Matrix4 (),
 		translation: new Vector3 (0, 0, 0),
 		rotation: new Rotation4 (),
 		scale: new Vector3 (1, 1, 1),
@@ -200,20 +200,20 @@ function ($,
 			this .rotation .setFromToVec (this .zAxis, this .direction_ .getValue ());
 			this .scale .z = a / b;
 
-			var transformationMatrix = this .transformationMatrix;
+			var modelMatrix = this .modelMatrix;
 
-			transformationMatrix .assign (modelViewMatrix);
-			transformationMatrix .translate (this .location_ .getValue ());
-			transformationMatrix .rotate (this .rotation);
+			modelMatrix .assign (modelViewMatrix);
+			modelMatrix .translate (this .location_ .getValue ());
+			modelMatrix .rotate (this .rotation);
 
-			transformationMatrix .translate (this .translation);
-			transformationMatrix .scale (this .scale);
+			modelMatrix .translate (this .translation);
+			modelMatrix .scale (this .scale);
 
-			transformationMatrix .inverse ();
+			modelMatrix .inverse ();
 
-			this .viewer .set (transformationMatrix [12],
-			                   transformationMatrix [13],
-			                   transformationMatrix [14]);
+			this .viewer .set (modelMatrix [12],
+			                   modelMatrix [13],
+			                   modelMatrix [14]);
 
 			value .radius   = b;
 			value .distance = this .viewer .abs ();

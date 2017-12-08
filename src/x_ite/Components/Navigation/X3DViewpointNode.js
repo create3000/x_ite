@@ -104,7 +104,7 @@ function ($,
 	   this .userPosition             = new Vector3 (0, 1, 0);
 	   this .userOrientation          = new Rotation4 (0, 0, 1, 0);
 	   this .userCenterOfRotation     = new Vector3 (0, 0, 0);
-		this .transformationMatrix     = new Matrix4 ();
+		this .modelMatrix              = new Matrix4 ();
 		this .cameraSpaceMatrix        = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
 		this .inverseCameraSpaceMatrix = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
 
@@ -220,9 +220,9 @@ function ($,
 		{
 			return this .inverseCameraSpaceMatrix;
 		},
-		getTransformationMatrix: function ()
+		getModelMatrix: function ()
 		{
-			return this .transformationMatrix;
+			return this .modelMatrix;
 		},
 		getUpVector: function ()
 		{
@@ -335,7 +335,7 @@ function ($,
 		getRelativeTransformation: function (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
 		// throw
 		{
-			var differenceMatrix = this .transformationMatrix .copy () .multRight (fromViewpoint .getInverseCameraSpaceMatrix ()) .inverse ();
+			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpoint .getInverseCameraSpaceMatrix ()) .inverse ();
 
 			differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
@@ -365,7 +365,7 @@ function ($,
 			{
 				this .getCameraSpaceMatrix () .multVecMatrix (point);
 
-				Matrix4 .inverse (this .getTransformationMatrix ()) .multVecMatrix (point);
+				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
 
 				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
 		
@@ -433,7 +433,7 @@ function ($,
 		{
 			renderObject .getLayer () .getViewpoints () .push (this);
 
-			this .transformationMatrix .assign (renderObject .getModelViewMatrix () .get ());
+			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
 		},
 		update: function ()
 		{
@@ -444,7 +444,7 @@ function ($,
 				                              this .scaleOffset_ .getValue (),
 				                              this .scaleOrientationOffset_ .getValue ());
 
-				this .cameraSpaceMatrix .multRight (this .transformationMatrix);
+				this .cameraSpaceMatrix .multRight (this .modelMatrix);
 
 				this .inverseCameraSpaceMatrix .assign (this .cameraSpaceMatrix) .inverse ();
 			}

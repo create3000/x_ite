@@ -116,10 +116,10 @@ function ($,
 
 		this .addType (X3DConstants .GeneratedCubeMapTexture);
 
-		this .renderer             = new DependentRenderer (executionContext);
-		this .projectionMatrix     = new Matrix4 ();
-		this .transformationMatrix = new Matrix4 ();
-		this .viewVolume           = new ViewVolume ();
+		this .renderer         = new DependentRenderer (executionContext);
+		this .projectionMatrix = new Matrix4 ();
+		this .modelMatrix      = new Matrix4 ();
+		this .viewVolume       = new ViewVolume ();
 	}
 
 	GeneratedCubeMapTexture .prototype = $.extend (Object .create (X3DEnvironmentTextureNode .prototype),
@@ -199,7 +199,7 @@ function ($,
 
 			renderObject .getGeneratedCubeMapTextures () .push (this);
 
-			this .transformationMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
+			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
 		},
 		renderTexture: function (renderObject, group)
 		{
@@ -237,7 +237,7 @@ function ($,
 
 				// Setup inverse texture space matrix.
 
-				renderer .getCameraSpaceMatrix () .pushMatrix (this .transformationMatrix);
+				renderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
 				renderer .getCameraSpaceMatrix () .rotate (rotations [i]);
 				renderer .getCameraSpaceMatrix () .scale (scales [i]);
 

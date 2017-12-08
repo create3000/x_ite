@@ -301,7 +301,7 @@ function ($,
 				rotation .setFromToVec (zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
 				viewpoint .straightenHorizon (rotation);
 
-				cameraSpaceProjectionMatrix .assign (viewpoint .getTransformationMatrix ());
+				cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
 				cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
 				cameraSpaceProjectionMatrix .rotate (rotation);
 				cameraSpaceProjectionMatrix .inverse ();
@@ -643,7 +643,7 @@ function ($,
 					upVector = viewpoint .getUpVector (),
 					down     = rotation .setFromToVec (zAxis, upVector);
 
-				cameraSpaceProjectionMatrix .assign (viewpoint .getTransformationMatrix ());
+				cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
 				cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
 				cameraSpaceProjectionMatrix .rotate (down);
 				cameraSpaceProjectionMatrix .inverse ();

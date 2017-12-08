@@ -119,7 +119,7 @@ function ($,
 		this .viewport             = new Vector4 (0, 0, 0, 0);
 		this .projectionMatrix     = projectionMatrix;
 		this .modelViewMatrix      = new MatrixStack (Matrix4);
-		this .transformationMatrix = new Matrix4 ();
+		this .modelMatrix          = new Matrix4 ();
 		this .invLightSpaceMatrix  = new Matrix4 ();
 		this .shadowMatrix         = new Matrix4 ();
 		this .shadowMatrixArray    = new Float32Array (16);
@@ -185,8 +185,8 @@ function ($,
 				var
 					lightNode            = this .lightNode,
 					cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
-					transformationMatrix = this .transformationMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? transformationMatrix : Matrix4 .Identity);
+					modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				invLightSpaceMatrix .translate (lightNode .getLocation ());
 				invLightSpaceMatrix .inverse ();
@@ -227,7 +227,7 @@ function ($,
 				this .shadowBuffer .unbind ();
 	
 				if (! lightNode .getGlobal ())
-					invLightSpaceMatrix .multLeft (transformationMatrix .inverse ());
+					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 			}
 			catch (error)
 			{
