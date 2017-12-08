@@ -164,7 +164,7 @@ function ($,
 		set_fraction: function (time)
 		{
 			var t = (time - this .cycle) / this .interval;
-
+	
 			this .fraction_changed_ = this .fraction = this .first + (t - Math .floor (t)) * this .scale;
 		},
 		set_time: function ()
