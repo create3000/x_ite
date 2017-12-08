@@ -164,7 +164,7 @@ function ($,
 		set_fraction: function (time)
 		{
 			var t = (time - this .cycle) / this .interval;
-	
+
 			this .fraction_changed_ = this .fraction = this .first + (t - Math .floor (t)) * this .scale;
 		},
 		set_time: function ()
@@ -180,11 +180,11 @@ function ($,
 					if (this .interval)
 					{
 						this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
-
-						this .fraction_changed_ = this .fraction = this .last;
 						
 						this .elapsedTime_ = this .getElapsedTime ();
 						this .cycleTime_   = time;
+
+						this .set_fraction (time);
 					}
 				}
 				else
@@ -195,9 +195,9 @@ function ($,
 			}
 			else
 			{
-				this .set_fraction (time);
-
 				this .elapsedTime_ = this .getElapsedTime ();
+
+				this .set_fraction (time);
 			}
 
 			this .time_ = time;
