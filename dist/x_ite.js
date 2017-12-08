@@ -1,4 +1,4 @@
-/* X_ITE v4.1.2-162 */
+/* X_ITE v4.1.2-163 */
 
 (function () {
 
@@ -75633,7 +75633,7 @@ function ($,
 				// Get background scale.
 
 				var
-					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 0.999, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z,
+					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 1, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.85,
 					rotation        = this .rotation,
 					modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
 
