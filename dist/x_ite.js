@@ -1,4 +1,4 @@
-/* X_ITE v4.1.2a-159 */
+/* X_ITE v4.1.2a-160 */
 
 (function () {
 
@@ -57156,7 +57156,7 @@ function ($,
 	   this .userPosition             = new Vector3 (0, 1, 0);
 	   this .userOrientation          = new Rotation4 (0, 0, 1, 0);
 	   this .userCenterOfRotation     = new Vector3 (0, 0, 0);
-		this .transformationMatrix     = new Matrix4 ();
+		this .modelMatrix              = new Matrix4 ();
 		this .cameraSpaceMatrix        = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
 		this .inverseCameraSpaceMatrix = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
 
@@ -57272,9 +57272,9 @@ function ($,
 		{
 			return this .inverseCameraSpaceMatrix;
 		},
-		getTransformationMatrix: function ()
+		getModelMatrix: function ()
 		{
-			return this .transformationMatrix;
+			return this .modelMatrix;
 		},
 		getUpVector: function ()
 		{
@@ -57387,7 +57387,7 @@ function ($,
 		getRelativeTransformation: function (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
 		// throw
 		{
-			var differenceMatrix = this .transformationMatrix .copy () .multRight (fromViewpoint .getInverseCameraSpaceMatrix ()) .inverse ();
+			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpoint .getInverseCameraSpaceMatrix ()) .inverse ();
 
 			differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
@@ -57417,7 +57417,7 @@ function ($,
 			{
 				this .getCameraSpaceMatrix () .multVecMatrix (point);
 
-				Matrix4 .inverse (this .getTransformationMatrix ()) .multVecMatrix (point);
+				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
 
 				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
 		
@@ -57485,7 +57485,7 @@ function ($,
 		{
 			renderObject .getLayer () .getViewpoints () .push (this);
 
-			this .transformationMatrix .assign (renderObject .getModelViewMatrix () .get ());
+			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
 		},
 		update: function ()
 		{
@@ -57496,7 +57496,7 @@ function ($,
 				                              this .scaleOffset_ .getValue (),
 				                              this .scaleOrientationOffset_ .getValue ());
 
-				this .cameraSpaceMatrix .multRight (this .transformationMatrix);
+				this .cameraSpaceMatrix .multRight (this .modelMatrix);
 
 				this .inverseCameraSpaceMatrix .assign (this .cameraSpaceMatrix) .inverse ();
 			}
@@ -63058,7 +63058,7 @@ function ($,
 		this .viewport                      = new Vector4 (0, 0, 0, 0);
 		this .projectionMatrix              = new Matrix4 ();
 		this .modelViewMatrix               = new MatrixStack (Matrix4);
-		this .transformationMatrix          = new Matrix4 ();
+		this .modelMatrix                   = new Matrix4 ();
 		this .invLightSpaceMatrix           = new Matrix4 ();
 		this .invLightSpaceProjectionMatrix = new Matrix4 ();
 		this .shadowMatrix                  = new Matrix4 ();
@@ -63124,8 +63124,8 @@ function ($,
 				var
 					lightNode            = this .lightNode,
 					cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
-					transformationMatrix = this .transformationMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? transformationMatrix : Matrix4 .Identity);
+					modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
 				invLightSpaceMatrix .inverse ();
@@ -63154,7 +63154,7 @@ function ($,
 				this .shadowBuffer .unbind ();
 	
 				if (! lightNode .getGlobal ())
-					invLightSpaceMatrix .multLeft (transformationMatrix .inverse ());
+					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
 				this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
 			}
@@ -73846,7 +73846,7 @@ function ($,
 				rotation .setFromToVec (zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
 				viewpoint .straightenHorizon (rotation);
 
-				cameraSpaceProjectionMatrix .assign (viewpoint .getTransformationMatrix ());
+				cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
 				cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
 				cameraSpaceProjectionMatrix .rotate (rotation);
 				cameraSpaceProjectionMatrix .inverse ();
@@ -74188,7 +74188,7 @@ function ($,
 					upVector = viewpoint .getUpVector (),
 					down     = rotation .setFromToVec (zAxis, upVector);
 
-				cameraSpaceProjectionMatrix .assign (viewpoint .getTransformationMatrix ());
+				cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
 				cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
 				cameraSpaceProjectionMatrix .rotate (down);
 				cameraSpaceProjectionMatrix .inverse ();
@@ -75253,7 +75253,7 @@ function ($,
 
 		this .hidden                = false;
 		this .projectionMatrixArray = new Float32Array (16);
-		this .transformationMatrix  = new Matrix4 ();
+		this .modelMatrix           = new Matrix4 ();
 		this .modelViewMatrixArray  = new Float32Array (16);
 		this .clipPlanes            = [ ];
 		this .colors                = [ ];
@@ -75595,7 +75595,7 @@ function ($,
 				{
 					renderObject .getLayer () .getBackgrounds () .push (this);
 
-					this .transformationMatrix .assign (renderObject .getModelViewMatrix () .get ());
+					this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
 					break;
 				}
 				case TraverseType .DISPLAY:
@@ -75633,14 +75633,13 @@ function ($,
 				// Get background scale.
 
 				var
-					nearValue       = renderObject .getNavigationInfo () .getNearValue (),
-					farValue        = renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ()),
+					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 0.99999, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z,
 					rotation        = this .rotation,
-					modelViewMatrix = this .modelViewMatrix .assign (this .transformationMatrix);
+					modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
 
 				// Get projection matrix.
 
-				this .projectionMatrixArray .set (renderObject .getViewpoint () .getProjectionMatrixWithLimits (nearValue, farValue * 1.3, viewport, true));
+				this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
 
 				// Rotate and scale background.
 
@@ -88806,10 +88805,10 @@ function ($,
 
 		this .addType (X3DConstants .GeneratedCubeMapTexture);
 
-		this .renderer             = new DependentRenderer (executionContext);
-		this .projectionMatrix     = new Matrix4 ();
-		this .transformationMatrix = new Matrix4 ();
-		this .viewVolume           = new ViewVolume ();
+		this .renderer         = new DependentRenderer (executionContext);
+		this .projectionMatrix = new Matrix4 ();
+		this .modelMatrix      = new Matrix4 ();
+		this .viewVolume       = new ViewVolume ();
 	}
 
 	GeneratedCubeMapTexture .prototype = $.extend (Object .create (X3DEnvironmentTextureNode .prototype),
@@ -88889,7 +88888,7 @@ function ($,
 
 			renderObject .getGeneratedCubeMapTextures () .push (this);
 
-			this .transformationMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
+			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
 		},
 		renderTexture: function (renderObject, group)
 		{
@@ -88927,7 +88926,7 @@ function ($,
 
 				// Setup inverse texture space matrix.
 
-				renderer .getCameraSpaceMatrix () .pushMatrix (this .transformationMatrix);
+				renderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
 				renderer .getCameraSpaceMatrix () .rotate (rotations [i]);
 				renderer .getCameraSpaceMatrix () .scale (scales [i]);
 
@@ -91134,7 +91133,7 @@ function ($,
 				      modelViewMatrix        = this .modelViewMatrix,
 				      centerOfRotationMatrix = this .centerOfRotationMatrix;
 
-					centerOfRotationMatrix .assign (this .viewpoint .getTransformationMatrix ());
+					centerOfRotationMatrix .assign (this .viewpoint .getModelMatrix ());
 					centerOfRotationMatrix .translate (this .viewpoint .getUserCenterOfRotation ());
 					centerOfRotationMatrix .multRight (this .invModelViewMatrix .assign (modelViewMatrix) .inverse ());
 
@@ -100025,7 +100024,7 @@ function ($,
 		this .viewport             = new Vector4 (0, 0, 0, 0);
 		this .projectionMatrix     = projectionMatrix;
 		this .modelViewMatrix      = new MatrixStack (Matrix4);
-		this .transformationMatrix = new Matrix4 ();
+		this .modelMatrix          = new Matrix4 ();
 		this .invLightSpaceMatrix  = new Matrix4 ();
 		this .shadowMatrix         = new Matrix4 ();
 		this .shadowMatrixArray    = new Float32Array (16);
@@ -100091,8 +100090,8 @@ function ($,
 				var
 					lightNode            = this .lightNode,
 					cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
-					transformationMatrix = this .transformationMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? transformationMatrix : Matrix4 .Identity);
+					modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				invLightSpaceMatrix .translate (lightNode .getLocation ());
 				invLightSpaceMatrix .inverse ();
@@ -100133,7 +100132,7 @@ function ($,
 				this .shadowBuffer .unbind ();
 	
 				if (! lightNode .getGlobal ())
-					invLightSpaceMatrix .multLeft (transformationMatrix .inverse ());
+					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 			}
 			catch (error)
 			{
@@ -103981,7 +103980,7 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "priority",   new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "source",     new Fields .SFNode ()),
 		]),
-		transformationMatrix: new Matrix4 (),
+		modelMatrix: new Matrix4 (),
 		translation: new Vector3 (0, 0, 0),
 		rotation: new Rotation4 (),
 		scale: new Vector3 (1, 1, 1),
@@ -104073,20 +104072,20 @@ function ($,
 			this .rotation .setFromToVec (this .zAxis, this .direction_ .getValue ());
 			this .scale .z = a / b;
 
-			var transformationMatrix = this .transformationMatrix;
+			var modelMatrix = this .modelMatrix;
 
-			transformationMatrix .assign (modelViewMatrix);
-			transformationMatrix .translate (this .location_ .getValue ());
-			transformationMatrix .rotate (this .rotation);
+			modelMatrix .assign (modelViewMatrix);
+			modelMatrix .translate (this .location_ .getValue ());
+			modelMatrix .rotate (this .rotation);
 
-			transformationMatrix .translate (this .translation);
-			transformationMatrix .scale (this .scale);
+			modelMatrix .translate (this .translation);
+			modelMatrix .scale (this .scale);
 
-			transformationMatrix .inverse ();
+			modelMatrix .inverse ();
 
-			this .viewer .set (transformationMatrix [12],
-			                   transformationMatrix [13],
-			                   transformationMatrix [14]);
+			this .viewer .set (modelMatrix [12],
+			                   modelMatrix [13],
+			                   modelMatrix [14]);
 
 			value .radius   = b;
 			value .distance = this .viewer .abs ();
@@ -105766,7 +105765,7 @@ function ($,
 		this .viewport                      = new Vector4 (0, 0, 0, 0);
 		this .projectionMatrix              = new Matrix4 ();
 		this .modelViewMatrix               = new MatrixStack (Matrix4);
-		this .transformationMatrix          = new Matrix4 ();
+		this .modelMatrix                   = new Matrix4 ();
 		this .invLightSpaceMatrix           = new Matrix4 ();
 		this .invLightSpaceProjectionMatrix = new Matrix4 ();
 		this .shadowMatrix                  = new Matrix4 ();
@@ -105834,8 +105833,8 @@ function ($,
 				var
 					lightNode            = this .lightNode,
 					cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
-					transformationMatrix = this .transformationMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? transformationMatrix : Matrix4 .Identity);
+					modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				invLightSpaceMatrix .translate (lightNode .getLocation ());
 				invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
@@ -105869,7 +105868,7 @@ function ($,
 				this .shadowBuffer .unbind ();
 	
 				if (! lightNode .getGlobal ())
-					invLightSpaceMatrix .multLeft (transformationMatrix .inverse ());
+					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
 				this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
 			}
