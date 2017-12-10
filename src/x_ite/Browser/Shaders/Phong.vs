@@ -28,7 +28,7 @@ main ()
 	vec4 p = x3d_ModelViewMatrix * x3d_Vertex;
 
 	if (x3d_Lighting)
-		vN = normalize (x3d_NormalMatrix * x3d_Normal);
+		vN = x3d_NormalMatrix * x3d_Normal;
 
 	t = x3d_TextureMatrix [0] * x3d_TexCoord;
 	C = x3d_Color;
