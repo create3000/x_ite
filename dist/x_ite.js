@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-168 */
+/* X_ITE v4.1.3a-169 */
 
 (function () {
 
@@ -23268,7 +23268,7 @@ function ($,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.1.2";
+	return "4.1.3a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -75633,7 +75633,7 @@ function ($,
 				// Get background scale.
 
 				var
-					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 1, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.85,
+					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 1, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8,
 					rotation        = this .rotation,
 					modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
 

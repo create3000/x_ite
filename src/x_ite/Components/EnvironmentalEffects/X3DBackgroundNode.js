@@ -544,7 +544,7 @@ function ($,
 				// Get background scale.
 
 				var
-					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 1, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.85,
+					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 1, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8,
 					rotation        = this .rotation,
 					modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
 

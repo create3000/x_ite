@@ -1,17 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Rendering/LineSet.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
+      <File FileName="src/x_ite.html" Line="527" Column="37" />
       <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js" Line="1" Column="1" />
-      <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Time/TimeSensor.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Time/X3DTimeDependentNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="104" Column="20" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.vs" Line="20" Column="28" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.vs" Line="31" Column="37" />
-      <File FileName="src/x_ite/Browser/Shaders/PointSet.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/LineSet.js" Line="182" Column="16" />
+      <File FileName="src/x_ite/Components/Rendering/X3DLineGeometryNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="249" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
