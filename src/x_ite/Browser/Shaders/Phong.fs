@@ -15,7 +15,6 @@ uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, other
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
 uniform int   x3d_LightType [x3d_MaxLights];
-uniform bool  x3d_LightOn [x3d_MaxLights];
 uniform vec3  x3d_LightColor [x3d_MaxLights];
 uniform float x3d_LightIntensity [x3d_MaxLights];
 uniform float x3d_LightAmbientIntensity [x3d_MaxLights];
