@@ -322,6 +322,8 @@ function ($,
 					}
 	
 					this .isActive_ = false;
+					
+					this .numParticles = 0;
 				}
 			}
 

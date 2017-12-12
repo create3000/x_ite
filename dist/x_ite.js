@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-169 */
+/* X_ITE v4.1.3a-170 */
 
 (function () {
 
@@ -98300,6 +98300,8 @@ function ($,
 					}
 	
 					this .isActive_ = false;
+					
+					this .numParticles = 0;
 				}
 			}
 
