@@ -1,29 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
     <Files>
       <File FileName="src/x_ite.html" Line="509" Column="45" />
-      <File FileName="src/x_ite/Components/ParticleSystems/ForcePhysicsModel.js" Line="87" Column="5" />
-      <File FileName="src/x_ite/Components/ParticleSystems/PolylineEmitter.js" Line="235" Column="13" />
-      <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="1319" Column="3" />
+      <File FileName="src/x_ite/Components/ParticleSystems/ForcePhysicsModel.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/ParticleSystems/PolylineEmitter.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="X_ITE" expanded="True">
-            <Node name="src" expanded="True">
-              <Node name="x_ite" expanded="True">
-                <Node name="Components" expanded="True">
-                  <Node name="ParticleSystems" expanded="True">
-                    <Node name="ParticleSystem.js" selected="True" />
-                  </Node>
-                </Node>
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
