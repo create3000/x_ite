@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-170 */
+/* X_ITE v4.1.3a-171 */
 
 (function () {
 
@@ -98198,11 +98198,13 @@ function ($,
 			this .texCoordKey_       .addInterest ("set_texCoord__",          this);
 			this .texCoordRamp_      .addInterest ("set_texCoordRamp__",      this);
 
+			this .idBuffer        = gl .createBuffer ();
 			this .colorBuffer     = gl .createBuffer ();
 			this .texCoordBuffers = [ gl .createBuffer () ];
 			this .normalBuffer    = gl .createBuffer ();
 			this .vertexBuffer    = gl .createBuffer ();
 
+			this .idArray       = new Float32Array ();
 			this .colorArray    = new Float32Array ();
 			this .texCoordArray = new Float32Array ();
 			this .normalArray   = new Float32Array ();
@@ -98330,10 +98332,14 @@ function ($,
 			{
 				case POINT:
 				{
+					this .idArray       = new Float32Array (maxParticles);
 					this .colorArray    = new Float32Array (4 * maxParticles);
 					this .texCoordArray = new Float32Array ();
 					this .normalArray   = new Float32Array ();
 					this .vertexArray   = new Float32Array (4 * maxParticles);
+
+					for (var i = 0, a = this .idArray, l = a .length; i < l; ++ i)
+						a [i] = i;
 
 					this .colorArray  .fill (1);
 					this .vertexArray .fill (1);
@@ -98344,10 +98350,14 @@ function ($,
 				}
 				case LINE:
 				{
+					this .idArray       = new Float32Array (2 * maxParticles);
 					this .colorArray    = new Float32Array (2 * 4 * maxParticles);
 					this .texCoordArray = new Float32Array ();
 					this .normalArray   = new Float32Array ();
 					this .vertexArray   = new Float32Array (2 * 4 * maxParticles);
+
+					for (var i = 0, a = this .idArray, l = a .length; i < l; ++ i)
+						a [i] = Math .floor (i / 2);
 
 					this .colorArray  .fill (1);
 					this .vertexArray .fill (1);
@@ -98360,10 +98370,14 @@ function ($,
 				case QUAD:
 				case SPRITE:
 				{
+					this .idArray       = new Float32Array (6 * maxParticles);
 					this .colorArray    = new Float32Array (6 * 4 * maxParticles);
 					this .texCoordArray = new Float32Array (6 * 4 * maxParticles);
 					this .normalArray   = new Float32Array (6 * 3 * maxParticles);
 					this .vertexArray   = new Float32Array (6 * 4 * maxParticles);
+
+					for (var i = 0, a = this .idArray, l = a .length; i < l; ++ i)
+						a [i] = Math .floor (i / 6);
 
 					this .colorArray  .fill (1);
 					this .vertexArray .fill (1);
@@ -98432,6 +98446,9 @@ function ($,
 					break;
 				}
 			}
+
+			gl .bindBuffer (gl .ARRAY_BUFFER, this .idBuffer);
+			gl .bufferData (gl .ARRAY_BUFFER, this .idArray, gl .STATIC_DRAW);
 
 			this .set_shader__ ();
 			this .set_transparent__ ();
@@ -98511,6 +98528,8 @@ function ($,
 
 			if (! this .emitterNode)
 				this .emitterNode = this .getBrowser () .getDefaultEmitter ();
+				
+			this .createParticles = this .createParticles_ .getValue ();
 		},
 		set_physics__: function ()
 		{
@@ -99022,7 +99041,7 @@ function ($,
 		
 						normal
 							.set (rotation [0], rotation [1], rotation [2])
-							.cross (vector .set (rotation [4], rotation [5], rotation [6]))
+							.cross (vector .set (rotation [3], rotation [4], rotation [5]))
 							.normalize ();
 		
 						var
@@ -99205,9 +99224,12 @@ function ($,
 
 				// Setup vertex attributes.
 
+				shaderNode .enableFloatAttrib (gl, "x3d_ParticleId", this .idBuffer, 1);
 				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
 				gl .drawArrays (this .shaderNode .primitiveMode, 0, this .numParticles * this .vertexCount);
+
+				shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
 			}
 		},
 		display: function (context)
@@ -99252,6 +99274,8 @@ function ($,
 		
 					// Setup vertex attributes.
 		
+					shaderNode .enableFloatAttrib (gl, "x3d_ParticleId", this .idBuffer, 1);
+
 					if (this .colorMaterial)
 						shaderNode .enableColorAttribute (gl, this .colorBuffer);
 	
@@ -99297,6 +99321,7 @@ function ($,
 						gl .drawArrays (this .shaderNode .primitiveMode, 0, this .numParticles * this .vertexCount);
 					}
 		
+					shaderNode .disableFloatAttrib       (gl, "x3d_ParticleId");
 					shaderNode .disableColorAttribute    (gl);
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
