@@ -243,6 +243,7 @@ function ($,
 
 					if (createParticles)
 					{
+						++ particle .life;
 						this .getRandomPosition (particle .position);
 						this .getRandomVelocity (particle .velocity);
 					}

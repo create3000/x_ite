@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-174 */
+/* X_ITE v4.1.3a-175 */
 
 (function () {
 
@@ -73147,6 +73147,7 @@ function ($,
 
 					if (createParticles)
 					{
+						++ particle .life;
 						this .getRandomPosition (particle .position);
 						this .getRandomVelocity (particle .velocity);
 					}
@@ -98201,6 +98202,7 @@ function ($,
 			this .idBuffer           = gl .createBuffer ();
 			this .positionBuffer     = gl .createBuffer ();
 			this .elapsedTimeBuffer  = gl .createBuffer ();
+			this .lifeBuffer         = gl .createBuffer ();
 			this .colorBuffer        = gl .createBuffer ();
 			this .texCoordBuffers    = [ gl .createBuffer () ];
 			this .normalBuffer       = gl .createBuffer ();
@@ -98209,6 +98211,7 @@ function ($,
 			this .idArray          = new Float32Array ();
 			this .positionArray    = new Float32Array ();
 			this .elapsedTimeArray = new Float32Array ();
+			this .lifeArray        = new Float32Array ();
 			this .colorArray       = new Float32Array ();
 			this .texCoordArray    = new Float32Array ();
 			this .normalArray      = new Float32Array ();
@@ -98341,6 +98344,7 @@ function ($,
 					this .idArray          = new Float32Array (maxParticles);
 					this .positionArray    = new Float32Array (3 * maxParticles);
 					this .elapsedTimeArray = new Float32Array (maxParticles);
+					this .lifeArray        = new Float32Array (maxParticles);
 					this .colorArray       = new Float32Array (4 * maxParticles);
 					this .texCoordArray    = new Float32Array ();
 					this .normalArray      = new Float32Array ();
@@ -98362,6 +98366,7 @@ function ($,
 					this .idArray          = new Float32Array (2 * maxParticles);
 					this .positionArray    = new Float32Array (2 * 3 * maxParticles);
 					this .elapsedTimeArray = new Float32Array (2 * maxParticles);
+					this .lifeArray        = new Float32Array (2 * maxParticles);
 					this .colorArray       = new Float32Array (2 * 4 * maxParticles);
 					this .texCoordArray    = new Float32Array ();
 					this .normalArray      = new Float32Array ();
@@ -98385,6 +98390,7 @@ function ($,
 					this .idArray          = new Float32Array (6 * maxParticles);
 					this .positionArray    = new Float32Array (6 * 3 * maxParticles);
 					this .elapsedTimeArray = new Float32Array (6 * maxParticles);
+					this .lifeArray        = new Float32Array (6 * maxParticles);
 					this .colorArray       = new Float32Array (6 * 4 * maxParticles);
 					this .texCoordArray    = new Float32Array (6 * 4 * maxParticles);
 					this .normalArray      = new Float32Array (6 * 3 * maxParticles);
@@ -98507,11 +98513,15 @@ function ($,
 				maxParticles = Math .max (0, this .maxParticles_ .getValue ());
 
 			for (var i = this .numParticles, length = Math .min (particles .length, maxParticles); i < length; ++ i)
+			{
+				particles [i] .life     = 1;
 				particles [i] .lifetime = -1;
+			}
 
 			for (var i = particles .length, length = maxParticles; i < length; ++ i)
 			{
 				particles [i] = {
+					life: 1,
 					lifetime: -1,
 					elapsedTime: 0,
 					position: new Vector3 (0, 0, 0),
@@ -98804,6 +98814,7 @@ function ($,
 				numParticles     = this .numParticles,
 				positionArray    = this .positionArray,
 				elapsedTimeArray = this .elapsedTimeArray,
+				lifeArray        = this .lifeArray,
 				colorArray       = this .colorArray,
 				vertexArray      = this .vertexArray;
 
@@ -98842,6 +98853,7 @@ function ($,
 				positionArray [i3 + 2] = position .z;
 
 				elapsedTimeArray [i] = elapsedTime;
+				lifeArray [i]        = particles [i] .life;
 
 				vertexArray [i4]     = position .x;
 				vertexArray [i4 + 1] = position .y;
@@ -98852,6 +98864,8 @@ function ($,
 			gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
 			gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
+			gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
+			gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
 			gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
 		},
@@ -98863,6 +98877,7 @@ function ($,
 				numParticles     = this .numParticles,
 				positionArray    = this .positionArray,
 				elapsedTimeArray = this .elapsedTimeArray,
+				lifeArray        = this .lifeArray,
 				colorArray       = this .colorArray,
 				vertexArray      = this .vertexArray,
 				sy1_2            = this .particleSize_ .y / 2;
@@ -98900,6 +98915,7 @@ function ($,
 					particle    = particles [i],
 					position    = particle .position,
 					elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
+					life        = particles [i] .life,
 					x           = position .x,
 					y           = position .y,
 					z           = position .z,
@@ -98917,6 +98933,9 @@ function ($,
 				elapsedTimeArray [i2]     = elapsedTime;
 				elapsedTimeArray [i2 + 1] = elapsedTime;
 
+				lifeArray [i2]     = life;
+				lifeArray [i2 + 1] = life;
+
 				// Length of line / 2.
 				normal .assign (particle .velocity) .normalize () .multiply (sy1_2);
 
@@ -98933,6 +98952,8 @@ function ($,
 			gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
 			gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
+			gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
+			gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
 			gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
 		},
@@ -98947,6 +98968,7 @@ function ($,
 				   numParticles     = this .numParticles,
 					positionArray    = this .positionArray,
 					elapsedTimeArray = this .elapsedTimeArray,
+					lifeArray        = this .lifeArray,
 					colorArray       = this .colorArray,
 					texCoordArray    = this .texCoordArray,
 					normalArray      = this .normalArray,
@@ -99149,6 +99171,7 @@ function ($,
 							positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
 
 							elapsedTimeArray [i6 + 0] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
+							lifeArray [i6 + 0]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
 
 							// p1
 							vertexArray [i24]     = vertexArray [i24 + 12] = x + s1 .x;
@@ -99175,6 +99198,8 @@ function ($,
 						gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
 						gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
 						gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
+						gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
+						gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
 						gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
 						gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
 					}
@@ -99207,6 +99232,7 @@ function ($,
 							positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
 
 							elapsedTimeArray [i6 + 0] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
+							lifeArray [i6 + 0]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
 			
 							// p1
 							vertexArray [i24]     = vertexArray [i24 + 12] = x - sx1_2;
@@ -99233,6 +99259,8 @@ function ($,
 						gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
 						gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
 						gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
+						gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
+						gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
 						gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
 						gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
 					}
@@ -99306,6 +99334,7 @@ function ($,
 				shaderNode .enableFloatAttrib (gl, "x3d_ParticleId",          this .idBuffer,          1);
 				shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition",    this .positionBuffer,    3);
 				shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
+				shaderNode .enableFloatAttrib (gl, "x3d_ParticleLife",        this .lifeBuffer,        1);
 				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
 				gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
@@ -99313,6 +99342,7 @@ function ($,
 				shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
 				shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
 				shaderNode .disableFloatAttrib (gl, "x3d_ParticleElapsedTime");
+				shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
 			}
 		},
 		display: function (context)
@@ -99360,6 +99390,7 @@ function ($,
 					shaderNode .enableFloatAttrib (gl, "x3d_ParticleId",          this .idBuffer,          1);
 					shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition",    this .positionBuffer,    3);
 					shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
+					shaderNode .enableFloatAttrib (gl, "x3d_ParticleLife",        this .lifeBuffer,        1);
 
 					if (this .colorMaterial)
 						shaderNode .enableColorAttribute (gl, this .colorBuffer);
@@ -99409,6 +99440,7 @@ function ($,
 					shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
 					shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
 					shaderNode .disableFloatAttrib (gl, "x3d_ParticleElapsedTime");
+					shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
 
 					shaderNode .disableColorAttribute    (gl);
 					shaderNode .disableTexCoordAttribute (gl);
