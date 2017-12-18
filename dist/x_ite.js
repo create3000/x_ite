@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-173 */
+/* X_ITE v4.1.3a-174 */
 
 (function () {
 
@@ -98214,6 +98214,8 @@ function ($,
 			this .normalArray      = new Float32Array ();
 			this .vertexArray      = new Float32Array ();
 
+			this .primitiveMode = gl .TRIANGLES;
+
 			// Call order is higly important at startup.
 			this .set_emitter__ ();
 			this .set_enabled__ ();
@@ -98338,7 +98340,7 @@ function ($,
 				{
 					this .idArray          = new Float32Array (maxParticles);
 					this .positionArray    = new Float32Array (3 * maxParticles);
-					this .elaspedTimeArray = new Float32Array (maxParticles);
+					this .elapsedTimeArray = new Float32Array (maxParticles);
 					this .colorArray       = new Float32Array (4 * maxParticles);
 					this .texCoordArray    = new Float32Array ();
 					this .normalArray      = new Float32Array ();
@@ -98350,6 +98352,7 @@ function ($,
 					this .colorArray  .fill (1);
 					this .vertexArray .fill (1);
 
+					this .primitiveMode = gl .POINTS;
 					this .texCoordCount = 0;
 					this .vertexCount   = 1;
 					break;
@@ -98358,7 +98361,7 @@ function ($,
 				{
 					this .idArray          = new Float32Array (2 * maxParticles);
 					this .positionArray    = new Float32Array (2 * 3 * maxParticles);
-					this .elaspedTimeArray = new Float32Array (2 * maxParticles);
+					this .elapsedTimeArray = new Float32Array (2 * maxParticles);
 					this .colorArray       = new Float32Array (2 * 4 * maxParticles);
 					this .texCoordArray    = new Float32Array ();
 					this .normalArray      = new Float32Array ();
@@ -98370,6 +98373,7 @@ function ($,
 					this .colorArray  .fill (1);
 					this .vertexArray .fill (1);
 
+					this .primitiveMode = gl .LINES;
 					this .texCoordCount = 2;
 					this .vertexCount   = 2;
 					break;
@@ -98380,7 +98384,7 @@ function ($,
 				{
 					this .idArray          = new Float32Array (6 * maxParticles);
 					this .positionArray    = new Float32Array (6 * 3 * maxParticles);
-					this .elaspedTimeArray = new Float32Array (6 * maxParticles);
+					this .elapsedTimeArray = new Float32Array (6 * maxParticles);
 					this .colorArray       = new Float32Array (6 * 4 * maxParticles);
 					this .texCoordArray    = new Float32Array (6 * 4 * maxParticles);
 					this .normalArray      = new Float32Array (6 * 3 * maxParticles);
@@ -98445,6 +98449,7 @@ function ($,
 					gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
 					gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray, gl .STATIC_DRAW);
 
+					this .primitiveMode = gl .TRIANGLES;
 					this .texCoordCount = 4;
 					this .vertexCount   = 6;
 					break;
@@ -98836,7 +98841,7 @@ function ($,
 				positionArray [i3 + 1] = position .y;
 				positionArray [i3 + 2] = position .z;
 
-				elaspedTimeArray [i] = elapsedTime;
+				elapsedTimeArray [i] = elapsedTime;
 
 				vertexArray [i4]     = position .x;
 				vertexArray [i4 + 1] = position .y;
@@ -98895,16 +98900,19 @@ function ($,
 					particle    = particles [i],
 					position    = particle .position,
 					elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
+					x           = position .x,
+					y           = position .y,
+					z           = position .z,
 					i2          = i * 2,
 					i6          = i * 6,
 					i8          = i * 8;
 
-				positionArray [i6]     = position .x;
-				positionArray [i6 + 1] = position .y;
-				positionArray [i6 + 2] = position .z;
-				positionArray [i6 + 4] = position .x;
-				positionArray [i6 + 5] = position .y;
-				positionArray [i6 + 6] = position .z;
+				positionArray [i6]     = x;
+				positionArray [i6 + 1] = y;
+				positionArray [i6 + 2] = z;
+				positionArray [i6 + 3] = x;
+				positionArray [i6 + 4] = y;
+				positionArray [i6 + 5] = z;
 
 				elapsedTimeArray [i2]     = elapsedTime;
 				elapsedTimeArray [i2 + 1] = elapsedTime;
@@ -98912,13 +98920,13 @@ function ($,
 				// Length of line / 2.
 				normal .assign (particle .velocity) .normalize () .multiply (sy1_2);
 
-				vertexArray [i8]     = position .x - normal .x;
-				vertexArray [i8 + 1] = position .y - normal .y;
-				vertexArray [i8 + 2] = position .z - normal .z;
-
-				vertexArray [i8 + 4] = position .x + normal .x;
-				vertexArray [i8 + 5] = position .y + normal .y;
-				vertexArray [i8 + 6] = position .z + normal .z;
+				vertexArray [i8]     = x - normal .x;
+				vertexArray [i8 + 1] = y - normal .y;
+				vertexArray [i8 + 2] = z - normal .z;
+											  
+				vertexArray [i8 + 4] = x + normal .x;
+				vertexArray [i8 + 5] = y + normal .y;
+				vertexArray [i8 + 6] = z + normal .z;
 			}
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .positionBuffer);
@@ -99140,7 +99148,7 @@ function ($,
 							positionArray [i18 + 1] = positionArray [i18 + 4] = positionArray [i18 + 7] = positionArray [i18 + 10] = positionArray [i18 + 13] = positionArray [i18 + 16] = y;
 							positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
 
-							elapsedTimeArray [i6 + 0] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 6] = elapsedTimeArray [i6 + 9] = elapsedTimeArray [i6 + 12] = elapsedTimeArray [i6 + 15] = elapsedTime;
+							elapsedTimeArray [i6 + 0] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
 
 							// p1
 							vertexArray [i24]     = vertexArray [i24 + 12] = x + s1 .x;
@@ -99198,7 +99206,7 @@ function ($,
 							positionArray [i18 + 1] = positionArray [i18 + 4] = positionArray [i18 + 7] = positionArray [i18 + 10] = positionArray [i18 + 13] = positionArray [i18 + 16] = y;
 							positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
 
-							elapsedTimeArray [i6 + 0] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 6] = elapsedTimeArray [i6 + 9] = elapsedTimeArray [i6 + 12] = elapsedTimeArray [i6 + 15] = elapsedTime;
+							elapsedTimeArray [i6 + 0] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
 			
 							// p1
 							vertexArray [i24]     = vertexArray [i24 + 12] = x - sx1_2;
@@ -99300,7 +99308,7 @@ function ($,
 				shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
 				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
-				gl .drawArrays (this .shaderNode .primitiveMode, 0, this .numParticles * this .vertexCount);
+				gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
 
 				shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
 				shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
@@ -99348,7 +99356,7 @@ function ($,
 					shaderNode .setLocalUniforms (gl, context);
 		
 					// Setup vertex attributes.
-		
+
 					shaderNode .enableFloatAttrib (gl, "x3d_ParticleId",          this .idBuffer,          1);
 					shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition",    this .positionBuffer,    3);
 					shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
@@ -99395,7 +99403,7 @@ function ($,
 						gl .enable (gl .CULL_FACE);
 						gl .cullFace (gl .BACK);
 
-						gl .drawArrays (this .shaderNode .primitiveMode, 0, this .numParticles * this .vertexCount);
+						gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
 					}
 		
 					shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
