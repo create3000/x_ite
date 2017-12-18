@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-172 */
+/* X_ITE v4.1.3a-173 */
 
 (function () {
 
@@ -98337,7 +98337,7 @@ function ($,
 				case POINT:
 				{
 					this .idArray          = new Float32Array (maxParticles);
-					this .positionArray    = new Float32Array (maxParticles);
+					this .positionArray    = new Float32Array (3 * maxParticles);
 					this .elaspedTimeArray = new Float32Array (maxParticles);
 					this .colorArray       = new Float32Array (4 * maxParticles);
 					this .texCoordArray    = new Float32Array ();
@@ -98357,7 +98357,7 @@ function ($,
 				case LINE:
 				{
 					this .idArray          = new Float32Array (2 * maxParticles);
-					this .positionArray    = new Float32Array (2 * maxParticles);
+					this .positionArray    = new Float32Array (2 * 3 * maxParticles);
 					this .elaspedTimeArray = new Float32Array (2 * maxParticles);
 					this .colorArray       = new Float32Array (2 * 4 * maxParticles);
 					this .texCoordArray    = new Float32Array ();
@@ -98379,7 +98379,7 @@ function ($,
 				case SPRITE:
 				{
 					this .idArray          = new Float32Array (6 * maxParticles);
-					this .positionArray    = new Float32Array (6 * maxParticles);
+					this .positionArray    = new Float32Array (6 * 3 * maxParticles);
 					this .elaspedTimeArray = new Float32Array (6 * maxParticles);
 					this .colorArray       = new Float32Array (6 * 4 * maxParticles);
 					this .texCoordArray    = new Float32Array (6 * 4 * maxParticles);
