@@ -1,13 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/ParticleSystems/ParticleSystem.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/x_ite.html" Line="596" Column="1" />
-      <File FileName="src/x_ite/Components/X_ITE/BlendMode.js" Line="148" Column="4" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="750" Column="1" />
-      <File FileName="src/x_ite/Components/Grouping/X3DGroupingNode.js" Line="527" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="966" Column="6" />
-      <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="833" Column="10" />
+      <File FileName="src/x_ite.html" Line="718" Column="1" />
+      <File FileName="src/x_ite/Components/X_ITE/BlendMode.js" Line="85" Column="85" />
+      <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="759" Column="2" />
+      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="483" Column="43" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
