@@ -755,7 +755,7 @@ function ($,
 				{
 					var
 						now          = performance .now () / 1000,
-						newParticles = Math .max (0, Math .ceil ((now - this .creationTime) * this .maxParticles / this .particleLifetime));
+						newParticles = Math .max (0, Math .floor ((now - this .creationTime) * this .maxParticles / this .particleLifetime));
 	
 					if (newParticles)
 						this .creationTime = now;
