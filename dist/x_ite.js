@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-175 */
+/* X_ITE v4.1.3a-176 */
 
 (function () {
 
@@ -13388,6 +13388,10 @@ define ('x_ite/Bits/X3DConstants',[],function ()
 		X3DProtoDeclarationNode:   nodeType ++,
 		X3DProtoDeclaration:       nodeType ++,
 		X3DExternProtoDeclaration: nodeType ++,
+
+		// Non standard
+
+		BlendMode: nodeType ++,
 	};
 
 	Object .preventExtensions (X3DConstants);
@@ -38416,13 +38420,16 @@ function ($,
 		this .x3d_ShadowColor           = [ ];
 		this .x3d_ShadowMatrix          = [ ];
 		this .x3d_ShadowMap             = [ ];
+
+		this .numClipPlanes   = 0;
+		this .numGlobalLights = 0;
+		this .numLights       = 0;
 	}
 
 	X3DProgrammableShaderObject .prototype =
 	{
 		constructor: X3DProgrammableShaderObject,
 		x3d_NoneClipPlane: new Float32Array ([ 88, 51, 68, 33 ]), // X3D!
-		numGlobalLights: 0,
 		normalMatrixArray: new Float32Array (9),
 		initialize: function ()
 		{
@@ -39178,18 +39185,21 @@ function ($,
 
 			return i;
 		},
-		setClipPlanes: function (gl, clipPlanes)
+		setShaderObjects: function (gl, shaderObjects)
 		{
-			if (clipPlanes .length)
-			{
-				for (var i = 0, numClipPlanes = Math .min (this .x3d_MaxClipPlanes, clipPlanes .length); i < numClipPlanes; ++ i)
-					clipPlanes [i] .setShaderUniforms (gl, this, i);
-	
-				if (i < this .x3d_MaxClipPlanes)
-					gl .uniform4fv (this .x3d_ClipPlane [i], this .x3d_NoneClipPlane);
-			}
-			else
-				gl .uniform4fv (this .x3d_ClipPlane [0], this .x3d_NoneClipPlane);
+			// Clip planes and local lights
+
+			this .numClipPlanes = 0;
+			this .numLights     = 0;
+
+			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
+				shaderObjects [i] .setShaderUniforms (gl, this);
+
+			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
+				gl .uniform4fv (this .x3d_ClipPlane [this .numClipPlanes], this .x3d_NoneClipPlane);
+
+			if (this .numLights < this .x3d_MaxLights)
+				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
 		},
 		setGlobalUniforms: function (renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
@@ -39206,10 +39216,11 @@ function ($,
 
 			// Set global lights
 
-			this .numGlobalLights = Math .min (this .x3d_MaxLights, globalLights .length);
+			this .numGlobalLights = globalLights .length;
+			this .numLights       = 0;
 
-			for (var i = 0, length = this .numGlobalLights; i < length; ++ i)
-				globalLights [i] .setShaderUniforms (gl, this, i);
+			for (var i = 0, length = globalLights .length; i < length; ++ i)
+				globalLights [i] .setShaderUniforms (gl, this);
 		},
 		setLocalUniforms: function (gl, context)
 		{
@@ -39219,26 +39230,25 @@ function ($,
 				textureNode          = context .textureNode,
 				textureTransformNode = context .textureTransformNode,
 				modelViewMatrix      = context .modelViewMatrix,
-				clipPlaneNodes       = context .clipPlanes;
+				shaderObjects        = context .shaderObjects;
 
 			// Geometry type
 
 			gl .uniform1i (this .x3d_GeometryType, context .geometryType);
 
-			// Clip planes
+			// Clip planes and local lights
 
-			if (clipPlaneNodes .length)
-			{
-				for (var i = 0, numClipPlanes = Math .min (this .x3d_MaxClipPlanes, clipPlaneNodes .length); i < numClipPlanes; ++ i)
-					clipPlaneNodes [i] .setShaderUniforms (gl, this, i);
-	
-				if (i < this .x3d_MaxClipPlanes)
-					gl .uniform4fv (this .x3d_ClipPlane [i], this .x3d_NoneClipPlane);
-			}
-			else
-			{
-				gl .uniform4fv (this .x3d_ClipPlane [0], this .x3d_NoneClipPlane);
-			}
+			this .numClipPlanes = 0;
+			this .numLights     = this .numGlobalLights;
+
+			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
+				shaderObjects [i] .setShaderUniforms (gl, this);
+
+			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
+				gl .uniform4fv (this .x3d_ClipPlane [this .numClipPlanes], this .x3d_NoneClipPlane);
+
+			if (this .numLights < this .x3d_MaxLights)
+				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
 
 			// Fog, there is always one
 
@@ -39268,16 +39278,6 @@ function ($,
 				// Lights
 
 				gl .uniform1i  (this .x3d_Lighting, true);
-
-				var
-					localLights = context .localLights,
-					numLights   = Math .min (this .x3d_MaxLights, this .numGlobalLights + localLights .length);
-
-				for (var i = this .numGlobalLights, l = 0; i < numLights; ++ i, ++ l)
-					localLights [l] .setShaderUniforms (gl, this, i);
-
-				if (numLights < this .x3d_MaxLights)
-					gl .uniform1i (this .x3d_LightType [numLights], 0);
 
 				// Material
 
@@ -49856,7 +49856,7 @@ function (DepthBuffer,
 		gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
 		gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
 
-		shaderNode .setClipPlanes (gl, [ ]);
+		shaderNode .setShaderObjects (gl, [ ]);
 
 		gl .uniform1i (shaderNode .x3d_FogType,       0);
 		gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
@@ -62061,8 +62061,8 @@ function ($,
 						                     group,
 						                     renderObject .getModelViewMatrix () .get ());
 
-						renderObject .getLocalLights () .push (lightContainer);
-						renderObject .getLights ()      .push (lightContainer);
+						renderObject .getShaderObjects () .push (lightContainer);
+						renderObject .getLights ()        .push (lightContainer);
 					}
 				}
 				else
@@ -62080,8 +62080,8 @@ function ($,
 					{
 						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
 	
-						renderObject .getLocalLights () .push (lightContainer);
-						renderObject .getLights ()      .push (lightContainer);
+						renderObject .getShaderObjects () .push (lightContainer);
+						renderObject .getLights ()        .push (lightContainer);
 					}
 				}
 			}
@@ -62094,9 +62094,9 @@ function ($,
 				   return;
 
 				if (renderObject .isIndependent ())
-					renderObject .getBrowser () .getLocalLights () .push (renderObject .getLocalLights () .pop ());
+					renderObject .getBrowser () .getLocalLights () .push (renderObject .getShaderObjects () .pop ());
 				else
-					renderObject .getLocalLights () .pop ();
+					renderObject .getShaderObjects () .pop ();
 			}
 		},
 	});
@@ -62307,6 +62307,7 @@ function ($,
 		this .clipPlanes            = [ ];
 		this .localFogs             = [ ];
 		this .lights                = [ ];
+		this .displayNodes          = [ ];
 		this .childNodes            = [ ];
 	}
 
@@ -62510,6 +62511,7 @@ function ($,
 			}
 
 			this .set_cameraObjects__ ();
+			this .set_display_nodes ();
 		},
 		remove: function (children)
 		{
@@ -62618,6 +62620,7 @@ function ($,
 			}
 
 			this .set_cameraObjects__ ();
+			this .set_display_nodes ();
 		},
 		clear: function ()
 		{
@@ -62646,6 +62649,25 @@ function ($,
 
 			this .setCameraObject (this .cameraObjects .length);
 		},
+		set_display_nodes: function ()
+		{
+			var
+				clipPlanes   = this .clipPlanes,
+				localFogs    = this .localFogs,
+				lights       = this .lights,
+				displayNodes = this .displayNodes;
+
+			displayNodes .length = 0;
+
+			for (var i = 0, length = clipPlanes .length; i < length; ++ i)
+				displayNodes .push (clipPlanes [i]);
+
+			for (var i = 0, length = localFogs .length; i < length; ++ i)
+				displayNodes .push (localFogs [i]);
+
+			for (var i = 0, length = lights .length; i < length; ++ i)
+				displayNodes .push (lights [i]);
+		},
 		traverse: function (type, renderObject)
 		{
 			switch (type)
@@ -62673,7 +62695,7 @@ function ($,
 					for (var i = 0, length = childNodes .length; i < length; ++ i)
 						childNodes [i] .traverse (type, renderObject);
 
-					for (var i = 0, length = clipPlanes .length; i < length; ++ i)
+					for (var i = clipPlanes .length - 1; i >= 0; -- i)
 						clipPlanes [i] .pop (renderObject);
 
 					if (pointingDeviceSensors .length)
@@ -62703,7 +62725,7 @@ function ($,
 					for (var i = 0, length = childNodes .length; i < length; ++ i)
 						childNodes [i] .traverse (type, renderObject);
 
-					for (var i = 0, length = clipPlanes .length; i < length; ++ i)
+					for (var i = clipPlanes .length - 1; i >= 0; -- i)
 						clipPlanes [i] .pop (renderObject);
 					
 					return;
@@ -62711,31 +62733,17 @@ function ($,
 				case TraverseType .DISPLAY:
 				{
 					var
-						clipPlanes = this .clipPlanes,
-						localFogs  = this .localFogs,
-						lights     = this .lights,
-						childNodes = this .childNodes;
+						displayNodes = this .displayNodes,
+						childNodes   = this .childNodes;
 
-					for (var i = 0, length = clipPlanes .length; i < length; ++ i)
-						clipPlanes [i] .push (renderObject);
-
-					for (var i = 0, length = localFogs .length; i < length; ++ i)
-						localFogs [i] .push (renderObject);
-
-					for (var i = 0, length = lights .length; i < length; ++ i)
-						lights [i] .push (renderObject, this);
+					for (var i = 0, length = displayNodes .length; i < length; ++ i)
+						displayNodes [i] .push (renderObject, this);
 
 					for (var i = 0, length = childNodes .length; i < length; ++ i)
 						childNodes [i] .traverse (type, renderObject);
-					
-					for (var i = 0, length = lights .length; i < length; ++ i)
-						lights [i] .pop (renderObject);
 
-					for (var i = 0, length = localFogs .length; i < length; ++ i)
-						localFogs [i] .pop (renderObject);
-
-					for (var i = 0, length = clipPlanes .length; i < length; ++ i)
-						clipPlanes [i] .pop (renderObject);
+					for (var i = displayNodes .length - 1; i >= 0; -- i)
+						displayNodes [i] .pop (renderObject);
 
 					return;
 				}
@@ -63171,13 +63179,14 @@ function ($,
 			this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
 			this .shadowMatrixArray .set (this .shadowMatrix);
 		},
-		setShaderUniforms: function (gl, shaderObject, i)
+		setShaderUniforms: function (gl, shaderObject)
 		{
 			var
 				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				direction   = this .direction,
-				shadowColor = lightNode .getShadowColor ();
+				shadowColor = lightNode .getShadowColor (),
+				i           = shaderObject .numLights ++;
 
 			gl .uniform1i (shaderObject .x3d_LightType [i],             1);
 			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
@@ -73654,9 +73663,8 @@ function ($,
 		this .projectionMatrix         = new MatrixStack (Matrix4);
 		this .modelViewMatrix          = new MatrixStack (Matrix4);
 		this .viewVolumes              = [ ];
-		this .clipPlanes               = [ ];
+		this .shaderObjects            = [ ];
 		this .globalLights             = [ ];
-		this .localLights              = [ ];
 		this .lights                   = [ ];
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
@@ -73724,17 +73732,13 @@ function ($,
 		{
 			return this .viewVolumes [this .viewVolumes .length - 1];
 		},
-		getClipPlanes: function ()
+		getShaderObjects: function ()
 		{
-			return this .clipPlanes;
+			return this .shaderObjects;
 		},
 		getGlobalLights: function ()
 		{
 			return this .globalLights;
-		},
-		getLocalLights: function ()
-		{
-			return this .localLights;
 		},
 		getLights: function ()
 		{
@@ -73957,7 +73961,7 @@ function ($,
 				// Clip planes
 	
 				var
-					sourcePlanes = this .getClipPlanes (),
+					sourcePlanes = this .getShaderObjects (),
 					destPlanes   = context .clipPlanes;
 	
 				for (var i = 0, length = sourcePlanes .length; i < length; ++ i)
@@ -73995,7 +73999,7 @@ function ($,
 				// Clip planes
 	
 				var
-					sourcePlanes = this .getClipPlanes (),
+					sourcePlanes = this .getShaderObjects (),
 					destPlanes   = context .clipPlanes;
 	
 				for (var i = 0, length = sourcePlanes .length; i < length; ++ i)
@@ -74049,27 +74053,16 @@ function ($,
 				context .distance  = distance - radius;
 				context .fogNode   = this .localFog;
 
-				// Clip planes
+				// Clip planes and local lights
 
 				var
-					sourcePlanes = this .getClipPlanes (),
-					destPlanes   = context .clipPlanes;
+					sourceObjects = this .getShaderObjects (),
+					destObjects   = context .shaderObjects;
 
-				for (var i = 0, length = sourcePlanes .length; i < length; ++ i)
-					destPlanes [i] = sourcePlanes [i];
+				for (var i = 0, length = sourceObjects .length; i < length; ++ i)
+					destObjects [i] = sourceObjects [i];
 				
-				destPlanes .length = sourcePlanes .length;
-
-				// Local lights
-
-				var
-					sourceLights = this .getLocalLights (),
-					destLights   = context .localLights;
-
-				for (var i = 0, length = sourceLights .length; i < length; ++ i)
-					destLights [i] = sourceLights [i];
-				
-				destLights .length = sourceLights .length;
+				destObjects .length = sourceObjects .length;
 
 				return true;
 			}
@@ -74085,8 +74078,7 @@ function ($,
 				colorMaterial: false,
 				modelViewMatrix: new Float32Array (16),
 				scissor: new Vector4 (0, 0, 0, 0),
-				clipPlanes: [ ],
-				localLights: [ ],
+				shaderObjects: [ ],
 				linePropertiesNode: null,
 				materialNode: null,
 				textureNode: null,
@@ -74313,7 +74305,7 @@ function ($,
 
 				// Clip planes
 
-				shaderNode .setClipPlanes (gl, context .clipPlanes);
+				shaderNode .setShaderObjects (gl, context .clipPlanes);
 
 				// modelViewMatrix
 	
@@ -74441,22 +74433,21 @@ function ($,
 
 			gl .activeTexture (gl .TEXTURE0);
 
-			// Recycle clip planes.
-
-			var clipPlanes = this .getBrowser () .getClipPlanes ();
-
-			for (var i = 0, length = clipPlanes .length; i < length; ++ i)
-			   clipPlanes [i] .dispose ();
-
-			clipPlanes .length = 0;
-
 			// Reset GeneratedCubeMapTextures.
 
 			generatedCubeMapTextures .length = 0;
 
-
 			if (this .isIndependent ())
 			{
+				// Recycle clip planes.
+
+				var clipPlanes = this .getBrowser () .getClipPlanes ();
+	
+				for (var i = 0, length = clipPlanes .length; i < length; ++ i)
+				   clipPlanes [i] .dispose ();
+	
+				clipPlanes .length = 0;
+
 				// Recycle global lights.
 	
 				var lights = this .globalLights;
@@ -75256,7 +75247,7 @@ function ($,
 		this .projectionMatrixArray = new Float32Array (16);
 		this .modelMatrix           = new Matrix4 ();
 		this .modelViewMatrixArray  = new Float32Array (16);
-		this .clipPlanes            = [ ];
+		this .shaderObjects         = [ ];
 		this .colors                = [ ];
 		this .sphere                = [ ];
 		this .textures              = 0;
@@ -75602,13 +75593,13 @@ function ($,
 				case TraverseType .DISPLAY:
 				{
 					var
-						sourcePlanes = renderObject .getClipPlanes (),
-						destPlanes   = this .clipPlanes;
+						sourceObjects = renderObject .getShaderObjects (),
+						destObjects   = this .shaderObjects;
 
-					for (var i = 0, length = sourcePlanes .length; i < length; ++ i)
-						destPlanes [i] = sourcePlanes [i];
+					for (var i = 0, length = sourceObjects .length; i < length; ++ i)
+						destObjects [i] = sourceObjects [i];
 
-					destPlanes .length = sourcePlanes .length;
+					destObjects .length = sourceObjects .length;
 					break;
 				}
 			}
@@ -75678,7 +75669,7 @@ function ($,
 
 			// Clip planes
 
-			shaderNode .setClipPlanes (gl, this .clipPlanes);
+			shaderNode .setShaderObjects (gl, this .shaderObjects);
 
 			// Enable vertex attribute arrays.
 
@@ -75716,7 +75707,7 @@ function ($,
 
 			// Clip planes
 
-			shaderNode .setClipPlanes (gl, this .clipPlanes);
+			shaderNode .setShaderObjects (gl, this .shaderObjects);
 
 			// Enable vertex attribute arrays.
 
@@ -82633,13 +82624,13 @@ function ($,
 				plane .distanceFromOrigin = 0;
 			}
 		},
-		setShaderUniforms: function (gl, shaderObject, i)
+		setShaderUniforms: function (gl, shaderObject)
 		{
 			var
 				plane  = this .plane,
 				normal = plane .normal;
 
-			gl .uniform4f (shaderObject .x3d_ClipPlane [i], normal .x, normal .y, normal .z, plane .distanceFromOrigin);
+			gl .uniform4f (shaderObject .x3d_ClipPlane [shaderObject .numClipPlanes ++], normal .x, normal .y, normal .z, plane .distanceFromOrigin);
 		},
 		dispose: function ()
 		{
@@ -82700,13 +82691,13 @@ function ($,
 
 				clipPlaneContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
-				renderObject .getClipPlanes () .push (clipPlaneContainer);
+				renderObject .getShaderObjects () .push (clipPlaneContainer);
 			}
 		},
 		pop: function (renderObject)
 		{
 			if (this .enabled)
-				renderObject .getBrowser () .getClipPlanes () .push (renderObject .getClipPlanes () .pop ());
+				renderObject .getBrowser () .getClipPlanes () .push (renderObject .getShaderObjects () .pop ());
 		},
 	});
 
@@ -100294,7 +100285,7 @@ function ($,
 			this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceMatrix);
 			this .shadowMatrixArray .set (this .shadowMatrix);
 		},
-		setShaderUniforms: function (gl, shaderObject, i)
+		setShaderUniforms: function (gl, shaderObject)
 		{
 			// For correct results the radius must be transform by the modelViewMatrix. This can only be done in the shader.
 			// distanceOfLightToFragmentInLightSpace = |(FragmentPosition - LightPosition) * inverseModelViewMatrixOfLight|
@@ -100305,7 +100296,8 @@ function ($,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
 				location    = this .location,
-				shadowColor = lightNode .getShadowColor ();
+				shadowColor = lightNode .getShadowColor (),
+				i           = shaderObject .numLights ++;
 
 			gl .uniform1i (shaderObject .x3d_LightType [i],             2);
 			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
@@ -103890,7 +103882,7 @@ function ($,
 
 				this .hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
 
-				if (geometry .intersectsLine (this .hitRay, renderObject .getClipPlanes (), modelViewMatrix, intersections))
+				if (geometry .intersectsLine (this .hitRay, renderObject .getShaderObjects (), modelViewMatrix, intersections))
 				{
 					// Finally we have intersections and must now find the closest hit in front of the camera.
 
@@ -106037,7 +106029,7 @@ function ($,
 			this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
 			this .shadowMatrixArray .set (this .shadowMatrix);
 		},
-		setShaderUniforms: function (gl, shaderObject, i)
+		setShaderUniforms: function (gl, shaderObject)
 		{
 			var 
 				lightNode       = this .lightNode,
@@ -106046,7 +106038,8 @@ function ($,
 				modelViewMatrix = this .modelViewMatrix .get (),
 				location        = this .location,
 				direction       = this .direction,
-				shadowColor     = lightNode .getShadowColor ();
+				shadowColor     = lightNode .getShadowColor (),
+				i               = shaderObject .numLights ++;
 
 			gl .uniform1i (shaderObject .x3d_LightType [i],             3);
 			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
