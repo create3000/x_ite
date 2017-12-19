@@ -66,7 +66,7 @@ function ($,
 {
 "use strict";
 
-	function X3DBlendModeEditor (executionContext)
+	function BlendMode (executionContext)
 	{
 		X3DGroupingNode .call (this, executionContext);
 
@@ -76,7 +76,6 @@ function ($,
 	}
 
 	BlendMode .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
-		X3DSensorNode .prototype,
 	{
 		constructor: BlendMode,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -86,6 +85,8 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "sourceAlpha",      new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "destinationRGB",   new Fields .SFString ("ONE")),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "destinationAlpha", new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
@@ -108,7 +109,7 @@ function ($,
 	
 			var gl = this .getBrowser () .getContext ();
 
-			this .blendModes ["ZERO"]                     = gl ZERO.;
+			this .blendModes ["ZERO"]                     = gl .ZERO;
 			this .blendModes ["ONE"]                      = gl .ONE;
 			this .blendModes ["SRC_COLOR"]                = gl .SRC_COLOR;
 			this .blendModes ["ONE_MINUS_SRC_COLOR"]      = gl .ONE_MINUS_SRC_COLOR;
@@ -171,21 +172,13 @@ function ($,
 			{
 				case TraverseType .DISPLAY:
 				{
-					if (this .enabled_ .getValue ())
-					{
-					   var collisions = renderObject .getCollisions ();
+					renderObject .getBlend () .push (this .enabled_ .getValue ());
+					renderObject .getLocalObjects () .push (this);
 
-						collisions .push (this);
+					X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-						if (this .proxyNode)
-							this .proxyNode .traverse (type, renderObject);
-
-						else
-							X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-
-						collisions .pop ();
-					}
-
+					renderObject .getLocalObjects () .pop ();
+					renderObject .getBlend () .pop ();
 					break;
 				}
 				default:
@@ -193,9 +186,19 @@ function ($,
 					break;
 			}
 		},
+		enable: function (gl)
+		{
+			gl .blendFuncSeparate (this .sourceRGBType, this .sourceAlphaType, this .destinationRGBType, this .destinationAlphaType);
+			gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
+		},
+		disable: function (gl)
+		{
+			gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+			gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
+		},
 	});
 
-	return Collision;
+	return BlendMode;
 });
 
 

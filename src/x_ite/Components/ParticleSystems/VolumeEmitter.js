@@ -158,6 +158,7 @@ function ($,
 			this .volumeNode .setPrivate (true);
 			this .volumeNode .setup ();
 
+			this .set_direction__ ();
 			this .set_geometry__ ();
 		},
 		set_direction__: function ()

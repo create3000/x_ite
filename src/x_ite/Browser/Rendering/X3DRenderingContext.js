@@ -106,6 +106,7 @@ function ($,
 			gl .clearDepth (1);
 
 			gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+			gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
 			gl .enable (gl .BLEND);
 
 			// Configure viewport.

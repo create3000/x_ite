@@ -282,6 +282,7 @@ define ([
 	//"x_ite/Components/Picking/VolumePickSensor",
 	"x_ite/Components/ParticleSystems/WindPhysicsModel",
 	"x_ite/Components/Core/WorldInfo", // VRML
+	"x_ite/Components/X_ITE/BlendMode",
 ],
 function (Anchor,
           Appearance,
@@ -516,7 +517,8 @@ function (Anchor,
           VolumeEmitter,
           //VolumePickSensor,
           WindPhysicsModel,
-          WorldInfo)
+          WorldInfo,
+          BlendMode)
 {
 "use strict";
 
@@ -759,6 +761,8 @@ function (Anchor,
 		//VolumePickSensor:             VolumePickSensor,
 		WindPhysicsModel:             WindPhysicsModel,
 		WorldInfo:                    WorldInfo,
+
+		BlendMode:                    BlendMode,
 	};
 
 	function createInstance (executionContext) { return new this (executionContext); }
