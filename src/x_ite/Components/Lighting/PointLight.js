@@ -242,7 +242,7 @@ function ($,
 			this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceMatrix);
 			this .shadowMatrixArray .set (this .shadowMatrix);
 		},
-		setShaderUniforms: function (gl, shaderObject, i)
+		setShaderUniforms: function (gl, shaderObject)
 		{
 			// For correct results the radius must be transform by the modelViewMatrix. This can only be done in the shader.
 			// distanceOfLightToFragmentInLightSpace = |(FragmentPosition - LightPosition) * inverseModelViewMatrixOfLight|
@@ -253,7 +253,8 @@ function ($,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
 				location    = this .location,
-				shadowColor = lightNode .getShadowColor ();
+				shadowColor = lightNode .getShadowColor (),
+				i           = shaderObject .numLights ++;
 
 			gl .uniform1i (shaderObject .x3d_LightType [i],             2);
 			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);

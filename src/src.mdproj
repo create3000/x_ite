@@ -719,6 +719,7 @@
     <None Include="x_ite\Browser\Shaders\ShaderTest.js" />
     <None Include="x_ite\Parser\X3DParser.js" />
     <None Include="standard\Math\Algorithms\PartialSort.js" />
+    <None Include="x_ite\Components\X_ITE\BlendMode.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
@@ -727,5 +728,6 @@
     <Folder Include="images\" />
     <Folder Include="x_ite\" />
     <Folder Include="x_ite\Components\VolumeRendering\" />
+    <Folder Include="x_ite\Components\X_ITE\" />
   </ItemGroup>
 </Project>

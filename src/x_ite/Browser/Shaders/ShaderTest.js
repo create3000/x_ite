@@ -98,7 +98,7 @@ function (DepthBuffer,
 		gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
 		gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
 
-		shaderNode .setClipPlanes (gl, [ ]);
+		shaderNode .setShaderObjects (gl, [ ]);
 
 		gl .uniform1i (shaderNode .x3d_FogType,       0);
 		gl .uniform1i (shaderNode .x3d_ColorMaterial, false);

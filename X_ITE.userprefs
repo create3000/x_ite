@@ -1,12 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/ParticleSystems/ParticleSystem.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/ParticleSystems/X3DParticleEmitterNode.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/ParticleSystems/ForcePhysicsModel.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/ParticleSystems/PolylineEmitter.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="1465" Column="1" />
       <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/ParticleSystems/X3DParticleEmitterNode.js" Line="246" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

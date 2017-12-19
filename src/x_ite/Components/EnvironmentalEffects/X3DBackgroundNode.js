@@ -166,7 +166,7 @@ function ($,
 		this .projectionMatrixArray = new Float32Array (16);
 		this .modelMatrix           = new Matrix4 ();
 		this .modelViewMatrixArray  = new Float32Array (16);
-		this .clipPlanes            = [ ];
+		this .shaderObjects         = [ ];
 		this .colors                = [ ];
 		this .sphere                = [ ];
 		this .textures              = 0;
@@ -512,13 +512,13 @@ function ($,
 				case TraverseType .DISPLAY:
 				{
 					var
-						sourcePlanes = renderObject .getClipPlanes (),
-						destPlanes   = this .clipPlanes;
+						sourceObjects = renderObject .getShaderObjects (),
+						destObjects   = this .shaderObjects;
 
-					for (var i = 0, length = sourcePlanes .length; i < length; ++ i)
-						destPlanes [i] = sourcePlanes [i];
+					for (var i = 0, length = sourceObjects .length; i < length; ++ i)
+						destObjects [i] = sourceObjects [i];
 
-					destPlanes .length = sourcePlanes .length;
+					destObjects .length = sourceObjects .length;
 					break;
 				}
 			}
@@ -588,7 +588,7 @@ function ($,
 
 			// Clip planes
 
-			shaderNode .setClipPlanes (gl, this .clipPlanes);
+			shaderNode .setShaderObjects (gl, this .shaderObjects);
 
 			// Enable vertex attribute arrays.
 
@@ -626,7 +626,7 @@ function ($,
 
 			// Clip planes
 
-			shaderNode .setClipPlanes (gl, this .clipPlanes);
+			shaderNode .setShaderObjects (gl, this .shaderObjects);
 
 			// Enable vertex attribute arrays.
 

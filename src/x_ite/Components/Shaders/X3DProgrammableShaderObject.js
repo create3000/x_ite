@@ -87,13 +87,16 @@ function ($,
 		this .x3d_ShadowColor           = [ ];
 		this .x3d_ShadowMatrix          = [ ];
 		this .x3d_ShadowMap             = [ ];
+
+		this .numClipPlanes   = 0;
+		this .numGlobalLights = 0;
+		this .numLights       = 0;
 	}
 
 	X3DProgrammableShaderObject .prototype =
 	{
 		constructor: X3DProgrammableShaderObject,
 		x3d_NoneClipPlane: new Float32Array ([ 88, 51, 68, 33 ]), // X3D!
-		numGlobalLights: 0,
 		normalMatrixArray: new Float32Array (9),
 		initialize: function ()
 		{
@@ -849,18 +852,21 @@ function ($,
 
 			return i;
 		},
-		setClipPlanes: function (gl, clipPlanes)
+		setShaderObjects: function (gl, shaderObjects)
 		{
-			if (clipPlanes .length)
-			{
-				for (var i = 0, numClipPlanes = Math .min (this .x3d_MaxClipPlanes, clipPlanes .length); i < numClipPlanes; ++ i)
-					clipPlanes [i] .setShaderUniforms (gl, this, i);
-	
-				if (i < this .x3d_MaxClipPlanes)
-					gl .uniform4fv (this .x3d_ClipPlane [i], this .x3d_NoneClipPlane);
-			}
-			else
-				gl .uniform4fv (this .x3d_ClipPlane [0], this .x3d_NoneClipPlane);
+			// Clip planes and local lights
+
+			this .numClipPlanes = 0;
+			this .numLights     = 0;
+
+			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
+				shaderObjects [i] .setShaderUniforms (gl, this);
+
+			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
+				gl .uniform4fv (this .x3d_ClipPlane [this .numClipPlanes], this .x3d_NoneClipPlane);
+
+			if (this .numLights < this .x3d_MaxLights)
+				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
 		},
 		setGlobalUniforms: function (renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
@@ -877,10 +883,11 @@ function ($,
 
 			// Set global lights
 
-			this .numGlobalLights = Math .min (this .x3d_MaxLights, globalLights .length);
+			this .numGlobalLights = globalLights .length;
+			this .numLights       = 0;
 
-			for (var i = 0, length = this .numGlobalLights; i < length; ++ i)
-				globalLights [i] .setShaderUniforms (gl, this, i);
+			for (var i = 0, length = globalLights .length; i < length; ++ i)
+				globalLights [i] .setShaderUniforms (gl, this);
 		},
 		setLocalUniforms: function (gl, context)
 		{
@@ -890,26 +897,25 @@ function ($,
 				textureNode          = context .textureNode,
 				textureTransformNode = context .textureTransformNode,
 				modelViewMatrix      = context .modelViewMatrix,
-				clipPlaneNodes       = context .clipPlanes;
+				shaderObjects        = context .shaderObjects;
 
 			// Geometry type
 
 			gl .uniform1i (this .x3d_GeometryType, context .geometryType);
 
-			// Clip planes
+			// Clip planes and local lights
 
-			if (clipPlaneNodes .length)
-			{
-				for (var i = 0, numClipPlanes = Math .min (this .x3d_MaxClipPlanes, clipPlaneNodes .length); i < numClipPlanes; ++ i)
-					clipPlaneNodes [i] .setShaderUniforms (gl, this, i);
-	
-				if (i < this .x3d_MaxClipPlanes)
-					gl .uniform4fv (this .x3d_ClipPlane [i], this .x3d_NoneClipPlane);
-			}
-			else
-			{
-				gl .uniform4fv (this .x3d_ClipPlane [0], this .x3d_NoneClipPlane);
-			}
+			this .numClipPlanes = 0;
+			this .numLights     = this .numGlobalLights;
+
+			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
+				shaderObjects [i] .setShaderUniforms (gl, this);
+
+			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
+				gl .uniform4fv (this .x3d_ClipPlane [this .numClipPlanes], this .x3d_NoneClipPlane);
+
+			if (this .numLights < this .x3d_MaxLights)
+				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
 
 			// Fog, there is always one
 
@@ -939,16 +945,6 @@ function ($,
 				// Lights
 
 				gl .uniform1i  (this .x3d_Lighting, true);
-
-				var
-					localLights = context .localLights,
-					numLights   = Math .min (this .x3d_MaxLights, this .numGlobalLights + localLights .length);
-
-				for (var i = this .numGlobalLights, l = 0; i < numLights; ++ i, ++ l)
-					localLights [l] .setShaderUniforms (gl, this, i);
-
-				if (numLights < this .x3d_MaxLights)
-					gl .uniform1i (this .x3d_LightType [numLights], 0);
 
 				// Material
 

@@ -439,6 +439,10 @@ define (function ()
 		X3DProtoDeclarationNode:   nodeType ++,
 		X3DProtoDeclaration:       nodeType ++,
 		X3DExternProtoDeclaration: nodeType ++,
+
+		// Non standard
+
+		BlendMode: nodeType ++,
 	};
 
 	Object .preventExtensions (X3DConstants);

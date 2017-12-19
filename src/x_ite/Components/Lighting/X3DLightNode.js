@@ -146,8 +146,8 @@ function ($,
 						                     group,
 						                     renderObject .getModelViewMatrix () .get ());
 
-						renderObject .getLocalLights () .push (lightContainer);
-						renderObject .getLights ()      .push (lightContainer);
+						renderObject .getShaderObjects () .push (lightContainer);
+						renderObject .getLights ()        .push (lightContainer);
 					}
 				}
 				else
@@ -165,8 +165,8 @@ function ($,
 					{
 						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
 	
-						renderObject .getLocalLights () .push (lightContainer);
-						renderObject .getLights ()      .push (lightContainer);
+						renderObject .getShaderObjects () .push (lightContainer);
+						renderObject .getLights ()        .push (lightContainer);
 					}
 				}
 			}
@@ -179,9 +179,9 @@ function ($,
 				   return;
 
 				if (renderObject .isIndependent ())
-					renderObject .getBrowser () .getLocalLights () .push (renderObject .getLocalLights () .pop ());
+					renderObject .getBrowser () .getLocalLights () .push (renderObject .getShaderObjects () .pop ());
 				else
-					renderObject .getLocalLights () .pop ();
+					renderObject .getShaderObjects () .pop ();
 			}
 		},
 	});

@@ -105,13 +105,13 @@ function ($,
 				plane .distanceFromOrigin = 0;
 			}
 		},
-		setShaderUniforms: function (gl, shaderObject, i)
+		setShaderUniforms: function (gl, shaderObject)
 		{
 			var
 				plane  = this .plane,
 				normal = plane .normal;
 
-			gl .uniform4f (shaderObject .x3d_ClipPlane [i], normal .x, normal .y, normal .z, plane .distanceFromOrigin);
+			gl .uniform4f (shaderObject .x3d_ClipPlane [shaderObject .numClipPlanes ++], normal .x, normal .y, normal .z, plane .distanceFromOrigin);
 		},
 		dispose: function ()
 		{
@@ -172,13 +172,13 @@ function ($,
 
 				clipPlaneContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
-				renderObject .getClipPlanes () .push (clipPlaneContainer);
+				renderObject .getShaderObjects () .push (clipPlaneContainer);
 			}
 		},
 		pop: function (renderObject)
 		{
 			if (this .enabled)
-				renderObject .getBrowser () .getClipPlanes () .push (renderObject .getClipPlanes () .pop ());
+				renderObject .getBrowser () .getClipPlanes () .push (renderObject .getShaderObjects () .pop ());
 		},
 	});
 

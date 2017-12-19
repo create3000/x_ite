@@ -108,9 +108,8 @@ function ($,
 		this .projectionMatrix         = new MatrixStack (Matrix4);
 		this .modelViewMatrix          = new MatrixStack (Matrix4);
 		this .viewVolumes              = [ ];
-		this .clipPlanes               = [ ];
+		this .shaderObjects            = [ ];
 		this .globalLights             = [ ];
-		this .localLights              = [ ];
 		this .lights                   = [ ];
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
@@ -178,17 +177,13 @@ function ($,
 		{
 			return this .viewVolumes [this .viewVolumes .length - 1];
 		},
-		getClipPlanes: function ()
+		getShaderObjects: function ()
 		{
-			return this .clipPlanes;
+			return this .shaderObjects;
 		},
 		getGlobalLights: function ()
 		{
 			return this .globalLights;
-		},
-		getLocalLights: function ()
-		{
-			return this .localLights;
 		},
 		getLights: function ()
 		{
@@ -411,7 +406,7 @@ function ($,
 				// Clip planes
 	
 				var
-					sourcePlanes = this .getClipPlanes (),
+					sourcePlanes = this .getShaderObjects (),
 					destPlanes   = context .clipPlanes;
 	
 				for (var i = 0, length = sourcePlanes .length; i < length; ++ i)
@@ -449,7 +444,7 @@ function ($,
 				// Clip planes
 	
 				var
-					sourcePlanes = this .getClipPlanes (),
+					sourcePlanes = this .getShaderObjects (),
 					destPlanes   = context .clipPlanes;
 	
 				for (var i = 0, length = sourcePlanes .length; i < length; ++ i)
@@ -503,27 +498,16 @@ function ($,
 				context .distance  = distance - radius;
 				context .fogNode   = this .localFog;
 
-				// Clip planes
+				// Clip planes and local lights
 
 				var
-					sourcePlanes = this .getClipPlanes (),
-					destPlanes   = context .clipPlanes;
+					sourceObjects = this .getShaderObjects (),
+					destObjects   = context .shaderObjects;
 
-				for (var i = 0, length = sourcePlanes .length; i < length; ++ i)
-					destPlanes [i] = sourcePlanes [i];
+				for (var i = 0, length = sourceObjects .length; i < length; ++ i)
+					destObjects [i] = sourceObjects [i];
 				
-				destPlanes .length = sourcePlanes .length;
-
-				// Local lights
-
-				var
-					sourceLights = this .getLocalLights (),
-					destLights   = context .localLights;
-
-				for (var i = 0, length = sourceLights .length; i < length; ++ i)
-					destLights [i] = sourceLights [i];
-				
-				destLights .length = sourceLights .length;
+				destObjects .length = sourceObjects .length;
 
 				return true;
 			}
@@ -539,8 +523,7 @@ function ($,
 				colorMaterial: false,
 				modelViewMatrix: new Float32Array (16),
 				scissor: new Vector4 (0, 0, 0, 0),
-				clipPlanes: [ ],
-				localLights: [ ],
+				shaderObjects: [ ],
 				linePropertiesNode: null,
 				materialNode: null,
 				textureNode: null,
@@ -767,7 +750,7 @@ function ($,
 
 				// Clip planes
 
-				shaderNode .setClipPlanes (gl, context .clipPlanes);
+				shaderNode .setShaderObjects (gl, context .clipPlanes);
 
 				// modelViewMatrix
 	
@@ -895,22 +878,21 @@ function ($,
 
 			gl .activeTexture (gl .TEXTURE0);
 
-			// Recycle clip planes.
-
-			var clipPlanes = this .getBrowser () .getClipPlanes ();
-
-			for (var i = 0, length = clipPlanes .length; i < length; ++ i)
-			   clipPlanes [i] .dispose ();
-
-			clipPlanes .length = 0;
-
 			// Reset GeneratedCubeMapTextures.
 
 			generatedCubeMapTextures .length = 0;
 
-
 			if (this .isIndependent ())
 			{
+				// Recycle clip planes.
+
+				var clipPlanes = this .getBrowser () .getClipPlanes ();
+	
+				for (var i = 0, length = clipPlanes .length; i < length; ++ i)
+				   clipPlanes [i] .dispose ();
+	
+				clipPlanes .length = 0;
+
 				// Recycle global lights.
 	
 				var lights = this .globalLights;

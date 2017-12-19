@@ -226,7 +226,7 @@ function ($,
 			this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
 			this .shadowMatrixArray .set (this .shadowMatrix);
 		},
-		setShaderUniforms: function (gl, shaderObject, i)
+		setShaderUniforms: function (gl, shaderObject)
 		{
 			var 
 				lightNode       = this .lightNode,
@@ -235,7 +235,8 @@ function ($,
 				modelViewMatrix = this .modelViewMatrix .get (),
 				location        = this .location,
 				direction       = this .direction,
-				shadowColor     = lightNode .getShadowColor ();
+				shadowColor     = lightNode .getShadowColor (),
+				i               = shaderObject .numLights ++;
 
 			gl .uniform1i (shaderObject .x3d_LightType [i],             3);
 			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
