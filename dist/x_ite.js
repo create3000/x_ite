@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-177 */
+/* X_ITE v4.1.3a-178 */
 
 (function () {
 
@@ -110462,6 +110462,7 @@ function ($,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "blendColor",       new Fields .SFColorRGBA ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "sourceColor",      new Fields .SFString ("SRC_ALPHA")),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "sourceAlpha",      new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "destinationColor", new Fields .SFString ("ONE")),
@@ -110593,11 +110594,26 @@ function ($,
 		},
 		enable: function (gl)
 		{
+			var color = this .blendColor_ .getValue ();
+
+			this .blend = gl .isEnabled (gl .BLEND);
+
+			if (this .enabled_ .getValue ())
+				gl .enable (gl .BLEND);
+			else
+				gl .disable (gl .BLEND);
+
+			gl .blendColor (color .r, color .g, color .b, color .a);
 			gl .blendFuncSeparate (this .sourceColorType, this .sourceAlphaType, this .destinationColorType, this .destinationAlphaType);
 			gl .blendEquationSeparate (this .modeColorType, this .modeAlphaType);
 		},
 		disable: function (gl)
 		{
+			if (this .blend)
+				gl .enable (gl .BLEND);
+			else
+				gl .disable (gl .BLEND);
+
 			gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 			gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
 		},

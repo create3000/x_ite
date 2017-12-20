@@ -216,12 +216,24 @@ function ($,
 		{
 			var color = this .blendColor_ .getValue ();
 
+			this .blend = gl .isEnabled (gl .BLEND);
+
+			if (this .enabled_ .getValue ())
+				gl .enable (gl .BLEND);
+			else
+				gl .disable (gl .BLEND);
+
 			gl .blendColor (color .r, color .g, color .b, color .a);
 			gl .blendFuncSeparate (this .sourceColorType, this .sourceAlphaType, this .destinationColorType, this .destinationAlphaType);
 			gl .blendEquationSeparate (this .modeColorType, this .modeAlphaType);
 		},
 		disable: function (gl)
 		{
+			if (this .blend)
+				gl .enable (gl .BLEND);
+			else
+				gl .disable (gl .BLEND);
+
 			gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 			gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
 		},
