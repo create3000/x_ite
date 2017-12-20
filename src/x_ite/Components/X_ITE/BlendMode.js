@@ -82,6 +82,7 @@ function ($,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "blendColor",       new Fields .SFColorRGBA ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "sourceColor",      new Fields .SFString ("SRC_ALPHA")),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "sourceAlpha",      new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "destinationColor", new Fields .SFString ("ONE")),
@@ -213,6 +214,9 @@ function ($,
 		},
 		enable: function (gl)
 		{
+			var color = this .blendColor_ .getValue ();
+
+			gl .blendColor (color .r, color .g, color .b, color .a);
 			gl .blendFuncSeparate (this .sourceColorType, this .sourceAlphaType, this .destinationColorType, this .destinationAlphaType);
 			gl .blendEquationSeparate (this .modeColorType, this .modeAlphaType);
 		},
