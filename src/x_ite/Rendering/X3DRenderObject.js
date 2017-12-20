@@ -103,7 +103,7 @@ function ($,
 
 	function X3DRenderObject (executionContext)
 	{
-		this .blend                    = [ false ];
+		this .blend                    = [ ];
 		this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
 		this .inverseCameraSpaceMatrix = new MatrixStack (Matrix4);
 		this .projectionMatrix         = new MatrixStack (Matrix4);
@@ -466,7 +466,7 @@ function ($,
 
 			if (viewVolume .intersectsSphere (radius, bboxCenter))
 			{
-				if (shapeNode .isTransparent () || this .blend [this .blend .length - 1])
+				if (this .blend .length ? this .blend [this .blend .length - 1] : shapeNode .isTransparent ())
 				{
 					var num = this .numTransparentShapes;
 
