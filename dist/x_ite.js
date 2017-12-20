@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-180 */
+/* X_ITE v4.1.3a-181 */
 
 (function () {
 
@@ -110578,30 +110578,36 @@ function ($,
 			{
 				case TraverseType .DISPLAY:
 				{
-					renderObject .getBlend () .push (this .enabled_ .getValue ());
-					renderObject .getLocalObjects () .push (this);
-
-					X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-
-					renderObject .getLocalObjects () .pop ();
-					renderObject .getBlend () .pop ();
+					if (this .enabled_ .getValue ())
+					{
+						renderObject .getBlend () .push (true);
+						renderObject .getLocalObjects () .push (this);
+	
+						X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+	
+						renderObject .getLocalObjects () .pop ();
+						renderObject .getBlend () .pop ();
+					}
+					else
+					{
+						renderObject .getBlend () .push (false);
+	
+						X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+	
+						renderObject .getBlend () .pop ();
+					}
 					break;
 				}
 				default:
+				{
 					X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 					break;
+				}
 			}
 		},
 		enable: function (gl)
 		{
 			var color = this .blendColor_ .getValue ();
-
-			this .blend = gl .isEnabled (gl .BLEND);
-
-			if (this .enabled_ .getValue ())
-				gl .enable (gl .BLEND);
-			else
-				gl .disable (gl .BLEND);
 
 			gl .blendColor (color .r, color .g, color .b, color .a);
 			gl .blendFuncSeparate (this .sourceColorType, this .sourceAlphaType, this .destinationColorType, this .destinationAlphaType);
@@ -110609,11 +110615,6 @@ function ($,
 		},
 		disable: function (gl)
 		{
-			if (this .blend)
-				gl .enable (gl .BLEND);
-			else
-				gl .disable (gl .BLEND);
-
 			gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 			gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
 		},
