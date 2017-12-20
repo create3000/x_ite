@@ -12,6 +12,7 @@ dist: all
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.min.js
 
+	cp src/tests.js tests.js
 	cp src/x_ite.html x_ite.min.html
 	perl -pi -e 's|\s*<script type="text/javascript" src="\.\./node_modules/requirejs/require.js"></script>\n||sg' x_ite.min.html
 	perl -pi -e 's|\s*<script type="text/javascript" src="require.config.js"></script>\n||sg'                      x_ite.min.html

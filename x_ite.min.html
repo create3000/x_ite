@@ -8,6 +8,7 @@
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.js"></script>
 	<script type="text/javascript" src="src/bookmarks.js"></script>
+	<script type="text/javascript" src="tests.js"></script>
 
 	<!-- X_ITE START -->
 	<link rel="stylesheet" type="text/css" href="dist/x_ite.css"/>
@@ -387,7 +388,6 @@ X3D (function ()
 		{ name: 'Integer Trigger',    url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/EventUtilities/IntegerTrigger.wrl" ] },
 		{ name: 'Time Trigger',       url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/EventUtilities/TimeTrigger.wrl" ] },
 		{ name: 'Sequencer',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/EventUtilities/Sequencer.x3d" ] },
-		{ name: 'Words never spoken', url: [ "http://media.create3000.de/components/EventUtilities/IntegerSequencer/IntegerSequencer.x3d" ] },
 
 		{ name: 'Follower' },
 		{ name: 'Scalar Damper',        url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Follower/ScalarDamper.x3d" ] },
@@ -426,7 +426,6 @@ X3D (function ()
 		{ name: 'Grouping' },
 		{ name: 'Static Group',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Grouping/StaticGroup.x3d" ] },
 		{ name: 'Add Remove Children',   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Grouping/AddRemoveChildren.x3dv" ] },
-		{ name: 'Transform Variations',  url: [ "http://media.create3000.de/components/Grouping/Transform/Transform.x3d" ] },
 
 		{ name: 'Geometry 2D' },
 		{ name: 'Geometry 2D',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Geometry2D/Geometry2D.x3d" ] },
@@ -454,7 +453,6 @@ X3D (function ()
 		{ name: 'Spline Position Interpolator 2D',       url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SplinePositionInterpolator2.wrl" ] },
 		{ name: 'Spline Scalar Interpolator',            url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SplineScalarInterpolator.wrl" ] },
 		{ name: 'Squad Orientation Interpolator',        url: [ "https://cdn.rawgit.com/create3000/Titania/master/Library/Tests/Interpolation/SquadOrientationInterpolator.wrl" ] },
-		{ name: 'Color Interpolator',                    url: [ "http://media.create3000.de/components/Interpolation/ColorInterpolator/ColorInterpolator.x3d" ] },
 		
 		{ name: 'Layering' },
 		{ name: 'Layer Set',            url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Layering/LayerSet.x3d" ] },
@@ -478,7 +476,6 @@ X3D (function ()
 		{ name: 'Depth',                url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Navigation/Depth.x3d" ] },
 		{ name: 'Walk Viewer',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Navigation/WalkViewer.x3d" ] },
 		{ name: 'Viewpoint Jump',       url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Navigation/ViewpointJump.x3d" ] },
-		{ name: 'Venus',                url: [ "http://media.create3000.de/components/Navigation/Viewpoint/Viewpoint.x3d" ] },
 
 		{ name: 'Networking' },
 		{ name: 'Anchor',              url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Networking/Anchor.x3d" ] },
@@ -507,9 +504,6 @@ X3D (function ()
 		{ name: 'Geometry',               url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/Geometry.x3d" ] },
 		{ name: 'Geometry Line',          url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/GeometryLine.x3d" ] },
 		{ name: 'Bubbles',                url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/ParticleSystems/Bubbles.x3d" ] },
-		{ name: 'Point Emitter',          url: [ "http://media.create3000.de/components/ParticleSystems/PointEmitter/PointEmitter.x3d" ] },
-		{ name: 'Cone Emitter',           url: [ "http://media.create3000.de/components/ParticleSystems/ConeEmitter/ConeEmitter.x3d" ] },
-		{ name: 'Fireworks',              url: [ "http://media.create3000.de/fireworks.x3d" ] },
 
 		{ name: 'Pointing Device Sensor' },
 		{ name: 'Lamp',                     url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/PointingDeviceSensor/lamp.x3d" ] },
@@ -525,7 +519,6 @@ X3D (function ()
 		{ name: 'Indexed Line Set',        url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Rendering/IndexedLineSet.x3d" ] },
 		{ name: 'Glowing World',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Rendering/world.x3d" ] },
 		{ name: 'L-System',                url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Rendering/L-System.x3dz" ] },
-		{ name: 'LineSet',                 url: [ "http://media.create3000.de/components/Rendering/LineSet/LineSet.x3d" ] },
 
 		{ name: 'Scripting' },
 		{ name: 'Color Spheres',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Scripting/ColorSpheres.x3d" ] },
@@ -582,14 +575,16 @@ X3D (function ()
 		{ name: 'Horizontal Text',      url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Text/horizontal.x3d" ] },
 		{ name: 'Vertical Text',        url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Text/vertical.x3d" ] },
 		{ name: 'Far Away',             url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Text/scrolling-text.x3d" ] },
-		{ name: 'FontStyle',            url: [ "http://media.create3000.de/components/Text/FontStyle/FontStyle.x3d" ] },
 
 		{ name: 'Texturing' },
 		{ name: 'Ubuntu',           url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Texturing/ubuntu.x3d" ] },
 		{ name: 'Color Material',   url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Texturing/ColorMaterial.x3d" ] },
 		{ name: 'Movie Texture',    url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Texturing/MovieTexture.x3d" ] },
 		{ name: 'Color Management', url: [ "https://rawgit.com/create3000/Library/master/Tests/Components/Texturing/ColorManagement.x3d" ] },
+
 	]; 
+
+	pages = pages .concat (x_ite_examples);
 
 	function loadURL ()
 	{

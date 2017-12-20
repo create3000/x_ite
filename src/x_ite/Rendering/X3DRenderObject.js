@@ -403,27 +403,19 @@ function ($,
 				context .scissor   = viewVolume .getScissor ();
 	
 				// Collisions
-	
-				var
-					sourceCollisions = this .getCollisions (),
-					destCollisions   = context .collisions;
-	
-				for (var i = 0, length = sourceCollisions .length; i < length; ++ i)
-				   destCollisions [i] = sourceCollisions [i];
-				
-				destCollisions .length = sourceCollisions .length;
-	
+
+				var collisions = context .collisions;
+
+				collisions .length = 0;
+				collisions .push .apply (collisions, this .collisions);
+
 				// Clip planes
-	
-				var
-					sourcePlanes = this .getShaderObjects (),
-					destPlanes   = context .clipPlanes;
-	
-				for (var i = 0, length = sourcePlanes .length; i < length; ++ i)
-					destPlanes [i] = sourcePlanes [i];
-				
-				destPlanes .length = sourcePlanes .length;
-	
+
+				var clipPlanes = context .clipPlanes;
+
+				clipPlanes .length = 0;
+				clipPlanes .push .apply (clipPlanes, this .shaderObjects);
+
 				return true;
 			}
 
@@ -453,15 +445,11 @@ function ($,
 	
 				// Clip planes
 	
-				var
-					sourcePlanes = this .getShaderObjects (),
-					destPlanes   = context .clipPlanes;
-	
-				for (var i = 0, length = sourcePlanes .length; i < length; ++ i)
-					destPlanes [i] = sourcePlanes [i];
-				
-				destPlanes .length = sourcePlanes .length;
-	
+				var clipPlanes = context .clipPlanes;
+
+				clipPlanes .length = 0;
+				clipPlanes .push .apply (clipPlanes, this .shaderObjects);
+
 				return true;
 			}
 
@@ -509,25 +497,17 @@ function ($,
 
 				// Local objects
 
-				var
-					sourceObjects = this .getLocalObjects (),
-					destObjects   = context .localObjects;
+				var localObjects = context .localObjects;
 
-				for (var i = 0, length = sourceObjects .length; i < length; ++ i)
-					destObjects [i] = sourceObjects [i];
-				
-				destObjects .length = sourceObjects .length;
+				localObjects .length = 0;
+				localObjects .push .apply (localObjects, this .localObjects);
 
 				// Clip planes and local lights
 
-				var
-					sourceObjects = this .getShaderObjects (),
-					destObjects   = context .shaderObjects;
+				var shaderObjects = context .shaderObjects;
 
-				for (var i = 0, length = sourceObjects .length; i < length; ++ i)
-					destObjects [i] = sourceObjects [i];
-				
-				destObjects .length = sourceObjects .length;
+				shaderObjects .length = 0;
+				shaderObjects .push .apply (shaderObjects, this .shaderObjects);
 
 				return true;
 			}

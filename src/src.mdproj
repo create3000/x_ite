@@ -720,6 +720,7 @@
     <None Include="x_ite\Parser\X3DParser.js" />
     <None Include="standard\Math\Algorithms\PartialSort.js" />
     <None Include="x_ite\Components\X_ITE\BlendMode.js" />
+    <None Include="tests.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
