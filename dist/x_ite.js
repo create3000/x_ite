@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-182 */
+/* X_ITE v4.1.3a-183 */
 
 (function () {
 
@@ -110451,7 +110451,7 @@ function ($,
 		constructor: BlendMode,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "color",             new Fields .SFColorRGBA ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "blendColor",        new Fields .SFColorRGBA ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "sourceColorFactor", new Fields .SFString ("SRC_ALPHA")),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "sourceAlphaFactor", new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "destinationColor",  new Fields .SFString ("ONE")),
@@ -110558,7 +110558,7 @@ function ($,
 		},
 		enable: function (gl)
 		{
-			var color = this .color_ .getValue ();
+			var color = this .blendColor_ .getValue ();
 
 			gl .blendColor (color .r, color .g, color .b, color .a);
 			gl .blendFuncSeparate (this .sourceColorFactorType, this .sourceAlphaFactorType, this .destinationColorType, this .destinationAlphaType);

@@ -1,14 +1,14 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/X_ITE/BlendMode.js" Line="138" Column="70" />
-      <File FileName="src/x_ite/Components/Shape/X3DShapeNode.js" Line="170" Column="31" />
-      <File FileName="src/x_ite/Components/Shape/Shape.js" Line="217" Column="37" />
-      <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="1471" Column="36" />
-      <File FileName="src/x_ite/Components/Shape/Appearance.js" Line="268" Column="4" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="788" Column="19" />
+      <File FileName="src/x_ite/Components/X_ITE/BlendMode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Shape/X3DShapeNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Shape/Shape.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Shape/Appearance.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -22,10 +22,9 @@
                   <Node name="Shape" expanded="True" />
                   <Node name="X_ITE" expanded="True" />
                 </Node>
-                <Node name="Rendering" expanded="True">
-                  <Node name="X3DRenderObject.js" selected="True" />
-                </Node>
+                <Node name="Rendering" expanded="True" />
               </Node>
+              <Node name="x_ite.html" selected="True" />
             </Node>
           </Node>
         </State>
