@@ -190,12 +190,6 @@ function ($,
 		{
 			var color = this .blendColor_ .getValue ();
 
-console .log (color .toString ());
-console .log (this .sourceColorFactorType == gl .DST_COLOR);
-console .log (this .sourceAlphaFactorType == gl .CONSTANT_COLOR);
-console .log (this .destinationColorFactorType  == gl .CONSTANT_COLOR);
-console .log (this .destinationAlphaFactorType  == gl .ONE_MINUS_SRC_ALPHA);
-
 			gl .blendColor (color .r, color .g, color .b, color .a);
 			gl .blendFuncSeparate (this .sourceColorFactorType, this .sourceAlphaFactorType, this .destinationColorFactorType, this .destinationAlphaFactorType);
 			gl .blendEquationSeparate (this .colorEquationType, this .alphaEquationType);
