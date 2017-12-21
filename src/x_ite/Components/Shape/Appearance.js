@@ -78,6 +78,7 @@ function ($,
 		this .textureTransformNode = null;
 		this .shaderNodes          = [ ];
 		this .shaderNode           = null;
+		this .blendModeNode        = null;
 	}
 
 	Appearance .prototype = $.extend (Object .create (X3DAppearanceNode .prototype),
@@ -91,6 +92,7 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",          new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",          new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "blendMode",        new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -110,17 +112,19 @@ function ($,
 
 			this .isLive () .addInterest ("set_live__", this);
 
-			this .lineProperties_   .addInterest ("set_lineProperties__", this);
-			this .material_         .addInterest ("set_material__", this);
-			this .texture_          .addInterest ("set_texture__", this);
+			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
+			this .material_         .addInterest ("set_material__",         this);
+			this .texture_          .addInterest ("set_texture__",          this);
 			this .textureTransform_ .addInterest ("set_textureTransform__", this);
-			this .shaders_          .addInterest ("set_shaders__", this);
+			this .shaders_          .addInterest ("set_shaders__",          this);
+			this .blendMode_        .addInterest ("set_blendMode__",        this);
 
 			this .set_lineProperties__ ();
 			this .set_material__ ();
 			this .set_texture__ ();
 			this .set_textureTransform__ ();
 			this .set_shaders__ ();
+			this .set_blendMode__ ();
 		},
 		getLineProperties: function ()
 		{
@@ -138,10 +142,6 @@ function ($,
 		{
 			return this .textureTransformNode;
 		},
-		set_lineProperties__: function ()
-		{
-			this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
-		},
 		set_live__: function ()
 		{
 			if (this .isLive () .getValue ())
@@ -154,6 +154,10 @@ function ($,
 				if (this .shaderNode)
 				this .getBrowser () .removeShader (this .shaderNode);
 			}
+		},
+		set_lineProperties__: function ()
+		{
+			this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
 		},
 		set_material__: function ()
 		{
@@ -240,10 +244,17 @@ function ($,
 
 			this .set_transparent__ ();
 		},
+		set_blendMode__: function ()
+		{
+			this .blendModeNode = X3DCast (X3DConstants .BlendMode, this .blendMode_);
+
+			this .set_transparent__ ();
+		},
 		set_transparent__: function ()
 		{
 			this .transparent_ = (this .materialNode && this .materialNode .transparent_ .getValue ()) ||
-			                     (this .textureNode  && this .textureNode  .transparent_ .getValue ());
+			                     (this .textureNode  && this .textureNode  .transparent_ .getValue () ||
+			                      this .blendModeNode);
 		},
 		traverse: function (type, renderObject)
 		{
@@ -253,13 +264,21 @@ function ($,
 			if (this .shaderNode)
 				this .shaderNode .traverse (type, renderObject);
 		},
-		display: function (context)
+		enable: function (context)
 		{
 			context .linePropertiesNode   = this .linePropertiesNode;
 			context .materialNode         = this .materialNode;
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
 			context .shaderNode           = this .shaderNode || context .renderer .getBrowser () .getDefaultShader ();
+
+			if (this .blendModeNode)
+				this .blendModeNode .enable (context .renderer .getBrowser () .getContext ());
+		},
+		disable: function (context)
+		{
+			if (this .blendModeNode)
+				this .blendModeNode .disable (context .renderer .getBrowser () .getContext ());
 		},
 	});
 

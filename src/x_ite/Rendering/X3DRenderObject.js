@@ -103,14 +103,12 @@ function ($,
 
 	function X3DRenderObject (executionContext)
 	{
-		this .blend                    = [ ];
 		this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
 		this .inverseCameraSpaceMatrix = new MatrixStack (Matrix4);
 		this .projectionMatrix         = new MatrixStack (Matrix4);
 		this .modelViewMatrix          = new MatrixStack (Matrix4);
 		this .viewVolumes              = [ ];
 		this .shaderObjects            = [ ];
-		this .localObjects             = [ ];
 		this .globalLights             = [ ];
 		this .lights                   = [ ];
 		this .localFogs                = [ ];
@@ -155,10 +153,6 @@ function ($,
 		{
 			return true;
 		},
-		getBlend: function ()
-		{
-			return this .blend;
-		},
 		getCameraSpaceMatrix: function ()
 		{
 			return this .cameraSpaceMatrix;
@@ -186,10 +180,6 @@ function ($,
 		getShaderObjects: function ()
 		{
 			return this .shaderObjects;
-		},
-		getLocalObjects: function ()
-		{
-			return this .localObjects;
 		},
 		getGlobalLights: function ()
 		{
@@ -466,7 +456,7 @@ function ($,
 
 			if (viewVolume .intersectsSphere (radius, bboxCenter))
 			{
-				if (this .blend .length ? this .blend [this .blend .length - 1] : shapeNode .isTransparent ())
+				if (shapeNode .isTransparent ())
 				{
 					var num = this .numTransparentShapes;
 
@@ -495,13 +485,6 @@ function ($,
 				context .distance  = bboxCenter .z - radius;
 				context .fogNode   = this .localFog;
 
-				// Local objects
-
-				var localObjects = context .localObjects;
-
-				localObjects .length = 0;
-				localObjects .push .apply (localObjects, this .localObjects);
-
 				// Clip planes and local lights
 
 				var shaderObjects = context .shaderObjects;
@@ -523,7 +506,6 @@ function ($,
 				colorMaterial: false,
 				modelViewMatrix: new Float32Array (16),
 				scissor: new Vector4 (0, 0, 0, 0),
-				localObjects: [ ],
 				shaderObjects: [ ],
 				linePropertiesNode: null,
 				materialNode: null,
@@ -838,22 +820,15 @@ function ($,
 			for (var i = 0; i < this .numOpaqueShapes; ++ i)
 			{
 				var
-					context      = this .opaqueShapes [i],
-					scissor      = context .scissor,
-					localObjects = context .localObjects;
+					context = this .opaqueShapes [i],
+					scissor = context .scissor;
 
 				gl .scissor (scissor .x,
 				             scissor .y,
 				             scissor .z,
 				             scissor .w);
 
-				for (var l = 0, length = localObjects .length; l < length; ++ l)
-					localObjects [l] .enable (gl);
-
 				context .shapeNode .display (context);
-
-				for (var l = localObjects .length - 1; l >= 0; -- l)
-					localObjects [l] .disable (gl);
 			}
 
 			// Render transparent objects
@@ -866,22 +841,15 @@ function ($,
 			for (var i = 0; i < this .numTransparentShapes; ++ i)
 			{
 				var
-					context      = this .transparentShapes [i],
-					scissor      = context .scissor,
-					localObjects = context .localObjects;
+					context = this .transparentShapes [i],
+					scissor = context .scissor;
 
 				gl .scissor (scissor .x,
 				             scissor .y,
 				             scissor .z,
 				             scissor .w);
 
-				for (var l = 0, length = localObjects .length; l < length; ++ l)
-					localObjects [l] .enable (gl);
-
 				context .shapeNode .display (context);
-
-				for (var l = localObjects .length - 1; l >= 0; -- l)
-					localObjects [l] .disable (gl);
 			}
 
 			gl .depthMask (true);

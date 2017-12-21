@@ -214,8 +214,9 @@ function ($,
 		},
 		display: function (context)
 		{
-			this .getAppearance () .display (context);
+			this .getAppearance () .enable  (context);
 			this .getGeometry ()   .display (context);
+			this .getAppearance () .disable (context);
 		},
 	});
 

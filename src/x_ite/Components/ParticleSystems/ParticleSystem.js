@@ -1375,7 +1375,7 @@ function ($,
 
 				// Traverse appearance before everything.
 
-				this .getAppearance () .display (context);
+				this .getAppearance () .enable (context);
 
 				// Update geometry if SPRITE.
 
@@ -1467,6 +1467,8 @@ function ($,
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
 				}
+
+				this .getAppearance () .disable (context);
 			}
 			catch (error)
 			{

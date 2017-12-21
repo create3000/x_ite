@@ -52,7 +52,7 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DGroupingNode",
+	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 ],
@@ -60,7 +60,7 @@ function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode,
+          X3DAppearanceChildNode,
           TraverseType,
           X3DConstants)
 {
@@ -68,7 +68,7 @@ function ($,
 
 	function BlendMode (executionContext)
 	{
-		X3DGroupingNode .call (this, executionContext);
+		X3DAppearanceChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .BlendMode);
 
@@ -76,24 +76,18 @@ function ($,
 		this .blendModes = { };
 	}
 
-	BlendMode .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	BlendMode .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: BlendMode,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "blendColor",       new Fields .SFColorRGBA ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "sourceColor",      new Fields .SFString ("SRC_ALPHA")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "sourceAlpha",      new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "destinationColor", new Fields .SFString ("ONE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "destinationAlpha", new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "modeColor",        new Fields .SFString ("FUNC_ADD")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "modeAlpha",        new Fields .SFString ("FUNC_ADD")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "color",             new Fields .SFColorRGBA ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "sourceColorFactor", new Fields .SFString ("SRC_ALPHA")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "sourceAlphaFactor", new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "destinationColor",  new Fields .SFString ("ONE")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "destinationAlpha",  new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "colorEquation",     new Fields .SFString ("FUNC_ADD")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "alphaEquation",     new Fields .SFString ("FUNC_ADD")),
 		]),
 		getTypeName: function ()
 		{
@@ -105,11 +99,11 @@ function ($,
 		},
 		getContainerField: function ()
 		{
-			return "children";
+			return "blendMode";
 		},
 		initialize: function ()
 		{
-			X3DGroupingNode .prototype .initialize .call (this);
+			X3DAppearanceChildNode .prototype .initialize .call (this);
 	
 			var gl = this .getBrowser () .getContext ();
 
@@ -136,33 +130,33 @@ function ($,
 			this .blendModes ["FUNC_SUBTRACT"]         = gl .FUNC_SUBTRACT;
 			this .blendModes ["FUNC_REVERSE_SUBTRACT"] = gl .FUNC_REVERSE_SUBTRACT;
 
-			this .sourceColor_      .addInterest ("set_sourceColor__",      this);
-			this .sourceAlpha_      .addInterest ("set_sourceAlpha__",      this);
-			this .destinationColor_ .addInterest ("set_destinationColor__", this);
-			this .destinationAlpha_ .addInterest ("set_destinationAlpha__", this);
-			this .modeColor_        .addInterest ("set_modeColor__",        this);
-			this .modeAlpha_        .addInterest ("set_modeAlpha__",        this);
+			this .sourceColorFactor_ .addInterest ("set_sourceColorFactor__", this);
+			this .sourceAlphaFactor_ .addInterest ("set_sourceAlphaFactor__", this);
+			this .destinationColor_  .addInterest ("set_destinationColor__",  this);
+			this .destinationAlpha_  .addInterest ("set_destinationAlpha__",  this);
+			this .colorEquation_     .addInterest ("set_colorEquation__",     this);
+			this .alphaEquation_     .addInterest ("set_alphaEquation__",     this);
 
-			this .set_sourceColor__ ();
-			this .set_sourceAlpha__ ();
+			this .set_sourceColorFactor__ ();
+			this .set_sourceAlphaFactor__ ();
 			this .set_destinationColor__ ();
 			this .set_destinationAlpha__ ();
-			this .set_modeColor__ ();
-			this .set_modeAlpha__ ();
+			this .set_colorEquation__ ();
+			this .set_alphaEquation__ ();
 		},
-		set_sourceColor__: function ()
+		set_sourceColorFactor__: function ()
 		{
-			this .sourceColorType = this .blendTypes [this .sourceColor_ .getValue ()];
+			this .sourceColorFactorType = this .blendTypes [this .sourceColorFactor_ .getValue ()];
 
-			if (! this .sourceColorType)
-				this .sourceColorType = this .blendTypes ["SRC_ALPHA"];
+			if (! this .sourceColorFactorType)
+				this .sourceColorFactorType = this .blendTypes ["SRC_ALPHA"];
 		},
-		set_sourceAlpha__: function ()
+		set_sourceAlphaFactor__: function ()
 		{
-			this .sourceAlphaType = this .blendTypes [this .sourceAlpha_ .getValue ()];
+			this .sourceAlphaFactorType = this .blendTypes [this .sourceAlphaFactor_ .getValue ()];
 
-			if (! this .sourceAlphaType)
-				this .sourceAlphaType = this .blendTypes ["ONE_MINUS_SRC_ALPHA"];
+			if (! this .sourceAlphaFactorType)
+				this .sourceAlphaFactorType = this .blendTypes ["ONE_MINUS_SRC_ALPHA"];
 		},
 		set_destinationColor__: function ()
 		{
@@ -178,61 +172,27 @@ function ($,
 			if (! this .destinationAlphaType)
 				this .destinationAlphaType = this .blendTypes ["ONE_MINUS_SRC_ALPHA"];
 		},
-		set_modeColor__: function ()
+		set_colorEquation__: function ()
 		{
-			this .modeColorType = this .blendModes [this .modeColor_ .getValue ()];
+			this .colorEquationType = this .blendModes [this .colorEquation_ .getValue ()];
 
-			if (! this .modeColorType)
-				this .modeColorType = this .blendModes ["FUNC_ADD"];
+			if (! this .colorEquationType)
+				this .colorEquationType = this .blendModes ["FUNC_ADD"];
 		},
-		set_modeAlpha__: function ()
+		set_alphaEquation__: function ()
 		{
-			this .modeAlphaType = this .blendModes [this .modeAlpha_ .getValue ()];
+			this .alphaEquationType = this .blendModes [this .alphaEquation_ .getValue ()];
 
-			if (! this .modeAlphaType)
-				this .modeAlphaType = this .blendModes ["FUNC_ADD"];
-		},
-		traverse: function (type, renderObject)
-		{
-			switch (type)
-			{
-				case TraverseType .DISPLAY:
-				{
-					if (this .enabled_ .getValue ())
-					{
-						renderObject .getBlend () .push (true);
-						renderObject .getLocalObjects () .push (this);
-	
-						X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-	
-						renderObject .getLocalObjects () .pop ();
-						renderObject .getBlend () .pop ();
-					}
-					else
-					{
-						renderObject .getBlend () .push (false);
-	
-						X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-	
-						renderObject .getBlend () .pop ();
-					}
-
-					break;
-				}
-				default:
-				{
-					X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-					break;
-				}
-			}
+			if (! this .alphaEquationType)
+				this .alphaEquationType = this .blendModes ["FUNC_ADD"];
 		},
 		enable: function (gl)
 		{
-			var color = this .blendColor_ .getValue ();
+			var color = this .color_ .getValue ();
 
 			gl .blendColor (color .r, color .g, color .b, color .a);
-			gl .blendFuncSeparate (this .sourceColorType, this .sourceAlphaType, this .destinationColorType, this .destinationAlphaType);
-			gl .blendEquationSeparate (this .modeColorType, this .modeAlphaType);
+			gl .blendFuncSeparate (this .sourceColorFactorType, this .sourceAlphaFactorType, this .destinationColorType, this .destinationAlphaType);
+			gl .blendEquationSeparate (this .colorEquationType, this .alphaEquationType);
 		},
 		disable: function (gl)
 		{
