@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-181 */
+/* X_ITE v4.1.3a-182 */
 
 (function () {
 
@@ -37712,6 +37712,7 @@ function ($,
 		this .textureTransformNode = null;
 		this .shaderNodes          = [ ];
 		this .shaderNode           = null;
+		this .blendModeNode        = null;
 	}
 
 	Appearance .prototype = $.extend (Object .create (X3DAppearanceNode .prototype),
@@ -37725,6 +37726,7 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",          new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",          new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "blendMode",        new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -37744,17 +37746,19 @@ function ($,
 
 			this .isLive () .addInterest ("set_live__", this);
 
-			this .lineProperties_   .addInterest ("set_lineProperties__", this);
-			this .material_         .addInterest ("set_material__", this);
-			this .texture_          .addInterest ("set_texture__", this);
+			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
+			this .material_         .addInterest ("set_material__",         this);
+			this .texture_          .addInterest ("set_texture__",          this);
 			this .textureTransform_ .addInterest ("set_textureTransform__", this);
-			this .shaders_          .addInterest ("set_shaders__", this);
+			this .shaders_          .addInterest ("set_shaders__",          this);
+			this .blendMode_        .addInterest ("set_blendMode__",        this);
 
 			this .set_lineProperties__ ();
 			this .set_material__ ();
 			this .set_texture__ ();
 			this .set_textureTransform__ ();
 			this .set_shaders__ ();
+			this .set_blendMode__ ();
 		},
 		getLineProperties: function ()
 		{
@@ -37772,10 +37776,6 @@ function ($,
 		{
 			return this .textureTransformNode;
 		},
-		set_lineProperties__: function ()
-		{
-			this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
-		},
 		set_live__: function ()
 		{
 			if (this .isLive () .getValue ())
@@ -37788,6 +37788,10 @@ function ($,
 				if (this .shaderNode)
 				this .getBrowser () .removeShader (this .shaderNode);
 			}
+		},
+		set_lineProperties__: function ()
+		{
+			this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
 		},
 		set_material__: function ()
 		{
@@ -37874,10 +37878,17 @@ function ($,
 
 			this .set_transparent__ ();
 		},
+		set_blendMode__: function ()
+		{
+			this .blendModeNode = X3DCast (X3DConstants .BlendMode, this .blendMode_);
+
+			this .set_transparent__ ();
+		},
 		set_transparent__: function ()
 		{
 			this .transparent_ = (this .materialNode && this .materialNode .transparent_ .getValue ()) ||
-			                     (this .textureNode  && this .textureNode  .transparent_ .getValue ());
+			                     (this .textureNode  && this .textureNode  .transparent_ .getValue () ||
+			                      this .blendModeNode);
 		},
 		traverse: function (type, renderObject)
 		{
@@ -37887,13 +37898,21 @@ function ($,
 			if (this .shaderNode)
 				this .shaderNode .traverse (type, renderObject);
 		},
-		display: function (context)
+		enable: function (context)
 		{
 			context .linePropertiesNode   = this .linePropertiesNode;
 			context .materialNode         = this .materialNode;
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
 			context .shaderNode           = this .shaderNode || context .renderer .getBrowser () .getDefaultShader ();
+
+			if (this .blendModeNode)
+				this .blendModeNode .enable (context .renderer .getBrowser () .getContext ());
+		},
+		disable: function (context)
+		{
+			if (this .blendModeNode)
+				this .blendModeNode .disable (context .renderer .getBrowser () .getContext ());
 		},
 	});
 
@@ -73659,14 +73678,12 @@ function ($,
 
 	function X3DRenderObject (executionContext)
 	{
-		this .blend                    = [ ];
 		this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
 		this .inverseCameraSpaceMatrix = new MatrixStack (Matrix4);
 		this .projectionMatrix         = new MatrixStack (Matrix4);
 		this .modelViewMatrix          = new MatrixStack (Matrix4);
 		this .viewVolumes              = [ ];
 		this .shaderObjects            = [ ];
-		this .localObjects             = [ ];
 		this .globalLights             = [ ];
 		this .lights                   = [ ];
 		this .localFogs                = [ ];
@@ -73711,10 +73728,6 @@ function ($,
 		{
 			return true;
 		},
-		getBlend: function ()
-		{
-			return this .blend;
-		},
 		getCameraSpaceMatrix: function ()
 		{
 			return this .cameraSpaceMatrix;
@@ -73742,10 +73755,6 @@ function ($,
 		getShaderObjects: function ()
 		{
 			return this .shaderObjects;
-		},
-		getLocalObjects: function ()
-		{
-			return this .localObjects;
 		},
 		getGlobalLights: function ()
 		{
@@ -74022,7 +74031,7 @@ function ($,
 
 			if (viewVolume .intersectsSphere (radius, bboxCenter))
 			{
-				if (this .blend .length ? this .blend [this .blend .length - 1] : shapeNode .isTransparent ())
+				if (shapeNode .isTransparent ())
 				{
 					var num = this .numTransparentShapes;
 
@@ -74051,13 +74060,6 @@ function ($,
 				context .distance  = bboxCenter .z - radius;
 				context .fogNode   = this .localFog;
 
-				// Local objects
-
-				var localObjects = context .localObjects;
-
-				localObjects .length = 0;
-				localObjects .push .apply (localObjects, this .localObjects);
-
 				// Clip planes and local lights
 
 				var shaderObjects = context .shaderObjects;
@@ -74079,7 +74081,6 @@ function ($,
 				colorMaterial: false,
 				modelViewMatrix: new Float32Array (16),
 				scissor: new Vector4 (0, 0, 0, 0),
-				localObjects: [ ],
 				shaderObjects: [ ],
 				linePropertiesNode: null,
 				materialNode: null,
@@ -74394,22 +74395,15 @@ function ($,
 			for (var i = 0; i < this .numOpaqueShapes; ++ i)
 			{
 				var
-					context      = this .opaqueShapes [i],
-					scissor      = context .scissor,
-					localObjects = context .localObjects;
+					context = this .opaqueShapes [i],
+					scissor = context .scissor;
 
 				gl .scissor (scissor .x,
 				             scissor .y,
 				             scissor .z,
 				             scissor .w);
 
-				for (var l = 0, length = localObjects .length; l < length; ++ l)
-					localObjects [l] .enable (gl);
-
 				context .shapeNode .display (context);
-
-				for (var l = localObjects .length - 1; l >= 0; -- l)
-					localObjects [l] .disable (gl);
 			}
 
 			// Render transparent objects
@@ -74422,22 +74416,15 @@ function ($,
 			for (var i = 0; i < this .numTransparentShapes; ++ i)
 			{
 				var
-					context      = this .transparentShapes [i],
-					scissor      = context .scissor,
-					localObjects = context .localObjects;
+					context = this .transparentShapes [i],
+					scissor = context .scissor;
 
 				gl .scissor (scissor .x,
 				             scissor .y,
 				             scissor .z,
 				             scissor .w);
 
-				for (var l = 0, length = localObjects .length; l < length; ++ l)
-					localObjects [l] .enable (gl);
-
 				context .shapeNode .display (context);
-
-				for (var l = localObjects .length - 1; l >= 0; -- l)
-					localObjects [l] .disable (gl);
 			}
 
 			gl .depthMask (true);
@@ -99361,7 +99348,7 @@ function ($,
 
 				// Traverse appearance before everything.
 
-				this .getAppearance () .display (context);
+				this .getAppearance () .enable (context);
 
 				// Update geometry if SPRITE.
 
@@ -99453,6 +99440,8 @@ function ($,
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
 				}
+
+				this .getAppearance () .disable (context);
 			}
 			catch (error)
 			{
@@ -103938,8 +103927,9 @@ function ($,
 		},
 		display: function (context)
 		{
-			this .getAppearance () .display (context);
+			this .getAppearance () .enable  (context);
 			this .getGeometry ()   .display (context);
+			this .getAppearance () .disable (context);
 		},
 	});
 
@@ -110432,7 +110422,7 @@ define ('x_ite/Components/X_ITE/BlendMode',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DGroupingNode",
+	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 ],
@@ -110440,7 +110430,7 @@ function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode,
+          X3DAppearanceChildNode,
           TraverseType,
           X3DConstants)
 {
@@ -110448,7 +110438,7 @@ function ($,
 
 	function BlendMode (executionContext)
 	{
-		X3DGroupingNode .call (this, executionContext);
+		X3DAppearanceChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .BlendMode);
 
@@ -110456,24 +110446,18 @@ function ($,
 		this .blendModes = { };
 	}
 
-	BlendMode .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	BlendMode .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: BlendMode,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "blendColor",       new Fields .SFColorRGBA ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "sourceColor",      new Fields .SFString ("SRC_ALPHA")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "sourceAlpha",      new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "destinationColor", new Fields .SFString ("ONE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "destinationAlpha", new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "modeColor",        new Fields .SFString ("FUNC_ADD")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "modeAlpha",        new Fields .SFString ("FUNC_ADD")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "color",             new Fields .SFColorRGBA ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "sourceColorFactor", new Fields .SFString ("SRC_ALPHA")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "sourceAlphaFactor", new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "destinationColor",  new Fields .SFString ("ONE")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "destinationAlpha",  new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "colorEquation",     new Fields .SFString ("FUNC_ADD")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "alphaEquation",     new Fields .SFString ("FUNC_ADD")),
 		]),
 		getTypeName: function ()
 		{
@@ -110485,11 +110469,11 @@ function ($,
 		},
 		getContainerField: function ()
 		{
-			return "children";
+			return "blendMode";
 		},
 		initialize: function ()
 		{
-			X3DGroupingNode .prototype .initialize .call (this);
+			X3DAppearanceChildNode .prototype .initialize .call (this);
 	
 			var gl = this .getBrowser () .getContext ();
 
@@ -110516,33 +110500,33 @@ function ($,
 			this .blendModes ["FUNC_SUBTRACT"]         = gl .FUNC_SUBTRACT;
 			this .blendModes ["FUNC_REVERSE_SUBTRACT"] = gl .FUNC_REVERSE_SUBTRACT;
 
-			this .sourceColor_      .addInterest ("set_sourceColor__",      this);
-			this .sourceAlpha_      .addInterest ("set_sourceAlpha__",      this);
-			this .destinationColor_ .addInterest ("set_destinationColor__", this);
-			this .destinationAlpha_ .addInterest ("set_destinationAlpha__", this);
-			this .modeColor_        .addInterest ("set_modeColor__",        this);
-			this .modeAlpha_        .addInterest ("set_modeAlpha__",        this);
+			this .sourceColorFactor_ .addInterest ("set_sourceColorFactor__", this);
+			this .sourceAlphaFactor_ .addInterest ("set_sourceAlphaFactor__", this);
+			this .destinationColor_  .addInterest ("set_destinationColor__",  this);
+			this .destinationAlpha_  .addInterest ("set_destinationAlpha__",  this);
+			this .colorEquation_     .addInterest ("set_colorEquation__",     this);
+			this .alphaEquation_     .addInterest ("set_alphaEquation__",     this);
 
-			this .set_sourceColor__ ();
-			this .set_sourceAlpha__ ();
+			this .set_sourceColorFactor__ ();
+			this .set_sourceAlphaFactor__ ();
 			this .set_destinationColor__ ();
 			this .set_destinationAlpha__ ();
-			this .set_modeColor__ ();
-			this .set_modeAlpha__ ();
+			this .set_colorEquation__ ();
+			this .set_alphaEquation__ ();
 		},
-		set_sourceColor__: function ()
+		set_sourceColorFactor__: function ()
 		{
-			this .sourceColorType = this .blendTypes [this .sourceColor_ .getValue ()];
+			this .sourceColorFactorType = this .blendTypes [this .sourceColorFactor_ .getValue ()];
 
-			if (! this .sourceColorType)
-				this .sourceColorType = this .blendTypes ["SRC_ALPHA"];
+			if (! this .sourceColorFactorType)
+				this .sourceColorFactorType = this .blendTypes ["SRC_ALPHA"];
 		},
-		set_sourceAlpha__: function ()
+		set_sourceAlphaFactor__: function ()
 		{
-			this .sourceAlphaType = this .blendTypes [this .sourceAlpha_ .getValue ()];
+			this .sourceAlphaFactorType = this .blendTypes [this .sourceAlphaFactor_ .getValue ()];
 
-			if (! this .sourceAlphaType)
-				this .sourceAlphaType = this .blendTypes ["ONE_MINUS_SRC_ALPHA"];
+			if (! this .sourceAlphaFactorType)
+				this .sourceAlphaFactorType = this .blendTypes ["ONE_MINUS_SRC_ALPHA"];
 		},
 		set_destinationColor__: function ()
 		{
@@ -110558,60 +110542,27 @@ function ($,
 			if (! this .destinationAlphaType)
 				this .destinationAlphaType = this .blendTypes ["ONE_MINUS_SRC_ALPHA"];
 		},
-		set_modeColor__: function ()
+		set_colorEquation__: function ()
 		{
-			this .modeColorType = this .blendModes [this .modeColor_ .getValue ()];
+			this .colorEquationType = this .blendModes [this .colorEquation_ .getValue ()];
 
-			if (! this .modeColorType)
-				this .modeColorType = this .blendModes ["FUNC_ADD"];
+			if (! this .colorEquationType)
+				this .colorEquationType = this .blendModes ["FUNC_ADD"];
 		},
-		set_modeAlpha__: function ()
+		set_alphaEquation__: function ()
 		{
-			this .modeAlphaType = this .blendModes [this .modeAlpha_ .getValue ()];
+			this .alphaEquationType = this .blendModes [this .alphaEquation_ .getValue ()];
 
-			if (! this .modeAlphaType)
-				this .modeAlphaType = this .blendModes ["FUNC_ADD"];
-		},
-		traverse: function (type, renderObject)
-		{
-			switch (type)
-			{
-				case TraverseType .DISPLAY:
-				{
-					if (this .enabled_ .getValue ())
-					{
-						renderObject .getBlend () .push (true);
-						renderObject .getLocalObjects () .push (this);
-	
-						X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-	
-						renderObject .getLocalObjects () .pop ();
-						renderObject .getBlend () .pop ();
-					}
-					else
-					{
-						renderObject .getBlend () .push (false);
-	
-						X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-	
-						renderObject .getBlend () .pop ();
-					}
-					break;
-				}
-				default:
-				{
-					X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-					break;
-				}
-			}
+			if (! this .alphaEquationType)
+				this .alphaEquationType = this .blendModes ["FUNC_ADD"];
 		},
 		enable: function (gl)
 		{
-			var color = this .blendColor_ .getValue ();
+			var color = this .color_ .getValue ();
 
 			gl .blendColor (color .r, color .g, color .b, color .a);
-			gl .blendFuncSeparate (this .sourceColorType, this .sourceAlphaType, this .destinationColorType, this .destinationAlphaType);
-			gl .blendEquationSeparate (this .modeColorType, this .modeAlphaType);
+			gl .blendFuncSeparate (this .sourceColorFactorType, this .sourceAlphaFactorType, this .destinationColorType, this .destinationAlphaType);
+			gl .blendEquationSeparate (this .colorEquationType, this .alphaEquationType);
 		},
 		disable: function (gl)
 		{
