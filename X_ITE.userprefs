@@ -3,34 +3,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/X_ITE/BlendMode.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/X_ITE/BlendMode.js" Line="184" Column="82" />
-      <File FileName="src/x_ite/Components/Shape/X3DShapeNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shape/Shape.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shape/Appearance.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/X_ITE/BlendMode.js" Line="192" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="X_ITE" expanded="True">
-            <Node name="src" expanded="True">
-              <Node name="x_ite" expanded="True">
-                <Node name="Components" expanded="True">
-                  <Node name="ParticleSystems" expanded="True" />
-                  <Node name="Rendering" expanded="True" />
-                  <Node name="Shape" expanded="True" />
-                  <Node name="X_ITE" expanded="True">
-                    <Node name="BlendMode.js" selected="True" />
-                  </Node>
-                </Node>
-                <Node name="Rendering" expanded="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
