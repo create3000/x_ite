@@ -1,4 +1,4 @@
-/* X_ITE v4.1.3a-188 */
+/* X_ITE v4.1.3a-189 */
 
 (function () {
 
@@ -110475,7 +110475,9 @@ function ($,
 		{
 			X3DAppearanceChildNode .prototype .initialize .call (this);
 	
-			var gl = this .getBrowser () .getContext ();
+			var
+				gl  = this .getBrowser () .getContext (),
+				ext = gl .getExtension ('EXT_blend_minmax');
 
 			this .blendTypes ["ZERO"]                     = gl .ZERO;
 			this .blendTypes ["ONE"]                      = gl .ONE;
@@ -110487,18 +110489,17 @@ function ($,
 			this .blendTypes ["ONE_MINUS_SRC_ALPHA"]      = gl .ONE_MINUS_SRC_ALPHA;
 			this .blendTypes ["DST_ALPHA"]                = gl .DST_ALPHA;
 			this .blendTypes ["ONE_MINUS_DST_ALPHA"]      = gl .ONE_MINUS_DST_ALPHA;
+			this .blendTypes ["SRC_ALPHA_SATURATE"]       = gl .SRC_ALPHA_SATURATE;
 			this .blendTypes ["CONSTANT_COLOR"]           = gl .CONSTANT_COLOR;
 			this .blendTypes ["ONE_MINUS_CONSTANT_COLOR"] = gl .ONE_MINUS_CONSTANT_COLOR;
 			this .blendTypes ["CONSTANT_ALPHA"]           = gl .CONSTANT_ALPHA;
 			this .blendTypes ["ONE_MINUS_CONSTANT_ALPHA"] = gl .ONE_MINUS_CONSTANT_ALPHA;
 
-			this .blendTypes ["SRC_ALPHA_SATURATE"]       = gl .SRC_ALPHA_SATURATE;
-			this .blendTypes ["SRC1_COLOR"]               = gl .SRC1_COLOR;
-			this .blendTypes ["SRC1_ALPHA"]               = gl .SRC1_ALPHA;
-
 			this .blendModes ["FUNC_ADD"]              = gl .FUNC_ADD;
 			this .blendModes ["FUNC_SUBTRACT"]         = gl .FUNC_SUBTRACT;
 			this .blendModes ["FUNC_REVERSE_SUBTRACT"] = gl .FUNC_REVERSE_SUBTRACT;
+			this .blendModes ["MIN"]                   = gl .MIN || ext .MIN_EXT;
+			this .blendModes ["MAX"]                   = gl .MAX || ext .MAX_EXT;
 
 			this .sourceColorFactor_      .addInterest ("set_sourceColorFactor__", this);
 			this .sourceAlphaFactor_      .addInterest ("set_sourceAlphaFactor__", this);
