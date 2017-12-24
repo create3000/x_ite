@@ -14,13 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		require.build.js = require.build.js
 		package.json = package.json
 		require.build.min.js = require.build.min.js
-		Makefile = Makefile
 		x_ite.min.html = x_ite.min.html
 		X_ITE.sln = X_ITE.sln
 		X_ITE.userprefs = X_ITE.userprefs
 		.bzrignore = .bzrignore
 		.gitignore = .gitignore
-		tests.js = tests.js
+		components.js = components.js
+		Makefile = Makefile
 	EndProjectSection
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "src", "src\src.mdproj", "{45DFA11C-B569-4954-B1E1-DA0CF12C452A}"
