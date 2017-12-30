@@ -48,6 +48,7 @@
 
 
 define ([
+	"text!x_ite/Browser/Shaders/Bits/Pack.h",
 	"text!x_ite/Browser/Shaders/Bits/Line3.h",
 	"text!x_ite/Browser/Shaders/Bits/Plane3.h",
 	"text!x_ite/Browser/Shaders/Bits/Random.h",
@@ -55,7 +56,8 @@ define ([
 	"text!x_ite/Browser/Shaders/Types.h",
 	"x_ite/DEBUG",
 ],
-function (Line3,
+function (Pack,
+          Line3,
           Plane3,
           Random,
           Shadow,
@@ -65,6 +67,7 @@ function (Line3,
 "use strict";
 
 	var includes = {
+		Pack: Pack,
 		Line3: Line3,
 		Plane3: Plane3,
 		Random: Random,

@@ -724,6 +724,7 @@
     <None Include="x_ite\Browser\Shaders\Bits\Shadow.h" />
     <None Include="x_ite\Browser\Shaders\Types.h" />
     <None Include="test.x3d" />
+    <None Include="x_ite\Browser\Shaders\Bits\Pack.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

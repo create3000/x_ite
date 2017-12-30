@@ -6,33 +6,13 @@ uniform float     x3d_ShadowDiffusion [x3d_MaxLights];
 uniform mat4      x3d_ShadowMatrix [x3d_MaxLights];
 uniform sampler2D x3d_ShadowMap [x3d_MaxLights];
 
+#pragma X3D include "Pack.h"
 #pragma X3D include "Plane3.h"
 #pragma X3D include "Random.h"
 
 #ifdef X3D_SHADOWS
 
 Plane3 shadowPlane;
-
-#ifdef TITANIA
-float
-unpack (in vec4 color)
-{
-	return color .z;
-}
-#endif
-
-#ifdef X_ITE
-float
-unpack (vec4 color)
-{
-	const vec4 bitShifts = vec4 (1.0 / (256.0 * 256.0 * 256.0),
-	                             1.0 / (256.0 * 256.0),
-	                             1.0 / 256.0,
-	                             1.0);
-
-	return dot (color, bitShifts);
-}
-#endif
 
 float
 getShadowDepth (in int index, in vec2 shadowCoord)
