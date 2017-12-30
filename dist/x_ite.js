@@ -1,4 +1,4 @@
-/* X_ITE v4.1.4a-193 */
+/* X_ITE v4.1.4a-194 */
 
 (function () {
 
@@ -39913,14 +39913,13 @@ define('text!x_ite/Browser/Shaders/Types.h',[],function () { return '// -*- Mode
  ******************************************************************************/
 
 
-define ('x_ite/DEBUG',[
-	"x_ite/Browser/VERSION",
-],
-function (VERSION)
+define ('x_ite/DEBUG',[],function ()
 {
 "use strict";
 
-	return VERSION .match (/^\d+\.\d+\.\d+a$/);
+	// Modified during dist build.
+
+	return false;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-

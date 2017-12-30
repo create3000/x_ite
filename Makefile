@@ -7,6 +7,8 @@ all:
 	echo
 
 dist: all
+	perl -pi -e 's/return (?:true|false);/return false;/sg' src/x_ite/DEBUG.js
+
 	npm run build
 
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
@@ -30,6 +32,7 @@ dist: all
 	ls -la dist/x_ite.min.js
 	echo
 
+	perl -pi -e 's/return (?:true|false);/return true;/sg' src/x_ite/DEBUG.js
 
 version: dist
 	perl build/version.pl

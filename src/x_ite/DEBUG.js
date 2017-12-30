@@ -47,12 +47,11 @@
  ******************************************************************************/
 
 
-define ([
-	"x_ite/Browser/VERSION",
-],
-function (VERSION)
+define (function ()
 {
 "use strict";
 
-	return VERSION .match (/^\d+\.\d+\.\d+a$/);
+	// Modified during dist build.
+
+	return true;
 });
