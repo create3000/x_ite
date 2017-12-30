@@ -1,6 +1,6 @@
 {
 	"name": "x_ite",
-	"version": "4.1.3",
+	"version": "4.1.4a",
 	"revision": "190",
 	"description": "X_ITE X3D Browser",
 	"main": "src/x_ite.js",
@@ -35,6 +35,7 @@
 		"requirejs": "latest",
 		"jquery": "latest",
 		"jquery-mousewheel": "latest",
+		"jquery.fullscreen": "latest",
 		"pako": "latest",
 		"poly2tri": "latest",
 		"earcut": "latest",

@@ -204,19 +204,17 @@ function ($,
 					else
 						valid = false;
 
-					// Debug
+					// Debug, print complete shader info and statistics.
 					// this .printProgramInfo ();
 				}
 				else
 					console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
 
-				if (valid != this .isValid_ .getValue ())
-					this .isValid_ = valid;
+				this .isValid_ = valid;
 			}
 			else
 			{
-				if (this .isValid_ .getValue ())
-					this .isValid_ = false;
+				this .isValid_ = false;
 			}
 		},
 		setGlobalUniforms: function (renderObject, gl,cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)

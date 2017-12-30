@@ -63,6 +63,9 @@
 		{ name: 'Layer Set', url: [ "http://media.create3000.de/components/Layering/LayerSet/LayerSet.x3d" ], archive: "http://media.create3000.de/components/Layering/LayerSet/LayerSet.zip" },
 		{ name: 'Viewport', url: [ "http://media.create3000.de/components/Layering/Viewport/Viewport.x3d" ], archive: "http://media.create3000.de/components/Layering/Viewport/Viewport.zip" },
 
+		{ name: 'Lighting' },
+		{ name: 'Directional Light', url: [ "http://media.create3000.de/components/Lighting/DirectionalLight/DirectionalLight.x3d" ], archive: "http://media.create3000.de/components/Lighting/DirectionalLight/DirectionalLight.zip" },
+
 		{ name: 'Navigation' },
 		{ name: 'Billboard', url: [ "http://media.create3000.de/components/Navigation/Billboard/Billboard.x3d" ], archive: "http://media.create3000.de/components/Navigation/Billboard/Billboard.zip" },
 		{ name: 'Collision', url: [ "http://media.create3000.de/components/Navigation/Collision/Collision.x3d" ], archive: "http://media.create3000.de/components/Navigation/Collision/Collision.zip" },

@@ -12,6 +12,6 @@
     <OutputPath>.</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="SEE.txt" />
+    <None Include="README.md" />
   </ItemGroup>
 </Project>

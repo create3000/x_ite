@@ -433,7 +433,7 @@ function ($,
 			function (fragment)
 			{
 				this .currentScene .changeViewpoint (fragment);
-				this .removeLoadCount (id);
+				this .removeLoadCount (this);
 				this .setBrowserLoading (false);
 			}
 			.bind (this),
@@ -444,7 +444,7 @@ function ($,
 				else
 					location = url;
 
-				this .removeLoadCount (id);
+				this .removeLoadCount (this);
 				this .setBrowserLoading (false);
 			}
 			.bind (this));

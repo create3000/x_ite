@@ -156,7 +156,7 @@ function (ViewVolume,
 				{
 					for (var wx = 0; wx < width; ++ wx, i += 4)
 					{
-						var wz = array [i] / 255 + array [i + 1] / 65025 + array [i + 2] / 16581375 + array [i + 3] / 4228250625;
+						var wz = array [i] / (256 * 256 * 256) + array [i + 1] / (256 * 256) + array [i + 2] / 256 + array [i + 3];
 
 						if (wz < winz)
 						{

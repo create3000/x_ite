@@ -268,7 +268,8 @@ function ($,
 
 			if (width !== canvas .width || height !== canvas .height)
 			{
-				this .viewport_ .setValue ([0, 0, width, height]);
+				this .viewport_ [2] = width;
+				this .viewport_ [3] = height;
 				this .context .viewport (0, 0, width, height);
 				this .context .scissor  (0, 0, width, height);
 

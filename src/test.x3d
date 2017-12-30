@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile='Full' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
+  <head>
+    <meta name='comment' content='World of Titania'/>
+    <meta name='created' content='Fri, 29 Dec 2017 10:23:47 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Titania V4.0.4, http://titania.create3000.de'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/X_ITE/src/test.x3d'/>
+    <meta name='modified' content='Fri, 29 Dec 2017 10:31:23 GMT'/>
+    <meta name='titania-add-metadata' content='true'/>
+  </head>
+  <Scene>
+    <WorldInfo>
+      <MetadataSet DEF='Titania'
+          name='Titania'
+          reference='http://titania.create3000.de'>
+        <MetadataSet DEF='AngleGrid' containerField='value'
+            name='AngleGrid'
+            reference='http://titania.create3000.de'>
+          <MetadataBoolean DEF='enabled' containerField='value'
+              name='enabled'
+              reference='http://titania.create3000.de'
+              value='false'/>
+        </MetadataSet>
+        <MetadataSet DEF='Grid' containerField='value'
+            name='Grid'
+            reference='http://titania.create3000.de'>
+          <MetadataBoolean DEF='enabled_1' containerField='value'
+              name='enabled'
+              reference='http://titania.create3000.de'
+              value='true'/>
+        </MetadataSet>
+        <MetadataSet DEF='Selection' containerField='value'
+            name='Selection'
+            reference='http://titania.create3000.de'>
+          <MetadataBoolean DEF='selectGeometry' containerField='value'
+              name='selectGeometry'
+              reference='http://titania.create3000.de'
+              value='false'/>
+          <MetadataSet DEF='nodes' containerField='value'
+              name='nodes'
+              reference='http://titania.create3000.de'>
+            <Script DEF='PhongShadingScript' containerField='value'>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+	// Phong shading can be enabled if »Cobweb Compatibility« mode is enabled.
+
+	Browser .setBrowserOption ("Shading", "PHONG");
+}
+]]>
+            </Script>
+          </MetadataSet>
+        </MetadataSet>
+        <MetadataSet DEF='BrowserPanel' containerField='value'
+            name='BrowserPanel'
+            reference='http://titania.create3000.de'>
+          <MetadataInteger DEF='layerNumber' containerField='value'
+              name='layerNumber'
+              reference='http://titania.create3000.de'
+              value='-1, 0, 0, 0, 0, -1, -1, -1'/>
+          <MetadataString DEF='type_2' containerField='value'
+              name='type'
+              reference='http://titania.create3000.de'
+              value='"TOP_VIEW", "MAIN_VIEW", "PERSPECTIVE_VIEW", "FRONT_VIEW"'/>
+          <MetadataSet DEF='viewpoints' containerField='value'
+              name='viewpoints'
+              reference='http://titania.create3000.de'>
+            <MetadataSet DEF='PerspectiveViewpoint' containerField='value'
+                name='PerspectiveViewpoint'
+                reference='http://titania.create3000.de'>
+              <MetadataDouble DEF='position_3' containerField='value'
+                  name='position'
+                  reference='http://titania.create3000.de'
+                  value='5.87788534164429, 6.46984958648682, 13.8524446487427'/>
+              <MetadataDouble DEF='orientation_4' containerField='value'
+                  name='orientation'
+                  reference='http://titania.create3000.de'
+                  value='-0.704047462871212, 0.695566762376517, 0.143192350010952, 0.568941727555854'/>
+              <MetadataDouble DEF='centerOfRotation_5' containerField='value'
+                  name='centerOfRotation'
+                  reference='http://titania.create3000.de'
+                  value='0, 0, 0'/>
+              <MetadataDouble DEF='fieldOfViewScale' containerField='value'
+                  name='fieldOfViewScale'
+                  reference='http://titania.create3000.de'
+                  value='1'/>
+            </MetadataSet>
+            <MetadataSet DEF='TopViewpoint' containerField='value'
+                name='TopViewpoint'
+                reference='http://titania.create3000.de'>
+              <MetadataDouble DEF='position_6' containerField='value'
+                  name='position'
+                  reference='http://titania.create3000.de'
+                  value='-0.0320612526145463, 10.8662109375, 0.0937320149966475'/>
+              <MetadataDouble DEF='orientation_7' containerField='value'
+                  name='orientation'
+                  reference='http://titania.create3000.de'
+                  value='1, 0, 0, 4.71238898038469'/>
+              <MetadataDouble DEF='centerOfRotation_8' containerField='value'
+                  name='centerOfRotation'
+                  reference='http://titania.create3000.de'
+                  value='-0.0320612526145463, 0, 0.0937320149966475'/>
+              <MetadataDouble DEF='fieldOfViewScale_9' containerField='value'
+                  name='fieldOfViewScale'
+                  reference='http://titania.create3000.de'
+                  value='1.21023944190259'/>
+            </MetadataSet>
+            <MetadataSet DEF='FrontViewpoint' containerField='value'
+                name='FrontViewpoint'
+                reference='http://titania.create3000.de'>
+              <MetadataDouble DEF='position_10' containerField='value'
+                  name='position'
+                  reference='http://titania.create3000.de'
+                  value='-0.00884759203065143, 0.0177734813359099, 10000'/>
+              <MetadataDouble DEF='orientation_11' containerField='value'
+                  name='orientation'
+                  reference='http://titania.create3000.de'
+                  value='0, 0, 1, 0'/>
+              <MetadataDouble DEF='centerOfRotation_12' containerField='value'
+                  name='centerOfRotation'
+                  reference='http://titania.create3000.de'
+                  value='-0.00884759203065143, 0.0177734813359099, 0'/>
+              <MetadataDouble DEF='fieldOfViewScale_13' containerField='value'
+                  name='fieldOfViewScale'
+                  reference='http://titania.create3000.de'
+                  value='1.212467484375'/>
+            </MetadataSet>
+          </MetadataSet>
+        </MetadataSet>
+        <MetadataSet DEF='Page' containerField='value'
+            name='Page'
+            reference='http://titania.create3000.de'>
+          <MetadataInteger DEF='activeView' containerField='value'
+              name='activeView'
+              reference='http://titania.create3000.de'
+              value='1'/>
+          <MetadataInteger DEF='multiView' containerField='value'
+              name='multiView'
+              reference='http://titania.create3000.de'
+              value='1'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <OrthoViewpoint DEF='_14'/>
+    <Shape>
+      <Appearance>
+        <Material
+            ambientIntensity='0'
+            diffuseColor='1 0 0'
+            specularColor='1 0 0'
+            emissiveColor='1 0 0'
+            shininess='0'/>
+      </Appearance>
+      <IndexedFaceSet
+          coordIndex='0, 1, 2, 3, -1'>
+        <Coordinate
+            point='-2 -2 0, 2 -2 0, 2 2 0, -2 2 0'/>
+      </IndexedFaceSet>
+    </Shape>
+    <NavigationInfo
+        headlight='false'/>
+    <Script USE='PhongShadingScript'/>
+  </Scene>
+</X3D>

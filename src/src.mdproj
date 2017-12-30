@@ -721,6 +721,9 @@
     <None Include="standard\Math\Algorithms\PartialSort.js" />
     <None Include="x_ite\Components\X_ITE\BlendMode.js" />
     <None Include="components.js" />
+    <None Include="x_ite\Browser\Shaders\Bits\Shadow.h" />
+    <None Include="x_ite\Browser\Shaders\Types.h" />
+    <None Include="test.x3d" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

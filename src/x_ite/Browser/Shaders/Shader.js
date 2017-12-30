@@ -51,10 +51,16 @@ define ([
 	"text!x_ite/Browser/Shaders/Bits/Line3.h",
 	"text!x_ite/Browser/Shaders/Bits/Plane3.h",
 	"text!x_ite/Browser/Shaders/Bits/Random.h",
+	"text!x_ite/Browser/Shaders/Bits/Shadow.h",
+	"text!x_ite/Browser/Shaders/Types.h",
+	"x_ite/DEBUG",
 ],
 function (Line3,
           Plane3,
-          Random)
+          Random,
+          Shadow,
+          Types,
+          DEBUG)
 {
 "use strict";
 
@@ -62,24 +68,47 @@ function (Line3,
 		Line3: Line3,
 		Plane3: Plane3,
 		Random: Random,
+		Shadow: Shadow,
 	};
 
 	var
-		include  = /#pragma\s+X3D\s+include\s+".*?([^\/]+).h"/,
+		include  = /^#pragma\s+X3D\s+include\s+".*?([^\/]+).h"\s*$/,
 		newLines = /\n/g;
 
 	var Shader =
 	{
-		getShaderSource: function (browser, source)
+		getIncludes: function (source)
 		{
-			var includeMatch = null;
+			var
+				lines = source .split ("\n"),
+				match = null;
 
-			while (includeMatch = source .match (include))
+			source = "#line 1\n";
+
+			for (var i = 0, length = lines .length; i < length; ++ i)
 			{
-				source = source .replace (includeMatch [0], includes [includeMatch [1]]);
+				var line = lines [i];
+
+				if (match = line .match (include))
+				{
+					source += this .getIncludes (includes [match [1]]);
+					source += "\n";
+					source += "#line " + (i + 1) + "\n";
+				}
+				else
+				{
+					source += line;
+					source += "\n";
+				}
 			}
 
+			return source;
+		},
+		getShaderSource: function (browser, source)
+		{
 			var constants = "";
+
+			constants += "#define X_ITE\n";
 
 			constants += "#define x3d_GeometryPoints  0\n";
 			constants += "#define x3d_GeometryLines   1\n";
@@ -106,13 +135,13 @@ function (Line3,
 			constants += "#define x3d_TextureType3D              3\n";
 			constants += "#define x3d_TextureTypeCubeMapTexture  4\n";
 
-			constants += "#define X3D_SHADOWS\n";
+			if (DEBUG)
+				constants += "#define X3D_SHADOWS\n";
+
 			constants += "#define x3d_MaxShadows     4\n";
 			constants += "#define x3d_ShadowSamples  8\n"; // Range (0, 255)
 
-			constants += "#line 1\n";
-
-			return constants + source;
+			return constants + Types + this .getIncludes (source);
 		},
 	};
 

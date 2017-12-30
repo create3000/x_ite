@@ -143,16 +143,16 @@ function ($,
 
 			for (var i = 0; i < this .x3d_MaxLights; ++ i)
 			{
-				this .x3d_LightType [i]             = gl .getUniformLocation (program, "x3d_LightType[" + i + "]");
-				this .x3d_LightColor [i]            = gl .getUniformLocation (program, "x3d_LightColor[" + i + "]");
-				this .x3d_LightAmbientIntensity [i] = gl .getUniformLocation (program, "x3d_LightAmbientIntensity[" + i + "]");
-				this .x3d_LightIntensity [i]        = gl .getUniformLocation (program, "x3d_LightIntensity[" + i + "]");
-				this .x3d_LightAttenuation [i]      = gl .getUniformLocation (program, "x3d_LightAttenuation[" + i + "]");
-				this .x3d_LightLocation [i]         = gl .getUniformLocation (program, "x3d_LightLocation[" + i + "]");
-				this .x3d_LightDirection [i]        = gl .getUniformLocation (program, "x3d_LightDirection[" + i + "]");
-				this .x3d_LightBeamWidth [i]        = gl .getUniformLocation (program, "x3d_LightBeamWidth[" + i + "]");
-				this .x3d_LightCutOffAngle [i]      = gl .getUniformLocation (program, "x3d_LightCutOffAngle[" + i + "]");
-				this .x3d_LightRadius [i]           = gl .getUniformLocation (program, "x3d_LightRadius[" + i + "]");
+				this .x3d_LightType [i]             = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].type",             "x3d_LightType[" + i + "]");
+				this .x3d_LightColor [i]            = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].color",            "x3d_LightColor[" + i + "]");
+				this .x3d_LightAmbientIntensity [i] = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].ambientIntensity", "x3d_LightAmbientIntensity[" + i + "]");
+				this .x3d_LightIntensity [i]        = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].intensity",        "x3d_LightIntensity[" + i + "]");
+				this .x3d_LightAttenuation [i]      = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].attenuation",      "x3d_LightAttenuation[" + i + "]");
+				this .x3d_LightLocation [i]         = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].location",         "x3d_LightLocation[" + i + "]");
+				this .x3d_LightDirection [i]        = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].direction",        "x3d_LightDirection[" + i + "]");
+				this .x3d_LightBeamWidth [i]        = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].beamWidth",        "x3d_LightBeamWidth[" + i + "]");
+				this .x3d_LightCutOffAngle [i]      = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].cutOffAngle",      "x3d_LightCutOffAngle[" + i + "]");
+				this .x3d_LightRadius [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].radius",           "x3d_LightRadius[" + i + "]");
 
 				this .x3d_ShadowIntensity [i] = gl .getUniformLocation (program, "x3d_ShadowIntensity[" + i + "]");
 				this .x3d_ShadowDiffusion [i] = gl .getUniformLocation (program, "x3d_ShadowDiffusion[" + i + "]");
@@ -178,10 +178,8 @@ function ($,
 			this .x3d_BackTransparency     = gl .getUniformLocation (program, "x3d_BackTransparency");
 
 			this .x3d_TextureType    = gl .getUniformLocation (program, "x3d_TextureType");
-			this .x3d_Texture2D      = gl .getUniformLocation (program, "x3d_Texture2D");
+			this .x3d_Texture2D      = this .getUniformLocation (gl, program, "x3d_Texture2D", "x3d_Texture");
 			this .x3d_CubeMapTexture = gl .getUniformLocation (program, "x3d_CubeMapTexture");
-
-			this .x3d_Texture = gl .getUniformLocation (program, "x3d_Texture"); // depreciated
 
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
 			this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
@@ -195,11 +193,13 @@ function ($,
 			this .x3d_Normal   = gl .getAttribLocation (program, "x3d_Normal");
 			this .x3d_Vertex   = gl .getAttribLocation (program, "x3d_Vertex");	
 
+			// Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
+
 			gl .uniform1f  (this .x3d_LinewidthScaleFactor, 1);
 			gl .uniform1iv (this .x3d_TextureType,          new Int32Array ([0]));
-			gl .uniform1iv (this .x3d_Texture,              new Int32Array ([2])); // depreciated
 			gl .uniform1iv (this .x3d_Texture2D,            new Int32Array ([2])); // Set texture to active texture unit 2.
 			gl .uniform1iv (this .x3d_CubeMapTexture,       new Int32Array ([4])); // Set cube map texture to active texture unit 3.
+			gl .uniform1iv (gl .getUniformLocation (program, "x3d_ShadowMap"), new Int32Array (this .x3d_MaxLights) .fill (5)); // Set cube map texture to active texture unit 5, the whole uniform must be set at once.
 
 			// Return true if valid, otherwise false.
 
@@ -237,9 +237,30 @@ function ($,
 			}
 
 			if (this .x3d_Vertex < 0)
+			{
+				console .warning ("Missing »attribute vec4 x3d_Vertex;«.");
 				return false;
+			}
 
 			return true;
+		},
+		getUniformLocation: function (gl, program, name, depreciated)
+		{
+			// Legacy function to get uniform location.
+
+			var location = gl .getUniformLocation (program, name);
+
+			if (location)
+				return location;
+
+			// Look for depreciated location.
+
+			location = gl .getUniformLocation (program, depreciated);
+
+			if (location)
+				console .error ("Using uniform location name »" + depreciated + "« is depreciated. See http://create3000.de/x_ite/custom-shaders/.");
+
+			return location;
 		},
 		addShaderFields: function ()
 		{
@@ -430,7 +451,7 @@ function ($,
 					case X3DConstants .SFDouble:
 					case X3DConstants .SFFloat:
 					case X3DConstants .SFTime:
-					{
+					{this
 						gl .uniform1f (location, field .getValue ());
 						return;
 					}
@@ -1130,6 +1151,8 @@ function ($,
 		},
 		getProgramInfo: function ()
 		{
+			function cmp (lhs, rhs) { return lhs < rhs ? -1 : lhs > rhs ? 1 : 0; }
+
 			var
 				gl      = this .getBrowser () .getContext (),
 				program = this .getProgram ();
@@ -1189,8 +1212,8 @@ function ($,
 				result .attributeCount += attribute .size;
 			}
 
-			result .uniforms   .sort (function (a, b) { return a .name < b .name ? -1 : a .name > b .name ? 1 : 0 });
-			result .attributes .sort (function (a, b) { return a .name < b .name ? -1 : a .name > b .name ? 1 : 0 });
+			result .uniforms   .sort (function (a, b) { return cmp (a .name, b .name); });
+			result .attributes .sort (function (a, b) { return cmp (a .name, b .name); });
 
 			return result;
 		},

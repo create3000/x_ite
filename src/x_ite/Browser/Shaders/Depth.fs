@@ -20,26 +20,23 @@ clip ()
 }
 
 vec4
-pack (in float f)
+pack (in float value)
 {
-	vec4 color;
+	const vec4 bitSh = vec4 (256.0 * 256.0 * 256.0,
+	                         256.0 * 256.0,
+	                         256.0,
+	                         1.0);
 
-	f *= 255.0;
-	color .r = floor (f);
+	const vec4 bitMsk = vec4 (0.0,
+	                          1.0 / 256.0,
+	                          1.0 / 256.0,
+	                          1.0 / 256.0);
 
-	f -= color .r;
-	f *= 255.0;
-	color .g = floor (f);
+	vec4 comp = fract (value * bitSh);
 
-	f -= color .g;
-	f *= 255.0;
-	color .b = floor (f);
+	comp -= comp.xxyz * bitMsk;
 
-	f -= color .b;
-	f *= 255.0;
-	color .a = floor (f);
-
-	return color / 255.0;
+	return comp;
 }
 
 void

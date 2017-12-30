@@ -50,6 +50,8 @@ varying vec4 t;  // texCoord
 varying vec3 vN; // normalized normal vector at this point on geometry
 varying vec3 v;  // point on geometry
 
+#pragma X3D include "Bits/Shadow.h"
+
 void
 clip ()
 {
@@ -105,6 +107,8 @@ getMaterialColor ()
 {
 	if (x3d_Lighting)
 	{
+		initShadows ();
+
 		vec3  N  = normalize (gl_FrontFacing ? vN : -vN);
 		vec3  V  = normalize (-v); // normalized vector from point on geometry to viewer's position
 		float dV = length (v);
@@ -184,8 +188,9 @@ getMaterialColor ()
 				float attenuationSpotFactor       = attenuationFactor * spotFactor;
 				vec3  ambientColor                = x3d_LightAmbientIntensity [i] * ambientTerm;
 				vec3  ambientDiffuseSpecularColor = ambientColor + x3d_LightIntensity [i] * (diffuseTerm + specularTerm);
+				float shadowIntensity             = getShadowIntensity (i, lightType, x3d_ShadowIntensity [i], x3d_ShadowDiffusion [i], x3d_ShadowMatrix [i], lightAngle);
 
-				finalColor += attenuationSpotFactor * (x3d_LightColor [i] * ambientDiffuseSpecularColor);
+				finalColor += attenuationSpotFactor * mix (x3d_LightColor [i] * ambientDiffuseSpecularColor, x3d_ShadowColor [i], shadowIntensity);
 			}
 		}
 

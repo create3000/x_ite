@@ -266,19 +266,23 @@ function ($,
 		},
 		enable: function (context)
 		{
+			var browser = context .renderer .getBrowser ();
+		
 			context .linePropertiesNode   = this .linePropertiesNode;
 			context .materialNode         = this .materialNode;
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
-			context .shaderNode           = this .shaderNode || context .renderer .getBrowser () .getDefaultShader ();
+			context .shaderNode           = this .shaderNode || browser .getDefaultShader ();
 
 			if (this .blendModeNode)
-				this .blendModeNode .enable (context .renderer .getBrowser () .getContext ());
+				this .blendModeNode .enable (browser .getContext ());
 		},
 		disable: function (context)
 		{
+			var browser = context .renderer .getBrowser ();
+
 			if (this .blendModeNode)
-				this .blendModeNode .disable (context .renderer .getBrowser () .getContext ());
+				this .blendModeNode .disable (browser .getContext ());
 		},
 	});
 

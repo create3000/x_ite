@@ -109,6 +109,7 @@ function (TextureProperties,
 
 			this .defaultTexture2D              = gl .createTexture ();
  			this .defaultComposedCubeMapTexture = gl .createTexture ();
+			this .defaultShadowMapTexture       = gl .createTexture ();
 
 			gl .activeTexture (gl .TEXTURE2);
 			gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
@@ -122,6 +123,10 @@ function (TextureProperties,
 			gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 			gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 			gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+			gl .activeTexture (gl .TEXTURE5);
+			gl .bindTexture (gl .TEXTURE_2D, this .defaultShadowMapTexture);
+			gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
 			gl .activeTexture (gl .TEXTURE0);
 		},

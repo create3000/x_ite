@@ -88,7 +88,6 @@ function (DepthBuffer,
          normalBuffer = gl .createBuffer (),
          vertexBuffer = gl .createBuffer ();
 
-
 		frameBuffer .bind ();
 		shaderNode .useProgram (gl);
 		gl .viewport (0, 0, 16, 16);
@@ -98,6 +97,7 @@ function (DepthBuffer,
 		gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
 		gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
 
+		// Set clip planes and lights to none.
 		shaderNode .setShaderObjects (gl, [ ]);
 
 		gl .uniform1i (shaderNode .x3d_FogType,       0);
@@ -112,8 +112,6 @@ function (DepthBuffer,
 		gl .uniform1f (shaderNode .x3d_Shininess,         0);
 		gl .uniform1f (shaderNode .x3d_Transparency,      0);
 
-		gl .uniform1i (shaderNode .x3d_LightType [0], 0);
-
 		shaderNode .textureTypeArray [0] = 0;
 		gl .uniform1iv (shaderNode .x3d_TextureType, shaderNode .textureTypeArray);
 
@@ -123,6 +121,7 @@ function (DepthBuffer,
 
 		gl .disable (gl .BLEND);
 		gl .frontFace (gl .CCW);
+		gl .enable (gl .CULL_FACE);
 		gl .cullFace (gl .BACK);
 
 		shaderNode .enableNormalAttribute (gl, normalBuffer);
