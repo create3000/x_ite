@@ -5,41 +5,16 @@ precision mediump float;
 uniform int x3d_GeometryType;
 
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
-
-uniform int   x3d_FogType;
-uniform vec3  x3d_FogColor;
-uniform float x3d_FogVisibilityRange;
+uniform x3d_FogParameters x3d_Fog;
 
 uniform float x3d_LinewidthScaleFactor;
 uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
-uniform int   x3d_LightType [x3d_MaxLights];
-uniform vec3  x3d_LightColor [x3d_MaxLights];
-uniform float x3d_LightIntensity [x3d_MaxLights];
-uniform float x3d_LightAmbientIntensity [x3d_MaxLights];
-uniform vec3  x3d_LightAttenuation [x3d_MaxLights];
-uniform vec3  x3d_LightLocation [x3d_MaxLights];
-uniform vec3  x3d_LightDirection [x3d_MaxLights];
-uniform float x3d_LightRadius [x3d_MaxLights];
-uniform float x3d_LightBeamWidth [x3d_MaxLights];
-uniform float x3d_LightCutOffAngle [x3d_MaxLights];
-
+uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
-
-uniform float x3d_AmbientIntensity;
-uniform vec3  x3d_DiffuseColor;
-uniform vec3  x3d_SpecularColor;
-uniform vec3  x3d_EmissiveColor;
-uniform float x3d_Shininess;
-uniform float x3d_Transparency;
-
-uniform float x3d_BackAmbientIntensity;
-uniform vec3  x3d_BackDiffuseColor;
-uniform vec3  x3d_BackSpecularColor;
-uniform vec3  x3d_BackEmissiveColor;
-uniform float x3d_BackShininess;
-uniform float x3d_BackTransparency;
+uniform x3d_MaterialParameters x3d_FrontMaterial;  
+uniform x3d_MaterialParameters x3d_BackMaterial;        
 
 uniform int         x3d_TextureType [x3d_MaxTextures]; // true if a X3DTexture2DNode is attached, otherwise false
 uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
@@ -117,12 +92,12 @@ getMaterialColor ()
 
 		bool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;
 
-		float ambientIntensity = frontColor ? x3d_AmbientIntensity : x3d_BackAmbientIntensity;
-		vec3  diffuseColor     = frontColor ? x3d_DiffuseColor     : x3d_BackDiffuseColor;
-		vec3  specularColor    = frontColor ? x3d_SpecularColor    : x3d_BackSpecularColor;
-		vec3  emissiveColor    = frontColor ? x3d_EmissiveColor    : x3d_BackEmissiveColor;
-		float shininess        = frontColor ? x3d_Shininess        : x3d_BackShininess;
-		float transparency     = frontColor ? x3d_Transparency     : x3d_BackTransparency;
+		float ambientIntensity = frontColor ? x3d_FrontMaterial.ambientIntensity : x3d_BackMaterial.ambientIntensity;
+		vec3  diffuseColor     = frontColor ? x3d_FrontMaterial.diffuseColor     : x3d_BackMaterial.diffuseColor;
+		vec3  specularColor    = frontColor ? x3d_FrontMaterial.specularColor    : x3d_BackMaterial.specularColor;
+		vec3  emissiveColor    = frontColor ? x3d_FrontMaterial.emissiveColor    : x3d_BackMaterial.emissiveColor;
+		float shininess        = frontColor ? x3d_FrontMaterial.shininess        : x3d_BackMaterial.shininess;
+		float transparency     = frontColor ? x3d_FrontMaterial.transparency     : x3d_BackMaterial.transparency;
 
 		vec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);
 		float alpha         = 1.0 - transparency;
@@ -162,19 +137,19 @@ getMaterialColor ()
 
 		for (int i = 0; i < x3d_MaxLights; ++ i)
 		{
-			int lightType = x3d_LightType [i];
+			x3d_LightSourceParameters light = x3d_LightSource [i];
 
-			if (lightType == x3d_NoneLight)
+			if (light .type == x3d_NoneLight)
 				break;
 
-			vec3  vL = x3d_LightLocation [i] - v;
+			vec3  vL = light .location - v;
 			float dL = length (vL);
-			bool  di = lightType == x3d_DirectionalLight;
+			bool  di = light .type == x3d_DirectionalLight;
 
-			if (di || dL <= x3d_LightRadius [i])
+			if (di || dL <= light .radius)
 			{
-				vec3 d = x3d_LightDirection [i];
-				vec3 c = x3d_LightAttenuation [i];
+				vec3 d = light .direction;
+				vec3 c = light .attenuation;
 				vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.
 				vec3 H = normalize (L + V);             // Specular term
 
@@ -184,13 +159,13 @@ getMaterialColor ()
 				vec3  specularTerm   = specularColor * specularFactor;
 
 				float attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
-				float spotFactor                  = lightType == x3d_SpotLight ? getSpotFactor (x3d_LightCutOffAngle [i], x3d_LightBeamWidth [i], L, d) : 1.0;
+				float spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
 				float attenuationSpotFactor       = attenuationFactor * spotFactor;
-				vec3  ambientColor                = x3d_LightAmbientIntensity [i] * ambientTerm;
-				vec3  ambientDiffuseSpecularColor = ambientColor + x3d_LightIntensity [i] * (diffuseTerm + specularTerm);
-				float shadowIntensity             = getShadowIntensity (i, lightType, x3d_ShadowIntensity [i], x3d_ShadowDiffusion [i], x3d_ShadowMatrix [i], lightAngle);
+				vec3  ambientColor                = light .ambientIntensity * ambientTerm;
+				vec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);
+				float shadowIntensity             = getShadowIntensity (i, light .type, x3d_ShadowIntensity [i], x3d_ShadowDiffusion [i], x3d_ShadowMatrix [i], lightAngle);
 
-				finalColor += attenuationSpotFactor * mix (x3d_LightColor [i] * ambientDiffuseSpecularColor, x3d_ShadowColor [i], shadowIntensity);
+				finalColor += attenuationSpotFactor * mix (light .color * ambientDiffuseSpecularColor, x3d_ShadowColor [i], shadowIntensity);
 			}
 		}
 
@@ -228,22 +203,22 @@ getFogInterpolant ()
 {
 	// Returns 0.0 for fog color and 1.0 for material color.
 
-	if (x3d_FogType == x3d_NoneFog)
+	if (x3d_Fog .type == x3d_NoneFog)
 		return 1.0;
 
-	if (x3d_FogVisibilityRange <= 0.0)
+	if (x3d_Fog .visibilityRange <= 0.0)
 		return 0.0;
 
 	float dV = length (v);
 
-	if (dV >= x3d_FogVisibilityRange)
+	if (dV >= x3d_Fog .visibilityRange)
 		return 0.0;
 
-	if (x3d_FogType == x3d_LinearFog)
-		return (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;
+	if (x3d_Fog .type == x3d_LinearFog)
+		return (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;
 
-	if (x3d_FogType == x3d_ExponentialFog)
-		return exp (-dV / (x3d_FogVisibilityRange - dV));
+	if (x3d_Fog .type == x3d_ExponentialFog)
+		return exp (-dV / (x3d_Fog .visibilityRange - dV));
 
 	return 1.0;
 }
@@ -255,5 +230,5 @@ main ()
 
 	gl_FragColor = getMaterialColor ();
 
-	gl_FragColor .rgb = mix (x3d_FogColor, gl_FragColor .rgb, getFogInterpolant ());
+	gl_FragColor .rgb = mix (x3d_Fog. color, gl_FragColor .rgb, getFogInterpolant ());
 }

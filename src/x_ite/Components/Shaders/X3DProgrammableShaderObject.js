@@ -132,9 +132,9 @@ function ($,
 			for (var i = 0; i < this .x3d_MaxClipPlanes; ++ i)
 				this .x3d_ClipPlane [i]  = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
 
-			this .x3d_FogType            = gl .getUniformLocation (program, "x3d_FogType");
-			this .x3d_FogColor           = gl .getUniformLocation (program, "x3d_FogColor");
-			this .x3d_FogVisibilityRange = gl .getUniformLocation (program, "x3d_FogVisibilityRange");
+			this .x3d_FogType            = this .getUniformLocation (gl, program, "x3d_Fog.type",            "x3d_FogType");
+			this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
+			this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
 
 			this .x3d_LinewidthScaleFactor = gl .getUniformLocation (program, "x3d_LinewidthScaleFactor");
 
@@ -163,19 +163,19 @@ function ($,
 
 			this .x3d_SeparateBackColor = gl .getUniformLocation (program, "x3d_SeparateBackColor");
 
-			this .x3d_AmbientIntensity = gl .getUniformLocation (program, "x3d_AmbientIntensity");
-			this .x3d_DiffuseColor     = gl .getUniformLocation (program, "x3d_DiffuseColor");
-			this .x3d_SpecularColor    = gl .getUniformLocation (program, "x3d_SpecularColor");
-			this .x3d_EmissiveColor    = gl .getUniformLocation (program, "x3d_EmissiveColor");
-			this .x3d_Shininess        = gl .getUniformLocation (program, "x3d_Shininess");
-			this .x3d_Transparency     = gl .getUniformLocation (program, "x3d_Transparency");
+			this .x3d_AmbientIntensity = this .getUniformLocation (gl, program, "x3d_FrontMaterial.ambientIntensity", "x3d_AmbientIntensity");
+			this .x3d_DiffuseColor     = this .getUniformLocation (gl, program, "x3d_FrontMaterial.diffuseColor",     "x3d_DiffuseColor");
+			this .x3d_SpecularColor    = this .getUniformLocation (gl, program, "x3d_FrontMaterial.specularColor",    "x3d_SpecularColor");
+			this .x3d_EmissiveColor    = this .getUniformLocation (gl, program, "x3d_FrontMaterial.emissiveColor",    "x3d_EmissiveColor");
+			this .x3d_Shininess        = this .getUniformLocation (gl, program, "x3d_FrontMaterial.shininess",        "x3d_Shininess");
+			this .x3d_Transparency     = this .getUniformLocation (gl, program, "x3d_FrontMaterial.transparency",     "x3d_Transparency");
 
-			this .x3d_BackAmbientIntensity = gl .getUniformLocation (program, "x3d_BackAmbientIntensity");
-			this .x3d_BackDiffuseColor     = gl .getUniformLocation (program, "x3d_BackDiffuseColor");
-			this .x3d_BackSpecularColor    = gl .getUniformLocation (program, "x3d_BackSpecularColor");
-			this .x3d_BackEmissiveColor    = gl .getUniformLocation (program, "x3d_BackEmissiveColor");
-			this .x3d_BackShininess        = gl .getUniformLocation (program, "x3d_BackShininess");
-			this .x3d_BackTransparency     = gl .getUniformLocation (program, "x3d_BackTransparency");
+			this .x3d_BackAmbientIntensity = this .getUniformLocation (gl, program, "x3d_BackMaterial.ambientIntensity", "x3d_BackAmbientIntensity");
+			this .x3d_BackDiffuseColor     = this .getUniformLocation (gl, program, "x3d_BackMaterial.diffuseColor",     "x3d_BackDiffuseColor");
+			this .x3d_BackSpecularColor    = this .getUniformLocation (gl, program, "x3d_BackMaterial.specularColor",    "x3d_BackSpecularColor");
+			this .x3d_BackEmissiveColor    = this .getUniformLocation (gl, program, "x3d_BackMaterial.emissiveColor",    "x3d_BackEmissiveColor");
+			this .x3d_BackShininess        = this .getUniformLocation (gl, program, "x3d_BackMaterial.shininess",        "x3d_BackShininess");
+			this .x3d_BackTransparency     = this .getUniformLocation (gl, program, "x3d_BackMaterial.transparency",     "x3d_BackTransparency");
 
 			this .x3d_TextureType    = gl .getUniformLocation (program, "x3d_TextureType");
 			this .x3d_Texture2D      = this .getUniformLocation (gl, program, "x3d_Texture2D", "x3d_Texture");

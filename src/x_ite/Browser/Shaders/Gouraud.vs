@@ -11,59 +11,50 @@ uniform float x3d_LinewidthScaleFactor;
 uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
-uniform int   x3d_LightType [x3d_MaxLights];
-uniform vec3  x3d_LightColor [x3d_MaxLights];
-uniform float x3d_LightIntensity [x3d_MaxLights];
-uniform float x3d_LightAmbientIntensity [x3d_MaxLights];
-uniform vec3  x3d_LightAttenuation [x3d_MaxLights];
-uniform vec3  x3d_LightLocation [x3d_MaxLights];
-uniform vec3  x3d_LightDirection [x3d_MaxLights];
-uniform float x3d_LightRadius [x3d_MaxLights];
-uniform float x3d_LightBeamWidth [x3d_MaxLights];
-uniform float x3d_LightCutOffAngle [x3d_MaxLights];
-
+uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
-
-uniform float x3d_AmbientIntensity;
-uniform vec3  x3d_DiffuseColor;
-uniform vec3  x3d_SpecularColor;
-uniform vec3  x3d_EmissiveColor;
-uniform float x3d_Shininess;
-uniform float x3d_Transparency;
-
-uniform float x3d_BackAmbientIntensity;
-uniform vec3  x3d_BackDiffuseColor;
-uniform vec3  x3d_BackSpecularColor;
-uniform vec3  x3d_BackEmissiveColor;
-uniform float x3d_BackShininess;
-uniform float x3d_BackTransparency;
+uniform x3d_MaterialParameters x3d_FrontMaterial;  
+uniform x3d_MaterialParameters x3d_BackMaterial;        
 
 attribute vec4 x3d_Color;
 attribute vec4 x3d_TexCoord;
 attribute vec3 x3d_Normal;
 attribute vec4 x3d_Vertex;
 
-varying vec4  frontColor; // color
-varying vec4  backColor;  // color
-varying vec4  t;          // texCoord
-varying vec3  v;          // point on geometry
+varying vec4 frontColor; // color
+varying vec4 backColor;  // color
+varying vec4 t;          // texCoord
+varying vec3 v;          // point on geometry
+
+float
+getSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)
+{
+	float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
+	
+	if (spotAngle >= cutOffAngle)
+		return 0.0;
+	else if (spotAngle <= beamWidth)
+		return 1.0;
+
+	return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
+}
 
 vec4
 getMaterialColor (in vec3 N,
                   in vec3 v,
-                  in float x3d_AmbientIntensity,
-                  in vec3  x3d_DiffuseColor,
-                  in vec3  x3d_SpecularColor,
-                  in vec3  x3d_EmissiveColor,
-                  in float x3d_Shininess,
-                  in float x3d_Transparency)
+                  in float ambientIntensity,
+                  in vec3  diffuseColor,
+                  in vec3  specularColor,
+                  in vec3  emissiveColor,
+                  in float shininess,
+                  in float transparency)
 {
 	vec3 V = normalize (-v); // normalized vector from point on geometry to viewer's position
 
 	// Calculate diffuseFactor & alpha
 
-	vec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);
-	float alpha         = 1.0 - x3d_Transparency;
+	vec3  diffuseFactor = vec3 (0.0, 0.0, 0.0);
+	float alpha         = 1.0 - transparency;
 
 	if (x3d_ColorMaterial)
 	{
@@ -71,9 +62,9 @@ getMaterialColor (in vec3 N,
 		alpha         *= x3d_Color .a;
 	}
 	else
-		diffuseFactor = x3d_DiffuseColor;
+		diffuseFactor = diffuseColor;
 
-	vec3 ambientTerm = diffuseFactor * x3d_AmbientIntensity;
+	vec3 ambientTerm = diffuseFactor * ambientIntensity;
 
 	// Apply light sources
 
@@ -81,52 +72,38 @@ getMaterialColor (in vec3 N,
 
 	for (int i = 0; i < x3d_MaxLights; ++ i)
 	{
-		int lightType = x3d_LightType [i];
+		x3d_LightSourceParameters light = x3d_LightSource [i];
 
-		if (lightType == x3d_NoneLight)
+		if (light .type == x3d_NoneLight)
 			break;
 
-		vec3  vL = x3d_LightLocation [i] - v;
+		vec3  vL = light .location - v;
 		float dL = length (vL);
-		bool  di = lightType == x3d_DirectionalLight;
+		bool  di = light .type == x3d_DirectionalLight;
 
-		if (di || dL <= x3d_LightRadius [i])
+		if (di || dL <= light .radius)
 		{
-			vec3 d = x3d_LightDirection [i];
-			vec3 c = x3d_LightAttenuation [i];
-			vec3 L = di ? -d : normalize (vL);
-			vec3 H = normalize (L + V); // specular term
+			vec3 d = light .direction;
+			vec3 c = light .attenuation;
+			vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.
+			vec3 H = normalize (L + V);             // Specular term
 
-			vec3  diffuseTerm    = diffuseFactor * max (dot (N, L), 0.0);
-			float specularFactor = x3d_Shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Shininess * 128.0) : 1.0;
-			vec3  specularTerm   = x3d_SpecularColor * specularFactor;
+			float lightAngle     = dot (N, L);      // Angle between normal and light ray.
+			vec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);
+			float specularFactor = shininess > 0.0 ? pow (max (dot (N, H), 0.0), shininess * 128.0) : 1.0;
+			vec3  specularTerm   = specularColor * specularFactor;
 
-			float attenuation = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
-			float spot        = 1.0;
+			float attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
+			float spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
+			float attenuationSpotFactor       = attenuationFactor * spotFactor;
+			vec3  ambientColor                = light .ambientIntensity * ambientTerm;
+			vec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);
 
-			if (lightType == x3d_SpotLight)
-			{
-				float spotAngle   = acos (clamp (dot (-L, d), -1.0, 1.0));
-				float cutOffAngle = x3d_LightCutOffAngle [i];
-				float beamWidth   = x3d_LightBeamWidth [i];
-				
-				if (spotAngle >= cutOffAngle)
-					spot = 0.0;
-				else if (spotAngle <= beamWidth)
-					spot = 1.0;
-				else
-					spot = (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
-			}
-		
-			vec3 lightFactor  = (attenuation * spot) * x3d_LightColor [i];
-			vec3 ambientLight = (lightFactor * x3d_LightAmbientIntensity [i]) * ambientTerm;
-
-			lightFactor *= x3d_LightIntensity [i];
-			finalColor  += ambientLight + lightFactor * (diffuseTerm + specularTerm);
+			finalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);
 		}
 	}
 
-	finalColor += x3d_EmissiveColor;
+	finalColor += emissiveColor;
 
 	return vec4 (clamp (finalColor, 0.0, 1.0), alpha);
 }
@@ -147,12 +124,12 @@ main ()
 	{
 		vec3 N = normalize (x3d_NormalMatrix * x3d_Normal);
 
-		float ambientIntensity = x3d_AmbientIntensity;
-		vec3  diffuseColor     = x3d_DiffuseColor;
-		vec3  specularColor    = x3d_SpecularColor;
-		vec3  emissiveColor    = x3d_EmissiveColor;
-		float shininess        = x3d_Shininess;
-		float transparency     = x3d_Transparency;
+		float ambientIntensity = x3d_FrontMaterial .ambientIntensity;
+		vec3  diffuseColor     = x3d_FrontMaterial .diffuseColor;
+		vec3  specularColor    = x3d_FrontMaterial .specularColor;
+		vec3  emissiveColor    = x3d_FrontMaterial .emissiveColor;
+		float shininess        = x3d_FrontMaterial .shininess;
+		float transparency     = x3d_FrontMaterial .transparency;
 
 		frontColor = getMaterialColor (N, v,
 		                               ambientIntensity,
@@ -164,12 +141,12 @@ main ()
 
 		if (x3d_SeparateBackColor)
 		{
-			ambientIntensity = x3d_BackAmbientIntensity;
-			diffuseColor     = x3d_BackDiffuseColor;
-			specularColor    = x3d_BackSpecularColor;
-			emissiveColor    = x3d_BackEmissiveColor;
-			shininess        = x3d_BackShininess;
-			transparency     = x3d_BackTransparency;
+			ambientIntensity = x3d_BackMaterial .ambientIntensity;
+			diffuseColor     = x3d_BackMaterial .diffuseColor;
+			specularColor    = x3d_BackMaterial .specularColor;
+			emissiveColor    = x3d_BackMaterial .emissiveColor;
+			shininess        = x3d_BackMaterial .shininess;
+			transparency     = x3d_BackMaterial .transparency;
 		}
 
 		backColor = getMaterialColor (-N, v,

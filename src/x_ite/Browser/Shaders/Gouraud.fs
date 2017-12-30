@@ -5,10 +5,7 @@ precision mediump float;
 uniform int x3d_GeometryType;
 
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
-
-uniform int   x3d_FogType;
-uniform vec3  x3d_FogColor;
-uniform float x3d_FogVisibilityRange;
+uniform x3d_FogParameters x3d_Fog;
 
 uniform float x3d_LinewidthScaleFactor;
 uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
@@ -65,22 +62,22 @@ getFogInterpolant ()
 {
 	// Returns 0.0 for fog color and 1.0 for material color.
 
-	if (x3d_FogType == x3d_NoneFog)
+	if (x3d_Fog .type == x3d_NoneFog)
 		return 1.0;
 
-	if (x3d_FogVisibilityRange <= 0.0)
+	if (x3d_Fog .visibilityRange <= 0.0)
 		return 0.0;
 
 	float dV = length (v);
 
-	if (dV >= x3d_FogVisibilityRange)
+	if (dV >= x3d_Fog .visibilityRange)
 		return 0.0;
 
-	if (x3d_FogType == x3d_LinearFog)
-		return (x3d_FogVisibilityRange - dV) / x3d_FogVisibilityRange;
+	if (x3d_Fog .type == x3d_LinearFog)
+		return (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;
 
-	if (x3d_FogType == x3d_ExponentialFog)
-		return exp (-dV / (x3d_FogVisibilityRange - dV));
+	if (x3d_Fog .type == x3d_ExponentialFog)
+		return exp (-dV / (x3d_Fog .visibilityRange - dV));
 
 	return 1.0;
 }
@@ -105,6 +102,6 @@ main ()
 		}
 	}
 
-	gl_FragColor .rgb = mix (x3d_FogColor, finalColor .rgb, getFogInterpolant ());
+	gl_FragColor .rgb = mix (x3d_Fog .color, finalColor .rgb, getFogInterpolant ());
 	gl_FragColor .a   = finalColor .a;
 }

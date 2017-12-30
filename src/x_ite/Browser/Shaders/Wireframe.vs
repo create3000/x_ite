@@ -7,8 +7,7 @@ uniform int x3d_GeometryType;
 uniform float x3d_LinewidthScaleFactor;
 uniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false
 uniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false
-uniform vec3  x3d_EmissiveColor;
-uniform float x3d_Transparency;
+uniform x3d_MaterialParameters x3d_FrontMaterial;  
 
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
@@ -32,7 +31,7 @@ main ()
 
 	if (x3d_Lighting)
 	{
-		float alpha = 1.0 - x3d_Transparency;
+		float alpha = 1.0 - x3d_FrontMaterial .transparency;
 
 		if (x3d_ColorMaterial)
 		{
@@ -41,7 +40,7 @@ main ()
 		}
 		else
 		{
-			C .rgb = x3d_EmissiveColor;
+			C .rgb = x3d_FrontMaterial .emissiveColor;
 			C .a   = alpha;
 		}
 	}
