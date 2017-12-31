@@ -12,7 +12,7 @@ uniform sampler2D x3d_ShadowMap [x3d_MaxLights];
 
 #ifdef X3D_SHADOWS
 
-Plane3 shadowPlane;
+Plane3 shadowPlane = Plane3 (vec3 (0.0), 0.0);
 
 float
 getShadowDepth (in int index, in vec2 shadowCoord)

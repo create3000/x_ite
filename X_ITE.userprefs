@@ -1,16 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Rendering/DepthBuffer.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Shaders/Types.h">
     <Files>
       <File FileName="src/x_ite.html" Line="223" Column="1" />
       <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="70" Column="13" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="54" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Bits/Shadow.h" Line="178" Column="7" />
-      <File FileName="src/x_ite/Browser/Shaders/Types.h" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Depth.fs" Line="22" Column="2" />
-      <File FileName="src/x_ite/Browser/Shaders/Bits/Pack.h" Line="22" Column="1" />
-      <File FileName="src/x_ite/Rendering/DepthBuffer.js" Line="159" Column="138" />
+      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="18" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Types.h" Line="35" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

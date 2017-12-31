@@ -6,6 +6,8 @@ struct x3d_FogParameters {
 	mediump float visibilityRange;
 };
 
+//uniform x3d_FogParameters x3d_Fog;
+
 struct x3d_LightSourceParameters {
 	mediump int   type;
 	mediump vec3  color;
@@ -19,6 +21,8 @@ struct x3d_LightSourceParameters {
 	mediump float cutOffAngle;
 };
 
+//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
+
 struct x3d_MaterialParameters  
 {   
 	mediump float ambientIntensity;
@@ -28,3 +32,6 @@ struct x3d_MaterialParameters
 	mediump float shininess;
 	mediump float transparency;
 };
+
+//uniform x3d_MaterialParameters x3d_FrontMaterial;  
+//uniform x3d_MaterialParameters x3d_BackMaterial;        
