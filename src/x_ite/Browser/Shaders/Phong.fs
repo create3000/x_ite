@@ -222,7 +222,7 @@ main ()
 
 	bool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;
 
-	gl_FragColor = getMaterialColor (frontColor ? x3d_FrontMaterial : x3d_BackMaterial);
+	gl_FragColor = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
 
 	gl_FragColor .rgb = mix (x3d_Fog. color, gl_FragColor .rgb, getFogInterpolant ());
 }
