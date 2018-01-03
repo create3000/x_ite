@@ -328,9 +328,6 @@
     <None Include="x_ite\Browser\Scripting\X3DScriptingContext.js" />
     <None Include="x_ite\Browser\Shaders\BackgroundSphereFragmentShader.fs" />
     <None Include="x_ite\Browser\Shaders\BackgroundSphereVertexShader.vs" />
-    <None Include="x_ite\Browser\Shaders\Bits\Line3.h" />
-    <None Include="x_ite\Browser\Shaders\Bits\Plane3.h" />
-    <None Include="x_ite\Browser\Shaders\Bits\Random.h" />
     <None Include="x_ite\Browser\Shaders\Depth.fs" />
     <None Include="x_ite\Browser\Shaders\Depth.vs" />
     <None Include="x_ite\Browser\Shaders\Gouraud.fs" />
@@ -721,10 +718,13 @@
     <None Include="standard\Math\Algorithms\PartialSort.js" />
     <None Include="x_ite\Components\X_ITE\BlendMode.js" />
     <None Include="components.js" />
-    <None Include="x_ite\Browser\Shaders\Bits\Shadow.h" />
     <None Include="x_ite\Browser\Shaders\Types.h" />
     <None Include="test.x3d" />
-    <None Include="x_ite\Browser\Shaders\Bits\Pack.h" />
+    <None Include="x_ite\Browser\Shaders\Inlcude\Line3.h" />
+    <None Include="x_ite\Browser\Shaders\Inlcude\Plane3.h" />
+    <None Include="x_ite\Browser\Shaders\Inlcude\Random.h" />
+    <None Include="x_ite\Browser\Shaders\Inlcude\Shadow.h" />
+    <None Include="x_ite\Browser\Shaders\Inlcude\Pack.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

@@ -48,30 +48,30 @@
 
 
 define ([
-	"text!x_ite/Browser/Shaders/Bits/Pack.h",
-	"text!x_ite/Browser/Shaders/Bits/Line3.h",
-	"text!x_ite/Browser/Shaders/Bits/Plane3.h",
-	"text!x_ite/Browser/Shaders/Bits/Random.h",
-	"text!x_ite/Browser/Shaders/Bits/Shadow.h",
+	"text!x_ite/Browser/Shaders/Inlcude/Shadow.h",
+	"text!x_ite/Browser/Shaders/Inlcude/Pack.h",
+	"text!x_ite/Browser/Shaders/Inlcude/Line3.h",
+	"text!x_ite/Browser/Shaders/Inlcude/Plane3.h",
+	"text!x_ite/Browser/Shaders/Inlcude/Random.h",
 	"text!x_ite/Browser/Shaders/Types.h",
 	"x_ite/DEBUG",
 ],
-function (Pack,
+function (Shadow,
+          Pack,
           Line3,
           Plane3,
           Random,
-          Shadow,
           Types,
           DEBUG)
 {
 "use strict";
 
 	var includes = {
+		Shadow: Shadow,
 		Pack: Pack,
 		Line3: Line3,
 		Plane3: Plane3,
 		Random: Random,
-		Shadow: Shadow,
 	};
 
 	var
@@ -113,27 +113,25 @@ function (Pack,
 
 			constants += "#define X_ITE\n";
 
+			constants += "#define x3d_None 0\n";
+
 			constants += "#define x3d_GeometryPoints  0\n";
 			constants += "#define x3d_GeometryLines   1\n";
 			constants += "#define x3d_Geometry2D      2\n";
 			constants += "#define x3d_Geometry3D      3\n";
 
 			constants += "#define x3d_MaxClipPlanes  " + browser .getMaxClipPlanes () + "\n";
-			constants += "#define x3d_NoneClipPlane  vec4 (88.0, 51.0, 68.0, 33.0)\n"; // X3D!
 
-			constants += "#define x3d_NoneFog          0\n";
 			constants += "#define x3d_LinearFog        1\n";
 			constants += "#define x3d_ExponentialFog   2\n";
 			constants += "#define x3d_Exponential2Fog  3\n";
 
 			constants += "#define x3d_MaxLights         " + browser .getMaxLights () + "\n";
-			constants += "#define x3d_NoneLight         0\n";
 			constants += "#define x3d_DirectionalLight  1\n";
 			constants += "#define x3d_PointLight        2\n";
 			constants += "#define x3d_SpotLight         3\n";
 
 			constants += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
-			constants += "#define x3d_NoneTexture                0\n";
 			constants += "#define x3d_TextureType2D              2\n";
 			constants += "#define x3d_TextureType3D              3\n";
 			constants += "#define x3d_TextureTypeCubeMapTexture  4\n";
@@ -144,9 +142,28 @@ function (Pack,
 			constants += "#define x3d_MaxShadows     4\n";
 			constants += "#define x3d_ShadowSamples  8\n"; // Range (0, 255)
 
+			// Legacy
+			constants += "#define x3d_NoneClipPlane  vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
+			constants += "#define x3d_NoneFog        0\n";
+			constants += "#define x3d_NoneLight      0\n";
+			constants += "#define x3d_NoneTexture    0\n";
+
+			depreciatedWarning (source, "x3d_NoneClipPlane", "x3d_NumClipPlanes");
+			depreciatedWarning (source, "x3d_NoneFog",       "x3d_None");
+			depreciatedWarning (source, "x3d_NoneLight",     "x3d_NumLights");
+			depreciatedWarning (source, "x3d_NoneTexture",   "x3d_NumTextures");
+
 			return constants + Types + this .getSource (source);
 		},
 	};
+
+	function depreciatedWarning (source, depreciated, current)
+	{
+		if (source .indexOf (depreciated) === -1)
+			return;
+
+		console .warn ("Use of '" + depreciated + "' is depreciated, use '" + current + "' instead. See http://create3000.de/x_ite/custom-shaders/.");
+	}
 
 	return Shader;
 });

@@ -12,6 +12,7 @@ uniform float x3d_LinewidthScaleFactor;
 uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
+uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
 uniform x3d_MaterialParameters x3d_FrontMaterial;  
@@ -68,10 +69,10 @@ getMaterialColor (in vec3 N,
 
 	for (int i = 0; i < x3d_MaxLights; ++ i)
 	{
-		x3d_LightSourceParameters light = x3d_LightSource [i];
-
-		if (light .type == x3d_NoneLight)
+		if (i == x3d_NumLights)
 			break;
+
+		x3d_LightSourceParameters light = x3d_LightSource [i];
 
 		vec3  vL = light .location - v;
 		float dL = length (vL);

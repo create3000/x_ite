@@ -5,16 +5,19 @@ precision mediump int;
 
 uniform int x3d_GeometryType;
 
+uniform int  x3d_NumClipPlanes;
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
-uniform x3d_FogParameters x3d_Fog;
 
 uniform float x3d_LinewidthScaleFactor;
 uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
-uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_NoneTexture, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture
+uniform int         x3d_NumTextures;
+uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture
 uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
+
+uniform x3d_FogParameters x3d_Fog;
 
 varying vec4 frontColor; // color
 varying vec4 backColor;  // color
@@ -26,7 +29,7 @@ clip ()
 {
 	for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
 	{
-		if (x3d_ClipPlane [i] == x3d_NoneClipPlane)
+		if (i == x3d_NumClipPlanes)
 			break;
 
 		if (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
@@ -63,7 +66,7 @@ getFogInterpolant ()
 {
 	// Returns 0.0 for fog color and 1.0 for material color.
 
-	if (x3d_Fog .type == x3d_NoneFog)
+	if (x3d_Fog .type == x3d_None)
 		return 1.0;
 
 	if (x3d_Fog .visibilityRange <= 0.0)
@@ -83,6 +86,12 @@ getFogInterpolant ()
 	return 1.0;
 }
 
+vec3
+getFogColor (in vec3 color)
+{
+	return mix (x3d_Fog .color, color, getFogInterpolant ());
+}
+
 void
 main ()
 {
@@ -90,7 +99,7 @@ main ()
 
 	vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
 
-	if (x3d_TextureType [0] != x3d_NoneTexture)
+	if (x3d_TextureType [0] != x3d_None)
 	{
 		if (x3d_Lighting)
 			finalColor *= getTextureColor ();
@@ -103,6 +112,6 @@ main ()
 		}
 	}
 
-	gl_FragColor .rgb = mix (x3d_Fog .color, finalColor .rgb, getFogInterpolant ());
+	gl_FragColor .rgb = getFogColor (finalColor .rgb);
 	gl_FragColor .a   = finalColor .a;
 }

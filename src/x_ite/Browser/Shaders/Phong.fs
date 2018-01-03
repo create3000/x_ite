@@ -5,40 +5,57 @@ precision mediump int;
 
 uniform int x3d_GeometryType;
 
+uniform int  x3d_NumClipPlanes;
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
-uniform x3d_FogParameters x3d_Fog;
 
 uniform float x3d_LinewidthScaleFactor;
 uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
+uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
 uniform x3d_MaterialParameters x3d_FrontMaterial;  
 uniform x3d_MaterialParameters x3d_BackMaterial;        
 
-uniform int         x3d_TextureType [x3d_MaxTextures]; // true if a X3DTexture2DNode is attached, otherwise false
+uniform int         x3d_NumTextures;
+uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture
 uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
+
+uniform x3d_FogParameters x3d_Fog;
 
 varying vec4 C;  // color
 varying vec4 t;  // texCoord
 varying vec3 vN; // normalized normal vector at this point on geometry
 varying vec3 v;  // point on geometry
 
-#pragma X3D include "Bits/Shadow.h"
+#pragma X3D include "Inlcude/Shadow.h"
 
 void
 clip ()
 {
 	for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
 	{
-		if (x3d_ClipPlane [i] == x3d_NoneClipPlane)
+		if (i == x3d_NumClipPlanes)
 			break;
 
 		if (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
 			discard;
 	}
+}
+
+float
+getSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)
+{
+	float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
+	
+	if (spotAngle >= cutOffAngle)
+		return 0.0;
+	else if (spotAngle <= beamWidth)
+		return 1.0;
+
+	return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
 }
 
 vec4
@@ -53,7 +70,7 @@ getTextureColor ()
 		return texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));
 	}
 
-	if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)
+ 	if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)
 	{
 		if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
 			return textureCube (x3d_CubeMapTexture [0], vec3 (t));
@@ -61,21 +78,8 @@ getTextureColor ()
 		// If dimension is x3d_Geometry2D the texCoords must be flipped.
 		return textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));
 	}
-
+ 
 	return vec4 (1.0, 1.0, 1.0, 1.0);
-}
-
-float
-getSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)
-{
-	float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
-	
-	if (spotAngle >= cutOffAngle)
-		return 0.0;
-	else if (spotAngle <= beamWidth)
-		return 1.0;
-
-	return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
 }
 
 vec4
@@ -96,7 +100,7 @@ getMaterialColor (in x3d_MaterialParameters material)
 
 		if (x3d_ColorMaterial)
 		{
-			if (x3d_TextureType [0] != x3d_NoneTexture)
+			if (x3d_TextureType [0] != x3d_None)
 			{
 				vec4 T = getTextureColor ();
 
@@ -110,7 +114,7 @@ getMaterialColor (in x3d_MaterialParameters material)
 		}
 		else
 		{
-			if (x3d_TextureType [0] != x3d_NoneTexture)
+			if (x3d_TextureType [0] != x3d_None)
 			{
 				vec4 T = getTextureColor ();
 
@@ -129,10 +133,10 @@ getMaterialColor (in x3d_MaterialParameters material)
 
 		for (int i = 0; i < x3d_MaxLights; ++ i)
 		{
-			x3d_LightSourceParameters light = x3d_LightSource [i];
-
-			if (light .type == x3d_NoneLight)
+			if (i == x3d_NumLights)
 				break;
+
+			x3d_LightSourceParameters light = x3d_LightSource [i];
 
 			vec3  vL = light .location - v;
 			float dL = length (vL);
@@ -171,7 +175,7 @@ getMaterialColor (in x3d_MaterialParameters material)
 	
 		if (x3d_ColorMaterial)
 		{
-			if (x3d_TextureType [0] != x3d_NoneTexture)
+			if (x3d_TextureType [0] != x3d_None)
 			{
 				vec4 T = getTextureColor ();
 
@@ -182,7 +186,7 @@ getMaterialColor (in x3d_MaterialParameters material)
 		}
 		else
 		{
-			if (x3d_TextureType [0] != x3d_NoneTexture)
+			if (x3d_TextureType [0] != x3d_None)
 				finalColor = getTextureColor ();
 		}
 
@@ -195,7 +199,7 @@ getFogInterpolant ()
 {
 	// Returns 0.0 for fog color and 1.0 for material color.
 
-	if (x3d_Fog .type == x3d_NoneFog)
+	if (x3d_Fog .type == x3d_None)
 		return 1.0;
 
 	if (x3d_Fog .visibilityRange <= 0.0)
@@ -215,6 +219,12 @@ getFogInterpolant ()
 	return 1.0;
 }
 
+vec3
+getFogColor (in vec3 color)
+{
+	return mix (x3d_Fog .color, color, getFogInterpolant ());
+}
+
 void
 main ()
 {
@@ -224,5 +234,5 @@ main ()
 
 	gl_FragColor = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
 
-	gl_FragColor .rgb = mix (x3d_Fog. color, gl_FragColor .rgb, getFogInterpolant ());
+	gl_FragColor .rgb = getFogColor (gl_FragColor .rgb);
 }

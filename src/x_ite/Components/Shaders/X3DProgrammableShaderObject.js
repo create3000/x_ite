@@ -61,7 +61,7 @@ function ($,
           Matrix3)
 {
 "use strict";
-
+var xxx = 0;
 	var
 		matrix3 = new Matrix3 (),
 		NULL    = new Fields .SFNode ();
@@ -96,7 +96,6 @@ function ($,
 	X3DProgrammableShaderObject .prototype =
 	{
 		constructor: X3DProgrammableShaderObject,
-		x3d_NoneClipPlane: new Float32Array ([ 88, 51, 68, 33 ]), // X3D!
 		normalMatrixArray: new Float32Array (9),
 		initialize: function ()
 		{
@@ -127,7 +126,8 @@ function ($,
 				gl      = this .getBrowser () .getContext (),
 				program = this .getProgram ();
 
-			this .x3d_GeometryType = gl .getUniformLocation (program, "x3d_GeometryType");
+			this .x3d_GeometryType  = gl .getUniformLocation (program, "x3d_GeometryType");
+			this .x3d_NumClipPlanes = gl .getUniformLocation (program, "x3d_NumClipPlanes");
 
 			for (var i = 0; i < this .x3d_MaxClipPlanes; ++ i)
 				this .x3d_ClipPlane [i]  = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
@@ -140,6 +140,7 @@ function ($,
 
 			this .x3d_Lighting      = gl .getUniformLocation (program, "x3d_Lighting");
 			this .x3d_ColorMaterial = gl .getUniformLocation (program, "x3d_ColorMaterial");
+			this .x3d_NumLights     = gl .getUniformLocation (program, "x3d_NumLights");
 
 			for (var i = 0; i < this .x3d_MaxLights; ++ i)
 			{
@@ -177,6 +178,7 @@ function ($,
 			this .x3d_BackShininess        = this .getUniformLocation (gl, program, "x3d_BackMaterial.shininess",        "x3d_BackShininess");
 			this .x3d_BackTransparency     = this .getUniformLocation (gl, program, "x3d_BackMaterial.transparency",     "x3d_BackTransparency");
 
+			this .x3d_NumTextures    = gl .getUniformLocation (program, "x3d_NumTextures");
 			this .x3d_TextureType    = gl .getUniformLocation (program, "x3d_TextureType");
 			this .x3d_Texture2D      = this .getUniformLocation (gl, program, "x3d_Texture2D", "x3d_Texture");
 			this .x3d_CubeMapTexture = gl .getUniformLocation (program, "x3d_CubeMapTexture");
@@ -200,6 +202,8 @@ function ($,
 			gl .uniform1iv (this .x3d_Texture2D,            new Int32Array ([2])); // Set texture to active texture unit 2.
 			gl .uniform1iv (this .x3d_CubeMapTexture,       new Int32Array ([4])); // Set cube map texture to active texture unit 3.
 			gl .uniform1iv (gl .getUniformLocation (program, "x3d_ShadowMap"), new Int32Array (this .x3d_MaxLights) .fill (5)); // Set cube map texture to active texture unit 5, the whole uniform must be set at once.
+			
+			gl .uniform1i (this .x3d_NumTextures, 1);
 
 			// Return true if valid, otherwise false.
 
@@ -883,8 +887,13 @@ function ($,
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
+			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
+			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
+
+			// Legacy before 4.1.4
+
 			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
-				gl .uniform4fv (this .x3d_ClipPlane [this .numClipPlanes], this .x3d_NoneClipPlane);
+				gl .uniform4f (this .x3d_ClipPlane [this .numClipPlanes], 88, 51, 68, 33);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
@@ -932,8 +941,13 @@ function ($,
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
+			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
+			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
+
+			// Legacy before 4.1.4
+
 			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
-				gl .uniform4fv (this .x3d_ClipPlane [this .numClipPlanes], this .x3d_NoneClipPlane);
+				gl .uniform4f (this .x3d_ClipPlane [this .numClipPlanes], 88, 51, 68, 33);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);

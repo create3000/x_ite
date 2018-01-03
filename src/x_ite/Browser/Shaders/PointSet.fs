@@ -3,8 +3,10 @@
 precision mediump float;
 precision mediump int;
 
-uniform float x3d_LinewidthScaleFactor;
+uniform int  x3d_NumClipPlanes;
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
+
+uniform float x3d_LinewidthScaleFactor;
 uniform x3d_FogParameters x3d_Fog;
 
 varying vec4 C; // color
@@ -15,7 +17,7 @@ clip ()
 {
 	for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
 	{
-		if (x3d_ClipPlane [i] == x3d_NoneClipPlane)
+		if (i == x3d_NumClipPlanes)
 			break;
 
 		if (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
@@ -28,7 +30,7 @@ getFogInterpolant ()
 {
 	// Returns 0.0 for fog color and 1.0 for material color.
 
-	if (x3d_Fog .type == x3d_NoneFog)
+	if (x3d_Fog .type == x3d_None)
 		return 1.0;
 
 	if (x3d_Fog .visibilityRange <= 0.0)
@@ -48,6 +50,12 @@ getFogInterpolant ()
 	return 1.0;
 }
 
+vec3
+getFogColor (in vec3 color)
+{
+	return mix (x3d_Fog .color, color, getFogInterpolant ());
+}
+
 void
 main ()
 {
@@ -56,6 +64,6 @@ main ()
 	float lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;
 	float t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;
 
-	gl_FragColor .rgb = mix (x3d_Fog .color, C .rgb, getFogInterpolant ());
+	gl_FragColor .rgb = getFogColor (C .rgb);
 	gl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));
 }
