@@ -1,6 +1,7 @@
 // -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
 precision mediump float;
+precision mediump int;
 
 uniform float x3d_LinewidthScaleFactor;
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];

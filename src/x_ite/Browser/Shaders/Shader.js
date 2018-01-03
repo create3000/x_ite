@@ -80,7 +80,7 @@ function (Pack,
 
 	var Shader =
 	{
-		getIncludes: function (source)
+		getSource: function (source)
 		{
 			var
 				lines = source .split ("\n"),
@@ -94,7 +94,7 @@ function (Pack,
 
 				if (match = line .match (include))
 				{
-					source += this .getIncludes (includes [match [1]]);
+					source += this .getSource (includes [match [1]]);
 					source += "\n";
 					source += "#line " + (i + 1) + "\n";
 				}
@@ -144,7 +144,7 @@ function (Pack,
 			constants += "#define x3d_MaxShadows     4\n";
 			constants += "#define x3d_ShadowSamples  8\n"; // Range (0, 255)
 
-			return constants + Types + this .getIncludes (source);
+			return constants + Types + this .getSource (source);
 		},
 	};
 

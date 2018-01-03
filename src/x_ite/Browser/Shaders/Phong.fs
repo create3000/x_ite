@@ -1,6 +1,7 @@
 // -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
 precision mediump float;
+precision mediump int;
 
 uniform int x3d_GeometryType;
 
@@ -78,7 +79,7 @@ getSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)
 }
 
 vec4
-getMaterialColor ()
+getMaterialColor (in x3d_MaterialParameters material)
 {
 	if (x3d_Lighting)
 	{
@@ -90,17 +91,8 @@ getMaterialColor ()
 
 		// Calculate diffuseFactor & alpha
 
-		bool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;
-
-		float ambientIntensity = frontColor ? x3d_FrontMaterial.ambientIntensity : x3d_BackMaterial.ambientIntensity;
-		vec3  diffuseColor     = frontColor ? x3d_FrontMaterial.diffuseColor     : x3d_BackMaterial.diffuseColor;
-		vec3  specularColor    = frontColor ? x3d_FrontMaterial.specularColor    : x3d_BackMaterial.specularColor;
-		vec3  emissiveColor    = frontColor ? x3d_FrontMaterial.emissiveColor    : x3d_BackMaterial.emissiveColor;
-		float shininess        = frontColor ? x3d_FrontMaterial.shininess        : x3d_BackMaterial.shininess;
-		float transparency     = frontColor ? x3d_FrontMaterial.transparency     : x3d_BackMaterial.transparency;
-
 		vec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);
-		float alpha         = 1.0 - transparency;
+		float alpha         = 1.0 - material .transparency;
 
 		if (x3d_ColorMaterial)
 		{
@@ -122,14 +114,14 @@ getMaterialColor ()
 			{
 				vec4 T = getTextureColor ();
 
-				diffuseFactor  = T .rgb * diffuseColor;
+				diffuseFactor  = T .rgb * material .diffuseColor;
 				alpha         *= T .a;
 			}
 			else
-				diffuseFactor = diffuseColor;
+				diffuseFactor = material .diffuseColor;
 		}
 
-		vec3 ambientTerm = diffuseFactor * ambientIntensity;
+		vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
 
 		// Apply light sources
 
@@ -155,8 +147,8 @@ getMaterialColor ()
 
 				float lightAngle     = dot (N, L);      // Angle between normal and light ray.
 				vec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);
-				float specularFactor = shininess > 0.0 ? pow (max (dot (N, H), 0.0), shininess * 128.0) : 1.0;
-				vec3  specularTerm   = specularColor * specularFactor;
+				float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
+				vec3  specularTerm   = material .specularColor * specularFactor;
 
 				float attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
 				float spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
@@ -169,7 +161,7 @@ getMaterialColor ()
 			}
 		}
 
-		finalColor += emissiveColor;
+		finalColor += material .emissiveColor;
 
 		return vec4 (finalColor, alpha);
 	}
@@ -228,7 +220,9 @@ main ()
 {
 	clip ();
 
-	gl_FragColor = getMaterialColor ();
+	bool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;
+
+	gl_FragColor = getMaterialColor (frontColor ? x3d_FrontMaterial : x3d_BackMaterial);
 
 	gl_FragColor .rgb = mix (x3d_Fog. color, gl_FragColor .rgb, getFogInterpolant ());
 }
