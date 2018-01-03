@@ -40086,9 +40086,22 @@ function (Shadow,
 			constants += "#define x3d_NoneLight      0\n";
 			constants += "#define x3d_NoneTexture    0\n";
 
+			depreciatedWarning (source, "x3d_NoneClipPlane", "x3d_NumClipPlanes");
+			depreciatedWarning (source, "x3d_NoneFog",       "x3d_None");
+			depreciatedWarning (source, "x3d_NoneLight",     "x3d_NumLights");
+			depreciatedWarning (source, "x3d_NoneTexture",   "x3d_NumTextures");
+
 			return constants + Types + this .getSource (source);
 		},
 	};
+
+	function depreciatedWarning (source, depreciated, current)
+	{
+		if (source .indexOf (depreciated) === -1)
+			return;
+
+		console .warn ("Use of '" + depreciated + "' is depreciated, use '" + current + "' instead. See http://create3000.de/x_ite/custom-shaders/.");
+	}
 
 	return Shader;
 });
