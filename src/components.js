@@ -84,7 +84,7 @@
 		{ name: 'Point Emitter', url: [ "http://media.create3000.de/components/ParticleSystems/PointEmitter/PointEmitter.x3d" ], archive: "http://media.create3000.de/components/ParticleSystems/PointEmitter/PointEmitter.zip" },
 		{ name: 'Polyline Emitter', url: [ "http://media.create3000.de/components/ParticleSystems/PolylineEmitter/PolylineEmitter.x3d" ], archive: "http://media.create3000.de/components/ParticleSystems/PolylineEmitter/PolylineEmitter.zip" },
 		{ name: 'Surface Emitter', url: [ "http://media.create3000.de/components/ParticleSystems/SurfaceEmitter/SurfaceEmitter.x3d" ], archive: "http://media.create3000.de/components/ParticleSystems/SurfaceEmitter/SurfaceEmitter.zip" },
-		{ name: 'Volume Editor', url: [ "http://media.create3000.de/components/ParticleSystems/VolumeEditor/VolumeEditor.x3d" ], archive: "http://media.create3000.de/components/ParticleSystems/VolumeEditor/VolumeEditor.zip" },
+		{ name: 'Volume Emitter', url: [ "http://media.create3000.de/components/ParticleSystems/VolumeEmitter/VolumeEmitter.x3d" ], archive: "http://media.create3000.de/components/ParticleSystems/VolumeEmitter/VolumeEmitter.zip" },
 		{ name: 'Wind Physics Model', url: [ "http://media.create3000.de/components/ParticleSystems/WindPhysicsModel/WindPhysicsModel.x3d" ], archive: "http://media.create3000.de/components/ParticleSystems/WindPhysicsModel/WindPhysicsModel.zip" },
 
 		{ name: 'Pointing Device Sensor' },

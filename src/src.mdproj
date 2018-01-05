@@ -326,8 +326,6 @@
     <None Include="x_ite\Browser\Rendering\X3DRenderingContext.js" />
     <None Include="x_ite\Browser\Scripting\evaluate.js" />
     <None Include="x_ite\Browser\Scripting\X3DScriptingContext.js" />
-    <None Include="x_ite\Browser\Shaders\BackgroundSphereFragmentShader.fs" />
-    <None Include="x_ite\Browser\Shaders\BackgroundSphereVertexShader.vs" />
     <None Include="x_ite\Browser\Shaders\Depth.fs" />
     <None Include="x_ite\Browser\Shaders\Depth.vs" />
     <None Include="x_ite\Browser\Shaders\Gouraud.fs" />
@@ -725,6 +723,8 @@
     <None Include="x_ite\Browser\Shaders\Inlcude\Random.h" />
     <None Include="x_ite\Browser\Shaders\Inlcude\Shadow.h" />
     <None Include="x_ite\Browser\Shaders\Inlcude\Pack.h" />
+    <None Include="x_ite\Browser\Shaders\Background.vs" />
+    <None Include="x_ite\Browser\Shaders\Background.fs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
