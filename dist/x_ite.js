@@ -1,4 +1,4 @@
-/* X_ITE v4.1.4-200 */
+/* X_ITE v4.1.5a-201 */
 
 (function () {
 
@@ -23272,7 +23272,7 @@ function ($,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.1.4a";
+	return "4.1.4";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -38811,7 +38811,7 @@ var xxx = 0;
 					case X3DConstants .SFDouble:
 					case X3DConstants .SFFloat:
 					case X3DConstants .SFTime:
-					{this
+					{
 						gl .uniform1f (location, field .getValue ());
 						return;
 					}
@@ -41811,7 +41811,7 @@ define ('standard/Networking/BinaryTransport',[],function ()
 						// Apply custom fields if provided
 						if ( options.xhrFields )
 						{
-							for (var i in options.xhrFields)
+							for (var i in options .xhrFields)
 								xhr [i] = options .xhrFields [i];
 						}
 
@@ -59954,7 +59954,7 @@ function (Vector3,
 			if (this .longitudeFirst)
 			{
 				var
-					latitude  = geodetic .y;
+					latitude  = geodetic .y,
 					longitude = geodetic .x;
 			}
 			else
@@ -60244,7 +60244,7 @@ function (Geodetic,
 			if (this .eastingFirst)
 			{
 				var
-					northing = utm .y;
+					northing = utm .y,
 					easting  = utm .x;
 			}
 			else
