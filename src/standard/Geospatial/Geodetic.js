@@ -81,7 +81,7 @@ function (Vector3,
 			if (this .longitudeFirst)
 			{
 				var
-					latitude  = geodetic .y;
+					latitude  = geodetic .y,
 					longitude = geodetic .x;
 			}
 			else

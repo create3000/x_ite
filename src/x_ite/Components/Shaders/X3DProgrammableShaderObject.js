@@ -455,7 +455,7 @@ var xxx = 0;
 					case X3DConstants .SFDouble:
 					case X3DConstants .SFFloat:
 					case X3DConstants .SFTime:
-					{this
+					{
 						gl .uniform1f (location, field .getValue ());
 						return;
 					}

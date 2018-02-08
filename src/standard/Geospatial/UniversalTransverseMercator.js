@@ -103,7 +103,7 @@ function (Geodetic,
 			if (this .eastingFirst)
 			{
 				var
-					northing = utm .y;
+					northing = utm .y,
 					easting  = utm .x;
 			}
 			else
