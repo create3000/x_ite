@@ -63,9 +63,9 @@ function ($, X3DViewer, Vector3, Rotation4)
 		SPIN_RELEASE_TIME = 0.01 * 1000,
 		SPIN_ANGLE        = 0.006,
 		SPIN_FACTOR       = 0.6,
-		SCROLL_FACTOR     = 1.0 / 10.0,
+		SCROLL_FACTOR     = 1.0 / 20.0,
 		FRAME_RATE        = 60,
-		SCROLL_TIME       = 0.2;
+		SCROLL_TIME       = 0.3;
 
 	var
 		positionOffset         = new Vector3 (0, 0, 0),
