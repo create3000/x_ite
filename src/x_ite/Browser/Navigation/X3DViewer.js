@@ -145,6 +145,10 @@ function ($, X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 		
 			return this .getBrowser () .getHits () .length;
 		},
+		easeInEaseOut: function (t)
+		{
+			return (1 - Math .cos (t * Math .PI)) / 2;
+		},
 		dispose: function () { },
 	});
 

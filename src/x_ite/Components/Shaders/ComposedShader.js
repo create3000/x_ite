@@ -70,8 +70,6 @@ function ($,
 {
 "use strict";
 
-	var currentShaderNode = null;
-
 	function ComposedShader (executionContext)
 	{
 		X3DShaderNode               .call (this, executionContext);

@@ -409,9 +409,11 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 			if (elapsedTime > ROLL_TIME)
 				return this .disconnect ();
 
-			var viewpoint = this .getActiveViewpoint ();
+			var
+				viewpoint = this .getActiveViewpoint (),
+			   t         = this .easeInEaseOut (elapsedTime / ROLL_TIME);
 
-			viewpoint .orientationOffset_ = orientationOffset .assign (this .sourceRotation) .slerp (this .destinationRotation, elapsedTime / ROLL_TIME);
+			viewpoint .orientationOffset_ = orientationOffset .assign (this .sourceRotation) .slerp (this .destinationRotation, t);
 		},
 		addFly: function ()
 		{

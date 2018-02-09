@@ -39677,8 +39677,6 @@ function ($,
 {
 "use strict";
 
-	var currentShaderNode = null;
-
 	function ComposedShader (executionContext)
 	{
 		X3DShaderNode               .call (this, executionContext);
@@ -58081,6 +58079,10 @@ function ($, X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 		
 			return this .getBrowser () .getHits () .length;
 		},
+		easeInEaseOut: function (t)
+		{
+			return (1 - Math .cos (t * Math .PI)) / 2;
+		},
 		dispose: function () { },
 	});
 
@@ -58391,8 +58393,9 @@ function ($, X3DViewer, Vector3, Rotation4)
 		SPIN_RELEASE_TIME = 0.01 * 1000,
 		SPIN_ANGLE        = 0.006,
 		SPIN_FACTOR       = 0.6,
-		SCROLL_FACTOR     = 1.0 / 50.0,
-		FRAME_RATE        = 60;
+		SCROLL_FACTOR     = 1.0 / 10.0,
+		FRAME_RATE        = 60,
+		SCROLL_TIME       = 0.2;
 
 	var
 		positionOffset         = new Vector3 (0, 0, 0),
@@ -58407,16 +58410,18 @@ function ($, X3DViewer, Vector3, Rotation4)
 	{
 		X3DViewer .call (this, executionContext);
 
-		this .button            = -1;
-		this .orientationOffset = new Rotation4 (0, 0, 1, 0);
-		this .rotation          = new Rotation4 (0, 0, 1, 0);
-		this .fromVector        = new Vector3 (0, 0, 0);
-		this .toVector          = new Vector3 (0, 0, 0);
-		this .fromPoint         = new Vector3 (0, 0, 0);
-		this .toPoint           = new Vector3 (0, 0, 0);
-		this .pressTime         = 0;
-		this .motionTime        = 0;
-		this .spinId            = undefined;
+		this .button                    = -1;
+		this .orientationOffset         = new Rotation4 (0, 0, 1, 0);
+		this .rotation                  = new Rotation4 (0, 0, 1, 0);
+		this .fromVector                = new Vector3 (0, 0, 0);
+		this .toVector                  = new Vector3 (0, 0, 0);
+		this .fromPoint                 = new Vector3 (0, 0, 0);
+		this .toPoint                   = new Vector3 (0, 0, 0);
+		this .sourcePositionOffset      = new Vector3 (0, 0, 0);
+		this .destinationPositionOffset = new Vector3 (0, 0, 0);
+		this .pressTime                 = 0;
+		this .motionTime                = 0;
+		this .spinId                    = undefined;
 	}
 
 	ExamineViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
@@ -58629,10 +58634,10 @@ function ($, X3DViewer, Vector3, Rotation4)
 			viewpoint .getUserOrientation () .multVecRot (positionOffset .set (0, 0, step .abs ()));
 
 			if (event .deltaY > 0)
-				viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .subtract (positionOffset);		
+				this .addScroll (viewpoint .positionOffset_ .getValue (), Vector3 .subtract (viewpoint .positionOffset_ .getValue (), positionOffset));		
 			
 			else if (event .deltaY < 0)
-				viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .add (positionOffset);
+				this .addScroll (viewpoint .positionOffset_ .getValue (), Vector3 .add (viewpoint .positionOffset_ .getValue (), positionOffset));
 		},
 		getPositionOffset: function ()
 		{
@@ -58654,12 +58659,37 @@ function ($, X3DViewer, Vector3, Rotation4)
 
 			return result .assign (viewpoint .getOrientation ()) .inverse () .multRight (this .rotation) .multRight (viewpoint .getUserOrientation ());
 		},
+		scroll: function ()
+		{
+			var
+				now          = performance .now (),
+				elapsedTime  = (now - this .startTime) / 1000;
+
+			if (elapsedTime > SCROLL_TIME)
+				return this .disconnect ();
+
+			var
+				viewpoint = this .getActiveViewpoint (),
+			   t         = this .easeInEaseOut (elapsedTime / SCROLL_TIME);
+
+			viewpoint .positionOffset_ = positionOffset .assign (this .sourcePositionOffset) .lerp (this .destinationPositionOffset, t);
+		},
 		spin: function ()
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
 			viewpoint .orientationOffset_ = this .getOrientationOffset ();
 			viewpoint .positionOffset_    = this .getPositionOffset ();
+		},
+		addScroll: function (sourcePositionOffset, destinationPositionOffset)
+		{
+			this .getBrowser () .prepareEvents () .addInterest ("scroll", this);
+			this .getBrowser () .addBrowserEvent ();
+
+			this .sourcePositionOffset      .assign (sourcePositionOffset);
+			this .destinationPositionOffset .assign (destinationPositionOffset);
+		
+			this .startTime = performance .now ();
 		},
 		addSpinning: function ()
 		{
@@ -58669,6 +58699,8 @@ function ($, X3DViewer, Vector3, Rotation4)
 		disconnect: function ()
 		{
 			clearInterval (this .spinId);
+
+			this .getBrowser () .prepareEvents () .removeInterest ("scroll", this);
 
 			this .spinId = undefined;
 		},
@@ -59094,9 +59126,11 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 			if (elapsedTime > ROLL_TIME)
 				return this .disconnect ();
 
-			var viewpoint = this .getActiveViewpoint ();
+			var
+				viewpoint = this .getActiveViewpoint (),
+			   t         = this .easeInEaseOut (elapsedTime / ROLL_TIME);
 
-			viewpoint .orientationOffset_ = orientationOffset .assign (this .sourceRotation) .slerp (this .destinationRotation, elapsedTime / ROLL_TIME);
+			viewpoint .orientationOffset_ = orientationOffset .assign (this .sourceRotation) .slerp (this .destinationRotation, t);
 		},
 		addFly: function ()
 		{
