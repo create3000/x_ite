@@ -1,17 +1,14 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="package.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Shaders/ComposedShader.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.vs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext.js" Line="1" Column="1" />
-      <File FileName="build/version.pl" Line="1" Column="1" />
-      <File FileName="package.json" Line="5" Column="24" />
+      <File FileName="src/x_ite/Components/Rendering/X3DComposedGeometryNode.js" Line="231" Column="17" />
+      <File FileName="src/x_ite/Components/Rendering/LineSet.js" Line="204" Column="19" />
+      <File FileName="src/x_ite/Components/Rendering/PointSet.js" Line="180" Column="17" />
+      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="131" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/ShaderPart.js" Line="75" Column="13" />
+      <File FileName="src/x_ite/Components/Shaders/ComposedShader.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -217,36 +217,21 @@ function ($,
 				this .isValid_ = false;
 			}
 		},
-		setGlobalUniforms: function (renderObject, gl,cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
+		setGlobalUniforms: function (renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
-			if (currentShaderNode !== this)
-			{
-				currentShaderNode = this;
-
-				gl .useProgram (this .program);
-			}
+			this .useProgram (gl);
 			
 			X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 		},
 		setLocalUniforms: function (gl, context)
 		{
-			if (currentShaderNode !== this)
-			{
-				currentShaderNode = this;
-
-				gl .useProgram (this .program);
-			}
-
+			this .useProgram (gl);
+	
 			X3DProgrammableShaderObject .prototype .setLocalUniforms .call (this, gl, context);
 		},
 		useProgram: function (gl)
 		{
-			if (currentShaderNode !== this)
-			{
-				currentShaderNode = this;
-
-				gl .useProgram (this .program);
-			}
+			gl .useProgram (this .program);
 		},
 	});
 

@@ -201,7 +201,7 @@ function ($,
 					for (var i = 0; i < count; ++ i, index += i & 1)
 					{
 						for (var a = 0; a < numAttrib; ++ a)
-							attrib [a] .addValue (attribs [a], index);
+							attribNodes [a] .addValue (attribs [a], index);
 
 						if (colorNode)
 							this .addColor (colorNode .get1Color (index));

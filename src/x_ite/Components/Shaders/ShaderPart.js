@@ -57,6 +57,7 @@ define ([
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/InputOutput/FileLoader",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/DEBUG",
 ],
 function ($,
           Fields,
@@ -66,7 +67,8 @@ function ($,
           X3DNode, 
           X3DUrlObject,
           FileLoader,
-          X3DConstants)
+          X3DConstants,
+          DEBUG)
 {
 "use strict";
 

@@ -1,4 +1,4 @@
-/* X_ITE v4.1.5a-201 */
+/* X_ITE v4.1.5a-202 */
 
 (function () {
 
@@ -23272,7 +23272,7 @@ function ($,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.1.4";
+	return "4.1.5a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -39824,36 +39824,21 @@ function ($,
 				this .isValid_ = false;
 			}
 		},
-		setGlobalUniforms: function (renderObject, gl,cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
+		setGlobalUniforms: function (renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
-			if (currentShaderNode !== this)
-			{
-				currentShaderNode = this;
-
-				gl .useProgram (this .program);
-			}
+			this .useProgram (gl);
 			
 			X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 		},
 		setLocalUniforms: function (gl, context)
 		{
-			if (currentShaderNode !== this)
-			{
-				currentShaderNode = this;
-
-				gl .useProgram (this .program);
-			}
-
+			this .useProgram (gl);
+	
 			X3DProgrammableShaderObject .prototype .setLocalUniforms .call (this, gl, context);
 		},
 		useProgram: function (gl)
 		{
-			if (currentShaderNode !== this)
-			{
-				currentShaderNode = this;
-
-				gl .useProgram (this .program);
-			}
+			gl .useProgram (this .program);
 		},
 	});
 
@@ -40047,51 +40032,74 @@ function (Shadow,
 		},
 		getShaderSource: function (browser, source)
 		{
-			var constants = "";
+			var source = this .getSource (source);
 
-			constants += "#define X_ITE\n";
+			var
+				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
+				LINE         = "#line\\s+.*?\\n",
+				IFDEF        = "#ifdef\\s+.*?\\n",
+				IFNDEF       = "#ifndef\\s+.*?\\n",
+				ELSE         = "#else.*?\\n",
+				ENDIF        = "#endif+.*?\\n",
+				DEFINE       = "#define\\s+(?:[^\\n\\\\]|\\\\[^\\r\\n]|\\\\\\r?\\n)*\\n",
+				PRAGMA       = "#pragma\\s+.*?\\n",
+				PREPROCESSOR =  LINE + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + PRAGMA,
+				VERSION      = "#version\\s+.*?\\n",
+				EXTENSION    = "#extension\\s+.*?\\n",
+				ANY          = "[\\s\\S]*";
 
-			constants += "#define x3d_None 0\n";
+			var
+				GLSL  = new RegExp ("^((?:" + COMMENTS + "|" + PREPROCESSOR + ")*(?:" + VERSION + ")?(?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$"),
+				match = source .match (GLSL);
 
-			constants += "#define x3d_GeometryPoints  0\n";
-			constants += "#define x3d_GeometryLines   1\n";
-			constants += "#define x3d_Geometry2D      2\n";
-			constants += "#define x3d_Geometry3D      3\n";
+			if (! match)
+				return source;
 
-			constants += "#define x3d_MaxClipPlanes  " + browser .getMaxClipPlanes () + "\n";
+			var definitions = "";
 
-			constants += "#define x3d_LinearFog        1\n";
-			constants += "#define x3d_ExponentialFog   2\n";
-			constants += "#define x3d_Exponential2Fog  3\n";
+			definitions += "#define X_ITE\n";
 
-			constants += "#define x3d_MaxLights         " + browser .getMaxLights () + "\n";
-			constants += "#define x3d_DirectionalLight  1\n";
-			constants += "#define x3d_PointLight        2\n";
-			constants += "#define x3d_SpotLight         3\n";
+			definitions += "#define x3d_None 0\n";
 
-			constants += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
-			constants += "#define x3d_TextureType2D              2\n";
-			constants += "#define x3d_TextureType3D              3\n";
-			constants += "#define x3d_TextureTypeCubeMapTexture  4\n";
+			definitions += "#define x3d_GeometryPoints  0\n";
+			definitions += "#define x3d_GeometryLines   1\n";
+			definitions += "#define x3d_Geometry2D      2\n";
+			definitions += "#define x3d_Geometry3D      3\n";
+
+			definitions += "#define x3d_MaxClipPlanes  " + browser .getMaxClipPlanes () + "\n";
+
+			definitions += "#define x3d_LinearFog        1\n";
+			definitions += "#define x3d_ExponentialFog   2\n";
+			definitions += "#define x3d_Exponential2Fog  3\n";
+
+			definitions += "#define x3d_MaxLights         " + browser .getMaxLights () + "\n";
+			definitions += "#define x3d_DirectionalLight  1\n";
+			definitions += "#define x3d_PointLight        2\n";
+			definitions += "#define x3d_SpotLight         3\n";
+
+			definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
+			definitions += "#define x3d_TextureType2D              2\n";
+			definitions += "#define x3d_TextureType3D              3\n";
+			definitions += "#define x3d_TextureTypeCubeMapTexture  4\n";
 
 			if (DEBUG)
-				constants += "#define X3D_SHADOWS\n";
+				definitions += "#define X3D_SHADOWS\n";
 
-			constants += "#define x3d_MaxShadows     4\n";
-			constants += "#define x3d_ShadowSamples  8\n"; // Range (0, 255)
+			definitions += "#define x3d_MaxShadows     4\n";
+			definitions += "#define x3d_ShadowSamples  8\n"; // Range (0, 255)
 
 			// Legacy
-			constants += "#define x3d_NoneClipPlane  vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
-			constants += "#define x3d_NoneFog        0\n";
-			constants += "#define x3d_NoneLight      0\n";
-			constants += "#define x3d_NoneTexture    0\n";
+			definitions += "#define x3d_NoneClipPlane  vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
+			definitions += "#define x3d_NoneFog        0\n";
+			definitions += "#define x3d_NoneLight      0\n";
+			definitions += "#define x3d_NoneTexture    0\n";
 
 			depreciatedWarning (source, "x3d_NoneClipPlane", "x3d_NumClipPlanes");
 			depreciatedWarning (source, "x3d_NoneFog",       "x3d_None");
 			depreciatedWarning (source, "x3d_NoneLight",     "x3d_NumLights");
 			depreciatedWarning (source, "x3d_NoneTexture",   "x3d_NumTextures");
 
-			return constants + Types + this .getSource (source);
+			return match [1] + definitions + Types + match [2];
 		},
 	};
 
@@ -45722,6 +45730,7 @@ define ('x_ite/Components/Shaders/ShaderPart',[
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/InputOutput/FileLoader",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/DEBUG",
 ],
 function ($,
           Fields,
@@ -45731,7 +45740,8 @@ function ($,
           X3DNode, 
           X3DUrlObject,
           FileLoader,
-          X3DConstants)
+          X3DConstants,
+          DEBUG)
 {
 "use strict";
 
@@ -50098,6 +50108,63 @@ function ($,
 {
 "use strict";
 
+	var extensions = [
+			"ANGLE_instanced_arrays",
+			"EXT_blend_minmax",
+			"EXT_frag_depth",
+			"EXT_shader_texture_lod",
+			"EXT_texture_filter_anisotropic",
+			"OES_element_index_uint",
+			"OES_standard_derivatives",
+			"OES_texture_float",
+			"OES_texture_float_linear",
+			"OES_texture_half_float",
+			"OES_texture_half_float_linear",
+			"OES_vertex_array_object",
+			"WEBGL_compressed_texture_s3tc",
+			"WEBGL_debug_renderer_info",
+			"WEBGL_debug_shaders",
+			"WEBGL_depth_texture",
+			"WEBGL_draw_buffers",
+			"WEBGL_lose_context",
+
+			"EXT_color_buffer_float",
+			"EXT_color_buffer_half_float",
+			"EXT_disjoint_timer_query",
+			"EXT_disjoint_timer_query_webgl2",
+			"EXT_sRGB",
+			"WEBGL_color_buffer_float",
+			"WEBGL_compressed_texture_astc",
+			"WEBGL_compressed_texture_atc",
+			"WEBGL_compressed_texture_etc",
+			"WEBGL_compressed_texture_etc1",
+			"WEBGL_compressed_texture_pvrtc",
+			"WEBGL_compressed_texture_s3tc_srgb",
+
+			"EXT_float_blend",
+			"OES_fbo_render_mipmap",
+			"WEBGL_get_buffer_sub_data_async",
+			"WEBGL_multiview",
+			"WEBGL_security_sensitive_resources",
+			"WEBGL_shared_resources",
+
+			"EXT_clip_cull_distance",
+			"WEBGL_debug",
+			"WEBGL_dynamic_texture",
+			"WEBGL_subarray_uploads",
+			"WEBGL_texture_multisample",
+			"WEBGL_texture_source_iframe",
+			"WEBGL_video_texture",
+
+			"EXT_texture_storage",
+			"OES_depth24",
+			"WEBGL_debug_shader_precision",
+			"WEBGL_draw_elements_no_range_check",
+			"WEBGL_subscribe_uniform",
+			"WEBGL_texture_from_depth_video",
+	];
+
+
 	function X3DRenderingContext ()
 	{
 		this .addChildObjects ("viewport", new Fields .MFInt32 (0, 0, 300, 150));
@@ -50112,6 +50179,10 @@ function ($,
 			// Configure context.
 
 			var gl = this .getContext ();
+
+			extensions .forEach (function (extension) {
+            gl .getExtension (extension);
+			});
 
 			gl .enable (gl .SCISSOR_TEST);
 			gl .cullFace (gl .BACK);
@@ -52955,7 +53026,7 @@ function ($,
 				var index = this .getPolygonIndex (this .getTriangleIndex (i));
 
 				for (var a = 0; a < numAttrib; ++ a)
-					attrib [a] .addValue (attribs [a], index);
+					attribNodes [a] .addValue (attribs [a], index);
 
 				if (colorNode)
 				{
@@ -95304,7 +95375,7 @@ function ($,
 					for (var i = 0; i < count; ++ i, index += i & 1)
 					{
 						for (var a = 0; a < numAttrib; ++ a)
-							attrib [a] .addValue (attribs [a], index);
+							attribNodes [a] .addValue (attribs [a], index);
 
 						if (colorNode)
 							this .addColor (colorNode .get1Color (index));

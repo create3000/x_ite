@@ -109,51 +109,74 @@ function (Shadow,
 		},
 		getShaderSource: function (browser, source)
 		{
-			var constants = "";
+			var source = this .getSource (source);
 
-			constants += "#define X_ITE\n";
+			var
+				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
+				LINE         = "#line\\s+.*?\\n",
+				IFDEF        = "#ifdef\\s+.*?\\n",
+				IFNDEF       = "#ifndef\\s+.*?\\n",
+				ELSE         = "#else.*?\\n",
+				ENDIF        = "#endif+.*?\\n",
+				DEFINE       = "#define\\s+(?:[^\\n\\\\]|\\\\[^\\r\\n]|\\\\\\r?\\n)*\\n",
+				PRAGMA       = "#pragma\\s+.*?\\n",
+				PREPROCESSOR =  LINE + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + PRAGMA,
+				VERSION      = "#version\\s+.*?\\n",
+				EXTENSION    = "#extension\\s+.*?\\n",
+				ANY          = "[\\s\\S]*";
 
-			constants += "#define x3d_None 0\n";
+			var
+				GLSL  = new RegExp ("^((?:" + COMMENTS + "|" + PREPROCESSOR + ")*(?:" + VERSION + ")?(?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$"),
+				match = source .match (GLSL);
 
-			constants += "#define x3d_GeometryPoints  0\n";
-			constants += "#define x3d_GeometryLines   1\n";
-			constants += "#define x3d_Geometry2D      2\n";
-			constants += "#define x3d_Geometry3D      3\n";
+			if (! match)
+				return source;
 
-			constants += "#define x3d_MaxClipPlanes  " + browser .getMaxClipPlanes () + "\n";
+			var definitions = "";
 
-			constants += "#define x3d_LinearFog        1\n";
-			constants += "#define x3d_ExponentialFog   2\n";
-			constants += "#define x3d_Exponential2Fog  3\n";
+			definitions += "#define X_ITE\n";
 
-			constants += "#define x3d_MaxLights         " + browser .getMaxLights () + "\n";
-			constants += "#define x3d_DirectionalLight  1\n";
-			constants += "#define x3d_PointLight        2\n";
-			constants += "#define x3d_SpotLight         3\n";
+			definitions += "#define x3d_None 0\n";
 
-			constants += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
-			constants += "#define x3d_TextureType2D              2\n";
-			constants += "#define x3d_TextureType3D              3\n";
-			constants += "#define x3d_TextureTypeCubeMapTexture  4\n";
+			definitions += "#define x3d_GeometryPoints  0\n";
+			definitions += "#define x3d_GeometryLines   1\n";
+			definitions += "#define x3d_Geometry2D      2\n";
+			definitions += "#define x3d_Geometry3D      3\n";
+
+			definitions += "#define x3d_MaxClipPlanes  " + browser .getMaxClipPlanes () + "\n";
+
+			definitions += "#define x3d_LinearFog        1\n";
+			definitions += "#define x3d_ExponentialFog   2\n";
+			definitions += "#define x3d_Exponential2Fog  3\n";
+
+			definitions += "#define x3d_MaxLights         " + browser .getMaxLights () + "\n";
+			definitions += "#define x3d_DirectionalLight  1\n";
+			definitions += "#define x3d_PointLight        2\n";
+			definitions += "#define x3d_SpotLight         3\n";
+
+			definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
+			definitions += "#define x3d_TextureType2D              2\n";
+			definitions += "#define x3d_TextureType3D              3\n";
+			definitions += "#define x3d_TextureTypeCubeMapTexture  4\n";
 
 			if (DEBUG)
-				constants += "#define X3D_SHADOWS\n";
+				definitions += "#define X3D_SHADOWS\n";
 
-			constants += "#define x3d_MaxShadows     4\n";
-			constants += "#define x3d_ShadowSamples  8\n"; // Range (0, 255)
+			definitions += "#define x3d_MaxShadows     4\n";
+			definitions += "#define x3d_ShadowSamples  8\n"; // Range (0, 255)
 
 			// Legacy
-			constants += "#define x3d_NoneClipPlane  vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
-			constants += "#define x3d_NoneFog        0\n";
-			constants += "#define x3d_NoneLight      0\n";
-			constants += "#define x3d_NoneTexture    0\n";
+			definitions += "#define x3d_NoneClipPlane  vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
+			definitions += "#define x3d_NoneFog        0\n";
+			definitions += "#define x3d_NoneLight      0\n";
+			definitions += "#define x3d_NoneTexture    0\n";
 
 			depreciatedWarning (source, "x3d_NoneClipPlane", "x3d_NumClipPlanes");
 			depreciatedWarning (source, "x3d_NoneFog",       "x3d_None");
 			depreciatedWarning (source, "x3d_NoneLight",     "x3d_NumLights");
 			depreciatedWarning (source, "x3d_NoneTexture",   "x3d_NumTextures");
 
-			return constants + Types + this .getSource (source);
+			return match [1] + definitions + Types + match [2];
 		},
 	};
 
