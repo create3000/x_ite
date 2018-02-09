@@ -1,4 +1,4 @@
-/* X_ITE v4.1.5a-202 */
+/* X_ITE v4.1.5a-203 */
 
 (function () {
 
@@ -58634,10 +58634,10 @@ function ($, X3DViewer, Vector3, Rotation4)
 			viewpoint .getUserOrientation () .multVecRot (positionOffset .set (0, 0, step .abs ()));
 
 			if (event .deltaY > 0)
-				this .addScroll (viewpoint .positionOffset_ .getValue (), Vector3 .subtract (viewpoint .positionOffset_ .getValue (), positionOffset));		
+				this .addScroll (positionOffset .negate ());		
 			
 			else if (event .deltaY < 0)
-				this .addScroll (viewpoint .positionOffset_ .getValue (), Vector3 .add (viewpoint .positionOffset_ .getValue (), positionOffset));
+				this .addScroll (positionOffset);
 		},
 		getPositionOffset: function ()
 		{
@@ -58681,13 +58681,23 @@ function ($, X3DViewer, Vector3, Rotation4)
 			viewpoint .orientationOffset_ = this .getOrientationOffset ();
 			viewpoint .positionOffset_    = this .getPositionOffset ();
 		},
-		addScroll: function (sourcePositionOffset, destinationPositionOffset)
+		addScroll: function (positionOffset)
 		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			if (this .getBrowser () .prepareEvents () .hasInterest ("scroll", this))
+			{
+				this .sourcePositionOffset      .assign (viewpoint .positionOffset_ .getValue ());
+				this .destinationPositionOffset .add (positionOffset);
+			}
+			else
+			{
+				this .sourcePositionOffset      .assign (viewpoint .positionOffset_ .getValue ());
+				this .destinationPositionOffset .assign (Vector3 .add (viewpoint .positionOffset_ .getValue (), positionOffset));
+			}
+
 			this .getBrowser () .prepareEvents () .addInterest ("scroll", this);
 			this .getBrowser () .addBrowserEvent ();
-
-			this .sourcePositionOffset      .assign (sourcePositionOffset);
-			this .destinationPositionOffset .assign (destinationPositionOffset);
 		
 			this .startTime = performance .now ();
 		},
