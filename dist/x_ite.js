@@ -1,4 +1,4 @@
-/* X_ITE v4.1.5a-209 */
+/* X_ITE v4.1.5a-210 */
 
 (function () {
 
@@ -58398,7 +58398,7 @@ function ($, X3DViewer, Vector3, Rotation4)
 
 	var
 		MOTION_TIME       = 0.05 * 1000,
-		SPIN_RELEASE_TIME = 0.02 * 1000,
+		SPIN_RELEASE_TIME = 0.04 * 1000,
 		SPIN_ANGLE        = 0.003,
 		SPIN_FACTOR       = 0.6,
 		SCROLL_FACTOR     = 1.0 / 20.0,
@@ -58632,9 +58632,12 @@ function ($, X3DViewer, Vector3, Rotation4)
 
 			// Change viewpoint position.
 
-			var viewpoint = this .getActiveViewpoint ();
+			var
+				browser   = this .getBrowser (),
+				viewpoint = this .getActiveViewpoint ();
 
-			//viewpoint .transitionStop ();
+			browser .prepareEvents () .removeInterest ("spin", this);
+			viewpoint .transitionStop ();
 
 			var step = this .getDistanceToCenter (distance) .multiply (SCROLL_FACTOR);
 
@@ -58688,19 +58691,19 @@ function ($, X3DViewer, Vector3, Rotation4)
 			viewpoint .orientationOffset_ = this .getOrientationOffset ();
 			viewpoint .positionOffset_    = this .getPositionOffset ();
 		},
-		addScroll: function (positionOffset)
+		addScroll: function (positionOffsetChange)
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
 			if (this .getBrowser () .prepareEvents () .hasInterest ("scroll", this))
 			{
 				this .sourcePositionOffset      .assign (viewpoint .positionOffset_ .getValue ());
-				this .destinationPositionOffset .add (positionOffset);
+				this .destinationPositionOffset .add (positionOffsetChange);
 			}
 			else
 			{
 				this .sourcePositionOffset      .assign (viewpoint .positionOffset_ .getValue ());
-				this .destinationPositionOffset .assign (Vector3 .add (viewpoint .positionOffset_ .getValue (), positionOffset));
+				this .destinationPositionOffset .assign (Vector3 .add (viewpoint .positionOffset_ .getValue (), positionOffsetChange));
 			}
 
 			this .getBrowser () .prepareEvents () .addInterest ("scroll", this);
