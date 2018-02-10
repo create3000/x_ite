@@ -97,18 +97,7 @@ function ($,
 		{
 			// Configure context.
 
-			var
-				gl         = this .getContext (),
-				extensions = this .getElement () .attr ("extensions");
-
-			if (extensions)
-			{
-				extensions .split (" ") .forEach (function (extension)
-				{
-					if (extension .length)
-						gl .getExtension (extension);
-				});
-			}
+			var gl = this .getContext ();
 
 			gl .enable (gl .SCISSOR_TEST);
 			gl .cullFace (gl .BACK);

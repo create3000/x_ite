@@ -1,4 +1,4 @@
-/* X_ITE v4.1.5a-208 */
+/* X_ITE v4.1.5a-209 */
 
 (function () {
 
@@ -36265,6 +36265,62 @@ function ($,
 	
 	var browserNumber = 0;
 
+	var extensions = [
+			"ANGLE_instanced_arrays",
+			"EXT_blend_minmax",
+			"EXT_frag_depth",
+			"EXT_shader_texture_lod",
+			"EXT_texture_filter_anisotropic",
+			"OES_element_index_uint",
+			"OES_standard_derivatives",
+			"OES_texture_float",
+			"OES_texture_float_linear",
+			"OES_texture_half_float",
+			"OES_texture_half_float_linear",
+			"OES_vertex_array_object",
+			"WEBGL_compressed_texture_s3tc",
+			"WEBGL_debug_renderer_info",
+			"WEBGL_debug_shaders",
+			"WEBGL_depth_texture",
+			"WEBGL_draw_buffers",
+			"WEBGL_lose_context",
+
+			"EXT_color_buffer_float",
+			"EXT_color_buffer_half_float",
+			"EXT_disjoint_timer_query",
+			"EXT_disjoint_timer_query_webgl2",
+			"EXT_sRGB",
+			"WEBGL_color_buffer_float",
+			"WEBGL_compressed_texture_astc",
+			"WEBGL_compressed_texture_atc",
+			"WEBGL_compressed_texture_etc",
+			"WEBGL_compressed_texture_etc1",
+			"WEBGL_compressed_texture_pvrtc",
+			"WEBGL_compressed_texture_s3tc_srgb",
+
+			"EXT_float_blend",
+			"OES_fbo_render_mipmap",
+			"WEBGL_get_buffer_sub_data_async",
+			"WEBGL_multiview",
+			"WEBGL_security_sensitive_resources",
+			"WEBGL_shared_resources",
+
+			"EXT_clip_cull_distance",
+			"WEBGL_debug",
+			"WEBGL_dynamic_texture",
+			"WEBGL_subarray_uploads",
+			"WEBGL_texture_multisample",
+			"WEBGL_texture_source_iframe",
+			"WEBGL_video_texture",
+
+			"EXT_texture_storage",
+			"OES_depth24",
+			"WEBGL_debug_shader_precision",
+			"WEBGL_draw_elements_no_range_check",
+			"WEBGL_subscribe_uniform",
+			"WEBGL_texture_from_depth_video",
+	];
+
 	function getContext (canvas)
 	{
 		var gl = canvas .getContext ("webgl") ||
@@ -36309,6 +36365,15 @@ function ($,
 		this .splashScreen = splashScreen;
 		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
 		this .context      = getContext (this .canvas [0]);
+		this .extensions   = { };
+
+		var gl = this .getContext ();
+
+		extensions .forEach (function (name)
+		{
+			this .extensions [name] = gl .getExtension (name);
+		},
+		this);
 
 		this .privateScene = new Scene (this); // Scene for default nodes.
 
@@ -36378,6 +36443,10 @@ function ($,
 		getContext: function ()
 		{
 			return this .context;
+		},
+		getExtension: function (name)
+		{
+			return this .extensions [name];
 		},
 		getBrowserOptions: function ()
 		{
@@ -50119,18 +50188,7 @@ function ($,
 		{
 			// Configure context.
 
-			var
-				gl         = this .getContext (),
-				extensions = this .getElement () .attr ("extensions");
-
-			if (extensions)
-			{
-				extensions .split (" ") .forEach (function (extension)
-				{
-					if (extension .length)
-						gl .getExtension (extension);
-				});
-			}
+			var gl = this .getContext ();
 
 			gl .enable (gl .SCISSOR_TEST);
 			gl .cullFace (gl .BACK);
@@ -58340,8 +58398,8 @@ function ($, X3DViewer, Vector3, Rotation4)
 
 	var
 		MOTION_TIME       = 0.05 * 1000,
-		SPIN_RELEASE_TIME = 0.01 * 1000,
-		SPIN_ANGLE        = 0.006,
+		SPIN_RELEASE_TIME = 0.02 * 1000,
+		SPIN_ANGLE        = 0.003,
 		SPIN_FACTOR       = 0.6,
 		SCROLL_FACTOR     = 1.0 / 20.0,
 		SCROLL_TIME       = 0.3,
@@ -58371,7 +58429,6 @@ function ($, X3DViewer, Vector3, Rotation4)
 		this .destinationPositionOffset = new Vector3 (0, 0, 0);
 		this .pressTime                 = 0;
 		this .motionTime                = 0;
-		this .spinId                    = undefined;
 	}
 
 	ExamineViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
@@ -58653,16 +58710,14 @@ function ($, X3DViewer, Vector3, Rotation4)
 		},
 		addSpinning: function ()
 		{
-			if (! this .spinId)
-				this .spinId = setInterval (this .spin .bind (this), 1000.0 / FRAME_RATE);
+			this .getBrowser () .prepareEvents () .addInterest ("spin", this);
 		},
 		disconnect: function ()
 		{
-			clearInterval (this .spinId);
+			var browser = this .getBrowser ();
 
-			this .getBrowser () .prepareEvents () .removeInterest ("scroll", this);
-
-			this .spinId = undefined;
+			browser .prepareEvents () .removeInterest ("scroll", this);
+			browser .prepareEvents () .removeInterest ("spin",   this);
 		},
 		dispose: function ()
 		{

@@ -60,8 +60,8 @@ function ($, X3DViewer, Vector3, Rotation4)
 
 	var
 		MOTION_TIME       = 0.05 * 1000,
-		SPIN_RELEASE_TIME = 0.01 * 1000,
-		SPIN_ANGLE        = 0.006,
+		SPIN_RELEASE_TIME = 0.02 * 1000,
+		SPIN_ANGLE        = 0.003,
 		SPIN_FACTOR       = 0.6,
 		SCROLL_FACTOR     = 1.0 / 20.0,
 		SCROLL_TIME       = 0.3,
@@ -91,7 +91,6 @@ function ($, X3DViewer, Vector3, Rotation4)
 		this .destinationPositionOffset = new Vector3 (0, 0, 0);
 		this .pressTime                 = 0;
 		this .motionTime                = 0;
-		this .spinId                    = undefined;
 	}
 
 	ExamineViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
@@ -373,16 +372,14 @@ function ($, X3DViewer, Vector3, Rotation4)
 		},
 		addSpinning: function ()
 		{
-			if (! this .spinId)
-				this .spinId = setInterval (this .spin .bind (this), 1000.0 / FRAME_RATE);
+			this .getBrowser () .prepareEvents () .addInterest ("spin", this);
 		},
 		disconnect: function ()
 		{
-			clearInterval (this .spinId);
+			var browser = this .getBrowser ();
 
-			this .getBrowser () .prepareEvents () .removeInterest ("scroll", this);
-
-			this .spinId = undefined;
+			browser .prepareEvents () .removeInterest ("scroll", this);
+			browser .prepareEvents () .removeInterest ("spin",   this);
 		},
 		dispose: function ()
 		{
