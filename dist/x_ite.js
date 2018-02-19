@@ -1,4 +1,4 @@
-/* X_ITE v4.1.5a-210 */
+/* X_ITE v4.1.5a-211 */
 
 (function () {
 
@@ -22995,33 +22995,6 @@ function ($,
 			}
 		},
 	});
-	
-	function MFFieldTemplate (TypeName, Type, SFField)
-	{
-		function MFField (value)
-		{
-			if (this instanceof MFField)
-				return X3DArrayField .call (this, arguments);
-			
-			return X3DArrayField .call (Object .create (MFField .prototype), arguments);
-		}
-	
-		MFField .prototype = $.extend (Object .create (X3DArrayField .prototype),
-		{
-			constructor: MFField,
-			_valueType: SFField,
-			getTypeName: function ()
-			{
-				return TypeName;
-			},
-			getType: function ()
-			{
-				return Type;
-			},
-		});
-
-		return MFField;
-	}
 
 	function MFString (value)
 	{
@@ -23065,30 +23038,58 @@ function ($,
 			}
 		},
 	});
+	
+	function MFFieldTemplate (TypeName, Type, SFField, ArrayType)
+	{
+		function MFField (value)
+		{
+			if (this instanceof MFField)
+				return X3DArrayField .call (this, arguments);
+			
+			return X3DArrayField .call (Object .create (MFField .prototype), arguments);
+		}
+	
+		MFField .prototype = $.extend (Object .create (X3DArrayField .prototype),
+		{
+			constructor: MFField,
+			_arrayType: ArrayType,
+			_valueType: SFField,
+			getTypeName: function ()
+			{
+				return TypeName;
+			},
+			getType: function ()
+			{
+				return Type;
+			},
+		});
+
+		return MFField;
+	}
 
 	var ArrayFields =
 	{
-		MFBool:      MFFieldTemplate ("MFBool",      X3DConstants .MFBool,      SFBool),
-		MFColor:     MFFieldTemplate ("MFColor",     X3DConstants .MFColor,     SFColor),
-		MFColorRGBA: MFFieldTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA),
-		MFDouble:    MFFieldTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble),
-		MFFloat:     MFFieldTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat),
-		MFImage:     MFFieldTemplate ("MFImage",     X3DConstants .MFImage,     SFImage),
-		MFInt32:     MFFieldTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32),
-		MFMatrix3d:  MFFieldTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d),
-		MFMatrix3f:  MFFieldTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f),
-		MFMatrix4d:  MFFieldTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d),
-		MFMatrix4f:  MFFieldTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f),
+		MFBool:      MFFieldTemplate ("MFBool",      X3DConstants .MFBool,      SFBool,      Uint8Array),
+		MFColor:     MFFieldTemplate ("MFColor",     X3DConstants .MFColor,     SFColor,     Float32Array),
+		MFColorRGBA: MFFieldTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA, Float32Array),
+		MFDouble:    MFFieldTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble,    Float64Array),
+		MFFloat:     MFFieldTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat,     Float32Array),
+		MFImage:     MFFieldTemplate ("MFImage",     X3DConstants .MFImage,     SFImage,     Array),
+		MFInt32:     MFFieldTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32,     Int32Array),
+		MFMatrix3d:  MFFieldTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d,  Float64Array),
+		MFMatrix3f:  MFFieldTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f,  Float32Array),
+		MFMatrix4d:  MFFieldTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d,  Float64Array),
+		MFMatrix4f:  MFFieldTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f,  Float32Array),
 		MFNode:      MFNode,
-		MFRotation:  MFFieldTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation),
+		MFRotation:  MFFieldTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation,  Float64Array),
 		MFString:    MFString,
-		MFTime:      MFFieldTemplate ("MFTime",      X3DConstants .MFTime,      SFTime),
-		MFVec2d:     MFFieldTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d),
-		MFVec2f:     MFFieldTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f),
-		MFVec3d:     MFFieldTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d),
-		MFVec3f:     MFFieldTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f),
-		MFVec4d:     MFFieldTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d),
-		MFVec4f:     MFFieldTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f),
+		MFTime:      MFFieldTemplate ("MFTime",      X3DConstants .MFTime,      SFTime,      Float64Array),
+		MFVec2d:     MFFieldTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d,     Float64Array),
+		MFVec2f:     MFFieldTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f,     Float32Array),
+		MFVec3d:     MFFieldTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d,     Float64Array),
+		MFVec3f:     MFFieldTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f,     Float32Array),
+		MFVec4d:     MFFieldTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d,     Float64Array),
+		MFVec4f:     MFFieldTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f,     Float32Array),
 	};
 
 	Object .preventExtensions (ArrayFields);
@@ -33275,6 +33276,7 @@ function ($,
 	 *  Grammar
 	 */
 
+/*
 	// VRML lexical elements
 	var Grammar =
 	{
@@ -33355,71 +33357,71 @@ function ($,
 
 		return false;
 	}
+*/
 
 
-/*
 	// VRML lexical elements
 	var Grammar =
 	{
 		// General
-		Whitespaces: new RegExp ('^([\\x20\\n,\\t\\r]+)', 'y'),
-		Comment:     new RegExp ('^#(.*?)(?=[\\n\\r])',   'y'),
+		Whitespaces: new RegExp ('([\\x20\\n,\\t\\r]+)', 'gy'),
+		Comment:     new RegExp ('#(.*?)(?=[\\n\\r])',   'gy'),
 
 		// Header
-		Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'y'),
+		Header:	    new RegExp ("#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'gy'),
 
 		// Keywords
-		AS:          new RegExp ('^AS',          'y'),
-		COMPONENT:   new RegExp ('^COMPONENT',   'y'),
-		DEF:         new RegExp ('^DEF',         'y'),
-		EXPORT:      new RegExp ('^EXPORT',      'y'),
-		EXTERNPROTO: new RegExp ('^EXTERNPROTO', 'y'),
-		FALSE:       new RegExp ('^FALSE',       'y'),
-		false:       new RegExp ('^false',       'y'),
-		IMPORT:      new RegExp ('^IMPORT',      'y'),
-		IS:          new RegExp ('^IS',          'y'),
-		META:        new RegExp ('^META',        'y'),
-		NULL:        new RegExp ('^NULL',        'y'),
-		TRUE:        new RegExp ('^TRUE',        'y'),
-		true:        new RegExp ('^true',        'y'),
-		PROFILE:     new RegExp ('^PROFILE',     'y'),
-		PROTO:       new RegExp ('^PROTO',       'y'),
-		ROUTE:       new RegExp ('^ROUTE',       'y'),
-		TO:          new RegExp ('^TO',          'y'),
-		UNIT:        new RegExp ('^UNIT',        'y'),
-		USE:         new RegExp ('^USE',         'y'),
+		AS:          new RegExp ('AS',          'gy'),
+		COMPONENT:   new RegExp ('COMPONENT',   'gy'),
+		DEF:         new RegExp ('DEF',         'gy'),
+		EXPORT:      new RegExp ('EXPORT',      'gy'),
+		EXTERNPROTO: new RegExp ('EXTERNPROTO', 'gy'),
+		FALSE:       new RegExp ('FALSE',       'gy'),
+		false:       new RegExp ('false',       'gy'),
+		IMPORT:      new RegExp ('IMPORT',      'gy'),
+		IS:          new RegExp ('IS',          'gy'),
+		META:        new RegExp ('META',        'gy'),
+		NULL:        new RegExp ('NULL',        'gy'),
+		TRUE:        new RegExp ('TRUE',        'gy'),
+		true:        new RegExp ('true',        'gy'),
+		PROFILE:     new RegExp ('PROFILE',     'gy'),
+		PROTO:       new RegExp ('PROTO',       'gy'),
+		ROUTE:       new RegExp ('ROUTE',       'gy'),
+		TO:          new RegExp ('TO',          'gy'),
+		UNIT:        new RegExp ('UNIT',        'gy'),
+		USE:         new RegExp ('USE',         'gy'),
 
 		// Terminal symbols
-		OpenBrace:    new RegExp ('^\\{', 'y'),
-		CloseBrace:   new RegExp ('^\\}', 'y'),
-		OpenBracket:  new RegExp ('^\\[', 'y'),
-		CloseBracket: new RegExp ('^\\]', 'y'),
-		Period:       new RegExp ('^\\.', 'y'),
-		Colon:        new RegExp ('^\\:', 'y'),
+		OpenBrace:    new RegExp ('\\{', 'gy'),
+		CloseBrace:   new RegExp ('\\}', 'gy'),
+		OpenBracket:  new RegExp ('\\[', 'gy'),
+		CloseBracket: new RegExp ('\\]', 'gy'),
+		Period:       new RegExp ('\\.', 'gy'),
+		Colon:        new RegExp ('\\:', 'gy'),
 
-		Id: new RegExp ('^([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]*)', 'y'),
-		ComponentNameId: new RegExp ('^([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]*)', 'y'),
+		Id: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]*)', 'gy'),
+		ComponentNameId: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]*)', 'gy'),
 
-		initializeOnly: new RegExp ('^initializeOnly', 'y'),
-		inputOnly:      new RegExp ('^inputOnly',      'y'),
-		outputOnly:     new RegExp ('^outputOnly',     'y'),
-		inputOutput:    new RegExp ('^inputOutput',    'y'),
+		initializeOnly: new RegExp ('initializeOnly', 'gy'),
+		inputOnly:      new RegExp ('inputOnly',      'gy'),
+		outputOnly:     new RegExp ('outputOnly',     'gy'),
+		inputOutput:    new RegExp ('inputOutput',    'gy'),
 
-		field:        new RegExp ('^field', 'y'),
-		eventIn:      new RegExp ('^eventIn', 'y'),
-		eventOut:     new RegExp ('^eventOut', 'y'),
-		exposedField: new RegExp ('^exposedField', 'y'),
+		field:        new RegExp ('field', 'gy'),
+		eventIn:      new RegExp ('eventIn', 'gy'),
+		eventOut:     new RegExp ('eventOut', 'gy'),
+		exposedField: new RegExp ('exposedField', 'gy'),
 
-		FieldType: new RegExp ('^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)', 'y'),
+		FieldType: new RegExp ('(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)', 'gy'),
 
 		// Values
-		int32:  new RegExp ('^((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'y'),
-		double: new RegExp ('^([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'y'),
-		string: new RegExp ('^"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'y'),
+		int32:  new RegExp ('((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'gy'),
+		double: new RegExp ('([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'gy'),
+		string: new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'y'),
 		
-		Inf:         new RegExp ('^[+]?inf',  'yi'),
-		NegativeInf: new RegExp ('^-inf',     'yi'),
-		NaN:         new RegExp ('^[+-]?nan', 'yi'),
+		Inf:         new RegExp ('[+]?inf',  'gyi'),
+		NegativeInf: new RegExp ('-inf',     'gyi'),
+		NaN:         new RegExp ('[+-]?nan', 'gyi'),
 
 		// Misc
 		Break: new RegExp ('\\r?\\n', 'g'),
@@ -33439,7 +33441,6 @@ function ($,
 
 		return false;
 	}
-*/
 
 	for (var key in Grammar)
 		Grammar [key] .parse = parse;
@@ -58418,17 +58419,18 @@ function ($, X3DViewer, Vector3, Rotation4)
 	{
 		X3DViewer .call (this, executionContext);
 
-		this .button                    = -1;
-		this .orientationOffset         = new Rotation4 (0, 0, 1, 0);
-		this .rotation                  = new Rotation4 (0, 0, 1, 0);
-		this .fromVector                = new Vector3 (0, 0, 0);
-		this .toVector                  = new Vector3 (0, 0, 0);
-		this .fromPoint                 = new Vector3 (0, 0, 0);
-		this .toPoint                   = new Vector3 (0, 0, 0);
-		this .sourcePositionOffset      = new Vector3 (0, 0, 0);
-		this .destinationPositionOffset = new Vector3 (0, 0, 0);
-		this .pressTime                 = 0;
-		this .motionTime                = 0;
+		this .button                       = -1;
+		this .positionOffset               = new Vector3 (0, 0, 0);
+		this .orientationOffset            = new Rotation4 (0, 0, 1, 0);
+		this .fromVector                   = new Vector3 (0, 0, 0);
+		this .toVector                     = new Vector3 (0, 0, 0);
+		this .fromPoint                    = new Vector3 (0, 0, 0);
+		this .toPoint                      = new Vector3 (0, 0, 0);
+		this .sourcePositionOffset         = new Vector3 (0, 0, 0);
+		this .destinationPositionOffset    = new Vector3 (0, 0, 0);
+		this .rotation                     = new Rotation4 (0, 0, 1, 0);
+		this .pressTime                    = 0;
+		this .motionTime                   = 0;
 	}
 
 	ExamineViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
@@ -58529,15 +58531,7 @@ function ($, X3DViewer, Vector3, Rotation4)
 
 					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
-						try
-						{
-							this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (this .rotation, SPIN_FACTOR));
-							this .addSpinning ();
-						}
-						catch (error)
-						{
-							console .log (error);
-						}
+						this .addSpinning ();
 					}
 
 					break;
@@ -58589,13 +58583,12 @@ function ($, X3DViewer, Vector3, Rotation4)
 						viewpoint = this .getActiveViewpoint (),
 						toVector  = this .trackballProjectToSphere (x, y, this .toVector);
 
-					this .rotation .setFromToVec (toVector, this .fromVector);
+					var rotation = new Rotation4 (toVector, this .fromVector);
 
-					if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
+					if (Math .abs (rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
 						return false;
 
-					viewpoint .orientationOffset_ = this .getOrientationOffset ();
-					viewpoint .positionOffset_    = this .getPositionOffset ();
+					this .addRotate (rotation);
 
 					this .fromVector .assign (toVector);
 					this .motionTime = performance .now ();
@@ -58649,25 +58642,12 @@ function ($, X3DViewer, Vector3, Rotation4)
 			else if (event .deltaY < 0)
 				this .addScroll (positionOffset);
 		},
-		getPositionOffset: function ()
+		spin: function ()
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			this .getDistanceToCenter (distance);
-
-			return (orientationOffset .assign (this .orientationOffset) .inverse ()
-			        .multRight (viewpoint .orientationOffset_ .getValue ())
-			        .multVecRot (vector .assign (distance))
-			        .subtract (distance)
-			        .add (viewpoint .positionOffset_ .getValue ()));
-		},
-		getOrientationOffset: function ()
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			this .orientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
-
-			return result .assign (viewpoint .getOrientation ()) .inverse () .multRight (this .rotation) .multRight (viewpoint .getUserOrientation ());
+			viewpoint .orientationOffset_ = this .getOrientationOffset ();
+			viewpoint .positionOffset_    = this .getPositionOffset ();
 		},
 		scroll: function ()
 		{
@@ -58684,12 +58664,29 @@ function ($, X3DViewer, Vector3, Rotation4)
 
 			viewpoint .positionOffset_ = positionOffset .assign (this .sourcePositionOffset) .lerp (this .destinationPositionOffset, t);
 		},
-		spin: function ()
+		addRotate: function (rotationChange)
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
+			this .rotation .assign (rotationChange);
+
 			viewpoint .orientationOffset_ = this .getOrientationOffset ();
 			viewpoint .positionOffset_    = this .getPositionOffset ();
+
+			return;
+		},
+		addSpinning: function (spinTime)
+		{
+			try
+			{
+				this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (this .rotation, SPIN_FACTOR));
+
+				this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+			}
+			catch (error)
+			{
+				console .log (error);
+			}
 		},
 		addScroll: function (positionOffsetChange)
 		{
@@ -58711,16 +58708,34 @@ function ($, X3DViewer, Vector3, Rotation4)
 		
 			this .startTime = performance .now ();
 		},
-		addSpinning: function ()
+		getPositionOffset: function ()
 		{
-			this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+			var viewpoint = this .getActiveViewpoint ();
+
+			this .getDistanceToCenter (distance);
+
+			this .positionOffset .assign (viewpoint .positionOffset_ .getValue ());
+
+			return (orientationOffset .assign (this .orientationOffset) .inverse ()
+			        .multRight (viewpoint .orientationOffset_ .getValue ())
+			        .multVecRot (vector .assign (distance))
+			        .subtract (distance)
+			        .add (viewpoint .positionOffset_ .getValue ()));
+		},
+		getOrientationOffset: function ()
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			this .orientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
+
+			return result .assign (viewpoint .getOrientation ()) .inverse () .multRight (this .rotation) .multRight (viewpoint .getUserOrientation ());
 		},
 		disconnect: function ()
 		{
 			var browser = this .getBrowser ();
 
-			browser .prepareEvents () .removeInterest ("scroll", this);
 			browser .prepareEvents () .removeInterest ("spin",   this);
+			browser .prepareEvents () .removeInterest ("scroll", this);
 		},
 		dispose: function ()
 		{
@@ -76610,6 +76625,9 @@ function ($,
 				var
 					data   = cx .getImageData (0, 0, width, height) .data,
 					opaque = true;
+
+				canvas .width  = 1;
+				canvas .height = 1;
 
 				for (var i = 3; i < data .length; i += 4)
 				{

@@ -225,33 +225,6 @@ function ($,
 			}
 		},
 	});
-	
-	function MFFieldTemplate (TypeName, Type, SFField)
-	{
-		function MFField (value)
-		{
-			if (this instanceof MFField)
-				return X3DArrayField .call (this, arguments);
-			
-			return X3DArrayField .call (Object .create (MFField .prototype), arguments);
-		}
-	
-		MFField .prototype = $.extend (Object .create (X3DArrayField .prototype),
-		{
-			constructor: MFField,
-			_valueType: SFField,
-			getTypeName: function ()
-			{
-				return TypeName;
-			},
-			getType: function ()
-			{
-				return Type;
-			},
-		});
-
-		return MFField;
-	}
 
 	function MFString (value)
 	{
@@ -295,30 +268,58 @@ function ($,
 			}
 		},
 	});
+	
+	function MFFieldTemplate (TypeName, Type, SFField, ArrayType)
+	{
+		function MFField (value)
+		{
+			if (this instanceof MFField)
+				return X3DArrayField .call (this, arguments);
+			
+			return X3DArrayField .call (Object .create (MFField .prototype), arguments);
+		}
+	
+		MFField .prototype = $.extend (Object .create (X3DArrayField .prototype),
+		{
+			constructor: MFField,
+			_arrayType: ArrayType,
+			_valueType: SFField,
+			getTypeName: function ()
+			{
+				return TypeName;
+			},
+			getType: function ()
+			{
+				return Type;
+			},
+		});
+
+		return MFField;
+	}
 
 	var ArrayFields =
 	{
-		MFBool:      MFFieldTemplate ("MFBool",      X3DConstants .MFBool,      SFBool),
-		MFColor:     MFFieldTemplate ("MFColor",     X3DConstants .MFColor,     SFColor),
-		MFColorRGBA: MFFieldTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA),
-		MFDouble:    MFFieldTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble),
-		MFFloat:     MFFieldTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat),
-		MFImage:     MFFieldTemplate ("MFImage",     X3DConstants .MFImage,     SFImage),
-		MFInt32:     MFFieldTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32),
-		MFMatrix3d:  MFFieldTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d),
-		MFMatrix3f:  MFFieldTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f),
-		MFMatrix4d:  MFFieldTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d),
-		MFMatrix4f:  MFFieldTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f),
+		MFBool:      MFFieldTemplate ("MFBool",      X3DConstants .MFBool,      SFBool,      Uint8Array),
+		MFColor:     MFFieldTemplate ("MFColor",     X3DConstants .MFColor,     SFColor,     Float32Array),
+		MFColorRGBA: MFFieldTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA, Float32Array),
+		MFDouble:    MFFieldTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble,    Float64Array),
+		MFFloat:     MFFieldTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat,     Float32Array),
+		MFImage:     MFFieldTemplate ("MFImage",     X3DConstants .MFImage,     SFImage,     Array),
+		MFInt32:     MFFieldTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32,     Int32Array),
+		MFMatrix3d:  MFFieldTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d,  Float64Array),
+		MFMatrix3f:  MFFieldTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f,  Float32Array),
+		MFMatrix4d:  MFFieldTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d,  Float64Array),
+		MFMatrix4f:  MFFieldTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f,  Float32Array),
 		MFNode:      MFNode,
-		MFRotation:  MFFieldTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation),
+		MFRotation:  MFFieldTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation,  Float64Array),
 		MFString:    MFString,
-		MFTime:      MFFieldTemplate ("MFTime",      X3DConstants .MFTime,      SFTime),
-		MFVec2d:     MFFieldTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d),
-		MFVec2f:     MFFieldTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f),
-		MFVec3d:     MFFieldTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d),
-		MFVec3f:     MFFieldTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f),
-		MFVec4d:     MFFieldTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d),
-		MFVec4f:     MFFieldTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f),
+		MFTime:      MFFieldTemplate ("MFTime",      X3DConstants .MFTime,      SFTime,      Float64Array),
+		MFVec2d:     MFFieldTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d,     Float64Array),
+		MFVec2f:     MFFieldTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f,     Float32Array),
+		MFVec3d:     MFFieldTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d,     Float64Array),
+		MFVec3f:     MFFieldTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f,     Float32Array),
+		MFVec4d:     MFFieldTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d,     Float64Array),
+		MFVec4f:     MFFieldTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f,     Float32Array),
 	};
 
 	Object .preventExtensions (ArrayFields);

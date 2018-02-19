@@ -236,6 +236,9 @@ function ($,
 					data   = cx .getImageData (0, 0, width, height) .data,
 					opaque = true;
 
+				canvas .width  = 1;
+				canvas .height = 1;
+
 				for (var i = 3; i < data .length; i += 4)
 				{
 					if (data [i] !== 255)

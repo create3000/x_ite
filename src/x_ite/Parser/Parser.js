@@ -83,6 +83,7 @@ function ($,
 	 *  Grammar
 	 */
 
+/*
 	// VRML lexical elements
 	var Grammar =
 	{
@@ -163,71 +164,71 @@ function ($,
 
 		return false;
 	}
+*/
 
 
-/*
 	// VRML lexical elements
 	var Grammar =
 	{
 		// General
-		Whitespaces: new RegExp ('^([\\x20\\n,\\t\\r]+)', 'y'),
-		Comment:     new RegExp ('^#(.*?)(?=[\\n\\r])',   'y'),
+		Whitespaces: new RegExp ('([\\x20\\n,\\t\\r]+)', 'gy'),
+		Comment:     new RegExp ('#(.*?)(?=[\\n\\r])',   'gy'),
 
 		// Header
-		Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'y'),
+		Header:	    new RegExp ("#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'gy'),
 
 		// Keywords
-		AS:          new RegExp ('^AS',          'y'),
-		COMPONENT:   new RegExp ('^COMPONENT',   'y'),
-		DEF:         new RegExp ('^DEF',         'y'),
-		EXPORT:      new RegExp ('^EXPORT',      'y'),
-		EXTERNPROTO: new RegExp ('^EXTERNPROTO', 'y'),
-		FALSE:       new RegExp ('^FALSE',       'y'),
-		false:       new RegExp ('^false',       'y'),
-		IMPORT:      new RegExp ('^IMPORT',      'y'),
-		IS:          new RegExp ('^IS',          'y'),
-		META:        new RegExp ('^META',        'y'),
-		NULL:        new RegExp ('^NULL',        'y'),
-		TRUE:        new RegExp ('^TRUE',        'y'),
-		true:        new RegExp ('^true',        'y'),
-		PROFILE:     new RegExp ('^PROFILE',     'y'),
-		PROTO:       new RegExp ('^PROTO',       'y'),
-		ROUTE:       new RegExp ('^ROUTE',       'y'),
-		TO:          new RegExp ('^TO',          'y'),
-		UNIT:        new RegExp ('^UNIT',        'y'),
-		USE:         new RegExp ('^USE',         'y'),
+		AS:          new RegExp ('AS',          'gy'),
+		COMPONENT:   new RegExp ('COMPONENT',   'gy'),
+		DEF:         new RegExp ('DEF',         'gy'),
+		EXPORT:      new RegExp ('EXPORT',      'gy'),
+		EXTERNPROTO: new RegExp ('EXTERNPROTO', 'gy'),
+		FALSE:       new RegExp ('FALSE',       'gy'),
+		false:       new RegExp ('false',       'gy'),
+		IMPORT:      new RegExp ('IMPORT',      'gy'),
+		IS:          new RegExp ('IS',          'gy'),
+		META:        new RegExp ('META',        'gy'),
+		NULL:        new RegExp ('NULL',        'gy'),
+		TRUE:        new RegExp ('TRUE',        'gy'),
+		true:        new RegExp ('true',        'gy'),
+		PROFILE:     new RegExp ('PROFILE',     'gy'),
+		PROTO:       new RegExp ('PROTO',       'gy'),
+		ROUTE:       new RegExp ('ROUTE',       'gy'),
+		TO:          new RegExp ('TO',          'gy'),
+		UNIT:        new RegExp ('UNIT',        'gy'),
+		USE:         new RegExp ('USE',         'gy'),
 
 		// Terminal symbols
-		OpenBrace:    new RegExp ('^\\{', 'y'),
-		CloseBrace:   new RegExp ('^\\}', 'y'),
-		OpenBracket:  new RegExp ('^\\[', 'y'),
-		CloseBracket: new RegExp ('^\\]', 'y'),
-		Period:       new RegExp ('^\\.', 'y'),
-		Colon:        new RegExp ('^\\:', 'y'),
+		OpenBrace:    new RegExp ('\\{', 'gy'),
+		CloseBrace:   new RegExp ('\\}', 'gy'),
+		OpenBracket:  new RegExp ('\\[', 'gy'),
+		CloseBracket: new RegExp ('\\]', 'gy'),
+		Period:       new RegExp ('\\.', 'gy'),
+		Colon:        new RegExp ('\\:', 'gy'),
 
-		Id: new RegExp ('^([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]*)', 'y'),
-		ComponentNameId: new RegExp ('^([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]*)', 'y'),
+		Id: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]*)', 'gy'),
+		ComponentNameId: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]*)', 'gy'),
 
-		initializeOnly: new RegExp ('^initializeOnly', 'y'),
-		inputOnly:      new RegExp ('^inputOnly',      'y'),
-		outputOnly:     new RegExp ('^outputOnly',     'y'),
-		inputOutput:    new RegExp ('^inputOutput',    'y'),
+		initializeOnly: new RegExp ('initializeOnly', 'gy'),
+		inputOnly:      new RegExp ('inputOnly',      'gy'),
+		outputOnly:     new RegExp ('outputOnly',     'gy'),
+		inputOutput:    new RegExp ('inputOutput',    'gy'),
 
-		field:        new RegExp ('^field', 'y'),
-		eventIn:      new RegExp ('^eventIn', 'y'),
-		eventOut:     new RegExp ('^eventOut', 'y'),
-		exposedField: new RegExp ('^exposedField', 'y'),
+		field:        new RegExp ('field', 'gy'),
+		eventIn:      new RegExp ('eventIn', 'gy'),
+		eventOut:     new RegExp ('eventOut', 'gy'),
+		exposedField: new RegExp ('exposedField', 'gy'),
 
-		FieldType: new RegExp ('^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)', 'y'),
+		FieldType: new RegExp ('(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)', 'gy'),
 
 		// Values
-		int32:  new RegExp ('^((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'y'),
-		double: new RegExp ('^([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'y'),
-		string: new RegExp ('^"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'y'),
+		int32:  new RegExp ('((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'gy'),
+		double: new RegExp ('([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'gy'),
+		string: new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'y'),
 		
-		Inf:         new RegExp ('^[+]?inf',  'yi'),
-		NegativeInf: new RegExp ('^-inf',     'yi'),
-		NaN:         new RegExp ('^[+-]?nan', 'yi'),
+		Inf:         new RegExp ('[+]?inf',  'gyi'),
+		NegativeInf: new RegExp ('-inf',     'gyi'),
+		NaN:         new RegExp ('[+-]?nan', 'gyi'),
 
 		// Misc
 		Break: new RegExp ('\\r?\\n', 'g'),
@@ -247,7 +248,6 @@ function ($,
 
 		return false;
 	}
-*/
 
 	for (var key in Grammar)
 		Grammar [key] .parse = parse;

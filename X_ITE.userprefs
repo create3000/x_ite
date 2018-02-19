@@ -1,14 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Shaders/ComposedShader.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Navigation/ExamineViewer.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DComposedGeometryNode.js" Line="231" Column="17" />
-      <File FileName="src/x_ite/Components/Rendering/LineSet.js" Line="204" Column="19" />
-      <File FileName="src/x_ite/Components/Rendering/PointSet.js" Line="180" Column="17" />
-      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="131" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/ShaderPart.js" Line="75" Column="13" />
-      <File FileName="src/x_ite/Components/Shaders/ComposedShader.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Navigation/X3DViewer.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/ImageTexture.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Navigation/ExamineViewer.js" Line="105" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
