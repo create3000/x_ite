@@ -195,7 +195,7 @@ function ($,
 
 			for (var i = arguments .length - 1; i >= 0; -- i)
 			{
-				var field = new (this ._valueType) ();
+				var field = new (this .getValueType ()) ();
 
 				field .setValue (arguments [i]);
 	
@@ -226,7 +226,7 @@ function ($,
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var field = new (this ._valueType) ();
+				var field = new (this .getValueType ()) ();
 
 				field .setValue (arguments [i]);
 
@@ -253,7 +253,7 @@ function ($,
 		},
 		splice: function (index, deleteCount)
 		{
-			var array  = this .getValue ();
+			var array = this .getValue ();
 
 			if (index > array .length)
 				index = array .length;
@@ -261,7 +261,7 @@ function ($,
 			if (index + deleteCount > array .length)
 				deleteCount = array .length - index;
 
-			var result = new (this .constructor) (this .erase (index, index + deleteCount));
+			var result = this .erase (index, index + deleteCount);
 
 			if (arguments .length > 2)
 				this .insert (index, arguments, 2, arguments .length);
@@ -274,7 +274,7 @@ function ($,
 
 			for (var i = first; i < last; ++ i)
 			{
-				var field = new (this ._valueType) ();
+				var field = new (this .getValueType ()) ();
 
 				field .setValue (array [i]);
 
@@ -366,6 +366,15 @@ function ($,
 
 			return first;
 		},
+		clear: function ()
+		{
+			var array = this .getValue ();
+
+			for (var i = 0, length = this .length; i < length; ++ i)
+				this .removeChild (array [i]);
+
+			array .length = 0;
+		},
 		erase: function (first, last)
 		{
 			var values = this .getValue () .splice (first, last - first);
@@ -375,7 +384,7 @@ function ($,
 			
 			this .addEvent ();
 
-			return values;
+			return new (this .constructor) (values);
 		},
 		resize: function (size, value, silent)
 		{
@@ -395,7 +404,7 @@ function ($,
 			{
 				for (var i = array .length; i < size; ++ i)
 				{
-					var field = new (this ._valueType) ();
+					var field = new (this .getValueType ()) ();
 
 					if (value !== undefined)
 						field .setValue (value);
@@ -490,7 +499,7 @@ function ($,
 		},
 		dispose: function ()
 		{
-			this .erase (0, this .length);
+			this .clear ();
 			X3DField .prototype .dispose .call (this);
 		},
 	});
