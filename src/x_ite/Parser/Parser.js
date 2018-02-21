@@ -83,90 +83,93 @@ function ($,
 	 *  Grammar
 	 */
 
-/*
-	// VRML lexical elements
-	var Grammar =
-	{
-		// General
-		Whitespaces: /^([\x20\n,\t\r]+)/,
-		Comment:     /^#(.*?)(?=[\n\r])/,
 
-		// Header
-		Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\n\r]/,
+//	Comment out scriptBody function fragments
+//
+//	// VRML lexical elements
+//	var Grammar =
+//	{
+//		// General
+//		Whitespaces: /^([\x20\n,\t\r]+)/,
+//		Comment:     /^#(.*?)(?=[\n\r])/,
+//
+//		// Header
+//		Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\n\r]/,
+//
+//		// Keywords
+//		AS:          /^AS/,
+//		COMPONENT:   /^COMPONENT/,
+//		DEF:         /^DEF/,
+//		EXPORT:      /^EXPORT/,
+//		EXTERNPROTO: /^EXTERNPROTO/,
+//		FALSE:       /^FALSE/,
+//		false:       /^false/,
+//		IMPORT:      /^IMPORT/,
+//		IS:          /^IS/,
+//		META:        /^META/,
+//		NULL:        /^NULL/,
+//		TRUE:        /^TRUE/,
+//		true:        /^true/,
+//		PROFILE:     /^PROFILE/,
+//		PROTO:       /^PROTO/,
+//		ROUTE:       /^ROUTE/,
+//		TO:          /^TO/,
+//		UNIT:        /^UNIT/,
+//		USE:         /^USE/,
+//
+//		// Terminal symbols
+//		OpenBrace:    /^\{/,
+//		CloseBrace:   /^\}/,
+//		OpenBracket:  /^\[/,
+//		CloseBracket: /^\]/,
+//		Period:       /^\./,
+//		Colon:        /^\:/,
+//
+//		Id: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*)/,
+//		ComponentNameId: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*)/,
+//
+//		initializeOnly: /^initializeOnly/,
+//		inputOnly:      /^inputOnly/,
+//		outputOnly:     /^outputOnly/,
+//		inputOutput:    /^inputOutput/,
+//
+//		field:        /^field/,
+//		eventIn:      /^eventIn/,
+//		eventOut:     /^eventOut/,
+//		exposedField: /^exposedField/,
+//
+//		FieldType: /^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)/,
+//
+//		// Values
+//		int32:  /^((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/,
+//		double: /^([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/,
+//		string: /^"((?:[^"\\]|\\\\|\\")*)"/,
+//
+//		Inf:         /^[+]?inf/i,
+//		NegativeInf: /^-inf/i,
+//		NaN:         /^[+-]?nan/i,
+//
+//		// Misc
+//		Break: /\r?\n/g,
+//	};
+//
+//	function parse (parser)
+//	{
+//		this .lastIndex = 0;
+//		parser .result  = this .exec (parser .input);
+//
+//		if (parser .result)
+//		{
+//			parser .input = parser .input .slice (parser .result [0] .length);
+//			return true;
+//		}
+//
+//		return false;
+//	}
 
-		// Keywords
-		AS:          /^AS/,
-		COMPONENT:   /^COMPONENT/,
-		DEF:         /^DEF/,
-		EXPORT:      /^EXPORT/,
-		EXTERNPROTO: /^EXTERNPROTO/,
-		FALSE:       /^FALSE/,
-		false:       /^false/,
-		IMPORT:      /^IMPORT/,
-		IS:          /^IS/,
-		META:        /^META/,
-		NULL:        /^NULL/,
-		TRUE:        /^TRUE/,
-		true:        /^true/,
-		PROFILE:     /^PROFILE/,
-		PROTO:       /^PROTO/,
-		ROUTE:       /^ROUTE/,
-		TO:          /^TO/,
-		UNIT:        /^UNIT/,
-		USE:         /^USE/,
 
-		// Terminal symbols
-		OpenBrace:    /^\{/,
-		CloseBrace:   /^\}/,
-		OpenBracket:  /^\[/,
-		CloseBracket: /^\]/,
-		Period:       /^\./,
-		Colon:        /^\:/,
-
-		Id: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*)/,
-		ComponentNameId: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*)/,
-
-		initializeOnly: /^initializeOnly/,
-		inputOnly:      /^inputOnly/,
-		outputOnly:     /^outputOnly/,
-		inputOutput:    /^inputOutput/,
-
-		field:        /^field/,
-		eventIn:      /^eventIn/,
-		eventOut:     /^eventOut/,
-		exposedField: /^exposedField/,
-
-		FieldType: /^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)/,
-
-		// Values
-		int32:  /^((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/,
-		double: /^([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/,
-		string: /^"((?:[^"\\]|\\\\|\\")*)"/,
-
-		Inf:         /^[+]?inf/i,
-		NegativeInf: /^-inf/i,
-		NaN:         /^[+-]?nan/i,
-
-		// Misc
-		Break: /\r?\n/g,
-	};
-
-	function parse (parser)
-	{
-		this .lastIndex = 0;
-		parser .result  = this .exec (parser .input);
-
-		if (parser .result)
-		{
-			parser .input = parser .input .slice (parser .result [0] .length);
-			return true;
-		}
-
-		return false;
-	}
-*/
-
-
+	// Comment out scriptBody function fragments
+	//
 	// VRML lexical elements
 	var Grammar =
 	{
@@ -224,7 +227,7 @@ function ($,
 		// Values
 		int32:  new RegExp ('((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'gy'),
 		double: new RegExp ('([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'gy'),
-		string: new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'y'),
+		string: new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'gy'),
 		
 		Inf:         new RegExp ('[+]?inf',  'gyi'),
 		NegativeInf: new RegExp ('-inf',     'gyi'),
@@ -1359,13 +1362,13 @@ function ($,
 		},
 		scriptBodyElement: function (baseNode)
 		{
-//			var
-//				lastIndex  = this .lastIndex,
-//				lineNumber = this .lineNumber;
-
 			var
-				input      = this .input,
+				lastIndex  = this .lastIndex,
 				lineNumber = this .lineNumber;
+
+//			var
+//				input      = this .input,
+//				lineNumber = this .lineNumber;
 
 			if (this .Id ())
 			{
@@ -1456,11 +1459,11 @@ function ($,
 				}
 			}
 
-//			this .lastIndex  = lastIndex;
-//			this .lineNumber = lineNumber;
-
-			this .input      = input;
+			this .lastIndex  = lastIndex;
 			this .lineNumber = lineNumber;
+
+//			this .input      = input;
+//			this .lineNumber = lineNumber;
 
 			var field = this .interfaceDeclaration ();
 		
