@@ -81,12 +81,15 @@ function ($,
 					components = target .getComponents (),
 					valueType  = target .getValueType ();
 
-				if (index >= array .length)
+				if (index >= target ._length)
+				{
 					target .resize (index + 1);
+					array = target .getValue ();
+				}
 
 				if (components === 1)
 				{
-					value = valueType (array [index]);
+					return valueType (array [index]);
 				}
 				else
 				{
@@ -100,9 +103,9 @@ function ($,
 					var value = Object .create (valueType .prototype);
 
 					valueType .apply (value, tmp);
-				}
 
-				return value;
+					return value;
+				}
 			}
 			catch (error)
 			{
@@ -129,8 +132,11 @@ function ($,
 					index      = parseInt (key),
 					components = target .getComponents ();
 
-				if (index >= array .length)
+				if (index >= target ._length)
+				{
 					target .resize (index + 1);
+					array = target .getValue ();
+				}
 
 				if (components === 1)
 				{
@@ -190,7 +196,7 @@ function ($,
 
 			copy ._length = this ._length;
 
-			X3DField .prototype .set .call (copy, copyArray);
+			X3DField .prototype .set .call (copy, copyArray, this ._length);
 
 			return copy;
 		},
@@ -230,9 +236,12 @@ function ($,
 				otherLength = l !== undefined ? l * components : otherArray .length,
 				rest        = otherLength % components;
 
-//console .log (this .getTypeName ());
+//if (this .getName () == "majorLineEvery")
+//{
+//console .log (this .getName ());
 //console .log (otherArray);
-
+//console .trace (otherArray);
+//}
 			if (rest)
 			{
 				throw new Error ("Array length must be multiple of components size, which is " + components + ".");
@@ -480,6 +489,8 @@ function ($,
 				array [index] = otherArray [first];
 
 			this ._length += difference;
+
+			this .addEvent ();
 		},
 		erase: function (first, last)
 		{
@@ -504,6 +515,8 @@ function ($,
 
 			this   ._length = newLength;
 			values ._length = difference;
+
+			this .addEvent ();
 
 			return values;
 		},
@@ -568,12 +581,13 @@ function ($,
 		toStream: function (stream)
 		{
 			var
-				generator = Generator .Get (stream),
-				array     = this .getValue (),
+				generator  = Generator .Get (stream),
+				array      = this .getValue (),
+				length     = this ._length,
 				components = this .getComponents (),
 				value      = new (this .getSingleType ()) ();
 
-			switch (array .length)
+			switch (length)
 			{
 				case 0:
 				{

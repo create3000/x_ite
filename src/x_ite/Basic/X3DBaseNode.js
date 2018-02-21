@@ -302,10 +302,10 @@ function ($,
 							{
 								case X3DConstants .SFNode:
 								case X3DConstants .MFNode:
-									destfield .set (sourceField .copy (executionContext) .getValue ());
+									destfield .setValue (sourceField .copy (executionContext));
 									break;
 								default:
-									destfield .set (sourceField .getValue (), sourceField .length);
+									destfield .setValue (sourceField);
 									break;
 							}
 						}

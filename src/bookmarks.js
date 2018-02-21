@@ -114,7 +114,6 @@ var Bookmarks = (function ()
 		},
 		restore: function (first)
 		{
-return;
 			var url = this .browser .getDataStorage () ["Bookmarks.url"];
 
 			if (url)

@@ -154,7 +154,7 @@ function ($,
 							if (field .hasReferences ())
 								continue;
 
-							field .assign (protoField);
+							field .setValue (protoField);
 						}
 						catch (error)
 						{
@@ -244,17 +244,13 @@ function ($,
 			for (var i = 0, length = protos .length; i < length; ++ i)
 				this .protos .add (protos [i] .getName (), protos [i]);
 		},
-		copyRootNodes: function (rootNodes)
+		copyRootNodes: function (rootNodes1)
 		{
-			var
-				rootNodes1 = rootNodes .getValue (),
-				rootNodes2 = this  .getRootNodes () .getValue ();
+			var rootNodes2 = this .getRootNodes ();
 
 			for (var i = 0, length = rootNodes1 .length; i < length; ++ i)
 			{
-				var value = rootNodes1 [i] .copy (this);
-				value .addParent (this .getRootNodes ());
-				rootNodes2 .push (value);
+				rootNodes2 .push (rootNodes1 [i] .copy (this));
 			}
 		},
 		copyImportedNodes: function (executionContext, importedNodes)

@@ -193,11 +193,11 @@ function ($,
 				polylines  = [ ],
 				polyline   = [ ];
 
-			if (this .coordIndex_ .length)
+			if (coordIndex .length)
 			{
 				var i = 0;
 
-				for (var i = 0; i < coordIndex .length; ++ i)
+				for (var i = 0, length = coordIndex .length; i < length; ++ i)
 				{
 					var index = coordIndex [i];
 
@@ -236,7 +236,7 @@ function ($,
 				polylineIndices = this .getPolylineIndices (),
 				coordIndex      = this .coordIndex_;
 
-			for (var p = 0; p < polylineIndices .length; ++ p)
+			for (var p = 0, pl = polylineIndices .length; p < pl; ++ p)
 			{
 				var polyline = polylineIndices [p];
 
@@ -259,7 +259,7 @@ function ($,
 				return;
 
 			var
-				coordIndex     = this .coordIndex_. getValue (),
+				coordIndex     = this .coordIndex_,
 				polylines      = this .getPolylineIndices (),
 				colorPerVertex = this .colorPerVertex_ .getValue (),
 				attribNodes    = this .getAttrib (),
@@ -306,8 +306,6 @@ function ($,
 
 				++ face;
 			}
-
-			//this .setAttribs (this .attribNodes, attribArrays);
 		},
 	});
 
