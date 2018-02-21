@@ -189,7 +189,7 @@ function ($,
 		getPolylineIndices: function ()
 		{
 			var
-				coordIndex = this .coordIndex_. getValue (),
+				coordIndex = this .coordIndex_,
 				polylines  = [ ],
 				polyline   = [ ];
 
@@ -199,7 +199,7 @@ function ($,
 
 				for (var i = 0; i < coordIndex .length; ++ i)
 				{
-					var index = coordIndex [i] .getValue ();
+					var index = coordIndex [i];
 
 					if (index >= 0)
 						// Add vertex.
@@ -215,7 +215,7 @@ function ($,
 					}
 				}
 
-				if (coordIndex [coordIndex .length - 1] .getValue () >= 0)
+				if (coordIndex [coordIndex .length - 1] >= 0)
 				{
 					polylines .push (polyline);
 				}
@@ -234,7 +234,7 @@ function ($,
 		
 			var
 				polylineIndices = this .getPolylineIndices (),
-				coordIndex      = this .coordIndex_. getValue ();
+				coordIndex      = this .coordIndex_;
 
 			for (var p = 0; p < polylineIndices .length; ++ p)
 			{
@@ -246,7 +246,7 @@ function ($,
 				{
 					for (var index = line, endI = line + 2; index < endI; ++ index)
 					{
-						polylines .push (this .coordNode .get1Point (coordIndex [polyline [index]] .getValue ()));
+						polylines .push (this .coordNode .get1Point (coordIndex [polyline [index]]));
 					}
 				}
 			}
@@ -286,7 +286,7 @@ function ($,
 						{
 							var
 								i  = polyline [index],
-								ci = coordIndex [i] .getValue ();
+								ci = coordIndex [i];
 
 							for (var a = 0; a < numAttrib; ++ a)
 								attribNodes [a] .addValue (attribs [a], ci);

@@ -67,8 +67,6 @@ function ($,
 		X3DGeometricPropertyNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DCoordinateNode);
-
-		this .point = this .point_ .getValue ();
 	}
 
 	X3DCoordinateNode .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
@@ -76,18 +74,18 @@ function ($,
 		constructor: X3DCoordinateNode,
 		isEmpty: function ()
 		{
-			return this .point .length == 0;
+			return this .point_ .length === 0;
 		},
 		getSize: function ()
 		{
-			return this .point .length;
+			return this .point_ .length;
 		},
 		get1Point: function (index)
 		{
 			// The index cannot be less than 0.
 
-			if (index < this .point .length)
-				return this .point [index] .getValue ();
+			if (index < this .point_ .length)
+				return this .point_ [index] .getValue ();
 
 			return new Vector3 (0, 0, 0);
 		},
@@ -96,7 +94,7 @@ function ($,
 			// The index[1,2,3] cannot be less than 0.
 
 			var
-				point  = this .point,
+				point  = this .point_,
 				length = point .length;
 
 			if (index1 < length && index2 < length && index3 < length)
@@ -112,7 +110,7 @@ function ($,
 			// The index[1,2,3,4] cannot be less than 0.
 
 			var
-				point  = this .point,
+				point  = this .point_,
 				length = point .length;
 
 			if (index1 < length && index2 < length && index3 < length && index4 < length)

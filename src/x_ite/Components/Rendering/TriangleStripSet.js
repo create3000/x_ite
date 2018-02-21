@@ -115,14 +115,14 @@ function ($,
 			// Build coordIndex
 
 			var
-				stripCount    = this .stripCount_ .getValue (),
+				stripCount    = this .stripCount_,
 				triangleIndex = this .triangleIndex;
 
 			triangleIndex .length = 0;
 
 			for (var s = 0, strips = stripCount .length, index = 0; s < strips; ++ s)
 			{
-				var vertexCount = stripCount [s] .getValue ()
+				var vertexCount = stripCount [s];
 
 				for (var i = 0, count = vertexCount - 2; i < count; ++ i)
 				{

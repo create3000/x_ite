@@ -106,7 +106,7 @@ function ($,
 		},
 		build: function ()
 		{
-			var lineSegments = this .lineSegments_ .getValue ();
+			var lineSegments = this .lineSegments_;
 
 			for (var i = 0, length = lineSegments .length; i < length; ++ i)
 			{

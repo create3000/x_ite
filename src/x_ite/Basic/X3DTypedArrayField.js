@@ -95,6 +95,8 @@ function ($,
 					for (var c = 0; c < components; ++ c, ++ index)
 						tmp [c] = array [index];
 
+					tmp .length = components;
+
 					var value = Object .create (valueType .prototype);
 
 					valueType .apply (value, tmp);
@@ -141,6 +143,8 @@ function ($,
 					for (var c = 0; c < components; ++ c, ++ index)
 						array [index] = value [c];
 				}
+
+				target .addEvent ();
 
 				return true;
 			}
@@ -212,23 +216,29 @@ function ($,
 
 			return true;
 		},
-		isDefaultValue: function ()
+		assign: function (value)
 		{
-			return this ._length === 0;
-		},
-		setValue: function (value)
-		{
-			this .set (value);
+			this .set (value .getValue (), value .length);
 			this .addEvent ();
 		},
-		set: function (value)
+		set: function (otherArray /* value of field */, l /* length of field */)
 		{
 			var
 				components  = this .getComponents (),
 				array       = this .getValue (),
 				length      = this ._length,
-				otherArray  = value .getValue (),
-				otherLength = value ._length;
+				otherLength = l !== undefined ? l * components : otherArray .length,
+				rest        = otherLength % components;
+
+//console .log (this .getTypeName ());
+//console .log (otherArray);
+
+			if (rest)
+			{
+				throw new Error ("Array length must be multiple of components size, which is " + components + ".");
+			}
+
+			otherLength /= components;
 
 			if (array .length < otherArray .length)
 			{
@@ -244,6 +254,22 @@ function ($,
 			}
 
 			this ._length = otherLength;
+		},
+		isDefaultValue: function ()
+		{
+			return this ._length === 0;
+		},
+		setValue: function (value)
+		{
+			if (value instanceof this .constructor)
+			{
+				this .assign (value);
+			}
+			else
+			{
+				this .set (value);
+				this .addEvent ();
+			}
 		},
 		unshift: function (value)
 		{
@@ -299,6 +325,8 @@ function ($,
 				{
 					for (var c = 0; c < components; ++ c)
 						tmp [c] = array [c];
+
+					tmp .length = components;
 
 					var value = Object .create (valueType .prototype);
 
@@ -367,6 +395,8 @@ function ($,
 					for (var c = 0, a = newLength * components; c < components; ++ c, ++ a)
 						tmp [c] = array [a];
 	
+					tmp .length = components;
+
 					var value = Object .create (valueType .prototype);
 
 					valueType .apply (value, tmp);
@@ -451,14 +481,6 @@ function ($,
 
 			this ._length += difference;
 		},
-		clear: function ()
-		{
-			var array = this .getValue ();
-
-			array .fill (0, 0, this ._length * this .getComponents ());
-
-			this ._length = 0;
-		},
 		erase: function (first, last)
 		{
 			var
@@ -467,7 +489,6 @@ function ($,
 				difference = last - first,
 				length     = this ._length,
 				newLength  = this ._length - difference,
-				valueType  = this .getValueType (),
 				values     = new (this .constructor) ();
 
 			first *= components;
@@ -495,6 +516,9 @@ function ($,
 			if (newLength < length)
 			{
 				this .getValue () .fill (0, newLength * components, length * components);
+
+				if (! silent)
+					this .addEvent ();
 			}
 			else if (newLength > length)
 			{
@@ -517,12 +541,12 @@ function ($,
 						}
 					}
 				}
+	
+				if (! silent)
+					this .addEvent ();
 			}
 
 			this ._length = newLength;
-
-			if (! silent)
-				this .addEvent ();
 		},
 		grow: function (length)
 		{
@@ -545,7 +569,9 @@ function ($,
 		{
 			var
 				generator = Generator .Get (stream),
-				array     = this .getValue ();
+				array     = this .getValue (),
+				components = this .getComponents (),
+				value      = new (this .getSingleType ()) ();
 
 			switch (array .length)
 			{
@@ -558,7 +584,19 @@ function ($,
 				{
 					generator .PushUnitCategory (this .getUnit ());
 
-					array [0] .toStream (stream);
+					if (components === 1)
+					{
+						value .set (array [0]);
+
+						value .toStream (stream);
+					}
+					else
+					{
+						for (var c = 0, first = 0; c < components; ++ c, ++ first)
+							value [c] = array [first]; 
+
+						value .toStream (stream);
+					}
 
 					generator .PopUnitCategory ();
 					break;
@@ -569,17 +607,47 @@ function ($,
 
 					stream .string += "[\n";
 					generator .IncIndent ();
-				
-					for (var i = 0, length = array .length - 1; i < length; ++ i)
-					{
-						stream .string += generator .Indent ();
-						array [i] .toStream (stream);
-						stream .string += ",\n"
-					}
 
-					stream .string += generator .Indent ();
-					array [length] .toStream (stream);
-					stream .string += "\n";
+					if (components === 1)
+					{
+						for (var i = 0, n = length - 1; i < n; ++ i)
+						{
+							stream .string += generator .Indent ();
+
+							value .set (array [i * components]);
+							value .toStream (stream);
+	
+							stream .string += ",\n"
+						}
+	
+						stream .string += generator .Indent ();
+						value .set (array [n * components]);
+						value .toStream (stream);
+
+						stream .string += "\n";
+					}
+					else
+					{
+						for (var i = 0, n = length - 1; i < n; ++ i)
+						{
+							stream .string += generator .Indent ();
+
+							for (var c = 0, first = i * components; c < components; ++ c, ++ first)
+								value [c] = array [first]; 
+		
+							value .toStream (stream);
+		
+							stream .string += ",\n"
+						}
+
+						stream .string += generator .Indent ();
+
+						for (var c = 0, first = n * components; c < components; ++ c, ++ first)
+							value [c] = array [first]; 
+		
+						value .toStream (stream);
+						stream .string += "\n";
+					}
 
 					generator .DecIndent ();
 					stream .string += generator .Indent ();
@@ -599,7 +667,8 @@ function ($,
 				var
 					generator  = Generator .Get (stream),
 					array      = this .getValue (),
-					components = this .getComponents ();
+					components = this .getComponents (),
+					value      = new (this .getSingleType ()) ();
 	
 				generator .PushUnitCategory (this .getUnit ());
 
@@ -607,16 +676,18 @@ function ($,
 				{
 					for (var i = 0, n = length - 1; i < n; ++ i)
 					{
-						stream .string += array [i];
+						value .set (array [i * components]);
+						value .toXMLStream (stream);
+
 						stream .string += ", ";
 					}
 
-					stream .string += array [n * components];
+					value .set (array [n * components]);
+
+					value .toXMLStream (stream);
 				}
 				else
 				{
-					var value = new (this .getValueType ()) ();
-
 					for (var i = 0, n = length - 1; i < n; ++ i)
 					{
 						for (var c = 0, first = i * components; c < components; ++ c, ++ first)

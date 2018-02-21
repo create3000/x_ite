@@ -660,12 +660,12 @@ function ($,
 		set_color__: function ()
 		{
 			var
-				colorKey  = this .colorKey_ .getValue (),
+				colorKey  = this .colorKey_,
 				colorKeys = this .colorKeys,
 				colorRamp = this .colorRamp;
 
 			for (var i = 0, length = colorKey .length; i < length; ++ i)
-				colorKeys [i] = colorKey [i] .getValue ();
+				colorKeys [i] = colorKey [i];
 
 			colorKeys .length = length;
 
@@ -694,12 +694,12 @@ function ($,
 		set_texCoord__: function ()
 		{
 			var
-				texCoordKey  = this .texCoordKey_ .getValue (),
+				texCoordKey  = this .texCoordKey_,
 				texCoordKeys = this .texCoordKeys,
 				texCoordRamp = this .texCoordRamp;
 
 			for (var i = 0, length = texCoordKey .length; i < length; ++ i)
-				texCoordKeys [i] = texCoordKey [i] .getValue ();
+				texCoordKeys [i] = texCoordKey [i];
 
 			texCoordKeys .length = length;
 

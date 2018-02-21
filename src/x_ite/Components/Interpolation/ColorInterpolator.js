@@ -106,8 +106,8 @@ function ($,
 		},
 		set_keyValue__: function ()
 		{
-			var keyValue = this .keyValue_ .getValue ();
-		
+			var keyValue = this .keyValue_;
+
 			if (keyValue .length < this .key_ .length)
 				this .keyValue_ .resize (this .key_ .length, keyValue .length ? keyValue [this .keyValue_ .length - 1] : new Fields .SFColor ());
 

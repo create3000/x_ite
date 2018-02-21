@@ -171,15 +171,6 @@ function ($,
 
 			return true;
 		},
-		setValue: function (value)
-		{
-			this .set (value instanceof X3DArrayField ? value .getValue () : value);
-			this .addEvent ();
-		},
-		isDefaultValue: function ()
-		{
-			return this .length === 0;
-		},
 		set: function (value)
 		{
 			this .resize (value .length, undefined, true);
@@ -189,13 +180,22 @@ function ($,
 			for (var i = 0, length = value .length; i < length; ++ i)
 				array [i] .set (value [i] instanceof X3DField ? value [i] .getValue () : value [i]);
 		},
+		isDefaultValue: function ()
+		{
+			return this .length === 0;
+		},
+		setValue: function (value)
+		{
+			this .set (value instanceof X3DArrayField ? value .getValue () : value);
+			this .addEvent ();
+		},
 		unshift: function (value)
 		{
 			var array = this .getValue ();
 
 			for (var i = arguments .length - 1; i >= 0; -- i)
 			{
-				var field = new (this .getValueType ()) ();
+				var field = new (this .getSingleType ()) ();
 
 				field .setValue (arguments [i]);
 	
@@ -226,7 +226,7 @@ function ($,
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var field = new (this .getValueType ()) ();
+				var field = new (this .getSingleType ()) ();
 
 				field .setValue (arguments [i]);
 
@@ -274,7 +274,7 @@ function ($,
 
 			for (var i = first; i < last; ++ i)
 			{
-				var field = new (this .getValueType ()) ();
+				var field = new (this .getSingleType ()) ();
 
 				field .setValue (array [i]);
 
@@ -366,15 +366,6 @@ function ($,
 
 			return first;
 		},
-		clear: function ()
-		{
-			var array = this .getValue ();
-
-			for (var i = 0, length = this .length; i < length; ++ i)
-				this .removeChild (array [i]);
-
-			array .length = 0;
-		},
 		erase: function (first, last)
 		{
 			var values = this .getValue () .splice (first, last - first);
@@ -404,7 +395,7 @@ function ($,
 			{
 				for (var i = array .length; i < size; ++ i)
 				{
-					var field = new (this .getValueType ()) ();
+					var field = new (this .getSingleType ()) ();
 
 					if (value !== undefined)
 						field .setValue (value);
@@ -499,7 +490,13 @@ function ($,
 		},
 		dispose: function ()
 		{
-			this .clear ();
+			var array = this .getValue ();
+
+			for (var i = 0, length = this .length; i < length; ++ i)
+				this .removeChild (array [i]);
+
+			array .length = 0;
+
 			X3DField .prototype .dispose .call (this);
 		},
 	});

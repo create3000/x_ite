@@ -82,7 +82,7 @@ function ($,
 		constructor: PixelTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, [ ])),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, new Fields .MFInt32 ())),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
@@ -119,7 +119,7 @@ function ($,
 				{
 					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index] =
 						data [index + 1] =
@@ -133,7 +133,7 @@ function ($,
 				{
 					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index] =
 						data [index + 1] =
@@ -147,7 +147,7 @@ function ($,
 				{
 					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index]     = (pixel >>> 16) & 255;
 						data [index + 1] = (pixel >>>  8) & 255;
@@ -161,7 +161,7 @@ function ($,
 				{
 					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index]     = (pixel >>> 24);
 						data [index + 1] = (pixel >>> 16) & 255;
@@ -179,7 +179,7 @@ function ($,
 				width       = this .image_ .width,
 				height      = this .image_ .height,
 				comp        = this .image_ .comp,
-				array       = this .image_ .array .getValue (),
+				array       = this .image_ .array,
 				transparent = ! (comp % 2),
 				data        = null;
 		

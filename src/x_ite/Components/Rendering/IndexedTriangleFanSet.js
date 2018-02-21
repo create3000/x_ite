@@ -115,25 +115,25 @@ function ($,
 			// Build coordIndex
 
 			var
-				index         = this .index_ .getValue (),
+				index         = this .index_,
 				triangleIndex = this .triangleIndex;
 		
 			triangleIndex .length = 0;
 		
 			for (var i = 0, length = index .length; i < length; ++ i)
 			{
-				var first = index [i] .getValue ();
+				var first = index [i];
 		
 				if (++ i < length)
 				{
-					var second = index [i] .getValue ();
+					var second = index [i];
 
 					if (second < 0)
 						continue;
 	
 					for (++ i; i < length; ++ i)
 					{
-						var third = index [i] .getValue ();
+						var third = index [i];
 
 						if (third < 0)
 							break;

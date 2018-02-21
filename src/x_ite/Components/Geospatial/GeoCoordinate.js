@@ -115,7 +115,7 @@ function ($,
 		eventsProcessed: function ()
 		{
 			var
-				point  = this .point_ .getValue (),
+				point  = this .point_,
 				points = this .points;
 
 			for (var i = 0, length = Math .min (point .length, points .length); i < length; ++ i)

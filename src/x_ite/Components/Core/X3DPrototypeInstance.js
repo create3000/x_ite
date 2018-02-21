@@ -154,7 +154,7 @@ function ($,
 							if (field .hasReferences ())
 								continue;
 
-							field .setValue (protoField .getValue ());
+							field .assign (protoField);
 						}
 						catch (error)
 						{

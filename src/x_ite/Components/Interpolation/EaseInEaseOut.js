@@ -106,13 +106,15 @@ function ($,
 		},
 		interpolate: function (index0, index1, weight)
 		{
-			var easeOut = this .easeInEaseOut_ [index0] .y;
-			var easeIn  = this .easeInEaseOut_ [index1] .x;
-			var sum     = easeOut + easeIn;
+			var
+				easeOut = this .easeInEaseOut_ [index0] .y,
+				easeIn  = this .easeInEaseOut_ [index1] .x,
+				sum     = easeOut + easeIn;
 
 			if (sum < 0)
+			{
 				this .modifiedFraction_changed_ = weight;
-
+			}
 			else
 			{
 				if (sum > 1)

@@ -172,7 +172,7 @@ function ($,
 			var
 				colorPerVertex  = this .colorPerVertex_ .getValue (),
 				normalPerVertex = this .normalPerVertex_ .getValue (),
-				coordIndex      = this .coordIndex_ .getValue (),
+				coordIndex      = this .coordIndex_,
 				attribNodes     = this .getAttrib (),
 				numAttrib       = attribNodes .length,
 				attribs         = this .getAttribs (),
@@ -197,7 +197,7 @@ function ($,
 				{
 					var
 						i     = vertices [triangles [v]],
-						index = coordIndex [i] .getValue ();
+						index = coordIndex [i];
 
 					for (var a = 0; a < numAttrib; ++ a)
 						attribNodes [a] .addValue (attribs [a], index);
@@ -240,7 +240,7 @@ function ($,
 		{
 			var
 				convex      = this .convex_ .getValue (),
-				coordIndex  = this .coordIndex_ .getValue (),
+				coordIndex  = this .coordIndex_,
 				coordLength = coordIndex .length,
 				polygons    = [ ];
 
@@ -250,9 +250,9 @@ function ($,
 			if (coordLength)
 			{
 				// Add -1 (polygon end marker) to coordIndex if not present.
-				if (this .coordIndex_ [coordLength - 1] > -1)
+				if (coordIndex [coordLength - 1] > -1)
 				{
-					this .coordIndex_ .push (-1);
+					coordIndex .push (-1);
 
 					++ coordLength;
 				}
@@ -264,7 +264,7 @@ function ($,
 
 				for (var i = 0; i < coordLength; ++ i)
 				{
-					var index = coordIndex [i] .getValue ();
+					var index = coordIndex [i];
 	
 					if (index > -1)
 					{
@@ -336,12 +336,12 @@ function ($,
 			var
 				vertices   = polygon .vertices,
 				triangles  = polygon .triangles,
-				coordIndex = this .coordIndex_ .getValue (),
+				coordIndex = this .coordIndex_,
 				coord      = this .getCoord ();
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
-				var vertex = coord .get1Point (coordIndex [vertices [i]] .getValue ()) .copy ();
+				var vertex = coord .get1Point (coordIndex [vertices [i]]) .copy ();
 
 				vertex .index = i;
 
@@ -390,7 +390,7 @@ function ($,
 		{
 			var
 				cw          = ! this .ccw_ .getValue (),
-				coordIndex  = this .coordIndex_ .getValue (),
+				coordIndex  = this .coordIndex_,
 				coord       = this .getCoord (),
 				normal      = null;
 
@@ -408,17 +408,17 @@ function ($,
 				{
 					case 3:
 					{
-						normal = coord .getNormal (coordIndex [vertices [0]] .getValue (),
-						                           coordIndex [vertices [1]] .getValue (),
-						                           coordIndex [vertices [2]] .getValue ());
+						normal = coord .getNormal (coordIndex [vertices [0]],
+						                           coordIndex [vertices [1]],
+						                           coordIndex [vertices [2]]);
 						break;
 					}
 					case 4:
 					{
-						normal = coord .getQuadNormal (coordIndex [vertices [0]] .getValue (),
-						                               coordIndex [vertices [1]] .getValue (),
-						                               coordIndex [vertices [2]] .getValue (),
-						                               coordIndex [vertices [3]] .getValue ());
+						normal = coord .getQuadNormal (coordIndex [vertices [0]],
+						                               coordIndex [vertices [1]],
+						                               coordIndex [vertices [2]],
+						                               coordIndex [vertices [3]]);
 						break;
 					}
 					default:
@@ -431,7 +431,7 @@ function ($,
 				// Add a normal index for each point.
 				for (var i = 0; i < length; ++ i)
 				{
-					var index = coordIndex [vertices [i]] .getValue ();
+					var index = coordIndex [vertices [i]];
 
 					if (! normalIndex [index])
 						normalIndex [index] = [ ];
@@ -457,13 +457,13 @@ function ($,
 
 			var
 				normal = new Vector3 (0, 0, 0),
-				next   = coord .get1Point (coordIndex [vertices [0]] .getValue ());
+				next   = coord .get1Point (coordIndex [vertices [0]]);
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
 				var
 					current = next,
-					next    = coord .get1Point (coordIndex [vertices [(i + 1) % length]] .getValue ());
+					next    = coord .get1Point (coordIndex [vertices [(i + 1) % length]]);
 
 				normal .x += (current .y - next .y) * (current .z + next .z);
 				normal .y += (current .z - next .z) * (current .x + next .x);

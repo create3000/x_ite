@@ -305,7 +305,7 @@ function ($,
 									destfield .set (sourceField .copy (executionContext) .getValue ());
 									break;
 								default:
-									destfield .set (sourceField .getValue ());
+									destfield .set (sourceField .getValue (), sourceField .length);
 									break;
 							}
 						}

@@ -103,7 +103,7 @@ function ($,
 		},
 		build: function ()
 		{
-			var vertices = this .vertices_ .getValue ();
+			var vertices = this .vertices_;
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
@@ -122,11 +122,11 @@ function ($,
 				min       = p .min,
 				Ssize     = p .Ssize,
 				texCoords = [ ],
-				vertices  = this .vertices;
+				vertices  = this .getVertices ();
 
 			this .texCoords .push (texCoords);
 
-			for (var i = 0, length = this .vertices .length; i < length; i += 4)
+			for (var i = 0, length = vertices .length; i < length; i += 4)
 			{
 				texCoords .push ((vertices [i]     - min [0]) / Ssize,
 				                 (vertices [i + 1] - min [1]) / Ssize,

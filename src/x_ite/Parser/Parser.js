@@ -1961,21 +1961,25 @@ function ($,
 					{
 						var
 							comp  = this .value,
-							array = [ ],
 							size  = width * height;
+
+						field .width  = width;
+						field .height = height;
+						field .comp   = comp;
+
+						var array = field .array;
 
 						for (var i = 0; i < size; ++ i)
 						{
 							if (this .int32 ())
 							{
-								array .push (this .value);
+								array [i] = this .value;
 								continue;
 							}
 
 							return false;
 						}
 
-						field .getValue () .set (width, height, comp, array);
 						return true;
 					}
 				}

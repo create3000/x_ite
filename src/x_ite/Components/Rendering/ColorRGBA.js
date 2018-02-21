@@ -106,11 +106,11 @@ function ($,
 		},
 		getVectors: function (array)
 		{
-			var color = this .color_ .getValue ();
+			var color = this .color_;
 
 			for (var i = 0, length = color .length; i < length; ++ i)
 			{
-				var c = color [i] .getValue ();
+				var c = color [i];
 
 				array [i] = new Vector4 (c .r, c .g, c .b, c .a);
 			}

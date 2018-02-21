@@ -131,15 +131,15 @@ function ($,
 		},
 		set_normalizeVelocity__: function ()
 		{
-			this .spline .generate (this .closed_            .getValue (),
-			                        this .key_               .getValue (),
-			                        this .keyValue_          .getValue (),
-			                        this .keyVelocity_       .getValue (),
+			this .spline .generate (this .closed_ .getValue (),
+			                        this .key_,
+			                        this .keyValue_,
+			                        this .keyVelocity_,
 			                        this .normalizeVelocity_ .getValue ());
 		},
 		interpolate: function (index0, index1, weight)
 		{
-			this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_ .getValue ());
+			this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_);
 		},
 	});
 

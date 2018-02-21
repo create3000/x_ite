@@ -119,7 +119,7 @@ function ($,
 		},
 		getClosedOrientation: function ()
 		{
-			var orientation = this .orientation_ .getValue ();
+			var orientation = this .orientation_;
 
 			if (orientation .length)
 			{
@@ -135,10 +135,10 @@ function ($,
 		createPoints: function ()
 		{
 			var
-				crossSection = this .crossSection_. getValue (),
-				orientation  = this .orientation_. getValue (),
-				scale        = this .scale_. getValue (),
-				spine        = this .spine_. getValue (),
+				crossSection = this .crossSection_,
+				orientation  = this .orientation_,
+				scale        = this .scale_,
+				spine        = this .spine_,
 				points       = [ ];
 
 			// calculate SCP rotations
@@ -177,7 +177,7 @@ function ($,
 			// calculate SCP rotations
 
 			var
-				spine       = this .spine_ .getValue (),
+				spine       = this .spine_,
 				numSpines   = spine .length,
 				firstSpine  = spine [0] .getValue (),
 				lastSpine   = spine [spine .length - 1] .getValue (),
@@ -317,8 +317,8 @@ function ($,
 		{
 			var
 				cw           = ! this .ccw_ .getValue (),
-				crossSection = this .crossSection_. getValue (),
-				spine        = this .spine_. getValue (),
+				crossSection = this .crossSection_,
+				spine        = this .spine_,
 				texCoords    = [ ];
 
 			if (spine .length < 2 || crossSection .length < 2)

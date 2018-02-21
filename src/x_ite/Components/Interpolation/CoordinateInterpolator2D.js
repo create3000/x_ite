@@ -97,8 +97,8 @@ function ($,
 		interpolate: function (index0, index1, weight)
 		{
 			var
-				keyValue      = this .keyValue_ .getValue (),
-				value_changed = this .value_changed_ .getValue (),
+				keyValue      = this .keyValue_,
+				value_changed = this .value_changed_,
 				size          = this .key_ .length ? Math .floor (keyValue .length / this .key_ .length) : 0;
 
 			index0 *= size;
@@ -108,10 +108,8 @@ function ($,
 
 			for (var i = 0; i < size; ++ i)
 			{
-				value_changed [i] .getValue () .assign (keyValue [index0 + i] .getValue ()) .lerp (keyValue [index1 + i] .getValue (), weight);
+				value_changed [i] = keyValue [index0 + i] .getValue () .lerp (keyValue [index1 + i] .getValue (), weight);
 			}
-
-			this .value_changed_ .addEvent ();
 		},
 	});
 

@@ -115,14 +115,14 @@ function ($,
 			// Build coordIndex
 
 			var
-				fanCount      = this .fanCount_ .getValue (),
+				fanCount      = this .fanCount_,
 				triangleIndex = this .triangleIndex;
 		
 			triangleIndex .length = 0;
 
 			for (var f = 0, fans = fanCount .length, index = 0; f < fans; ++ f)
 			{
-				var vertexCount = fanCount [f] .getValue ()
+				var vertexCount = fanCount [f];
 
 				for (var i = 1, count = vertexCount - 1; i < count; ++ i)
 				{

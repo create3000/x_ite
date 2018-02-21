@@ -178,7 +178,7 @@ function ($,
 			// Fill GeometryNode
 
 			var
-				vertexCount = this .vertexCount_ .getValue (),
+				vertexCount = this .vertexCount_,
 				attribNodes = this .getAttrib (),
 				numAttrib   = attribNodes .length,
 				attribs     = this .getAttribs (),
@@ -189,7 +189,7 @@ function ($,
 
 			for (var c = 0, length = vertexCount .length; c < length; ++ c)
 			{
-				var count = vertexCount [c] .getValue ();
+				var count = vertexCount [c];
 
 				if (index + count > size)
 					break;

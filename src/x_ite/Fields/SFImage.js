@@ -91,14 +91,14 @@ function ($, X3DField, X3DConstants)
 			this .width  = image .width;
 			this .height = image .height;
 			this .comp   = image .comp;
-			this .array .set (image .array .getValue ());
+			this .array .assign (image .array);
 		},
 		set: function (width, height, comp, array)
 		{
 			this .width  = width;
 			this .height = height;
 			this .comp   = comp;
-			this .array .set (array);
+			this .array .assign (array);
 		},
 		setWidth: function (value)
 		{
@@ -128,7 +128,7 @@ function ($, X3DField, X3DConstants)
 		},
 		setArray: function (value)
 		{
-			this .array .setValue (value);
+			this .array .assign (value);
 			this .array .length = this .width  * this .height;	
 		},
 		getArray: function ()

@@ -113,15 +113,15 @@ function ($,
 			if (keyValue .length < key .length)
 				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
 
-			this .squad .generate (this .closed_   .getValue (),
-			                       this .key_      .getValue (),
-			                       this .keyValue_ .getValue ());
+			this .squad .generate (this .closed_ .getValue (),
+			                       this .key_,
+			                       this .keyValue_);
 		},
 		interpolate: function (index0, index1, weight)
 		{
 			try
 			{
-				this .value_changed_ = this .squad .interpolate (index0, index1, weight, this .keyValue_ .getValue ());
+				this .value_changed_ = this .squad .interpolate (index0, index1, weight, this .keyValue_);
 			}
 			catch (error)
 			{

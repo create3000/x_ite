@@ -113,7 +113,7 @@ function ($,
 		set_index__: function ()
 		{
 			var
-				index         = this .index_ .getValue (),
+				index         = this .index_,
 				length        = index .length,
 				triangleIndex = this .triangleIndex;
 

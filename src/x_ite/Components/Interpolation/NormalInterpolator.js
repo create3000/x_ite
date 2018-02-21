@@ -109,8 +109,8 @@ function ($,
 		interpolate: function (index0, index1, weight)
 		{
 			var
-				keyValue      = this .keyValue_ .getValue (),
-				value_changed = this .value_changed_ .getValue (),
+				keyValue      = this .keyValue_,
+				value_changed = this .value_changed_,
 				size          = this .key_ .length > 1 ? Math .floor (keyValue .length / this .key_ .length) : 0;
 
 			index0 *= size;
@@ -122,15 +122,13 @@ function ($,
 			{
 				try
 				{
-					value_changed [i] .set (Algorithm .simpleSlerp (this .keyValue0 .assign (keyValue [index0 + i] .getValue ()),
-					                                                this .keyValue1 .assign (keyValue [index1 + i] .getValue ()),
-					                                                weight));
+					value_changed [i] = Algorithm .simpleSlerp (this .keyValue0 .assign (keyValue [index0 + i] .getValue ()),
+					                                            this .keyValue1 .assign (keyValue [index1 + i] .getValue ()),
+					                                            weight);
 				}
 				catch (error)
 				{ }
 			}
-
-			this .value_changed_ .addEvent ();
 		},
 	});
 

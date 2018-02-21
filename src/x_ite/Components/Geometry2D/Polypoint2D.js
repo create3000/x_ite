@@ -115,7 +115,7 @@ function ($,
 		},
 		build: function ()
 		{
-			var point = this .point_ .getValue ();
+			var point = this .point_;
 
 			for (var i = 0, length = point .length; i < length; ++ i)
 			{

@@ -96,27 +96,27 @@ function (Vector4,
 				if (keyVelocity .length === 0)
 				{
 					if (closed)
-						T .push (this .divide (this .subtract (keyValue [1] .getValue (), keyValue [keyValue .size () - 2] .getValue ()), 2));
+						T .push (this .divide (this .subtract (keyValue [1], keyValue [keyValue .length - 2]), 2));
 		
 					else
 						T .push (this .create ());
 		
 					for (var i = 1, length = keyValue .length - 1; i < length; ++ i)
-						T .push (this .divide (this .subtract (keyValue [i + 1] .getValue (), keyValue [i - 1] .getValue ()), 2));
+						T .push (this .divide (this .subtract (keyValue [i + 1], keyValue [i - 1]), 2));
 		
 					T .push (this .copy (T [0]));
 				}
 				else
 				{
 					for (var i = 0, length = keyVelocity .length; i < length; ++ i)
-						T .push (this .copy (keyVelocity [i] .getValue ()));
+						T .push (this .copy (keyVelocity [i]));
 		
 					if (normalizeVelocity)
 					{
 						var Dtot = 0;
 		
 						for (var i = 0, length = keyValue .length - 1; i < length; ++ i)
-							Dtot += this .abs (this .subtract (keyValue [i] .getValue (), keyValue [i + 1] .getValue ()));
+							Dtot += this .abs (this .subtract (keyValue [i], keyValue [i + 1]));
 		
 						for (var i = 0, length = T .length - 1; i < length; ++ i)
 						{
@@ -135,10 +135,10 @@ function (Vector4,
 					var i_1 = key .length - 1;
 					var i_2 = key .length - 2;
 		
-					var d = key [1] .getValue () - key [0] .getValue () + key [i_1] .getValue () - key [i_2] .getValue ();
+					var d = key [1] - key [0] + key [i_1] - key [i_2];
 		
-					Fm .push (2 * (key [1]   .getValue () - key [0]   .getValue ()) / d);
-					Fp .push (2 * (key [i_1] .getValue () - key [i_2] .getValue ()) / d);
+					Fm .push (2 * (key [1]   - key [0])   / d);
+					Fp .push (2 * (key [i_1] - key [i_2]) / d);
 
 				}
 				else
@@ -149,10 +149,10 @@ function (Vector4,
 
 				for (var i = 1, length = key .length - 1; i < length; ++ i)
 				{
-					var d = key [i + 1] .getValue () - key [i - 1] .getValue ();
+					var d = key [i + 1] - key [i - 1];
 		
-					Fm .push (2 * (key [i + 1] .getValue () - key [i]     .getValue ()) / d);
-					Fp .push (2 * (key [i]     .getValue () - key [i - 1] .getValue ()) / d);
+					Fm .push (2 * (key [i + 1] - key [i])     / d);
+					Fp .push (2 * (key [i]     - key [i - 1]) / d);
 				}
 		
 				Fm .push (Fm [0]);
@@ -179,8 +179,8 @@ function (Vector4,
 			// Taking dot product from SH and C;
 
 			return this .dot (H .multVecMatrix (S),
-                           keyValue [index0] .getValue (),
-                           keyValue [index1] .getValue (),
+                           keyValue [index0],
+                           keyValue [index1],
                            this .T0 [index0],
                            this .T1 [index1]);
 		},

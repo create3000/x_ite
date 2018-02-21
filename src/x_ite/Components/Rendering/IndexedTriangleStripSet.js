@@ -115,7 +115,7 @@ function ($,
 			// Build coordIndex
 
 			var
-				index         = this .index_ .getValue (),
+				index         = this .index_,
 				triangleIndex = this .triangleIndex;
 		
 			triangleIndex .length = 0;
@@ -124,14 +124,14 @@ function ($,
 		
 			for (var i = 0, length = index .length; i < length; ++ i)
 			{
-				var first = index [i] .getValue ();
+				var first = index [i];
 
 				if (first < 0)
 					continue;
 		
 				if (++ i < length)
 				{
-					var second = index [i] .getValue ();
+					var second = index [i];
 
 					if (second < 0)
 						continue;
@@ -140,7 +140,7 @@ function ($,
 		
 					for (var face = 0; i < length; ++ i, ++ face)
 					{
-						var third = index [i] .getValue ();
+						var third = index [i];
 
 						if (third < 0)
 							break;
