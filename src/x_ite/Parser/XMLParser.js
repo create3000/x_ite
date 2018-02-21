@@ -50,7 +50,6 @@
 define ([
 	"jquery",
 	"x_ite/Basic/X3DField",
-	"x_ite/Basic/X3DArrayField",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Fields",
@@ -63,7 +62,6 @@ define ([
 ],
 function ($,
           X3DField,
-          X3DArrayField,
           X3DBaseNode,
           X3DPrototypeInstance,
           Fields,

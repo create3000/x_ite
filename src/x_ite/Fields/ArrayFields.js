@@ -65,7 +65,7 @@ define ([
 	"x_ite/Fields/SFVec2",
 	"x_ite/Fields/SFVec3",
 	"x_ite/Fields/SFVec4",
-	"x_ite/Basic/X3DArrayField",
+	"x_ite/Basic/X3DObjectArrayField",
 	"x_ite/Basic/X3DTypedArrayField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
@@ -87,7 +87,7 @@ function ($,
           SFVec2,
           SFVec3,
           SFVec4,
-          X3DArrayField,
+          X3DObjectArrayField,
           X3DTypedArrayField,
           X3DConstants,
           Generator)
@@ -113,12 +113,12 @@ function ($,
 	function MFNode (value)
 	{
 		if (this instanceof MFNode)
-			return X3DArrayField .call (this, arguments);
+			return X3DObjectArrayField .call (this, arguments);
 		
-		return X3DArrayField .call (Object .create (MFNode .prototype), arguments);
+		return X3DObjectArrayField .call (Object .create (MFNode .prototype), arguments);
 	}
 
-	MFNode .prototype = $.extend (Object .create (X3DArrayField .prototype),
+	MFNode .prototype = $.extend (Object .create (X3DObjectArrayField .prototype),
 	{
 		constructor: MFNode,
 		_cloneCount: 0,
@@ -188,13 +188,13 @@ function ($,
 		},
 		addChildObject: function (value)
 		{
-			X3DArrayField .prototype .addChildObject .call (this, value);
+			X3DObjectArrayField .prototype .addChildObject .call (this, value);
 
 			value .addClones (this ._cloneCount);
 		},
 		removeChild: function (value)
 		{
-			X3DArrayField .prototype .removeChild .call (this, value);
+			X3DObjectArrayField .prototype .removeChild .call (this, value);
 
 			value .removeClones (this ._cloneCount);
 		},
@@ -246,12 +246,12 @@ function ($,
 	function MFString (value)
 	{
 		if (this instanceof MFString)
-			return X3DArrayField .call (this, arguments);
+			return X3DObjectArrayField .call (this, arguments);
 		
-		return X3DArrayField .call (Object .create (MFString .prototype), arguments);
+		return X3DObjectArrayField .call (Object .create (MFString .prototype), arguments);
 	}
 
-	MFString .prototype = $.extend (Object .create (X3DArrayField .prototype),
+	MFString .prototype = $.extend (Object .create (X3DObjectArrayField .prototype),
 	{
 		constructor: MFString,
 		getValueType: function ()
@@ -306,12 +306,12 @@ function ($,
 		function ArrayField (value)
 		{
 			if (this instanceof ArrayField)
-				return X3DArrayField .call (this, arguments);
+				return X3DObjectArrayField .call (this, arguments);
 			
-			return X3DArrayField .call (Object .create (ArrayField .prototype), arguments);
+			return X3DObjectArrayField .call (Object .create (ArrayField .prototype), arguments);
 		}
 
-		ArrayField .prototype = $.extend (Object .create (X3DArrayField .prototype),
+		ArrayField .prototype = $.extend (Object .create (X3DObjectArrayField .prototype),
 		{
 			constructor: ArrayField,
 			getSingleType: function ()

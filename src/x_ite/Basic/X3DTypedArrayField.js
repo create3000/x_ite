@@ -49,13 +49,13 @@
 
 define ([
 	"jquery",
-	"x_ite/Basic/X3DField",
+	"x_ite/Basic/X3DArrayField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 	"standard/Math/Algorithm",
 ],
 function ($,
-          X3DField,
+          X3DArrayField,
           X3DConstants, 
           Generator,
           Algorithm)
@@ -107,7 +107,7 @@ function ($,
 				if ((typeof key) === "symbol")
 					return;
 
-				// if target not instance of X3DArrayField, then the constuctor is called as function.
+				// if target not instance of X3DTypedArrayField, then the constuctor is called as function.
 				console .log (target, typeof key, key, error);
 			}
 		},
@@ -150,7 +150,7 @@ function ($,
 			}
 			catch (error)
 			{
-				// if target not instance of X3DArrayField, then the constuctor is called as function.
+				// if target not instance of X3DTypedArrayField, then the constuctor is called as function.
 				console .log (target, key, error);
 				return false;
 			}
@@ -165,21 +165,21 @@ function ($,
 		},
 	};
 
-	function X3DArrayField (value)
+	function X3DTypedArrayField (value)
 	{
-		X3DField .call (this, new (this .getArrayType ()) (2));
+		X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
 		if (value [0] instanceof Array)
 			value = value [0];
 
-		X3DArrayField .prototype .push .apply (this, value);
+		X3DTypedArrayField .prototype .push .apply (this, value);
 
 		return new Proxy (this, handler);
 	}
 
-	X3DArrayField .prototype = $.extend (new X3DField ([ ]),
+	X3DTypedArrayField .prototype = $.extend (Object .create (X3DArrayField .prototype),
 	{
-		constructor: X3DArrayField,
+		constructor: X3DTypedArrayField,
 		_length: 0,
 		copy: function ()
 		{
@@ -190,7 +190,7 @@ function ($,
 
 			copy ._length = this ._length;
 
-			X3DField .prototype .set .call (copy, copyArray, this ._length);
+			X3DArrayField .prototype .set .call (copy, copyArray, this ._length);
 
 			return copy;
 		},
@@ -568,7 +568,7 @@ function ($,
 
 			newArray .set (array);
 
-			X3DField .prototype .set .call (this, newArray);
+			X3DArrayField .prototype .set .call (this, newArray);
 
 			return newArray;
 		},
@@ -717,16 +717,16 @@ function ($,
 		},
 		dispose: function ()
 		{
-			X3DField .prototype .dispose .call (this);
+			X3DArrayField .prototype .dispose .call (this);
 		},
 	});
 
-	Object .defineProperty (X3DArrayField .prototype, "length",
+	Object .defineProperty (X3DTypedArrayField .prototype, "length",
 	{
 		get: function () { return this ._length; },
 		set: function (value) { this .resize (value); },
 		enumerable: false,
-		configurable: false
+		configurable: false,
 	});
 
 	// Getter/Setter functions to reference a value for a given index.
@@ -761,5 +761,5 @@ function ($,
 		field .addEvent ();
 	}
 
-	return X3DArrayField;
+	return X3DTypedArrayField;
 });
