@@ -93,16 +93,10 @@ function ($,
 				}
 				else
 				{
-					index *= components;
-	
-					for (var c = 0; c < components; ++ c, ++ index)
-						tmp [c] = array [index];
+					var value = new (valueType) ();
 
-					tmp .length = components;
-
-					var value = Object .create (valueType .prototype);
-
-					valueType .apply (value, tmp);
+					value .getValue = getValue .bind (value, target, index, value .getValue (), components);
+					value .addEvent = addEvent .bind (value, target, index, value .getValue (), components);
 
 					return value;
 				}
@@ -734,6 +728,38 @@ function ($,
 		enumerable: false,
 		configurable: false
 	});
+
+	// Getter/Setter functions to reference a value for a given index.
+
+	function getValue (field, index, value, components)
+	{
+		var array = field .getValue ();
+
+		index *= components;
+
+		for (var c = 0; c < components; ++ c, ++ index)
+			tmp [c] = array [index];
+
+		tmp .length = components;
+
+		value .set .apply (value, tmp);
+
+		return value;
+	}
+
+	function addEvent (field, index, value, components)
+	{
+		var array = field .getValue ();
+
+		index *= components;
+
+		for (var c = 0; c < components; ++ index, ++ c)
+		{
+			array [index] = value [c];
+		}
+
+		field .addEvent ();
+	}
 
 	return X3DArrayField;
 });
