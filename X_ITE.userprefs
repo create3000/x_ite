@@ -3,11 +3,6 @@
   <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/X3DViewer.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/ImageTexture.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/ExamineViewer.js" Line="105" Column="37" />
-      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shape/Appearance.js" Line="183" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

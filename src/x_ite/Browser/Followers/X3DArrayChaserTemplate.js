@@ -72,16 +72,17 @@ function ($,
 			step: function (value1, value2, t)
 			{
 				var
-					output   = this .output .getValue (),
-					deltaOut = this .deltaOut .getValue ();
+					output   = this .output,
+					deltaOut = this .deltaOut;
 
-				value1 = value1 .getValue ();
-				value2 = value2 .getValue ();
-
-				this .deltaOut .length = output .length;
+				deltaOut .length = output .length;
 
 				for (var i = 0, length = output .length; i < length; ++ i)
-					output [i] .getValue () .add (deltaOut [i] .getValue () .assign (value1 [i] .getValue ()) .subtract (value2 [i] .getValue ()) .multiply (t));
+				{
+					var di = deltaOut [i] = value1 [i];
+
+					output [i] = output [i] .getValue () .add (di .getValue () .subtract (value2 [i] .getValue ()) .multiply (t));
+				}
 			},
 		});
 	
