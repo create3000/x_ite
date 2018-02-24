@@ -351,6 +351,7 @@ function ($,
 			}
 			catch (error)
 			{
+				console .log (error);
 				throw new Error (this .getError (error));
 			}
 		},
@@ -1736,15 +1737,9 @@ function ($,
 		{
 			field .length = 0;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFBool ();
-
-			while (this .sfboolValue (value))
+			while (this .sfboolValue (this .SFBool))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFBool ();
+				field .push (this .SFBool);
 			}
 		},
 		sfcolorValue: function (field)
