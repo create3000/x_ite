@@ -1,10 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
     <Files>
-      <File FileName="src/x_ite.html" Line="358" Column="1" />
+      <File FileName="src/x_ite.html" Line="407" Column="36" />
       <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Parser/Parser.js" Line="1738" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="329" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
