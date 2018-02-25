@@ -50,9 +50,10 @@
 define ([
 	"jquery",
 	"x_ite/Basic/X3DField",
+	"x_ite/Fields/SFInt32",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($, X3DField, X3DConstants)
+function ($, X3DField, SFInt32, X3DConstants)
 {
 "use strict";
 
@@ -196,14 +197,18 @@ function ($, X3DField, X3DConstants)
 		},
 		toStream: function (stream)
 		{
-		   var array = this .array .getValue ();
+		   var
+				array = this .array,
+				int   = new SFInt32 ();
 
 			stream .string += this .width + " " + this .height + " " + this .comp;
 
 			for (var i = 0, length = this .width * this .height; i < length; ++ i)
 			{
 				stream .string += " 0x";
-				array [i] .toStream (stream, 16);
+
+				int .set (array [i]);
+				int .toXMLStream (stream);
 			}
 		},
 		toXMLStream: function (stream)

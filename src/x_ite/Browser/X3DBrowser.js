@@ -652,7 +652,7 @@ function ($,
 
 			console .log (string);
 
-			$(".x_ite-console") .append (string);
+			$(".x_ite-console") .append (document .createTextNode (string));
 		},
 		println: function ()
 		{

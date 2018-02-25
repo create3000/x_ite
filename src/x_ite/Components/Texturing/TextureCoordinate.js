@@ -106,11 +106,11 @@ function ($,
 		},
 		getTexCoord: function (array)
 		{
-			var point = this .point_ .getValue ();
+			var point = this .point_;
 
 			for (var i = 0, length = point .length; i < length; ++ i)
 			{
-				var p = point[i] .getValue ();
+				var p = point [i];
 
 				array [i] = new Vector4 (p .x, p .y, 0, 1);
 			}

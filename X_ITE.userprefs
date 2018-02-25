@@ -1,10 +1,14 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Texturing3D/TextureCoordinate4D.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="407" Column="36" />
+      <File FileName="src/x_ite.html" Line="469" Column="1" />
       <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="329" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Text/X3DTextGeometry.js" Line="556" Column="4" />
+      <File FileName="src/x_ite/Components/Texturing/TextureCoordinate.js" Line="114" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing3D/TextureCoordinate3D.js" Line="114" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing3D/TextureCoordinate4D.js" Line="114" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
