@@ -305,9 +305,35 @@ var xxx = 0;
 							location .array = new Float32Array (16);
 							break;
 						}
+						case X3DConstants .MFBool:
+						case X3DConstants .MFInt32:
+						{
+							location .array = new Int32Array (this .getLocationLength (gl, program, field));
+							break;
+						}
+						case X3DConstants .MFFloat:
+						case X3DConstants .MFDouble:
+						case X3DConstants .MFTime:
+						{
+							location .array = new Float32Array (this .getLocationLength (gl, program, field));
+							break;
+						}
 						case X3DConstants .MFImage:
 						{
 							location .array = new Int32Array (this .getImagesLength (field));
+							break;
+						}
+						case X3DConstants .MFMatrix3d:
+						case X3DConstants .MFMatrix3f:
+						case X3DConstants .MFRotation:
+						{
+							location .array = new Float32Array (9 * this .getLocationLength (gl, program, field));
+							break;
+						}
+						case X3DConstants .MFMatrix4d:
+						case X3DConstants .MFMatrix4f:
+						{
+							location .array = new Float32Array (16 * this .getLocationLength (gl, program, field));
 							break;
 						}
 						case X3DConstants .MFNode:
@@ -324,6 +350,26 @@ var xxx = 0;
 									break;
 							}
 
+							break;
+						}
+						case X3DConstants .MFVec2d:
+						case X3DConstants .MFVec2f:
+						{
+							location .array = new Float32Array (2 * this .getLocationLength (gl, program, field));
+							break;
+						}
+						case X3DConstants .MFVec3d:
+						case X3DConstants .MFVec3f:
+						case X3DConstants .MFColor:
+						{
+							location .array = new Float32Array (3 * this .getLocationLength (gl, program, field));
+							break;
+						}
+						case X3DConstants .MFVec4d:
+						case X3DConstants .MFVec4f:
+						case X3DConstants .MFColorRGBA:
+						{
+							location .array = new Float32Array (4 * this .getLocationLength (gl, program, field));
 							break;
 						}
 					}
@@ -417,7 +463,7 @@ var xxx = 0;
 					{
 						var
 							array  = location .array,
-							pixels = field .array .getValue (),
+							pixels = field .array,
 							length = 3 + pixels .length;
 	
 						if (length !== array .length)
@@ -428,7 +474,7 @@ var xxx = 0;
 						array [2] = field .comp;
 	
 						for (var a = 3, p = 0, length = pixels .length; p < length; ++ p)
-							array [a ++] = pixels [p] .getValue ();
+							array [a ++] = pixels [p];
 	
 						gl .uniform1iv (location, array);
 						return;
@@ -489,48 +535,92 @@ var xxx = 0;
 					case X3DConstants .MFBool:
 					case X3DConstants .MFInt32:
 					{
-						gl .uniform1iv (location, field .getValue ());
+						var array = location .array;
+
+						for (var i = 0, length = field .length; i < length; ++ i)
+							array [i] = field [i];
+	
+						for (var length = array .length; i < length; ++ i)
+							array [i] = 0;
+	
+						gl .uniform1iv (location, array);
 						return;
 					}
 					case X3DConstants .MFColor:
 					{
-						gl .uniform3fv (location, field .getValue ());
+						var array = location .array;
+	
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+						{
+							var color = field [i];
+	
+							array [k++] = color .r;
+							array [k++] = color .g;
+							array [k++] = color .b;
+						}
+	
+						for (var length = array .length; k < length; ++ k)
+							array [k] = 0;
+	
+						gl .uniform3fv (location, array);
 						return;
 					}
 					case X3DConstants .MFColorRGBA:
 					{
-						gl .uniform4fv (location, field .getValue ());
+						var array = location .array;
+	
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+						{
+							var color = field [i];
+	
+							array [k++] = color .r;
+							array [k++] = color .g;
+							array [k++] = color .b;
+							array [k++] = color .a;
+						}
+	
+						for (var length = array .length; k < length; ++ k)
+							array [k] = 0;
+	
+						gl .uniform4fv (location, array);
 						return;
 					}
 					case X3DConstants .MFDouble:
 					case X3DConstants .MFFloat:
 					case X3DConstants .MFTime:
 					{
-						gl .uniform1fv (location, field .getValue ());
+						var array = location .array;
+
+						for (var i = 0, length = field .length; i < length; ++ i)
+							array [i] = field [i];
+	
+						for (var length = array .length; i < length; ++ i)
+							array [i] = 0;
+
+						gl .uniform1fv (location, array);
 						return;
 					}
 					case X3DConstants .MFImage:
 					{
 						var
-							images = field .getValue (),
 							array  = location .array,
 							length = this .getImagesLength (field);
 	
 						if (length !== array .length)
 							array = location .array = new Int32Array (length);
 	
-						for (var i = 0, a = 0, length = images .length; i < length; ++ i)
+						for (var i = 0, a = 0, length = field .length; i < length; ++ i)
 						{
 							var
-								value  = images [i],
-								pixels = value .array .getValue ();
+								value  = field [i],
+								pixels = value .array;
 	
 							array [a ++] = value .width;
 							array [a ++] = value .height;
 							array [a ++] = value .comp;
 	
 							for (var p = 0, plength = pixels .length; p < plength; ++ p)
-								array [a ++] = pixels [p] .getValue ();
+								array [a ++] = pixels [p];
 						}
 	
 						gl .uniform1iv (location, array);
@@ -539,13 +629,39 @@ var xxx = 0;
 					case X3DConstants .MFMatrix3d:
 					case X3DConstants .MFMatrix3f:
 					{
-						gl .uniformMatrix3fv (location, false, field .getValue ());
+						var array = location .array;
+	
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+						{
+							var matrix = field [i];
+	
+							for (var m = 0; m < 9; ++ m)
+								array [k++] = matrix [m];
+						}
+	
+						for (var length = array .length; k < length; ++ k)
+							array [k] = 0;
+	
+						gl .uniformMatrix3fv (location, false, array);
 						return;
 					}
 					case X3DConstants .MFMatrix4d:
 					case X3DConstants .MFMatrix4f:
 					{
-						gl .uniformMatrix4fv (location, false, field .getValue ());
+						var array = location .array;
+	
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+						{
+							var matrix = field [i];
+	
+							for (var m = 0; m < 16; ++ m)
+								array [k++] = matrix [m];
+						}
+	
+						for (var length = array .length; k < length; ++ k)
+							array [k] = 0;
+	
+						gl .uniformMatrix4fv (location, false, array);
 						return;
 					}
 					case X3DConstants .MFNode:
@@ -562,13 +678,11 @@ var xxx = 0;
 					}
 					case X3DConstants .MFRotation:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var matrix = value [i] .getValue () .getMatrix (matrix3);
+							var matrix = field [i] .getValue () .getMatrix (matrix3);
 	
 							array [k++] = matrix [0];
 							array [k++] = matrix [1];
@@ -594,19 +708,61 @@ var xxx = 0;
 					case X3DConstants .MFVec2d:
 					case X3DConstants .MFVec2f:
 					{
-						gl .uniform2fv (location, field .getValue ());
+						var array = location .array;
+	
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+						{
+							var vector = field [i];
+	
+							array [k++] = vector .x;
+							array [k++] = vector .y;
+						}
+	
+						for (var length = array .length; k < length; ++ k)
+							array [k] = 0;
+
+						gl .uniform2fv (location, array);
 						return;
 					}
 					case X3DConstants .MFVec3d:
 					case X3DConstants .MFVec3f:
 					{
-						gl .uniform3fv (location, field .getValue ());
+						var array = location .array;
+	
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+						{
+							var vector = field [i];
+	
+							array [k++] = vector .x;
+							array [k++] = vector .y;
+							array [k++] = vector .z;
+						}
+	
+						for (var length = array .length; k < length; ++ k)
+							array [k] = 0;
+	
+						gl .uniform3fv (location, array);
 						return;
 					}
 					case X3DConstants .MFVec4d:
 					case X3DConstants .MFVec4f:
 					{
-						gl .uniform4fv (location, field .getValue ());
+						var array = location .array;
+	
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+						{
+							var vector = field [i];
+	
+							array [k++] = vector .x;
+							array [k++] = vector .y;
+							array [k++] = vector .z;
+							array [k++] = vector .w;
+						}
+	
+						for (var length = array .length; k < length; ++ k)
+							array [k] = 0;
+	
+						gl .uniform4fv (location, array);
 						return;
 					}
 				}
