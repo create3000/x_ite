@@ -54,13 +54,15 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Interpolation/X3DInterpolatorNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
 ],
 function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
-          X3DConstants)
+          X3DConstants,
+          Algorithm)
 {
 "use strict";
 
@@ -97,19 +99,27 @@ function ($,
 		interpolate: function (index0, index1, weight)
 		{
 			var
-				keyValue      = this .keyValue_,
-				value_changed = this .value_changed_,
-				size          = this .key_ .length ? Math .floor (keyValue .length / this .key_ .length) : 0;
+				keyValue = this .keyValue_ .getValue (),
+				size     = this .key_ .length ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+
+			this .value_changed_ .length = size;
+
+			var value_changed = this .value_changed_ .getValue ();
 
 			index0 *= size;
 			index1  = index0 + (this .key_ .length > 1 ? size : 0);
 
-			this .value_changed_ .length = size;
+			index0 *= 2;
+			index1 *= 2;
+			size   *= 2;
 
-			for (var i = 0; i < size; ++ i)
+			for (var i = 0; i < size; i += 2)
 			{
-				value_changed [i] = keyValue [index0 + i] .getValue () .lerp (keyValue [index1 + i] .getValue (), weight);
+				value_changed [i + 0] = Algorithm .lerp (keyValue [index0 + i + 0], keyValue [index1 + i + 0], weight);
+				value_changed [i + 1] = Algorithm .lerp (keyValue [index0 + i + 1], keyValue [index1 + i + 1], weight);
 			}
+
+			this .value_changed_ .addEvent ();
 		},
 	});
 

@@ -76,16 +76,13 @@ function ($,
 				// value
 				
 				var
-					array      = target .getValue (),
 					index      = parseInt (key),
+					array      = target .getValue (),
 					components = target .getComponents (),
 					valueType  = target .getValueType ();
 
 				if (index >= target ._length)
-				{
-					target .resize (index + 1);
-					array = target .getValue ();
-				}
+					array = target .resize (index + 1);
 
 				if (components === 1)
 				{
@@ -122,15 +119,12 @@ function ($,
 				}
 
 				var
-					array      = target .getValue (),
 					index      = parseInt (key),
+					array      = target .getValue (),
 					components = target .getComponents ();
 
 				if (index >= target ._length)
-				{
-					target .resize (index + 1);
-					array = target .getValue ();
-				}
+					array = target .resize (index + 1);
 
 				if (components === 1)
 				{
@@ -262,6 +256,48 @@ function ($,
 		{
 			return this ._length === 0;
 		},
+//		get1Value: function (index, value)
+//		{
+//			var
+//				array      = this .getValue (),
+//				components = this .getComponents ();
+//
+//			if (components === 1)
+//			{
+//				return array [index];
+//			}
+//			else
+//			{
+//				index *= components;
+//		
+//				for (var c = 0; c < components; ++ c, ++ index)
+//					value [c] = array [index];
+//		
+//				return value;
+//			}
+//		},
+//		set1Value: function (index, value)
+//		{
+//			var
+//				array      = this .getValue (),
+//				components = this .getComponents ();
+//	
+//			if (components === 1)
+//			{
+//				array [index] = value;
+//			}
+//			else
+//			{
+//				index *= components;
+//
+//				for (var c = 0; c < components; ++ c, ++ index)
+//				{
+//					array [index] = value [c];
+//				}
+//			}
+//
+//			this .addEvent ();
+//		},
 		setValue: function (value)
 		{
 			if (value instanceof this .constructor)
@@ -295,7 +331,7 @@ function ($,
 				{
 					var argument = arguments [a];
 
-					for (var c = 0; c < components; ++ i, ++ c)
+					for (var c = 0; c < components; ++ c, ++ i)
 					{
 						array [i] = argument [c];
 					}
@@ -364,7 +400,7 @@ function ($,
 				{
 					var argument = arguments [a];
 
-					for (var c = 0; c < components; ++ i, ++ c)
+					for (var c = 0; c < components; ++ c,  ++ i)
 					{
 						array [i] = argument [c];
 					}
@@ -518,18 +554,19 @@ function ($,
 		{
 			var
 				length     = this ._length,
+				array      = this .getValue (),
 				components = this .getComponents ();
 
 			if (newLength < length)
 			{
-				this .getValue () .fill (0, newLength * components, length * components);
+				array .fill (0, newLength * components, length * components);
 
 				if (! silent)
 					this .addEvent ();
 			}
 			else if (newLength > length)
 			{
-				var array = this .grow (newLength * components);
+				array = this .grow (newLength * components);
 
 				if (value !== undefined)
 				{
@@ -541,7 +578,7 @@ function ($,
 					{
 						for (var i = length * components, il = newLength * components; i < il; )
 						{
-							for (var c = 0; c < components; ++ i, ++ c)
+							for (var c = 0; c < components; ++ c, ++ i)
 							{
 								array [i] = value [c];
 							}
@@ -554,6 +591,8 @@ function ($,
 			}
 
 			this ._length = newLength;
+
+			return array;
 		},
 		grow: function (length)
 		{
@@ -753,7 +792,7 @@ function ($,
 
 		index *= components;
 
-		for (var c = 0; c < components; ++ index, ++ c)
+		for (var c = 0; c < components; ++ c, ++ index)
 		{
 			array [index] = value [c];
 		}
