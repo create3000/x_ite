@@ -261,7 +261,7 @@ function ($,
 								ci = coordIndex [i];
 
 							for (var a = 0; a < numAttrib; ++ a)
-								attribNodes [a] .addValue (attribs [a], ci);
+								attribNodes [a] .addValue (ci, attribs [a]);
 
 							if (colorNode)
 							{

@@ -179,7 +179,7 @@ function ($,
 			for (var a = 0; a < numAttrib; ++ a)
 			{
 				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-					attribNodes [a] .addValue (attribs [a], i);
+					attribNodes [a] .addValue (i, attribs [a]);
 			}
 			
 			if (this .colorNode)

@@ -235,7 +235,7 @@ function ($,
 				var index = this .getPolygonIndex (this .getTriangleIndex (i));
 
 				for (var a = 0; a < numAttrib; ++ a)
-					attribNodes [a] .addValue (attribs [a], index);
+					attribNodes [a] .addValue (index, attribs [a]);
 
 				if (colorNode)
 				{

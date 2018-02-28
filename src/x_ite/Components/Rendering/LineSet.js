@@ -203,7 +203,7 @@ function ($,
 					for (var i = 0; i < count; ++ i, index += i & 1)
 					{
 						for (var a = 0; a < numAttrib; ++ a)
-							attribNodes [a] .addValue (attribs [a], index);
+							attribNodes [a] .addValue (index, attribs [a]);
 
 						if (colorNode)
 							colorNode .addColor (index, colorArray);

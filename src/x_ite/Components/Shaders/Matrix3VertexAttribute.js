@@ -93,21 +93,34 @@ function ($,
 		{
 			return "attrib";
 		},
-		addValue: function (array, index)
+		initialize: function ()
 		{
-			if (index < this .value_ .length)
-			{
-				var mat3 = this .value_ [index] .getValue ();
+			X3DVertexAttributeNode .prototype .initialize .call (this);
 
-				for (var i = 0; i < 9; ++ i)
-					array .push (mat3 [i]);
+			this .value_ .addInterest ("value__", this);
+
+			this .value__ ();
+		},
+		value__: function ()
+		{
+			this .value  = this .value_ .getValue ();
+			this .length = this .value_ .length;
+		},
+		addValue: function (index, array)
+		{
+			if (index < this .length)
+			{
+				var value = this .value;
+
+				for (var i = index * 9, l = i + 9; i < l; ++ i)
+					array .push (value [i]);
 			}
 			else
 			{
-				var mat3 = Matrix3 .Identity;
+				var value = Matrix3 .Identity;
 
 				for (var i = 0; i < 9; ++ i)
-					array .push (mat3 [i]);
+					array .push (value [i]);
 			}
 		},
 		enable: function (gl, shaderNode, buffer)

@@ -94,17 +94,31 @@ function ($,
 		{
 			return "attrib";
 		},
-		addValue: function (array, index)
+		initialize: function ()
+		{
+			X3DVertexAttributeNode .prototype .initialize .call (this);
+
+			this .value_ .addInterest ("value__", this);
+
+			this .value__ ();
+		},
+		value__: function ()
+		{
+			this .value  = this .value_ .getValue ();
+			this .length = this .value_ .length;
+		},
+		addValue: function (index, array)
 		{
 			var
-				size  = Algorithm .clamp (this .numComponents_ .getValue (), 1, 4),
-				first = index * size,
-				last  = first + size;
-		
-			if (last <= this .value_ .length)
+				value         = this .value,
+				numComponents = Algorithm .clamp (this .numComponents_ .getValue (), 1, 4),
+				first         = index * numComponents,
+				last          = first + numComponents;
+
+			if (last <= this .length)
 			{
 				for (; first < last; ++ first)
-					array .push (this .value_ [first]);
+					array .push (value [first]);
 			}
 			else
 			{

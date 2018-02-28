@@ -83,7 +83,7 @@ function ($,
 
 		text .transparent_ = false;
 
-		this .texCoords = [ ];
+		this .texCoordArray = [ ];
 	}
 
 	PolygonText .prototype = $.extend (Object .create (X3DTextGeometry .prototype),
@@ -113,12 +113,12 @@ function ($,
 				origin           = text .origin_ .getValue (),
 				sizeUnitsPerEm   = size / font .unitsPerEm,
 				primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
-				texCoords        = this .texCoords,
-				normals          = text .getNormals (),
-				vertices         = text .getVertices ();
+				texCoordArray    = this .texCoordArray,
+				normalArray      = text .getNormals (),
+				vertexArray      = text .getVertices ();
 
-			texCoords .length = 0;
-			text .getTexCoords () .push (texCoords);
+			texCoordArray .length = 0;
+			text .getTexCoords () .push (texCoordArray);
 
 			this .getBBox () .getExtents (min, max);
 			text .getMin () .assign (min);
@@ -146,9 +146,9 @@ function ($,
 								x = glyphVertices [v] .x * size + minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
 								y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
 		
-							texCoords .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
-							normals   .push (0, 0, 1);
-							vertices  .push (x, y, 0, 1);
+							texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
+							normalArray   .push (0, 0, 1);
+							vertexArray   .push (x, y, 0, 1);
 						}
 		
 						// Calculate advanceWidth.
@@ -193,9 +193,9 @@ function ($,
 								x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
 								y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
 			
-							texCoords .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
-							normals   .push (0, 0, 1);
-							vertices  .push (x, y, 0, 1);
+							texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
+							normalArray   .push (0, 0, 1);
+							vertexArray   .push (x, y, 0, 1);
 						}
 					}
 				}
