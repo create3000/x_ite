@@ -134,10 +134,10 @@ function ($,
 					                   defaultVertices [i + 2],
 					                   1);
 				}
+	
+				this .getMin () .set (-x, -y, 0);
+				this .getMax () .set ( x,  y, 0);
 			}
-
-			this .getMin () .set (-x, -y, 0);
-			this .getMax () .set ( x,  y, 0);
 
 			this .setSolid (this .solid_ .getValue ());
 		},

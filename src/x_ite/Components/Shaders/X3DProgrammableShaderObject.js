@@ -262,7 +262,7 @@ var xxx = 0;
 			location = gl .getUniformLocation (program, depreciated);
 
 			if (location)
-				console .error ("Using uniform location name »" + depreciated + "« is depreciated. See http://create3000.de/x_ite/custom-shaders/.");
+				console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated. See http://create3000.de/x_ite/custom-shaders/.");
 
 			return location;
 		},

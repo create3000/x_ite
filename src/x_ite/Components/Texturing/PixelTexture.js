@@ -111,13 +111,13 @@ function ($,
 		{
 			return this .loadState_ .getValue ();
 		},
-		convert: function (data, comp, array)
+		convert: function (data, comp, array, length)
 		{
 			switch (comp)
 			{
 				case 1:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
 						var pixel = array [i];
 
@@ -131,7 +131,7 @@ function ($,
 				}
 				case 2:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
 						var pixel = array [i];
 
@@ -145,7 +145,7 @@ function ($,
 				}
 				case 3:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
 						var pixel = array [i];
 
@@ -159,7 +159,7 @@ function ($,
 				}
 				case 4:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
 						var pixel = array [i];
 
@@ -189,13 +189,13 @@ function ($,
 				{
 					data = new Uint8Array (width * height * 4);
 
-					this .convert (data, comp, array);
+					this .convert (data, comp, array .getValue (), array .length);
 				}
 				else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this .textureProperties_ .getValue ())
 				{
 					data = new Uint8Array (width * height * 4);
 
-					this .convert (data, comp, array);
+					this .convert (data, comp, array .getValue (), array .length);
 
 					var
 						inputWidth  = width,
@@ -218,7 +218,7 @@ function ($,
 					canvas1 .width  = width;
 					canvas1 .height = height;
 
-					this .convert (imageData .data, comp, array);
+					this .convert (imageData .data, comp, array, array .length);
 					cx1 .putImageData (imageData, 0, 0);
 
 					width  = Algorithm .nextPowerOfTwo (width);

@@ -346,7 +346,7 @@ function ($,
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
-				var vertex = coord .addPoint (coordIndex [vertices [i]]) .copy ();
+				var vertex = coord .get1Point (coordIndex [vertices [i]], new Vector3 (0, 0, 0));
 
 				vertex .index = i;
 
