@@ -208,9 +208,9 @@ function ($,
 					if (colorNode)
 					{
 						if (colorPerVertex)
-							colorNode .get1Color (this .getColorPerVertexIndex (i), colorArray);
+							colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
 						else
-							colorNode .get1Color (this .getColorIndex (face), colorArray);
+							colorNode .addColor (this .getColorIndex (face), colorArray);
 					}
 
 					if (texCoordNode)
@@ -219,13 +219,13 @@ function ($,
 					if (normalNode)
 					{
 						if (normalPerVertex)
-							normalNode .get1Vector (this .getNormalPerVertexIndex (i), normalArray);
+							normalNode .addVector (this .getNormalPerVertexIndex (i), normalArray);
 
 						else
-							normalNode .get1Vector (this .getNormalIndex (face), normalArray);
+							normalNode .addVector (this .getNormalIndex (face), normalArray);
 					}
 
-					coordNode .get1Point (index, vertexArray);
+					coordNode .addPoint (index, vertexArray);
 				}
 
 				++ face;
@@ -344,7 +344,7 @@ function ($,
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
-				var vertex = coord .get1Point (coordIndex [vertices [i]]) .copy ();
+				var vertex = coord .addPoint (coordIndex [vertices [i]]) .copy ();
 
 				vertex .index = i;
 
@@ -466,7 +466,7 @@ function ($,
 				current = [ ],
 				next    = [ ];
 
-			coord .get1Point (coordIndex [vertices [0]], next);
+			coord .addPoint (coordIndex [vertices [0]], next);
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
@@ -476,7 +476,7 @@ function ($,
 
 				next .length = 0;
 
-				coord .get1Point (coordIndex [vertices [(i + 1) % length]], next);
+				coord .addPoint (coordIndex [vertices [(i + 1) % length]], next);
 
 				normal .x += (current [1] - next [1]) * (current [2] + next [2]);
 				normal .y += (current [2] - next [2]) * (current [0] + next [0]);

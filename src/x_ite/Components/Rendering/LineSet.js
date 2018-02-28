@@ -206,9 +206,9 @@ function ($,
 							attribNodes [a] .addValue (attribs [a], index);
 
 						if (colorNode)
-							colorNode .get1Color (index, colorArray);
+							colorNode .addColor (index, colorArray);
 
-						coordNode .get1Point (index, vertexArray);
+						coordNode .addPoint (index, vertexArray);
 					}
 
 					++ index;

@@ -236,9 +236,9 @@ function ($,
 				if (colorNode)
 				{
 					if (colorPerVertex)
-						colorNode .get1Color (index, colorArray);
+						colorNode .addColor (index, colorArray);
 					else
-						colorNode .get1Color (face, colorArray);
+						colorNode .addColor (face, colorArray);
 				}
 
 				if (texCoordNode)
@@ -247,13 +247,13 @@ function ($,
 				if (normalNode)
 				{
 					if (normalPerVertex)
-						normalNode .get1Vector (index, normalArray);
+						normalNode .addVector (index, normalArray);
 
 					else
-						normalNode .get1Vector (face, normalArray);
+						normalNode .addVector (face, normalArray);
 				}
 
-				coordNode .get1Point (index, vertexArray);
+				coordNode .addPoint (index, vertexArray);
 			}
 		
 			// Autogenerate normal if not specified.
@@ -330,7 +330,7 @@ function ($,
 				current = [ ],
 				next    = [ ];
 
-			coord .get1Point (this .getPolygonIndex (0), next);
+			coord .addPoint (this .getPolygonIndex (0), next);
 
 			for (var i = 0; i < verticesPerPolygon; ++ i)
 			{
@@ -340,7 +340,7 @@ function ($,
 
 				next .length = 0;
 
-				coord .get1Point (this .getPolygonIndex ((i + 1) % verticesPerPolygon), next);
+				coord .addPoint (this .getPolygonIndex ((i + 1) % verticesPerPolygon), next);
 
 				normal .x += (current [1] - next [1]) * (current [2] + next [2]);
 				normal .y += (current [2] - next [2]) * (current [0] + next [0]);

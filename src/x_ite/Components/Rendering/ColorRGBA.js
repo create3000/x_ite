@@ -96,7 +96,7 @@ function ($,
 		{
 			return true;
 		},
-		get1Color: function (index, colors)
+		addColor: function (index, colors)
 		{
 			if (index >= 0 && index < this .color_ .length)
 			{

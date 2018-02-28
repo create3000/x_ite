@@ -80,7 +80,7 @@ function ($,
 		{
 			return this .point_ .length;
 		},
-		get1Point: function (index, vertices)
+		addPoint: function (index, vertices)
 		{
 			if (index < this .point_ .length)
 			{

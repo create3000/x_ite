@@ -377,9 +377,9 @@ function ($,
 					if (colorNode)
 					{
 						if (colorPerVertex)
-							colorNode .get1Color (index, colorArray);
+							colorNode .addColor (index, colorArray);
 						else
-							colorNode .get1Color (face, colorArray);
+							colorNode .addColor (face, colorArray);
 					}
 						
 					if (texCoordNode)
@@ -396,10 +396,10 @@ function ($,
 					if (normalNode)
 					{
 						if (normalPerVertex)
-							normalNode .get1Vector (index, normalArray);
+							normalNode .addVector (index, normalArray);
 
 						else
-							normalNode .get1Vector (face, normalArray);
+							normalNode .addVector (face, normalArray);
 					}
 
 					vertexArray .push (point .x, point .y, point .z, 1);

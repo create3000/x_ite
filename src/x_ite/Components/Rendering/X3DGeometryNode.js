@@ -567,7 +567,7 @@ function ($,
 						v0 .x = vertices [i4 + 0]; v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-		
+
 						if (box .intersectsTriangle (v0, v1, v2))
 						{
 							if (clipPlanes .length)
@@ -667,15 +667,15 @@ function ($,
 
 			if (vertices .length)
 			{
-				min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
-				max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
-
-				for (var i = 0, length = vertices .length; i < length; i += 4)
+				if (min .x === Number .POSITIVE_INFINITY)
 				{
-					point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
-
-					min .min (point);
-					max .max (point);
+					for (var i = 0, length = vertices .length; i < length; i += 4)
+					{
+						point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+	
+						min .min (point);
+						max .max (point);
+					}
 				}
 
 				this .bbox .setExtents (min, max);
@@ -701,6 +701,11 @@ function ($,
 		},
 		clear: function ()
 		{
+			// BBox
+
+			this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
+			this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+
 			// Attrib
 
 			var

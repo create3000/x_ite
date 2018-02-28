@@ -92,7 +92,7 @@ function ($,
 		{
 			return "normal";
 		},
-		get1Vector: function (index, normals)
+		addVector: function (index, normals)
 		{
 			if (index >= 0 && index < this .vector_ .length)
 			{

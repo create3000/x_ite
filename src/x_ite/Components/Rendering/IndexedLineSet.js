@@ -227,11 +227,13 @@ function ($,
 		{
 			// Polyline map
 
+			var coordNode = this .coordNode;
+
 			polylines .length = 0;
 		
-			if (! this .coordNode || this .coordNode .isEmpty ())
+			if (! coordNode || coordNode .isEmpty ())
 				return polylines;
-		
+
 			var
 				polylineIndices = this .getPolylineIndices (),
 				coordIndex      = this .coordIndex_;
@@ -246,7 +248,7 @@ function ($,
 				{
 					for (var index = line, endI = line + 2; index < endI; ++ index)
 					{
-						polylines .push (this .coordNode .get1Point (coordIndex [polyline [index]]));
+						polylines .push (coordNode .addPoint (coordIndex [polyline [index]]));
 					}
 				}
 			}
@@ -296,12 +298,12 @@ function ($,
 							if (colorNode)
 							{
 								if (colorPerVertex)
-									colorNode .get1Color (this .getColorPerVertexIndex (i), colorArray);
+									colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
 								else
-									colorNode .get1Color (this .getColorIndex (face), colorArray);
+									colorNode .addColor (this .getColorIndex (face), colorArray);
 							}
 
-							coordNode .get1Point (ci, vertexArray);
+							coordNode .addPoint (ci, vertexArray);
 						}
 					}
 				}

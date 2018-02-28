@@ -139,7 +139,7 @@ function ($,
 		{
 			return this .point_ .length;
 		},
-		get1Point: function (index, vertices)
+		addPoint: function (index, vertices)
 		{
 			// The index cannot be less than 0.
 

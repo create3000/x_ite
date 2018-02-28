@@ -185,11 +185,11 @@ function ($,
 			if (this .colorNode)
 			{
 				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-					colorNode .get1Color (i, colorArray);
+					colorNode .addColor (i, colorArray);
 			}
 
 			for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-				coordNode .get1Point (i, vertexArray);
+				coordNode .addPoint (i, vertexArray);
 		},
 	});
 
