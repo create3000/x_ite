@@ -163,6 +163,8 @@ function ($,
 	{
 		X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
+		this .target = this;
+
 		if (value [0] instanceof Array)
 			value = value [0];
 
@@ -178,13 +180,14 @@ function ($,
 		copy: function ()
 		{
 			var
-				array      = this .getValue (),
-				copy       = new (this .constructor) (),
-				copyArray  = new (this .getArrayType ()) (array);
+				target     = this .target,
+				array      = target .getValue (),
+				copy       = new (target .constructor) (),
+				copyArray  = new (target .getArrayType ()) (array);
 
-			copy ._length = this ._length;
+			copy ._length = target ._length;
 
-			X3DArrayField .prototype .set .call (copy, copyArray, this ._length);
+			X3DArrayField .prototype .set .call (copy, copyArray, target ._length);
 
 			return copy;
 		},
@@ -193,16 +196,18 @@ function ($,
 			if (this === other)
 				return true;
 
-			var length = this ._length;
+			var
+				target = this .target,
+				length = target ._length;
 
 			if (length !== other ._length)
 				return false;
 
 			var
-				a = this  .getValue (),
+				a = target  .getValue (),
 				b = other .getValue ();
 
-			for (var i = 0, l = length * this .getComponents (); i < l; ++ i)
+			for (var i = 0, l = length * target .getComponents (); i < l; ++ i)
 			{
 				if (a [i] !== b [i])
 					return false;
@@ -212,24 +217,21 @@ function ($,
 		},
 		assign: function (value)
 		{
-			this .set (value .getValue (), value .length);
-			this .addEvent ();
+			var target = this .target;
+
+			target .set (value .getValue (), value .length);
+			target .addEvent ();
 		},
 		set: function (otherArray /* value of field */, l /* length of field */)
 		{
 			var
-				components  = this .getComponents (),
-				array       = this .getValue (),
-				length      = this ._length,
+				target      = this .target,
+				components  = target .getComponents (),
+				array       = target .getValue (),
+				length      = target ._length,
 				otherLength = l !== undefined ? l * components : otherArray .length,
 				rest        = otherLength % components;
 
-//if (this .getName () == "majorLineEvery")
-//{
-//console .log (this .getName ());
-//console .log (otherArray);
-//console .trace (otherArray);
-//}
 			if (rest)
 			{
 				throw new Error ("Array length must be multiple of components size, which is " + components + ".");
@@ -239,7 +241,7 @@ function ($,
 
 			if (array .length < otherArray .length)
 			{
-				array = this .grow (otherArray .length);
+				array = target .grow (otherArray .length);
 				array .set (otherArray);
 			}
 			else
@@ -250,74 +252,35 @@ function ($,
 					array .fill (0, otherLength * components, length * components);
 			}
 
-			this ._length = otherLength;
+			target ._length = otherLength;
 		},
 		isDefaultValue: function ()
 		{
 			return this ._length === 0;
 		},
-//		get1Value: function (index, value)
-//		{
-//			var
-//				array      = this .getValue (),
-//				components = this .getComponents ();
-//
-//			if (components === 1)
-//			{
-//				return array [index];
-//			}
-//			else
-//			{
-//				index *= components;
-//		
-//				for (var c = 0; c < components; ++ c, ++ index)
-//					value [c] = array [index];
-//		
-//				return value;
-//			}
-//		},
-//		set1Value: function (index, value)
-//		{
-//			var
-//				array      = this .getValue (),
-//				components = this .getComponents ();
-//	
-//			if (components === 1)
-//			{
-//				array [index] = value;
-//			}
-//			else
-//			{
-//				index *= components;
-//
-//				for (var c = 0; c < components; ++ c, ++ index)
-//				{
-//					array [index] = value [c];
-//				}
-//			}
-//
-//			this .addEvent ();
-//		},
 		setValue: function (value)
 		{
-			if (value instanceof this .constructor)
+			var target = this .target;
+
+			if (value instanceof target .constructor)
 			{
-				this .assign (value);
+				target .assign (value);
 			}
 			else
 			{
-				this .set (value);
-				this .addEvent ();
+				target .set (value);
+				target .addEvent ();
 			}
 		},
 		unshift: function (value)
 		{
 			var
-				components      = this .getComponents (),
-				length          = this ._length,
+				target          = this .target,
+				components      = target .getComponents (),
+				length          = target ._length,
 				argumentsLength = arguments .length;
 
-			var array = this .grow ((length + argumentsLength) * components);
+			var array = target .grow ((length + argumentsLength) * components);
 
 			array .copyWithin (argumentsLength * components, 0, length * components);
 
@@ -338,22 +301,24 @@ function ($,
 				}
 			}
 
-			this ._length += argumentsLength;
+			target ._length += argumentsLength;
 
-			this .addEvent ();
+			target .addEvent ();
 
 			return array .length;
 		},
 		shift: function ()
 		{
-			var array = this .getValue ();
+			var
+				target = this .target,
+				array  = target .getValue ();
 
 			if (array .length)
 			{
 				var
-					components = this .getComponents (),
-					valueType  = this .getValueType (),
-					length     = this ._length,
+					components = target .getComponents (),
+					valueType  = target .getValueType (),
+					length     = target ._length,
 					newLength  = length - 1;
 
 				if (components === 1)
@@ -375,20 +340,21 @@ function ($,
 				array .copyWithin (0, components, length * components);
 				array .fill (0, components * newLength, length * components);
 
-				this ._length = newLength;
+				target ._length = newLength;
 
-				this .addEvent ();
+				target .addEvent ();
 				return value;
 			}
 		},
 		push: function (value)
 		{
 			var
-				components      = this .getComponents (),
-				length          = this ._length,
+				target          = this .target,
+				components      = target .getComponents (),
+				length          = target ._length,
 				argumentsLength = arguments .length;
 
-			var array = this .grow ((length + argumentsLength) * components);
+			var array = target .grow ((length + argumentsLength) * components);
 
 			if (components === 1)
 			{
@@ -407,22 +373,24 @@ function ($,
 				}
 			}
 
-			this ._length += argumentsLength;
+			target ._length += argumentsLength;
 
-			this .addEvent ();
+			target .addEvent ();
 
-			return this ._length;
+			return target ._length;
 		},
 		pop: function ()
 		{
-			var array = this .getValue ();
+			var
+				target = this .target,
+				array  = target .getValue ();
 
 			if (array .length)
 			{
 				var
-					components = this .getComponents (),
-					valueType  = this .getValueType (),
-					length     = this ._length,
+					components = target .getComponents (),
+					valueType  = target .getValueType (),
+					length     = target ._length,
 					newLength  = length - 1;
 
 				if (components === 1)
@@ -443,17 +411,19 @@ function ($,
 
 				array .fill (0, newLength * components, length * components);
 
-				this ._length = newLength;
+				target ._length = newLength;
 
-				this .addEvent ();
+				target .addEvent ();
+
 				return value;
 			}
 		},
 		splice: function (index, deleteCount)
 		{
 			var
-				array  = this .getValue (),
-				length = this ._length;
+				target = this .target,
+				array  = target .getValue (),
+				length = target ._length;
 
 			if (index > length)
 				index = length;
@@ -461,25 +431,26 @@ function ($,
 			if (index + deleteCount > length)
 				deleteCount = length - index;
 
-			var result = this .erase (index, index + deleteCount);
+			var result = target .erase (index, index + deleteCount);
 
 			if (arguments .length > 2)
-				this .spliceInsert (index, Array .prototype .splice .call (arguments, 2));
+				target .spliceInsert (index, Array .prototype .splice .call (arguments, 2));
 
-			this .addEvent ();
+			target .addEvent ();
 
 			return result;
 		},
 		spliceInsert: function (index, other)
 		{
 			var
-				components  = this .getComponents (),
-				length      = this ._length,
+				target      = this .target,
+				components  = target .getComponents (),
+				length      = target ._length,
 				otherLength = other .length;
 
 			index *= components;
 
-			var array = this .grow ((length + otherLength) * components);
+			var array = target .grow ((length + otherLength) * components);
 
 			array .copyWithin (index + otherLength * components, index, length * components);
 
@@ -498,39 +469,42 @@ function ($,
 				}
 			}
 
-			this ._length += otherLength;
+			target ._length += otherLength;
 		},
 		insert: function (index, other, first, last)
 		{
 			var
+				target     = this .target,
+				length     = target ._length,
 				otherArray = other .getValue (),
-				components = this .getComponents (),
+				components = target .getComponents (),
 				difference = last - first;
 
 			index *= components;
 			first *= components;
 			last  *= components;
 
-			var array = this .grow ((this ._length + difference) * components);
+			var array = target .grow ((length + difference) * components);
 
-			array .copyWithin (index + difference * components, index, this ._length * components);
+			array .copyWithin (index + difference * components, index, length * components);
 
 			for (; first < last; ++ index, ++ first)
 				array [index] = otherArray [first];
 
-			this ._length += difference;
+			target ._length += difference;
 
-			this .addEvent ();
+			target .addEvent ();
 		},
 		erase: function (first, last)
 		{
 			var
-				array      = this .getValue (),
-				components = this .getComponents (),
+				target     = this .target,
+				array      = target .getValue (),
+				components = target .getComponents (),
 				difference = last - first,
-				length     = this ._length,
-				newLength  = this ._length - difference,
-				values     = new (this .constructor) ();
+				length     = target ._length,
+				newLength  = length - difference,
+				values     = new (target .constructor) ();
 
 			first *= components;
 			last  *= components;
@@ -543,30 +517,31 @@ function ($,
 			array .copyWithin (first, last, length * components);
 			array .fill (0, newLength * components, length * components);
 
-			this   ._length = newLength;
+			target ._length = newLength;
 			values ._length = difference;
 
-			this .addEvent ();
+			target .addEvent ();
 
 			return values;
 		},
 		resize: function (newLength, value, silent)
 		{
 			var
-				length     = this ._length,
-				array      = this .getValue (),
-				components = this .getComponents ();
+				target     = this .target,
+				length     = target ._length,
+				array      = target .getValue (),
+				components = target .getComponents ();
 
 			if (newLength < length)
 			{
 				array .fill (0, newLength * components, length * components);
 
 				if (! silent)
-					this .addEvent ();
+					target .addEvent ();
 			}
 			else if (newLength > length)
 			{
-				array = this .grow (newLength * components);
+				array = target .grow (newLength * components);
 
 				if (value !== undefined)
 				{
@@ -587,38 +562,41 @@ function ($,
 				}
 	
 				if (! silent)
-					this .addEvent ();
+					target .addEvent ();
 			}
 
-			this ._length = newLength;
+			target ._length = newLength;
 
 			return array;
 		},
 		grow: function (length)
 		{
-			var array = this .getValue ();
+			var
+				target = this .target,
+				array  = target .getValue ();
 
 			if (length < array .length)
 				return array;
 
 			var
 				maxLength = Algorithm .nextPowerOfTwo (length),
-				newArray  = new (this .getArrayType ()) (maxLength);
+				newArray  = new (target .getArrayType ()) (maxLength);
 
 			newArray .set (array);
 
-			X3DArrayField .prototype .set .call (this, newArray);
+			X3DArrayField .prototype .set .call (target, newArray);
 
 			return newArray;
 		},
 		toStream: function (stream)
 		{
 			var
+				target     = this .target,
 				generator  = Generator .Get (stream),
-				array      = this .getValue (),
-				length     = this ._length,
-				components = this .getComponents (),
-				value      = new (this .getSingleType ()) ();
+				array      = target .getValue (),
+				length     = target ._length,
+				components = target .getComponents (),
+				value      = new (target .getSingleType ()) ();
 
 			switch (length)
 			{
@@ -629,7 +607,7 @@ function ($,
 				}
 				case 1:
 				{
-					generator .PushUnitCategory (this .getUnit ());
+					generator .PushUnitCategory (target .getUnit ());
 
 					if (components === 1)
 					{
@@ -650,7 +628,7 @@ function ($,
 				}
 				default:
 				{
-					generator .PushUnitCategory (this .getUnit ());
+					generator .PushUnitCategory (target .getUnit ());
 
 					stream .string += "[\n";
 					generator .IncIndent ();
@@ -707,17 +685,19 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var length = this ._length;
+			var
+				target = this .target,
+				length = target ._length;
 
 			if (length)
 			{
 				var
 					generator  = Generator .Get (stream),
-					array      = this .getValue (),
-					components = this .getComponents (),
-					value      = new (this .getSingleType ()) ();
+					array      = target .getValue (),
+					components = target .getComponents (),
+					value      = new (target .getSingleType ()) ();
 	
-				generator .PushUnitCategory (this .getUnit ());
+				generator .PushUnitCategory (target .getUnit ());
 
 				if (components === 1)
 				{
@@ -756,14 +736,14 @@ function ($,
 		},
 		dispose: function ()
 		{
-			X3DArrayField .prototype .dispose .call (this);
+			X3DArrayField .prototype .dispose .call (this .target);
 		},
 	});
 
 	Object .defineProperty (X3DTypedArrayField .prototype, "length",
 	{
 		get: function () { return this ._length; },
-		set: function (value) { this .resize (value); },
+		set: function (value) { this .target .resize (value); },
 		enumerable: false,
 		configurable: false,
 	});

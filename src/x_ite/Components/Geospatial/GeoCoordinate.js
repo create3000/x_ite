@@ -139,21 +139,34 @@ function ($,
 		{
 			return this .point_ .length;
 		},
-		addPoint: function (index, vertices)
+		get1Point: function (index, vector)
+		{
+			if (index < this .length)
+			{
+				const p = this .points [index];
+
+				return vector .set (p .x, p .y, p .z);
+			}
+			else
+			{
+				return vector .set (0, 0, 0);
+			}
+		},
+		addPoint: function (index, array)
 		{
 			// The index cannot be less than 0.
 
 			if (index < this .points .length)
 			{
-				var p = this .points [index];
+				const p = this .points [index];
 
-				vertices .push (p .x, p .y, p .z, 1);
+				array .push (p .x, p .y, p .z, 1);
 			}
 			else
 			{
-				var p = this .origin;
+				const p = this .origin;
 
-				vertices .push (p .x, p .y, p .z, 1);
+				array .push (p .x, p .y, p .z, 1);
 			}
 		},
 		getNormal: function (index1, index2, index3)
@@ -165,10 +178,12 @@ function ($,
 				length = points .length;
 
 			if (index1 < length && index2 < length && index3 < length)
+			{
 				return Triangle3 .normal (points [index1],
 				                          points [index2],
 				                          points [index3],
 				                          new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},
@@ -181,11 +196,13 @@ function ($,
 				length = points .length;
 
 			if (index1 < length && index2 < length && index3 < length && index4 < length)
+			{
 				return Triangle3 .quadNormal (points [index1],
 				                              points [index2],
 				                              points [index3],
 				                              points [index4],
 				                              new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},

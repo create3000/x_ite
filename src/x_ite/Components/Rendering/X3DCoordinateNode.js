@@ -107,11 +107,11 @@ function ($,
 
 				index *= 3;
 
-				return vector .set (point [index + 0], point [index + 1], point [index + 2], 1);
+				return vector .set (point [index + 0], point [index + 1], point [index + 2]);
 			}
 			else
 			{
-				return vector .set (0, 0, 0, 1);
+				return vector .set (0, 0, 0);
 			}
 		},
 		addPoint: function (index, array)

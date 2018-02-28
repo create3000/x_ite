@@ -133,6 +133,8 @@ function ($,
 	{
 		X3DArrayField .call (this, [ ]);
 		
+		this .target = this;
+
 		if (value [0] instanceof Array)
 			value = value [0];
 
@@ -147,8 +149,9 @@ function ($,
 		copy: function ()
 		{
 			var
-				copy  = new (this .constructor) (),
-				array = this .getValue ();
+				target = this .target,
+				copy   = new (target .constructor) (),
+				array  = target .getValue ();
 
 			X3DObjectArrayField .prototype .push .apply (copy, array);
 
@@ -157,7 +160,8 @@ function ($,
 		equals: function (array)
 		{
 			var
-				a      = this .getValue (),
+				target = this .target,
+				a      = target .getValue (),
 				b      = array .getValue (),
 				length = a .length;
 
@@ -168,16 +172,20 @@ function ($,
 				return false;
 
 			for (var i = 0; i < length; ++ i)
+			{
 				if (! a [i] .equals (b [i]))
 					return false;
+			}
 
 			return true;
 		},
 		set: function (value)
 		{
-			this .resize (value .length, undefined, true);
+			var target = this .target;
 
-			var array = this .getValue ();
+			target .resize (value .length, undefined, true);
+
+			var array = target .getValue ();
 
 			for (var i = 0, length = value .length; i < length; ++ i)
 				array [i] .set (value [i] instanceof X3DField ? value [i] .getValue () : value [i]);
@@ -188,74 +196,86 @@ function ($,
 		},
 		setValue: function (value)
 		{
-			this .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
-			this .addEvent ();
+			var target = this .target;
+
+			target .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
+			target .addEvent ();
 		},
 		unshift: function (value)
 		{
-			var array = this .getValue ();
+			var
+				target = this .target,
+				array  = target .getValue ();
 
 			for (var i = arguments .length - 1; i >= 0; -- i)
 			{
-				var field = new (this .getSingleType ()) ();
+				var field = new (target .getSingleType ()) ();
 
 				field .setValue (arguments [i]);
 	
-				this .addChild (field);
+				target .addChild (field);
 
 				array .unshift (field);
 			}
 
-			this .addEvent ();
+			target .addEvent ();
 
 			return array .length;
 		},
 		shift: function ()
 		{
-			var array = this .getValue ();
+			var
+				target = this .target,
+				array  = target .getValue ();
 
 			if (array .length)
 			{
 				var field = array .shift ();
-				this .removeChild (field);
-				this .addEvent ();
+				target .removeChild (field);
+				target .addEvent ();
 				return field .valueOf ();
 			}
 		},
 		push: function (value)
 		{
-			var array = this .getValue ();
+			var
+				target = this .target,
+				array  = target .getValue ();
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var field = new (this .getSingleType ()) ();
+				var field = new (target .getSingleType ()) ();
 
 				field .setValue (arguments [i]);
 
-				this .addChild (field);
+				target .addChild (field);
 
 				array .push (field);
 			}
 
-			this .addEvent ();
+			target .addEvent ();
 
 			return array .length;
 		},
 		pop: function ()
 		{
-			var array = this .getValue ();
+			var
+				target = this .target,
+				array  = target .getValue ();
 
 			if (array .length)
 			{
 				var field = array .pop ();
-				this .removeChild (field);
-				this .addEvent ();
+				target .removeChild (field);
+				target .addEvent ();
 				return field .valueOf ();
 			}
 		},
 		splice: function (index, deleteCount)
 		{
-			var array = this .getValue ();
+			var
+				target = this .target,
+				array  = target .getValue ();
 
 			if (index > array .length)
 				index = array .length;
@@ -263,36 +283,40 @@ function ($,
 			if (index + deleteCount > array .length)
 				deleteCount = array .length - index;
 
-			var result = this .erase (index, index + deleteCount);
+			var result = target .erase (index, index + deleteCount);
 
 			if (arguments .length > 2)
-				this .insert (index, arguments, 2, arguments .length);
+				target .insert (index, arguments, 2, arguments .length);
 
 			return result;
 		},
 		insert: function (index, array, first, last)
 		{
-			var args = [index, 0];
+			var
+				target = this .target,
+				args   = [index, 0];
 
 			for (var i = first; i < last; ++ i)
 			{
-				var field = new (this .getSingleType ()) ();
+				var field = new (target .getSingleType ()) ();
 
 				field .setValue (array [i]);
 
-				this .addChild (field);
+				target .addChild (field);
 				args .push (field);
 			}
 
-			Array .prototype .splice .apply (this .getValue (), args);
+			Array .prototype .splice .apply (target .getValue (), args);
 
-			this .addEvent ();
+			target .addEvent ();
 		},
 		find: function (first, last, value)
 		{
+			var target = this .target;
+
 			if ($.isFunction (value))
 			{
-				var values = this .getValue ();
+				var values = target .getValue ();
 	
 				for (var i = first; i < last; ++ i)
 				{
@@ -303,7 +327,7 @@ function ($,
 				return last;
 			}
 
-			var values = this .getValue ();
+			var values = target .getValue ();
 
 			for (var i = first; i < last; ++ i)
 			{
@@ -315,11 +339,13 @@ function ($,
 		},
 		remove: function (first, last, value)
 		{
+			var target = this .target;
+
 			if ($.isFunction (value))
 			{
-				var values = this .getValue ();
+				var values = target .getValue ();
 	
-				first = this .find (first, last, value);
+				first = target .find (first, last, value);
 	
 				if (first !== last)
 				{
@@ -338,14 +364,14 @@ function ($,
 				}
 		
 				if (first !== last)
-					this .addEvent ();
+					target .addEvent ();
 
 				return first;
 			}
 
-			var values = this .getValue ();
+			var values = target .getValue ();
 
-			first = this .find (first, last, value);
+			first = target .find (first, last, value);
 
 			if (first !== last)
 			{
@@ -364,65 +390,70 @@ function ($,
 			}
 
 			if (first !== last)
-				this .addEvent ();
+				target .addEvent ();
 
 			return first;
 		},
 		erase: function (first, last)
 		{
-			var values = this .getValue () .splice (first, last - first);
+			var
+				target = this .target,
+				values = target .getValue () .splice (first, last - first);
 				
 			for (var i = 0, length = values .length; i < length; ++ i)
-				this .removeChild (values [i]);
+				target .removeChild (values [i]);
 			
-			this .addEvent ();
+			target .addEvent ();
 
-			return new (this .constructor) (values);
+			return new (target .constructor) (values);
 		},
 		resize: function (size, value, silent)
 		{
-			var array = this .getValue ();
+			var
+				target = this .target,
+				array  = target .getValue ();
 		
 			if (size < array .length)
 			{
 				for (var i = size, length = array .length; i < length; ++ i)
-					this .removeChild (array [i]);
+					target .removeChild (array [i]);
 
 				array .length = size;
 
 				if (! silent)
-					this .addEvent ();
+					target .addEvent ();
 			}
 			else if (size > array .length)
 			{
 				for (var i = array .length; i < size; ++ i)
 				{
-					var field = new (this .getSingleType ()) ();
+					var field = new (target .getSingleType ()) ();
 
 					if (value !== undefined)
 						field .setValue (value);
 
-					this .addChild (field);
+					target .addChild (field);
 					array .push (field);
 				}
 
 				if (! silent)
-					this .addEvent ();
+					target .addEvent ();
 			}
 		},
 		addChild: function (value)
 		{
-			value .addParent (this);
+			value .addParent (this .target);
 		},
 		removeChild: function (value)
 		{
-			value .removeParent (this);
+			value .removeParent (this .target);
 		},
 		toStream: function (stream)
 		{
 			var
-				generator = Generator .Get (stream),
-				array     = this .getValue ();
+				target    = this .target,
+				array     = target .getValue (),
+				generator = Generator .Get (stream);
 
 			switch (array .length)
 			{
@@ -433,7 +464,7 @@ function ($,
 				}
 				case 1:
 				{
-					generator .PushUnitCategory (this .getUnit ());
+					generator .PushUnitCategory (target .getUnit ());
 
 					array [0] .toStream (stream);
 
@@ -442,7 +473,7 @@ function ($,
 				}
 				default:
 				{
-					generator .PushUnitCategory (this .getUnit ());
+					generator .PushUnitCategory (target .getUnit ());
 
 					stream .string += "[\n";
 					generator .IncIndent ();
@@ -469,15 +500,17 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var length = this .length;
+			var
+				target = this .target,
+				length = target .length;
 
 			if (length)
 			{
 				var
 					generator = Generator .Get (stream),
-					array     = this .getValue ();
+					array     = target .getValue ();
 
-				generator .PushUnitCategory (this .getUnit ());
+				generator .PushUnitCategory (target .getUnit ());
 
 				for (var i = 0, n = length - 1; i < n; ++ i)
 				{
@@ -492,21 +525,23 @@ function ($,
 		},
 		dispose: function ()
 		{
-			var array = this .getValue ();
+			var
+				target = this .target,
+				array  = target .getValue ();
 
-			for (var i = 0, length = this .length; i < length; ++ i)
-				this .removeChild (array [i]);
+			for (var i = 0, length = target .length; i < length; ++ i)
+				target .removeChild (array [i]);
 
 			array .length = 0;
 
-			X3DArrayField .prototype .dispose .call (this);
+			X3DArrayField .prototype .dispose .call (target);
 		},
 	});
 
 	Object .defineProperty (X3DObjectArrayField .prototype, "length",
 	{
-		get: function () { return this .getValue () .length; },
-		set: function (value) { this .resize (value); },
+		get: function () { return this .target .getValue () .length; },
+		set: function (value) { this .target .resize (value); },
 		enumerable: false,
 		configurable: false,
 	});

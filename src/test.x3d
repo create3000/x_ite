@@ -7,7 +7,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Titania V4.0.6a, http://titania.create3000.de'/>
     <meta name='identifier' content='file:///home/holger/Projekte/X_ITE/src/test.x3d'/>
-    <meta name='modified' content='Wed, 14 Feb 2018 04:52:41 GMT'/>
+    <meta name='modified' content='Wed, 28 Feb 2018 17:26:18 GMT'/>
     <meta name='titania-add-metadata' content='true'/>
   </head>
   <Scene>
@@ -47,10 +47,15 @@
 
 function set_time (value, time)
 {
-	print (time);
+	var t0 = performance .now ();
 	
-	var a = new Int32Array (400000);
+	var N = 1000000;
+	var a = new MFInt32 ();
 	
+	for (var i = 0; i < N; ++ i)
+		a .push (i);
+
+	print ((performance .now () - t0) / 1000);
 	print (a .length);
 }
 ]]>
