@@ -102,7 +102,7 @@ function ($,
 		},
 		vector__: function ()
 		{
-			this .point  = this .vector_ .getValue ();
+			this .vector = this .vector_ .getValue ();
 			this .length = this .vector_ .length;
 		},
 		addVector: function (index, array)
