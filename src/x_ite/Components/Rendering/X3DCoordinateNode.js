@@ -62,6 +62,12 @@ function ($,
 {
 "use strict";
 
+	var
+		point1 = new Vector3 (0, 0, 0),
+		point2 = new Vector3 (0, 0, 0),
+		point3 = new Vector3 (0, 0, 0),
+		point4 = new Vector3 (0, 0, 0);
+
 	function X3DCoordinateNode (executionContext)
 	{
 		X3DGeometricPropertyNode .call (this, executionContext);
@@ -72,42 +78,70 @@ function ($,
 	X3DCoordinateNode .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: X3DCoordinateNode,
+		initialize: function ()
+		{
+			X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+			this .point_ .addInterest ("point__", this);
+
+			this .point__ ();
+		},
+		point__: function ()
+		{
+			this .point  = this .point_ .getValue ();
+			this .length = this .point_ .length;
+		},
 		isEmpty: function ()
 		{
-			return this .point_ .length === 0;
+			return this .length === 0;
 		},
 		getSize: function ()
 		{
-			return this .point_ .length;
+			return this .length;
 		},
-		addPoint: function (index, vertices)
+		get1Point: function (index, vector)
 		{
-			if (index < this .point_ .length)
+			if (index < this .length)
 			{
-				const value = this .point_ .getValue ();
+				const point = this .point;
 
 				index *= 3;
 
-				vertices .push (value [index + 0], value [index + 1], value [index + 2], 1);
+				return vector .set (point [index + 0], point [index + 1], point [index + 2], 1);
 			}
 			else
 			{
-				vertices .push (0, 0, 0, 1);
+				return vector .set (0, 0, 0, 1);
+			}
+		},
+		addPoint: function (index, array)
+		{
+			if (index < this .length)
+			{
+				const point = this .point;
+
+				index *= 3;
+
+				array .push (point [index + 0], point [index + 1], point [index + 2], 1);
+			}
+			else
+			{
+				array .push (0, 0, 0, 1);
 			}
 		},
 		getNormal: function (index1, index2, index3)
 		{
 			// The index[1,2,3] cannot be less than 0.
 
-			var
-				point  = this .point_,
-				length = point .length;
+			var length = this .length;
 
 			if (index1 < length && index2 < length && index3 < length)
-				return Triangle3 .normal (point [index1] .getValue (),
-				                          point [index2] .getValue (),
-				                          point [index3] .getValue (),
+			{
+				return Triangle3 .normal (this .get1Point (index1, point1),
+				                          this .get1Point (index2, point2),
+				                          this .get1Point (index3, point3),
 				                          new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},
@@ -115,16 +149,16 @@ function ($,
 		{
 			// The index[1,2,3,4] cannot be less than 0.
 
-			var
-				point  = this .point_,
-				length = point .length;
+			var length = this .length;
 
 			if (index1 < length && index2 < length && index3 < length && index4 < length)
-				return Triangle3 .quadNormal (point [index1] .getValue (),
-				                              point [index2] .getValue (),
-				                              point [index3] .getValue (),
-				                              point [index4] .getValue (),
+			{
+				return Triangle3 .quadNormal (this .get1Point (index1, point1),
+				                              this .get1Point (index2, point2),
+				                              this .get1Point (index3, point3),
+				                              this .get1Point (index4, point4),
 				                              new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},

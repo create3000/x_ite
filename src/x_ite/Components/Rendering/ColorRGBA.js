@@ -92,31 +92,44 @@ function ($,
 		{
 			return "color";
 		},
+		initialize: function ()
+		{
+			X3DColorNode .prototype .initialize .call (this);
+
+			this .color_ .addInterest ("color__", this);
+
+			this .color__ ();
+		},
+		color__: function ()
+		{
+			this .color  = this .color_ .getValue ();
+			this .length = this .color_ .length;
+		},
 		isTransparent: function ()
 		{
 			return true;
 		},
-		addColor: function (index, colors)
+		addColor: function (index, array)
 		{
-			if (index >= 0 && index < this .color_ .length)
+			if (index >= 0 && index < this .length)
 			{
-				const value = this .color_ .getValue ();
+				const color = this .color;
 
 				index *= 4;
 
-				colors .push (value [index + 0], value [index + 1], value [index + 2], value [index + 3]);
+				array .push (color [index + 0], color [index + 1], color [index + 2], color [index + 3]);
 			}
 			else if (this .color_ .length)
 			{
-				const value = this .color_ .getValue ();
+				const color = this .color;
 
 				index = (this .color_ .length - 1) * 4;
 
-				colors .push (value [index + 0], value [index + 1], value [index + 2], value [index + 3]);
+				array .push (color [index + 0], color [index + 1], color [index + 2], color [index + 3]);
 			}
 			else
 			{
-				colors .push (1, 1, 1, 1);
+				array .push (1, 1, 1, 1);
 			}
 		},
 		getVectors: function (array)

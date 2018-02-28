@@ -92,19 +92,32 @@ function ($,
 		{
 			return "normal";
 		},
-		addVector: function (index, normals)
+		initialize: function ()
 		{
-			if (index >= 0 && index < this .vector_ .length)
+			X3DNormalNode .prototype .initialize .call (this);
+
+			this .vector_ .addInterest ("vector__", this);
+
+			this .vector__ ();
+		},
+		vector__: function ()
+		{
+			this .point  = this .vector_ .getValue ();
+			this .length = this .vector_ .length;
+		},
+		addVector: function (index, array)
+		{
+			if (index >= 0 && index < this .length)
 			{
-				const value = this .vector_ .getValue ();
+				const vector = this .vector;
 
 				index *= 3;
 
-				normals .push (value [index + 0], value [index + 1], value [index + 2]);
+				array .push (vector [index + 0], vector [index + 1], vector [index + 2]);
 			}
 			else
 			{
-				return normals .push (0, 0, 0);
+				return array .push (0, 0, 0);
 			}
 		},
 	});

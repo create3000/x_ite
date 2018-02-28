@@ -62,6 +62,10 @@ function ($,
 {
 "use strict";
 
+	var
+		current = new Vector3 (0, 0, 0),
+		next    = new Vector3 (0, 0, 0);
+
 	function X3DComposedGeometryNode (executionContext)
 	{
 		X3DGeometryNode .call (this, executionContext);
@@ -325,12 +329,9 @@ function ($,
 			// Determine polygon normal.
 			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-			var
-				normal  = new Vector3 (0, 0, 0),
-				current = [ ],
-				next    = [ ];
+			var normal = new Vector3 (0, 0, 0);
 
-			coord .addPoint (this .getPolygonIndex (0), next);
+			coord .get1Point (this .getPolygonIndex (0), next);
 
 			for (var i = 0; i < verticesPerPolygon; ++ i)
 			{
@@ -338,13 +339,11 @@ function ($,
 				current = next;
 				next    = tmp;
 
-				next .length = 0;
+				coord .get1Point (this .getPolygonIndex ((i + 1) % verticesPerPolygon), next);
 
-				coord .addPoint (this .getPolygonIndex ((i + 1) % verticesPerPolygon), next);
-
-				normal .x += (current [1] - next [1]) * (current [2] + next [2]);
-				normal .y += (current [2] - next [2]) * (current [0] + next [0]);
-				normal .z += (current [0] - next [0]) * (current [1] + next [1]);
+				normal .x += (current .y - next .y) * (current .z + next .z);
+				normal .y += (current .z - next .z) * (current .x + next .x);
+				normal .z += (current .x - next .x) * (current .y + next .y);
 			}
 
 			return normal .normalize ();

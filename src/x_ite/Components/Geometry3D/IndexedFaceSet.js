@@ -76,7 +76,9 @@ function ($,
 		Triangle    = [0, 1, 2],
 		Polygon     = [ ],
 		normals     = [ ],
-		normalIndex = [ ];
+		normalIndex = [ ],
+		current     = new Vector3 (0, 0, 0),
+		next        = new Vector3 (0, 0, 0);
 
 	function IndexedFaceSet (executionContext)
 	{
@@ -461,12 +463,9 @@ function ($,
 			// Determine polygon normal.
 			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-			var
-				normal  = new Vector3 (0, 0, 0),
-				current = [ ],
-				next    = [ ];
+			var normal = new Vector3 (0, 0, 0);
 
-			coord .addPoint (coordIndex [vertices [0]], next);
+			coord .get1Point (coordIndex [vertices [0]], next);
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
@@ -474,13 +473,11 @@ function ($,
 				current = next;
 				next    = tmp;
 
-				next .length = 0;
+				coord .get1Point (coordIndex [vertices [(i + 1) % length]], next);
 
-				coord .addPoint (coordIndex [vertices [(i + 1) % length]], next);
-
-				normal .x += (current [1] - next [1]) * (current [2] + next [2]);
-				normal .y += (current [2] - next [2]) * (current [0] + next [0]);
-				normal .z += (current [0] - next [0]) * (current [1] + next [1]);
+				normal .x += (current .y - next .y) * (current .z + next .z);
+				normal .y += (current .z - next .z) * (current .x + next .x);
+				normal .z += (current .x - next .x) * (current .y + next .y);
 			}
 
 			return normal .normalize ();

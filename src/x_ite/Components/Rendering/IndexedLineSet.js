@@ -223,38 +223,6 @@ function ($,
 
 			return polylines;
 		},
-		getPolylines: function (polylines)
-		{
-			// Polyline map
-
-			var coordNode = this .coordNode;
-
-			polylines .length = 0;
-		
-			if (! coordNode || coordNode .isEmpty ())
-				return polylines;
-
-			var
-				polylineIndices = this .getPolylineIndices (),
-				coordIndex      = this .coordIndex_;
-
-			for (var p = 0, pl = polylineIndices .length; p < pl; ++ p)
-			{
-				var polyline = polylineIndices [p];
-
-				// Create two vertices for each line.
-		
-				for (var line = 0, endL = polyline .length - 1; line < endL; ++ line)
-				{
-					for (var index = line, endI = line + 2; index < endI; ++ index)
-					{
-						polylines .push (coordNode .addPoint (coordIndex [polyline [index]]));
-					}
-				}
-			}
-		
-			return polylines;
-		},
 		build: function ()
 		{
 			if (! this .coordNode || this .coordNode .isEmpty ())
