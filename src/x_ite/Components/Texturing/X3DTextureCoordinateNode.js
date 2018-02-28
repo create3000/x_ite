@@ -68,13 +68,13 @@ function ($,
 	X3DTextureCoordinateNode .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: X3DTextureCoordinateNode,
-		init: function (texCoords)
+		init: function (multiArray)
 		{
-			texCoords .push ([ ]);
+			multiArray .push ([ ]);
 		},
-		addTexCoord: function (texCoord, index)
+		addTexCoord: function (index, multiArray)
 		{
-			this .addTexCoordToChannel (texCoord [0], index);
+			this .addTexCoordToChannel (index, multiArray [0]);
 		},
 	});
 

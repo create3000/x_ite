@@ -172,23 +172,23 @@ function ($,
 			// Fill GeometryNode
 
 			var
-				colorPerVertex  = this .colorPerVertex_ .getValue (),
-				normalPerVertex = this .normalPerVertex_ .getValue (),
-				coordIndex      = this .coordIndex_,
-				attribNodes     = this .getAttrib (),
-				numAttrib       = attribNodes .length,
-				attribs         = this .getAttribs (),
-				colorNode       = this .getColor (),
-				texCoordNode    = this .getTexCoord (),
-				normalNode      = this .getNormal (),
-				coordNode       = this .getCoord (),
-				textCoords      = this .getTexCoords (),
-				colorArray      = this .getColors (),
-				normalArray     = this .getNormals (),
-				vertexArray     = this .getVertices ();
+				colorPerVertex     = this .colorPerVertex_ .getValue (),
+				normalPerVertex    = this .normalPerVertex_ .getValue (),
+				coordIndex         = this .coordIndex_,
+				attribNodes        = this .getAttrib (),
+				numAttrib          = attribNodes .length,
+				attribs            = this .getAttribs (),
+				colorNode          = this .getColor (),
+				texCoordNode       = this .getTexCoord (),
+				normalNode         = this .getNormal (),
+				coordNode          = this .getCoord (),
+				colorArray         = this .getColors (),
+				multiTexCoordArray = this .getTexCoords (),
+				normalArray        = this .getNormals (),
+				vertexArray        = this .getVertices ();
 
 			if (texCoordNode)
-				texCoordNode .init (textCoords);
+				texCoordNode .init (multiTexCoordArray);
 
 			for (var p = 0, numPolygons = polygons .length; p < numPolygons; ++ p)
 			{
@@ -216,7 +216,7 @@ function ($,
 					}
 
 					if (texCoordNode)
-						texCoordNode .addTexCoord (textCoords, this .getTexCoordPerVertexIndex (i));
+						texCoordNode .addTexCoord (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
 
 					if (normalNode)
 					{

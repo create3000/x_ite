@@ -90,19 +90,31 @@ function ($,
 		{
 			return "texCoord";
 		},
-		addTexCoordToChannel: function (texCoords, index)
+		initialize: function ()
 		{
-			if (index >= 0 && index < this .point_ .length)
-			{
-				var point = this .point_ [index];
+			X3DTextureCoordinateNode .prototype .initialize .call (this);
 
-				texCoords .push (point .x,
-				                 point .y,
-				                 point .z,
-				                 point .w);
+			this .point_ .addInterest ("set_point", this);
+
+			this .set_point ();
+		},
+		set_point: function ()
+		{
+			this .point  = this .point_ .getValue ();
+			this .length = this .point_ .length;
+		},
+		addTexCoordToChannel: function (index, array)
+		{
+			if (index >= 0 && index < this .length)
+			{
+				var point = this .point;
+
+				index *= 4;
+
+				array .push (point [index], point [index + 1], point [index + 2], point [index + 3]);
 			}
 			else
-				texCoords .push (0, 0, 0, 1);
+				array .push (0, 0, 0, 1);
 		},
 		getTexCoord: function (array)
 		{

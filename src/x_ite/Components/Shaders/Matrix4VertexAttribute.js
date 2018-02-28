@@ -95,11 +95,11 @@ function ($,
 		{
 			X3DVertexAttributeNode .prototype .initialize .call (this);
 
-			this .value_ .addInterest ("value__", this);
+			this .value_ .addInterest ("set_value", this);
 
-			this .value__ ();
+			this .set_value ();
 		},
-		value__: function ()
+		set_value: function ()
 		{
 			this .value  = this .value_ .getValue ();
 			this .length = this .value_ .length;

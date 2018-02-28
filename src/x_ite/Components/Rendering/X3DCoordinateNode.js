@@ -82,11 +82,11 @@ function ($,
 		{
 			X3DGeometricPropertyNode .prototype .initialize .call (this);
 
-			this .point_ .addInterest ("point__", this);
+			this .point_ .addInterest ("set_point", this);
 
-			this .point__ ();
+			this .set_point ();
 		},
-		point__: function ()
+		set_point: function ()
 		{
 			this .point  = this .point_ .getValue ();
 			this .length = this .point_ .length;

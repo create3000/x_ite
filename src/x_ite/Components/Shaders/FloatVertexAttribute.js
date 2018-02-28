@@ -98,11 +98,17 @@ function ($,
 		{
 			X3DVertexAttributeNode .prototype .initialize .call (this);
 
-			this .value_ .addInterest ("value__", this);
+			this .numComponents_ .addInterest ("set_numComponents", this);
+			this .value_         .addInterest ("set_value",         this);
 
-			this .value__ ();
+			this .set_numComponents ();
+			this .set_value ();
 		},
-		value__: function ()
+		set_numComponents: function ()
+		{
+			this .numComponents = Algorithm .clamp (this .numComponents_ .getValue (), 1, 4);
+		},
+		set_value: function ()
 		{
 			this .value  = this .value_ .getValue ();
 			this .length = this .value_ .length;
@@ -110,10 +116,9 @@ function ($,
 		addValue: function (index, array)
 		{
 			var
-				value         = this .value,
-				numComponents = Algorithm .clamp (this .numComponents_ .getValue (), 1, 4),
-				first         = index * numComponents,
-				last          = first + numComponents;
+				value = this .value,
+				first = index * this .numComponents,
+				last  = first + this .numComponents;
 
 			if (last <= this .length)
 			{
@@ -128,7 +133,7 @@ function ($,
 		},
 		enable: function (gl, shaderNode, buffer)
 		{
-			shaderNode .enableFloatAttrib (gl, this .name_ .getValue (), buffer, Algorithm .clamp (this .numComponents_ .getValue (), 1, 4));
+			shaderNode .enableFloatAttrib (gl, this .name_ .getValue (), buffer, this .numComponents);
 		},
 		disable: function (gl, shaderNode)
 		{

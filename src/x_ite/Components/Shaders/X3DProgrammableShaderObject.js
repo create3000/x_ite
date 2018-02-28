@@ -473,8 +473,8 @@ var xxx = 0;
 						array [1] = field .height;
 						array [2] = field .comp;
 	
-						for (var a = 3, p = 0, length = pixels .length; p < length; ++ p)
-							array [a ++] = pixels [p];
+						for (var a = 3, p = 0, length = pixels .length; p < length; ++ p, ++ a)
+							array [a] = pixels [p];
 	
 						gl .uniform1iv (location, array);
 						return;

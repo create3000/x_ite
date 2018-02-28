@@ -345,17 +345,18 @@ function ($,
 				return;
 
 			var
-				colorPerVertex  = this .colorPerVertex_ .getValue (),
-				normalPerVertex = this .normalPerVertex_ .getValue (),
-				coordIndex      = this .createCoordIndex (),
-				colorNode       = this .getColor (),
-				texCoordNode    = this .getTexCoord (),
-				normalNode      = this .getNormal (),
-				points          = this .createPoints (),
-				colorArray      = this .getColors (),
-				normalArray     = this .getNormals (),
-				vertexArray     = this .getVertices (),
-				face            = 0;
+				colorPerVertex     = this .colorPerVertex_ .getValue (),
+				normalPerVertex    = this .normalPerVertex_ .getValue (),
+				coordIndex         = this .createCoordIndex (),
+				colorNode          = this .getColor (),
+				texCoordNode       = this .getTexCoord (),
+				normalNode         = this .getNormal (),
+				points             = this .createPoints (),
+				colorArray         = this .getColors (),
+				multiTexCoordArray = this .getTexCoords (),
+				normalArray        = this .getNormals (),
+				vertexArray        = this .getVertices (),
+				face               = 0;
 
 			// Vertex attribute
 
@@ -366,7 +367,7 @@ function ($,
 
 			if (texCoordNode)
 			{
-				texCoordNode .init (this .getTexCoords ());
+				texCoordNode .init (multiTexCoordArray);
 			}
 			else
 			{
@@ -374,7 +375,7 @@ function ($,
 					texCoords     = this .createTexCoords (),
 					texCoordArray = [ ];
 
-				this .getTexCoords () .push (texCoordArray);
+				multiTexCoordArray .push (texCoordArray);
 			}
 
 			// Build geometry
@@ -400,7 +401,7 @@ function ($,
 						
 					if (texCoordNode)
 					{
-						texCoordNode .addTexCoord (this .getTexCoords (), index);
+						texCoordNode .addTexCoord (index, multiTexCoordArray);
 					}
 					else
 					{

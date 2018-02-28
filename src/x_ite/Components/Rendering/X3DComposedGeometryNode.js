@@ -208,23 +208,23 @@ function ($,
 			trianglesSize -= trianglesSize % verticesPerFace;
 
 			var
-				colorPerVertex  = this .colorPerVertex_ .getValue (),
-				normalPerVertex = this .normalPerVertex_ .getValue (),
-				attribNodes     = this .getAttrib (),
-				numAttrib       = attribNodes .length,
-				attribs         = this .getAttribs (),
-				colorNode       = this .getColor (),
-				texCoordNode    = this .getTexCoord (),
-				normalNode      = this .getNormal (),
-				coordNode       = this .getCoord (),
-				textCoords      = this .getTexCoords (),
-				colorArray      = this .getColors (),
-				normalArray     = this .getNormals (),
-				vertexArray     = this .getVertices (),
-				face            = 0;
+				colorPerVertex     = this .colorPerVertex_ .getValue (),
+				normalPerVertex    = this .normalPerVertex_ .getValue (),
+				attribNodes        = this .getAttrib (),
+				numAttrib          = attribNodes .length,
+				attribs            = this .getAttribs (),
+				colorNode          = this .getColor (),
+				texCoordNode       = this .getTexCoord (),
+				normalNode         = this .getNormal (),
+				coordNode          = this .getCoord (),
+				colorArray         = this .getColors (),
+				multiTexCoordArray = this .getTexCoords (),
+				normalArray        = this .getNormals (),
+				vertexArray        = this .getVertices (),
+				face               = 0;
 
 			if (texCoordNode)
-				texCoordNode .init (textCoords);
+				texCoordNode .init (multiTexCoordArray);
 		
 			// Fill GeometryNode
 		
@@ -246,7 +246,7 @@ function ($,
 				}
 
 				if (texCoordNode)
-					texCoordNode .addTexCoord (textCoords, index);
+					texCoordNode .addTexCoord (index, multiTexCoordArray);
 	
 				if (normalNode)
 				{
