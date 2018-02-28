@@ -92,12 +92,20 @@ function ($,
 		{
 			return "normal";
 		},
-		get1Vector: function (index)
+		get1Vector: function (index, normals)
 		{
 			if (index >= 0 && index < this .vector_ .length)
-				return this .vector_ [index] .getValue ();
+			{
+				const value = this .vector_ .getValue ();
 
-			return new Vector3 (0, 0, 0);
+				index *= 3;
+
+				normals .push (value [index + 0], value [index + 1], value [index + 2]);
+			}
+			else
+			{
+				return normals .push (0, 0, 0);
+			}
 		},
 	});
 

@@ -214,6 +214,9 @@ function ($,
 				normalNode      = this .getNormal (),
 				coordNode       = this .getCoord (),
 				textCoords      = this .getTexCoords (),
+				colorArray      = this .getColors (),
+				normalArray     = this .getNormals (),
+				vertexArray     = this .getVertices (),
 				face            = 0;
 
 			if (texCoordNode)
@@ -233,9 +236,9 @@ function ($,
 				if (colorNode)
 				{
 					if (colorPerVertex)
-						this .addColor (colorNode .get1Color (index));
+						colorNode .get1Color (index, colorArray);
 					else
-						this .addColor (colorNode .get1Color (face));
+						colorNode .get1Color (face, colorArray);
 				}
 
 				if (texCoordNode)
@@ -244,13 +247,13 @@ function ($,
 				if (normalNode)
 				{
 					if (normalPerVertex)
-						this .addNormal (normalNode .get1Vector (index));
+						normalNode .get1Vector (index, normalArray);
 
 					else
-						this .addNormal (normalNode .get1Vector (face));
+						normalNode .get1Vector (face, normalArray);
 				}
 
-				this .addVertex (coordNode .get1Point (index));
+				coordNode .get1Point (index, vertexArray);
 			}
 		
 			// Autogenerate normal if not specified.
@@ -263,10 +266,16 @@ function ($,
 		},
 		buildNormals: function (verticesPerPolygon, polygonsSize, trianglesSize)
 		{
-			var normals = this .createNormals (verticesPerPolygon, polygonsSize);
+			var
+				normals     = this .createNormals (verticesPerPolygon, polygonsSize),
+				normalArray = this .getNormals ();
 
 			for (var i = 0; i < trianglesSize; ++ i)
-				this .addNormal (normals [this .getTriangleIndex (i)]);
+			{
+				var normal = normals [this .getTriangleIndex (i)];
+
+				normalArray .push (normal .x, normal .y, normal .z);
+			}
 		},
 		createNormals: function (verticesPerPolygon, polygonsSize)
 		{
@@ -317,18 +326,25 @@ function ($,
 			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
 			var
-				normal = new Vector3 (0, 0, 0),
-				next   = coord .get1Point (this .getPolygonIndex (0));
+				normal  = new Vector3 (0, 0, 0),
+				current = [ ],
+				next    = [ ];
+
+			coord .get1Point (this .getPolygonIndex (0), next);
 
 			for (var i = 0; i < verticesPerPolygon; ++ i)
 			{
-				var
-					current = next,
-					next    = coord .get1Point (this .getPolygonIndex ((i + 1) % verticesPerPolygon));
+				var tmp = current;
+				current = next;
+				next    = tmp;
 
-				normal .x += (current .y - next .y) * (current .z + next .z);
-				normal .y += (current .z - next .z) * (current .x + next .x);
-				normal .z += (current .x - next .x) * (current .y + next .y);
+				next .length = 0;
+
+				coord .get1Point (this .getPolygonIndex ((i + 1) % verticesPerPolygon), next);
+
+				normal .x += (current [1] - next [1]) * (current [2] + next [2]);
+				normal .y += (current [2] - next [2]) * (current [0] + next [0]);
+				normal .z += (current [0] - next [0]) * (current [1] + next [1]);
 			}
 
 			return normal .normalize ();

@@ -123,14 +123,14 @@ function ($,
 			{
 				var
 					defaultVertices = geometry .getVertices (),
-					vertices        = this .getVertices ();
+					vertexArray     = this .getVertices ();
 
 				for (var i = 0; i < defaultVertices .length; i += 4)
 				{
-					vertices .push (radius * defaultVertices [i],
-					                radius * defaultVertices [i + 1],
-					                radius * defaultVertices [i + 2],
-					                1);
+					vertexArray .push (radius * defaultVertices [i],
+					                   radius * defaultVertices [i + 1],
+					                   radius * defaultVertices [i + 2],
+					                   1);
 				}
 
 				radius = Math .abs (radius);

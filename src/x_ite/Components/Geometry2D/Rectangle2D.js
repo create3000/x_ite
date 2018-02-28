@@ -125,19 +125,19 @@ function ($,
 					x               = scale .x,
 					y               = scale .y,
 					defaultVertices = geometry .getVertices (),
-					vertices        = this .getVertices ();
+					vertexArray     = this .getVertices ();
 
 				for (var i = 0; i < defaultVertices .length; i += 4)
 				{
-					vertices .push (x * defaultVertices [i],
-					                y * defaultVertices [i + 1],
-					                defaultVertices [i + 2],
-					                1);
+					vertexArray .push (x * defaultVertices [i],
+					                   y * defaultVertices [i + 1],
+					                   defaultVertices [i + 2],
+					                   1);
 				}
-
-				this .getMin () .set (-x, -y, 0);
-				this .getMax () .set ( x,  y, 0);
 			}
+
+			this .getMin () .set (-x, -y, 0);
+			this .getMax () .set ( x,  y, 0);
 
 			this .setSolid (this .solid_ .getValue ());
 		},

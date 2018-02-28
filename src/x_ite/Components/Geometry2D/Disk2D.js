@@ -133,13 +133,13 @@ function ($,
 				var
 					radius          = Math .abs (outerRadius),
 					defaultVertices = options .getCircleVertices (),
-					vertices        = this .getVertices ();
+					vertexArray     = this .getVertices ();
 
 				// Point
 
 				//if (radius === 0)
 				//{
-				//	this .addVertex (Vector3 .Zero);
+				//	vertexArray .push (0, 0, 0, 1);
 				//	this .setGeometryType (GeometryType .GEOMETRY_POINTS);
 				//	return;
 				//}
@@ -147,11 +147,13 @@ function ($,
 				// Circle
 
 				if (radius === 1)
+				{
 					this .setVertices (defaultVertices);
+				}
 				else
 				{
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertices .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 				}
 	
 				this .getMin () .set (-radius, -radius, 0);
@@ -168,17 +170,19 @@ function ($,
 				var
 					radius          = Math .abs (Math .max (innerRadius, outerRadius)),
 					defaultVertices = options .getDiskVertices (),
-					vertices        = this .getVertices ();
+					vertexArray     = this .getVertices ();
 
 				this .getTexCoords () .push (options .getDiskTexCoords ());
 				this .setNormals (options .getDiskNormals ());
 	
 				if (radius === 1)
+				{
 					this .setVertices (defaultVertices);
+				}
 				else
 				{
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertices .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 				}
 
 				this .getMin () .set (-radius, -radius, 0);
@@ -193,19 +197,19 @@ function ($,
 			// Disk with hole
 
 			var
-				maxRadius  = Math .abs (Math .max (innerRadius, outerRadius)),
-				minRadius  = Math .abs (Math .min (innerRadius, outerRadius)),
-				scale      = minRadius / maxRadius,
-				offset     = (1 - scale) / 2,
-				texCoords1 = options .getDiskTexCoords (),
-				texCoords2 = [ ],
-				normals    = this .getNormals (),
-				vertices1  = options .getDiskVertices (),
-				vertices2  = this .getVertices ();
+				maxRadius       = Math .abs (Math .max (innerRadius, outerRadius)),
+				minRadius       = Math .abs (Math .min (innerRadius, outerRadius)),
+				scale           = minRadius / maxRadius,
+				offset          = (1 - scale) / 2,
+				texCoords1      = options .getDiskTexCoords (),
+				texCoords2      = [ ],
+				normals         = this .getNormals (),
+				defaultVertices = options .getDiskVertices (),
+				vertexArray     = this .getVertices ();
 
 			this .getTexCoords () .push (texCoords2);
 
-			for (var i = 0, length = vertices1 .length; i < length; i += 12)
+			for (var i = 0, length = defaultVertices .length; i < length; i += 12)
 			{
 				texCoords2 .push (texCoords1 [i + 4] * scale + offset, texCoords1 [i + 5] * scale + offset, 0, 1,
 				                  texCoords1 [i + 4], texCoords1 [i + 5], 0, 1,
@@ -218,13 +222,13 @@ function ($,
 				normals .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
                            0, 0, 1,  0, 0, 1,  0, 0, 1);
 
-				vertices2 .push (vertices1 [i + 4] * minRadius, vertices1 [i + 5] * minRadius, 0, 1,
-				                 vertices1 [i + 4] * maxRadius, vertices1 [i + 5] * maxRadius, 0, 1,
-				                 vertices1 [i + 8] * maxRadius, vertices1 [i + 9] * maxRadius, 0, 1,
-
-				                 vertices1 [i + 4] * minRadius, vertices1 [i + 5] * minRadius, 0, 1,
-				                 vertices1 [i + 8] * maxRadius, vertices1 [i + 9] * maxRadius, 0, 1,
-				                 vertices1 [i + 8] * minRadius, vertices1 [i + 9] * minRadius, 0, 1);
+				vertexArray .push (defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
+				                   defaultVertices [i + 4] * maxRadius, defaultVertices [i + 5] * maxRadius, 0, 1,
+				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
+									    
+				                   defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
+				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
+				                   defaultVertices [i + 8] * minRadius, defaultVertices [i + 9] * minRadius, 0, 1);
 			}
 
 			this .getMin () .set (-maxRadius, -maxRadius, 0);

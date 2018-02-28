@@ -66,8 +66,6 @@ function ($,
 {
 "use strict";
 
-	var vector = new Vector3 (0, 0, 0);
-
 	function Polyline2D (executionContext)
 	{
 		X3DLineGeometryNode .call (this, executionContext);
@@ -106,13 +104,13 @@ function ($,
 		},
 		build: function ()
 		{
-			var lineSegments = this .lineSegments_;
+			var
+				lineSegments = this .lineSegments_ .getValue (),
+				vertexArray  = this .getVertices ();
 
-			for (var i = 0, length = lineSegments .length; i < length; ++ i)
+			for (var i = 0, length = this .lineSegments_ .length * 2; i < length; i += 2)
 			{
-				var vertex = lineSegments [i];
-
-				this .addVertex (vector .set (vertex .x, vertex .y, 0));
+				vertexArray .push (lineSegments [i + 0], lineSegments [i + 1], 0, 1);
 			}
 
 			this .setSolid (false);

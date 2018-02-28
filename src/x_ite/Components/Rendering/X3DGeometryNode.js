@@ -79,8 +79,7 @@ function ($,
 "use strict";
 
 	var
-		min             = new Vector3 (0, 0, 0),
-		max             = new Vector3 (0, 0, 0),
+		point           = new Vector3 (0, 0, 0),
 		clipPoint       = new Vector3 (0, 0, 0),
 		modelViewMatrix = new Matrix4 (),
 		invMatrix       = new Matrix4 ();
@@ -198,14 +197,12 @@ function ($,
 		{
 			if (! bbox .equals (this .bbox))
 			{
-			   bbox .getExtents (min, max);
+			   bbox .getExtents (this .min, this .max);
 	
-				this .min  .assign (min);
-				this .max  .assign (max);
 				this .bbox .assign (bbox);
 	
 				for (var i = 0; i < 5; ++ i)
-					this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+					this .planes [i] .set (i % 2 ? this .min : this .max, boxNormals [i]);
 	
 				this .bbox_changed_ .addEvent ();
 			}
@@ -248,10 +245,6 @@ function ($,
 		{
 			return this .attribs;
 		},
-		addColor: function (color)
-		{
-			this .colors .push (color .r, color .g, color .b, color .length === 3 ? 1 : color .a);
-		},
 		setColors: function (value)
 		{
 			var colors = this .colors;
@@ -282,10 +275,6 @@ function ($,
 		{
 			this .currentTexCoordNode = value || this .getBrowser () .getDefaultTextureCoordinate ();
 		},
-		addNormal: function (normal)
-		{
-			this .normals .push (normal .x, normal .y, normal .z);
-		},
 		setNormals: function (value)
 		{
 			var normals = this .normals;
@@ -298,13 +287,6 @@ function ($,
 		getNormals: function ()
 		{
 			return this .normals;
-		},
-		addVertex: function (vertex)
-		{
-			this .min .min (vertex);
-			this .max .max (vertex);
-
-			this .vertices .push (vertex .x, vertex .y, vertex .z, 1);
 		},
 		setVertices: function (value)
 		{
@@ -678,19 +660,35 @@ function ($,
 			this .clear ();
 			this .build ();
 
-			if (this .vertices .length)
-				this .bbox .setExtents (this .min, this .max);
+			var
+				min      = this .min,
+				max      = this .max,
+				vertices = this .vertices;
+
+			if (vertices .length)
+			{
+				min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
+				max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+
+				for (var i = 0, length = vertices .length; i < length; i += 4)
+				{
+					point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+
+					min .min (point);
+					max .max (point);
+				}
+
+				this .bbox .setExtents (min, max);
+			}
 			else
-				this .bbox .setExtents (this .min .set (0, 0, 0), this .max .set (0, 0, 0));
+			{
+				this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
+			}
 
 			this .bbox_changed_ .addEvent ();
 
 			if (this .geometryType > 1)
 			{
-				var
-					min = this .min,
-					max = this .max;
-
 				for (var i = 0; i < 5; ++ i)
 					this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
 
@@ -703,11 +701,6 @@ function ($,
 		},
 		clear: function ()
 		{
-			// BBox
-
-			this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
-			this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
-
 			// Attrib
 
 			var

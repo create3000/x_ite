@@ -122,7 +122,7 @@ main ()
 		vec3 N = normalize (x3d_NormalMatrix * x3d_Normal);
 
 		frontColor = getMaterialColor (N, v, x3d_FrontMaterial);
-		backColor  = x3d_SeparateBackColor ? getMaterialColor (-N, v, x3d_BackMaterial) : frontColor;
+		backColor  = x3d_SeparateBackColor ? getMaterialColor (-N, v, x3d_BackMaterial) : getMaterialColor (-N, v, x3d_FrontMaterial);
 	}
 	else
 	{

@@ -266,7 +266,9 @@ function ($,
 				numAttrib      = attribNodes .length,
 				attribs        = this .getAttribs (),
 				colorNode      = this .colorNode,
-				coordNode      = this .coordNode;
+				coordNode      = this .coordNode,
+				colorArray     = this .getColors (),
+				vertexArray    = this .getVertices ();
 
 			// Fill GeometryNode
 
@@ -294,12 +296,12 @@ function ($,
 							if (colorNode)
 							{
 								if (colorPerVertex)
-									this .addColor (colorNode .get1Color (this .getColorPerVertexIndex (i)));
+									colorNode .get1Color (this .getColorPerVertexIndex (i), colorArray);
 								else
-									this .addColor (colorNode .get1Color (this .getColorIndex (face)));
+									colorNode .get1Color (this .getColorIndex (face), colorArray);
 							}
 
-							this .addVertex (coordNode .get1Point (ci));
+							coordNode .get1Point (ci, vertexArray);
 						}
 					}
 				}

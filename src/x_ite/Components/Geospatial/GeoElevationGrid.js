@@ -352,6 +352,9 @@ function ($,
 				texCoordNode    = this .getTexCoord (),
 				normalNode      = this .getNormal (),
 				points          = this .createPoints (),
+				colorArray      = this .getColors (),
+				normalArray     = this .getNormals (),
+				vertexArray     = this .getVertices (),
 				face            = 0;
 
 			// Vertex attribute
@@ -362,11 +365,16 @@ function ($,
 			//	attribArrays [a] .reserve (coordIndex .size ());
 
 			if (texCoordNode)
+			{
 				texCoordNode .init (this .getTexCoords ());
+			}
 			else
 			{
-				var texCoords = this .createTexCoords ();
-				this .getTexCoords () .push ([ ]);
+				var
+					texCoords     = this .createTexCoords (),
+					texCoordArray = [ ];
+
+				this .getTexCoords () .push (texCoordArray);
 			}
 
 			// Build geometry
@@ -375,7 +383,9 @@ function ($,
 			{
 				for (var p = 0; p < 6; ++ p, ++ c)
 				{
-					var index = coordIndex [c];
+					var
+						index = coordIndex [c],
+						point = points [index];
 
 					//for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
 					//	attribNodes [a] -> addValue (attribArrays [a], i);
@@ -383,30 +393,32 @@ function ($,
 					if (colorNode)
 					{
 						if (colorPerVertex)
-							this .addColor (colorNode .get1Color (index));
+							colorNode .get1Color (index, colorArray);
 						else
-							this .addColor (colorNode .get1Color (face));
+							colorNode .get1Color (face, colorArray);
 					}
 						
 					if (texCoordNode)
+					{
 						texCoordNode .addTexCoord (this .getTexCoords (), index);
-
+					}
 					else
 					{
 						var t = texCoords [index];
-						this .getTexCoords () [0] .push (t .x, t .y, 0, 1);
+
+						texCoordArray .push (t .x, t .y, 0, 1);
 					}
 
 					if (normalNode)
 					{
 						if (normalPerVertex)
-							this .addNormal (normalNode .get1Vector (index));
+							normalNode .get1Vector (index, normalArray);
 
 						else
-							this .addNormal (normalNode .get1Vector (face));
+							normalNode .get1Vector (face, normalArray);
 					}
 
-					this .addVertex (points [index]);
+					vertexArray .push (point .x, point .y, point .z, 1);
 				}
 			}
 
@@ -417,7 +429,11 @@ function ($,
 				var normals = this .createNormals (points, coordIndex);
 
 				for (var i = 0; i < normals .length; ++ i)
-					this .addNormal (normals [i]);
+				{
+					var normal = normals [i];
+
+					normalArray .push (normal .x, normal .y, normal .z);
+				}
 			}
 
 			this .setSolid (this .solid_ .getValue ());

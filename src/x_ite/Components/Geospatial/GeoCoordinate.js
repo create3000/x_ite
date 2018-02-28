@@ -139,14 +139,22 @@ function ($,
 		{
 			return this .point_ .length;
 		},
-		get1Point: function (index)
+		get1Point: function (index, vertices)
 		{
 			// The index cannot be less than 0.
 
 			if (index < this .points .length)
-				return this .points [index];
+			{
+				var p = this .points [index];
 
-			return this .origin;
+				vertices .push (p .x, p .y, p .z, 1);
+			}
+			else
+			{
+				var p = this .origin;
+
+				vertices .push (p .x, p .y, p .z, 1);
+			}
 		},
 		getNormal: function (index1, index2, index3)
 		{

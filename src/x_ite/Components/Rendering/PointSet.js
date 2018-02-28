@@ -172,7 +172,9 @@ function ($,
 				numAttrib   = attribNodes .length,
 				attribs     = this .getAttribs (),
 				colorNode   = this .colorNode,
-				coordNode   = this .coordNode;
+				coordNode   = this .coordNode,
+				colorArray  = this .getColors (),
+				vertexArray = this .getVertices ();
 
 			for (var a = 0; a < numAttrib; ++ a)
 			{
@@ -183,11 +185,11 @@ function ($,
 			if (this .colorNode)
 			{
 				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-					this .addColor (colorNode .get1Color (i));
+					colorNode .get1Color (i, colorArray);
 			}
 
 			for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-				this .addVertex (coordNode .get1Point (i));
+				coordNode .get1Point (i, vertexArray);
 		},
 	});
 

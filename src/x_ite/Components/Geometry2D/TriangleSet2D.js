@@ -66,10 +66,6 @@ function ($,
 {
 "use strict";
 
-	var
-		normal = new Vector3 (0, 0, 1),
-		vector = new Vector3 (0, 0, 0);
-
 	function TriangleSet2D (executionContext)
 	{
 		X3DGeometryNode .call (this, executionContext);
@@ -103,14 +99,15 @@ function ($,
 		},
 		build: function ()
 		{
-			var vertices = this .vertices_;
+			var
+				vertices    = this .vertices_ .getValue (),
+				normalArray = this .getNormals (),
+				vertexArray = this .getVertices ();
 
-			for (var i = 0, length = vertices .length; i < length; ++ i)
+			for (var i = 0, length = this .vertices_ .length * 2; i < length; i += 2)
 			{
-				var vertex = vertices [i];
-
-				this .addNormal (normal);
-				this .addVertex (vector .set (vertex .x, vertex .y, 0));
+				normalArray .push (0, 0, 1);
+				vertexArray .push (vertices [i + 0], vertices [i + 1], 0, 1);
 			}
 
 			this .setSolid (this .solid_ .getValue ());
@@ -118,18 +115,18 @@ function ($,
 		buildTexCoords: function ()
 		{
 			var
-				p         = this .getTexCoordParams (),
-				min       = p .min,
-				Ssize     = p .Ssize,
-				texCoords = [ ],
-				vertices  = this .getVertices ();
+				p           = this .getTexCoordParams (),
+				min         = p .min,
+				Ssize       = p .Ssize,
+				texCoords   = [ ],
+				vertexArray = this .getVertices ();
 
-			this .texCoords .push (texCoords);
+			this .getTexCoords () .push (texCoords);
 
-			for (var i = 0, length = vertices .length; i < length; i += 4)
+			for (var i = 0, length = vertexArray .length; i < length; i += 4)
 			{
-				texCoords .push ((vertices [i]     - min [0]) / Ssize,
-				                 (vertices [i + 1] - min [1]) / Ssize,
+				texCoords .push ((vertexArray [i]     - min [0]) / Ssize,
+				                 (vertexArray [i + 1] - min [1]) / Ssize,
 				                 0,
 				                 1);
 			}

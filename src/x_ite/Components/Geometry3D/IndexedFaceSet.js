@@ -180,7 +180,10 @@ function ($,
 				texCoordNode    = this .getTexCoord (),
 				normalNode      = this .getNormal (),
 				coordNode       = this .getCoord (),
-				textCoords      = this .getTexCoords ();
+				textCoords      = this .getTexCoords (),
+				colorArray      = this .getColors (),
+				normalArray     = this .getNormals (),
+				vertexArray     = this .getVertices ();
 
 			if (texCoordNode)
 				texCoordNode .init (textCoords);
@@ -205,9 +208,9 @@ function ($,
 					if (colorNode)
 					{
 						if (colorPerVertex)
-							this .addColor (colorNode .get1Color (this .getColorPerVertexIndex (i)));
+							colorNode .get1Color (this .getColorPerVertexIndex (i), colorArray);
 						else
-							this .addColor (colorNode .get1Color (this .getColorIndex (face)));
+							colorNode .get1Color (this .getColorIndex (face), colorArray);
 					}
 
 					if (texCoordNode)
@@ -216,13 +219,13 @@ function ($,
 					if (normalNode)
 					{
 						if (normalPerVertex)
-							this .addNormal (normalNode .get1Vector (this .getNormalPerVertexIndex (i)));
+							normalNode .get1Vector (this .getNormalPerVertexIndex (i), normalArray);
 
 						else
-							this .addNormal (normalNode .get1Vector (this .getNormalIndex (face)));
+							normalNode .get1Vector (this .getNormalIndex (face), normalArray);
 					}
 
-					this .addVertex (coordNode .get1Point (index));
+					coordNode .get1Point (index, vertexArray);
 				}
 
 				++ face;
@@ -368,8 +371,9 @@ function ($,
 		buildNormals: function (polygons)
 		{
 			var
-				first   = 0,
-				normals = this .createNormals (polygons);
+				first       = 0,
+				normals     = this .createNormals (polygons),
+				normalArray = this .getNormals ();
 
 			for (var p = 0, pl = polygons .length; p < pl; ++ p)
 			{
@@ -380,7 +384,9 @@ function ($,
 
 				for (var v = 0, tl = triangles .length; v < tl; ++ v)
 				{
-					this .addNormal (normals [first + triangles [v]]);
+					var normal = normals [first + triangles [v]];
+
+					normalArray .push (normal .x, normal .y, normal .z);
 				}
 
 				first += vertices .length;
@@ -456,18 +462,25 @@ function ($,
 			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
 			var
-				normal = new Vector3 (0, 0, 0),
-				next   = coord .get1Point (coordIndex [vertices [0]]);
+				normal  = new Vector3 (0, 0, 0),
+				current = [ ],
+				next    = [ ];
+
+			coord .get1Point (coordIndex [vertices [0]], next);
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
-				var
-					current = next,
-					next    = coord .get1Point (coordIndex [vertices [(i + 1) % length]]);
+				var tmp = current;
+				current = next;
+				next    = tmp;
 
-				normal .x += (current .y - next .y) * (current .z + next .z);
-				normal .y += (current .z - next .z) * (current .x + next .x);
-				normal .z += (current .x - next .x) * (current .y + next .y);
+				next .length = 0;
+
+				coord .get1Point (coordIndex [vertices [(i + 1) % length]], next);
+
+				normal .x += (current [1] - next [1]) * (current [2] + next [2]);
+				normal .y += (current [2] - next [2]) * (current [0] + next [0]);
+				normal .z += (current [0] - next [0]) * (current [1] + next [1]);
 			}
 
 			return normal .normalize ();

@@ -54,7 +54,6 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DColorNode",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Color4",
 	"standard/Math/Numbers/Vector4",
 ],
 function ($,
@@ -63,12 +62,9 @@ function ($,
           FieldDefinitionArray,
           X3DColorNode, 
           X3DConstants,
-          Color4,
           Vector4)
 {
 "use strict";
-
-	var white = new Color4 (1, 1, 1, 1);
 
 	function ColorRGBA (executionContext)
 	{
@@ -100,9 +96,28 @@ function ($,
 		{
 			return true;
 		},
-		getWhite: function ()
+		get1Color: function (index, colors)
 		{
-			return white;
+			if (index >= 0 && index < this .color_ .length)
+			{
+				const value = this .color_ .getValue ();
+
+				index *= 4;
+
+				colors .push (value [index + 0], value [index + 1], value [index + 2], value [index + 3]);
+			}
+			else if (this .color_ .length)
+			{
+				const value = this .color_ .getValue ();
+
+				index = (this .color_ .length - 1) * 4;
+
+				colors .push (value [index + 0], value [index + 1], value [index + 2], value [index + 3]);
+			}
+			else
+			{
+				colors .push (1, 1, 1, 1);
+			}
 		},
 		getVectors: function (array)
 		{

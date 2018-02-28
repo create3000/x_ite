@@ -116,13 +116,13 @@ function ($,
 		build: function ()
 		{
 			var
-				options    = this .getBrowser () .getCylinderOptions (),
-				xDimension = options .xDimension_ .getValue (),
-				texCoords  = [ ],
-				normals    = this .getNormals (),
-				vertices   = this .getVertices ();
+				options       = this .getBrowser () .getCylinderOptions (),
+				xDimension    = options .xDimension_ .getValue (),
+				texCoordArray = [ ],
+				normalArray   = this .getNormals (),
+				vertexArray   = this .getVertices ();
 
-			this .getTexCoords () .push (texCoords);
+			this .getTexCoords () .push (texCoordArray);
 
 			var
 				radius = this .radius_ .getValue (),
@@ -152,36 +152,36 @@ function ($,
 					// Triangle one
 
 					// p1
-					texCoords .push (u1, 1, 0, 1);
-					normals .push (n1 .imag,  0, n1 .real);
-					vertices .push (p1 .imag, y1, p1 .real, 1);
+					texCoordArray .push (u1, 1, 0, 1);
+					normalArray .push (n1 .imag,  0, n1 .real);
+					vertexArray .push (p1 .imag, y1, p1 .real, 1);
 
 					// p2
-					texCoords .push (u1, 0, 0, 1);
-					normals .push (n1 .imag,  0, n1 .real);
-					vertices .push (p1 .imag, y2, p1 .real, 1);
+					texCoordArray .push (u1, 0, 0, 1);
+					normalArray .push (n1 .imag,  0, n1 .real);
+					vertexArray .push (p1 .imag, y2, p1 .real, 1);
 
 					// p3
-					texCoords .push (u2, 0, 0, 1);
-					normals .push (n2 .imag,  0, n2 .real);
-					vertices .push (p2 .imag, y2, p2 .real, 1);
+					texCoordArray .push (u2, 0, 0, 1);
+					normalArray .push (n2 .imag,  0, n2 .real);
+					vertexArray .push (p2 .imag, y2, p2 .real, 1);
 
 					// Triangle two
 
 					// p1
-					texCoords .push (u1, 1, 0, 1);
-					normals .push (n1 .imag,  0, n1 .real);
-					vertices .push (p1 .imag, y1, p1 .real, 1);
+					texCoordArray .push (u1, 1, 0, 1);
+					normalArray .push (n1 .imag,  0, n1 .real);
+					vertexArray .push (p1 .imag, y1, p1 .real, 1);
 
 					// p3
-					texCoords .push (u2, 0, 0, 1);
-					normals .push (n2 .imag,  0, n2 .real);
-					vertices .push (p2 .imag, y2, p2 .real, 1);
+					texCoordArray .push (u2, 0, 0, 1);
+					normalArray .push (n2 .imag,  0, n2 .real);
+					vertexArray .push (p2 .imag, y2, p2 .real, 1);
 
 					// p4
-					texCoords .push (u2, 1, 0, 1);
-					normals .push (n2 .imag,  0, n2 .real);
-					vertices .push (p2 .imag, y1, p2 .real, 1);
+					texCoordArray .push (u2, 1, 0, 1);
+					normalArray .push (n2 .imag,  0, n2 .real);
+					vertexArray .push (p2 .imag, y1, p2 .real, 1);
 				}
 			}
 
@@ -214,17 +214,17 @@ function ($,
 						p1 = points [i],
 						p2 = points [i + 1];
 
-					texCoords .push (t0 .x, t0 .y, 0, 1);
-					normals .push (0, 1, 0);
-					vertices .push (p0 .x, p0 .y, p0 .z, 1);
+					texCoordArray .push (t0 .x, t0 .y, 0, 1);
+					normalArray .push (0, 1, 0);
+					vertexArray .push (p0 .x, p0 .y, p0 .z, 1);
 
-					texCoords .push (t1 .x, t1 .y, 0, 1);
-					normals .push (0, 1, 0);
-					vertices .push (p1 .x, p1 .y, p1 .z, 1);
+					texCoordArray .push (t1 .x, t1 .y, 0, 1);
+					normalArray .push (0, 1, 0);
+					vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 
-					texCoords .push (t2 .x, t2 .y, 0, 1);
-					normals .push (0, 1, 0);
-					vertices .push (p2 .x, p2 .y, p2 .z, 1);
+					texCoordArray .push (t2 .x, t2 .y, 0, 1);
+					normalArray .push (0, 1, 0);
+					vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
 				}
 			}
 
@@ -257,22 +257,22 @@ function ($,
 						p1 = points [i],
 						p2 = points [i + 1];
 
-					texCoords .push (t0 .x, t0 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p0 .x, p0 .y, p0 .z, 1);
+					texCoordArray .push (t0 .x, t0 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p0 .x, p0 .y, p0 .z, 1);
 
-					texCoords .push (t1 .x, t1 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p1 .x, p1 .y, p1 .z, 1);
+					texCoordArray .push (t1 .x, t1 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 
-					texCoords .push (t2 .x, t2 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p2 .x, p2 .y, p2 .z, 1);
+					texCoordArray .push (t2 .x, t2 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
 				}
 			}
 
 			this .setSolid (this .solid_ .getValue ());
-			this .setNormals (normals);
+			this .setNormals (normalArray);
 			this .setExtents ();
 		},
 		setExtents: function ()

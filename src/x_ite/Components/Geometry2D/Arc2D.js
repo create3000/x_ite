@@ -136,15 +136,15 @@ function ($,
 		build: function ()
 		{
 			var
-				gl         = this .getBrowser () .getContext (),
-				options    = this .getBrowser () .getArc2DOptions (),
-				dimension  = options .dimension_ .getValue (),
-				startAngle = this .startAngle_ .getValue  (),
-				radius     = Math .abs (this .radius_ .getValue ()),
-				sweepAngle = this .getSweepAngle (),
-				circle     = sweepAngle == (Math .PI * 2),
-				steps      = Math .floor (sweepAngle * dimension / (Math .PI * 2)),
-				vertices   = this .getVertices ();
+				gl          = this .getBrowser () .getContext (),
+				options     = this .getBrowser () .getArc2DOptions (),
+				dimension   = options .dimension_ .getValue (),
+				startAngle  = this .startAngle_ .getValue  (),
+				radius      = Math .abs (this .radius_ .getValue ()),
+				sweepAngle  = this .getSweepAngle (),
+				circle      = sweepAngle == (Math .PI * 2),
+				steps       = Math .floor (sweepAngle * dimension / (Math .PI * 2)),
+				vertexArray = this .getVertices ();
 
 			steps = Math .max (3, steps);
 
@@ -165,7 +165,7 @@ function ($,
 					theta = startAngle + (sweepAngle * t),
 					point = Complex .Polar (radius, theta);
 
-				vertices .push (point .real, point .imag, 0, 1);
+				vertexArray .push (point .real, point .imag, 0, 1);
 			}
 
 			this .getMin () .set (-radius, -radius, 0);

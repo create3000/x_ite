@@ -184,6 +184,8 @@ function ($,
 				attribs     = this .getAttribs (),
 				colorNode   = this .colorNode,
 				coordNode   = this .coordNode,
+				colorArray  = this .getColors (),
+				vertexArray = this .getVertices (),
 				size        = coordNode .getSize (),
 				index       = 0;
 
@@ -204,9 +206,9 @@ function ($,
 							attribNodes [a] .addValue (attribs [a], index);
 
 						if (colorNode)
-							this .addColor (colorNode .get1Color (index));
+							colorNode .get1Color (index, colorArray);
 
-						this .addVertex (coordNode .get1Point (index));
+						coordNode .get1Point (index, vertexArray);
 					}
 
 					++ index;

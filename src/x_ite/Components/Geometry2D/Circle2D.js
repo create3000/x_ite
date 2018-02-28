@@ -115,14 +115,16 @@ function ($,
 				options         = this .getBrowser () .getCircle2DOptions (),
 				radius          = this .radius_ .getValue (),
 				defaultVertices = options .getVertices (),
-				vertices        = this .getVertices ();
+				vertexArray     = this .getVertices ();
 
 			if (radius === 1)
+			{
 				this .setVertices (defaultVertices);
+			}
 			else
 			{
 				for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-					vertices .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+					vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 			}
 
 			this .getMin () .set (-radius, -radius, 0);

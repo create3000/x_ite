@@ -122,14 +122,14 @@ function ($,
 					y               = scale .y,
 					z               = scale .z,
 					defaultVertices = geometry .getVertices (),
-					vertices        = this .getVertices ();
+					vertexArray     = this .getVertices ();
 
 				for (var i = 0; i < defaultVertices .length; i += 4)
 				{
-					vertices .push (x * defaultVertices [i],
-					                y * defaultVertices [i + 1],
-					                z * defaultVertices [i + 2],
-					                1);
+					vertexArray .push (x * defaultVertices [i],
+					                   y * defaultVertices [i + 1],
+					                   z * defaultVertices [i + 2],
+					                   1);
 				}
 
 				x = Math .abs (x);

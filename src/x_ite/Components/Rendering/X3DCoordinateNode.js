@@ -80,14 +80,20 @@ function ($,
 		{
 			return this .point_ .length;
 		},
-		get1Point: function (index)
+		get1Point: function (index, vertices)
 		{
-			// The index cannot be less than 0.
-
 			if (index < this .point_ .length)
-				return this .point_ [index] .getValue ();
+			{
+				const value = this .point_ .getValue ();
 
-			return new Vector3 (0, 0, 0);
+				index *= 3;
+
+				vertices .push (value [index + 0], value [index + 1], value [index + 2], 1);
+			}
+			else
+			{
+				vertices .push (0, 0, 0, 1);
+			}
 		},
 		getNormal: function (index1, index2, index3)
 		{
