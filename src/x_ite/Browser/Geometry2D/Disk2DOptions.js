@@ -51,12 +51,14 @@ define ([
 	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Fields",
+	"x_ite/Components/Rendering/X3DGeometryNode",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector3",
 ],
 function ($,
           X3DBaseNode,
           Fields,
+          X3DGeometryNode,
           Complex,
           Vector3)
 {
@@ -70,10 +72,10 @@ function ($,
 
 		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
 
-		this .circleVertices = new Fields .MFFloat ();
-		this .diskTexCoords  = new Fields .MFFloat ();
-		this .diskNormals    = new Fields .MFFloat ();
-		this .diskVertices   = new Fields .MFFloat ();
+		this .circleVertices = X3DGeometryNode .createArray ();
+		this .diskTexCoords  = X3DGeometryNode .createArray ();
+		this .diskNormals    = X3DGeometryNode .createArray ();
+		this .diskVertices   = X3DGeometryNode .createArray ();
 	}
 
 	Disk2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),

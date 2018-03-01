@@ -121,6 +121,14 @@ function ($,
 		array .target      = array;
 		array .shrinkToFit = Function .prototype;
 
+		array .assign = function (value)
+		{
+			for (var i = 0, length = value .length; i < length; ++ i)
+				this [i] = value [i];
+
+			this .length = length;
+		};
+
 		array .getValue = function ()
 		{
 			if (array .length !== array .typedArray .length)
