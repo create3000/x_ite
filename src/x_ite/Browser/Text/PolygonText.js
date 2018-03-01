@@ -568,7 +568,7 @@ function ($,
 				//console .warn (error);
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{ },
 		transformLine: function (line)
 		{ },

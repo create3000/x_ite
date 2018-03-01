@@ -488,7 +488,7 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 				shaderNode = browser .getLineShader (),
 				lineWidth  = gl .getParameter (gl .LINE_WIDTH);
 
-			shaderNode .useProgram (gl);
+			shaderNode .enable (gl);
 			shaderNode .enableVertexAttribute (gl, this .lineBuffer);
 
 			gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
@@ -515,6 +515,7 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 			gl .enable (gl .DEPTH_TEST);
 
 			gl .lineWidth (lineWidth);
+			shaderNode .disable (gl);
 		},
 		transfer: function (fromPoint, toPoint)
 		{

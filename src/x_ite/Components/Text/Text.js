@@ -168,11 +168,11 @@ function ($,
 				console .log (error);
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			try
 			{
-				this .textGeometry .display (context);
+				this .textGeometry .display (gl, context);
 
 				X3DGeometryNode .prototype .display .call (this, context);
 			}

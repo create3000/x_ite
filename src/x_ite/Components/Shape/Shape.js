@@ -208,15 +208,15 @@ function ($,
 				console .log (error);
 			}
 		},
-		depth: function (context, shaderNode)
+		depth: function (gl, context, shaderNode)
 		{
-			this .getGeometry () .depth (context, shaderNode);
+			this .getGeometry () .depth (gl, context, shaderNode);
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
-			this .getAppearance () .enable  (context);
-			this .getGeometry ()   .display (context);
-			this .getAppearance () .disable (context);
+			this .getAppearance () .enable  (gl, context);
+			this .getGeometry ()   .display (gl, context);
+			this .getAppearance () .disable (gl, context);
 		},
 	});
 

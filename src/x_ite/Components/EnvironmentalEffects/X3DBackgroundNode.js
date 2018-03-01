@@ -523,16 +523,12 @@ function ($,
 				}
 			}
 		},
-		display: function (renderObject, viewport)
+		display: function (gl, renderObject, viewport)
 		{
 			try
 			{
 				if (this .hidden)
 					return;
-
-				var
-					browser = renderObject .getBrowser (),
-					gl      = browser .getContext ();
 
 				// Setup context.
 	
@@ -584,7 +580,7 @@ function ($,
 				gl         = browser .getContext (),
 				shaderNode = browser .getBackgroundSphereShader ();
 
-			shaderNode .useProgram (gl);
+			shaderNode .enable (gl);
 
 			// Clip planes
 
@@ -614,6 +610,7 @@ function ($,
 			// Disable vertex attribute arrays.
 
 			shaderNode .disableColorAttribute (gl);
+			shaderNode .disable (gl);
 		},
 		drawCube: function (renderObject)
 		{
@@ -622,7 +619,7 @@ function ($,
 				gl         = browser .getContext (),
 				shaderNode = browser .getGouraudShader ();
 
-			shaderNode .useProgram (gl);
+			shaderNode .enable (gl);
 
 			// Clip planes
 
@@ -654,6 +651,7 @@ function ($,
 			// Disable vertex attribute arrays.
 
 			shaderNode .disableTexCoordAttribute (gl);
+			shaderNode .disable (gl);
 		},
 		drawRectangle: function (gl, shaderNode, texture, buffer)
 		{

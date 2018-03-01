@@ -261,11 +261,11 @@ function ($,
 				return X3DGeometryNode .prototype .intersectsBox .call (this, box, clipPlanes, modelViewMatrix);
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			if (this .getGeometryType () < 2)
 			{
-				return X3DLineGeometryNode .prototype .display .call (this, context);
+				return X3DLineGeometryNode .prototype .display .call (this, gl, context);
 			}
 			else
 			{
@@ -276,11 +276,11 @@ function ($,
 		{
 			if (this .getGeometryType () < 2)
 			{
-				return X3DLineGeometryNode .prototype .displayParticles .call (this, context, particles, numParticles);
+				return X3DLineGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
 			}
 			else
 			{
-				return X3DGeometryNode .prototype .displayParticles .call (this, context, particles, numParticles);
+				return X3DGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
 			}
 		}
 	});

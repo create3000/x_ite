@@ -264,7 +264,7 @@ function ($,
 			if (this .shaderNode)
 				this .shaderNode .traverse (type, renderObject);
 		},
-		enable: function (context)
+		enable: function (gl, context)
 		{
 			var browser = context .renderer .getBrowser ();
 		
@@ -275,14 +275,12 @@ function ($,
 			context .shaderNode           = this .shaderNode || browser .getDefaultShader ();
 
 			if (this .blendModeNode)
-				this .blendModeNode .enable (browser .getContext ());
+				this .blendModeNode .enable (gl);
 		},
-		disable: function (context)
+		disable: function (gl, context)
 		{
-			var browser = context .renderer .getBrowser ();
-
 			if (this .blendModeNode)
-				this .blendModeNode .disable (browser .getContext ());
+				this .blendModeNode .disable (gl);
 		},
 	});
 

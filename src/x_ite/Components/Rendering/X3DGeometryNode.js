@@ -78,7 +78,7 @@ function ($,
 {
 "use strict";
 
-	const ARRAY_TYPE = "Array"; // can be MFFloat or Array;
+	const ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
 
 	const
 		point           = new Vector3 (0, 0, 0),
@@ -835,10 +835,8 @@ function ($,
 	  	},
 		traverse: function (type, renderObject)
 		{ },
-		depth: function (context, shaderNode)
+		depth: function (gl, context, shaderNode)
 		{
-			var gl = context .renderer .getBrowser () .getContext ();
-
 			// Setup vertex attributes.
 
 			// Attribs in depth rendering are not supported.
@@ -852,13 +850,11 @@ function ($,
 
 			gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			try
 			{
 				var
-					browser       = context .renderer .getBrowser (),
-					gl            = browser .getContext (),
 					shaderNode    = context .shaderNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
@@ -867,6 +863,8 @@ function ($,
 	
 				context .geometryType  = this .geometryType;
 				context .colorMaterial = this .colorMaterial;
+
+				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
 	
 				// Setup vertex attributes.
@@ -922,6 +920,7 @@ function ($,
 				shaderNode .disableColorAttribute    (gl);
 				shaderNode .disableTexCoordAttribute (gl);
 				shaderNode .disableNormalAttribute   (gl);
+				shaderNode .disable                  (gl);
 			}
 			catch (error)
 			{
@@ -929,7 +928,7 @@ function ($,
 				console .log (error);
 			}
 		},
-		displayParticlesDepth: function (context, shaderNode, particles, numParticles)
+		displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
 		{
 			var gl = context .renderer .getBrowser () .getContext ();
 
@@ -937,7 +936,7 @@ function ($,
 			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
 			//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-			shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+			shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
 			// Draw depending on wireframe, solid and transparent.
 
@@ -963,13 +962,11 @@ function ($,
 			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
 			//	attribNodes [i] .disable (gl, shaderNode);
 		},
-		displayParticles: function (context, particles, numParticles)
+		displayParticles: function (gl, context, particles, numParticles)
 		{
 			try
 			{
 				var
-					browser       = context .renderer .getBrowser (),
-					gl            = browser .getContext (),
 					shaderNode    = context .shaderNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
@@ -978,6 +975,8 @@ function ($,
 	
 				context .geometryType  = this .geometryType;
 				context .colorMaterial = this .colorMaterial;
+
+				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
 	
 				// Setup vertex attributes.
@@ -1105,6 +1104,7 @@ function ($,
 				shaderNode .disableColorAttribute    (gl);
 				shaderNode .disableTexCoordAttribute (gl);
 				shaderNode .disableNormalAttribute   (gl);
+				shaderNode .disable                  (gl);
 			}
 			catch (error)
 			{

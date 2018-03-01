@@ -461,7 +461,7 @@ function ($,
 		{
 			this .transform (renderObject);
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			Matrix4 .prototype .multLeft .call (context .modelViewMatrix, this .matrix);
 

@@ -132,20 +132,24 @@ function ($,
 		},
 		set_live__: function ()
 		{
+			var gl = this .getBrowser () .getContext ();
+
 			if (this .isLive () .getValue ())
 			{
 				if (this .isValid_ .getValue ())
 				{
-					this .useProgram (this .getBrowser () .getContext ());
+					this .enable (gl);
 					this .addShaderFields ();
+					this .disable (gl);
 				}
 			}
 			else
 			{
 				if (this .isValid_ .getValue ())
 				{
-					this .useProgram (this .getBrowser () .getContext ());
+					this .enable (gl);
 					this .removeShaderFields ();
+					this .disable (gl);
 				}
 			}
 		},
@@ -191,7 +195,7 @@ function ($,
 
 				if (valid)
 				{
-					this .useProgram (gl);
+					this .enable (gl);
 
 					// Initialize uniform variables and attributes
 					if (this .getDefaultUniforms ())
@@ -204,6 +208,8 @@ function ($,
 
 					// Debug, print complete shader info and statistics.
 					// this .printProgramInfo ();
+
+					this .disable (gl);
 				}
 				else
 					console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
@@ -215,21 +221,33 @@ function ($,
 				this .isValid_ = false;
 			}
 		},
-		setGlobalUniforms: function (renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
+		set_field__: function (field)
 		{
-			this .useProgram (gl);
-			
-			X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			var gl = this .getBrowser () .getContext ();
+
+			this .enable (gl);
+
+			X3DProgrammableShaderObject .prototype .set_field__ .call (this, field);
+
+			this .disable (gl);
+		},
+		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
+		{
+			this .enable (gl);
+
+			X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+
+			this .disable (gl);
 		},
 		setLocalUniforms: function (gl, context)
 		{
-			this .useProgram (gl);
-	
 			X3DProgrammableShaderObject .prototype .setLocalUniforms .call (this, gl, context);
 		},
-		useProgram: function (gl)
+		enable: function (gl)
 		{
 			gl .useProgram (this .program);
+
+			X3DProgrammableShaderObject .prototype .enable .call (this, gl);
 		},
 	});
 

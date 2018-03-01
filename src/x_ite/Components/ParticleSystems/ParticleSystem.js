@@ -1328,7 +1328,7 @@ function ($,
 					this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
 			}
 		},
-		depth: function (context, shaderNode)
+		depth: function (gl, context, shaderNode)
 		{
 			// Update geometry if SPRITE.
 
@@ -1341,14 +1341,12 @@ function ($,
 				var geometryNode = this .getGeometry ();
 
 				if (geometryNode)
-					geometryNode .displayParticlesDepth (context, shaderNode, this .particles, this .numParticles);
+					geometryNode .displayParticlesDepth (gl, context, shaderNode, this .particles, this .numParticles);
 			}
 			else
 			{
 				if (this .numParticles <= 0)
 					return;
-
-				var gl = context .renderer .getBrowser () .getContext ();
 
 				// Setup vertex attributes.
 
@@ -1366,7 +1364,7 @@ function ($,
 				shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			try
 			{
@@ -1388,13 +1386,12 @@ function ($,
 					var geometryNode = this .getGeometry ();
 
 					if (geometryNode)
-						geometryNode .displayParticles (context, this .particles, this .numParticles);
+						geometryNode .displayParticles (gl, context, this .particles, this .numParticles);
 				}
 				else
 				{
 					var
 						browser    = context .renderer .getBrowser (),
-						gl         = browser .getContext (),
 						shaderNode = context .shaderNode;
 	
 					if (shaderNode === browser .getDefaultShader ())
@@ -1404,6 +1401,8 @@ function ($,
 	
 					context .geometryType  = this .shaderGeometryType;
 					context .colorMaterial = this .colorMaterial;
+
+					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
 		
 					// Setup vertex attributes.
@@ -1466,6 +1465,7 @@ function ($,
 					shaderNode .disableColorAttribute    (gl);
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
+					shaderNode .disable                  (gl);
 				}
 
 				this .getAppearance () .disable (context);
