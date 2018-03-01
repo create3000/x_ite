@@ -588,6 +588,22 @@ function ($,
 
 			return newArray;
 		},
+		shrinkToFit: function ()
+		{
+			var
+				target = this .target,
+				array  = target .getValue (),
+				length = target ._length * target .getComponents ();
+
+			if (array .length == length)
+				return array;
+
+			var newArray = array .subarray (0, length);
+
+			X3DArrayField .prototype .set .call (target, newArray);
+
+			return newArray;
+		},
 		toStream: function (stream)
 		{
 			var
