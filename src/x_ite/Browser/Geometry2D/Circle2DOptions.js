@@ -68,7 +68,7 @@ function ($,
 
 		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
 
-		this .vertices = [ ];
+		this .vertices = new Fields .MFFloat ();
 	}
 
 	Circle2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),

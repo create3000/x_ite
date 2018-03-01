@@ -70,10 +70,10 @@ function ($,
 
 		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
 
-		this .circleVertices = [ ];
-		this .diskTexCoords  = [ ];
-		this .diskNormals    = [ ];
-		this .diskVertices   = [ ];
+		this .circleVertices = new Fields .MFFloat ();
+		this .diskTexCoords  = new Fields .MFFloat ();
+		this .diskNormals    = new Fields .MFFloat ();
+		this .diskVertices   = new Fields .MFFloat ();
 	}
 
 	Disk2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),

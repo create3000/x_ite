@@ -197,30 +197,30 @@ function ($,
 			// Disk with hole
 
 			var
-				maxRadius       = Math .abs (Math .max (innerRadius, outerRadius)),
-				minRadius       = Math .abs (Math .min (innerRadius, outerRadius)),
-				scale           = minRadius / maxRadius,
-				offset          = (1 - scale) / 2,
-				texCoords1      = options .getDiskTexCoords (),
-				texCoords2      = [ ],
-				normals         = this .getNormals (),
-				defaultVertices = options .getDiskVertices (),
-				vertexArray     = this .getVertices ();
+				maxRadius        = Math .abs (Math .max (innerRadius, outerRadius)),
+				minRadius        = Math .abs (Math .min (innerRadius, outerRadius)),
+				scale            = minRadius / maxRadius,
+				offset           = (1 - scale) / 2,
+				defaultTexCoords = options .getDiskTexCoords (),
+				defaultVertices  = options .getDiskVertices (),
+				texCoordArray    = [ ],
+				normalArray      = this .getNormals (),
+				vertexArray      = this .getVertices ();
 
-			this .getTexCoords () .push (texCoords2);
+			this .getTexCoords () .push (texCoordArray);
 
 			for (var i = 0, length = defaultVertices .length; i < length; i += 12)
 			{
-				texCoords2 .push (texCoords1 [i + 4] * scale + offset, texCoords1 [i + 5] * scale + offset, 0, 1,
-				                  texCoords1 [i + 4], texCoords1 [i + 5], 0, 1,
-				                  texCoords1 [i + 8], texCoords1 [i + 9], 0, 1,
+				texCoordArray .push (defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
+				                     defaultTexCoords [i + 4], defaultTexCoords [i + 5], 0, 1,
+				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
+										   
+				                     defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
+				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
+				                     defaultTexCoords [i + 8] * scale + offset, defaultTexCoords [i + 9] * scale + offset, 0, 1);
 
-				                  texCoords1 [i + 4] * scale + offset, texCoords1 [i + 5] * scale + offset, 0, 1,
-				                  texCoords1 [i + 8], texCoords1 [i + 9], 0, 1,
-				                  texCoords1 [i + 8] * scale + offset, texCoords1 [i + 9] * scale + offset, 0, 1);
-
-				normals .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
-                           0, 0, 1,  0, 0, 1,  0, 0, 1);
+				normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
+                               0, 0, 1,  0, 0, 1,  0, 0, 1);
 
 				vertexArray .push (defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
 				                   defaultVertices [i + 4] * maxRadius, defaultVertices [i + 5] * maxRadius, 0, 1,

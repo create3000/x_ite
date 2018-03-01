@@ -140,15 +140,16 @@ function ($,
 			this .bbox             = new Box3 (this .min, this .max, true);
 			this .solid            = true;
 			this .flatShading      = undefined;
+			this .colorMaterial    = false;
 			this .attribNodes      = [ ];
 			this .attribs          = [ ];
-			this .colors           = [ ];
+			this .colors           = new Fields .MFFloat ();
 			this .texCoords        = [ ];
 			this .defaultTexCoords = [ ];
 			this .texCoordParams   = { min: new Vector3 (0, 0, 0) };
-			this .normals          = [ ];
+			this .normals          = new Fields .MFFloat ();
 			this .flatNormals      = [ ];
-			this .vertices         = [ ];
+			this .vertices         = new Fields .MFFloat ();
 			this .vertexCount      = 0;
 
 			this .primitiveMode   = gl .TRIANGLES;
@@ -159,9 +160,7 @@ function ($,
 			this .normalBuffer    = gl .createBuffer ();
 			this .vertexBuffer    = gl .createBuffer ();
 			this .attribArray     = [ ];
-			this .colorArray      = new Float32Array ();
 			this .texCoordArray   = [ ];
-			this .vertexArray     = new Float32Array ();
 			this .planes          = [ ];
 
 			if (this .geometryType > 1)
@@ -247,12 +246,7 @@ function ($,
 		},
 		setColors: function (value)
 		{
-			var colors = this .colors;
-
-			for (var i = 0, length = value .length; i < length; ++ i)
-				colors [i] = value [i];
-
-			colors .length = length;
+			this .colors .assign (value);
 		},
 		getColors: function ()
 		{
@@ -277,12 +271,7 @@ function ($,
 		},
 		setNormals: function (value)
 		{
-			var normals = this .normals;
-
-			for (var i = 0, length = value .length; i < length; ++ i)
-				normals [i] = value [i];
-
-			normals .length = length;
+			this .normals .assign (value);
 		},
 		getNormals: function ()
 		{
@@ -290,12 +279,7 @@ function ($,
 		},
 		setVertices: function (value)
 		{
-			var vertices = this .vertices;
-
-			for (var i = 0, length = value .length; i < length; ++ i)
-				vertices [i] = value [i];
-
-			vertices .length = length;
+			this .vertices .assign (value);
 		},
 		getVertices: function ()
 		{
@@ -312,7 +296,7 @@ function ($,
 				S         = min [Sindex],
 				T         = min [Tindex],
 				texCoords = this .defaultTexCoords,
-				vertices  = this .vertices;
+				vertices  = this .vertices .getValue ();
 
 			texCoords .length = 0;
 			this .texCoords .push (texCoords);
@@ -432,8 +416,8 @@ function ($,
 
 					var
 						texCoords  = this .texCoords [0],
-						normals    = this .normals,
-						vertices   = this .vertices,
+						normals    = this .normals .getValue (),
+						vertices   = this .vertices .getValue (),
 						uvt        = this .uvt,
 						v0         = this .v0,
 						v1         = this .v1,
@@ -555,7 +539,7 @@ function ($,
 					this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
 
 					var
-						vertices = this .vertices,
+						vertices = this .vertices .getValue (),
 						v0       = this .v0,
 						v1       = this .v1,
 						v2       = this .v2;
@@ -625,7 +609,7 @@ function ($,
 					var
 						cw          = this .frontFace === gl .CW,
 						flatNormals = this .flatNormals,
-						vertices    = this .vertices,
+						vertices    = this .vertices .getValue (),
 						v0          = this .v0,
 						v1          = this .v1,
 						v2          = this .v2,
@@ -645,13 +629,15 @@ function ($,
 						                   normal .x, normal .y, normal .z,
 						                   normal .x, normal .y, normal .z);
 					}
+
+					flatNormals .shrinkToFit ();
 				}
 			}
 
 			// Transfer normals.
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-			gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (flatShading ? this .flatNormals : this .normals), gl .STATIC_DRAW);
+			gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
 		},
 		eventsProcessed: function ()
 		{
@@ -660,10 +646,14 @@ function ($,
 			this .clear ();
 			this .build ();
 
+			this .colors   .shrinkToFit ();
+			this .normals  .shrinkToFit ();
+			this .vertices .shrinkToFit ();
+
 			var
 				min      = this .min,
 				max      = this .max,
-				vertices = this .vertices;
+				vertices = this .vertices .getValue ();
 
 			if (vertices .length)
 			{
@@ -758,14 +748,10 @@ function ($,
 			}
 
 			// Transfer colors.
-	
-			if (this .colorArray .length !== this .colors .length)
-				this .colorArray = new Float32Array (this .colors);
-			else
-				this .colorArray .set (this .colors);
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-			gl .bufferData (gl .ARRAY_BUFFER, this .colorArray, gl .STATIC_DRAW);
+			gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .STATIC_DRAW);
+			this .colorMaterial = Boolean (this .colors .length);
 
 			// Transfer texCoords.
 
@@ -790,13 +776,8 @@ function ($,
 
 			// Transfer vertices.
 
-			if (this .vertexArray .length !== this .vertices .length)
-				this .vertexArray = new Float32Array (this .vertices);
-			else
-				this .vertexArray .set (this .vertices);
-
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-			gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
+			gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .STATIC_DRAW);
 			this .vertexCount = count;
 
 			// Setup render functions.
@@ -849,7 +830,7 @@ function ($,
 				// Setup shader.
 	
 				context .geometryType  = this .geometryType;
-				context .colorMaterial = this .colors .length;
+				context .colorMaterial = this .colorMaterial;
 				shaderNode .setLocalUniforms (gl, context);
 	
 				// Setup vertex attributes.
@@ -857,7 +838,7 @@ function ($,
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 	
-				if (this .colors .length)
+				if (this .colorMaterial)
 					shaderNode .enableColorAttribute (gl, this .colorBuffer);
 	
 				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
@@ -960,7 +941,7 @@ function ($,
 				// Setup shader.
 	
 				context .geometryType  = this .geometryType;
-				context .colorMaterial = this .colors .length;
+				context .colorMaterial = this .colorMaterial;
 				shaderNode .setLocalUniforms (gl, context);
 	
 				// Setup vertex attributes.
@@ -968,7 +949,7 @@ function ($,
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-				if (this .colors .length)
+				if (this .colorMaterial)
 					shaderNode .enableColorAttribute (gl, this .colorBuffer);
 	
 				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);

@@ -96,11 +96,11 @@ function ($,
 		{
 			X3DTextureCoordinateNode .prototype .initialize .call (this);
 
-			this .point_ .addInterest ("set_point", this);
+			this .point_ .addInterest ("set_point__", this);
 
-			this .set_point ();
+			this .set_point__ ();
 		},
-		set_point: function ()
+		set_point__: function ()
 		{
 			this .point  = this .point_ .getValue ();
 			this .length = this .point_ .length;

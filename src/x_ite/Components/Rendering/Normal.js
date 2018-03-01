@@ -96,11 +96,11 @@ function ($,
 		{
 			X3DNormalNode .prototype .initialize .call (this);
 
-			this .vector_ .addInterest ("set_vector", this);
+			this .vector_ .addInterest ("set_vector__", this);
 
-			this .set_vector ();
+			this .set_vector__ ();
 		},
-		set_vector: function ()
+		set_vector__: function ()
 		{
 			this .vector = this .vector_ .getValue ();
 			this .length = this .vector_ .length;

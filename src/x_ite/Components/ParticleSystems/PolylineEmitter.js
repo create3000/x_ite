@@ -145,7 +145,7 @@ function ($,
 		},
 		set_polyline: function ()
 		{
-			var vertices = this .vertices = this .polylineNode .getVertices ();
+			var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
 
 			if (vertices .length)
 			{

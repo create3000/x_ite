@@ -96,11 +96,11 @@ function ($,
 		{
 			X3DColorNode .prototype .initialize .call (this);
 
-			this .color_ .addInterest ("set_color", this);
+			this .color_ .addInterest ("set_color__", this);
 
-			this .set_color ();
+			this .set_color__ ();
 		},
-		set_color: function ()
+		set_color__: function ()
 		{
 			this .color  = this .color_ .getValue ();
 			this .length = this .color_ .length;

@@ -1,19 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Rendering/X3DGeometryNode.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="689" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Text/X3DTextGeometry.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/TextureCoordinate.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing3D/TextureCoordinate3D.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing3D/TextureCoordinate4D.js" Line="114" Column="1" />
-      <File FileName="src/x_ite/Fields/SFInt32.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Fields/SFImage.js" Line="56" Column="33" />
-      <File FileName="src/x_ite/Basic/X3DArrayField.js" Line="52" Column="25" />
-      <File FileName="src/x_ite/Basic/X3DObjectArrayField.js" Line="498" Column="35" />
-      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="654" Column="1" />
+      <File FileName="src/x_ite.html" Line="593" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="591" Column="14" />
+      <File FileName="src/x_ite/Basic/X3DObjectArrayField.js" Line="534" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="656" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

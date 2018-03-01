@@ -185,8 +185,8 @@ function ($,
 				size           = fontStyle .getScale (), // in pixel
 				sizeUnitsPerEm = size / font .unitsPerEm,
 				texCoords      = this .texCoords,
-				normals        = text .getNormals (),
-				vertices       = text .getVertices (),
+				normalArray    = text .getNormals (),
+				vertexArray    = text .getVertices (),
 				canvas         = this .canvas [0],
 				cx             = this .context;
 
@@ -197,19 +197,19 @@ function ($,
 
 			this .getBBox () .getExtents (min, max);
 
-			normals  .push (0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1);
+			normalArray  .push (0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1);
 
-			vertices .push (min .x, min .y, 0, 1,
-			                max .x, min .y, 0, 1,
-			                max .x, max .y, 0, 1,
-			                min .x, min .y, 0, 1,
-			                max .x, max .y, 0, 1,
-			                min .x, max .y, 0, 1);
+			vertexArray .push (min .x, min .y, 0, 1,
+			                   max .x, min .y, 0, 1,
+			                   max .x, max .y, 0, 1,
+			                   min .x, min .y, 0, 1,
+			                   max .x, max .y, 0, 1,
+			                   min .x, max .y, 0, 1);
 
 			// Generate texture.
 

@@ -272,7 +272,6 @@ function ($,
 			}
 
 			this .setSolid (this .solid_ .getValue ());
-			this .setNormals (normalArray);
 			this .setExtents ();
 		},
 		setExtents: function ()

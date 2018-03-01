@@ -175,9 +175,12 @@ function ($,
 			var
 				areaSoFar      = 0,
 				areaSoFarArray = this .areaSoFarArray,
-				vertices       = this .volumeNode .getVertices (),
-				normals        = this .volumeNode .getNormals ();
-	
+				vertices       = this .volumeNode .getVertices () .getValue (),
+				normals        = this .volumeNode .getNormals () .getValue ();
+
+			this .normals  = normals;
+			this .vertices = vertices;
+
 			areaSoFarArray .length = 1;
 
 			for (var i = 0, length = vertices .length; i < length; i += 12)
@@ -244,7 +247,7 @@ function ($,
 
 			var
 				i        = index0 * 12,
-				vertices = this .volumeNode .getVertices ();
+				vertices = this .vertices;
 
 			point .x = u * vertices [i + 0] + v * vertices [i + 4] + t * vertices [i + 8];
 			point .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
@@ -252,7 +255,7 @@ function ($,
 
 			var
 				i       = index0 * 9,
-				normals = this .volumeNode .getNormals ();
+				normals = this .normals;
 
 			normal .x = u * normals [i + 0] + v * normals [i + 3] + t * normals [i + 6];
 			normal .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];

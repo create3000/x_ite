@@ -116,8 +116,8 @@ function ($,
 			if (this .geometryNode)
 			{
 				var
-					normals  = this .geometryNode .getNormals (),
-					vertices = this .geometryNode .getVertices ();
+					normals  = this .geometryNode .getNormals () .getValue (),
+					vertices = this .geometryNode .getVertices () .getValue ();
 	
 				for (var i = 0, length = normals .length; i < length; ++ i)
 					boundedNormals .push (normals [i]);
