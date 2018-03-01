@@ -353,7 +353,7 @@ function ($,
 				normalNode         = this .getNormal (),
 				points             = this .createPoints (),
 				colorArray         = this .getColors (),
-				multiTexCoordArray = this .getTexCoords (),
+				multiTexCoordArray = this .getMultiTexCoords (),
 				normalArray        = this .getNormals (),
 				vertexArray        = this .getVertices (),
 				face               = 0;
@@ -373,7 +373,7 @@ function ($,
 			{
 				var
 					texCoords     = this .createTexCoords (),
-					texCoordArray = [ ];
+					texCoordArray = this .getTexCoords ();
 
 				multiTexCoordArray .push (texCoordArray);
 			}

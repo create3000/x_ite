@@ -112,17 +112,18 @@ function ($,
 		build: function ()
 		{
 			var
-				options         = this .getBrowser () .getCircle2DOptions (),
-				radius          = this .radius_ .getValue (),
-				defaultVertices = options .getVertices (),
-				vertexArray     = this .getVertices ();
+				options     = this .getBrowser () .getCircle2DOptions (),
+				vertexArray = this .getVertices (),
+				radius      = this .radius_ .getValue ();
 
 			if (radius === 1)
 			{
-				this .setVertices (defaultVertices);
+				this .setVertices (options .getVertices ());
 			}
 			else
 			{
+				var defaultVertices = options .getVertices () .getValue ();
+
 				for (var i = 0, length = defaultVertices .length; i < length; i += 4)
 					vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 			}

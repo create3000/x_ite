@@ -49,6 +49,7 @@
 
 define ([
 	"jquery",
+	"x_ite/Fields",
 	"x_ite/Browser/Core/PrimitiveQuality",
 	"x_ite/Browser/Text/X3DTextGeometry",
 	"standard/Math/Numbers/Vector3",
@@ -59,6 +60,7 @@ define ([
 	"earcut",
 ],
 function ($,
+          Fields,
           PrimitiveQuality,
           X3DTextGeometry,
           Vector3,
@@ -83,7 +85,7 @@ function ($,
 
 		text .transparent_ = false;
 
-		this .texCoordArray = [ ];
+		this .texCoordArray = new Fields .MFFloat () .target;
 	}
 
 	PolygonText .prototype = $.extend (Object .create (X3DTextGeometry .prototype),
@@ -117,8 +119,11 @@ function ($,
 				normalArray      = text .getNormals (),
 				vertexArray      = text .getVertices ();
 
+			// Set texCoords.
+
 			texCoordArray .length = 0;
-			text .getTexCoords () .push (texCoordArray);
+
+			text .getMultiTexCoords () .push (texCoordArray);
 
 			this .getBBox () .getExtents (min, max);
 			text .getMin () .assign (min);

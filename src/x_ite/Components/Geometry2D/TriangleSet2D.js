@@ -115,20 +115,20 @@ function ($,
 		buildTexCoords: function ()
 		{
 			var
-				p           = this .getTexCoordParams (),
-				min         = p .min,
-				Ssize       = p .Ssize,
-				texCoords   = [ ],
-				vertexArray = this .getVertices ();
+				p             = this .getTexCoordParams (),
+				min           = p .min,
+				Ssize         = p .Ssize,
+				texCoordArray = this .getTexCoords (),
+				vertexArray   = this .getVertices () .getValue ();
 
-			this .getTexCoords () .push (texCoords);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			for (var i = 0, length = vertexArray .length; i < length; i += 4)
 			{
-				texCoords .push ((vertexArray [i]     - min [0]) / Ssize,
-				                 (vertexArray [i + 1] - min [1]) / Ssize,
-				                 0,
-				                 1);
+				texCoordArray .push ((vertexArray [i]     - min [0]) / Ssize,
+				                     (vertexArray [i + 1] - min [1]) / Ssize,
+				                     0,
+				                     1);
 			}
 		},
 	});

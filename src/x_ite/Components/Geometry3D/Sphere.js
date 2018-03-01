@@ -109,8 +109,8 @@ function ($,
 				geometry = options .getGeometry (),
 				radius   = this .radius_ .getValue ();
 
-			this .setNormals   (geometry .getNormals ());
-			this .setTexCoords (geometry .getTexCoords ());
+			this .setMultiTexCoords (geometry .getMultiTexCoords ());
+			this .setNormals        (geometry .getNormals ());
 
 			if (radius === 1)
 			{
@@ -122,7 +122,7 @@ function ($,
 			else
 			{
 				var
-					defaultVertices = geometry .getVertices (),
+					defaultVertices = geometry .getVertices () .getValue (),
 					vertexArray     = this .getVertices ();
 
 				for (var i = 0; i < defaultVertices .length; i += 4)

@@ -78,14 +78,16 @@ function ($,
 {
 "use strict";
 
-	var
+	const ARRAY_TYPE = "Array"; // can be MFFloat or Array;
+
+	const
 		point           = new Vector3 (0, 0, 0),
 		clipPoint       = new Vector3 (0, 0, 0),
 		modelViewMatrix = new Matrix4 (),
 		invMatrix       = new Matrix4 ();
 
 	// Box normals for bbox / line intersection.
-	var boxNormals = [
+	const boxNormals = [
 		new Vector3 (0,  0,  1), // front
 		new Vector3 (0,  0, -1), // back
 		new Vector3 (0,  1,  0), // top
@@ -105,6 +107,31 @@ function ($,
 
 		this .geometryType        = 3;
 		this .currentTexCoordNode = this .getBrowser () .getDefaultTextureCoordinate (); // For TextureCoordinateGenerator needed.
+	}
+
+	// Function to select ether Array or MFFloat for color/normal/vertex arrays.
+	X3DGeometryNode .createArray = function ()
+	{
+		if (ARRAY_TYPE == "MFFloat")
+			return new Fields .MFFloat ();
+
+		var array = [ ];
+
+		array .typedArray  = new Float32Array ();
+		array .target      = array;
+		array .shrinkToFit = Function .prototype;
+
+		array .getValue = function ()
+		{
+			if (array .length !== array .typedArray .length)
+				array .typedArray = new Float32Array (array);
+			else
+				array .typedArray .set (array);
+
+			return array .typedArray;
+		};
+
+		return array;
 	}
 
 	X3DGeometryNode .prototype = $.extend (Object .create (X3DNode .prototype),
@@ -143,24 +170,23 @@ function ($,
 			this .colorMaterial    = false;
 			this .attribNodes      = [ ];
 			this .attribs          = [ ];
-			this .colors           = new Fields .MFFloat ();
-			this .texCoords        = [ ];
-			this .defaultTexCoords = [ ];
 			this .texCoordParams   = { min: new Vector3 (0, 0, 0) };
-			this .normals          = new Fields .MFFloat ();
-			this .flatNormals      = [ ];
-			this .vertices         = new Fields .MFFloat ();
+			this .multiTexCoords   = [ ];
+			this .texCoords        = X3DGeometryNode .createArray () .target;
+			this .colors           = X3DGeometryNode .createArray () .target;
+			this .normals          = X3DGeometryNode .createArray () .target;
+			this .flatNormals      = X3DGeometryNode .createArray () .target;
+			this .vertices         = X3DGeometryNode .createArray () .target;
 			this .vertexCount      = 0;
 
 			this .primitiveMode   = gl .TRIANGLES;
 			this .frontFace       = gl .CCW;
 			this .attribBuffers   = [ ];
-			this .colorBuffer     = gl .createBuffer ();
 			this .texCoordBuffers = [ ];
+			this .colorBuffer     = gl .createBuffer ();
 			this .normalBuffer    = gl .createBuffer ();
 			this .vertexBuffer    = gl .createBuffer ();
 			this .attribArray     = [ ];
-			this .texCoordArray   = [ ];
 			this .planes          = [ ];
 
 			if (this .geometryType > 1)
@@ -252,14 +278,18 @@ function ($,
 		{
 			return this .colors;
 		},
-		setTexCoords: function (value)
+		setMultiTexCoords: function (value)
 		{
-			var texCoords = this .texCoords;
+			var multiTexCoords = this .multiTexCoords;
 
 			for (var i = 0, length = value .length; i < length; ++ i)
-				texCoords [i] = value [i];
+				multiTexCoords [i] = value [i];
 
-			texCoords .length = length;
+			multiTexCoords .length = length;
+		},
+		getMultiTexCoords: function ()
+		{
+			return this .multiTexCoords;
 		},
 		getTexCoords: function ()
 		{
@@ -295,11 +325,10 @@ function ($,
 				Ssize     = p .Ssize,
 				S         = min [Sindex],
 				T         = min [Tindex],
-				texCoords = this .defaultTexCoords,
+				texCoords = this .texCoords,
 				vertices  = this .vertices .getValue ();
 
-			texCoords .length = 0;
-			this .texCoords .push (texCoords);
+			this .multiTexCoords .push (texCoords);
 
 			for (var i = 0, length = vertices .length; i < length; i += 4)
 			{
@@ -415,7 +444,7 @@ function ($,
 					this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
 
 					var
-						texCoords  = this .texCoords [0],
+						texCoords  = this .multiTexCoords [0] .getValue (),
 						normals    = this .normals .getValue (),
 						vertices   = this .vertices .getValue (),
 						uvt        = this .uvt,
@@ -646,10 +675,6 @@ function ($,
 			this .clear ();
 			this .build ();
 
-			this .colors   .shrinkToFit ();
-			this .normals  .shrinkToFit ();
-			this .vertices .shrinkToFit ();
-
 			var
 				min      = this .min,
 				max      = this .max,
@@ -682,7 +707,7 @@ function ($,
 				for (var i = 0; i < 5; ++ i)
 					this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
 
-				if (this .texCoords .length === 0)
+				if (this .multiTexCoords .length === 0)
 					this .buildTexCoords ();
 			}
 
@@ -714,17 +739,28 @@ function ($,
 			// Buffer
 
 			this .flatShading = undefined;
-			this .colors      .length = 0;
-			this .texCoords   .length = 0;
-			this .normals     .length = 0;
-			this .flatNormals .length = 0;
-			this .vertices    .length = 0;
+
+			this .colors         .length = 0;
+			this .multiTexCoords .length = 0;
+			this .texCoords      .length = 0;
+			this .normals        .length = 0;
+			this .flatNormals    .length = 0;
+			this .vertices       .length = 0;
 		},
 		transfer: function ()
 		{
 			var
 				gl    = this .getBrowser () .getContext (),
 				count = this .vertices .length / 4;
+
+			// Shrink arrays.
+
+			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
+				this .multiTexCoords [i] .shrinkToFit ();
+	
+			this .colors   .shrinkToFit ();
+			this .normals  .shrinkToFit ();
+			this .vertices .shrinkToFit ();
 
 			// Transfer attribs.
 
@@ -753,25 +789,17 @@ function ($,
 			gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .STATIC_DRAW);
 			this .colorMaterial = Boolean (this .colors .length);
 
-			// Transfer texCoords.
+			// Transfer multiTexCoords.
 
-			for (var i = this .texCoordBuffers .length, length = this .texCoords .length; i < length; ++ i)
-			{
+			for (var i = this .texCoordBuffers .length, length = this .multiTexCoords .length; i < length; ++ i)
 				this .texCoordBuffers .push (gl .createBuffer ());
-				this .texCoordArray   .push (new Float32Array ());
-			}
 
-			this .texCoordBuffers .length = this .texCoords .length;
+			this .texCoordBuffers .length = this .multiTexCoords .length;
 			
-			for (var i = 0, length = this .texCoords .length; i < length; ++ i)
+			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
 			{
-				if (this .texCoordArray [i] .length !== this .texCoords [i] .length)
-					this .texCoordArray [i] = new Float32Array (this .texCoords [i]);
-				else
-					this .texCoordArray [i] .set (this .texCoords [i]);
-
 				gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
-				gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray [i], gl .STATIC_DRAW);
+				gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .STATIC_DRAW);
 			}
 
 			// Transfer vertices.

@@ -68,8 +68,10 @@ function ($,
 		{
 			try
 			{
-				if (key in target)
-					return target [key];
+				var value = target [key];
+
+				if (value !== undefined)
+					return value;
 
 				// value
 				

@@ -49,6 +49,7 @@
 
 define ([
 	"jquery",
+	"x_ite/Fields",
 	"x_ite/Browser/Text/X3DTextGeometry",
 	"x_ite/Browser/Text/TextAlignment",
 	"x_ite/Components/Texturing/PixelTexture",
@@ -62,6 +63,7 @@ define ([
 	"standard/Math/Algorithm",
 ],
 function ($,
+          Fields,
           X3DTextGeometry,
           TextAlignment,
           PixelTexture,
@@ -92,12 +94,12 @@ function ($,
 
 		text .transparent_ = true;
 
-		this .texCoords    = [ ];
-		this .texture      = new PixelTexture (text .getExecutionContext ());
-		this .canvas       = $("<canvas></canvas>");
-		this .context      = this .canvas [0] .getContext ("2d");
-		this .screenMatrix = new Matrix4 ();
-		this .matrix       = new Matrix4 ();
+		this .texCoordArray = new Fields .MFFloat ();
+		this .texture       = new PixelTexture (text .getExecutionContext ());
+		this .canvas        = $("<canvas></canvas>");
+		this .context       = this .canvas [0] .getContext ("2d");
+		this .screenMatrix  = new Matrix4 ();
+		this .matrix        = new Matrix4 ();
 
 		this .texture .textureProperties_ = fontStyle .getBrowser () .getScreenTextureProperties ();
 		this .texture .setup ();
@@ -184,14 +186,17 @@ function ($,
 				charSpacings   = this .getCharSpacings (),
 				size           = fontStyle .getScale (), // in pixel
 				sizeUnitsPerEm = size / font .unitsPerEm,
-				texCoords      = this .texCoords,
+				texCoordArray  = this .texCoordArray,
 				normalArray    = text .getNormals (),
 				vertexArray    = text .getVertices (),
 				canvas         = this .canvas [0],
 				cx             = this .context;
 
-			texCoords .length = 0;
-			text .getTexCoords () .push (texCoords);
+			// Set texCoord.
+
+			texCoordArray .length = 0;
+
+			text .getMultiTexCoords () .push (texCoordArray);
 
 			// Triangle one and two.
 
@@ -235,12 +240,12 @@ function ($,
 			   h = height / canvas .height,
 			   y = 1 - h;
 
-			texCoords .push (0, y, 0, 1,
-			                 w, y, 0, 1,
-			                 w, 1, 0, 1,
-			                 0, y, 0, 1,
-			                 w, 1, 0, 1,
-			                 0, 1, 0, 1);
+			texCoordArray .push (0, y, 0, 1,
+			                     w, y, 0, 1,
+			                     w, 1, 0, 1,
+			                     0, y, 0, 1,
+			                     w, 1, 0, 1,
+			                     0, 1, 0, 1);
 
 			// Setup canvas.
 

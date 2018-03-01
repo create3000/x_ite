@@ -119,11 +119,11 @@ function ($,
 				xDimension    = options .xDimension_ .getValue (),
 				height        = this .height_ .getValue (),
 				bottomRadius  = this .bottomRadius_ .getValue (),
-				texCoordArray = [ ],
+				texCoordArray = this .getTexCoords (),
 				normalArray   = this .getNormals (),
 				vertexArray   = this .getVertices ();
 
-			this .getTexCoords () .push (texCoordArray);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			var
 				y1 = height / 2,

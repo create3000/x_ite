@@ -116,7 +116,7 @@ function ($,
 			if (this .geometryNode)
 			{
 				var
-					normals  = this .geometryNode .getNormals () .getValue (),
+					normals  = this .geometryNode .getNormals ()  .getValue (),
 					vertices = this .geometryNode .getVertices () .getValue ();
 	
 				for (var i = 0, length = normals .length; i < length; ++ i)

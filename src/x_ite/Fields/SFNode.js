@@ -61,11 +61,13 @@ function ($, X3DField, X3DConstants, Generator)
 	{
 		get: function (target, key)
 		{
-			if (key in target)
-				return target [key];
-
 			try
 			{
+				var value = target [key];
+
+				if (value !== undefined)
+					return value;
+
 				var
 					field      = target .getValue () .getField (key),
 					accessType = field .getAccessType ();

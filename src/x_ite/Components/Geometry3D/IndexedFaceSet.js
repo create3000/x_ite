@@ -183,7 +183,7 @@ function ($,
 				normalNode         = this .getNormal (),
 				coordNode          = this .getCoord (),
 				colorArray         = this .getColors (),
-				multiTexCoordArray = this .getTexCoords (),
+				multiTexCoordArray = this .getMultiTexCoords (),
 				normalArray        = this .getNormals (),
 				vertexArray        = this .getVertices ();
 

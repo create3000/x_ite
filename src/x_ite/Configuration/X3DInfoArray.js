@@ -58,11 +58,15 @@ function ($)
 	{
 		get: function (target, key)
 		{
-			if (key in target)
-				return target [key];
+			var value = target [key];
 
-			if (key in target .array)
-				return target .array [key];
+			if (value !== undefined)
+				return value;
+
+			value = target .array [key];
+
+			if (value !== undefined)
+				return value;
 
 			return target .index [key];
 		},

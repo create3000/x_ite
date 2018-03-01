@@ -118,11 +118,11 @@ function ($,
 			var
 				options       = this .getBrowser () .getCylinderOptions (),
 				xDimension    = options .xDimension_ .getValue (),
-				texCoordArray = [ ],
+				texCoordArray = this .getTexCoords (),
 				normalArray   = this .getNormals (),
 				vertexArray   = this .getVertices ();
 
-			this .getTexCoords () .push (texCoordArray);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			var
 				radius = this .radius_ .getValue (),

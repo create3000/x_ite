@@ -104,8 +104,8 @@ function ($,
 				geometry = options .getGeometry (),
 				size     = this .size_ .getValue ();
 
-			this .setNormals   (geometry .getNormals ());
-			this .setTexCoords (geometry .getTexCoords ());
+			this .setMultiTexCoords (geometry .getMultiTexCoords ());
+			this .setNormals        (geometry .getNormals ());
 
 			if (size .equals (defaultSize))
 			{
@@ -121,7 +121,7 @@ function ($,
 					x               = scale .x,
 					y               = scale .y,
 					z               = scale .z,
-					defaultVertices = geometry .getVertices (),
+					defaultVertices = geometry .getVertices () .getValue (),
 					vertexArray     = this .getVertices ();
 
 				for (var i = 0; i < defaultVertices .length; i += 4)

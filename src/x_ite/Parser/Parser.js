@@ -1736,6 +1736,7 @@ function ($,
 		sfboolValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfboolValue (this .SFBool))
 			{
@@ -1791,6 +1792,7 @@ function ($,
 		sfcolorValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfcolorValue (this .SFColor))
 			{
@@ -1851,6 +1853,7 @@ function ($,
 		sfcolorrgbaValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfcolorrgbaValue (this .SFColorRGBA))
 			{
@@ -1896,6 +1899,7 @@ function ($,
 		sfdoubleValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFDouble .setUnit (field .getUnit ());
 
@@ -1937,6 +1941,7 @@ function ($,
 		sffloatValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFFloat .setUnit (field .getUnit ());
 
@@ -2012,6 +2017,7 @@ function ($,
 		sfimageValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfimageValue (this .SFImage))
 			{
@@ -2055,6 +2061,7 @@ function ($,
 		sfint32Values: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfint32Value (this .SFInt32))
 			{
@@ -2142,6 +2149,7 @@ function ($,
 		sfmatrix3dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix3dValue (this .SFMatrix3d))
 			{
@@ -2179,6 +2187,7 @@ function ($,
 		sfmatrix3fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix3fValue (this .SFMatrix3f))
 			{
@@ -2302,6 +2311,7 @@ function ($,
 		sfmatrix4dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix4dValue (this .SFMatrix4d))
 			{
@@ -2339,6 +2349,7 @@ function ($,
 		sfmatrix4fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix4fValue (this .SFMatrix4f))
 			{
@@ -2448,6 +2459,7 @@ function ($,
 		sfrotationValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfrotationValue (this .SFRotation))
 			{
@@ -2491,6 +2503,7 @@ function ($,
 		sfstringValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfstringValue (this .SFString))
 			{
@@ -2528,6 +2541,7 @@ function ($,
 		sftimeValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sftimeValue (this .SFTime))
 			{
@@ -2583,6 +2597,7 @@ function ($,
 		sfvec2dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec2d .setUnit (field .getUnit ());
 
@@ -2624,6 +2639,7 @@ function ($,
 		sfvec2fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec2f .setUnit (field .getUnit ());
 
@@ -2687,6 +2703,7 @@ function ($,
 		sfvec3dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec3d .setUnit (field .getUnit ());
 
@@ -2728,6 +2745,7 @@ function ($,
 		sfvec3fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec3f .setUnit (field .getUnit ());
 
@@ -2797,6 +2815,7 @@ function ($,
 		sfvec4dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec4d .setUnit (field .getUnit ());
 
@@ -2838,6 +2857,7 @@ function ($,
 		sfvec4fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec4f .setUnit (field .getUnit ());
 

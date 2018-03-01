@@ -319,12 +319,12 @@ function ($,
 				cw            = ! this .ccw_ .getValue (),
 				crossSection  = this .crossSection_,
 				spine         = this .spine_,
-				texCoordArray = [ ];
+				texCoordArray = this .getTexCoords ();
 
 			if (spine .length < 2 || crossSection .length < 2)
 				return;
 
-			this .getTexCoords () .push (texCoordArray);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			var crossSectionSize = crossSection .length; // This one is used only in the INDEX macro.
 

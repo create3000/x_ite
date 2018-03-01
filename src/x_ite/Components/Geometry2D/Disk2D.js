@@ -131,9 +131,8 @@ function ($,
 			if (innerRadius === outerRadius)
 			{
 				var
-					radius          = Math .abs (outerRadius),
-					defaultVertices = options .getCircleVertices (),
-					vertexArray     = this .getVertices ();
+					radius      = Math .abs (outerRadius),
+					vertexArray = this .getVertices ();
 
 				// Point
 
@@ -148,10 +147,12 @@ function ($,
 
 				if (radius === 1)
 				{
-					this .setVertices (defaultVertices);
+					this .setVertices (options .getCircleVertices ());
 				}
 				else
 				{
+					var defaultVertices = options .getCircleVertices () .getValue ();
+
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
 						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 				}
@@ -167,20 +168,21 @@ function ($,
 			{
 				// Disk
 
-				var
-					radius          = Math .abs (Math .max (innerRadius, outerRadius)),
-					defaultVertices = options .getDiskVertices (),
-					vertexArray     = this .getVertices ();
+				var radius = Math .abs (Math .max (innerRadius, outerRadius));
 
-				this .getTexCoords () .push (options .getDiskTexCoords ());
+				this .getMultiTexCoords () .push (options .getDiskTexCoords ());
 				this .setNormals (options .getDiskNormals ());
 	
 				if (radius === 1)
 				{
-					this .setVertices (defaultVertices);
+					this .setVertices (options .getDiskVertices ());
 				}
 				else
 				{
+					var
+						defaultVertices = options .getDiskVertices () .getValue (),
+						vertexArray     = this .getVertices ();
+
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
 						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 				}
@@ -201,13 +203,13 @@ function ($,
 				minRadius        = Math .abs (Math .min (innerRadius, outerRadius)),
 				scale            = minRadius / maxRadius,
 				offset           = (1 - scale) / 2,
-				defaultTexCoords = options .getDiskTexCoords (),
-				defaultVertices  = options .getDiskVertices (),
-				texCoordArray    = [ ],
+				defaultTexCoords = options .getDiskTexCoords () .getValue (),
+				defaultVertices  = options .getDiskVertices () .getValue (),
+				texCoordArray    = this .getTexCoords (),
 				normalArray      = this .getNormals (),
 				vertexArray      = this .getVertices ();
 
-			this .getTexCoords () .push (texCoordArray);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			for (var i = 0, length = defaultVertices .length; i < length; i += 12)
 			{
