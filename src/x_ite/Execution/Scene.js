@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Execution/X3DScene",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DScene)
 {
 "use strict";
@@ -70,7 +68,7 @@ function ($,
 		this .loadingObjects = { };
 	}
 
-	Scene .prototype = $.extend (Object .create (X3DScene .prototype),
+	Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
 	{
 		constructor: Scene,
 		getTypeName: function ()

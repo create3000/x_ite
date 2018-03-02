@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DBindableNode",
 	"x_ite/Components/Time/TimeSensor",
@@ -62,8 +61,7 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBindableNode,
           TimeSensor,
           EaseInEaseOut,
@@ -118,7 +116,7 @@ function ($,
 		this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
 	}
 
-	X3DViewpointNode .prototype = $.extend (Object .create (X3DBindableNode .prototype),
+	X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 	{
 		constructor: X3DViewpointNode,
 		initialize: function ()

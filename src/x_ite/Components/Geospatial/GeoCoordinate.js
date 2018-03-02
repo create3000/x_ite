@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DCoordinateNode, 
@@ -81,7 +79,7 @@ function ($,
 		this .origin = new Vector3 (0, 0, 0); // Origin of the reference frame.
 	}
 
-	GeoCoordinate .prototype = $.extend (Object .create (X3DCoordinateNode .prototype),
+	GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoCoordinate,

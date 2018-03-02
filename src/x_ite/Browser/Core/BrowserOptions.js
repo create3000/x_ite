@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Browser/Core/PrimitiveQuality",
 	"x_ite/Browser/Core/TextureQuality",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBaseNode,
@@ -80,7 +78,7 @@ function ($,
 		this .textureQuality   = TextureQuality   .MEDIUM;
 	}
 
-	BrowserOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BrowserOptions,
 		fieldDefinitions: new FieldDefinitionArray ([

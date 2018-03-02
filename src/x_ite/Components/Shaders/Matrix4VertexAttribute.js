@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Shaders/X3DVertexAttributeNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DVertexAttributeNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .Matrix4VertexAttribute);
 	}
 
-	Matrix4VertexAttribute .prototype = $.extend (Object .create (X3DVertexAttributeNode .prototype),
+	Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 	{
 		constructor: Matrix4VertexAttribute,
 		fieldDefinitions: new FieldDefinitionArray ([

@@ -67,7 +67,7 @@ function ($,
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	ContextMenu .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: ContextMenu,
 		getTypeName: function ()

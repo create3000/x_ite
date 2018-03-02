@@ -48,11 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($, X3DField, X3DConstants)
+function (X3DField,
+          X3DConstants)
 {
 "use strict";
 
@@ -64,7 +64,7 @@ function ($, X3DField, X3DConstants)
 		return X3DField .call (Object .create (SFBool .prototype), Boolean (value));
 	}
 
-	SFBool .prototype = $.extend (Object .create (X3DField .prototype),
+	SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFBool,
 		copy: function ()

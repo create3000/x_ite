@@ -48,11 +48,10 @@
 
 
 define ([
-	"jquery",
 	"standard/Math/Numbers/Color3",
 	"standard/Math/Algorithm",
 ],
-function ($, Color3, Algorithm)
+function (Color3, Algorithm)
 {
 "use strict";
 

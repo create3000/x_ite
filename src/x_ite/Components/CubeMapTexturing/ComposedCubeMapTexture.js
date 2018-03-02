@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentTextureNode,
@@ -78,7 +76,7 @@ function ($,
 		this .loadStates = 0;
 	}
 
-	ComposedCubeMapTexture .prototype = $.extend (Object .create (X3DEnvironmentTextureNode .prototype),
+	ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
 	{
 		constructor: ComposedCubeMapTexture,
 		fieldDefinitions: new FieldDefinitionArray ([

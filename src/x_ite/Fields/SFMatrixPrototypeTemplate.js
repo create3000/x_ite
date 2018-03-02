@@ -48,16 +48,15 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DField",
 ],
-function ($, X3DField)
+function (X3DField)
 {
 "use strict";
 
 	return function (Matrix, SFVec)
 	{
-		return $.extend (Object .create (X3DField .prototype),
+		return Object .assign (Object .create (X3DField .prototype),
 		{
 			copy: function ()
 			{

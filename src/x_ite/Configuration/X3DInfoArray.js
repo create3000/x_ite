@@ -47,10 +47,7 @@
  ******************************************************************************/
 
 
-define ([
-	"jquery",
-],
-function ($)
+define (function ()
 {
 "use strict";
 
@@ -92,7 +89,7 @@ function ($)
 		return new Proxy (this, handler);
 	}
 
-	$.extend (X3DInfoArray .prototype,
+	Object .assign (X3DInfoArray .prototype,
 	{
 		constructor: X3DInfoArray,
 		add: function (key, value)

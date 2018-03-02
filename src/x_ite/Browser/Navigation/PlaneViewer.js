@@ -75,7 +75,7 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3)
 		this .toPoint   = new Vector3 (0, 0, 0);
 	}
 
-	PlaneViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: PlaneViewer,
 		initialize: function ()

@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          X3DField,
+function (X3DField,
           X3DConstants,
           Generator)
 {
@@ -72,7 +70,7 @@ function ($,
 		return X3DField .call (Object .create (SFString .prototype), arguments .length ? String (value) : "");
 	}
 	
-	$.extend (SFString,
+	Object .assign (SFString,
 	{
 		unescape: function (string)
 		{
@@ -84,7 +82,7 @@ function ($,
 		},
 	});
 
-	SFString .prototype = $.extend (Object .create (X3DField .prototype),
+	SFString .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFString,
 		copy: function ()

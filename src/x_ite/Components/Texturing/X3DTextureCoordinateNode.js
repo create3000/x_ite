@@ -48,14 +48,12 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DGeometricPropertyNode, 
           X3DGeometryNode, 
           X3DConstants)
@@ -71,7 +69,7 @@ function ($,
 		this .texCoordArray = X3DGeometryNode .createArray ();
 	}
 
-	X3DTextureCoordinateNode .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
+	X3DTextureCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: X3DTextureCoordinateNode,
 		init: function (multiArray)

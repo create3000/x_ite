@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields/SFTime",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Browser/Core/X3DCoreContext",
@@ -75,8 +74,7 @@ define ([
 	"x_ite/Execution/World",
 	"x_ite/Bits/TraverseType",
 ],
-function ($,
-          SFTime,
+function (SFTime,
           X3DBaseNode,
           X3DCoreContext,
           X3DRoutingContext,
@@ -147,7 +145,7 @@ function ($,
 		this .displayTime     = 0;
 	};
 
-	X3DBrowserContext .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 		X3DRoutingContext .prototype,
 		X3DCoreContext .prototype,
 		X3DScriptingContext .prototype,

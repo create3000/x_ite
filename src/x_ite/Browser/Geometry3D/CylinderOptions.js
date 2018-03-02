@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBaseNode)
 {
 "use strict";
@@ -66,7 +64,7 @@ function ($,
 		                       "yDimension", new Fields .SFInt32 (1))
 	}
 
-	CylinderOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	CylinderOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: CylinderOptions,
 		getTypeName: function ()

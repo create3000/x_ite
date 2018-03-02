@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Components/Networking/X3DUrlObject",
@@ -61,8 +60,7 @@ define ([
 	"x_ite/Browser/VERSION",
 	"x_ite/DEBUG",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DNode,
           X3DUrlObject,
           TextAlignment,
@@ -126,7 +124,7 @@ function ($,
 		this .loader      = new FileLoader (this);
 	}
 
-	X3DFontStyleNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DFontStyleNode,
 		initialize: function ()

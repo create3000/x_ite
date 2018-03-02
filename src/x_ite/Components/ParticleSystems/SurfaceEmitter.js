@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59,8 +58,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode, 
@@ -92,7 +90,7 @@ function ($,
 		this .areaSoFarArray = [ 0 ];
 	}
 
-	SurfaceEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: SurfaceEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([

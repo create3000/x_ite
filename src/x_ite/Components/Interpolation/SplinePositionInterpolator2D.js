@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Browser/Interpolation/CatmullRomSplineInterpolator2",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode,
@@ -75,7 +73,7 @@ function ($,
 		this .spline = new CatmullRomSplineInterpolator2 ();
 	}
 
-	SplinePositionInterpolator2D .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	SplinePositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: SplinePositionInterpolator2D,
 		fieldDefinitions: new FieldDefinitionArray ([

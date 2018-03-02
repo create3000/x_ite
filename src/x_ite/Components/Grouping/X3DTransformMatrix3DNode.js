@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          X3DGroupingNode,
+function (X3DGroupingNode,
           X3DConstants,
           Vector3,
           Rotation4,
@@ -73,7 +71,7 @@ function ($,
 		this .matrix = new Matrix4 ();
 	}
 
-	X3DTransformMatrix3DNode .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: X3DTransformMatrix3DNode,
 		getBBox: function (bbox)

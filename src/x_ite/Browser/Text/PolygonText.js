@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Browser/Core/PrimitiveQuality",
 	"x_ite/Browser/Text/X3DTextGeometry",
@@ -60,8 +59,7 @@ define ([
 	"poly2tri",
 	"earcut",
 ],
-function ($,
-          Fields,
+function (Fields,
           PrimitiveQuality,
           X3DTextGeometry,
           X3DGeometryNode,
@@ -90,7 +88,7 @@ function ($,
 		this .texCoordArray = X3DGeometryNode .createArray ();
 	}
 
-	PolygonText .prototype = $.extend (Object .create (X3DTextGeometry .prototype),
+	PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
 	{
 		constructor: PolygonText,
 		getMatrix: function ()

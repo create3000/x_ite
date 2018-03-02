@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -85,7 +83,7 @@ function ($,
 		this .radius_     .setUnit ("length");
 	}
 
-	ArcClose2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: ArcClose2D,
 		fieldDefinitions: new FieldDefinitionArray ([

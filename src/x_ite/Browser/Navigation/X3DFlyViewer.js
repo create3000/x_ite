@@ -116,7 +116,7 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 		this .modelViewMatrixArray  = new Float32Array (this .projectionMatrix);
 	}
 
-	X3DFlyViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: X3DFlyViewer,
 		initialize: function ()

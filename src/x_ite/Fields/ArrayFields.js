@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields/SFBool",
 	"x_ite/Fields/SFColor",
 	"x_ite/Fields/SFColorRGBA",
@@ -70,8 +69,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          SFBool,
+function (SFBool,
           SFColor,
           SFColorRGBA,
           SFDouble,
@@ -118,7 +116,7 @@ function ($,
 		return X3DObjectArrayField .call (Object .create (MFNode .prototype), arguments);
 	}
 
-	MFNode .prototype = $.extend (Object .create (X3DObjectArrayField .prototype),
+	MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
 	{
 		constructor: MFNode,
 		_cloneCount: 0,
@@ -251,7 +249,7 @@ function ($,
 		return X3DObjectArrayField .call (Object .create (MFString .prototype), arguments);
 	}
 
-	MFString .prototype = $.extend (Object .create (X3DObjectArrayField .prototype),
+	MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
 	{
 		constructor: MFString,
 		getValueType: function ()
@@ -311,7 +309,7 @@ function ($,
 			return X3DObjectArrayField .call (Object .create (ArrayField .prototype), arguments);
 		}
 
-		ArrayField .prototype = $.extend (Object .create (X3DObjectArrayField .prototype),
+		ArrayField .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
 		{
 			constructor: ArrayField,
 			getSingleType: function ()
@@ -353,7 +351,7 @@ function ($,
 			return X3DTypedArrayField .call (Object .create (ArrayField .prototype), arguments);
 		}
 
-		ArrayField .prototype = $.extend (Object .create (X3DTypedArrayField .prototype),
+		ArrayField .prototype = Object .assign (Object .create (X3DTypedArrayField .prototype),
 		{
 			constructor: ArrayField,
 			getSingleType: function ()

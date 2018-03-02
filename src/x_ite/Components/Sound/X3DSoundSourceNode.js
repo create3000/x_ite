@@ -53,8 +53,7 @@ define ([
 	"x_ite/Components/Time/X3DTimeDependentNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode,
+function (X3DChildNode,
           X3DTimeDependentNode,
           X3DConstants)
 {
@@ -71,7 +70,7 @@ function ($,
 		this .media  = null;
 	}
 
-	X3DSoundSourceNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DTimeDependentNode .prototype,
 	{
 		constructor: X3DSoundSourceNode,

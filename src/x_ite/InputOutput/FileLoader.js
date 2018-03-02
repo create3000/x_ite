@@ -103,7 +103,7 @@ function ($,
 		this .fileReader       = new FileReader ();
 	}
 
-	FileLoader .prototype = $.extend (Object .create (X3DObject .prototype),
+	FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: FileLoader,
 		abort: function ()

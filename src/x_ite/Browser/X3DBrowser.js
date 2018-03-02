@@ -97,7 +97,7 @@ function ($,
 		this .replaceWorld (this .createScene ());
 	};
 
-	X3DBrowser .prototype = $.extend (Object .create (X3DBrowserContext .prototype),
+	X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .prototype),
 	{
 		constructor: X3DBrowser,
 		getTypeName: function ()

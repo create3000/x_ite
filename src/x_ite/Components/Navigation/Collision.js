@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
@@ -80,7 +78,7 @@ function ($,
 		this .addAlias ("collide", this .enabled_); // VRML2
 	}
 
-	Collision .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 		X3DSensorNode .prototype,
 	{
 		constructor: Collision,

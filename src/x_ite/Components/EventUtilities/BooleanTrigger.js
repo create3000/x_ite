@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/EventUtilities/X3DTriggerNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTriggerNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .BooleanTrigger);
 	}
 
-	BooleanTrigger .prototype = $.extend (Object .create (X3DTriggerNode .prototype),
+	BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
 	{
 		constructor: BooleanTrigger,
 		fieldDefinitions: new FieldDefinitionArray ([

@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNurbsSurfaceGeometryNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .NurbsTrimmedSurface);
 	}
 
-	NurbsTrimmedSurface .prototype = $.extend (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
+	NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
 	{
 		constructor: NurbsTrimmedSurface,
 		fieldDefinitions: new FieldDefinitionArray ([

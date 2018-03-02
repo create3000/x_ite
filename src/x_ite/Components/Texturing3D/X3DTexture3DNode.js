@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Texturing/X3DTextureNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DTextureNode, 
+function (X3DTextureNode, 
           X3DConstants)
 {
 "use strict";
@@ -65,7 +63,7 @@ function ($,
 		this .addType (X3DConstants .X3DTexture3DNode);
 	}
 
-	X3DTexture3DNode .prototype = $.extend (Object .create (X3DTextureNode .prototype),
+	X3DTexture3DNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
 	{
 		constructor: X3DTexture3DNode,
 	});

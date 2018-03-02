@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Fields",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"standard/Math/Numbers/Complex",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          X3DBaseNode,
+function (X3DBaseNode,
           Fields,
           X3DGeometryNode,
           Complex,
@@ -73,7 +71,7 @@ function ($,
 		this .vertices = X3DGeometryNode .createArray ();
 	}
 
-	Circle2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	Circle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: Circle2DOptions,
 		getTypeName: function ()

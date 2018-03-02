@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Parser/X3DParser",
 	"x_ite/Prototype/X3DExternProtoDeclaration",
 	"x_ite/Prototype/X3DProtoDeclaration",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DParser,
           X3DExternProtoDeclaration,
           X3DProtoDeclaration,
@@ -270,7 +268,7 @@ function ($,
 		this .isXML = isXML;
 	}
 
-	Parser .prototype = $.extend (Object .create (X3DParser .prototype),
+	Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 	{
 		accessTypes:
 		{

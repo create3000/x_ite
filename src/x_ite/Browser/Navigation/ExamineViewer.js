@@ -94,7 +94,7 @@ function ($, X3DViewer, Vector3, Rotation4)
 		this .motionTime                   = 0;
 	}
 
-	ExamineViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: ExamineViewer,
 		initialize: function ()

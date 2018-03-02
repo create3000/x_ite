@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .DISEntityManager);
 	}
 
-	DISEntityManager .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	DISEntityManager .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: DISEntityManager,
 		fieldDefinitions: new FieldDefinitionArray ([

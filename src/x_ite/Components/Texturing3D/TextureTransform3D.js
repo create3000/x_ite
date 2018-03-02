@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureTransformNode, 
@@ -77,7 +75,7 @@ function ($,
 		this .addType (X3DConstants .TextureTransform3D);
 	}
 
-	TextureTransform3D .prototype = $.extend (Object .create (X3DTextureTransformNode .prototype),
+	TextureTransform3D .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
 	{
 		constructor: TextureTransform3D,
 		fieldDefinitions: new FieldDefinitionArray ([

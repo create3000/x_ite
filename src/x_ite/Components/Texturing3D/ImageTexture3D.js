@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTexture3DNode, 
@@ -74,7 +72,7 @@ function ($,
 		this .addType (X3DConstants .ImageTexture3D);
 	}
 
-	ImageTexture3D .prototype = $.extend (Object .create (X3DTexture3DNode .prototype),new X3DUrlObject (),
+	ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),new X3DUrlObject (),
 	{
 		constructor: ImageTexture3D,
 		fieldDefinitions: new FieldDefinitionArray ([

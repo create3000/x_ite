@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -62,8 +61,7 @@ define ([
 	"standard/Math/Geometry/Cylinder3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDragSensorNode, 
@@ -90,7 +88,7 @@ function ($,
 		this .offset_    .setUnit ("angle");
 	}
 
-	CylinderSensor .prototype = $.extend (Object .create (X3DDragSensorNode .prototype),
+	CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 	{
 		constructor: CylinderSensor,
 		fieldDefinitions: new FieldDefinitionArray ([

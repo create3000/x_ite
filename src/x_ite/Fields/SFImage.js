@@ -48,12 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Fields/SFInt32",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($, X3DField, SFInt32, X3DConstants)
+function (X3DField,
+          SFInt32,
+          X3DConstants)
 {
 "use strict";
 
@@ -161,7 +162,7 @@ function ($, X3DField, SFInt32, X3DConstants)
 		return SFImage .apply (Object .create (SFImage .prototype), arguments);
 	}
 
-	SFImage .prototype = $.extend (Object .create (X3DField .prototype),
+	SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFImage,
 		set_size__: function ()

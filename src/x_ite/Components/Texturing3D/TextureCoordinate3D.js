@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureCoordinateNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .TextureCoordinate3D);
 	}
 
-	TextureCoordinate3D .prototype = $.extend (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinate3D .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinate3D,
 		fieldDefinitions: new FieldDefinitionArray ([

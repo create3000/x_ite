@@ -48,10 +48,9 @@
 
 
 define ([
-	"jquery",
 	"standard/Math/Algorithm"
 ],
-function ($, Algorithm)
+function (Algorithm)
 {
 "use strict";
 
@@ -221,7 +220,7 @@ function ($, Algorithm)
 		configurable: false
 	});
 
-	$.extend (Matrix2,
+	Object .assign (Matrix2,
 	{
 		Identity: new Matrix2 (),
 	});

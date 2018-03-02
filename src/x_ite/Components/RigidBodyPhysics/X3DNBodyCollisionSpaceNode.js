@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DNode, 
+function (X3DNode, 
           X3DBoundedObject, 
           X3DConstants)
 {
@@ -68,7 +66,7 @@ function ($,
 		this .addType (X3DConstants .X3DNBodyCollisionSpaceNode);
 	}
 
-	X3DNBodyCollisionSpaceNode .prototype = $.extend (Object .create (X3DNode .prototype),new X3DBoundedObject (),
+	X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode .prototype),new X3DBoundedObject (),
 	{
 		constructor: X3DNBodyCollisionSpaceNode,
 	});

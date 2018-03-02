@@ -48,10 +48,9 @@
 
 
 define ([
-	"jquery",
 	"standard/Math/Algorithm",
 ],
-function ($, Algorithm)
+function (Algorithm)
 {
 "use strict";
 
@@ -212,7 +211,7 @@ function ($, Algorithm)
 	Object .defineProperty (Color3 .prototype, "1", g);
 	Object .defineProperty (Color3 .prototype, "2", b);
 
-	$.extend (Color3,
+	Object .assign (Color3,
 	{
 		HSV: function (h, s, v)
 		{

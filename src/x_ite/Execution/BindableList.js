@@ -48,10 +48,9 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 ],
-function ($, X3DBaseNode)
+function (X3DBaseNode)
 {
 "use strict";
 
@@ -78,7 +77,7 @@ function ($, X3DBaseNode)
 		this .array     = [ defaultNode ];
 	}
 
-	BindableList .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BindableList,
 		getTypeName: function ()

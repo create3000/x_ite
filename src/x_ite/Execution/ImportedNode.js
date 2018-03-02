@@ -48,14 +48,12 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBaseNode,
           X3DConstants,
           Generator)
@@ -74,7 +72,7 @@ function ($,
 		this .inlineNode .loadState_ .addInterest ("set_loadState__", this);
 	}
 
-	ImportedNode .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	ImportedNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: ImportedNode,
 		getTypeName: function ()

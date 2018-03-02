@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -61,8 +60,7 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithms/QuickSort",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode, 
@@ -85,7 +83,7 @@ function ($,
 		this .addType (X3DConstants .Shape);
 	}
 
-	Shape .prototype = $.extend (Object .create (X3DShapeNode .prototype),
+	Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 	{
 		constructor: Shape,
 		fieldDefinitions: new FieldDefinitionArray ([

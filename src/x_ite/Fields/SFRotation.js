@@ -48,14 +48,17 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields/SFVec3",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($, SFVec3, X3DField, X3DConstants, Generator, Rotation4)
+function (SFVec3,
+          X3DField,
+          X3DConstants,
+          Generator,
+          Rotation4)
 {
 "use strict";
 
@@ -84,7 +87,7 @@ function ($, SFVec3, X3DField, X3DConstants, Generator, Rotation4)
 		return SFRotation .apply (Object .create (SFRotation .prototype), arguments);
 	}
 
-	SFRotation .prototype = $.extend (Object .create (X3DField .prototype),
+	SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFRotation,
 		copy: function ()

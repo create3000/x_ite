@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticlePhysicsModelNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .force_ .setUnit ("force");
 	}
 
-	ForcePhysicsModel .prototype = $.extend (Object .create (X3DParticlePhysicsModelNode .prototype),
+	ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
 	{
 		constructor: ForcePhysicsModel,
 		fieldDefinitions: new FieldDefinitionArray ([

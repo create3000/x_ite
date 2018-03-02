@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChaserNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .addType (X3DConstants .ScalarChaser);
 	}
 
-	ScalarChaser .prototype = $.extend (Object .create (X3DChaserNode .prototype),
+	ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 	{
 		constructor: ScalarChaser,
 		fieldDefinitions: new FieldDefinitionArray ([

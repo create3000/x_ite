@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Geometry3D/IndexedFaceSet",
 	"x_ite/Components/Rendering/Coordinate",
 	"x_ite/Components/Texturing/TextureCoordinate",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBaseNode,
           IndexedFaceSet,
           Coordinate,
@@ -69,7 +67,7 @@ function ($,
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	BoxOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BoxOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BoxOptions,
 		getTypeName: function ()

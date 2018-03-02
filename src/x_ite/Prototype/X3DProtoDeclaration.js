@@ -78,7 +78,7 @@ function ($,
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 	}
 
-	X3DProtoDeclaration .prototype = $.extend (Object .create (X3DExecutionContext .prototype),
+	X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
 		X3DProtoDeclarationNode .prototype,
 	{
 		constructor: X3DProtoDeclaration,

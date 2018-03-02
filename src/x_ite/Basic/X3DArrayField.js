@@ -48,11 +48,9 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DField",
 ],
-function ($,
-          X3DField)
+function (X3DField)
 {
 "use strict";
 
@@ -61,7 +59,7 @@ function ($,
 		X3DField .call (this, value);
 	}
 
-	X3DArrayField .prototype = $.extend (Object .create (X3DField .prototype),
+	X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: X3DArrayField,
 	});

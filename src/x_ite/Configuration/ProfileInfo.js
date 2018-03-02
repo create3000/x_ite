@@ -47,10 +47,7 @@
  ******************************************************************************/
 
 
-define ([
-	"jquery",
-],
-function ($)
+define (function ()
 {
 "use strict";
 
@@ -66,7 +63,7 @@ function ($)
 		Object .seal (this);
 	}
 
-	$.extend (ProfileInfo .prototype,
+	Object .assign (ProfileInfo .prototype,
 	{
 		constructor: ProfileInfo,
 		toXMLStream: function (stream)

@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode, 
@@ -78,7 +76,7 @@ function ($,
 		this .getRandomVelocity = this .getSphericalRandomVelocity;
 	}
 
-	ExplosionEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: ExplosionEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([

@@ -47,10 +47,7 @@
  ******************************************************************************/
 
 
-define ([
-	"jquery",
-],
-function ($)
+define (function ()
 {
 "use strict";
 
@@ -82,7 +79,7 @@ function ($)
 		return new Proxy (this, handler);
 	}
 
-	$.extend (FieldDefinitionArray .prototype,
+	Object .assign (FieldDefinitionArray .prototype,
 	{
 		constructor: FieldDefinitionArray,
 		add: function (fieldDefinition)

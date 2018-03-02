@@ -48,22 +48,22 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Browser/Followers/X3DArrayFollowerTemplate",
 ],
-function ($,
-          X3DArrayFollowerTemplate)
+function (X3DArrayFollowerTemplate)
 {
 "use strict";
 
 	return function (Type)
 	{
+		var X3DArrayFollower = X3DArrayFollowerTemplate (Type);
+
 		function X3DArrayChaserObject ()
 		{
 			this .array = this .getArray ();
 		}
-	
-		X3DArrayChaserObject .prototype = $.extend (Object .create (X3DArrayFollowerTemplate (Type) .prototype),
+
+		Object .assign (X3DArrayChaserObject .prototype, X3DArrayFollower .prototype,
 		{
 			setPreviousValue: function (value)
 			{
@@ -85,7 +85,7 @@ function ($,
 				}
 			},
 		});
-	
+
 		return X3DArrayChaserObject;
 	};
 });

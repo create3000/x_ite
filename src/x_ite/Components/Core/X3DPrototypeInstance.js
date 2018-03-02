@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Fields",
 	"x_ite/Base/X3DChildObject",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          FieldDefinitionArray,
+function (FieldDefinitionArray,
           Fields,
           X3DChildObject,
           X3DNode,
@@ -88,7 +86,7 @@ function ($,
 			this .construct ();
 	}
 
-	X3DPrototypeInstance .prototype = $.extend (Object .create (X3DExecutionContext .prototype),
+	X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
 		X3DNode .prototype,
 	{
 		constructor: X3DPrototypeInstance,

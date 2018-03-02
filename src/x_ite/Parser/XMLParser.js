@@ -100,7 +100,7 @@ function ($,
 		{ }
 	}
 
-	XMLParser .prototype = $.extend (Object .create (X3DParser .prototype),
+	XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 	{
 		constructor: XMLParser,
 		parseIntoScene: function (xmlElement)

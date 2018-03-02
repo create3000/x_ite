@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -63,8 +62,7 @@ define ([
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDragSensorNode, 
@@ -97,7 +95,7 @@ function ($,
 		this .translation_changed_ .setUnit ("length");
 	}
 
-	PlaneSensor .prototype = $.extend (Object .create (X3DDragSensorNode .prototype),
+	PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 	{
 		constructor: PlaneSensor,
 		fieldDefinitions: new FieldDefinitionArray ([

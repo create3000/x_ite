@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59,8 +58,7 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode,
@@ -92,7 +90,7 @@ function ($,
 		this .keepCurrentLevel = false;
 	}
 
-	LOD .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: LOD,
 		fieldDefinitions: new FieldDefinitionArray ([

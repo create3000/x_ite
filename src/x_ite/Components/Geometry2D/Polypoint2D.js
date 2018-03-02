@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode, 
@@ -79,7 +77,7 @@ function ($,
 		this .transparent_ = true;
 	}
 
-	Polypoint2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	Polypoint2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: Polypoint2D,
 		fieldDefinitions: new FieldDefinitionArray ([

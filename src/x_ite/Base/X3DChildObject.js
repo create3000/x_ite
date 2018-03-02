@@ -48,10 +48,9 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Base/X3DObject",
 ],
-function ($, X3DObject)
+function (X3DObject)
 {
 "use strict";
 
@@ -62,7 +61,7 @@ function ($, X3DObject)
 		this ._parents = { };
 	}
 
-	X3DChildObject .prototype = $.extend (Object .create (X3DObject .prototype),
+	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: X3DChildObject,
 		addEvent: function ()

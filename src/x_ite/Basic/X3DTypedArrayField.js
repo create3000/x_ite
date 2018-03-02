@@ -48,14 +48,12 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DArrayField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          X3DArrayField,
+function (X3DArrayField,
           X3DConstants, 
           Generator,
           Algorithm)
@@ -175,7 +173,7 @@ function ($,
 		return new Proxy (this, handler);
 	}
 
-	X3DTypedArrayField .prototype = $.extend (Object .create (X3DArrayField .prototype),
+	X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
 	{
 		constructor: X3DTypedArrayField,
 		_length: 0,

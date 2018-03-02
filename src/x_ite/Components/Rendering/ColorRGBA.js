@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DColorNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .addType (X3DConstants .ColorRGBA);
 	}
 
-	ColorRGBA .prototype = $.extend (Object .create (X3DColorNode .prototype),
+	ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
 	{
 		constructor: ColorRGBA,
 		fieldDefinitions: new FieldDefinitionArray ([

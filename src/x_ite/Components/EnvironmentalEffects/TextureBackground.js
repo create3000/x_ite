@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBackgroundNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .addType (X3DConstants .TextureBackground);
 	}
 
-	TextureBackground .prototype = $.extend (Object .create (X3DBackgroundNode .prototype),
+	TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
 	{
 		constructor: TextureBackground,
 		fieldDefinitions: new FieldDefinitionArray ([

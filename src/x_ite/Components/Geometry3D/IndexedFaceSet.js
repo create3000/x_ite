@@ -50,7 +50,6 @@
 // https://github.com/r3mi/poly2tri.js
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -60,8 +59,7 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Triangle3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -89,7 +87,7 @@ function ($,
 		this .creaseAngle_ .setUnit ("angle");
 	}
 
-	IndexedFaceSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: IndexedFaceSet,
 		fieldDefinitions: new FieldDefinitionArray ([

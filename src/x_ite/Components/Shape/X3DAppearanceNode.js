@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DNode, 
           X3DConstants)
 {
@@ -67,7 +65,7 @@ function ($,
 		this .addType (X3DConstants .X3DAppearanceNode);
 	}
 
-	X3DAppearanceNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DAppearanceNode,
 		initialize: function ()

@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
@@ -62,8 +61,7 @@ define ([
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DNode,
           X3DConstants,
           Color3,
@@ -105,8 +103,31 @@ function ($,
 		this .addChildObjects ("transparent",  new Fields .SFBool (),
 		                       "bbox_changed", new Fields .SFTime ());
 
+		// Members
+
+		this .min                 = new Vector3 (0, 0, 0);
+		this .max                 = new Vector3 (0, 0, 0);
+		this .bbox                = new Box3 (this .min, this .max, true);
+		this .solid               = true;
 		this .geometryType        = 3;
+		this .flatShading         = undefined;
+		this .colorMaterial       = false;
+		this .attribNodes         = [ ];
+		this .attribs             = [ ];
 		this .currentTexCoordNode = this .getBrowser () .getDefaultTextureCoordinate (); // For TextureCoordinateGenerator needed.
+		this .texCoordParams      = { min: new Vector3 (0, 0, 0) };
+		this .multiTexCoords      = [ ];
+		this .texCoords           = X3DGeometryNode .createArray ();
+		this .colors              = X3DGeometryNode .createArray ();
+		this .normals             = X3DGeometryNode .createArray ();
+		this .flatNormals         = X3DGeometryNode .createArray ();
+		this .vertices            = X3DGeometryNode .createArray ();
+		this .vertexCount         = 0;
+
+		// This methods are configured in transfer.
+		this .depth            = Function .prototype;
+		this .display          = Function .prototype;
+		this .displayParticles = Function .prototype;
 	}
 
 	// Function to select ether Array or MFFloat for color/normal/vertex arrays.
@@ -143,7 +164,7 @@ function ($,
 		return array;
 	}
 
-	X3DGeometryNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DGeometryNode,
 		intersection: new Vector3 (0, 0, 0),
@@ -171,23 +192,6 @@ function ($,
 
 			var gl = this .getBrowser () .getContext ();
 
-			this .min              = new Vector3 (0, 0, 0);
-			this .max              = new Vector3 (0, 0, 0);
-			this .bbox             = new Box3 (this .min, this .max, true);
-			this .solid            = true;
-			this .flatShading      = undefined;
-			this .colorMaterial    = false;
-			this .attribNodes      = [ ];
-			this .attribs          = [ ];
-			this .texCoordParams   = { min: new Vector3 (0, 0, 0) };
-			this .multiTexCoords   = [ ];
-			this .texCoords        = X3DGeometryNode .createArray ();
-			this .colors           = X3DGeometryNode .createArray ();
-			this .normals          = X3DGeometryNode .createArray ();
-			this .flatNormals      = X3DGeometryNode .createArray ();
-			this .vertices         = X3DGeometryNode .createArray ();
-			this .vertexCount      = 0;
-
 			this .primitiveMode   = gl .TRIANGLES;
 			this .frontFace       = gl .CCW;
 			this .attribBuffers   = [ ];
@@ -202,10 +206,6 @@ function ($,
 				for (var i = 0; i < 5; ++ i)
 					this .planes [i] = new Plane3 (Vector3 .Zero, boxNormals [0]);
 			}
-
-			this .depth            = Function .prototype;
-			this .display          = Function .prototype;
-			this .displayParticles = Function .prototype;
 
 			this .set_live__ ();
 		},

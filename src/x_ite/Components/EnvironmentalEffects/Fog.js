@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBindableNode, 
@@ -76,7 +74,7 @@ function ($,
 		this .addType (X3DConstants .Fog);
 	}
 
-	Fog .prototype = $.extend (Object .create (X3DBindableNode .prototype),
+	Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 		X3DFogObject .prototype,
 	{
 		constructor: Fog,

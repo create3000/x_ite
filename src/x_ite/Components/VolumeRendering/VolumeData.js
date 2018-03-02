@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/VolumeRendering/X3DVolumeDataNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DVolumeDataNode,
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .VolumeData);
 	}
 
-	VolumeData .prototype = extend (Object .create (X3DVolumeDataNode .prototype),
+	VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
 	{
 		constructor: VolumeData,
 		fieldDefinitions: new FieldDefinitionArray ([

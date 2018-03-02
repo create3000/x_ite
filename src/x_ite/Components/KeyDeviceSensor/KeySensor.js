@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DKeyDeviceSensorNode, 
@@ -94,7 +92,7 @@ function ($,
 		this .addType (X3DConstants .KeySensor);
 	}
 
-	KeySensor .prototype = $.extend (Object .create (X3DKeyDeviceSensorNode .prototype),
+	KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
 	{
 		constructor: KeySensor,
 		fieldDefinitions: new FieldDefinitionArray ([

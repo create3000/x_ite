@@ -48,11 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Configuration/ComponentInfoArray",
 	"x_ite/Browser/Networking/urls",
 ],
-function ($, ComponentInfoArray, urls)
+function (ComponentInfoArray,
+          urls)
 {
 "use strict";
 

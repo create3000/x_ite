@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Core/X3DBindableNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
@@ -59,8 +58,7 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          X3DBindableNode,
+function (X3DBindableNode,
           TraverseType,
           X3DConstants,
           ViewVolume,
@@ -172,7 +170,7 @@ function ($,
 		this .textures              = 0;
 	}
 
-	X3DBackgroundNode .prototype = $.extend (Object .create (X3DBindableNode .prototype),
+	X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 	{
 		constructor: X3DBackgroundNode,
 		modelViewMatrix: new Matrix4 (),

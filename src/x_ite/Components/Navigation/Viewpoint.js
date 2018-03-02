@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59,8 +58,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DViewpointNode,
@@ -91,7 +89,7 @@ function ($,
 		this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
 	}
 
-	Viewpoint .prototype = $.extend (Object .create (X3DViewpointNode .prototype),
+	Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
 	{
 		constructor: Viewpoint,
 		fieldDefinitions: new FieldDefinitionArray ([

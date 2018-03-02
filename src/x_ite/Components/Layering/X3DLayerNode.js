@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Rendering/X3DRenderObject",
 	"x_ite/Components/Layering/X3DViewportNode",
@@ -64,8 +63,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          X3DNode,
+function (X3DNode,
           X3DRenderObject,
           X3DViewportNode,
           BindableStack,
@@ -115,7 +113,7 @@ function ($,
 		this .collisionTime = 0;
 	}
 
-	X3DLayerNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 		X3DRenderObject .prototype,
 	{
 		constructor: X3DLayerNode,

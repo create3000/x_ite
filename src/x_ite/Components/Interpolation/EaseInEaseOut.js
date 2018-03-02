@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Interpolation/X3DInterpolatorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .EaseInEaseOut);
 	}
 
-	EaseInEaseOut .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: EaseInEaseOut,
 		fieldDefinitions: new FieldDefinitionArray ([

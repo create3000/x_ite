@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -80,7 +78,7 @@ function ($,
 		this .bottomRadius_ .setUnit ("length");
 	}
 
-	Cone .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Cone,
 		fieldDefinitions: new FieldDefinitionArray ([

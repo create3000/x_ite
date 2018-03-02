@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 ],
-function ($,
-          X3DAppearanceChildNode, 
+function (X3DAppearanceChildNode, 
           X3DConstants,
           TraverseType)
 {
@@ -67,7 +65,7 @@ function ($,
 		this .addType (X3DConstants .X3DShaderNode);
 	}
 
-	X3DShaderNode .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
+	X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DShaderNode,
 		custom: true,

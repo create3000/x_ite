@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometricPropertyNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .HAnimDisplacer);
 	}
 
-	HAnimDisplacer .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
+	HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: HAnimDisplacer,
 		fieldDefinitions: new FieldDefinitionArray ([

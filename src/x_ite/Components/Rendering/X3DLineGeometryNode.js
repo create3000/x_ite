@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          X3DGeometryNode,
+function (X3DGeometryNode,
           X3DConstants,
           Matrix4)
 {
@@ -67,7 +65,7 @@ function ($,
 		//this .addType (X3DConstants .X3DLineGeometryNode);
 	}
 
-	X3DLineGeometryNode .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: X3DLineGeometryNode,
 		getShader: function (browser)

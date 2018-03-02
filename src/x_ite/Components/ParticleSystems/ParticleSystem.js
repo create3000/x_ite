@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -65,8 +64,7 @@ define ([
 	"standard/Math/Algorithm",
 	"standard/Math/Utility/BVH",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode,
@@ -160,7 +158,7 @@ function ($,
 		this .sortParticles            = false;
 	}
 
-	ParticleSystem .prototype = $.extend (Object .create (X3DShapeNode .prototype),
+	ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 	{
 		constructor: ParticleSystem,
 		fieldDefinitions: new FieldDefinitionArray ([

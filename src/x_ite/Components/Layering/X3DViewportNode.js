@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DGroupingNode, 
+function (X3DGroupingNode, 
           X3DConstants)
 {
 "use strict";
@@ -65,7 +63,7 @@ function ($,
 		this .addType (X3DConstants .X3DViewportNode);
 	}
 
-	X3DViewportNode .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	X3DViewportNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: X3DViewportNode,
 	});

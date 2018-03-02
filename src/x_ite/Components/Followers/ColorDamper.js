@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDamperNode, 
@@ -81,7 +79,7 @@ function ($,
 		this .addType (X3DConstants .ColorDamper);
 	}
 
-	ColorDamper .prototype = $.extend (Object .create (X3DDamperNode .prototype),
+	ColorDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 	{
 		constructor: ColorDamper,
 		fieldDefinitions: new FieldDefinitionArray ([

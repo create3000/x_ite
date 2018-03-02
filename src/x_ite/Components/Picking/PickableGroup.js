@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Components/Picking/X3DPickableObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
@@ -74,7 +72,7 @@ function ($,
 		this .addType (X3DConstants .PickableGroup);
 	}
 
-	PickableGroup .prototype = $.extend (Object .create (X3DGroupingNode .prototype),new X3DPickableObject (),
+	PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),new X3DPickableObject (),
 	{
 		constructor: PickableGroup,
 		fieldDefinitions: new FieldDefinitionArray ([

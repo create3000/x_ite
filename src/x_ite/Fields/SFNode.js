@@ -48,12 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField, X3DConstants, Generator)
+function (X3DField,
+          X3DConstants,
+          Generator)
 {
 "use strict";
 
@@ -130,7 +131,7 @@ function ($, X3DField, X3DConstants, Generator)
 		return SFNode .call (Object .create (SFNode .prototype), value);
 	}
 
-	SFNode .prototype = $.extend (Object .create (X3DField .prototype),
+	SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFNode,
 		_cloneCount: 0,

@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DConstants,
           Generator)
 {
@@ -72,7 +70,7 @@ function ($,
 		Object .seal (this);
 	}
 
-	$.extend (ComponentInfo .prototype,
+	Object .assign (ComponentInfo .prototype,
 	{
 		constructor: ComponentInfo,
 		toXMLStream: function (stream)

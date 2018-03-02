@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -60,8 +59,7 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLayoutNode, 
@@ -111,7 +109,7 @@ function ($,
 		this .matrix          = new Matrix4 ();
 	}
 
-	Layout .prototype = $.extend (Object .create (X3DLayoutNode .prototype),
+	Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 	{
 		constructor: Layout,
 		viewportPixel: new Vector2 (0, 0),

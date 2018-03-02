@@ -63,7 +63,7 @@ function ($, X3DViewer)
 		this .button = -1;
 	}
 
-	LookAtViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: LookAtViewer,
 		initialize: function ()

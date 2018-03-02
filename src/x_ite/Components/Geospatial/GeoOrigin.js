@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Geospatial/Geospatial",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
@@ -75,7 +73,7 @@ function ($,
 		this .radians = false;
 	}
 
-	GeoOrigin .prototype = $.extend (Object .create (X3DNode .prototype),
+	GeoOrigin .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: GeoOrigin,
 		fieldDefinitions: new FieldDefinitionArray ([

@@ -47,16 +47,13 @@
  ******************************************************************************/
 
 
-define ([
-	"jquery",
-],
-function ($)
+define (function ()
 {
 "use strict";
 
 	function MatrixStack (Type)
 	{
-		return $.extend ([ new Type () ],
+		return Object .assign ([ new Type () ],
 		{
 			top: 0,
 			set: function (matrix)

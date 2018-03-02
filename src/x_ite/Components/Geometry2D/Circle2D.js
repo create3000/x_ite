@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DLineGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode, 
@@ -75,7 +73,7 @@ function ($,
 		this .radius_ .setUnit ("length");
 	}
 
-	Circle2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: Circle2D,
 		fieldDefinitions: new FieldDefinitionArray ([

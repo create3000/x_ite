@@ -86,7 +86,7 @@ function ($,
 		this .urlStack = new Fields .MFString ();
 	}
 
-	ImageTexture .prototype = $.extend (Object .create (X3DTexture2DNode .prototype),
+	ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: ImageTexture,

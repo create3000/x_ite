@@ -69,7 +69,7 @@ function ($,
 		return this;
 	}
 
-	X3DField .prototype = $.extend (Object .create (X3DChildObject .prototype),
+	X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype),
 	{
 		constructor: X3DField,
 		_value: null,

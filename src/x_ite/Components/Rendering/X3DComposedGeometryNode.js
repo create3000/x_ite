@@ -48,14 +48,12 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          X3DGeometryNode,
+function (X3DGeometryNode,
           X3DCast,
           X3DConstants,
           Vector3)
@@ -78,7 +76,7 @@ function ($,
 		this .coordNode    = null;
 	}
 
-	X3DComposedGeometryNode .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: X3DComposedGeometryNode,
 		initialize: function ()

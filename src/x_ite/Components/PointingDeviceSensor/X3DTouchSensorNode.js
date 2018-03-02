@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DPointingDeviceSensorNode, 
+function (X3DPointingDeviceSensorNode, 
           X3DConstants)
 {
 "use strict";
@@ -65,7 +63,7 @@ function ($,
 		this .addType (X3DConstants .X3DTouchSensorNode);
 	}
 
-	X3DTouchSensorNode .prototype = $.extend (Object .create (X3DPointingDeviceSensorNode .prototype),
+	X3DTouchSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
 	{
 		constructor: X3DTouchSensorNode,
 		set_active__: function (active, hit)

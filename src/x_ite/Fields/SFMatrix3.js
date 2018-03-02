@@ -49,14 +49,17 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Fields/SFMatrixPrototypeTemplate",
 	"x_ite/Fields/SFVec2",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix3",
 ],
-function ($, X3DField, SFMatrixPrototypeTemplate, SFVec2, X3DConstants, Matrix3)
+function (X3DField,
+          SFMatrixPrototypeTemplate,
+          SFVec2,
+          X3DConstants,
+          Matrix3)
 {
 "use strict";
 
@@ -79,7 +82,7 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec2, X3DConstants, Matrix3)
 			return X3DField .call (this, new Matrix3 ());
 		}
 	
-		SFMatrix3 .prototype = $.extend (Object .create (X3DField .prototype),
+		SFMatrix3 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFMatrixPrototypeTemplate (Matrix3, SFVec2),
 		{
 			constructor: SFMatrix3,

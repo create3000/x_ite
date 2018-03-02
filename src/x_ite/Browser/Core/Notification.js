@@ -75,7 +75,7 @@ function ($,
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	Notification .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: Notification,
 		initialize: function ()

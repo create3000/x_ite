@@ -48,10 +48,9 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
 ],
-function ($, X3DViewer)
+function (X3DViewer)
 {
 "use strict";
 	
@@ -60,7 +59,7 @@ function ($, X3DViewer)
 		X3DViewer .call (this, executionContext);
 	}
 
-	NoneViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	NoneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: NoneViewer,
 	});

@@ -107,7 +107,7 @@ function ($,
 		this .texture .setup ();
 	}
 
-	ScreenText .prototype = $.extend (Object .create (X3DTextGeometry .prototype),
+	ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
 	{
 		constructor: ScreenText,
 		modelViewMatrix: new Matrix4 (),

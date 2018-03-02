@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -64,8 +63,7 @@ define ([
 	"standard/Math/Utility/BVH",
 	"standard/Math/Algorithms/QuickSort",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode,
@@ -114,7 +112,7 @@ function ($,
 		this .sorter         = new QuickSort (this .intersections, PlaneCompare);
 	}
 
-	VolumeEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: VolumeEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([

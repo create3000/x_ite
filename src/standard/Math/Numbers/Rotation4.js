@@ -48,14 +48,12 @@
 
 
 define ([
-	"jquery",
 	"standard/Math/Numbers/Quaternion",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Quaternion,
+function (Quaternion,
           Vector3,
           Vector4,
           Algorithm)
@@ -361,7 +359,7 @@ function ($,
 	Object .defineProperty (Rotation4 .prototype, "2", z);
 	Object .defineProperty (Rotation4 .prototype, "3", angle);
 
-	$.extend (Rotation4,
+	Object .assign (Rotation4,
 	{
 		Identity: new Rotation4 (),
 		inverse: function (rotation)

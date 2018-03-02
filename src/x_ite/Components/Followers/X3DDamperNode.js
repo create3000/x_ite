@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Followers/X3DFollowerNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          X3DFollowerNode, 
+function (X3DFollowerNode, 
           X3DConstants,
           Algorithm)
 {
@@ -67,7 +65,7 @@ function ($,
 		this .addType (X3DConstants .X3DDamperNode);
 	}
 
-	X3DDamperNode .prototype = $.extend (Object .create (X3DFollowerNode .prototype),
+	X3DDamperNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
 	{
 		constructor: X3DDamperNode,
 		initialize: function ()

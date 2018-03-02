@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShaderNode, 
@@ -80,7 +78,7 @@ function ($,
 		this .loadSensor = new LoadSensor (executionContext);
 	}
 
-	ComposedShader .prototype = $.extend (Object .create (X3DShaderNode .prototype),
+	ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
 		X3DProgrammableShaderObject .prototype,
 	{
 		constructor: ComposedShader,

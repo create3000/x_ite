@@ -65,7 +65,7 @@ function ($,
 		this .motionTime = 0;
 	}
 
-	PointingDevice .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: PointingDevice,
 		initialize: function ()

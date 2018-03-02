@@ -145,7 +145,7 @@ function ($,
 		return new Proxy (this, handler);
 	}
 
-	X3DObjectArrayField .prototype = $.extend (Object .create (X3DArrayField .prototype),
+	X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
 	{
 		constructor: X3DObjectArrayField,
 		copy: function ()

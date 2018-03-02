@@ -48,20 +48,18 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DCast,
           X3DConstants,
           Matrix3)
 {
 "use strict";
-var xxx = 0;
+
 	var
 		matrix3 = new Matrix3 (),
 		NULL    = new Fields .SFNode ();
@@ -1169,7 +1167,7 @@ var xxx = 0;
 			{
 				var uniform = gl .getActiveUniform (program, i);
 				uniform .typeName = enums [uniform.type];
-				result .uniforms .push ($.extend ({ }, uniform));
+				result .uniforms .push (Object .assign ({ }, uniform));
 				result .uniformCount += uniform .size;
 			}
 
@@ -1178,7 +1176,7 @@ var xxx = 0;
 			{
 				var attribute = gl .getActiveAttrib (program, i);
 				attribute .typeName = enums [attribute .type];
-				result .attributes .push ($.extend ({ }, attribute));
+				result .attributes .push (Object .assign ({ }, attribute));
 				result .attributeCount += attribute .size;
 			}
 

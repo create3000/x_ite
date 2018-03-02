@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNetworkSensorNode,
@@ -77,7 +75,7 @@ function ($,
 		this .timeOutId  = undefined;
 	}
 
-	LoadSensor .prototype = $.extend (Object .create (X3DNetworkSensorNode .prototype),
+	LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .prototype),
 	{
 		constructor: LoadSensor,
 		fieldDefinitions: new FieldDefinitionArray ([

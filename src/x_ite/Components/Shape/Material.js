@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DMaterialNode, 
@@ -77,7 +75,7 @@ function ($,
 		this .emissiveColor = new Float32Array (3);
 	}
 
-	Material .prototype = $.extend (Object .create (X3DMaterialNode .prototype),
+	Material .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
 	{
 		constructor: Material,
 		fieldDefinitions: new FieldDefinitionArray ([

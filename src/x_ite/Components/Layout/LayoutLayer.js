@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Components/Navigation/OrthoViewpoint",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLayerNode,
@@ -78,7 +76,7 @@ function ($,
 		this .addType (X3DConstants .LayoutLayer);
 	}
 
-	LayoutLayer .prototype = $.extend (Object .create (X3DLayerNode .prototype),
+	LayoutLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
 	{
 		constructor: LayoutLayer,
 		fieldDefinitions: new FieldDefinitionArray ([

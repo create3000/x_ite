@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DSensorNode, 
+function (X3DSensorNode, 
           X3DConstants)
 {
 "use strict";
@@ -65,7 +63,7 @@ function ($,
 		this .addType (X3DConstants .X3DKeyDeviceSensorNode);
 	}
 
-	X3DKeyDeviceSensorNode .prototype = $.extend (Object .create (X3DSensorNode .prototype),
+	X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 	{
 		constructor: X3DKeyDeviceSensorNode,
 		initialize: function ()

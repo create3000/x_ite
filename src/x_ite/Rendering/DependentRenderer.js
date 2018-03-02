@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Rendering/X3DRenderObject",
 	"x_ite/Bits/TraverseType",
 ],
-function ($,
-          X3DBaseNode,
+function (X3DBaseNode,
           X3DRenderObject,
           TraverseType)
 {
@@ -68,7 +66,7 @@ function ($,
 		this .renderObject = null;
 	}
 
-	DependentRenderer .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	DependentRenderer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 		X3DRenderObject .prototype,
 	{
 		constructor: DependentRenderer,

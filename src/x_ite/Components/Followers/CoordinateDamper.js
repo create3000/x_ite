@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDamperNode,
@@ -78,7 +76,7 @@ function ($,
 		this .addType (X3DConstants .CoordinateDamper);
 	}
 
-	CoordinateDamper .prototype = $.extend (Object .create (X3DDamperNode .prototype),
+	CoordinateDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 		X3DArrayFollowerObject .prototype,
 	{
 		constructor: CoordinateDamper,

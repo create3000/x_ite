@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -79,7 +77,7 @@ function ($,
 		this .addType (X3DConstants .NormalInterpolator);
 	}
 
-	NormalInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	NormalInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: NormalInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([

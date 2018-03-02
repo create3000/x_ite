@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -61,8 +60,7 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DSoundNode, 
@@ -92,7 +90,7 @@ function ($,
 		this .max = { radius: 0, distance: 0 };
 	}
 
-	Sound .prototype = $.extend (Object .create (X3DSoundNode .prototype),
+	Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
 	{
 		constructor: Sound,
 		fieldDefinitions: new FieldDefinitionArray ([

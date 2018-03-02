@@ -48,11 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Configuration/X3DInfoArray",
 	"x_ite/Configuration/ComponentInfo",
 ],
-function ($, X3DInfoArray, ComponentInfo)
+function (X3DInfoArray,
+          ComponentInfo)
 {
 "use strict";
 
@@ -71,7 +71,7 @@ function ($, X3DInfoArray, ComponentInfo)
 		return proxy;
 	}
 
-	ComponentInfoArray .prototype = $.extend (Object .create (X3DInfoArray .prototype),
+	ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ComponentInfoArray,
 		addComponentInfo: function (value)

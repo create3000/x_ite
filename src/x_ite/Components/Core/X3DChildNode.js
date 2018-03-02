@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DNode, 
           X3DConstants)
 {
@@ -72,7 +70,7 @@ function ($,
 		this .addChildObjects ("isCameraObject", new Fields .SFBool ());
 	}
 
-	X3DChildNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DChildNode,
 		setCameraObject: function (value)

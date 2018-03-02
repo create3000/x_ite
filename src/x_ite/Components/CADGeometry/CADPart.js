@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTransformNode, 
@@ -74,7 +72,7 @@ function ($,
 		this .addType (X3DConstants .CADPart);
 	}
 
-	CADPart .prototype = $.extend (Object .create (X3DTransformNode .prototype),
+	CADPart .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 		//X3DProductStructureChildNode .prototype,
 	{
 		constructor: CADPart,

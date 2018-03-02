@@ -278,7 +278,7 @@ function ($,
 				var difference = Algorithm .set_difference (this .overSensors, nearestHit .sensors, { });
 
 			else
-				var difference = $.extend ({ }, this .overSensors);
+				var difference = Object .assign ({ }, this .overSensors);
 
 			for (var key in difference)
 				difference [key] .set_over__ (false, nearestHit);

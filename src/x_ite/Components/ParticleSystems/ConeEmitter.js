@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode, 
@@ -83,7 +81,7 @@ function ($,
 		this .rotation = new Rotation4 (0, 0, 1, 0);
 	}
 
-	ConeEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: ConeEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([

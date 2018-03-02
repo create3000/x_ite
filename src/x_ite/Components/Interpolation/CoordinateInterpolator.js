@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .addType (X3DConstants .CoordinateInterpolator);
 	}
 
-	CoordinateInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	CoordinateInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: CoordinateInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([

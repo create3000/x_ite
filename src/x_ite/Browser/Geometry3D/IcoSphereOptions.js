@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Geometry3D/IndexedFaceSet",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Components/Texturing/TextureCoordinate",
 	"x_ite/Browser/Geometry3D/IcoSphere",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBaseNode,
           IndexedFaceSet,
           Coordinate,
@@ -74,7 +72,7 @@ function ($,
 		                       "order", new Fields .SFInt32 (2))
 	}
 
-	IcoSphereOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	IcoSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: IcoSphereOptions,
 		getTypeName: function ()

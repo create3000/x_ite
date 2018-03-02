@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DAppearanceChildNode, 
           X3DConstants)
 {
@@ -77,7 +75,7 @@ function ($,
 		this .addChildObjects ("transparent", new Fields .SFBool ());
 	}
 
-	X3DTextureNode .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
+	X3DTextureNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DTextureNode,
 		initialize: function ()
