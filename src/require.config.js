@@ -8,7 +8,7 @@ require .config ({
 		},
 		{
 			"name": "text",
-			"location": "../node_modules/text",
+			"location": "../node_modules/requirejs-text",
 			"main": "text.js"
 		},
 		{

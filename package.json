@@ -47,8 +47,11 @@
 		"lint": "jshint **",
 		"build": "npm run build:js && npm run build:min.js && npm run build:css",
 		"-prebuild:js": "npm run lint",
-		"build:js": "r.js -o require.build.js",
-		"build:min.js": "r.js -o require.build.min.js",
-		"build:css": "r.js -o cssIn=src/x_ite.css out=dist/x_ite.css"
+		"build:js": "sh node_modules/.bin/r.js -o require.build.js",
+		"build:min.js": "sh node_modules/.bin/r.js -o require.build.min.js",
+		"build:css": "sh node_modules/.bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css"
+	},
+	"dependencies": {
+		"requirejs-text": "^2.0.15"
 	}
 }

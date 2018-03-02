@@ -682,6 +682,7 @@
     <None Include="x_ite\Parser\HTMLSupport.js" />
     <None Include="x_ite\Parser\Parser.js" />
     <None Include="x_ite\Parser\XMLParser.js" />
+    <None Include="x_ite\Parser\JSONParser.js" />
     <None Include="x_ite\Prototype\ExternProtoDeclarationArray.js" />
     <None Include="x_ite\Prototype\ProtoDeclarationArray.js" />
     <None Include="x_ite\Prototype\X3DExternProtoDeclaration.js" />
