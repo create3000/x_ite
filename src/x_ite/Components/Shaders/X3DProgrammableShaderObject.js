@@ -275,6 +275,8 @@ var xxx = 0;
 				program           = this .getProgram (),
 				userDefinedFields = this .getUserDefinedFields ();
 
+			this .textures .clear ();
+
 			for (var name in userDefinedFields)
 			{
 				var
@@ -309,14 +311,6 @@ var xxx = 0;
 						}
 						case X3DConstants .SFNode:
 						{
-							var texture = X3DCast (X3DConstants .X3DTextureNode, field);
-			
-							if (texture)
-							{
-								this .textures .set (location, { name: field .getName (), texture: texture, textureUnit: undefined } );
-								break;
-							}
-
 							break;
 						}
 						case X3DConstants .MFBool:
@@ -352,17 +346,16 @@ var xxx = 0;
 						}
 						case X3DConstants .MFNode:
 						{
-							var array = field ._uniformLocation = [ ];
+							var locations = location .locations = [ ];
 
-							for (var i = 0, length = field .length; i < length; ++ i)
+							for (var i = 0;; ++ i)
 							{
-								var texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
-				
-								if (texture)
-								{
-									this .textures .set (location, { name: field [i] .getName (), texture: texture, textureUnit: undefined } );
-									continue;
-								}
+								var l = gl .getUniformLocation (program, field .getName () + "[" + i + "]");
+
+								if (! l)
+									break;
+
+								locations .push (l);
 							}
 
 							break;
@@ -407,31 +400,6 @@ var xxx = 0;
 					location = gl .getUniformLocation (program, name);
 
 				field .removeInterest ("set_field__", this);
-
-				switch (field .getType ())
-				{
-					case X3DConstants .SFNode:
-					{
-						this .textures .delete (location);
-						break;
-					}
-					case X3DConstants .MFNode:
-					{
-						var name = field .getName ();
-
-						for (var i = 0; ; ++ i)
-						{
-							var location = gl .getUniformLocation (program, name + "[" + i + "]");
-
-							if (location)
-								this .textures .delete (location);
-						}
-
-						break;
-					}
-					default:
-						break;
-				}
 			}
 		},
 		set_field__: function (field)
@@ -508,6 +476,15 @@ var xxx = 0;
 					}
 					case X3DConstants .SFNode:
 					{
+						var texture = X3DCast (X3DConstants .X3DTextureNode, field);
+		
+						if (texture)
+						{
+							this .textures .set (location, { name: field .getName (), texture: texture, textureUnit: undefined } );
+							return;
+						}
+
+						this .textures .delete (location);
 						return;
 					}
 					case X3DConstants .SFRotation:
@@ -676,6 +653,19 @@ var xxx = 0;
 					}
 					case X3DConstants .MFNode:
 					{
+						var locations = location .locations;
+
+						for (var i = 0, length = field .length; i < length; ++ i)
+						{
+							var texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
+			
+							if (texture)
+							{
+								this .textures .set (locations [i], { name: field [i] .getName (), texture: texture, textureUnit: undefined } );
+								continue;
+							}
+						}
+
 						return;
 					}
 					case X3DConstants .MFRotation:
@@ -815,53 +805,6 @@ var xxx = 0;
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
-		},
-		enable: function (gl)
-		{
-			var browser = this .getBrowser ();
-
-			//console .log (this .getName ());
-			//console .log (browser .getCombinedTextureUnits () .length);
-
-			for (let item of this .textures)
-			{
-				var
-					location = item [0],
-					object   = item [1],
-					name     = object .name,
-					texture  = object .texture;
-
-				if (! browser .getCombinedTextureUnits () .length)
-				{
-					console .warn ("Not enough combined texture units for uniform variable '" + name + "' available.");
-					continue;
-				}
-
-				var textureUnit = object .textureUnit = browser .getCombinedTextureUnits () .pop ();
-	
-				gl .uniform1i (location, textureUnit);
-				gl .activeTexture (gl .TEXTURE0 + textureUnit);
-				gl .bindTexture (texture .getTarget (), texture .getTexture ());
-				gl .activeTexture (gl .TEXTURE0);
-			}		
-		},
-		disable: function (gl)
-		{
-			var browser = this .getBrowser ();
-
-			for (let item of this .textures)
-			{
-				var
-					object      = item [1],
-					textureUnit = object .textureUnit;
-
-				if (textureUnit !== undefined)
-					browser .getCombinedTextureUnits () .push (textureUnit);
-
-				object .textureUnit = undefined;
-			}		
-
-			//console .log (browser .getCombinedTextureUnits () .length);
 		},
 		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
@@ -1007,6 +950,54 @@ var xxx = 0;
 			}
 
 			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+		},
+		enable: function (gl)
+		{
+			var browser = this .getBrowser ();
+
+			//console .log (this .getName ());
+			//console .log (browser .getCombinedTextureUnits () .length);
+
+			for (let item of this .textures)
+			{
+				var
+					location = item [0],
+					object   = item [1],
+					name     = object .name,
+					texture  = object .texture;
+
+				if (! browser .getCombinedTextureUnits () .length)
+				{
+					console .warn ("Not enough combined texture units for uniform variable '" + name + "' available.");
+					continue;
+				}
+
+				var textureUnit = object .textureUnit = browser .getCombinedTextureUnits () .pop ();
+	
+				gl .uniform1i (location, textureUnit);
+				gl .activeTexture (gl .TEXTURE0 + textureUnit);
+				gl .bindTexture (texture .getTarget (), texture .getTexture ());
+			}
+
+			gl .activeTexture (gl .TEXTURE0);
+		},
+		disable: function (gl)
+		{
+			var browser = this .getBrowser ();
+
+			for (let item of this .textures)
+			{
+				var
+					object      = item [1],
+					textureUnit = object .textureUnit;
+
+				if (textureUnit !== undefined)
+					browser .getCombinedTextureUnits () .push (textureUnit);
+
+				object .textureUnit = undefined;
+			}		
+
+			//console .log (browser .getCombinedTextureUnits () .length);
 		},
 		enableFloatAttrib: function (gl, name, buffer, components)
 		{

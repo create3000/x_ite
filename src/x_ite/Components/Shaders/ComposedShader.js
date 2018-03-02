@@ -195,7 +195,7 @@ function ($,
 
 				if (valid)
 				{
-					this .enable (gl);
+					gl .useProgram (this .program);
 
 					// Initialize uniform variables and attributes
 					if (this .getDefaultUniforms ())
@@ -208,8 +208,6 @@ function ($,
 
 					// Debug, print complete shader info and statistics.
 					// this .printProgramInfo ();
-
-					this .disable (gl);
 				}
 				else
 					console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
@@ -225,23 +223,15 @@ function ($,
 		{
 			var gl = this .getBrowser () .getContext ();
 
-			this .enable (gl);
+			gl .useProgram (this .program);
 
 			X3DProgrammableShaderObject .prototype .set_field__ .call (this, field);
-
-			this .disable (gl);
 		},
 		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
-			this .enable (gl);
+			gl .useProgram (this .program);
 
 			X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-
-			this .disable (gl);
-		},
-		setLocalUniforms: function (gl, context)
-		{
-			X3DProgrammableShaderObject .prototype .setLocalUniforms .call (this, gl, context);
 		},
 		enable: function (gl)
 		{

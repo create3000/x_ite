@@ -1,11 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Rendering/X3DGeometryNode.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Shaders/Gouraud.vs">
     <Files>
       <File FileName="src/x_ite.html" Line="593" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="591" Column="14" />
-      <File FileName="src/x_ite/Basic/X3DObjectArrayField.js" Line="534" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="656" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="119" Column="27" />
+      <File FileName="src/x_ite/Basic/X3DObjectArrayField.js" Line="145" Column="19" />
+      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="737" Column="6" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.vs" Line="123" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
