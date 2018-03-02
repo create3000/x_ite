@@ -118,13 +118,17 @@ function ($,
 		build: function ()
 		{
 			var
-				dimension = this .dimension_ .getValue (),
-				angle     = Math .PI * 2 / dimension;
-		
-			this .circleVertices .length = 0;
-			this .diskTexCoords  .length = 0;
-			this .diskNormals    .length = 0;
-			this .diskVertices   .length = 0;
+				dimension      = this .dimension_ .getValue (),
+				angle          = Math .PI * 2 / dimension,
+				circleVertices = this .circleVertices,
+				diskTexCoords  = this .diskTexCoords,
+				diskNormals    = this .diskNormals,
+				diskVertices   = this .diskVertices;
+
+			circleVertices .length = 0;
+			diskTexCoords  .length = 0;
+			diskNormals    .length = 0;
+			diskVertices   .length = 0;
 
 			for (var n = 0; n < dimension; ++ n)
 			{
@@ -138,20 +142,25 @@ function ($,
 		
 				// Circle
 
-				this .circleVertices .push (point1 .real, point1 .imag, 0, 1);
+				circleVertices .push (point1 .real, point1 .imag, 0, 1);
 
 				// Disk
 
-				this .diskTexCoords .push (0.5, 0.5, 0, 1,
-				                           texCoord1 .real, texCoord1 .imag, 0, 1,
-				                           texCoord2 .real, texCoord2 .imag, 0, 1);
+				diskTexCoords .push (0.5, 0.5, 0, 1,
+				                     texCoord1 .real, texCoord1 .imag, 0, 1,
+				                     texCoord2 .real, texCoord2 .imag, 0, 1);
 
-				this .diskNormals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
+				diskNormals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
 
-				this .diskVertices .push (0, 0, 0, 1,
-				                          point1 .real, point1 .imag, 0, 1,
-				                          point2 .real, point2 .imag, 0, 1);
+				diskVertices .push (0, 0, 0, 1,
+				                    point1 .real, point1 .imag, 0, 1,
+				                    point2 .real, point2 .imag, 0, 1);
 			}
+
+			circleVertices .shrinkToFit ();
+			diskTexCoords  .shrinkToFit ();
+			diskNormals    .shrinkToFit ();
+			diskVertices   .shrinkToFit ();
 		},
 	});
 

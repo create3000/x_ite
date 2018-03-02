@@ -52,6 +52,7 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Browser/Core/PrimitiveQuality",
 	"x_ite/Browser/Text/X3DTextGeometry",
+	"x_ite/Components/Rendering/X3DGeometryNode",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Triangle2",
@@ -63,6 +64,7 @@ function ($,
           Fields,
           PrimitiveQuality,
           X3DTextGeometry,
+          X3DGeometryNode,
           Vector3,
           Matrix4,
           Triangle2,
@@ -85,7 +87,7 @@ function ($,
 
 		text .transparent_ = false;
 
-		this .texCoordArray = new Fields .MFFloat () .target;
+		this .texCoordArray = X3DGeometryNode .createArray ();
 	}
 
 	PolygonText .prototype = $.extend (Object .create (X3DTextGeometry .prototype),

@@ -53,6 +53,7 @@ define ([
 	"x_ite/Browser/Text/X3DTextGeometry",
 	"x_ite/Browser/Text/TextAlignment",
 	"x_ite/Components/Texturing/PixelTexture",
+	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -67,6 +68,7 @@ function ($,
           X3DTextGeometry,
           TextAlignment,
           PixelTexture,
+          X3DGeometryNode,
           TraverseType,
           Vector2,
           Vector3,
@@ -94,7 +96,7 @@ function ($,
 
 		text .transparent_ = true;
 
-		this .texCoordArray = new Fields .MFFloat ();
+		this .texCoordArray = X3DGeometryNode .createArray ();
 		this .texture       = new PixelTexture (text .getExecutionContext ());
 		this .canvas        = $("<canvas></canvas>");
 		this .context       = this .canvas [0] .getContext ("2d");

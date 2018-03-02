@@ -269,10 +269,10 @@ function ($,
 			}
 			else
 			{
-				return X3DGeometryNode .prototype .display .call (this, context);
+				return X3DGeometryNode .prototype .display .call (this, gl, context);
 			}
 		},
-		displayParticles: function (context, particles, numParticles)
+		displayParticles: function (gl, context, particles, numParticles)
 		{
 			if (this .getGeometryType () < 2)
 			{

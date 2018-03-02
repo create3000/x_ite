@@ -68,7 +68,7 @@ function ($,
 
 		this .addType (X3DConstants .X3DTextureCoordinateNode);
 
-		this .texCoordArray = X3DGeometryNode .createArray () .target;
+		this .texCoordArray = X3DGeometryNode .createArray ();
 	}
 
 	X3DTextureCoordinateNode .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),

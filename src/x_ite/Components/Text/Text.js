@@ -174,7 +174,7 @@ function ($,
 			{
 				this .textGeometry .display (gl, context);
 
-				X3DGeometryNode .prototype .display .call (this, context);
+				X3DGeometryNode .prototype .display .call (this, gl, context);
 			}
 			catch (error)
 			{

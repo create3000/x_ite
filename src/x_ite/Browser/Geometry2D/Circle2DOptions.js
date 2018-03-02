@@ -102,16 +102,19 @@ function ($,
 		{
 			var
 				dimension = this .dimension_ .getValue (),
-				angle     = Math .PI * 2 / dimension;
-		
-			this .vertices .length = 0;
+				angle     = Math .PI * 2 / dimension,
+				vertices  = this .vertices;
+
+			vertices .length = 0;
 
 			for (var n = 0; n < dimension; ++ n)
 			{
 				var point = Complex .Polar (1, angle * n);
 		
-				this .vertices .push (point .real, point .imag, 0, 1);
+				vertices .push (point .real, point .imag, 0, 1);
 			}
+
+			vertices .shrinkToFit ();
 		},
 	});
 
