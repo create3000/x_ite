@@ -142,10 +142,9 @@ function (Fields,
 
 		array .assign = function (value)
 		{
-			for (var i = 0, length = value .length; i < length; ++ i)
-				this [i] = value [i];
+			Object .assign (this, value);
 
-			this .length = length;
+			this .length = value .length;
 		};
 
 		array .getValue = function ()

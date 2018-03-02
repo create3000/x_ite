@@ -52,6 +52,7 @@
 
 		{ name: 'Interpolation' },
 		{ name: 'Color Interpolator', url: [ "http://media.create3000.de/components/Interpolation/ColorInterpolator/ColorInterpolator.x3d" ], archive: "http://media.create3000.de/components/Interpolation/ColorInterpolator/ColorInterpolator.zip" },
+		{ name: 'Coordinate Interpolator', url: [ "http://media.create3000.de/components/Interpolation/CoordinateInterpolator/CoordinateInterpolator.x3d" ], archive: "http://media.create3000.de/components/Interpolation/CoordinateInterpolator/CoordinateInterpolator.zip" },
 		{ name: 'Orientation Interpolator', url: [ "http://media.create3000.de/components/Interpolation/OrientationInterpolator/OrientationInterpolator.x3d" ], archive: "http://media.create3000.de/components/Interpolation/OrientationInterpolator/OrientationInterpolator.zip" },
 		{ name: 'Position Interpolator', url: [ "http://media.create3000.de/components/Interpolation/PositionInterpolator/PositionInterpolator.x3d" ], archive: "http://media.create3000.de/components/Interpolation/PositionInterpolator/PositionInterpolator.zip" },
 		{ name: 'Position Interpolator2D', url: [ "http://media.create3000.de/components/Interpolation/PositionInterpolator2D/PositionInterpolator2D.x3d" ], archive: "http://media.create3000.de/components/Interpolation/PositionInterpolator2D/PositionInterpolator2D.zip" },

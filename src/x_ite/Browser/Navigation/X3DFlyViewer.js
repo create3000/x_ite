@@ -56,7 +56,12 @@ define ([
 	"standard/Math/Geometry/Camera",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
+function ($,
+          X3DViewer,
+          Vector3,
+          Rotation4,
+          Matrix4,
+          Camera)
 {
 "use strict";
 	

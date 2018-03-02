@@ -54,7 +54,10 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, Vector3, Rotation4)
+function ($,
+          X3DViewer,
+          Vector3,
+          Rotation4)
 {
 "use strict";
 

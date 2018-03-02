@@ -55,7 +55,11 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3)
+function ($,
+          X3DViewer,
+          Viewpoint,
+          GeoViewpoint,
+          Vector3)
 {
 "use strict";
 	

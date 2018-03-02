@@ -52,7 +52,8 @@ define ([
 	"x_ite/Browser/Navigation/X3DViewer",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer)
+function ($,
+          X3DViewer)
 {
 "use strict";
 
