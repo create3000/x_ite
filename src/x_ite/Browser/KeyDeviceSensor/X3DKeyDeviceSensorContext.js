@@ -48,11 +48,9 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 ],
-function ($,
-          Fields)
+function (Fields)
 {
 "use strict";
 	

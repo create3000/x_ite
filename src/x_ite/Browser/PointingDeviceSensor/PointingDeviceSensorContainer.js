@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Vector4,
+function (Vector4,
           Matrix4)
 {
 "use strict";

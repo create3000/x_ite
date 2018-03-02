@@ -51,7 +51,8 @@ define ([
 	"jquery",
 	"x_ite/Components/Texturing/TextureProperties",
 ],
-function ($, TextureProperties)
+function ($,
+          TextureProperties)
 {
 "use strict";
 

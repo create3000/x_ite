@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Time/X3DTimeDependentNode",
 	"x_ite/Bits/X3DConstants",

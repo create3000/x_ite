@@ -652,7 +652,10 @@ function ($,
 
 			console .log (string);
 
-			$(".x_ite-console") .append (document .createTextNode (string));
+			var element = $(".x_ite-console");
+
+			if (element .length)
+				element .append (document .createTextNode (string));
 		},
 		println: function ()
 		{
@@ -665,7 +668,10 @@ function ($,
 
 			string += "\n";
 
-			$(".x_ite-console") .append (string);
+			var element = $(".x_ite-console");
+
+			if (element .length)
+				element .append (document .createTextNode (string));
 		},
 	});
 
