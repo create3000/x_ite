@@ -61,6 +61,7 @@ define ([
 	"x_ite/Execution/X3DScene",
 	"x_ite/InputOutput/FileLoader",
 	"x_ite/Parser/XMLParser",
+	"x_ite/Parser/JSONParser",
 	"x_ite/Bits/X3DConstants",
 	"locale/gettext",
 ],
@@ -77,6 +78,7 @@ function ($,
           X3DScene,
           FileLoader,
           XMLParser,
+          JSONParser,
           X3DConstants,
           _)
 {
@@ -464,6 +466,27 @@ function ($,
 		removeBrowserCallback: function (callback)
 		{	
 			// Probably to be implemented like removeFieldCallback.
+		},
+		importJS: function (jsobj) {
+			var
+				currentScene = this .currentScene,
+				external     = this .isExternal (),
+				scene        = this .createScene ();
+
+			new JSONParser (scene) .parseJavaScript (jsobj);
+
+			if (! external)
+			{
+				scene .setExecutionContext (currentScene);
+				currentScene .isLive () .addInterest (scene, "setLive");
+						
+				if (currentScene .isLive () .getValue ())
+					scene .setLive (true);
+			}
+
+			scene .setup ();
+
+			return scene;
 		},
 		importDocument: function (dom)
 		{
