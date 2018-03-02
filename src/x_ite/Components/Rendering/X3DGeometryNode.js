@@ -119,7 +119,6 @@ function ($,
 
 		array .typedArray  = new Float32Array ();
 		array .target      = array;
-		array .shrinkToFit = Function .prototype;
 
 		array .assign = function (value)
 		{
@@ -131,12 +130,15 @@ function ($,
 
 		array .getValue = function ()
 		{
-			if (array .length !== array .typedArray .length)
-				array .typedArray = new Float32Array (array);
-			else
-				array .typedArray .set (array);
+			return this .typedArray;
+		};
 
-			return array .typedArray;
+		array .shrinkToFit = function ()
+		{
+			if (this .length !== this .typedArray .length)
+				this .typedArray = new Float32Array (this);
+			else
+				this .typedArray .set (this);
 		};
 
 		return array;
@@ -194,7 +196,6 @@ function ($,
 			this .colorBuffer     = gl .createBuffer ();
 			this .normalBuffer    = gl .createBuffer ();
 			this .vertexBuffer    = gl .createBuffer ();
-			this .attribArray     = [ ];
 			this .planes          = [ ];
 
 			if (this .geometryType > 1)
@@ -719,7 +720,24 @@ function ($,
 					this .buildTexCoords ();
 			}
 
+			// Shrink arrays.
+
+			for (var i = 0, length = this .attribs .length; i < length; ++ i)
+				this .attribs [i] .shrinkToFit ();
+
+			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
+				this .multiTexCoords [i] .shrinkToFit ();
+	
+			this .colors   .shrinkToFit ();
+			this .normals  .shrinkToFit ();
+			this .vertices .shrinkToFit ();
+
+			// Upload normals or flat normals.
+
 			this .set_shading__ (this .getBrowser () .getBrowserOptions () .Shading_);
+
+			// Upload arrays.
+
 			this .transfer ();
 		},
 		clear: function ()
@@ -729,7 +747,7 @@ function ($,
 			this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
 			this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
 
-			// Attrib
+			// Create attrib arrays.
 
 			var
 				attrib    = this .getAttrib (),
@@ -737,11 +755,11 @@ function ($,
 				attribs   = this .getAttribs ();
 			
 			for (var a = 0, length = attribs .length; a < length; ++ a)
-				attribs [a] .length = 0;;
+				attribs [a] .length = 0;
 			
 			for (var a = attribs .length; a < numAttrib; ++ a)
-				attribs [a] = [ ];
-			
+				attribs [a] = X3DGeometryNode .createArray () .target;
+
 			attribs .length = numAttrib;
 
 			// Buffer
@@ -761,34 +779,17 @@ function ($,
 				gl    = this .getBrowser () .getContext (),
 				count = this .vertices .length / 4;
 
-			// Shrink arrays.
-
-			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
-				this .multiTexCoords [i] .shrinkToFit ();
-	
-			this .colors   .shrinkToFit ();
-			this .normals  .shrinkToFit ();
-			this .vertices .shrinkToFit ();
-
 			// Transfer attribs.
 
 			for (var i = this .attribBuffers .length, length = this .attribs .length; i < length; ++ i)
-			{
 				this .attribBuffers .push (gl .createBuffer ());
-				this .attribArray   .push (new Float32Array ());
-			}
 
 			this .attribBuffers .length = this .attribs .length;
 			
 			for (var i = 0, length = this .attribs .length; i < length; ++ i)
 			{
-				if (this .attribArray [i] .length !== this .attribs [i] .length)
-					this .attribArray [i] = new Float32Array (this .attribs [i]);
-				else
-					this .attribArray [i] .set (this .attribs [i]);
-
 				gl .bindBuffer (gl .ARRAY_BUFFER, this .attribBuffers [i]);
-				gl .bufferData (gl .ARRAY_BUFFER, this .attribArray [i], gl .STATIC_DRAW);
+				gl .bufferData (gl .ARRAY_BUFFER, this .attribs [i] .getValue (), gl .STATIC_DRAW);
 			}
 
 			// Transfer colors.
