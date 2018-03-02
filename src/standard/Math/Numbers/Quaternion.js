@@ -48,11 +48,10 @@
 
 
 define ([
-	"jquery",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($, Vector3, Algorithm)
+function (Vector3, Algorithm)
 {
 "use strict";
 
@@ -465,7 +464,7 @@ function ($, Vector3, Algorithm)
 		configurable: false
 	});
 
-	$.extend (Quaternion,
+	Object .assign (Quaternion,
 	{
 		negate: function (vector)
 		{

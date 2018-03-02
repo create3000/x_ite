@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DVertexAttributeNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .addType (X3DConstants .Matrix3VertexAttribute);
 	}
 
-	Matrix3VertexAttribute .prototype = $.extend (Object .create (X3DVertexAttributeNode .prototype),
+	Matrix3VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 	{
 		constructor: Matrix3VertexAttribute,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -93,21 +91,34 @@ function ($,
 		{
 			return "attrib";
 		},
-		addValue: function (array, index)
+		initialize: function ()
 		{
-			if (index < this .value_ .length)
-			{
-				var mat3 = this .value_ [index] .getValue ();
+			X3DVertexAttributeNode .prototype .initialize .call (this);
 
-				for (var i = 0; i < 9; ++ i)
-					array .push (mat3 [i]);
+			this .value_ .addInterest ("set_value", this);
+
+			this .set_value ();
+		},
+		set_value: function ()
+		{
+			this .value  = this .value_ .getValue ();
+			this .length = this .value_ .length;
+		},
+		addValue: function (index, array)
+		{
+			if (index < this .length)
+			{
+				var value = this .value;
+
+				for (var i = index * 9, l = i + 9; i < l; ++ i)
+					array .push (value [i]);
 			}
 			else
 			{
-				var mat3 = Matrix3 .Identity;
+				var value = Matrix3 .Identity;
 
 				for (var i = 0; i < 9; ++ i)
-					array .push (mat3 [i]);
+					array .push (value [i]);
 			}
 		},
 		enable: function (gl, shaderNode, buffer)

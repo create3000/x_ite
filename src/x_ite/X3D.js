@@ -220,7 +220,7 @@ function ($,
 		callbacks .resolve ();
 	}
 
-	$.extend (X3D,
+	Object .assign (X3D,
 		Fields,
 	{
 		require:                     require,

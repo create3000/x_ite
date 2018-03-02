@@ -89,7 +89,7 @@ function (DepthBuffer,
          vertexBuffer = gl .createBuffer ();
 
 		frameBuffer .bind ();
-		shaderNode .useProgram (gl);
+		shaderNode  .enable (gl);
 		gl .viewport (0, 0, 16, 16);
 
 		gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
@@ -132,6 +132,9 @@ function (DepthBuffer,
 		var data = frameBuffer .readPixels ();
 
 		frameBuffer .unbind ();
+
+		shaderNode .disableNormalAttribute (gl, normalBuffer);
+		shaderNode .disable                (gl);
 
 		return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
 	}

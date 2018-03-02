@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode, 
@@ -65,8 +63,6 @@ function ($,
           Vector3)
 {
 "use strict";
-
-	var vector = new Vector3 (0, 0, 0);
 
 	function Polyline2D (executionContext)
 	{
@@ -79,7 +75,7 @@ function ($,
 		this .lineSegments_ .setUnit ("length");
 	}
 
-	Polyline2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: Polyline2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -106,13 +102,13 @@ function ($,
 		},
 		build: function ()
 		{
-			var lineSegments = this .lineSegments_ .getValue ();
+			var
+				lineSegments = this .lineSegments_ .getValue (),
+				vertexArray  = this .getVertices ();
 
-			for (var i = 0, length = lineSegments .length; i < length; ++ i)
+			for (var i = 0, length = this .lineSegments_ .length * 2; i < length; i += 2)
 			{
-				var vertex = lineSegments [i];
-
-				this .addVertex (vector .set (vertex .x, vertex .y, 0));
+				vertexArray .push (lineSegments [i + 0], lineSegments [i + 1], 0, 1);
 			}
 
 			this .setSolid (false);

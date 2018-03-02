@@ -48,11 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DField",
+	"x_ite/Fields/SFInt32",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($, X3DField, X3DConstants)
+function (X3DField,
+          SFInt32,
+          X3DConstants)
 {
 "use strict";
 
@@ -91,14 +93,14 @@ function ($, X3DField, X3DConstants)
 			this .width  = image .width;
 			this .height = image .height;
 			this .comp   = image .comp;
-			this .array .set (image .array .getValue ());
+			this .array .assign (image .array);
 		},
 		set: function (width, height, comp, array)
 		{
 			this .width  = width;
 			this .height = height;
 			this .comp   = comp;
-			this .array .set (array);
+			this .array .assign (array);
 		},
 		setWidth: function (value)
 		{
@@ -128,7 +130,7 @@ function ($, X3DField, X3DConstants)
 		},
 		setArray: function (value)
 		{
-			this .array .setValue (value);
+			this .array .assign (value);
 			this .array .length = this .width  * this .height;	
 		},
 		getArray: function ()
@@ -160,7 +162,7 @@ function ($, X3DField, X3DConstants)
 		return SFImage .apply (Object .create (SFImage .prototype), arguments);
 	}
 
-	SFImage .prototype = $.extend (Object .create (X3DField .prototype),
+	SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFImage,
 		set_size__: function ()
@@ -196,14 +198,18 @@ function ($, X3DField, X3DConstants)
 		},
 		toStream: function (stream)
 		{
-		   var array = this .array .getValue ();
+		   var
+				array = this .array,
+				int   = new SFInt32 ();
 
 			stream .string += this .width + " " + this .height + " " + this .comp;
 
 			for (var i = 0, length = this .width * this .height; i < length; ++ i)
 			{
 				stream .string += " 0x";
-				array [i] .toStream (stream, 16);
+
+				int .set (array [i]);
+				int .toXMLStream (stream);
 			}
 		},
 		toXMLStream: function (stream)

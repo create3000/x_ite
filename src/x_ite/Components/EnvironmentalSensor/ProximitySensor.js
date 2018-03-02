@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59,8 +58,7 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentalSensorNode, 
@@ -96,7 +94,7 @@ function ($,
 		this .inside                 = false;
 	}
 
-	ProximitySensor .prototype = $.extend (Object .create (X3DEnvironmentalSensorNode .prototype),
+	ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 	{
 		constructor: ProximitySensor,
 		fieldDefinitions: new FieldDefinitionArray ([

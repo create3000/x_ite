@@ -1,4 +1,4 @@
-/* X_ITE v4.1.5a-210 */
+/* X_ITE v4.1.5a-211 */
 
 (function () {
 
@@ -12624,10 +12624,7 @@ define ('x_ite/Basic/X3DFieldDefinition',[],function ()
  ******************************************************************************/
 
 
-define ('x_ite/Basic/FieldDefinitionArray',[
-	"jquery",
-],
-function ($)
+define ('x_ite/Basic/FieldDefinitionArray',[],function ()
 {
 "use strict";
 
@@ -12635,8 +12632,10 @@ function ($)
 	{
 		get: function (target, key)
 		{
-			if (key in target)
-				return target [key];
+			var value = target [key];
+
+			if (value !== undefined)
+				return value;
 
 			return target .array [key];
 		},
@@ -12657,7 +12656,7 @@ function ($)
 		return new Proxy (this, handler);
 	}
 
-	$.extend (FieldDefinitionArray .prototype,
+	Object .assign (FieldDefinitionArray .prototype,
 	{
 		constructor: FieldDefinitionArray,
 		add: function (fieldDefinition)
@@ -12888,10 +12887,9 @@ function ()
 
 
 define ('x_ite/Base/X3DChildObject',[
-	"jquery",
 	"x_ite/Base/X3DObject",
 ],
-function ($, X3DObject)
+function (X3DObject)
 {
 "use strict";
 
@@ -12902,7 +12900,7 @@ function ($, X3DObject)
 		this ._parents = { };
 	}
 
-	X3DChildObject .prototype = $.extend (Object .create (X3DObject .prototype),
+	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: X3DChildObject,
 		addEvent: function ()
@@ -13450,10 +13448,7 @@ define ('x_ite/Bits/X3DConstants',[],function ()
  ******************************************************************************/
 
 ﻿
-define ('x_ite/Base/Events',[
-	"jquery",
-],
-function ($)
+define ('x_ite/Base/Events',[],function ()
 {
 "use strict";
 
@@ -13590,7 +13585,7 @@ function ($,
 		return this;
 	}
 
-	X3DField .prototype = $.extend (Object .create (X3DChildObject .prototype),
+	X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype),
 	{
 		constructor: X3DField,
 		_value: null,
@@ -13611,10 +13606,10 @@ function ($,
 		{
 			return this ._value === value .valueOf ();
 		},
-		setValue: function (value)
+		assign: function (field)
 		{
-			// Sets internal value and generates event.
-			this .set (value instanceof this .constructor ? value .getValue () : value);
+			// Assigns field to this field.
+			this .set (field .getValue ());
 			this .addEvent ();
 		},
 		set: function (value)
@@ -13622,10 +13617,10 @@ function ($,
 			// Sets internal value without generating event.
 			this ._value = value;
 		},
-		assign: function (field)
+		setValue: function (value)
 		{
-			// Assigns field to this field.
-			this .set (field .getValue ());
+			// Sets internal value and generates event.
+			this .set (value instanceof this .constructor ? value .getValue () : value);
 			this .addEvent ();
 		},
 		getValue: function ()
@@ -13703,7 +13698,7 @@ function ($,
 			{
 				case X3DConstants .initializeOnly:
 					reference .addFieldInterest (this);
-					this .set (reference .getValue ());
+					this .set (reference .getValue (), reference .length);
 					return;
 				case X3DConstants .inputOnly:
 					reference .addFieldInterest (this);
@@ -13714,7 +13709,7 @@ function ($,
 				case X3DConstants .inputOutput:
 					reference .addFieldInterest (this);
 					this .addFieldInterest (reference);
-					this .set (reference .getValue ());
+					this .set (reference .getValue (), reference .length);
 					return;
 			}
 		},
@@ -13740,7 +13735,7 @@ function ($,
 							continue;
 						case X3DConstants .initializeOnly:
 						case X3DConstants .inputOutput:
-							this .set (reference .getValue ());
+							this .set (reference .getValue (), reference .length);
 							continue;
 					}
 				}
@@ -13816,7 +13811,7 @@ function ($,
 			this .setTainted (false);
 
 			if (event .field !== this)
-				this .set (event .field .getValue ());
+				this .set (event .field .getValue (), event .field .length);
 
 			// Process interests
 
@@ -13907,13 +13902,1261 @@ function ($,
  ******************************************************************************/
 
 
+define ('x_ite/Basic/X3DArrayField',[
+	"x_ite/Basic/X3DField",
+],
+function (X3DField)
+{
+"use strict";
 
-define ('x_ite/InputOutput/Generator',[
-	"jquery",
+	function X3DArrayField (value)
+	{
+		X3DField .call (this, value);
+	}
+
+	X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
+	{
+		constructor: X3DArrayField,
+	});
+
+	return X3DArrayField;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Fields/SFBool',[
+	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
+function (X3DField,
           X3DConstants)
+{
+"use strict";
+
+	function SFBool (value)
+	{
+		if (this instanceof SFBool)
+			return X3DField .call (this, Boolean (value));
+		
+		return X3DField .call (Object .create (SFBool .prototype), Boolean (value));
+	}
+
+	SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
+	{
+		constructor: SFBool,
+		copy: function ()
+		{
+			return new SFBool (this .getValue ());
+		},
+		isDefaultValue: function ()
+		{
+			return this .getValue () === false;
+		},
+		set: function (value)
+		{
+			X3DField .prototype .set .call (this, Boolean (value));
+		},
+		getTypeName: function ()
+		{
+			return "SFBool";
+		},
+		getType: function ()
+		{
+			return X3DConstants .SFBool;
+		},
+		valueOf: function ()
+		{
+			return this .getValue ();
+		},
+		toStream: function (stream)
+		{
+			stream .string += this .getValue () ? "TRUE" : "FALSE";
+		},
+		toXMLStream: function (stream)
+		{
+			stream .string += this .getValue () ? "true" : "false";
+		},
+	});
+
+	return SFBool;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+define ('standard/Math/Algorithm',[],function ()
+{
+"use strict";
+
+	var Algorithm =
+	{
+		signum: function (value)
+		{
+			return (0 < value) - (value < 0);
+		},
+		radians: function (value)
+		{
+			return value * (Math .PI / 180);
+		},
+		degrees: function (value)
+		{
+			return value * (180 / Math .PI);
+		},
+		random: function (min, max)
+		{
+			return min + Math .random () * (max - min);
+		},
+		clamp: function (value, min, max)
+		{
+			return value < min ? min : (value > max ? max : value);
+		},
+		interval: function (value, low, high)
+		{
+			if (value >= high)
+				return ((value - low) % (high - low)) + low;
+
+			if (value < low)
+				return ((value - high) % (high - low)) + high;
+
+			return value;
+		},
+		lerp: function (source, destination, t)
+		{
+			return source + t * (destination - source);
+		},
+		slerp: function (source, destination, t)
+		{
+			var cosom = source .dot (destination);
+
+			if (cosom <= -1)
+				throw new Error ("slerp is not possible: vectors are inverse collinear.");
+
+			if (cosom >= 1) // both normal vectors are equal
+				return source;
+
+			if (cosom < 0)
+			{
+				// Reverse signs so we travel the short way round
+				cosom = -cosom;
+				destination .negate ();
+			}				
+
+			var
+				omega = Math .acos (cosom),
+				sinom = Math .sin  (omega),
+
+				scale0 = Math .sin ((1 - t) * omega) / sinom,
+				scale1 = Math .sin (t * omega) / sinom;
+
+			source .x = source .x * scale0 + destination .x * scale1;
+			source .y = source .y * scale0 + destination .y * scale1;
+			source .z = source .z * scale0 + destination .z * scale1;
+			source .w = source .w * scale0 + destination .w * scale1;
+
+			return source;
+		},
+		simpleSlerp: function (source, destination, t)
+		{
+			var cosom = source .dot (destination);
+
+			if (cosom <= -1)
+				throw new Error ("slerp is not possible: vectors are inverse collinear.");
+
+			if (cosom >= 1) // both normal vectors are equal
+				return source;
+
+			var
+				omega = Math .acos (cosom),
+				sinom = Math .sin  (omega),
+
+				scale0 = Math .sin ((1 - t) * omega) / sinom,
+				scale1 = Math .sin (t * omega) / sinom;
+
+			source .x = source .x * scale0 + destination .x * scale1;
+			source .y = source .y * scale0 + destination .y * scale1;
+			source .z = source .z * scale0 + destination .z * scale1;
+			source .w = source .w * scale0 + destination .w * scale1;
+
+			return source;
+		},
+		isPowerOfTwo: function (n)
+		{
+			return ((n - 1) & n) === 0;
+		},
+		nextPowerOfTwo: function (n)
+		{
+			///  Returns the next power of two of @a n. If n is a power of two, n is returned.
+
+			-- n;
+
+			for (var k = 1; ! (k & (1 << (4 + 1))); k <<= 1)
+				n |= n >> k;
+
+			return ++ n;
+		},
+		/*
+		isInt: function(n)
+		{
+			return typeof n === 'number' && 
+			       parseFloat (n) == parseInt (n, 10) && ! isNaN (n);
+		},
+		decimalPlaces: function (n)
+		{
+			var
+				a = Math.abs(n),
+				c = a, count = 1;
+
+			while(! Algorithm .isInt (c) && isFinite (c))
+				c = a * Math .pow (10, count ++);
+	
+			return count-1;
+		},
+		*/
+		less: function (lhs, rhs)
+		{
+			return lhs < rhs;
+		},
+		greater: function (lhs, rhs)
+		{
+			return lhs > rhs;
+		},
+		lowerBound: function (array, first, last, value, comp)
+		{
+		   // http://en.cppreference.com/w/cpp/algorithm/lower_bound
+
+			var
+				index = 0,
+				step  = 0,
+				count = last - first;
+
+			while (count > 0)
+			{
+				step  = count >>> 1;
+				index = first + step;
+
+				if (comp (array [index], value))
+				{
+					first  = ++ index;
+					count -= step + 1;
+				}
+				else
+					count = step;
+			}
+
+			return first;
+		},
+		upperBound: function (array, first, last, value, comp)
+		{
+		   // http://en.cppreference.com/w/cpp/algorithm/upper_bound
+
+			var
+				index = 0,
+				step  = 0,
+				count = last - first;
+
+			while (count > 0)
+			{
+				step  = count >>> 1;
+				index = first + step;
+
+				if (comp (value, array [index]))
+					count = step;
+
+				else
+				{
+					first  = ++ index;
+					count -= step + 1;
+				}
+			}
+
+			return first;
+		},
+		set_difference: function (lhs, rhs, result)
+		{
+			for (var key in lhs)
+			{
+				if (key in rhs)
+					continue;
+
+				result [key] = lhs [key];
+			}
+
+			return result;
+		},
+	};
+
+	Object .preventExtensions (Algorithm);
+	Object .freeze (Algorithm);
+	Object .seal (Algorithm);
+
+	return Algorithm;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Math/Numbers/Color3',[
+	"standard/Math/Algorithm",
+],
+function (Algorithm)
+{
+"use strict";
+
+	var clamp = Algorithm .clamp;
+
+	function Color3 (r, g, b)
+	{
+		if (arguments .length)
+		{
+			this .r_ = clamp (r, 0, 1);
+			this .g_ = clamp (g, 0, 1);
+			this .b_ = clamp (b, 0, 1);
+		}
+		else
+		{
+			this .r_ = 0;
+			this .g_ = 0;
+			this .b_ = 0;
+		}
+	}
+
+	Color3 .prototype =
+	{
+		constructor: Color3,
+		length: 3,
+		copy: function ()
+		{
+			var copy = Object .create (Color3 .prototype);
+			copy .r_ = this .r_;
+			copy .g_ = this .g_;
+			copy .b_ = this .b_;
+			return copy;
+		},
+		assign: function (color)
+		{
+			this .r_ = color .r_;
+			this .g_ = color .g_;
+			this .b_ = color .b_;
+		},
+		set: function (r, g, b)
+		{
+			this .r_ = clamp (r, 0, 1);
+			this .g_ = clamp (g, 0, 1);
+			this .b_ = clamp (b, 0, 1);
+		},
+		equals: function (color)
+		{
+			return this .r_ === color .r_ &&
+			       this .g_ === color .g_ &&
+			       this .b_ === color .b_;
+		},
+		getHSV: function (result)
+		{
+			var h, s, v;
+
+			var min = Math .min (this .r_, this .g_, this .b_);
+			var max = Math .max (this .r_, this .g_, this .b_);
+			v = max; // value
+
+			var delta = max - min;
+
+			if (max !== 0 && delta !== 0)
+			{
+				s = delta / max; // s
+
+				if (this .r_ === max)
+					h =     (this .g_ - this .b_) / delta;  // between yellow & magenta
+				else if (this .g_ === max)
+					h = 2 + (this .b_ - this .r_) / delta;  // between cyan & yellow
+				else
+					h = 4 + (this .r_ - this .g_) / delta;  // between magenta & cyan
+
+				h *= Math .PI / 3;  // radiants
+				if (h < 0)
+					h += Math .PI * 2;
+			}
+			else
+				s = h = 0;         // s = 0, h is undefined
+
+			result [0] = h;
+			result [1] = s;
+			result [2] = v;
+
+			return result;
+		},
+		setHSV: function (h, s, v)
+		{
+			s = clamp (s, 0, 1),
+			v = clamp (v, 0, 1);
+
+			// H is given on [0, 2 * Pi]. S and V are given on [0, 1].
+			// RGB are each returned on [0, 1].
+
+			if (s === 0)
+			{
+				// achromatic (grey)
+				this .r_ = this .g_ = this .b_ = v;
+			}
+			else
+			{
+				var w = Algorithm .degrees (Algorithm .interval (h, 0, Math .PI * 2)) / 60;     // sector 0 to 5
+
+				var i = Math .floor (w);
+				var f = w - i;                      // factorial part of h
+				var p = v * ( 1 - s );
+				var q = v * ( 1 - s * f );
+				var t = v * ( 1 - s * ( 1 - f ) );
+
+				switch (i % 6)
+				{
+					case 0:  this .r_ = v; this .g_ = t; this .b_ = p; break;
+					case 1:  this .r_ = q; this .g_ = v; this .b_ = p; break;
+					case 2:  this .r_ = p; this .g_ = v; this .b_ = t; break;
+					case 3:  this .r_ = p; this .g_ = q; this .b_ = v; break;
+					case 4:  this .r_ = t; this .g_ = p; this .b_ = v; break;
+					default: this .r_ = v; this .g_ = p; this .b_ = q; break;
+				}
+			}
+		},
+		toString: function ()
+		{
+			return this .r_ + " " +
+			       this .g_ + " " +
+			       this .b_;
+		},
+	};
+
+	var r = {
+		get: function () { return this .r_; },
+		set: function (value) { this .r_ = clamp (value, 0, 1); },
+		enumerable: true,
+		configurable: false
+	};
+	
+	var g = {
+		get: function () { return this .g_; },
+		set: function (value) { this .g_ = clamp (value, 0, 1); },
+		enumerable: true,
+		configurable: false
+	};
+
+	var b = {
+		get: function () { return this .b_; },
+		set: function (value) { this .b_ = clamp (value, 0, 1); },
+		enumerable: true,
+		configurable: false
+	};
+
+	Object .defineProperty (Color3 .prototype, "r", r);
+	Object .defineProperty (Color3 .prototype, "g", g);
+	Object .defineProperty (Color3 .prototype, "b", b);
+
+	r .enumerable = false;
+	g .enumerable = false;
+	b .enumerable = false;
+
+	Object .defineProperty (Color3 .prototype, "0", r);
+	Object .defineProperty (Color3 .prototype, "1", g);
+	Object .defineProperty (Color3 .prototype, "2", b);
+
+	Object .assign (Color3,
+	{
+		HSV: function (h, s, v)
+		{
+			var color = new Color3 (0, 0, 0);
+			color .setHSV (h, s, v);
+			return color;
+		},
+		lerp: function (a, b, t, r)
+		{
+			var range = Math .abs (b [0] - a [0]);
+
+			if (range <= Math .PI)
+			{
+				r [0] = Algorithm .lerp (a [0], b [0], t);
+				r [1] = Algorithm .lerp (a [1], b [1], t);
+				r [2] = Algorithm .lerp (a [2], b [2], t);
+				return r;
+			}
+
+			var
+				PI2  = Math .PI * 2,
+				step = (PI2 - range) * t,
+				h    = a [0] < b [0] ? a [0] - step : a [0] + step;
+
+			if (h < 0)
+				h += PI2;
+
+			else if (h > PI2)
+				h -= PI2;
+
+			r [0] = h;
+			r [1] = Algorithm .lerp (a [1], b [1], t);
+			r [2] = Algorithm .lerp (a [2], b [2], t);
+			return r;
+		},
+	});
+
+	return Color3;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Fields/SFColor',[
+	"standard/Math/Numbers/Color3",
+	"x_ite/Basic/X3DField",
+	"x_ite/Bits/X3DConstants",
+],
+function (Color3,
+          X3DField,
+          X3DConstants)
+{
+"use strict";
+
+	function SFColor (r, g, b)
+	{
+		if (this instanceof SFColor)
+		{
+			if (arguments .length)
+			{
+				if (arguments [0] instanceof Color3)
+					return X3DField .call (this, arguments [0]);
+				else
+					return X3DField .call (this, new Color3 (+r, +g, +b));
+			}
+
+			return X3DField .call (this, new Color3 ());
+		}
+
+		return SFColor .apply (Object .create (SFColor .prototype), arguments);
+	}
+
+	SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
+	{
+		constructor: SFColor,
+		copy: function ()
+		{
+			return new SFColor (this .getValue () .copy ());
+		},
+		getTypeName: function ()
+		{
+			return "SFColor";
+		},
+		getType: function ()
+		{
+			return X3DConstants .SFColor;
+		},
+		equals: function (color)
+		{
+			return this .getValue () .equals (color .getValue ());
+		},
+		isDefaultValue: function ()
+		{
+			return (
+				this .getValue () .r === 0 &&
+				this .getValue () .g === 0 &&
+				this .getValue () .b === 0);
+		},
+		set: function (value)
+		{
+			this .getValue () .assign (value);
+		},
+		getHSV: function ()
+		{
+			return this .getValue () .getHSV ([ ]);
+		},
+		setHSV: function (h, s, v)
+		{
+			this .getValue () .setHSV (h, s, v);
+			this .addEvent ();
+		},
+		toStream: function (stream)
+		{
+			stream .string += this .getValue () .toString ();
+		},
+		toXMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
+	});
+
+	var r = {
+		get: function ()
+		{
+			return this .getValue () .r;
+		},
+		set: function (value)
+		{
+			this .getValue () .r = value;
+			this .addEvent ();
+		},
+		enumerable: true,
+		configurable: false
+	};
+
+	var g = {
+		get: function ()
+		{
+			return this .getValue () .g;
+		},
+		set: function (value)
+		{
+			this .getValue () .g = value;
+			this .addEvent ();
+		},
+		enumerable: true,
+		configurable: false
+	};
+
+	var b = {
+		get: function ()
+		{
+			return this .getValue () .b;
+		},
+		set: function (value)
+		{
+			this .getValue () .b = value;
+			this .addEvent ();
+		},
+		enumerable: true,
+		configurable: false
+	};
+
+	Object .defineProperty (SFColor .prototype, "r", r);
+	Object .defineProperty (SFColor .prototype, "g", g);
+	Object .defineProperty (SFColor .prototype, "b", b);
+
+	r .enumerable = false;
+	g .enumerable = false;
+	b .enumerable = false;
+
+	Object .defineProperty (SFColor .prototype, "0", r);
+	Object .defineProperty (SFColor .prototype, "1", g);
+	Object .defineProperty (SFColor .prototype, "2", b);
+
+	return SFColor;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Math/Numbers/Color4',[
+	"standard/Math/Numbers/Color3",
+	"standard/Math/Algorithm",
+],
+function (Color3, Algorithm)
+{
+"use strict";
+
+	var clamp = Algorithm .clamp;
+
+	function Color4 (r, g, b, a)
+	{
+		if (arguments .length)
+		{
+			this .r_ = clamp (r, 0, 1);
+			this .g_ = clamp (g, 0, 1);
+			this .b_ = clamp (b, 0, 1);
+			this .a_ = clamp (a, 0, 1);
+		}
+		else
+		{
+			this .r_ = 0;
+			this .g_ = 0;
+			this .b_ = 0;
+			this .a_ = 0;
+		}
+	}
+
+	Color4 .prototype =
+	{
+		constructor: Color4,
+		length: 4,
+		copy: function ()
+		{
+			var copy = Object .create (Color4 .prototype);
+			copy .r_ = this .r_;
+			copy .g_ = this .g_;
+			copy .b_ = this .b_;
+			copy .a_ = this .a_;
+			return copy;
+		},
+		assign: function (color)
+		{
+			this .r_ = color .r_;
+			this .g_ = color .g_;
+			this .b_ = color .b_;
+			this .a_ = color .a_;
+		},
+		set: function (r, g, b, a)
+		{
+			this .r_ = clamp (r, 0, 1);
+			this .g_ = clamp (g, 0, 1);
+			this .b_ = clamp (b, 0, 1);
+			this .a_ = clamp (a, 0, 1);
+		},
+		equals: function (color)
+		{
+			return this .r_ === color .r_ &&
+			       this .g_ === color .g_ &&
+			       this .b_ === color .b_ &&
+			       this .a_ === color .a_;
+		},
+		getHSVA: function (result)
+		{
+			Color3 .prototype .getHSV .call (this, result);
+
+			result [3] = this .a_;
+
+			return result;
+		},
+		setHSVA: function (h, s, v, a)
+		{
+			Color3 .prototype .setHSV .call (this, h, s, v);
+
+			this .a_ = clamp (a, 0, 1);
+		},
+		toString: function ()
+		{
+			return this .r_ + " " +
+			       this .g_ + " " +
+			       this .b_ + " " +
+			       this .a_;
+		},
+	};
+
+	var r = {
+		get: function () { return this .r_; },
+		set: function (value) { this .r_ = clamp (value, 0, 1); },
+		enumerable: true,
+		configurable: false
+	};
+	
+	var g = {
+		get: function () { return this .g_; },
+		set: function (value) { this .g_ = clamp (value, 0, 1); },
+		enumerable: true,
+		configurable: false
+	};
+
+	var b = {
+		get: function () { return this .b_; },
+		set: function (value) { this .b_ = clamp (value, 0, 1); },
+		enumerable: true,
+		configurable: false
+	};
+
+	var a = {
+		get: function () { return this .a_; },
+		set: function (value) { this .a_ = clamp (value, 0, 1); },
+		enumerable: true,
+		configurable: false
+	};
+
+	Object .defineProperty (Color4 .prototype, "r", r);
+	Object .defineProperty (Color4 .prototype, "g", g);
+	Object .defineProperty (Color4 .prototype, "b", b);
+	Object .defineProperty (Color4 .prototype, "a", a);
+
+	r .enumerable = false;
+	g .enumerable = false;
+	b .enumerable = false;
+	a .enumerable = false;
+
+	Object .defineProperty (Color4 .prototype, "0", r);
+	Object .defineProperty (Color4 .prototype, "1", g);
+	Object .defineProperty (Color4 .prototype, "2", b);
+	Object .defineProperty (Color4 .prototype, "3", a);
+
+	Color4 .HSVA = function (h, s, v, a)
+	{
+		var color = new Color4 (0, 0, 0, a);
+		color .setHSV (h, s, v);
+		return color;
+	}
+
+	return Color4;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Fields/SFColorRGBA',[
+	"x_ite/Basic/X3DField",
+	"x_ite/Fields/SFColor",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Color4",
+],
+function (X3DField,
+          SFColor,
+          X3DConstants,
+          Color4)
+{
+"use strict";
+
+	function SFColorRGBA (r, g, b, a)
+	{
+		if (this instanceof SFColorRGBA)
+		{
+			if (arguments .length)
+			{
+				if (arguments [0] instanceof Color4)
+					return X3DField .call (this, arguments [0]);
+				else
+					return X3DField .call (this, new Color4 (+r, +g, +b, +a));
+			}
+
+			return X3DField .call (this, new Color4 ());
+		}
+
+		return SFColorRGBA .apply (Object .create (SFColorRGBA .prototype), arguments);
+	}
+
+	SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
+	{
+		constructor: SFColorRGBA,
+		copy: function ()
+		{
+			return new SFColorRGBA (this .getValue () .copy ());
+		},
+		getTypeName: function ()
+		{
+			return "SFColorRGBA";
+		},
+		getType: function ()
+		{
+			return X3DConstants .SFColorRGBA;
+		},
+		equals: SFColor .prototype .equals,
+		isDefaultValue: function ()
+		{
+			return (
+				this .getValue () .r === 0 &&
+				this .getValue () .g === 0 &&
+				this .getValue () .b === 0 &&
+				this .getValue () .a === 0);
+		},
+		set: SFColor .prototype .set,
+		getHSVA: function ()
+		{
+			return this .getValue () .getHSVA ([ ]);
+		},
+		setHSVA: function (h, s, v, a)
+		{
+			this .getValue () .setHSVA (h, s, v, a);
+			this .addEvent ();
+		},
+		toStream: SFColor .prototype .toStream,
+		toXMLStream: SFColor .prototype .toXMLStream,
+	});
+
+	var r = {
+		get: function ()
+		{
+			return this .getValue () .r;
+		},
+		set: function (value)
+		{
+			this .getValue () .r = value;
+			this .addEvent ();
+		},
+		enumerable: true,
+		configurable: false
+	};
+
+	var g = {
+		get: function ()
+		{
+			return this .getValue () .g;
+		},
+		set: function (value)
+		{
+			this .getValue () .g = value;
+			this .addEvent ();
+		},
+		enumerable: true,
+		configurable: false
+	};
+
+	var b = {
+		get: function ()
+		{
+			return this .getValue () .b;
+		},
+		set: function (value)
+		{
+			this .getValue () .b = value;
+			this .addEvent ();
+		},
+		enumerable: true,
+		configurable: false
+	};
+
+	var a = {
+		get: function ()
+		{
+			return this .getValue () .a;
+		},
+		set: function (value)
+		{
+			this .getValue () .a = value;
+			this .addEvent ();
+		},
+		enumerable: true,
+		configurable: false
+	};
+
+	Object .defineProperty (SFColorRGBA .prototype, "r", r);
+	Object .defineProperty (SFColorRGBA .prototype, "g", g);
+	Object .defineProperty (SFColorRGBA .prototype, "b", b);
+	Object .defineProperty (SFColorRGBA .prototype, "a", a);
+
+	r .enumerable = false;
+	g .enumerable = false;
+	b .enumerable = false;
+	a .enumerable = false;
+
+	Object .defineProperty (SFColorRGBA .prototype, "0", r);
+	Object .defineProperty (SFColorRGBA .prototype, "1", g);
+	Object .defineProperty (SFColorRGBA .prototype, "2", b);
+	Object .defineProperty (SFColorRGBA .prototype, "3", a);
+
+	return SFColorRGBA;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+define ('x_ite/InputOutput/Generator',[
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DConstants)
 {
 "use strict";
 
@@ -14299,1701 +15542,14 @@ function ($,
  ******************************************************************************/
 
 
-define ('x_ite/Basic/X3DArrayField',[
-	"jquery",
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/InputOutput/Generator",
-],
-function ($,
-          X3DField,
-          X3DConstants, 
-          Generator)
-{
-"use strict";
-
-	var handler =
-	{
-		get: function (target, key)
-		{
-			try
-			{
-				if (key in target)
-					return target [key];
-
-				// value
-				
-				var
-					array = target .getValue (),
-					index = parseInt (key);
-
-				if (index >= array .length)
-					target .resize (index + 1);
-
-				return array [index] .valueOf ();
-			}
-			catch (error)
-			{
-				// Don't know what to do with symbols, but it seem not to affect anything.
-				if ((typeof key) === "symbol")
-					return;
-
-				// if target not instance of X3DArrayField, then the constuctor is called as function.
-				console .log (target, typeof key, key, error);
-			}
-		},
-		set: function (target, key, value)
-		{
-			try
-			{
-				if (key in target)
-				{
-					target [key] = value;
-					return true;
-				}
-
-				var
-					array = target .getValue (),
-					index = parseInt (key);
-
-				if (index >= array .length)
-					target .resize (index + 1);
-
-				array [index] .setValue (value);
-				return true;
-			}
-			catch (error)
-			{
-				// if target not instance of X3DArrayField, then the constuctor is called as function.
-				console .log (target, key, error);
-				return false;
-			}
-		},
-		has: function (target, key)
-		{
-			return key in target .getValue ();
-		},
-		enumerate: function (target)
-		{
-			return Object .keys (target .getValue ()) [Symbol.iterator] ();
-		},
-	};
-
-	function X3DArrayField (value)
-	{
-		X3DField .call (this, [ ]);
-		
-		if (value [0] instanceof Array)
-			value = value [0];
-
-		X3DArrayField .prototype .push .apply (this, value);
-
-		return new Proxy (this, handler);
-	}
-
-	X3DArrayField .prototype = $.extend (new X3DField ([ ]),
-	{
-		constructor: X3DArrayField,
-		copy: function ()
-		{
-			var
-				copy  = new (this .constructor) (),
-				array = this .getValue ();
-
-			X3DArrayField .prototype .push .apply (copy, array);
-
-			return copy;
-		},
-		equals: function (array)
-		{
-			var
-				a      = this .getValue (),
-				b      = array .getValue (),
-				length = a .length;
-
-			if (a === b)
-				return true;
-
-			if (length !== b .length)
-				return false;
-
-			for (var i = 0; i < length; ++ i)
-				if (! a [i] .equals (b [i]))
-					return false;
-
-			return true;
-		},
-		setValue: function (value)
-		{
-			this .set (value instanceof X3DArrayField ? value .getValue () : value);
-			this .addEvent ();
-		},
-		isDefaultValue: function ()
-		{
-			return this .length === 0;
-		},
-		set: function (value)
-		{
-			this .resize (value .length, undefined, true);
-
-			var array = this .getValue ();
-
-			for (var i = 0, length = value .length; i < length; ++ i)
-				array [i] .set (value [i] instanceof X3DField ? value [i] .getValue () : value [i]);
-		},
-		unshift: function (value)
-		{
-			var array = this .getValue ();
-
-			for (var i = arguments .length - 1; i >= 0; -- i)
-			{
-				var field = new (this ._valueType) ();
-
-				field .setValue (arguments [i]);
-	
-				this .addChild (field);
-
-				array .unshift (field);
-			}
-
-			this .addEvent ();
-
-			return array .length;
-		},
-		shift: function ()
-		{
-			var array = this .getValue ();
-
-			if (array .length)
-			{
-				var field = array .shift ();
-				this .removeChild (field);
-				this .addEvent ();
-				return field .valueOf ();
-			}
-		},
-		push: function (value)
-		{
-			var array = this .getValue ();
-
-			for (var i = 0, length = arguments .length; i < length; ++ i)
-			{
-				var field = new (this ._valueType) ();
-
-				field .setValue (arguments [i]);
-
-				this .addChild (field);
-
-				array .push (field);
-			}
-
-			this .addEvent ();
-
-			return array .length;
-		},
-		pop: function ()
-		{
-			var array = this .getValue ();
-
-			if (array .length)
-			{
-				var field = array .pop ();
-				this .removeChild (field);
-				this .addEvent ();
-				return field .valueOf ();
-			}
-		},
-		splice: function (index, deleteCount)
-		{
-			var array  = this .getValue ();
-
-			if (index > array .length)
-				index = array .length;
-
-			if (index + deleteCount > array .length)
-				deleteCount = array .length - index;
-
-			var result = new (this .constructor) (this .erase (index, index + deleteCount));
-
-			if (arguments .length > 2)
-				this .insert (index, arguments, 2, arguments .length);
-
-			return result;
-		},
-		insert: function (index, array, first, last)
-		{
-			var args = [index, 0];
-
-			for (var i = first; i < last; ++ i)
-			{
-				var field = new (this ._valueType) ();
-
-				field .setValue (array [i]);
-
-				this .addChild (field);
-				args .push (field);
-			}
-
-			Array .prototype .splice .apply (this .getValue (), args);
-
-			this .addEvent ();
-		},
-		find: function (first, last, value)
-		{
-			if ($.isFunction (value))
-			{
-				var values = this .getValue ();
-	
-				for (var i = first; i < last; ++ i)
-				{
-					if (value (values [i] .valueOf ()))
-						return i;
-				}
-	
-				return last;
-			}
-
-			var values = this .getValue ();
-
-			for (var i = first; i < last; ++ i)
-			{
-				if (values [i] .equals (value))
-					return i;
-			}
-
-			return last;
-		},
-		remove: function (first, last, value)
-		{
-			if ($.isFunction (value))
-			{
-				var values = this .getValue ();
-	
-				first = this .find (first, last, value);
-	
-				if (first !== last)
-				{
-					for (var i = first; ++ i < last; )
-					{
-						var current = values [i];
-
-						if (! value (current .valueOf ()))
-						{
-							var tmp = values [first];
-	
-							values [first ++] = current;
-							values [i]        = tmp;
-						}
-					}
-				}
-		
-				if (first !== last)
-					this .addEvent ();
-
-				return first;
-			}
-
-			var values = this .getValue ();
-
-			first = this .find (first, last, value);
-
-			if (first !== last)
-			{
-				for (var i = first; ++ i < last; )
-				{
-					var current = values [i];
-
-					if (! current .equals (value))
-					{
-						var tmp = values [first];
-
-						values [first ++] = current;
-						values [i]        = tmp;
-					}
-				}
-			}
-
-			if (first !== last)
-				this .addEvent ();
-
-			return first;
-		},
-		erase: function (first, last)
-		{
-			var values = this .getValue () .splice (first, last - first);
-				
-			for (var i = 0, length = values .length; i < length; ++ i)
-				this .removeChild (values [i]);
-			
-			this .addEvent ();
-
-			return values;
-		},
-		resize: function (size, value, silent)
-		{
-			var array = this .getValue ();
-		
-			if (size < array .length)
-			{
-				for (var i = size, length = array .length; i < length; ++ i)
-					this .removeChild (array [i]);
-
-				array .length = size;
-
-				if (! silent)
-					this .addEvent ();
-			}
-			else if (size > array .length)
-			{
-				for (var i = array .length; i < size; ++ i)
-				{
-					var field = new (this ._valueType) ();
-
-					if (value !== undefined)
-						field .setValue (value);
-
-					this .addChild (field);
-					array .push (field);
-				}
-
-				if (! silent)
-					this .addEvent ();
-			}
-		},
-		addChild: function (value)
-		{
-			value .addParent (this);
-		},
-		removeChild: function (value)
-		{
-			value .removeParent (this);
-		},
-		toStream: function (stream)
-		{
-			var
-				generator = Generator .Get (stream),
-				array     = this .getValue ();
-
-			switch (array .length)
-			{
-				case 0:
-				{
-					stream .string += "[ ]";
-					break;
-				}
-				case 1:
-				{
-					generator .PushUnitCategory (this .getUnit ());
-
-					array [0] .toStream (stream);
-
-					generator .PopUnitCategory ();
-					break;
-				}
-				default:
-				{
-					generator .PushUnitCategory (this .getUnit ());
-
-					stream .string += "[\n";
-					generator .IncIndent ();
-				
-					for (var i = 0, length = array .length - 1; i < length; ++ i)
-					{
-						stream .string += generator .Indent ();
-						array [i] .toStream (stream);
-						stream .string += ",\n"
-					}
-
-					stream .string += generator .Indent ();
-					array [length] .toStream (stream);
-					stream .string += "\n";
-
-					generator .DecIndent ();
-					stream .string += generator .Indent ();
-					stream .string += "]";
-
-					generator .PopUnitCategory ();
-					break;
-				}
-			}
-		},
-		toXMLStream: function (stream)
-		{
-			var length = this .length;
-
-			if (length)
-			{
-				var
-					generator = Generator .Get (stream),
-					array     = this .getValue ();
-
-				generator .PushUnitCategory (this .getUnit ());
-
-				for (var i = 0, n = length - 1; i < n; ++ i)
-				{
-					array [i] .toXMLStream (stream);
-					stream .string += ", ";
-				}
-
-				array [n] .toXMLStream (stream);
-
-				generator .PopUnitCategory ();
-			}
-		},
-		dispose: function ()
-		{
-			this .erase (0, this .length);
-			X3DField .prototype .dispose .call (this);
-		},
-	});
-
-	Object .defineProperty (X3DArrayField .prototype, "length",
-	{
-		get: function () { return this .getValue () .length; },
-		set: function (value) { this .resize (value); },
-		enumerable: false,
-		configurable: false
-	});
-
-	return X3DArrayField;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Fields/SFBool',[
-	"jquery",
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
-],
-function ($, X3DField, X3DConstants)
-{
-"use strict";
-
-	function SFBool (value)
-	{
-		if (this instanceof SFBool)
-			return X3DField .call (this, Boolean (value));
-		
-		return X3DField .call (Object .create (SFBool .prototype), Boolean (value));
-	}
-
-	SFBool .prototype = $.extend (Object .create (X3DField .prototype),
-	{
-		constructor: SFBool,
-		copy: function ()
-		{
-			return new SFBool (this .getValue ());
-		},
-		isDefaultValue: function ()
-		{
-			return this .getValue () === false;
-		},
-		set: function (value)
-		{
-			X3DField .prototype .set .call (this, Boolean (value));
-		},
-		getTypeName: function ()
-		{
-			return "SFBool";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFBool;
-		},
-		valueOf: function ()
-		{
-			return this .getValue ();
-		},
-		toStream: function (stream)
-		{
-			stream .string += this .getValue () ? "TRUE" : "FALSE";
-		},
-		toXMLStream: function (stream)
-		{
-			stream .string += this .getValue () ? "true" : "false";
-		},
-	});
-
-	return SFBool;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-define ('standard/Math/Algorithm',[],function ()
-{
-"use strict";
-
-	var Algorithm =
-	{
-		signum: function (value)
-		{
-			return (0 < value) - (value < 0);
-		},
-		radians: function (value)
-		{
-			return value * (Math .PI / 180);
-		},
-		degrees: function (value)
-		{
-			return value * (180 / Math .PI);
-		},
-		random: function (min, max)
-		{
-			return min + Math .random () * (max - min);
-		},
-		clamp: function (value, min, max)
-		{
-			return value < min ? min : (value > max ? max : value);
-		},
-		interval: function (value, low, high)
-		{
-			if (value >= high)
-				return ((value - low) % (high - low)) + low;
-
-			if (value < low)
-				return ((value - high) % (high - low)) + high;
-
-			return value;
-		},
-		lerp: function (source, destination, t)
-		{
-			return source + t * (destination - source);
-		},
-		slerp: function (source, destination, t)
-		{
-			var cosom = source .dot (destination);
-
-			if (cosom <= -1)
-				throw new Error ("slerp is not possible: vectors are inverse collinear.");
-
-			if (cosom >= 1) // both normal vectors are equal
-				return source;
-
-			if (cosom < 0)
-			{
-				// Reverse signs so we travel the short way round
-				cosom = -cosom;
-				destination .negate ();
-			}				
-
-			var
-				omega = Math .acos (cosom),
-				sinom = Math .sin  (omega),
-
-				scale0 = Math .sin ((1 - t) * omega) / sinom,
-				scale1 = Math .sin (t * omega) / sinom;
-
-			source .x = source .x * scale0 + destination .x * scale1;
-			source .y = source .y * scale0 + destination .y * scale1;
-			source .z = source .z * scale0 + destination .z * scale1;
-			source .w = source .w * scale0 + destination .w * scale1;
-
-			return source;
-		},
-		simpleSlerp: function (source, destination, t)
-		{
-			var cosom = source .dot (destination);
-
-			if (cosom <= -1)
-				throw new Error ("slerp is not possible: vectors are inverse collinear.");
-
-			if (cosom >= 1) // both normal vectors are equal
-				return source;
-
-			var
-				omega = Math .acos (cosom),
-				sinom = Math .sin  (omega),
-
-				scale0 = Math .sin ((1 - t) * omega) / sinom,
-				scale1 = Math .sin (t * omega) / sinom;
-
-			source .x = source .x * scale0 + destination .x * scale1;
-			source .y = source .y * scale0 + destination .y * scale1;
-			source .z = source .z * scale0 + destination .z * scale1;
-			source .w = source .w * scale0 + destination .w * scale1;
-
-			return source;
-		},
-		isPowerOfTwo: function (n)
-		{
-			return ((n - 1) & n) === 0;
-		},
-		nextPowerOfTwo: function (n)
-		{
-			///  Returns the next power of two of @a n. If n is a power of two, n is returned.
-
-			-- n;
-
-			for (var k = 1; ! (k & (1 << (4 + 1))); k <<= 1)
-				n |= n >> k;
-
-			return ++ n;
-		},
-		/*
-		isInt: function(n)
-		{
-			return typeof n === 'number' && 
-			       parseFloat (n) == parseInt (n, 10) && ! isNaN (n);
-		},
-		decimalPlaces: function (n)
-		{
-			var
-				a = Math.abs(n),
-				c = a, count = 1;
-
-			while(! Algorithm .isInt (c) && isFinite (c))
-				c = a * Math .pow (10, count ++);
-	
-			return count-1;
-		},
-		*/
-		less: function (lhs, rhs)
-		{
-			return lhs < rhs;
-		},
-		greater: function (lhs, rhs)
-		{
-			return lhs > rhs;
-		},
-		lowerBound: function (array, first, last, value, comp)
-		{
-		   // http://en.cppreference.com/w/cpp/algorithm/lower_bound
-
-			var
-				index = 0,
-				step  = 0,
-				count = last - first;
-
-			while (count > 0)
-			{
-				step  = count >>> 1;
-				index = first + step;
-
-				if (comp (array [index], value))
-				{
-					first  = ++ index;
-					count -= step + 1;
-				}
-				else
-					count = step;
-			}
-
-			return first;
-		},
-		upperBound: function (array, first, last, value, comp)
-		{
-		   // http://en.cppreference.com/w/cpp/algorithm/upper_bound
-
-			var
-				index = 0,
-				step  = 0,
-				count = last - first;
-
-			while (count > 0)
-			{
-				step  = count >>> 1;
-				index = first + step;
-
-				if (comp (value, array [index]))
-					count = step;
-
-				else
-				{
-					first  = ++ index;
-					count -= step + 1;
-				}
-			}
-
-			return first;
-		},
-		set_difference: function (lhs, rhs, result)
-		{
-			for (var key in lhs)
-			{
-				if (key in rhs)
-					continue;
-
-				result [key] = lhs [key];
-			}
-
-			return result;
-		},
-	};
-
-	Object .preventExtensions (Algorithm);
-	Object .freeze (Algorithm);
-	Object .seal (Algorithm);
-
-	return Algorithm;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Numbers/Color3',[
-	"jquery",
-	"standard/Math/Algorithm",
-],
-function ($, Algorithm)
-{
-"use strict";
-
-	var clamp = Algorithm .clamp;
-
-	function Color3 (r, g, b)
-	{
-		if (arguments .length)
-		{
-			this .r_ = clamp (r, 0, 1);
-			this .g_ = clamp (g, 0, 1);
-			this .b_ = clamp (b, 0, 1);
-		}
-		else
-		{
-			this .r_ = 0;
-			this .g_ = 0;
-			this .b_ = 0;
-		}
-	}
-
-	Color3 .prototype =
-	{
-		constructor: Color3,
-		length: 3,
-		copy: function ()
-		{
-			var copy = Object .create (Color3 .prototype);
-			copy .r_ = this .r_;
-			copy .g_ = this .g_;
-			copy .b_ = this .b_;
-			return copy;
-		},
-		assign: function (color)
-		{
-			this .r_ = color .r_;
-			this .g_ = color .g_;
-			this .b_ = color .b_;
-		},
-		set: function (r, g, b)
-		{
-			this .r_ = clamp (r, 0, 1);
-			this .g_ = clamp (g, 0, 1);
-			this .b_ = clamp (b, 0, 1);
-		},
-		equals: function (color)
-		{
-			return this .r_ === color .r_ &&
-			       this .g_ === color .g_ &&
-			       this .b_ === color .b_;
-		},
-		getHSV: function (result)
-		{
-			var h, s, v;
-
-			var min = Math .min (this .r_, this .g_, this .b_);
-			var max = Math .max (this .r_, this .g_, this .b_);
-			v = max; // value
-
-			var delta = max - min;
-
-			if (max !== 0 && delta !== 0)
-			{
-				s = delta / max; // s
-
-				if (this .r_ === max)
-					h =     (this .g_ - this .b_) / delta;  // between yellow & magenta
-				else if (this .g_ === max)
-					h = 2 + (this .b_ - this .r_) / delta;  // between cyan & yellow
-				else
-					h = 4 + (this .r_ - this .g_) / delta;  // between magenta & cyan
-
-				h *= Math .PI / 3;  // radiants
-				if (h < 0)
-					h += Math .PI * 2;
-			}
-			else
-				s = h = 0;         // s = 0, h is undefined
-
-			result [0] = h;
-			result [1] = s;
-			result [2] = v;
-
-			return result;
-		},
-		setHSV: function (h, s, v)
-		{
-			s = clamp (s, 0, 1),
-			v = clamp (v, 0, 1);
-
-			// H is given on [0, 2 * Pi]. S and V are given on [0, 1].
-			// RGB are each returned on [0, 1].
-
-			if (s === 0)
-			{
-				// achromatic (grey)
-				this .r_ = this .g_ = this .b_ = v;
-			}
-			else
-			{
-				var w = Algorithm .degrees (Algorithm .interval (h, 0, Math .PI * 2)) / 60;     // sector 0 to 5
-
-				var i = Math .floor (w);
-				var f = w - i;                      // factorial part of h
-				var p = v * ( 1 - s );
-				var q = v * ( 1 - s * f );
-				var t = v * ( 1 - s * ( 1 - f ) );
-
-				switch (i % 6)
-				{
-					case 0:  this .r_ = v; this .g_ = t; this .b_ = p; break;
-					case 1:  this .r_ = q; this .g_ = v; this .b_ = p; break;
-					case 2:  this .r_ = p; this .g_ = v; this .b_ = t; break;
-					case 3:  this .r_ = p; this .g_ = q; this .b_ = v; break;
-					case 4:  this .r_ = t; this .g_ = p; this .b_ = v; break;
-					default: this .r_ = v; this .g_ = p; this .b_ = q; break;
-				}
-			}
-		},
-		toString: function ()
-		{
-			return this .r_ + " " +
-			       this .g_ + " " +
-			       this .b_;
-		},
-	};
-
-	var r = {
-		get: function () { return this .r_; },
-		set: function (value) { this .r_ = clamp (value, 0, 1); },
-		enumerable: true,
-		configurable: false
-	};
-	
-	var g = {
-		get: function () { return this .g_; },
-		set: function (value) { this .g_ = clamp (value, 0, 1); },
-		enumerable: true,
-		configurable: false
-	};
-
-	var b = {
-		get: function () { return this .b_; },
-		set: function (value) { this .b_ = clamp (value, 0, 1); },
-		enumerable: true,
-		configurable: false
-	};
-
-	Object .defineProperty (Color3 .prototype, "r", r);
-	Object .defineProperty (Color3 .prototype, "g", g);
-	Object .defineProperty (Color3 .prototype, "b", b);
-
-	r .enumerable = false;
-	g .enumerable = false;
-	b .enumerable = false;
-
-	Object .defineProperty (Color3 .prototype, "0", r);
-	Object .defineProperty (Color3 .prototype, "1", g);
-	Object .defineProperty (Color3 .prototype, "2", b);
-
-	$.extend (Color3,
-	{
-		HSV: function (h, s, v)
-		{
-			var color = new Color3 (0, 0, 0);
-			color .setHSV (h, s, v);
-			return color;
-		},
-		lerp: function (a, b, t, r)
-		{
-			var range = Math .abs (b [0] - a [0]);
-
-			if (range <= Math .PI)
-			{
-				r [0] = Algorithm .lerp (a [0], b [0], t);
-				r [1] = Algorithm .lerp (a [1], b [1], t);
-				r [2] = Algorithm .lerp (a [2], b [2], t);
-				return r;
-			}
-
-			var
-				PI2  = Math .PI * 2,
-				step = (PI2 - range) * t,
-				h    = a [0] < b [0] ? a [0] - step : a [0] + step;
-
-			if (h < 0)
-				h += PI2;
-
-			else if (h > PI2)
-				h -= PI2;
-
-			r [0] = h;
-			r [1] = Algorithm .lerp (a [1], b [1], t);
-			r [2] = Algorithm .lerp (a [2], b [2], t);
-			return r;
-		},
-	});
-
-	return Color3;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Fields/SFColor',[
-	"jquery",
-	"standard/Math/Numbers/Color3",
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
-],
-function ($, Color3, X3DField, X3DConstants)
-{
-"use strict";
-
-	function SFColor (r, g, b)
-	{
-		if (this instanceof SFColor)
-		{
-			if (arguments .length)
-			{
-				if (arguments [0] instanceof Color3)
-					return X3DField .call (this, arguments [0]);
-				else
-					return X3DField .call (this, new Color3 (+r, +g, +b));
-			}
-
-			return X3DField .call (this, new Color3 ());
-		}
-
-		return SFColor .apply (Object .create (SFColor .prototype), arguments);
-	}
-
-	SFColor .prototype = $.extend (Object .create (X3DField .prototype),
-	{
-		constructor: SFColor,
-		copy: function ()
-		{
-			return new SFColor (this .getValue () .copy ());
-		},
-		getTypeName: function ()
-		{
-			return "SFColor";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFColor;
-		},
-		equals: function (color)
-		{
-			return this .getValue () .equals (color .getValue ());
-		},
-		isDefaultValue: function ()
-		{
-			return (
-				this .getValue () .r === 0 &&
-				this .getValue () .g === 0 &&
-				this .getValue () .b === 0);
-		},
-		set: function (value)
-		{
-			this .getValue () .assign (value);
-		},
-		getHSV: function ()
-		{
-			return this .getValue () .getHSV ([ ]);
-		},
-		setHSV: function (h, s, v)
-		{
-			this .getValue () .setHSV (h, s, v);
-			this .addEvent ();
-		},
-		toStream: function (stream)
-		{
-			stream .string += this .getValue () .toString ();
-		},
-		toXMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-	});
-
-	var r = {
-		get: function ()
-		{
-			return this .getValue () .r;
-		},
-		set: function (value)
-		{
-			this .getValue () .r = value;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
-
-	var g = {
-		get: function ()
-		{
-			return this .getValue () .g;
-		},
-		set: function (value)
-		{
-			this .getValue () .g = value;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
-
-	var b = {
-		get: function ()
-		{
-			return this .getValue () .b;
-		},
-		set: function (value)
-		{
-			this .getValue () .b = value;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
-
-	Object .defineProperty (SFColor .prototype, "r", r);
-	Object .defineProperty (SFColor .prototype, "g", g);
-	Object .defineProperty (SFColor .prototype, "b", b);
-
-	r .enumerable = false;
-	g .enumerable = false;
-	b .enumerable = false;
-
-	Object .defineProperty (SFColor .prototype, "0", r);
-	Object .defineProperty (SFColor .prototype, "1", g);
-	Object .defineProperty (SFColor .prototype, "2", b);
-
-	return SFColor;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Numbers/Color4',[
-	"jquery",
-	"standard/Math/Numbers/Color3",
-	"standard/Math/Algorithm",
-],
-function ($, Color3, Algorithm)
-{
-"use strict";
-
-	var clamp = Algorithm .clamp;
-
-	function Color4 (r, g, b, a)
-	{
-		if (arguments .length)
-		{
-			this .r_ = clamp (r, 0, 1);
-			this .g_ = clamp (g, 0, 1);
-			this .b_ = clamp (b, 0, 1);
-			this .a_ = clamp (a, 0, 1);
-		}
-		else
-		{
-			this .r_ = 0;
-			this .g_ = 0;
-			this .b_ = 0;
-			this .a_ = 0;
-		}
-	}
-
-	Color4 .prototype =
-	{
-		constructor: Color4,
-		length: 4,
-		copy: function ()
-		{
-			var copy = Object .create (Color4 .prototype);
-			copy .r_ = this .r_;
-			copy .g_ = this .g_;
-			copy .b_ = this .b_;
-			copy .a_ = this .a_;
-			return copy;
-		},
-		assign: function (color)
-		{
-			this .r_ = color .r_;
-			this .g_ = color .g_;
-			this .b_ = color .b_;
-			this .a_ = color .a_;
-		},
-		set: function (r, g, b, a)
-		{
-			this .r_ = clamp (r, 0, 1);
-			this .g_ = clamp (g, 0, 1);
-			this .b_ = clamp (b, 0, 1);
-			this .a_ = clamp (a, 0, 1);
-		},
-		equals: function (color)
-		{
-			return this .r_ === color .r_ &&
-			       this .g_ === color .g_ &&
-			       this .b_ === color .b_ &&
-			       this .a_ === color .a_;
-		},
-		getHSVA: function (result)
-		{
-			Color3 .prototype .getHSV .call (this, result);
-
-			result [3] = this .a_;
-
-			return result;
-		},
-		setHSVA: function (h, s, v, a)
-		{
-			Color3 .prototype .setHSV .call (this, h, s, v);
-
-			this .a_ = clamp (a, 0, 1);
-		},
-		toString: function ()
-		{
-			return this .r_ + " " +
-			       this .g_ + " " +
-			       this .b_ + " " +
-			       this .a_;
-		},
-	};
-
-	var r = {
-		get: function () { return this .r_; },
-		set: function (value) { this .r_ = clamp (value, 0, 1); },
-		enumerable: true,
-		configurable: false
-	};
-	
-	var g = {
-		get: function () { return this .g_; },
-		set: function (value) { this .g_ = clamp (value, 0, 1); },
-		enumerable: true,
-		configurable: false
-	};
-
-	var b = {
-		get: function () { return this .b_; },
-		set: function (value) { this .b_ = clamp (value, 0, 1); },
-		enumerable: true,
-		configurable: false
-	};
-
-	var a = {
-		get: function () { return this .a_; },
-		set: function (value) { this .a_ = clamp (value, 0, 1); },
-		enumerable: true,
-		configurable: false
-	};
-
-	Object .defineProperty (Color4 .prototype, "r", r);
-	Object .defineProperty (Color4 .prototype, "g", g);
-	Object .defineProperty (Color4 .prototype, "b", b);
-	Object .defineProperty (Color4 .prototype, "a", a);
-
-	r .enumerable = false;
-	g .enumerable = false;
-	b .enumerable = false;
-	a .enumerable = false;
-
-	Object .defineProperty (Color4 .prototype, "0", r);
-	Object .defineProperty (Color4 .prototype, "1", g);
-	Object .defineProperty (Color4 .prototype, "2", b);
-	Object .defineProperty (Color4 .prototype, "3", a);
-
-	Color4 .HSVA = function (h, s, v, a)
-	{
-		var color = new Color4 (0, 0, 0, a);
-		color .setHSV (h, s, v);
-		return color;
-	}
-
-	return Color4;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Fields/SFColorRGBA',[
-	"jquery",
-	"x_ite/Basic/X3DField",
-	"x_ite/Fields/SFColor",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Color4",
-],
-function ($, X3DField, SFColor, X3DConstants, Color4)
-{
-"use strict";
-
-	function SFColorRGBA (r, g, b, a)
-	{
-		if (this instanceof SFColorRGBA)
-		{
-			if (arguments .length)
-			{
-				if (arguments [0] instanceof Color4)
-					return X3DField .call (this, arguments [0]);
-				else
-					return X3DField .call (this, new Color4 (+r, +g, +b, +a));
-			}
-
-			return X3DField .call (this, new Color4 ());
-		}
-
-		return SFColorRGBA .apply (Object .create (SFColorRGBA .prototype), arguments);
-	}
-
-	SFColorRGBA .prototype = $.extend (Object .create (X3DField .prototype),
-	{
-		constructor: SFColorRGBA,
-		copy: function ()
-		{
-			return new SFColorRGBA (this .getValue () .copy ());
-		},
-		getTypeName: function ()
-		{
-			return "SFColorRGBA";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFColorRGBA;
-		},
-		equals: SFColor .prototype .equals,
-		isDefaultValue: function ()
-		{
-			return (
-				this .getValue () .r === 0 &&
-				this .getValue () .g === 0 &&
-				this .getValue () .b === 0 &&
-				this .getValue () .a === 0);
-		},
-		set: SFColor .prototype .set,
-		getHSVA: function ()
-		{
-			return this .getValue () .getHSVA ([ ]);
-		},
-		setHSVA: function (h, s, v, a)
-		{
-			this .getValue () .setHSVA (h, s, v, a);
-			this .addEvent ();
-		},
-		toStream: SFColor .prototype .toStream,
-		toXMLStream: SFColor .prototype .toXMLStream,
-	});
-
-	var r = {
-		get: function ()
-		{
-			return this .getValue () .r;
-		},
-		set: function (value)
-		{
-			this .getValue () .r = value;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
-
-	var g = {
-		get: function ()
-		{
-			return this .getValue () .g;
-		},
-		set: function (value)
-		{
-			this .getValue () .g = value;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
-
-	var b = {
-		get: function ()
-		{
-			return this .getValue () .b;
-		},
-		set: function (value)
-		{
-			this .getValue () .b = value;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
-
-	var a = {
-		get: function ()
-		{
-			return this .getValue () .a;
-		},
-		set: function (value)
-		{
-			this .getValue () .a = value;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
-
-	Object .defineProperty (SFColorRGBA .prototype, "r", r);
-	Object .defineProperty (SFColorRGBA .prototype, "g", g);
-	Object .defineProperty (SFColorRGBA .prototype, "b", b);
-	Object .defineProperty (SFColorRGBA .prototype, "a", a);
-
-	r .enumerable = false;
-	g .enumerable = false;
-	b .enumerable = false;
-	a .enumerable = false;
-
-	Object .defineProperty (SFColorRGBA .prototype, "0", r);
-	Object .defineProperty (SFColorRGBA .prototype, "1", g);
-	Object .defineProperty (SFColorRGBA .prototype, "2", b);
-	Object .defineProperty (SFColorRGBA .prototype, "3", a);
-
-	return SFColorRGBA;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Fields/SFDouble',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField, X3DConstants, Generator)
+function (X3DField,
+          X3DConstants,
+          Generator)
 {
 "use strict";
 
@@ -16005,7 +15561,7 @@ function ($, X3DField, X3DConstants, Generator)
 		return X3DField .call (Object .create (SFDouble .prototype), arguments .length ? +value : 0);
 	}
 
-	SFDouble .prototype = $.extend (Object .create (X3DField .prototype),
+	SFDouble .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFDouble,
 		copy: function ()
@@ -16096,12 +15652,13 @@ function ($, X3DField, X3DConstants, Generator)
 
 
 define ('x_ite/Fields/SFFloat',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField, X3DConstants, Generator)
+function (X3DField,
+          X3DConstants,
+          Generator)
 {
 "use strict";
 
@@ -16113,7 +15670,7 @@ function ($, X3DField, X3DConstants, Generator)
 		return X3DField .call (Object .create (SFFloat .prototype), arguments .length ? +value : 0);
 	}
 
-	SFFloat .prototype = $.extend (Object .create (X3DField .prototype),
+	SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFFloat,
 		copy: function ()
@@ -16203,12 +15760,117 @@ function ($, X3DField, X3DConstants, Generator)
  ******************************************************************************/
 
 
-define ('x_ite/Fields/SFImage',[
-	"jquery",
+define ('x_ite/Fields/SFInt32',[
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($, X3DField, X3DConstants)
+function (X3DField,
+          X3DConstants)
+{
+"use strict";
+
+	function SFInt32 (value)
+	{
+		if (this instanceof SFInt32)
+			return X3DField .call (this, ~~value);
+		
+		return X3DField .call (Object .create (SFInt32 .prototype), ~~value);
+	}
+
+	SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
+	{
+		constructor: SFInt32,
+		copy: function ()
+		{
+			return new SFInt32 (this .getValue ());
+		},
+		getTypeName: function ()
+		{
+			return "SFInt32";
+		},
+		getType: function ()
+		{
+			return X3DConstants .SFInt32;
+		},
+		isDefaultValue: function ()
+		{
+			return this .getValue () === 0;
+		},
+		set: function (value)
+		{
+			X3DField .prototype .set .call (this, ~~value);
+		},
+		valueOf: X3DField .prototype .getValue,
+		toStream: function (stream, base)
+		{
+			stream .string += this .getValue () .toString (base);
+		},
+		toXMLStream: function (stream)
+		{
+			stream .string += this .getValue () .toString ();
+		},
+	});
+
+	return SFInt32;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Fields/SFImage',[
+	"x_ite/Basic/X3DField",
+	"x_ite/Fields/SFInt32",
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DField,
+          SFInt32,
+          X3DConstants)
 {
 "use strict";
 
@@ -16247,14 +15909,14 @@ function ($, X3DField, X3DConstants)
 			this .width  = image .width;
 			this .height = image .height;
 			this .comp   = image .comp;
-			this .array .set (image .array .getValue ());
+			this .array .assign (image .array);
 		},
 		set: function (width, height, comp, array)
 		{
 			this .width  = width;
 			this .height = height;
 			this .comp   = comp;
-			this .array .set (array);
+			this .array .assign (array);
 		},
 		setWidth: function (value)
 		{
@@ -16284,7 +15946,7 @@ function ($, X3DField, X3DConstants)
 		},
 		setArray: function (value)
 		{
-			this .array .setValue (value);
+			this .array .assign (value);
 			this .array .length = this .width  * this .height;	
 		},
 		getArray: function ()
@@ -16316,7 +15978,7 @@ function ($, X3DField, X3DConstants)
 		return SFImage .apply (Object .create (SFImage .prototype), arguments);
 	}
 
-	SFImage .prototype = $.extend (Object .create (X3DField .prototype),
+	SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFImage,
 		set_size__: function ()
@@ -16352,14 +16014,18 @@ function ($, X3DField, X3DConstants)
 		},
 		toStream: function (stream)
 		{
-		   var array = this .array .getValue ();
+		   var
+				array = this .array,
+				int   = new SFInt32 ();
 
 			stream .string += this .width + " " + this .height + " " + this .comp;
 
 			for (var i = 0, length = this .width * this .height; i < length; ++ i)
 			{
 				stream .string += " 0x";
-				array [i] .toStream (stream, 16);
+
+				int .set (array [i]);
+				int .toXMLStream (stream);
 			}
 		},
 		toXMLStream: function (stream)
@@ -16487,120 +16153,16 @@ function ($, X3DField, X3DConstants)
  ******************************************************************************/
 
 
-define ('x_ite/Fields/SFInt32',[
-	"jquery",
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
-],
-function ($, X3DField, X3DConstants)
-{
-"use strict";
-
-	function SFInt32 (value)
-	{
-		if (this instanceof SFInt32)
-			return X3DField .call (this, ~~value);
-		
-		return X3DField .call (Object .create (SFInt32 .prototype), ~~value);
-	}
-
-	SFInt32 .prototype = $.extend (Object .create (X3DField .prototype),
-	{
-		constructor: SFInt32,
-		copy: function ()
-		{
-			return new SFInt32 (this .getValue ());
-		},
-		getTypeName: function ()
-		{
-			return "SFInt32";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFInt32;
-		},
-		isDefaultValue: function ()
-		{
-			return this .getValue () === 0;
-		},
-		set: function (value)
-		{
-			X3DField .prototype .set .call (this, ~~value);
-		},
-		valueOf: X3DField .prototype .getValue,
-		toStream: function (stream, base)
-		{
-			stream .string += this .getValue () .toString (base);
-		},
-		toXMLStream: function (stream)
-		{
-			stream .string += this .getValue () .toString ();
-		},
-	});
-
-	return SFInt32;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Fields/SFMatrixPrototypeTemplate',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 ],
-function ($, X3DField)
+function (X3DField)
 {
 "use strict";
 
 	return function (Matrix, SFVec)
 	{
-		return $.extend (Object .create (X3DField .prototype),
+		return Object .assign (Object .create (X3DField .prototype),
 		{
 			copy: function ()
 			{
@@ -16732,17 +16294,17 @@ function ($, X3DField)
 
 
 define ('x_ite/Fields/SFVecPrototypeTemplate',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField, Generator)
+function (X3DField,
+          Generator)
 {
 "use strict";
 
 	return function (Type)
 	{
-		return $.extend (Object .create (X3DField .prototype),
+		return Object .assign (Object .create (X3DField .prototype),
 		{
 			copy: function ()
 			{
@@ -16873,10 +16435,9 @@ function ($, X3DField, Generator)
 
 
 define ('standard/Math/Numbers/Vector2',[
-	"jquery",
 	"standard/Math/Algorithm",
 ],
-function ($, Algorithm)
+function (Algorithm)
 {
 "use strict";
 
@@ -17048,7 +16609,7 @@ function ($, Algorithm)
 		configurable: false
 	});
 
-	$.extend (Vector2,
+	Object .assign (Vector2,
 	{
 		Zero: new Vector2 (0, 0),
 		One: new Vector2 (1, 1),
@@ -17220,13 +16781,12 @@ function ($, Algorithm)
 
 
 define ('x_ite/Fields/SFVec2',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Fields/SFVecPrototypeTemplate",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
-function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
+function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 {
 "use strict";
 
@@ -17245,7 +16805,7 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 			return X3DField .call (this, new Vector2 (0, 0));
 		}
 
-		SFVec2 .prototype = $.extend (Object .create (X3DField .prototype),
+		SFVec2 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFVecPrototypeTemplate (Vector2),
 		{
 			constructor: SFVec2,
@@ -17355,10 +16915,9 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 
 
 define ('standard/Math/Numbers/Vector3',[
-	"jquery",
 	"standard/Math/Algorithm",
 ],
-function ($, Algorithm)
+function (Algorithm)
 {
 "use strict";
 
@@ -17575,7 +17134,7 @@ function ($, Algorithm)
 		configurable: false
 	});
 
-	$.extend (Vector3,
+	Object .assign (Vector3,
 	{
 		Zero: new Vector3 (0, 0, 0),
 		One: new Vector3 (1, 1, 1),
@@ -17779,10 +17338,9 @@ function ($, Algorithm)
 
 
 define ('standard/Math/Numbers/Matrix2',[
-	"jquery",
 	"standard/Math/Algorithm"
 ],
-function ($, Algorithm)
+function (Algorithm)
 {
 "use strict";
 
@@ -17952,7 +17510,7 @@ function ($, Algorithm)
 		configurable: false
 	});
 
-	$.extend (Matrix2,
+	Object .assign (Matrix2,
 	{
 		Identity: new Matrix2 (),
 	});
@@ -18202,13 +17760,15 @@ define ('standard/Math/Algorithms/eigendecomposition',[],function ()
 
 
 define ('standard/Math/Numbers/Matrix3',[
-	"jquery",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix2",
 	"standard/Math/Algorithms/eigendecomposition",
 ],
-function ($, Vector2, Vector3, Matrix2, eigendecomposition)
+function (Vector2,
+          Vector3,
+          Matrix2,
+          eigendecomposition)
 {
 "use strict";
 
@@ -18797,7 +18357,7 @@ function ($, Vector2, Vector3, Matrix2, eigendecomposition)
 		configurable: false
 	});
 
-	$.extend (Matrix3,
+	Object .assign (Matrix3,
 	{
 		Identity: new Matrix3 (),
 		Rotation: function (rotation)
@@ -18973,14 +18533,17 @@ function ($, Vector2, Vector3, Matrix2, eigendecomposition)
 
 
 define ('x_ite/Fields/SFMatrix3',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Fields/SFMatrixPrototypeTemplate",
 	"x_ite/Fields/SFVec2",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix3",
 ],
-function ($, X3DField, SFMatrixPrototypeTemplate, SFVec2, X3DConstants, Matrix3)
+function (X3DField,
+          SFMatrixPrototypeTemplate,
+          SFVec2,
+          X3DConstants,
+          Matrix3)
 {
 "use strict";
 
@@ -19003,7 +18566,7 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec2, X3DConstants, Matrix3)
 			return X3DField .call (this, new Matrix3 ());
 		}
 	
-		SFMatrix3 .prototype = $.extend (Object .create (X3DField .prototype),
+		SFMatrix3 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFMatrixPrototypeTemplate (Matrix3, SFVec2),
 		{
 			constructor: SFMatrix3,
@@ -19107,13 +18670,15 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec2, X3DConstants, Matrix3)
 
 
 define ('x_ite/Fields/SFVec3',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Fields/SFVecPrototypeTemplate",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector3)
+function (X3DField,
+          SFVecPrototypeTemplate,
+          X3DConstants,
+          Vector3)
 {
 "use strict";
 
@@ -19132,7 +18697,7 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector3)
 			return X3DField .call (this, new Vector3 (0, 0, 0));
 		}
 	
-		SFVec3 .prototype = $.extend (Object .create (X3DField .prototype),
+		SFVec3 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFVecPrototypeTemplate (Vector3),
 		{
 			constructor: SFVec3,
@@ -19263,10 +18828,9 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector3)
 
 
 define ('standard/Math/Numbers/Vector4',[
-	"jquery",
 	"standard/Math/Algorithm",
 ],
-function ($, Algorithm)
+function (Algorithm)
 {
 "use strict";
 
@@ -19500,7 +19064,7 @@ function ($, Algorithm)
 		configurable: false
 	});
 
-	$.extend (Vector4,
+	Object .assign (Vector4,
 	{
 		Zero: new Vector4 (0, 0, 0, 0),
 		One: new Vector4 (1, 1, 1, 1),
@@ -19702,11 +19266,10 @@ function ($, Algorithm)
 
 
 define ('standard/Math/Numbers/Quaternion',[
-	"jquery",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($, Vector3, Algorithm)
+function (Vector3, Algorithm)
 {
 "use strict";
 
@@ -20119,7 +19682,7 @@ function ($, Vector3, Algorithm)
 		configurable: false
 	});
 
-	$.extend (Quaternion,
+	Object .assign (Quaternion,
 	{
 		negate: function (vector)
 		{
@@ -20344,14 +19907,12 @@ function ($, Vector3, Algorithm)
 
 
 define ('standard/Math/Numbers/Rotation4',[
-	"jquery",
 	"standard/Math/Numbers/Quaternion",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Quaternion,
+function (Quaternion,
           Vector3,
           Vector4,
           Algorithm)
@@ -20657,7 +20218,7 @@ function ($,
 	Object .defineProperty (Rotation4 .prototype, "2", z);
 	Object .defineProperty (Rotation4 .prototype, "3", angle);
 
-	$.extend (Rotation4,
+	Object .assign (Rotation4,
 	{
 		Identity: new Rotation4 (),
 		inverse: function (rotation)
@@ -20751,14 +20312,17 @@ function ($,
 
 
 define ('standard/Math/Numbers/Matrix4',[
-	"jquery",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix3",
 	"standard/Math/Algorithms/eigendecomposition",
 ],
-function ($, Vector3, Vector4, Rotation4, Matrix3, eigendecomposition)
+function (Vector3,
+          Vector4,
+          Rotation4,
+          Matrix3,
+          eigendecomposition)
 {
 "use strict";
 
@@ -21531,7 +21095,7 @@ function ($, Vector3, Vector4, Rotation4, Matrix3, eigendecomposition)
 		configurable: false
 	});
 
-	$.extend (Matrix4,
+	Object .assign (Matrix4,
 	{
 		Identity: new Matrix4 (),
 		Rotation: function (rotation)
@@ -21753,14 +21317,17 @@ function ($, Vector3, Vector4, Rotation4, Matrix3, eigendecomposition)
 
 
 define ('x_ite/Fields/SFMatrix4',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Fields/SFMatrixPrototypeTemplate",
 	"x_ite/Fields/SFVec3",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($, X3DField, SFMatrixPrototypeTemplate, SFVec3, X3DConstants, Matrix4)
+function (X3DField,
+          SFMatrixPrototypeTemplate,
+          SFVec3,
+          X3DConstants,
+          Matrix4)
 {
 "use strict";
 
@@ -21785,7 +21352,7 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec3, X3DConstants, Matrix4)
 			return X3DField .call (this, new Matrix4 ());
 		}
 	
-		SFMatrix4 .prototype = $.extend (Object .create (X3DField .prototype),
+		SFMatrix4 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFMatrixPrototypeTemplate (Matrix4, SFVec3),
 		{
 			constructor: SFMatrix4,
@@ -21880,12 +21447,13 @@ function ($, X3DField, SFMatrixPrototypeTemplate, SFVec3, X3DConstants, Matrix4)
 
 
 define ('x_ite/Fields/SFNode',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField, X3DConstants, Generator)
+function (X3DField,
+          X3DConstants,
+          Generator)
 {
 "use strict";
 
@@ -21893,11 +21461,13 @@ function ($, X3DField, X3DConstants, Generator)
 	{
 		get: function (target, key)
 		{
-			if (key in target)
-				return target [key];
-
 			try
 			{
+				var value = target [key];
+
+				if (value !== undefined)
+					return value;
+
 				var
 					field      = target .getValue () .getField (key),
 					accessType = field .getAccessType ();
@@ -21960,7 +21530,7 @@ function ($, X3DField, X3DConstants, Generator)
 		return SFNode .call (Object .create (SFNode .prototype), value);
 	}
 
-	SFNode .prototype = $.extend (Object .create (X3DField .prototype),
+	SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFNode,
 		_cloneCount: 0,
@@ -22184,14 +21754,17 @@ function ($, X3DField, X3DConstants, Generator)
 
 
 define ('x_ite/Fields/SFRotation',[
-	"jquery",
 	"x_ite/Fields/SFVec3",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($, SFVec3, X3DField, X3DConstants, Generator, Rotation4)
+function (SFVec3,
+          X3DField,
+          X3DConstants,
+          Generator,
+          Rotation4)
 {
 "use strict";
 
@@ -22220,7 +21793,7 @@ function ($, SFVec3, X3DField, X3DConstants, Generator, Rotation4)
 		return SFRotation .apply (Object .create (SFRotation .prototype), arguments);
 	}
 
-	SFRotation .prototype = $.extend (Object .create (X3DField .prototype),
+	SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFRotation,
 		copy: function ()
@@ -22413,13 +21986,11 @@ function ($, SFVec3, X3DField, X3DConstants, Generator, Rotation4)
 
 
 define ('x_ite/Fields/SFString',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          X3DField,
+function (X3DField,
           X3DConstants,
           Generator)
 {
@@ -22437,7 +22008,7 @@ function ($,
 		return X3DField .call (Object .create (SFString .prototype), arguments .length ? String (value) : "");
 	}
 	
-	$.extend (SFString,
+	Object .assign (SFString,
 	{
 		unescape: function (string)
 		{
@@ -22449,7 +22020,7 @@ function ($,
 		},
 	});
 
-	SFString .prototype = $.extend (Object .create (X3DField .prototype),
+	SFString .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFString,
 		copy: function ()
@@ -22546,11 +22117,11 @@ function ($,
 
 
 define ('x_ite/Fields/SFTime',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($, X3DField, X3DConstants)
+function (X3DField,
+          X3DConstants)
 {
 "use strict";
 
@@ -22562,7 +22133,7 @@ function ($, X3DField, X3DConstants)
 		return X3DField .call (Object .create (SFTime .prototype), arguments .length ? +value : 0);
 	}
 
-	SFTime .prototype = $.extend (Object .create (X3DField .prototype),
+	SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFTime,
 		copy: function ()
@@ -22649,13 +22220,15 @@ function ($, X3DField, X3DConstants)
 
 
 define ('x_ite/Fields/SFVec4',[
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Fields/SFVecPrototypeTemplate",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector4",
 ],
-function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector4)
+function (X3DField,
+          SFVecPrototypeTemplate,
+          X3DConstants,
+          Vector4)
 {
 "use strict";
 
@@ -22674,7 +22247,7 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector4)
 			return X3DField .call (this, new Vector4 (0, 0, 0, 0));
 		}
 	
-		SFVec4 .prototype = $.extend (Object .create (X3DField .prototype),
+		SFVec4 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFVecPrototypeTemplate (Vector4),
 		{
 			constructor: SFVec4,
@@ -22817,8 +22390,1361 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector4)
  ******************************************************************************/
 
 
-define ('x_ite/Fields/ArrayFields',[
+define ('x_ite/Basic/X3DObjectArrayField',[
 	"jquery",
+	"x_ite/Basic/X3DField",
+	"x_ite/Basic/X3DArrayField",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
+],
+function ($,
+          X3DField,
+          X3DArrayField,
+          X3DConstants, 
+          Generator)
+{
+"use strict";
+
+	var handler =
+	{
+		get: function (target, key)
+		{
+			try
+			{
+				var value = target [key];
+
+				if (value !== undefined)
+					return value;
+
+				// value
+				
+				var
+					array = target .getValue (),
+					index = parseInt (key);
+
+				if (index >= array .length)
+					target .resize (index + 1);
+
+				return array [index] .valueOf ();
+			}
+			catch (error)
+			{
+				// Don't know what to do with symbols, but it seem not to affect anything.
+				if ((typeof key) === "symbol")
+					return;
+
+				// if target not instance of X3DObjectArrayField, then the constuctor is called as function.
+				console .log (target, typeof key, key, error);
+			}
+		},
+		set: function (target, key, value)
+		{
+			try
+			{
+				if (key in target)
+				{
+					target [key] = value;
+					return true;
+				}
+
+				var
+					array = target .getValue (),
+					index = parseInt (key);
+
+				if (index >= array .length)
+					target .resize (index + 1);
+
+				array [index] .setValue (value);
+				return true;
+			}
+			catch (error)
+			{
+				// if target not instance of X3DObjectArrayField, then the constuctor is called as function.
+				console .log (target, key, error);
+				return false;
+			}
+		},
+		has: function (target, key)
+		{
+			return key in target .getValue ();
+		},
+		enumerate: function (target)
+		{
+			return Object .keys (target .getValue ()) [Symbol.iterator] ();
+		},
+	};
+
+	function X3DObjectArrayField (value)
+	{
+		X3DArrayField .call (this, [ ]);
+		
+		this .target = this;
+
+		if (value [0] instanceof Array)
+			value = value [0];
+
+		X3DObjectArrayField .prototype .push .apply (this, value);
+
+		return new Proxy (this, handler);
+	}
+
+	X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
+	{
+		constructor: X3DObjectArrayField,
+		copy: function ()
+		{
+			var
+				target = this .target,
+				copy   = new (target .constructor) (),
+				array  = target .getValue ();
+
+			X3DObjectArrayField .prototype .push .apply (copy, array);
+
+			return copy;
+		},
+		equals: function (array)
+		{
+			var
+				target = this .target,
+				a      = target .getValue (),
+				b      = array .getValue (),
+				length = a .length;
+
+			if (a === b)
+				return true;
+
+			if (length !== b .length)
+				return false;
+
+			for (var i = 0; i < length; ++ i)
+			{
+				if (! a [i] .equals (b [i]))
+					return false;
+			}
+
+			return true;
+		},
+		set: function (value)
+		{
+			var target = this .target;
+
+			target .resize (value .length, undefined, true);
+
+			var array = target .getValue ();
+
+			for (var i = 0, length = value .length; i < length; ++ i)
+				array [i] .set (value [i] instanceof X3DField ? value [i] .getValue () : value [i]);
+		},
+		isDefaultValue: function ()
+		{
+			return this .length === 0;
+		},
+		setValue: function (value)
+		{
+			var target = this .target;
+
+			target .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
+			target .addEvent ();
+		},
+		unshift: function (value)
+		{
+			var
+				target = this .target,
+				array  = target .getValue ();
+
+			for (var i = arguments .length - 1; i >= 0; -- i)
+			{
+				var field = new (target .getSingleType ()) ();
+
+				field .setValue (arguments [i]);
+	
+				target .addChild (field);
+
+				array .unshift (field);
+			}
+
+			target .addEvent ();
+
+			return array .length;
+		},
+		shift: function ()
+		{
+			var
+				target = this .target,
+				array  = target .getValue ();
+
+			if (array .length)
+			{
+				var field = array .shift ();
+				target .removeChild (field);
+				target .addEvent ();
+				return field .valueOf ();
+			}
+		},
+		push: function (value)
+		{
+			var
+				target = this .target,
+				array  = target .getValue ();
+
+			for (var i = 0, length = arguments .length; i < length; ++ i)
+			{
+				var field = new (target .getSingleType ()) ();
+
+				field .setValue (arguments [i]);
+
+				target .addChild (field);
+
+				array .push (field);
+			}
+
+			target .addEvent ();
+
+			return array .length;
+		},
+		pop: function ()
+		{
+			var
+				target = this .target,
+				array  = target .getValue ();
+
+			if (array .length)
+			{
+				var field = array .pop ();
+				target .removeChild (field);
+				target .addEvent ();
+				return field .valueOf ();
+			}
+		},
+		splice: function (index, deleteCount)
+		{
+			var
+				target = this .target,
+				array  = target .getValue ();
+
+			if (index > array .length)
+				index = array .length;
+
+			if (index + deleteCount > array .length)
+				deleteCount = array .length - index;
+
+			var result = target .erase (index, index + deleteCount);
+
+			if (arguments .length > 2)
+				target .insert (index, arguments, 2, arguments .length);
+
+			return result;
+		},
+		insert: function (index, array, first, last)
+		{
+			var
+				target = this .target,
+				args   = [index, 0];
+
+			for (var i = first; i < last; ++ i)
+			{
+				var field = new (target .getSingleType ()) ();
+
+				field .setValue (array [i]);
+
+				target .addChild (field);
+				args .push (field);
+			}
+
+			Array .prototype .splice .apply (target .getValue (), args);
+
+			target .addEvent ();
+		},
+		find: function (first, last, value)
+		{
+			var target = this .target;
+
+			if ($.isFunction (value))
+			{
+				var values = target .getValue ();
+	
+				for (var i = first; i < last; ++ i)
+				{
+					if (value (values [i] .valueOf ()))
+						return i;
+				}
+	
+				return last;
+			}
+
+			var values = target .getValue ();
+
+			for (var i = first; i < last; ++ i)
+			{
+				if (values [i] .equals (value))
+					return i;
+			}
+
+			return last;
+		},
+		remove: function (first, last, value)
+		{
+			var target = this .target;
+
+			if ($.isFunction (value))
+			{
+				var values = target .getValue ();
+	
+				first = target .find (first, last, value);
+	
+				if (first !== last)
+				{
+					for (var i = first; ++ i < last; )
+					{
+						var current = values [i];
+
+						if (! value (current .valueOf ()))
+						{
+							var tmp = values [first];
+	
+							values [first ++] = current;
+							values [i]        = tmp;
+						}
+					}
+				}
+		
+				if (first !== last)
+					target .addEvent ();
+
+				return first;
+			}
+
+			var values = target .getValue ();
+
+			first = target .find (first, last, value);
+
+			if (first !== last)
+			{
+				for (var i = first; ++ i < last; )
+				{
+					var current = values [i];
+
+					if (! current .equals (value))
+					{
+						var tmp = values [first];
+
+						values [first ++] = current;
+						values [i]        = tmp;
+					}
+				}
+			}
+
+			if (first !== last)
+				target .addEvent ();
+
+			return first;
+		},
+		erase: function (first, last)
+		{
+			var
+				target = this .target,
+				values = target .getValue () .splice (first, last - first);
+				
+			for (var i = 0, length = values .length; i < length; ++ i)
+				target .removeChild (values [i]);
+			
+			target .addEvent ();
+
+			return new (target .constructor) (values);
+		},
+		resize: function (size, value, silent)
+		{
+			var
+				target = this .target,
+				array  = target .getValue ();
+		
+			if (size < array .length)
+			{
+				for (var i = size, length = array .length; i < length; ++ i)
+					target .removeChild (array [i]);
+
+				array .length = size;
+
+				if (! silent)
+					target .addEvent ();
+			}
+			else if (size > array .length)
+			{
+				for (var i = array .length; i < size; ++ i)
+				{
+					var field = new (target .getSingleType ()) ();
+
+					if (value !== undefined)
+						field .setValue (value);
+
+					target .addChild (field);
+					array .push (field);
+				}
+
+				if (! silent)
+					target .addEvent ();
+			}
+		},
+		addChild: function (value)
+		{
+			value .addParent (this .target);
+		},
+		removeChild: function (value)
+		{
+			value .removeParent (this .target);
+		},
+		toStream: function (stream)
+		{
+			var
+				target    = this .target,
+				array     = target .getValue (),
+				generator = Generator .Get (stream);
+
+			switch (array .length)
+			{
+				case 0:
+				{
+					stream .string += "[ ]";
+					break;
+				}
+				case 1:
+				{
+					generator .PushUnitCategory (target .getUnit ());
+
+					array [0] .toStream (stream);
+
+					generator .PopUnitCategory ();
+					break;
+				}
+				default:
+				{
+					generator .PushUnitCategory (target .getUnit ());
+
+					stream .string += "[\n";
+					generator .IncIndent ();
+				
+					for (var i = 0, length = array .length - 1; i < length; ++ i)
+					{
+						stream .string += generator .Indent ();
+						array [i] .toStream (stream);
+						stream .string += ",\n"
+					}
+
+					stream .string += generator .Indent ();
+					array [length] .toStream (stream);
+					stream .string += "\n";
+
+					generator .DecIndent ();
+					stream .string += generator .Indent ();
+					stream .string += "]";
+
+					generator .PopUnitCategory ();
+					break;
+				}
+			}
+		},
+		toXMLStream: function (stream)
+		{
+			var
+				target = this .target,
+				length = target .length;
+
+			if (length)
+			{
+				var
+					generator = Generator .Get (stream),
+					array     = target .getValue ();
+
+				generator .PushUnitCategory (target .getUnit ());
+
+				for (var i = 0, n = length - 1; i < n; ++ i)
+				{
+					array [i] .toXMLStream (stream);
+					stream .string += ", ";
+				}
+
+				array [n] .toXMLStream (stream);
+
+				generator .PopUnitCategory ();
+			}
+		},
+		dispose: function ()
+		{
+			var
+				target = this .target,
+				array  = target .getValue ();
+
+			for (var i = 0, length = target .length; i < length; ++ i)
+				target .removeChild (array [i]);
+
+			array .length = 0;
+
+			X3DArrayField .prototype .dispose .call (target);
+		},
+	});
+
+	Object .defineProperty (X3DObjectArrayField .prototype, "length",
+	{
+		get: function () { return this .target .getValue () .length; },
+		set: function (value) { this .target .resize (value); },
+		enumerable: false,
+		configurable: false,
+	});
+
+	return X3DObjectArrayField;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Basic/X3DTypedArrayField',[
+	"x_ite/Basic/X3DArrayField",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
+	"standard/Math/Algorithm",
+],
+function (X3DArrayField,
+          X3DConstants, 
+          Generator,
+          Algorithm)
+{
+"use strict";
+
+	var tmp = [ ]; // Array with components size.
+
+	var handler =
+	{
+		get: function (target, key)
+		{
+			try
+			{
+				var value = target [key];
+
+				if (value !== undefined)
+					return value;
+
+				// value
+				
+				var
+					index      = parseInt (key),
+					array      = target .getValue (),
+					components = target .getComponents (),
+					valueType  = target .getValueType ();
+
+				if (index >= target ._length)
+					array = target .resize (index + 1);
+
+				if (components === 1)
+				{
+					return valueType (array [index]);
+				}
+				else
+				{
+					var value = new (valueType) ();
+
+					value .getValue = getValue .bind (value, target, index, value .getValue (), components);
+					value .addEvent = addEvent .bind (value, target, index, value .getValue (), components);
+
+					return value;
+				}
+			}
+			catch (error)
+			{
+				// Don't know what to do with symbols, but it seem not to affect anything.
+				if ((typeof key) === "symbol")
+					return;
+
+				// if target not instance of X3DTypedArrayField, then the constuctor is called as function.
+				console .log (target, typeof key, key, error);
+			}
+		},
+		set: function (target, key, value)
+		{
+			try
+			{
+				if (key in target)
+				{
+					target [key] = value;
+					return true;
+				}
+
+				var
+					index      = parseInt (key),
+					array      = target .getValue (),
+					components = target .getComponents ();
+
+				if (index >= target ._length)
+					array = target .resize (index + 1);
+
+				if (components === 1)
+				{
+					array [index] = value;
+				}
+				else
+				{
+					index *= components;
+
+					for (var c = 0; c < components; ++ c, ++ index)
+						array [index] = value [c];
+				}
+
+				target .addEvent ();
+
+				return true;
+			}
+			catch (error)
+			{
+				// if target not instance of X3DTypedArrayField, then the constuctor is called as function.
+				console .log (target, key, error);
+				return false;
+			}
+		},
+		has: function (target, key)
+		{
+			return key in target .getValue ();
+		},
+		enumerate: function (target)
+		{
+			return Object .keys (target .getValue ()) [Symbol.iterator] ();
+		},
+	};
+
+	function X3DTypedArrayField (value)
+	{
+		X3DArrayField .call (this, new (this .getArrayType ()) (2));
+
+		this .target = this;
+
+		if (value [0] instanceof Array)
+			value = value [0];
+
+		X3DTypedArrayField .prototype .push .apply (this, value);
+
+		return new Proxy (this, handler);
+	}
+
+	X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
+	{
+		constructor: X3DTypedArrayField,
+		_length: 0,
+		copy: function ()
+		{
+			var
+				target     = this .target,
+				array      = target .getValue (),
+				copy       = new (target .constructor) (),
+				copyArray  = new (target .getArrayType ()) (array);
+
+			copy ._length = target ._length;
+
+			X3DArrayField .prototype .set .call (copy, copyArray, target ._length);
+
+			return copy;
+		},
+		equals: function (other)
+		{
+			if (this === other)
+				return true;
+
+			var
+				target = this .target,
+				length = target ._length;
+
+			if (length !== other ._length)
+				return false;
+
+			var
+				a = target  .getValue (),
+				b = other .getValue ();
+
+			for (var i = 0, l = length * target .getComponents (); i < l; ++ i)
+			{
+				if (a [i] !== b [i])
+					return false;
+			}
+
+			return true;
+		},
+		assign: function (value)
+		{
+			var target = this .target;
+
+			target .set (value .getValue (), value .length);
+			target .addEvent ();
+		},
+		set: function (otherArray /* value of field */, l /* length of field */)
+		{
+			var
+				target      = this .target,
+				components  = target .getComponents (),
+				array       = target .getValue (),
+				length      = target ._length,
+				otherLength = l !== undefined ? l * components : otherArray .length,
+				rest        = otherLength % components;
+
+			if (rest)
+			{
+				throw new Error ("Array length must be multiple of components size, which is " + components + ".");
+			}
+
+			otherLength /= components;
+
+			if (array .length < otherArray .length)
+			{
+				array = target .grow (otherArray .length);
+				array .set (otherArray);
+			}
+			else
+			{
+				array .set (otherArray);
+
+				if (otherLength < length)
+					array .fill (0, otherLength * components, length * components);
+			}
+
+			target ._length = otherLength;
+		},
+		isDefaultValue: function ()
+		{
+			return this ._length === 0;
+		},
+		setValue: function (value)
+		{
+			var target = this .target;
+
+			if (value instanceof target .constructor)
+			{
+				target .assign (value);
+			}
+			else
+			{
+				target .set (value);
+				target .addEvent ();
+			}
+		},
+		unshift: function (value)
+		{
+			var
+				target          = this .target,
+				components      = target .getComponents (),
+				length          = target ._length,
+				argumentsLength = arguments .length;
+
+			var array = target .grow ((length + argumentsLength) * components);
+
+			array .copyWithin (argumentsLength * components, 0, length * components);
+
+			if (components === 1)
+			{
+				array .set (arguments, 0);
+			}
+			else
+			{
+				for (var i = 0, a = 0; a < argumentsLength; ++ a)
+				{
+					var argument = arguments [a];
+
+					for (var c = 0; c < components; ++ c, ++ i)
+					{
+						array [i] = argument [c];
+					}
+				}
+			}
+
+			target ._length += argumentsLength;
+
+			target .addEvent ();
+
+			return array .length;
+		},
+		shift: function ()
+		{
+			var
+				target = this .target,
+				array  = target .getValue ();
+
+			if (array .length)
+			{
+				var
+					components = target .getComponents (),
+					valueType  = target .getValueType (),
+					length     = target ._length,
+					newLength  = length - 1;
+
+				if (components === 1)
+				{
+					var value = valueType (array [0]);
+				}
+				else
+				{
+					for (var c = 0; c < components; ++ c)
+						tmp [c] = array [c];
+
+					tmp .length = components;
+
+					var value = Object .create (valueType .prototype);
+
+					valueType .apply (value, tmp);
+				}
+
+				array .copyWithin (0, components, length * components);
+				array .fill (0, components * newLength, length * components);
+
+				target ._length = newLength;
+
+				target .addEvent ();
+				return value;
+			}
+		},
+		push: function (value)
+		{
+			var
+				target          = this .target,
+				components      = target .getComponents (),
+				length          = target ._length,
+				argumentsLength = arguments .length;
+
+			var array = target .grow ((length + argumentsLength) * components);
+
+			if (components === 1)
+			{
+				array .set (arguments, length);
+			}
+			else
+			{
+				for (var i = length * components, a = 0; a < argumentsLength; ++ a)
+				{
+					var argument = arguments [a];
+
+					for (var c = 0; c < components; ++ c,  ++ i)
+					{
+						array [i] = argument [c];
+					}
+				}
+			}
+
+			target ._length += argumentsLength;
+
+			target .addEvent ();
+
+			return target ._length;
+		},
+		pop: function ()
+		{
+			var
+				target = this .target,
+				array  = target .getValue ();
+
+			if (array .length)
+			{
+				var
+					components = target .getComponents (),
+					valueType  = target .getValueType (),
+					length     = target ._length,
+					newLength  = length - 1;
+
+				if (components === 1)
+				{
+					var value = valueType (array [length - 1]);
+				}
+				else
+				{
+					for (var c = 0, a = newLength * components; c < components; ++ c, ++ a)
+						tmp [c] = array [a];
+	
+					tmp .length = components;
+
+					var value = Object .create (valueType .prototype);
+
+					valueType .apply (value, tmp);
+				}
+
+				array .fill (0, newLength * components, length * components);
+
+				target ._length = newLength;
+
+				target .addEvent ();
+
+				return value;
+			}
+		},
+		splice: function (index, deleteCount)
+		{
+			var
+				target = this .target,
+				array  = target .getValue (),
+				length = target ._length;
+
+			if (index > length)
+				index = length;
+
+			if (index + deleteCount > length)
+				deleteCount = length - index;
+
+			var result = target .erase (index, index + deleteCount);
+
+			if (arguments .length > 2)
+				target .spliceInsert (index, Array .prototype .splice .call (arguments, 2));
+
+			target .addEvent ();
+
+			return result;
+		},
+		spliceInsert: function (index, other)
+		{
+			var
+				target      = this .target,
+				components  = target .getComponents (),
+				length      = target ._length,
+				otherLength = other .length;
+
+			index *= components;
+
+			var array = target .grow ((length + otherLength) * components);
+
+			array .copyWithin (index + otherLength * components, index, length * components);
+
+			if (components === 1)
+			{
+				array .set (other, index);
+			}
+			else
+			{
+				for (var i = 0, a = index; i < otherLength; ++ i)
+				{
+					var value = other [i];
+
+					for (var c = 0; c < components; ++ c, ++ a)
+						array [a] = value [c];
+				}
+			}
+
+			target ._length += otherLength;
+		},
+		insert: function (index, other, first, last)
+		{
+			var
+				target     = this .target,
+				length     = target ._length,
+				otherArray = other .getValue (),
+				components = target .getComponents (),
+				difference = last - first;
+
+			index *= components;
+			first *= components;
+			last  *= components;
+
+			var array = target .grow ((length + difference) * components);
+
+			array .copyWithin (index + difference * components, index, length * components);
+
+			for (; first < last; ++ index, ++ first)
+				array [index] = otherArray [first];
+
+			target ._length += difference;
+
+			target .addEvent ();
+		},
+		erase: function (first, last)
+		{
+			var
+				target     = this .target,
+				array      = target .getValue (),
+				components = target .getComponents (),
+				difference = last - first,
+				length     = target ._length,
+				newLength  = length - difference,
+				values     = new (target .constructor) ();
+
+			first *= components;
+			last  *= components;
+
+			var valuesArray = values .grow (difference * components);
+
+			for (var v = 0, f = first; f < last; ++ v, ++ f)
+				valuesArray [v] = array [f];
+
+			array .copyWithin (first, last, length * components);
+			array .fill (0, newLength * components, length * components);
+
+			target ._length = newLength;
+			values ._length = difference;
+
+			target .addEvent ();
+
+			return values;
+		},
+		resize: function (newLength, value, silent)
+		{
+			var
+				target     = this .target,
+				length     = target ._length,
+				array      = target .getValue (),
+				components = target .getComponents ();
+
+			if (newLength < length)
+			{
+				array .fill (0, newLength * components, length * components);
+
+				if (! silent)
+					target .addEvent ();
+			}
+			else if (newLength > length)
+			{
+				array = target .grow (newLength * components);
+
+				if (value !== undefined)
+				{
+					if (components === 1)
+					{
+						array .fill (value, length * components, newLength * components);
+					}
+					else
+					{
+						for (var i = length * components, il = newLength * components; i < il; )
+						{
+							for (var c = 0; c < components; ++ c, ++ i)
+							{
+								array [i] = value [c];
+							}
+						}
+					}
+				}
+	
+				if (! silent)
+					target .addEvent ();
+			}
+
+			target ._length = newLength;
+
+			return array;
+		},
+		grow: function (length)
+		{
+			var
+				target = this .target,
+				array  = target .getValue ();
+
+			if (length < array .length)
+				return array;
+
+			var
+				maxLength = Algorithm .nextPowerOfTwo (length),
+				newArray  = new (target .getArrayType ()) (maxLength);
+
+			newArray .set (array);
+
+			X3DArrayField .prototype .set .call (target, newArray);
+
+			return newArray;
+		},
+		shrinkToFit: function ()
+		{
+			var
+				target = this .target,
+				array  = target .getValue (),
+				length = target ._length * target .getComponents ();
+
+			if (array .length == length)
+				return array;
+
+			var newArray = array .subarray (0, length);
+
+			X3DArrayField .prototype .set .call (target, newArray);
+
+			return newArray;
+		},
+		toStream: function (stream)
+		{
+			var
+				target     = this .target,
+				generator  = Generator .Get (stream),
+				array      = target .getValue (),
+				length     = target ._length,
+				components = target .getComponents (),
+				value      = new (target .getSingleType ()) ();
+
+			switch (length)
+			{
+				case 0:
+				{
+					stream .string += "[ ]";
+					break;
+				}
+				case 1:
+				{
+					generator .PushUnitCategory (target .getUnit ());
+
+					if (components === 1)
+					{
+						value .set (array [0]);
+
+						value .toStream (stream);
+					}
+					else
+					{
+						for (var c = 0, first = 0; c < components; ++ c, ++ first)
+							value [c] = array [first]; 
+
+						value .toStream (stream);
+					}
+
+					generator .PopUnitCategory ();
+					break;
+				}
+				default:
+				{
+					generator .PushUnitCategory (target .getUnit ());
+
+					stream .string += "[\n";
+					generator .IncIndent ();
+
+					if (components === 1)
+					{
+						for (var i = 0, n = length - 1; i < n; ++ i)
+						{
+							stream .string += generator .Indent ();
+
+							value .set (array [i * components]);
+							value .toStream (stream);
+	
+							stream .string += ",\n"
+						}
+	
+						stream .string += generator .Indent ();
+						value .set (array [n * components]);
+						value .toStream (stream);
+
+						stream .string += "\n";
+					}
+					else
+					{
+						for (var i = 0, n = length - 1; i < n; ++ i)
+						{
+							stream .string += generator .Indent ();
+
+							for (var c = 0, first = i * components; c < components; ++ c, ++ first)
+								value [c] = array [first]; 
+		
+							value .toStream (stream);
+		
+							stream .string += ",\n"
+						}
+
+						stream .string += generator .Indent ();
+
+						for (var c = 0, first = n * components; c < components; ++ c, ++ first)
+							value [c] = array [first]; 
+		
+						value .toStream (stream);
+						stream .string += "\n";
+					}
+
+					generator .DecIndent ();
+					stream .string += generator .Indent ();
+					stream .string += "]";
+
+					generator .PopUnitCategory ();
+					break;
+				}
+			}
+		},
+		toXMLStream: function (stream)
+		{
+			var
+				target = this .target,
+				length = target ._length;
+
+			if (length)
+			{
+				var
+					generator  = Generator .Get (stream),
+					array      = target .getValue (),
+					components = target .getComponents (),
+					value      = new (target .getSingleType ()) ();
+	
+				generator .PushUnitCategory (target .getUnit ());
+
+				if (components === 1)
+				{
+					for (var i = 0, n = length - 1; i < n; ++ i)
+					{
+						value .set (array [i * components]);
+						value .toXMLStream (stream);
+
+						stream .string += ", ";
+					}
+
+					value .set (array [n * components]);
+
+					value .toXMLStream (stream);
+				}
+				else
+				{
+					for (var i = 0, n = length - 1; i < n; ++ i)
+					{
+						for (var c = 0, first = i * components; c < components; ++ c, ++ first)
+							value [c] = array [first]; 
+	
+						value .toXMLStream (stream);
+	
+						stream .string += ", ";
+					}
+
+					for (var c = 0, first = n * components; c < components; ++ c, ++ first)
+						value [c] = array [first]; 
+	
+					value .toXMLStream (stream);
+				}
+
+				generator .PopUnitCategory ();
+			}
+		},
+		dispose: function ()
+		{
+			X3DArrayField .prototype .dispose .call (this .target);
+		},
+	});
+
+	Object .defineProperty (X3DTypedArrayField .prototype, "length",
+	{
+		get: function () { return this ._length; },
+		set: function (value) { this .target .resize (value); },
+		enumerable: false,
+		configurable: false,
+	});
+
+	// Getter/Setter functions to reference a value for a given index.
+
+	function getValue (field, index, value, components)
+	{
+		var array = field .getValue ();
+
+		index *= components;
+
+		for (var c = 0; c < components; ++ c, ++ index)
+			tmp [c] = array [index];
+
+		tmp .length = components;
+
+		value .set .apply (value, tmp);
+
+		return value;
+	}
+
+	function addEvent (field, index, value, components)
+	{
+		var array = field .getValue ();
+
+		index *= components;
+
+		for (var c = 0; c < components; ++ c, ++ index)
+		{
+			array [index] = value [c];
+		}
+
+		field .addEvent ();
+	}
+
+	return X3DTypedArrayField;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Fields/ArrayFields',[
 	"x_ite/Fields/SFBool",
 	"x_ite/Fields/SFColor",
 	"x_ite/Fields/SFColorRGBA",
@@ -22835,12 +23761,12 @@ define ('x_ite/Fields/ArrayFields',[
 	"x_ite/Fields/SFVec2",
 	"x_ite/Fields/SFVec3",
 	"x_ite/Fields/SFVec4",
-	"x_ite/Basic/X3DArrayField",
+	"x_ite/Basic/X3DObjectArrayField",
+	"x_ite/Basic/X3DTypedArrayField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          SFBool,
+function (SFBool,
           SFColor,
           SFColorRGBA,
           SFDouble,
@@ -22856,7 +23782,8 @@ function ($,
           SFVec2,
           SFVec3,
           SFVec4,
-          X3DArrayField,
+          X3DObjectArrayField,
+          X3DTypedArrayField,
           X3DConstants,
           Generator)
 {
@@ -22881,16 +23808,31 @@ function ($,
 	function MFNode (value)
 	{
 		if (this instanceof MFNode)
-			return X3DArrayField .call (this, arguments);
+			return X3DObjectArrayField .call (this, arguments);
 		
-		return X3DArrayField .call (Object .create (MFNode .prototype), arguments);
+		return X3DObjectArrayField .call (Object .create (MFNode .prototype), arguments);
 	}
 
-	MFNode .prototype = $.extend (Object .create (X3DArrayField .prototype),
+	MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
 	{
 		constructor: MFNode,
-		_valueType: SFNode,
 		_cloneCount: 0,
+		getSingleType: function ()
+		{
+			return SFNode;
+		},
+		getValueType: function ()
+		{
+			return SFNode;
+		},
+		getArrayType: function ()
+		{
+			return Array;
+		},
+		getComponents: function ()
+		{
+			return 1;
+		},
 		getTypeName: function ()
 		{
 			return "MFNode";
@@ -22941,13 +23883,13 @@ function ($,
 		},
 		addChildObject: function (value)
 		{
-			X3DArrayField .prototype .addChildObject .call (this, value);
+			X3DObjectArrayField .prototype .addChildObject .call (this, value);
 
 			value .addClones (this ._cloneCount);
 		},
 		removeChild: function (value)
 		{
-			X3DArrayField .prototype .removeChild .call (this, value);
+			X3DObjectArrayField .prototype .removeChild .call (this, value);
 
 			value .removeClones (this ._cloneCount);
 		},
@@ -22995,46 +23937,34 @@ function ($,
 			}
 		},
 	});
-	
-	function MFFieldTemplate (TypeName, Type, SFField)
-	{
-		function MFField (value)
-		{
-			if (this instanceof MFField)
-				return X3DArrayField .call (this, arguments);
-			
-			return X3DArrayField .call (Object .create (MFField .prototype), arguments);
-		}
-	
-		MFField .prototype = $.extend (Object .create (X3DArrayField .prototype),
-		{
-			constructor: MFField,
-			_valueType: SFField,
-			getTypeName: function ()
-			{
-				return TypeName;
-			},
-			getType: function ()
-			{
-				return Type;
-			},
-		});
-
-		return MFField;
-	}
 
 	function MFString (value)
 	{
 		if (this instanceof MFString)
-			return X3DArrayField .call (this, arguments);
+			return X3DObjectArrayField .call (this, arguments);
 		
-		return X3DArrayField .call (Object .create (MFString .prototype), arguments);
+		return X3DObjectArrayField .call (Object .create (MFString .prototype), arguments);
 	}
 
-	MFString .prototype = $.extend (Object .create (X3DArrayField .prototype),
+	MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
 	{
 		constructor: MFString,
-		_valueType: SFString,
+		getValueType: function ()
+		{
+			return String;
+		},
+		getSingleType: function ()
+		{
+			return SFString;
+		},
+		getArrayType: function ()
+		{
+			return Array;
+		},
+		getComponents: function ()
+		{
+			return 1;
+		},
 		getTypeName: function ()
 		{
 			return "MFString";
@@ -23065,30 +23995,114 @@ function ($,
 			}
 		},
 	});
+	
+	function ArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+	{
+		function ArrayField (value)
+		{
+			if (this instanceof ArrayField)
+				return X3DObjectArrayField .call (this, arguments);
+			
+			return X3DObjectArrayField .call (Object .create (ArrayField .prototype), arguments);
+		}
+
+		ArrayField .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+		{
+			constructor: ArrayField,
+			getSingleType: function ()
+			{
+				return SingleType;
+			},
+			getValueType: function ()
+			{
+				return ValueType;
+			},
+			getArrayType: function ()
+			{
+				return ArrayType;
+			},
+			getComponents: function ()
+			{
+				return Components;
+			},
+			getTypeName: function ()
+			{
+				return TypeName;
+			},
+			getType: function ()
+			{
+				return Type;
+			},
+		});
+
+		return ArrayField;
+	}
+
+	function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+	{
+		function ArrayField (value)
+		{
+			if (this instanceof ArrayField)
+				return X3DTypedArrayField .call (this, arguments);
+
+			return X3DTypedArrayField .call (Object .create (ArrayField .prototype), arguments);
+		}
+
+		ArrayField .prototype = Object .assign (Object .create (X3DTypedArrayField .prototype),
+		{
+			constructor: ArrayField,
+			getSingleType: function ()
+			{
+				return SingleType;
+			},
+			getValueType: function ()
+			{
+				return ValueType;
+			},
+			getArrayType: function ()
+			{
+				return ArrayType;
+			},
+			getComponents: function ()
+			{
+				return Components;
+			},
+			getTypeName: function ()
+			{
+				return TypeName;
+			},
+			getType: function ()
+			{
+				return Type;
+			},
+		});
+
+		return ArrayField;
+	}
 
 	var ArrayFields =
 	{
-		MFBool:      MFFieldTemplate ("MFBool",      X3DConstants .MFBool,      SFBool),
-		MFColor:     MFFieldTemplate ("MFColor",     X3DConstants .MFColor,     SFColor),
-		MFColorRGBA: MFFieldTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA),
-		MFDouble:    MFFieldTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble),
-		MFFloat:     MFFieldTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat),
-		MFImage:     MFFieldTemplate ("MFImage",     X3DConstants .MFImage,     SFImage),
-		MFInt32:     MFFieldTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32),
-		MFMatrix3d:  MFFieldTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d),
-		MFMatrix3f:  MFFieldTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f),
-		MFMatrix4d:  MFFieldTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d),
-		MFMatrix4f:  MFFieldTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f),
+		MFBool:      TypedArrayTemplate ("MFBool",      X3DConstants .MFBool,      SFBool,      Boolean,     Uint8Array,   1),
+		MFColor:     TypedArrayTemplate ("MFColor",     X3DConstants .MFColor,     SFColor,     SFColor,     Float32Array, 3),
+		MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA, SFColorRGBA, Float32Array, 4),
+		MFDouble:    TypedArrayTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble,    Number,      Float64Array, 1),
+		MFFloat:     TypedArrayTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat,     Number,      Float32Array, 1),
+		MFImage:     ArrayTemplate      ("MFImage",     X3DConstants .MFImage,     SFImage,     SFImage,     Array,        1),
+		MFInt32:     TypedArrayTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32,     Number,      Int32Array,   1),
+		MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
+		MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f,  SFMatrix3f,  Float32Array, 9),
+		MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d,  SFMatrix4d,  Float64Array, 16),
+		MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f,  SFMatrix4f,  Float32Array, 16),
 		MFNode:      MFNode,
-		MFRotation:  MFFieldTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation),
+		MFRotation:  TypedArrayTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation,  SFRotation,  Float64Array, 4),
 		MFString:    MFString,
-		MFTime:      MFFieldTemplate ("MFTime",      X3DConstants .MFTime,      SFTime),
-		MFVec2d:     MFFieldTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d),
-		MFVec2f:     MFFieldTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f),
-		MFVec3d:     MFFieldTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d),
-		MFVec3f:     MFFieldTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f),
-		MFVec4d:     MFFieldTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d),
-		MFVec4f:     MFFieldTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f),
+		MFTime:      TypedArrayTemplate ("MFTime",      X3DConstants .MFTime,      SFTime,      Number,      Float64Array, 1),
+		MFVec2d:     TypedArrayTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d,     SFVec2d,     Float64Array, 2),
+		MFVec2f:     TypedArrayTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f,     SFVec2f,     Float32Array, 2),
+		MFVec3d:     TypedArrayTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d,     SFVec3d,     Float64Array, 3),
+		MFVec3f:     TypedArrayTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f,     SFVec3f,     Float32Array, 3),
+		MFVec4d:     TypedArrayTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d,     SFVec4d,     Float64Array, 4),
+		MFVec4f:     TypedArrayTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f,     SFVec4f,     Float32Array, 4),
 	};
 
 	Object .preventExtensions (ArrayFields);
@@ -23148,7 +24162,6 @@ function ($,
 
 
 define ('x_ite/Fields',[
-	"jquery",
 	"x_ite/Fields/SFBool",
 	"x_ite/Fields/SFColor",
 	"x_ite/Fields/SFColorRGBA",
@@ -23167,8 +24180,7 @@ define ('x_ite/Fields',[
 	"x_ite/Fields/SFVec4",
 	"x_ite/Fields/ArrayFields",
 ],
-function ($,
-          SFBool,
+function (SFBool,
           SFColor,
           SFColorRGBA,
           SFDouble,
@@ -23188,7 +24200,7 @@ function ($,
 {
 "use strict";
 
-	var Fields = $.extend (
+	var Fields = Object .assign (
 	{
 		SFBool:      SFBool,
 		SFColor:     SFColor,
@@ -23325,12 +24337,10 @@ define ('x_ite/Browser/VERSION',[],function ()
 
 
 define ('x_ite/Base/X3DEventObject',[
-	"jquery",
 	"x_ite/Base/X3DChildObject",
 	"x_ite/Base/Events",
 ],
-function ($,
-	       X3DChildObject,
+function (X3DChildObject,
 	       Events)
 {
 "use strict";
@@ -23342,7 +24352,7 @@ function ($,
 		this ._browser = browser;
 	}
 
-	X3DEventObject .prototype = $.extend (Object .create (X3DChildObject .prototype),
+	X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prototype),
 	{
 		constructor: X3DEventObject,
 		getBrowser: function ()
@@ -23502,7 +24512,7 @@ function ($,
 			this .addField (fieldDefinitions [i]);
 	}
 
-	X3DBaseNode .prototype = $.extend (Object .create (X3DEventObject .prototype),
+	X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
 	{
 		constructor: X3DBaseNode,
 		fieldDefinitions: new FieldDefinitionArray ([ ]),
@@ -23706,10 +24716,10 @@ function ($,
 							{
 								case X3DConstants .SFNode:
 								case X3DConstants .MFNode:
-									destfield .set (sourceField .copy (executionContext) .getValue ());
+									destfield .setValue (sourceField .copy (executionContext));
 									break;
 								default:
-									destfield .set (sourceField .getValue ());
+									destfield .setValue (sourceField);
 									break;
 							}
 						}
@@ -24583,7 +25593,6 @@ define ('x_ite/Browser/Core/TextureQuality',[],function ()
 
 
 define ('x_ite/Browser/Core/BrowserOptions',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -24592,8 +25601,7 @@ define ('x_ite/Browser/Core/BrowserOptions',[
 	"x_ite/Browser/Core/PrimitiveQuality",
 	"x_ite/Browser/Core/TextureQuality",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBaseNode,
@@ -24615,7 +25623,7 @@ function ($,
 		this .textureQuality   = TextureQuality   .MEDIUM;
 	}
 
-	BrowserOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BrowserOptions,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -24901,15 +25909,13 @@ function ($,
 
 
 define ('x_ite/Browser/Core/BrowserProperties',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBaseNode, 
@@ -24922,7 +25928,7 @@ function ($,
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	BrowserProperties .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BrowserProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BrowserProperties,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -25002,15 +26008,13 @@ function ($,
 
 
 define ('x_ite/Browser/Core/RenderingProperties',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBaseNode, 
@@ -25025,7 +26029,7 @@ function ($,
 		this .addAlias ("AntiAliased", this .Antialiased_);
 	}
 
-	RenderingProperties .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: RenderingProperties,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -25151,7 +26155,7 @@ function ($,
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	Notification .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: Notification,
 		initialize: function ()
@@ -25808,7 +26812,7 @@ function ($,
 		this .addChildObjects ("enabled", new SFBool ());
 	}
 
-	BrowserTimings .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BrowserTimings,
 		getTypeName: function ()
@@ -27877,7 +28881,7 @@ function ($,
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	ContextMenu .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: ContextMenu,
 		getTypeName: function ()
@@ -28267,10 +29271,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('x_ite/Configuration/X3DInfoArray',[
-	"jquery",
-],
-function ($)
+define ('x_ite/Configuration/X3DInfoArray',[],function ()
 {
 "use strict";
 
@@ -28278,11 +29279,15 @@ function ($)
 	{
 		get: function (target, key)
 		{
-			if (key in target)
-				return target [key];
+			var value = target [key];
 
-			if (key in target .array)
-				return target .array [key];
+			if (value !== undefined)
+				return value;
+
+			value = target .array [key];
+
+			if (value !== undefined)
+				return value;
 
 			return target .index [key];
 		},
@@ -28308,7 +29313,7 @@ function ($)
 		return new Proxy (this, handler);
 	}
 
-	$.extend (X3DInfoArray .prototype,
+	Object .assign (X3DInfoArray .prototype,
 	{
 		constructor: X3DInfoArray,
 		add: function (key, value)
@@ -28395,13 +29400,11 @@ function ($)
 
 
 define ('x_ite/Configuration/ComponentInfo',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DConstants,
           Generator)
 {
@@ -28419,7 +29422,7 @@ function ($,
 		Object .seal (this);
 	}
 
-	$.extend (ComponentInfo .prototype,
+	Object .assign (ComponentInfo .prototype,
 	{
 		constructor: ComponentInfo,
 		toXMLStream: function (stream)
@@ -28492,11 +29495,11 @@ function ($,
 
 
 define ('x_ite/Configuration/ComponentInfoArray',[
-	"jquery",
 	"x_ite/Configuration/X3DInfoArray",
 	"x_ite/Configuration/ComponentInfo",
 ],
-function ($, X3DInfoArray, ComponentInfo)
+function (X3DInfoArray,
+          ComponentInfo)
 {
 "use strict";
 
@@ -28515,7 +29518,7 @@ function ($, X3DInfoArray, ComponentInfo)
 		return proxy;
 	}
 
-	ComponentInfoArray .prototype = $.extend (Object .create (X3DInfoArray .prototype),
+	ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ComponentInfoArray,
 		addComponentInfo: function (value)
@@ -28577,14 +29580,12 @@ function ($, X3DInfoArray, ComponentInfo)
 
 
 define ('x_ite/Execution/ImportedNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBaseNode,
           X3DConstants,
           Generator)
@@ -28603,7 +29604,7 @@ function ($,
 		this .inlineNode .loadState_ .addInterest ("set_loadState__", this);
 	}
 
-	ImportedNode .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	ImportedNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: ImportedNode,
 		getTypeName: function ()
@@ -28872,10 +29873,9 @@ function ($,
 
 
 define ('x_ite/Prototype/ExternProtoDeclarationArray',[
-	"jquery",
 	"x_ite/Configuration/X3DInfoArray",
 ],
-function ($, X3DInfoArray)
+function (X3DInfoArray)
 {
 "use strict";
 
@@ -28884,7 +29884,7 @@ function ($, X3DInfoArray)
 		return X3DInfoArray .call (this);
 	}
 
-	ExternProtoDeclarationArray .prototype = $.extend (Object .create (X3DInfoArray .prototype),
+	ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ExternProtoDeclarationArray,
 	});
@@ -28942,10 +29942,9 @@ function ($, X3DInfoArray)
 
 
 define ('x_ite/Prototype/ProtoDeclarationArray',[
-	"jquery",
 	"x_ite/Configuration/X3DInfoArray",
 ],
-function ($, X3DInfoArray)
+function (X3DInfoArray)
 {
 "use strict";
 
@@ -28954,7 +29953,7 @@ function ($, X3DInfoArray)
 		return X3DInfoArray .call (this);
 	}
 
-	ProtoDeclarationArray .prototype = $.extend (Object .create (X3DInfoArray .prototype),
+	ProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ProtoDeclarationArray,
 	});
@@ -29011,10 +30010,7 @@ function ($, X3DInfoArray)
  ******************************************************************************/
 
 
-define ('x_ite/Routing/RouteArray',[
-	"jquery",
-],
-function ($)
+define ('x_ite/Routing/RouteArray',[],function ()
 {
 "use strict";
 
@@ -29022,8 +30018,10 @@ function ($)
 	{
 		get: function (target, key)
 		{
-			if (key in target)
-				return target [key];
+			var value = target [key];
+	
+			if (value !== undefined)
+				return value;
 
 			return target .array [key];
 		},
@@ -29040,7 +30038,7 @@ function ($)
 		return new Proxy (this, handler);
 	}
 
-	$.extend (RouteArray .prototype,
+	Object .assign (RouteArray .prototype,
 	{
 		constructor: RouteArray,
 		getValue: function ()
@@ -29118,14 +30116,12 @@ function ($)
 
 
 define ('x_ite/Routing/X3DRoute',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBaseNode,
           X3DConstants,
           Generator)
@@ -29151,7 +30147,7 @@ function ($,
 		}
 	}
 
-	X3DRoute .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	X3DRoute .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		getTypeName: function ()
 		{
@@ -29437,10 +30433,7 @@ function (Fields)
  ******************************************************************************/
 
 
-define ('standard/Networking/URI',[
-	"jquery",
-],
-function ($)
+define ('standard/Networking/URI',[],function ()
 {
 "use strict";
 
@@ -30126,7 +31119,6 @@ function ($)
 
 
 define ('x_ite/Execution/X3DExecutionContext',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -30143,8 +31135,7 @@ define ('x_ite/Execution/X3DExecutionContext',[
 	"standard/Math/Algorithm",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBaseNode,
@@ -30183,7 +31174,7 @@ function ($,
 		this .routeIndex           = { };
 	}
 
-	X3DExecutionContext .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DExecutionContext,
 		setup: function ()
@@ -30804,11 +31795,9 @@ function ($,
 
 
 define ('x_ite/Configuration/UnitInfo',[
-	"jquery",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Generator)
+function (Generator)
 {
 "use strict";
 
@@ -30823,7 +31812,7 @@ function ($,
 		this .conversionFactor = conversionFactor;
 	}
 
-	$.extend (UnitInfo .prototype,
+	Object .assign (UnitInfo .prototype,
 	{
 		constructor: UnitInfo,
 		toXMLStream: function (stream)
@@ -30907,10 +31896,9 @@ function ($,
 
 
 define ('x_ite/Configuration/UnitInfoArray',[
-	"jquery",
 	"x_ite/Configuration/X3DInfoArray",
 ],
-function ($, X3DInfoArray)
+function (X3DInfoArray)
 {
 "use strict";
 
@@ -30919,7 +31907,7 @@ function ($, X3DInfoArray)
 		return X3DInfoArray .call (this);
 	}
 
-	UnitInfoArray .prototype = $.extend (Object .create (X3DInfoArray .prototype),
+	UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: UnitInfoArray,
 	});
@@ -30977,13 +31965,11 @@ function ($, X3DInfoArray)
 
 
 define ('x_ite/Execution/ExportedNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Base/X3DObject",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DObject,
           Generator)
 {
@@ -30997,7 +31983,7 @@ function ($,
 		this .localNode    = localNode;
 	}
 
-	ExportedNode .prototype = $.extend (Object .create (X3DObject .prototype),
+	ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: ExportedNode,
 		getExportedName: function ()
@@ -31086,7 +32072,6 @@ function ($,
 
 
 define ('x_ite/Execution/X3DScene',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Execution/X3DExecutionContext",
 	"x_ite/Configuration/UnitInfo",
@@ -31095,8 +32080,7 @@ define ('x_ite/Execution/X3DScene',[
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DExecutionContext,
           UnitInfo,
           UnitInfoArray,
@@ -31125,7 +32109,7 @@ function ($,
 		this .setLive (false);
 	}
 
-	X3DScene .prototype = $.extend (Object .create (X3DExecutionContext .prototype),
+	X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
 	{
 		constructor: X3DScene,
 		isMasterContext: function ()
@@ -31232,7 +32216,7 @@ function ($,
 		},
 		getMetadata: function ()
 		{
-			return $.extend ({ }, this .metadata);
+			return Object .assign ({ }, this .metadata);
 		},
 		addExportedNode: function (exportedName, node)
 		{
@@ -31477,12 +32461,10 @@ function ($,
 
 
 define ('x_ite/Execution/Scene',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Execution/X3DScene",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DScene)
 {
 "use strict";
@@ -31499,7 +32481,7 @@ function ($,
 		this .loadingObjects = { };
 	}
 
-	Scene .prototype = $.extend (Object .create (X3DScene .prototype),
+	Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
 	{
 		constructor: Scene,
 		getTypeName: function ()
@@ -31763,12 +32745,10 @@ define ('x_ite/Parser/X3DParser',[],function ()
 
 
 define ('x_ite/Components/Networking/X3DUrlObject',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DConstants)
 {
 "use strict";
@@ -31855,12 +32835,10 @@ function ($,
 
 
 define ('x_ite/Components/Core/X3DNode',[
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DBaseNode,
+function (X3DBaseNode,
           X3DConstants)
 {
 "use strict";
@@ -31872,7 +32850,7 @@ function ($,
 		this .addType (X3DConstants .X3DNode);
 	}
 
-	X3DNode .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DNode,
 		getLayers: function ()
@@ -31990,7 +32968,6 @@ function ($,
 
 
 define ('x_ite/Components/Core/X3DPrototypeInstance',[
-	"jquery",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Fields",
 	"x_ite/Base/X3DChildObject",
@@ -31999,8 +32976,7 @@ define ('x_ite/Components/Core/X3DPrototypeInstance',[
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          FieldDefinitionArray,
+function (FieldDefinitionArray,
           Fields,
           X3DChildObject,
           X3DNode,
@@ -32030,7 +33006,7 @@ function ($,
 			this .construct ();
 	}
 
-	X3DPrototypeInstance .prototype = $.extend (Object .create (X3DExecutionContext .prototype),
+	X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
 		X3DNode .prototype,
 	{
 		constructor: X3DPrototypeInstance,
@@ -32096,7 +33072,7 @@ function ($,
 							if (field .hasReferences ())
 								continue;
 
-							field .setValue (protoField .getValue ());
+							field .setValue (protoField);
 						}
 						catch (error)
 						{
@@ -32186,17 +33162,13 @@ function ($,
 			for (var i = 0, length = protos .length; i < length; ++ i)
 				this .protos .add (protos [i] .getName (), protos [i]);
 		},
-		copyRootNodes: function (rootNodes)
+		copyRootNodes: function (rootNodes1)
 		{
-			var
-				rootNodes1 = rootNodes .getValue (),
-				rootNodes2 = this  .getRootNodes () .getValue ();
+			var rootNodes2 = this .getRootNodes ();
 
 			for (var i = 0, length = rootNodes1 .length; i < length; ++ i)
 			{
-				var value = rootNodes1 [i] .copy (this);
-				value .addParent (this .getRootNodes ());
-				rootNodes2 .push (value);
+				rootNodes2 .push (rootNodes1 [i] .copy (this));
 			}
 		},
 		copyImportedNodes: function (executionContext, importedNodes)
@@ -32556,14 +33528,12 @@ function ($,
 
 
 define ('x_ite/Prototype/X3DProtoDeclarationNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DNode,
           X3DPrototypeInstance,
           X3DConstants)
@@ -32577,7 +33547,7 @@ function ($,
 		this .addType (X3DConstants .X3DProtoDeclarationNode);
 	}
 
-	X3DProtoDeclarationNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DProtoDeclarationNode,
 		hasUserDefinedFields: function ()
@@ -32689,7 +33659,7 @@ function ($,
 		this .deferred = $.Deferred ();
 	}
 
-	X3DExternProtoDeclaration .prototype = $.extend (Object .create (X3DProtoDeclarationNode .prototype),
+	X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: X3DExternProtoDeclaration,
@@ -32988,7 +33958,7 @@ function ($,
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 	}
 
-	X3DProtoDeclaration .prototype = $.extend (Object .create (X3DExecutionContext .prototype),
+	X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
 		X3DProtoDeclarationNode .prototype,
 	{
 		constructor: X3DProtoDeclaration,
@@ -33240,15 +34210,13 @@ function ($,
 
 
 define ('x_ite/Parser/Parser',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Parser/X3DParser",
 	"x_ite/Prototype/X3DExternProtoDeclaration",
 	"x_ite/Prototype/X3DProtoDeclaration",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DParser,
           X3DExternProtoDeclaration,
           X3DProtoDeclaration,
@@ -33275,151 +34243,155 @@ function ($,
 	 *  Grammar
 	 */
 
+
+//	Comment out scriptBody function fragments
+//
+//	// VRML lexical elements
+//	var Grammar =
+//	{
+//		// General
+//		Whitespaces: /^([\x20\n,\t\r]+)/,
+//		Comment:     /^#(.*?)(?=[\n\r])/,
+//
+//		// Header
+//		Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\n\r]/,
+//
+//		// Keywords
+//		AS:          /^AS/,
+//		COMPONENT:   /^COMPONENT/,
+//		DEF:         /^DEF/,
+//		EXPORT:      /^EXPORT/,
+//		EXTERNPROTO: /^EXTERNPROTO/,
+//		FALSE:       /^FALSE/,
+//		false:       /^false/,
+//		IMPORT:      /^IMPORT/,
+//		IS:          /^IS/,
+//		META:        /^META/,
+//		NULL:        /^NULL/,
+//		TRUE:        /^TRUE/,
+//		true:        /^true/,
+//		PROFILE:     /^PROFILE/,
+//		PROTO:       /^PROTO/,
+//		ROUTE:       /^ROUTE/,
+//		TO:          /^TO/,
+//		UNIT:        /^UNIT/,
+//		USE:         /^USE/,
+//
+//		// Terminal symbols
+//		OpenBrace:    /^\{/,
+//		CloseBrace:   /^\}/,
+//		OpenBracket:  /^\[/,
+//		CloseBracket: /^\]/,
+//		Period:       /^\./,
+//		Colon:        /^\:/,
+//
+//		Id: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*)/,
+//		ComponentNameId: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*)/,
+//
+//		initializeOnly: /^initializeOnly/,
+//		inputOnly:      /^inputOnly/,
+//		outputOnly:     /^outputOnly/,
+//		inputOutput:    /^inputOutput/,
+//
+//		field:        /^field/,
+//		eventIn:      /^eventIn/,
+//		eventOut:     /^eventOut/,
+//		exposedField: /^exposedField/,
+//
+//		FieldType: /^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)/,
+//
+//		// Values
+//		int32:  /^((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/,
+//		double: /^([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/,
+//		string: /^"((?:[^"\\]|\\\\|\\")*)"/,
+//
+//		Inf:         /^[+]?inf/i,
+//		NegativeInf: /^-inf/i,
+//		NaN:         /^[+-]?nan/i,
+//
+//		// Misc
+//		Break: /\r?\n/g,
+//	};
+//
+//	function parse (parser)
+//	{
+//		this .lastIndex = 0;
+//		parser .result  = this .exec (parser .input);
+//
+//		if (parser .result)
+//		{
+//			parser .input = parser .input .slice (parser .result [0] .length);
+//			return true;
+//		}
+//
+//		return false;
+//	}
+
+
+	// Comment out scriptBody function fragments
+	//
 	// VRML lexical elements
 	var Grammar =
 	{
 		// General
-		Whitespaces: /^([\x20\n,\t\r]+)/,
-		Comment:     /^#(.*?)(?=[\n\r])/,
+		Whitespaces: new RegExp ('([\\x20\\n,\\t\\r]+)', 'gy'),
+		Comment:     new RegExp ('#(.*?)(?=[\\n\\r])',   'gy'),
 
 		// Header
-		Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\n\r]/,
+		Header:	    new RegExp ("#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'gy'),
 
 		// Keywords
-		AS:          /^AS/,
-		COMPONENT:   /^COMPONENT/,
-		DEF:         /^DEF/,
-		EXPORT:      /^EXPORT/,
-		EXTERNPROTO: /^EXTERNPROTO/,
-		FALSE:       /^FALSE/,
-		false:       /^false/,
-		IMPORT:      /^IMPORT/,
-		IS:          /^IS/,
-		META:        /^META/,
-		NULL:        /^NULL/,
-		TRUE:        /^TRUE/,
-		true:        /^true/,
-		PROFILE:     /^PROFILE/,
-		PROTO:       /^PROTO/,
-		ROUTE:       /^ROUTE/,
-		TO:          /^TO/,
-		UNIT:        /^UNIT/,
-		USE:         /^USE/,
+		AS:          new RegExp ('AS',          'gy'),
+		COMPONENT:   new RegExp ('COMPONENT',   'gy'),
+		DEF:         new RegExp ('DEF',         'gy'),
+		EXPORT:      new RegExp ('EXPORT',      'gy'),
+		EXTERNPROTO: new RegExp ('EXTERNPROTO', 'gy'),
+		FALSE:       new RegExp ('FALSE',       'gy'),
+		false:       new RegExp ('false',       'gy'),
+		IMPORT:      new RegExp ('IMPORT',      'gy'),
+		IS:          new RegExp ('IS',          'gy'),
+		META:        new RegExp ('META',        'gy'),
+		NULL:        new RegExp ('NULL',        'gy'),
+		TRUE:        new RegExp ('TRUE',        'gy'),
+		true:        new RegExp ('true',        'gy'),
+		PROFILE:     new RegExp ('PROFILE',     'gy'),
+		PROTO:       new RegExp ('PROTO',       'gy'),
+		ROUTE:       new RegExp ('ROUTE',       'gy'),
+		TO:          new RegExp ('TO',          'gy'),
+		UNIT:        new RegExp ('UNIT',        'gy'),
+		USE:         new RegExp ('USE',         'gy'),
 
 		// Terminal symbols
-		OpenBrace:    /^\{/,
-		CloseBrace:   /^\}/,
-		OpenBracket:  /^\[/,
-		CloseBracket: /^\]/,
-		Period:       /^\./,
-		Colon:        /^\:/,
+		OpenBrace:    new RegExp ('\\{', 'gy'),
+		CloseBrace:   new RegExp ('\\}', 'gy'),
+		OpenBracket:  new RegExp ('\\[', 'gy'),
+		CloseBracket: new RegExp ('\\]', 'gy'),
+		Period:       new RegExp ('\\.', 'gy'),
+		Colon:        new RegExp ('\\:', 'gy'),
 
-		Id: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*)/,
-		ComponentNameId: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*)/,
+		Id: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]*)', 'gy'),
+		ComponentNameId: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]*)', 'gy'),
 
-		initializeOnly: /^initializeOnly/,
-		inputOnly:      /^inputOnly/,
-		outputOnly:     /^outputOnly/,
-		inputOutput:    /^inputOutput/,
+		initializeOnly: new RegExp ('initializeOnly', 'gy'),
+		inputOnly:      new RegExp ('inputOnly',      'gy'),
+		outputOnly:     new RegExp ('outputOnly',     'gy'),
+		inputOutput:    new RegExp ('inputOutput',    'gy'),
 
-		field:        /^field/,
-		eventIn:      /^eventIn/,
-		eventOut:     /^eventOut/,
-		exposedField: /^exposedField/,
+		field:        new RegExp ('field', 'gy'),
+		eventIn:      new RegExp ('eventIn', 'gy'),
+		eventOut:     new RegExp ('eventOut', 'gy'),
+		exposedField: new RegExp ('exposedField', 'gy'),
 
-		FieldType: /^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)/,
-
-		// Values
-		int32:  /^((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/,
-		double: /^([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/,
-		string: /^"((?:[^"\\]|\\\\|\\")*)"/,
-
-		Inf:         /^[+]?inf/i,
-		NegativeInf: /^-inf/i,
-		NaN:         /^[+-]?nan/i,
-
-		// Misc
-		Break: /\r?\n/g,
-	};
-
-	function parse (parser)
-	{
-		this .lastIndex = 0;
-		parser .result  = this .exec (parser .input);
-
-		if (parser .result)
-		{
-			parser .input = parser .input .slice (parser .result [0] .length);
-			return true;
-		}
-
-		return false;
-	}
-
-
-/*
-	// VRML lexical elements
-	var Grammar =
-	{
-		// General
-		Whitespaces: new RegExp ('^([\\x20\\n,\\t\\r]+)', 'y'),
-		Comment:     new RegExp ('^#(.*?)(?=[\\n\\r])',   'y'),
-
-		// Header
-		Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'y'),
-
-		// Keywords
-		AS:          new RegExp ('^AS',          'y'),
-		COMPONENT:   new RegExp ('^COMPONENT',   'y'),
-		DEF:         new RegExp ('^DEF',         'y'),
-		EXPORT:      new RegExp ('^EXPORT',      'y'),
-		EXTERNPROTO: new RegExp ('^EXTERNPROTO', 'y'),
-		FALSE:       new RegExp ('^FALSE',       'y'),
-		false:       new RegExp ('^false',       'y'),
-		IMPORT:      new RegExp ('^IMPORT',      'y'),
-		IS:          new RegExp ('^IS',          'y'),
-		META:        new RegExp ('^META',        'y'),
-		NULL:        new RegExp ('^NULL',        'y'),
-		TRUE:        new RegExp ('^TRUE',        'y'),
-		true:        new RegExp ('^true',        'y'),
-		PROFILE:     new RegExp ('^PROFILE',     'y'),
-		PROTO:       new RegExp ('^PROTO',       'y'),
-		ROUTE:       new RegExp ('^ROUTE',       'y'),
-		TO:          new RegExp ('^TO',          'y'),
-		UNIT:        new RegExp ('^UNIT',        'y'),
-		USE:         new RegExp ('^USE',         'y'),
-
-		// Terminal symbols
-		OpenBrace:    new RegExp ('^\\{', 'y'),
-		CloseBrace:   new RegExp ('^\\}', 'y'),
-		OpenBracket:  new RegExp ('^\\[', 'y'),
-		CloseBracket: new RegExp ('^\\]', 'y'),
-		Period:       new RegExp ('^\\.', 'y'),
-		Colon:        new RegExp ('^\\:', 'y'),
-
-		Id: new RegExp ('^([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]*)', 'y'),
-		ComponentNameId: new RegExp ('^([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]*)', 'y'),
-
-		initializeOnly: new RegExp ('^initializeOnly', 'y'),
-		inputOnly:      new RegExp ('^inputOnly',      'y'),
-		outputOnly:     new RegExp ('^outputOnly',     'y'),
-		inputOutput:    new RegExp ('^inputOutput',    'y'),
-
-		field:        new RegExp ('^field', 'y'),
-		eventIn:      new RegExp ('^eventIn', 'y'),
-		eventOut:     new RegExp ('^eventOut', 'y'),
-		exposedField: new RegExp ('^exposedField', 'y'),
-
-		FieldType: new RegExp ('^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)', 'y'),
+		FieldType: new RegExp ('(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)', 'gy'),
 
 		// Values
-		int32:  new RegExp ('^((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'y'),
-		double: new RegExp ('^([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'y'),
-		string: new RegExp ('^"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'y'),
+		int32:  new RegExp ('((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'gy'),
+		double: new RegExp ('([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'gy'),
+		string: new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'gy'),
 		
-		Inf:         new RegExp ('^[+]?inf',  'yi'),
-		NegativeInf: new RegExp ('^-inf',     'yi'),
-		NaN:         new RegExp ('^[+-]?nan', 'yi'),
+		Inf:         new RegExp ('[+]?inf',  'gyi'),
+		NegativeInf: new RegExp ('-inf',     'gyi'),
+		NaN:         new RegExp ('[+-]?nan', 'gyi'),
 
 		// Misc
 		Break: new RegExp ('\\r?\\n', 'g'),
@@ -33439,7 +34411,6 @@ function ($,
 
 		return false;
 	}
-*/
 
 	for (var key in Grammar)
 		Grammar [key] .parse = parse;
@@ -33459,7 +34430,7 @@ function ($,
 		this .isXML = isXML;
 	}
 
-	Parser .prototype = $.extend (Object .create (X3DParser .prototype),
+	Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 	{
 		accessTypes:
 		{
@@ -33540,6 +34511,7 @@ function ($,
 			}
 			catch (error)
 			{
+				//console .log (error);
 				throw new Error (this .getError (error));
 			}
 		},
@@ -34551,13 +35523,13 @@ function ($,
 		},
 		scriptBodyElement: function (baseNode)
 		{
-//			var
-//				lastIndex  = this .lastIndex,
-//				lineNumber = this .lineNumber;
-
 			var
-				input      = this .input,
+				lastIndex  = this .lastIndex,
 				lineNumber = this .lineNumber;
+
+//			var
+//				input      = this .input,
+//				lineNumber = this .lineNumber;
 
 			if (this .Id ())
 			{
@@ -34648,11 +35620,11 @@ function ($,
 				}
 			}
 
-//			this .lastIndex  = lastIndex;
-//			this .lineNumber = lineNumber;
-
-			this .input      = input;
+			this .lastIndex  = lastIndex;
 			this .lineNumber = lineNumber;
+
+//			this .input      = input;
+//			this .lineNumber = lineNumber;
 
 			var field = this .interfaceDeclaration ();
 		
@@ -34924,16 +35896,11 @@ function ($,
 		sfboolValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFBool ();
-
-			while (this .sfboolValue (value))
+			while (this .sfboolValue (this .SFBool))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFBool ();
+				field .push (this .SFBool);
 			}
 		},
 		sfcolorValue: function (field)
@@ -34985,6 +35952,7 @@ function ($,
 		sfcolorValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfcolorValue (this .SFColor))
 			{
@@ -35045,6 +36013,7 @@ function ($,
 		sfcolorrgbaValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfcolorrgbaValue (this .SFColorRGBA))
 			{
@@ -35090,6 +36059,7 @@ function ($,
 		sfdoubleValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFDouble .setUnit (field .getUnit ());
 
@@ -35131,6 +36101,7 @@ function ($,
 		sffloatValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFFloat .setUnit (field .getUnit ());
 
@@ -35153,21 +36124,25 @@ function ($,
 					{
 						var
 							comp  = this .value,
-							array = [ ],
 							size  = width * height;
+
+						field .width  = width;
+						field .height = height;
+						field .comp   = comp;
+
+						var array = field .array;
 
 						for (var i = 0; i < size; ++ i)
 						{
 							if (this .int32 ())
 							{
-								array .push (this .value);
+								array [i] = this .value;
 								continue;
 							}
 
 							return false;
 						}
 
-						field .getValue () .set (width, height, comp, array);
 						return true;
 					}
 				}
@@ -35202,6 +36177,7 @@ function ($,
 		sfimageValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfimageValue (this .SFImage))
 			{
@@ -35245,6 +36221,7 @@ function ($,
 		sfint32Values: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfint32Value (this .SFInt32))
 			{
@@ -35332,6 +36309,7 @@ function ($,
 		sfmatrix3dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix3dValue (this .SFMatrix3d))
 			{
@@ -35369,6 +36347,7 @@ function ($,
 		sfmatrix3fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix3fValue (this .SFMatrix3f))
 			{
@@ -35492,6 +36471,7 @@ function ($,
 		sfmatrix4dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix4dValue (this .SFMatrix4d))
 			{
@@ -35529,6 +36509,7 @@ function ($,
 		sfmatrix4fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix4fValue (this .SFMatrix4f))
 			{
@@ -35638,6 +36619,7 @@ function ($,
 		sfrotationValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfrotationValue (this .SFRotation))
 			{
@@ -35681,6 +36663,7 @@ function ($,
 		sfstringValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfstringValue (this .SFString))
 			{
@@ -35718,6 +36701,7 @@ function ($,
 		sftimeValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sftimeValue (this .SFTime))
 			{
@@ -35773,6 +36757,7 @@ function ($,
 		sfvec2dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec2d .setUnit (field .getUnit ());
 
@@ -35814,6 +36799,7 @@ function ($,
 		sfvec2fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec2f .setUnit (field .getUnit ());
 
@@ -35877,6 +36863,7 @@ function ($,
 		sfvec3dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec3d .setUnit (field .getUnit ());
 
@@ -35918,6 +36905,7 @@ function ($,
 		sfvec3fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec3f .setUnit (field .getUnit ());
 
@@ -35987,6 +36975,7 @@ function ($,
 		sfvec4dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec4d .setUnit (field .getUnit ());
 
@@ -36028,6 +37017,7 @@ function ($,
 		sfvec4fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec4f .setUnit (field .getUnit ());
 
@@ -36145,9 +37135,11 @@ define ('standard/Utility/DataStorage',[],function ()
 	{
 		get: function (target, key)
 		{
-			if (key in target)
-				return target [key];
-			
+			var value = target [key];
+
+			if (value !== undefined)
+				return value;
+
 			var value = localStorage [target .getNameSpace () + key];
 
 			if (value === undefined)
@@ -36796,13 +37788,11 @@ function ()
 
 
 define ('x_ite/Components/Core/X3DChildNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DNode, 
           X3DConstants)
 {
@@ -36820,7 +37810,7 @@ function ($,
 		this .addChildObjects ("isCameraObject", new Fields .SFBool ());
 	}
 
-	X3DChildNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DChildNode,
 		setCameraObject: function (value)
@@ -36889,12 +37879,10 @@ function ($,
 
 
 define ('x_ite/Components/Core/X3DSensorNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants)
 {
 "use strict";
@@ -36906,7 +37894,7 @@ function ($,
 		this .addType (X3DConstants .X3DSensorNode);
 	}
 
-	X3DSensorNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DSensorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DSensorNode,
 	});
@@ -36966,12 +37954,10 @@ function ($,
 
 
 define ('x_ite/Components/Networking/X3DNetworkSensorNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DSensorNode, 
+function (X3DSensorNode, 
           X3DConstants)
 {
 "use strict";
@@ -36983,7 +37969,7 @@ function ($,
 		this .addType (X3DConstants .X3DNetworkSensorNode);
 	}
 
-	X3DNetworkSensorNode .prototype = $.extend (Object .create (X3DSensorNode .prototype),
+	X3DNetworkSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 	{
 		constructor: X3DNetworkSensorNode,
 	});
@@ -37043,7 +38029,6 @@ function ($,
 
 
 define ('x_ite/Components/Networking/LoadSensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -37051,8 +38036,7 @@ define ('x_ite/Components/Networking/LoadSensor',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNetworkSensorNode,
@@ -37072,7 +38056,7 @@ function ($,
 		this .timeOutId  = undefined;
 	}
 
-	LoadSensor .prototype = $.extend (Object .create (X3DNetworkSensorNode .prototype),
+	LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .prototype),
 	{
 		constructor: LoadSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -37666,13 +38650,11 @@ define ('x_ite/Browser/Shaders/X3DShadersContext',[],function ()
 
 
 define ('x_ite/Components/Shape/X3DAppearanceNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DNode, 
           X3DConstants)
 {
@@ -37685,7 +38667,7 @@ function ($,
 		this .addType (X3DConstants .X3DAppearanceNode);
 	}
 
-	X3DAppearanceNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DAppearanceNode,
 		initialize: function ()
@@ -37751,7 +38733,6 @@ function ($,
 
 
 define ('x_ite/Components/Shape/Appearance',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -37759,8 +38740,7 @@ define ('x_ite/Components/Shape/Appearance',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DAppearanceNode,
@@ -37784,7 +38764,7 @@ function ($,
 		this .blendModeNode        = null;
 	}
 
-	Appearance .prototype = $.extend (Object .create (X3DAppearanceNode .prototype),
+	Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
 	{
 		constructor: Appearance,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -37967,7 +38947,7 @@ function ($,
 			if (this .shaderNode)
 				this .shaderNode .traverse (type, renderObject);
 		},
-		enable: function (context)
+		enable: function (gl, context)
 		{
 			var browser = context .renderer .getBrowser ();
 		
@@ -37978,14 +38958,12 @@ function ($,
 			context .shaderNode           = this .shaderNode || browser .getDefaultShader ();
 
 			if (this .blendModeNode)
-				this .blendModeNode .enable (browser .getContext ());
+				this .blendModeNode .enable (gl);
 		},
-		disable: function (context)
+		disable: function (gl, context)
 		{
-			var browser = context .renderer .getBrowser ();
-
 			if (this .blendModeNode)
-				this .blendModeNode .disable (browser .getContext ());
+				this .blendModeNode .disable (gl);
 		},
 	});
 
@@ -38120,12 +39098,10 @@ function (Appearance)
 
 
 define ('x_ite/Components/Shape/X3DAppearanceChildNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DNode, 
+function (X3DNode, 
           X3DConstants)
 {
 "use strict";
@@ -38137,7 +39113,7 @@ function ($,
 		this .addType (X3DConstants .X3DAppearanceChildNode);
 	}
 
-	X3DAppearanceChildNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DAppearanceChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DAppearanceChildNode,
 	});
@@ -38268,13 +39244,11 @@ define ('x_ite/Bits/TraverseType',[],function ()
 
 
 define ('x_ite/Components/Shaders/X3DShaderNode',[
-	"jquery",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 ],
-function ($,
-          X3DAppearanceChildNode, 
+function (X3DAppearanceChildNode, 
           X3DConstants,
           TraverseType)
 {
@@ -38287,7 +39261,7 @@ function ($,
 		this .addType (X3DConstants .X3DShaderNode);
 	}
 
-	X3DShaderNode .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
+	X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DShaderNode,
 		custom: true,
@@ -38473,20 +39447,18 @@ function ($,
 
 
 define ('x_ite/Components/Shaders/X3DProgrammableShaderObject',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DCast,
           X3DConstants,
           Matrix3)
 {
 "use strict";
-var xxx = 0;
+
 	var
 		matrix3 = new Matrix3 (),
 		NULL    = new Fields .SFNode ();
@@ -38516,6 +39488,8 @@ var xxx = 0;
 		this .numClipPlanes   = 0;
 		this .numGlobalLights = 0;
 		this .numLights       = 0;
+
+		this .textures = new Map ();
 	}
 
 	X3DProgrammableShaderObject .prototype =
@@ -38687,7 +39661,7 @@ var xxx = 0;
 			location = gl .getUniformLocation (program, depreciated);
 
 			if (location)
-				console .error ("Using uniform location name »" + depreciated + "« is depreciated. See http://create3000.de/x_ite/custom-shaders/.");
+				console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated. See http://create3000.de/x_ite/custom-shaders/.");
 
 			return location;
 		},
@@ -38697,6 +39671,8 @@ var xxx = 0;
 				gl                = this .getBrowser () .getContext (),
 				program           = this .getProgram (),
 				userDefinedFields = this .getUserDefinedFields ();
+
+			this .textures .clear ();
 
 			for (var name in userDefinedFields)
 			{
@@ -38728,6 +39704,10 @@ var xxx = 0;
 						case X3DConstants .SFMatrix4f:
 						{
 							location .array = new Float32Array (16);
+							break;
+						}
+						case X3DConstants .SFNode:
+						{
 							break;
 						}
 						case X3DConstants .MFBool:
@@ -38763,16 +39743,16 @@ var xxx = 0;
 						}
 						case X3DConstants .MFNode:
 						{
-							var array = field ._uniformLocation = [ ];
+							var locations = location .locations = [ ];
 
-							for (var i = 0; ; ++ i)
+							for (var i = 0;; ++ i)
 							{
-								var location = gl .getUniformLocation (program, name + "[" + i + "]");
+								var l = gl .getUniformLocation (program, field .getName () + "[" + i + "]");
 
-								if (location)
-									array [i] = location;
-								else
+								if (! l)
 									break;
+
+								locations .push (l);
 							}
 
 							break;
@@ -38812,38 +39792,11 @@ var xxx = 0;
 
 			for (var name in userDefinedFields)
 			{
-				var field = userDefinedFields [name];
+				var
+					field    = userDefinedFields [name],
+					location = gl .getUniformLocation (program, name);
 
 				field .removeInterest ("set_field__", this);
-
-				switch (field .getType ())
-				{
-					case X3DConstants .SFNode:
-					{
-						this .removeNode (gl, program, field ._uniformLocation);
-						break;
-					}
-					case X3DConstants .MFNode:
-					{
-						var name = field .getName ();
-
-						for (var i = 0; ; ++ i)
-						{
-							var location = gl .getUniformLocation (program, name + "[" + i + "]");
-
-							if (location)
-								this .removeNode (gl, program, location);
-							else
-								break;
-						}
-
-						break;
-					}
-					default:
-						continue;
-				}
-
-				break;
 			}
 		},
 		set_field__: function (field)
@@ -38855,8 +39808,6 @@ var xxx = 0;
 
 			if (location)
 			{
-				this .useProgram (gl); // TODO: only in ComposedShader possible.
-
 				switch (field .getType ())
 				{
 					case X3DConstants .SFBool:
@@ -38888,7 +39839,7 @@ var xxx = 0;
 					{
 						var
 							array  = location .array,
-							pixels = field .array .getValue (),
+							pixels = field .array,
 							length = 3 + pixels .length;
 	
 						if (length !== array .length)
@@ -38898,8 +39849,8 @@ var xxx = 0;
 						array [1] = field .height;
 						array [2] = field .comp;
 	
-						for (var a = 3, p = 0, length = pixels .length; p < length; ++ p)
-							array [a ++] = pixels [p] .getValue ();
+						for (var a = 3, p = 0, length = pixels .length; p < length; ++ p, ++ a)
+							array [a] = pixels [p];
 	
 						gl .uniform1iv (location, array);
 						return;
@@ -38922,7 +39873,15 @@ var xxx = 0;
 					}
 					case X3DConstants .SFNode:
 					{
-						this .setNode (gl, program, location, field);
+						var texture = X3DCast (X3DConstants .X3DTextureNode, field);
+		
+						if (texture)
+						{
+							this .textures .set (location, { name: field .getName (), texture: texture, textureUnit: undefined } );
+							return;
+						}
+
+						this .textures .delete (location);
 						return;
 					}
 					case X3DConstants .SFRotation:
@@ -38960,12 +39919,10 @@ var xxx = 0;
 					case X3DConstants .MFBool:
 					case X3DConstants .MFInt32:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
-	
-						for (var i = 0, length = value .length; i < length; ++ i)
-							array [i] = value [i] .getValue ();
+						var array = location .array;
+
+						for (var i = 0, length = field .length; i < length; ++ i)
+							array [i] = field [i];
 	
 						for (var length = array .length; i < length; ++ i)
 							array [i] = 0;
@@ -38975,13 +39932,11 @@ var xxx = 0;
 					}
 					case X3DConstants .MFColor:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var color = value [i] .getValue ();
+							var color = field [i];
 	
 							array [k++] = color .r;
 							array [k++] = color .g;
@@ -38996,13 +39951,11 @@ var xxx = 0;
 					}
 					case X3DConstants .MFColorRGBA:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var color = value [i] .getValue ();
+							var color = field [i];
 	
 							array [k++] = color .r;
 							array [k++] = color .g;
@@ -39020,41 +39973,38 @@ var xxx = 0;
 					case X3DConstants .MFFloat:
 					case X3DConstants .MFTime:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
-	
-						for (var i = 0, length = value .length; i < length; ++ i)
-							array [i] = value [i] .getValue ();
+						var array = location .array;
+
+						for (var i = 0, length = field .length; i < length; ++ i)
+							array [i] = field [i];
 	
 						for (var length = array .length; i < length; ++ i)
 							array [i] = 0;
-	
+
 						gl .uniform1fv (location, array);
 						return;
 					}
 					case X3DConstants .MFImage:
 					{
 						var
-							images = field .getValue (),
 							array  = location .array,
 							length = this .getImagesLength (field);
 	
 						if (length !== array .length)
 							array = location .array = new Int32Array (length);
 	
-						for (var i = 0, a = 0, length = images .length; i < length; ++ i)
+						for (var i = 0, a = 0, length = field .length; i < length; ++ i)
 						{
 							var
-								value  = images [i],
-								pixels = value .array .getValue ();
+								value  = field [i],
+								pixels = value .array;
 	
 							array [a ++] = value .width;
 							array [a ++] = value .height;
 							array [a ++] = value .comp;
 	
 							for (var p = 0, plength = pixels .length; p < plength; ++ p)
-								array [a ++] = pixels [p] .getValue ();
+								array [a ++] = pixels [p];
 						}
 	
 						gl .uniform1iv (location, array);
@@ -39063,23 +40013,14 @@ var xxx = 0;
 					case X3DConstants .MFMatrix3d:
 					case X3DConstants .MFMatrix3f:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var matrix = value [i] .getValue ();
+							var matrix = field [i];
 	
-							array [k++] = matrix [0];
-							array [k++] = matrix [1];
-							array [k++] = matrix [2];
-							array [k++] = matrix [3];
-							array [k++] = matrix [4];
-							array [k++] = matrix [5];
-							array [k++] = matrix [6];
-							array [k++] = matrix [7];
-							array [k++] = matrix [8];
+							for (var m = 0; m < 9; ++ m)
+								array [k++] = matrix [m];
 						}
 	
 						for (var length = array .length; k < length; ++ k)
@@ -39091,30 +40032,14 @@ var xxx = 0;
 					case X3DConstants .MFMatrix4d:
 					case X3DConstants .MFMatrix4f:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var matrix = value [i] .getValue ();
+							var matrix = field [i];
 	
-							array [k++] = matrix [ 0];
-							array [k++] = matrix [ 1];
-							array [k++] = matrix [ 2];
-							array [k++] = matrix [ 3];
-							array [k++] = matrix [ 4];
-							array [k++] = matrix [ 5];
-							array [k++] = matrix [ 6];
-							array [k++] = matrix [ 7];
-							array [k++] = matrix [ 8];
-							array [k++] = matrix [ 9];
-							array [k++] = matrix [10];
-							array [k++] = matrix [11];
-							array [k++] = matrix [12];
-							array [k++] = matrix [13];
-							array [k++] = matrix [14];
-							array [k++] = matrix [15];
+							for (var m = 0; m < 16; ++ m)
+								array [k++] = matrix [m];
 						}
 	
 						for (var length = array .length; k < length; ++ k)
@@ -39125,25 +40050,28 @@ var xxx = 0;
 					}
 					case X3DConstants .MFNode:
 					{
-						var value = field .getValue ();
-	
-						for (var i = 0, length = value .length; i < length; ++ i)
-							this .setNode (gl, program, location [i], value [i]);
-	
-						for (var length = location .length; i < length; ++ i)
-							this .setNode (gl, program, location [i], NULL);
-	
+						var locations = location .locations;
+
+						for (var i = 0, length = field .length; i < length; ++ i)
+						{
+							var texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
+			
+							if (texture)
+							{
+								this .textures .set (locations [i], { name: field [i] .getName (), texture: texture, textureUnit: undefined } );
+								continue;
+							}
+						}
+
 						return;
 					}
 					case X3DConstants .MFRotation:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var matrix = value [i] .getValue () .getMatrix (matrix3);
+							var matrix = field [i] .getValue () .getMatrix (matrix3);
 	
 							array [k++] = matrix [0];
 							array [k++] = matrix [1];
@@ -39169,13 +40097,11 @@ var xxx = 0;
 					case X3DConstants .MFVec2d:
 					case X3DConstants .MFVec2f:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var vector = value [i] .getValue ();
+							var vector = field [i];
 	
 							array [k++] = vector .x;
 							array [k++] = vector .y;
@@ -39183,20 +40109,18 @@ var xxx = 0;
 	
 						for (var length = array .length; k < length; ++ k)
 							array [k] = 0;
-	
+
 						gl .uniform2fv (location, array);
 						return;
 					}
 					case X3DConstants .MFVec3d:
 					case X3DConstants .MFVec3f:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var vector = value [i] .getValue ();
+							var vector = field [i];
 	
 							array [k++] = vector .x;
 							array [k++] = vector .y;
@@ -39212,13 +40136,11 @@ var xxx = 0;
 					case X3DConstants .MFVec4d:
 					case X3DConstants .MFVec4f:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var vector = value [i] .getValue ();
+							var vector = field [i];
 	
 							array [k++] = vector .x;
 							array [k++] = vector .y;
@@ -39233,48 +40155,6 @@ var xxx = 0;
 						return;
 					}
 				}
-			}
-		},
-		setNode: function (gl, program, location, field)
-		{
-			if (location)
-			{
-				var textureUnit = gl .getUniform (program, location);
-
-				if (! textureUnit)
-				{
-					if (this .getBrowser () .getCombinedTextureUnits () .length)
-					{
-						textureUnit = this .getBrowser () .getCombinedTextureUnits () .pop ();
-						gl .uniform1i (location, textureUnit);
-					}
-					else
-					{
-						console .warn ("Not enough combined texture units for uniform variable '", field .getName (), "' available.");
-						return;
-					}
-				}
-
-				gl .activeTexture (gl .TEXTURE0 + textureUnit);
-
-				var texture = X3DCast (X3DConstants .X3DTextureNode, field);
-
-				if (texture)
-					gl .bindTexture (texture .getTarget (), texture .getTexture ());
-
-				gl .activeTexture (gl .TEXTURE0);
-			}
-		},
-		removeNode: function (gl, program, location)
-		{
-			if (location)
-			{
-				var textureUnit = gl .getUniform (program, location);
-	
-				if (textureUnit)
-					this .getBrowser () .getCombinedTextureUnits () .push (textureUnit);
-
-				gl .uniform1i (location, 0);
 			}
 		},
 		getImagesLength: function (field)
@@ -39323,7 +40203,7 @@ var xxx = 0;
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
 		},
-		setGlobalUniforms: function (renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
+		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
 			var globalLights = renderObject .getGlobalLights ();
 
@@ -39467,6 +40347,54 @@ var xxx = 0;
 			}
 
 			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+		},
+		enable: function (gl)
+		{
+			var browser = this .getBrowser ();
+
+			//console .log (this .getName ());
+			//console .log (browser .getCombinedTextureUnits () .length);
+
+			for (let item of this .textures)
+			{
+				var
+					location = item [0],
+					object   = item [1],
+					name     = object .name,
+					texture  = object .texture;
+
+				if (! browser .getCombinedTextureUnits () .length)
+				{
+					console .warn ("Not enough combined texture units for uniform variable '" + name + "' available.");
+					continue;
+				}
+
+				var textureUnit = object .textureUnit = browser .getCombinedTextureUnits () .pop ();
+	
+				gl .uniform1i (location, textureUnit);
+				gl .activeTexture (gl .TEXTURE0 + textureUnit);
+				gl .bindTexture (texture .getTarget (), texture .getTexture ());
+			}
+
+			gl .activeTexture (gl .TEXTURE0);
+		},
+		disable: function (gl)
+		{
+			var browser = this .getBrowser ();
+
+			for (let item of this .textures)
+			{
+				var
+					object      = item [1],
+					textureUnit = object .textureUnit;
+
+				if (textureUnit !== undefined)
+					browser .getCombinedTextureUnits () .push (textureUnit);
+
+				object .textureUnit = undefined;
+			}		
+
+			//console .log (browser .getCombinedTextureUnits () .length);
 		},
 		enableFloatAttrib: function (gl, name, buffer, components)
 		{
@@ -39638,7 +40566,7 @@ var xxx = 0;
 			{
 				var uniform = gl .getActiveUniform (program, i);
 				uniform .typeName = enums [uniform.type];
-				result .uniforms .push ($.extend ({ }, uniform));
+				result .uniforms .push (Object .assign ({ }, uniform));
 				result .uniformCount += uniform .size;
 			}
 
@@ -39647,7 +40575,7 @@ var xxx = 0;
 			{
 				var attribute = gl .getActiveAttrib (program, i);
 				attribute .typeName = enums [attribute .type];
-				result .attributes .push ($.extend ({ }, attribute));
+				result .attributes .push (Object .assign ({ }, attribute));
 				result .attributeCount += attribute .size;
 			}
 
@@ -39724,7 +40652,6 @@ var xxx = 0;
 
 
 define ('x_ite/Components/Shaders/ComposedShader',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -39734,8 +40661,7 @@ define ('x_ite/Components/Shaders/ComposedShader',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShaderNode, 
@@ -39756,7 +40682,7 @@ function ($,
 		this .loadSensor = new LoadSensor (executionContext);
 	}
 
-	ComposedShader .prototype = $.extend (Object .create (X3DShaderNode .prototype),
+	ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
 		X3DProgrammableShaderObject .prototype,
 	{
 		constructor: ComposedShader,
@@ -39808,20 +40734,24 @@ function ($,
 		},
 		set_live__: function ()
 		{
+			var gl = this .getBrowser () .getContext ();
+
 			if (this .isLive () .getValue ())
 			{
 				if (this .isValid_ .getValue ())
 				{
-					this .useProgram (this .getBrowser () .getContext ());
+					this .enable (gl);
 					this .addShaderFields ();
+					this .disable (gl);
 				}
 			}
 			else
 			{
 				if (this .isValid_ .getValue ())
 				{
-					this .useProgram (this .getBrowser () .getContext ());
+					this .enable (gl);
 					this .removeShaderFields ();
+					this .disable (gl);
 				}
 			}
 		},
@@ -39867,7 +40797,7 @@ function ($,
 
 				if (valid)
 				{
-					this .useProgram (gl);
+					gl .useProgram (this .program);
 
 					// Initialize uniform variables and attributes
 					if (this .getDefaultUniforms ())
@@ -39891,21 +40821,25 @@ function ($,
 				this .isValid_ = false;
 			}
 		},
-		setGlobalUniforms: function (renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
+		set_field__: function (field)
 		{
-			this .useProgram (gl);
-			
-			X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			var gl = this .getBrowser () .getContext ();
+
+			gl .useProgram (this .program);
+
+			X3DProgrammableShaderObject .prototype .set_field__ .call (this, field);
 		},
-		setLocalUniforms: function (gl, context)
-		{
-			this .useProgram (gl);
-	
-			X3DProgrammableShaderObject .prototype .setLocalUniforms .call (this, gl, context);
-		},
-		useProgram: function (gl)
+		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
 			gl .useProgram (this .program);
+
+			X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+		},
+		enable: function (gl)
+		{
+			gl .useProgram (this .program);
+
+			X3DProgrammableShaderObject .prototype .enable .call (this, gl);
 		},
 	});
 
@@ -40873,7 +41807,6 @@ define ('x_ite/Parser/HTMLSupport',[],function ()
 define ('x_ite/Parser/XMLParser',[
 	"jquery",
 	"x_ite/Basic/X3DField",
-	"x_ite/Basic/X3DArrayField",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Fields",
@@ -40886,7 +41819,6 @@ define ('x_ite/Parser/XMLParser',[
 ],
 function ($,
           X3DField,
-          X3DArrayField,
           X3DBaseNode,
           X3DPrototypeInstance,
           Fields,
@@ -40925,7 +41857,7 @@ function ($,
 		{ }
 	}
 
-	XMLParser .prototype = $.extend (Object .create (X3DParser .prototype),
+	XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 	{
 		constructor: XMLParser,
 		parseIntoScene: function (xmlElement)
@@ -41812,6 +42744,350 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = Parser .prototype .sfvec4fValues;
 
 	return XMLParser;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * X3DJSONLD Copyright John Carlson, USA 2016-2017
+ * https://coderextreme.net/X3DJSONLD/
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the Cobweb Project.
+ *
+ * Cobweb is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * Cobweb is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with Cobweb.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Parser/JSONParser',[
+	"x_ite/Fields",
+	"x_ite/Parser/Parser",
+	"x_ite/Parser/XMLParser"
+],
+function (
+          Fields,
+          Parser,
+          XMLParser
+          )
+{
+"use strict";
+
+	function JSONParser (scene)
+	{
+		this .scene             = scene;
+		this .executionContexts = [ scene ];
+		this .protoDeclarations = [ ];
+		this .parents           = [ ];
+		this .parser            = new Parser (this .scene, true);
+		this .url               = new Fields .MFString ();
+		this.x3djsonNS = "http://www.web3d.org/specifications/x3d-namespace";
+	}
+
+	JSONParser.prototype = Object.create(XMLParser.prototype);
+
+	JSONParser .prototype.
+		 constructor = JSONParser;
+
+		/**
+		 * Load X3D JSON into an element.
+		 * jsobj - the JavaScript object to convert to DOM.
+		 */
+	JSONParser .prototype.
+		parseJavaScript = function(jsobj) {
+			var child = this.CreateElement('X3D');
+			this.ConvertToX3DOM(jsobj, "", child);
+			// call the DOM parser
+			this.parseIntoScene(child);
+			return child;
+		};
+
+		// 'http://www.web3d.org/specifications/x3d-namespace'
+
+		// Load X3D JavaScript object into XML or DOM
+
+		/**
+		 * Yet another way to set an attribute on an element.  does not allow you to
+		 * set JSON schema or encoding.
+		 */
+	JSONParser .prototype.
+		elementSetAttribute = function(element, key, value) {
+			if (key === 'SON schema') {
+				// JSON Schema
+			} else if (key === 'ncoding') {
+				// encoding, UTF-8, UTF-16 or UTF-32
+			} else {
+				if (typeof element.setAttribute === 'function') {
+					element.setAttribute(key, value);
+				}
+			}
+		};
+
+		/**
+		 * converts children of object to DOM.
+		 */
+	JSONParser .prototype.
+		ConvertChildren = function(parentkey, object, element) {
+			var key;
+
+			for (key in object) {
+				if (typeof object[key] === 'object') {
+					if (isNaN(parseInt(key))) {
+						this.ConvertObject(key, object, element, parentkey.substr(1));
+					} else {
+						this.ConvertToX3DOM(object[key], key, element, parentkey.substr(1));
+					}
+				}
+			}
+		};
+
+		/**
+		 * a method to create and element with tagnam key to DOM in a namespace.  If
+		 * containerField is set, then the containerField is set in the elemetn.
+		 */
+	JSONParser .prototype.
+		CreateElement = function(key, containerField) {
+			var child = null;
+			if (typeof this.x3djsonNS === 'undefined') {
+				child = document.createElement(key);
+			} else {
+				child = document.createElementNS(this.x3djsonNS, key);
+				if (child === null || typeof child === 'undefined') {
+					console.error('Trouble creating element for', key);
+					child = document.createElement(key);
+				}
+			}
+			if (typeof containerField !== 'undefined') {
+				this.elementSetAttribute(child, 'containerField', containerField);
+			}
+			return child;
+		};
+
+		/**
+		 * a way to create a CDATA function or script in HTML, by using a DOM parser.
+		 */
+	JSONParser .prototype.
+		CDATACreateFunction = function(document, element, str) {
+			var y = str.replace(/\\"/g, "\\\"")
+				.replace(/&lt;/g, "<")
+				.replace(/&gt;/g, ">")
+				.replace(/&amp;/g, "&");
+			do {
+				str = y;
+				y = str.replace(/'([^'\r\n]*)\n([^']*)'/g, "'$1\\n$2'");
+				if (str !== y) {
+					console.log("CDATA Replacing",str,"with",y);
+				}
+			} while (y != str);
+			var domParser = new DOMParser();
+			var cdataStr = '<script> <![CDATA[ ' + y + ' ]]> </script>'; // has to be wrapped into an element
+			var scriptDoc = domParser .parseFromString (cdataStr, 'application/xml');
+			var cdata = scriptDoc .children[0] .childNodes[1]; // space after script is childNode[0]
+			element .appendChild(cdata);
+		};
+
+		/**
+		 * convert the object at object[key] to DOM.
+		 */
+	JSONParser .prototype.
+		ConvertObject = function(key, object, element, containerField) {
+			var child;
+			if (object !== null && typeof object[key] === 'object') {
+				if (key.substr(0,1) === '@') {
+					this.ConvertToX3DOM(object[key], key, element);
+				} else if (key.substr(0,1) === '-') {
+					this.ConvertChildren(key, object[key], element);
+				} else if (key === '#comment') {
+					for (var c in object[key]) {
+						child = document.createComment(this.CommentStringToXML(object[key][c]));
+						element.appendChild(child);
+					}
+				} else if (key === '#sourceText') {
+					this.CDATACreateFunction(document, element, object[key].join("\r\n")+"\r\n");
+				} else {
+					if (key === 'connect' || key === 'fieldValue' || key === 'field' || key === 'meta' || key === 'component') {
+						for (var childkey in object[key]) {  // for each field
+							if (typeof object[key][childkey] === 'object') {
+								child = this.CreateElement(key, containerField);
+								this.ConvertToX3DOM(object[key][childkey], childkey, child);
+								element.appendChild(child);
+								element.appendChild(document.createTextNode("\n"));
+							}
+						}
+					} else {
+						child = this.CreateElement(key, containerField);
+						this.ConvertToX3DOM(object[key], key, child);
+						element.appendChild(child);
+						element.appendChild(document.createTextNode("\n"));
+					}
+				}
+			}
+		};
+
+		/**
+		 * convert a comment string in JavaScript to XML.  Pass the string
+		 */
+	JSONParser .prototype.
+		CommentStringToXML = function(str) {
+			var y = str;
+			str = str.replace(/\\\\/g, '\\');
+			if (y !== str) {
+				console.log("X3DJSONLD <!-> replacing", y, "with", str);
+			}
+			return str;
+		};
+
+		/**
+		 * convert an SFString to XML.
+		 */
+	JSONParser .prototype.
+		SFStringToXML = function(str) {
+			var y = str;
+			/*
+			str = (""+str).replace(/\\\\/g, '\\\\');
+			str = str.replace(/\\\\\\\\/g, '\\\\');
+			str = str.replace(/(\\+)"/g, '\\"');
+			*/
+			str = str.replace(/\\/g, '\\\\');
+			str = str.replace(/"/g, '\\\"');
+			if (y !== str) {
+				console.log("X3DJSONLD [] replacing", y, "with", str);
+			}
+			return str;
+		};
+
+		/**
+		 * convert a JSON String to XML.
+		 */
+	JSONParser .prototype.
+		JSONStringToXML = function(str) {
+			var y = str;
+			str = str.replace(/\\/g, '\\\\');
+			str = str.replace(/\n/g, '\\n');
+			if (y !== str) {
+				console.log("X3DJSONLD replacing", y, "with", str);
+			}
+			return str;
+		};
+
+		/**
+		 * main routine for converting a JavaScript object to DOM.
+		 * object is the object to convert.
+		 * parentkey is the key of the object in the parent.
+		 * element is the parent element.
+		 * containerField is a possible containerField.
+		 */
+	JSONParser .prototype.
+		ConvertToX3DOM = function(object, parentkey, element, containerField) {
+			var key;
+			var localArray = [];
+			var isArray = false;
+			var arrayOfStrings = false;
+			for (key in object) {
+				if (isNaN(parseInt(key))) {
+					isArray = false;
+				} else {
+					isArray = true;
+				}
+				if (isArray) {
+					if (typeof object[key] === 'number') {
+						localArray.push(object[key]);
+					} else if (typeof object[key] === 'string') {
+						localArray.push(object[key]);
+						arrayOfStrings = true;
+					} else if (typeof object[key] === 'boolean') {
+						localArray.push(object[key]);
+					} else if (typeof object[key] === 'object') {
+						/*
+						if (object[key] != null && typeof object[key].join === 'function') {
+							localArray.push(object[key].join(" "));
+						}
+						*/
+						this.ConvertToX3DOM(object[key], key, element);
+					} else if (typeof object[key] === 'undefined') {
+					} else {
+						console.error("Unknown type found in array "+typeof object[key]);
+					}
+				} else if (typeof object[key] === 'object') {
+					// This is where the whole thing starts
+					if (key === 'X3D') {
+						this.ConvertToX3DOM(object[key], key, element);
+					} else {
+						this.ConvertObject(key, object, element);
+					}
+				} else if (typeof object[key] === 'number') {
+					this.elementSetAttribute(element, key.substr(1),object[key]);
+				} else if (typeof object[key] === 'string') {
+					if (key !== '#comment') {
+						// ordinary string attributes
+						this.elementSetAttribute(element, key.substr(1), this.JSONStringToXML(object[key]));
+					} else {
+						var child = document.createComment(this.CommentStringToXML(object[key]));
+						element.appendChild(child);
+					}
+				} else if (typeof object[key] === 'boolean') {
+					this.elementSetAttribute(element, key.substr(1),object[key]);
+				} else if (typeof object[key] === 'undefined') {
+				} else {
+					console.error("Unknown type found in object "+typeof object[key]);
+					console.error(object);
+				}
+			}
+			if (isArray) {
+				if (parentkey.substr(0,1) === '@') {
+					if (arrayOfStrings) {
+						arrayOfStrings = false;
+						for (var str in localArray) {
+							localArray[str] = this.SFStringToXML(localArray[str]);
+						}
+						this.elementSetAttribute(element, parentkey.substr(1),'"'+localArray.join('" "')+'"');
+					} else {
+						// if non string array
+						this.elementSetAttribute(element, parentkey.substr(1),localArray.join(" "));
+					}
+				}
+				isArray = false;
+			}
+			return element;
+		};
+	return JSONParser;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -45283,6 +46559,7 @@ define ('x_ite/InputOutput/FileLoader',[
 	"x_ite/Browser/Networking/urls",
 	"x_ite/Parser/Parser",
 	"x_ite/Parser/XMLParser",
+	"x_ite/Parser/JSONParser",
 	"standard/Networking/URI",
 	"standard/Networking/BinaryTransport",
 	"pako_inflate",
@@ -45294,6 +46571,7 @@ function ($,
           urls,
           Parser,
           XMLParser,
+	  JSONParser,
           URI,
           BinaryTransport,
           pako,
@@ -45332,7 +46610,7 @@ function ($,
 		this .fileReader       = new FileReader ();
 	}
 
-	FileLoader .prototype = $.extend (Object .create (X3DObject .prototype),
+	FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: FileLoader,
 		abort: function ()
@@ -45359,10 +46637,18 @@ function ($,
 				}
 				catch (exceptionParseXML)
 				{
-					// If we cannot parse XML we try to parse X3D Classic Encoding.	
+					// If we cannot parse XML we try to parse X3D JSON Encoding.	
+					try
+					{
 
-					new Parser (scene) .parseIntoScene (string);
+						setTimeout (this .importJS .bind (this, scene, JSON.parse (string), success, error), TIMEOUT);
 
+					}
+					catch (exceptionParseJSON)
+					{
+						// If we cannot parse XML we try to parse X3D Classic Encoding.	
+						new Parser (scene) .parseIntoScene (string);
+					}
 					this .setScene (scene, success);
 				}
 			}
@@ -45373,15 +46659,39 @@ function ($,
 					this .importDocument (scene, $.parseXML (string));
 					return scene;
 				}
-				catch (exception1)
+				catch (exceptionParseXML)
 				{
-					//var exception1 = new Error ("Couldn't parse XML");
 
-					// If we cannot parse XML we try to parse X3D Classic Encoding.	
+					try
+					{
+						// If we cannot parse XML we try to parse X3D JSON Encoding.	
+						this .importJS (scene, JSON.parse (string));
+						return scene;
+					}
+					catch (exceptionParseJSON)
+					{
+						// If we cannot parse JSON we try to parse X3D Classic Encoding.	
 
-					new Parser (scene) .parseIntoScene (string);
-					return scene;
+						new Parser (scene) .parseIntoScene (string);
+						return scene;
+					}
 				}
+			}
+		},
+		importJS: function (scene, jsobj, success, error) {
+			try
+			{
+				//AP: add reference to dom for later access
+				this.node.dom = new JSONParser (scene) .parseJavaScript (jsobj);
+				if (success)
+					this .setScene (scene, success);
+			}
+			catch (exception)
+			{
+				if (error)
+					error (exception);
+				else
+					throw exception;
 			}
 		},
 		importDocument: function (scene, dom, success, error)
@@ -45788,7 +47098,6 @@ function ($,
 
 
 define ('x_ite/Components/Shaders/ShaderPart',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -45799,8 +47108,7 @@ define ('x_ite/Components/Shaders/ShaderPart',[
 	"x_ite/Bits/X3DConstants",
 	"x_ite/DEBUG",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           Shader,
@@ -45834,7 +47142,7 @@ function ($,
 		this .valid = false;
 	}
 
-	ShaderPart .prototype = $.extend (Object .create (X3DNode .prototype),
+	ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: ShaderPart,
@@ -45950,7 +47258,7 @@ define('text!x_ite/Browser/Shaders/Wireframe.vs',[],function () { return '// -*-
 define('text!x_ite/Browser/Shaders/Wireframe.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = C .a;\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Gouraud.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\nfloat\ngetSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor (in vec3 N,\n                  in vec3 v,\n                  in x3d_MaterialParameters material)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (0.0, 0.0, 0.0);\n\tfloat alpha         = 1.0 - material .transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = material .diffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tif (i == x3d_NumLights)\n\t\t\tbreak;\n\n\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\tvec3  vL = light .location - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\tif (di || dL <= light .radius)\n\t\t{\n\t\t\tvec3 d = light .direction;\n\t\t\tvec3 c = light .attenuation;\n\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\tvec3  ambientColor                = light .ambientIntensity * ambientTerm;\n\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\tfinalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);\n\t\t}\n\t}\n\n\tfinalColor += material .emissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfrontColor = getMaterialColor (N, v, x3d_FrontMaterial);\n\t\tbackColor  = x3d_SeparateBackColor ? getMaterialColor (-N, v, x3d_BackMaterial) : frontColor;\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!x_ite/Browser/Shaders/Gouraud.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\nfloat\ngetSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor (in vec3 N,\n                  in vec3 v,\n                  in x3d_MaterialParameters material)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (0.0, 0.0, 0.0);\n\tfloat alpha         = 1.0 - material .transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = material .diffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tif (i == x3d_NumLights)\n\t\t\tbreak;\n\n\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\tvec3  vL = light .location - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\tif (di || dL <= light .radius)\n\t\t{\n\t\t\tvec3 d = light .direction;\n\t\t\tvec3 c = light .attenuation;\n\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\tvec3  ambientColor                = light .ambientIntensity * ambientTerm;\n\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\tfinalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);\n\t\t}\n\t}\n\n\tfinalColor += material .emissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfrontColor = getMaterialColor (N, v, x3d_FrontMaterial);\n\n\t\tx3d_MaterialParameters backMaterial = x3d_FrontMaterial;\n\n\t\tif (x3d_SeparateBackColor)\n\t\t\tbackMaterial = x3d_BackMaterial;\n\n\t\tbackColor = getMaterialColor (-N, v, backMaterial);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
 define('text!x_ite/Browser/Shaders/Gouraud.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_None)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = getFogColor (finalColor .rgb);\n\tgl_FragColor .a   = finalColor .a;\n}\n';});
@@ -49447,7 +50755,6 @@ function (Vector3,
 
 
 define ('standard/Math/Geometry/ViewVolume',[
-	"jquery",
 	"standard/Math/Geometry/Line3",
 	"standard/Math/Geometry/Plane3",
 	"standard/Math/Geometry/Triangle3",
@@ -49455,7 +50762,7 @@ define ('standard/Math/Geometry/ViewVolume',[
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($, Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
+function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
 {
 "use strict";
 
@@ -49563,7 +50870,7 @@ function ($, Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
 		},
 	};
 
-	$.extend (ViewVolume,
+	Object .assign (ViewVolume,
 	{
 		unProjectPoint: function (winx, winy, winz, modelViewMatrix, projectionMatrix, viewport, point)
 		{
@@ -50039,7 +51346,7 @@ function (DepthBuffer,
          vertexBuffer = gl .createBuffer ();
 
 		frameBuffer .bind ();
-		shaderNode .useProgram (gl);
+		shaderNode  .enable (gl);
 		gl .viewport (0, 0, 16, 16);
 
 		gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
@@ -50082,6 +51389,9 @@ function (DepthBuffer,
 		var data = frameBuffer .readPixels ();
 
 		frameBuffer .unbind ();
+
+		shaderNode .disableNormalAttribute (gl, normalBuffer);
+		shaderNode .disable                (gl);
 
 		return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
 	}
@@ -50432,12 +51742,10 @@ function ($,
 
 
 define ('x_ite/Browser/Geometry2D/Arc2DOptions',[
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Fields",
 ],
-function ($,
-          X3DBaseNode,
+function (X3DBaseNode,
           Fields)
 {
 "use strict";
@@ -50449,7 +51757,7 @@ function ($,
 		this .addChildObjects ("dimension", new Fields .SFInt32 (32))
 	}
 
-	ArcClose2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	ArcClose2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: ArcClose2DOptions,
 		getTypeName: function ()
@@ -50519,12 +51827,10 @@ function ($,
 
 
 define ('x_ite/Browser/Geometry2D/ArcClose2DOptions',[
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Fields",
 ],
-function ($,
-          X3DBaseNode,
+function (X3DBaseNode,
           Fields)
 {
 "use strict";
@@ -50536,7 +51842,7 @@ function ($,
 		this .addChildObjects ("dimension", new Fields .SFInt32 (32))
 	}
 
-	Arc2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	Arc2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: Arc2DOptions,
 		getTypeName: function ()
@@ -50554,493 +51860,6 @@ function ($,
 	});
 
 	return Arc2DOptions;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Numbers/Complex',[
-	"jquery",
-],
-function ($)
-{
-"use strict";
-
-	function Complex (real, imag)
-	{
-		this .real = real
-		this .imag = imag;
-	}
-
-	Complex .prototype =
-	{
-		constructor: Complex,
-		copy: function ()
-		{
-			var copy = Object .create (Complex .prototype);
-			copy .real = this .real;
-			copy .imag = this .imag;
-			return copy;
-		},
-		assign: function (complex)
-		{
-			this .real = complex .real;
-			this .imag = complex .imag;
-			return this;
-		},
-		equals: function (complex)
-		{
-			return this .real === complex .real &&
-			       this .imag === complex .imag;
-		},
-		setRadius: function (radius)
-		{
-			return this .setPolar (radius, this .getAngle ());
-		},
-		getRadius: function ()
-		{
-			if (this .real)
-			{
-				if (this .imag)
-					return Math .sqrt (this .real * this .real + this .imag * this .imag);
-
-				return Math .abs (this .real);
-			}
-
-			return Math .abs (this .imag);
-		},
-		setAngle: function (angle)
-		{
-			return this .setPolar (this .getRadius (), angle);
-		},
-		getAngle: function ()
-		{
-			return Math .atan2 (this .imag, this .real);
-		},
-		setPolar: function (radius, angle)
-		{
-			this .real = radius * Math .cos (angle);
-			this .imag = radius * Math .sin (angle);
-		},
-		conjugate: function ()
-		{
-			this .imag = -this .imag;
-			return this;
-		},
-		negate: function ()
-		{
-			this .real = -this .real;
-			this .imag = -this .imag;
-			return this;
-		},
-		inverse: function ()
-		{
-			var d = this .real * this .real + this .imag * this .imag;
-
-			this .real /=  d;
-			this .imag /= -d;
-			return this;
-		},
-		add: function (value)
-		{
-			this .real += value .real;
-			this .imag += value .imag;
-			return this;
-		},
-		subtract: function (value)
-		{
-			this .real -= value .real;
-			this .imag -= value .imag;
-			return this;
-		},
-		multiply: function (value)
-		{
-			this .real *= value;
-			this .imag *= value;
-			return this;
-		},
-		multComp: function ()
-		{
-			var
-				real = this .real, imag = this .imag;
-
-			this .real = real * value .real - imag * value .imag;
-			this .imag = real * value .imag + imag * value .real;
-			return this;
-		},
-		//divide: function (value)
-		//{
-		//	return this;
-		//},
-		divComp: function (value)
-		{
-			var
-				ar = this .real, ai = this .imag,
-				br = value .real, bi = value .imag;
-
-			var d = br * br + bi * bi;
-
-			this .real = (ar * br + ai * bi) / d;
-			this .imag = (ai * br - ar * bi) / d;
-			return this;
-		},
-		toString: function ()
-		{
-			if (this .imag)
-				return this .real + " " + this .imag + "i";
-
-			return String (this .real);
-		},
-	};
-
-	$.extend (Complex,
-	{
-		Polar: function (radius, angle)
-		{
-			var complex = Object .create (Complex .prototype);
-			complex .real = radius * Math .cos (angle);
-			complex .imag = radius * Math .sin (angle);
-			return complex;
-		},
-		multiply: function (lhs, rhs)
-		{
-			var copy = Object .create (this .prototype);
-			copy .real = lhs .real * rhs;
-			copy .imag = lhs .imag * rhs;
-			return copy;
-		},
-		multComp: function (lhs, rhs)
-		{
-			var copy = Object .create (this .prototype);
-			copy .real = lhs .real * rhs .real - lsh .imag * rhs .imag;
-			copy .imag = lhs .real * rhs .imag + lsh .imag * rhs .real;
-			return copy;
-		},
-	});
-
-	return Complex;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Geometry2D/Circle2DOptions',[
-	"jquery",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Fields",
-	"standard/Math/Numbers/Complex",
-	"standard/Math/Numbers/Vector3",
-],
-function ($,
-          X3DBaseNode,
-          Fields,
-          Complex,
-          Vector3)
-{
-"use strict";
-	
-	function Circle2DOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-
-		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
-
-		this .vertices = [ ];
-	}
-
-	Circle2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: Circle2DOptions,
-		getTypeName: function ()
-		{
-			return "Circle2DOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "circle2DOptions";
-		},
-		initialize: function ()
-		{
-			this .addInterest ("build", this);
-
-			this .build ();
-		},
-		getVertices: function ()
-		{
-			return this .vertices;
-		},
-		build: function ()
-		{
-			var
-				dimension = this .dimension_ .getValue (),
-				angle     = Math .PI * 2 / dimension;
-		
-			this .vertices .length = 0;
-
-			for (var n = 0; n < dimension; ++ n)
-			{
-				var point = Complex .Polar (1, angle * n);
-		
-				this .vertices .push (point .real, point .imag, 0, 1);
-			}
-		},
-	});
-
-	return Circle2DOptions;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Geometry2D/Disk2DOptions',[
-	"jquery",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Fields",
-	"standard/Math/Numbers/Complex",
-	"standard/Math/Numbers/Vector3",
-],
-function ($,
-          X3DBaseNode,
-          Fields,
-          Complex,
-          Vector3)
-{
-"use strict";
-	
-	var half = new Complex (0.5, 0.5);
-
-	function Disk2DOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-
-		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
-
-		this .circleVertices = [ ];
-		this .diskTexCoords  = [ ];
-		this .diskNormals    = [ ];
-		this .diskVertices   = [ ];
-	}
-
-	Disk2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: Disk2DOptions,
-		getTypeName: function ()
-		{
-			return "Disk2DOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "circle2DOptions";
-		},
-		initialize: function ()
-		{
-			this .addInterest ("build", this);
-
-			this .build ();
-		},
-		getCircleVertices: function ()
-		{
-			return this .circleVertices;
-		},
-		getDiskTexCoords: function ()
-		{
-			return this .diskTexCoords;
-		},
-		getDiskNormals: function ()
-		{
-			return this .diskNormals;
-		},
-		getDiskVertices: function ()
-		{
-			return this .diskVertices;
-		},
-		build: function ()
-		{
-			var
-				dimension = this .dimension_ .getValue (),
-				angle     = Math .PI * 2 / dimension;
-		
-			this .circleVertices .length = 0;
-			this .diskTexCoords  .length = 0;
-			this .diskNormals    .length = 0;
-			this .diskVertices   .length = 0;
-
-			for (var n = 0; n < dimension; ++ n)
-			{
-				var
-					theta1    = angle * n,
-					theta2    = angle * (n + 1),
-					texCoord1 = Complex .Polar (0.5, theta1) .add (half),
-					texCoord2 = Complex .Polar (0.5, theta2) .add (half),
-					point1    = Complex .Polar (1, theta1),
-					point2    = Complex .Polar (1, theta2);
-		
-				// Circle
-
-				this .circleVertices .push (point1 .real, point1 .imag, 0, 1);
-
-				// Disk
-
-				this .diskTexCoords .push (0.5, 0.5, 0, 1,
-				                           texCoord1 .real, texCoord1 .imag, 0, 1,
-				                           texCoord2 .real, texCoord2 .imag, 0, 1);
-
-				this .diskNormals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
-
-				this .diskVertices .push (0, 0, 0, 1,
-				                          point1 .real, point1 .imag, 0, 1,
-				                          point2 .real, point2 .imag, 0, 1);
-			}
-		},
-	});
-
-	return Disk2DOptions;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -51747,7 +52566,6 @@ function (Triangle3,
 
 
 define ('x_ite/Components/Rendering/X3DGeometryNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
@@ -51761,8 +52579,7 @@ define ('x_ite/Components/Rendering/X3DGeometryNode',[
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DNode,
           X3DConstants,
           Color3,
@@ -51777,15 +52594,16 @@ function ($,
 {
 "use strict";
 
-	var
-		min             = new Vector3 (0, 0, 0),
-		max             = new Vector3 (0, 0, 0),
+	const ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
+
+	const
+		point           = new Vector3 (0, 0, 0),
 		clipPoint       = new Vector3 (0, 0, 0),
 		modelViewMatrix = new Matrix4 (),
 		invMatrix       = new Matrix4 ();
 
 	// Box normals for bbox / line intersection.
-	var boxNormals = [
+	const boxNormals = [
 		new Vector3 (0,  0,  1), // front
 		new Vector3 (0,  0, -1), // back
 		new Vector3 (0,  1,  0), // top
@@ -51803,11 +52621,67 @@ function ($,
 		this .addChildObjects ("transparent",  new Fields .SFBool (),
 		                       "bbox_changed", new Fields .SFTime ());
 
+		// Members
+
+		this .min                 = new Vector3 (0, 0, 0);
+		this .max                 = new Vector3 (0, 0, 0);
+		this .bbox                = new Box3 (this .min, this .max, true);
+		this .solid               = true;
 		this .geometryType        = 3;
+		this .flatShading         = undefined;
+		this .colorMaterial       = false;
+		this .attribNodes         = [ ];
+		this .attribs             = [ ];
 		this .currentTexCoordNode = this .getBrowser () .getDefaultTextureCoordinate (); // For TextureCoordinateGenerator needed.
+		this .texCoordParams      = { min: new Vector3 (0, 0, 0) };
+		this .multiTexCoords      = [ ];
+		this .texCoords           = X3DGeometryNode .createArray ();
+		this .colors              = X3DGeometryNode .createArray ();
+		this .normals             = X3DGeometryNode .createArray ();
+		this .flatNormals         = X3DGeometryNode .createArray ();
+		this .vertices            = X3DGeometryNode .createArray ();
+		this .vertexCount         = 0;
+
+		// This methods are configured in transfer.
+		this .depth            = Function .prototype;
+		this .display          = Function .prototype;
+		this .displayParticles = Function .prototype;
 	}
 
-	X3DGeometryNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	// Function to select ether Array or MFFloat for color/normal/vertex arrays.
+	X3DGeometryNode .createArray = function ()
+	{
+		if (ARRAY_TYPE == "MFFloat")
+			return new Fields .MFFloat ();
+
+		var array = [ ];
+
+		array .typedArray  = new Float32Array ();
+
+		array .assign = function (value)
+		{
+			Object .assign (this, value);
+
+			this .length = value .length;
+		};
+
+		array .getValue = function ()
+		{
+			return this .typedArray;
+		};
+
+		array .shrinkToFit = function ()
+		{
+			if (this .length !== this .typedArray .length)
+				this .typedArray = new Float32Array (this);
+			else
+				this .typedArray .set (this);
+		};
+
+		return array;
+	}
+
+	X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DGeometryNode,
 		intersection: new Vector3 (0, 0, 0),
@@ -51835,33 +52709,13 @@ function ($,
 
 			var gl = this .getBrowser () .getContext ();
 
-			this .min              = new Vector3 (0, 0, 0);
-			this .max              = new Vector3 (0, 0, 0);
-			this .bbox             = new Box3 (this .min, this .max, true);
-			this .solid            = true;
-			this .flatShading      = undefined;
-			this .attribNodes      = [ ];
-			this .attribs          = [ ];
-			this .colors           = [ ];
-			this .texCoords        = [ ];
-			this .defaultTexCoords = [ ];
-			this .texCoordParams   = { min: new Vector3 (0, 0, 0) };
-			this .normals          = [ ];
-			this .flatNormals      = [ ];
-			this .vertices         = [ ];
-			this .vertexCount      = 0;
-
 			this .primitiveMode   = gl .TRIANGLES;
 			this .frontFace       = gl .CCW;
 			this .attribBuffers   = [ ];
-			this .colorBuffer     = gl .createBuffer ();
 			this .texCoordBuffers = [ ];
+			this .colorBuffer     = gl .createBuffer ();
 			this .normalBuffer    = gl .createBuffer ();
 			this .vertexBuffer    = gl .createBuffer ();
-			this .attribArray     = [ ];
-			this .colorArray      = new Float32Array ();
-			this .texCoordArray   = [ ];
-			this .vertexArray     = new Float32Array ();
 			this .planes          = [ ];
 
 			if (this .geometryType > 1)
@@ -51869,10 +52723,6 @@ function ($,
 				for (var i = 0; i < 5; ++ i)
 					this .planes [i] = new Plane3 (Vector3 .Zero, boxNormals [0]);
 			}
-
-			this .depth            = Function .prototype;
-			this .display          = Function .prototype;
-			this .displayParticles = Function .prototype;
 
 			this .set_live__ ();
 		},
@@ -51897,14 +52747,12 @@ function ($,
 		{
 			if (! bbox .equals (this .bbox))
 			{
-			   bbox .getExtents (min, max);
+			   bbox .getExtents (this .min, this .max);
 	
-				this .min  .assign (min);
-				this .max  .assign (max);
 				this .bbox .assign (bbox);
 	
 				for (var i = 0; i < 5; ++ i)
-					this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+					this .planes [i] .set (i % 2 ? this .min : this .max, boxNormals [i]);
 	
 				this .bbox_changed_ .addEvent ();
 			}
@@ -51947,31 +52795,26 @@ function ($,
 		{
 			return this .attribs;
 		},
-		addColor: function (color)
-		{
-			this .colors .push (color .r, color .g, color .b, color .length === 3 ? 1 : color .a);
-		},
 		setColors: function (value)
 		{
-			var colors = this .colors;
-
-			for (var i = 0, length = value .length; i < length; ++ i)
-				colors [i] = value [i];
-
-			colors .length = length;
+			this .colors .assign (value);
 		},
 		getColors: function ()
 		{
 			return this .colors;
 		},
-		setTexCoords: function (value)
+		setMultiTexCoords: function (value)
 		{
-			var texCoords = this .texCoords;
+			var multiTexCoords = this .multiTexCoords;
 
 			for (var i = 0, length = value .length; i < length; ++ i)
-				texCoords [i] = value [i];
+				multiTexCoords [i] = value [i];
 
-			texCoords .length = length;
+			multiTexCoords .length = length;
+		},
+		getMultiTexCoords: function ()
+		{
+			return this .multiTexCoords;
 		},
 		getTexCoords: function ()
 		{
@@ -51981,38 +52824,17 @@ function ($,
 		{
 			this .currentTexCoordNode = value || this .getBrowser () .getDefaultTextureCoordinate ();
 		},
-		addNormal: function (normal)
-		{
-			this .normals .push (normal .x, normal .y, normal .z);
-		},
 		setNormals: function (value)
 		{
-			var normals = this .normals;
-
-			for (var i = 0, length = value .length; i < length; ++ i)
-				normals [i] = value [i];
-
-			normals .length = length;
+			this .normals .assign (value);
 		},
 		getNormals: function ()
 		{
 			return this .normals;
 		},
-		addVertex: function (vertex)
-		{
-			this .min .min (vertex);
-			this .max .max (vertex);
-
-			this .vertices .push (vertex .x, vertex .y, vertex .z, 1);
-		},
 		setVertices: function (value)
 		{
-			var vertices = this .vertices;
-
-			for (var i = 0, length = value .length; i < length; ++ i)
-				vertices [i] = value [i];
-
-			vertices .length = length;
+			this .vertices .assign (value);
 		},
 		getVertices: function ()
 		{
@@ -52028,11 +52850,8 @@ function ($,
 				Ssize     = p .Ssize,
 				S         = min [Sindex],
 				T         = min [Tindex],
-				texCoords = this .defaultTexCoords,
-				vertices  = this .vertices;
-
-			texCoords .length = 0;
-			this .texCoords .push (texCoords);
+				texCoords = this .texCoords,
+				vertices  = this .vertices .getValue ();
 
 			for (var i = 0, length = vertices .length; i < length; i += 4)
 			{
@@ -52041,6 +52860,8 @@ function ($,
 				                 0,
 				                 1);
 			}
+
+			this .multiTexCoords .push (texCoords);
 		},
 		getTexCoordParams: function ()
 		{
@@ -52148,9 +52969,9 @@ function ($,
 					this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
 
 					var
-						texCoords  = this .texCoords [0],
-						normals    = this .normals,
-						vertices   = this .vertices,
+						texCoords  = this .multiTexCoords [0] .getValue (),
+						normals    = this .normals .getValue (),
+						vertices   = this .vertices .getValue (),
 						uvt        = this .uvt,
 						v0         = this .v0,
 						v1         = this .v1,
@@ -52272,7 +53093,7 @@ function ($,
 					this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
 
 					var
-						vertices = this .vertices,
+						vertices = this .vertices .getValue (),
 						v0       = this .v0,
 						v1       = this .v1,
 						v2       = this .v2;
@@ -52284,7 +53105,7 @@ function ($,
 						v0 .x = vertices [i4 + 0]; v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-		
+
 						if (box .intersectsTriangle (v0, v1, v2))
 						{
 							if (clipPlanes .length)
@@ -52342,7 +53163,7 @@ function ($,
 					var
 						cw          = this .frontFace === gl .CW,
 						flatNormals = this .flatNormals,
-						vertices    = this .vertices,
+						vertices    = this .vertices .getValue (),
 						v0          = this .v0,
 						v1          = this .v1,
 						v2          = this .v2,
@@ -52362,13 +53183,15 @@ function ($,
 						                   normal .x, normal .y, normal .z,
 						                   normal .x, normal .y, normal .z);
 					}
+
+					flatNormals .shrinkToFit ();
 				}
 			}
 
 			// Transfer normals.
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-			gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (flatShading ? this .flatNormals : this .normals), gl .STATIC_DRAW);
+			gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
 		},
 		eventsProcessed: function ()
 		{
@@ -52377,27 +53200,66 @@ function ($,
 			this .clear ();
 			this .build ();
 
-			if (this .vertices .length)
-				this .bbox .setExtents (this .min, this .max);
+			// Shrink arrays before transfer to graphics card.
+
+			for (var i = 0, length = this .attribs .length; i < length; ++ i)
+				this .attribs [i] .shrinkToFit ();
+
+			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
+				this .multiTexCoords [i] .shrinkToFit ();
+	
+			this .colors   .shrinkToFit ();
+			this .normals  .shrinkToFit ();
+			this .vertices .shrinkToFit ();
+
+			// Determine bbox and generate texCoord if needed.
+
+			var
+				min      = this .min,
+				max      = this .max,
+				vertices = this .vertices .getValue ();
+
+			if (vertices .length)
+			{
+				if (min .x === Number .POSITIVE_INFINITY)
+				{
+					for (var i = 0, length = vertices .length; i < length; i += 4)
+					{
+						point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+	
+						min .min (point);
+						max .max (point);
+					}
+				}
+
+				this .bbox .setExtents (min, max);
+			}
 			else
-				this .bbox .setExtents (this .min .set (0, 0, 0), this .max .set (0, 0, 0));
+			{
+				this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
+			}
 
 			this .bbox_changed_ .addEvent ();
 
 			if (this .geometryType > 1)
 			{
-				var
-					min = this .min,
-					max = this .max;
-
 				for (var i = 0; i < 5; ++ i)
 					this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
 
-				if (this .texCoords .length === 0)
+				if (this .multiTexCoords .length === 0)
+				{
 					this .buildTexCoords ();
+	
+					this .texCoords .shrinkToFit ();
+				}
 			}
 
+			// Upload normals or flat normals.
+
 			this .set_shading__ (this .getBrowser () .getBrowserOptions () .Shading_);
+
+			// Upload arrays.
+
 			this .transfer ();
 		},
 		clear: function ()
@@ -52407,29 +53269,28 @@ function ($,
 			this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
 			this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
 
-			// Attrib
+			// Create attrib arrays.
 
-			var
-				attrib    = this .getAttrib (),
-				numAttrib = attrib .length,
-				attribs   = this .getAttribs ();
-			
+			var attribs = this .attribs;
+
 			for (var a = 0, length = attribs .length; a < length; ++ a)
-				attribs [a] .length = 0;;
-			
-			for (var a = attribs .length; a < numAttrib; ++ a)
-				attribs [a] = [ ];
-			
-			attribs .length = numAttrib;
+				attribs [a] .length = 0;
+
+			for (var a = attribs .length, length = this .attribNodes .length; a < length; ++ a)
+				attribs [a] = X3DGeometryNode .createArray ();
+
+			attribs .length = length;
 
 			// Buffer
 
 			this .flatShading = undefined;
-			this .colors      .length = 0;
-			this .texCoords   .length = 0;
-			this .normals     .length = 0;
-			this .flatNormals .length = 0;
-			this .vertices    .length = 0;
+
+			this .colors         .length = 0;
+			this .multiTexCoords .length = 0;
+			this .texCoords      .length = 0;
+			this .normals        .length = 0;
+			this .flatNormals    .length = 0;
+			this .vertices       .length = 0;
 		},
 		transfer: function ()
 		{
@@ -52440,64 +53301,41 @@ function ($,
 			// Transfer attribs.
 
 			for (var i = this .attribBuffers .length, length = this .attribs .length; i < length; ++ i)
-			{
 				this .attribBuffers .push (gl .createBuffer ());
-				this .attribArray   .push (new Float32Array ());
-			}
 
-			this .attribBuffers .length = this .attribs .length;
+			// Only grow.
+			//this .attribBuffers .length = length;
 			
 			for (var i = 0, length = this .attribs .length; i < length; ++ i)
 			{
-				if (this .attribArray [i] .length !== this .attribs [i] .length)
-					this .attribArray [i] = new Float32Array (this .attribs [i]);
-				else
-					this .attribArray [i] .set (this .attribs [i]);
-
 				gl .bindBuffer (gl .ARRAY_BUFFER, this .attribBuffers [i]);
-				gl .bufferData (gl .ARRAY_BUFFER, this .attribArray [i], gl .STATIC_DRAW);
+				gl .bufferData (gl .ARRAY_BUFFER, this .attribs [i] .getValue (), gl .STATIC_DRAW);
+			}
+
+			// Transfer multiTexCoords.
+
+			for (var i = this .texCoordBuffers .length, length = this .multiTexCoords .length; i < length; ++ i)
+				this .texCoordBuffers .push (gl .createBuffer ());
+
+			// Only grow.
+			//this .texCoordBuffers .length = length;
+			
+			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
+			{
+				gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
+				gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .STATIC_DRAW);
 			}
 
 			// Transfer colors.
-	
-			if (this .colorArray .length !== this .colors .length)
-				this .colorArray = new Float32Array (this .colors);
-			else
-				this .colorArray .set (this .colors);
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-			gl .bufferData (gl .ARRAY_BUFFER, this .colorArray, gl .STATIC_DRAW);
-
-			// Transfer texCoords.
-
-			for (var i = this .texCoordBuffers .length, length = this .texCoords .length; i < length; ++ i)
-			{
-				this .texCoordBuffers .push (gl .createBuffer ());
-				this .texCoordArray   .push (new Float32Array ());
-			}
-
-			this .texCoordBuffers .length = this .texCoords .length;
-			
-			for (var i = 0, length = this .texCoords .length; i < length; ++ i)
-			{
-				if (this .texCoordArray [i] .length !== this .texCoords [i] .length)
-					this .texCoordArray [i] = new Float32Array (this .texCoords [i]);
-				else
-					this .texCoordArray [i] .set (this .texCoords [i]);
-
-				gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
-				gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray [i], gl .STATIC_DRAW);
-			}
+			gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .STATIC_DRAW);
+			this .colorMaterial = Boolean (this .colors .length);
 
 			// Transfer vertices.
 
-			if (this .vertexArray .length !== this .vertices .length)
-				this .vertexArray = new Float32Array (this .vertices);
-			else
-				this .vertexArray .set (this .vertices);
-
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-			gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
+			gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .STATIC_DRAW);
 			this .vertexCount = count;
 
 			// Setup render functions.
@@ -52519,10 +53357,8 @@ function ($,
 	  	},
 		traverse: function (type, renderObject)
 		{ },
-		depth: function (context, shaderNode)
+		depth: function (gl, context, shaderNode)
 		{
-			var gl = context .renderer .getBrowser () .getContext ();
-
 			// Setup vertex attributes.
 
 			// Attribs in depth rendering are not supported.
@@ -52536,21 +53372,21 @@ function ($,
 
 			gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			try
 			{
 				var
-					browser       = context .renderer .getBrowser (),
-					gl            = browser .getContext (),
 					shaderNode    = context .shaderNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
-	
+
 				// Setup shader.
 	
 				context .geometryType  = this .geometryType;
-				context .colorMaterial = this .colors .length;
+				context .colorMaterial = this .colorMaterial;
+
+				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
 	
 				// Setup vertex attributes.
@@ -52558,7 +53394,7 @@ function ($,
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 	
-				if (this .colors .length)
+				if (this .colorMaterial)
 					shaderNode .enableColorAttribute (gl, this .colorBuffer);
 	
 				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
@@ -52606,6 +53442,7 @@ function ($,
 				shaderNode .disableColorAttribute    (gl);
 				shaderNode .disableTexCoordAttribute (gl);
 				shaderNode .disableNormalAttribute   (gl);
+				shaderNode .disable                  (gl);
 			}
 			catch (error)
 			{
@@ -52613,7 +53450,7 @@ function ($,
 				console .log (error);
 			}
 		},
-		displayParticlesDepth: function (context, shaderNode, particles, numParticles)
+		displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
 		{
 			var gl = context .renderer .getBrowser () .getContext ();
 
@@ -52621,7 +53458,7 @@ function ($,
 			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
 			//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-			shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+			shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
 			// Draw depending on wireframe, solid and transparent.
 
@@ -52647,13 +53484,11 @@ function ($,
 			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
 			//	attribNodes [i] .disable (gl, shaderNode);
 		},
-		displayParticles: function (context, particles, numParticles)
+		displayParticles: function (gl, context, particles, numParticles)
 		{
 			try
 			{
 				var
-					browser       = context .renderer .getBrowser (),
-					gl            = browser .getContext (),
 					shaderNode    = context .shaderNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
@@ -52661,7 +53496,9 @@ function ($,
 				// Setup shader.
 	
 				context .geometryType  = this .geometryType;
-				context .colorMaterial = this .colors .length;
+				context .colorMaterial = this .colorMaterial;
+
+				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
 	
 				// Setup vertex attributes.
@@ -52669,7 +53506,7 @@ function ($,
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-				if (this .colors .length)
+				if (this .colorMaterial)
 					shaderNode .enableColorAttribute (gl, this .colorBuffer);
 	
 				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
@@ -52789,6 +53626,7 @@ function ($,
 				shaderNode .disableColorAttribute    (gl);
 				shaderNode .disableTexCoordAttribute (gl);
 				shaderNode .disableNormalAttribute   (gl);
+				shaderNode .disable                  (gl);
 			}
 			catch (error)
 			{
@@ -52851,20 +53689,518 @@ function ($,
  ******************************************************************************/
 
 
+define ('standard/Math/Numbers/Complex',[],function ()
+{
+"use strict";
+
+	function Complex (real, imag)
+	{
+		this .real = real
+		this .imag = imag;
+	}
+
+	Complex .prototype =
+	{
+		constructor: Complex,
+		copy: function ()
+		{
+			var copy = Object .create (Complex .prototype);
+			copy .real = this .real;
+			copy .imag = this .imag;
+			return copy;
+		},
+		assign: function (complex)
+		{
+			this .real = complex .real;
+			this .imag = complex .imag;
+			return this;
+		},
+		equals: function (complex)
+		{
+			return this .real === complex .real &&
+			       this .imag === complex .imag;
+		},
+		setRadius: function (radius)
+		{
+			return this .setPolar (radius, this .getAngle ());
+		},
+		getRadius: function ()
+		{
+			if (this .real)
+			{
+				if (this .imag)
+					return Math .sqrt (this .real * this .real + this .imag * this .imag);
+
+				return Math .abs (this .real);
+			}
+
+			return Math .abs (this .imag);
+		},
+		setAngle: function (angle)
+		{
+			return this .setPolar (this .getRadius (), angle);
+		},
+		getAngle: function ()
+		{
+			return Math .atan2 (this .imag, this .real);
+		},
+		setPolar: function (radius, angle)
+		{
+			this .real = radius * Math .cos (angle);
+			this .imag = radius * Math .sin (angle);
+		},
+		conjugate: function ()
+		{
+			this .imag = -this .imag;
+			return this;
+		},
+		negate: function ()
+		{
+			this .real = -this .real;
+			this .imag = -this .imag;
+			return this;
+		},
+		inverse: function ()
+		{
+			var d = this .real * this .real + this .imag * this .imag;
+
+			this .real /=  d;
+			this .imag /= -d;
+			return this;
+		},
+		add: function (value)
+		{
+			this .real += value .real;
+			this .imag += value .imag;
+			return this;
+		},
+		subtract: function (value)
+		{
+			this .real -= value .real;
+			this .imag -= value .imag;
+			return this;
+		},
+		multiply: function (value)
+		{
+			this .real *= value;
+			this .imag *= value;
+			return this;
+		},
+		multComp: function ()
+		{
+			var
+				real = this .real, imag = this .imag;
+
+			this .real = real * value .real - imag * value .imag;
+			this .imag = real * value .imag + imag * value .real;
+			return this;
+		},
+		//divide: function (value)
+		//{
+		//	return this;
+		//},
+		divComp: function (value)
+		{
+			var
+				ar = this .real, ai = this .imag,
+				br = value .real, bi = value .imag;
+
+			var d = br * br + bi * bi;
+
+			this .real = (ar * br + ai * bi) / d;
+			this .imag = (ai * br - ar * bi) / d;
+			return this;
+		},
+		toString: function ()
+		{
+			if (this .imag)
+				return this .real + " " + this .imag + "i";
+
+			return String (this .real);
+		},
+	};
+
+	Object .assign (Complex,
+	{
+		Polar: function (radius, angle)
+		{
+			var complex = Object .create (Complex .prototype);
+			complex .real = radius * Math .cos (angle);
+			complex .imag = radius * Math .sin (angle);
+			return complex;
+		},
+		multiply: function (lhs, rhs)
+		{
+			var copy = Object .create (this .prototype);
+			copy .real = lhs .real * rhs;
+			copy .imag = lhs .imag * rhs;
+			return copy;
+		},
+		multComp: function (lhs, rhs)
+		{
+			var copy = Object .create (this .prototype);
+			copy .real = lhs .real * rhs .real - lsh .imag * rhs .imag;
+			copy .imag = lhs .real * rhs .imag + lsh .imag * rhs .real;
+			return copy;
+		},
+	});
+
+	return Complex;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Geometry2D/Circle2DOptions',[
+	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Fields",
+	"x_ite/Components/Rendering/X3DGeometryNode",
+	"standard/Math/Numbers/Complex",
+	"standard/Math/Numbers/Vector3",
+],
+function (X3DBaseNode,
+          Fields,
+          X3DGeometryNode,
+          Complex,
+          Vector3)
+{
+"use strict";
+	
+	function Circle2DOptions (executionContext)
+	{
+		X3DBaseNode .call (this, executionContext);
+
+		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
+
+		this .vertices = X3DGeometryNode .createArray ();
+	}
+
+	Circle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+	{
+		constructor: Circle2DOptions,
+		getTypeName: function ()
+		{
+			return "Circle2DOptions";
+		},
+		getComponentName: function ()
+		{
+			return "X_ITE";
+		},
+		getContainerField: function ()
+		{
+			return "circle2DOptions";
+		},
+		initialize: function ()
+		{
+			this .addInterest ("build", this);
+
+			this .build ();
+		},
+		getVertices: function ()
+		{
+			return this .vertices;
+		},
+		build: function ()
+		{
+			var
+				dimension = this .dimension_ .getValue (),
+				angle     = Math .PI * 2 / dimension,
+				vertices  = this .vertices;
+
+			vertices .length = 0;
+
+			for (var n = 0; n < dimension; ++ n)
+			{
+				var point = Complex .Polar (1, angle * n);
+		
+				vertices .push (point .real, point .imag, 0, 1);
+			}
+
+			vertices .shrinkToFit ();
+		},
+	});
+
+	return Circle2DOptions;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Geometry2D/Disk2DOptions',[
+	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Fields",
+	"x_ite/Components/Rendering/X3DGeometryNode",
+	"standard/Math/Numbers/Complex",
+	"standard/Math/Numbers/Vector3",
+],
+function (X3DBaseNode,
+          Fields,
+          X3DGeometryNode,
+          Complex,
+          Vector3)
+{
+"use strict";
+	
+	var half = new Complex (0.5, 0.5);
+
+	function Disk2DOptions (executionContext)
+	{
+		X3DBaseNode .call (this, executionContext);
+
+		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
+
+		this .circleVertices = X3DGeometryNode .createArray ();
+		this .diskTexCoords  = X3DGeometryNode .createArray ();
+		this .diskNormals    = X3DGeometryNode .createArray ();
+		this .diskVertices   = X3DGeometryNode .createArray ();
+	}
+
+	Disk2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+	{
+		constructor: Disk2DOptions,
+		getTypeName: function ()
+		{
+			return "Disk2DOptions";
+		},
+		getComponentName: function ()
+		{
+			return "X_ITE";
+		},
+		getContainerField: function ()
+		{
+			return "circle2DOptions";
+		},
+		initialize: function ()
+		{
+			this .addInterest ("build", this);
+
+			this .build ();
+		},
+		getCircleVertices: function ()
+		{
+			return this .circleVertices;
+		},
+		getDiskTexCoords: function ()
+		{
+			return this .diskTexCoords;
+		},
+		getDiskNormals: function ()
+		{
+			return this .diskNormals;
+		},
+		getDiskVertices: function ()
+		{
+			return this .diskVertices;
+		},
+		build: function ()
+		{
+			var
+				dimension      = this .dimension_ .getValue (),
+				angle          = Math .PI * 2 / dimension,
+				circleVertices = this .circleVertices,
+				diskTexCoords  = this .diskTexCoords,
+				diskNormals    = this .diskNormals,
+				diskVertices   = this .diskVertices;
+
+			circleVertices .length = 0;
+			diskTexCoords  .length = 0;
+			diskNormals    .length = 0;
+			diskVertices   .length = 0;
+
+			for (var n = 0; n < dimension; ++ n)
+			{
+				var
+					theta1    = angle * n,
+					theta2    = angle * (n + 1),
+					texCoord1 = Complex .Polar (0.5, theta1) .add (half),
+					texCoord2 = Complex .Polar (0.5, theta2) .add (half),
+					point1    = Complex .Polar (1, theta1),
+					point2    = Complex .Polar (1, theta2);
+		
+				// Circle
+
+				circleVertices .push (point1 .real, point1 .imag, 0, 1);
+
+				// Disk
+
+				diskTexCoords .push (0.5, 0.5, 0, 1,
+				                     texCoord1 .real, texCoord1 .imag, 0, 1,
+				                     texCoord2 .real, texCoord2 .imag, 0, 1);
+
+				diskNormals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
+
+				diskVertices .push (0, 0, 0, 1,
+				                    point1 .real, point1 .imag, 0, 1,
+				                    point2 .real, point2 .imag, 0, 1);
+			}
+
+			circleVertices .shrinkToFit ();
+			diskTexCoords  .shrinkToFit ();
+			diskNormals    .shrinkToFit ();
+			diskVertices   .shrinkToFit ();
+		},
+	});
+
+	return Disk2DOptions;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Rendering/X3DComposedGeometryNode',[
-	"jquery",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          X3DGeometryNode,
+function (X3DGeometryNode,
           X3DCast,
           X3DConstants,
           Vector3)
 {
 "use strict";
+
+	var
+		current = new Vector3 (0, 0, 0),
+		next    = new Vector3 (0, 0, 0);
 
 	function X3DComposedGeometryNode (executionContext)
 	{
@@ -52878,7 +54214,7 @@ function ($,
 		this .coordNode    = null;
 	}
 
-	X3DComposedGeometryNode .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: X3DComposedGeometryNode,
 		initialize: function ()
@@ -53008,20 +54344,23 @@ function ($,
 			trianglesSize -= trianglesSize % verticesPerFace;
 
 			var
-				colorPerVertex  = this .colorPerVertex_ .getValue (),
-				normalPerVertex = this .normalPerVertex_ .getValue (),
-				attribNodes     = this .getAttrib (),
-				numAttrib       = attribNodes .length,
-				attribs         = this .getAttribs (),
-				colorNode       = this .getColor (),
-				texCoordNode    = this .getTexCoord (),
-				normalNode      = this .getNormal (),
-				coordNode       = this .getCoord (),
-				textCoords      = this .getTexCoords (),
-				face            = 0;
+				colorPerVertex     = this .colorPerVertex_ .getValue (),
+				normalPerVertex    = this .normalPerVertex_ .getValue (),
+				attribNodes        = this .getAttrib (),
+				numAttrib          = attribNodes .length,
+				attribs            = this .getAttribs (),
+				colorNode          = this .getColor (),
+				texCoordNode       = this .getTexCoord (),
+				normalNode         = this .getNormal (),
+				coordNode          = this .getCoord (),
+				colorArray         = this .getColors (),
+				multiTexCoordArray = this .getMultiTexCoords (),
+				normalArray        = this .getNormals (),
+				vertexArray        = this .getVertices (),
+				face               = 0;
 
 			if (texCoordNode)
-				texCoordNode .init (textCoords);
+				texCoordNode .init (multiTexCoordArray);
 		
 			// Fill GeometryNode
 		
@@ -53032,29 +54371,29 @@ function ($,
 				var index = this .getPolygonIndex (this .getTriangleIndex (i));
 
 				for (var a = 0; a < numAttrib; ++ a)
-					attribNodes [a] .addValue (attribs [a], index);
+					attribNodes [a] .addValue (index, attribs [a]);
 
 				if (colorNode)
 				{
 					if (colorPerVertex)
-						this .addColor (colorNode .get1Color (index));
+						colorNode .addColor (index, colorArray);
 					else
-						this .addColor (colorNode .get1Color (face));
+						colorNode .addColor (face, colorArray);
 				}
 
 				if (texCoordNode)
-					texCoordNode .addTexCoord (textCoords, index);
+					texCoordNode .addTexCoord (index, multiTexCoordArray);
 	
 				if (normalNode)
 				{
 					if (normalPerVertex)
-						this .addNormal (normalNode .get1Vector (index));
+						normalNode .addVector (index, normalArray);
 
 					else
-						this .addNormal (normalNode .get1Vector (face));
+						normalNode .addVector (face, normalArray);
 				}
 
-				this .addVertex (coordNode .get1Point (index));
+				coordNode .addPoint (index, vertexArray);
 			}
 		
 			// Autogenerate normal if not specified.
@@ -53067,10 +54406,16 @@ function ($,
 		},
 		buildNormals: function (verticesPerPolygon, polygonsSize, trianglesSize)
 		{
-			var normals = this .createNormals (verticesPerPolygon, polygonsSize);
+			var
+				normals     = this .createNormals (verticesPerPolygon, polygonsSize),
+				normalArray = this .getNormals ();
 
 			for (var i = 0; i < trianglesSize; ++ i)
-				this .addNormal (normals [this .getTriangleIndex (i)]);
+			{
+				var normal = normals [this .getTriangleIndex (i)];
+
+				normalArray .push (normal .x, normal .y, normal .z);
+			}
 		},
 		createNormals: function (verticesPerPolygon, polygonsSize)
 		{
@@ -53120,15 +54465,17 @@ function ($,
 			// Determine polygon normal.
 			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-			var
-				normal = new Vector3 (0, 0, 0),
-				next   = coord .get1Point (this .getPolygonIndex (0));
+			var normal = new Vector3 (0, 0, 0);
+
+			coord .get1Point (this .getPolygonIndex (0), next);
 
 			for (var i = 0; i < verticesPerPolygon; ++ i)
 			{
-				var
-					current = next,
-					next    = coord .get1Point (this .getPolygonIndex ((i + 1) % verticesPerPolygon));
+				var tmp = current;
+				current = next;
+				next    = tmp;
+
+				coord .get1Point (this .getPolygonIndex ((i + 1) % verticesPerPolygon), next);
 
 				normal .x += (current .y - next .y) * (current .z + next .z);
 				normal .y += (current .z - next .z) * (current .x + next .x);
@@ -53196,7 +54543,6 @@ function ($,
 // https://github.com/r3mi/poly2tri.js
 
 define ('x_ite/Components/Geometry3D/IndexedFaceSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -53206,8 +54552,7 @@ define ('x_ite/Components/Geometry3D/IndexedFaceSet',[
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Triangle3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -53222,7 +54567,9 @@ function ($,
 		Triangle    = [0, 1, 2],
 		Polygon     = [ ],
 		normals     = [ ],
-		normalIndex = [ ];
+		normalIndex = [ ],
+		current     = new Vector3 (0, 0, 0),
+		next        = new Vector3 (0, 0, 0);
 
 	function IndexedFaceSet (executionContext)
 	{
@@ -53233,7 +54580,7 @@ function ($,
 		this .creaseAngle_ .setUnit ("angle");
 	}
 
-	IndexedFaceSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: IndexedFaceSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -53316,20 +54663,23 @@ function ($,
 			// Fill GeometryNode
 
 			var
-				colorPerVertex  = this .colorPerVertex_ .getValue (),
-				normalPerVertex = this .normalPerVertex_ .getValue (),
-				coordIndex      = this .coordIndex_ .getValue (),
-				attribNodes     = this .getAttrib (),
-				numAttrib       = attribNodes .length,
-				attribs         = this .getAttribs (),
-				colorNode       = this .getColor (),
-				texCoordNode    = this .getTexCoord (),
-				normalNode      = this .getNormal (),
-				coordNode       = this .getCoord (),
-				textCoords      = this .getTexCoords ();
+				colorPerVertex     = this .colorPerVertex_ .getValue (),
+				normalPerVertex    = this .normalPerVertex_ .getValue (),
+				coordIndex         = this .coordIndex_,
+				attribNodes        = this .getAttrib (),
+				numAttrib          = attribNodes .length,
+				attribs            = this .getAttribs (),
+				colorNode          = this .getColor (),
+				texCoordNode       = this .getTexCoord (),
+				normalNode         = this .getNormal (),
+				coordNode          = this .getCoord (),
+				colorArray         = this .getColors (),
+				multiTexCoordArray = this .getMultiTexCoords (),
+				normalArray        = this .getNormals (),
+				vertexArray        = this .getVertices ();
 
 			if (texCoordNode)
-				texCoordNode .init (textCoords);
+				texCoordNode .init (multiTexCoordArray);
 
 			for (var p = 0, numPolygons = polygons .length; p < numPolygons; ++ p)
 			{
@@ -53343,32 +54693,32 @@ function ($,
 				{
 					var
 						i     = vertices [triangles [v]],
-						index = coordIndex [i] .getValue ();
+						index = coordIndex [i];
 
 					for (var a = 0; a < numAttrib; ++ a)
-						attribNodes [a] .addValue (attribs [a], index);
+						attribNodes [a] .addValue (index, attribs [a]);
 
 					if (colorNode)
 					{
 						if (colorPerVertex)
-							this .addColor (colorNode .get1Color (this .getColorPerVertexIndex (i)));
+							colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
 						else
-							this .addColor (colorNode .get1Color (this .getColorIndex (face)));
+							colorNode .addColor (this .getColorIndex (face), colorArray);
 					}
 
 					if (texCoordNode)
-						texCoordNode .addTexCoord (textCoords, this .getTexCoordPerVertexIndex (i));
+						texCoordNode .addTexCoord (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
 
 					if (normalNode)
 					{
 						if (normalPerVertex)
-							this .addNormal (normalNode .get1Vector (this .getNormalPerVertexIndex (i)));
+							normalNode .addVector (this .getNormalPerVertexIndex (i), normalArray);
 
 						else
-							this .addNormal (normalNode .get1Vector (this .getNormalIndex (face)));
+							normalNode .addVector (this .getNormalIndex (face), normalArray);
 					}
 
-					this .addVertex (coordNode .get1Point (index));
+					coordNode .addPoint (index, vertexArray);
 				}
 
 				++ face;
@@ -53386,7 +54736,7 @@ function ($,
 		{
 			var
 				convex      = this .convex_ .getValue (),
-				coordIndex  = this .coordIndex_ .getValue (),
+				coordIndex  = this .coordIndex_,
 				coordLength = coordIndex .length,
 				polygons    = [ ];
 
@@ -53396,9 +54746,9 @@ function ($,
 			if (coordLength)
 			{
 				// Add -1 (polygon end marker) to coordIndex if not present.
-				if (this .coordIndex_ [coordLength - 1] > -1)
+				if (coordIndex [coordLength - 1] > -1)
 				{
-					this .coordIndex_ .push (-1);
+					coordIndex .push (-1);
 
 					++ coordLength;
 				}
@@ -53410,7 +54760,7 @@ function ($,
 
 				for (var i = 0; i < coordLength; ++ i)
 				{
-					var index = coordIndex [i] .getValue ();
+					var index = coordIndex [i];
 	
 					if (index > -1)
 					{
@@ -53482,12 +54832,12 @@ function ($,
 			var
 				vertices   = polygon .vertices,
 				triangles  = polygon .triangles,
-				coordIndex = this .coordIndex_ .getValue (),
+				coordIndex = this .coordIndex_,
 				coord      = this .getCoord ();
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
-				var vertex = coord .get1Point (coordIndex [vertices [i]] .getValue ()) .copy ();
+				var vertex = coord .get1Point (coordIndex [vertices [i]], new Vector3 (0, 0, 0));
 
 				vertex .index = i;
 
@@ -53514,8 +54864,9 @@ function ($,
 		buildNormals: function (polygons)
 		{
 			var
-				first   = 0,
-				normals = this .createNormals (polygons);
+				first       = 0,
+				normals     = this .createNormals (polygons),
+				normalArray = this .getNormals ();
 
 			for (var p = 0, pl = polygons .length; p < pl; ++ p)
 			{
@@ -53526,7 +54877,9 @@ function ($,
 
 				for (var v = 0, tl = triangles .length; v < tl; ++ v)
 				{
-					this .addNormal (normals [first + triangles [v]]);
+					var normal = normals [first + triangles [v]];
+
+					normalArray .push (normal .x, normal .y, normal .z);
 				}
 
 				first += vertices .length;
@@ -53536,7 +54889,7 @@ function ($,
 		{
 			var
 				cw          = ! this .ccw_ .getValue (),
-				coordIndex  = this .coordIndex_ .getValue (),
+				coordIndex  = this .coordIndex_,
 				coord       = this .getCoord (),
 				normal      = null;
 
@@ -53554,17 +54907,17 @@ function ($,
 				{
 					case 3:
 					{
-						normal = coord .getNormal (coordIndex [vertices [0]] .getValue (),
-						                           coordIndex [vertices [1]] .getValue (),
-						                           coordIndex [vertices [2]] .getValue ());
+						normal = coord .getNormal (coordIndex [vertices [0]],
+						                           coordIndex [vertices [1]],
+						                           coordIndex [vertices [2]]);
 						break;
 					}
 					case 4:
 					{
-						normal = coord .getQuadNormal (coordIndex [vertices [0]] .getValue (),
-						                               coordIndex [vertices [1]] .getValue (),
-						                               coordIndex [vertices [2]] .getValue (),
-						                               coordIndex [vertices [3]] .getValue ());
+						normal = coord .getQuadNormal (coordIndex [vertices [0]],
+						                               coordIndex [vertices [1]],
+						                               coordIndex [vertices [2]],
+						                               coordIndex [vertices [3]]);
 						break;
 					}
 					default:
@@ -53577,7 +54930,7 @@ function ($,
 				// Add a normal index for each point.
 				for (var i = 0; i < length; ++ i)
 				{
-					var index = coordIndex [vertices [i]] .getValue ();
+					var index = coordIndex [vertices [i]];
 
 					if (! normalIndex [index])
 						normalIndex [index] = [ ];
@@ -53601,15 +54954,17 @@ function ($,
 			// Determine polygon normal.
 			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-			var
-				normal = new Vector3 (0, 0, 0),
-				next   = coord .get1Point (coordIndex [vertices [0]] .getValue ());
+			var normal = new Vector3 (0, 0, 0);
+
+			coord .get1Point (coordIndex [vertices [0]], next);
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
-				var
-					current = next,
-					next    = coord .get1Point (coordIndex [vertices [(i + 1) % length]] .getValue ());
+				var tmp = current;
+				current = next;
+				next    = tmp;
+
+				coord .get1Point (coordIndex [vertices [(i + 1) % length]], next);
 
 				normal .x += (current .y - next .y) * (current .z + next .z);
 				normal .y += (current .z - next .z) * (current .x + next .x);
@@ -53675,12 +55030,10 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/X3DGeometricPropertyNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DNode, 
+function (X3DNode, 
           X3DConstants)
 {
 "use strict";
@@ -53692,7 +55045,7 @@ function ($,
 		this .addType (X3DConstants .X3DGeometricPropertyNode);
 	}
 
-	X3DGeometricPropertyNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DGeometricPropertyNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DGeometricPropertyNode,
 	});
@@ -53752,62 +55105,98 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/X3DCoordinateNode',[
-	"jquery",
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          X3DGeometricPropertyNode, 
+function (X3DGeometricPropertyNode, 
           X3DConstants,
           Triangle3,
           Vector3)
 {
 "use strict";
 
+	var
+		point1 = new Vector3 (0, 0, 0),
+		point2 = new Vector3 (0, 0, 0),
+		point3 = new Vector3 (0, 0, 0),
+		point4 = new Vector3 (0, 0, 0);
+
 	function X3DCoordinateNode (executionContext)
 	{
 		X3DGeometricPropertyNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DCoordinateNode);
-
-		this .point = this .point_ .getValue ();
 	}
 
-	X3DCoordinateNode .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
+	X3DCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: X3DCoordinateNode,
+		initialize: function ()
+		{
+			X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+			this .point_ .addInterest ("set_point__", this);
+
+			this .set_point__ ();
+		},
+		set_point__: function ()
+		{
+			this .point  = this .point_ .getValue ();
+			this .length = this .point_ .length;
+		},
 		isEmpty: function ()
 		{
-			return this .point .length == 0;
+			return this .length === 0;
 		},
 		getSize: function ()
 		{
-			return this .point .length;
+			return this .length;
 		},
-		get1Point: function (index)
+		get1Point: function (index, vector)
 		{
-			// The index cannot be less than 0.
+			if (index < this .length)
+			{
+				const point = this .point;
 
-			if (index < this .point .length)
-				return this .point [index] .getValue ();
+				index *= 3;
 
-			return new Vector3 (0, 0, 0);
+				return vector .set (point [index + 0], point [index + 1], point [index + 2]);
+			}
+			else
+			{
+				return vector .set (0, 0, 0);
+			}
+		},
+		addPoint: function (index, array)
+		{
+			if (index < this .length)
+			{
+				const point = this .point;
+
+				index *= 3;
+
+				array .push (point [index + 0], point [index + 1], point [index + 2], 1);
+			}
+			else
+			{
+				array .push (0, 0, 0, 1);
+			}
 		},
 		getNormal: function (index1, index2, index3)
 		{
 			// The index[1,2,3] cannot be less than 0.
 
-			var
-				point  = this .point,
-				length = point .length;
+			var length = this .length;
 
 			if (index1 < length && index2 < length && index3 < length)
-				return Triangle3 .normal (point [index1] .getValue (),
-				                          point [index2] .getValue (),
-				                          point [index3] .getValue (),
+			{
+				return Triangle3 .normal (this .get1Point (index1, point1),
+				                          this .get1Point (index2, point2),
+				                          this .get1Point (index3, point3),
 				                          new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},
@@ -53815,16 +55204,16 @@ function ($,
 		{
 			// The index[1,2,3,4] cannot be less than 0.
 
-			var
-				point  = this .point,
-				length = point .length;
+			var length = this .length;
 
 			if (index1 < length && index2 < length && index3 < length && index4 < length)
-				return Triangle3 .quadNormal (point [index1] .getValue (),
-				                              point [index2] .getValue (),
-				                              point [index3] .getValue (),
-				                              point [index4] .getValue (),
+			{
+				return Triangle3 .quadNormal (this .get1Point (index1, point1),
+				                              this .get1Point (index2, point2),
+				                              this .get1Point (index3, point3),
+				                              this .get1Point (index4, point4),
 				                              new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},
@@ -53885,15 +55274,13 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/Coordinate',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DCoordinateNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DCoordinateNode, 
@@ -53910,7 +55297,7 @@ function ($,
 		this .point_ .setUnit ("length");
 	}
 
-	Coordinate .prototype = $.extend (Object .create (X3DCoordinateNode .prototype),
+	Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
 	{
 		constructor: Coordinate,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -53986,12 +55373,14 @@ function ($,
 
 
 define ('x_ite/Components/Texturing/X3DTextureCoordinateNode',[
-	"jquery",
+	"x_ite/Fields",
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
+	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
+function (Fields,
           X3DGeometricPropertyNode, 
+          X3DGeometryNode, 
           X3DConstants)
 {
 "use strict";
@@ -54001,18 +55390,22 @@ function ($,
 		X3DGeometricPropertyNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DTextureCoordinateNode);
+
+		this .texCoordArray = X3DGeometryNode .createArray ();
 	}
 
-	X3DTextureCoordinateNode .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
+	X3DTextureCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: X3DTextureCoordinateNode,
-		init: function (texCoords)
+		init: function (multiArray)
 		{
-			texCoords .push ([ ]);
+			this .texCoordArray .length = 0;
+
+			multiArray .push (this .texCoordArray);
 		},
-		addTexCoord: function (texCoord, index)
+		addTexCoord: function (index, multiArray)
 		{
-			this .addTexCoordToChannel (texCoord [0], index);
+			this .addTexCoordToChannel (index, multiArray [0]);
 		},
 	});
 
@@ -54071,7 +55464,6 @@ function ($,
 
 
 define ('x_ite/Components/Texturing/TextureCoordinate',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -54079,8 +55471,7 @@ define ('x_ite/Components/Texturing/TextureCoordinate',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureCoordinateNode, 
@@ -54096,7 +55487,7 @@ function ($,
 		this .addType (X3DConstants .TextureCoordinate);
 	}
 
-	TextureCoordinate .prototype = $.extend (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinate,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -54115,25 +55506,39 @@ function ($,
 		{
 			return "texCoord";
 		},
-		addTexCoordToChannel: function (texCoords, index)
+		initialize: function ()
 		{
-			if (index >= 0 && index < this .point_ .length)
+			X3DTextureCoordinateNode .prototype .initialize .call (this);
+
+			this .point_ .addInterest ("set_point__", this);
+
+			this .set_point__ ();
+		},
+		set_point__: function ()
+		{
+			this .point  = this .point_ .getValue ();
+			this .length = this .point_ .length;
+		},
+		addTexCoordToChannel: function (index, array)
+		{
+			if (index >= 0 && index < this .length)
 			{
-				var point = this .point_ [index];
-	
-				texCoords .push (point .x, point .y, 0, 1);
+				var point = this .point;
+
+				index *= 2;
+
+				array .push (point [index], point [index + 1], 0, 1);
 			}
 			else
-				texCoords .push (0, 0, 0, 1);
-
+				array .push (0, 0, 0, 1);
 		},
 		getTexCoord: function (array)
 		{
-			var point = this .point_ .getValue ();
+			var point = this .point_;
 
 			for (var i = 0, length = point .length; i < length; ++ i)
 			{
-				var p = point[i] .getValue ();
+				var p = point [i];
 
 				array [i] = new Vector4 (p .x, p .y, 0, 1);
 			}
@@ -54199,21 +55604,17 @@ function ($,
 
 
 define ('x_ite/Browser/Geometry2D/Rectangle2DOptions',[
-	"jquery",
+	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Geometry3D/IndexedFaceSet",
 	"x_ite/Components/Rendering/Coordinate",
 	"x_ite/Components/Texturing/TextureCoordinate",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
 ],
-function ($,
+function (Fields,
           X3DBaseNode,
           IndexedFaceSet,
           Coordinate,
-          TextureCoordinate,
-          Vector2,
-          Vector3)
+          TextureCoordinate)
 {
 "use strict";
 	
@@ -54222,7 +55623,7 @@ function ($,
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	Rectangle2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	Rectangle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: Rectangle2DOptions,
 		getTypeName: function ()
@@ -54255,21 +55656,21 @@ function ($,
 				texCoord = this .geometry .texCoord_ .getValue (),
 				coord    = this .geometry .coord_ .getValue ();
 
-			geometry .texCoordIndex_ = [
-				0, 1, 2, 3, -1, // top
-			];
+			geometry .texCoordIndex_ = new Fields .MFInt32 (
+				0, 1, 2, 3, -1,
+			);
 
-			geometry .coordIndex_ = [
-				0, 1, 2, 3, -1, // top
-			];
+			geometry .coordIndex_ = new Fields .MFInt32 (
+				0, 1, 2, 3, -1,
+			);
 
-			texCoord .point_ = [
-				new Vector2 (1, 1), new Vector2 (0, 1), new Vector2 (0, 0), new Vector2 (1, 0), 
-			];
+			texCoord .point_ = new Fields .MFVec2f (
+				new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0), 
+			);
 
-			coord .point_ = [
-				new Vector3 (1, 1, 0), new Vector3 (-1, 1, 0), new Vector3 (-1, -1, 0), new Vector3 (1, -1, 0), 
-			];
+			coord .point_ = new Fields .MFVec3f (
+				new Fields .SFVec3f (1, 1, 0), new Fields .SFVec3f (-1, 1, 0), new Fields .SFVec3f (-1, -1, 0), new Fields .SFVec3f (1, -1, 0), 
+			);
 
 			texCoord .setup ();
 			coord    .setup ();
@@ -54438,21 +55839,17 @@ function (Arc2DOptions,
 
 
 define ('x_ite/Browser/Geometry3D/BoxOptions',[
-	"jquery",
+	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Geometry3D/IndexedFaceSet",
 	"x_ite/Components/Rendering/Coordinate",
 	"x_ite/Components/Texturing/TextureCoordinate",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
 ],
-function ($,
+function (Fields,
           X3DBaseNode,
           IndexedFaceSet,
           Coordinate,
-          TextureCoordinate,
-          Vector2,
-          Vector3)
+          TextureCoordinate)
 {
 "use strict";
 	
@@ -54461,7 +55858,7 @@ function ($,
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	BoxOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BoxOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BoxOptions,
 		getTypeName: function ()
@@ -54494,32 +55891,32 @@ function ($,
 				texCoord = this .geometry .texCoord_ .getValue (),
 				coord    = this .geometry .coord_ .getValue ();
 
-			geometry .texCoordIndex_ = [
+			geometry .texCoordIndex_ = new Fields .MFInt32 (
 				0, 1, 2, 3, -1, // front
 				0, 1, 2, 3, -1, // back
 				0, 1, 2, 3, -1, // left
 				0, 1, 2, 3, -1, // right
 				0, 1, 2, 3, -1, // top
 				0, 1, 2, 3, -1, // bottom
-			];
+			);
 
-			geometry .coordIndex_ = [
+			geometry .coordIndex_ = new Fields .MFInt32 (
 				0, 1, 2, 3, -1, // front
 				5, 4, 7, 6, -1, // back
 				1, 5, 6, 2, -1, // left
 				4, 0, 3, 7, -1, // right
 				4, 5, 1, 0, -1, // top
 				3, 2, 6, 7, -1, // bottom
-			];
+			);
 
-			texCoord .point_ = [
-				new Vector2 (1, 1), new Vector2 (0, 1), new Vector2 (0, 0), new Vector2 (1, 0), 
-			];
+			texCoord .point_ = new Fields .MFVec2f (
+				new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0), 
+			);
 
-			coord .point_ = [
-				new Vector3 ( 1,  1,  1), new Vector3 (-1,  1,  1), new Vector3 (-1, -1,  1), new Vector3 ( 1, -1,  1), 
-				new Vector3 ( 1,  1, -1), new Vector3 (-1,  1, -1), new Vector3 (-1, -1, -1), new Vector3 ( 1, -1, -1), 
-			];
+			coord .point_ = new Fields .MFVec3f (
+				new Fields .SFVec3f ( 1,  1,  1), new Fields .SFVec3f (-1,  1,  1), new Fields .SFVec3f (-1, -1,  1), new Fields .SFVec3f ( 1, -1,  1), 
+				new Fields .SFVec3f ( 1,  1, -1), new Fields .SFVec3f (-1,  1, -1), new Fields .SFVec3f (-1, -1, -1), new Fields .SFVec3f ( 1, -1, -1), 
+			);
 
 			texCoord .setup ();
 			coord    .setup ();
@@ -54582,12 +55979,10 @@ function ($,
 
 
 define ('x_ite/Browser/Geometry3D/ConeOptions',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBaseNode)
 {
 "use strict";
@@ -54600,7 +55995,7 @@ function ($,
 		                       "yDimension", new Fields .SFInt32 (1))
 	}
 
-	ConeOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	ConeOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: ConeOptions,
 		getTypeName: function ()
@@ -54670,12 +56065,10 @@ function ($,
 
 
 define ('x_ite/Browser/Geometry3D/CylinderOptions',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBaseNode)
 {
 "use strict";
@@ -54688,7 +56081,7 @@ function ($,
 		                       "yDimension", new Fields .SFInt32 (1))
 	}
 
-	CylinderOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	CylinderOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: CylinderOptions,
 		getTypeName: function ()
@@ -54758,7 +56151,6 @@ function ($,
 
 
 define ('x_ite/Browser/Geometry3D/QuadSphereOptions',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Geometry3D/IndexedFaceSet",
@@ -54768,8 +56160,7 @@ define ('x_ite/Browser/Geometry3D/QuadSphereOptions',[
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBaseNode,
           IndexedFaceSet,
           Coordinate,
@@ -54788,7 +56179,7 @@ function ($,
 		                       "yDimension", new Fields .SFInt32 (15))
 	}
 
-	QuadSphereOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	QuadSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: QuadSphereOptions,
 		getTypeName: function ()
@@ -55181,7 +56572,7 @@ function ($,
 		this .motionTime = 0;
 	}
 
-	PointingDevice .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: PointingDevice,
 		initialize: function ()
@@ -55709,7 +57100,7 @@ function ($,
 				var difference = Algorithm .set_difference (this .overSensors, nearestHit .sensors, { });
 
 			else
-				var difference = $.extend ({ }, this .overSensors);
+				var difference = Object .assign ({ }, this .overSensors);
 
 			for (var key in difference)
 				difference [key] .set_over__ (false, nearestHit);
@@ -55788,11 +57179,9 @@ function ($,
 
 
 define ('x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext',[
-	"jquery",
 	"x_ite/Fields",
 ],
-function ($,
-          Fields)
+function (Fields)
 {
 "use strict";
 	
@@ -56069,12 +57458,10 @@ function ($,
 
 
 define ('x_ite/Components/Core/X3DBindableNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants)
 {
 "use strict";
@@ -56088,7 +57475,7 @@ function ($,
 		this .layers = [ ];
 	}
 
-	X3DBindableNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DBindableNode,
 		initialize: function ()
@@ -56183,13 +57570,11 @@ function ($,
 
 
 define ('x_ite/Components/Time/X3DTimeDependentNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DChildNode,
           X3DConstants)
 {
@@ -56213,7 +57598,7 @@ function ($,
 		this .disabled        = false;
 	}
 
-	X3DTimeDependentNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DTimeDependentNode,
 		initialize: function ()
@@ -56542,7 +57927,6 @@ function ($,
 
 
 define ('x_ite/Components/Time/TimeSensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56550,8 +57934,7 @@ define ('x_ite/Components/Time/TimeSensor',[
 	"x_ite/Components/Time/X3DTimeDependentNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DSensorNode, 
@@ -56577,7 +57960,7 @@ function ($,
 		this .scale    = 1;
 	}
 
-	TimeSensor .prototype = $.extend (Object .create (X3DSensorNode .prototype),
+	TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 		X3DTimeDependentNode .prototype,
 	{
 		constructor: TimeSensor,
@@ -56753,13 +58136,11 @@ function ($,
 
 
 define ('x_ite/Components/Interpolation/X3DInterpolatorNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants,
           Algorithm)
 {
@@ -56772,7 +58153,7 @@ function ($,
 		this .addType (X3DConstants .X3DInterpolatorNode);
 	}
 
-	X3DInterpolatorNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DInterpolatorNode,
 		setup: function ()
@@ -56892,15 +58273,13 @@ function ($,
 
 
 define ('x_ite/Components/Interpolation/EaseInEaseOut',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Interpolation/X3DInterpolatorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -56915,7 +58294,7 @@ function ($,
 		this .addType (X3DConstants .EaseInEaseOut);
 	}
 
-	EaseInEaseOut .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: EaseInEaseOut,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -56950,13 +58329,15 @@ function ($,
 		},
 		interpolate: function (index0, index1, weight)
 		{
-			var easeOut = this .easeInEaseOut_ [index0] .y;
-			var easeIn  = this .easeInEaseOut_ [index1] .x;
-			var sum     = easeOut + easeIn;
+			var
+				easeOut = this .easeInEaseOut_ [index0] .y,
+				easeIn  = this .easeInEaseOut_ [index1] .x,
+				sum     = easeOut + easeIn;
 
 			if (sum < 0)
+			{
 				this .modifiedFraction_changed_ = weight;
-
+			}
 			else
 			{
 				if (sum > 1)
@@ -57040,7 +58421,6 @@ function ($,
 
 
 define ('x_ite/Components/Interpolation/PositionInterpolator',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57048,8 +58428,7 @@ define ('x_ite/Components/Interpolation/PositionInterpolator',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -57065,7 +58444,7 @@ function ($,
 		this .addType (X3DConstants .PositionInterpolator);
 	}
 
-	PositionInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	PositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: PositionInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -57164,7 +58543,6 @@ function ($,
 
 
 define ('x_ite/Components/Interpolation/OrientationInterpolator',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57172,8 +58550,7 @@ define ('x_ite/Components/Interpolation/OrientationInterpolator',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Rotation4"
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -57189,7 +58566,7 @@ function ($,
 		this .addType (X3DConstants .OrientationInterpolator);
 	}
 
-	OrientationInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: OrientationInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -57293,7 +58670,6 @@ function ($,
 
 
 define ('x_ite/Components/Navigation/X3DViewpointNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DBindableNode",
 	"x_ite/Components/Time/TimeSensor",
@@ -57307,8 +58683,7 @@ define ('x_ite/Components/Navigation/X3DViewpointNode',[
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBindableNode,
           TimeSensor,
           EaseInEaseOut,
@@ -57363,7 +58738,7 @@ function ($,
 		this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
 	}
 
-	X3DViewpointNode .prototype = $.extend (Object .create (X3DBindableNode .prototype),
+	X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 	{
 		constructor: X3DViewpointNode,
 		initialize: function ()
@@ -57380,14 +58755,14 @@ function ($,
 			this .timeSensor .stopTime_ = 1;
 			this .timeSensor .setup ();
 
-			this .easeInEaseOut .key_           = [ 0, 1 ];
-			this .easeInEaseOut .easeInEaseOut_ = [ new Vector2 (0, 0), new Vector2 (0, 0) ];
+			this .easeInEaseOut .key_           = new Fields .MFFloat (0, 1);
+			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
 			this .easeInEaseOut .setup ();
 
-			this .positionInterpolator         .key_ = [ 0, 1 ];
-			this .orientationInterpolator      .key_ = [ 0, 1 ];
-			this .scaleInterpolator            .key_ = [ 0, 1 ];
-			this .scaleOrientationInterpolator .key_ = [ 0, 1 ];
+			this .positionInterpolator         .key_ = new Fields .MFFloat (0, 1);
+			this .orientationInterpolator      .key_ = new Fields .MFFloat (0, 1);
+			this .scaleInterpolator            .key_ = new Fields .MFFloat (0, 1);
+			this .scaleOrientationInterpolator .key_ = new Fields .MFFloat (0, 1);
 
 			this .positionInterpolator         .setup ();
 			this .orientationInterpolator      .setup ();
@@ -57516,13 +58891,13 @@ function ($,
 						}
 						case "ANIMATE":
 						{
-							this .easeInEaseOut .easeInEaseOut_ = [ new Vector2 (0, 1), new Vector2 (1, 0) ];
+							this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 							break;
 						}
 						default:
 						{
 							// LINEAR
-							this .easeInEaseOut .easeInEaseOut_ = [ new Vector2 (0, 0), new Vector2 (0, 0) ];
+							this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
 							break;
 						}
 					}
@@ -57534,10 +58909,10 @@ function ($,
 
 					this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
-					this .positionInterpolator         .keyValue_ = [ relativePosition,         this .positionOffset_         .getValue () ];
-					this .orientationInterpolator      .keyValue_ = [ relativeOrientation,      this .orientationOffset_      .getValue () ];
-					this .scaleInterpolator            .keyValue_ = [ relativeScale,            this .scaleOffset_            .getValue () ];
-					this .scaleOrientationInterpolator .keyValue_ = [ relativeScaleOrientation, this .scaleOrientationOffset_ .getValue () ];
+					this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
+					this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
+					this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
+					this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
 
 					this .positionOffset_         = relativePosition;
 					this .orientationOffset_      = relativeOrientation;
@@ -57635,7 +59010,7 @@ function ($,
 			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
 			this .timeSensor .isActive_ .addInterest ("set_active__", this);
 	
-			this .easeInEaseOut .easeInEaseOut_ = [ new Vector2 (0, 1), new Vector2 (1, 0) ];
+			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
 			var
 				translation = Vector3 .lerp (this .positionOffset_ .getValue (), offset, factor),
@@ -57755,7 +59130,6 @@ function ($,
 
 
 define ('x_ite/Components/Navigation/OrthoViewpoint',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57766,8 +59140,7 @@ define ('x_ite/Components/Navigation/OrthoViewpoint',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DViewpointNode, 
@@ -57796,7 +59169,7 @@ function ($,
 		this .projectionMatrix = new Matrix4 ();
 	}
 
-	OrthoViewpoint .prototype = $.extend (Object .create (X3DViewpointNode .prototype),
+	OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
 	{
 		constructor: OrthoViewpoint,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -57990,14 +59363,13 @@ function ($,
 
 
 define ('x_ite/Browser/Navigation/X3DViewer',[
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Navigation/OrthoViewpoint",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($, X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
+function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 {
 "use strict";
 	
@@ -58011,7 +59383,7 @@ function ($, X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	X3DViewer .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DViewer,
 		initialize: function ()
@@ -58392,7 +59764,10 @@ define ('x_ite/Browser/Navigation/ExamineViewer',[
 	"standard/Math/Numbers/Rotation4",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, Vector3, Rotation4)
+function ($,
+          X3DViewer,
+          Vector3,
+          Rotation4)
 {
 "use strict";
 
@@ -58418,20 +59793,21 @@ function ($, X3DViewer, Vector3, Rotation4)
 	{
 		X3DViewer .call (this, executionContext);
 
-		this .button                    = -1;
-		this .orientationOffset         = new Rotation4 (0, 0, 1, 0);
-		this .rotation                  = new Rotation4 (0, 0, 1, 0);
-		this .fromVector                = new Vector3 (0, 0, 0);
-		this .toVector                  = new Vector3 (0, 0, 0);
-		this .fromPoint                 = new Vector3 (0, 0, 0);
-		this .toPoint                   = new Vector3 (0, 0, 0);
-		this .sourcePositionOffset      = new Vector3 (0, 0, 0);
-		this .destinationPositionOffset = new Vector3 (0, 0, 0);
-		this .pressTime                 = 0;
-		this .motionTime                = 0;
+		this .button                       = -1;
+		this .positionOffset               = new Vector3 (0, 0, 0);
+		this .orientationOffset            = new Rotation4 (0, 0, 1, 0);
+		this .fromVector                   = new Vector3 (0, 0, 0);
+		this .toVector                     = new Vector3 (0, 0, 0);
+		this .fromPoint                    = new Vector3 (0, 0, 0);
+		this .toPoint                      = new Vector3 (0, 0, 0);
+		this .sourcePositionOffset         = new Vector3 (0, 0, 0);
+		this .destinationPositionOffset    = new Vector3 (0, 0, 0);
+		this .rotation                     = new Rotation4 (0, 0, 1, 0);
+		this .pressTime                    = 0;
+		this .motionTime                   = 0;
 	}
 
-	ExamineViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: ExamineViewer,
 		initialize: function ()
@@ -58529,15 +59905,7 @@ function ($, X3DViewer, Vector3, Rotation4)
 
 					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
-						try
-						{
-							this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (this .rotation, SPIN_FACTOR));
-							this .addSpinning ();
-						}
-						catch (error)
-						{
-							console .log (error);
-						}
+						this .addSpinning ();
 					}
 
 					break;
@@ -58589,13 +59957,12 @@ function ($, X3DViewer, Vector3, Rotation4)
 						viewpoint = this .getActiveViewpoint (),
 						toVector  = this .trackballProjectToSphere (x, y, this .toVector);
 
-					this .rotation .setFromToVec (toVector, this .fromVector);
+					var rotation = new Rotation4 (toVector, this .fromVector);
 
-					if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
+					if (Math .abs (rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
 						return false;
 
-					viewpoint .orientationOffset_ = this .getOrientationOffset ();
-					viewpoint .positionOffset_    = this .getPositionOffset ();
+					this .addRotate (rotation);
 
 					this .fromVector .assign (toVector);
 					this .motionTime = performance .now ();
@@ -58649,25 +60016,12 @@ function ($, X3DViewer, Vector3, Rotation4)
 			else if (event .deltaY < 0)
 				this .addScroll (positionOffset);
 		},
-		getPositionOffset: function ()
+		spin: function ()
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			this .getDistanceToCenter (distance);
-
-			return (orientationOffset .assign (this .orientationOffset) .inverse ()
-			        .multRight (viewpoint .orientationOffset_ .getValue ())
-			        .multVecRot (vector .assign (distance))
-			        .subtract (distance)
-			        .add (viewpoint .positionOffset_ .getValue ()));
-		},
-		getOrientationOffset: function ()
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			this .orientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
-
-			return result .assign (viewpoint .getOrientation ()) .inverse () .multRight (this .rotation) .multRight (viewpoint .getUserOrientation ());
+			viewpoint .orientationOffset_ = this .getOrientationOffset ();
+			viewpoint .positionOffset_    = this .getPositionOffset ();
 		},
 		scroll: function ()
 		{
@@ -58684,12 +60038,29 @@ function ($, X3DViewer, Vector3, Rotation4)
 
 			viewpoint .positionOffset_ = positionOffset .assign (this .sourcePositionOffset) .lerp (this .destinationPositionOffset, t);
 		},
-		spin: function ()
+		addRotate: function (rotationChange)
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
+			this .rotation .assign (rotationChange);
+
 			viewpoint .orientationOffset_ = this .getOrientationOffset ();
 			viewpoint .positionOffset_    = this .getPositionOffset ();
+
+			return;
+		},
+		addSpinning: function (spinTime)
+		{
+			try
+			{
+				this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (this .rotation, SPIN_FACTOR));
+
+				this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+			}
+			catch (error)
+			{
+				console .log (error);
+			}
 		},
 		addScroll: function (positionOffsetChange)
 		{
@@ -58711,16 +60082,34 @@ function ($, X3DViewer, Vector3, Rotation4)
 		
 			this .startTime = performance .now ();
 		},
-		addSpinning: function ()
+		getPositionOffset: function ()
 		{
-			this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+			var viewpoint = this .getActiveViewpoint ();
+
+			this .getDistanceToCenter (distance);
+
+			this .positionOffset .assign (viewpoint .positionOffset_ .getValue ());
+
+			return (orientationOffset .assign (this .orientationOffset) .inverse ()
+			        .multRight (viewpoint .orientationOffset_ .getValue ())
+			        .multVecRot (vector .assign (distance))
+			        .subtract (distance)
+			        .add (viewpoint .positionOffset_ .getValue ()));
+		},
+		getOrientationOffset: function ()
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			this .orientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
+
+			return result .assign (viewpoint .getOrientation ()) .inverse () .multRight (this .rotation) .multRight (viewpoint .getUserOrientation ());
 		},
 		disconnect: function ()
 		{
 			var browser = this .getBrowser ();
 
-			browser .prepareEvents () .removeInterest ("scroll", this);
 			browser .prepareEvents () .removeInterest ("spin",   this);
+			browser .prepareEvents () .removeInterest ("scroll", this);
 		},
 		dispose: function ()
 		{
@@ -58791,7 +60180,12 @@ define ('x_ite/Browser/Navigation/X3DFlyViewer',[
 	"standard/Math/Geometry/Camera",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
+function ($,
+          X3DViewer,
+          Vector3,
+          Rotation4,
+          Matrix4,
+          Camera)
 {
 "use strict";
 	
@@ -58851,7 +60245,7 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 		this .modelViewMatrixArray  = new Float32Array (this .projectionMatrix);
 	}
 
-	X3DFlyViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: X3DFlyViewer,
 		initialize: function ()
@@ -59223,7 +60617,7 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 				shaderNode = browser .getLineShader (),
 				lineWidth  = gl .getParameter (gl .LINE_WIDTH);
 
-			shaderNode .useProgram (gl);
+			shaderNode .enable (gl);
 			shaderNode .enableVertexAttribute (gl, this .lineBuffer);
 
 			gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
@@ -59250,6 +60644,7 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 			gl .enable (gl .DEPTH_TEST);
 
 			gl .lineWidth (lineWidth);
+			shaderNode .disable (gl);
 		},
 		transfer: function (fromPoint, toPoint)
 		{
@@ -59349,12 +60744,11 @@ function ($, X3DViewer, Vector3, Rotation4, Matrix4, Camera)
 
 ﻿
 define ('x_ite/Browser/Navigation/WalkViewer',[
-	"jquery",
 	"x_ite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($, X3DFlyViewer, Vector3, Rotation4)
+function (X3DFlyViewer, Vector3, Rotation4)
 {
 "use strict";
 	
@@ -59365,7 +60759,7 @@ function ($, X3DFlyViewer, Vector3, Rotation4)
 		X3DFlyViewer .call (this, executionContext);
 	}
 
-	WalkViewer .prototype = $.extend (Object .create (X3DFlyViewer .prototype),
+	WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 	{
 		constructor: WalkViewer,
 		initialize: function ()
@@ -59454,10 +60848,9 @@ function ($, X3DFlyViewer, Vector3, Rotation4)
 
 ﻿
 define ('x_ite/Browser/Navigation/FlyViewer',[
-	"jquery",
 	"x_ite/Browser/Navigation/X3DFlyViewer",
 ],
-function ($, X3DFlyViewer)
+function (X3DFlyViewer)
 {
 "use strict";
 	
@@ -59466,7 +60859,7 @@ function ($, X3DFlyViewer)
 		X3DFlyViewer .call (this, executionContext);
 	}
 
-	FlyViewer .prototype = $.extend (Object .create (X3DFlyViewer .prototype),
+	FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 	{
 		constructor: FlyViewer,
 		addCollision: function ()
@@ -59540,7 +60933,6 @@ function ($, X3DFlyViewer)
 
 
 define ('x_ite/Components/Interpolation/ScalarInterpolator',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59548,8 +60940,7 @@ define ('x_ite/Components/Interpolation/ScalarInterpolator',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -59565,7 +60956,7 @@ function ($,
 		this .addType (X3DConstants .ScalarInterpolator);
 	}
 
-	ScalarInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: ScalarInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -59663,7 +61054,6 @@ function ($,
 
 
 define ('x_ite/Components/Navigation/Viewpoint',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59674,8 +61064,7 @@ define ('x_ite/Components/Navigation/Viewpoint',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DViewpointNode,
@@ -59706,7 +61095,7 @@ function ($,
 		this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
 	}
 
-	Viewpoint .prototype = $.extend (Object .create (X3DViewpointNode .prototype),
+	Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
 	{
 		constructor: Viewpoint,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -59738,7 +61127,7 @@ function ($,
 		{
 			X3DViewpointNode .prototype .initialize .call (this);
 
-			this .fieldOfViewInterpolator .key_ = [ 0, 1 ];
+			this .fieldOfViewInterpolator .key_ = new Fields .MFFloat (0, 1);
 			this .fieldOfViewInterpolator .setup ();
 
 			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewInterpolator .set_fraction_);
@@ -59748,13 +61137,13 @@ function ($,
 		{
 			if (fromViewpoint .getType () .indexOf (X3DConstants .Viewpoint) < 0)
 			{
-				this .fieldOfViewInterpolator .keyValue_ = [ this .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue () ];
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (this .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue ());
 			}
 			else
 			{
 				var scale = fromViewpoint .getFieldOfView () / this .fieldOfView_ .getValue ();
 	
-				this .fieldOfViewInterpolator .keyValue_ = [ scale, this .fieldOfViewScale_ .getValue () ];
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, this .fieldOfViewScale_ .getValue ());
 	
 				this .fieldOfViewScale_ = scale;
 			}
@@ -60833,15 +62222,13 @@ function (ReferenceEllipsoids,
 
 
 define ('x_ite/Components/Geospatial/X3DGeospatialObject',[
-	"jquery",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Geospatial/Geospatial",
 	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          X3DConstants,
+function (X3DConstants,
           Geospatial,
           X3DCast,
           Vector3,
@@ -61115,7 +62502,6 @@ function ($,
 
 
 define ('x_ite/Components/Navigation/NavigationInfo',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -61123,8 +62509,7 @@ define ('x_ite/Components/Navigation/NavigationInfo',[
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBindableNode,
@@ -61154,7 +62539,7 @@ function ($,
 		this .visibilityLimit_ .setUnit ("speed");
 	}
 
-	NavigationInfo .prototype = $.extend (Object .create (X3DBindableNode .prototype),
+	NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 	{
 		constructor: NavigationInfo,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -61455,7 +62840,6 @@ function ($,
 
 
 define ('x_ite/Components/Geospatial/GeoViewpoint',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -61470,8 +62854,7 @@ define ('x_ite/Components/Geospatial/GeoViewpoint',[
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DViewpointNode, 
@@ -61534,7 +62917,7 @@ function ($,
 		}
 	}
 
-	GeoViewpoint .prototype = $.extend (Object .create (X3DViewpointNode .prototype),
+	GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoViewpoint,
@@ -61760,7 +63143,11 @@ define ('x_ite/Browser/Navigation/PlaneViewer',[
 	"standard/Math/Numbers/Vector3",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3)
+function ($,
+          X3DViewer,
+          Viewpoint,
+          GeoViewpoint,
+          Vector3)
 {
 "use strict";
 	
@@ -61780,7 +63167,7 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3)
 		this .toPoint   = new Vector3 (0, 0, 0);
 	}
 
-	PlaneViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: PlaneViewer,
 		initialize: function ()
@@ -61989,10 +63376,9 @@ function ($, X3DViewer, Viewpoint, GeoViewpoint, Vector3)
 
 
 define ('x_ite/Browser/Navigation/NoneViewer',[
-	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
 ],
-function ($, X3DViewer)
+function (X3DViewer)
 {
 "use strict";
 	
@@ -62001,7 +63387,7 @@ function ($, X3DViewer)
 		X3DViewer .call (this, executionContext);
 	}
 
-	NoneViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	NoneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: NoneViewer,
 	});
@@ -62063,7 +63449,8 @@ define ('x_ite/Browser/Navigation/LookAtViewer',[
 	"x_ite/Browser/Navigation/X3DViewer",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer)
+function ($,
+          X3DViewer)
 {
 "use strict";
 
@@ -62074,7 +63461,7 @@ function ($, X3DViewer)
 		this .button = -1;
 	}
 
-	LookAtViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: LookAtViewer,
 		initialize: function ()
@@ -62201,15 +63588,13 @@ function ($, X3DViewer)
 
 
 define ('x_ite/Components/Lighting/X3DLightNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          X3DChildNode,
+function (X3DChildNode,
           TraverseType,
           X3DConstants,
           Matrix4,
@@ -62231,7 +63616,7 @@ function ($,
 		this .shadowDiffusion_ .setUnit ("length");
 	}
 
-	X3DLightNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DLightNode,
 		getGlobal: function ()
@@ -62394,14 +63779,12 @@ function ($,
 
 
 define ('x_ite/Components/Grouping/X3DBoundedObject',[
-	"jquery",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Geometry/Box3",
 ],
-function ($,
-          X3DCast,
+function (X3DCast,
           X3DConstants,
           Vector3,
           Box3)
@@ -62497,7 +63880,6 @@ function ($,
 
 
 define ('x_ite/Components/Grouping/X3DGroupingNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
@@ -62505,8 +63887,7 @@ define ('x_ite/Components/Grouping/X3DGroupingNode',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-	       Fields,
+function (Fields,
           X3DChildNode, 
           X3DBoundedObject, 
           TraverseType,
@@ -62549,7 +63930,7 @@ function ($,
 		this .childNodes            = [ ];
 	}
 
-	X3DGroupingNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DBoundedObject .prototype,
 	{
 		constructor: X3DGroupingNode,
@@ -63043,16 +64424,13 @@ function ($,
  ******************************************************************************/
 
 
-define ('standard/Math/Utility/MatrixStack',[
-	"jquery",
-],
-function ($)
+define ('standard/Math/Utility/MatrixStack',[],function ()
 {
 "use strict";
 
 	function MatrixStack (Type)
 	{
-		return $.extend ([ new Type () ],
+		return Object .assign ([ new Type () ],
 		{
 			top: 0,
 			set: function (matrix)
@@ -63255,7 +64633,6 @@ define ('standard/Utility/ObjectCache',[],function ()
 
 
 define ('x_ite/Components/Lighting/DirectionalLight',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -63273,8 +64650,7 @@ define ('x_ite/Components/Lighting/DirectionalLight',[
 	"standard/Math/Utility/MatrixStack",
 	"standard/Utility/ObjectCache",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLightNode,
@@ -63474,7 +64850,7 @@ function ($,
 		this .global_ = false;
 	}
 
-	DirectionalLight .prototype = $.extend (Object .create (X3DLightNode .prototype),
+	DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 	{
 		constructor: DirectionalLight,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -63793,12 +65169,10 @@ function (Fields,
 
 
 define ('x_ite/Components/Layering/X3DViewportNode',[
-	"jquery",
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DGroupingNode, 
+function (X3DGroupingNode, 
           X3DConstants)
 {
 "use strict";
@@ -63810,7 +65184,7 @@ function ($,
 		this .addType (X3DConstants .X3DViewportNode);
 	}
 
-	X3DViewportNode .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	X3DViewportNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: X3DViewportNode,
 	});
@@ -63868,7 +65242,6 @@ function ($,
 
 
 define ('x_ite/Components/Layering/Viewport',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -63879,8 +65252,7 @@ define ('x_ite/Components/Layering/Viewport',[
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DViewportNode, 
@@ -63903,7 +65275,7 @@ function ($,
 		this .rectangle = new Vector4 (0, 0, 0, 0);
 	}
 
-	Viewport .prototype = $.extend (Object .create (X3DViewportNode .prototype),
+	Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype),
 	{
 		constructor: Viewport,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -64129,15 +65501,13 @@ function (Viewport)
 
 
 define ('x_ite/Components/Texturing/TextureProperties',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
@@ -64189,7 +65559,7 @@ function ($,
 		this .addType (X3DConstants .TextureProperties);
 	}
 
-	TextureProperties .prototype = $.extend (Object .create (X3DNode .prototype),
+	TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: TextureProperties,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -64323,7 +65693,8 @@ define ('x_ite/Browser/Layout/X3DLayoutContext',[
 	"jquery",
 	"x_ite/Components/Texturing/TextureProperties",
 ],
-function ($, TextureProperties)
+function ($,
+          TextureProperties)
 {
 "use strict";
 
@@ -64853,7 +66224,6 @@ define ('standard/Utility/Shuffle',[],function ()
 
 
 define ('x_ite/Components/Text/X3DFontStyleNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Components/Networking/X3DUrlObject",
@@ -64866,8 +66236,7 @@ define ('x_ite/Components/Text/X3DFontStyleNode',[
 	"x_ite/Browser/VERSION",
 	"x_ite/DEBUG",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DNode,
           X3DUrlObject,
           TextAlignment,
@@ -64931,7 +66300,7 @@ function ($,
 		this .loader      = new FileLoader (this);
 	}
 
-	X3DFontStyleNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DFontStyleNode,
 		initialize: function ()
@@ -65529,7 +66898,7 @@ function (TextAlignment,
 			else
 			{
 				var
-					string   = text .string_ .getValue (),
+					string   = text .string_,
 					numChars = 0;
 			
 				for (var i = 0, length = string .length; i < length; ++ i)
@@ -65554,7 +66923,7 @@ function (TextAlignment,
 		{
 			var
 				font        = fontStyle .getFont (),
-				string      = text .string_ .getValue (),
+				string      = text .string_,
 				numLines    = string .length,
 				maxExtent   = Math .max (0, text .maxExtent_ .getValue ()),
 				topToBottom = fontStyle .topToBottom_ .getValue (),
@@ -65681,7 +67050,7 @@ function (TextAlignment,
 		{		
 			var
 				font             = fontStyle .getFont (),
-				string           = text .string_ .getValue (),
+				string           = text .string_,
 				numLines         = string .length,
 				maxExtent        = Math .max (0, text .maxExtent_ .getValue ()),
 				leftToRight      = fontStyle .leftToRight_ .getValue (),
@@ -65852,7 +67221,7 @@ function (TextAlignment,
 				case TextAlignment .BEGIN:
 				case TextAlignment .FIRST:
 				{
-					var lineBounds = text .lineBounds_ .getValue ();
+					var lineBounds = text .lineBounds_;
 
 					for (var i = 0, length = lineBounds .length; i < length; ++ i)
 						lineBounds [i] .y += max .y - yPad [i] * scale;
@@ -65863,10 +67232,10 @@ function (TextAlignment,
 					break;
 				case TextAlignment .END:
 				{
-					var lineBounds = text .lineBounds_ .getValue ();
+					var lineBounds = text .lineBounds_;
 
 					for (var i = 0, length = lineBounds .length; i < length; ++ i)
-						lineBounds [i].y += yPad [i] * scale - min .y;
+						lineBounds [i] .y += yPad [i] * scale - min .y;
 		
 					break;
 				}
@@ -65919,8 +67288,6 @@ function (TextAlignment,
 		},
 		stringToGlyphs: function (font, line, normal, lineNumber)
 		{
-			line = line .getValue ();
-
 			var
 				fontGlyphCache = glyphCache [font .fontName],
 				glypes         = this .glyphs [lineNumber];
@@ -66808,9 +68175,10 @@ define('earcut', ['earcut/dist/earcut.dev'], function (main) { return main; });
 
 
 define ('x_ite/Browser/Text/PolygonText',[
-	"jquery",
+	"x_ite/Fields",
 	"x_ite/Browser/Core/PrimitiveQuality",
 	"x_ite/Browser/Text/X3DTextGeometry",
+	"x_ite/Components/Rendering/X3DGeometryNode",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Triangle2",
@@ -66818,9 +68186,10 @@ define ('x_ite/Browser/Text/PolygonText',[
 	"poly2tri",
 	"earcut",
 ],
-function ($,
+function (Fields,
           PrimitiveQuality,
           X3DTextGeometry,
+          X3DGeometryNode,
           Vector3,
           Matrix4,
           Triangle2,
@@ -66843,10 +68212,10 @@ function ($,
 
 		text .transparent_ = false;
 
-		this .texCoords = [ ];
+		this .texCoordArray = X3DGeometryNode .createArray ();
 	}
 
-	PolygonText .prototype = $.extend (Object .create (X3DTextGeometry .prototype),
+	PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
 	{
 		constructor: PolygonText,
 		getMatrix: function ()
@@ -66873,12 +68242,15 @@ function ($,
 				origin           = text .origin_ .getValue (),
 				sizeUnitsPerEm   = size / font .unitsPerEm,
 				primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
-				texCoords        = this .texCoords,
-				normals          = text .getNormals (),
-				vertices         = text .getVertices ();
+				texCoordArray    = this .texCoordArray,
+				normalArray      = text .getNormals (),
+				vertexArray      = text .getVertices ();
 
-			texCoords .length = 0;
-			text .getTexCoords () .push (texCoords);
+			// Set texCoords.
+
+			texCoordArray .length = 0;
+
+			text .getMultiTexCoords () .push (texCoordArray);
 
 			this .getBBox () .getExtents (min, max);
 			text .getMin () .assign (min);
@@ -66906,9 +68278,9 @@ function ($,
 								x = glyphVertices [v] .x * size + minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
 								y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
 		
-							texCoords .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
-							normals   .push (0, 0, 1);
-							vertices  .push (x, y, 0, 1);
+							texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
+							normalArray   .push (0, 0, 1);
+							vertexArray   .push (x, y, 0, 1);
 						}
 		
 						// Calculate advanceWidth.
@@ -66953,9 +68325,9 @@ function ($,
 								x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
 								y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
 			
-							texCoords .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
-							normals   .push (0, 0, 1);
-							vertices  .push (x, y, 0, 1);
+							texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
+							normalArray   .push (0, 0, 1);
+							vertexArray   .push (x, y, 0, 1);
 						}
 					}
 				}
@@ -67323,7 +68695,7 @@ function ($,
 				//console .warn (error);
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{ },
 		transformLine: function (line)
 		{ },
@@ -67384,7 +68756,6 @@ function ($,
 
 
 define ('x_ite/Components/Text/FontStyle',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -67392,8 +68763,7 @@ define ('x_ite/Components/Text/FontStyle',[
 	"x_ite/Browser/Text/PolygonText",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DFontStyleNode,
@@ -67411,7 +68781,7 @@ function ($,
 		this .size_ .setUnit ("length");
 	}
 
-	FontStyle .prototype = $.extend (Object .create (X3DFontStyleNode .prototype),
+	FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
 	{
 		constructor: FontStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -72557,13 +73927,11 @@ function ($,
 
 
 define ('x_ite/Components/Texturing/X3DTextureTransformNode',[
-	"jquery",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          X3DAppearanceChildNode, 
+function (X3DAppearanceChildNode, 
           X3DConstants,
           Matrix4)
 {
@@ -72579,7 +73947,7 @@ function ($,
 		this .matrixArray = new Float32Array (this .matrix);
 	}
 
-	X3DTextureTransformNode .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
+	X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DTextureTransformNode,
 		setMatrix: function (value)
@@ -72651,7 +74019,6 @@ function ($,
 
 
 define ('x_ite/Components/Texturing/TextureTransform',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -72660,8 +74027,7 @@ define ('x_ite/Components/Texturing/TextureTransform',[
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Matrix3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureTransformNode, 
@@ -72684,7 +74050,7 @@ function ($,
 		this .matrix3 = new Matrix3 ();
 	}
 
-	TextureTransform .prototype = $.extend (Object .create (X3DTextureTransformNode .prototype),
+	TextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
 	{
 		constructor: TextureTransform,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -73204,7 +74570,6 @@ define ('standard/Math/Algorithms/QuickSort',[],function ()
 
 
 define ('x_ite/Components/ParticleSystems/X3DParticleEmitterNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
@@ -73214,8 +74579,7 @@ define ('x_ite/Components/ParticleSystems/X3DParticleEmitterNode',[
 	"standard/Math/Algorithm",
 	"standard/Math/Algorithms/QuickSort",
 ],
-function ($,
-          X3DNode, 
+function (X3DNode, 
           X3DConstants,
           Vector3,
           Rotation4,
@@ -73258,7 +74622,7 @@ function ($,
 		this .sorter              = new QuickSort (this .intersections, PlaneCompare);
 	}
 
-	X3DParticleEmitterNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DParticleEmitterNode,
 		initialize: function ()
@@ -73618,7 +74982,6 @@ function ($,
 
 
 define ('x_ite/Components/ParticleSystems/PointEmitter',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -73626,8 +74989,7 @@ define ('x_ite/Components/ParticleSystems/PointEmitter',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode, 
@@ -73650,7 +75012,7 @@ function ($,
 		this .direction = new Vector3 (0, 0, 0);
 	}
 
-	PointEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: PointEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -74489,7 +75851,7 @@ function ($,
 
 			// Configure depth shader.
 
-			shaderNode .useProgram (gl);
+			shaderNode .enable (gl);
 
 			projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
@@ -74539,8 +75901,10 @@ function ($,
 
 				// Draw
 	
-				context .shapeNode .depth (context, shaderNode);
+				context .shapeNode .depth (gl, context, shaderNode);
 			}
+
+			shaderNode .disable (gl);
 		},
 		draw: function (group)
 		{
@@ -74594,7 +75958,7 @@ function ($,
 
 			gl .clear (gl .DEPTH_BUFFER_BIT);
 
-			this .getBackground () .display (this, viewport);
+			this .getBackground () .display (gl, this, viewport);
 
 			// Sorted blend
 
@@ -74602,12 +75966,12 @@ function ($,
 			cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 			projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
-			browser .getPointShader   () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-			browser .getLineShader    () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-			browser .getDefaultShader () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			browser .getPointShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			browser .getLineShader    () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			browser .getDefaultShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 
 			for (var id in shaders)
-				shaders [id] .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				shaders [id] .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 
 			// Render opaque objects first
 
@@ -74626,7 +75990,7 @@ function ($,
 				             scissor .z,
 				             scissor .w);
 
-				context .shapeNode .display (context);
+				context .shapeNode .display (gl, context);
 			}
 
 			// Render transparent objects
@@ -74647,7 +76011,7 @@ function ($,
 				             scissor .z,
 				             scissor .w);
 
-				context .shapeNode .display (context);
+				context .shapeNode .display (gl, context);
 			}
 
 			gl .depthMask (true);
@@ -74749,10 +76113,9 @@ function ($,
 
 
 define ('x_ite/Execution/BindableStack',[
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 ],
-function ($, X3DBaseNode)
+function (X3DBaseNode)
 {
 "use strict";
 
@@ -74764,7 +76127,7 @@ function ($, X3DBaseNode)
 		this .array = [ defaultNode ];
 	}
 
-	BindableStack .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BindableStack,
 		getTypeName: function ()
@@ -74938,10 +76301,9 @@ function ($, X3DBaseNode)
 
 
 define ('x_ite/Execution/BindableList',[
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 ],
-function ($, X3DBaseNode)
+function (X3DBaseNode)
 {
 "use strict";
 
@@ -74968,7 +76330,7 @@ function ($, X3DBaseNode)
 		this .array     = [ defaultNode ];
 	}
 
-	BindableList .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BindableList,
 		getTypeName: function ()
@@ -75097,11 +76459,9 @@ function ($, X3DBaseNode)
 
 
 define ('x_ite/Components/EnvironmentalEffects/X3DFogObject',[
-	"jquery",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DConstants)
+function (X3DConstants)
 {
 "use strict";
 
@@ -75224,7 +76584,6 @@ function ($,
 
 
 define ('x_ite/Components/EnvironmentalEffects/Fog',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -75233,8 +76592,7 @@ define ('x_ite/Components/EnvironmentalEffects/Fog',[
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBindableNode, 
@@ -75252,7 +76610,7 @@ function ($,
 		this .addType (X3DConstants .Fog);
 	}
 
-	Fog .prototype = $.extend (Object .create (X3DBindableNode .prototype),
+	Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 		X3DFogObject .prototype,
 	{
 		constructor: Fog,
@@ -75355,7 +76713,6 @@ function ($,
 
 
 define ('x_ite/Components/EnvironmentalEffects/X3DBackgroundNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DBindableNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
@@ -75366,8 +76723,7 @@ define ('x_ite/Components/EnvironmentalEffects/X3DBackgroundNode',[
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          X3DBindableNode,
+function (X3DBindableNode,
           TraverseType,
           X3DConstants,
           ViewVolume,
@@ -75479,7 +76835,7 @@ function ($,
 		this .textures              = 0;
 	}
 
-	X3DBackgroundNode .prototype = $.extend (Object .create (X3DBindableNode .prototype),
+	X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 	{
 		constructor: X3DBackgroundNode,
 		modelViewMatrix: new Matrix4 (),
@@ -75830,16 +77186,12 @@ function ($,
 				}
 			}
 		},
-		display: function (renderObject, viewport)
+		display: function (gl, renderObject, viewport)
 		{
 			try
 			{
 				if (this .hidden)
 					return;
-
-				var
-					browser = renderObject .getBrowser (),
-					gl      = browser .getContext ();
 
 				// Setup context.
 	
@@ -75891,7 +77243,7 @@ function ($,
 				gl         = browser .getContext (),
 				shaderNode = browser .getBackgroundSphereShader ();
 
-			shaderNode .useProgram (gl);
+			shaderNode .enable (gl);
 
 			// Clip planes
 
@@ -75921,6 +77273,7 @@ function ($,
 			// Disable vertex attribute arrays.
 
 			shaderNode .disableColorAttribute (gl);
+			shaderNode .disable (gl);
 		},
 		drawCube: function (renderObject)
 		{
@@ -75929,7 +77282,7 @@ function ($,
 				gl         = browser .getContext (),
 				shaderNode = browser .getGouraudShader ();
 
-			shaderNode .useProgram (gl);
+			shaderNode .enable (gl);
 
 			// Clip planes
 
@@ -75961,6 +77314,7 @@ function ($,
 			// Disable vertex attribute arrays.
 
 			shaderNode .disableTexCoordAttribute (gl);
+			shaderNode .disable (gl);
 		},
 		drawRectangle: function (gl, shaderNode, texture, buffer)
 		{
@@ -76037,13 +77391,11 @@ function ($,
 
 
 define ('x_ite/Components/Texturing/X3DTextureNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DAppearanceChildNode, 
           X3DConstants)
 {
@@ -76066,7 +77418,7 @@ function ($,
 		this .addChildObjects ("transparent", new Fields .SFBool ());
 	}
 
-	X3DTextureNode .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
+	X3DTextureNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DTextureNode,
 		initialize: function ()
@@ -76186,14 +77538,12 @@ function ($,
 
 
 define ('x_ite/Components/Texturing/X3DTexture2DNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Texturing/X3DTextureNode",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DTextureNode,
           X3DCast,
           X3DConstants)
@@ -76214,7 +77564,7 @@ function ($,
 		this .data   = null;
 	}
 
-	X3DTexture2DNode .prototype = $.extend (Object .create (X3DTextureNode .prototype),
+	X3DTexture2DNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
 	{
 		constructor: X3DTexture2DNode,
 		initialize: function ()
@@ -76461,7 +77811,7 @@ function ($,
 		this .urlStack = new Fields .MFString ();
 	}
 
-	ImageTexture .prototype = $.extend (Object .create (X3DTexture2DNode .prototype),
+	ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: ImageTexture,
@@ -76611,6 +77961,9 @@ function ($,
 					data   = cx .getImageData (0, 0, width, height) .data,
 					opaque = true;
 
+				canvas .width  = 1;
+				canvas .height = 1;
+
 				for (var i = 3; i < data .length; i += 4)
 				{
 					if (data [i] !== 255)
@@ -76692,7 +78045,6 @@ function ($,
 
 
 define ('x_ite/Components/EnvironmentalEffects/Background',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -76700,8 +78052,7 @@ define ('x_ite/Components/EnvironmentalEffects/Background',[
 	"x_ite/Components/Texturing/ImageTexture",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBackgroundNode,
@@ -76717,7 +78068,7 @@ function ($,
 		this .addType (X3DConstants .Background);
 	}
 
-	Background .prototype = $.extend (Object .create (X3DBackgroundNode .prototype),
+	Background .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
 	{
 		constructor: Background,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -76854,7 +78205,6 @@ function ($,
 
 
 define ('x_ite/Components/Layering/X3DLayerNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Rendering/X3DRenderObject",
 	"x_ite/Components/Layering/X3DViewportNode",
@@ -76870,8 +78220,7 @@ define ('x_ite/Components/Layering/X3DLayerNode',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          X3DNode,
+function (X3DNode,
           X3DRenderObject,
           X3DViewportNode,
           BindableStack,
@@ -76921,7 +78270,7 @@ function ($,
 		this .collisionTime = 0;
 	}
 
-	X3DLayerNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 		X3DRenderObject .prototype,
 	{
 		constructor: X3DLayerNode,
@@ -77240,15 +78589,13 @@ function ($,
 
 
 define ('x_ite/Components/Grouping/Group',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
@@ -77263,7 +78610,7 @@ function ($,
 		this .addType (X3DConstants .Group);
 	}
 
-	Group .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	Group .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: Group,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -77343,7 +78690,6 @@ function ($,
 
 
 define ('x_ite/Components/Layering/Layer',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -77352,8 +78698,7 @@ define ('x_ite/Components/Layering/Layer',[
 	"x_ite/Components/Grouping/Group",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLayerNode,
@@ -77373,7 +78718,7 @@ function ($,
 		this .addType (X3DConstants .Layer);
 	}
 
-	Layer .prototype = $.extend (Object .create (X3DLayerNode .prototype),
+	Layer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
 	{
 		constructor: Layer,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -77453,7 +78798,6 @@ function ($,
 
 
 define ('x_ite/Components/Layering/LayerSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -77463,8 +78807,7 @@ define ('x_ite/Components/Layering/LayerSet',[
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode,
@@ -77486,7 +78829,7 @@ function ($,
 		this .activeLayerNode = null;
 	}
 
-	LayerSet .prototype = $.extend (Object .create (X3DNode .prototype),
+	LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: LayerSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -77682,7 +79025,6 @@ function ($,
 
 
 define ('x_ite/Execution/World',[
-	"jquery",
 	"x_ite/Fields/SFNode",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Layering/LayerSet",
@@ -77690,8 +79032,7 @@ define ('x_ite/Execution/World',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          SFNode,
+function (SFNode,
           X3DBaseNode,
           LayerSet,
           Layer,
@@ -77711,7 +79052,7 @@ function ($,
 		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 	}
 
-	World .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	World .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: World,
 		getTypeName: function ()
@@ -77843,7 +79184,6 @@ function ($,
 
 
 define ('x_ite/Browser/X3DBrowserContext',[
-	"jquery",
 	"x_ite/Fields/SFTime",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Browser/Core/X3DCoreContext",
@@ -77870,8 +79210,7 @@ define ('x_ite/Browser/X3DBrowserContext',[
 	"x_ite/Execution/World",
 	"x_ite/Bits/TraverseType",
 ],
-function ($,
-          SFTime,
+function (SFTime,
           X3DBaseNode,
           X3DCoreContext,
           X3DRoutingContext,
@@ -77942,7 +79281,7 @@ function ($,
 		this .displayTime     = 0;
 	};
 
-	X3DBrowserContext .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 		X3DRoutingContext .prototype,
 		X3DCoreContext .prototype,
 		X3DScriptingContext .prototype,
@@ -78139,10 +79478,7 @@ function ($,
  ******************************************************************************/
 
 
-define ('x_ite/Configuration/ProfileInfo',[
-	"jquery",
-],
-function ($)
+define ('x_ite/Configuration/ProfileInfo',[],function ()
 {
 "use strict";
 
@@ -78158,7 +79494,7 @@ function ($)
 		Object .seal (this);
 	}
 
-	$.extend (ProfileInfo .prototype,
+	Object .assign (ProfileInfo .prototype,
 	{
 		constructor: ProfileInfo,
 		toXMLStream: function (stream)
@@ -78217,10 +79553,9 @@ function ($)
 
 
 define ('x_ite/Configuration/ProfileInfoArray',[
-	"jquery",
 	"x_ite/Configuration/X3DInfoArray",
 ],
-function ($, X3DInfoArray)
+function (X3DInfoArray)
 {
 "use strict";
 
@@ -78229,7 +79564,7 @@ function ($, X3DInfoArray)
 		return X3DInfoArray .call (this);
 	}
 
-	ProfileInfoArray .prototype = $.extend (Object .create (X3DInfoArray .prototype),
+	ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ProfileInfoArray,
 	});
@@ -78287,14 +79622,12 @@ function ($, X3DInfoArray)
 
 
 define ('x_ite/Configuration/SupportedProfiles',[
-	"jquery",
 	"x_ite/Configuration/ProfileInfo",
 	"x_ite/Configuration/ProfileInfoArray",
 	"x_ite/Configuration/ComponentInfoArray",
 	"x_ite/Browser/Networking/urls",
 ],
-function ($,
-          ProfileInfo,
+function (ProfileInfo,
           ProfileInfoArray,
           ComponentInfoArray,
           urls)
@@ -78518,11 +79851,11 @@ function ($,
 
 
 define ('x_ite/Configuration/SupportedComponents',[
-	"jquery",
 	"x_ite/Configuration/ComponentInfoArray",
 	"x_ite/Browser/Networking/urls",
 ],
-function ($, ComponentInfoArray, urls)
+function (ComponentInfoArray,
+          urls)
 {
 "use strict";
 
@@ -78877,12 +80210,10 @@ function ($, ComponentInfoArray, urls)
 
 
 define ('x_ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer',[
-	"jquery",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Vector4,
+function (Vector4,
           Matrix4)
 {
 "use strict";
@@ -78974,13 +80305,11 @@ function ($,
 
 
 define ('x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DSensorNode,
+function (X3DSensorNode,
           PointingDeviceSensorContainer,
           X3DConstants)
 {
@@ -78993,7 +80322,7 @@ function ($,
 		this .addType (X3DConstants .X3DPointingDeviceSensorNode);
 	}
 
-	X3DPointingDeviceSensorNode .prototype = $.extend (Object .create (X3DSensorNode .prototype),
+	X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 	{
 		constructor: X3DPointingDeviceSensorNode,
 		initialize: function ()
@@ -79101,12 +80430,10 @@ function ($,
 
 
 define ('x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode',[
-	"jquery",
 	"x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DPointingDeviceSensorNode, 
+function (X3DPointingDeviceSensorNode, 
           X3DConstants)
 {
 "use strict";
@@ -79118,7 +80445,7 @@ function ($,
 		this .addType (X3DConstants .X3DTouchSensorNode);
 	}
 
-	X3DTouchSensorNode .prototype = $.extend (Object .create (X3DPointingDeviceSensorNode .prototype),
+	X3DTouchSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
 	{
 		constructor: X3DTouchSensorNode,
 		set_active__: function (active, hit)
@@ -79185,7 +80512,6 @@ function ($,
 
 
 define ('x_ite/Components/PointingDeviceSensor/TouchSensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -79193,8 +80519,7 @@ define ('x_ite/Components/PointingDeviceSensor/TouchSensor',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTouchSensorNode, 
@@ -79214,7 +80539,7 @@ function ($,
 		this .hitPoint_changed_ .setUnit ("length");
 	}
 
-	TouchSensor .prototype = $.extend (Object .create (X3DTouchSensorNode .prototype),
+	TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
 	{
 		constructor: TouchSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -79319,7 +80644,6 @@ function ($,
 
 
 define ('x_ite/Components/Networking/Anchor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -79330,8 +80654,7 @@ define ('x_ite/Components/Networking/Anchor',[
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/FileLoader",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode,
@@ -79353,7 +80676,7 @@ function ($,
 		this .touchSensorNode = new TouchSensor (executionContext);
 	}
 
-	Anchor .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: Anchor,
@@ -79516,13 +80839,11 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/X3DLineGeometryNode',[
-	"jquery",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          X3DGeometryNode,
+function (X3DGeometryNode,
           X3DConstants,
           Matrix4)
 {
@@ -79535,7 +80856,7 @@ function ($,
 		//this .addType (X3DConstants .X3DLineGeometryNode);
 	}
 
-	X3DLineGeometryNode .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: X3DLineGeometryNode,
 		getShader: function (browser)
@@ -79550,13 +80871,12 @@ function ($,
 		{
 			return false;
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			try
 			{
 				var
 					browser       = context .renderer .getBrowser (),
-					gl            = browser .getContext (),
 					shaderNode    = context .shaderNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
@@ -79568,6 +80888,8 @@ function ($,
 	
 				context .geometryType  = this .getGeometryType ();
 				context .colorMaterial = this .getColors () .length;
+
+				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
 	
 				// Setup vertex attributes.
@@ -79588,6 +80910,7 @@ function ($,
 					attribNodes [i] .disable (gl, shaderNode);
 	
 				shaderNode .disableColorAttribute (gl);
+				shaderNode .disable (gl);
 			}
 			catch (error)
 			{
@@ -79595,13 +80918,12 @@ function ($,
 				console .log (error);
 			}
 		},
-		displayParticles: function (context, particles, numParticles)
+		displayParticles: function (gl, context, particles, numParticles)
 		{
 			try
 			{
 				var
 					browser       = context .renderer .getBrowser (),
-					gl            = browser .getContext (),
 					shaderNode    = context .shaderNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
@@ -79613,6 +80935,8 @@ function ($,
 	
 				context .geometryType  = this .getGeometryType ();
 				context .colorMaterial = this .colors .length;
+
+				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
 	
 				// Setup vertex attributes.
@@ -79651,6 +80975,7 @@ function ($,
 					attribNodes [i] .disable (gl, shaderNode);
 	
 				shaderNode .disableColorAttribute (gl);
+				shaderNode .disable (gl);
 			}
 			catch (error)
 			{
@@ -79715,7 +81040,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry2D/Arc2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -79725,8 +81049,7 @@ define ('x_ite/Components/Geometry2D/Arc2D',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode, 
@@ -79750,7 +81073,7 @@ function ($,
 		this .radius_     .setUnit ("length");
 	}
 
-	Arc2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: Arc2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -79803,15 +81126,15 @@ function ($,
 		build: function ()
 		{
 			var
-				gl         = this .getBrowser () .getContext (),
-				options    = this .getBrowser () .getArc2DOptions (),
-				dimension  = options .dimension_ .getValue (),
-				startAngle = this .startAngle_ .getValue  (),
-				radius     = Math .abs (this .radius_ .getValue ()),
-				sweepAngle = this .getSweepAngle (),
-				circle     = sweepAngle == (Math .PI * 2),
-				steps      = Math .floor (sweepAngle * dimension / (Math .PI * 2)),
-				vertices   = this .getVertices ();
+				gl          = this .getBrowser () .getContext (),
+				options     = this .getBrowser () .getArc2DOptions (),
+				dimension   = options .dimension_ .getValue (),
+				startAngle  = this .startAngle_ .getValue  (),
+				radius      = Math .abs (this .radius_ .getValue ()),
+				sweepAngle  = this .getSweepAngle (),
+				circle      = sweepAngle == (Math .PI * 2),
+				steps       = Math .floor (sweepAngle * dimension / (Math .PI * 2)),
+				vertexArray = this .getVertices ();
 
 			steps = Math .max (3, steps);
 
@@ -79832,7 +81155,7 @@ function ($,
 					theta = startAngle + (sweepAngle * t),
 					point = Complex .Polar (radius, theta);
 
-				vertices .push (point .real, point .imag, 0, 1);
+				vertexArray .push (point .real, point .imag, 0, 1);
 			}
 
 			this .getMin () .set (-radius, -radius, 0);
@@ -79897,7 +81220,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry2D/ArcClose2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -79907,8 +81229,7 @@ define ('x_ite/Components/Geometry2D/ArcClose2D',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -79934,7 +81255,7 @@ function ($,
 		this .radius_     .setUnit ("length");
 	}
 
-	ArcClose2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: ArcClose2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -79989,21 +81310,21 @@ function ($,
 		build: function ()
 		{
 			var
-				options    = this .getBrowser () .getArcClose2DOptions (),
-				chord      = this .closureType_ .getValue () === "CHORD",
-				dimension  = options .dimension_ .getValue (),
-				startAngle = this .startAngle_ .getValue  (),
-				radius     = Math .abs (this .radius_ .getValue ()),
-				sweepAngle = this .getSweepAngle (),
-				circle     = sweepAngle == (Math .PI * 2),
-				steps      = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
-				texCoords  = [ ],
-				normals    = this .getNormals (),
-				vertices   = this .getVertices (),
-				texCoord   = [ ],
-				points     = [ ];
+				options       = this .getBrowser () .getArcClose2DOptions (),
+				chord         = this .closureType_ .getValue () === "CHORD",
+				dimension     = options .dimension_ .getValue (),
+				startAngle    = this .startAngle_ .getValue  (),
+				radius        = Math .abs (this .radius_ .getValue ()),
+				sweepAngle    = this .getSweepAngle (),
+				circle        = sweepAngle == (Math .PI * 2),
+				steps         = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
+				texCoordArray = this .getTexCoords (),
+				normalArray   = this .getNormals (),
+				vertexArray   = this .getVertices (),
+				texCoord      = [ ],
+				points        = [ ];
 
-			this .getTexCoords () .push (texCoords);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			var steps_1 = steps - 1;
 
@@ -80031,17 +81352,17 @@ function ($,
 						p1 = points [i],
 						p2 = points [i + 1];
 
-					texCoords .push (t0 .real, t0 .imag, 0, 1,
-					                 t1 .real, t1 .imag, 0, 1,
-					                 t2 .real, t2 .imag, 0, 1);
+					texCoordArray .push (t0 .real, t0 .imag, 0, 1,
+					                     t1 .real, t1 .imag, 0, 1,
+					                     t2 .real, t2 .imag, 0, 1);
 
-					normals .push (0, 0, 1,
-					               0, 0, 1,
-					               0, 0, 1);
+					normalArray .push (0, 0, 1,
+					                   0, 0, 1,
+					                   0, 0, 1);
 
-					vertices .push (p0 .real, p0 .imag, 0, 1,
-					                p1 .real, p1 .imag, 0, 1,
-					                p2 .real, p2 .imag, 0, 1);
+					vertexArray .push (p0 .real, p0 .imag, 0, 1,
+					                   p1 .real, p1 .imag, 0, 1,
+					                   p2 .real, p2 .imag, 0, 1);
 				}
 			}
 			else
@@ -80054,15 +81375,15 @@ function ($,
 						p1 = points [i],
 						p2 = points [i + 1];
 
-					texCoords .push (0.5, 0.5, 0, 1,
-					                 t1 .real, t1 .imag, 0, 1,
-					                 t2 .real, t2 .imag, 0, 1);
+					texCoordArray .push (0.5, 0.5, 0, 1,
+					                     t1 .real, t1 .imag, 0, 1,
+					                     t2 .real, t2 .imag, 0, 1);
 
-					normals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
+					normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
 
-					vertices .push (0, 0, 0, 1,
-					                p1 .real, p1 .imag, 0, 1,
-					                p2 .real, p2 .imag, 0, 1);
+					vertexArray .push (0, 0, 0, 1,
+					                   p1 .real, p1 .imag, 0, 1,
+					                   p2 .real, p2 .imag, 0, 1);
 				}
 			}
 
@@ -80128,13 +81449,11 @@ function ($,
 
 
 define ('x_ite/Components/Sound/X3DSoundSourceNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Time/X3DTimeDependentNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode,
+function (X3DChildNode,
           X3DTimeDependentNode,
           X3DConstants)
 {
@@ -80151,7 +81470,7 @@ function ($,
 		this .media  = null;
 	}
 
-	X3DSoundSourceNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DTimeDependentNode .prototype,
 	{
 		constructor: X3DSoundSourceNode,
@@ -80390,7 +81709,7 @@ function ($,
 		this .urlStack = new Fields .MFString ();
 	}
 
-	AudioClip .prototype = $.extend (Object .create (X3DSoundSourceNode .prototype),
+	AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: AudioClip,
@@ -80568,7 +81887,6 @@ function ($,
 
 
 define ('x_ite/Components/Navigation/Billboard',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -80579,8 +81897,7 @@ define ('x_ite/Components/Navigation/Billboard',[
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
@@ -80612,7 +81929,7 @@ function ($,
 		this .matrix = new Matrix4 ();
 	}
 
-	Billboard .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	Billboard .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: Billboard,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -80766,15 +82083,13 @@ function ($,
 
 
 define ('x_ite/Components/EventUtilities/BooleanFilter',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
@@ -80789,7 +82104,7 @@ function ($,
 		this .addType (X3DConstants .BooleanFilter);
 	}
 
-	BooleanFilter .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	BooleanFilter .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: BooleanFilter,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -80886,13 +82201,11 @@ function ($,
 
 
 define ('x_ite/Components/EventUtilities/X3DSequencerNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants,
           Algorithm)
 {
@@ -80907,7 +82220,7 @@ function ($,
 		this .index = -1;
 	}
 
-	X3DSequencerNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DSequencerNode,
 		initialize: function ()
@@ -81041,15 +82354,13 @@ function ($,
 
 
 define ('x_ite/Components/EventUtilities/BooleanSequencer',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/EventUtilities/X3DSequencerNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DSequencerNode, 
@@ -81064,7 +82375,7 @@ function ($,
 		this .addType (X3DConstants .BooleanSequencer);
 	}
 
-	BooleanSequencer .prototype = $.extend (Object .create (X3DSequencerNode .prototype),
+	BooleanSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
 	{
 		constructor: BooleanSequencer,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -81159,15 +82470,13 @@ function ($,
 
 
 define ('x_ite/Components/EventUtilities/BooleanToggle',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
@@ -81182,7 +82491,7 @@ function ($,
 		this .addType (X3DConstants .BooleanToggle);
 	}
 
-	BooleanToggle .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	BooleanToggle .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: BooleanToggle,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -81270,12 +82579,10 @@ function ($,
 
 
 define ('x_ite/Components/EventUtilities/X3DTriggerNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants)
 {
 "use strict";
@@ -81287,7 +82594,7 @@ function ($,
 		this .addType (X3DConstants .X3DTriggerNode);
 	}
 
-	X3DTriggerNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DTriggerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DTriggerNode,
 	});
@@ -81347,15 +82654,13 @@ function ($,
 
 
 define ('x_ite/Components/EventUtilities/BooleanTrigger',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/EventUtilities/X3DTriggerNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTriggerNode, 
@@ -81370,7 +82675,7 @@ function ($,
 		this .addType (X3DConstants .BooleanTrigger);
 	}
 
-	BooleanTrigger .prototype = $.extend (Object .create (X3DTriggerNode .prototype),
+	BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
 	{
 		constructor: BooleanTrigger,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -81457,12 +82762,10 @@ function ($,
 
 
 define ('x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DNode, 
+function (X3DNode, 
           X3DConstants)
 {
 "use strict";
@@ -81474,7 +82777,7 @@ function ($,
 		this .addType (X3DConstants .X3DParticlePhysicsModelNode);
 	}
 
-	X3DParticlePhysicsModelNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DParticlePhysicsModelNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DParticlePhysicsModelNode,
 		addForce: function ()
@@ -81536,7 +82839,6 @@ function ($,
 
 
 define ('x_ite/Components/ParticleSystems/BoundedPhysicsModel',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -81544,8 +82846,7 @@ define ('x_ite/Components/ParticleSystems/BoundedPhysicsModel',[
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticlePhysicsModelNode, 
@@ -81561,7 +82862,7 @@ function ($,
 		this .addType (X3DConstants .BoundedPhysicsModel);
 	}
 
-	BoundedPhysicsModel .prototype = $.extend (Object .create (X3DParticlePhysicsModelNode .prototype),
+	BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
 	{
 		constructor: BoundedPhysicsModel,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -81604,8 +82905,8 @@ function ($,
 			if (this .geometryNode)
 			{
 				var
-					normals  = this .geometryNode .getNormals (),
-					vertices = this .geometryNode .getVertices ();
+					normals  = this .geometryNode .getNormals ()  .getValue (),
+					vertices = this .geometryNode .getVertices () .getValue ();
 	
 				for (var i = 0, length = normals .length; i < length; ++ i)
 					boundedNormals .push (normals [i]);
@@ -81671,7 +82972,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry3D/Box',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -81679,8 +82979,7 @@ define ('x_ite/Components/Geometry3D/Box',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode,
@@ -81700,7 +82999,7 @@ function ($,
 		this .size_ .setUnit ("length");
 	}
 
-	Box .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Box,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -81727,8 +83026,8 @@ function ($,
 				geometry = options .getGeometry (),
 				size     = this .size_ .getValue ();
 
-			this .setNormals   (geometry .getNormals ());
-			this .setTexCoords (geometry .getTexCoords ());
+			this .setMultiTexCoords (geometry .getMultiTexCoords ());
+			this .setNormals        (geometry .getNormals ());
 
 			if (size .equals (defaultSize))
 			{
@@ -81744,15 +83043,15 @@ function ($,
 					x               = scale .x,
 					y               = scale .y,
 					z               = scale .z,
-					defaultVertices = geometry .getVertices (),
-					vertices        = this .getVertices ();
+					defaultVertices = geometry .getVertices () .getValue (),
+					vertexArray     = this .getVertices ();
 
 				for (var i = 0; i < defaultVertices .length; i += 4)
 				{
-					vertices .push (x * defaultVertices [i],
-					                y * defaultVertices [i + 1],
-					                z * defaultVertices [i + 2],
-					                1);
+					vertexArray .push (x * defaultVertices [i],
+					                   y * defaultVertices [i + 1],
+					                   z * defaultVertices [i + 2],
+					                   1);
 				}
 
 				x = Math .abs (x);
@@ -81821,12 +83120,10 @@ function ($,
 
 
 define ('x_ite/Components/CADGeometry/X3DProductStructureChildNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants)
 {
 "use strict";
@@ -81838,7 +83135,7 @@ function ($,
 		this .addType (X3DConstants .X3DProductStructureChildNode);
 	}
 
-	X3DProductStructureChildNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DProductStructureChildNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DProductStructureChildNode,
 	});
@@ -81898,7 +83195,6 @@ function ($,
 
 
 define ('x_ite/Components/CADGeometry/CADAssembly',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -81906,8 +83202,7 @@ define ('x_ite/Components/CADGeometry/CADAssembly',[
 	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
@@ -81924,7 +83219,7 @@ function ($,
 		this .addType (X3DConstants .CADAssembly);
 	}
 
-	CADAssembly .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	CADAssembly .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 		//X3DProductStructureChildNode .prototype,
 	{
 		constructor: CADAssembly,
@@ -82006,7 +83301,6 @@ function ($,
 
 
 define ('x_ite/Components/CADGeometry/CADFace',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -82016,8 +83310,7 @@ define ('x_ite/Components/CADGeometry/CADFace',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DProductStructureChildNode, 
@@ -82037,7 +83330,7 @@ function ($,
 		this .shapeNode = null;
 	}
 
-	CADFace .prototype = $.extend (Object .create (X3DProductStructureChildNode .prototype),
+	CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNode .prototype),
 		X3DBoundedObject .prototype,
 	{
 		constructor: CADFace,
@@ -82182,15 +83475,13 @@ function ($,
 
 
 define ('x_ite/Components/CADGeometry/CADLayer',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
@@ -82205,7 +83496,7 @@ function ($,
 		this .addType (X3DConstants .CADLayer);
 	}
 
-	CADLayer .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	CADLayer .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: CADLayer,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -82301,15 +83592,13 @@ function ($,
 
 
 define ('x_ite/Components/Grouping/X3DTransformMatrix3DNode',[
-	"jquery",
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          X3DGroupingNode,
+function (X3DGroupingNode,
           X3DConstants,
           Vector3,
           Rotation4,
@@ -82326,7 +83615,7 @@ function ($,
 		this .matrix = new Matrix4 ();
 	}
 
-	X3DTransformMatrix3DNode .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: X3DTransformMatrix3DNode,
 		getBBox: function (bbox)
@@ -82437,12 +83726,10 @@ function ($,
 
 
 define ('x_ite/Components/Grouping/X3DTransformNode',[
-	"jquery",
 	"x_ite/Components/Grouping/X3DTransformMatrix3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DTransformMatrix3DNode, 
+function (X3DTransformMatrix3DNode, 
           X3DConstants)
 {
 "use strict";
@@ -82457,7 +83744,7 @@ function ($,
 		this .center_      .setUnit ("length");
 	}
 
-	X3DTransformNode .prototype = $.extend (Object .create (X3DTransformMatrix3DNode .prototype),
+	X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
 	{
 		constructor: X3DTransformNode,
 		initialize: function ()
@@ -82539,7 +83826,6 @@ function ($,
 
 
 define ('x_ite/Components/CADGeometry/CADPart',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -82547,8 +83833,7 @@ define ('x_ite/Components/CADGeometry/CADPart',[
 	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTransformNode, 
@@ -82565,7 +83850,7 @@ function ($,
 		this .addType (X3DConstants .CADPart);
 	}
 
-	CADPart .prototype = $.extend (Object .create (X3DTransformNode .prototype),
+	CADPart .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 		//X3DProductStructureChildNode .prototype,
 	{
 		constructor: CADPart,
@@ -82656,15 +83941,13 @@ function ($,
 
 
 define ('x_ite/Components/Geometry2D/Circle2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DLineGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode, 
@@ -82683,7 +83966,7 @@ function ($,
 		this .radius_ .setUnit ("length");
 	}
 
-	Circle2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: Circle2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -82720,17 +84003,20 @@ function ($,
 		build: function ()
 		{
 			var
-				options         = this .getBrowser () .getCircle2DOptions (),
-				radius          = this .radius_ .getValue (),
-				defaultVertices = options .getVertices (),
-				vertices        = this .getVertices ();
+				options     = this .getBrowser () .getCircle2DOptions (),
+				vertexArray = this .getVertices (),
+				radius      = this .radius_ .getValue ();
 
 			if (radius === 1)
-				this .setVertices (defaultVertices);
+			{
+				this .setVertices (options .getVertices ());
+			}
 			else
 			{
+				var defaultVertices = options .getVertices () .getValue ();
+
 				for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-					vertices .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+					vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 			}
 
 			this .getMin () .set (-radius, -radius, 0);
@@ -82793,7 +84079,6 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/ClipPlane',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -82804,8 +84089,7 @@ define ('x_ite/Components/Rendering/ClipPlane',[
 	"standard/Math/Geometry/Plane3",
 	"standard/Utility/ObjectCache",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
@@ -82874,7 +84158,7 @@ function ($,
 		this .plane   = new Vector4 (0, 0, 0, 0);
 	}
 
-	ClipPlane .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: ClipPlane,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -82982,7 +84266,6 @@ function ($,
 
 
 define ('x_ite/Components/Navigation/Collision',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -82992,8 +84275,7 @@ define ('x_ite/Components/Navigation/Collision',[
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
@@ -83014,7 +84296,7 @@ function ($,
 		this .addAlias ("collide", this .enabled_); // VRML2
 	}
 
-	Collision .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 		X3DSensorNode .prototype,
 	{
 		constructor: Collision,
@@ -83161,12 +84443,10 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/X3DColorNode',[
-	"jquery",
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DGeometricPropertyNode, 
+function (X3DGeometricPropertyNode, 
           X3DConstants)
 {
 "use strict";
@@ -83176,23 +84456,11 @@ function ($,
 		X3DGeometricPropertyNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DColorNode);
-
-		this .color = this .color_ .getValue ();
 	}
 
-	X3DColorNode .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
+	X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: X3DColorNode,
-		get1Color: function (index)
-		{
-			if (index >= 0 && index < this .color .length)
-				return this .color [index] .getValue ();
-
-			if (this .color .length)
-				return this .color [this .color .length - 1] .getValue ();
-
-			return this .getWhite ();
-		},
 	});
 
 	return X3DColorNode;
@@ -83250,27 +84518,21 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/Color',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DColorNode",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DColorNode, 
           X3DConstants,
-          Color3,
           Vector4)
 {
 "use strict";
-
-	var white = new Color3 (1, 1, 1);
 
 	function Color (executionContext)
 	{
@@ -83279,7 +84541,7 @@ function ($,
 		this .addType (X3DConstants .Color);
 	}
 
-	Color .prototype = $.extend (Object .create (X3DColorNode .prototype),
+	Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
 	{
 		constructor: Color,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -83298,21 +84560,53 @@ function ($,
 		{
 			return "color";
 		},
+		initialize: function ()
+		{
+			X3DColorNode .prototype .initialize .call (this);
+
+			this .color_ .addInterest ("set_color__", this);
+
+			this .set_color__ ();
+		},
+		set_color__: function ()
+		{
+			this .color  = this .color_ .getValue ();
+			this .length = this .color_ .length;
+		},
 		isTransparent: function ()
 		{
 			return false;
 		},
-		getWhite: function ()
+		addColor: function (index, array)
 		{
-			return white;
+			if (index >= 0 && index < this .length)
+			{
+				const color = this .color;
+
+				index *= 3;
+
+				array .push (color [index + 0], color [index + 1], color [index + 2], 1);
+			}
+			else if (this .length)
+			{
+				const color = this .color;
+
+				index = (this .length - 1) * 3;
+
+				array .push (color [index + 0], color [index + 1], color [index + 2], 1);
+			}
+			else
+			{
+				array .push (1, 1, 1, 1);
+			}
 		},
 		getVectors: function (array)
 		{
-			var color = this .color_ .getValue ();
+			var color = this .color_;
 
 			for (var i = 0, length = color .length; i < length; ++ i)
 			{
-				var c = color [i] .getValue ();
+				var c = color [i];
 
 				array [i] = new Vector4 (c .r, c .g, c .b, 1);
 			}
@@ -83378,12 +84672,10 @@ function ($,
 
 
 define ('x_ite/Components/Followers/X3DFollowerNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants)
 {
 "use strict";
@@ -83401,7 +84693,7 @@ function ($,
 		this .vector = this .getVector ();
 	}
 
-	X3DFollowerNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DFollowerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DFollowerNode,
 		initialize: function ()
@@ -83526,12 +84818,10 @@ function ($,
 
 
 define ('x_ite/Components/Followers/X3DChaserNode',[
-	"jquery",
 	"x_ite/Components/Followers/X3DFollowerNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DFollowerNode, 
+function (X3DFollowerNode, 
           X3DConstants)
 {
 "use strict";
@@ -83551,7 +84841,7 @@ function ($,
 		this .deltaOut = this .getArray ();
 	}
 
-	X3DChaserNode .prototype = $.extend (Object .create (X3DFollowerNode .prototype),
+	X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
 	{
 		constructor: X3DChaserNode,
 		initialize: function ()
@@ -83778,7 +85068,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/ColorChaser',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -83787,8 +85076,7 @@ define ('x_ite/Components/Followers/ColorChaser',[
 	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChaserNode, 
@@ -83811,7 +85099,7 @@ function ($,
 		this .addType (X3DConstants .ColorChaser);
 	}
 
-	ColorChaser .prototype = $.extend (Object .create (X3DChaserNode .prototype),
+	ColorChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 	{
 		constructor: ColorChaser,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -83929,13 +85217,11 @@ function ($,
 
 
 define ('x_ite/Components/Followers/X3DDamperNode',[
-	"jquery",
 	"x_ite/Components/Followers/X3DFollowerNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          X3DFollowerNode, 
+function (X3DFollowerNode, 
           X3DConstants,
           Algorithm)
 {
@@ -83948,7 +85234,7 @@ function ($,
 		this .addType (X3DConstants .X3DDamperNode);
 	}
 
-	X3DDamperNode .prototype = $.extend (Object .create (X3DFollowerNode .prototype),
+	X3DDamperNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
 	{
 		constructor: X3DDamperNode,
 		initialize: function ()
@@ -84112,7 +85398,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/ColorDamper',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -84121,8 +85406,7 @@ define ('x_ite/Components/Followers/ColorDamper',[
 	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDamperNode, 
@@ -84145,7 +85429,7 @@ function ($,
 		this .addType (X3DConstants .ColorDamper);
 	}
 
-	ColorDamper .prototype = $.extend (Object .create (X3DDamperNode .prototype),
+	ColorDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 	{
 		constructor: ColorDamper,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -84261,7 +85545,6 @@ function ($,
 
 
 define ('x_ite/Components/Interpolation/ColorInterpolator',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -84269,8 +85552,7 @@ define ('x_ite/Components/Interpolation/ColorInterpolator',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Color3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -84288,7 +85570,7 @@ function ($,
 		this .hsv = [ ];
 	}
 
-	ColorInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: ColorInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -84319,8 +85601,8 @@ function ($,
 		},
 		set_keyValue__: function ()
 		{
-			var keyValue = this .keyValue_ .getValue ();
-		
+			var keyValue = this .keyValue_;
+
 			if (keyValue .length < this .key_ .length)
 				this .keyValue_ .resize (this .key_ .length, keyValue .length ? keyValue [this .keyValue_ .length - 1] : new Fields .SFColor ());
 
@@ -84392,27 +85674,21 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/ColorRGBA',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DColorNode",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Color4",
 	"standard/Math/Numbers/Vector4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DColorNode, 
           X3DConstants,
-          Color4,
           Vector4)
 {
 "use strict";
-
-	var white = new Color4 (1, 1, 1, 1);
 
 	function ColorRGBA (executionContext)
 	{
@@ -84421,7 +85697,7 @@ function ($,
 		this .addType (X3DConstants .ColorRGBA);
 	}
 
-	ColorRGBA .prototype = $.extend (Object .create (X3DColorNode .prototype),
+	ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
 	{
 		constructor: ColorRGBA,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -84440,21 +85716,53 @@ function ($,
 		{
 			return "color";
 		},
+		initialize: function ()
+		{
+			X3DColorNode .prototype .initialize .call (this);
+
+			this .color_ .addInterest ("set_color__", this);
+
+			this .set_color__ ();
+		},
+		set_color__: function ()
+		{
+			this .color  = this .color_ .getValue ();
+			this .length = this .color_ .length;
+		},
 		isTransparent: function ()
 		{
 			return true;
 		},
-		getWhite: function ()
+		addColor: function (index, array)
 		{
-			return white;
+			if (index >= 0 && index < this .length)
+			{
+				const color = this .color;
+
+				index *= 4;
+
+				array .push (color [index + 0], color [index + 1], color [index + 2], color [index + 3]);
+			}
+			else if (this .color_ .length)
+			{
+				const color = this .color;
+
+				index = (this .color_ .length - 1) * 4;
+
+				array .push (color [index + 0], color [index + 1], color [index + 2], color [index + 3]);
+			}
+			else
+			{
+				array .push (1, 1, 1, 1);
+			}
 		},
 		getVectors: function (array)
 		{
-			var color = this .color_ .getValue ();
+			var color = this .color_;
 
 			for (var i = 0, length = color .length; i < length; ++ i)
 			{
-				var c = color [i] .getValue ();
+				var c = color [i];
 
 				array [i] = new Vector4 (c .r, c .g, c .b, c .a);
 			}
@@ -84520,12 +85828,10 @@ function ($,
 
 
 define ('x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode',[
-	"jquery",
 	"x_ite/Components/Texturing/X3DTextureNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DTextureNode, 
+function (X3DTextureNode, 
           X3DConstants)
 {
 "use strict";
@@ -84537,7 +85843,7 @@ function ($,
 		this .addType (X3DConstants .X3DEnvironmentTextureNode);
 	}
 
-	X3DEnvironmentTextureNode .prototype = $.extend (Object .create (X3DTextureNode .prototype),
+	X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
 	{
 		constructor: X3DEnvironmentTextureNode,
 		initialize: function ()
@@ -84646,7 +85952,6 @@ function ($,
 
 
 define ('x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -84654,8 +85959,7 @@ define ('x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentTextureNode,
@@ -84676,7 +85980,7 @@ function ($,
 		this .loadStates = 0;
 	}
 
-	ComposedCubeMapTexture .prototype = $.extend (Object .create (X3DEnvironmentTextureNode .prototype),
+	ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
 	{
 		constructor: ComposedCubeMapTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -84916,7 +86220,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry3D/Cone',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -84926,8 +86229,7 @@ define ('x_ite/Components/Geometry3D/Cone',[
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -84948,7 +86250,7 @@ function ($,
 		this .bottomRadius_ .setUnit ("length");
 	}
 
-	Cone .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Cone,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -84983,15 +86285,15 @@ function ($,
 		build: function ()
 		{
 			var
-				options      = this .getBrowser () .getConeOptions (),
-				xDimension   = options .xDimension_ .getValue (),
-				height       = this .height_ .getValue (),
-				bottomRadius = this .bottomRadius_ .getValue (),
-				texCoords    = [ ],
-				normals      = this .getNormals (),
-				vertices     = this .getVertices ();
+				options       = this .getBrowser () .getConeOptions (),
+				xDimension    = options .xDimension_ .getValue (),
+				height        = this .height_ .getValue (),
+				bottomRadius  = this .bottomRadius_ .getValue (),
+				texCoordArray = this .getTexCoords (),
+				normalArray   = this .getNormals (),
+				vertexArray   = this .getVertices ();
 
-			this .getTexCoords () .push (texCoords);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			var
 				y1 = height / 2,
@@ -85026,19 +86328,19 @@ function ($,
 					 */
 
 					// p1
-					texCoords .push (u1, 1, 0, 1);
-					normals .push (n1 .imag, nz .real, n1 .real);
-					vertices .push (0, y1, 0, 1);
+					texCoordArray .push (u1, 1, 0, 1);
+					normalArray .push (n1 .imag, nz .real, n1 .real);
+					vertexArray .push (0, y1, 0, 1);
 
 					// p2
-					texCoords .push (u2, 0, 0, 1);
-					normals .push (n2 .imag, nz .real, n2 .real);
-					vertices .push (p2 .imag, y2, p2 .real, 1);
+					texCoordArray .push (u2, 0, 0, 1);
+					normalArray .push (n2 .imag, nz .real, n2 .real);
+					vertexArray .push (p2 .imag, y2, p2 .real, 1);
 
 					// p3
-					texCoords .push (u3, 0, 0, 1);
-					normals .push (n3 .imag , nz .real, n3 .real);
-					vertices .push (p3 .imag, y2, p3 .real, 1);
+					texCoordArray .push (u3, 0, 0, 1);
+					normalArray .push (n3 .imag , nz .real, n3 .real);
+					vertexArray .push (p3 .imag, y2, p3 .real, 1);
 				}
 			}
 
@@ -85072,22 +86374,21 @@ function ($,
 						p1 = points [i],
 						p2 = points [i + 1];
 
-					texCoords .push (t0 .x, t0 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p0 .x, p0 .y, p0 .z, 1);
+					texCoordArray .push (t0 .x, t0 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p0 .x, p0 .y, p0 .z, 1);
 
-					texCoords .push (t1 .x, t1 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p1 .x, p1 .y, p1 .z, 1);
+					texCoordArray .push (t1 .x, t1 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 
-					texCoords .push (t2 .x, t2 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p2 .x, p2 .y, p2 .z, 1);
+					texCoordArray .push (t2 .x, t2 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
 				}
 			}
 
 			this .setSolid (this .solid_ .getValue ());
-			this .setNormals (normals);
 			this .setExtents ();
 		},
 		setExtents: function ()
@@ -85172,7 +86473,6 @@ function ($,
 
 
 define ('x_ite/Components/ParticleSystems/ConeEmitter',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -85181,8 +86481,7 @@ define ('x_ite/Components/ParticleSystems/ConeEmitter',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode, 
@@ -85207,7 +86506,7 @@ function ($,
 		this .rotation = new Rotation4 (0, 0, 1, 0);
 	}
 
-	ConeEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: ConeEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -85364,28 +86663,23 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
 			{
 				var
 					a        = this .a,
-					l        = lhs .getValue (),
-					r        = rhs .getValue (),
 					distance = 0;
 
-				for (var i = 0, length = l .length; i < length; ++ i)
-				  distance = Math .max (a .assign (l [i] .getValue ()) .subtract (r [i] .getValue ()) .abs ());
+				for (var i = 0, length = lhs .length; i < length; ++ i)
+				  distance = Math .max (a .assign (lhs [i] .getValue ()) .subtract (rhs [i] .getValue ()) .abs ());
 	
 				return distance < tolerance;
 			},
 			interpolate: function (source, destination, weight)
 			{
-				var
-					a = this .array .getValue (),
-					s = source .getValue (),
-					d = destination .getValue ();
+				var a = this .array;
 	
-				this .array .length = s .length;
+				a .length = source .length;
 	
-				for (var i = 0, length = s .length; i < length; ++ i)
-					a [i] .getValue () .assign (s [i] .getValue ()) .lerp (d [i] .getValue (), weight);
+				for (var i = 0, length = source .length; i < length; ++ i)
+					a [i] = source [i] .getValue () .lerp (destination [i] .getValue (), weight);
 	
-				return this .array;
+				return a;
 			},
 			set_value__: function ()
 			{
@@ -85462,22 +86756,22 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
 
 
 define ('x_ite/Browser/Followers/X3DArrayChaserTemplate',[
-	"jquery",
 	"x_ite/Browser/Followers/X3DArrayFollowerTemplate",
 ],
-function ($,
-          X3DArrayFollowerTemplate)
+function (X3DArrayFollowerTemplate)
 {
 "use strict";
 
 	return function (Type)
 	{
+		var X3DArrayFollower = X3DArrayFollowerTemplate (Type);
+
 		function X3DArrayChaserObject ()
 		{
 			this .array = this .getArray ();
 		}
-	
-		X3DArrayChaserObject .prototype = $.extend (Object .create (X3DArrayFollowerTemplate (Type) .prototype),
+
+		Object .assign (X3DArrayChaserObject .prototype, X3DArrayFollower .prototype,
 		{
 			setPreviousValue: function (value)
 			{
@@ -85486,19 +86780,20 @@ function ($,
 			step: function (value1, value2, t)
 			{
 				var
-					output   = this .output .getValue (),
-					deltaOut = this .deltaOut .getValue ();
+					output   = this .output,
+					deltaOut = this .deltaOut;
 
-				value1 = value1 .getValue ();
-				value2 = value2 .getValue ();
-
-				this .deltaOut .length = output .length;
+				deltaOut .length = output .length;
 
 				for (var i = 0, length = output .length; i < length; ++ i)
-					output [i] .getValue () .add (deltaOut [i] .getValue () .assign (value1 [i] .getValue ()) .subtract (value2 [i] .getValue ()) .multiply (t));
+				{
+					var di = deltaOut [i] = value1 [i];
+
+					output [i] = output [i] .getValue () .add (di .getValue () .subtract (value2 [i] .getValue ()) .multiply (t));
+				}
 			},
 		});
-	
+
 		return X3DArrayChaserObject;
 	};
 });
@@ -85555,7 +86850,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/CoordinateChaser',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -85564,8 +86858,7 @@ define ('x_ite/Components/Followers/CoordinateChaser',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChaserNode, 
@@ -85585,7 +86878,7 @@ function ($,
 		this .addType (X3DConstants .CoordinateChaser);
 	}
 
-	CoordinateChaser .prototype = $.extend (Object .create (X3DChaserNode .prototype),
+	CoordinateChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 		X3DArrayChaserObject .prototype,
 	{
 		constructor: CoordinateChaser,
@@ -85676,7 +86969,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/CoordinateDamper',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -85685,8 +86977,7 @@ define ('x_ite/Components/Followers/CoordinateDamper',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDamperNode,
@@ -85706,7 +86997,7 @@ function ($,
 		this .addType (X3DConstants .CoordinateDamper);
 	}
 
-	CoordinateDamper .prototype = $.extend (Object .create (X3DDamperNode .prototype),
+	CoordinateDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 		X3DArrayFollowerObject .prototype,
 	{
 		constructor: CoordinateDamper,
@@ -85799,15 +87090,13 @@ function ($,
 
 
 define ('x_ite/Components/NURBS/CoordinateDouble',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DCoordinateNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DCoordinateNode, 
@@ -85822,7 +87111,7 @@ function ($,
 		this .addType (X3DConstants .CoordinateDouble);
 	}
 
-	CoordinateDouble .prototype = $.extend (Object .create (X3DCoordinateNode .prototype),
+	CoordinateDouble .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
 	{
 		constructor: CoordinateDouble,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -85898,21 +87187,19 @@ function ($,
 
 
 define ('x_ite/Components/Interpolation/CoordinateInterpolator',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Interpolation/X3DInterpolatorNode",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
+	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
           X3DConstants,
-          Vector3)
+          Algorithm)
 {
 "use strict";
 
@@ -85923,7 +87210,7 @@ function ($,
 		this .addType (X3DConstants .CoordinateInterpolator);
 	}
 
-	CoordinateInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	CoordinateInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: CoordinateInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -85933,7 +87220,6 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec3f ()),
 		]),
-		keyValue: new Vector3 (0, 0, 0),
 		getTypeName: function ()
 		{
 			return "CoordinateInterpolator";
@@ -85950,18 +87236,25 @@ function ($,
 		interpolate: function (index0, index1, weight)
 		{
 			var
-				keyValue      = this .keyValue_ .getValue (),
-				value_changed = this .value_changed_ .getValue (),
-				size          = this .key_ .length ? Math .floor (keyValue .length / this .key_ .length) : 0;
+				keyValue = this .keyValue_ .getValue (),
+				size     = this .key_ .length ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+
+			this .value_changed_ .length = size;
+
+			var value_changed = this .value_changed_ .getValue ();
 
 			index0 *= size;
 			index1  = index0 + (this .key_ .length > 1 ? size : 0);
 
-			this .value_changed_ .length = size;
+			index0 *= 3;
+			index1 *= 3;
+			size   *= 3;
 
-			for (var i = 0; i < size; ++ i)
+			for (var i = 0; i < size; i += 3)
 			{
-				value_changed [i] .getValue () .assign (keyValue [index0 + i] .getValue ()) .lerp (keyValue [index1 + i] .getValue (), weight);
+				value_changed [i + 0] = Algorithm .lerp (keyValue [index0 + i + 0], keyValue [index1 + i + 0], weight);
+				value_changed [i + 1] = Algorithm .lerp (keyValue [index0 + i + 1], keyValue [index1 + i + 1], weight);
+				value_changed [i + 2] = Algorithm .lerp (keyValue [index0 + i + 2], keyValue [index1 + i + 2], weight);
 			}
 
 			this .value_changed_ .addEvent ();
@@ -86023,19 +87316,19 @@ function ($,
 
 
 define ('x_ite/Components/Interpolation/CoordinateInterpolator2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Interpolation/X3DInterpolatorNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
-          X3DConstants)
+          X3DConstants,
+          Algorithm)
 {
 "use strict";
 
@@ -86046,7 +87339,7 @@ function ($,
 		this .addType (X3DConstants .CoordinateInterpolator2D);
 	}
 
-	CoordinateInterpolator2D .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	CoordinateInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: CoordinateInterpolator2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -86072,18 +87365,24 @@ function ($,
 		interpolate: function (index0, index1, weight)
 		{
 			var
-				keyValue      = this .keyValue_ .getValue (),
-				value_changed = this .value_changed_ .getValue (),
-				size          = this .key_ .length ? Math .floor (keyValue .length / this .key_ .length) : 0;
+				keyValue = this .keyValue_ .getValue (),
+				size     = this .key_ .length ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+
+			this .value_changed_ .length = size;
+
+			var value_changed = this .value_changed_ .getValue ();
 
 			index0 *= size;
 			index1  = index0 + (this .key_ .length > 1 ? size : 0);
 
-			this .value_changed_ .length = size;
+			index0 *= 2;
+			index1 *= 2;
+			size   *= 2;
 
-			for (var i = 0; i < size; ++ i)
+			for (var i = 0; i < size; i += 2)
 			{
-				value_changed [i] .getValue () .assign (keyValue [index0 + i] .getValue ()) .lerp (keyValue [index1 + i] .getValue (), weight);
+				value_changed [i + 0] = Algorithm .lerp (keyValue [index0 + i + 0], keyValue [index1 + i + 0], weight);
+				value_changed [i + 1] = Algorithm .lerp (keyValue [index0 + i + 1], keyValue [index1 + i + 1], weight);
 			}
 
 			this .value_changed_ .addEvent ();
@@ -86145,7 +87444,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry3D/Cylinder',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -86155,8 +87453,7 @@ define ('x_ite/Components/Geometry3D/Cylinder',[
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -86177,7 +87474,7 @@ function ($,
 		this .radius_ .setUnit ("length");
 	}
 
-	Cylinder .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Cylinder,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -86213,13 +87510,13 @@ function ($,
 		build: function ()
 		{
 			var
-				options    = this .getBrowser () .getCylinderOptions (),
-				xDimension = options .xDimension_ .getValue (),
-				texCoords  = [ ],
-				normals    = this .getNormals (),
-				vertices   = this .getVertices ();
+				options       = this .getBrowser () .getCylinderOptions (),
+				xDimension    = options .xDimension_ .getValue (),
+				texCoordArray = this .getTexCoords (),
+				normalArray   = this .getNormals (),
+				vertexArray   = this .getVertices ();
 
-			this .getTexCoords () .push (texCoords);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			var
 				radius = this .radius_ .getValue (),
@@ -86249,36 +87546,36 @@ function ($,
 					// Triangle one
 
 					// p1
-					texCoords .push (u1, 1, 0, 1);
-					normals .push (n1 .imag,  0, n1 .real);
-					vertices .push (p1 .imag, y1, p1 .real, 1);
+					texCoordArray .push (u1, 1, 0, 1);
+					normalArray .push (n1 .imag,  0, n1 .real);
+					vertexArray .push (p1 .imag, y1, p1 .real, 1);
 
 					// p2
-					texCoords .push (u1, 0, 0, 1);
-					normals .push (n1 .imag,  0, n1 .real);
-					vertices .push (p1 .imag, y2, p1 .real, 1);
+					texCoordArray .push (u1, 0, 0, 1);
+					normalArray .push (n1 .imag,  0, n1 .real);
+					vertexArray .push (p1 .imag, y2, p1 .real, 1);
 
 					// p3
-					texCoords .push (u2, 0, 0, 1);
-					normals .push (n2 .imag,  0, n2 .real);
-					vertices .push (p2 .imag, y2, p2 .real, 1);
+					texCoordArray .push (u2, 0, 0, 1);
+					normalArray .push (n2 .imag,  0, n2 .real);
+					vertexArray .push (p2 .imag, y2, p2 .real, 1);
 
 					// Triangle two
 
 					// p1
-					texCoords .push (u1, 1, 0, 1);
-					normals .push (n1 .imag,  0, n1 .real);
-					vertices .push (p1 .imag, y1, p1 .real, 1);
+					texCoordArray .push (u1, 1, 0, 1);
+					normalArray .push (n1 .imag,  0, n1 .real);
+					vertexArray .push (p1 .imag, y1, p1 .real, 1);
 
 					// p3
-					texCoords .push (u2, 0, 0, 1);
-					normals .push (n2 .imag,  0, n2 .real);
-					vertices .push (p2 .imag, y2, p2 .real, 1);
+					texCoordArray .push (u2, 0, 0, 1);
+					normalArray .push (n2 .imag,  0, n2 .real);
+					vertexArray .push (p2 .imag, y2, p2 .real, 1);
 
 					// p4
-					texCoords .push (u2, 1, 0, 1);
-					normals .push (n2 .imag,  0, n2 .real);
-					vertices .push (p2 .imag, y1, p2 .real, 1);
+					texCoordArray .push (u2, 1, 0, 1);
+					normalArray .push (n2 .imag,  0, n2 .real);
+					vertexArray .push (p2 .imag, y1, p2 .real, 1);
 				}
 			}
 
@@ -86311,17 +87608,17 @@ function ($,
 						p1 = points [i],
 						p2 = points [i + 1];
 
-					texCoords .push (t0 .x, t0 .y, 0, 1);
-					normals .push (0, 1, 0);
-					vertices .push (p0 .x, p0 .y, p0 .z, 1);
+					texCoordArray .push (t0 .x, t0 .y, 0, 1);
+					normalArray .push (0, 1, 0);
+					vertexArray .push (p0 .x, p0 .y, p0 .z, 1);
 
-					texCoords .push (t1 .x, t1 .y, 0, 1);
-					normals .push (0, 1, 0);
-					vertices .push (p1 .x, p1 .y, p1 .z, 1);
+					texCoordArray .push (t1 .x, t1 .y, 0, 1);
+					normalArray .push (0, 1, 0);
+					vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 
-					texCoords .push (t2 .x, t2 .y, 0, 1);
-					normals .push (0, 1, 0);
-					vertices .push (p2 .x, p2 .y, p2 .z, 1);
+					texCoordArray .push (t2 .x, t2 .y, 0, 1);
+					normalArray .push (0, 1, 0);
+					vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
 				}
 			}
 
@@ -86354,22 +87651,21 @@ function ($,
 						p1 = points [i],
 						p2 = points [i + 1];
 
-					texCoords .push (t0 .x, t0 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p0 .x, p0 .y, p0 .z, 1);
+					texCoordArray .push (t0 .x, t0 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p0 .x, p0 .y, p0 .z, 1);
 
-					texCoords .push (t1 .x, t1 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p1 .x, p1 .y, p1 .z, 1);
+					texCoordArray .push (t1 .x, t1 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 
-					texCoords .push (t2 .x, t2 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p2 .x, p2 .y, p2 .z, 1);
+					texCoordArray .push (t2 .x, t2 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
 				}
 			}
 
 			this .setSolid (this .solid_ .getValue ());
-			this .setNormals (normals);
 			this .setExtents ();
 		},
 		setExtents: function ()
@@ -86460,12 +87756,10 @@ function ($,
 
 
 define ('x_ite/Components/PointingDeviceSensor/X3DDragSensorNode',[
-	"jquery",
 	"x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DPointingDeviceSensorNode, 
+function (X3DPointingDeviceSensorNode, 
           X3DConstants)
 {
 "use strict";
@@ -86479,7 +87773,7 @@ function ($,
 		this .trackPoint_changed_ .setUnit ("length");
 	}
 
-	X3DDragSensorNode .prototype = $.extend (Object .create (X3DPointingDeviceSensorNode .prototype),
+	X3DDragSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
 	{
 		constructor: X3DDragSensorNode,
 	});
@@ -86711,7 +88005,6 @@ function (Vector3,
 
 
 define ('x_ite/Components/PointingDeviceSensor/CylinderSensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -86725,8 +88018,7 @@ define ('x_ite/Components/PointingDeviceSensor/CylinderSensor',[
 	"standard/Math/Geometry/Cylinder3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDragSensorNode, 
@@ -86753,7 +88045,7 @@ function ($,
 		this .offset_    .setUnit ("angle");
 	}
 
-	CylinderSensor .prototype = $.extend (Object .create (X3DDragSensorNode .prototype),
+	CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 	{
 		constructor: CylinderSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -87025,7 +88317,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry2D/Disk2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -87034,8 +88325,7 @@ define ('x_ite/Components/Geometry2D/Disk2D',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode,
@@ -87055,7 +88345,7 @@ function ($,
 		this .outerRadius_ .setUnit ("length");
 	}
 
-	Disk2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 		//X3DLineGeometryNode .prototype, // Considered X3DLineGeometryNode.
 	{
 		constructor: Disk2D,
@@ -87108,15 +88398,14 @@ function ($,
 			if (innerRadius === outerRadius)
 			{
 				var
-					radius          = Math .abs (outerRadius),
-					defaultVertices = options .getCircleVertices (),
-					vertices        = this .getVertices ();
+					radius      = Math .abs (outerRadius),
+					vertexArray = this .getVertices ();
 
 				// Point
 
 				//if (radius === 0)
 				//{
-				//	this .addVertex (Vector3 .Zero);
+				//	vertexArray .push (0, 0, 0, 1);
 				//	this .setGeometryType (GeometryType .GEOMETRY_POINTS);
 				//	return;
 				//}
@@ -87124,11 +88413,15 @@ function ($,
 				// Circle
 
 				if (radius === 1)
-					this .setVertices (defaultVertices);
+				{
+					this .setVertices (options .getCircleVertices ());
+				}
 				else
 				{
+					var defaultVertices = options .getCircleVertices () .getValue ();
+
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertices .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 				}
 	
 				this .getMin () .set (-radius, -radius, 0);
@@ -87142,20 +88435,23 @@ function ($,
 			{
 				// Disk
 
-				var
-					radius          = Math .abs (Math .max (innerRadius, outerRadius)),
-					defaultVertices = options .getDiskVertices (),
-					vertices        = this .getVertices ();
+				var radius = Math .abs (Math .max (innerRadius, outerRadius));
 
-				this .getTexCoords () .push (options .getDiskTexCoords ());
+				this .getMultiTexCoords () .push (options .getDiskTexCoords ());
 				this .setNormals (options .getDiskNormals ());
 	
 				if (radius === 1)
-					this .setVertices (defaultVertices);
+				{
+					this .setVertices (options .getDiskVertices ());
+				}
 				else
 				{
+					var
+						defaultVertices = options .getDiskVertices () .getValue (),
+						vertexArray     = this .getVertices ();
+
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertices .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 				}
 
 				this .getMin () .set (-radius, -radius, 0);
@@ -87170,38 +88466,38 @@ function ($,
 			// Disk with hole
 
 			var
-				maxRadius  = Math .abs (Math .max (innerRadius, outerRadius)),
-				minRadius  = Math .abs (Math .min (innerRadius, outerRadius)),
-				scale      = minRadius / maxRadius,
-				offset     = (1 - scale) / 2,
-				texCoords1 = options .getDiskTexCoords (),
-				texCoords2 = [ ],
-				normals    = this .getNormals (),
-				vertices1  = options .getDiskVertices (),
-				vertices2  = this .getVertices ();
+				maxRadius        = Math .abs (Math .max (innerRadius, outerRadius)),
+				minRadius        = Math .abs (Math .min (innerRadius, outerRadius)),
+				scale            = minRadius / maxRadius,
+				offset           = (1 - scale) / 2,
+				defaultTexCoords = options .getDiskTexCoords () .getValue (),
+				defaultVertices  = options .getDiskVertices () .getValue (),
+				texCoordArray    = this .getTexCoords (),
+				normalArray      = this .getNormals (),
+				vertexArray      = this .getVertices ();
 
-			this .getTexCoords () .push (texCoords2);
+			this .getMultiTexCoords () .push (texCoordArray);
 
-			for (var i = 0, length = vertices1 .length; i < length; i += 12)
+			for (var i = 0, length = defaultVertices .length; i < length; i += 12)
 			{
-				texCoords2 .push (texCoords1 [i + 4] * scale + offset, texCoords1 [i + 5] * scale + offset, 0, 1,
-				                  texCoords1 [i + 4], texCoords1 [i + 5], 0, 1,
-				                  texCoords1 [i + 8], texCoords1 [i + 9], 0, 1,
+				texCoordArray .push (defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
+				                     defaultTexCoords [i + 4], defaultTexCoords [i + 5], 0, 1,
+				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
+										   
+				                     defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
+				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
+				                     defaultTexCoords [i + 8] * scale + offset, defaultTexCoords [i + 9] * scale + offset, 0, 1);
 
-				                  texCoords1 [i + 4] * scale + offset, texCoords1 [i + 5] * scale + offset, 0, 1,
-				                  texCoords1 [i + 8], texCoords1 [i + 9], 0, 1,
-				                  texCoords1 [i + 8] * scale + offset, texCoords1 [i + 9] * scale + offset, 0, 1);
+				normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
+                               0, 0, 1,  0, 0, 1,  0, 0, 1);
 
-				normals .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
-                           0, 0, 1,  0, 0, 1,  0, 0, 1);
-
-				vertices2 .push (vertices1 [i + 4] * minRadius, vertices1 [i + 5] * minRadius, 0, 1,
-				                 vertices1 [i + 4] * maxRadius, vertices1 [i + 5] * maxRadius, 0, 1,
-				                 vertices1 [i + 8] * maxRadius, vertices1 [i + 9] * maxRadius, 0, 1,
-
-				                 vertices1 [i + 4] * minRadius, vertices1 [i + 5] * minRadius, 0, 1,
-				                 vertices1 [i + 8] * maxRadius, vertices1 [i + 9] * maxRadius, 0, 1,
-				                 vertices1 [i + 8] * minRadius, vertices1 [i + 9] * minRadius, 0, 1);
+				vertexArray .push (defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
+				                   defaultVertices [i + 4] * maxRadius, defaultVertices [i + 5] * maxRadius, 0, 1,
+				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
+									    
+				                   defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
+				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
+				                   defaultVertices [i + 8] * minRadius, defaultVertices [i + 9] * minRadius, 0, 1);
 			}
 
 			this .getMin () .set (-maxRadius, -maxRadius, 0);
@@ -87232,26 +88528,26 @@ function ($,
 				return X3DGeometryNode .prototype .intersectsBox .call (this, box, clipPlanes, modelViewMatrix);
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			if (this .getGeometryType () < 2)
 			{
-				return X3DLineGeometryNode .prototype .display .call (this, context);
+				return X3DLineGeometryNode .prototype .display .call (this, gl, context);
 			}
 			else
 			{
-				return X3DGeometryNode .prototype .display .call (this, context);
+				return X3DGeometryNode .prototype .display .call (this, gl, context);
 			}
 		},
-		displayParticles: function (context, particles, numParticles)
+		displayParticles: function (gl, context, particles, numParticles)
 		{
 			if (this .getGeometryType () < 2)
 			{
-				return X3DLineGeometryNode .prototype .displayParticles .call (this, context, particles, numParticles);
+				return X3DLineGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
 			}
 			else
 			{
-				return X3DGeometryNode .prototype .displayParticles .call (this, context, particles, numParticles);
+				return X3DGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
 			}
 		}
 	});
@@ -87311,7 +88607,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry3D/ElevationGrid',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -87322,8 +88617,7 @@ define ('x_ite/Components/Geometry3D/ElevationGrid',[
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode,
@@ -87352,7 +88646,7 @@ function ($,
 		this .coordNode    = null;
 	}
 
-	ElevationGrid .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: ElevationGrid,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -87596,24 +88890,33 @@ function ($,
 				return;
 
 			var
-				colorPerVertex  = this .colorPerVertex_ .getValue (),
-				normalPerVertex = this .normalPerVertex_ .getValue (),
-				coordIndex      = this .createCoordIndex (),
-				attribNodes     = this .getAttrib (),
-				numAttrib       = attribNodes .length,
-				attribs         = this .getAttribs (),
-				colorNode       = this .getColor (),
-				texCoordNode    = this .getTexCoord (),
-				normalNode      = this .getNormal (),
-				points          = this .createPoints (),
-				face            = 0;
+				colorPerVertex     = this .colorPerVertex_ .getValue (),
+				normalPerVertex    = this .normalPerVertex_ .getValue (),
+				coordIndex         = this .createCoordIndex (),
+				attribNodes        = this .getAttrib (),
+				numAttrib          = attribNodes .length,
+				attribs            = this .getAttribs (),
+				colorNode          = this .getColor (),
+				texCoordNode       = this .getTexCoord (),
+				normalNode         = this .getNormal (),
+				points             = this .createPoints (),
+				colorArray         = this .getColors (),
+				multiTexCoordArray = this .getMultiTexCoords (),
+				normalArray        = this .getNormals (),
+				vertexArray        = this .getVertices (),
+				face               = 0;
 
 			if (texCoordNode)
-				texCoordNode .init (this .getTexCoords ());
+			{
+				texCoordNode .init (multiTexCoordArray);
+			}
 			else
 			{
-				var texCoords = this .createTexCoords ();
-				this .getTexCoords () .push ([ ]);
+				var
+					texCoords     = this .createTexCoords (),
+					texCoordArray = this .getTexCoords ();
+
+				multiTexCoordArray .push (texCoordArray);
 			}
 
 			// Build geometry
@@ -87622,38 +88925,42 @@ function ($,
 			{
 				for (var p = 0; p < 6; ++ p, ++ c)
 				{
-					var index = coordIndex [c];
+					var
+						index = coordIndex [c],
+						point = points [index];
 
 					for (var a = 0; a < numAttrib; ++ a)
-						attribNodes [a] .addValue (attribs [a], index);
+						attribNodes [a] .addValue (index, attribs [a]);
 
 					if (colorNode)
 					{
 						if (colorPerVertex)
-							this .addColor (colorNode .get1Color (index));
+							colorNode .addColor (index, colorArray);
 						else
-							this .addColor (colorNode .get1Color (face));
+							colorNode .addColor (face, colorArray);
 					}
 						
 					if (texCoordNode)
-						texCoordNode .addTexCoord (this .getTexCoords (), index);
-
+					{
+						texCoordNode .addTexCoord (index, multiTexCoordArray);
+					}
 					else
 					{
 						var t = texCoords [index];
-						this .getTexCoords () [0] .push (t .x, t .y, 0, 1);
+
+						texCoordArray .push (t .x, t .y, 0, 1);
 					}
 
 					if (normalNode)
 					{
 						if (normalPerVertex)
-							this .addNormal (normalNode .get1Vector (index));
+							normalNode .addVector (index, normalArray);
 
 						else
-							this .addNormal (normalNode .get1Vector (face));
+							normalNode .addVector (face, normalArray);
 					}
 
-					this .addVertex (points [index]);
+					vertexArray .push (point .x, point .y, point .z, 1);
 				}
 			}
 
@@ -87664,7 +88971,11 @@ function ($,
 				var normals = this .createNormals (points, coordIndex);
 
 				for (var i = 0; i < normals .length; ++ i)
-					this .addNormal (normals [i]);
+				{
+					var normal = normals [i];
+
+					normalArray .push (normal .x, normal .y, normal .z);
+				}
 			}
 
 			this .setSolid (this .solid_ .getValue ());
@@ -87727,15 +89038,13 @@ function ($,
 
 
 define ('x_ite/Components/ParticleSystems/ExplosionEmitter',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode, 
@@ -87757,7 +89066,7 @@ function ($,
 		this .getRandomVelocity = this .getSphericalRandomVelocity;
 	}
 
-	ExplosionEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: ExplosionEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -87857,7 +89166,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry3D/Extrusion',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -87869,8 +89177,7 @@ define ('x_ite/Components/Geometry3D/Extrusion',[
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -87898,7 +89205,7 @@ function ($,
 		this .spine_        .setUnit ("length");
 	}
 
-	Extrusion .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Extrusion,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -87928,7 +89235,7 @@ function ($,
 		},
 		getClosedOrientation: function ()
 		{
-			var orientation = this .orientation_ .getValue ();
+			var orientation = this .orientation_;
 
 			if (orientation .length)
 			{
@@ -87944,10 +89251,10 @@ function ($,
 		createPoints: function ()
 		{
 			var
-				crossSection = this .crossSection_. getValue (),
-				orientation  = this .orientation_. getValue (),
-				scale        = this .scale_. getValue (),
-				spine        = this .spine_. getValue (),
+				crossSection = this .crossSection_,
+				orientation  = this .orientation_,
+				scale        = this .scale_,
+				spine        = this .spine_,
 				points       = [ ];
 
 			// calculate SCP rotations
@@ -87986,7 +89293,7 @@ function ($,
 			// calculate SCP rotations
 
 			var
-				spine       = this .spine_ .getValue (),
+				spine       = this .spine_,
 				numSpines   = spine .length,
 				firstSpine  = spine [0] .getValue (),
 				lastSpine   = spine [spine .length - 1] .getValue (),
@@ -88125,15 +89432,15 @@ function ($,
 		build: function ()
 		{
 			var
-				cw           = ! this .ccw_ .getValue (),
-				crossSection = this .crossSection_. getValue (),
-				spine        = this .spine_. getValue (),
-				texCoords    = [ ];
+				cw            = ! this .ccw_ .getValue (),
+				crossSection  = this .crossSection_,
+				spine         = this .spine_,
+				texCoordArray = this .getTexCoords ();
 
 			if (spine .length < 2 || crossSection .length < 2)
 				return;
 
-			this .getTexCoords () .push (texCoords);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			var crossSectionSize = crossSection .length; // This one is used only in the INDEX macro.
 
@@ -88177,6 +89484,10 @@ function ($,
 				normalIndex [p] = [ ];
 
 			// Build body.
+
+			var
+				normalArray = this .getNormals (),
+				vertexArray = this .getVertices ();
 
 			var
 				numCrossSection_1 = crossSection .length - 1,
@@ -88259,30 +89570,30 @@ function ($,
 					{
 						// p1
 						if (l2)
-							texCoords .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
+							texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
 						else
 						{
 							// Cone case: ((texCoord1 + texCoord4) / 2)
 							var y = (n / numSpine_1 + (n + 1) / numSpine_1) / 2;
 
-							texCoords .push (k / numCrossSection_1, y, 0, 1);
+							texCoordArray .push (k / numCrossSection_1, y, 0, 1);
 						}
 
 						normalIndex [i1] .push (normals .length);
 						normals .push (normal1);
-						this .addVertex (p1);
+						vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 	
 						// p2
-						texCoords .push ((k + 1) / numCrossSection_1, n / numSpine_1, 0, 1);
+						texCoordArray .push ((k + 1) / numCrossSection_1, n / numSpine_1, 0, 1);
 						normalIndex [i2] .push (normals .length);
 						normals .push (normal1);
-						this .addVertex (p2);
+						vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
 	
 						// p3
-						texCoords .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
+						texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
 						normalIndex [i3] .push (normals .length);
 						normals .push (normal1);
-						this .addVertex (p3);
+						vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
 					}
 
 					// Triangle two
@@ -88290,31 +89601,31 @@ function ($,
 					if (l2)
 					{
 						// p1
-						texCoords .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
+						texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
 						normalIndex [i1] .push (normals .length);
 						normals .push (normal2);
-						this .addVertex (p1);
+						vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 	
 						// p3
 						if (l1)
-							texCoords .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
+							texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
 						else
 						{
 							// Cone case: ((texCoord3 + texCoord2) / 2)
 							var y = ((n + 1) / numSpine_1 + n / numSpine_1) / 2;
 
-							texCoords .push ((k + 1) / numCrossSection_1, y, 0, 1);
+							texCoordArray .push ((k + 1) / numCrossSection_1, y, 0, 1);
 						}
 
 						normalIndex [i3] .push (normals .length);
 						normals .push (normal2);
-						this .addVertex (p3);
+						vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
 	
 						// p4
-						texCoords .push (k / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
+						texCoordArray .push (k / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
 						normalIndex [i4] .push (normals .length);
 						normals .push (normal2);
-						this .addVertex (p4);
+						vertexArray .push (p4 .x, p4 .y, p4 .z, 1);
 					}
 				}
 			}
@@ -88324,8 +89635,11 @@ function ($,
 			normals = this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
 
 			for (var i = 0; i < normals .length; ++ i)
-				this .addNormal (normals [i]);
+			{
+				var normal = normals [i];
 
+				normalArray .push (normal .x, normal .y, normal .z);
+			}
 			// Build caps
 
 			if (capMax && crossSection .length > 2)
@@ -88342,6 +89656,7 @@ function ($,
 						var
 							index = INDEX (j, numCapPoints - 1 - k),
 							point = points [index] .copy ();
+
 						point .index    = index;
 						point .texCoord = Vector2 .subtract (crossSection [numCapPoints - 1 - k] .getValue (), min) .divide (capMax);
 						polygon .push (point);
@@ -88363,7 +89678,7 @@ function ($,
 						if (cw)
 							normal .negate ();
 
-						this .addCap (texCoords, normal, points, triangles);
+						this .addCap (texCoordArray, normal, points, triangles);
 					}
 				}
 
@@ -88379,6 +89694,7 @@ function ($,
 						var
 							index = INDEX (j, k),
 							point = points [index] .copy ();
+
 						point .index    = index;
 						point .texCoord = Vector2 .subtract (crossSection [k] .getValue (), min) .divide (capMax);
 						polygon .push (point);
@@ -88400,7 +89716,7 @@ function ($,
 						if (cw)
 							normal .negate ();
 
-						this .addCap (texCoords, normal, points, triangles);
+						this .addCap (texCoordArray, normal, points, triangles);
 					}
 				}
 			}
@@ -88408,8 +89724,12 @@ function ($,
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (this .ccw_ .getValue ());
 		},
-		addCap: function (texCoords, normal, vertices, triangles)
+		addCap: function (texCoordArray, normal, vertices, triangles)
 		{
+			var
+				normalArray = this .getNormals (),
+				vertexArray = this .getVertices ();
+
 			for (var i = 0; i < triangles .length; i += 3)
 			{
 				var
@@ -88420,17 +89740,17 @@ function ($,
 					t1 = triangles [i + 1] .texCoord,
 					t2 = triangles [i + 2] .texCoord;
 
-				texCoords .push (t0 .x, t0 .y, 0, 1);
-				texCoords .push (t1 .x, t1 .y, 0, 1);
-				texCoords .push (t2 .x, t2 .y, 0, 1);
+				texCoordArray .push (t0 .x, t0 .y, 0, 1);
+				texCoordArray .push (t1 .x, t1 .y, 0, 1);
+				texCoordArray .push (t2 .x, t2 .y, 0, 1);
 
-				this .addNormal (normal);
-				this .addNormal (normal);
-				this .addNormal (normal);
-				
-				this .addVertex (p0);
-				this .addVertex (p1);
-				this .addVertex (p2);
+				normalArray .push (normal .x, normal .y, normal .z,
+				                   normal .x, normal .y, normal .z,
+				                   normal .x, normal .y, normal .z);
+
+				vertexArray .push (p0 .x, p0 .y, p0 .z, 1,
+				                   p1 .x, p1 .y, p1 .z, 1,
+				                   p2 .x, p2 .y, p2 .z, 1);
 			}
 		},
 	});
@@ -88490,12 +89810,10 @@ function ($,
 
 
 define ('x_ite/Components/Shaders/X3DVertexAttributeNode',[
-	"jquery",
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DGeometricPropertyNode, 
+function (X3DGeometricPropertyNode, 
           X3DConstants)
 {
 "use strict";
@@ -88507,7 +89825,7 @@ function ($,
 		this .addType (X3DConstants .X3DVertexAttributeNode);
 	}
 
-	X3DVertexAttributeNode .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
+	X3DVertexAttributeNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: X3DVertexAttributeNode,
 	});
@@ -88567,7 +89885,6 @@ function ($,
 
 
 define ('x_ite/Components/Shaders/FloatVertexAttribute',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -88575,8 +89892,7 @@ define ('x_ite/Components/Shaders/FloatVertexAttribute',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DVertexAttributeNode, 
@@ -88592,7 +89908,7 @@ function ($,
 		this .addType (X3DConstants .FloatVertexAttribute);
 	}
 
-	FloatVertexAttribute .prototype = $.extend (Object .create (X3DVertexAttributeNode .prototype),
+	FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 	{
 		constructor: FloatVertexAttribute,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -88613,17 +89929,36 @@ function ($,
 		{
 			return "attrib";
 		},
-		addValue: function (array, index)
+		initialize: function ()
+		{
+			X3DVertexAttributeNode .prototype .initialize .call (this);
+
+			this .numComponents_ .addInterest ("set_numComponents", this);
+			this .value_         .addInterest ("set_value",         this);
+
+			this .set_numComponents ();
+			this .set_value ();
+		},
+		set_numComponents: function ()
+		{
+			this .numComponents = Algorithm .clamp (this .numComponents_ .getValue (), 1, 4);
+		},
+		set_value: function ()
+		{
+			this .value  = this .value_ .getValue ();
+			this .length = this .value_ .length;
+		},
+		addValue: function (index, array)
 		{
 			var
-				size  = Algorithm .clamp (this .numComponents_ .getValue (), 1, 4),
-				first = index * size,
-				last  = first + size;
-		
-			if (last <= this .value_ .length)
+				value = this .value,
+				first = index * this .numComponents,
+				last  = first + this .numComponents;
+
+			if (last <= this .length)
 			{
 				for (; first < last; ++ first)
-					array .push (this .value_ [first]);
+					array .push (value [first]);
 			}
 			else
 			{
@@ -88633,7 +89968,7 @@ function ($,
 		},
 		enable: function (gl, shaderNode, buffer)
 		{
-			shaderNode .enableFloatAttrib (gl, this .name_ .getValue (), buffer, Algorithm .clamp (this .numComponents_ .getValue (), 1, 4));
+			shaderNode .enableFloatAttrib (gl, this .name_ .getValue (), buffer, this .numComponents);
 		},
 		disable: function (gl, shaderNode)
 		{
@@ -88696,15 +90031,13 @@ function ($,
 
 
 define ('x_ite/Components/ParticleSystems/ForcePhysicsModel',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticlePhysicsModelNode, 
@@ -88721,7 +90054,7 @@ function ($,
 		this .force_ .setUnit ("force");
 	}
 
-	ForcePhysicsModel .prototype = $.extend (Object .create (X3DParticlePhysicsModelNode .prototype),
+	ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
 	{
 		constructor: ForcePhysicsModel,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -88806,13 +90139,11 @@ function ($,
 
 
 define ('x_ite/Rendering/DependentRenderer',[
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Rendering/X3DRenderObject",
 	"x_ite/Bits/TraverseType",
 ],
-function ($,
-          X3DBaseNode,
+function (X3DBaseNode,
           X3DRenderObject,
           TraverseType)
 {
@@ -88826,7 +90157,7 @@ function ($,
 		this .renderObject = null;
 	}
 
-	DependentRenderer .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	DependentRenderer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 		X3DRenderObject .prototype,
 	{
 		constructor: DependentRenderer,
@@ -88955,7 +90286,6 @@ function ($,
 
 
 define ('x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -88972,8 +90302,7 @@ define ('x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture',[
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentTextureNode, 
@@ -89029,7 +90358,7 @@ function ($,
 		this .viewVolume       = new ViewVolume ();
 	}
 
-	GeneratedCubeMapTexture .prototype = $.extend (Object .create (X3DEnvironmentTextureNode .prototype),
+	GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
 	{
 		constructor: GeneratedCubeMapTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -89259,7 +90588,6 @@ function ($,
 
 
 define ('x_ite/Components/Geospatial/GeoCoordinate',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -89269,8 +90597,7 @@ define ('x_ite/Components/Geospatial/GeoCoordinate',[
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DCoordinateNode, 
@@ -89292,7 +90619,7 @@ function ($,
 		this .origin = new Vector3 (0, 0, 0); // Origin of the reference frame.
 	}
 
-	GeoCoordinate .prototype = $.extend (Object .create (X3DCoordinateNode .prototype),
+	GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoCoordinate,
@@ -89326,7 +90653,7 @@ function ($,
 		eventsProcessed: function ()
 		{
 			var
-				point  = this .point_ .getValue (),
+				point  = this .point_,
 				points = this .points;
 
 			for (var i = 0, length = Math .min (point .length, points .length); i < length; ++ i)
@@ -89350,14 +90677,35 @@ function ($,
 		{
 			return this .point_ .length;
 		},
-		get1Point: function (index)
+		get1Point: function (index, vector)
+		{
+			if (index < this .length)
+			{
+				const p = this .points [index];
+
+				return vector .set (p .x, p .y, p .z);
+			}
+			else
+			{
+				return vector .set (0, 0, 0);
+			}
+		},
+		addPoint: function (index, array)
 		{
 			// The index cannot be less than 0.
 
 			if (index < this .points .length)
-				return this .points [index];
+			{
+				const p = this .points [index];
 
-			return this .origin;
+				array .push (p .x, p .y, p .z, 1);
+			}
+			else
+			{
+				const p = this .origin;
+
+				array .push (p .x, p .y, p .z, 1);
+			}
 		},
 		getNormal: function (index1, index2, index3)
 		{
@@ -89368,10 +90716,12 @@ function ($,
 				length = points .length;
 
 			if (index1 < length && index2 < length && index3 < length)
+			{
 				return Triangle3 .normal (points [index1],
 				                          points [index2],
 				                          points [index3],
 				                          new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},
@@ -89384,11 +90734,13 @@ function ($,
 				length = points .length;
 
 			if (index1 < length && index2 < length && index3 < length && index4 < length)
+			{
 				return Triangle3 .quadNormal (points [index1],
 				                              points [index2],
 				                              points [index3],
 				                              points [index4],
 				                              new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},
@@ -89449,7 +90801,6 @@ function ($,
 
 
 define ('x_ite/Components/Geospatial/GeoElevationGrid',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -89461,8 +90812,7 @@ define ('x_ite/Components/Geospatial/GeoElevationGrid',[
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -89490,7 +90840,7 @@ function ($,
 		this .normalNode   = null;
 	}
 
-	GeoElevationGrid .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoElevationGrid,
@@ -89746,14 +91096,18 @@ function ($,
 				return;
 
 			var
-				colorPerVertex  = this .colorPerVertex_ .getValue (),
-				normalPerVertex = this .normalPerVertex_ .getValue (),
-				coordIndex      = this .createCoordIndex (),
-				colorNode       = this .getColor (),
-				texCoordNode    = this .getTexCoord (),
-				normalNode      = this .getNormal (),
-				points          = this .createPoints (),
-				face            = 0;
+				colorPerVertex     = this .colorPerVertex_ .getValue (),
+				normalPerVertex    = this .normalPerVertex_ .getValue (),
+				coordIndex         = this .createCoordIndex (),
+				colorNode          = this .getColor (),
+				texCoordNode       = this .getTexCoord (),
+				normalNode         = this .getNormal (),
+				points             = this .createPoints (),
+				colorArray         = this .getColors (),
+				multiTexCoordArray = this .getMultiTexCoords (),
+				normalArray        = this .getNormals (),
+				vertexArray        = this .getVertices (),
+				face               = 0;
 
 			// Vertex attribute
 
@@ -89763,11 +91117,16 @@ function ($,
 			//	attribArrays [a] .reserve (coordIndex .size ());
 
 			if (texCoordNode)
-				texCoordNode .init (this .getTexCoords ());
+			{
+				texCoordNode .init (multiTexCoordArray);
+			}
 			else
 			{
-				var texCoords = this .createTexCoords ();
-				this .getTexCoords () .push ([ ]);
+				var
+					texCoords     = this .createTexCoords (),
+					texCoordArray = this .getTexCoords ();
+
+				multiTexCoordArray .push (texCoordArray);
 			}
 
 			// Build geometry
@@ -89776,7 +91135,9 @@ function ($,
 			{
 				for (var p = 0; p < 6; ++ p, ++ c)
 				{
-					var index = coordIndex [c];
+					var
+						index = coordIndex [c],
+						point = points [index];
 
 					//for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
 					//	attribNodes [a] -> addValue (attribArrays [a], i);
@@ -89784,30 +91145,32 @@ function ($,
 					if (colorNode)
 					{
 						if (colorPerVertex)
-							this .addColor (colorNode .get1Color (index));
+							colorNode .addColor (index, colorArray);
 						else
-							this .addColor (colorNode .get1Color (face));
+							colorNode .addColor (face, colorArray);
 					}
 						
 					if (texCoordNode)
-						texCoordNode .addTexCoord (this .getTexCoords (), index);
-
+					{
+						texCoordNode .addTexCoord (index, multiTexCoordArray);
+					}
 					else
 					{
 						var t = texCoords [index];
-						this .getTexCoords () [0] .push (t .x, t .y, 0, 1);
+
+						texCoordArray .push (t .x, t .y, 0, 1);
 					}
 
 					if (normalNode)
 					{
 						if (normalPerVertex)
-							this .addNormal (normalNode .get1Vector (index));
+							normalNode .addVector (index, normalArray);
 
 						else
-							this .addNormal (normalNode .get1Vector (face));
+							normalNode .addVector (face, normalArray);
 					}
 
-					this .addVertex (points [index]);
+					vertexArray .push (point .x, point .y, point .z, 1);
 				}
 			}
 
@@ -89818,7 +91181,11 @@ function ($,
 				var normals = this .createNormals (points, coordIndex);
 
 				for (var i = 0; i < normals .length; ++ i)
-					this .addNormal (normals [i]);
+				{
+					var normal = normals [i];
+
+					normalArray .push (normal .x, normal .y, normal .z);
+				}
 			}
 
 			this .setSolid (this .solid_ .getValue ());
@@ -89881,7 +91248,6 @@ function ($,
 
 
 define ('x_ite/Components/Networking/Inline',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -89892,8 +91258,7 @@ define ('x_ite/Components/Networking/Inline',[
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/FileLoader",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode,
@@ -89922,7 +91287,7 @@ function ($,
 		this .group .addParent (this);
 	}
 
-	Inline .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DUrlObject .prototype,
 		X3DBoundedObject .prototype,
 	{
@@ -90130,7 +91495,6 @@ function ($,
 
 
 define ('x_ite/Components/Geospatial/GeoLOD',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -90145,8 +91509,7 @@ define ('x_ite/Components/Geospatial/GeoLOD',[
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
@@ -90186,7 +91549,7 @@ function ($,
 		this .modelViewMatrix  = new Matrix4 ();
 	}
 
-	GeoLOD .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DBoundedObject .prototype,
 		X3DGeospatialObject .prototype,
 	{
@@ -90506,7 +91869,6 @@ function ($,
 
 
 define ('x_ite/Components/Geospatial/GeoLocation',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -90515,8 +91877,7 @@ define ('x_ite/Components/Geospatial/GeoLocation',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTransformMatrix3DNode, 
@@ -90536,7 +91897,7 @@ function ($,
 		this .addType (X3DConstants .GeoLocation);
 	}
 
-	GeoLocation .prototype = $.extend (Object .create (X3DTransformMatrix3DNode .prototype),
+	GeoLocation .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoLocation,
@@ -90633,12 +91994,10 @@ function ($,
 
 
 define ('x_ite/Components/Core/X3DInfoNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants)
 {
 "use strict";
@@ -90650,7 +92009,7 @@ function ($,
 		this .addType (X3DConstants .X3DInfoNode);
 	}
 
-	X3DInfoNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DInfoNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DInfoNode,
 	});
@@ -90710,15 +92069,13 @@ function ($,
 
 
 define ('x_ite/Components/Geospatial/GeoMetadata',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DInfoNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInfoNode, 
@@ -90733,7 +92090,7 @@ function ($,
 		this .addType (X3DConstants .GeoMetadata);
 	}
 
-	GeoMetadata .prototype = $.extend (Object .create (X3DInfoNode .prototype),
+	GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
 	{
 		constructor: GeoMetadata,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -90811,7 +92168,6 @@ function ($,
 
 
 define ('x_ite/Components/Geospatial/GeoOrigin',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -90819,8 +92175,7 @@ define ('x_ite/Components/Geospatial/GeoOrigin',[
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Geospatial/Geospatial",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
@@ -90838,7 +92193,7 @@ function ($,
 		this .radians = false;
 	}
 
-	GeoOrigin .prototype = $.extend (Object .create (X3DNode .prototype),
+	GeoOrigin .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: GeoOrigin,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -90932,7 +92287,6 @@ function ($,
 
 
 define ('x_ite/Components/Geospatial/GeoPositionInterpolator',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -90942,8 +92296,7 @@ define ('x_ite/Components/Geospatial/GeoPositionInterpolator',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -90966,7 +92319,7 @@ function ($,
 		this .geocentric = new Geocentric ();
 	}
 
-	GeoPositionInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoPositionInterpolator,
@@ -91089,14 +92442,12 @@ function ($,
 
 
 define ('x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DSensorNode, 
           X3DConstants,
           Vector3)
@@ -91117,7 +92468,7 @@ function ($,
 		this .currentTraversed = true;
 	}
 
-	X3DEnvironmentalSensorNode .prototype = $.extend (Object .create (X3DSensorNode .prototype),
+	X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 	{
 		constructor: X3DEnvironmentalSensorNode,
 		initialize: function ()
@@ -91226,7 +92577,6 @@ function ($,
 
 
 define ('x_ite/Components/EnvironmentalSensor/ProximitySensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -91237,8 +92587,7 @@ define ('x_ite/Components/EnvironmentalSensor/ProximitySensor',[
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentalSensorNode, 
@@ -91274,7 +92623,7 @@ function ($,
 		this .inside                 = false;
 	}
 
-	ProximitySensor .prototype = $.extend (Object .create (X3DEnvironmentalSensorNode .prototype),
+	ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 	{
 		constructor: ProximitySensor,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -91523,7 +92872,6 @@ function ($,
 
 
 define ('x_ite/Components/Geospatial/GeoProximitySensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -91533,8 +92881,7 @@ define ('x_ite/Components/Geospatial/GeoProximitySensor',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentalSensorNode, 
@@ -91562,7 +92909,7 @@ function ($,
 		this .setCameraObject (this .proximitySensor .getCameraObject ());
 	}
 
-	GeoProximitySensor .prototype = $.extend (Object .create (X3DEnvironmentalSensorNode .prototype),
+	GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoProximitySensor,
@@ -91684,7 +93031,6 @@ function ($,
 
 
 define ('x_ite/Components/Geospatial/GeoTouchSensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -91694,8 +93040,7 @@ define ('x_ite/Components/Geospatial/GeoTouchSensor',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTouchSensorNode, 
@@ -91720,7 +93065,7 @@ function ($,
 		this .hitPoint_changed_ .setUnit ("length");
 	}
 
-	GeoTouchSensor .prototype = $.extend (Object .create (X3DTouchSensorNode .prototype),
+	GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoTouchSensor,
@@ -91835,7 +93180,6 @@ function ($,
 
 
 define ('x_ite/Components/Geospatial/GeoTransform',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -91844,8 +93188,7 @@ define ('x_ite/Components/Geospatial/GeoTransform',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTransformMatrix3DNode, 
@@ -91869,7 +93212,7 @@ function ($,
 		this .translation_ .setUnit ("length");
 	}
 
-	GeoTransform .prototype = $.extend (Object .create (X3DTransformMatrix3DNode .prototype),
+	GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoTransform,
@@ -92038,7 +93381,7 @@ function ($,
 		this .urlStack = new Fields .MFString ();
 	}
 
-	ImageCubeMapTexture .prototype = $.extend (Object .create (X3DEnvironmentTextureNode .prototype),
+	ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: ImageCubeMapTexture,
@@ -92291,7 +93634,6 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/IndexedLineSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -92299,8 +93641,7 @@ define ('x_ite/Components/Rendering/IndexedLineSet',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode, 
@@ -92321,7 +93662,7 @@ function ($,
 		this .coordNode    = null;
 	}
 
-	IndexedLineSet .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: IndexedLineSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -92432,17 +93773,17 @@ function ($,
 		getPolylineIndices: function ()
 		{
 			var
-				coordIndex = this .coordIndex_. getValue (),
+				coordIndex = this .coordIndex_,
 				polylines  = [ ],
 				polyline   = [ ];
 
-			if (this .coordIndex_ .length)
+			if (coordIndex .length)
 			{
 				var i = 0;
 
-				for (var i = 0; i < coordIndex .length; ++ i)
+				for (var i = 0, length = coordIndex .length; i < length; ++ i)
 				{
-					var index = coordIndex [i] .getValue ();
+					var index = coordIndex [i];
 
 					if (index >= 0)
 						// Add vertex.
@@ -92458,42 +93799,12 @@ function ($,
 					}
 				}
 
-				if (coordIndex [coordIndex .length - 1] .getValue () >= 0)
+				if (coordIndex [coordIndex .length - 1] >= 0)
 				{
 					polylines .push (polyline);
 				}
 			}
 
-			return polylines;
-		},
-		getPolylines: function (polylines)
-		{
-			// Polyline map
-
-			polylines .length = 0;
-		
-			if (! this .coordNode || this .coordNode .isEmpty ())
-				return polylines;
-		
-			var
-				polylineIndices = this .getPolylineIndices (),
-				coordIndex      = this .coordIndex_. getValue ();
-
-			for (var p = 0; p < polylineIndices .length; ++ p)
-			{
-				var polyline = polylineIndices [p];
-
-				// Create two vertices for each line.
-		
-				for (var line = 0, endL = polyline .length - 1; line < endL; ++ line)
-				{
-					for (var index = line, endI = line + 2; index < endI; ++ index)
-					{
-						polylines .push (this .coordNode .get1Point (coordIndex [polyline [index]] .getValue ()));
-					}
-				}
-			}
-		
 			return polylines;
 		},
 		build: function ()
@@ -92502,14 +93813,16 @@ function ($,
 				return;
 
 			var
-				coordIndex     = this .coordIndex_. getValue (),
+				coordIndex     = this .coordIndex_,
 				polylines      = this .getPolylineIndices (),
 				colorPerVertex = this .colorPerVertex_ .getValue (),
 				attribNodes    = this .getAttrib (),
 				numAttrib      = attribNodes .length,
 				attribs        = this .getAttribs (),
 				colorNode      = this .colorNode,
-				coordNode      = this .coordNode;
+				coordNode      = this .coordNode,
+				colorArray     = this .getColors (),
+				vertexArray    = this .getVertices ();
 
 			// Fill GeometryNode
 
@@ -92529,28 +93842,26 @@ function ($,
 						{
 							var
 								i  = polyline [index],
-								ci = coordIndex [i] .getValue ();
+								ci = coordIndex [i];
 
 							for (var a = 0; a < numAttrib; ++ a)
-								attribNodes [a] .addValue (attribs [a], ci);
+								attribNodes [a] .addValue (ci, attribs [a]);
 
 							if (colorNode)
 							{
 								if (colorPerVertex)
-									this .addColor (colorNode .get1Color (this .getColorPerVertexIndex (i)));
+									colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
 								else
-									this .addColor (colorNode .get1Color (this .getColorIndex (face)));
+									colorNode .addColor (this .getColorIndex (face), colorArray);
 							}
 
-							this .addVertex (coordNode .get1Point (ci));
+							coordNode .addPoint (ci, vertexArray);
 						}
 					}
 				}
 
 				++ face;
 			}
-
-			//this .setAttribs (this .attribNodes, attribArrays);
 		},
 	});
 
@@ -92609,15 +93920,13 @@ function ($,
 
 
 define ('x_ite/Components/CADGeometry/IndexedQuadSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DComposedGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -92634,7 +93943,7 @@ function ($,
 		this .triangleIndex = [ ];
 	}
 
-	IndexedQuadSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: IndexedQuadSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -92674,7 +93983,7 @@ function ($,
 		set_index__: function ()
 		{
 			var
-				index         = this .index_ .getValue (),
+				index         = this .index_,
 				length        = index .length,
 				triangleIndex = this .triangleIndex;
 
@@ -92761,15 +94070,13 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/IndexedTriangleFanSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DComposedGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -92786,7 +94093,7 @@ function ($,
 		this .triangleIndex = [ ];
 	}
 
-	IndexedTriangleFanSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	IndexedTriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: IndexedTriangleFanSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -92828,25 +94135,25 @@ function ($,
 			// Build coordIndex
 
 			var
-				index         = this .index_ .getValue (),
+				index         = this .index_,
 				triangleIndex = this .triangleIndex;
 		
 			triangleIndex .length = 0;
 		
 			for (var i = 0, length = index .length; i < length; ++ i)
 			{
-				var first = index [i] .getValue ();
+				var first = index [i];
 		
 				if (++ i < length)
 				{
-					var second = index [i] .getValue ();
+					var second = index [i];
 
 					if (second < 0)
 						continue;
 	
 					for (++ i; i < length; ++ i)
 					{
-						var third = index [i] .getValue ();
+						var third = index [i];
 
 						if (third < 0)
 							break;
@@ -92923,15 +94230,13 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/IndexedTriangleSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DComposedGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -92946,7 +94251,7 @@ function ($,
 		this .addType (X3DConstants .IndexedTriangleSet);
 	}
 
-	IndexedTriangleSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	IndexedTriangleSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: IndexedTriangleSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -93040,15 +94345,13 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/IndexedTriangleStripSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DComposedGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -93065,7 +94368,7 @@ function ($,
 		this .triangleIndex = [ ];
 	}
 
-	IndexedTriangleStripSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	IndexedTriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: IndexedTriangleStripSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -93107,7 +94410,7 @@ function ($,
 			// Build coordIndex
 
 			var
-				index         = this .index_ .getValue (),
+				index         = this .index_,
 				triangleIndex = this .triangleIndex;
 		
 			triangleIndex .length = 0;
@@ -93116,14 +94419,14 @@ function ($,
 		
 			for (var i = 0, length = index .length; i < length; ++ i)
 			{
-				var first = index [i] .getValue ();
+				var first = index [i];
 
 				if (first < 0)
 					continue;
 		
 				if (++ i < length)
 				{
-					var second = index [i] .getValue ();
+					var second = index [i];
 
 					if (second < 0)
 						continue;
@@ -93132,7 +94435,7 @@ function ($,
 		
 					for (var face = 0; i < length; ++ i, ++ face)
 					{
-						var third = index [i] .getValue ();
+						var third = index [i];
 
 						if (third < 0)
 							break;
@@ -93213,15 +94516,13 @@ function ($,
 
 
 define ('x_ite/Components/EventUtilities/IntegerSequencer',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/EventUtilities/X3DSequencerNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DSequencerNode, 
@@ -93236,7 +94537,7 @@ function ($,
 		this .addType (X3DConstants .IntegerSequencer);
 	}
 
-	IntegerSequencer .prototype = $.extend (Object .create (X3DSequencerNode .prototype),
+	IntegerSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
 	{
 		constructor: IntegerSequencer,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -93331,15 +94632,13 @@ function ($,
 
 
 define ('x_ite/Components/EventUtilities/IntegerTrigger',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/EventUtilities/X3DTriggerNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTriggerNode, 
@@ -93354,7 +94653,7 @@ function ($,
 		this .addType (X3DConstants .IntegerTrigger);
 	}
 
-	IntegerTrigger .prototype = $.extend (Object .create (X3DTriggerNode .prototype),
+	IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
 	{
 		constructor: IntegerTrigger,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -93442,12 +94741,10 @@ function ($,
 
 
 define ('x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DSensorNode, 
+function (X3DSensorNode, 
           X3DConstants)
 {
 "use strict";
@@ -93459,7 +94756,7 @@ function ($,
 		this .addType (X3DConstants .X3DKeyDeviceSensorNode);
 	}
 
-	X3DKeyDeviceSensorNode .prototype = $.extend (Object .create (X3DSensorNode .prototype),
+	X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 	{
 		constructor: X3DKeyDeviceSensorNode,
 		initialize: function ()
@@ -93583,15 +94880,13 @@ function ($,
 
 
 define ('x_ite/Components/KeyDeviceSensor/KeySensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DKeyDeviceSensorNode, 
@@ -93629,7 +94924,7 @@ function ($,
 		this .addType (X3DConstants .KeySensor);
 	}
 
-	KeySensor .prototype = $.extend (Object .create (X3DKeyDeviceSensorNode .prototype),
+	KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
 	{
 		constructor: KeySensor,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -93898,7 +95193,6 @@ function ($,
 
 
 define ('x_ite/Components/Navigation/LOD',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -93909,8 +95203,7 @@ define ('x_ite/Components/Navigation/LOD',[
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode,
@@ -93942,7 +95235,7 @@ function ($,
 		this .keepCurrentLevel = false;
 	}
 
-	LOD .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: LOD,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -94119,12 +95412,10 @@ function ($,
 
 
 define ('x_ite/Components/Layout/X3DLayoutNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode,
+function (X3DChildNode,
           X3DConstants)
 {
 "use strict";
@@ -94136,7 +95427,7 @@ function ($,
 		this .addType (X3DConstants .X3DLayoutNode);
 	}
 
-	X3DLayoutNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DLayoutNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DLayoutNode,
 	});
@@ -94196,7 +95487,6 @@ function ($,
 
 
 define ('x_ite/Components/Layout/Layout',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -94208,8 +95498,7 @@ define ('x_ite/Components/Layout/Layout',[
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLayoutNode, 
@@ -94259,7 +95548,7 @@ function ($,
 		this .matrix          = new Matrix4 ();
 	}
 
-	Layout .prototype = $.extend (Object .create (X3DLayoutNode .prototype),
+	Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 	{
 		constructor: Layout,
 		viewportPixel: new Vector2 (0, 0),
@@ -94849,7 +96138,6 @@ function ($,
 
 
 define ('x_ite/Components/Layout/LayoutGroup',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -94859,8 +96147,7 @@ define ('x_ite/Components/Layout/LayoutGroup',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode,
@@ -94883,7 +96170,7 @@ function ($,
 		this .screenMatrix    = new Matrix4 ();
 	}
 
-	LayoutGroup .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: LayoutGroup,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -95038,7 +96325,6 @@ function ($,
 
 
 define ('x_ite/Components/Layout/LayoutLayer',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -95047,8 +96333,7 @@ define ('x_ite/Components/Layout/LayoutLayer',[
 	"x_ite/Components/Navigation/OrthoViewpoint",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLayerNode,
@@ -95068,7 +96353,7 @@ function ($,
 		this .addType (X3DConstants .LayoutLayer);
 	}
 
-	LayoutLayer .prototype = $.extend (Object .create (X3DLayerNode .prototype),
+	LayoutLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
 	{
 		constructor: LayoutLayer,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -95157,15 +96442,13 @@ function ($,
 
 
 define ('x_ite/Components/Shape/LineProperties',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DAppearanceChildNode, 
@@ -95180,7 +96463,7 @@ function ($,
 		this .addType (X3DConstants .LineProperties);
 	}
 
-	LineProperties .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
+	LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: LineProperties,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -95274,7 +96557,6 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/LineSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -95282,8 +96564,7 @@ define ('x_ite/Components/Rendering/LineSet',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode,
@@ -95304,7 +96585,7 @@ function ($,
 		this .coordNode = null;
 	}
 
-	LineSet .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: LineSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -95404,18 +96685,20 @@ function ($,
 			// Fill GeometryNode
 
 			var
-				vertexCount = this .vertexCount_ .getValue (),
+				vertexCount = this .vertexCount_,
 				attribNodes = this .getAttrib (),
 				numAttrib   = attribNodes .length,
 				attribs     = this .getAttribs (),
 				colorNode   = this .colorNode,
 				coordNode   = this .coordNode,
+				colorArray  = this .getColors (),
+				vertexArray = this .getVertices (),
 				size        = coordNode .getSize (),
 				index       = 0;
 
 			for (var c = 0, length = vertexCount .length; c < length; ++ c)
 			{
-				var count = vertexCount [c] .getValue ();
+				var count = vertexCount [c];
 
 				if (index + count > size)
 					break;
@@ -95427,12 +96710,12 @@ function ($,
 					for (var i = 0; i < count; ++ i, index += i & 1)
 					{
 						for (var a = 0; a < numAttrib; ++ a)
-							attribNodes [a] .addValue (attribs [a], index);
+							attribNodes [a] .addValue (index, attribs [a]);
 
 						if (colorNode)
-							this .addColor (colorNode .get1Color (index));
+							colorNode .addColor (index, colorArray);
 
-						this .addVertex (coordNode .get1Point (index));
+						coordNode .addPoint (index, vertexArray);
 					}
 
 					++ index;
@@ -95498,7 +96781,6 @@ function ($,
 
 
 define ('x_ite/Components/EnvironmentalEffects/LocalFog',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -95506,8 +96788,7 @@ define ('x_ite/Components/EnvironmentalEffects/LocalFog',[
 	"x_ite/Components/EnvironmentalEffects/X3DFogObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
@@ -95524,7 +96805,7 @@ function ($,
 		this .addType (X3DConstants .LocalFog);
 	}
 
-	LocalFog .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	LocalFog .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DFogObject .prototype,
 	{
 		constructor: LocalFog,
@@ -95619,12 +96900,10 @@ function ($,
 
 
 define ('x_ite/Components/Shape/X3DMaterialNode',[
-	"jquery",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DAppearanceChildNode, 
+function (X3DAppearanceChildNode, 
           X3DConstants)
 {
 "use strict";
@@ -95636,7 +96915,7 @@ function ($,
 		this .addType (X3DConstants .X3DMaterialNode);
 	}
 
-	X3DMaterialNode .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
+	X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DMaterialNode,
 	});
@@ -95696,7 +96975,6 @@ function ($,
 
 
 define ('x_ite/Components/Shape/Material',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -95704,8 +96982,7 @@ define ('x_ite/Components/Shape/Material',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DMaterialNode, 
@@ -95725,7 +97002,7 @@ function ($,
 		this .emissiveColor = new Float32Array (3);
 	}
 
-	Material .prototype = $.extend (Object .create (X3DMaterialNode .prototype),
+	Material .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
 	{
 		constructor: Material,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -95892,7 +97169,6 @@ function ($,
 
 
 define ('x_ite/Components/Shaders/Matrix3VertexAttribute',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -95900,8 +97176,7 @@ define ('x_ite/Components/Shaders/Matrix3VertexAttribute',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DVertexAttributeNode, 
@@ -95917,7 +97192,7 @@ function ($,
 		this .addType (X3DConstants .Matrix3VertexAttribute);
 	}
 
-	Matrix3VertexAttribute .prototype = $.extend (Object .create (X3DVertexAttributeNode .prototype),
+	Matrix3VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 	{
 		constructor: Matrix3VertexAttribute,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -95937,21 +97212,34 @@ function ($,
 		{
 			return "attrib";
 		},
-		addValue: function (array, index)
+		initialize: function ()
 		{
-			if (index < this .value_ .length)
-			{
-				var mat3 = this .value_ [index] .getValue ();
+			X3DVertexAttributeNode .prototype .initialize .call (this);
 
-				for (var i = 0; i < 9; ++ i)
-					array .push (mat3 [i]);
+			this .value_ .addInterest ("set_value", this);
+
+			this .set_value ();
+		},
+		set_value: function ()
+		{
+			this .value  = this .value_ .getValue ();
+			this .length = this .value_ .length;
+		},
+		addValue: function (index, array)
+		{
+			if (index < this .length)
+			{
+				var value = this .value;
+
+				for (var i = index * 9, l = i + 9; i < l; ++ i)
+					array .push (value [i]);
 			}
 			else
 			{
-				var mat3 = Matrix3 .Identity;
+				var value = Matrix3 .Identity;
 
 				for (var i = 0; i < 9; ++ i)
-					array .push (mat3 [i]);
+					array .push (value [i]);
 			}
 		},
 		enable: function (gl, shaderNode, buffer)
@@ -96019,15 +97307,13 @@ function ($,
 
 
 define ('x_ite/Components/Shaders/Matrix4VertexAttribute',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Shaders/X3DVertexAttributeNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DVertexAttributeNode, 
@@ -96042,7 +97328,7 @@ function ($,
 		this .addType (X3DConstants .Matrix4VertexAttribute);
 	}
 
-	Matrix4VertexAttribute .prototype = $.extend (Object .create (X3DVertexAttributeNode .prototype),
+	Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 	{
 		constructor: Matrix4VertexAttribute,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -96062,21 +97348,34 @@ function ($,
 		{
 			return "attrib";
 		},
-		addValue: function (array, index)
+		initialize: function ()
 		{
-			if (index < this .value_ .length)
-			{
-				var mat4 = this .value_ [index] .getValue ();
+			X3DVertexAttributeNode .prototype .initialize .call (this);
 
-				for (var i = 0; i < 16; ++ i)
-					array .push (mat4 [i]);
+			this .value_ .addInterest ("set_value", this);
+
+			this .set_value ();
+		},
+		set_value: function ()
+		{
+			this .value  = this .value_ .getValue ();
+			this .length = this .value_ .length;
+		},
+		addValue: function (index, array)
+		{
+			if (index < this .length)
+			{
+				var value = this .value;
+
+				for (var i = index * 16, l = i + 16; i < l; ++ i)
+					array .push (value [i]);
 			}
 			else
 			{
-				var mat4 = Matrix4 .Identity;
+				var value = Matrix4 .Identity;
 
 				for (var i = 0; i < 16; ++ i)
-					array .push (mat4 [i]);
+					array .push (value [i]);
 			}
 		},
 		enable: function (gl, shaderNode, buffer)
@@ -96144,11 +97443,9 @@ function ($,
 
 
 define ('x_ite/Components/Core/X3DMetadataObject',[
-	"jquery",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DConstants)
+function (X3DConstants)
 {
 "use strict";
 
@@ -96218,7 +97515,6 @@ function ($,
 
 
 define ('x_ite/Components/Core/MetadataBoolean',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -96226,8 +97522,7 @@ define ('x_ite/Components/Core/MetadataBoolean',[
 	"x_ite/Components/Core/X3DMetadataObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
@@ -96244,7 +97539,7 @@ function ($,
 		this .addType (X3DConstants .MetadataBoolean);
 	}
 
-	MetadataBoolean .prototype = $.extend (Object .create (X3DNode .prototype),
+	MetadataBoolean .prototype = Object .assign (Object .create (X3DNode .prototype),
 		X3DMetadataObject .prototype,
 	{
 		constructor: MetadataBoolean,
@@ -96323,7 +97618,6 @@ function ($,
 
 
 define ('x_ite/Components/Core/MetadataDouble',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -96331,8 +97625,7 @@ define ('x_ite/Components/Core/MetadataDouble',[
 	"x_ite/Components/Core/X3DMetadataObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
@@ -96349,7 +97642,7 @@ function ($,
 		this .addType (X3DConstants .MetadataDouble);
 	}
 
-	MetadataDouble .prototype = $.extend (Object .create (X3DNode .prototype),
+	MetadataDouble .prototype = Object .assign (Object .create (X3DNode .prototype),
 		X3DMetadataObject .prototype,
 	{
 		constructor: MetadataDouble,
@@ -96428,7 +97721,6 @@ function ($,
 
 
 define ('x_ite/Components/Core/MetadataFloat',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -96436,8 +97728,7 @@ define ('x_ite/Components/Core/MetadataFloat',[
 	"x_ite/Components/Core/X3DMetadataObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
@@ -96454,7 +97745,7 @@ function ($,
 		this .addType (X3DConstants .MetadataFloat);
 	}
 
-	MetadataFloat .prototype = $.extend (Object .create (X3DNode .prototype),
+	MetadataFloat .prototype = Object .assign (Object .create (X3DNode .prototype),
 		X3DMetadataObject .prototype,
 	{
 		constructor: MetadataFloat,
@@ -96533,7 +97824,6 @@ function ($,
 
 
 define ('x_ite/Components/Core/MetadataInteger',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -96541,8 +97831,7 @@ define ('x_ite/Components/Core/MetadataInteger',[
 	"x_ite/Components/Core/X3DMetadataObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
@@ -96559,7 +97848,7 @@ function ($,
 		this .addType (X3DConstants .MetadataInteger);
 	}
 
-	MetadataInteger .prototype = $.extend (Object .create (X3DNode .prototype),
+	MetadataInteger .prototype = Object .assign (Object .create (X3DNode .prototype),
 		X3DMetadataObject .prototype,
 	{
 		constructor: MetadataInteger,
@@ -96638,7 +97927,6 @@ function ($,
 
 
 define ('x_ite/Components/Core/MetadataSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -96646,8 +97934,7 @@ define ('x_ite/Components/Core/MetadataSet',[
 	"x_ite/Components/Core/X3DMetadataObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
@@ -96664,7 +97951,7 @@ function ($,
 		this .addType (X3DConstants .MetadataSet);
 	}
 
-	MetadataSet .prototype = $.extend (Object .create (X3DNode .prototype),
+	MetadataSet .prototype = Object .assign (Object .create (X3DNode .prototype),
 		X3DMetadataObject .prototype,
 	{
 		constructor: MetadataSet,
@@ -96743,7 +98030,6 @@ function ($,
 
 
 define ('x_ite/Components/Core/MetadataString',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -96751,8 +98037,7 @@ define ('x_ite/Components/Core/MetadataString',[
 	"x_ite/Components/Core/X3DMetadataObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
@@ -96769,7 +98054,7 @@ function ($,
 		this .addType (X3DConstants .MetadataString);
 	}
 
-	MetadataString .prototype = $.extend (Object .create (X3DNode .prototype),
+	MetadataString .prototype = Object .assign (Object .create (X3DNode .prototype),
 		X3DMetadataObject .prototype,
 	{
 		constructor: MetadataString,
@@ -96889,7 +98174,7 @@ function ($,
 		this .urlStack = new Fields .MFString ();
 	}
 
-	MovieTexture .prototype = $.extend (Object .create (X3DTexture2DNode .prototype),
+	MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
 		X3DSoundSourceNode .prototype,
 		X3DUrlObject .prototype,
 	{
@@ -97115,12 +98400,10 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/X3DNormalNode',[
-	"jquery",
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DGeometricPropertyNode, 
+function (X3DGeometricPropertyNode, 
           X3DConstants)
 {
 "use strict";
@@ -97132,7 +98415,7 @@ function ($,
 		this .addType (X3DConstants .X3DNormalNode);
 	}
 
-	X3DNormalNode .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
+	X3DNormalNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: X3DNormalNode,
 	});
@@ -97192,7 +98475,6 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/Normal',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -97200,8 +98482,7 @@ define ('x_ite/Components/Rendering/Normal',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNormalNode, 
@@ -97215,11 +98496,9 @@ function ($,
 		X3DNormalNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Normal);
-
-		this .vector = this .vector_ .getValue ();
 	}
 
-	Normal .prototype = $.extend (Object .create (X3DNormalNode .prototype),
+	Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
 	{
 		constructor: Normal,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -97238,12 +98517,33 @@ function ($,
 		{
 			return "normal";
 		},
-		get1Vector: function (index)
+		initialize: function ()
 		{
-			if (index >= 0 && index < this .vector .length)
-				return this .vector [index] .getValue ();
+			X3DNormalNode .prototype .initialize .call (this);
 
-			return new Vector3 (0, 0, 0);
+			this .vector_ .addInterest ("set_vector__", this);
+
+			this .set_vector__ ();
+		},
+		set_vector__: function ()
+		{
+			this .vector = this .vector_ .getValue ();
+			this .length = this .vector_ .length;
+		},
+		addVector: function (index, array)
+		{
+			if (index >= 0 && index < this .length)
+			{
+				const vector = this .vector;
+
+				index *= 3;
+
+				array .push (vector [index + 0], vector [index + 1], vector [index + 2]);
+			}
+			else
+			{
+				return array .push (0, 0, 0);
+			}
 		},
 	});
 
@@ -97302,7 +98602,6 @@ function ($,
 
 
 define ('x_ite/Components/Interpolation/NormalInterpolator',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -97311,8 +98610,7 @@ define ('x_ite/Components/Interpolation/NormalInterpolator',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -97322,6 +98620,10 @@ function ($,
 {
 "use strict";
 
+	var
+		keyValue0 = new Vector3 (0, 0, 0),
+		keyValue1 = new Vector3 (0, 0, 0);
+
 	function NormalInterpolator (executionContext)
 	{
 		X3DInterpolatorNode .call (this, executionContext);
@@ -97329,7 +98631,7 @@ function ($,
 		this .addType (X3DConstants .NormalInterpolator);
 	}
 
-	NormalInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	NormalInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: NormalInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -97339,8 +98641,6 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec3f ()),
 		]),
-		keyValue0: new Vector3 (0, 0, 0),
-		keyValue1: new Vector3 (0, 0, 0),
 		getTypeName: function ()
 		{
 			return "NormalInterpolator";
@@ -97363,22 +98663,32 @@ function ($,
 		interpolate: function (index0, index1, weight)
 		{
 			var
-				keyValue      = this .keyValue_ .getValue (),
-				value_changed = this .value_changed_ .getValue (),
-				size          = this .key_ .length > 1 ? Math .floor (keyValue .length / this .key_ .length) : 0;
+				keyValue = this .keyValue_ .getValue (),
+				size     = this .key_ .length > 1 ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+
+			this .value_changed_ .length = size;
+
+			var value_changed = this .value_changed_ .getValue ();
 
 			index0 *= size;
 			index1  = index0 + size;
 
-			this .value_changed_ .length = size;
+			index0 *= 3;
+			index1 *= 3;
+			size   *= 3;
 
-			for (var i = 0; i < size; ++ i)
+			for (var i = 0; i < size; i += 3)
 			{
 				try
 				{
-					value_changed [i] .set (Algorithm .simpleSlerp (this .keyValue0 .assign (keyValue [index0 + i] .getValue ()),
-					                                                this .keyValue1 .assign (keyValue [index1 + i] .getValue ()),
-					                                                weight));
+					keyValue0 .set (keyValue [index0 + i + 0], keyValue [index0 + i + 1], keyValue [index0 + i + 2]);
+					keyValue1 .set (keyValue [index1 + i + 0], keyValue [index1 + i + 1], keyValue [index1 + i + 2]);
+
+					var value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
+
+					value_changed [i + 0] = value [0];
+					value_changed [i + 1] = value [1];
+					value_changed [i + 2] = value [2];
 				}
 				catch (error)
 				{ }
@@ -97443,7 +98753,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/OrientationChaser',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -97451,8 +98760,7 @@ define ('x_ite/Components/Followers/OrientationChaser',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChaserNode, 
@@ -97472,7 +98780,7 @@ function ($,
 		this .addType (X3DConstants .OrientationChaser);
 	}
 
-	OrientationChaser .prototype = $.extend (Object .create (X3DChaserNode .prototype),
+	OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 	{
 		constructor: OrientationChaser,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -97574,7 +98882,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/OrientationDamper',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -97582,8 +98889,7 @@ define ('x_ite/Components/Followers/OrientationDamper',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDamperNode, 
@@ -97603,7 +98909,7 @@ function ($,
 		this .addType (X3DConstants .OrientationDamper);
 	}
 
-	OrientationDamper .prototype = $.extend (Object .create (X3DDamperNode .prototype),
+	OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 	{
 		constructor: OrientationDamper,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -97701,15 +99007,13 @@ function ($,
 
 
 define ('x_ite/Components/Shape/X3DShapeNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DBoundedObject,
           X3DCast,
           X3DConstants,
@@ -97727,7 +99031,7 @@ function ($,
 		this .bbox = new Box3 ();
 	}
 
-	X3DShapeNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DBoundedObject .prototype,
 	{
 		constructor: X3DShapeNode,
@@ -97743,7 +99047,6 @@ function ($,
 
 			this .set_apparance__ ();
 			this .set_geometry__ ();
-			this .set_bbox__ ();
 		},
 		getBBox: function (bbox)
 		{
@@ -97809,7 +99112,7 @@ function ($,
 			if (this .geometryNode)
 			{
 				this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
-				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__", this);
+				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
 			}
 
 			this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
@@ -97817,7 +99120,7 @@ function ($,
 			if (this .geometryNode)
 			{
 				this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
-				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__", this);
+				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
 			}
 
 			this .set_transparent__ ();
@@ -98244,7 +99547,6 @@ function (Vector3,
 
 
 define ('x_ite/Components/ParticleSystems/ParticleSystem',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -98261,8 +99563,7 @@ define ('x_ite/Components/ParticleSystems/ParticleSystem',[
 	"standard/Math/Algorithm",
 	"standard/Math/Utility/BVH",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode,
@@ -98356,7 +99657,7 @@ function ($,
 		this .sortParticles            = false;
 	}
 
-	ParticleSystem .prototype = $.extend (Object .create (X3DShapeNode .prototype),
+	ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 	{
 		constructor: ParticleSystem,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -98856,12 +100157,12 @@ function ($,
 		set_color__: function ()
 		{
 			var
-				colorKey  = this .colorKey_ .getValue (),
+				colorKey  = this .colorKey_,
 				colorKeys = this .colorKeys,
 				colorRamp = this .colorRamp;
 
 			for (var i = 0, length = colorKey .length; i < length; ++ i)
-				colorKeys [i] = colorKey [i] .getValue ();
+				colorKeys [i] = colorKey [i];
 
 			colorKeys .length = length;
 
@@ -98890,12 +100191,12 @@ function ($,
 		set_texCoord__: function ()
 		{
 			var
-				texCoordKey  = this .texCoordKey_ .getValue (),
+				texCoordKey  = this .texCoordKey_,
 				texCoordKeys = this .texCoordKeys,
 				texCoordRamp = this .texCoordRamp;
 
 			for (var i = 0, length = texCoordKey .length; i < length; ++ i)
-				texCoordKeys [i] = texCoordKey [i] .getValue ();
+				texCoordKeys [i] = texCoordKey [i];
 
 			texCoordKeys .length = length;
 
@@ -99524,7 +100825,7 @@ function ($,
 					this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
 			}
 		},
-		depth: function (context, shaderNode)
+		depth: function (gl, context, shaderNode)
 		{
 			// Update geometry if SPRITE.
 
@@ -99537,14 +100838,12 @@ function ($,
 				var geometryNode = this .getGeometry ();
 
 				if (geometryNode)
-					geometryNode .displayParticlesDepth (context, shaderNode, this .particles, this .numParticles);
+					geometryNode .displayParticlesDepth (gl, context, shaderNode, this .particles, this .numParticles);
 			}
 			else
 			{
 				if (this .numParticles <= 0)
 					return;
-
-				var gl = context .renderer .getBrowser () .getContext ();
 
 				// Setup vertex attributes.
 
@@ -99562,7 +100861,7 @@ function ($,
 				shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			try
 			{
@@ -99571,7 +100870,7 @@ function ($,
 
 				// Traverse appearance before everything.
 
-				this .getAppearance () .enable (context);
+				this .getAppearance () .enable (gl, context);
 
 				// Update geometry if SPRITE.
 
@@ -99584,13 +100883,12 @@ function ($,
 					var geometryNode = this .getGeometry ();
 
 					if (geometryNode)
-						geometryNode .displayParticles (context, this .particles, this .numParticles);
+						geometryNode .displayParticles (gl, context, this .particles, this .numParticles);
 				}
 				else
 				{
 					var
 						browser    = context .renderer .getBrowser (),
-						gl         = browser .getContext (),
 						shaderNode = context .shaderNode;
 	
 					if (shaderNode === browser .getDefaultShader ())
@@ -99600,6 +100898,8 @@ function ($,
 	
 					context .geometryType  = this .shaderGeometryType;
 					context .colorMaterial = this .colorMaterial;
+
+					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
 		
 					// Setup vertex attributes.
@@ -99662,9 +100962,10 @@ function ($,
 					shaderNode .disableColorAttribute    (gl);
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
+					shaderNode .disable                  (gl);
 				}
 
-				this .getAppearance () .disable (context);
+				this .getAppearance () .disable (gl, context);
 			}
 			catch (error)
 			{
@@ -99779,12 +101080,12 @@ function ($,
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 	}
 
-	PixelTexture .prototype = $.extend (Object .create (X3DTexture2DNode .prototype),
+	PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
 	{
 		constructor: PixelTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, [ ])),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, new Fields .MFInt32 ())),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
@@ -99813,15 +101114,15 @@ function ($,
 		{
 			return this .loadState_ .getValue ();
 		},
-		convert: function (data, comp, array)
+		convert: function (data, comp, array, length)
 		{
 			switch (comp)
 			{
 				case 1:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index] =
 						data [index + 1] =
@@ -99833,9 +101134,9 @@ function ($,
 				}
 				case 2:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index] =
 						data [index + 1] =
@@ -99847,9 +101148,9 @@ function ($,
 				}
 				case 3:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index]     = (pixel >>> 16) & 255;
 						data [index + 1] = (pixel >>>  8) & 255;
@@ -99861,9 +101162,9 @@ function ($,
 				}
 				case 4:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index]     = (pixel >>> 24);
 						data [index + 1] = (pixel >>> 16) & 255;
@@ -99881,7 +101182,7 @@ function ($,
 				width       = this .image_ .width,
 				height      = this .image_ .height,
 				comp        = this .image_ .comp,
-				array       = this .image_ .array .getValue (),
+				array       = this .image_ .array,
 				transparent = ! (comp % 2),
 				data        = null;
 		
@@ -99891,13 +101192,13 @@ function ($,
 				{
 					data = new Uint8Array (width * height * 4);
 
-					this .convert (data, comp, array);
+					this .convert (data, comp, array .getValue (), array .length);
 				}
 				else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this .textureProperties_ .getValue ())
 				{
 					data = new Uint8Array (width * height * 4);
 
-					this .convert (data, comp, array);
+					this .convert (data, comp, array .getValue (), array .length);
 
 					var
 						inputWidth  = width,
@@ -99920,7 +101221,7 @@ function ($,
 					canvas1 .width  = width;
 					canvas1 .height = height;
 
-					this .convert (imageData .data, comp, array);
+					this .convert (imageData .data, comp, array, array .length);
 					cx1 .putImageData (imageData, 0, 0);
 
 					width  = Algorithm .nextPowerOfTwo (width);
@@ -100000,7 +101301,6 @@ function ($,
 
 
 define ('x_ite/Components/PointingDeviceSensor/PlaneSensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -100015,8 +101315,7 @@ define ('x_ite/Components/PointingDeviceSensor/PlaneSensor',[
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDragSensorNode, 
@@ -100049,7 +101348,7 @@ function ($,
 		this .translation_changed_ .setUnit ("length");
 	}
 
-	PlaneSensor .prototype = $.extend (Object .create (X3DDragSensorNode .prototype),
+	PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 	{
 		constructor: PlaneSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -100319,7 +101618,6 @@ function ($,
 
 
 define ('x_ite/Components/Lighting/PointLight',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -100338,8 +101636,7 @@ define ('x_ite/Components/Lighting/PointLight',[
 	"standard/Math/Algorithm",
 	"standard/Utility/ObjectCache",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLightNode, 
@@ -100578,7 +101875,7 @@ function ($,
 		this .radius_   .setUnit ("length");
 	}
 
-	PointLight .prototype = $.extend (Object .create (X3DLightNode .prototype),
+	PointLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 	{
 		constructor: PointLight,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -100686,7 +101983,6 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/PointSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -100694,8 +101990,7 @@ define ('x_ite/Components/Rendering/PointSet',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode,
@@ -100717,7 +102012,7 @@ function ($,
 		this .transparent_ = true;
 	}
 
-	PointSet .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	PointSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: PointSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -100810,22 +102105,24 @@ function ($,
 				numAttrib   = attribNodes .length,
 				attribs     = this .getAttribs (),
 				colorNode   = this .colorNode,
-				coordNode   = this .coordNode;
+				coordNode   = this .coordNode,
+				colorArray  = this .getColors (),
+				vertexArray = this .getVertices ();
 
 			for (var a = 0; a < numAttrib; ++ a)
 			{
 				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-					attribNodes [a] .addValue (attribs [a], i);
+					attribNodes [a] .addValue (i, attribs [a]);
 			}
 			
 			if (this .colorNode)
 			{
 				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-					this .addColor (colorNode .get1Color (i));
+					colorNode .addColor (i, colorArray);
 			}
 
 			for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-				this .addVertex (coordNode .get1Point (i));
+				coordNode .addPoint (i, vertexArray);
 		},
 	});
 
@@ -100882,7 +102179,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry2D/Polyline2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -100890,8 +102186,7 @@ define ('x_ite/Components/Geometry2D/Polyline2D',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode, 
@@ -100899,8 +102194,6 @@ function ($,
           Vector3)
 {
 "use strict";
-
-	var vector = new Vector3 (0, 0, 0);
 
 	function Polyline2D (executionContext)
 	{
@@ -100913,7 +102206,7 @@ function ($,
 		this .lineSegments_ .setUnit ("length");
 	}
 
-	Polyline2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: Polyline2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -100940,13 +102233,13 @@ function ($,
 		},
 		build: function ()
 		{
-			var lineSegments = this .lineSegments_ .getValue ();
+			var
+				lineSegments = this .lineSegments_ .getValue (),
+				vertexArray  = this .getVertices ();
 
-			for (var i = 0, length = lineSegments .length; i < length; ++ i)
+			for (var i = 0, length = this .lineSegments_ .length * 2; i < length; i += 2)
 			{
-				var vertex = lineSegments [i];
-
-				this .addVertex (vector .set (vertex .x, vertex .y, 0));
+				vertexArray .push (lineSegments [i + 0], lineSegments [i + 1], 0, 1);
 			}
 
 			this .setSolid (false);
@@ -101008,7 +102301,6 @@ function ($,
 
 
 define ('x_ite/Components/ParticleSystems/PolylineEmitter',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -101018,8 +102310,7 @@ define ('x_ite/Components/ParticleSystems/PolylineEmitter',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode,
@@ -101030,7 +102321,9 @@ function ($,
 {
 "use strict";
 
-	var vector = new Vector3 (0, 0, 0);
+	var
+		vertex1 = new Vector3 (0, 0, 0),
+		vertex2 = new Vector3 (0, 0, 0);
 
 	function PolylineEmitter (executionContext)
 	{
@@ -101048,7 +102341,7 @@ function ($,
 		this .lengthSoFarArray = [ 0 ];
 	}
 
-	PolylineEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: PolylineEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -101103,9 +102396,9 @@ function ($,
 		},
 		set_polyline: function ()
 		{
-			var polylines = this .polylineNode .getPolylines (this .polylines);
+			var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
 
-			if (polylines .length)
+			if (vertices .length)
 			{
 				delete this .getRandomPosition;
 
@@ -101115,9 +102408,12 @@ function ($,
 		
 				lengthSoFarArray .length = 1;
 
-				for (var i = 0, length = polylines .length; i < length; i += 2)
+				for (var i = 0, length = vertices .length; i < length; i += 8)
 				{
-					lengthSoFar += vector .assign (polylines [i + 1]) .subtract (polylines [i]) .abs ();
+					vertex1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+
+					lengthSoFar += vertex2 .subtract (vertex1) .abs ();
 					lengthSoFarArray .push (lengthSoFar);
 				}
 			}
@@ -101172,12 +102468,13 @@ function ($,
 
 			// Interpolate and set position.
 
-			index0 *= 2;
-			index1  = index0 + 1;
+			index0 *= 8;
+			index1  = index0 + 4;
 
-			var
-				vertex1 = this .polylines [index0],
-				vertex2 = this .polylines [index1];
+			var vertices = this .vertices;
+
+			vertex1 .set (vertices [index0 + 0], vertices [index0 + 1], vertices [index0 + 2]);
+			vertex2 .set (vertices [index1 + 0], vertices [index1 + 1], vertices [index1 + 2]);
 	
 			position .x = vertex1 .x + weight * (vertex2 .x - vertex1 .x);
 			position .y = vertex1 .y + weight * (vertex2 .y - vertex1 .y);
@@ -101259,7 +102556,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry2D/Polypoint2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -101267,8 +102563,7 @@ define ('x_ite/Components/Geometry2D/Polypoint2D',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode, 
@@ -101276,8 +102571,6 @@ function ($,
           Vector3)
 {
 "use strict";
-
-	var vector = new Vector3 (0, 0, 0);
 
 	function Polypoint2D (executionContext)
 	{
@@ -101292,7 +102585,7 @@ function ($,
 		this .transparent_ = true;
 	}
 
-	Polypoint2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	Polypoint2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: Polypoint2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -101326,21 +102619,19 @@ function ($,
 		},
 		build: function ()
 		{
-			var point = this .point_ .getValue ();
+			var
+				point       = this .point_ .getValue (),
+				vertexArray = this .getVertices ();
 
-			for (var i = 0, length = point .length; i < length; ++ i)
+			for (var i = 0, length = this .point_ .length * 2; i < length; i += 2)
 			{
-				var vertex = point [i];
-
-				this .addVertex (vector .set (vertex .x, vertex .y, 0));
+				vertexArray .push (point [i + 0], point [i + 1], 0, 1);
 			}
 		},
 	});
 
 	return Polypoint2D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -101392,7 +102683,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/PositionChaser',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -101400,8 +102690,7 @@ define ('x_ite/Components/Followers/PositionChaser',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChaserNode, 
@@ -101417,7 +102706,7 @@ function ($,
 		this .addType (X3DConstants .PositionChaser);
 	}
 
-	PositionChaser .prototype = $.extend (Object .create (X3DChaserNode .prototype),
+	PositionChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 	{
 		constructor: PositionChaser,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -101503,7 +102792,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/PositionChaser2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -101511,8 +102799,7 @@ define ('x_ite/Components/Followers/PositionChaser2D',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChaserNode, 
@@ -101528,7 +102815,7 @@ function ($,
 		this .addType (X3DConstants .PositionChaser2D);
 	}
 
-	PositionChaser2D .prototype = $.extend (Object .create (X3DChaserNode .prototype),
+	PositionChaser2D .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 	{
 		constructor: PositionChaser2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -101614,7 +102901,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/PositionDamper',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -101622,8 +102908,7 @@ define ('x_ite/Components/Followers/PositionDamper',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDamperNode, 
@@ -101639,7 +102924,7 @@ function ($,
 		this .addType (X3DConstants .PositionDamper);
 	}
 
-	PositionDamper .prototype = $.extend (Object .create (X3DDamperNode .prototype),
+	PositionDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 	{
 		constructor: PositionDamper,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -101727,7 +103012,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/PositionDamper2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -101735,8 +103019,7 @@ define ('x_ite/Components/Followers/PositionDamper2D',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDamperNode, 
@@ -101752,7 +103035,7 @@ function ($,
 		this .addType (X3DConstants .PositionDamper2D);
 	}
 
-	PositionDamper2D .prototype = $.extend (Object .create (X3DDamperNode .prototype),
+	PositionDamper2D .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 	{
 		constructor: PositionDamper2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -101840,7 +103123,6 @@ function ($,
 
 
 define ('x_ite/Components/Interpolation/PositionInterpolator2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -101848,8 +103130,7 @@ define ('x_ite/Components/Interpolation/PositionInterpolator2D',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -101865,7 +103146,7 @@ function ($,
 		this .addType (X3DConstants .PositionInterpolator2D);
 	}
 
-	PositionInterpolator2D .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	PositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: PositionInterpolator2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -101964,15 +103245,13 @@ function ($,
 
 
 define ('x_ite/Components/CADGeometry/QuadSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DComposedGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -101989,7 +103268,7 @@ function ($,
 		this .triangleIndex = [ ];
 	}
 
-	QuadSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	QuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: QuadSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -102107,7 +103386,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry2D/Rectangle2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -102116,8 +103394,7 @@ define ('x_ite/Components/Geometry2D/Rectangle2D',[
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -102140,7 +103417,7 @@ function ($,
 		this .size_ .setUnit ("length");
 	}
 
-	Rectangle2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Rectangle2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -102167,8 +103444,8 @@ function ($,
 				geometry = options .getGeometry (),
 				size     = this .size_ .getValue ();
 
-			this .setTexCoords (geometry .getTexCoords ());
-			this .setNormals   (geometry .getNormals ());
+			this .setMultiTexCoords (geometry .getMultiTexCoords ());
+			this .setNormals        (geometry .getNormals ());
 
 			if (size .equals (defaultSize))
 			{
@@ -102183,17 +103460,17 @@ function ($,
 					scale           = Vector3 .divide (size, 2),
 					x               = scale .x,
 					y               = scale .y,
-					defaultVertices = geometry .getVertices (),
-					vertices        = this .getVertices ();
+					defaultVertices = geometry .getVertices () .getValue (),
+					vertexArray     = this .getVertices ();
 
 				for (var i = 0; i < defaultVertices .length; i += 4)
 				{
-					vertices .push (x * defaultVertices [i],
-					                y * defaultVertices [i + 1],
-					                defaultVertices [i + 2],
-					                1);
+					vertexArray .push (x * defaultVertices [i],
+					                   y * defaultVertices [i + 1],
+					                   defaultVertices [i + 2],
+					                   1);
 				}
-
+	
 				this .getMin () .set (-x, -y, 0);
 				this .getMax () .set ( x,  y, 0);
 			}
@@ -102255,7 +103532,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/ScalarChaser',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -102263,8 +103539,7 @@ define ('x_ite/Components/Followers/ScalarChaser',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChaserNode, 
@@ -102280,7 +103555,7 @@ function ($,
 		this .addType (X3DConstants .ScalarChaser);
 	}
 
-	ScalarChaser .prototype = $.extend (Object .create (X3DChaserNode .prototype),
+	ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 	{
 		constructor: ScalarChaser,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -102390,7 +103665,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/ScalarDamper',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -102398,8 +103672,7 @@ define ('x_ite/Components/Followers/ScalarDamper',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDamperNode, 
@@ -102415,7 +103688,7 @@ function ($,
 		this .addType (X3DConstants .ScalarDamper);
 	}
 
-	ScalarDamper .prototype = $.extend (Object .create (X3DDamperNode .prototype),
+	ScalarDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 	{
 		constructor: ScalarDamper,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -102520,9 +103793,11 @@ function ($,
 
 define ('x_ite/Browser/Layout/ScreenText',[
 	"jquery",
+	"x_ite/Fields",
 	"x_ite/Browser/Text/X3DTextGeometry",
 	"x_ite/Browser/Text/TextAlignment",
 	"x_ite/Components/Texturing/PixelTexture",
+	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -102533,9 +103808,11 @@ define ('x_ite/Browser/Layout/ScreenText',[
 	"standard/Math/Algorithm",
 ],
 function ($,
+          Fields,
           X3DTextGeometry,
           TextAlignment,
           PixelTexture,
+          X3DGeometryNode,
           TraverseType,
           Vector2,
           Vector3,
@@ -102563,18 +103840,18 @@ function ($,
 
 		text .transparent_ = true;
 
-		this .texCoords    = [ ];
-		this .texture      = new PixelTexture (text .getExecutionContext ());
-		this .canvas       = $("<canvas></canvas>");
-		this .context      = this .canvas [0] .getContext ("2d");
-		this .screenMatrix = new Matrix4 ();
-		this .matrix       = new Matrix4 ();
+		this .texCoordArray = X3DGeometryNode .createArray ();
+		this .texture       = new PixelTexture (text .getExecutionContext ());
+		this .canvas        = $("<canvas></canvas>");
+		this .context       = this .canvas [0] .getContext ("2d");
+		this .screenMatrix  = new Matrix4 ();
+		this .matrix        = new Matrix4 ();
 
 		this .texture .textureProperties_ = fontStyle .getBrowser () .getScreenTextureProperties ();
 		this .texture .setup ();
 	}
 
-	ScreenText .prototype = $.extend (Object .create (X3DTextGeometry .prototype),
+	ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
 	{
 		constructor: ScreenText,
 		modelViewMatrix: new Matrix4 (),
@@ -102655,32 +103932,35 @@ function ($,
 				charSpacings   = this .getCharSpacings (),
 				size           = fontStyle .getScale (), // in pixel
 				sizeUnitsPerEm = size / font .unitsPerEm,
-				texCoords      = this .texCoords,
-				normals        = text .getNormals (),
-				vertices       = text .getVertices (),
+				texCoordArray  = this .texCoordArray,
+				normalArray    = text .getNormals (),
+				vertexArray    = text .getVertices (),
 				canvas         = this .canvas [0],
 				cx             = this .context;
 
-			texCoords .length = 0;
-			text .getTexCoords () .push (texCoords);
+			// Set texCoord.
+
+			texCoordArray .length = 0;
+
+			text .getMultiTexCoords () .push (texCoordArray);
 
 			// Triangle one and two.
 
 			this .getBBox () .getExtents (min, max);
 
-			normals  .push (0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1);
+			normalArray  .push (0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1);
 
-			vertices .push (min .x, min .y, 0, 1,
-			                max .x, min .y, 0, 1,
-			                max .x, max .y, 0, 1,
-			                min .x, min .y, 0, 1,
-			                max .x, max .y, 0, 1,
-			                min .x, max .y, 0, 1);
+			vertexArray .push (min .x, min .y, 0, 1,
+			                   max .x, min .y, 0, 1,
+			                   max .x, max .y, 0, 1,
+			                   min .x, min .y, 0, 1,
+			                   max .x, max .y, 0, 1,
+			                   min .x, max .y, 0, 1);
 
 			// Generate texture.
 
@@ -102706,12 +103986,12 @@ function ($,
 			   h = height / canvas .height,
 			   y = 1 - h;
 
-			texCoords .push (0, y, 0, 1,
-			                 w, y, 0, 1,
-			                 w, 1, 0, 1,
-			                 0, y, 0, 1,
-			                 w, 1, 0, 1,
-			                 0, 1, 0, 1);
+			texCoordArray .push (0, y, 0, 1,
+			                     w, y, 0, 1,
+			                     w, 1, 0, 1,
+			                     0, y, 0, 1,
+			                     w, 1, 0, 1,
+			                     0, 1, 0, 1);
 
 			// Setup canvas.
 
@@ -102927,7 +104207,7 @@ function ($,
 		{
 			this .transform (renderObject);
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			Matrix4 .prototype .multLeft .call (context .modelViewMatrix, this .matrix);
 
@@ -102999,7 +104279,6 @@ function ($,
 
 
 define ('x_ite/Components/Layout/ScreenFontStyle',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -103007,8 +104286,7 @@ define ('x_ite/Components/Layout/ScreenFontStyle',[
 	"x_ite/Browser/Layout/ScreenText",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DFontStyleNode, 
@@ -103024,7 +104302,7 @@ function ($,
 		this .addType (X3DConstants .ScreenFontStyle);
 	}
 
-	ScreenFontStyle .prototype = $.extend (Object .create (X3DFontStyleNode .prototype),
+	ScreenFontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
 	{
 		constructor: ScreenFontStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -103116,7 +104394,6 @@ function ($,
 
 
 define ('x_ite/Components/Layout/ScreenGroup',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -103128,8 +104405,7 @@ define ('x_ite/Components/Layout/ScreenGroup',[
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/ViewVolume",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
@@ -103158,7 +104434,7 @@ function ($,
 		this .modelViewMatrix = new Matrix4 ();
 	}
 
-	ScreenGroup .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: ScreenGroup,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -103371,13 +104647,11 @@ define ('x_ite/Browser/Scripting/evaluate',[],function ()
 
 
 define ('x_ite/Components/Scripting/X3DScriptNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DUrlObject, 
           X3DConstants)
 {
@@ -103391,7 +104665,7 @@ function ($,
 		this .addType (X3DConstants .X3DScriptNode);
 	}
 
-	X3DScriptNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DScriptNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: X3DScriptNode,
@@ -103513,7 +104787,7 @@ function ($,
 		this .addType (X3DConstants .Script);
 	}
 
-	Script .prototype = $.extend (Object .create (X3DScriptNode .prototype),
+	Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 	{
 		constructor: Script,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -103662,8 +104936,6 @@ function ($,
 
 			var global =
 			{
-				$: { value: $ },
-
 				NULL:  { value: null },
 				FALSE: { value: false },
 				TRUE:  { value: true },
@@ -103984,7 +105256,6 @@ function ($,
 
 
 define ('x_ite/Components/Shape/Shape',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -103997,8 +105268,7 @@ define ('x_ite/Components/Shape/Shape',[
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithms/QuickSort",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode, 
@@ -104021,7 +105291,7 @@ function ($,
 		this .addType (X3DConstants .Shape);
 	}
 
-	Shape .prototype = $.extend (Object .create (X3DShapeNode .prototype),
+	Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 	{
 		constructor: Shape,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -104144,15 +105414,15 @@ function ($,
 				console .log (error);
 			}
 		},
-		depth: function (context, shaderNode)
+		depth: function (gl, context, shaderNode)
 		{
-			this .getGeometry () .depth (context, shaderNode);
+			this .getGeometry () .depth (gl, context, shaderNode);
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
-			this .getAppearance () .enable  (context);
-			this .getGeometry ()   .display (context);
-			this .getAppearance () .disable (context);
+			this .getAppearance () .enable  (gl, context);
+			this .getGeometry ()   .display (gl, context);
+			this .getAppearance () .disable (gl, context);
 		},
 	});
 
@@ -104211,12 +105481,10 @@ function ($,
 
 
 define ('x_ite/Components/Sound/X3DSoundNode',[
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants)
 {
 "use strict";
@@ -104228,7 +105496,7 @@ function ($,
 		this .addType (X3DConstants .X3DSoundNode);
 	}
 
-	X3DSoundNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DSoundNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DSoundNode,
 	});
@@ -104288,7 +105556,6 @@ function ($,
 
 
 define ('x_ite/Components/Sound/Sound',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -104301,8 +105568,7 @@ define ('x_ite/Components/Sound/Sound',[
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DSoundNode, 
@@ -104332,7 +105598,7 @@ function ($,
 		this .max = { radius: 0, distance: 0 };
 	}
 
-	Sound .prototype = $.extend (Object .create (X3DSoundNode .prototype),
+	Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
 	{
 		constructor: Sound,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -104515,15 +105781,13 @@ function ($,
 
 
 define ('x_ite/Components/Geometry3D/Sphere',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -104540,7 +105804,7 @@ function ($,
 		this .radius_ .setUnit ("length");
 	}
 
-	Sphere .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Sphere,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -104576,8 +105840,8 @@ function ($,
 				geometry = options .getGeometry (),
 				radius   = this .radius_ .getValue ();
 
-			this .setNormals   (geometry .getNormals ());
-			this .setTexCoords (geometry .getTexCoords ());
+			this .setMultiTexCoords (geometry .getMultiTexCoords ());
+			this .setNormals        (geometry .getNormals ());
 
 			if (radius === 1)
 			{
@@ -104589,15 +105853,15 @@ function ($,
 			else
 			{
 				var
-					defaultVertices = geometry .getVertices (),
-					vertices        = this .getVertices ();
+					defaultVertices = geometry .getVertices () .getValue (),
+					vertexArray     = this .getVertices ();
 
 				for (var i = 0; i < defaultVertices .length; i += 4)
 				{
-					vertices .push (radius * defaultVertices [i],
-					                radius * defaultVertices [i + 1],
-					                radius * defaultVertices [i + 2],
-					                1);
+					vertexArray .push (radius * defaultVertices [i],
+					                   radius * defaultVertices [i + 1],
+					                   radius * defaultVertices [i + 2],
+					                   1);
 				}
 
 				radius = Math .abs (radius);
@@ -104853,7 +106117,6 @@ function (Vector3)
 
 
 define ('x_ite/Components/PointingDeviceSensor/SphereSensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -104867,8 +106130,7 @@ define ('x_ite/Components/PointingDeviceSensor/SphereSensor',[
 	"standard/Math/Geometry/Plane3",
 	"standard/Math/Geometry/Sphere3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDragSensorNode, 
@@ -104890,7 +106152,7 @@ function ($,
 		this .addType (X3DConstants .SphereSensor);
 	}
 
-	SphereSensor .prototype = $.extend (Object .create (X3DDragSensorNode .prototype),
+	SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 	{
 		constructor: SphereSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -105145,27 +106407,27 @@ function (Vector4,
 				if (keyVelocity .length === 0)
 				{
 					if (closed)
-						T .push (this .divide (this .subtract (keyValue [1] .getValue (), keyValue [keyValue .size () - 2] .getValue ()), 2));
+						T .push (this .divide (this .subtract (keyValue [1], keyValue [keyValue .length - 2]), 2));
 		
 					else
 						T .push (this .create ());
 		
 					for (var i = 1, length = keyValue .length - 1; i < length; ++ i)
-						T .push (this .divide (this .subtract (keyValue [i + 1] .getValue (), keyValue [i - 1] .getValue ()), 2));
+						T .push (this .divide (this .subtract (keyValue [i + 1], keyValue [i - 1]), 2));
 		
 					T .push (this .copy (T [0]));
 				}
 				else
 				{
 					for (var i = 0, length = keyVelocity .length; i < length; ++ i)
-						T .push (this .copy (keyVelocity [i] .getValue ()));
+						T .push (this .copy (keyVelocity [i]));
 		
 					if (normalizeVelocity)
 					{
 						var Dtot = 0;
 		
 						for (var i = 0, length = keyValue .length - 1; i < length; ++ i)
-							Dtot += this .abs (this .subtract (keyValue [i] .getValue (), keyValue [i + 1] .getValue ()));
+							Dtot += this .abs (this .subtract (keyValue [i], keyValue [i + 1]));
 		
 						for (var i = 0, length = T .length - 1; i < length; ++ i)
 						{
@@ -105184,10 +106446,10 @@ function (Vector4,
 					var i_1 = key .length - 1;
 					var i_2 = key .length - 2;
 		
-					var d = key [1] .getValue () - key [0] .getValue () + key [i_1] .getValue () - key [i_2] .getValue ();
+					var d = key [1] - key [0] + key [i_1] - key [i_2];
 		
-					Fm .push (2 * (key [1]   .getValue () - key [0]   .getValue ()) / d);
-					Fp .push (2 * (key [i_1] .getValue () - key [i_2] .getValue ()) / d);
+					Fm .push (2 * (key [1]   - key [0])   / d);
+					Fp .push (2 * (key [i_1] - key [i_2]) / d);
 
 				}
 				else
@@ -105198,10 +106460,10 @@ function (Vector4,
 
 				for (var i = 1, length = key .length - 1; i < length; ++ i)
 				{
-					var d = key [i + 1] .getValue () - key [i - 1] .getValue ();
+					var d = key [i + 1] - key [i - 1];
 		
-					Fm .push (2 * (key [i + 1] .getValue () - key [i]     .getValue ()) / d);
-					Fp .push (2 * (key [i]     .getValue () - key [i - 1] .getValue ()) / d);
+					Fm .push (2 * (key [i + 1] - key [i])     / d);
+					Fp .push (2 * (key [i]     - key [i - 1]) / d);
 				}
 		
 				Fm .push (Fm [0]);
@@ -105228,8 +106490,8 @@ function (Vector4,
 			// Taking dot product from SH and C;
 
 			return this .dot (H .multVecMatrix (S),
-                           keyValue [index0] .getValue (),
-                           keyValue [index1] .getValue (),
+                           keyValue [index0],
+                           keyValue [index1],
                            this .T0 [index0],
                            this .T1 [index1]);
 		},
@@ -105290,11 +106552,9 @@ function (Vector4,
 
 
 define ('x_ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate',[
-	"jquery",
 	"x_ite/Browser/Interpolation/CatmullRomSplineInterpolator"
 ],
-function ($,
-          CatmullRomSplineInterpolator)
+function (CatmullRomSplineInterpolator)
 {
 "use strict";
 
@@ -105312,7 +106572,7 @@ function ($,
 			this .T1 = [ ];
 		}
 	
-		CatmullRomSplineInterpolatorInstance .prototype = $.extend (Object .create (CatmullRomSplineInterpolator .prototype),
+		CatmullRomSplineInterpolatorInstance .prototype = Object .assign (Object .create (CatmullRomSplineInterpolator .prototype),
 		{
 			constructor: CatmullRomSplineInterpolatorInstance,
 			create: function ()
@@ -105467,7 +106727,6 @@ function (CatmullRomSplineInterpolatorTemplate,
 
 
 define ('x_ite/Components/Interpolation/SplinePositionInterpolator',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -105475,8 +106734,7 @@ define ('x_ite/Components/Interpolation/SplinePositionInterpolator',[
 	"x_ite/Browser/Interpolation/CatmullRomSplineInterpolator3",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -105494,7 +106752,7 @@ function ($,
 		this .spline = new CatmullRomSplineInterpolator3 ();
 	}
 
-	SplinePositionInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	SplinePositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: SplinePositionInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -105550,15 +106808,15 @@ function ($,
 		},
 		set_normalizeVelocity__: function ()
 		{
-			this .spline .generate (this .closed_            .getValue (),
-			                        this .key_               .getValue (),
-			                        this .keyValue_          .getValue (),
-			                        this .keyVelocity_       .getValue (),
+			this .spline .generate (this .closed_ .getValue (),
+			                        this .key_,
+			                        this .keyValue_,
+			                        this .keyVelocity_,
 			                        this .normalizeVelocity_ .getValue ());
 		},
 		interpolate: function (index0, index1, weight)
 		{
-			this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_ .getValue ());
+			this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_);
 		},
 	});
 
@@ -105678,7 +106936,6 @@ function (CatmullRomSplineInterpolatorTemplate,
 
 
 define ('x_ite/Components/Interpolation/SplinePositionInterpolator2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -105686,8 +106943,7 @@ define ('x_ite/Components/Interpolation/SplinePositionInterpolator2D',[
 	"x_ite/Browser/Interpolation/CatmullRomSplineInterpolator2",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode,
@@ -105705,7 +106961,7 @@ function ($,
 		this .spline = new CatmullRomSplineInterpolator2 ();
 	}
 
-	SplinePositionInterpolator2D .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	SplinePositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: SplinePositionInterpolator2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -105761,15 +107017,15 @@ function ($,
 		},
 		set_normalizeVelocity__: function ()
 		{
-			this .spline .generate (this .closed_            .getValue (),
-			                        this .key_               .getValue (),
-			                        this .keyValue_          .getValue (),
-			                        this .keyVelocity_       .getValue (),
+			this .spline .generate (this .closed_ .getValue (),
+			                        this .key_,
+			                        this .keyValue_,
+			                        this .keyVelocity_,
 			                        this .normalizeVelocity_ .getValue ());
 		},
 		interpolate: function (index0, index1, weight)
 		{
-			this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_ .getValue ());
+			this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_);
 		},
 	});
 
@@ -105828,11 +107084,9 @@ function ($,
 
 
 define ('x_ite/Browser/Interpolation/CatmullRomSplineInterpolator1',[
-	"jquery",
 	"x_ite/Browser/Interpolation/CatmullRomSplineInterpolator"
 ],
-function ($,
-          CatmullRomSplineInterpolator)
+function (CatmullRomSplineInterpolator)
 {
 "use strict";
 
@@ -105842,7 +107096,7 @@ function ($,
 		this .T1 = [ ];
 	}
 
-	CatmullRomSplineInterpolator1 .prototype = $.extend (Object .create (CatmullRomSplineInterpolator .prototype),
+	CatmullRomSplineInterpolator1 .prototype = Object .assign (Object .create (CatmullRomSplineInterpolator .prototype),
 	{
 		constructor: CatmullRomSplineInterpolator1,
 		create: function ()
@@ -105930,7 +107184,6 @@ function ($,
 
 
 define ('x_ite/Components/Interpolation/SplineScalarInterpolator',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -105938,8 +107191,7 @@ define ('x_ite/Components/Interpolation/SplineScalarInterpolator',[
 	"x_ite/Browser/Interpolation/CatmullRomSplineInterpolator1",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -105957,7 +107209,7 @@ function ($,
 		this .spline = new CatmullRomSplineInterpolator1 ();
 	}
 
-	SplineScalarInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: SplineScalarInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -106013,15 +107265,15 @@ function ($,
 		},
 		set_normalizeVelocity__: function ()
 		{
-			this .spline .generate (this .closed_            .getValue (),
-			                        this .key_               .getValue (),
-			                        this .keyValue_          .getValue (),
-			                        this .keyVelocity_       .getValue (),
+			this .spline .generate (this .closed_ .getValue (),
+			                        this .key_,
+			                        this .keyValue_,
+			                        this .keyVelocity_,
 			                        this .normalizeVelocity_ .getValue ());
 		},
 		interpolate: function (index0, index1, weight)
 		{
-			this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_ .getValue ());
+			this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_);
 		},
 	});
 
@@ -106080,7 +107332,6 @@ function ($,
 
 
 define ('x_ite/Components/Lighting/SpotLight',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -106099,8 +107350,7 @@ define ('x_ite/Components/Lighting/SpotLight',[
 	"standard/Math/Algorithm",
 	"standard/Utility/ObjectCache",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLightNode, 
@@ -106328,7 +107578,7 @@ function ($,
 		this .cutOffAngle_ .setUnit ("angle");
 	}
 
-	SpotLight .prototype = $.extend (Object .create (X3DLightNode .prototype),
+	SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 	{
 		constructor: SpotLight,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -106571,7 +107821,6 @@ function (Rotation4)
 
 
 define ('x_ite/Components/Interpolation/SquadOrientationInterpolator',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -106579,8 +107828,7 @@ define ('x_ite/Components/Interpolation/SquadOrientationInterpolator',[
 	"x_ite/Browser/Interpolation/SquatInterpolator",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode,
@@ -106598,7 +107846,7 @@ function ($,
 		this .squad = new SquatInterpolator ();
 	}
 
-	SquadOrientationInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	SquadOrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: SquadOrientationInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -106636,15 +107884,15 @@ function ($,
 			if (keyValue .length < key .length)
 				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
 
-			this .squad .generate (this .closed_   .getValue (),
-			                       this .key_      .getValue (),
-			                       this .keyValue_ .getValue ());
+			this .squad .generate (this .closed_ .getValue (),
+			                       this .key_,
+			                       this .keyValue_);
 		},
 		interpolate: function (index0, index1, weight)
 		{
 			try
 			{
-				this .value_changed_ = this .squad .interpolate (index0, index1, weight, this .keyValue_ .getValue ());
+				this .value_changed_ = this .squad .interpolate (index0, index1, weight, this .keyValue_);
 			}
 			catch (error)
 			{
@@ -106708,7 +107956,6 @@ function ($,
 
 
 define ('x_ite/Components/Grouping/StaticGroup',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -106718,8 +107965,7 @@ define ('x_ite/Components/Grouping/StaticGroup',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
@@ -106741,7 +107987,7 @@ function ($,
 		this .bbox  = new Box3 ();
 	}
 
-	StaticGroup .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DBoundedObject .prototype,
 	{
 		constructor: StaticGroup,
@@ -106853,7 +108099,6 @@ function ($,
 
 
 define ('x_ite/Components/ParticleSystems/SurfaceEmitter',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -106864,8 +108109,7 @@ define ('x_ite/Components/ParticleSystems/SurfaceEmitter',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode, 
@@ -106897,7 +108141,7 @@ function ($,
 		this .areaSoFarArray = [ 0 ];
 	}
 
-	SurfaceEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: SurfaceEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -106950,8 +108194,11 @@ function ($,
 				var
 					areaSoFar      = 0,
 					areaSoFarArray = this .areaSoFarArray,
-					vertices       = this .surfaceNode .getVertices ();
+					vertices       = this .surfaceNode .getVertices () .getValue ();
 		
+				this .normals  = this .surfaceNode .getNormals () .getValue ();
+				this .vertices = vertices;
+
 				areaSoFarArray .length = 1;
 
 				for (var i = 0, length = vertices .length; i < length; i += 12)
@@ -107020,7 +108267,7 @@ function ($,
 
 			var
 				i        = index0 * 12,
-				vertices = this .surfaceNode .getVertices ();
+				vertices = this .vertices;
 
 			var t = 1 - u - v;
 
@@ -107030,7 +108277,7 @@ function ($,
 
 			var
 				i       = index0 * 9,
-				normals = this .surfaceNode .getNormals ();
+				normals = this .normals;
 
 			direction .x = u * normals [i + 0] + v * normals [i + 3] + t * normals [i + 6];
 			direction .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
@@ -107110,7 +108357,6 @@ function ($,
 
 
 define ('x_ite/Components/Grouping/Switch',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -107118,8 +108364,7 @@ define ('x_ite/Components/Grouping/Switch',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
@@ -107137,7 +108382,7 @@ function ($,
 		this .addAlias ("choice", this .children_);
 	}
 
-	Switch .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: Switch,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -107258,7 +108503,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/TexCoordChaser2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -107267,8 +108511,7 @@ define ('x_ite/Components/Followers/TexCoordChaser2D',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChaserNode, 
@@ -107288,7 +108531,7 @@ function ($,
 		this .addType (X3DConstants .TexCoordChaser2D);
 	}
 
-	TexCoordChaser2D .prototype = $.extend (Object .create (X3DChaserNode .prototype),
+	TexCoordChaser2D .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 		X3DArrayChaserObject .prototype,
 	{
 		constructor: TexCoordChaser2D,
@@ -107379,7 +108622,6 @@ function ($,
 
 
 define ('x_ite/Components/Followers/TexCoordDamper2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -107388,8 +108630,7 @@ define ('x_ite/Components/Followers/TexCoordDamper2D',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDamperNode, 
@@ -107409,7 +108650,7 @@ function ($,
 		this .addType (X3DConstants .TexCoordDamper2D);
 	}
 
-	TexCoordDamper2D .prototype = $.extend (Object .create (X3DDamperNode .prototype),
+	TexCoordDamper2D .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 		X3DArrayFollowerObject .prototype,
 	{
 		constructor: TexCoordDamper2D,
@@ -107502,7 +108743,6 @@ function ($,
 
 
 define ('x_ite/Components/Text/Text',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -107510,8 +108750,7 @@ define ('x_ite/Components/Text/Text',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -107533,7 +108772,7 @@ function ($,
 		this .lineBounds_ .setUnit ("length");
 	}
 
-	Text .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Text,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -107622,13 +108861,13 @@ function ($,
 				console .log (error);
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			try
 			{
-				this .textGeometry .display (context);
+				this .textGeometry .display (gl, context);
 
-				X3DGeometryNode .prototype .display .call (this, context);
+				X3DGeometryNode .prototype .display .call (this, gl, context);
 			}
 			catch (error)
 			{
@@ -107702,7 +108941,6 @@ function ($,
 
 
 define ('x_ite/Components/EnvironmentalEffects/TextureBackground',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -107710,8 +108948,7 @@ define ('x_ite/Components/EnvironmentalEffects/TextureBackground',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBackgroundNode, 
@@ -107727,7 +108964,7 @@ function ($,
 		this .addType (X3DConstants .TextureBackground);
 	}
 
-	TextureBackground .prototype = $.extend (Object .create (X3DBackgroundNode .prototype),
+	TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
 	{
 		constructor: TextureBackground,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -107858,15 +109095,13 @@ function ($,
 
 
 define ('x_ite/Components/Texturing3D/TextureCoordinate3D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureCoordinateNode, 
@@ -107881,7 +109116,7 @@ function ($,
 		this .addType (X3DConstants .TextureCoordinate3D);
 	}
 
-	TextureCoordinate3D .prototype = $.extend (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinate3D .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinate3D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -107900,27 +109135,39 @@ function ($,
 		{
 			return "texCoord";
 		},
-		addTexCoordToChannel: function (texCoords, index)
+		initialize: function ()
 		{
-			if (index >= 0 && index < this .point_ .length)
+			X3DTextureCoordinateNode .prototype .initialize .call (this);
+
+			this .point_ .addInterest ("set_point__", this);
+
+			this .set_point__ ();
+		},
+		set_point__: function ()
+		{
+			this .point  = this .point_ .getValue ();
+			this .length = this .point_ .length;
+		},
+		addTexCoordToChannel: function (index, array)
+		{
+			if (index >= 0 && index < this .length)
 			{
-				var point = this .point_ [index];
-	
-				texCoords .push (point .x,
-				                 point .y,
-				                 point .z,
-				                 1);
+				var point = this .point;
+
+				index *= 3;
+
+				array .push (point [index], point [index + 1], point [index + 2], 1);
 			}
 			else
-				texCoords .push (0, 0, 0, 1);
+				array .push (0, 0, 0, 1);
 		},
 		getTexCoord: function (array)
 		{
-			var point = this .point_ .getValue ();
+			var point = this .point_;
 
 			for (var i = 0, length = point .length; i < length; ++ i)
 			{
-				var p = point[i] .getValue ();
+				var p = point [i];
 
 				array [i] = new Vector4 (p .x, p .y, p .z, 1);
 			}
@@ -107986,15 +109233,13 @@ function ($,
 
 
 define ('x_ite/Components/Texturing3D/TextureCoordinate4D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureCoordinateNode, 
@@ -108009,7 +109254,7 @@ function ($,
 		this .addType (X3DConstants .TextureCoordinate4D);
 	}
 
-	TextureCoordinate4D .prototype = $.extend (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinate4D .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinate4D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -108028,27 +109273,39 @@ function ($,
 		{
 			return "texCoord";
 		},
-		addTexCoordToChannel: function (texCoords, index)
+		initialize: function ()
 		{
-			if (index >= 0 && index < this .point_ .length)
-			{
-				var point = this .point_ [index];
+			X3DTextureCoordinateNode .prototype .initialize .call (this);
 
-				texCoords .push (point .x,
-				                 point .y,
-				                 point .z,
-				                 point .w);
+			this .point_ .addInterest ("set_point__", this);
+
+			this .set_point__ ();
+		},
+		set_point__: function ()
+		{
+			this .point  = this .point_ .getValue ();
+			this .length = this .point_ .length;
+		},
+		addTexCoordToChannel: function (index, array)
+		{
+			if (index >= 0 && index < this .length)
+			{
+				var point = this .point;
+
+				index *= 4;
+
+				array .push (point [index], point [index + 1], point [index + 2], point [index + 3]);
 			}
 			else
-				texCoords .push (0, 0, 0, 1);
+				array .push (0, 0, 0, 1);
 		},
 		getTexCoord: function (array)
 		{
-			var point = this .point_ .getValue ();
+			var point = this .point_;
 
 			for (var i = 0, length = point .length; i < length; ++ i)
 			{
-				var p = point[i] .getValue ();
+				var p = point [i];
 
 				array [i] = new Vector4 (p .x, p .y, p .z, p .w);
 			}
@@ -108114,7 +109371,6 @@ function ($,
 
 
 define ('x_ite/Components/Texturing3D/TextureTransform3D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -108123,8 +109379,7 @@ define ('x_ite/Components/Texturing3D/TextureTransform3D',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureTransformNode, 
@@ -108143,7 +109398,7 @@ function ($,
 		this .addType (X3DConstants .TextureTransform3D);
 	}
 
-	TextureTransform3D .prototype = $.extend (Object .create (X3DTextureTransformNode .prototype),
+	TextureTransform3D .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
 	{
 		constructor: TextureTransform3D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -108260,15 +109515,13 @@ function ($,
 
 
 define ('x_ite/Components/Texturing3D/TextureTransformMatrix3D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureTransformNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureTransformNode, 
@@ -108283,7 +109536,7 @@ function ($,
 		this .addType (X3DConstants .TextureTransformMatrix3D);
 	}
 
-	TextureTransformMatrix3D .prototype = $.extend (Object .create (X3DTextureTransformNode .prototype),
+	TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
 	{
 		constructor: TextureTransformMatrix3D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -108369,15 +109622,13 @@ function ($,
 
 
 define ('x_ite/Components/EventUtilities/TimeTrigger',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/EventUtilities/X3DTriggerNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTriggerNode, 
@@ -108392,7 +109643,7 @@ function ($,
 		this .addType (X3DConstants .TimeTrigger);
 	}
 
-	TimeTrigger .prototype = $.extend (Object .create (X3DTriggerNode .prototype),
+	TimeTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
 	{
 		constructor: TimeTrigger,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -108479,15 +109730,13 @@ function ($,
 
 
 define ('x_ite/Components/Grouping/Transform',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Grouping/X3DTransformNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTransformNode, 
@@ -108502,7 +109751,7 @@ function ($,
 		this .addType (X3DConstants .Transform);
 	}
 
-	Transform .prototype = $.extend (Object .create (X3DTransformNode .prototype),
+	Transform .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 	{
 		constructor: Transform,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -108587,7 +109836,6 @@ function ($,
 
 
 define ('x_ite/Components/EnvironmentalSensor/TransformSensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -108598,8 +109846,7 @@ define ('x_ite/Components/EnvironmentalSensor/TransformSensor',[
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Geometry/Box3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentalSensorNode, 
@@ -108629,7 +109876,7 @@ function ($,
 		this .targetObjectNode = null;
 	}
 
-	TransformSensor .prototype = $.extend (Object .create (X3DEnvironmentalSensorNode .prototype),
+	TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 	{
 		constructor: TransformSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -108791,15 +110038,13 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/TriangleFanSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DComposedGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -108816,7 +110061,7 @@ function ($,
 		this .triangleIndex = [ ];
 	}
 
-	TriangleFanSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	TriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: TriangleFanSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -108858,14 +110103,14 @@ function ($,
 			// Build coordIndex
 
 			var
-				fanCount      = this .fanCount_ .getValue (),
+				fanCount      = this .fanCount_,
 				triangleIndex = this .triangleIndex;
 		
 			triangleIndex .length = 0;
 
 			for (var f = 0, fans = fanCount .length, index = 0; f < fans; ++ f)
 			{
-				var vertexCount = fanCount [f] .getValue ()
+				var vertexCount = fanCount [f];
 
 				for (var i = 1, count = vertexCount - 1; i < count; ++ i)
 				{
@@ -108940,15 +110185,13 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/TriangleSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DComposedGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -108963,7 +110206,7 @@ function ($,
 		this .addType (X3DConstants .TriangleSet);
 	}
 
-	TriangleSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	TriangleSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: TriangleSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -109059,7 +110302,6 @@ function ($,
 
 
 define ('x_ite/Components/Geometry2D/TriangleSet2D',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -109067,8 +110309,7 @@ define ('x_ite/Components/Geometry2D/TriangleSet2D',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -109076,10 +110317,6 @@ function ($,
           Vector3)
 {
 "use strict";
-
-	var
-		normal = new Vector3 (0, 0, 1),
-		vector = new Vector3 (0, 0, 0);
 
 	function TriangleSet2D (executionContext)
 	{
@@ -109092,7 +110329,7 @@ function ($,
 		this .vertices_ .setUnit ("length");
 	}
 
-	TriangleSet2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: TriangleSet2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -109114,14 +110351,15 @@ function ($,
 		},
 		build: function ()
 		{
-			var vertices = this .vertices_ .getValue ();
+			var
+				vertices    = this .vertices_ .getValue (),
+				normalArray = this .getNormals (),
+				vertexArray = this .getVertices ();
 
-			for (var i = 0, length = vertices .length; i < length; ++ i)
+			for (var i = 0, length = this .vertices_ .length * 2; i < length; i += 2)
 			{
-				var vertex = vertices [i];
-
-				this .addNormal (normal);
-				this .addVertex (vector .set (vertex .x, vertex .y, 0));
+				normalArray .push (0, 0, 1);
+				vertexArray .push (vertices [i + 0], vertices [i + 1], 0, 1);
 			}
 
 			this .setSolid (this .solid_ .getValue ());
@@ -109129,20 +110367,20 @@ function ($,
 		buildTexCoords: function ()
 		{
 			var
-				p         = this .getTexCoordParams (),
-				min       = p .min,
-				Ssize     = p .Ssize,
-				texCoords = [ ],
-				vertices  = this .vertices;
+				p             = this .getTexCoordParams (),
+				min           = p .min,
+				Ssize         = p .Ssize,
+				texCoordArray = this .getTexCoords (),
+				vertexArray   = this .getVertices () .getValue ();
 
-			this .texCoords .push (texCoords);
+			this .getMultiTexCoords () .push (texCoordArray);
 
-			for (var i = 0, length = this .vertices .length; i < length; i += 4)
+			for (var i = 0, length = vertexArray .length; i < length; i += 4)
 			{
-				texCoords .push ((vertices [i]     - min [0]) / Ssize,
-				                 (vertices [i + 1] - min [1]) / Ssize,
-				                 0,
-				                 1);
+				texCoordArray .push ((vertexArray [i]     - min [0]) / Ssize,
+				                     (vertexArray [i + 1] - min [1]) / Ssize,
+				                     0,
+				                     1);
 			}
 		},
 	});
@@ -109202,15 +110440,13 @@ function ($,
 
 
 define ('x_ite/Components/Rendering/TriangleStripSet',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DComposedGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -109227,7 +110463,7 @@ function ($,
 		this .triangleIndex = [ ];
 	}
 
-	TriangleStripSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: TriangleStripSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -109269,14 +110505,14 @@ function ($,
 			// Build coordIndex
 
 			var
-				stripCount    = this .stripCount_ .getValue (),
+				stripCount    = this .stripCount_,
 				triangleIndex = this .triangleIndex;
 
 			triangleIndex .length = 0;
 
 			for (var s = 0, strips = stripCount .length, index = 0; s < strips; ++ s)
 			{
-				var vertexCount = stripCount [s] .getValue ()
+				var vertexCount = stripCount [s];
 
 				for (var i = 0, count = vertexCount - 2; i < count; ++ i)
 				{
@@ -109355,7 +110591,6 @@ function ($,
 
 
 define ('x_ite/Components/Shape/TwoSidedMaterial',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -109363,8 +110598,7 @@ define ('x_ite/Components/Shape/TwoSidedMaterial',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DMaterialNode, 
@@ -109388,7 +110622,7 @@ function ($,
 		this .backEmissiveColor = new Float32Array (3);
 	}
 
-	TwoSidedMaterial .prototype = $.extend (Object .create (X3DMaterialNode .prototype),
+	TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
 	{
 		constructor: TwoSidedMaterial,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -109650,7 +110884,6 @@ function ($,
 
 
 define ('x_ite/Components/Navigation/ViewpointGroup',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -109660,8 +110893,7 @@ define ('x_ite/Components/Navigation/ViewpointGroup',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode,
@@ -109686,7 +110918,7 @@ function ($,
 		this .viewpointGroups  = [ ];
 	}
 
-	ViewpointGroup .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: ViewpointGroup,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -109905,7 +111137,6 @@ function ($,
 
 
 define ('x_ite/Components/EnvironmentalSensor/VisibilitySensor',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -109914,8 +111145,7 @@ define ('x_ite/Components/EnvironmentalSensor/VisibilitySensor',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentalSensorNode,
@@ -109936,7 +111166,7 @@ function ($,
 		this .visible = false;
 	}
 
-	VisibilitySensor .prototype = $.extend (Object .create (X3DEnvironmentalSensorNode .prototype),
+	VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 	{
 		constructor: VisibilitySensor,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -110081,7 +111311,6 @@ function ($,
 
 
 define ('x_ite/Components/ParticleSystems/VolumeEmitter',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -110097,8 +111326,7 @@ define ('x_ite/Components/ParticleSystems/VolumeEmitter',[
 	"standard/Math/Utility/BVH",
 	"standard/Math/Algorithms/QuickSort",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode,
@@ -110147,7 +111375,7 @@ function ($,
 		this .sorter         = new QuickSort (this .intersections, PlaneCompare);
 	}
 
-	VolumeEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: VolumeEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -110208,9 +111436,12 @@ function ($,
 			var
 				areaSoFar      = 0,
 				areaSoFarArray = this .areaSoFarArray,
-				vertices       = this .volumeNode .getVertices (),
-				normals        = this .volumeNode .getNormals ();
-	
+				vertices       = this .volumeNode .getVertices () .getValue (),
+				normals        = this .volumeNode .getNormals () .getValue ();
+
+			this .normals  = normals;
+			this .vertices = vertices;
+
 			areaSoFarArray .length = 1;
 
 			for (var i = 0, length = vertices .length; i < length; i += 12)
@@ -110277,7 +111508,7 @@ function ($,
 
 			var
 				i        = index0 * 12,
-				vertices = this .volumeNode .getVertices ();
+				vertices = this .vertices;
 
 			point .x = u * vertices [i + 0] + v * vertices [i + 4] + t * vertices [i + 8];
 			point .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
@@ -110285,7 +111516,7 @@ function ($,
 
 			var
 				i       = index0 * 9,
-				normals = this .volumeNode .getNormals ();
+				normals = this .normals;
 
 			normal .x = u * normals [i + 0] + v * normals [i + 3] + t * normals [i + 6];
 			normal .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
@@ -110403,7 +111634,6 @@ function ($,
 
 
 define ('x_ite/Components/ParticleSystems/WindPhysicsModel',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -110412,8 +111642,7 @@ define ('x_ite/Components/ParticleSystems/WindPhysicsModel',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticlePhysicsModelNode, 
@@ -110434,7 +111663,7 @@ function ($,
 		this .speed_ .setUnit ("speed");
 	}
 
-	WindPhysicsModel .prototype = $.extend (Object .create (X3DParticlePhysicsModelNode .prototype),
+	WindPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
 	{
 		constructor: WindPhysicsModel,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -110541,15 +111770,13 @@ function ($,
 
 
 define ('x_ite/Components/Core/WorldInfo',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DInfoNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInfoNode, 
@@ -110564,7 +111791,7 @@ function ($,
 		this .addType (X3DConstants .WorldInfo);
 	}
 
-	WorldInfo .prototype = $.extend (Object .create (X3DInfoNode .prototype),
+	WorldInfo .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
 	{
 		constructor: WorldInfo,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -110641,7 +111868,6 @@ function ($,
 
 
 define ('x_ite/Components/X_ITE/BlendMode',[
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -110649,8 +111875,7 @@ define ('x_ite/Components/X_ITE/BlendMode',[
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DAppearanceChildNode,
@@ -110669,7 +111894,7 @@ function ($,
 		this .blendModes = { };
 	}
 
-	BlendMode .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
+	BlendMode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: BlendMode,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -111642,6 +112867,7 @@ define ('x_ite/Browser/X3DBrowser',[
 	"x_ite/Execution/X3DScene",
 	"x_ite/InputOutput/FileLoader",
 	"x_ite/Parser/XMLParser",
+	"x_ite/Parser/JSONParser",
 	"x_ite/Bits/X3DConstants",
 	"locale/gettext",
 ],
@@ -111658,6 +112884,7 @@ function ($,
           X3DScene,
           FileLoader,
           XMLParser,
+          JSONParser,
           X3DConstants,
           _)
 {
@@ -111678,7 +112905,7 @@ function ($,
 		this .replaceWorld (this .createScene ());
 	};
 
-	X3DBrowser .prototype = $.extend (Object .create (X3DBrowserContext .prototype),
+	X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .prototype),
 	{
 		constructor: X3DBrowser,
 		getTypeName: function ()
@@ -112046,6 +113273,27 @@ function ($,
 		{	
 			// Probably to be implemented like removeFieldCallback.
 		},
+		importJS: function (jsobj) {
+			var
+				currentScene = this .currentScene,
+				external     = this .isExternal (),
+				scene        = this .createScene ();
+
+			new JSONParser (scene) .parseJavaScript (jsobj);
+
+			if (! external)
+			{
+				scene .setExecutionContext (currentScene);
+				currentScene .isLive () .addInterest (scene, "setLive");
+						
+				if (currentScene .isLive () .getValue ())
+					scene .setLive (true);
+			}
+
+			scene .setup ();
+
+			return scene;
+		},
 		importDocument: function (dom)
 		{
 			if (! dom) return;
@@ -112233,7 +113481,10 @@ function ($,
 
 			console .log (string);
 
-			$(".x_ite-console") .append (string);
+			var element = $(".x_ite-console");
+
+			if (element .length)
+				element .append (document .createTextNode (string));
 		},
 		println: function ()
 		{
@@ -112246,7 +113497,10 @@ function ($,
 
 			string += "\n";
 
-			$(".x_ite-console") .append (string);
+			var element = $(".x_ite-console");
+
+			if (element .length)
+				element .append (document .createTextNode (string));
 		},
 	});
 
@@ -112511,7 +113765,7 @@ function ($,
 		callbacks .resolve ();
 	}
 
-	$.extend (X3D,
+	Object .assign (X3D,
 		Fields,
 	{
 		require:                     require,

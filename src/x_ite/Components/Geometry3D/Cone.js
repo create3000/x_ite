@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -80,7 +78,7 @@ function ($,
 		this .bottomRadius_ .setUnit ("length");
 	}
 
-	Cone .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Cone,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -115,15 +113,15 @@ function ($,
 		build: function ()
 		{
 			var
-				options      = this .getBrowser () .getConeOptions (),
-				xDimension   = options .xDimension_ .getValue (),
-				height       = this .height_ .getValue (),
-				bottomRadius = this .bottomRadius_ .getValue (),
-				texCoords    = [ ],
-				normals      = this .getNormals (),
-				vertices     = this .getVertices ();
+				options       = this .getBrowser () .getConeOptions (),
+				xDimension    = options .xDimension_ .getValue (),
+				height        = this .height_ .getValue (),
+				bottomRadius  = this .bottomRadius_ .getValue (),
+				texCoordArray = this .getTexCoords (),
+				normalArray   = this .getNormals (),
+				vertexArray   = this .getVertices ();
 
-			this .getTexCoords () .push (texCoords);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			var
 				y1 = height / 2,
@@ -158,19 +156,19 @@ function ($,
 					 */
 
 					// p1
-					texCoords .push (u1, 1, 0, 1);
-					normals .push (n1 .imag, nz .real, n1 .real);
-					vertices .push (0, y1, 0, 1);
+					texCoordArray .push (u1, 1, 0, 1);
+					normalArray .push (n1 .imag, nz .real, n1 .real);
+					vertexArray .push (0, y1, 0, 1);
 
 					// p2
-					texCoords .push (u2, 0, 0, 1);
-					normals .push (n2 .imag, nz .real, n2 .real);
-					vertices .push (p2 .imag, y2, p2 .real, 1);
+					texCoordArray .push (u2, 0, 0, 1);
+					normalArray .push (n2 .imag, nz .real, n2 .real);
+					vertexArray .push (p2 .imag, y2, p2 .real, 1);
 
 					// p3
-					texCoords .push (u3, 0, 0, 1);
-					normals .push (n3 .imag , nz .real, n3 .real);
-					vertices .push (p3 .imag, y2, p3 .real, 1);
+					texCoordArray .push (u3, 0, 0, 1);
+					normalArray .push (n3 .imag , nz .real, n3 .real);
+					vertexArray .push (p3 .imag, y2, p3 .real, 1);
 				}
 			}
 
@@ -204,22 +202,21 @@ function ($,
 						p1 = points [i],
 						p2 = points [i + 1];
 
-					texCoords .push (t0 .x, t0 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p0 .x, p0 .y, p0 .z, 1);
+					texCoordArray .push (t0 .x, t0 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p0 .x, p0 .y, p0 .z, 1);
 
-					texCoords .push (t1 .x, t1 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p1 .x, p1 .y, p1 .z, 1);
+					texCoordArray .push (t1 .x, t1 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 
-					texCoords .push (t2 .x, t2 .y, 0, 1);
-					normals .push (0, -1, 0);
-					vertices .push (p2 .x, p2 .y, p2 .z, 1);
+					texCoordArray .push (t2 .x, t2 .y, 0, 1);
+					normalArray .push (0, -1, 0);
+					vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
 				}
 			}
 
 			this .setSolid (this .solid_ .getValue ());
-			this .setNormals (normals);
 			this .setExtents ();
 		},
 		setExtents: function ()

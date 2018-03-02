@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DBindableNode",
 	"x_ite/Components/Time/TimeSensor",
@@ -62,8 +61,7 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBindableNode,
           TimeSensor,
           EaseInEaseOut,
@@ -118,7 +116,7 @@ function ($,
 		this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
 	}
 
-	X3DViewpointNode .prototype = $.extend (Object .create (X3DBindableNode .prototype),
+	X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 	{
 		constructor: X3DViewpointNode,
 		initialize: function ()
@@ -135,14 +133,14 @@ function ($,
 			this .timeSensor .stopTime_ = 1;
 			this .timeSensor .setup ();
 
-			this .easeInEaseOut .key_           = [ 0, 1 ];
-			this .easeInEaseOut .easeInEaseOut_ = [ new Vector2 (0, 0), new Vector2 (0, 0) ];
+			this .easeInEaseOut .key_           = new Fields .MFFloat (0, 1);
+			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
 			this .easeInEaseOut .setup ();
 
-			this .positionInterpolator         .key_ = [ 0, 1 ];
-			this .orientationInterpolator      .key_ = [ 0, 1 ];
-			this .scaleInterpolator            .key_ = [ 0, 1 ];
-			this .scaleOrientationInterpolator .key_ = [ 0, 1 ];
+			this .positionInterpolator         .key_ = new Fields .MFFloat (0, 1);
+			this .orientationInterpolator      .key_ = new Fields .MFFloat (0, 1);
+			this .scaleInterpolator            .key_ = new Fields .MFFloat (0, 1);
+			this .scaleOrientationInterpolator .key_ = new Fields .MFFloat (0, 1);
 
 			this .positionInterpolator         .setup ();
 			this .orientationInterpolator      .setup ();
@@ -271,13 +269,13 @@ function ($,
 						}
 						case "ANIMATE":
 						{
-							this .easeInEaseOut .easeInEaseOut_ = [ new Vector2 (0, 1), new Vector2 (1, 0) ];
+							this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 							break;
 						}
 						default:
 						{
 							// LINEAR
-							this .easeInEaseOut .easeInEaseOut_ = [ new Vector2 (0, 0), new Vector2 (0, 0) ];
+							this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
 							break;
 						}
 					}
@@ -289,10 +287,10 @@ function ($,
 
 					this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
-					this .positionInterpolator         .keyValue_ = [ relativePosition,         this .positionOffset_         .getValue () ];
-					this .orientationInterpolator      .keyValue_ = [ relativeOrientation,      this .orientationOffset_      .getValue () ];
-					this .scaleInterpolator            .keyValue_ = [ relativeScale,            this .scaleOffset_            .getValue () ];
-					this .scaleOrientationInterpolator .keyValue_ = [ relativeScaleOrientation, this .scaleOrientationOffset_ .getValue () ];
+					this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
+					this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
+					this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
+					this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
 
 					this .positionOffset_         = relativePosition;
 					this .orientationOffset_      = relativeOrientation;
@@ -390,7 +388,7 @@ function ($,
 			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
 			this .timeSensor .isActive_ .addInterest ("set_active__", this);
 	
-			this .easeInEaseOut .easeInEaseOut_ = [ new Vector2 (0, 1), new Vector2 (1, 0) ];
+			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
 			var
 				translation = Vector3 .lerp (this .positionOffset_ .getValue (), offset, factor),

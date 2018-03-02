@@ -48,62 +48,98 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          X3DGeometricPropertyNode, 
+function (X3DGeometricPropertyNode, 
           X3DConstants,
           Triangle3,
           Vector3)
 {
 "use strict";
 
+	var
+		point1 = new Vector3 (0, 0, 0),
+		point2 = new Vector3 (0, 0, 0),
+		point3 = new Vector3 (0, 0, 0),
+		point4 = new Vector3 (0, 0, 0);
+
 	function X3DCoordinateNode (executionContext)
 	{
 		X3DGeometricPropertyNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DCoordinateNode);
-
-		this .point = this .point_ .getValue ();
 	}
 
-	X3DCoordinateNode .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
+	X3DCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: X3DCoordinateNode,
+		initialize: function ()
+		{
+			X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+			this .point_ .addInterest ("set_point__", this);
+
+			this .set_point__ ();
+		},
+		set_point__: function ()
+		{
+			this .point  = this .point_ .getValue ();
+			this .length = this .point_ .length;
+		},
 		isEmpty: function ()
 		{
-			return this .point .length == 0;
+			return this .length === 0;
 		},
 		getSize: function ()
 		{
-			return this .point .length;
+			return this .length;
 		},
-		get1Point: function (index)
+		get1Point: function (index, vector)
 		{
-			// The index cannot be less than 0.
+			if (index < this .length)
+			{
+				const point = this .point;
 
-			if (index < this .point .length)
-				return this .point [index] .getValue ();
+				index *= 3;
 
-			return new Vector3 (0, 0, 0);
+				return vector .set (point [index + 0], point [index + 1], point [index + 2]);
+			}
+			else
+			{
+				return vector .set (0, 0, 0);
+			}
+		},
+		addPoint: function (index, array)
+		{
+			if (index < this .length)
+			{
+				const point = this .point;
+
+				index *= 3;
+
+				array .push (point [index + 0], point [index + 1], point [index + 2], 1);
+			}
+			else
+			{
+				array .push (0, 0, 0, 1);
+			}
 		},
 		getNormal: function (index1, index2, index3)
 		{
 			// The index[1,2,3] cannot be less than 0.
 
-			var
-				point  = this .point,
-				length = point .length;
+			var length = this .length;
 
 			if (index1 < length && index2 < length && index3 < length)
-				return Triangle3 .normal (point [index1] .getValue (),
-				                          point [index2] .getValue (),
-				                          point [index3] .getValue (),
+			{
+				return Triangle3 .normal (this .get1Point (index1, point1),
+				                          this .get1Point (index2, point2),
+				                          this .get1Point (index3, point3),
 				                          new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},
@@ -111,16 +147,16 @@ function ($,
 		{
 			// The index[1,2,3,4] cannot be less than 0.
 
-			var
-				point  = this .point,
-				length = point .length;
+			var length = this .length;
 
 			if (index1 < length && index2 < length && index3 < length && index4 < length)
-				return Triangle3 .quadNormal (point [index1] .getValue (),
-				                              point [index2] .getValue (),
-				                              point [index3] .getValue (),
-				                              point [index4] .getValue (),
+			{
+				return Triangle3 .quadNormal (this .get1Point (index1, point1),
+				                              this .get1Point (index2, point2),
+				                              this .get1Point (index3, point3),
+				                              this .get1Point (index4, point4),
 				                              new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},

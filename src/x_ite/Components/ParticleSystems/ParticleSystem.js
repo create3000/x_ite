@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -65,8 +64,7 @@ define ([
 	"standard/Math/Algorithm",
 	"standard/Math/Utility/BVH",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode,
@@ -160,7 +158,7 @@ function ($,
 		this .sortParticles            = false;
 	}
 
-	ParticleSystem .prototype = $.extend (Object .create (X3DShapeNode .prototype),
+	ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 	{
 		constructor: ParticleSystem,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -660,12 +658,12 @@ function ($,
 		set_color__: function ()
 		{
 			var
-				colorKey  = this .colorKey_ .getValue (),
+				colorKey  = this .colorKey_,
 				colorKeys = this .colorKeys,
 				colorRamp = this .colorRamp;
 
 			for (var i = 0, length = colorKey .length; i < length; ++ i)
-				colorKeys [i] = colorKey [i] .getValue ();
+				colorKeys [i] = colorKey [i];
 
 			colorKeys .length = length;
 
@@ -694,12 +692,12 @@ function ($,
 		set_texCoord__: function ()
 		{
 			var
-				texCoordKey  = this .texCoordKey_ .getValue (),
+				texCoordKey  = this .texCoordKey_,
 				texCoordKeys = this .texCoordKeys,
 				texCoordRamp = this .texCoordRamp;
 
 			for (var i = 0, length = texCoordKey .length; i < length; ++ i)
-				texCoordKeys [i] = texCoordKey [i] .getValue ();
+				texCoordKeys [i] = texCoordKey [i];
 
 			texCoordKeys .length = length;
 
@@ -1328,7 +1326,7 @@ function ($,
 					this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
 			}
 		},
-		depth: function (context, shaderNode)
+		depth: function (gl, context, shaderNode)
 		{
 			// Update geometry if SPRITE.
 
@@ -1341,14 +1339,12 @@ function ($,
 				var geometryNode = this .getGeometry ();
 
 				if (geometryNode)
-					geometryNode .displayParticlesDepth (context, shaderNode, this .particles, this .numParticles);
+					geometryNode .displayParticlesDepth (gl, context, shaderNode, this .particles, this .numParticles);
 			}
 			else
 			{
 				if (this .numParticles <= 0)
 					return;
-
-				var gl = context .renderer .getBrowser () .getContext ();
 
 				// Setup vertex attributes.
 
@@ -1366,7 +1362,7 @@ function ($,
 				shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			try
 			{
@@ -1375,7 +1371,7 @@ function ($,
 
 				// Traverse appearance before everything.
 
-				this .getAppearance () .enable (context);
+				this .getAppearance () .enable (gl, context);
 
 				// Update geometry if SPRITE.
 
@@ -1388,13 +1384,12 @@ function ($,
 					var geometryNode = this .getGeometry ();
 
 					if (geometryNode)
-						geometryNode .displayParticles (context, this .particles, this .numParticles);
+						geometryNode .displayParticles (gl, context, this .particles, this .numParticles);
 				}
 				else
 				{
 					var
 						browser    = context .renderer .getBrowser (),
-						gl         = browser .getContext (),
 						shaderNode = context .shaderNode;
 	
 					if (shaderNode === browser .getDefaultShader ())
@@ -1404,6 +1399,8 @@ function ($,
 	
 					context .geometryType  = this .shaderGeometryType;
 					context .colorMaterial = this .colorMaterial;
+
+					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
 		
 					// Setup vertex attributes.
@@ -1466,9 +1463,10 @@ function ($,
 					shaderNode .disableColorAttribute    (gl);
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
+					shaderNode .disable                  (gl);
 				}
 
-				this .getAppearance () .disable (context);
+				this .getAppearance () .disable (gl, context);
 			}
 			catch (error)
 			{

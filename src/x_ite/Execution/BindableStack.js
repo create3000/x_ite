@@ -48,10 +48,9 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 ],
-function ($, X3DBaseNode)
+function (X3DBaseNode)
 {
 "use strict";
 
@@ -63,7 +62,7 @@ function ($, X3DBaseNode)
 		this .array = [ defaultNode ];
 	}
 
-	BindableStack .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BindableStack,
 		getTypeName: function ()

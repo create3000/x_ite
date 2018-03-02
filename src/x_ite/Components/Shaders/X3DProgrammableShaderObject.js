@@ -48,20 +48,18 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DCast,
           X3DConstants,
           Matrix3)
 {
 "use strict";
-var xxx = 0;
+
 	var
 		matrix3 = new Matrix3 (),
 		NULL    = new Fields .SFNode ();
@@ -91,6 +89,8 @@ var xxx = 0;
 		this .numClipPlanes   = 0;
 		this .numGlobalLights = 0;
 		this .numLights       = 0;
+
+		this .textures = new Map ();
 	}
 
 	X3DProgrammableShaderObject .prototype =
@@ -262,7 +262,7 @@ var xxx = 0;
 			location = gl .getUniformLocation (program, depreciated);
 
 			if (location)
-				console .error ("Using uniform location name »" + depreciated + "« is depreciated. See http://create3000.de/x_ite/custom-shaders/.");
+				console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated. See http://create3000.de/x_ite/custom-shaders/.");
 
 			return location;
 		},
@@ -272,6 +272,8 @@ var xxx = 0;
 				gl                = this .getBrowser () .getContext (),
 				program           = this .getProgram (),
 				userDefinedFields = this .getUserDefinedFields ();
+
+			this .textures .clear ();
 
 			for (var name in userDefinedFields)
 			{
@@ -303,6 +305,10 @@ var xxx = 0;
 						case X3DConstants .SFMatrix4f:
 						{
 							location .array = new Float32Array (16);
+							break;
+						}
+						case X3DConstants .SFNode:
+						{
 							break;
 						}
 						case X3DConstants .MFBool:
@@ -338,16 +344,16 @@ var xxx = 0;
 						}
 						case X3DConstants .MFNode:
 						{
-							var array = field ._uniformLocation = [ ];
+							var locations = location .locations = [ ];
 
-							for (var i = 0; ; ++ i)
+							for (var i = 0;; ++ i)
 							{
-								var location = gl .getUniformLocation (program, name + "[" + i + "]");
+								var l = gl .getUniformLocation (program, field .getName () + "[" + i + "]");
 
-								if (location)
-									array [i] = location;
-								else
+								if (! l)
 									break;
+
+								locations .push (l);
 							}
 
 							break;
@@ -387,38 +393,11 @@ var xxx = 0;
 
 			for (var name in userDefinedFields)
 			{
-				var field = userDefinedFields [name];
+				var
+					field    = userDefinedFields [name],
+					location = gl .getUniformLocation (program, name);
 
 				field .removeInterest ("set_field__", this);
-
-				switch (field .getType ())
-				{
-					case X3DConstants .SFNode:
-					{
-						this .removeNode (gl, program, field ._uniformLocation);
-						break;
-					}
-					case X3DConstants .MFNode:
-					{
-						var name = field .getName ();
-
-						for (var i = 0; ; ++ i)
-						{
-							var location = gl .getUniformLocation (program, name + "[" + i + "]");
-
-							if (location)
-								this .removeNode (gl, program, location);
-							else
-								break;
-						}
-
-						break;
-					}
-					default:
-						continue;
-				}
-
-				break;
 			}
 		},
 		set_field__: function (field)
@@ -430,8 +409,6 @@ var xxx = 0;
 
 			if (location)
 			{
-				this .useProgram (gl); // TODO: only in ComposedShader possible.
-
 				switch (field .getType ())
 				{
 					case X3DConstants .SFBool:
@@ -463,7 +440,7 @@ var xxx = 0;
 					{
 						var
 							array  = location .array,
-							pixels = field .array .getValue (),
+							pixels = field .array,
 							length = 3 + pixels .length;
 	
 						if (length !== array .length)
@@ -473,8 +450,8 @@ var xxx = 0;
 						array [1] = field .height;
 						array [2] = field .comp;
 	
-						for (var a = 3, p = 0, length = pixels .length; p < length; ++ p)
-							array [a ++] = pixels [p] .getValue ();
+						for (var a = 3, p = 0, length = pixels .length; p < length; ++ p, ++ a)
+							array [a] = pixels [p];
 	
 						gl .uniform1iv (location, array);
 						return;
@@ -497,7 +474,15 @@ var xxx = 0;
 					}
 					case X3DConstants .SFNode:
 					{
-						this .setNode (gl, program, location, field);
+						var texture = X3DCast (X3DConstants .X3DTextureNode, field);
+		
+						if (texture)
+						{
+							this .textures .set (location, { name: field .getName (), texture: texture, textureUnit: undefined } );
+							return;
+						}
+
+						this .textures .delete (location);
 						return;
 					}
 					case X3DConstants .SFRotation:
@@ -535,12 +520,10 @@ var xxx = 0;
 					case X3DConstants .MFBool:
 					case X3DConstants .MFInt32:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
-	
-						for (var i = 0, length = value .length; i < length; ++ i)
-							array [i] = value [i] .getValue ();
+						var array = location .array;
+
+						for (var i = 0, length = field .length; i < length; ++ i)
+							array [i] = field [i];
 	
 						for (var length = array .length; i < length; ++ i)
 							array [i] = 0;
@@ -550,13 +533,11 @@ var xxx = 0;
 					}
 					case X3DConstants .MFColor:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var color = value [i] .getValue ();
+							var color = field [i];
 	
 							array [k++] = color .r;
 							array [k++] = color .g;
@@ -571,13 +552,11 @@ var xxx = 0;
 					}
 					case X3DConstants .MFColorRGBA:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var color = value [i] .getValue ();
+							var color = field [i];
 	
 							array [k++] = color .r;
 							array [k++] = color .g;
@@ -595,41 +574,38 @@ var xxx = 0;
 					case X3DConstants .MFFloat:
 					case X3DConstants .MFTime:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
-	
-						for (var i = 0, length = value .length; i < length; ++ i)
-							array [i] = value [i] .getValue ();
+						var array = location .array;
+
+						for (var i = 0, length = field .length; i < length; ++ i)
+							array [i] = field [i];
 	
 						for (var length = array .length; i < length; ++ i)
 							array [i] = 0;
-	
+
 						gl .uniform1fv (location, array);
 						return;
 					}
 					case X3DConstants .MFImage:
 					{
 						var
-							images = field .getValue (),
 							array  = location .array,
 							length = this .getImagesLength (field);
 	
 						if (length !== array .length)
 							array = location .array = new Int32Array (length);
 	
-						for (var i = 0, a = 0, length = images .length; i < length; ++ i)
+						for (var i = 0, a = 0, length = field .length; i < length; ++ i)
 						{
 							var
-								value  = images [i],
-								pixels = value .array .getValue ();
+								value  = field [i],
+								pixels = value .array;
 	
 							array [a ++] = value .width;
 							array [a ++] = value .height;
 							array [a ++] = value .comp;
 	
 							for (var p = 0, plength = pixels .length; p < plength; ++ p)
-								array [a ++] = pixels [p] .getValue ();
+								array [a ++] = pixels [p];
 						}
 	
 						gl .uniform1iv (location, array);
@@ -638,23 +614,14 @@ var xxx = 0;
 					case X3DConstants .MFMatrix3d:
 					case X3DConstants .MFMatrix3f:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var matrix = value [i] .getValue ();
+							var matrix = field [i];
 	
-							array [k++] = matrix [0];
-							array [k++] = matrix [1];
-							array [k++] = matrix [2];
-							array [k++] = matrix [3];
-							array [k++] = matrix [4];
-							array [k++] = matrix [5];
-							array [k++] = matrix [6];
-							array [k++] = matrix [7];
-							array [k++] = matrix [8];
+							for (var m = 0; m < 9; ++ m)
+								array [k++] = matrix [m];
 						}
 	
 						for (var length = array .length; k < length; ++ k)
@@ -666,30 +633,14 @@ var xxx = 0;
 					case X3DConstants .MFMatrix4d:
 					case X3DConstants .MFMatrix4f:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var matrix = value [i] .getValue ();
+							var matrix = field [i];
 	
-							array [k++] = matrix [ 0];
-							array [k++] = matrix [ 1];
-							array [k++] = matrix [ 2];
-							array [k++] = matrix [ 3];
-							array [k++] = matrix [ 4];
-							array [k++] = matrix [ 5];
-							array [k++] = matrix [ 6];
-							array [k++] = matrix [ 7];
-							array [k++] = matrix [ 8];
-							array [k++] = matrix [ 9];
-							array [k++] = matrix [10];
-							array [k++] = matrix [11];
-							array [k++] = matrix [12];
-							array [k++] = matrix [13];
-							array [k++] = matrix [14];
-							array [k++] = matrix [15];
+							for (var m = 0; m < 16; ++ m)
+								array [k++] = matrix [m];
 						}
 	
 						for (var length = array .length; k < length; ++ k)
@@ -700,25 +651,28 @@ var xxx = 0;
 					}
 					case X3DConstants .MFNode:
 					{
-						var value = field .getValue ();
-	
-						for (var i = 0, length = value .length; i < length; ++ i)
-							this .setNode (gl, program, location [i], value [i]);
-	
-						for (var length = location .length; i < length; ++ i)
-							this .setNode (gl, program, location [i], NULL);
-	
+						var locations = location .locations;
+
+						for (var i = 0, length = field .length; i < length; ++ i)
+						{
+							var texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
+			
+							if (texture)
+							{
+								this .textures .set (locations [i], { name: field [i] .getName (), texture: texture, textureUnit: undefined } );
+								continue;
+							}
+						}
+
 						return;
 					}
 					case X3DConstants .MFRotation:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var matrix = value [i] .getValue () .getMatrix (matrix3);
+							var matrix = field [i] .getValue () .getMatrix (matrix3);
 	
 							array [k++] = matrix [0];
 							array [k++] = matrix [1];
@@ -744,13 +698,11 @@ var xxx = 0;
 					case X3DConstants .MFVec2d:
 					case X3DConstants .MFVec2f:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var vector = value [i] .getValue ();
+							var vector = field [i];
 	
 							array [k++] = vector .x;
 							array [k++] = vector .y;
@@ -758,20 +710,18 @@ var xxx = 0;
 	
 						for (var length = array .length; k < length; ++ k)
 							array [k] = 0;
-	
+
 						gl .uniform2fv (location, array);
 						return;
 					}
 					case X3DConstants .MFVec3d:
 					case X3DConstants .MFVec3f:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var vector = value [i] .getValue ();
+							var vector = field [i];
 	
 							array [k++] = vector .x;
 							array [k++] = vector .y;
@@ -787,13 +737,11 @@ var xxx = 0;
 					case X3DConstants .MFVec4d:
 					case X3DConstants .MFVec4f:
 					{
-						var
-							value = field .getValue (),
-							array = location .array;
+						var array = location .array;
 	
-						for (var i = 0, k = 0, length = value .length; i < length; ++ i)
+						for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 						{
-							var vector = value [i] .getValue ();
+							var vector = field [i];
 	
 							array [k++] = vector .x;
 							array [k++] = vector .y;
@@ -808,48 +756,6 @@ var xxx = 0;
 						return;
 					}
 				}
-			}
-		},
-		setNode: function (gl, program, location, field)
-		{
-			if (location)
-			{
-				var textureUnit = gl .getUniform (program, location);
-
-				if (! textureUnit)
-				{
-					if (this .getBrowser () .getCombinedTextureUnits () .length)
-					{
-						textureUnit = this .getBrowser () .getCombinedTextureUnits () .pop ();
-						gl .uniform1i (location, textureUnit);
-					}
-					else
-					{
-						console .warn ("Not enough combined texture units for uniform variable '", field .getName (), "' available.");
-						return;
-					}
-				}
-
-				gl .activeTexture (gl .TEXTURE0 + textureUnit);
-
-				var texture = X3DCast (X3DConstants .X3DTextureNode, field);
-
-				if (texture)
-					gl .bindTexture (texture .getTarget (), texture .getTexture ());
-
-				gl .activeTexture (gl .TEXTURE0);
-			}
-		},
-		removeNode: function (gl, program, location)
-		{
-			if (location)
-			{
-				var textureUnit = gl .getUniform (program, location);
-	
-				if (textureUnit)
-					this .getBrowser () .getCombinedTextureUnits () .push (textureUnit);
-
-				gl .uniform1i (location, 0);
 			}
 		},
 		getImagesLength: function (field)
@@ -898,7 +804,7 @@ var xxx = 0;
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
 		},
-		setGlobalUniforms: function (renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
+		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
 			var globalLights = renderObject .getGlobalLights ();
 
@@ -1042,6 +948,54 @@ var xxx = 0;
 			}
 
 			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+		},
+		enable: function (gl)
+		{
+			var browser = this .getBrowser ();
+
+			//console .log (this .getName ());
+			//console .log (browser .getCombinedTextureUnits () .length);
+
+			for (let item of this .textures)
+			{
+				var
+					location = item [0],
+					object   = item [1],
+					name     = object .name,
+					texture  = object .texture;
+
+				if (! browser .getCombinedTextureUnits () .length)
+				{
+					console .warn ("Not enough combined texture units for uniform variable '" + name + "' available.");
+					continue;
+				}
+
+				var textureUnit = object .textureUnit = browser .getCombinedTextureUnits () .pop ();
+	
+				gl .uniform1i (location, textureUnit);
+				gl .activeTexture (gl .TEXTURE0 + textureUnit);
+				gl .bindTexture (texture .getTarget (), texture .getTexture ());
+			}
+
+			gl .activeTexture (gl .TEXTURE0);
+		},
+		disable: function (gl)
+		{
+			var browser = this .getBrowser ();
+
+			for (let item of this .textures)
+			{
+				var
+					object      = item [1],
+					textureUnit = object .textureUnit;
+
+				if (textureUnit !== undefined)
+					browser .getCombinedTextureUnits () .push (textureUnit);
+
+				object .textureUnit = undefined;
+			}		
+
+			//console .log (browser .getCombinedTextureUnits () .length);
 		},
 		enableFloatAttrib: function (gl, name, buffer, components)
 		{
@@ -1213,7 +1167,7 @@ var xxx = 0;
 			{
 				var uniform = gl .getActiveUniform (program, i);
 				uniform .typeName = enums [uniform.type];
-				result .uniforms .push ($.extend ({ }, uniform));
+				result .uniforms .push (Object .assign ({ }, uniform));
 				result .uniformCount += uniform .size;
 			}
 
@@ -1222,7 +1176,7 @@ var xxx = 0;
 			{
 				var attribute = gl .getActiveAttrib (program, i);
 				attribute .typeName = enums [attribute .type];
-				result .attributes .push ($.extend ({ }, attribute));
+				result .attributes .push (Object .assign ({ }, attribute));
 				result .attributeCount += attribute .size;
 			}
 

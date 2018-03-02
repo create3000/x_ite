@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DInfoNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInfoNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .DISEntityTypeMapping);
 	}
 
-	DISEntityTypeMapping .prototype = $.extend (Object .create (X3DInfoNode .prototype),
+	DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
 	{
 		constructor: DISEntityTypeMapping,
 		fieldDefinitions: new FieldDefinitionArray ([

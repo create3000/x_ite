@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Geometry3D/IndexedFaceSet",
@@ -58,8 +57,7 @@ define ([
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBaseNode,
           IndexedFaceSet,
           Coordinate,
@@ -78,7 +76,7 @@ function ($,
 		                       "yDimension", new Fields .SFInt32 (15))
 	}
 
-	QuadSphereOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	QuadSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: QuadSphereOptions,
 		getTypeName: function ()

@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -65,8 +64,7 @@ define ([
 	"standard/Math/Algorithm",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBaseNode,
@@ -105,7 +103,7 @@ function ($,
 		this .routeIndex           = { };
 	}
 
-	X3DExecutionContext .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DExecutionContext,
 		setup: function ()

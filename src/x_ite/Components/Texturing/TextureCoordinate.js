@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureCoordinateNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .addType (X3DConstants .TextureCoordinate);
 	}
 
-	TextureCoordinate .prototype = $.extend (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinate,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -92,25 +90,39 @@ function ($,
 		{
 			return "texCoord";
 		},
-		addTexCoordToChannel: function (texCoords, index)
+		initialize: function ()
 		{
-			if (index >= 0 && index < this .point_ .length)
+			X3DTextureCoordinateNode .prototype .initialize .call (this);
+
+			this .point_ .addInterest ("set_point__", this);
+
+			this .set_point__ ();
+		},
+		set_point__: function ()
+		{
+			this .point  = this .point_ .getValue ();
+			this .length = this .point_ .length;
+		},
+		addTexCoordToChannel: function (index, array)
+		{
+			if (index >= 0 && index < this .length)
 			{
-				var point = this .point_ [index];
-	
-				texCoords .push (point .x, point .y, 0, 1);
+				var point = this .point;
+
+				index *= 2;
+
+				array .push (point [index], point [index + 1], 0, 1);
 			}
 			else
-				texCoords .push (0, 0, 0, 1);
-
+				array .push (0, 0, 0, 1);
 		},
 		getTexCoord: function (array)
 		{
-			var point = this .point_ .getValue ();
+			var point = this .point_;
 
 			for (var i = 0, length = point .length; i < length; ++ i)
 			{
-				var p = point[i] .getValue ();
+				var p = point [i];
 
 				array [i] = new Vector4 (p .x, p .y, 0, 1);
 			}

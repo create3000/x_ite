@@ -83,7 +83,7 @@ function ($,
 		this .deferred = $.Deferred ();
 	}
 
-	X3DExternProtoDeclaration .prototype = $.extend (Object .create (X3DProtoDeclarationNode .prototype),
+	X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: X3DExternProtoDeclaration,

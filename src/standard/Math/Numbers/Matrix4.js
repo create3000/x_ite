@@ -48,14 +48,17 @@
 
 
 define ([
-	"jquery",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix3",
 	"standard/Math/Algorithms/eigendecomposition",
 ],
-function ($, Vector3, Vector4, Rotation4, Matrix3, eigendecomposition)
+function (Vector3,
+          Vector4,
+          Rotation4,
+          Matrix3,
+          eigendecomposition)
 {
 "use strict";
 
@@ -828,7 +831,7 @@ function ($, Vector3, Vector4, Rotation4, Matrix3, eigendecomposition)
 		configurable: false
 	});
 
-	$.extend (Matrix4,
+	Object .assign (Matrix4,
 	{
 		Identity: new Matrix4 (),
 		Rotation: function (rotation)

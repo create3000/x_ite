@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -65,10 +63,6 @@ function ($,
           Vector3)
 {
 "use strict";
-
-	var
-		normal = new Vector3 (0, 0, 1),
-		vector = new Vector3 (0, 0, 0);
 
 	function TriangleSet2D (executionContext)
 	{
@@ -81,7 +75,7 @@ function ($,
 		this .vertices_ .setUnit ("length");
 	}
 
-	TriangleSet2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: TriangleSet2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -103,14 +97,15 @@ function ($,
 		},
 		build: function ()
 		{
-			var vertices = this .vertices_ .getValue ();
+			var
+				vertices    = this .vertices_ .getValue (),
+				normalArray = this .getNormals (),
+				vertexArray = this .getVertices ();
 
-			for (var i = 0, length = vertices .length; i < length; ++ i)
+			for (var i = 0, length = this .vertices_ .length * 2; i < length; i += 2)
 			{
-				var vertex = vertices [i];
-
-				this .addNormal (normal);
-				this .addVertex (vector .set (vertex .x, vertex .y, 0));
+				normalArray .push (0, 0, 1);
+				vertexArray .push (vertices [i + 0], vertices [i + 1], 0, 1);
 			}
 
 			this .setSolid (this .solid_ .getValue ());
@@ -118,20 +113,20 @@ function ($,
 		buildTexCoords: function ()
 		{
 			var
-				p         = this .getTexCoordParams (),
-				min       = p .min,
-				Ssize     = p .Ssize,
-				texCoords = [ ],
-				vertices  = this .vertices;
+				p             = this .getTexCoordParams (),
+				min           = p .min,
+				Ssize         = p .Ssize,
+				texCoordArray = this .getTexCoords (),
+				vertexArray   = this .getVertices () .getValue ();
 
-			this .texCoords .push (texCoords);
+			this .getMultiTexCoords () .push (texCoordArray);
 
-			for (var i = 0, length = this .vertices .length; i < length; i += 4)
+			for (var i = 0, length = vertexArray .length; i < length; i += 4)
 			{
-				texCoords .push ((vertices [i]     - min [0]) / Ssize,
-				                 (vertices [i + 1] - min [1]) / Ssize,
-				                 0,
-				                 1);
+				texCoordArray .push ((vertexArray [i]     - min [0]) / Ssize,
+				                     (vertexArray [i + 1] - min [1]) / Ssize,
+				                     0,
+				                     1);
 			}
 		},
 	});

@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -63,8 +62,7 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DViewpointNode, 
@@ -127,7 +125,7 @@ function ($,
 		}
 	}
 
-	GeoViewpoint .prototype = $.extend (Object .create (X3DViewpointNode .prototype),
+	GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoViewpoint,

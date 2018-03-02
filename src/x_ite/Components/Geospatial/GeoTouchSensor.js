@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTouchSensorNode, 
@@ -84,7 +82,7 @@ function ($,
 		this .hitPoint_changed_ .setUnit ("length");
 	}
 
-	GeoTouchSensor .prototype = $.extend (Object .create (X3DTouchSensorNode .prototype),
+	GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoTouchSensor,

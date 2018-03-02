@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode,
@@ -82,7 +80,7 @@ function ($,
 		this .screenMatrix    = new Matrix4 ();
 	}
 
-	LayoutGroup .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: LayoutGroup,
 		fieldDefinitions: new FieldDefinitionArray ([

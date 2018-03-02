@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          X3DAppearanceChildNode, 
+function (X3DAppearanceChildNode, 
           X3DConstants,
           Matrix4)
 {
@@ -70,7 +68,7 @@ function ($,
 		this .matrixArray = new Float32Array (this .matrix);
 	}
 
-	X3DTextureTransformNode .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
+	X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DTextureTransformNode,
 		setMatrix: function (value)

@@ -164,7 +164,7 @@ function (TextAlignment,
 			else
 			{
 				var
-					string   = text .string_ .getValue (),
+					string   = text .string_,
 					numChars = 0;
 			
 				for (var i = 0, length = string .length; i < length; ++ i)
@@ -189,7 +189,7 @@ function (TextAlignment,
 		{
 			var
 				font        = fontStyle .getFont (),
-				string      = text .string_ .getValue (),
+				string      = text .string_,
 				numLines    = string .length,
 				maxExtent   = Math .max (0, text .maxExtent_ .getValue ()),
 				topToBottom = fontStyle .topToBottom_ .getValue (),
@@ -316,7 +316,7 @@ function (TextAlignment,
 		{		
 			var
 				font             = fontStyle .getFont (),
-				string           = text .string_ .getValue (),
+				string           = text .string_,
 				numLines         = string .length,
 				maxExtent        = Math .max (0, text .maxExtent_ .getValue ()),
 				leftToRight      = fontStyle .leftToRight_ .getValue (),
@@ -487,7 +487,7 @@ function (TextAlignment,
 				case TextAlignment .BEGIN:
 				case TextAlignment .FIRST:
 				{
-					var lineBounds = text .lineBounds_ .getValue ();
+					var lineBounds = text .lineBounds_;
 
 					for (var i = 0, length = lineBounds .length; i < length; ++ i)
 						lineBounds [i] .y += max .y - yPad [i] * scale;
@@ -498,10 +498,10 @@ function (TextAlignment,
 					break;
 				case TextAlignment .END:
 				{
-					var lineBounds = text .lineBounds_ .getValue ();
+					var lineBounds = text .lineBounds_;
 
 					for (var i = 0, length = lineBounds .length; i < length; ++ i)
-						lineBounds [i].y += yPad [i] * scale - min .y;
+						lineBounds [i] .y += yPad [i] * scale - min .y;
 		
 					break;
 				}
@@ -554,8 +554,6 @@ function (TextAlignment,
 		},
 		stringToGlyphs: function (font, line, normal, lineNumber)
 		{
-			line = line .getValue ();
-
 			var
 				fontGlyphCache = glyphCache [font .fontName],
 				glypes         = this .glyphs [lineNumber];

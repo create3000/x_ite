@@ -48,11 +48,9 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Browser/Interpolation/CatmullRomSplineInterpolator"
 ],
-function ($,
-          CatmullRomSplineInterpolator)
+function (CatmullRomSplineInterpolator)
 {
 "use strict";
 
@@ -70,7 +68,7 @@ function ($,
 			this .T1 = [ ];
 		}
 	
-		CatmullRomSplineInterpolatorInstance .prototype = $.extend (Object .create (CatmullRomSplineInterpolator .prototype),
+		CatmullRomSplineInterpolatorInstance .prototype = Object .assign (Object .create (CatmullRomSplineInterpolator .prototype),
 		{
 			constructor: CatmullRomSplineInterpolatorInstance,
 			create: function ()

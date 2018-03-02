@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Fields",
 	"x_ite/Base/X3DChildObject",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          FieldDefinitionArray,
+function (FieldDefinitionArray,
           Fields,
           X3DChildObject,
           X3DNode,
@@ -88,7 +86,7 @@ function ($,
 			this .construct ();
 	}
 
-	X3DPrototypeInstance .prototype = $.extend (Object .create (X3DExecutionContext .prototype),
+	X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
 		X3DNode .prototype,
 	{
 		constructor: X3DPrototypeInstance,
@@ -154,7 +152,7 @@ function ($,
 							if (field .hasReferences ())
 								continue;
 
-							field .setValue (protoField .getValue ());
+							field .setValue (protoField);
 						}
 						catch (error)
 						{
@@ -244,17 +242,13 @@ function ($,
 			for (var i = 0, length = protos .length; i < length; ++ i)
 				this .protos .add (protos [i] .getName (), protos [i]);
 		},
-		copyRootNodes: function (rootNodes)
+		copyRootNodes: function (rootNodes1)
 		{
-			var
-				rootNodes1 = rootNodes .getValue (),
-				rootNodes2 = this  .getRootNodes () .getValue ();
+			var rootNodes2 = this .getRootNodes ();
 
 			for (var i = 0, length = rootNodes1 .length; i < length; ++ i)
 			{
-				var value = rootNodes1 [i] .copy (this);
-				value .addParent (this .getRootNodes ());
-				rootNodes2 .push (value);
+				rootNodes2 .push (rootNodes1 [i] .copy (this));
 			}
 		},
 		copyImportedNodes: function (executionContext, importedNodes)

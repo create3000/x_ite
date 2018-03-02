@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DAppearanceChildNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .LineProperties);
 	}
 
-	LineProperties .prototype = $.extend (Object .create (X3DAppearanceChildNode .prototype),
+	LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: LineProperties,
 		fieldDefinitions: new FieldDefinitionArray ([

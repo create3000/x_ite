@@ -48,14 +48,12 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Geometry/Box3",
 ],
-function ($,
-          X3DCast,
+function (X3DCast,
           X3DConstants,
           Vector3,
           Box3)

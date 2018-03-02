@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Browser/Interpolation/CatmullRomSplineInterpolator3",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -75,7 +73,7 @@ function ($,
 		this .spline = new CatmullRomSplineInterpolator3 ();
 	}
 
-	SplinePositionInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	SplinePositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: SplinePositionInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -131,15 +129,15 @@ function ($,
 		},
 		set_normalizeVelocity__: function ()
 		{
-			this .spline .generate (this .closed_            .getValue (),
-			                        this .key_               .getValue (),
-			                        this .keyValue_          .getValue (),
-			                        this .keyVelocity_       .getValue (),
+			this .spline .generate (this .closed_ .getValue (),
+			                        this .key_,
+			                        this .keyValue_,
+			                        this .keyVelocity_,
 			                        this .normalizeVelocity_ .getValue ());
 		},
 		interpolate: function (index0, index1, weight)
 		{
-			this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_ .getValue ());
+			this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_);
 		},
 	});
 

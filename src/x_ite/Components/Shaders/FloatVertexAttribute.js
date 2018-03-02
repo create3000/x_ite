@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DVertexAttributeNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .addType (X3DConstants .FloatVertexAttribute);
 	}
 
-	FloatVertexAttribute .prototype = $.extend (Object .create (X3DVertexAttributeNode .prototype),
+	FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 	{
 		constructor: FloatVertexAttribute,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -94,17 +92,36 @@ function ($,
 		{
 			return "attrib";
 		},
-		addValue: function (array, index)
+		initialize: function ()
+		{
+			X3DVertexAttributeNode .prototype .initialize .call (this);
+
+			this .numComponents_ .addInterest ("set_numComponents", this);
+			this .value_         .addInterest ("set_value",         this);
+
+			this .set_numComponents ();
+			this .set_value ();
+		},
+		set_numComponents: function ()
+		{
+			this .numComponents = Algorithm .clamp (this .numComponents_ .getValue (), 1, 4);
+		},
+		set_value: function ()
+		{
+			this .value  = this .value_ .getValue ();
+			this .length = this .value_ .length;
+		},
+		addValue: function (index, array)
 		{
 			var
-				size  = Algorithm .clamp (this .numComponents_ .getValue (), 1, 4),
-				first = index * size,
-				last  = first + size;
-		
-			if (last <= this .value_ .length)
+				value = this .value,
+				first = index * this .numComponents,
+				last  = first + this .numComponents;
+
+			if (last <= this .length)
 			{
 				for (; first < last; ++ first)
-					array .push (this .value_ [first]);
+					array .push (value [first]);
 			}
 			else
 			{
@@ -114,7 +131,7 @@ function ($,
 		},
 		enable: function (gl, shaderNode, buffer)
 		{
-			shaderNode .enableFloatAttrib (gl, this .name_ .getValue (), buffer, Algorithm .clamp (this .numComponents_ .getValue (), 1, 4));
+			shaderNode .enableFloatAttrib (gl, this .name_ .getValue (), buffer, this .numComponents);
 		},
 		disable: function (gl, shaderNode)
 		{

@@ -48,27 +48,21 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DColorNode",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DColorNode, 
           X3DConstants,
-          Color3,
           Vector4)
 {
 "use strict";
-
-	var white = new Color3 (1, 1, 1);
 
 	function Color (executionContext)
 	{
@@ -77,7 +71,7 @@ function ($,
 		this .addType (X3DConstants .Color);
 	}
 
-	Color .prototype = $.extend (Object .create (X3DColorNode .prototype),
+	Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
 	{
 		constructor: Color,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -96,21 +90,53 @@ function ($,
 		{
 			return "color";
 		},
+		initialize: function ()
+		{
+			X3DColorNode .prototype .initialize .call (this);
+
+			this .color_ .addInterest ("set_color__", this);
+
+			this .set_color__ ();
+		},
+		set_color__: function ()
+		{
+			this .color  = this .color_ .getValue ();
+			this .length = this .color_ .length;
+		},
 		isTransparent: function ()
 		{
 			return false;
 		},
-		getWhite: function ()
+		addColor: function (index, array)
 		{
-			return white;
+			if (index >= 0 && index < this .length)
+			{
+				const color = this .color;
+
+				index *= 3;
+
+				array .push (color [index + 0], color [index + 1], color [index + 2], 1);
+			}
+			else if (this .length)
+			{
+				const color = this .color;
+
+				index = (this .length - 1) * 3;
+
+				array .push (color [index + 0], color [index + 1], color [index + 2], 1);
+			}
+			else
+			{
+				array .push (1, 1, 1, 1);
+			}
 		},
 		getVectors: function (array)
 		{
-			var color = this .color_ .getValue ();
+			var color = this .color_;
 
 			for (var i = 0, length = color .length; i < length; ++ i)
 			{
-				var c = color [i] .getValue ();
+				var c = color [i];
 
 				array [i] = new Vector4 (c .r, c .g, c .b, 1);
 			}

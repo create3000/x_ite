@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields/SFBool",
 	"x_ite/Fields/SFColor",
 	"x_ite/Fields/SFColorRGBA",
@@ -65,12 +64,12 @@ define ([
 	"x_ite/Fields/SFVec2",
 	"x_ite/Fields/SFVec3",
 	"x_ite/Fields/SFVec4",
-	"x_ite/Basic/X3DArrayField",
+	"x_ite/Basic/X3DObjectArrayField",
+	"x_ite/Basic/X3DTypedArrayField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          SFBool,
+function (SFBool,
           SFColor,
           SFColorRGBA,
           SFDouble,
@@ -86,7 +85,8 @@ function ($,
           SFVec2,
           SFVec3,
           SFVec4,
-          X3DArrayField,
+          X3DObjectArrayField,
+          X3DTypedArrayField,
           X3DConstants,
           Generator)
 {
@@ -111,16 +111,31 @@ function ($,
 	function MFNode (value)
 	{
 		if (this instanceof MFNode)
-			return X3DArrayField .call (this, arguments);
+			return X3DObjectArrayField .call (this, arguments);
 		
-		return X3DArrayField .call (Object .create (MFNode .prototype), arguments);
+		return X3DObjectArrayField .call (Object .create (MFNode .prototype), arguments);
 	}
 
-	MFNode .prototype = $.extend (Object .create (X3DArrayField .prototype),
+	MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
 	{
 		constructor: MFNode,
-		_valueType: SFNode,
 		_cloneCount: 0,
+		getSingleType: function ()
+		{
+			return SFNode;
+		},
+		getValueType: function ()
+		{
+			return SFNode;
+		},
+		getArrayType: function ()
+		{
+			return Array;
+		},
+		getComponents: function ()
+		{
+			return 1;
+		},
 		getTypeName: function ()
 		{
 			return "MFNode";
@@ -171,13 +186,13 @@ function ($,
 		},
 		addChildObject: function (value)
 		{
-			X3DArrayField .prototype .addChildObject .call (this, value);
+			X3DObjectArrayField .prototype .addChildObject .call (this, value);
 
 			value .addClones (this ._cloneCount);
 		},
 		removeChild: function (value)
 		{
-			X3DArrayField .prototype .removeChild .call (this, value);
+			X3DObjectArrayField .prototype .removeChild .call (this, value);
 
 			value .removeClones (this ._cloneCount);
 		},
@@ -225,46 +240,34 @@ function ($,
 			}
 		},
 	});
-	
-	function MFFieldTemplate (TypeName, Type, SFField)
-	{
-		function MFField (value)
-		{
-			if (this instanceof MFField)
-				return X3DArrayField .call (this, arguments);
-			
-			return X3DArrayField .call (Object .create (MFField .prototype), arguments);
-		}
-	
-		MFField .prototype = $.extend (Object .create (X3DArrayField .prototype),
-		{
-			constructor: MFField,
-			_valueType: SFField,
-			getTypeName: function ()
-			{
-				return TypeName;
-			},
-			getType: function ()
-			{
-				return Type;
-			},
-		});
-
-		return MFField;
-	}
 
 	function MFString (value)
 	{
 		if (this instanceof MFString)
-			return X3DArrayField .call (this, arguments);
+			return X3DObjectArrayField .call (this, arguments);
 		
-		return X3DArrayField .call (Object .create (MFString .prototype), arguments);
+		return X3DObjectArrayField .call (Object .create (MFString .prototype), arguments);
 	}
 
-	MFString .prototype = $.extend (Object .create (X3DArrayField .prototype),
+	MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
 	{
 		constructor: MFString,
-		_valueType: SFString,
+		getValueType: function ()
+		{
+			return String;
+		},
+		getSingleType: function ()
+		{
+			return SFString;
+		},
+		getArrayType: function ()
+		{
+			return Array;
+		},
+		getComponents: function ()
+		{
+			return 1;
+		},
 		getTypeName: function ()
 		{
 			return "MFString";
@@ -295,30 +298,114 @@ function ($,
 			}
 		},
 	});
+	
+	function ArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+	{
+		function ArrayField (value)
+		{
+			if (this instanceof ArrayField)
+				return X3DObjectArrayField .call (this, arguments);
+			
+			return X3DObjectArrayField .call (Object .create (ArrayField .prototype), arguments);
+		}
+
+		ArrayField .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+		{
+			constructor: ArrayField,
+			getSingleType: function ()
+			{
+				return SingleType;
+			},
+			getValueType: function ()
+			{
+				return ValueType;
+			},
+			getArrayType: function ()
+			{
+				return ArrayType;
+			},
+			getComponents: function ()
+			{
+				return Components;
+			},
+			getTypeName: function ()
+			{
+				return TypeName;
+			},
+			getType: function ()
+			{
+				return Type;
+			},
+		});
+
+		return ArrayField;
+	}
+
+	function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+	{
+		function ArrayField (value)
+		{
+			if (this instanceof ArrayField)
+				return X3DTypedArrayField .call (this, arguments);
+
+			return X3DTypedArrayField .call (Object .create (ArrayField .prototype), arguments);
+		}
+
+		ArrayField .prototype = Object .assign (Object .create (X3DTypedArrayField .prototype),
+		{
+			constructor: ArrayField,
+			getSingleType: function ()
+			{
+				return SingleType;
+			},
+			getValueType: function ()
+			{
+				return ValueType;
+			},
+			getArrayType: function ()
+			{
+				return ArrayType;
+			},
+			getComponents: function ()
+			{
+				return Components;
+			},
+			getTypeName: function ()
+			{
+				return TypeName;
+			},
+			getType: function ()
+			{
+				return Type;
+			},
+		});
+
+		return ArrayField;
+	}
 
 	var ArrayFields =
 	{
-		MFBool:      MFFieldTemplate ("MFBool",      X3DConstants .MFBool,      SFBool),
-		MFColor:     MFFieldTemplate ("MFColor",     X3DConstants .MFColor,     SFColor),
-		MFColorRGBA: MFFieldTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA),
-		MFDouble:    MFFieldTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble),
-		MFFloat:     MFFieldTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat),
-		MFImage:     MFFieldTemplate ("MFImage",     X3DConstants .MFImage,     SFImage),
-		MFInt32:     MFFieldTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32),
-		MFMatrix3d:  MFFieldTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d),
-		MFMatrix3f:  MFFieldTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f),
-		MFMatrix4d:  MFFieldTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d),
-		MFMatrix4f:  MFFieldTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f),
+		MFBool:      TypedArrayTemplate ("MFBool",      X3DConstants .MFBool,      SFBool,      Boolean,     Uint8Array,   1),
+		MFColor:     TypedArrayTemplate ("MFColor",     X3DConstants .MFColor,     SFColor,     SFColor,     Float32Array, 3),
+		MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA, SFColorRGBA, Float32Array, 4),
+		MFDouble:    TypedArrayTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble,    Number,      Float64Array, 1),
+		MFFloat:     TypedArrayTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat,     Number,      Float32Array, 1),
+		MFImage:     ArrayTemplate      ("MFImage",     X3DConstants .MFImage,     SFImage,     SFImage,     Array,        1),
+		MFInt32:     TypedArrayTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32,     Number,      Int32Array,   1),
+		MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
+		MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f,  SFMatrix3f,  Float32Array, 9),
+		MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d,  SFMatrix4d,  Float64Array, 16),
+		MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f,  SFMatrix4f,  Float32Array, 16),
 		MFNode:      MFNode,
-		MFRotation:  MFFieldTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation),
+		MFRotation:  TypedArrayTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation,  SFRotation,  Float64Array, 4),
 		MFString:    MFString,
-		MFTime:      MFFieldTemplate ("MFTime",      X3DConstants .MFTime,      SFTime),
-		MFVec2d:     MFFieldTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d),
-		MFVec2f:     MFFieldTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f),
-		MFVec3d:     MFFieldTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d),
-		MFVec3f:     MFFieldTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f),
-		MFVec4d:     MFFieldTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d),
-		MFVec4f:     MFFieldTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f),
+		MFTime:      TypedArrayTemplate ("MFTime",      X3DConstants .MFTime,      SFTime,      Number,      Float64Array, 1),
+		MFVec2d:     TypedArrayTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d,     SFVec2d,     Float64Array, 2),
+		MFVec2f:     TypedArrayTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f,     SFVec2f,     Float32Array, 2),
+		MFVec3d:     TypedArrayTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d,     SFVec3d,     Float64Array, 3),
+		MFVec3f:     TypedArrayTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f,     SFVec3f,     Float32Array, 3),
+		MFVec4d:     TypedArrayTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d,     SFVec4d,     Float64Array, 4),
+		MFVec4f:     TypedArrayTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f,     SFVec4f,     Float32Array, 4),
 	};
 
 	Object .preventExtensions (ArrayFields);

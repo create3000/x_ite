@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -68,6 +66,10 @@ function ($,
 {
 "use strict";
 
+	var
+		keyValue0 = new Vector3 (0, 0, 0),
+		keyValue1 = new Vector3 (0, 0, 0);
+
 	function NormalInterpolator (executionContext)
 	{
 		X3DInterpolatorNode .call (this, executionContext);
@@ -75,7 +77,7 @@ function ($,
 		this .addType (X3DConstants .NormalInterpolator);
 	}
 
-	NormalInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	NormalInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: NormalInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -85,8 +87,6 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec3f ()),
 		]),
-		keyValue0: new Vector3 (0, 0, 0),
-		keyValue1: new Vector3 (0, 0, 0),
 		getTypeName: function ()
 		{
 			return "NormalInterpolator";
@@ -109,22 +109,32 @@ function ($,
 		interpolate: function (index0, index1, weight)
 		{
 			var
-				keyValue      = this .keyValue_ .getValue (),
-				value_changed = this .value_changed_ .getValue (),
-				size          = this .key_ .length > 1 ? Math .floor (keyValue .length / this .key_ .length) : 0;
+				keyValue = this .keyValue_ .getValue (),
+				size     = this .key_ .length > 1 ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+
+			this .value_changed_ .length = size;
+
+			var value_changed = this .value_changed_ .getValue ();
 
 			index0 *= size;
 			index1  = index0 + size;
 
-			this .value_changed_ .length = size;
+			index0 *= 3;
+			index1 *= 3;
+			size   *= 3;
 
-			for (var i = 0; i < size; ++ i)
+			for (var i = 0; i < size; i += 3)
 			{
 				try
 				{
-					value_changed [i] .set (Algorithm .simpleSlerp (this .keyValue0 .assign (keyValue [index0 + i] .getValue ()),
-					                                                this .keyValue1 .assign (keyValue [index1 + i] .getValue ()),
-					                                                weight));
+					keyValue0 .set (keyValue [index0 + i + 0], keyValue [index0 + i + 1], keyValue [index0 + i + 2]);
+					keyValue1 .set (keyValue [index1 + i + 0], keyValue [index1 + i + 1], keyValue [index1 + i + 2]);
+
+					var value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
+
+					value_changed [i + 0] = value [0];
+					value_changed [i + 1] = value [1];
+					value_changed [i + 2] = value [2];
 				}
 				catch (error)
 				{ }

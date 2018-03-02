@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Color3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
@@ -75,7 +73,7 @@ function ($,
 		this .hsv = [ ];
 	}
 
-	ColorInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: ColorInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -106,8 +104,8 @@ function ($,
 		},
 		set_keyValue__: function ()
 		{
-			var keyValue = this .keyValue_ .getValue ();
-		
+			var keyValue = this .keyValue_;
+
 			if (keyValue .length < this .key_ .length)
 				this .keyValue_ .resize (this .key_ .length, keyValue .length ? keyValue [this .keyValue_ .length - 1] : new Fields .SFColor ());
 

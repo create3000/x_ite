@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode,
@@ -70,7 +68,9 @@ function ($,
 {
 "use strict";
 
-	var vector = new Vector3 (0, 0, 0);
+	var
+		vertex1 = new Vector3 (0, 0, 0),
+		vertex2 = new Vector3 (0, 0, 0);
 
 	function PolylineEmitter (executionContext)
 	{
@@ -88,7 +88,7 @@ function ($,
 		this .lengthSoFarArray = [ 0 ];
 	}
 
-	PolylineEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: PolylineEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -143,9 +143,9 @@ function ($,
 		},
 		set_polyline: function ()
 		{
-			var polylines = this .polylineNode .getPolylines (this .polylines);
+			var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
 
-			if (polylines .length)
+			if (vertices .length)
 			{
 				delete this .getRandomPosition;
 
@@ -155,9 +155,12 @@ function ($,
 		
 				lengthSoFarArray .length = 1;
 
-				for (var i = 0, length = polylines .length; i < length; i += 2)
+				for (var i = 0, length = vertices .length; i < length; i += 8)
 				{
-					lengthSoFar += vector .assign (polylines [i + 1]) .subtract (polylines [i]) .abs ();
+					vertex1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+
+					lengthSoFar += vertex2 .subtract (vertex1) .abs ();
 					lengthSoFarArray .push (lengthSoFar);
 				}
 			}
@@ -212,12 +215,13 @@ function ($,
 
 			// Interpolate and set position.
 
-			index0 *= 2;
-			index1  = index0 + 1;
+			index0 *= 8;
+			index1  = index0 + 4;
 
-			var
-				vertex1 = this .polylines [index0],
-				vertex2 = this .polylines [index1];
+			var vertices = this .vertices;
+
+			vertex1 .set (vertices [index0 + 0], vertices [index0 + 1], vertices [index0 + 2]);
+			vertex2 .set (vertices [index1 + 0], vertices [index1 + 1], vertices [index1 + 2]);
 	
 			position .x = vertex1 .x + weight * (vertex2 .x - vertex1 .x);
 			position .y = vertex1 .y + weight * (vertex2 .y - vertex1 .y);

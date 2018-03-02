@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DParametricGeometryNode, 
+function (X3DParametricGeometryNode, 
           X3DConstants)
 {
 "use strict";
@@ -65,7 +63,7 @@ function ($,
 		this .addType (X3DConstants .X3DNurbsSurfaceGeometryNode);
 	}
 
-	X3DNurbsSurfaceGeometryNode .prototype = $.extend (Object .create (X3DParametricGeometryNode .prototype),
+	X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
 	{
 		constructor: X3DNurbsSurfaceGeometryNode,
 	});

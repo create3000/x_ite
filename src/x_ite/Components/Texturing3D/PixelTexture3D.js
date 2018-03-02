@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing3D/X3DTexture3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTexture3DNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .PixelTexture3D);
 	}
 
-	PixelTexture3D .prototype = $.extend (Object .create (X3DTexture3DNode .prototype),
+	PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
 	{
 		constructor: PixelTexture3D,
 		fieldDefinitions: new FieldDefinitionArray ([

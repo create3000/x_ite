@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNBodyCollisionSpaceNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .CollisionSpace);
 	}
 
-	CollisionSpace .prototype = $.extend (Object .create (X3DNBodyCollisionSpaceNode .prototype),
+	CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpaceNode .prototype),
 	{
 		constructor: CollisionSpace,
 		fieldDefinitions: new FieldDefinitionArray ([

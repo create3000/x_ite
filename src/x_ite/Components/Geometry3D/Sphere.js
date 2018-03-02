@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .radius_ .setUnit ("length");
 	}
 
-	Sphere .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Sphere,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -109,8 +107,8 @@ function ($,
 				geometry = options .getGeometry (),
 				radius   = this .radius_ .getValue ();
 
-			this .setNormals   (geometry .getNormals ());
-			this .setTexCoords (geometry .getTexCoords ());
+			this .setMultiTexCoords (geometry .getMultiTexCoords ());
+			this .setNormals        (geometry .getNormals ());
 
 			if (radius === 1)
 			{
@@ -122,15 +120,15 @@ function ($,
 			else
 			{
 				var
-					defaultVertices = geometry .getVertices (),
-					vertices        = this .getVertices ();
+					defaultVertices = geometry .getVertices () .getValue (),
+					vertexArray     = this .getVertices ();
 
 				for (var i = 0; i < defaultVertices .length; i += 4)
 				{
-					vertices .push (radius * defaultVertices [i],
-					                radius * defaultVertices [i + 1],
-					                radius * defaultVertices [i + 2],
-					                1);
+					vertexArray .push (radius * defaultVertices [i],
+					                   radius * defaultVertices [i + 1],
+					                   radius * defaultVertices [i + 2],
+					                   1);
 				}
 
 				radius = Math .abs (radius);

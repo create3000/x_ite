@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Grouping/X3DTransformNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTransformNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .Transform);
 	}
 
-	Transform .prototype = $.extend (Object .create (X3DTransformNode .prototype),
+	Transform .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 	{
 		constructor: Transform,
 		fieldDefinitions: new FieldDefinitionArray ([

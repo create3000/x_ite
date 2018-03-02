@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59,8 +58,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/FileLoader",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode,
@@ -89,7 +87,7 @@ function ($,
 		this .group .addParent (this);
 	}
 
-	Inline .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DUrlObject .prototype,
 		X3DBoundedObject .prototype,
 	{

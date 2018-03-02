@@ -48,13 +48,15 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Fields/SFVecPrototypeTemplate",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector3)
+function (X3DField,
+          SFVecPrototypeTemplate,
+          X3DConstants,
+          Vector3)
 {
 "use strict";
 
@@ -73,7 +75,7 @@ function ($, X3DField, SFVecPrototypeTemplate, X3DConstants, Vector3)
 			return X3DField .call (this, new Vector3 (0, 0, 0));
 		}
 	
-		SFVec3 .prototype = $.extend (Object .create (X3DField .prototype),
+		SFVec3 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFVecPrototypeTemplate (Vector3),
 		{
 			constructor: SFVec3,

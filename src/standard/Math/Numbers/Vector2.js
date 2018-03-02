@@ -48,10 +48,9 @@
 
 
 define ([
-	"jquery",
 	"standard/Math/Algorithm",
 ],
-function ($, Algorithm)
+function (Algorithm)
 {
 "use strict";
 
@@ -223,7 +222,7 @@ function ($, Algorithm)
 		configurable: false
 	});
 
-	$.extend (Vector2,
+	Object .assign (Vector2,
 	{
 		Zero: new Vector2 (0, 0),
 		One: new Vector2 (1, 1),

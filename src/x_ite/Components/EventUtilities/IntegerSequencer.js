@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/EventUtilities/X3DSequencerNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DSequencerNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .IntegerSequencer);
 	}
 
-	IntegerSequencer .prototype = $.extend (Object .create (X3DSequencerNode .prototype),
+	IntegerSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
 	{
 		constructor: IntegerSequencer,
 		fieldDefinitions: new FieldDefinitionArray ([

@@ -48,11 +48,9 @@
 
 
 define ([
-	"jquery",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Generator)
+function (Generator)
 {
 "use strict";
 
@@ -67,7 +65,7 @@ function ($,
 		this .conversionFactor = conversionFactor;
 	}
 
-	$.extend (UnitInfo .prototype,
+	Object .assign (UnitInfo .prototype,
 	{
 		constructor: UnitInfo,
 		toXMLStream: function (stream)

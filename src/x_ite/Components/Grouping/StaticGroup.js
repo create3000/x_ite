@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
@@ -81,7 +79,7 @@ function ($,
 		this .bbox  = new Box3 ();
 	}
 
-	StaticGroup .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DBoundedObject .prototype,
 	{
 		constructor: StaticGroup,

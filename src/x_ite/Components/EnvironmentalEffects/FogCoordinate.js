@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometricPropertyNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .depth_ .setUnit ("length");
 	}
 
-	FogCoordinate .prototype = $.extend (Object .create (X3DGeometricPropertyNode .prototype),
+	FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: FogCoordinate,
 		fieldDefinitions: new FieldDefinitionArray ([

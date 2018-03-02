@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode, 
@@ -78,7 +76,7 @@ function ($,
 		this .coordNode    = null;
 	}
 
-	IndexedLineSet .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: IndexedLineSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -189,17 +187,17 @@ function ($,
 		getPolylineIndices: function ()
 		{
 			var
-				coordIndex = this .coordIndex_. getValue (),
+				coordIndex = this .coordIndex_,
 				polylines  = [ ],
 				polyline   = [ ];
 
-			if (this .coordIndex_ .length)
+			if (coordIndex .length)
 			{
 				var i = 0;
 
-				for (var i = 0; i < coordIndex .length; ++ i)
+				for (var i = 0, length = coordIndex .length; i < length; ++ i)
 				{
-					var index = coordIndex [i] .getValue ();
+					var index = coordIndex [i];
 
 					if (index >= 0)
 						// Add vertex.
@@ -215,42 +213,12 @@ function ($,
 					}
 				}
 
-				if (coordIndex [coordIndex .length - 1] .getValue () >= 0)
+				if (coordIndex [coordIndex .length - 1] >= 0)
 				{
 					polylines .push (polyline);
 				}
 			}
 
-			return polylines;
-		},
-		getPolylines: function (polylines)
-		{
-			// Polyline map
-
-			polylines .length = 0;
-		
-			if (! this .coordNode || this .coordNode .isEmpty ())
-				return polylines;
-		
-			var
-				polylineIndices = this .getPolylineIndices (),
-				coordIndex      = this .coordIndex_. getValue ();
-
-			for (var p = 0; p < polylineIndices .length; ++ p)
-			{
-				var polyline = polylineIndices [p];
-
-				// Create two vertices for each line.
-		
-				for (var line = 0, endL = polyline .length - 1; line < endL; ++ line)
-				{
-					for (var index = line, endI = line + 2; index < endI; ++ index)
-					{
-						polylines .push (this .coordNode .get1Point (coordIndex [polyline [index]] .getValue ()));
-					}
-				}
-			}
-		
 			return polylines;
 		},
 		build: function ()
@@ -259,14 +227,16 @@ function ($,
 				return;
 
 			var
-				coordIndex     = this .coordIndex_. getValue (),
+				coordIndex     = this .coordIndex_,
 				polylines      = this .getPolylineIndices (),
 				colorPerVertex = this .colorPerVertex_ .getValue (),
 				attribNodes    = this .getAttrib (),
 				numAttrib      = attribNodes .length,
 				attribs        = this .getAttribs (),
 				colorNode      = this .colorNode,
-				coordNode      = this .coordNode;
+				coordNode      = this .coordNode,
+				colorArray     = this .getColors (),
+				vertexArray    = this .getVertices ();
 
 			// Fill GeometryNode
 
@@ -286,28 +256,26 @@ function ($,
 						{
 							var
 								i  = polyline [index],
-								ci = coordIndex [i] .getValue ();
+								ci = coordIndex [i];
 
 							for (var a = 0; a < numAttrib; ++ a)
-								attribNodes [a] .addValue (attribs [a], ci);
+								attribNodes [a] .addValue (ci, attribs [a]);
 
 							if (colorNode)
 							{
 								if (colorPerVertex)
-									this .addColor (colorNode .get1Color (this .getColorPerVertexIndex (i)));
+									colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
 								else
-									this .addColor (colorNode .get1Color (this .getColorIndex (face)));
+									colorNode .addColor (this .getColorIndex (face), colorArray);
 							}
 
-							this .addVertex (coordNode .get1Point (ci));
+							coordNode .addPoint (ci, vertexArray);
 						}
 					}
 				}
 
 				++ face;
 			}
-
-			//this .setAttribs (this .attribNodes, attribArrays);
 		},
 	});
 

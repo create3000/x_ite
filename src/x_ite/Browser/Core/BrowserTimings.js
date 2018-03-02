@@ -69,7 +69,7 @@ function ($,
 		this .addChildObjects ("enabled", new SFBool ());
 	}
 
-	BrowserTimings .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BrowserTimings,
 		getTypeName: function ()

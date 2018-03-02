@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBindableNode,
@@ -87,7 +85,7 @@ function ($,
 		this .visibilityLimit_ .setUnit ("speed");
 	}
 
-	NavigationInfo .prototype = $.extend (Object .create (X3DBindableNode .prototype),
+	NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 	{
 		constructor: NavigationInfo,
 		fieldDefinitions: new FieldDefinitionArray ([

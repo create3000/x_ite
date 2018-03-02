@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode,
@@ -81,7 +79,7 @@ function ($,
 		this .activeLayerNode = null;
 	}
 
-	LayerSet .prototype = $.extend (Object .create (X3DNode .prototype),
+	LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: LayerSet,
 		fieldDefinitions: new FieldDefinitionArray ([

@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Execution/X3DExecutionContext",
 	"x_ite/Configuration/UnitInfo",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DExecutionContext,
           UnitInfo,
           UnitInfoArray,
@@ -87,7 +85,7 @@ function ($,
 		this .setLive (false);
 	}
 
-	X3DScene .prototype = $.extend (Object .create (X3DExecutionContext .prototype),
+	X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
 	{
 		constructor: X3DScene,
 		isMasterContext: function ()
@@ -194,7 +192,7 @@ function ($,
 		},
 		getMetadata: function ()
 		{
-			return $.extend ({ }, this .metadata);
+			return Object .assign ({ }, this .metadata);
 		},
 		addExportedNode: function (exportedName, node)
 		{

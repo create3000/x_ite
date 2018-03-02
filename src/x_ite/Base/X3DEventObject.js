@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Base/X3DChildObject",
 	"x_ite/Base/Events",
 ],
-function ($,
-	       X3DChildObject,
+function (X3DChildObject,
 	       Events)
 {
 "use strict";
@@ -65,7 +63,7 @@ function ($,
 		this ._browser = browser;
 	}
 
-	X3DEventObject .prototype = $.extend (Object .create (X3DChildObject .prototype),
+	X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prototype),
 	{
 		constructor: X3DEventObject,
 		getBrowser: function ()

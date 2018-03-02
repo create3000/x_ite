@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DConstants)
 {
 "use strict";

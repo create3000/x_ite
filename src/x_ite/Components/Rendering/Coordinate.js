@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DCoordinateNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DCoordinateNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .point_ .setUnit ("length");
 	}
 
-	Coordinate .prototype = $.extend (Object .create (X3DCoordinateNode .prototype),
+	Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
 	{
 		constructor: Coordinate,
 		fieldDefinitions: new FieldDefinitionArray ([

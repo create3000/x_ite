@@ -691,7 +691,7 @@ function ($,
 
 			// Configure depth shader.
 
-			shaderNode .useProgram (gl);
+			shaderNode .enable (gl);
 
 			projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
@@ -741,8 +741,10 @@ function ($,
 
 				// Draw
 	
-				context .shapeNode .depth (context, shaderNode);
+				context .shapeNode .depth (gl, context, shaderNode);
 			}
+
+			shaderNode .disable (gl);
 		},
 		draw: function (group)
 		{
@@ -796,7 +798,7 @@ function ($,
 
 			gl .clear (gl .DEPTH_BUFFER_BIT);
 
-			this .getBackground () .display (this, viewport);
+			this .getBackground () .display (gl, this, viewport);
 
 			// Sorted blend
 
@@ -804,12 +806,12 @@ function ($,
 			cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 			projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
-			browser .getPointShader   () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-			browser .getLineShader    () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-			browser .getDefaultShader () .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			browser .getPointShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			browser .getLineShader    () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			browser .getDefaultShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 
 			for (var id in shaders)
-				shaders [id] .setGlobalUniforms (this, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				shaders [id] .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 
 			// Render opaque objects first
 
@@ -828,7 +830,7 @@ function ($,
 				             scissor .z,
 				             scissor .w);
 
-				context .shapeNode .display (context);
+				context .shapeNode .display (gl, context);
 			}
 
 			// Render transparent objects
@@ -849,7 +851,7 @@ function ($,
 				             scissor .z,
 				             scissor .w);
 
-				context .shapeNode .display (context);
+				context .shapeNode .display (gl, context);
 			}
 
 			gl .depthMask (true);

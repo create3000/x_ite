@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
@@ -58,8 +57,7 @@ define ([
 	"standard/Math/Algorithm",
 	"standard/Math/Algorithms/QuickSort",
 ],
-function ($,
-          X3DNode, 
+function (X3DNode, 
           X3DConstants,
           Vector3,
           Rotation4,
@@ -102,7 +100,7 @@ function ($,
 		this .sorter              = new QuickSort (this .intersections, PlaneCompare);
 	}
 
-	X3DParticleEmitterNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DParticleEmitterNode,
 		initialize: function ()

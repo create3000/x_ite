@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode, 
@@ -65,8 +63,6 @@ function ($,
           Vector3)
 {
 "use strict";
-
-	var vector = new Vector3 (0, 0, 0);
 
 	function Polypoint2D (executionContext)
 	{
@@ -81,7 +77,7 @@ function ($,
 		this .transparent_ = true;
 	}
 
-	Polypoint2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	Polypoint2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: Polypoint2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -115,18 +111,16 @@ function ($,
 		},
 		build: function ()
 		{
-			var point = this .point_ .getValue ();
+			var
+				point       = this .point_ .getValue (),
+				vertexArray = this .getVertices ();
 
-			for (var i = 0, length = point .length; i < length; ++ i)
+			for (var i = 0, length = this .point_ .length * 2; i < length; i += 2)
 			{
-				var vertex = point [i];
-
-				this .addVertex (vector .set (vertex .x, vertex .y, 0));
+				vertexArray .push (point [i + 0], point [i + 1], 0, 1);
 			}
 		},
 	});
 
 	return Polypoint2D;
 });
-
-

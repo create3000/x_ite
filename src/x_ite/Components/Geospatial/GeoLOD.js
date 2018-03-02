@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -63,8 +62,7 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
@@ -104,7 +102,7 @@ function ($,
 		this .modelViewMatrix  = new Matrix4 ();
 	}
 
-	GeoLOD .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DBoundedObject .prototype,
 		X3DGeospatialObject .prototype,
 	{

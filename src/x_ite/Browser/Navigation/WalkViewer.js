@@ -48,12 +48,11 @@
 
 ﻿
 define ([
-	"jquery",
 	"x_ite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($, X3DFlyViewer, Vector3, Rotation4)
+function (X3DFlyViewer, Vector3, Rotation4)
 {
 "use strict";
 	
@@ -64,7 +63,7 @@ function ($, X3DFlyViewer, Vector3, Rotation4)
 		X3DFlyViewer .call (this, executionContext);
 	}
 
-	WalkViewer .prototype = $.extend (Object .create (X3DFlyViewer .prototype),
+	WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 	{
 		constructor: WalkViewer,
 		initialize: function ()

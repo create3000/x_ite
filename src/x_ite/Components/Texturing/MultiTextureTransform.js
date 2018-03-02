@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureTransformNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureTransformNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .MultiTextureTransform);
 	}
 
-	MultiTextureTransform .prototype = $.extend (Object .create (X3DTextureTransformNode .prototype),
+	MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
 	{
 		constructor: MultiTextureTransform,
 		fieldDefinitions: new FieldDefinitionArray ([

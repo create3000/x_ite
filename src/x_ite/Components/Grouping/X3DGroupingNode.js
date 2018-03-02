@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-	       Fields,
+function (Fields,
           X3DChildNode, 
           X3DBoundedObject, 
           TraverseType,
@@ -100,7 +98,7 @@ function ($,
 		this .childNodes            = [ ];
 	}
 
-	X3DGroupingNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DBoundedObject .prototype,
 	{
 		constructor: X3DGroupingNode,

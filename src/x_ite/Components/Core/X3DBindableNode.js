@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants)
 {
 "use strict";
@@ -67,7 +65,7 @@ function ($,
 		this .layers = [ ];
 	}
 
-	X3DBindableNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DBindableNode,
 		initialize: function ()

@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Components/Core/X3DMetadataObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
@@ -74,7 +72,7 @@ function ($,
 		this .addType (X3DConstants .MetadataString);
 	}
 
-	MetadataString .prototype = $.extend (Object .create (X3DNode .prototype),
+	MetadataString .prototype = Object .assign (Object .create (X3DNode .prototype),
 		X3DMetadataObject .prototype,
 	{
 		constructor: MetadataString,

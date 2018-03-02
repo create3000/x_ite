@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Rotation4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDamperNode, 
@@ -77,7 +75,7 @@ function ($,
 		this .addType (X3DConstants .OrientationDamper);
 	}
 
-	OrientationDamper .prototype = $.extend (Object .create (X3DDamperNode .prototype),
+	OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 	{
 		constructor: OrientationDamper,
 		fieldDefinitions: new FieldDefinitionArray ([

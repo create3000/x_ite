@@ -89,7 +89,7 @@ function ($,
 		this .urlStack = new Fields .MFString ();
 	}
 
-	MovieTexture .prototype = $.extend (Object .create (X3DTexture2DNode .prototype),
+	MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
 		X3DSoundSourceNode .prototype,
 		X3DUrlObject .prototype,
 	{

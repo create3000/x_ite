@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposableVolumeRenderStyleNode,
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .BlendedVolumeStyle);
 	}
 
-	BlendedVolumeStyle .prototype = extend (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+	BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 	{
 		constructor: BlendedVolumeStyle,
 		fieldDefinitions: new FieldDefinitionArray ([

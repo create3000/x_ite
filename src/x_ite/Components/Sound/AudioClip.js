@@ -84,7 +84,7 @@ function ($,
 		this .urlStack = new Fields .MFString ();
 	}
 
-	AudioClip .prototype = $.extend (Object .create (X3DSoundSourceNode .prototype),
+	AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: AudioClip,

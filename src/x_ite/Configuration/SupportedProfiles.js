@@ -48,14 +48,12 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Configuration/ProfileInfo",
 	"x_ite/Configuration/ProfileInfoArray",
 	"x_ite/Configuration/ComponentInfoArray",
 	"x_ite/Browser/Networking/urls",
 ],
-function ($,
-          ProfileInfo,
+function (ProfileInfo,
           ProfileInfoArray,
           ComponentInfoArray,
           urls)

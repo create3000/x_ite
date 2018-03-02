@@ -69,7 +69,7 @@ function ($,
 		return this;
 	}
 
-	X3DField .prototype = $.extend (Object .create (X3DChildObject .prototype),
+	X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype),
 	{
 		constructor: X3DField,
 		_value: null,
@@ -90,10 +90,10 @@ function ($,
 		{
 			return this ._value === value .valueOf ();
 		},
-		setValue: function (value)
+		assign: function (field)
 		{
-			// Sets internal value and generates event.
-			this .set (value instanceof this .constructor ? value .getValue () : value);
+			// Assigns field to this field.
+			this .set (field .getValue ());
 			this .addEvent ();
 		},
 		set: function (value)
@@ -101,10 +101,10 @@ function ($,
 			// Sets internal value without generating event.
 			this ._value = value;
 		},
-		assign: function (field)
+		setValue: function (value)
 		{
-			// Assigns field to this field.
-			this .set (field .getValue ());
+			// Sets internal value and generates event.
+			this .set (value instanceof this .constructor ? value .getValue () : value);
 			this .addEvent ();
 		},
 		getValue: function ()
@@ -182,7 +182,7 @@ function ($,
 			{
 				case X3DConstants .initializeOnly:
 					reference .addFieldInterest (this);
-					this .set (reference .getValue ());
+					this .set (reference .getValue (), reference .length);
 					return;
 				case X3DConstants .inputOnly:
 					reference .addFieldInterest (this);
@@ -193,7 +193,7 @@ function ($,
 				case X3DConstants .inputOutput:
 					reference .addFieldInterest (this);
 					this .addFieldInterest (reference);
-					this .set (reference .getValue ());
+					this .set (reference .getValue (), reference .length);
 					return;
 			}
 		},
@@ -219,7 +219,7 @@ function ($,
 							continue;
 						case X3DConstants .initializeOnly:
 						case X3DConstants .inputOutput:
-							this .set (reference .getValue ());
+							this .set (reference .getValue (), reference .length);
 							continue;
 					}
 				}
@@ -295,7 +295,7 @@ function ($,
 			this .setTainted (false);
 
 			if (event .field !== this)
-				this .set (event .field .getValue ());
+				this .set (event .field .getValue (), event .field .length);
 
 			// Process interests
 

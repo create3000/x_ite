@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBaseNode, 
@@ -69,7 +67,7 @@ function ($,
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	BrowserProperties .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BrowserProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BrowserProperties,
 		fieldDefinitions: new FieldDefinitionArray ([

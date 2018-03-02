@@ -48,21 +48,19 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Interpolation/X3DInterpolatorNode",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
+	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode, 
           X3DConstants,
-          Vector3)
+          Algorithm)
 {
 "use strict";
 
@@ -73,7 +71,7 @@ function ($,
 		this .addType (X3DConstants .CoordinateInterpolator);
 	}
 
-	CoordinateInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	CoordinateInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: CoordinateInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -83,7 +81,6 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec3f ()),
 		]),
-		keyValue: new Vector3 (0, 0, 0),
 		getTypeName: function ()
 		{
 			return "CoordinateInterpolator";
@@ -100,18 +97,25 @@ function ($,
 		interpolate: function (index0, index1, weight)
 		{
 			var
-				keyValue      = this .keyValue_ .getValue (),
-				value_changed = this .value_changed_ .getValue (),
-				size          = this .key_ .length ? Math .floor (keyValue .length / this .key_ .length) : 0;
+				keyValue = this .keyValue_ .getValue (),
+				size     = this .key_ .length ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+
+			this .value_changed_ .length = size;
+
+			var value_changed = this .value_changed_ .getValue ();
 
 			index0 *= size;
 			index1  = index0 + (this .key_ .length > 1 ? size : 0);
 
-			this .value_changed_ .length = size;
+			index0 *= 3;
+			index1 *= 3;
+			size   *= 3;
 
-			for (var i = 0; i < size; ++ i)
+			for (var i = 0; i < size; i += 3)
 			{
-				value_changed [i] .getValue () .assign (keyValue [index0 + i] .getValue ()) .lerp (keyValue [index1 + i] .getValue (), weight);
+				value_changed [i + 0] = Algorithm .lerp (keyValue [index0 + i + 0], keyValue [index1 + i + 0], weight);
+				value_changed [i + 1] = Algorithm .lerp (keyValue [index0 + i + 1], keyValue [index1 + i + 1], weight);
+				value_changed [i + 2] = Algorithm .lerp (keyValue [index0 + i + 2], keyValue [index1 + i + 2], weight);
 			}
 
 			this .value_changed_ .addEvent ();

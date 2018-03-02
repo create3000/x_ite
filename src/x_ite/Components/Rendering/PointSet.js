@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode,
@@ -79,7 +77,7 @@ function ($,
 		this .transparent_ = true;
 	}
 
-	PointSet .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	PointSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: PointSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -172,22 +170,24 @@ function ($,
 				numAttrib   = attribNodes .length,
 				attribs     = this .getAttribs (),
 				colorNode   = this .colorNode,
-				coordNode   = this .coordNode;
+				coordNode   = this .coordNode,
+				colorArray  = this .getColors (),
+				vertexArray = this .getVertices ();
 
 			for (var a = 0; a < numAttrib; ++ a)
 			{
 				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-					attribNodes [a] .addValue (attribs [a], i);
+					attribNodes [a] .addValue (i, attribs [a]);
 			}
 			
 			if (this .colorNode)
 			{
 				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-					this .addColor (colorNode .get1Color (i));
+					colorNode .addColor (i, colorArray);
 			}
 
 			for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-				this .addVertex (coordNode .get1Point (i));
+				coordNode .addPoint (i, vertexArray);
 		},
 	});
 

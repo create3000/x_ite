@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -85,7 +83,7 @@ function ($,
 		this .radius_     .setUnit ("length");
 	}
 
-	ArcClose2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: ArcClose2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -140,21 +138,21 @@ function ($,
 		build: function ()
 		{
 			var
-				options    = this .getBrowser () .getArcClose2DOptions (),
-				chord      = this .closureType_ .getValue () === "CHORD",
-				dimension  = options .dimension_ .getValue (),
-				startAngle = this .startAngle_ .getValue  (),
-				radius     = Math .abs (this .radius_ .getValue ()),
-				sweepAngle = this .getSweepAngle (),
-				circle     = sweepAngle == (Math .PI * 2),
-				steps      = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
-				texCoords  = [ ],
-				normals    = this .getNormals (),
-				vertices   = this .getVertices (),
-				texCoord   = [ ],
-				points     = [ ];
+				options       = this .getBrowser () .getArcClose2DOptions (),
+				chord         = this .closureType_ .getValue () === "CHORD",
+				dimension     = options .dimension_ .getValue (),
+				startAngle    = this .startAngle_ .getValue  (),
+				radius        = Math .abs (this .radius_ .getValue ()),
+				sweepAngle    = this .getSweepAngle (),
+				circle        = sweepAngle == (Math .PI * 2),
+				steps         = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
+				texCoordArray = this .getTexCoords (),
+				normalArray   = this .getNormals (),
+				vertexArray   = this .getVertices (),
+				texCoord      = [ ],
+				points        = [ ];
 
-			this .getTexCoords () .push (texCoords);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			var steps_1 = steps - 1;
 
@@ -182,17 +180,17 @@ function ($,
 						p1 = points [i],
 						p2 = points [i + 1];
 
-					texCoords .push (t0 .real, t0 .imag, 0, 1,
-					                 t1 .real, t1 .imag, 0, 1,
-					                 t2 .real, t2 .imag, 0, 1);
+					texCoordArray .push (t0 .real, t0 .imag, 0, 1,
+					                     t1 .real, t1 .imag, 0, 1,
+					                     t2 .real, t2 .imag, 0, 1);
 
-					normals .push (0, 0, 1,
-					               0, 0, 1,
-					               0, 0, 1);
+					normalArray .push (0, 0, 1,
+					                   0, 0, 1,
+					                   0, 0, 1);
 
-					vertices .push (p0 .real, p0 .imag, 0, 1,
-					                p1 .real, p1 .imag, 0, 1,
-					                p2 .real, p2 .imag, 0, 1);
+					vertexArray .push (p0 .real, p0 .imag, 0, 1,
+					                   p1 .real, p1 .imag, 0, 1,
+					                   p2 .real, p2 .imag, 0, 1);
 				}
 			}
 			else
@@ -205,15 +203,15 @@ function ($,
 						p1 = points [i],
 						p2 = points [i + 1];
 
-					texCoords .push (0.5, 0.5, 0, 1,
-					                 t1 .real, t1 .imag, 0, 1,
-					                 t2 .real, t2 .imag, 0, 1);
+					texCoordArray .push (0.5, 0.5, 0, 1,
+					                     t1 .real, t1 .imag, 0, 1,
+					                     t2 .real, t2 .imag, 0, 1);
 
-					normals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
+					normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
 
-					vertices .push (0, 0, 0, 1,
-					                p1 .real, p1 .imag, 0, 1,
-					                p2 .real, p2 .imag, 0, 1);
+					vertexArray .push (0, 0, 0, 1,
+					                   p1 .real, p1 .imag, 0, 1,
+					                   p2 .real, p2 .imag, 0, 1);
 				}
 			}
 

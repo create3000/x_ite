@@ -86,7 +86,7 @@ function ($,
 		this .urlStack = new Fields .MFString ();
 	}
 
-	ImageTexture .prototype = $.extend (Object .create (X3DTexture2DNode .prototype),
+	ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: ImageTexture,
@@ -235,6 +235,9 @@ function ($,
 				var
 					data   = cx .getImageData (0, 0, width, height) .data,
 					opaque = true;
+
+				canvas .width  = 1;
+				canvas .height = 1;
 
 				for (var i = 3; i < data .length; i += 4)
 				{

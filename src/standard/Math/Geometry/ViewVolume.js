@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"standard/Math/Geometry/Line3",
 	"standard/Math/Geometry/Plane3",
 	"standard/Math/Geometry/Triangle3",
@@ -56,7 +55,7 @@ define ([
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($, Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
+function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
 {
 "use strict";
 
@@ -164,7 +163,7 @@ function ($, Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
 		},
 	};
 
-	$.extend (ViewVolume,
+	Object .assign (ViewVolume,
 	{
 		unProjectPoint: function (winx, winy, winz, modelViewMatrix, projectionMatrix, viewport, point)
 		{

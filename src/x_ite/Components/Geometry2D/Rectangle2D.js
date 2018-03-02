@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -81,7 +79,7 @@ function ($,
 		this .size_ .setUnit ("length");
 	}
 
-	Rectangle2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Rectangle2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -108,8 +106,8 @@ function ($,
 				geometry = options .getGeometry (),
 				size     = this .size_ .getValue ();
 
-			this .setTexCoords (geometry .getTexCoords ());
-			this .setNormals   (geometry .getNormals ());
+			this .setMultiTexCoords (geometry .getMultiTexCoords ());
+			this .setNormals        (geometry .getNormals ());
 
 			if (size .equals (defaultSize))
 			{
@@ -124,17 +122,17 @@ function ($,
 					scale           = Vector3 .divide (size, 2),
 					x               = scale .x,
 					y               = scale .y,
-					defaultVertices = geometry .getVertices (),
-					vertices        = this .getVertices ();
+					defaultVertices = geometry .getVertices () .getValue (),
+					vertexArray     = this .getVertices ();
 
 				for (var i = 0; i < defaultVertices .length; i += 4)
 				{
-					vertices .push (x * defaultVertices [i],
-					                y * defaultVertices [i + 1],
-					                defaultVertices [i + 2],
-					                1);
+					vertexArray .push (x * defaultVertices [i],
+					                   y * defaultVertices [i + 1],
+					                   defaultVertices [i + 2],
+					                   1);
 				}
-
+	
 				this .getMin () .set (-x, -y, 0);
 				this .getMax () .set ( x,  y, 0);
 			}

@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Grouping/X3DTransformMatrix3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DTransformMatrix3DNode, 
+function (X3DTransformMatrix3DNode, 
           X3DConstants)
 {
 "use strict";
@@ -68,7 +66,7 @@ function ($,
 		this .center_      .setUnit ("length");
 	}
 
-	X3DTransformNode .prototype = $.extend (Object .create (X3DTransformMatrix3DNode .prototype),
+	X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
 	{
 		constructor: X3DTransformNode,
 		initialize: function ()

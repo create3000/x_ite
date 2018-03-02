@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields/SFBool",
 	"x_ite/Fields/SFColor",
 	"x_ite/Fields/SFColorRGBA",
@@ -67,8 +66,7 @@ define ([
 	"x_ite/Fields/SFVec4",
 	"x_ite/Fields/ArrayFields",
 ],
-function ($,
-          SFBool,
+function (SFBool,
           SFColor,
           SFColorRGBA,
           SFDouble,
@@ -88,7 +86,7 @@ function ($,
 {
 "use strict";
 
-	var Fields = $.extend (
+	var Fields = Object .assign (
 	{
 		SFBool:      SFBool,
 		SFColor:     SFColor,

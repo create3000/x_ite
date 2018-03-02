@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Base/X3DObject",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DObject,
           Generator)
 {
@@ -68,7 +66,7 @@ function ($,
 		this .localNode    = localNode;
 	}
 
-	ExportedNode .prototype = $.extend (Object .create (X3DObject .prototype),
+	ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: ExportedNode,
 		getExportedName: function ()

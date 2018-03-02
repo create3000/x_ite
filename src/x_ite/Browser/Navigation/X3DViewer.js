@@ -48,14 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Navigation/OrthoViewpoint",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($, X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
+function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 {
 "use strict";
 	
@@ -69,7 +68,7 @@ function ($, X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	X3DViewer .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DViewer,
 		initialize: function ()

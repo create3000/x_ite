@@ -49,9 +49,11 @@
 
 define ([
 	"jquery",
+	"x_ite/Fields",
 	"x_ite/Browser/Text/X3DTextGeometry",
 	"x_ite/Browser/Text/TextAlignment",
 	"x_ite/Components/Texturing/PixelTexture",
+	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -62,9 +64,11 @@ define ([
 	"standard/Math/Algorithm",
 ],
 function ($,
+          Fields,
           X3DTextGeometry,
           TextAlignment,
           PixelTexture,
+          X3DGeometryNode,
           TraverseType,
           Vector2,
           Vector3,
@@ -92,18 +96,18 @@ function ($,
 
 		text .transparent_ = true;
 
-		this .texCoords    = [ ];
-		this .texture      = new PixelTexture (text .getExecutionContext ());
-		this .canvas       = $("<canvas></canvas>");
-		this .context      = this .canvas [0] .getContext ("2d");
-		this .screenMatrix = new Matrix4 ();
-		this .matrix       = new Matrix4 ();
+		this .texCoordArray = X3DGeometryNode .createArray ();
+		this .texture       = new PixelTexture (text .getExecutionContext ());
+		this .canvas        = $("<canvas></canvas>");
+		this .context       = this .canvas [0] .getContext ("2d");
+		this .screenMatrix  = new Matrix4 ();
+		this .matrix        = new Matrix4 ();
 
 		this .texture .textureProperties_ = fontStyle .getBrowser () .getScreenTextureProperties ();
 		this .texture .setup ();
 	}
 
-	ScreenText .prototype = $.extend (Object .create (X3DTextGeometry .prototype),
+	ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
 	{
 		constructor: ScreenText,
 		modelViewMatrix: new Matrix4 (),
@@ -184,32 +188,35 @@ function ($,
 				charSpacings   = this .getCharSpacings (),
 				size           = fontStyle .getScale (), // in pixel
 				sizeUnitsPerEm = size / font .unitsPerEm,
-				texCoords      = this .texCoords,
-				normals        = text .getNormals (),
-				vertices       = text .getVertices (),
+				texCoordArray  = this .texCoordArray,
+				normalArray    = text .getNormals (),
+				vertexArray    = text .getVertices (),
 				canvas         = this .canvas [0],
 				cx             = this .context;
 
-			texCoords .length = 0;
-			text .getTexCoords () .push (texCoords);
+			// Set texCoord.
+
+			texCoordArray .length = 0;
+
+			text .getMultiTexCoords () .push (texCoordArray);
 
 			// Triangle one and two.
 
 			this .getBBox () .getExtents (min, max);
 
-			normals  .push (0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1,
-			                0, 0, 1);
+			normalArray  .push (0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1,
+			                    0, 0, 1);
 
-			vertices .push (min .x, min .y, 0, 1,
-			                max .x, min .y, 0, 1,
-			                max .x, max .y, 0, 1,
-			                min .x, min .y, 0, 1,
-			                max .x, max .y, 0, 1,
-			                min .x, max .y, 0, 1);
+			vertexArray .push (min .x, min .y, 0, 1,
+			                   max .x, min .y, 0, 1,
+			                   max .x, max .y, 0, 1,
+			                   min .x, min .y, 0, 1,
+			                   max .x, max .y, 0, 1,
+			                   min .x, max .y, 0, 1);
 
 			// Generate texture.
 
@@ -235,12 +242,12 @@ function ($,
 			   h = height / canvas .height,
 			   y = 1 - h;
 
-			texCoords .push (0, y, 0, 1,
-			                 w, y, 0, 1,
-			                 w, 1, 0, 1,
-			                 0, y, 0, 1,
-			                 w, 1, 0, 1,
-			                 0, 1, 0, 1);
+			texCoordArray .push (0, y, 0, 1,
+			                     w, y, 0, 1,
+			                     w, 1, 0, 1,
+			                     0, y, 0, 1,
+			                     w, 1, 0, 1,
+			                     0, 1, 0, 1);
 
 			// Setup canvas.
 
@@ -456,7 +463,7 @@ function ($,
 		{
 			this .transform (renderObject);
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			Matrix4 .prototype .multLeft .call (context .modelViewMatrix, this .matrix);
 

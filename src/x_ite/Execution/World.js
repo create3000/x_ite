@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields/SFNode",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Layering/LayerSet",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          SFNode,
+function (SFNode,
           X3DBaseNode,
           LayerSet,
           Layer,
@@ -77,7 +75,7 @@ function ($,
 		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 	}
 
-	World .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	World .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: World,
 		getTypeName: function ()

@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59,8 +58,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode, 
@@ -92,7 +90,7 @@ function ($,
 		this .areaSoFarArray = [ 0 ];
 	}
 
-	SurfaceEmitter .prototype = $.extend (Object .create (X3DParticleEmitterNode .prototype),
+	SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 	{
 		constructor: SurfaceEmitter,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -145,8 +143,11 @@ function ($,
 				var
 					areaSoFar      = 0,
 					areaSoFarArray = this .areaSoFarArray,
-					vertices       = this .surfaceNode .getVertices ();
+					vertices       = this .surfaceNode .getVertices () .getValue ();
 		
+				this .normals  = this .surfaceNode .getNormals () .getValue ();
+				this .vertices = vertices;
+
 				areaSoFarArray .length = 1;
 
 				for (var i = 0, length = vertices .length; i < length; i += 12)
@@ -215,7 +216,7 @@ function ($,
 
 			var
 				i        = index0 * 12,
-				vertices = this .surfaceNode .getVertices ();
+				vertices = this .vertices;
 
 			var t = 1 - u - v;
 
@@ -225,7 +226,7 @@ function ($,
 
 			var
 				i       = index0 * 9,
-				normals = this .surfaceNode .getNormals ();
+				normals = this .normals;
 
 			direction .x = u * normals [i + 0] + v * normals [i + 3] + t * normals [i + 6];
 			direction .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];

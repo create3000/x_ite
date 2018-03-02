@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          X3DGeometryNode,
+function (X3DGeometryNode,
           X3DConstants,
           Matrix4)
 {
@@ -67,7 +65,7 @@ function ($,
 		//this .addType (X3DConstants .X3DLineGeometryNode);
 	}
 
-	X3DLineGeometryNode .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: X3DLineGeometryNode,
 		getShader: function (browser)
@@ -82,13 +80,12 @@ function ($,
 		{
 			return false;
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			try
 			{
 				var
 					browser       = context .renderer .getBrowser (),
-					gl            = browser .getContext (),
 					shaderNode    = context .shaderNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
@@ -100,6 +97,8 @@ function ($,
 	
 				context .geometryType  = this .getGeometryType ();
 				context .colorMaterial = this .getColors () .length;
+
+				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
 	
 				// Setup vertex attributes.
@@ -120,6 +119,7 @@ function ($,
 					attribNodes [i] .disable (gl, shaderNode);
 	
 				shaderNode .disableColorAttribute (gl);
+				shaderNode .disable (gl);
 			}
 			catch (error)
 			{
@@ -127,13 +127,12 @@ function ($,
 				console .log (error);
 			}
 		},
-		displayParticles: function (context, particles, numParticles)
+		displayParticles: function (gl, context, particles, numParticles)
 		{
 			try
 			{
 				var
 					browser       = context .renderer .getBrowser (),
-					gl            = browser .getContext (),
 					shaderNode    = context .shaderNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
@@ -145,6 +144,8 @@ function ($,
 	
 				context .geometryType  = this .getGeometryType ();
 				context .colorMaterial = this .colors .length;
+
+				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
 	
 				// Setup vertex attributes.
@@ -183,6 +184,7 @@ function ($,
 					attribNodes [i] .disable (gl, shaderNode);
 	
 				shaderNode .disableColorAttribute (gl);
+				shaderNode .disable (gl);
 			}
 			catch (error)
 			{

@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants,
           Algorithm)
 {
@@ -67,7 +65,7 @@ function ($,
 		this .addType (X3DConstants .X3DInterpolatorNode);
 	}
 
-	X3DInterpolatorNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DInterpolatorNode,
 		setup: function ()

@@ -48,14 +48,12 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DNode,
           X3DPrototypeInstance,
           X3DConstants)
@@ -69,7 +67,7 @@ function ($,
 		this .addType (X3DConstants .X3DProtoDeclarationNode);
 	}
 
-	X3DProtoDeclarationNode .prototype = $.extend (Object .create (X3DNode .prototype),
+	X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DProtoDeclarationNode,
 		hasUserDefinedFields: function ()

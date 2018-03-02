@@ -47,10 +47,7 @@
  ******************************************************************************/
 
 
-define ([
-	"jquery",
-],
-function ($)
+define (function ()
 {
 "use strict";
 
@@ -181,7 +178,7 @@ function ($)
 		},
 	};
 
-	$.extend (Complex,
+	Object .assign (Complex,
 	{
 		Polar: function (radius, angle)
 		{

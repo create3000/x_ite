@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -66,8 +65,7 @@ define ([
 	"standard/Math/Utility/MatrixStack",
 	"standard/Utility/ObjectCache",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLightNode,
@@ -267,7 +265,7 @@ function ($,
 		this .global_ = false;
 	}
 
-	DirectionalLight .prototype = $.extend (Object .create (X3DLightNode .prototype),
+	DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 	{
 		constructor: DirectionalLight,
 		fieldDefinitions: new FieldDefinitionArray ([

@@ -54,7 +54,10 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer, Vector3, Rotation4)
+function ($,
+          X3DViewer,
+          Vector3,
+          Rotation4)
 {
 "use strict";
 
@@ -80,20 +83,21 @@ function ($, X3DViewer, Vector3, Rotation4)
 	{
 		X3DViewer .call (this, executionContext);
 
-		this .button                    = -1;
-		this .orientationOffset         = new Rotation4 (0, 0, 1, 0);
-		this .rotation                  = new Rotation4 (0, 0, 1, 0);
-		this .fromVector                = new Vector3 (0, 0, 0);
-		this .toVector                  = new Vector3 (0, 0, 0);
-		this .fromPoint                 = new Vector3 (0, 0, 0);
-		this .toPoint                   = new Vector3 (0, 0, 0);
-		this .sourcePositionOffset      = new Vector3 (0, 0, 0);
-		this .destinationPositionOffset = new Vector3 (0, 0, 0);
-		this .pressTime                 = 0;
-		this .motionTime                = 0;
+		this .button                       = -1;
+		this .positionOffset               = new Vector3 (0, 0, 0);
+		this .orientationOffset            = new Rotation4 (0, 0, 1, 0);
+		this .fromVector                   = new Vector3 (0, 0, 0);
+		this .toVector                     = new Vector3 (0, 0, 0);
+		this .fromPoint                    = new Vector3 (0, 0, 0);
+		this .toPoint                      = new Vector3 (0, 0, 0);
+		this .sourcePositionOffset         = new Vector3 (0, 0, 0);
+		this .destinationPositionOffset    = new Vector3 (0, 0, 0);
+		this .rotation                     = new Rotation4 (0, 0, 1, 0);
+		this .pressTime                    = 0;
+		this .motionTime                   = 0;
 	}
 
-	ExamineViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: ExamineViewer,
 		initialize: function ()
@@ -191,15 +195,7 @@ function ($, X3DViewer, Vector3, Rotation4)
 
 					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
-						try
-						{
-							this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (this .rotation, SPIN_FACTOR));
-							this .addSpinning ();
-						}
-						catch (error)
-						{
-							console .log (error);
-						}
+						this .addSpinning ();
 					}
 
 					break;
@@ -251,13 +247,12 @@ function ($, X3DViewer, Vector3, Rotation4)
 						viewpoint = this .getActiveViewpoint (),
 						toVector  = this .trackballProjectToSphere (x, y, this .toVector);
 
-					this .rotation .setFromToVec (toVector, this .fromVector);
+					var rotation = new Rotation4 (toVector, this .fromVector);
 
-					if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
+					if (Math .abs (rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
 						return false;
 
-					viewpoint .orientationOffset_ = this .getOrientationOffset ();
-					viewpoint .positionOffset_    = this .getPositionOffset ();
+					this .addRotate (rotation);
 
 					this .fromVector .assign (toVector);
 					this .motionTime = performance .now ();
@@ -311,25 +306,12 @@ function ($, X3DViewer, Vector3, Rotation4)
 			else if (event .deltaY < 0)
 				this .addScroll (positionOffset);
 		},
-		getPositionOffset: function ()
+		spin: function ()
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			this .getDistanceToCenter (distance);
-
-			return (orientationOffset .assign (this .orientationOffset) .inverse ()
-			        .multRight (viewpoint .orientationOffset_ .getValue ())
-			        .multVecRot (vector .assign (distance))
-			        .subtract (distance)
-			        .add (viewpoint .positionOffset_ .getValue ()));
-		},
-		getOrientationOffset: function ()
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			this .orientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
-
-			return result .assign (viewpoint .getOrientation ()) .inverse () .multRight (this .rotation) .multRight (viewpoint .getUserOrientation ());
+			viewpoint .orientationOffset_ = this .getOrientationOffset ();
+			viewpoint .positionOffset_    = this .getPositionOffset ();
 		},
 		scroll: function ()
 		{
@@ -346,12 +328,29 @@ function ($, X3DViewer, Vector3, Rotation4)
 
 			viewpoint .positionOffset_ = positionOffset .assign (this .sourcePositionOffset) .lerp (this .destinationPositionOffset, t);
 		},
-		spin: function ()
+		addRotate: function (rotationChange)
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
+			this .rotation .assign (rotationChange);
+
 			viewpoint .orientationOffset_ = this .getOrientationOffset ();
 			viewpoint .positionOffset_    = this .getPositionOffset ();
+
+			return;
+		},
+		addSpinning: function (spinTime)
+		{
+			try
+			{
+				this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (this .rotation, SPIN_FACTOR));
+
+				this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+			}
+			catch (error)
+			{
+				console .log (error);
+			}
 		},
 		addScroll: function (positionOffsetChange)
 		{
@@ -373,16 +372,34 @@ function ($, X3DViewer, Vector3, Rotation4)
 		
 			this .startTime = performance .now ();
 		},
-		addSpinning: function ()
+		getPositionOffset: function ()
 		{
-			this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+			var viewpoint = this .getActiveViewpoint ();
+
+			this .getDistanceToCenter (distance);
+
+			this .positionOffset .assign (viewpoint .positionOffset_ .getValue ());
+
+			return (orientationOffset .assign (this .orientationOffset) .inverse ()
+			        .multRight (viewpoint .orientationOffset_ .getValue ())
+			        .multVecRot (vector .assign (distance))
+			        .subtract (distance)
+			        .add (viewpoint .positionOffset_ .getValue ()));
+		},
+		getOrientationOffset: function ()
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			this .orientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
+
+			return result .assign (viewpoint .getOrientation ()) .inverse () .multRight (this .rotation) .multRight (viewpoint .getUserOrientation ());
 		},
 		disconnect: function ()
 		{
 			var browser = this .getBrowser ();
 
-			browser .prepareEvents () .removeInterest ("scroll", this);
 			browser .prepareEvents () .removeInterest ("spin",   this);
+			browser .prepareEvents () .removeInterest ("scroll", this);
 		},
 		dispose: function ()
 		{

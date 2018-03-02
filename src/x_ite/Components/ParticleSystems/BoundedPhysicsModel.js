@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticlePhysicsModelNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .addType (X3DConstants .BoundedPhysicsModel);
 	}
 
-	BoundedPhysicsModel .prototype = $.extend (Object .create (X3DParticlePhysicsModelNode .prototype),
+	BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
 	{
 		constructor: BoundedPhysicsModel,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -116,8 +114,8 @@ function ($,
 			if (this .geometryNode)
 			{
 				var
-					normals  = this .geometryNode .getNormals (),
-					vertices = this .geometryNode .getVertices ();
+					normals  = this .geometryNode .getNormals ()  .getValue (),
+					vertices = this .geometryNode .getVertices () .getValue ();
 	
 				for (var i = 0, length = normals .length; i < length; ++ i)
 					boundedNormals .push (normals [i]);

@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParametricGeometryNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .NurbsSweptSurface);
 	}
 
-	NurbsSweptSurface .prototype = $.extend (Object .create (X3DParametricGeometryNode .prototype),
+	NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
 	{
 		constructor: NurbsSweptSurface,
 		fieldDefinitions: new FieldDefinitionArray ([

@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -79,7 +77,7 @@ function ($,
 		this .lineBounds_ .setUnit ("length");
 	}
 
-	Text .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Text,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -168,13 +166,13 @@ function ($,
 				console .log (error);
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			try
 			{
-				this .textGeometry .display (context);
+				this .textGeometry .display (gl, context);
 
-				X3DGeometryNode .prototype .display .call (this, context);
+				X3DGeometryNode .prototype .display .call (this, gl, context);
 			}
 			catch (error)
 			{

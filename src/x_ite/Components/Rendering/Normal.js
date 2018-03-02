@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNormalNode, 
@@ -71,11 +69,9 @@ function ($,
 		X3DNormalNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Normal);
-
-		this .vector = this .vector_ .getValue ();
 	}
 
-	Normal .prototype = $.extend (Object .create (X3DNormalNode .prototype),
+	Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
 	{
 		constructor: Normal,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -94,12 +90,33 @@ function ($,
 		{
 			return "normal";
 		},
-		get1Vector: function (index)
+		initialize: function ()
 		{
-			if (index >= 0 && index < this .vector .length)
-				return this .vector [index] .getValue ();
+			X3DNormalNode .prototype .initialize .call (this);
 
-			return new Vector3 (0, 0, 0);
+			this .vector_ .addInterest ("set_vector__", this);
+
+			this .set_vector__ ();
+		},
+		set_vector__: function ()
+		{
+			this .vector = this .vector_ .getValue ();
+			this .length = this .vector_ .length;
+		},
+		addVector: function (index, array)
+		{
+			if (index >= 0 && index < this .length)
+			{
+				const vector = this .vector;
+
+				index *= 3;
+
+				array .push (vector [index + 0], vector [index + 1], vector [index + 2]);
+			}
+			else
+			{
+				return array .push (0, 0, 0);
+			}
 		},
 	});
 

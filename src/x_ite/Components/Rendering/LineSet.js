@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode,
@@ -78,7 +76,7 @@ function ($,
 		this .coordNode = null;
 	}
 
-	LineSet .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: LineSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -178,18 +176,20 @@ function ($,
 			// Fill GeometryNode
 
 			var
-				vertexCount = this .vertexCount_ .getValue (),
+				vertexCount = this .vertexCount_,
 				attribNodes = this .getAttrib (),
 				numAttrib   = attribNodes .length,
 				attribs     = this .getAttribs (),
 				colorNode   = this .colorNode,
 				coordNode   = this .coordNode,
+				colorArray  = this .getColors (),
+				vertexArray = this .getVertices (),
 				size        = coordNode .getSize (),
 				index       = 0;
 
 			for (var c = 0, length = vertexCount .length; c < length; ++ c)
 			{
-				var count = vertexCount [c] .getValue ();
+				var count = vertexCount [c];
 
 				if (index + count > size)
 					break;
@@ -201,12 +201,12 @@ function ($,
 					for (var i = 0; i < count; ++ i, index += i & 1)
 					{
 						for (var a = 0; a < numAttrib; ++ a)
-							attribNodes [a] .addValue (attribs [a], index);
+							attribNodes [a] .addValue (index, attribs [a]);
 
 						if (colorNode)
-							this .addColor (colorNode .get1Color (index));
+							colorNode .addColor (index, colorArray);
 
-						this .addVertex (coordNode .get1Point (index));
+						coordNode .addPoint (index, vertexArray);
 					}
 
 					++ index;

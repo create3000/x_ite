@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode,
@@ -78,7 +76,7 @@ function ($,
 		this .outerRadius_ .setUnit ("length");
 	}
 
-	Disk2D .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 		//X3DLineGeometryNode .prototype, // Considered X3DLineGeometryNode.
 	{
 		constructor: Disk2D,
@@ -131,15 +129,14 @@ function ($,
 			if (innerRadius === outerRadius)
 			{
 				var
-					radius          = Math .abs (outerRadius),
-					defaultVertices = options .getCircleVertices (),
-					vertices        = this .getVertices ();
+					radius      = Math .abs (outerRadius),
+					vertexArray = this .getVertices ();
 
 				// Point
 
 				//if (radius === 0)
 				//{
-				//	this .addVertex (Vector3 .Zero);
+				//	vertexArray .push (0, 0, 0, 1);
 				//	this .setGeometryType (GeometryType .GEOMETRY_POINTS);
 				//	return;
 				//}
@@ -147,11 +144,15 @@ function ($,
 				// Circle
 
 				if (radius === 1)
-					this .setVertices (defaultVertices);
+				{
+					this .setVertices (options .getCircleVertices ());
+				}
 				else
 				{
+					var defaultVertices = options .getCircleVertices () .getValue ();
+
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertices .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 				}
 	
 				this .getMin () .set (-radius, -radius, 0);
@@ -165,20 +166,23 @@ function ($,
 			{
 				// Disk
 
-				var
-					radius          = Math .abs (Math .max (innerRadius, outerRadius)),
-					defaultVertices = options .getDiskVertices (),
-					vertices        = this .getVertices ();
+				var radius = Math .abs (Math .max (innerRadius, outerRadius));
 
-				this .getTexCoords () .push (options .getDiskTexCoords ());
+				this .getMultiTexCoords () .push (options .getDiskTexCoords ());
 				this .setNormals (options .getDiskNormals ());
 	
 				if (radius === 1)
-					this .setVertices (defaultVertices);
+				{
+					this .setVertices (options .getDiskVertices ());
+				}
 				else
 				{
+					var
+						defaultVertices = options .getDiskVertices () .getValue (),
+						vertexArray     = this .getVertices ();
+
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertices .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 				}
 
 				this .getMin () .set (-radius, -radius, 0);
@@ -193,38 +197,38 @@ function ($,
 			// Disk with hole
 
 			var
-				maxRadius  = Math .abs (Math .max (innerRadius, outerRadius)),
-				minRadius  = Math .abs (Math .min (innerRadius, outerRadius)),
-				scale      = minRadius / maxRadius,
-				offset     = (1 - scale) / 2,
-				texCoords1 = options .getDiskTexCoords (),
-				texCoords2 = [ ],
-				normals    = this .getNormals (),
-				vertices1  = options .getDiskVertices (),
-				vertices2  = this .getVertices ();
+				maxRadius        = Math .abs (Math .max (innerRadius, outerRadius)),
+				minRadius        = Math .abs (Math .min (innerRadius, outerRadius)),
+				scale            = minRadius / maxRadius,
+				offset           = (1 - scale) / 2,
+				defaultTexCoords = options .getDiskTexCoords () .getValue (),
+				defaultVertices  = options .getDiskVertices () .getValue (),
+				texCoordArray    = this .getTexCoords (),
+				normalArray      = this .getNormals (),
+				vertexArray      = this .getVertices ();
 
-			this .getTexCoords () .push (texCoords2);
+			this .getMultiTexCoords () .push (texCoordArray);
 
-			for (var i = 0, length = vertices1 .length; i < length; i += 12)
+			for (var i = 0, length = defaultVertices .length; i < length; i += 12)
 			{
-				texCoords2 .push (texCoords1 [i + 4] * scale + offset, texCoords1 [i + 5] * scale + offset, 0, 1,
-				                  texCoords1 [i + 4], texCoords1 [i + 5], 0, 1,
-				                  texCoords1 [i + 8], texCoords1 [i + 9], 0, 1,
+				texCoordArray .push (defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
+				                     defaultTexCoords [i + 4], defaultTexCoords [i + 5], 0, 1,
+				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
+										   
+				                     defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
+				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
+				                     defaultTexCoords [i + 8] * scale + offset, defaultTexCoords [i + 9] * scale + offset, 0, 1);
 
-				                  texCoords1 [i + 4] * scale + offset, texCoords1 [i + 5] * scale + offset, 0, 1,
-				                  texCoords1 [i + 8], texCoords1 [i + 9], 0, 1,
-				                  texCoords1 [i + 8] * scale + offset, texCoords1 [i + 9] * scale + offset, 0, 1);
+				normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
+                               0, 0, 1,  0, 0, 1,  0, 0, 1);
 
-				normals .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
-                           0, 0, 1,  0, 0, 1,  0, 0, 1);
-
-				vertices2 .push (vertices1 [i + 4] * minRadius, vertices1 [i + 5] * minRadius, 0, 1,
-				                 vertices1 [i + 4] * maxRadius, vertices1 [i + 5] * maxRadius, 0, 1,
-				                 vertices1 [i + 8] * maxRadius, vertices1 [i + 9] * maxRadius, 0, 1,
-
-				                 vertices1 [i + 4] * minRadius, vertices1 [i + 5] * minRadius, 0, 1,
-				                 vertices1 [i + 8] * maxRadius, vertices1 [i + 9] * maxRadius, 0, 1,
-				                 vertices1 [i + 8] * minRadius, vertices1 [i + 9] * minRadius, 0, 1);
+				vertexArray .push (defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
+				                   defaultVertices [i + 4] * maxRadius, defaultVertices [i + 5] * maxRadius, 0, 1,
+				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
+									    
+				                   defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
+				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
+				                   defaultVertices [i + 8] * minRadius, defaultVertices [i + 9] * minRadius, 0, 1);
 			}
 
 			this .getMin () .set (-maxRadius, -maxRadius, 0);
@@ -255,26 +259,26 @@ function ($,
 				return X3DGeometryNode .prototype .intersectsBox .call (this, box, clipPlanes, modelViewMatrix);
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
 			if (this .getGeometryType () < 2)
 			{
-				return X3DLineGeometryNode .prototype .display .call (this, context);
+				return X3DLineGeometryNode .prototype .display .call (this, gl, context);
 			}
 			else
 			{
-				return X3DGeometryNode .prototype .display .call (this, context);
+				return X3DGeometryNode .prototype .display .call (this, gl, context);
 			}
 		},
-		displayParticles: function (context, particles, numParticles)
+		displayParticles: function (gl, context, particles, numParticles)
 		{
 			if (this .getGeometryType () < 2)
 			{
-				return X3DLineGeometryNode .prototype .displayParticles .call (this, context, particles, numParticles);
+				return X3DLineGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
 			}
 			else
 			{
-				return X3DGeometryNode .prototype .displayParticles .call (this, context, particles, numParticles);
+				return X3DGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
 			}
 		}
 	});

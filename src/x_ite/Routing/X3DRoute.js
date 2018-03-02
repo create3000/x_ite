@@ -48,14 +48,12 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DBaseNode,
           X3DConstants,
           Generator)
@@ -81,7 +79,7 @@ function ($,
 		}
 	}
 
-	X3DRoute .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	X3DRoute .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		getTypeName: function ()
 		{

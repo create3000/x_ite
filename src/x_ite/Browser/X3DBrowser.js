@@ -99,7 +99,7 @@ function ($,
 		this .replaceWorld (this .createScene ());
 	};
 
-	X3DBrowser .prototype = $.extend (Object .create (X3DBrowserContext .prototype),
+	X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .prototype),
 	{
 		constructor: X3DBrowser,
 		getTypeName: function ()
@@ -675,7 +675,10 @@ function ($,
 
 			console .log (string);
 
-			$(".x_ite-console") .append (string);
+			var element = $(".x_ite-console");
+
+			if (element .length)
+				element .append (document .createTextNode (string));
 		},
 		println: function ()
 		{
@@ -688,7 +691,10 @@ function ($,
 
 			string += "\n";
 
-			$(".x_ite-console") .append (string);
+			var element = $(".x_ite-console");
+
+			if (element .length)
+				element .append (document .createTextNode (string));
 		},
 	});
 

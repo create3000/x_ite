@@ -52,7 +52,8 @@ define ([
 	"x_ite/Browser/Navigation/X3DViewer",
 	"jquery-mousewheel",
 ],
-function ($, X3DViewer)
+function ($,
+          X3DViewer)
 {
 "use strict";
 
@@ -63,7 +64,7 @@ function ($, X3DViewer)
 		this .button = -1;
 	}
 
-	LookAtViewer .prototype = $.extend (Object .create (X3DViewer .prototype),
+	LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: LookAtViewer,
 		initialize: function ()

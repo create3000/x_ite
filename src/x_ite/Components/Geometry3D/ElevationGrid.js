@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59,8 +58,7 @@ define ([
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode,
@@ -89,7 +87,7 @@ function ($,
 		this .coordNode    = null;
 	}
 
-	ElevationGrid .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: ElevationGrid,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -333,24 +331,33 @@ function ($,
 				return;
 
 			var
-				colorPerVertex  = this .colorPerVertex_ .getValue (),
-				normalPerVertex = this .normalPerVertex_ .getValue (),
-				coordIndex      = this .createCoordIndex (),
-				attribNodes     = this .getAttrib (),
-				numAttrib       = attribNodes .length,
-				attribs         = this .getAttribs (),
-				colorNode       = this .getColor (),
-				texCoordNode    = this .getTexCoord (),
-				normalNode      = this .getNormal (),
-				points          = this .createPoints (),
-				face            = 0;
+				colorPerVertex     = this .colorPerVertex_ .getValue (),
+				normalPerVertex    = this .normalPerVertex_ .getValue (),
+				coordIndex         = this .createCoordIndex (),
+				attribNodes        = this .getAttrib (),
+				numAttrib          = attribNodes .length,
+				attribs            = this .getAttribs (),
+				colorNode          = this .getColor (),
+				texCoordNode       = this .getTexCoord (),
+				normalNode         = this .getNormal (),
+				points             = this .createPoints (),
+				colorArray         = this .getColors (),
+				multiTexCoordArray = this .getMultiTexCoords (),
+				normalArray        = this .getNormals (),
+				vertexArray        = this .getVertices (),
+				face               = 0;
 
 			if (texCoordNode)
-				texCoordNode .init (this .getTexCoords ());
+			{
+				texCoordNode .init (multiTexCoordArray);
+			}
 			else
 			{
-				var texCoords = this .createTexCoords ();
-				this .getTexCoords () .push ([ ]);
+				var
+					texCoords     = this .createTexCoords (),
+					texCoordArray = this .getTexCoords ();
+
+				multiTexCoordArray .push (texCoordArray);
 			}
 
 			// Build geometry
@@ -359,38 +366,42 @@ function ($,
 			{
 				for (var p = 0; p < 6; ++ p, ++ c)
 				{
-					var index = coordIndex [c];
+					var
+						index = coordIndex [c],
+						point = points [index];
 
 					for (var a = 0; a < numAttrib; ++ a)
-						attribNodes [a] .addValue (attribs [a], index);
+						attribNodes [a] .addValue (index, attribs [a]);
 
 					if (colorNode)
 					{
 						if (colorPerVertex)
-							this .addColor (colorNode .get1Color (index));
+							colorNode .addColor (index, colorArray);
 						else
-							this .addColor (colorNode .get1Color (face));
+							colorNode .addColor (face, colorArray);
 					}
 						
 					if (texCoordNode)
-						texCoordNode .addTexCoord (this .getTexCoords (), index);
-
+					{
+						texCoordNode .addTexCoord (index, multiTexCoordArray);
+					}
 					else
 					{
 						var t = texCoords [index];
-						this .getTexCoords () [0] .push (t .x, t .y, 0, 1);
+
+						texCoordArray .push (t .x, t .y, 0, 1);
 					}
 
 					if (normalNode)
 					{
 						if (normalPerVertex)
-							this .addNormal (normalNode .get1Vector (index));
+							normalNode .addVector (index, normalArray);
 
 						else
-							this .addNormal (normalNode .get1Vector (face));
+							normalNode .addVector (face, normalArray);
 					}
 
-					this .addVertex (points [index]);
+					vertexArray .push (point .x, point .y, point .z, 1);
 				}
 			}
 
@@ -401,7 +412,11 @@ function ($,
 				var normals = this .createNormals (points, coordIndex);
 
 				for (var i = 0; i < normals .length; ++ i)
-					this .addNormal (normals [i]);
+				{
+					var normal = normals [i];
+
+					normalArray .push (normal .x, normal .y, normal .z);
+				}
 			}
 
 			this .setSolid (this .solid_ .getValue ());

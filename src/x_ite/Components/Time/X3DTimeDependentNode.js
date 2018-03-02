@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DChildNode,
           X3DConstants)
 {
@@ -78,7 +76,7 @@ function ($,
 		this .disabled        = false;
 	}
 
-	X3DTimeDependentNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DTimeDependentNode,
 		initialize: function ()

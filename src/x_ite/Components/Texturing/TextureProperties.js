@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
@@ -108,7 +106,7 @@ function ($,
 		this .addType (X3DConstants .TextureProperties);
 	}
 
-	TextureProperties .prototype = $.extend (Object .create (X3DNode .prototype),
+	TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: TextureProperties,
 		fieldDefinitions: new FieldDefinitionArray ([

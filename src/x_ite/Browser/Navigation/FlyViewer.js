@@ -48,10 +48,9 @@
 
 ﻿
 define ([
-	"jquery",
 	"x_ite/Browser/Navigation/X3DFlyViewer",
 ],
-function ($, X3DFlyViewer)
+function (X3DFlyViewer)
 {
 "use strict";
 	
@@ -60,7 +59,7 @@ function ($, X3DFlyViewer)
 		X3DFlyViewer .call (this, executionContext);
 	}
 
-	FlyViewer .prototype = $.extend (Object .create (X3DFlyViewer .prototype),
+	FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 	{
 		constructor: FlyViewer,
 		addCollision: function ()

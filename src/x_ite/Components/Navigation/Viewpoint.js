@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59,8 +58,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DViewpointNode,
@@ -91,7 +89,7 @@ function ($,
 		this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
 	}
 
-	Viewpoint .prototype = $.extend (Object .create (X3DViewpointNode .prototype),
+	Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
 	{
 		constructor: Viewpoint,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -123,7 +121,7 @@ function ($,
 		{
 			X3DViewpointNode .prototype .initialize .call (this);
 
-			this .fieldOfViewInterpolator .key_ = [ 0, 1 ];
+			this .fieldOfViewInterpolator .key_ = new Fields .MFFloat (0, 1);
 			this .fieldOfViewInterpolator .setup ();
 
 			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewInterpolator .set_fraction_);
@@ -133,13 +131,13 @@ function ($,
 		{
 			if (fromViewpoint .getType () .indexOf (X3DConstants .Viewpoint) < 0)
 			{
-				this .fieldOfViewInterpolator .keyValue_ = [ this .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue () ];
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (this .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue ());
 			}
 			else
 			{
 				var scale = fromViewpoint .getFieldOfView () / this .fieldOfView_ .getValue ();
 	
-				this .fieldOfViewInterpolator .keyValue_ = [ scale, this .fieldOfViewScale_ .getValue () ];
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, this .fieldOfViewScale_ .getValue ());
 	
 				this .fieldOfViewScale_ = scale;
 			}

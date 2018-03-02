@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59,8 +58,7 @@ define ([
 	"standard/Math/Geometry/Plane3",
 	"standard/Utility/ObjectCache",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
@@ -129,7 +127,7 @@ function ($,
 		this .plane   = new Vector4 (0, 0, 0, 0);
 	}
 
-	ClipPlane .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: ClipPlane,
 		fieldDefinitions: new FieldDefinitionArray ([

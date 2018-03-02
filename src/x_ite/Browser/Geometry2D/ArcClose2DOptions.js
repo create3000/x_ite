@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Fields",
 ],
-function ($,
-          X3DBaseNode,
+function (X3DBaseNode,
           Fields)
 {
 "use strict";
@@ -65,7 +63,7 @@ function ($,
 		this .addChildObjects ("dimension", new Fields .SFInt32 (32))
 	}
 
-	Arc2DOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	Arc2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: Arc2DOptions,
 		getTypeName: function ()

@@ -50,7 +50,6 @@
 // https://github.com/r3mi/poly2tri.js
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -60,8 +59,7 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Triangle3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -76,7 +74,9 @@ function ($,
 		Triangle    = [0, 1, 2],
 		Polygon     = [ ],
 		normals     = [ ],
-		normalIndex = [ ];
+		normalIndex = [ ],
+		current     = new Vector3 (0, 0, 0),
+		next        = new Vector3 (0, 0, 0);
 
 	function IndexedFaceSet (executionContext)
 	{
@@ -87,7 +87,7 @@ function ($,
 		this .creaseAngle_ .setUnit ("angle");
 	}
 
-	IndexedFaceSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: IndexedFaceSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -170,20 +170,23 @@ function ($,
 			// Fill GeometryNode
 
 			var
-				colorPerVertex  = this .colorPerVertex_ .getValue (),
-				normalPerVertex = this .normalPerVertex_ .getValue (),
-				coordIndex      = this .coordIndex_ .getValue (),
-				attribNodes     = this .getAttrib (),
-				numAttrib       = attribNodes .length,
-				attribs         = this .getAttribs (),
-				colorNode       = this .getColor (),
-				texCoordNode    = this .getTexCoord (),
-				normalNode      = this .getNormal (),
-				coordNode       = this .getCoord (),
-				textCoords      = this .getTexCoords ();
+				colorPerVertex     = this .colorPerVertex_ .getValue (),
+				normalPerVertex    = this .normalPerVertex_ .getValue (),
+				coordIndex         = this .coordIndex_,
+				attribNodes        = this .getAttrib (),
+				numAttrib          = attribNodes .length,
+				attribs            = this .getAttribs (),
+				colorNode          = this .getColor (),
+				texCoordNode       = this .getTexCoord (),
+				normalNode         = this .getNormal (),
+				coordNode          = this .getCoord (),
+				colorArray         = this .getColors (),
+				multiTexCoordArray = this .getMultiTexCoords (),
+				normalArray        = this .getNormals (),
+				vertexArray        = this .getVertices ();
 
 			if (texCoordNode)
-				texCoordNode .init (textCoords);
+				texCoordNode .init (multiTexCoordArray);
 
 			for (var p = 0, numPolygons = polygons .length; p < numPolygons; ++ p)
 			{
@@ -197,32 +200,32 @@ function ($,
 				{
 					var
 						i     = vertices [triangles [v]],
-						index = coordIndex [i] .getValue ();
+						index = coordIndex [i];
 
 					for (var a = 0; a < numAttrib; ++ a)
-						attribNodes [a] .addValue (attribs [a], index);
+						attribNodes [a] .addValue (index, attribs [a]);
 
 					if (colorNode)
 					{
 						if (colorPerVertex)
-							this .addColor (colorNode .get1Color (this .getColorPerVertexIndex (i)));
+							colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
 						else
-							this .addColor (colorNode .get1Color (this .getColorIndex (face)));
+							colorNode .addColor (this .getColorIndex (face), colorArray);
 					}
 
 					if (texCoordNode)
-						texCoordNode .addTexCoord (textCoords, this .getTexCoordPerVertexIndex (i));
+						texCoordNode .addTexCoord (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
 
 					if (normalNode)
 					{
 						if (normalPerVertex)
-							this .addNormal (normalNode .get1Vector (this .getNormalPerVertexIndex (i)));
+							normalNode .addVector (this .getNormalPerVertexIndex (i), normalArray);
 
 						else
-							this .addNormal (normalNode .get1Vector (this .getNormalIndex (face)));
+							normalNode .addVector (this .getNormalIndex (face), normalArray);
 					}
 
-					this .addVertex (coordNode .get1Point (index));
+					coordNode .addPoint (index, vertexArray);
 				}
 
 				++ face;
@@ -240,7 +243,7 @@ function ($,
 		{
 			var
 				convex      = this .convex_ .getValue (),
-				coordIndex  = this .coordIndex_ .getValue (),
+				coordIndex  = this .coordIndex_,
 				coordLength = coordIndex .length,
 				polygons    = [ ];
 
@@ -250,9 +253,9 @@ function ($,
 			if (coordLength)
 			{
 				// Add -1 (polygon end marker) to coordIndex if not present.
-				if (this .coordIndex_ [coordLength - 1] > -1)
+				if (coordIndex [coordLength - 1] > -1)
 				{
-					this .coordIndex_ .push (-1);
+					coordIndex .push (-1);
 
 					++ coordLength;
 				}
@@ -264,7 +267,7 @@ function ($,
 
 				for (var i = 0; i < coordLength; ++ i)
 				{
-					var index = coordIndex [i] .getValue ();
+					var index = coordIndex [i];
 	
 					if (index > -1)
 					{
@@ -336,12 +339,12 @@ function ($,
 			var
 				vertices   = polygon .vertices,
 				triangles  = polygon .triangles,
-				coordIndex = this .coordIndex_ .getValue (),
+				coordIndex = this .coordIndex_,
 				coord      = this .getCoord ();
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
-				var vertex = coord .get1Point (coordIndex [vertices [i]] .getValue ()) .copy ();
+				var vertex = coord .get1Point (coordIndex [vertices [i]], new Vector3 (0, 0, 0));
 
 				vertex .index = i;
 
@@ -368,8 +371,9 @@ function ($,
 		buildNormals: function (polygons)
 		{
 			var
-				first   = 0,
-				normals = this .createNormals (polygons);
+				first       = 0,
+				normals     = this .createNormals (polygons),
+				normalArray = this .getNormals ();
 
 			for (var p = 0, pl = polygons .length; p < pl; ++ p)
 			{
@@ -380,7 +384,9 @@ function ($,
 
 				for (var v = 0, tl = triangles .length; v < tl; ++ v)
 				{
-					this .addNormal (normals [first + triangles [v]]);
+					var normal = normals [first + triangles [v]];
+
+					normalArray .push (normal .x, normal .y, normal .z);
 				}
 
 				first += vertices .length;
@@ -390,7 +396,7 @@ function ($,
 		{
 			var
 				cw          = ! this .ccw_ .getValue (),
-				coordIndex  = this .coordIndex_ .getValue (),
+				coordIndex  = this .coordIndex_,
 				coord       = this .getCoord (),
 				normal      = null;
 
@@ -408,17 +414,17 @@ function ($,
 				{
 					case 3:
 					{
-						normal = coord .getNormal (coordIndex [vertices [0]] .getValue (),
-						                           coordIndex [vertices [1]] .getValue (),
-						                           coordIndex [vertices [2]] .getValue ());
+						normal = coord .getNormal (coordIndex [vertices [0]],
+						                           coordIndex [vertices [1]],
+						                           coordIndex [vertices [2]]);
 						break;
 					}
 					case 4:
 					{
-						normal = coord .getQuadNormal (coordIndex [vertices [0]] .getValue (),
-						                               coordIndex [vertices [1]] .getValue (),
-						                               coordIndex [vertices [2]] .getValue (),
-						                               coordIndex [vertices [3]] .getValue ());
+						normal = coord .getQuadNormal (coordIndex [vertices [0]],
+						                               coordIndex [vertices [1]],
+						                               coordIndex [vertices [2]],
+						                               coordIndex [vertices [3]]);
 						break;
 					}
 					default:
@@ -431,7 +437,7 @@ function ($,
 				// Add a normal index for each point.
 				for (var i = 0; i < length; ++ i)
 				{
-					var index = coordIndex [vertices [i]] .getValue ();
+					var index = coordIndex [vertices [i]];
 
 					if (! normalIndex [index])
 						normalIndex [index] = [ ];
@@ -455,15 +461,17 @@ function ($,
 			// Determine polygon normal.
 			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-			var
-				normal = new Vector3 (0, 0, 0),
-				next   = coord .get1Point (coordIndex [vertices [0]] .getValue ());
+			var normal = new Vector3 (0, 0, 0);
+
+			coord .get1Point (coordIndex [vertices [0]], next);
 
 			for (var i = 0, length = vertices .length; i < length; ++ i)
 			{
-				var
-					current = next,
-					next    = coord .get1Point (coordIndex [vertices [(i + 1) % length]] .getValue ());
+				var tmp = current;
+				current = next;
+				next    = tmp;
+
+				coord .get1Point (coordIndex [vertices [(i + 1) % length]], next);
 
 				normal .x += (current .y - next .y) * (current .z + next .z);
 				normal .y += (current .z - next .z) * (current .x + next .x);

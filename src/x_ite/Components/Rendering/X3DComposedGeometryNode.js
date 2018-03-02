@@ -48,19 +48,21 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          X3DGeometryNode,
+function (X3DGeometryNode,
           X3DCast,
           X3DConstants,
           Vector3)
 {
 "use strict";
+
+	var
+		current = new Vector3 (0, 0, 0),
+		next    = new Vector3 (0, 0, 0);
 
 	function X3DComposedGeometryNode (executionContext)
 	{
@@ -74,7 +76,7 @@ function ($,
 		this .coordNode    = null;
 	}
 
-	X3DComposedGeometryNode .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: X3DComposedGeometryNode,
 		initialize: function ()
@@ -204,20 +206,23 @@ function ($,
 			trianglesSize -= trianglesSize % verticesPerFace;
 
 			var
-				colorPerVertex  = this .colorPerVertex_ .getValue (),
-				normalPerVertex = this .normalPerVertex_ .getValue (),
-				attribNodes     = this .getAttrib (),
-				numAttrib       = attribNodes .length,
-				attribs         = this .getAttribs (),
-				colorNode       = this .getColor (),
-				texCoordNode    = this .getTexCoord (),
-				normalNode      = this .getNormal (),
-				coordNode       = this .getCoord (),
-				textCoords      = this .getTexCoords (),
-				face            = 0;
+				colorPerVertex     = this .colorPerVertex_ .getValue (),
+				normalPerVertex    = this .normalPerVertex_ .getValue (),
+				attribNodes        = this .getAttrib (),
+				numAttrib          = attribNodes .length,
+				attribs            = this .getAttribs (),
+				colorNode          = this .getColor (),
+				texCoordNode       = this .getTexCoord (),
+				normalNode         = this .getNormal (),
+				coordNode          = this .getCoord (),
+				colorArray         = this .getColors (),
+				multiTexCoordArray = this .getMultiTexCoords (),
+				normalArray        = this .getNormals (),
+				vertexArray        = this .getVertices (),
+				face               = 0;
 
 			if (texCoordNode)
-				texCoordNode .init (textCoords);
+				texCoordNode .init (multiTexCoordArray);
 		
 			// Fill GeometryNode
 		
@@ -228,29 +233,29 @@ function ($,
 				var index = this .getPolygonIndex (this .getTriangleIndex (i));
 
 				for (var a = 0; a < numAttrib; ++ a)
-					attribNodes [a] .addValue (attribs [a], index);
+					attribNodes [a] .addValue (index, attribs [a]);
 
 				if (colorNode)
 				{
 					if (colorPerVertex)
-						this .addColor (colorNode .get1Color (index));
+						colorNode .addColor (index, colorArray);
 					else
-						this .addColor (colorNode .get1Color (face));
+						colorNode .addColor (face, colorArray);
 				}
 
 				if (texCoordNode)
-					texCoordNode .addTexCoord (textCoords, index);
+					texCoordNode .addTexCoord (index, multiTexCoordArray);
 	
 				if (normalNode)
 				{
 					if (normalPerVertex)
-						this .addNormal (normalNode .get1Vector (index));
+						normalNode .addVector (index, normalArray);
 
 					else
-						this .addNormal (normalNode .get1Vector (face));
+						normalNode .addVector (face, normalArray);
 				}
 
-				this .addVertex (coordNode .get1Point (index));
+				coordNode .addPoint (index, vertexArray);
 			}
 		
 			// Autogenerate normal if not specified.
@@ -263,10 +268,16 @@ function ($,
 		},
 		buildNormals: function (verticesPerPolygon, polygonsSize, trianglesSize)
 		{
-			var normals = this .createNormals (verticesPerPolygon, polygonsSize);
+			var
+				normals     = this .createNormals (verticesPerPolygon, polygonsSize),
+				normalArray = this .getNormals ();
 
 			for (var i = 0; i < trianglesSize; ++ i)
-				this .addNormal (normals [this .getTriangleIndex (i)]);
+			{
+				var normal = normals [this .getTriangleIndex (i)];
+
+				normalArray .push (normal .x, normal .y, normal .z);
+			}
 		},
 		createNormals: function (verticesPerPolygon, polygonsSize)
 		{
@@ -316,15 +327,17 @@ function ($,
 			// Determine polygon normal.
 			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-			var
-				normal = new Vector3 (0, 0, 0),
-				next   = coord .get1Point (this .getPolygonIndex (0));
+			var normal = new Vector3 (0, 0, 0);
+
+			coord .get1Point (this .getPolygonIndex (0), next);
 
 			for (var i = 0; i < verticesPerPolygon; ++ i)
 			{
-				var
-					current = next,
-					next    = coord .get1Point (this .getPolygonIndex ((i + 1) % verticesPerPolygon));
+				var tmp = current;
+				current = next;
+				next    = tmp;
+
+				coord .get1Point (this .getPolygonIndex ((i + 1) % verticesPerPolygon), next);
 
 				normal .x += (current .y - next .y) * (current .z + next .z);
 				normal .y += (current .z - next .z) * (current .x + next .x);

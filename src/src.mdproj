@@ -726,6 +726,8 @@
     <None Include="x_ite\Browser\Shaders\Inlcude\Pack.h" />
     <None Include="x_ite\Browser\Shaders\Background.vs" />
     <None Include="x_ite\Browser\Shaders\Background.fs" />
+    <None Include="x_ite\Basic\X3DTypedArrayField.js" />
+    <None Include="x_ite\Basic\X3DObjectArrayField.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

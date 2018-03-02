@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .HAnimSegment);
 	}
 
-	HAnimSegment .prototype = $.extend (Object .create (X3DGroupingNode .prototype),
+	HAnimSegment .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: HAnimSegment,
 		fieldDefinitions: new FieldDefinitionArray ([

@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Picking/X3DPickSensorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DPickSensorNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .PointPickSensor);
 	}
 
-	PointPickSensor .prototype = $.extend (Object .create (X3DPickSensorNode .prototype),
+	PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
 	{
 		constructor: PointPickSensor,
 		fieldDefinitions: new FieldDefinitionArray ([

@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -59,8 +58,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/DEBUG",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           Shader,
@@ -94,7 +92,7 @@ function ($,
 		this .valid = false;
 	}
 
-	ShaderPart .prototype = $.extend (Object .create (X3DNode .prototype),
+	ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: ShaderPart,

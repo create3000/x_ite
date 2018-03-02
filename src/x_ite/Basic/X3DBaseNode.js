@@ -98,7 +98,7 @@ function ($,
 			this .addField (fieldDefinitions [i]);
 	}
 
-	X3DBaseNode .prototype = $.extend (Object .create (X3DEventObject .prototype),
+	X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
 	{
 		constructor: X3DBaseNode,
 		fieldDefinitions: new FieldDefinitionArray ([ ]),
@@ -302,10 +302,10 @@ function ($,
 							{
 								case X3DConstants .SFNode:
 								case X3DConstants .MFNode:
-									destfield .set (sourceField .copy (executionContext) .getValue ());
+									destfield .setValue (sourceField .copy (executionContext));
 									break;
 								default:
-									destfield .set (sourceField .getValue ());
+									destfield .setValue (sourceField);
 									break;
 							}
 						}

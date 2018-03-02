@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Components/Time/X3DTimeDependentNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DSensorNode, 
@@ -83,7 +81,7 @@ function ($,
 		this .scale    = 1;
 	}
 
-	TimeSensor .prototype = $.extend (Object .create (X3DSensorNode .prototype),
+	TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 		X3DTimeDependentNode .prototype,
 	{
 		constructor: TimeSensor,

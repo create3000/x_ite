@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DCoordinateNode, 
@@ -81,7 +79,7 @@ function ($,
 		this .origin = new Vector3 (0, 0, 0); // Origin of the reference frame.
 	}
 
-	GeoCoordinate .prototype = $.extend (Object .create (X3DCoordinateNode .prototype),
+	GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoCoordinate,
@@ -115,7 +113,7 @@ function ($,
 		eventsProcessed: function ()
 		{
 			var
-				point  = this .point_ .getValue (),
+				point  = this .point_,
 				points = this .points;
 
 			for (var i = 0, length = Math .min (point .length, points .length); i < length; ++ i)
@@ -139,14 +137,35 @@ function ($,
 		{
 			return this .point_ .length;
 		},
-		get1Point: function (index)
+		get1Point: function (index, vector)
+		{
+			if (index < this .length)
+			{
+				const p = this .points [index];
+
+				return vector .set (p .x, p .y, p .z);
+			}
+			else
+			{
+				return vector .set (0, 0, 0);
+			}
+		},
+		addPoint: function (index, array)
 		{
 			// The index cannot be less than 0.
 
 			if (index < this .points .length)
-				return this .points [index];
+			{
+				const p = this .points [index];
 
-			return this .origin;
+				array .push (p .x, p .y, p .z, 1);
+			}
+			else
+			{
+				const p = this .origin;
+
+				array .push (p .x, p .y, p .z, 1);
+			}
 		},
 		getNormal: function (index1, index2, index3)
 		{
@@ -157,10 +176,12 @@ function ($,
 				length = points .length;
 
 			if (index1 < length && index2 < length && index3 < length)
+			{
 				return Triangle3 .normal (points [index1],
 				                          points [index2],
 				                          points [index3],
 				                          new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},
@@ -173,11 +194,13 @@ function ($,
 				length = points .length;
 
 			if (index1 < length && index2 < length && index3 < length && index4 < length)
+			{
 				return Triangle3 .quadNormal (points [index1],
 				                              points [index2],
 				                              points [index3],
 				                              points [index4],
 				                              new Vector3 (0, 0, 0));
+			}
 
 			return new Vector3 (0, 0, 0);
 		},

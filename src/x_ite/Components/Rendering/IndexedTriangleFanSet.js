@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DComposedGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .triangleIndex = [ ];
 	}
 
-	IndexedTriangleFanSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	IndexedTriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: IndexedTriangleFanSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -115,25 +113,25 @@ function ($,
 			// Build coordIndex
 
 			var
-				index         = this .index_ .getValue (),
+				index         = this .index_,
 				triangleIndex = this .triangleIndex;
 		
 			triangleIndex .length = 0;
 		
 			for (var i = 0, length = index .length; i < length; ++ i)
 			{
-				var first = index [i] .getValue ();
+				var first = index [i];
 		
 				if (++ i < length)
 				{
-					var second = index [i] .getValue ();
+					var second = index [i];
 
 					if (second < 0)
 						continue;
 	
 					for (++ i; i < length; ++ i)
 					{
-						var third = index [i] .getValue ();
+						var third = index [i];
 
 						if (third < 0)
 							break;

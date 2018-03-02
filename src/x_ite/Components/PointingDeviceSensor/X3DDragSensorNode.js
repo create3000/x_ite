@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DPointingDeviceSensorNode, 
+function (X3DPointingDeviceSensorNode, 
           X3DConstants)
 {
 "use strict";
@@ -67,7 +65,7 @@ function ($,
 		this .trackPoint_changed_ .setUnit ("length");
 	}
 
-	X3DDragSensorNode .prototype = $.extend (Object .create (X3DPointingDeviceSensorNode .prototype),
+	X3DDragSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
 	{
 		constructor: X3DDragSensorNode,
 	});

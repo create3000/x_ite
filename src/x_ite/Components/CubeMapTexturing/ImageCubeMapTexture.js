@@ -97,7 +97,7 @@ function ($,
 		this .urlStack = new Fields .MFString ();
 	}
 
-	ImageCubeMapTexture .prototype = $.extend (Object .create (X3DEnvironmentTextureNode .prototype),
+	ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
 		X3DUrlObject .prototype,
 	{
 		constructor: ImageCubeMapTexture,

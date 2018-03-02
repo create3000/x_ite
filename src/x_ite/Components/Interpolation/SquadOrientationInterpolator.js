@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Browser/Interpolation/SquatInterpolator",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInterpolatorNode,
@@ -75,7 +73,7 @@ function ($,
 		this .squad = new SquatInterpolator ();
 	}
 
-	SquadOrientationInterpolator .prototype = $.extend (Object .create (X3DInterpolatorNode .prototype),
+	SquadOrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 	{
 		constructor: SquadOrientationInterpolator,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -113,15 +111,15 @@ function ($,
 			if (keyValue .length < key .length)
 				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
 
-			this .squad .generate (this .closed_   .getValue (),
-			                       this .key_      .getValue (),
-			                       this .keyValue_ .getValue ());
+			this .squad .generate (this .closed_ .getValue (),
+			                       this .key_,
+			                       this .keyValue_);
 		},
 		interpolate: function (index0, index1, weight)
 		{
 			try
 			{
-				this .value_changed_ = this .squad .interpolate (index0, index1, weight, this .keyValue_ .getValue ());
+				this .value_changed_ = this .squad .interpolate (index0, index1, weight, this .keyValue_);
 			}
 			catch (error)
 			{

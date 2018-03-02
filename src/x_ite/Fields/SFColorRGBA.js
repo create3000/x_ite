@@ -48,13 +48,15 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/Fields/SFColor",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Color4",
 ],
-function ($, X3DField, SFColor, X3DConstants, Color4)
+function (X3DField,
+          SFColor,
+          X3DConstants,
+          Color4)
 {
 "use strict";
 
@@ -76,7 +78,7 @@ function ($, X3DField, SFColor, X3DConstants, Color4)
 		return SFColorRGBA .apply (Object .create (SFColorRGBA .prototype), arguments);
 	}
 
-	SFColorRGBA .prototype = $.extend (Object .create (X3DField .prototype),
+	SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
 	{
 		constructor: SFColorRGBA,
 		copy: function ()

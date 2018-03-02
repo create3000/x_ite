@@ -48,17 +48,17 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Basic/X3DField",
 	"x_ite/InputOutput/Generator",
 ],
-function ($, X3DField, Generator)
+function (X3DField,
+          Generator)
 {
 "use strict";
 
 	return function (Type)
 	{
-		return $.extend (Object .create (X3DField .prototype),
+		return Object .assign (Object .create (X3DField .prototype),
 		{
 			copy: function ()
 			{

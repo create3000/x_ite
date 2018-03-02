@@ -77,12 +77,12 @@ function ($,
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 	}
 
-	PixelTexture .prototype = $.extend (Object .create (X3DTexture2DNode .prototype),
+	PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
 	{
 		constructor: PixelTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, [ ])),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, new Fields .MFInt32 ())),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
@@ -111,15 +111,15 @@ function ($,
 		{
 			return this .loadState_ .getValue ();
 		},
-		convert: function (data, comp, array)
+		convert: function (data, comp, array, length)
 		{
 			switch (comp)
 			{
 				case 1:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index] =
 						data [index + 1] =
@@ -131,9 +131,9 @@ function ($,
 				}
 				case 2:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index] =
 						data [index + 1] =
@@ -145,9 +145,9 @@ function ($,
 				}
 				case 3:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index]     = (pixel >>> 16) & 255;
 						data [index + 1] = (pixel >>>  8) & 255;
@@ -159,9 +159,9 @@ function ($,
 				}
 				case 4:
 				{
-					for (var i = 0, index = 0, length = array .length; i < length; ++ i, index += 4)
+					for (var i = 0, index = 0; i < length; ++ i, index += 4)
 					{
-						var pixel = array [i] .getValue ();
+						var pixel = array [i];
 
 						data [index]     = (pixel >>> 24);
 						data [index + 1] = (pixel >>> 16) & 255;
@@ -179,7 +179,7 @@ function ($,
 				width       = this .image_ .width,
 				height      = this .image_ .height,
 				comp        = this .image_ .comp,
-				array       = this .image_ .array .getValue (),
+				array       = this .image_ .array,
 				transparent = ! (comp % 2),
 				data        = null;
 		
@@ -189,13 +189,13 @@ function ($,
 				{
 					data = new Uint8Array (width * height * 4);
 
-					this .convert (data, comp, array);
+					this .convert (data, comp, array .getValue (), array .length);
 				}
 				else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this .textureProperties_ .getValue ())
 				{
 					data = new Uint8Array (width * height * 4);
 
-					this .convert (data, comp, array);
+					this .convert (data, comp, array .getValue (), array .length);
 
 					var
 						inputWidth  = width,
@@ -218,7 +218,7 @@ function ($,
 					canvas1 .width  = width;
 					canvas1 .height = height;
 
-					this .convert (imageData .data, comp, array);
+					this .convert (imageData .data, comp, array, array .length);
 					cx1 .putImageData (imageData, 0, 0);
 
 					width  = Algorithm .nextPowerOfTwo (width);

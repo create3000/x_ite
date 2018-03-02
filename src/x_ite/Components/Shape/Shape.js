@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -61,8 +60,7 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithms/QuickSort",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode, 
@@ -85,7 +83,7 @@ function ($,
 		this .addType (X3DConstants .Shape);
 	}
 
-	Shape .prototype = $.extend (Object .create (X3DShapeNode .prototype),
+	Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 	{
 		constructor: Shape,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -208,15 +206,15 @@ function ($,
 				console .log (error);
 			}
 		},
-		depth: function (context, shaderNode)
+		depth: function (gl, context, shaderNode)
 		{
-			this .getGeometry () .depth (context, shaderNode);
+			this .getGeometry () .depth (gl, context, shaderNode);
 		},
-		display: function (context)
+		display: function (gl, context)
 		{
-			this .getAppearance () .enable  (context);
-			this .getGeometry ()   .display (context);
-			this .getAppearance () .disable (context);
+			this .getAppearance () .enable  (gl, context);
+			this .getGeometry ()   .display (gl, context);
+			this .getAppearance () .disable (gl, context);
 		},
 	});
 

@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DComposedGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .triangleIndex = [ ];
 	}
 
-	IndexedQuadSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: IndexedQuadSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -113,7 +111,7 @@ function ($,
 		set_index__: function ()
 		{
 			var
-				index         = this .index_ .getValue (),
+				index         = this .index_,
 				length        = index .length,
 				triangleIndex = this .triangleIndex;
 

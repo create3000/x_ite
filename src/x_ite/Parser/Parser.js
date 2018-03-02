@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Parser/X3DParser",
 	"x_ite/Prototype/X3DExternProtoDeclaration",
 	"x_ite/Prototype/X3DProtoDeclaration",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DParser,
           X3DExternProtoDeclaration,
           X3DProtoDeclaration,
@@ -83,151 +81,155 @@ function ($,
 	 *  Grammar
 	 */
 
+
+//	Comment out scriptBody function fragments
+//
+//	// VRML lexical elements
+//	var Grammar =
+//	{
+//		// General
+//		Whitespaces: /^([\x20\n,\t\r]+)/,
+//		Comment:     /^#(.*?)(?=[\n\r])/,
+//
+//		// Header
+//		Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\n\r]/,
+//
+//		// Keywords
+//		AS:          /^AS/,
+//		COMPONENT:   /^COMPONENT/,
+//		DEF:         /^DEF/,
+//		EXPORT:      /^EXPORT/,
+//		EXTERNPROTO: /^EXTERNPROTO/,
+//		FALSE:       /^FALSE/,
+//		false:       /^false/,
+//		IMPORT:      /^IMPORT/,
+//		IS:          /^IS/,
+//		META:        /^META/,
+//		NULL:        /^NULL/,
+//		TRUE:        /^TRUE/,
+//		true:        /^true/,
+//		PROFILE:     /^PROFILE/,
+//		PROTO:       /^PROTO/,
+//		ROUTE:       /^ROUTE/,
+//		TO:          /^TO/,
+//		UNIT:        /^UNIT/,
+//		USE:         /^USE/,
+//
+//		// Terminal symbols
+//		OpenBrace:    /^\{/,
+//		CloseBrace:   /^\}/,
+//		OpenBracket:  /^\[/,
+//		CloseBracket: /^\]/,
+//		Period:       /^\./,
+//		Colon:        /^\:/,
+//
+//		Id: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*)/,
+//		ComponentNameId: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*)/,
+//
+//		initializeOnly: /^initializeOnly/,
+//		inputOnly:      /^inputOnly/,
+//		outputOnly:     /^outputOnly/,
+//		inputOutput:    /^inputOutput/,
+//
+//		field:        /^field/,
+//		eventIn:      /^eventIn/,
+//		eventOut:     /^eventOut/,
+//		exposedField: /^exposedField/,
+//
+//		FieldType: /^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)/,
+//
+//		// Values
+//		int32:  /^((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/,
+//		double: /^([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/,
+//		string: /^"((?:[^"\\]|\\\\|\\")*)"/,
+//
+//		Inf:         /^[+]?inf/i,
+//		NegativeInf: /^-inf/i,
+//		NaN:         /^[+-]?nan/i,
+//
+//		// Misc
+//		Break: /\r?\n/g,
+//	};
+//
+//	function parse (parser)
+//	{
+//		this .lastIndex = 0;
+//		parser .result  = this .exec (parser .input);
+//
+//		if (parser .result)
+//		{
+//			parser .input = parser .input .slice (parser .result [0] .length);
+//			return true;
+//		}
+//
+//		return false;
+//	}
+
+
+	// Comment out scriptBody function fragments
+	//
 	// VRML lexical elements
 	var Grammar =
 	{
 		// General
-		Whitespaces: /^([\x20\n,\t\r]+)/,
-		Comment:     /^#(.*?)(?=[\n\r])/,
+		Whitespaces: new RegExp ('([\\x20\\n,\\t\\r]+)', 'gy'),
+		Comment:     new RegExp ('#(.*?)(?=[\\n\\r])',   'gy'),
 
 		// Header
-		Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\n\r]/,
+		Header:	    new RegExp ("#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'gy'),
 
 		// Keywords
-		AS:          /^AS/,
-		COMPONENT:   /^COMPONENT/,
-		DEF:         /^DEF/,
-		EXPORT:      /^EXPORT/,
-		EXTERNPROTO: /^EXTERNPROTO/,
-		FALSE:       /^FALSE/,
-		false:       /^false/,
-		IMPORT:      /^IMPORT/,
-		IS:          /^IS/,
-		META:        /^META/,
-		NULL:        /^NULL/,
-		TRUE:        /^TRUE/,
-		true:        /^true/,
-		PROFILE:     /^PROFILE/,
-		PROTO:       /^PROTO/,
-		ROUTE:       /^ROUTE/,
-		TO:          /^TO/,
-		UNIT:        /^UNIT/,
-		USE:         /^USE/,
+		AS:          new RegExp ('AS',          'gy'),
+		COMPONENT:   new RegExp ('COMPONENT',   'gy'),
+		DEF:         new RegExp ('DEF',         'gy'),
+		EXPORT:      new RegExp ('EXPORT',      'gy'),
+		EXTERNPROTO: new RegExp ('EXTERNPROTO', 'gy'),
+		FALSE:       new RegExp ('FALSE',       'gy'),
+		false:       new RegExp ('false',       'gy'),
+		IMPORT:      new RegExp ('IMPORT',      'gy'),
+		IS:          new RegExp ('IS',          'gy'),
+		META:        new RegExp ('META',        'gy'),
+		NULL:        new RegExp ('NULL',        'gy'),
+		TRUE:        new RegExp ('TRUE',        'gy'),
+		true:        new RegExp ('true',        'gy'),
+		PROFILE:     new RegExp ('PROFILE',     'gy'),
+		PROTO:       new RegExp ('PROTO',       'gy'),
+		ROUTE:       new RegExp ('ROUTE',       'gy'),
+		TO:          new RegExp ('TO',          'gy'),
+		UNIT:        new RegExp ('UNIT',        'gy'),
+		USE:         new RegExp ('USE',         'gy'),
 
 		// Terminal symbols
-		OpenBrace:    /^\{/,
-		CloseBrace:   /^\}/,
-		OpenBracket:  /^\[/,
-		CloseBracket: /^\]/,
-		Period:       /^\./,
-		Colon:        /^\:/,
+		OpenBrace:    new RegExp ('\\{', 'gy'),
+		CloseBrace:   new RegExp ('\\}', 'gy'),
+		OpenBracket:  new RegExp ('\\[', 'gy'),
+		CloseBracket: new RegExp ('\\]', 'gy'),
+		Period:       new RegExp ('\\.', 'gy'),
+		Colon:        new RegExp ('\\:', 'gy'),
 
-		Id: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*)/,
-		ComponentNameId: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*)/,
+		Id: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]*)', 'gy'),
+		ComponentNameId: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]*)', 'gy'),
 
-		initializeOnly: /^initializeOnly/,
-		inputOnly:      /^inputOnly/,
-		outputOnly:     /^outputOnly/,
-		inputOutput:    /^inputOutput/,
+		initializeOnly: new RegExp ('initializeOnly', 'gy'),
+		inputOnly:      new RegExp ('inputOnly',      'gy'),
+		outputOnly:     new RegExp ('outputOnly',     'gy'),
+		inputOutput:    new RegExp ('inputOutput',    'gy'),
 
-		field:        /^field/,
-		eventIn:      /^eventIn/,
-		eventOut:     /^eventOut/,
-		exposedField: /^exposedField/,
+		field:        new RegExp ('field', 'gy'),
+		eventIn:      new RegExp ('eventIn', 'gy'),
+		eventOut:     new RegExp ('eventOut', 'gy'),
+		exposedField: new RegExp ('exposedField', 'gy'),
 
-		FieldType: /^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)/,
-
-		// Values
-		int32:  /^((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/,
-		double: /^([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/,
-		string: /^"((?:[^"\\]|\\\\|\\")*)"/,
-
-		Inf:         /^[+]?inf/i,
-		NegativeInf: /^-inf/i,
-		NaN:         /^[+-]?nan/i,
-
-		// Misc
-		Break: /\r?\n/g,
-	};
-
-	function parse (parser)
-	{
-		this .lastIndex = 0;
-		parser .result  = this .exec (parser .input);
-
-		if (parser .result)
-		{
-			parser .input = parser .input .slice (parser .result [0] .length);
-			return true;
-		}
-
-		return false;
-	}
-
-
-/*
-	// VRML lexical elements
-	var Grammar =
-	{
-		// General
-		Whitespaces: new RegExp ('^([\\x20\\n,\\t\\r]+)', 'y'),
-		Comment:     new RegExp ('^#(.*?)(?=[\\n\\r])',   'y'),
-
-		// Header
-		Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'y'),
-
-		// Keywords
-		AS:          new RegExp ('^AS',          'y'),
-		COMPONENT:   new RegExp ('^COMPONENT',   'y'),
-		DEF:         new RegExp ('^DEF',         'y'),
-		EXPORT:      new RegExp ('^EXPORT',      'y'),
-		EXTERNPROTO: new RegExp ('^EXTERNPROTO', 'y'),
-		FALSE:       new RegExp ('^FALSE',       'y'),
-		false:       new RegExp ('^false',       'y'),
-		IMPORT:      new RegExp ('^IMPORT',      'y'),
-		IS:          new RegExp ('^IS',          'y'),
-		META:        new RegExp ('^META',        'y'),
-		NULL:        new RegExp ('^NULL',        'y'),
-		TRUE:        new RegExp ('^TRUE',        'y'),
-		true:        new RegExp ('^true',        'y'),
-		PROFILE:     new RegExp ('^PROFILE',     'y'),
-		PROTO:       new RegExp ('^PROTO',       'y'),
-		ROUTE:       new RegExp ('^ROUTE',       'y'),
-		TO:          new RegExp ('^TO',          'y'),
-		UNIT:        new RegExp ('^UNIT',        'y'),
-		USE:         new RegExp ('^USE',         'y'),
-
-		// Terminal symbols
-		OpenBrace:    new RegExp ('^\\{', 'y'),
-		CloseBrace:   new RegExp ('^\\}', 'y'),
-		OpenBracket:  new RegExp ('^\\[', 'y'),
-		CloseBracket: new RegExp ('^\\]', 'y'),
-		Period:       new RegExp ('^\\.', 'y'),
-		Colon:        new RegExp ('^\\:', 'y'),
-
-		Id: new RegExp ('^([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]*)', 'y'),
-		ComponentNameId: new RegExp ('^([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]*)', 'y'),
-
-		initializeOnly: new RegExp ('^initializeOnly', 'y'),
-		inputOnly:      new RegExp ('^inputOnly',      'y'),
-		outputOnly:     new RegExp ('^outputOnly',     'y'),
-		inputOutput:    new RegExp ('^inputOutput',    'y'),
-
-		field:        new RegExp ('^field', 'y'),
-		eventIn:      new RegExp ('^eventIn', 'y'),
-		eventOut:     new RegExp ('^eventOut', 'y'),
-		exposedField: new RegExp ('^exposedField', 'y'),
-
-		FieldType: new RegExp ('^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)', 'y'),
+		FieldType: new RegExp ('(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)', 'gy'),
 
 		// Values
-		int32:  new RegExp ('^((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'y'),
-		double: new RegExp ('^([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'y'),
-		string: new RegExp ('^"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'y'),
+		int32:  new RegExp ('((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'gy'),
+		double: new RegExp ('([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'gy'),
+		string: new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'gy'),
 		
-		Inf:         new RegExp ('^[+]?inf',  'yi'),
-		NegativeInf: new RegExp ('^-inf',     'yi'),
-		NaN:         new RegExp ('^[+-]?nan', 'yi'),
+		Inf:         new RegExp ('[+]?inf',  'gyi'),
+		NegativeInf: new RegExp ('-inf',     'gyi'),
+		NaN:         new RegExp ('[+-]?nan', 'gyi'),
 
 		// Misc
 		Break: new RegExp ('\\r?\\n', 'g'),
@@ -247,7 +249,6 @@ function ($,
 
 		return false;
 	}
-*/
 
 	for (var key in Grammar)
 		Grammar [key] .parse = parse;
@@ -267,7 +268,7 @@ function ($,
 		this .isXML = isXML;
 	}
 
-	Parser .prototype = $.extend (Object .create (X3DParser .prototype),
+	Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 	{
 		accessTypes:
 		{
@@ -348,6 +349,7 @@ function ($,
 			}
 			catch (error)
 			{
+				//console .log (error);
 				throw new Error (this .getError (error));
 			}
 		},
@@ -1359,13 +1361,13 @@ function ($,
 		},
 		scriptBodyElement: function (baseNode)
 		{
-//			var
-//				lastIndex  = this .lastIndex,
-//				lineNumber = this .lineNumber;
-
 			var
-				input      = this .input,
+				lastIndex  = this .lastIndex,
 				lineNumber = this .lineNumber;
+
+//			var
+//				input      = this .input,
+//				lineNumber = this .lineNumber;
 
 			if (this .Id ())
 			{
@@ -1456,11 +1458,11 @@ function ($,
 				}
 			}
 
-//			this .lastIndex  = lastIndex;
-//			this .lineNumber = lineNumber;
-
-			this .input      = input;
+			this .lastIndex  = lastIndex;
 			this .lineNumber = lineNumber;
+
+//			this .input      = input;
+//			this .lineNumber = lineNumber;
 
 			var field = this .interfaceDeclaration ();
 		
@@ -1732,16 +1734,11 @@ function ($,
 		sfboolValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
-			var
-				array = field .getValue (),
-				value = new Fields .SFBool ();
-
-			while (this .sfboolValue (value))
+			while (this .sfboolValue (this .SFBool))
 			{
-				value .addParent (field);
-				array .push (value);
-				value = new Fields .SFBool ();
+				field .push (this .SFBool);
 			}
 		},
 		sfcolorValue: function (field)
@@ -1793,6 +1790,7 @@ function ($,
 		sfcolorValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfcolorValue (this .SFColor))
 			{
@@ -1853,6 +1851,7 @@ function ($,
 		sfcolorrgbaValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfcolorrgbaValue (this .SFColorRGBA))
 			{
@@ -1898,6 +1897,7 @@ function ($,
 		sfdoubleValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFDouble .setUnit (field .getUnit ());
 
@@ -1939,6 +1939,7 @@ function ($,
 		sffloatValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFFloat .setUnit (field .getUnit ());
 
@@ -1961,21 +1962,25 @@ function ($,
 					{
 						var
 							comp  = this .value,
-							array = [ ],
 							size  = width * height;
+
+						field .width  = width;
+						field .height = height;
+						field .comp   = comp;
+
+						var array = field .array;
 
 						for (var i = 0; i < size; ++ i)
 						{
 							if (this .int32 ())
 							{
-								array .push (this .value);
+								array [i] = this .value;
 								continue;
 							}
 
 							return false;
 						}
 
-						field .getValue () .set (width, height, comp, array);
 						return true;
 					}
 				}
@@ -2010,6 +2015,7 @@ function ($,
 		sfimageValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfimageValue (this .SFImage))
 			{
@@ -2053,6 +2059,7 @@ function ($,
 		sfint32Values: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfint32Value (this .SFInt32))
 			{
@@ -2140,6 +2147,7 @@ function ($,
 		sfmatrix3dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix3dValue (this .SFMatrix3d))
 			{
@@ -2177,6 +2185,7 @@ function ($,
 		sfmatrix3fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix3fValue (this .SFMatrix3f))
 			{
@@ -2300,6 +2309,7 @@ function ($,
 		sfmatrix4dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix4dValue (this .SFMatrix4d))
 			{
@@ -2337,6 +2347,7 @@ function ($,
 		sfmatrix4fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfmatrix4fValue (this .SFMatrix4f))
 			{
@@ -2446,6 +2457,7 @@ function ($,
 		sfrotationValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfrotationValue (this .SFRotation))
 			{
@@ -2489,6 +2501,7 @@ function ($,
 		sfstringValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sfstringValue (this .SFString))
 			{
@@ -2526,6 +2539,7 @@ function ($,
 		sftimeValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			while (this .sftimeValue (this .SFTime))
 			{
@@ -2581,6 +2595,7 @@ function ($,
 		sfvec2dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec2d .setUnit (field .getUnit ());
 
@@ -2622,6 +2637,7 @@ function ($,
 		sfvec2fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec2f .setUnit (field .getUnit ());
 
@@ -2685,6 +2701,7 @@ function ($,
 		sfvec3dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec3d .setUnit (field .getUnit ());
 
@@ -2726,6 +2743,7 @@ function ($,
 		sfvec3fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec3f .setUnit (field .getUnit ());
 
@@ -2795,6 +2813,7 @@ function ($,
 		sfvec4dValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec4d .setUnit (field .getUnit ());
 
@@ -2836,6 +2855,7 @@ function ($,
 		sfvec4fValues: function (field)
 		{
 			field .length = 0;
+			field         = field .target;
 
 			this .SFVec4f .setUnit (field .getUnit ());
 

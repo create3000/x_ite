@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DVolumeRenderStyleNode,
+function (X3DVolumeRenderStyleNode,
           X3DConstants)
 {
 "use strict";
@@ -65,7 +63,7 @@ function ($,
 		this .addType (X3DConstants .X3DComposableVolumeRenderStyleNode);
 	}
 
-	X3DComposableVolumeRenderStyleNode .prototype = extend (Object .create (X3DVolumeRenderStyleNode .prototype),
+	X3DComposableVolumeRenderStyleNode .prototype = Object .assign (Object .create (X3DVolumeRenderStyleNode .prototype),
 	{
 		constructor: X3DComposableVolumeRenderStyleNode,
 	});

@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -62,8 +61,7 @@ define ([
 	"standard/Math/Geometry/Plane3",
 	"standard/Math/Geometry/Sphere3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DDragSensorNode, 
@@ -85,7 +83,7 @@ function ($,
 		this .addType (X3DConstants .SphereSensor);
 	}
 
-	SphereSensor .prototype = $.extend (Object .create (X3DDragSensorNode .prototype),
+	SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 	{
 		constructor: SphereSensor,
 		fieldDefinitions: new FieldDefinitionArray ([

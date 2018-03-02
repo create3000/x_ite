@@ -48,14 +48,12 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DSensorNode, 
           X3DConstants,
           Vector3)
@@ -76,7 +74,7 @@ function ($,
 		this .currentTraversed = true;
 	}
 
-	X3DEnvironmentalSensorNode .prototype = $.extend (Object .create (X3DSensorNode .prototype),
+	X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 	{
 		constructor: X3DEnvironmentalSensorNode,
 		initialize: function ()

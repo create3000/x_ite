@@ -48,9 +48,10 @@
 
 
 define ([
-	"jquery",
+	"x_ite/Fields",
 	"x_ite/Browser/Core/PrimitiveQuality",
 	"x_ite/Browser/Text/X3DTextGeometry",
+	"x_ite/Components/Rendering/X3DGeometryNode",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Triangle2",
@@ -58,9 +59,10 @@ define ([
 	"poly2tri",
 	"earcut",
 ],
-function ($,
+function (Fields,
           PrimitiveQuality,
           X3DTextGeometry,
+          X3DGeometryNode,
           Vector3,
           Matrix4,
           Triangle2,
@@ -83,10 +85,10 @@ function ($,
 
 		text .transparent_ = false;
 
-		this .texCoords = [ ];
+		this .texCoordArray = X3DGeometryNode .createArray ();
 	}
 
-	PolygonText .prototype = $.extend (Object .create (X3DTextGeometry .prototype),
+	PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
 	{
 		constructor: PolygonText,
 		getMatrix: function ()
@@ -113,12 +115,15 @@ function ($,
 				origin           = text .origin_ .getValue (),
 				sizeUnitsPerEm   = size / font .unitsPerEm,
 				primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
-				texCoords        = this .texCoords,
-				normals          = text .getNormals (),
-				vertices         = text .getVertices ();
+				texCoordArray    = this .texCoordArray,
+				normalArray      = text .getNormals (),
+				vertexArray      = text .getVertices ();
 
-			texCoords .length = 0;
-			text .getTexCoords () .push (texCoords);
+			// Set texCoords.
+
+			texCoordArray .length = 0;
+
+			text .getMultiTexCoords () .push (texCoordArray);
 
 			this .getBBox () .getExtents (min, max);
 			text .getMin () .assign (min);
@@ -146,9 +151,9 @@ function ($,
 								x = glyphVertices [v] .x * size + minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
 								y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
 		
-							texCoords .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
-							normals   .push (0, 0, 1);
-							vertices  .push (x, y, 0, 1);
+							texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
+							normalArray   .push (0, 0, 1);
+							vertexArray   .push (x, y, 0, 1);
 						}
 		
 						// Calculate advanceWidth.
@@ -193,9 +198,9 @@ function ($,
 								x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
 								y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
 			
-							texCoords .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
-							normals   .push (0, 0, 1);
-							vertices  .push (x, y, 0, 1);
+							texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
+							normalArray   .push (0, 0, 1);
+							vertexArray   .push (x, y, 0, 1);
 						}
 					}
 				}
@@ -563,7 +568,7 @@ function ($,
 				//console .warn (error);
 			}
 		},
-		display: function (context)
+		display: function (gl, context)
 		{ },
 		transformLine: function (line)
 		{ },

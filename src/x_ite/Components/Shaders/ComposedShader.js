@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -58,8 +57,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShaderNode, 
@@ -80,7 +78,7 @@ function ($,
 		this .loadSensor = new LoadSensor (executionContext);
 	}
 
-	ComposedShader .prototype = $.extend (Object .create (X3DShaderNode .prototype),
+	ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
 		X3DProgrammableShaderObject .prototype,
 	{
 		constructor: ComposedShader,
@@ -132,20 +130,24 @@ function ($,
 		},
 		set_live__: function ()
 		{
+			var gl = this .getBrowser () .getContext ();
+
 			if (this .isLive () .getValue ())
 			{
 				if (this .isValid_ .getValue ())
 				{
-					this .useProgram (this .getBrowser () .getContext ());
+					this .enable (gl);
 					this .addShaderFields ();
+					this .disable (gl);
 				}
 			}
 			else
 			{
 				if (this .isValid_ .getValue ())
 				{
-					this .useProgram (this .getBrowser () .getContext ());
+					this .enable (gl);
 					this .removeShaderFields ();
+					this .disable (gl);
 				}
 			}
 		},
@@ -191,7 +193,7 @@ function ($,
 
 				if (valid)
 				{
-					this .useProgram (gl);
+					gl .useProgram (this .program);
 
 					// Initialize uniform variables and attributes
 					if (this .getDefaultUniforms ())
@@ -215,21 +217,25 @@ function ($,
 				this .isValid_ = false;
 			}
 		},
-		setGlobalUniforms: function (renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
+		set_field__: function (field)
 		{
-			this .useProgram (gl);
-			
-			X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, renderObject, gl, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+			var gl = this .getBrowser () .getContext ();
+
+			gl .useProgram (this .program);
+
+			X3DProgrammableShaderObject .prototype .set_field__ .call (this, field);
 		},
-		setLocalUniforms: function (gl, context)
-		{
-			this .useProgram (gl);
-	
-			X3DProgrammableShaderObject .prototype .setLocalUniforms .call (this, gl, context);
-		},
-		useProgram: function (gl)
+		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
 			gl .useProgram (this .program);
+
+			X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+		},
+		enable: function (gl)
+		{
+			gl .useProgram (this .program);
+
+			X3DProgrammableShaderObject .prototype .enable .call (this, gl);
 		},
 	});
 

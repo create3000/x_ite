@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -60,8 +59,7 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode, 
@@ -89,7 +87,7 @@ function ($,
 		this .spine_        .setUnit ("length");
 	}
 
-	Extrusion .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Extrusion,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -119,7 +117,7 @@ function ($,
 		},
 		getClosedOrientation: function ()
 		{
-			var orientation = this .orientation_ .getValue ();
+			var orientation = this .orientation_;
 
 			if (orientation .length)
 			{
@@ -135,10 +133,10 @@ function ($,
 		createPoints: function ()
 		{
 			var
-				crossSection = this .crossSection_. getValue (),
-				orientation  = this .orientation_. getValue (),
-				scale        = this .scale_. getValue (),
-				spine        = this .spine_. getValue (),
+				crossSection = this .crossSection_,
+				orientation  = this .orientation_,
+				scale        = this .scale_,
+				spine        = this .spine_,
 				points       = [ ];
 
 			// calculate SCP rotations
@@ -177,7 +175,7 @@ function ($,
 			// calculate SCP rotations
 
 			var
-				spine       = this .spine_ .getValue (),
+				spine       = this .spine_,
 				numSpines   = spine .length,
 				firstSpine  = spine [0] .getValue (),
 				lastSpine   = spine [spine .length - 1] .getValue (),
@@ -316,15 +314,15 @@ function ($,
 		build: function ()
 		{
 			var
-				cw           = ! this .ccw_ .getValue (),
-				crossSection = this .crossSection_. getValue (),
-				spine        = this .spine_. getValue (),
-				texCoords    = [ ];
+				cw            = ! this .ccw_ .getValue (),
+				crossSection  = this .crossSection_,
+				spine         = this .spine_,
+				texCoordArray = this .getTexCoords ();
 
 			if (spine .length < 2 || crossSection .length < 2)
 				return;
 
-			this .getTexCoords () .push (texCoords);
+			this .getMultiTexCoords () .push (texCoordArray);
 
 			var crossSectionSize = crossSection .length; // This one is used only in the INDEX macro.
 
@@ -368,6 +366,10 @@ function ($,
 				normalIndex [p] = [ ];
 
 			// Build body.
+
+			var
+				normalArray = this .getNormals (),
+				vertexArray = this .getVertices ();
 
 			var
 				numCrossSection_1 = crossSection .length - 1,
@@ -450,30 +452,30 @@ function ($,
 					{
 						// p1
 						if (l2)
-							texCoords .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
+							texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
 						else
 						{
 							// Cone case: ((texCoord1 + texCoord4) / 2)
 							var y = (n / numSpine_1 + (n + 1) / numSpine_1) / 2;
 
-							texCoords .push (k / numCrossSection_1, y, 0, 1);
+							texCoordArray .push (k / numCrossSection_1, y, 0, 1);
 						}
 
 						normalIndex [i1] .push (normals .length);
 						normals .push (normal1);
-						this .addVertex (p1);
+						vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 	
 						// p2
-						texCoords .push ((k + 1) / numCrossSection_1, n / numSpine_1, 0, 1);
+						texCoordArray .push ((k + 1) / numCrossSection_1, n / numSpine_1, 0, 1);
 						normalIndex [i2] .push (normals .length);
 						normals .push (normal1);
-						this .addVertex (p2);
+						vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
 	
 						// p3
-						texCoords .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
+						texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
 						normalIndex [i3] .push (normals .length);
 						normals .push (normal1);
-						this .addVertex (p3);
+						vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
 					}
 
 					// Triangle two
@@ -481,31 +483,31 @@ function ($,
 					if (l2)
 					{
 						// p1
-						texCoords .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
+						texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
 						normalIndex [i1] .push (normals .length);
 						normals .push (normal2);
-						this .addVertex (p1);
+						vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 	
 						// p3
 						if (l1)
-							texCoords .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
+							texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
 						else
 						{
 							// Cone case: ((texCoord3 + texCoord2) / 2)
 							var y = ((n + 1) / numSpine_1 + n / numSpine_1) / 2;
 
-							texCoords .push ((k + 1) / numCrossSection_1, y, 0, 1);
+							texCoordArray .push ((k + 1) / numCrossSection_1, y, 0, 1);
 						}
 
 						normalIndex [i3] .push (normals .length);
 						normals .push (normal2);
-						this .addVertex (p3);
+						vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
 	
 						// p4
-						texCoords .push (k / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
+						texCoordArray .push (k / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
 						normalIndex [i4] .push (normals .length);
 						normals .push (normal2);
-						this .addVertex (p4);
+						vertexArray .push (p4 .x, p4 .y, p4 .z, 1);
 					}
 				}
 			}
@@ -515,8 +517,11 @@ function ($,
 			normals = this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
 
 			for (var i = 0; i < normals .length; ++ i)
-				this .addNormal (normals [i]);
+			{
+				var normal = normals [i];
 
+				normalArray .push (normal .x, normal .y, normal .z);
+			}
 			// Build caps
 
 			if (capMax && crossSection .length > 2)
@@ -533,6 +538,7 @@ function ($,
 						var
 							index = INDEX (j, numCapPoints - 1 - k),
 							point = points [index] .copy ();
+
 						point .index    = index;
 						point .texCoord = Vector2 .subtract (crossSection [numCapPoints - 1 - k] .getValue (), min) .divide (capMax);
 						polygon .push (point);
@@ -554,7 +560,7 @@ function ($,
 						if (cw)
 							normal .negate ();
 
-						this .addCap (texCoords, normal, points, triangles);
+						this .addCap (texCoordArray, normal, points, triangles);
 					}
 				}
 
@@ -570,6 +576,7 @@ function ($,
 						var
 							index = INDEX (j, k),
 							point = points [index] .copy ();
+
 						point .index    = index;
 						point .texCoord = Vector2 .subtract (crossSection [k] .getValue (), min) .divide (capMax);
 						polygon .push (point);
@@ -591,7 +598,7 @@ function ($,
 						if (cw)
 							normal .negate ();
 
-						this .addCap (texCoords, normal, points, triangles);
+						this .addCap (texCoordArray, normal, points, triangles);
 					}
 				}
 			}
@@ -599,8 +606,12 @@ function ($,
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (this .ccw_ .getValue ());
 		},
-		addCap: function (texCoords, normal, vertices, triangles)
+		addCap: function (texCoordArray, normal, vertices, triangles)
 		{
+			var
+				normalArray = this .getNormals (),
+				vertexArray = this .getVertices ();
+
 			for (var i = 0; i < triangles .length; i += 3)
 			{
 				var
@@ -611,17 +622,17 @@ function ($,
 					t1 = triangles [i + 1] .texCoord,
 					t2 = triangles [i + 2] .texCoord;
 
-				texCoords .push (t0 .x, t0 .y, 0, 1);
-				texCoords .push (t1 .x, t1 .y, 0, 1);
-				texCoords .push (t2 .x, t2 .y, 0, 1);
+				texCoordArray .push (t0 .x, t0 .y, 0, 1);
+				texCoordArray .push (t1 .x, t1 .y, 0, 1);
+				texCoordArray .push (t2 .x, t2 .y, 0, 1);
 
-				this .addNormal (normal);
-				this .addNormal (normal);
-				this .addNormal (normal);
-				
-				this .addVertex (p0);
-				this .addVertex (p1);
-				this .addVertex (p2);
+				normalArray .push (normal .x, normal .y, normal .z,
+				                   normal .x, normal .y, normal .z,
+				                   normal .x, normal .y, normal .z);
+
+				vertexArray .push (p0 .x, p0 .y, p0 .z, 1,
+				                   p1 .x, p1 .y, p1 .z, 1,
+				                   p2 .x, p2 .y, p2 .z, 1);
 			}
 		},
 	});

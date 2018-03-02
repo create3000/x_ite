@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode,
@@ -77,7 +75,7 @@ function ($,
 		this .size_ .setUnit ("length");
 	}
 
-	Box .prototype = $.extend (Object .create (X3DGeometryNode .prototype),
+	Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: Box,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -104,8 +102,8 @@ function ($,
 				geometry = options .getGeometry (),
 				size     = this .size_ .getValue ();
 
-			this .setNormals   (geometry .getNormals ());
-			this .setTexCoords (geometry .getTexCoords ());
+			this .setMultiTexCoords (geometry .getMultiTexCoords ());
+			this .setNormals        (geometry .getNormals ());
 
 			if (size .equals (defaultSize))
 			{
@@ -121,15 +119,15 @@ function ($,
 					x               = scale .x,
 					y               = scale .y,
 					z               = scale .z,
-					defaultVertices = geometry .getVertices (),
-					vertices        = this .getVertices ();
+					defaultVertices = geometry .getVertices () .getValue (),
+					vertexArray     = this .getVertices ();
 
 				for (var i = 0; i < defaultVertices .length; i += 4)
 				{
-					vertices .push (x * defaultVertices [i],
-					                y * defaultVertices [i + 1],
-					                z * defaultVertices [i + 2],
-					                1);
+					vertexArray .push (x * defaultVertices [i],
+					                   y * defaultVertices [i + 1],
+					                   z * defaultVertices [i + 2],
+					                   1);
 				}
 
 				x = Math .abs (x);

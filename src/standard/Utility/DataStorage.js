@@ -57,9 +57,11 @@ define (function ()
 	{
 		get: function (target, key)
 		{
-			if (key in target)
-				return target [key];
-			
+			var value = target [key];
+
+			if (value !== undefined)
+				return value;
+
 			var value = localStorage [target .getNameSpace () + key];
 
 			if (value === undefined)

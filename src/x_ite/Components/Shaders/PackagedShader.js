@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Components/Shaders/X3DProgrammableShaderObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShaderNode, 
@@ -77,7 +75,7 @@ function ($,
 		this .addType (X3DConstants .PackagedShader);
 	}
 
-	PackagedShader .prototype = $.extend (Object .create (X3DShaderNode .prototype),new X3DUrlObject (),new X3DProgrammableShaderObject (),
+	PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),new X3DUrlObject (),new X3DProgrammableShaderObject (),
 	{
 		constructor: PackagedShader,
 		fieldDefinitions: new FieldDefinitionArray ([

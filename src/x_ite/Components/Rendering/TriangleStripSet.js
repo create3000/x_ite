@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DComposedGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposedGeometryNode, 
@@ -73,7 +71,7 @@ function ($,
 		this .triangleIndex = [ ];
 	}
 
-	TriangleStripSet .prototype = $.extend (Object .create (X3DComposedGeometryNode .prototype),
+	TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 	{
 		constructor: TriangleStripSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -115,14 +113,14 @@ function ($,
 			// Build coordIndex
 
 			var
-				stripCount    = this .stripCount_ .getValue (),
+				stripCount    = this .stripCount_,
 				triangleIndex = this .triangleIndex;
 
 			triangleIndex .length = 0;
 
 			for (var s = 0, strips = stripCount .length, index = 0; s < strips; ++ s)
 			{
-				var vertexCount = stripCount [s] .getValue ()
+				var vertexCount = stripCount [s];
 
 				for (var i = 0, count = vertexCount - 2; i < count; ++ i)
 				{

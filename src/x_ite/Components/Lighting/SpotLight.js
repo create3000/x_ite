@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -67,8 +66,7 @@ define ([
 	"standard/Math/Algorithm",
 	"standard/Utility/ObjectCache",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLightNode, 
@@ -296,7 +294,7 @@ function ($,
 		this .cutOffAngle_ .setUnit ("angle");
 	}
 
-	SpotLight .prototype = $.extend (Object .create (X3DLightNode .prototype),
+	SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 	{
 		constructor: SpotLight,
 		fieldDefinitions: new FieldDefinitionArray ([

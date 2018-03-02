@@ -109,7 +109,7 @@ function ($,
 		this .addType (X3DConstants .Script);
 	}
 
-	Script .prototype = $.extend (Object .create (X3DScriptNode .prototype),
+	Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 	{
 		constructor: Script,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -258,8 +258,6 @@ function ($,
 
 			var global =
 			{
-				$: { value: $ },
-
 				NULL:  { value: null },
 				FALSE: { value: false },
 				TRUE:  { value: true },

@@ -84,28 +84,23 @@ define (function ()
 			{
 				var
 					a        = this .a,
-					l        = lhs .getValue (),
-					r        = rhs .getValue (),
 					distance = 0;
 
-				for (var i = 0, length = l .length; i < length; ++ i)
-				  distance = Math .max (a .assign (l [i] .getValue ()) .subtract (r [i] .getValue ()) .abs ());
+				for (var i = 0, length = lhs .length; i < length; ++ i)
+				  distance = Math .max (a .assign (lhs [i] .getValue ()) .subtract (rhs [i] .getValue ()) .abs ());
 	
 				return distance < tolerance;
 			},
 			interpolate: function (source, destination, weight)
 			{
-				var
-					a = this .array .getValue (),
-					s = source .getValue (),
-					d = destination .getValue ();
+				var a = this .array;
 	
-				this .array .length = s .length;
+				a .length = source .length;
 	
-				for (var i = 0, length = s .length; i < length; ++ i)
-					a [i] .getValue () .assign (s [i] .getValue ()) .lerp (d [i] .getValue (), weight);
+				for (var i = 0, length = source .length; i < length; ++ i)
+					a [i] = source [i] .getValue () .lerp (destination [i] .getValue (), weight);
 	
-				return this .array;
+				return a;
 			},
 			set_value__: function ()
 			{

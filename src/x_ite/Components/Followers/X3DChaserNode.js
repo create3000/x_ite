@@ -48,12 +48,10 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Followers/X3DFollowerNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DFollowerNode, 
+function (X3DFollowerNode, 
           X3DConstants)
 {
 "use strict";
@@ -73,7 +71,7 @@ function ($,
 		this .deltaOut = this .getArray ();
 	}
 
-	X3DChaserNode .prototype = $.extend (Object .create (X3DFollowerNode .prototype),
+	X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
 	{
 		constructor: X3DChaserNode,
 		initialize: function ()

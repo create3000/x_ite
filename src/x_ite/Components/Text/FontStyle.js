@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Browser/Text/PolygonText",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DFontStyleNode,
@@ -75,7 +73,7 @@ function ($,
 		this .size_ .setUnit ("length");
 	}
 
-	FontStyle .prototype = $.extend (Object .create (X3DFontStyleNode .prototype),
+	FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
 	{
 		constructor: FontStyle,
 		fieldDefinitions: new FieldDefinitionArray ([

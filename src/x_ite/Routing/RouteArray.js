@@ -47,10 +47,7 @@
  ******************************************************************************/
 
 
-define ([
-	"jquery",
-],
-function ($)
+define (function ()
 {
 "use strict";
 
@@ -58,8 +55,10 @@ function ($)
 	{
 		get: function (target, key)
 		{
-			if (key in target)
-				return target [key];
+			var value = target [key];
+	
+			if (value !== undefined)
+				return value;
 
 			return target .array [key];
 		},
@@ -76,7 +75,7 @@ function ($)
 		return new Proxy (this, handler);
 	}
 
-	$.extend (RouteArray .prototype,
+	Object .assign (RouteArray .prototype,
 	{
 		constructor: RouteArray,
 		getValue: function ()

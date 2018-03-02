@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          X3DChildNode,
+function (X3DChildNode,
           X3DBoundedObject,
           X3DConstants)
 {
@@ -68,7 +66,7 @@ function ($,
 		this .addType (X3DConstants .X3DVolumeDataNode);
 	}
 
-	X3DVolumeDataNode .prototype = extend (Object .create (X3DChildNode .prototype),
+	X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DBoundedObject .prototype,
 	{
 		constructor: X3DVolumeDataNode,

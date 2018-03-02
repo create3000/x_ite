@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DLineGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode, 
@@ -75,7 +73,7 @@ function ($,
 		this .radius_ .setUnit ("length");
 	}
 
-	Circle2D .prototype = $.extend (Object .create (X3DLineGeometryNode .prototype),
+	Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 	{
 		constructor: Circle2D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -112,17 +110,20 @@ function ($,
 		build: function ()
 		{
 			var
-				options         = this .getBrowser () .getCircle2DOptions (),
-				radius          = this .radius_ .getValue (),
-				defaultVertices = options .getVertices (),
-				vertices        = this .getVertices ();
+				options     = this .getBrowser () .getCircle2DOptions (),
+				vertexArray = this .getVertices (),
+				radius      = this .radius_ .getValue ();
 
 			if (radius === 1)
-				this .setVertices (defaultVertices);
+			{
+				this .setVertices (options .getVertices ());
+			}
 			else
 			{
+				var defaultVertices = options .getVertices () .getValue ();
+
 				for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-					vertices .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+					vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 			}
 
 			this .getMin () .set (-radius, -radius, 0);

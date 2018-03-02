@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/NURBS/X3DNurbsControlCurveNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNurbsControlCurveNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .ContourPolyline2D);
 	}
 
-	ContourPolyline2D .prototype = $.extend (Object .create (X3DNurbsControlCurveNode .prototype),
+	ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
 	{
 		constructor: ContourPolyline2D,
 		fieldDefinitions: new FieldDefinitionArray ([

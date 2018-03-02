@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTransformMatrix3DNode, 
@@ -78,7 +76,7 @@ function ($,
 		this .addType (X3DConstants .GeoLocation);
 	}
 
-	GeoLocation .prototype = $.extend (Object .create (X3DTransformMatrix3DNode .prototype),
+	GeoLocation .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
 		X3DGeospatialObject .prototype,
 	{
 		constructor: GeoLocation,

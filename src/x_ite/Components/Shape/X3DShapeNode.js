@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DBoundedObject,
           X3DCast,
           X3DConstants,
@@ -74,7 +72,7 @@ function ($,
 		this .bbox = new Box3 ();
 	}
 
-	X3DShapeNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 		X3DBoundedObject .prototype,
 	{
 		constructor: X3DShapeNode,
@@ -90,7 +88,6 @@ function ($,
 
 			this .set_apparance__ ();
 			this .set_geometry__ ();
-			this .set_bbox__ ();
 		},
 		getBBox: function (bbox)
 		{
@@ -156,7 +153,7 @@ function ($,
 			if (this .geometryNode)
 			{
 				this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
-				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__", this);
+				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
 			}
 
 			this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
@@ -164,7 +161,7 @@ function ($,
 			if (this .geometryNode)
 			{
 				this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
-				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__", this);
+				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
 			}
 
 			this .set_transparent__ ();

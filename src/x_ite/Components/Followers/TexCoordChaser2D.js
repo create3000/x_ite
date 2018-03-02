@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChaserNode, 
@@ -78,7 +76,7 @@ function ($,
 		this .addType (X3DConstants .TexCoordChaser2D);
 	}
 
-	TexCoordChaser2D .prototype = $.extend (Object .create (X3DChaserNode .prototype),
+	TexCoordChaser2D .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 		X3DArrayChaserObject .prototype,
 	{
 		constructor: TexCoordChaser2D,

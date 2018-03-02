@@ -5,9 +5,9 @@
     <meta name='comment' content='World of Titania'/>
     <meta name='created' content='Fri, 29 Dec 2017 10:23:47 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Titania V4.0.4, http://titania.create3000.de'/>
+    <meta name='generator' content='Titania V4.0.6a, http://titania.create3000.de'/>
     <meta name='identifier' content='file:///home/holger/Projekte/X_ITE/src/test.x3d'/>
-    <meta name='modified' content='Fri, 29 Dec 2017 10:31:23 GMT'/>
+    <meta name='modified' content='Wed, 28 Feb 2018 17:26:18 GMT'/>
     <meta name='titania-add-metadata' content='true'/>
   </head>
   <Scene>
@@ -41,14 +41,22 @@
           <MetadataSet DEF='nodes' containerField='value'
               name='nodes'
               reference='http://titania.create3000.de'>
-            <Script DEF='PhongShadingScript' containerField='value'>
+            <Script DEF='TestScript' containerField='value'>
+              <field accessType='inputOnly' type='SFTime' name='set_time'/>
 <![CDATA[ecmascript:
 
-function initialize ()
+function set_time (value, time)
 {
-	// Phong shading can be enabled if »Cobweb Compatibility« mode is enabled.
+	var t0 = performance .now ();
+	
+	var N = 1000000;
+	var a = new MFInt32 ();
+	
+	for (var i = 0; i < N; ++ i)
+		a .push (i);
 
-	Browser .setBrowserOption ("Shading", "PHONG");
+	print ((performance .now () - t0) / 1000);
+	print (a .length);
 }
 ]]>
             </Script>
@@ -144,24 +152,17 @@ function initialize ()
         </MetadataSet>
       </MetadataSet>
     </WorldInfo>
-    <OrthoViewpoint DEF='_14'/>
-    <Shape>
-      <Appearance>
-        <Material
-            ambientIntensity='0'
-            diffuseColor='1 0 0'
-            specularColor='1 0 0'
-            emissiveColor='1 0 0'
-            shininess='0'/>
-      </Appearance>
-      <IndexedFaceSet
-          coordIndex='0, 1, 2, 3, -1'>
-        <Coordinate
-            point='-2 -2 0, 2 -2 0, 2 2 0, -2 2 0'/>
-      </IndexedFaceSet>
-    </Shape>
-    <NavigationInfo
-        headlight='false'/>
-    <Script USE='PhongShadingScript'/>
+    <NavigationInfo/>
+    <Transform DEF='Box'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Box/>
+      </Shape>
+    </Transform>
+    <TouchSensor DEF='_14'/>
+    <Script USE='TestScript'/>
+    <ROUTE fromNode='_14' fromField='touchTime' toNode='TestScript' toField='set_time'/>
   </Scene>
 </X3D>

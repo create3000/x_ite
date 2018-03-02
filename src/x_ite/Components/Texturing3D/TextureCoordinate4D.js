@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureCoordinateNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .TextureCoordinate4D);
 	}
 
-	TextureCoordinate4D .prototype = $.extend (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinate4D .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinate4D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -90,27 +88,39 @@ function ($,
 		{
 			return "texCoord";
 		},
-		addTexCoordToChannel: function (texCoords, index)
+		initialize: function ()
 		{
-			if (index >= 0 && index < this .point_ .length)
-			{
-				var point = this .point_ [index];
+			X3DTextureCoordinateNode .prototype .initialize .call (this);
 
-				texCoords .push (point .x,
-				                 point .y,
-				                 point .z,
-				                 point .w);
+			this .point_ .addInterest ("set_point__", this);
+
+			this .set_point__ ();
+		},
+		set_point__: function ()
+		{
+			this .point  = this .point_ .getValue ();
+			this .length = this .point_ .length;
+		},
+		addTexCoordToChannel: function (index, array)
+		{
+			if (index >= 0 && index < this .length)
+			{
+				var point = this .point;
+
+				index *= 4;
+
+				array .push (point [index], point [index + 1], point [index + 2], point [index + 3]);
 			}
 			else
-				texCoords .push (0, 0, 0, 1);
+				array .push (0, 0, 0, 1);
 		},
 		getTexCoord: function (array)
 		{
-			var point = this .point_ .getValue ();
+			var point = this .point_;
 
 			for (var i = 0, length = point .length; i < length; ++ i)
 			{
-				var p = point[i] .getValue ();
+				var p = point [i];
 
 				array [i] = new Vector4 (p .x, p .y, p .z, p .w);
 			}

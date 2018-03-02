@@ -48,15 +48,13 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DRigidJointNode, 
@@ -71,7 +69,7 @@ function ($,
 		this .addType (X3DConstants .SingleAxisHingeJoint);
 	}
 
-	SingleAxisHingeJoint .prototype = $.extend (Object .create (X3DRigidJointNode .prototype),
+	SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 	{
 		constructor: SingleAxisHingeJoint,
 		fieldDefinitions: new FieldDefinitionArray ([

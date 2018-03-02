@@ -48,13 +48,11 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function ($,
-          X3DChildNode, 
+function (X3DChildNode, 
           X3DConstants,
           Algorithm)
 {
@@ -69,7 +67,7 @@ function ($,
 		this .index = -1;
 	}
 
-	X3DSequencerNode .prototype = $.extend (Object .create (X3DChildNode .prototype),
+	X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DSequencerNode,
 		initialize: function ()

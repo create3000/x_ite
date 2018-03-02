@@ -48,21 +48,17 @@
 
 
 define ([
-	"jquery",
+	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Geometry3D/IndexedFaceSet",
 	"x_ite/Components/Rendering/Coordinate",
 	"x_ite/Components/Texturing/TextureCoordinate",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
 ],
-function ($,
+function (Fields,
           X3DBaseNode,
           IndexedFaceSet,
           Coordinate,
-          TextureCoordinate,
-          Vector2,
-          Vector3)
+          TextureCoordinate)
 {
 "use strict";
 	
@@ -71,7 +67,7 @@ function ($,
 		X3DBaseNode .call (this, executionContext);
 	}
 
-	BoxOptions .prototype = $.extend (Object .create (X3DBaseNode .prototype),
+	BoxOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: BoxOptions,
 		getTypeName: function ()
@@ -104,32 +100,32 @@ function ($,
 				texCoord = this .geometry .texCoord_ .getValue (),
 				coord    = this .geometry .coord_ .getValue ();
 
-			geometry .texCoordIndex_ = [
+			geometry .texCoordIndex_ = new Fields .MFInt32 (
 				0, 1, 2, 3, -1, // front
 				0, 1, 2, 3, -1, // back
 				0, 1, 2, 3, -1, // left
 				0, 1, 2, 3, -1, // right
 				0, 1, 2, 3, -1, // top
 				0, 1, 2, 3, -1, // bottom
-			];
+			);
 
-			geometry .coordIndex_ = [
+			geometry .coordIndex_ = new Fields .MFInt32 (
 				0, 1, 2, 3, -1, // front
 				5, 4, 7, 6, -1, // back
 				1, 5, 6, 2, -1, // left
 				4, 0, 3, 7, -1, // right
 				4, 5, 1, 0, -1, // top
 				3, 2, 6, 7, -1, // bottom
-			];
+			);
 
-			texCoord .point_ = [
-				new Vector2 (1, 1), new Vector2 (0, 1), new Vector2 (0, 0), new Vector2 (1, 0), 
-			];
+			texCoord .point_ = new Fields .MFVec2f (
+				new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0), 
+			);
 
-			coord .point_ = [
-				new Vector3 ( 1,  1,  1), new Vector3 (-1,  1,  1), new Vector3 (-1, -1,  1), new Vector3 ( 1, -1,  1), 
-				new Vector3 ( 1,  1, -1), new Vector3 (-1,  1, -1), new Vector3 (-1, -1, -1), new Vector3 ( 1, -1, -1), 
-			];
+			coord .point_ = new Fields .MFVec3f (
+				new Fields .SFVec3f ( 1,  1,  1), new Fields .SFVec3f (-1,  1,  1), new Fields .SFVec3f (-1, -1,  1), new Fields .SFVec3f ( 1, -1,  1), 
+				new Fields .SFVec3f ( 1,  1, -1), new Fields .SFVec3f (-1,  1, -1), new Fields .SFVec3f (-1, -1, -1), new Fields .SFVec3f ( 1, -1, -1), 
+			);
 
 			texCoord .setup ();
 			coord    .setup ();
