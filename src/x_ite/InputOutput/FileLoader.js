@@ -126,58 +126,88 @@ function ($,
 
 			if (success)
 			{
-				try
+				// Async branch.
+
+				var handlers = [
+					function (scene, string, success, error)
+					{
+						// Try parse X3D XML Encoding.	
+						setTimeout (this .importDocument .bind (this, scene, $.parseXML (string), success, error), TIMEOUT);
+					},
+					function (scene, string, success, error)
+					{
+						// Try parse X3D JSON Encoding.	
+						setTimeout (this .importJS .bind (this, scene, JSON .parse (string), success, error), TIMEOUT);
+					},
+					function (scene, string, success, error)
+					{
+						// Try parse X3D Classic Encoding.	
+						new Parser (scene) .parseIntoScene (string);
+				
+						this .setScene (scene, success);
+					},
+				];
+
+				for (var i = 0, length = handlers .length; i < length; ++ i)
 				{
-					setTimeout (this .importDocument .bind (this, scene, $.parseXML (string), success, error), TIMEOUT);
-				}
-				catch (exceptionParseXML)
-				{
-					// If we cannot parse XML we try to parse X3D JSON Encoding.	
 					try
 					{
-
-						setTimeout (this .importJS .bind (this, scene, JSON.parse (string), success, error), TIMEOUT);
-
+						handlers [i] .call (this, scene, string, success, error);
+						return;
 					}
-					catch (exceptionParseJSON)
+					catch (error)
 					{
-						// If we cannot parse XML we try to parse X3D Classic Encoding.	
-						new Parser (scene) .parseIntoScene (string);
+						// Try next handler.
 					}
-					this .setScene (scene, success);
 				}
+
+				throw new Error ("Couldn't parse X3D. No suitable file handler found.");
 			}
 			else
 			{
-				try
-				{
-					this .importDocument (scene, $.parseXML (string));
-					return scene;
-				}
-				catch (exceptionParseXML)
-				{
+				// Sync branch.
 
+				var handlers = [
+					function (scene, string)
+					{
+						// Try parse X3D XML Encoding.	
+						this .importDocument (scene, $.parseXML (string));
+					},
+					function (scene, string)
+					{
+						// Try parse X3D JSON Encoding.	
+						this .importJS (scene, JSON.parse (string));
+					},
+					function (scene, string)
+					{
+						// Try parse X3D Classic Encoding.	
+						new Parser (scene) .parseIntoScene (string);
+					},
+				];
+
+				for (var i = 0, length = handlers .length; i < length; ++ i)
+				{
 					try
 					{
-						// If we cannot parse XML we try to parse X3D JSON Encoding.	
-						this .importJS (scene, JSON.parse (string));
+						handlers [i] .call (this, scene, string);
 						return scene;
 					}
-					catch (exceptionParseJSON)
+					catch (error)
 					{
-						// If we cannot parse JSON we try to parse X3D Classic Encoding.	
-
-						new Parser (scene) .parseIntoScene (string);
-						return scene;
+						// Try next handler.
 					}
 				}
+
+				return null;
 			}
 		},
-		importJS: function (scene, jsobj, success, error) {
+		importJS: function (scene, jsobj, success, error)
+		{
 			try
 			{
-				//AP: add reference to dom for later access
-				this.node.dom = new JSONParser (scene) .parseJavaScript (jsobj);
+				//AP: add reference to dom for later access.
+				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj);
+
 				if (success)
 					this .setScene (scene, success);
 			}
@@ -195,7 +225,7 @@ function ($,
 			{
 				new XMLParser (scene) .parseIntoScene (dom);
 				
-				//AP: add reference to dom for later access
+				//AP: add reference to dom for later access.
 				this .node .dom = dom;
 
 				if (success)
