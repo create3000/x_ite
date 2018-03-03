@@ -161,7 +161,7 @@ function ($,
 					}
 				}
 
-				throw new Error ("Couldn't parse X3D. No suitable file handler found.");
+				throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + worldURL + "'.");
 			}
 			else
 			{
