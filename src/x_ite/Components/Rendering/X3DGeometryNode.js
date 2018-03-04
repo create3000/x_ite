@@ -289,10 +289,9 @@ function (Fields,
 		{
 			var multiTexCoords = this .multiTexCoords;
 
-			for (var i = 0, length = value .length; i < length; ++ i)
-				multiTexCoords [i] = value [i];
+			multiTexCoords .length = 0;
 
-			multiTexCoords .length = length;
+			Array .prototype .push .apply (multiTexCoords, value);
 		},
 		getMultiTexCoords: function ()
 		{
