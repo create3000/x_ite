@@ -397,14 +397,14 @@ function ($,
 				var collisions = context .collisions;
 
 				collisions .length = 0;
-				collisions .push .apply (collisions, this .collisions);
+				Array .prototype .push .apply (collisions, this .collisions);
 
 				// Clip planes
 
 				var clipPlanes = context .clipPlanes;
 
 				clipPlanes .length = 0;
-				clipPlanes .push .apply (clipPlanes, this .shaderObjects);
+				Array .prototype .push .apply (clipPlanes, this .shaderObjects);
 
 				return true;
 			}
@@ -438,7 +438,7 @@ function ($,
 				var clipPlanes = context .clipPlanes;
 
 				clipPlanes .length = 0;
-				clipPlanes .push .apply (clipPlanes, this .shaderObjects);
+				Array .prototype .push .apply (clipPlanes, this .shaderObjects);
 
 				return true;
 			}
@@ -490,7 +490,7 @@ function ($,
 				var shaderObjects = context .shaderObjects;
 
 				shaderObjects .length = 0;
-				shaderObjects .push .apply (shaderObjects, this .shaderObjects);
+				Array .prototype .push .apply (shaderObjects, this .shaderObjects);
 
 				return true;
 			}

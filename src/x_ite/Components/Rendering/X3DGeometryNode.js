@@ -142,9 +142,9 @@ function (Fields,
 
 		array .assign = function (value)
 		{
-			Object .assign (this, value);
+			this .length = 0;
 
-			this .length = value .length;
+			Array .prototype .push .apply (this, value);
 		};
 
 		array .getValue = function ()
