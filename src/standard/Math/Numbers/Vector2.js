@@ -132,15 +132,17 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			var length = Math .sqrt (this .x * this .x +
-			                         this .y * this .y);
-			
+			var
+				x = this .x,
+				y = this .y;
+
+			var length = Math .sqrt (x * x +
+			                         y * y);
+
 			if (length)
 			{
-				length = 1 / length;
-
-				this .x *= length;
-				this .y *= length;
+				this .x = x / length;
+				this .y = y / length;
 			}
 
 			return this;
@@ -152,13 +154,21 @@ function (Algorithm)
 		},
 		norm: function ()
 		{
-			return this .x * this .x +
-			       this .y * this .y;
+			var
+				x = this .x,
+				y = this .y;
+
+			return x * x +
+			       y * y;
 		},
 		abs: function ()
 		{
-			return Math .sqrt (this .x * this .x +
-			                   this .y * this .y);
+			var
+				x = this .x,
+				y = this .y;
+
+			return Math .sqrt (x * x +
+			                   y * y);
 		},
 		distance: function (vector)
 		{
@@ -171,32 +181,48 @@ function (Algorithm)
 		},
 		lerp: function (dest, t)
 		{
-			this .x = this .x + t * (dest .x - this .x);
-			this .y = this .y + t * (dest .y - this .y);
+			var
+				x = this .x,
+				y = this .y;
+
+			this .x = x + t * (dest .x - x);
+			this .y = y + t * (dest .y - y);
 			return this;
 		},
 		min: function (vector)
 		{
+			var
+				x = this .x,
+				y = this .y;
+
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
 				var vector = arguments [i];
 
-				this .x = Math .min (this .x, vector .x);
-				this .y = Math .min (this .y, vector .y);
+				x = Math .min (x, vector .x);
+				y = Math .min (y, vector .y);
 			}
 
+			this .x = x;
+			this .y = y;
 			return this;
 		},
 		max: function (vector)
 		{
+			var
+				x = this .x,
+				y = this .y;
+
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
 				var vector = arguments [i];
 
-				this .x = Math .max (this .x, vector .x);
-				this .y = Math .max (this .y, vector .y);
+				x = Math .max (x, vector .x);
+				y = Math .max (y, vector .y);
 			}
 
+			this .x = x;
+			this .y = y;
 			return this;
 		},
 		toString: function ()
@@ -285,10 +311,8 @@ function (Algorithm)
 
 			if (length)
 			{
-				length = 1 / length;
-
-				copy .x = x * length;
-				copy .y = y * length;
+				copy .x = x / length;
+				copy .y = y / length;
 			}
 			else
 			{
