@@ -173,8 +173,8 @@ function (Fields,
 			var
 				areaSoFar      = 0,
 				areaSoFarArray = this .areaSoFarArray,
-				vertices       = this .volumeNode .getVertices () .getValue (),
-				normals        = this .volumeNode .getNormals () .getValue ();
+				normals        = this .volumeNode .getNormals () .getValue (),
+				vertices       = this .volumeNode .getVertices () .getValue ();
 
 			this .normals  = normals;
 			this .vertices = vertices;

@@ -314,8 +314,10 @@ function (Vector3,
 		switch (numTriangles)
 		{
 			case 0:
+			{
 				this .root = null;
 				break;
+			}
 			case 1:
 			{
 				this .root = new Triangle (this, 0);

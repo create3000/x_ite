@@ -238,9 +238,9 @@ function (Algorithm)
 			{
 				var vector = arguments [i];
 
-				this .x = Math .min (this .x, vector .x);
-				this .y = Math .min (this .y, vector .y);
-				this .z = Math .min (this .z, vector .z);
+				x = Math .min (x, vector .x);
+				y = Math .min (y, vector .y);
+				z = Math .min (z, vector .z);
 			}
 
 			this .x = x;
