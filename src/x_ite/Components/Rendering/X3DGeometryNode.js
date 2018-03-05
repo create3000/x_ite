@@ -700,7 +700,6 @@ function (Fields,
 				max      = this .max,
 				vertices = this .vertices .getValue ();
 
-console .log (vertices .length);
 			if (vertices .length)
 			{
 				if (min .x === Number .POSITIVE_INFINITY)
@@ -714,7 +713,6 @@ console .log (vertices .length);
 					}
 				}
 
-console .log (min);
 				this .bbox .setExtents (min, max);
 			}
 			else
