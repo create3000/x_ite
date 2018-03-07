@@ -1,12 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/CADGeometry/IndexedQuadSet.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="542" Column="23" />
+      <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="1" Column="1" />
-      <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="Makefile" Line="1" Column="1" />
-      <File FileName="src/x_ite/Parser/JSONParser.js" Line="270" Column="17" />
+      <File FileName="src/x_ite/Components/CADGeometry/QuadSet.js" Line="67" Column="1" />
+      <File FileName="src/x_ite/Components/CADGeometry/IndexedQuadSet.js" Line="67" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/X3DComposedGeometryNode.js" Line="233" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -94,6 +94,7 @@
 
 		{ name: 'Rendering' },
 		{ name: 'Color', url: [ "http://media.create3000.de/components/Rendering/Color/Color.x3d" ], archive: "http://media.create3000.de/components/Rendering/Color/Color.zip" },
+		{ name: 'Indexed Triangle Set', url: [ "http://media.create3000.de/components/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d" ], archive: "http://media.create3000.de/components/Rendering/IndexedTriangleSet/IndexedTriangleSet.zip" },
 		{ name: 'Line Set', url: [ "http://media.create3000.de/components/Rendering/LineSet/LineSet.x3d" ], archive: "http://media.create3000.de/components/Rendering/LineSet/LineSet.zip" },
 
 		{ name: 'Shaders' },

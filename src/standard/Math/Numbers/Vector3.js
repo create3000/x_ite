@@ -154,17 +154,20 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			var length = Math .sqrt (this .x * this .x +
-			                         this .y * this .y +
-			                         this .z * this .z);
-			
+			var
+				x = this .x,
+				y = this .y,
+				z = this .z;
+
+			var length = Math .sqrt (x * x +
+			                         y * y +
+			                         z * z);
+
 			if (length)
 			{
-				length = 1 / length;
-
-				this .x *= length;
-				this .y *= length;
-				this .z *= length;
+				this .x = x / length;
+				this .y = y / length;
+				this .z = z / length;
 			}
 
 			return this;
@@ -177,15 +180,25 @@ function (Algorithm)
 		},
 		norm: function ()
 		{
-			return this .x * this .x +
-			       this .y * this .y +
-			       this .z * this .z;
+			var
+				x = this .x,
+				y = this .y,
+				z = this .z;
+
+			return x * x +
+			       y * y +
+			       z * z;
 		},
 		abs: function ()
 		{
-			return Math .sqrt (this .x * this .x +
-			                   this .y * this .y +
-			                   this .z * this .z);
+			var
+				x = this .x,
+				y = this .y,
+				z = this .z;
+
+			return Math .sqrt (x * x +
+			                   y * y +
+			                   z * z);
 		},
 		distance: function (vector)
 		{
@@ -200,9 +213,14 @@ function (Algorithm)
 		},
 		lerp: function (dest, t)
 		{
-			this .x = this .x + t * (dest .x - this .x);
-			this .y = this .y + t * (dest .y - this .y);
-			this .z = this .z + t * (dest .z - this .z);
+			var
+				x = this .x,
+				y = this .y,
+				z = this .z;
+
+			this .x = x + t * (dest .x - x);
+			this .y = y + t * (dest .y - y);
+			this .z = z + t * (dest .z - z);
 			return this;
 		},
 		slerp: function (destination, t)
@@ -211,28 +229,44 @@ function (Algorithm)
 		},
 		min: function (vector)
 		{
+			var
+				x = this .x,
+				y = this .y,
+				z = this .z;
+
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
 				var vector = arguments [i];
 
-				this .x = Math .min (this .x, vector .x);
-				this .y = Math .min (this .y, vector .y);
-				this .z = Math .min (this .z, vector .z);
+				x = Math .min (x, vector .x);
+				y = Math .min (y, vector .y);
+				z = Math .min (z, vector .z);
 			}
 
+			this .x = x;
+			this .y = y;
+			this .z = z;
 			return this;
 		},
 		max: function (vector)
 		{
+			var
+				x = this .x,
+				y = this .y,
+				z = this .z;
+
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
 				var vector = arguments [i];
 
-				this .x = Math .max (this .x, vector .x);
-				this .y = Math .max (this .y, vector .y);
-				this .z = Math .max (this .z, vector .z);
+				x = Math .max (x, vector .x);
+				y = Math .max (y, vector .y);
+				z = Math .max (z, vector .z);
 			}
 
+			this .x = x;
+			this .y = y;
+			this .z = z;
 			return this;
 		},
 		toString: function ()
@@ -349,11 +383,9 @@ function (Algorithm)
 
 			if (length)
 			{
-				length = 1 / length;
-
-				copy .x = x * length;
-				copy .y = y * length;
-				copy .z = z * length;
+				copy .x = x / length;
+				copy .y = y / length;
+				copy .z = z / length;
 			}
 			else
 			{

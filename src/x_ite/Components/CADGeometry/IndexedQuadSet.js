@@ -62,13 +62,14 @@ function (Fields,
 {
 "use strict";
 
+	// Define two triangles.
+	var indexMap = [0, 1, 2,   0, 2, 3];
+
 	function IndexedQuadSet (executionContext)
 	{
 		X3DComposedGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .IndexedQuadSet);
-
-		this .triangleIndex = [ ];
 	}
 
 	IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
@@ -100,38 +101,11 @@ function (Fields,
 		{
 			return "geometry";
 		},
-		initialize: function ()
-		{
-			X3DComposedGeometryNode .prototype .initialize .call (this);
-		
-			this .index_ .addInterest ("set_index__", this);
-		
-			this .set_index__ ();
-		},
-		set_index__: function ()
-		{
-			var
-				index         = this .index_,
-				length        = index .length,
-				triangleIndex = this .triangleIndex;
-
-			length -= length % 4;
-			triangleIndex .length = 0;
-
-			for (var i = 0; i < length; i += 4)
-			{
-				var
-					i0 = i,
-					i1 = i + 1,
-					i2 = i + 2,
-					i3 = i + 3;
-
-				triangleIndex .push (i0, i1, i2,  i0, i2, i3);
-			}
-		},
 		getTriangleIndex: function (i)
 		{
-			return this .triangleIndex [i];
+			var mod = i % 6;
+
+			return (i - mod) / 6 * 4 + indexMap [mod];
 		},
 		getPolygonIndex: function (i)
 		{
@@ -139,7 +113,11 @@ function (Fields,
 		},
 		build: function ()
 		{
-			X3DComposedGeometryNode .prototype .build .call (this, 4, this .index_ .length, 6, this .triangleIndex .length);
+			var length = this .index_ .length;
+
+			length -= length % 4;
+
+			X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, length / 4 * 6);
 		},
 	});
 

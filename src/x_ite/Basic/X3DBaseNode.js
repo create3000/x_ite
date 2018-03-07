@@ -371,7 +371,7 @@ function ($,
 			Object .defineProperty (this, name + "_",
 			{
 				get: function () { return field; },
-				set: function (value) { return field .setValue (value); },
+				set: function (value) { field .setValue (value); },
 				enumerable: true,
 				configurable: false,
 			});
@@ -414,7 +414,7 @@ function ($,
 			Object .defineProperty (this, name + "_",
 			{
 				get: function () { return field; },
-				set: function (value) { return field .setValue (value); },
+				set: function (value) { field .setValue (value); },
 				enumerable: true,
 				configurable: true, // false : non deleteable
 			});
