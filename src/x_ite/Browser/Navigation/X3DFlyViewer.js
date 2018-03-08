@@ -143,6 +143,7 @@ function ($,
 			// Setup scroll chaser.
 
 			this .orientationChaser .duration_ = ROLL_TIME;
+			this .orientationChaser .setPrivate (true);
 			this .orientationChaser .setup ();
 		},
 		addCollision: function () { },
@@ -447,18 +448,18 @@ function ($,
 
 			if (this .orientationChaser .isActive_ .getValue ())
 			{
-				var destination = this .orientationChaser .set_destination_ .getValue ();
+				var orientationOffset = this .orientationChaser .set_destination_ .getValue ();
 
-				destination
+				orientationOffset
 					.multLeft (viewpoint .getOrientation ())
 					.multLeft (new Rotation4 (1, 0, 0, rollAngle))
 					.multLeft (Rotation4 .inverse (viewpoint .getOrientation ()));
 
-				this .orientationChaser .set_destination_ = destination;
+				this .orientationChaser .set_destination_ = orientationOffset;
 			}
 			else
 			{
-				var destination = viewpoint .getUserOrientation ()
+				var orientationOffset = viewpoint .getUserOrientation ()
 					.copy ()
 					.multLeft (new Rotation4 (1, 0, 0, rollAngle))
 					.multLeft (Rotation4 .inverse (viewpoint .getOrientation ()));
@@ -467,7 +468,7 @@ function ($,
 				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
 
 				this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
-				this .orientationChaser .set_destination_ = destination;
+				this .orientationChaser .set_destination_ = orientationOffset;
 			}
 		},
 		display: function (interest, type)

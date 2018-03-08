@@ -12471,21 +12471,11 @@ function ($)
 
 	function Error (error, fallbacks)
 	{
-		console .log (error);
-
-		var consoleElement = $(".x_ite-console");
-
-		if (consoleElement .length)
-			consoleElement .append (document .createTextNode (error));
-
 		$(function ()
 		{
 		   var elements = $("X3DCanvas");
 
-			elements .each (function ()
-			{
-				Error .fallback ($(this));
-			});
+			Error .fallback (elements, error);
 
 			for (var i = 0; i < fallbacks .length; ++ i)
 			{
@@ -12499,7 +12489,7 @@ function ($)
 
 	// In some browser went something wrong when the fallback function is called.
 
-	function fallback (error, elements)
+	function fallback (elements, error)
 	{
 		console .log (error);
 
@@ -59597,10 +59587,6 @@ function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 		
 			return this .getBrowser () .getHits () .length;
 		},
-		easeInEaseOut: function (t)
-		{
-			return (1 - Math .cos (t * Math .PI)) / 2;
-		},
 		dispose: function () { },
 	});
 
@@ -59621,6 +59607,640 @@ function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 
 	return X3DViewer;
 });
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Followers/X3DFollowerNode',[
+	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DChildNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function X3DFollowerNode (executionContext)
+	{
+		X3DChildNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DFollowerNode);
+
+		this .buffer = [ ];
+
+		// Auxillary variables
+		this .a      = this .getVector ();
+		this .vector = this .getVector ();
+	}
+
+	X3DFollowerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+	{
+		constructor: X3DFollowerNode,
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .isLive () .addInterest ("set_live__", this);
+		},
+		duplicate: function (value)
+		{
+			return value .copy ();
+		},
+		getBuffer: function ()
+		{
+			return this .buffer;
+		},
+		getValue: function ()
+		{
+			return this .set_value_ .getValue ();
+		},
+		getDestination: function ()
+		{
+			return this .set_destination_ .getValue ();
+		},
+		getInitialValue: function ()
+		{
+			return this .initialValue_ .getValue ();
+		},
+		getInitialDestination: function ()
+		{
+			return this .initialDestination_ .getValue ();
+		},
+		setValue: function (value)
+		{
+			this .value_changed_ = value;
+		},
+		assign: function (buffer, i, value)
+		{
+			buffer [i] .assign (value);
+		},
+		equals: function (lhs, rhs, tolerance)
+		{
+			return this .a .assign (lhs) .subtract (rhs) .abs () < tolerance;
+		},
+		interpolate: function (source, destination, weight)
+		{
+			return this .vector .assign (source) .lerp (destination, weight);
+		},
+		set_live__: function ()
+		{
+			if ((this .isLive () .getValue () || this .getPrivate ()) && this .isActive_ .getValue ())
+			{
+				this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
+				this .getBrowser () .addBrowserEvent ();
+			}
+			else
+				this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents", this);
+		},
+		set_active: function (value)
+		{
+			if (value !== this .isActive_ .getValue ())
+			{
+				this .isActive_ = value;
+
+				this .set_live__ ();
+			}
+		},
+	});
+
+	return X3DFollowerNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Followers/X3DChaserNode',[
+	"x_ite/Components/Followers/X3DFollowerNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DFollowerNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function X3DChaserNode (executionContext)
+	{
+		X3DFollowerNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DChaserNode);
+
+		this .destination   = null;
+		this .previousValue = null;
+		this .bufferEndTime = 0;
+		this .stepTime      = 0;
+
+		// Auxillary variables
+		this .deltaOut = this .getArray ();
+	}
+
+	X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
+	{
+		constructor: X3DChaserNode,
+		initialize: function ()
+		{
+			X3DFollowerNode .prototype .initialize .call (this);
+		
+			this .set_value_       .addInterest ("set_value__",       this);
+			this .set_destination_ .addInterest ("set_destination__", this);
+			this .duration_        .addInterest ("set_duration__",    this);
+
+			this .set_duration__ ();
+
+			var
+				buffer             = this .getBuffer (),
+				initialValue       = this .getInitialValue (),
+				initialDestination = this .getInitialDestination (),
+				numBuffers         = this .getNumBuffers ();
+
+			this .bufferEndTime = this .getBrowser () .getCurrentTime ();
+			this .previousValue = this .duplicate (initialValue);
+	
+			buffer [0] = this .duplicate (initialDestination);
+
+			for (var i = 1; i < numBuffers; ++ i)
+				buffer [i] = this .duplicate (initialValue);
+
+			this .destination = this .duplicate (initialDestination);
+
+			if (this .equals (initialDestination, initialValue, this .getTolerance ()))
+				this .setValue (initialDestination);
+
+			else
+				this .set_active (true);
+		},
+		getNumBuffers: function ()
+		{
+			return 60;
+		},
+		getTolerance: function ()
+		{
+			return 1e-8;
+		},
+		getArray: function ()
+		{
+			return this .getVector ();
+		},
+		setPreviousValue: function (value)
+		{
+			this .previousValue .assign (value);
+		},
+		step: function (value1, value2, t)
+		{
+			this .output .add (this .deltaOut .assign (value1) .subtract (value2) .multiply (t));
+		},
+		stepResponse: function (t)
+		{
+			if (t <= 0)
+				return 0;
+
+			var duration = this .duration_ .getValue ();
+		
+			if (t >= duration)
+				return 1;
+	
+			return 0.5 - 0.5 * Math .cos ((t / duration) * Math .PI);
+		},
+		set_value__: function ()
+		{
+			if (! this .isActive_ .getValue ())
+				this .bufferEndTime = this .getBrowser () .getCurrentTime ();
+
+			var
+				buffer = this .getBuffer (),
+				value  = this .getValue ();
+
+			for (var i = 0, length = buffer .length; i < length; ++ i)
+				this .assign (buffer, i, value);
+
+			this .setPreviousValue (value);
+			this .setValue (value);
+
+			this .set_active (true);
+		},
+		set_destination__: function ()
+		{
+			this .destination = this .duplicate (this .getDestination ());
+
+			if (! this .isActive_ .getValue ())
+				this .bufferEndTime = this .getBrowser () .getCurrentTime ();
+
+			this .set_active (true);
+		},
+		set_duration__: function ()
+		{
+			this .stepTime = this .duration_ .getValue () / this .getNumBuffers ();
+		},
+		prepareEvents: function ()
+		{
+			try
+			{
+				var
+					buffer     = this .getBuffer (),
+					numBuffers = buffer .length,
+					fraction   = this .updateBuffer ();
+			
+				this .output = this .interpolate (this .previousValue,
+				                                  buffer [numBuffers - 1],
+				                                  this .stepResponse ((numBuffers - 1 + fraction) * this .stepTime));
+	
+				for (var i = numBuffers - 2; i >= 0; -- i)
+				{
+					this .step (buffer [i], buffer [i + 1], this .stepResponse ((i + fraction) * this .stepTime));
+				}
+	
+				this .setValue (this .output);
+		
+				if (this .equals (this .output, this .destination, this .getTolerance ()))
+					this .set_active (false);
+			}
+			catch (error)
+			{ }
+		},
+		updateBuffer: function ()
+		{
+			var
+				buffer     = this .getBuffer (),
+				numBuffers = buffer .length,
+				fraction   = (this .getBrowser () .getCurrentTime () - this .bufferEndTime) / this .stepTime;
+		
+			if (fraction >= 1)
+			{
+				var seconds = Math .floor (fraction);
+
+				fraction -= seconds;
+		
+				if (seconds < numBuffers)
+				{
+					this .setPreviousValue (buffer [numBuffers - seconds]);
+		
+					for (var i = numBuffers - 1; i >= seconds; -- i)
+					{
+						this .assign (buffer, i, buffer [i - seconds])
+					}
+		
+					for (var i = 0; i < seconds; ++ i)
+					{
+						try
+						{
+							var alpha = i / seconds;
+
+							this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha))
+						}
+						catch (error)
+						{ }
+		 			}
+				}
+				else
+				{
+					this .setPreviousValue (seconds == numBuffers ? buffer [0] : this .destination);
+
+					for (var i = 0; i < numBuffers; ++ i)
+						this .assign (buffer, i, this .destination);
+				}
+		
+				this .bufferEndTime += seconds * this .stepTime;
+			}
+
+			return fraction;
+		},
+	});
+
+	return X3DChaserNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Followers/PositionChaser',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Followers/X3DChaserNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector3",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DChaserNode, 
+          X3DConstants,
+          Vector3)
+{
+"use strict";
+
+	function PositionChaser (executionContext)
+	{
+		X3DChaserNode .call (this, executionContext);
+
+		this .addType (X3DConstants .PositionChaser);
+	}
+
+	PositionChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+	{
+		constructor: PositionChaser,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFVec3f ()),
+		]),
+		getTypeName: function ()
+		{
+			return "PositionChaser";
+		},
+		getComponentName: function ()
+		{
+			return "Followers";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		getVector: function ()
+		{
+			return new Vector3 (0, 0, 0);
+		},
+	});
+
+	return PositionChaser;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Followers/OrientationChaser',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Followers/X3DChaserNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Rotation4",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DChaserNode, 
+          X3DConstants,
+          Rotation4)
+{
+"use strict";
+
+	var
+		a        = new Rotation4 (0, 0, 1, 0),
+		rotation = new Rotation4 (0, 0, 1, 0);
+
+	function OrientationChaser (executionContext)
+	{
+		X3DChaserNode .call (this, executionContext);
+
+		this .addType (X3DConstants .OrientationChaser);
+	}
+
+	OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+	{
+		constructor: OrientationChaser,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFRotation ()),
+		]),
+		getTypeName: function ()
+		{
+			return "OrientationChaser";
+		},
+		getComponentName: function ()
+		{
+			return "Followers";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		getVector: function ()
+		{
+			return new Rotation4 (0, 0, 1, 0);
+		},
+		equals: function (lhs, rhs, tolerance)
+		{
+			a .assign (lhs) .inverse () .multRight (rhs);
+
+			return Math .abs (a .angle) < tolerance;
+		},
+		interpolate: function (source, destination, weight)
+		{
+			return rotation .assign (source) .slerp (destination, weight);
+		},
+		step: function (value1, value2, t)
+		{
+			this .deltaOut .assign (value2) .inverse () .multRight (value1) .multLeft (this .output);
+
+			this .output .slerp (this .deltaOut, t);
+		},
+	});
+
+	return OrientationChaser;
+});
+
+
 
 /*!
  * jQuery Mousewheel 3.1.13
@@ -59898,12 +60518,16 @@ define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (m
 define ('x_ite/Browser/Navigation/ExamineViewer',[
 	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
+	"x_ite/Components/Followers/PositionChaser",
+	"x_ite/Components/Followers/OrientationChaser",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"jquery-mousewheel",
 ],
 function ($,
           X3DViewer,
+          PositionChaser,
+          OrientationChaser,
           Vector3,
           Rotation4)
 {
@@ -59915,12 +60539,12 @@ function ($,
 		SPIN_ANGLE        = 0.003,
 		SPIN_FACTOR       = 0.6,
 		SCROLL_FACTOR     = 1.0 / 20.0,
-		SCROLL_TIME       = 0.3,
+		MOVE_TIME         = 0.3,
+		ROTATE_TIME       = 0.4,
 		FRAME_RATE        = 60;
 
 	var
 		positionOffset         = new Vector3 (0, 0, 0),
-		centerOfRotationOffset = new Vector3 (0, 0, 0),
 		distance               = new Vector3 (0, 0, 0),
 		vector                 = new Vector3 (0, 0, 0),
 		rotation               = new Rotation4 (0, 0, 1, 0),
@@ -59931,18 +60555,19 @@ function ($,
 	{
 		X3DViewer .call (this, executionContext);
 
-		this .button                       = -1;
-		this .positionOffset               = new Vector3 (0, 0, 0);
-		this .orientationOffset            = new Rotation4 (0, 0, 1, 0);
-		this .fromVector                   = new Vector3 (0, 0, 0);
-		this .toVector                     = new Vector3 (0, 0, 0);
-		this .fromPoint                    = new Vector3 (0, 0, 0);
-		this .toPoint                      = new Vector3 (0, 0, 0);
-		this .sourcePositionOffset         = new Vector3 (0, 0, 0);
-		this .destinationPositionOffset    = new Vector3 (0, 0, 0);
-		this .rotation                     = new Rotation4 (0, 0, 1, 0);
-		this .pressTime                    = 0;
-		this .motionTime                   = 0;
+		this .button                 = -1;
+		this .orientationOffset      = new Rotation4 (0, 0, 1, 0);
+		this .fromVector             = new Vector3 (0, 0, 0);
+		this .toVector               = new Vector3 (0, 0, 0);
+		this .fromPoint              = new Vector3 (0, 0, 0);
+		this .toPoint                = new Vector3 (0, 0, 0);
+		this .rotationChange         = new Rotation4 (0, 0, 1, 0);
+		this .rotation               = new Rotation4 (0, 0, 1, 0);
+		this .pressTime              = 0;
+		this .motionTime             = 0;
+		this .positionChaser         = new PositionChaser (executionContext);
+		this .centerOfRotationChaser = new PositionChaser (executionContext);
+		this .rotationChaser         = new OrientationChaser (executionContext);
 	}
 
 	ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
@@ -59956,10 +60581,26 @@ function ($,
 			   browser = this .getBrowser (),
 			   canvas  = browser .getCanvas ();
 
+			// Bind pointing device events.
+
 			canvas .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
 			canvas .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
 			canvas .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
 			canvas .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+
+			// Setup scroll chaser.
+
+			this .positionChaser .duration_ = MOVE_TIME;
+			this .positionChaser .setPrivate (true);
+			this .positionChaser .setup ();
+
+			this .centerOfRotationChaser .duration_ = MOVE_TIME;
+			this .centerOfRotationChaser .setPrivate (true);
+			this .centerOfRotationChaser .setup ();
+
+			this .rotationChaser .duration_ = ROTATE_TIME;
+			this .rotationChaser .setPrivate (true);
+			this .rotationChaser .setup ();
 		},
 		mousedown: function (event)
 		{
@@ -60041,7 +60682,7 @@ function ($,
 
 					this .getBrowser () .setCursor ("DEFAULT");
 
-					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
+					if (Math .abs (this .rotationChange .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
 						this .addSpinning ();
 					}
@@ -60095,12 +60736,12 @@ function ($,
 						viewpoint = this .getActiveViewpoint (),
 						toVector  = this .trackballProjectToSphere (x, y, this .toVector);
 
-					var rotation = new Rotation4 (toVector, this .fromVector);
+					this .rotationChange = new Rotation4 (toVector, this .fromVector);
 
-					if (Math .abs (rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
+					if (Math .abs (this .rotationChange .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
 						return false;
 
-					this .addRotate (rotation);
+					this .addRotate (this .rotationChange);
 
 					this .fromVector .assign (toVector);
 					this .motionTime = performance .now ();
@@ -60120,8 +60761,7 @@ function ($,
 						toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
 						translation = viewpoint .getUserOrientation () .multVecRot (vector .assign (this .fromPoint) .subtract (toPoint));
 
-					viewpoint .positionOffset_         = positionOffset .assign (viewpoint .positionOffset_ .getValue ()) .add (translation);
-					viewpoint .centerOfRotationOffset_ = centerOfRotationOffset .assign (viewpoint .centerOfRotationOffset_ .getValue ()) .add (translation);
+					this .addMove (translation, translation);
 
 					this .fromPoint .assign (toPoint);
 					break;
@@ -60149,10 +60789,10 @@ function ($,
 			viewpoint .getUserOrientation () .multVecRot (positionOffset .set (0, 0, step .abs ()));
 
 			if (event .deltaY > 0)
-				this .addScroll (positionOffset .negate ());		
+				this .addMove (positionOffset .negate (), new Vector3 (0, 0, 0));		
 			
 			else if (event .deltaY < 0)
-				this .addScroll (positionOffset);
+				this .addMove (positionOffset, new Vector3 (0, 0, 0));
 		},
 		spin: function ()
 		{
@@ -60161,72 +60801,108 @@ function ($,
 			viewpoint .orientationOffset_ = this .getOrientationOffset ();
 			viewpoint .positionOffset_    = this .getPositionOffset ();
 		},
-		scroll: function ()
+		set_positionOffset__: function (value)
 		{
-			var
-				now          = performance .now (),
-				elapsedTime  = (now - this .startTime) / 1000;
+			var viewpoint = this .getActiveViewpoint ();
 
-			if (elapsedTime > SCROLL_TIME)
-				return this .disconnect ();
+			viewpoint .positionOffset_ = value;
+		},
+		set_rotation__: function (value)
+		{
+			var viewpoint = this .getActiveViewpoint ();
 
-			var
-				viewpoint = this .getActiveViewpoint (),
-			   t         = this .easeInEaseOut (elapsedTime / SCROLL_TIME);
+			viewpoint .orientationOffset_ = this .initialOrientationOffset;
+			viewpoint .positionOffset_    = this .initialPositionOffset;
 
-			viewpoint .positionOffset_ = positionOffset .assign (this .sourcePositionOffset) .lerp (this .destinationPositionOffset, t);
+			this .rotation .assign (value .getValue ());
+
+			viewpoint .orientationOffset_ = this .getOrientationOffset ();
+			viewpoint .positionOffset_    = this .getPositionOffset ();
+		},
+		set_centerOfRotationOffset__: function (value)
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			viewpoint .centerOfRotationOffset_ = value;
 		},
 		addRotate: function (rotationChange)
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			this .rotation .assign (rotationChange);
+			if (this .rotationChaser .isActive_ .getValue ())
+			{
+				var rotation = this .rotationChaser .set_destination_ .getValue ()
+					.multLeft (rotationChange);
 
-			viewpoint .orientationOffset_ = this .getOrientationOffset ();
-			viewpoint .positionOffset_    = this .getPositionOffset ();
+				this .rotationChaser .set_destination_ = rotation;
+			}
+			else
+			{
+				this .disconnect ();
+				this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
 
-			return;
+				this .rotationChaser .set_value_       = new Rotation4 ();
+				this .rotationChaser .set_destination_ = rotationChange;
+
+				this .initialOrientationOffset = viewpoint .orientationOffset_ .getValue () .copy ();
+				this .initialPositionOffset    = viewpoint .positionOffset_    .getValue () .copy ();
+			}
 		},
 		addSpinning: function (spinTime)
 		{
 			try
 			{
-				this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (this .rotation, SPIN_FACTOR));
-
+				this .disconnect ();
 				this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+
+				this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (this .rotationChange, SPIN_FACTOR));
 			}
 			catch (error)
 			{
 				console .log (error);
 			}
 		},
-		addScroll: function (positionOffsetChange)
+		addMove: function (positionOffsetChange, centerOfRotationOffsetChange)
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			if (this .getBrowser () .prepareEvents () .hasInterest ("scroll", this))
+			if (this .positionChaser .isActive_ .getValue ())
 			{
-				this .sourcePositionOffset      .assign (viewpoint .positionOffset_ .getValue ());
-				this .destinationPositionOffset .add (positionOffsetChange);
+				var positionOffset = this .positionChaser .set_destination_ .getValue ()
+					.add (positionOffsetChange);
+
+				var centerOfRotationOffset = this .centerOfRotationChaser .set_destination_ .getValue ()
+					.add (centerOfRotationOffsetChange);
+
+				this .positionChaser         .set_destination_ = positionOffset;
+				this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
 			}
 			else
 			{
-				this .sourcePositionOffset      .assign (viewpoint .positionOffset_ .getValue ());
-				this .destinationPositionOffset .assign (Vector3 .add (viewpoint .positionOffset_ .getValue (), positionOffsetChange));
-			}
+				var positionOffset = viewpoint .positionOffset_ .getValue ()
+					.copy ()
+					.add (positionOffsetChange);
 
-			this .getBrowser () .prepareEvents () .addInterest ("scroll", this);
-			this .getBrowser () .addBrowserEvent ();
-		
-			this .startTime = performance .now ();
+				var centerOfRotationOffset = viewpoint .centerOfRotationOffset_ .getValue ()
+					.copy ()
+					.add (centerOfRotationOffsetChange);
+
+				this .disconnect ();
+				this .positionChaser         .value_changed_ .addInterest ("set_positionOffset__",         this);
+				this .centerOfRotationChaser .value_changed_ .addInterest ("set_centerOfRotationOffset__", this);
+
+				this .positionChaser .set_value_       = viewpoint .positionOffset_;
+				this .positionChaser .set_destination_ = positionOffset;
+
+				this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
+				this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+			}
 		},
 		getPositionOffset: function ()
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
 			this .getDistanceToCenter (distance);
-
-			this .positionOffset .assign (viewpoint .positionOffset_ .getValue ());
 
 			return (orientationOffset .assign (this .orientationOffset) .inverse ()
 			        .multRight (viewpoint .orientationOffset_ .getValue ())
@@ -60246,8 +60922,11 @@ function ($,
 		{
 			var browser = this .getBrowser ();
 
-			browser .prepareEvents () .removeInterest ("spin",   this);
-			browser .prepareEvents () .removeInterest ("scroll", this);
+			this .positionChaser .value_changed_ .removeInterest ("set_positionOffset__",         this);
+			this .rotationChaser .value_changed_ .removeInterest ("set_rotation__",               this);
+			this .positionChaser .value_changed_ .removeInterest ("set_centerOfRotationOffset__", this);
+
+			browser .prepareEvents () .removeInterest ("spin", this);
 		},
 		dispose: function ()
 		{
@@ -60312,6 +60991,7 @@ function ($,
 define ('x_ite/Browser/Navigation/X3DFlyViewer',[
 	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
+	"x_ite/Components/Followers/OrientationChaser",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -60320,6 +61000,7 @@ define ('x_ite/Browser/Navigation/X3DFlyViewer',[
 ],
 function ($,
           X3DViewer,
+          OrientationChaser,
           Vector3,
           Rotation4,
           Matrix4,
@@ -60335,7 +61016,7 @@ function ($,
 		PAN_SPEED_FACTOR       = SPEED_FACTOR,
 		PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
 		ROLL_ANGLE             = Math .PI / 32,
-		ROLL_TIME              = 0.2;
+		ROLL_TIME              = 0.3;
 
 	var
 		yAxis              = new Vector3 (0, 1, 0),
@@ -60347,7 +61028,6 @@ function ($,
 		upVector           = new Vector3 (0, 0, 0),
 		direction          = new Vector3 (0, 0, 0),
 		axis               = new Vector3 (0, 0, 0),
-		rotation           = new Rotation4 (0, 0, 1, 0),
 		orientation        = new Rotation4 (0, 0, 1, 0),
 		orientationOffset  = new Rotation4 (0, 0, 1, 0),
 		rubberBandRotation = new Rotation4 (0, 0, 1, 0),
@@ -60365,18 +61045,17 @@ function ($,
 
 		var gl = this .getBrowser () .getContext ();
 
-		this .button              = -1;
-		this .fromVector          = new Vector3 (0, 0, 0);
-		this .toVector            = new Vector3 (0, 0, 0);
-		this .direction           = new Vector3 (0, 0, 0);
-		this .sourceRotation      = new Rotation4 (0, 0, 1, 0);
-		this .destinationRotation = new Rotation4 (0, 0, 1, 0);
-		this .startTime           = 0;
-		this .lineBuffer          = gl .createBuffer ();
-		this .lineCount           = 2;
-		this .lineVertices        = new Array (this .lineCount * 4);
-		this .lineArray           = new Float32Array (this .lineVertices);
-		this .event               = null;
+		this .button            = -1;
+		this .fromVector        = new Vector3 (0, 0, 0);
+		this .toVector          = new Vector3 (0, 0, 0);
+		this .direction         = new Vector3 (0, 0, 0);
+		this .startTime         = 0;
+		this .lineBuffer        = gl .createBuffer ();
+		this .lineCount         = 2;
+		this .lineVertices      = new Array (this .lineCount * 4);
+		this .lineArray         = new Float32Array (this .lineVertices);
+		this .event             = null;
+		this .orientationChaser = new OrientationChaser (executionContext);
 
 		this .projectionMatrix      = new Matrix4 ();
 		this .projectionMatrixArray = new Float32Array (this .projectionMatrix);
@@ -60390,13 +61069,23 @@ function ($,
 		{
 			X3DViewer .prototype .initialize .call (this);
 
-			var canvas = this .getBrowser () .getCanvas ();
+			var
+			   browser = this .getBrowser (),
+			   canvas  = browser .getCanvas ();
+
+			// Bind pointing device events.
 
 			canvas .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
 			canvas .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
 			canvas .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
 
-			this .getBrowser () .controlKey_ .addInterest ("set_controlKey_", this);
+			browser .controlKey_ .addInterest ("set_controlKey_", this);
+
+			// Setup scroll chaser.
+
+			this .orientationChaser .duration_ = ROLL_TIME;
+			this .orientationChaser .setPrivate (true);
+			this .orientationChaser .setup ();
 		},
 		addCollision: function () { },
 		removeCollision: function () { },
@@ -60658,7 +61347,7 @@ function ($,
 			speedFactor *= dt;
 
 			var
-				orientation = viewpoint .getUserOrientation () .multRight (rotation .setFromToVec (viewpoint .getUserOrientation () .multVecRot (axis .assign (yAxis)), upVector)),
+				orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (yAxis)), upVector)),
 				translation = orientation .multVecRot (direction .multiply (speedFactor));
 
 			this .getActiveLayer () .constrainTranslation (translation, true);
@@ -60667,20 +61356,11 @@ function ($,
 
 			this .startTime = now;
 		},
-		roll: function ()
+		set_orientationOffset__: function (value)
 		{
-			var
-				now          = performance .now (),
-				elapsedTime  = (now - this .startTime) / 1000;
+			var viewpoint = this .getActiveViewpoint ();
 
-			if (elapsedTime > ROLL_TIME)
-				return this .disconnect ();
-
-			var
-				viewpoint = this .getActiveViewpoint (),
-			   t         = this .easeInEaseOut (elapsedTime / ROLL_TIME);
-
-			viewpoint .orientationOffset_ = orientationOffset .assign (this .sourceRotation) .slerp (this .destinationRotation, t);
+			viewpoint .orientationOffset_ = value;
 		},
 		addFly: function ()
 		{
@@ -60697,6 +61377,7 @@ function ($,
 			if (this .startTime)
 				return;
 			
+			this .disconnect ();
 			this .getBrowser () .prepareEvents () .addInterest ("pan", this);
 			this .getBrowser () .addBrowserEvent ();
 
@@ -60706,20 +61387,30 @@ function ($,
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			if (this .getBrowser () .prepareEvents () .hasInterest ("roll", this))
-				delta .assign (viewpoint .orientationOffset_ .getValue ()) .inverse () .multLeft (this .destinationRotation);
+			if (this .orientationChaser .isActive_ .getValue ())
+			{
+				var orientationOffset = this .orientationChaser .set_destination_ .getValue ();
+
+				orientationOffset
+					.multLeft (viewpoint .getOrientation ())
+					.multLeft (new Rotation4 (1, 0, 0, rollAngle))
+					.multLeft (Rotation4 .inverse (viewpoint .getOrientation ()));
+
+				this .orientationChaser .set_destination_ = orientationOffset;
+			}
 			else
-				delta .set (0, 0, 1, 0);
+			{
+				var orientationOffset = viewpoint .getUserOrientation ()
+					.copy ()
+					.multLeft (new Rotation4 (1, 0, 0, rollAngle))
+					.multLeft (Rotation4 .inverse (viewpoint .getOrientation ()));
 
-			rotation .setAxisAngle (viewpoint .getUserOrientation () .multVecRot (axis .set (1, 0, 0)), rollAngle + delta .angle);
+				this .disconnect ();
+				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
 
-			this .getBrowser () .prepareEvents () .addInterest ("roll", this);
-			this .getBrowser () .addBrowserEvent ();
-
-			this .sourceRotation .assign (viewpoint .orientationOffset_ .getValue ());
-			this .destinationRotation .assign (this .sourceRotation) .multRight (rotation);
-		
-			this .startTime = performance .now ();
+				this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
+				this .orientationChaser .set_destination_ = orientationOffset;
+			}
 		},
 		display: function (interest, type)
 		{
@@ -60815,8 +61506,9 @@ function ($,
 
 			browser .prepareEvents () .removeInterest ("fly", this);
 			browser .prepareEvents () .removeInterest ("pan", this);
-			browser .prepareEvents () .removeInterest ("roll", this);
 			browser .finished ()      .removeInterest ("display", this);
+
+			this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
 
 			this .startTime = 0;
 		},
@@ -84812,402 +85504,6 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/Followers/X3DFollowerNode',[
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (X3DChildNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DFollowerNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DFollowerNode);
-
-		this .buffer = [ ];
-
-		// Auxillary variables
-		this .a      = this .getVector ();
-		this .vector = this .getVector ();
-	}
-
-	X3DFollowerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DFollowerNode,
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-
-			this .isLive () .addInterest ("set_live__", this);
-		},
-		duplicate: function (value)
-		{
-			return value .copy ();
-		},
-		getBuffer: function ()
-		{
-			return this .buffer;
-		},
-		getValue: function ()
-		{
-			return this .set_value_ .getValue ();
-		},
-		getDestination: function ()
-		{
-			return this .set_destination_ .getValue ();
-		},
-		getInitialValue: function ()
-		{
-			return this .initialValue_ .getValue ();
-		},
-		getInitialDestination: function ()
-		{
-			return this .initialDestination_ .getValue ();
-		},
-		setValue: function (value)
-		{
-			this .value_changed_ = value;
-		},
-		assign: function (buffer, i, value)
-		{
-			buffer [i] .assign (value);
-		},
-		equals: function (lhs, rhs, tolerance)
-		{
-			return this .a .assign (lhs) .subtract (rhs) .abs () < tolerance;
-		},
-		interpolate: function (source, destination, weight)
-		{
-			return this .vector .assign (source) .lerp (destination, weight);
-		},
-		set_live__: function ()
-		{
-			if (this .isLive () .getValue () && this .isActive_ .getValue ())
-			{
-				this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
-				this .getBrowser () .addBrowserEvent ();
-			}
-			else
-				this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents", this);
-		},
-		set_active: function (value)
-		{
-			if (value !== this .isActive_ .getValue ())
-			{
-				this .isActive_ = value;
-
-				this .set_live__ ();
-			}
-		},
-	});
-
-	return X3DFollowerNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Followers/X3DChaserNode',[
-	"x_ite/Components/Followers/X3DFollowerNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (X3DFollowerNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DChaserNode (executionContext)
-	{
-		X3DFollowerNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DChaserNode);
-
-		this .destination   = null;
-		this .previousValue = null;
-		this .bufferEndTime = 0;
-		this .stepTime      = 0;
-
-		// Auxillary variables
-		this .deltaOut = this .getArray ();
-	}
-
-	X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
-	{
-		constructor: X3DChaserNode,
-		initialize: function ()
-		{
-			X3DFollowerNode .prototype .initialize .call (this);
-		
-			this .set_value_       .addInterest ("set_value__", this);
-			this .set_destination_ .addInterest ("set_destination__", this);
-			this .duration_        .addInterest ("set_duration__", this);
-
-			this .set_duration__ ();
-
-			var
-				buffer             = this .getBuffer (),
-				initialValue       = this .getInitialValue (),
-				initialDestination = this .getInitialDestination (),
-				numBuffers         = this .getNumBuffers ();
-
-			this .bufferEndTime = this .getBrowser () .getCurrentTime ();
-			this .previousValue = this .duplicate (initialValue);
-	
-			buffer [0] = this .duplicate (initialDestination);
-
-			for (var i = 1; i < numBuffers; ++ i)
-				buffer [i] = this .duplicate (initialValue);
-
-			this .destination = this .duplicate (initialDestination);
-
-			if (this .equals (initialDestination, initialValue, this .getTolerance ()))
-				this .setValue (initialDestination);
-
-			else
-				this .set_active (true);
-		},
-		getNumBuffers: function ()
-		{
-			return 60;
-		},
-		getTolerance: function ()
-		{
-			return 1e-8;
-		},
-		getArray: function ()
-		{
-			return this .getVector ();
-		},
-		setPreviousValue: function (value)
-		{
-			this .previousValue .assign (value);
-		},
-		step: function (value1, value2, t)
-		{
-			this .output .add (this .deltaOut .assign (value1) .subtract (value2) .multiply (t));
-		},
-		stepResponse: function (t)
-		{
-			if (t <= 0)
-				return 0;
-
-			var duration = this .duration_ .getValue ();
-		
-			if (t >= duration)
-				return 1;
-	
-			return 0.5 - 0.5 * Math .cos ((t / duration) * Math .PI);
-		},
-		set_value__: function ()
-		{
-			if (! this .isActive_ .getValue ())
-				this .bufferEndTime = this .getBrowser () .getCurrentTime ();
-
-			var
-				buffer = this .getBuffer (),
-				value  = this .getValue ();
-
-			for (var i = 1, length = buffer .length; i < length; ++ i)
-				this .assign (buffer, i, value);
-
-			this .setPreviousValue (value);
-			this .setValue (value);
-
-			this .set_active (true);
-		},
-		set_destination__: function ()
-		{
-			this .destination = this .duplicate (this .getDestination ());
-
-			if (! this .isActive_ .getValue ())
-				this .bufferEndTime = this .getBrowser () .getCurrentTime ();
-		
-			this .set_active (true);
-		},
-		set_duration__: function ()
-		{
-			this .stepTime = this .duration_ .getValue () / this .getNumBuffers ();
-		},
-		prepareEvents: function ()
-		{
-			try
-			{
-				var
-					buffer     = this .getBuffer (),
-					numBuffers = buffer .length,
-					fraction   = this .updateBuffer ();
-			
-				this .output = this .interpolate (this .previousValue,
-				                                  buffer [numBuffers - 1],
-				                                  this .stepResponse ((numBuffers - 1 + fraction) * this .stepTime));
-	
-				for (var i = numBuffers - 2; i >= 0; -- i)
-				{
-					this .step (buffer [i], buffer [i + 1], this .stepResponse ((i + fraction) * this .stepTime));
-				}
-	
-				this .setValue (this .output);
-		
-				if (this .equals (this .output, this .destination, this .getTolerance ()))
-					this .set_active (false);
-			}
-			catch (error)
-			{ }
-		},
-		updateBuffer: function ()
-		{
-			var
-				buffer     = this .getBuffer (),
-				numBuffers = buffer .length,
-				fraction   = (this .getBrowser () .getCurrentTime () - this .bufferEndTime) / this .stepTime;
-		
-			if (fraction >= 1)
-			{
-				var seconds = Math .floor (fraction);
-
-				fraction -= seconds;
-		
-				if (seconds < numBuffers)
-				{
-					this .setPreviousValue (buffer [numBuffers - seconds]);
-		
-					for (var i = numBuffers - 1; i >= seconds; -- i)
-					{
-						this .assign (buffer, i, buffer [i - seconds])
-					}
-		
-					for (var i = 0; i < seconds; ++ i)
-					{
-						try
-						{
-							var alpha = i / seconds;
-
-							this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha))
-						}
-						catch (error)
-						{ }
-		 			}
-				}
-				else
-				{
-					this .setPreviousValue (seconds == numBuffers ? buffer [0] : this .destination);
-
-					for (var i = 0; i < numBuffers; ++ i)
-						this .assign (buffer, i, this .destination);
-				}
-		
-				this .bufferEndTime += seconds * this .stepTime;
-			}
-
-			return fraction;
-		},
-	});
-
-	return X3DChaserNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Components/Followers/ColorChaser',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -98871,135 +99167,6 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/Followers/OrientationChaser',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Followers/X3DChaserNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Rotation4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DChaserNode, 
-          X3DConstants,
-          Rotation4)
-{
-"use strict";
-
-	var
-		a        = new Rotation4 (0, 0, 1, 0),
-		rotation = new Rotation4 (0, 0, 1, 0);
-
-	function OrientationChaser (executionContext)
-	{
-		X3DChaserNode .call (this, executionContext);
-
-		this .addType (X3DConstants .OrientationChaser);
-	}
-
-	OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
-	{
-		constructor: OrientationChaser,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFRotation ()),
-		]),
-		getTypeName: function ()
-		{
-			return "OrientationChaser";
-		},
-		getComponentName: function ()
-		{
-			return "Followers";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		getVector: function ()
-		{
-			return new Rotation4 (0, 0, 1, 0);
-		},
-		equals: function (lhs, rhs, tolerance)
-		{
-			a .assign (lhs) .inverse () .multRight (rhs);
-
-			return Math .abs (a .angle) < tolerance;
-		},
-		interpolate: function (source, destination, weight)
-		{
-			return rotation .assign (source) .slerp (destination, weight);
-		},
-		step: function (value1, value2, t)
-		{
-			this .deltaOut .assign (value2) .inverse () .multRight (value1) .multLeft (this .output);
-
-			this .output .slerp (this .deltaOut, t);
-		},
-	});
-
-	return OrientationChaser;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Components/Followers/OrientationDamper',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -102753,115 +102920,6 @@ function (Fields,
 
 	return Polypoint2D;
 });
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Followers/PositionChaser',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Followers/X3DChaserNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DChaserNode, 
-          X3DConstants,
-          Vector3)
-{
-"use strict";
-
-	function PositionChaser (executionContext)
-	{
-		X3DChaserNode .call (this, executionContext);
-
-		this .addType (X3DConstants .PositionChaser);
-	}
-
-	PositionChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
-	{
-		constructor: PositionChaser,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFVec3f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "PositionChaser";
-		},
-		getComponentName: function ()
-		{
-			return "Followers";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		getVector: function ()
-		{
-			return new Vector3 (0, 0, 0);
-		},
-	});
-
-	return PositionChaser;
-});
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -113856,7 +113914,7 @@ function ($,
 			}
 			catch (error)
 			{
-				Error .fallback (error, elements);
+				Error .fallback (elements, error);
 				fallbacks .resolve (error);
 			}
 		});
@@ -113973,8 +114031,6 @@ function ($,
 
 	function fallback (error)
 	{
-		console .log (error);
-
 		require (["x_ite/Error"],
 		function (Error)
 		{
