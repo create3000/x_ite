@@ -58,6 +58,13 @@ function ($)
 
 	function Error (error, fallbacks)
 	{
+		console .log (error);
+
+		var consoleElement = $(".x_ite-console");
+
+		if (consoleElement .length)
+			consoleElement .append (document .createTextNode (error));
+
 		$(function ()
 		{
 		   var elements = $("X3DCanvas");
@@ -79,8 +86,15 @@ function ($)
 
 	// In some browser went something wrong when the fallback function is called.
 
-	function fallback (elements)
+	function fallback (error, elements)
 	{
+		console .log (error);
+
+		var consoleElement = $(".x_ite-console");
+
+		if (consoleElement .length)
+			consoleElement .append (document .createTextNode (error));
+
 		elements .addClass ("x_ite-browser-fallback");
 		elements .children (".x_ite-private-browser") .hide ();
 		elements .children (":not(.x_ite-private-browser)") .addClass ("x_ite-fallback");

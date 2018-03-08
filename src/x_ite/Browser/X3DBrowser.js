@@ -675,10 +675,10 @@ function ($,
 
 			console .log (string);
 
-			var element = $(".x_ite-console");
+			var consoleElement = $(".x_ite-console");
 
-			if (element .length)
-				element .append (document .createTextNode (string));
+			if (consoleElement .length)
+				consoleElement .append (document .createTextNode (string));
 		},
 		println: function ()
 		{
