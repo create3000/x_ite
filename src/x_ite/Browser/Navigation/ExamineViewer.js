@@ -87,19 +87,21 @@ function ($,
 	{
 		X3DViewer .call (this, executionContext);
 
-		this .button                 = -1;
-		this .orientationOffset      = new Rotation4 (0, 0, 1, 0);
-		this .fromVector             = new Vector3 (0, 0, 0);
-		this .toVector               = new Vector3 (0, 0, 0);
-		this .fromPoint              = new Vector3 (0, 0, 0);
-		this .toPoint                = new Vector3 (0, 0, 0);
-		this .rotationChange         = new Rotation4 (0, 0, 1, 0);
-		this .rotation               = new Rotation4 (0, 0, 1, 0);
-		this .pressTime              = 0;
-		this .motionTime             = 0;
-		this .positionChaser         = new PositionChaser (executionContext);
-		this .centerOfRotationChaser = new PositionChaser (executionContext);
-		this .rotationChaser         = new OrientationChaser (executionContext);
+		this .button                   = -1;
+		this .orientationOffset        = new Rotation4 (0, 0, 1, 0);
+		this .fromVector               = new Vector3 (0, 0, 0);
+		this .toVector                 = new Vector3 (0, 0, 0);
+		this .fromPoint                = new Vector3 (0, 0, 0);
+		this .toPoint                  = new Vector3 (0, 0, 0);
+		this .rotationChange           = new Rotation4 (0, 0, 1, 0);
+		this .rotation                 = new Rotation4 (0, 0, 1, 0);
+		this .pressTime                = 0;
+		this .motionTime               = 0;
+		this .initialPositionOffset    = new Vector3 (0, 0, 0);
+		this .initialOrientationOffset = new Rotation4 (0, 0, 1, 0);
+		this .positionChaser           = new PositionChaser (executionContext);
+		this .centerOfRotationChaser   = new PositionChaser (executionContext);
+		this .rotationChaser           = new OrientationChaser (executionContext);
 	}
 
 	ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
@@ -376,8 +378,8 @@ function ($,
 				this .rotationChaser .set_value_       = new Rotation4 ();
 				this .rotationChaser .set_destination_ = rotationChange;
 
-				this .initialOrientationOffset = viewpoint .orientationOffset_ .getValue () .copy ();
-				this .initialPositionOffset    = viewpoint .positionOffset_    .getValue () .copy ();
+				this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
+				this .initialPositionOffset    .assign (viewpoint .positionOffset_    .getValue ());
 			}
 		},
 		addSpinning: function (spinTime)
