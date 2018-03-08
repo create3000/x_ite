@@ -58,21 +58,11 @@ function ($)
 
 	function Error (error, fallbacks)
 	{
-		console .log (error);
-
-		var consoleElement = $(".x_ite-console");
-
-		if (consoleElement .length)
-			consoleElement .append (document .createTextNode (error));
-
 		$(function ()
 		{
 		   var elements = $("X3DCanvas");
 
-			elements .each (function ()
-			{
-				Error .fallback ($(this));
-			});
+			Error .fallback (elements, error);
 
 			for (var i = 0; i < fallbacks .length; ++ i)
 			{
@@ -86,7 +76,7 @@ function ($)
 
 	// In some browser went something wrong when the fallback function is called.
 
-	function fallback (error, elements)
+	function fallback (elements, error)
 	{
 		console .log (error);
 

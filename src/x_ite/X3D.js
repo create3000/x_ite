@@ -201,7 +201,7 @@ function ($,
 			}
 			catch (error)
 			{
-				Error .fallback (error, elements);
+				Error .fallback (elements, error);
 				fallbacks .resolve (error);
 			}
 		});

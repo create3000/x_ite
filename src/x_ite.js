@@ -65,8 +65,6 @@
 
 	function fallback (error)
 	{
-		console .log (error);
-
 		require (["x_ite/Error"],
 		function (Error)
 		{
