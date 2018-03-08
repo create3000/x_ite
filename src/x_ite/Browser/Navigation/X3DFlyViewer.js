@@ -50,6 +50,7 @@
 define ([
 	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
+	"x_ite/Components/Followers/OrientationChaser",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -58,6 +59,7 @@ define ([
 ],
 function ($,
           X3DViewer,
+          OrientationChaser,
           Vector3,
           Rotation4,
           Matrix4,
@@ -73,7 +75,7 @@ function ($,
 		PAN_SPEED_FACTOR       = SPEED_FACTOR,
 		PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
 		ROLL_ANGLE             = Math .PI / 32,
-		ROLL_TIME              = 0.2;
+		ROLL_TIME              = 0.3;
 
 	var
 		yAxis              = new Vector3 (0, 1, 0),
@@ -85,7 +87,6 @@ function ($,
 		upVector           = new Vector3 (0, 0, 0),
 		direction          = new Vector3 (0, 0, 0),
 		axis               = new Vector3 (0, 0, 0),
-		rotation           = new Rotation4 (0, 0, 1, 0),
 		orientation        = new Rotation4 (0, 0, 1, 0),
 		orientationOffset  = new Rotation4 (0, 0, 1, 0),
 		rubberBandRotation = new Rotation4 (0, 0, 1, 0),
@@ -103,18 +104,17 @@ function ($,
 
 		var gl = this .getBrowser () .getContext ();
 
-		this .button              = -1;
-		this .fromVector          = new Vector3 (0, 0, 0);
-		this .toVector            = new Vector3 (0, 0, 0);
-		this .direction           = new Vector3 (0, 0, 0);
-		this .sourceRotation      = new Rotation4 (0, 0, 1, 0);
-		this .destinationRotation = new Rotation4 (0, 0, 1, 0);
-		this .startTime           = 0;
-		this .lineBuffer          = gl .createBuffer ();
-		this .lineCount           = 2;
-		this .lineVertices        = new Array (this .lineCount * 4);
-		this .lineArray           = new Float32Array (this .lineVertices);
-		this .event               = null;
+		this .button            = -1;
+		this .fromVector        = new Vector3 (0, 0, 0);
+		this .toVector          = new Vector3 (0, 0, 0);
+		this .direction         = new Vector3 (0, 0, 0);
+		this .startTime         = 0;
+		this .lineBuffer        = gl .createBuffer ();
+		this .lineCount         = 2;
+		this .lineVertices      = new Array (this .lineCount * 4);
+		this .lineArray         = new Float32Array (this .lineVertices);
+		this .event             = null;
+		this .orientationChaser = new OrientationChaser (executionContext);
 
 		this .projectionMatrix      = new Matrix4 ();
 		this .projectionMatrixArray = new Float32Array (this .projectionMatrix);
@@ -128,13 +128,22 @@ function ($,
 		{
 			X3DViewer .prototype .initialize .call (this);
 
-			var canvas = this .getBrowser () .getCanvas ();
+			var
+			   browser = this .getBrowser (),
+			   canvas  = browser .getCanvas ();
+
+			// Bind pointing device events.
 
 			canvas .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
 			canvas .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
 			canvas .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
 
-			this .getBrowser () .controlKey_ .addInterest ("set_controlKey_", this);
+			browser .controlKey_ .addInterest ("set_controlKey_", this);
+
+			// Setup scroll chaser.
+
+			this .orientationChaser .duration_ = ROLL_TIME;
+			this .orientationChaser .setup ();
 		},
 		addCollision: function () { },
 		removeCollision: function () { },
@@ -396,7 +405,7 @@ function ($,
 			speedFactor *= dt;
 
 			var
-				orientation = viewpoint .getUserOrientation () .multRight (rotation .setFromToVec (viewpoint .getUserOrientation () .multVecRot (axis .assign (yAxis)), upVector)),
+				orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (yAxis)), upVector)),
 				translation = orientation .multVecRot (direction .multiply (speedFactor));
 
 			this .getActiveLayer () .constrainTranslation (translation, true);
@@ -405,20 +414,11 @@ function ($,
 
 			this .startTime = now;
 		},
-		roll: function ()
+		roll: function (value)
 		{
-			var
-				now          = performance .now (),
-				elapsedTime  = (now - this .startTime) / 1000;
+			var viewpoint = this .getActiveViewpoint ();
 
-			if (elapsedTime > ROLL_TIME)
-				return this .disconnect ();
-
-			var
-				viewpoint = this .getActiveViewpoint (),
-			   t         = this .easeInEaseOut (elapsedTime / ROLL_TIME);
-
-			viewpoint .orientationOffset_ = orientationOffset .assign (this .sourceRotation) .slerp (this .destinationRotation, t);
+			viewpoint .orientationOffset_ = value;
 		},
 		addFly: function ()
 		{
@@ -444,20 +444,29 @@ function ($,
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			if (this .getBrowser () .prepareEvents () .hasInterest ("roll", this))
-				delta .assign (viewpoint .orientationOffset_ .getValue ()) .inverse () .multLeft (this .destinationRotation);
+			if (this .orientationChaser .isActive_ .getValue ())
+			{
+				var destination = this .orientationChaser .set_destination_ .getValue ();
+
+				destination
+					.multLeft (viewpoint .getOrientation ())
+					.multLeft (new Rotation4 (1, 0, 0, rollAngle))
+					.multLeft (Rotation4 .inverse (viewpoint .getOrientation ()));
+
+				this .orientationChaser .set_destination_ = destination;
+			}
 			else
-				delta .set (0, 0, 1, 0);
+			{
+				var destination = viewpoint .getUserOrientation ()
+					.copy ()
+					.multLeft (new Rotation4 (1, 0, 0, rollAngle))
+					.multLeft (Rotation4 .inverse (viewpoint .getOrientation ()));
 
-			rotation .setAxisAngle (viewpoint .getUserOrientation () .multVecRot (axis .set (1, 0, 0)), rollAngle + delta .angle);
+				this .orientationChaser .value_changed_ .addInterest ("roll", this);
 
-			this .getBrowser () .prepareEvents () .addInterest ("roll", this);
-			this .getBrowser () .addBrowserEvent ();
-
-			this .sourceRotation .assign (viewpoint .orientationOffset_ .getValue ());
-			this .destinationRotation .assign (this .sourceRotation) .multRight (rotation);
-		
-			this .startTime = performance .now ();
+				this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
+				this .orientationChaser .set_destination_ = destination;
+			}
 		},
 		display: function (interest, type)
 		{
@@ -553,8 +562,9 @@ function ($,
 
 			browser .prepareEvents () .removeInterest ("fly", this);
 			browser .prepareEvents () .removeInterest ("pan", this);
-			browser .prepareEvents () .removeInterest ("roll", this);
 			browser .finished ()      .removeInterest ("display", this);
+
+			this .orientationChaser .value_changed_ .addInterest ("roll", this);
 
 			this .startTime = 0;
 		},

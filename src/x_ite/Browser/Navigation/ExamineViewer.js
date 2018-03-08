@@ -50,12 +50,14 @@
 define ([
 	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
+	"x_ite/Components/Followers/PositionChaser",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"jquery-mousewheel",
 ],
 function ($,
           X3DViewer,
+          PositionChaser,
           Vector3,
           Rotation4)
 {
@@ -90,11 +92,11 @@ function ($,
 		this .toVector                     = new Vector3 (0, 0, 0);
 		this .fromPoint                    = new Vector3 (0, 0, 0);
 		this .toPoint                      = new Vector3 (0, 0, 0);
-		this .sourcePositionOffset         = new Vector3 (0, 0, 0);
 		this .destinationPositionOffset    = new Vector3 (0, 0, 0);
 		this .rotation                     = new Rotation4 (0, 0, 1, 0);
 		this .pressTime                    = 0;
 		this .motionTime                   = 0;
+		this .scrollChaser                 = new PositionChaser (executionContext);
 	}
 
 	ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
@@ -108,10 +110,17 @@ function ($,
 			   browser = this .getBrowser (),
 			   canvas  = browser .getCanvas ();
 
+			// Bind pointing device events.
+
 			canvas .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
 			canvas .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
 			canvas .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
 			canvas .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+
+			// Setup scroll chaser.
+
+			this .scrollChaser .duration_ = SCROLL_TIME;
+			this .scrollChaser .setup ();
 		},
 		mousedown: function (event)
 		{
@@ -313,20 +322,11 @@ function ($,
 			viewpoint .orientationOffset_ = this .getOrientationOffset ();
 			viewpoint .positionOffset_    = this .getPositionOffset ();
 		},
-		scroll: function ()
+		scroll: function (value)
 		{
-			var
-				now          = performance .now (),
-				elapsedTime  = (now - this .startTime) / 1000;
+			var viewpoint = this .getActiveViewpoint ();
 
-			if (elapsedTime > SCROLL_TIME)
-				return this .disconnect ();
-
-			var
-				viewpoint = this .getActiveViewpoint (),
-			   t         = this .easeInEaseOut (elapsedTime / SCROLL_TIME);
-
-			viewpoint .positionOffset_ = positionOffset .assign (this .sourcePositionOffset) .lerp (this .destinationPositionOffset, t);
+			viewpoint .positionOffset_ = value;
 		},
 		addRotate: function (rotationChange)
 		{
@@ -336,8 +336,6 @@ function ($,
 
 			viewpoint .orientationOffset_ = this .getOrientationOffset ();
 			viewpoint .positionOffset_    = this .getPositionOffset ();
-
-			return;
 		},
 		addSpinning: function (spinTime)
 		{
@@ -356,21 +354,21 @@ function ($,
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			if (this .getBrowser () .prepareEvents () .hasInterest ("scroll", this))
+			if (this .scrollChaser .isActive_ .getValue ())
 			{
-				this .sourcePositionOffset      .assign (viewpoint .positionOffset_ .getValue ());
 				this .destinationPositionOffset .add (positionOffsetChange);
+
+				this .scrollChaser .set_destination_ = this .destinationPositionOffset;
 			}
 			else
 			{
-				this .sourcePositionOffset      .assign (viewpoint .positionOffset_ .getValue ());
-				this .destinationPositionOffset .assign (Vector3 .add (viewpoint .positionOffset_ .getValue (), positionOffsetChange));
-			}
+				this .destinationPositionOffset .assign (viewpoint .positionOffset_ .getValue ()) .add (positionOffsetChange);
 
-			this .getBrowser () .prepareEvents () .addInterest ("scroll", this);
-			this .getBrowser () .addBrowserEvent ();
-		
-			this .startTime = performance .now ();
+				this .scrollChaser .value_changed_ .addInterest ("scroll", this);
+
+				this .scrollChaser .set_value_       = viewpoint .positionOffset_;
+				this .scrollChaser .set_destination_ = this .destinationPositionOffset;
+			}
 		},
 		getPositionOffset: function ()
 		{
@@ -398,8 +396,9 @@ function ($,
 		{
 			var browser = this .getBrowser ();
 
-			browser .prepareEvents () .removeInterest ("spin",   this);
-			browser .prepareEvents () .removeInterest ("scroll", this);
+			this .scrollChaser .value_changed_ .removeInterest ("scroll", this);
+
+			browser .prepareEvents () .removeInterest ("spin", this);
 		},
 		dispose: function ()
 		{
