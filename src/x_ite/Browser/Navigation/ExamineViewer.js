@@ -51,6 +51,7 @@ define ([
 	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Followers/PositionChaser",
+	"x_ite/Components/Followers/OrientationChaser",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"jquery-mousewheel",
@@ -58,6 +59,7 @@ define ([
 function ($,
           X3DViewer,
           PositionChaser,
+          OrientationChaser,
           Vector3,
           Rotation4)
 {
@@ -70,6 +72,7 @@ function ($,
 		SPIN_FACTOR       = 0.6,
 		SCROLL_FACTOR     = 1.0 / 20.0,
 		SCROLL_TIME       = 0.3,
+		ROTATE_TIME       = 0.4,
 		FRAME_RATE        = 60;
 
 	var
@@ -85,18 +88,18 @@ function ($,
 	{
 		X3DViewer .call (this, executionContext);
 
-		this .button                       = -1;
-		this .positionOffset               = new Vector3 (0, 0, 0);
-		this .orientationOffset            = new Rotation4 (0, 0, 1, 0);
-		this .fromVector                   = new Vector3 (0, 0, 0);
-		this .toVector                     = new Vector3 (0, 0, 0);
-		this .fromPoint                    = new Vector3 (0, 0, 0);
-		this .toPoint                      = new Vector3 (0, 0, 0);
-		this .destinationPositionOffset    = new Vector3 (0, 0, 0);
-		this .rotation                     = new Rotation4 (0, 0, 1, 0);
-		this .pressTime                    = 0;
-		this .motionTime                   = 0;
-		this .scrollChaser                 = new PositionChaser (executionContext);
+		this .button            = -1;
+		this .orientationOffset = new Rotation4 (0, 0, 1, 0);
+		this .fromVector        = new Vector3 (0, 0, 0);
+		this .toVector          = new Vector3 (0, 0, 0);
+		this .fromPoint         = new Vector3 (0, 0, 0);
+		this .toPoint           = new Vector3 (0, 0, 0);
+		this .rotationChange    = new Rotation4 (0, 0, 1, 0);
+		this .rotation          = new Rotation4 (0, 0, 1, 0);
+		this .pressTime         = 0;
+		this .motionTime        = 0;
+		this .positionChaser    = new PositionChaser (executionContext);
+		this .rotationChaser    = new OrientationChaser (executionContext);
 	}
 
 	ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
@@ -119,8 +122,11 @@ function ($,
 
 			// Setup scroll chaser.
 
-			this .scrollChaser .duration_ = SCROLL_TIME;
-			this .scrollChaser .setup ();
+			this .positionChaser .duration_ = SCROLL_TIME;
+			this .positionChaser .setup ();
+
+			this .rotationChaser .duration_ = ROTATE_TIME;
+			this .rotationChaser .setup ();
 		},
 		mousedown: function (event)
 		{
@@ -202,7 +208,7 @@ function ($,
 
 					this .getBrowser () .setCursor ("DEFAULT");
 
-					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
+					if (Math .abs (this .rotationChange .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
 						this .addSpinning ();
 					}
@@ -256,12 +262,12 @@ function ($,
 						viewpoint = this .getActiveViewpoint (),
 						toVector  = this .trackballProjectToSphere (x, y, this .toVector);
 
-					var rotation = new Rotation4 (toVector, this .fromVector);
+					this .rotationChange = new Rotation4 (toVector, this .fromVector);
 
-					if (Math .abs (rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
+					if (Math .abs (this .rotationChange .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
 						return false;
 
-					this .addRotate (rotation);
+					this .addRotate (this .rotationChange);
 
 					this .fromVector .assign (toVector);
 					this .motionTime = performance .now ();
@@ -322,28 +328,55 @@ function ($,
 			viewpoint .orientationOffset_ = this .getOrientationOffset ();
 			viewpoint .positionOffset_    = this .getPositionOffset ();
 		},
-		scroll: function (value)
+		set_positionOffset__: function (value)
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
 			viewpoint .positionOffset_ = value;
 		},
+		set_rotation__: function (value)
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			viewpoint .orientationOffset_ = this .initialOrientationOffset;
+			viewpoint .positionOffset_    = this .initialPositionOffset;
+
+			this .rotation .assign (value .getValue ());
+
+			viewpoint .orientationOffset_ = this .getOrientationOffset ();
+			viewpoint .positionOffset_    = this .getPositionOffset ();
+		},
 		addRotate: function (rotationChange)
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			this .rotation .assign (rotationChange);
+			if (this .rotationChaser .isActive_ .getValue ())
+			{
+				var destination = this .rotationChaser .set_destination_ .getValue ()
+					.multLeft (rotationChange);
 
-			viewpoint .orientationOffset_ = this .getOrientationOffset ();
-			viewpoint .positionOffset_    = this .getPositionOffset ();
+				this .rotationChaser .set_destination_ = destination;
+			}
+			else
+			{
+				this .disconnect ();
+				this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
+
+				this .rotationChaser .set_value_       = new Rotation4 ();
+				this .rotationChaser .set_destination_ = rotationChange;
+
+				this .initialOrientationOffset = viewpoint .orientationOffset_ .getValue () .copy ();
+				this .initialPositionOffset    = viewpoint .positionOffset_    .getValue () .copy ();
+			}
 		},
 		addSpinning: function (spinTime)
 		{
 			try
 			{
-				this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (this .rotation, SPIN_FACTOR));
-
+				this .disconnect ();
 				this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+
+				this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (this .rotationChange, SPIN_FACTOR));
 			}
 			catch (error)
 			{
@@ -354,20 +387,24 @@ function ($,
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			if (this .scrollChaser .isActive_ .getValue ())
+			if (this .positionChaser .isActive_ .getValue ())
 			{
-				this .destinationPositionOffset .add (positionOffsetChange);
+				var destination = this .positionChaser .set_destination_ .getValue ()
+					.add (positionOffsetChange);
 
-				this .scrollChaser .set_destination_ = this .destinationPositionOffset;
+				this .positionChaser .set_destination_ = destination;
 			}
 			else
 			{
-				this .destinationPositionOffset .assign (viewpoint .positionOffset_ .getValue ()) .add (positionOffsetChange);
+				var destination = viewpoint .positionOffset_ .getValue ()
+					.copy ()
+					.add (positionOffsetChange);
 
-				this .scrollChaser .value_changed_ .addInterest ("scroll", this);
+				this .disconnect ();
+				this .positionChaser .value_changed_ .addInterest ("set_positionOffset__", this);
 
-				this .scrollChaser .set_value_       = viewpoint .positionOffset_;
-				this .scrollChaser .set_destination_ = this .destinationPositionOffset;
+				this .positionChaser .set_value_       = viewpoint .positionOffset_;
+				this .positionChaser .set_destination_ = destination;
 			}
 		},
 		getPositionOffset: function ()
@@ -375,8 +412,6 @@ function ($,
 			var viewpoint = this .getActiveViewpoint ();
 
 			this .getDistanceToCenter (distance);
-
-			this .positionOffset .assign (viewpoint .positionOffset_ .getValue ());
 
 			return (orientationOffset .assign (this .orientationOffset) .inverse ()
 			        .multRight (viewpoint .orientationOffset_ .getValue ())
@@ -396,7 +431,8 @@ function ($,
 		{
 			var browser = this .getBrowser ();
 
-			this .scrollChaser .value_changed_ .removeInterest ("scroll", this);
+			this .positionChaser .value_changed_ .removeInterest ("set_positionOffset__", this);
+			this .rotationChaser .value_changed_ .removeInterest ("set_rotation__",       this);
 
 			browser .prepareEvents () .removeInterest ("spin", this);
 		},

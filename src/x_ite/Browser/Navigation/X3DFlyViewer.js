@@ -414,7 +414,7 @@ function ($,
 
 			this .startTime = now;
 		},
-		roll: function (value)
+		set_orientationOffset__: function (value)
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
@@ -435,6 +435,7 @@ function ($,
 			if (this .startTime)
 				return;
 			
+			this .disconnect ();
 			this .getBrowser () .prepareEvents () .addInterest ("pan", this);
 			this .getBrowser () .addBrowserEvent ();
 
@@ -462,7 +463,8 @@ function ($,
 					.multLeft (new Rotation4 (1, 0, 0, rollAngle))
 					.multLeft (Rotation4 .inverse (viewpoint .getOrientation ()));
 
-				this .orientationChaser .value_changed_ .addInterest ("roll", this);
+				this .disconnect ();
+				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
 
 				this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
 				this .orientationChaser .set_destination_ = destination;
@@ -564,7 +566,7 @@ function ($,
 			browser .prepareEvents () .removeInterest ("pan", this);
 			browser .finished ()      .removeInterest ("display", this);
 
-			this .orientationChaser .value_changed_ .addInterest ("roll", this);
+			this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
 
 			this .startTime = 0;
 		},
