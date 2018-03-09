@@ -63,7 +63,7 @@ function (Fields,
 		this .addType (X3DConstants .X3DTimeDependentNode);
 
 		this .addChildObjects ("initialized", new Fields .SFTime (),
-			                    "isEvenLive",  new Fields .SFBool ());
+		                       "isEvenLive",  new Fields .SFBool ());
 
 		this .startTimeValue  = 0;
 		this .pauseTimeValue  = 0;
