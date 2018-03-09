@@ -57721,7 +57721,7 @@ function (Fields,
 		this .addType (X3DConstants .X3DTimeDependentNode);
 
 		this .addChildObjects ("initialized", new Fields .SFTime (),
-			                    "isEvenLive",  new Fields .SFBool ());
+		                       "isEvenLive",  new Fields .SFBool ());
 
 		this .startTimeValue  = 0;
 		this .pauseTimeValue  = 0;
@@ -79923,16 +79923,18 @@ function (SFNode,
 			this .layerSet .setPrivate (true);
 			this .layerSet .setup ();
 			this .layerSet .setLayer0 (this .layer0);
-			this .layerSet .activeLayer_ .addInterest ("set_activeLayer", this);
+			this .layerSet .activeLayer_ .addInterest ("set_rootNodes__", this);
 
-			this .getExecutionContext () .getRootNodes () .addInterest ("set_rootNodes", this);
+			this .getExecutionContext () .getRootNodes () .addInterest ("set_rootNodes__", this);
 			this .getExecutionContext () .setup ();
 
-			this .set_rootNodes ();
+			this .set_rootNodes__ ();
 
 			this .layer0 .setPrivate (true);
 			this .layer0 .isLayer0 (true);
 			this .layer0 .setup ();
+
+			this .set_activeLayer__ ();
 
 			this .bind ();
 		},
@@ -79944,7 +79946,7 @@ function (SFNode,
 		{
 			return this .activeLayer_ .getValue ();
 		},
-		set_rootNodes: function ()
+		set_rootNodes__: function ()
 		{
 			var oldLayerSet = this .layerSet;
 			this .layerSet  = this .defaultLayerSet;
@@ -79966,13 +79968,13 @@ function (SFNode,
 
 			if (this .layerSet !== oldLayerSet)
 			{
-				oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer", this);
-				this .layerSet .activeLayer_ .addInterest ("set_activeLayer", this);
+				oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer__", this);
+				this .layerSet .activeLayer_ .addInterest ("set_activeLayer__", this);
 
-				this .set_activeLayer ();
+				this .set_activeLayer__ ();
 			}
 		},
-		set_activeLayer: function ()
+		set_activeLayer__: function ()
 		{
 			this .activeLayer_ = this .layerSet .getActiveLayer ();
 		},
