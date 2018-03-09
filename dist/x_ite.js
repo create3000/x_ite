@@ -1,4 +1,4 @@
-/* X_ITE v4.1.5a-218 */
+/* X_ITE v4.1.5a-219 */
 
 (function () {
 
@@ -25737,6 +25737,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
 		]),
 		getTypeName: function ()
 		{
@@ -60678,7 +60679,7 @@ function ($,
 				{
 					// Stop event propagation.
 
-					if (! this .getBrowser () .getStraightenHorizon ())
+					if (! this .getBrowser () .getBrowserOption ("StraightenHorizon"))
 					{
 						event .preventDefault ();
 						event .stopImmediatePropagation ();
@@ -60928,7 +60929,7 @@ function ($,
 				.multRight (viewpoint .getOrientation ())
 				.multRight (orientationOffsetBefore));
 
-			if (this .getBrowser () .getStraightenHorizon ())
+			if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
 				viewpoint .straightenHorizon (userOrientation);
 
 			return (viewpoint .getOrientation ()
@@ -65846,10 +65847,6 @@ function (Fields,
 			this .shutdown ()    .addInterest ("remove_world__", this);
 
 			this .headlightContainer = getHeadLight (this);
-		},
-		getStraightenHorizon: function ()
-		{
-			return this .getElement () [0] .getAttribute ("straightenHorizon") != "false";
 		},
 		getHeadlight: function ()
 		{

@@ -107,10 +107,6 @@ function (Fields,
 
 			this .headlightContainer = getHeadLight (this);
 		},
-		getStraightenHorizon: function ()
-		{
-			return this .getElement () [0] .getAttribute ("straightenHorizon") != "false";
-		},
 		getHeadlight: function ()
 		{
 			return this .headlightContainer;

@@ -203,7 +203,7 @@ function ($,
 				{
 					// Stop event propagation.
 
-					if (! this .getBrowser () .getStraightenHorizon ())
+					if (! this .getBrowser () .getBrowserOption ("StraightenHorizon"))
 					{
 						event .preventDefault ();
 						event .stopImmediatePropagation ();
@@ -453,7 +453,7 @@ function ($,
 				.multRight (viewpoint .getOrientation ())
 				.multRight (orientationOffsetBefore));
 
-			if (this .getBrowser () .getStraightenHorizon ())
+			if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
 				viewpoint .straightenHorizon (userOrientation);
 
 			return (viewpoint .getOrientation ()
