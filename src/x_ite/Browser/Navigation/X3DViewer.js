@@ -116,11 +116,14 @@ function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 				return result .set (0, 0, 0);
 			}
 		},
-		getDistanceToCenter: function (distance)
+		getDistanceToCenter: function (distance, positionOffset)
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			return distance .assign (viewpoint .getUserPosition ()) .subtract (viewpoint .getUserCenterOfRotation ());
+			return (distance
+				.assign (viewpoint .getPosition ())
+				.add (positionOffset || viewpoint .positionOffset_ .getValue ())
+				.subtract (viewpoint .getUserCenterOfRotation ()));
 		},
 		trackballProjectToSphere: function (x, y, vector)
 		{

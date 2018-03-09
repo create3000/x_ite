@@ -106,6 +106,10 @@ function (X3DChildNode,
 		{
 			this .value_changed_ = value;
 		},
+		setDestination: function (value)
+		{
+			this .destination .assign (value);
+		},
 		assign: function (buffer, i, value)
 		{
 			buffer [i] .assign (value);

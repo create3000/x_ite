@@ -104,6 +104,10 @@ function (Fields,
 		{
 			this .previousValue = value;
 		},
+		setDestination: function (value)
+		{
+			this .destination = value;
+		},
 		duplicate: function (value)
 		{
 			return value;

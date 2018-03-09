@@ -446,7 +446,7 @@ function ($,
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			if (this .orientationChaser .isActive_ .getValue ())
+			if (this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
 			{
 				var orientationOffset = this .orientationChaser .set_destination_ .getValue ();
 
@@ -464,12 +464,12 @@ function ($,
 					.multLeft (new Rotation4 (1, 0, 0, rollAngle))
 					.multLeft (Rotation4 .inverse (viewpoint .getOrientation ()));
 
-				this .disconnect ();
-				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
-
 				this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
 				this .orientationChaser .set_destination_ = orientationOffset;
 			}
+
+			this .disconnect ();
+			this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
 		},
 		display: function (interest, type)
 		{

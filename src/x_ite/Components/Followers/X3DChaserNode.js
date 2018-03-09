@@ -157,7 +157,7 @@ function (X3DFollowerNode,
 		},
 		set_destination__: function ()
 		{
-			this .destination = this .duplicate (this .getDestination ());
+			this .setDestination (this .getDestination ());
 
 			if (! this .isActive_ .getValue ())
 				this .bufferEndTime = this .getBrowser () .getCurrentTime ();
