@@ -1,4 +1,4 @@
-/* X_ITE v4.1.5a-221 */
+/* X_ITE v4.1.5a-222 */
 
 (function () {
 
@@ -14105,7 +14105,9 @@ define ('standard/Math/Algorithm',[],function ()
 		},
 		clamp: function (value, min, max)
 		{
-			return value < min ? min : (value > max ? max : value);
+			// http://jsperf.com/math-clamp
+			// http://jsperf.com/clamping-methods/2
+			return Math .min (max, Math .max (min, value));
 		},
 		interval: function (value, low, high)
 		{
@@ -20222,6 +20224,11 @@ function (Quaternion,
 		{
 			return this .value .multQuatVec (vector);
 		},
+		pow: function (exponent)
+		{
+			this .value .pow (exponent);
+			return this;
+		},
 		slerp: function (dest, t)
 		{
 			this .value .slerp (dest .value, t);
@@ -26253,6 +26260,8 @@ function ($,
    function Notification (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+
+		this .addChildObjects ("string", new SFString ());
 	}
 
 	Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -26261,8 +26270,6 @@ function ($,
 		initialize: function ()
 		{
 			X3DBaseNode .prototype .initialize .call (this);
-
-			this .addChildObjects ("string", new SFString ());
 
 			this .element = $("<div></div>")
 				.addClass ("x_ite-private-notification")
@@ -38765,6 +38772,8 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DAppearanceNode);
+		
+		this .addChildObjects ("transparent", new Fields .SFBool ());
 	}
 
 	X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -38773,8 +38782,6 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DNode .prototype .initialize .call (this);
-			
-			this .addChildObjects ("transparent", new Fields .SFBool ());
 		},
 	});
 
@@ -39741,7 +39748,7 @@ function (Fields,
 
 			if (this .x3d_Vertex < 0)
 			{
-				console .warning ("Missing »attribute vec4 x3d_Vertex;«.");
+				console .warn ("Missing »attribute vec4 x3d_Vertex;«.");
 				return false;
 			}
 
@@ -57713,6 +57720,9 @@ function (Fields,
 	{
 		this .addType (X3DConstants .X3DTimeDependentNode);
 
+		this .addChildObjects ("initialized", new Fields .SFTime (),
+			                    "isEvenLive",  new Fields .SFBool ());
+
 		this .startTimeValue  = 0;
 		this .pauseTimeValue  = 0;
 		this .resumeTimeValue = 0;
@@ -57733,9 +57743,6 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DChildNode .prototype .initialize .call (this);
-
-			this .addChildObjects ("initialized", new Fields .SFTime (),
-				                    "isEvenLive",  new Fields .SFBool ());
 
 			this .isLive ()   .addInterest ("set_live__", this);
 			this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode
@@ -58827,28 +58834,18 @@ function (Fields,
 {
 "use strict";
 
-	var
-		yAxis = new Vector3 (0, 1, 0),
-		zAxis = new Vector3 (0, 0, 1);
-
-	var
-		relativePosition         = new Vector3 (0, 0, 0),
-		relativeOrientation      = new Rotation4 (0, 0, 1, 0),
-		relativeScale            = new Vector3 (0, 0, 0),
-		relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
-			
-	var
-		localYAxis = new Vector3 (0, 0, 0),
-		direction  = new Vector3 (0, 0, 0),
-		normal     = new Vector3 (0, 0, 0),
-		vector     = new Vector3 (0, 0, 0),
-		rotation   = new Rotation4 (0, 0, 1, 0);
-
 	function X3DViewpointNode (executionContext)
 	{
 		X3DBindableNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DViewpointNode);
+
+		this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
+		                       "orientationOffset",      new Fields .SFRotation (),
+		                       "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
+		                       "scaleOrientationOffset", new Fields .SFRotation (),
+		                       "centerOfRotationOffset", new Fields .SFVec3f (),
+		                       "fieldOfViewScale",       new Fields .SFFloat (1));
 
 	   this .userPosition             = new Vector3 (0, 1, 0);
 	   this .userOrientation          = new Rotation4 (0, 0, 1, 0);
@@ -58873,13 +58870,6 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DBindableNode .prototype .initialize .call (this);
-
-			this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
-			                       "orientationOffset",      new Fields .SFRotation (),
-			                       "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
-			                       "scaleOrientationOffset", new Fields .SFRotation (),
-			                       "centerOfRotationOffset", new Fields .SFVec3f (),
-			                       "fieldOfViewScale",       new Fields .SFFloat (1));
 		
 			this .timeSensor .stopTime_ = 1;
 			this .timeSensor .setup ();
@@ -58977,7 +58967,7 @@ function (Fields,
 		{
 		   // Local y-axis,
 		   // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
-		   return yAxis;
+		   return Vector3 .yAxis;
 		},
 		getSpeedFactor: function ()
 		{
@@ -58987,86 +58977,95 @@ function (Fields,
 		{
 			return 1e5;
 		},
-		transitionStart: function (fromViewpoint)
+		transitionStart: (function ()
 		{
-			try
-			{
-				if (this .jump_ .getValue ())
-				{
-					var layers = this .getLayers ();
+			var
+				relativePosition         = new Vector3 (0, 0, 0),
+				relativeOrientation      = new Rotation4 (0, 0, 1, 0),
+				relativeScale            = new Vector3 (0, 0, 0),
+				relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
 
-					if (! this .retainUserOffsets_ .getValue ())
-						this .resetUserOffsets ();
+			return function (fromViewpoint)
+			{
+				try
+				{
+					if (this .jump_ .getValue ())
+					{
+						var layers = this .getLayers ();
 	
-					for (var i = 0; i < layers .length; ++ i)
-					{
-						var navigationInfo = layers [i] .getNavigationInfo ();
-
-						navigationInfo .transitionStart_ = true;
-
-						var
-							transitionType = navigationInfo .getTransitionType (),
-							transitionTime = navigationInfo .transitionTime_ .getValue ();
+						if (! this .retainUserOffsets_ .getValue ())
+							this .resetUserOffsets ();
+		
+						for (var i = 0; i < layers .length; ++ i)
+						{
+							var navigationInfo = layers [i] .getNavigationInfo ();
+	
+							navigationInfo .transitionStart_ = true;
+	
+							var
+								transitionType = navigationInfo .getTransitionType (),
+								transitionTime = navigationInfo .transitionTime_ .getValue ();
+						}
+	
+						switch (transitionType)
+						{
+							case "TELEPORT":
+							{
+								for (var i = 0; i < layers .length; ++ i)
+									layers [i] .getNavigationInfo () .transitionComplete_ = true;
+	
+								return;
+							}
+							case "ANIMATE":
+							{
+								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+								break;
+							}
+							default:
+							{
+								// LINEAR
+								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+								break;
+							}
+						}
+						
+						this .timeSensor .cycleInterval_ = transitionTime;
+						this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
+						this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+						this .timeSensor .isActive_ .addInterest ("set_active__", this);
+	
+						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+	
+						this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
+						this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
+						this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
+						this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
+	
+						this .positionOffset_         = relativePosition;
+						this .orientationOffset_      = relativeOrientation;
+						this .scaleOffset_            = relativeScale;
+						this .scaleOrientationOffset_ = relativeScaleOrientation;
+	
+						this .setInterpolators (fromViewpoint);
 					}
-
-					switch (transitionType)
+					else
 					{
-						case "TELEPORT":
-						{
-							for (var i = 0; i < layers .length; ++ i)
-								layers [i] .getNavigationInfo () .transitionComplete_ = true;
-
-							return;
-						}
-						case "ANIMATE":
-						{
-							this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-							break;
-						}
-						default:
-						{
-							// LINEAR
-							this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-							break;
-						}
+						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+		 
+						this .positionOffset_         = relativePosition;
+						this .orientationOffset_      = relativeOrientation;
+						this .scaleOffset_            = relativeScale;
+						this .scaleOrientationOffset_ = relativeScaleOrientation;
+	
+						this .setInterpolators (fromViewpoint);
 					}
-					
-					this .timeSensor .cycleInterval_ = transitionTime;
-					this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-					this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
-					this .timeSensor .isActive_ .addInterest ("set_active__", this);
-
-					this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-					this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
-					this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
-					this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
-					this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
-
-					this .positionOffset_         = relativePosition;
-					this .orientationOffset_      = relativeOrientation;
-					this .scaleOffset_            = relativeScale;
-					this .scaleOrientationOffset_ = relativeScaleOrientation;
-
-					this .setInterpolators (fromViewpoint);
 				}
-				else
+				catch (error)
 				{
-					this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-	 
-					this .positionOffset_         = relativePosition;
-					this .orientationOffset_      = relativeOrientation;
-					this .scaleOffset_            = relativeScale;
-					this .scaleOrientationOffset_ = relativeScaleOrientation;
-
-					this .setInterpolators (fromViewpoint);
+					console .log (error);
 				}
 			}
-			catch (error)
-			{
-				console .log (error);
-			}
-		},
+		})(),
 		transitionStop: function ()
 		{
 			this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
@@ -59091,27 +59090,33 @@ function (Fields,
 			relativePosition .subtract (this .getPosition ());
 			relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
 		},
-		straightenHorizon: function (orientation)
+		straightenHorizon: (function ()
 		{
-			// Taken from Billboard
+			var
+				localXAxis = new Vector3 (0, 0, 0),
+				localZAxis = new Vector3 (0, 0, 0),
+				vector     = new Vector3 (0, 0, 0),
+				rotation   = new Rotation4 (0, 0, 1, 0);
 
-			orientation .multVecRot (direction .assign (zAxis));
-			orientation .multVecRot (localYAxis .assign (yAxis));
-
-			normal .assign (direction) .cross (this .getUpVector ());
-			vector .assign (direction) .cross (localYAxis);
-
-			rotation .setFromToVec (vector, normal);
-
-			return orientation .multRight (rotation);
-		},
+			return function (orientation)
+			{
+				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
+	
+				vector .assign (localZAxis) .cross (this .getUpVector ());
+	
+				rotation .setFromToVec (localXAxis, vector);
+	
+				return orientation .multRight (rotation);
+			}
+		})(),
 		lookAtPoint: function (point, factor, straighten)
 		{
-			if (! this .getBrowser () .getActiveLayer ())
-				return;
-
 			try
 			{
+				if (! this .getBrowser () .getActiveLayer ())
+					return;
+	
 				this .getCameraSpaceMatrix () .multVecMatrix (point);
 
 				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
@@ -60679,17 +60684,17 @@ function ($,
 				{
 					// Stop event propagation.
 
-					if (! this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+					event .preventDefault ();
+					event .stopImmediatePropagation ();
+
+					this .getBrowser () .setCursor ("DEFAULT");
+
+					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
-						event .preventDefault ();
-						event .stopImmediatePropagation ();
-	
-						this .getBrowser () .setCursor ("DEFAULT");
-	
-						if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
-						{
+						if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+							this .addRotate (this .rotation .pow (4));
+						else
 							this .addSpinning (this .rotation);
-						}
 					}
 
 					break;
@@ -79896,12 +79901,12 @@ function (SFNode,
 	function World (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+		
+		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 
 		this .layerSet        = new LayerSet (executionContext);
 		this .defaultLayerSet = this .layerSet;
 		this .layer0          = new Layer (executionContext);
-		
-		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 	}
 
 	World .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -97430,7 +97435,9 @@ function (Fields,
 		X3DMaterialNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Material);
-			
+
+		this .addChildObjects ("transparent", new Fields .SFBool ());
+
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
 		this .emissiveColor = new Float32Array (3);
@@ -97463,8 +97470,6 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DMaterialNode .prototype .initialize .call (this);
-
-			this .addChildObjects ("transparent", new Fields .SFBool ());
 
 			this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
 			this .diffuseColor_     .addInterest ("set_diffuseColor__", this);
@@ -110804,6 +110809,8 @@ function (Fields,
 
 		this .addType (X3DConstants .TwoSidedMaterial);
 			
+		this .addChildObjects ("transparent", new Fields .SFBool ());
+			
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
 		this .emissiveColor = new Float32Array (3);
@@ -110847,8 +110854,6 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DMaterialNode . prototype .initialize .call (this);
-			
-			this .addChildObjects ("transparent", new Fields .SFBool ());
 
 			this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
 			this .diffuseColor_     .addInterest ("set_diffuseColor__", this);
