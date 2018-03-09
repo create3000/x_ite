@@ -203,17 +203,17 @@ function ($,
 				{
 					// Stop event propagation.
 
-					if (! this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+					event .preventDefault ();
+					event .stopImmediatePropagation ();
+
+					this .getBrowser () .setCursor ("DEFAULT");
+
+					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
-						event .preventDefault ();
-						event .stopImmediatePropagation ();
-	
-						this .getBrowser () .setCursor ("DEFAULT");
-	
-						if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
-						{
+						if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+							this .addRotate (this .rotation .pow (4));
+						else
 							this .addSpinning (this .rotation);
-						}
 					}
 
 					break;

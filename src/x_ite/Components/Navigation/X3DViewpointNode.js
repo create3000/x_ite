@@ -77,19 +77,14 @@ function (Fields,
 "use strict";
 
 	var
-		yAxis = new Vector3 (0, 1, 0),
-		zAxis = new Vector3 (0, 0, 1);
-
-	var
 		relativePosition         = new Vector3 (0, 0, 0),
 		relativeOrientation      = new Rotation4 (0, 0, 1, 0),
 		relativeScale            = new Vector3 (0, 0, 0),
 		relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
 			
 	var
-		localYAxis = new Vector3 (0, 0, 0),
-		direction  = new Vector3 (0, 0, 0),
-		normal     = new Vector3 (0, 0, 0),
+		localXAxis = new Vector3 (0, 0, 0),
+		localZAxis = new Vector3 (0, 0, 0),
 		vector     = new Vector3 (0, 0, 0),
 		rotation   = new Rotation4 (0, 0, 1, 0);
 
@@ -226,7 +221,7 @@ function (Fields,
 		{
 		   // Local y-axis,
 		   // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
-		   return yAxis;
+		   return Vector3 .yAxis;
 		},
 		getSpeedFactor: function ()
 		{
@@ -342,25 +337,22 @@ function (Fields,
 		},
 		straightenHorizon: function (orientation)
 		{
-			// Taken from Billboard
+			orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+			orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
 
-			orientation .multVecRot (direction .assign (zAxis));
-			orientation .multVecRot (localYAxis .assign (yAxis));
+			vector .assign (localZAxis) .cross (this .getUpVector ());
 
-			normal .assign (direction) .cross (this .getUpVector ());
-			vector .assign (direction) .cross (localYAxis);
-
-			rotation .setFromToVec (vector, normal);
+			rotation .setFromToVec (localXAxis, vector);
 
 			return orientation .multRight (rotation);
 		},
 		lookAtPoint: function (point, factor, straighten)
 		{
-			if (! this .getBrowser () .getActiveLayer ())
-				return;
-
 			try
 			{
+				if (! this .getBrowser () .getActiveLayer ())
+					return;
+	
 				this .getCameraSpaceMatrix () .multVecMatrix (point);
 
 				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
