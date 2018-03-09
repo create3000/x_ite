@@ -567,7 +567,7 @@ function ($,
 			browser .prepareEvents () .removeInterest ("pan", this);
 			browser .finished ()      .removeInterest ("display", this);
 
-			this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+			this .orientationChaser .value_changed_ .removeInterest ("set_orientationOffset__", this);
 
 			this .startTime = 0;
 		},
