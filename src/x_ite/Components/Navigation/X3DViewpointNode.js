@@ -82,6 +82,13 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DViewpointNode);
 
+		this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
+		                       "orientationOffset",      new Fields .SFRotation (),
+		                       "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
+		                       "scaleOrientationOffset", new Fields .SFRotation (),
+		                       "centerOfRotationOffset", new Fields .SFVec3f (),
+		                       "fieldOfViewScale",       new Fields .SFFloat (1));
+
 	   this .userPosition             = new Vector3 (0, 1, 0);
 	   this .userOrientation          = new Rotation4 (0, 0, 1, 0);
 	   this .userCenterOfRotation     = new Vector3 (0, 0, 0);
@@ -105,13 +112,6 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DBindableNode .prototype .initialize .call (this);
-
-			this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
-			                       "orientationOffset",      new Fields .SFRotation (),
-			                       "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
-			                       "scaleOrientationOffset", new Fields .SFRotation (),
-			                       "centerOfRotationOffset", new Fields .SFVec3f (),
-			                       "fieldOfViewScale",       new Fields .SFFloat (1));
 		
 			this .timeSensor .stopTime_ = 1;
 			this .timeSensor .setup ();

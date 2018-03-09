@@ -67,12 +67,12 @@ function (SFNode,
 	function World (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+		
+		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 
 		this .layerSet        = new LayerSet (executionContext);
 		this .defaultLayerSet = this .layerSet;
 		this .layer0          = new Layer (executionContext);
-		
-		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 	}
 
 	World .prototype = Object .assign (Object .create (X3DBaseNode .prototype),

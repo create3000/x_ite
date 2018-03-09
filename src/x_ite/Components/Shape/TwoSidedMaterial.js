@@ -70,6 +70,8 @@ function (Fields,
 
 		this .addType (X3DConstants .TwoSidedMaterial);
 			
+		this .addChildObjects ("transparent", new Fields .SFBool ());
+			
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
 		this .emissiveColor = new Float32Array (3);
@@ -113,8 +115,6 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DMaterialNode . prototype .initialize .call (this);
-			
-			this .addChildObjects ("transparent", new Fields .SFBool ());
 
 			this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
 			this .diffuseColor_     .addInterest ("set_diffuseColor__", this);
