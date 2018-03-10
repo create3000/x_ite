@@ -121,7 +121,7 @@ function ($,
 			canvas .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
 
 			canvas .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
-			canvas .bind ("touchend.ExamineViewer",    this .touchend  .bind (this));
+			canvas .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
 
 			// Setup scroll chaser.
 
@@ -163,7 +163,9 @@ function ($,
 					
 					this .getBrowser () .getCanvas () .unbind ("mousemove.ExamineViewer");
 
+					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
 					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
 
 					this .disconnect ();
@@ -188,7 +190,9 @@ function ($,
 					
 					this .getBrowser () .getCanvas () .unbind ("mousemove.ExamineViewer");
 
+					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
 					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
 		
 					this .disconnect ();
@@ -209,6 +213,7 @@ function ($,
 		
 			$(document) .unbind ("mousemove.ExamineViewer" + this .getId ());
 			$(document) .unbind ("mouseup.ExamineViewer"   + this .getId ());
+			$(document) .unbind ("touchend.ExamineViewer"  + this .getId ());
 			$(document) .unbind ("touchmove.ExamineViewer" + this .getId ());
 
 			switch (event .button)
