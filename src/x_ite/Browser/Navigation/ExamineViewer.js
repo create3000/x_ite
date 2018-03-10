@@ -52,6 +52,7 @@ define ([
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Followers/PositionChaser",
 	"x_ite/Components/Followers/OrientationChaser",
+	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"jquery-mousewheel",
@@ -60,6 +61,7 @@ function ($,
           X3DViewer,
           PositionChaser,
           OrientationChaser,
+          Vector2,
           Vector3,
           Rotation4)
 {
@@ -88,6 +90,10 @@ function ($,
 		this .rotation                 = new Rotation4 (0, 0, 1, 0);
 		this .pressTime                = 0;
 		this .motionTime               = 0;
+
+		this .touch1                   = new Vector2 (0, 0);
+		this .touch2                   = new Vector2 (0, 0);
+
 		this .initialPositionOffset    = new Vector3 (0, 0, 0);
 		this .initialOrientationOffset = new Rotation4 (0, 0, 1, 0);
 		this .positionChaser           = new PositionChaser (executionContext);
@@ -113,6 +119,9 @@ function ($,
 			canvas .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
 			canvas .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
 			canvas .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+
+			canvas .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
+			canvas .bind ("touchend.ExamineViewer",    this .touchend  .bind (this));
 
 			// Setup scroll chaser.
 
@@ -144,15 +153,18 @@ function ($,
 			{
 				case 0:
 				{
-					// Stop event propagation.
+					// Start rotate.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
 					
-					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
+					this .getBrowser () .getCanvas () .unbind ("mousemove.ExamineViewer");
+
 					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
 
 					this .disconnect ();
 					this .getActiveViewpoint () .transitionStop ();
@@ -166,8 +178,9 @@ function ($,
 				}
 				case 1:
 				{
-					// Stop event propagation.
+					// Start pan.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
@@ -175,8 +188,8 @@ function ($,
 					
 					this .getBrowser () .getCanvas () .unbind ("mousemove.ExamineViewer");
 
-					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
 		
 					this .disconnect ();
 					this .getActiveViewpoint () .transitionStop ();
@@ -201,8 +214,9 @@ function ($,
 			{
 				case 0:
 				{
-					// Stop event propagation.
+					// End rotate.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
@@ -220,8 +234,9 @@ function ($,
 				}
 				case 1:
 				{
-					// Stop event propagation.
+					// End pan.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
@@ -233,7 +248,6 @@ function ($,
 		dblclick: function (event)
 		{
 			// Stop event propagation.
-
 			event .preventDefault ();
 			event .stopImmediatePropagation ();
 
@@ -259,11 +273,11 @@ function ($,
 				{
 					case 0:
 					{
+						// Rotate view around Viewpoint.centerOfRotation.
+
 						// Stop event propagation.
-	
 						event .preventDefault ();
-	
-						// Move.
+						event .stopImmediatePropagation ();
 	
 						var
 							viewpoint = this .getActiveViewpoint (),
@@ -282,12 +296,11 @@ function ($,
 					}
 					case 1:
 					{
+						// Move view along center plane.
+
 						// Stop event propagation.
-	
 						event .preventDefault ();
 						event .stopImmediatePropagation ();
-	
-						// Move.
 	
 						var
 							viewpoint   = this .getActiveViewpoint (),
@@ -311,7 +324,6 @@ function ($,
 			return function (event)
 			{
 				// Stop event propagation.
-	
 				event .preventDefault ();
 				event .stopImmediatePropagation ();
 	
@@ -334,6 +346,76 @@ function ($,
 					this .addMove (translation, Vector3 .Zero);
 			};
 		})(),
+		touchstart: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+		
+					this .mousedown (event);
+					break;
+				}
+				case 2:
+				{
+					this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+					this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+					break;
+				}
+			}
+		},
+		touchend: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+		
+					this .mouseup (event);
+					break;
+				}
+			}
+		},
+		touchmove: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+		
+					this .mousemove (event);
+					break;
+				}
+				case 2:
+				{
+					var distance1 = this .touch1 .distance (this .touch2);
+	
+					this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+					this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+	
+					var distance2 = this .touch1 .distance (this .touch2);
+	
+					event .deltaY = distance2 - distance1;
+
+					this .mousewheel (event);
+					break;
+				}
+			}
+		},
 		spin: function ()
 		{
 			var viewpoint = this .getActiveViewpoint ();
