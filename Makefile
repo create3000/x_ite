@@ -21,6 +21,7 @@ dist: all
 	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'                x_ite.min.html
 	perl -pi -e 's|"x_ite.css"|"dist/x_ite.css"|sg'                  x_ite.min.html
 	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'            x_ite.min.html
+	perl -pi -e 's|class="links"|class="links min-links"|sg'         x_ite.min.html
 	perl -pi -e 's|\>x_ite.min.html|>src/x_ite.html|sg'              x_ite.min.html
 	perl -pi -e 's|x_ite-dev|x_ite-min|sg'                           x_ite.min.html
 	perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'             x_ite.min.html
