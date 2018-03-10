@@ -209,6 +209,7 @@ function ($,
 		
 			$(document) .unbind ("mousemove.ExamineViewer" + this .getId ());
 			$(document) .unbind ("mouseup.ExamineViewer"   + this .getId ());
+			$(document) .unbind ("touchmove.ExamineViewer" + this .getId ());
 
 			switch (event .button)
 			{
@@ -335,8 +336,8 @@ function ($,
 	
 				browser .prepareEvents () .removeInterest ("spin", this);
 				viewpoint .transitionStop ();
-	
-				step        = this .getDistanceToCenter (step) .multiply (SCROLL_FACTOR),
+
+				step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
 				translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .abs ()));
 	
 				if (event .deltaY > 0)
@@ -354,6 +355,8 @@ function ($,
 			{
 				case 1:
 				{
+					// Start rotate (button 0).
+
 					event .button = 0;
 					event .pageX  = touches [0] .pageX;
 					event .pageY  = touches [0] .pageY;
@@ -363,6 +366,24 @@ function ($,
 				}
 				case 2:
 				{
+					// End rotate (button 0).
+
+					if (this .button === 0)
+					{
+						event .button = 0;
+						this .mouseup (event);
+					}
+
+					// Start move (button 1).
+
+					event .button = 1;
+					event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
+					event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
+
+					this .mousedown (event);
+
+					// Start zoom (mouse wheel).
+
 					this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
 					this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
 					break;
@@ -373,49 +394,92 @@ function ($,
 		{
 			var touches = event .originalEvent .touches;
 
-			switch (touches .length)
+			switch (this .button)
 			{
+				case 0:
+				{
+					// End rotate (button 0).
+					event .button = 0;
+					this .mouseup (event);
+					break;
+				}
 				case 1:
 				{
-					event .button = 0;
-					event .pageX  = touches [0] .pageX;
-					event .pageY  = touches [0] .pageY;
-		
+					// End move (button 1).
+					event .button = 1;
 					this .mouseup (event);
 					break;
 				}
 			}
 		},
-		touchmove: function (event)
+		touchmove: (function ()
 		{
-			var touches = event .originalEvent .touches;
+			var
+				ZOOM_ANGLE   = 0.7,
+				vector       = new Vector2 (0, 0),
+				touch1Change = new Vector2 (0, 0),
+				touch2Change = new Vector2 (0, 0);
 
-			switch (touches .length)
+			return function (event)
 			{
-				case 1:
+				var touches = event .originalEvent .touches;
+	
+				switch (touches .length)
 				{
-					event .pageX  = touches [0] .pageX;
-					event .pageY  = touches [0] .pageY;
-		
-					this .mousemove (event);
-					break;
-				}
-				case 2:
-				{
-					var distance1 = this .touch1 .distance (this .touch2);
+					case 1:
+					{
+						// Rotate (button 0).
 	
-					this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
-					this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
-	
-					var distance2 = this .touch1 .distance (this .touch2);
-	
-					event .deltaY = distance2 - distance1;
+						event .pageX = touches [0] .pageX;
+						event .pageY = touches [0] .pageY;
+			
+						this .mousemove (event);
+						break;
+					}
+					case 2:
+					{
+						vector .assign (this .touch1) .subtract (this .touch2) .normalize ();
 
-					this .mousewheel (event);
-					break;
+						touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
+						touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
+
+						var move = !(Math .abs (vector .dot (touch1Change)) > ZOOM_ANGLE && Math .abs (vector .dot (touch2Change)) > ZOOM_ANGLE && touch1Change .dot (touch2Change) < 0);
+
+						if (move)
+						{
+							// Move (button 1).
+		
+							event .pageX = (touches [0] .pageX + touches [1] .pageX) / 2;
+							event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
+		
+							this .mousemove (event);
+						}
+						else
+						{	
+							// Zoom (mouse wheel).
+		
+							var distance1 = this .touch1 .distance (this .touch2);
+			
+							this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+							this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+			
+							var
+								distance2 = this .touch1 .distance (this .touch2),
+								delta     = distance2 - distance1;
+			
+							event .deltaY     = delta;
+							event .zoomFactor = Math .abs (delta) / $(window) .width ();
+
+							this .mousewheel (event);
+						}
+		
+						this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+						this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+						break;
+					}
 				}
-			}
-		},
+			};
+		})(),
 		spin: function ()
 		{
 			var viewpoint = this .getActiveViewpoint ();
