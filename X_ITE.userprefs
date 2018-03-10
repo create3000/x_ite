@@ -1,11 +1,16 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Makefile">
     <Files>
-      <File FileName="src/x_ite.html" Line="640" Column="45" />
-      <File FileName="src/x_ite/Browser/Navigation/ExamineViewer.js" Line="98" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/X3DViewer.js" Line="140" Column="5" />
-      <File FileName="src/x_ite/Components/Navigation/X3DViewpointNode.js" Line="382" Column="81" />
+      <File FileName="src/x_ite.html" Line="640" Column="9" />
+      <File FileName="src/x_ite/Browser/Navigation/ExamineViewer.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Navigation/X3DViewer.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Navigation/X3DViewpointNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite.css" Line="1" Column="1" />
+      <File FileName="package.json" Line="50" Column="17" />
+      <File FileName="Makefile" Line="14" Column="1" />
+      <File FileName="build/version.pl" Line="1" Column="1" />
+      <File FileName="require.build.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
