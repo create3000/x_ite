@@ -33,6 +33,7 @@
 	"devDependencies": {
 		"require": "latest",
 		"requirejs": "latest",
+		"uglify-js-es6": "latest",
 		"jquery": "latest",
 		"jquery-mousewheel": "latest",
 		"jquery.fullscreen": "latest",
@@ -48,7 +49,7 @@
 		"build": "npm run build:js && npm run build:min.js && npm run build:css",
 		"-prebuild:js": "npm run lint",
 		"build:js": "node_modules/requirejs/bin/r.js -o require.build.js",
-		"build:min.js": "node_modules/requirejs/bin/r.js -o require.build.min.js",
+		"build:min.js": "node_modules/uglify-js-es6/bin/uglifyjs --compress --mangle -- dist/x_ite.js > dist/x_ite.min.js",
 		"build:css": "node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css"
 	},
 	"dependencies": {
