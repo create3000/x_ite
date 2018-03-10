@@ -168,9 +168,9 @@ function (Fields,
 	
 					var browser = renderObject .getBrowser ();
 
-					modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
+					modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
 					invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-	
+
 					hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
 	
 					if (geometry .intersectsLine (hitRay, renderObject .getShaderObjects (), modelViewMatrix, intersections))

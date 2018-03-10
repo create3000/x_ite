@@ -609,7 +609,7 @@ function ($,
 					centerOfRotationOffset
 						.assign (this .centerOfRotationChaser .set_destination_ .getValue ())
 						.add (centerOfRotationOffsetChange);
-	
+
 					this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
 				}
 				else
@@ -617,7 +617,7 @@ function ($,
 					centerOfRotationOffset
 						.assign (viewpoint .centerOfRotationOffset_ .getValue ())
 						.add (centerOfRotationOffsetChange);
-	
+
 					this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
 					this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
 				}
@@ -677,9 +677,10 @@ function ($,
 		{
 			var browser = this .getBrowser ();
 
-			this .positionChaser .value_changed_ .removeInterest ("set_positionOffset__",         this);
-			this .rotationChaser .value_changed_ .removeInterest ("set_rotation__",               this);
-			this .positionChaser .value_changed_ .removeInterest ("set_centerOfRotationOffset__", this);
+			this .positionChaser         .value_changed_ .removeInterest ("set_positionOffset__",         this);
+			this .rotationChaser         .value_changed_ .removeInterest ("set_rotation__",               this);
+			this .positionChaser         .value_changed_ .removeInterest ("set_positionOffset__",         this)
+			this .centerOfRotationChaser .value_changed_ .removeInterest ("set_centerOfRotationOffset__", this)
 
 			browser .prepareEvents () .removeInterest ("spin", this);
 		},
