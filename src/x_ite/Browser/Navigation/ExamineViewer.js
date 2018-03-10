@@ -244,85 +244,96 @@ function ($,
 
 			this .lookAt (x, y);
 		},
-		mousemove: function (event)
+		mousemove: (function ()
 		{
-			var
-				offset = this .getBrowser () .getCanvas () .offset (),
-				x      = event .pageX - offset .left,
-				y      = event .pageY - offset .top;
+			var fromPoint = new Vector3 (0, 0, 0);
 
-			switch (this .button)
+			return function (event)
 			{
-				case 0:
+				var
+					offset = this .getBrowser () .getCanvas () .offset (),
+					x      = event .pageX - offset .left,
+					y      = event .pageY - offset .top;
+	
+				switch (this .button)
 				{
-					// Stop event propagation.
-
-					event .preventDefault ();
-
-					// Move.
-
-					var
-						viewpoint = this .getActiveViewpoint (),
-						toVector  = this .trackballProjectToSphere (x, y, this .toVector);
-
-					this .rotation .setFromToVec (toVector, this .fromVector);
-
-					if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
-						return false;
-
-					this .addRotate (this .rotation);
-
-					this .fromVector .assign (toVector);
-					this .motionTime = performance .now ();
-					break;
+					case 0:
+					{
+						// Stop event propagation.
+	
+						event .preventDefault ();
+	
+						// Move.
+	
+						var
+							viewpoint = this .getActiveViewpoint (),
+							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+	
+						this .rotation .setFromToVec (toVector, this .fromVector);
+	
+						if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
+							return false;
+	
+						this .addRotate (this .rotation);
+	
+						this .fromVector .assign (toVector);
+						this .motionTime = performance .now ();
+						break;
+					}
+					case 1:
+					{
+						// Stop event propagation.
+	
+						event .preventDefault ();
+						event .stopImmediatePropagation ();
+	
+						// Move.
+	
+						var
+							viewpoint   = this .getActiveViewpoint (),
+							toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
+							translation = viewpoint .getUserOrientation () .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
+	
+						this .addMove (translation, translation);
+	
+						this .fromPoint .assign (toPoint);
+						break;
+					}
 				}
-				case 1:
-				{
-					// Stop event propagation.
-
-					event .preventDefault ();
-					event .stopImmediatePropagation ();
-
-					// Move.
-
-					var
-						viewpoint   = this .getActiveViewpoint (),
-						toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
-						translation = viewpoint .getUserOrientation () .multVecRot (this .fromPoint .copy () .subtract (toPoint));
-
-					this .addMove (translation, translation);
-
-					this .fromPoint .assign (toPoint);
-					break;
-				}
-			}
-		},
-		mousewheel: function (event)
+			};
+		})(),
+		mousewheel: (function ()
 		{
-			// Stop event propagation.
-
-			event .preventDefault ();
-			event .stopImmediatePropagation ();
-
-			// Change viewpoint position.
-
 			var
-				browser   = this .getBrowser (),
-				viewpoint = this .getActiveViewpoint ();
+				step        = new Vector3 (0, 0, 0),
+				translation = new Vector3 (0, 0, 0);
 
-			browser .prepareEvents () .removeInterest ("spin", this);
-			viewpoint .transitionStop ();
-
-			var
-				step        = this .getDistanceToCenter (new Vector3 (0, 0, 0)) .multiply (SCROLL_FACTOR),
-				translation = viewpoint .getUserOrientation () .multVecRot (new Vector3 (0, 0, step .abs ()));
-
-			if (event .deltaY > 0)
-				this .addMove (translation .negate (), new Vector3 (0, 0, 0));		
-			
-			else if (event .deltaY < 0)
-				this .addMove (translation, new Vector3 (0, 0, 0));
-		},
+			return function (event)
+			{
+				// Stop event propagation.
+	
+				event .preventDefault ();
+				event .stopImmediatePropagation ();
+	
+				// Change viewpoint position.
+	
+				var
+					browser   = this .getBrowser (),
+					viewpoint = this .getActiveViewpoint ();
+	
+				browser .prepareEvents () .removeInterest ("spin", this);
+				viewpoint .transitionStop ();
+	
+				step        = this .getDistanceToCenter (step) .multiply (SCROLL_FACTOR),
+				translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .abs ()));
+	
+				if (event .deltaY > 0)
+					this .addMove (translation .negate (), Vector3 .Zero);		
+				
+				else if (event .deltaY < 0)
+					this .addMove (translation, Vector3 .Zero);
+			};
+		})(),
 		spin: function ()
 		{
 			var viewpoint = this .getActiveViewpoint ();
@@ -364,7 +375,7 @@ function ($,
 			}
 			else
 			{
-				this .rotationChaser .set_value_       = new Rotation4 ();
+				this .rotationChaser .set_value_       = Rotation4 .Identity;
 				this .rotationChaser .set_destination_ = rotationChange;
 
 				this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
@@ -374,93 +385,122 @@ function ($,
 			this .disconnect ();
 			this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
 		},
-		addSpinning: function (rotationChange)
+		addSpinning: (function ()
 		{
-			try
+			var rotation = new Rotation4 (0, 0, 1, 0);
+
+			return function (rotationChange)
 			{
-				this .disconnect ();
-				this .getBrowser () .prepareEvents () .addInterest ("spin", this);
-
-				this .rotation .assign (new Rotation4 (0, 0, 1, 0) .slerp (rotationChange, SPIN_FACTOR));
-			}
-			catch (error)
-			{
-				console .log (error);
-			}
-		},
-		addMove: function (positionOffsetChange, centerOfRotationOffsetChange)
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			if (this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
-			{
-				var positionOffset = this .positionChaser .set_destination_ .getValue ()
-					.add (positionOffsetChange);
-
-				this .positionChaser .set_destination_ = positionOffset;
-			}
-			else
-			{
-				var positionOffset = viewpoint .positionOffset_ .getValue ()
-					.copy ()
-					.add (positionOffsetChange);
-
-				this .positionChaser .set_value_       = viewpoint .positionOffset_;
-				this .positionChaser .set_destination_ = positionOffset;
-			}
-
-			if (this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
-			{
-				var centerOfRotationOffset = this .centerOfRotationChaser .set_destination_ .getValue ()
-					.add (centerOfRotationOffsetChange);
-
-				this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
-			}
-			else
-			{
-				var centerOfRotationOffset = viewpoint .centerOfRotationOffset_ .getValue ()
-					.copy ()
-					.add (centerOfRotationOffsetChange);
-
-				this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
-				this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
-			}
-
-			this .disconnect ();
-			this .positionChaser         .value_changed_ .addInterest ("set_positionOffset__",         this);
-			this .centerOfRotationChaser .value_changed_ .addInterest ("set_centerOfRotationOffset__", this);
-		},
-		getPositionOffset: function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
+				try
+				{
+					this .disconnect ();
+					this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+	
+					this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR));
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		})(),
+		addMove: (function ()
 		{
 			var
-				viewpoint = this .getActiveViewpoint (),
-				distance  = this .getDistanceToCenter (new Vector3 (0, 0, 0), positionOffsetBefore);
+				positionOffset         = new Vector3 (0, 0, 0),
+				centerOfRotationOffset = new Vector3 (0, 0, 0);
 
-			return (orientationOffsetBefore
-				.copy ()
-				.inverse ()
-				.multRight (orientationOffsetAfter)
-				.multVecRot (distance .copy ())
-				.subtract (distance)
-				.add (positionOffsetBefore));
-		},
-		getOrientationOffset: function (rotation, orientationOffsetBefore)
+			return function (positionOffsetChange, centerOfRotationOffsetChange)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+	
+				if (this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
+				{
+					positionOffset
+						.assign (this .positionChaser .set_destination_ .getValue ())
+						.add (positionOffsetChange);
+	
+					this .positionChaser .set_destination_ = positionOffset;
+				}
+				else
+				{
+					positionOffset
+						.assign (viewpoint .positionOffset_ .getValue ())
+						.add (positionOffsetChange);
+	
+					this .positionChaser .set_value_       = viewpoint .positionOffset_;
+					this .positionChaser .set_destination_ = positionOffset;
+				}
+	
+				if (this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
+				{
+					centerOfRotationOffset
+						.assign (this .centerOfRotationChaser .set_destination_ .getValue ())
+						.add (centerOfRotationOffsetChange);
+	
+					this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+				}
+				else
+				{
+					centerOfRotationOffset
+						.assign (viewpoint .centerOfRotationOffset_ .getValue ())
+						.add (centerOfRotationOffsetChange);
+	
+					this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
+					this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+				}
+	
+				this .disconnect ();
+				this .positionChaser         .value_changed_ .addInterest ("set_positionOffset__",         this);
+				this .centerOfRotationChaser .value_changed_ .addInterest ("set_centerOfRotationOffset__", this);
+			};
+		})(),
+		getPositionOffset: (function ()
 		{
-			var viewpoint = this .getActiveViewpoint ();
+			var
+				distance = new Vector3 (0, 0, 0),
+				d        = new Vector3 (0, 0, 0),
+				oob      = new Rotation4 (0, 0, 1, 0);
 
-			var userOrientation = (rotation
-				.copy ()
-				.multRight (viewpoint .getOrientation ())
-				.multRight (orientationOffsetBefore));
+			return function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
+			{
+				var viewpoint = this .getActiveViewpoint ();
 
-			if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
-				viewpoint .straightenHorizon (userOrientation);
+				this .getDistanceToCenter (distance, positionOffsetBefore);
+	
+				return (oob
+					.assign (orientationOffsetBefore)
+					.inverse ()
+					.multRight (orientationOffsetAfter)
+					.multVecRot (d .assign (distance))
+					.subtract (distance)
+					.add (positionOffsetBefore));
+			};
+		})(),
+		getOrientationOffset: (function ()
+		{
+			var
+				userOrientation   = new Rotation4 (0, 0, 1, 0),
+				orientationOffset = new Rotation4 (0, 0, 1, 0);
 
-			return (viewpoint .getOrientation ()
-				.copy ()
-				.inverse ()
-				.multRight (userOrientation));
-		},
+			return function (rotation, orientationOffsetBefore)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+	
+				userOrientation
+					.assign (rotation)
+					.multRight (viewpoint .getOrientation ())
+					.multRight (orientationOffsetBefore);
+	
+				if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+					viewpoint .straightenHorizon (userOrientation);
+	
+				return (orientationOffset
+					.assign (viewpoint .getOrientation ())
+					.inverse ()
+					.multRight (userOrientation));
+			};
+		})(),
 		disconnect: function ()
 		{
 			var browser = this .getBrowser ();

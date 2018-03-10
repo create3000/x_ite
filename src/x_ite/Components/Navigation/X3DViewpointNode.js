@@ -306,7 +306,7 @@ function (Fields,
 				{
 					console .log (error);
 				}
-			}
+			};
 		})(),
 		transitionStop: function ()
 		{
@@ -350,7 +350,7 @@ function (Fields,
 				rotation .setFromToVec (localXAxis, vector);
 	
 				return orientation .multRight (rotation);
-			}
+			};
 		})(),
 		lookAtPoint: function (point, factor, straighten)
 		{
