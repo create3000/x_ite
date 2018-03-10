@@ -25,6 +25,10 @@
 		{
 			"name": "Andreas Plesh",
 			"email": "andreasplesch@gmail.com"
+		},
+		{
+			"name": "John Carlson",
+			"email": "yottzumm@gmail.com"
 		}
 	],
 	"bugs": {
@@ -49,8 +53,5 @@
 		"lint": "jshint **",
 		"build": "make",
 		"-prebuild:js": "npm run lint",
-	},
-	"dependencies": {
-		"requirejs-text": "^2.0.15"
 	}
 }
