@@ -170,7 +170,7 @@ function ($,
 		{
 			return this .enabledSensors;
 		},
-		addHit: function (intersection, layer)
+		addHit: function (intersection, layer, shape, modelViewMatrix)
 		{
 			this .hits .push ({
 				pointer:         this .pointer,
@@ -179,6 +179,8 @@ function ($,
 				sensors:         this .enabledSensors [this .enabledSensors .length - 1],
 				layer:           layer,
 				layerNumber:     this .layerNumber,
+				shape:           shape,
+				modelViewMatrix: modelViewMatrix .copy (),
 			});
 		},
 		getHits: function ()

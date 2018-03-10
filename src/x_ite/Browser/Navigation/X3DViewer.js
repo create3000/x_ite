@@ -50,11 +50,17 @@
 define ([
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Navigation/OrthoViewpoint",
-	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Box3",
+	"standard/Math/Geometry/ViewVolume",
 ],
-function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
+function (X3DBaseNode,
+          OrthoViewpoint,
+          Vector3,
+          Matrix4,
+          Box3,
+          ViewVolume)
 {
 "use strict";
 	
@@ -132,15 +138,22 @@ function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 
 			return vector .set (x, y, tbProjectToSphere (0.5, x, y));
 		},
-		lookAt: function (x, y, straightenHorizon)
+		lookAt: (function ()
 		{
-			if (this .touch (x, y))
-			{
-				var hit = this .getBrowser () .getNearestHit ();
+			var bbox = new Box3 ();
 
-				this .getActiveViewpoint () .lookAtPoint (hit .intersection .point, 2 - 1.618034, straightenHorizon);
-			}
-		},
+			return function (x, y, straightenHorizon)
+			{
+				if (! this .touch (x, y))
+					return;
+	
+				var hit = this .getBrowser () .getNearestHit ();
+	
+				hit .shape .getBBox (bbox) .multRight (hit .modelViewMatrix);
+
+				this .getActiveViewpoint () .lookAtBBox (bbox, 2 - 1.618034, straightenHorizon);
+			};
+		})(),
 		touch: function (x, y)
 		{
 			this .getBrowser () .touch (x, y);

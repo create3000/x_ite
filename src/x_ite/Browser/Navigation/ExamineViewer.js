@@ -93,6 +93,8 @@ function ($,
 
 		this .touch1                   = new Vector2 (0, 0);
 		this .touch2                   = new Vector2 (0, 0);
+		this .tapStart                 = 0;
+		this .dblTapInterval           = 0.4;
 
 		this .initialPositionOffset    = new Vector3 (0, 0, 0);
 		this .initialOrientationOffset = new Rotation4 (0, 0, 1, 0);
@@ -262,7 +264,8 @@ function ($,
 				x      = event .pageX - offset .left,
 				y      = this .getBrowser () .getCanvas () .height () - (event .pageY - offset .top);
 
-			this .lookAt (x, y);
+			this .disconnect ();
+			this .lookAt (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
 		},
 		mousemove: (function ()
 		{
@@ -367,17 +370,17 @@ function ($,
 					event .pageY  = touches [0] .pageY;
 		
 					this .mousedown (event);
+
+					// Remember tap.
+
+					this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
 					break;
 				}
 				case 2:
 				{
 					// End rotate (button 0).
 
-					if (this .button === 0)
-					{
-						event .button = 0;
-						this .mouseup (event);
-					}
+					this .touchend (event);
 
 					// Start move (button 1).
 
@@ -393,12 +396,16 @@ function ($,
 					this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
 					break;
 				}
+				case 3:
+				{
+					// End move (button 1).
+					this .touchend (event);
+					break;
+				}
 			}
 		},
 		touchend: function (event)
 		{
-			var touches = event .originalEvent .touches;
-
 			switch (this .button)
 			{
 				case 0:
@@ -406,6 +413,20 @@ function ($,
 					// End rotate (button 0).
 					event .button = 0;
 					this .mouseup (event);
+
+					// Start dblclick (button 0).
+
+					if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
+					{
+						event .button = 1;
+
+						event .pageX  = this .touch1 .x;
+						event .pageY  = this .touch1 .y;
+
+						this .dblclick (event);
+					}
+
+					this .tapStart = this .getBrowser () .getCurrentTime ();
 					break;
 				}
 				case 1:
@@ -420,8 +441,8 @@ function ($,
 		touchmove: (function ()
 		{
 			var
-				ZOOM_ANGLE   = 0.7,
-				vector       = new Vector2 (0, 0),
+				MOVE_ANGLE   = 0.7,
+				ZOOM_ANGLE   = -0.7,
 				touch1Change = new Vector2 (0, 0),
 				touch2Change = new Vector2 (0, 0);
 
@@ -443,12 +464,12 @@ function ($,
 					}
 					case 2:
 					{
-						vector .assign (this .touch1) .subtract (this .touch2) .normalize ();
-
 						touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
 						touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
 
-						var move = !(Math .abs (vector .dot (touch1Change)) > ZOOM_ANGLE && Math .abs (vector .dot (touch2Change)) > ZOOM_ANGLE && touch1Change .dot (touch2Change) < 0);
+						var
+							move = touch1Change .dot (touch2Change) > MOVE_ANGLE,
+							zoom = touch1Change .dot (touch2Change) < ZOOM_ANGLE;
 
 						if (move)
 						{
@@ -459,7 +480,7 @@ function ($,
 		
 							this .mousemove (event);
 						}
-						else
+						else if (zoom)
 						{	
 							// Zoom (mouse wheel).
 		

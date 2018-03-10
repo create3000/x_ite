@@ -372,6 +372,22 @@ function (Fields,
 				console .error (error);
 			}
 		},
+		lookAtBBox: function (bbox, factor, straighten)
+		{
+			try
+			{
+				if (! this .getBrowser () .getActiveLayer ())
+					return;
+
+				bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
+		
+				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
+		
+				this .lookAt (bbox .center, minDistance, factor, straighten);
+			}
+			catch (error)
+			{ }
+		},
 		lookAt: function (point, distance, factor, straighten)
 		{
 			var
@@ -396,10 +412,10 @@ function (Fields,
 			if (straighten)
 				rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
 		
-			this .positionInterpolator         .keyValue_ = [ this .positionOffset_ .getValue (),         translation ];
-			this .orientationInterpolator      .keyValue_ = [ this .orientationOffset_ .getValue (),      rotation ];
-			this .scaleInterpolator            .keyValue_ = [ this .scaleOffset_ .getValue (),            this .scaleOffset_ .getValue () ];
-			this .scaleOrientationInterpolator .keyValue_ = [ this .scaleOrientationOffset_ .getValue (), this .scaleOrientationOffset_ .getValue () ];
+			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, translation);
+			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
+			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
+			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
 		
 			this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
 			this .set_bind_               = true;
