@@ -57128,7 +57128,7 @@ function ($,
 		{
 			return this .enabledSensors;
 		},
-		addHit: function (intersection, layer)
+		addHit: function (intersection, layer, shape, modelViewMatrix)
 		{
 			this .hits .push ({
 				pointer:         this .pointer,
@@ -57137,6 +57137,8 @@ function ($,
 				sensors:         this .enabledSensors [this .enabledSensors .length - 1],
 				layer:           layer,
 				layerNumber:     this .layerNumber,
+				shape:           shape,
+				modelViewMatrix: modelViewMatrix .copy (),
 			});
 		},
 		getHits: function ()
@@ -59064,7 +59066,7 @@ function (Fields,
 				{
 					console .log (error);
 				}
-			}
+			};
 		})(),
 		transitionStop: function ()
 		{
@@ -59108,7 +59110,7 @@ function (Fields,
 				rotation .setFromToVec (localXAxis, vector);
 	
 				return orientation .multRight (rotation);
-			}
+			};
 		})(),
 		lookAtPoint: function (point, factor, straighten)
 		{
@@ -59129,6 +59131,22 @@ function (Fields,
 			{
 				console .error (error);
 			}
+		},
+		lookAtBBox: function (bbox, factor, straighten)
+		{
+			try
+			{
+				if (! this .getBrowser () .getActiveLayer ())
+					return;
+
+				bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
+		
+				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
+		
+				this .lookAt (bbox .center, minDistance, factor, straighten);
+			}
+			catch (error)
+			{ }
 		},
 		lookAt: function (point, distance, factor, straighten)
 		{
@@ -59154,10 +59172,10 @@ function (Fields,
 			if (straighten)
 				rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
 		
-			this .positionInterpolator         .keyValue_ = [ this .positionOffset_ .getValue (),         translation ];
-			this .orientationInterpolator      .keyValue_ = [ this .orientationOffset_ .getValue (),      rotation ];
-			this .scaleInterpolator            .keyValue_ = [ this .scaleOffset_ .getValue (),            this .scaleOffset_ .getValue () ];
-			this .scaleOrientationInterpolator .keyValue_ = [ this .scaleOrientationOffset_ .getValue (), this .scaleOrientationOffset_ .getValue () ];
+			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, translation);
+			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
+			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
+			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
 		
 			this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
 			this .set_bind_               = true;
@@ -59499,11 +59517,17 @@ function (Fields,
 define ('x_ite/Browser/Navigation/X3DViewer',[
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Navigation/OrthoViewpoint",
-	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Box3",
+	"standard/Math/Geometry/ViewVolume",
 ],
-function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
+function (X3DBaseNode,
+          OrthoViewpoint,
+          Vector3,
+          Matrix4,
+          Box3,
+          ViewVolume)
 {
 "use strict";
 	
@@ -59581,15 +59605,22 @@ function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 
 			return vector .set (x, y, tbProjectToSphere (0.5, x, y));
 		},
-		lookAt: function (x, y, straightenHorizon)
+		lookAt: (function ()
 		{
-			if (this .touch (x, y))
-			{
-				var hit = this .getBrowser () .getNearestHit ();
+			var bbox = new Box3 ();
 
-				this .getActiveViewpoint () .lookAtPoint (hit .intersection .point, 2 - 1.618034, straightenHorizon);
-			}
-		},
+			return function (x, y, straightenHorizon)
+			{
+				if (! this .touch (x, y))
+					return;
+	
+				var hit = this .getBrowser () .getNearestHit ();
+	
+				hit .shape .getBBox (bbox) .multRight (hit .modelViewMatrix);
+
+				this .getActiveViewpoint () .lookAtBBox (bbox, 2 - 1.618034, straightenHorizon);
+			};
+		})(),
 		touch: function (x, y)
 		{
 			this .getBrowser () .touch (x, y);
@@ -60533,6 +60564,7 @@ define ('x_ite/Browser/Navigation/ExamineViewer',[
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Followers/PositionChaser",
 	"x_ite/Components/Followers/OrientationChaser",
+	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"jquery-mousewheel",
@@ -60541,6 +60573,7 @@ function ($,
           X3DViewer,
           PositionChaser,
           OrientationChaser,
+          Vector2,
           Vector3,
           Rotation4)
 {
@@ -60569,6 +60602,12 @@ function ($,
 		this .rotation                 = new Rotation4 (0, 0, 1, 0);
 		this .pressTime                = 0;
 		this .motionTime               = 0;
+
+		this .touch1                   = new Vector2 (0, 0);
+		this .touch2                   = new Vector2 (0, 0);
+		this .tapStart                 = 0;
+		this .dblTapInterval           = 0.4;
+
 		this .initialPositionOffset    = new Vector3 (0, 0, 0);
 		this .initialOrientationOffset = new Rotation4 (0, 0, 1, 0);
 		this .positionChaser           = new PositionChaser (executionContext);
@@ -60594,6 +60633,9 @@ function ($,
 			canvas .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
 			canvas .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
 			canvas .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+
+			canvas .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
+			canvas .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
 
 			// Setup scroll chaser.
 
@@ -60625,15 +60667,20 @@ function ($,
 			{
 				case 0:
 				{
-					// Stop event propagation.
+					// Start rotate.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
 					
+					this .getBrowser () .getCanvas () .unbind ("mousemove.ExamineViewer");
+
 					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
+					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
 
 					this .disconnect ();
 					this .getActiveViewpoint () .transitionStop ();
@@ -60647,8 +60694,9 @@ function ($,
 				}
 				case 1:
 				{
-					// Stop event propagation.
+					// Start pan.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
@@ -60658,6 +60706,8 @@ function ($,
 
 					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
+					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
 		
 					this .disconnect ();
 					this .getActiveViewpoint () .transitionStop ();
@@ -60677,13 +60727,16 @@ function ($,
 		
 			$(document) .unbind ("mousemove.ExamineViewer" + this .getId ());
 			$(document) .unbind ("mouseup.ExamineViewer"   + this .getId ());
+			$(document) .unbind ("touchend.ExamineViewer"  + this .getId ());
+			$(document) .unbind ("touchmove.ExamineViewer" + this .getId ());
 
 			switch (event .button)
 			{
 				case 0:
 				{
-					// Stop event propagation.
+					// End rotate.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
@@ -60701,8 +60754,9 @@ function ($,
 				}
 				case 1:
 				{
-					// Stop event propagation.
+					// End pan.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
@@ -60714,7 +60768,6 @@ function ($,
 		dblclick: function (event)
 		{
 			// Stop event propagation.
-
 			event .preventDefault ();
 			event .stopImmediatePropagation ();
 
@@ -60723,87 +60776,248 @@ function ($,
 				x      = event .pageX - offset .left,
 				y      = this .getBrowser () .getCanvas () .height () - (event .pageY - offset .top);
 
-			this .lookAt (x, y);
+			this .disconnect ();
+			this .lookAt (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
 		},
-		mousemove: function (event)
+		mousemove: (function ()
+		{
+			var fromPoint = new Vector3 (0, 0, 0);
+
+			return function (event)
+			{
+				var
+					offset = this .getBrowser () .getCanvas () .offset (),
+					x      = event .pageX - offset .left,
+					y      = event .pageY - offset .top;
+	
+				switch (this .button)
+				{
+					case 0:
+					{
+						// Rotate view around Viewpoint.centerOfRotation.
+
+						// Stop event propagation.
+						event .preventDefault ();
+						event .stopImmediatePropagation ();
+	
+						var
+							viewpoint = this .getActiveViewpoint (),
+							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+	
+						this .rotation .setFromToVec (toVector, this .fromVector);
+	
+						if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
+							return false;
+	
+						this .addRotate (this .rotation);
+	
+						this .fromVector .assign (toVector);
+						this .motionTime = performance .now ();
+						break;
+					}
+					case 1:
+					{
+						// Move view along center plane.
+
+						// Stop event propagation.
+						event .preventDefault ();
+						event .stopImmediatePropagation ();
+	
+						var
+							viewpoint   = this .getActiveViewpoint (),
+							toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
+							translation = viewpoint .getUserOrientation () .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
+	
+						this .addMove (translation, translation);
+	
+						this .fromPoint .assign (toPoint);
+						break;
+					}
+				}
+			};
+		})(),
+		mousewheel: (function ()
 		{
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
-				x      = event .pageX - offset .left,
-				y      = event .pageY - offset .top;
+				step        = new Vector3 (0, 0, 0),
+				translation = new Vector3 (0, 0, 0);
 
-			switch (this .button)
+			return function (event)
 			{
-				case 0:
-				{
-					// Stop event propagation.
+				// Stop event propagation.
+				event .preventDefault ();
+				event .stopImmediatePropagation ();
+	
+				// Change viewpoint position.
+	
+				var
+					browser   = this .getBrowser (),
+					viewpoint = this .getActiveViewpoint ();
+	
+				browser .prepareEvents () .removeInterest ("spin", this);
+				viewpoint .transitionStop ();
 
-					event .preventDefault ();
+				step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
+				translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .abs ()));
+	
+				if (event .deltaY > 0)
+					this .addMove (translation .negate (), Vector3 .Zero);		
+				
+				else if (event .deltaY < 0)
+					this .addMove (translation, Vector3 .Zero);
+			};
+		})(),
+		touchstart: function (event)
+		{
+			var touches = event .originalEvent .touches;
 
-					// Move.
-
-					var
-						viewpoint = this .getActiveViewpoint (),
-						toVector  = this .trackballProjectToSphere (x, y, this .toVector);
-
-					this .rotation .setFromToVec (toVector, this .fromVector);
-
-					if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
-						return false;
-
-					this .addRotate (this .rotation);
-
-					this .fromVector .assign (toVector);
-					this .motionTime = performance .now ();
-					break;
-				}
+			switch (touches .length)
+			{
 				case 1:
 				{
-					// Stop event propagation.
+					// Start rotate (button 0).
 
-					event .preventDefault ();
-					event .stopImmediatePropagation ();
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+		
+					this .mousedown (event);
 
-					// Move.
+					// Remember tap.
 
-					var
-						viewpoint   = this .getActiveViewpoint (),
-						toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
-						translation = viewpoint .getUserOrientation () .multVecRot (this .fromPoint .copy () .subtract (toPoint));
+					this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+					break;
+				}
+				case 2:
+				{
+					// End rotate (button 0).
 
-					this .addMove (translation, translation);
+					this .touchend (event);
 
-					this .fromPoint .assign (toPoint);
+					// Start move (button 1).
+
+					event .button = 1;
+					event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
+					event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
+
+					this .mousedown (event);
+
+					// Start zoom (mouse wheel).
+
+					this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+					this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+					break;
+				}
+				case 3:
+				{
+					// End move (button 1).
+					this .touchend (event);
 					break;
 				}
 			}
 		},
-		mousewheel: function (event)
+		touchend: function (event)
 		{
-			// Stop event propagation.
+			switch (this .button)
+			{
+				case 0:
+				{
+					// End rotate (button 0).
+					event .button = 0;
+					this .mouseup (event);
 
-			event .preventDefault ();
-			event .stopImmediatePropagation ();
+					// Start dblclick (button 0).
 
-			// Change viewpoint position.
+					if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
+					{
+						event .button = 1;
 
-			var
-				browser   = this .getBrowser (),
-				viewpoint = this .getActiveViewpoint ();
+						event .pageX  = this .touch1 .x;
+						event .pageY  = this .touch1 .y;
 
-			browser .prepareEvents () .removeInterest ("spin", this);
-			viewpoint .transitionStop ();
+						this .dblclick (event);
+					}
 
-			var
-				step        = this .getDistanceToCenter (new Vector3 (0, 0, 0)) .multiply (SCROLL_FACTOR),
-				translation = viewpoint .getUserOrientation () .multVecRot (new Vector3 (0, 0, step .abs ()));
-
-			if (event .deltaY > 0)
-				this .addMove (translation .negate (), new Vector3 (0, 0, 0));		
-			
-			else if (event .deltaY < 0)
-				this .addMove (translation, new Vector3 (0, 0, 0));
+					this .tapStart = this .getBrowser () .getCurrentTime ();
+					break;
+				}
+				case 1:
+				{
+					// End move (button 1).
+					event .button = 1;
+					this .mouseup (event);
+					break;
+				}
+			}
 		},
+		touchmove: (function ()
+		{
+			var
+				MOVE_ANGLE   = 0.7,
+				ZOOM_ANGLE   = -0.7,
+				touch1Change = new Vector2 (0, 0),
+				touch2Change = new Vector2 (0, 0);
+
+			return function (event)
+			{
+				var touches = event .originalEvent .touches;
+	
+				switch (touches .length)
+				{
+					case 1:
+					{
+						// Rotate (button 0).
+	
+						event .pageX = touches [0] .pageX;
+						event .pageY = touches [0] .pageY;
+			
+						this .mousemove (event);
+						break;
+					}
+					case 2:
+					{
+						touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
+						touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
+
+						var
+							move = touch1Change .dot (touch2Change) > MOVE_ANGLE,
+							zoom = touch1Change .dot (touch2Change) < ZOOM_ANGLE;
+
+						if (move)
+						{
+							// Move (button 1).
+		
+							event .pageX = (touches [0] .pageX + touches [1] .pageX) / 2;
+							event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
+		
+							this .mousemove (event);
+						}
+						else if (zoom)
+						{	
+							// Zoom (mouse wheel).
+		
+							var distance1 = this .touch1 .distance (this .touch2);
+			
+							this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+							this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+			
+							var
+								distance2 = this .touch1 .distance (this .touch2),
+								delta     = distance2 - distance1;
+			
+							event .deltaY     = delta;
+							event .zoomFactor = Math .abs (delta) / $(window) .width ();
+
+							this .mousewheel (event);
+						}
+		
+						this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+						this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+						break;
+					}
+				}
+			};
+		})(),
 		spin: function ()
 		{
 			var viewpoint = this .getActiveViewpoint ();
@@ -60845,7 +61059,7 @@ function ($,
 			}
 			else
 			{
-				this .rotationChaser .set_value_       = new Rotation4 ();
+				this .rotationChaser .set_value_       = Rotation4 .Identity;
 				this .rotationChaser .set_destination_ = rotationChange;
 
 				this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
@@ -60855,93 +61069,122 @@ function ($,
 			this .disconnect ();
 			this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
 		},
-		addSpinning: function (rotationChange)
+		addSpinning: (function ()
 		{
-			try
+			var rotation = new Rotation4 (0, 0, 1, 0);
+
+			return function (rotationChange)
 			{
-				this .disconnect ();
-				this .getBrowser () .prepareEvents () .addInterest ("spin", this);
-
-				this .rotation .assign (new Rotation4 (0, 0, 1, 0) .slerp (rotationChange, SPIN_FACTOR));
-			}
-			catch (error)
-			{
-				console .log (error);
-			}
-		},
-		addMove: function (positionOffsetChange, centerOfRotationOffsetChange)
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			if (this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
-			{
-				var positionOffset = this .positionChaser .set_destination_ .getValue ()
-					.add (positionOffsetChange);
-
-				this .positionChaser .set_destination_ = positionOffset;
-			}
-			else
-			{
-				var positionOffset = viewpoint .positionOffset_ .getValue ()
-					.copy ()
-					.add (positionOffsetChange);
-
-				this .positionChaser .set_value_       = viewpoint .positionOffset_;
-				this .positionChaser .set_destination_ = positionOffset;
-			}
-
-			if (this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
-			{
-				var centerOfRotationOffset = this .centerOfRotationChaser .set_destination_ .getValue ()
-					.add (centerOfRotationOffsetChange);
-
-				this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
-			}
-			else
-			{
-				var centerOfRotationOffset = viewpoint .centerOfRotationOffset_ .getValue ()
-					.copy ()
-					.add (centerOfRotationOffsetChange);
-
-				this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
-				this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
-			}
-
-			this .disconnect ();
-			this .positionChaser         .value_changed_ .addInterest ("set_positionOffset__",         this);
-			this .centerOfRotationChaser .value_changed_ .addInterest ("set_centerOfRotationOffset__", this);
-		},
-		getPositionOffset: function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
+				try
+				{
+					this .disconnect ();
+					this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+	
+					this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR));
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		})(),
+		addMove: (function ()
 		{
 			var
-				viewpoint = this .getActiveViewpoint (),
-				distance  = this .getDistanceToCenter (new Vector3 (0, 0, 0), positionOffsetBefore);
+				positionOffset         = new Vector3 (0, 0, 0),
+				centerOfRotationOffset = new Vector3 (0, 0, 0);
 
-			return (orientationOffsetBefore
-				.copy ()
-				.inverse ()
-				.multRight (orientationOffsetAfter)
-				.multVecRot (distance .copy ())
-				.subtract (distance)
-				.add (positionOffsetBefore));
-		},
-		getOrientationOffset: function (rotation, orientationOffsetBefore)
+			return function (positionOffsetChange, centerOfRotationOffsetChange)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+	
+				if (this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
+				{
+					positionOffset
+						.assign (this .positionChaser .set_destination_ .getValue ())
+						.add (positionOffsetChange);
+	
+					this .positionChaser .set_destination_ = positionOffset;
+				}
+				else
+				{
+					positionOffset
+						.assign (viewpoint .positionOffset_ .getValue ())
+						.add (positionOffsetChange);
+	
+					this .positionChaser .set_value_       = viewpoint .positionOffset_;
+					this .positionChaser .set_destination_ = positionOffset;
+				}
+	
+				if (this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
+				{
+					centerOfRotationOffset
+						.assign (this .centerOfRotationChaser .set_destination_ .getValue ())
+						.add (centerOfRotationOffsetChange);
+	
+					this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+				}
+				else
+				{
+					centerOfRotationOffset
+						.assign (viewpoint .centerOfRotationOffset_ .getValue ())
+						.add (centerOfRotationOffsetChange);
+	
+					this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
+					this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+				}
+	
+				this .disconnect ();
+				this .positionChaser         .value_changed_ .addInterest ("set_positionOffset__",         this);
+				this .centerOfRotationChaser .value_changed_ .addInterest ("set_centerOfRotationOffset__", this);
+			};
+		})(),
+		getPositionOffset: (function ()
 		{
-			var viewpoint = this .getActiveViewpoint ();
+			var
+				distance = new Vector3 (0, 0, 0),
+				d        = new Vector3 (0, 0, 0),
+				oob      = new Rotation4 (0, 0, 1, 0);
 
-			var userOrientation = (rotation
-				.copy ()
-				.multRight (viewpoint .getOrientation ())
-				.multRight (orientationOffsetBefore));
+			return function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
+			{
+				var viewpoint = this .getActiveViewpoint ();
 
-			if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
-				viewpoint .straightenHorizon (userOrientation);
+				this .getDistanceToCenter (distance, positionOffsetBefore);
+	
+				return (oob
+					.assign (orientationOffsetBefore)
+					.inverse ()
+					.multRight (orientationOffsetAfter)
+					.multVecRot (d .assign (distance))
+					.subtract (distance)
+					.add (positionOffsetBefore));
+			};
+		})(),
+		getOrientationOffset: (function ()
+		{
+			var
+				userOrientation   = new Rotation4 (0, 0, 1, 0),
+				orientationOffset = new Rotation4 (0, 0, 1, 0);
 
-			return (viewpoint .getOrientation ()
-				.copy ()
-				.inverse ()
-				.multRight (userOrientation));
-		},
+			return function (rotation, orientationOffsetBefore)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+	
+				userOrientation
+					.assign (rotation)
+					.multRight (viewpoint .getOrientation ())
+					.multRight (orientationOffsetBefore);
+	
+				if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+					viewpoint .straightenHorizon (userOrientation);
+	
+				return (orientationOffset
+					.assign (viewpoint .getOrientation ())
+					.inverse ()
+					.multRight (userOrientation));
+			};
+		})(),
 		disconnect: function ()
 		{
 			var browser = this .getBrowser ();
@@ -105480,8 +105723,6 @@ function (Fields,
 {
 "use strict";
 
-	var intersections = [ ];
-
 	function Shape (executionContext)
 	{
 		X3DShapeNode .call (this, executionContext);
@@ -105499,14 +105740,6 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance", new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",   new Fields .SFNode ()),
 		]),
-		modelViewMatrix: new Matrix4 (),
-		invModelViewMatrix: new Matrix4 (),
-		hitRay: new Line3 (new Vector3 (0, 0, 0), new Vector3 (0, 0, 0)),
-		intersections: intersections,
-		intersectionSorter: new QuickSort (intersections, function (lhs, rhs)
-		{
-			return lhs .point .z > rhs .point .z;
-		}),
 		getTypeName: function ()
 		{
 			return "Shape";
@@ -105561,57 +105794,69 @@ function (Fields,
 	
 			this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
 		},
-		pointer: function (renderObject)
+		pointer: (function ()
 		{
-			try
-			{
-				var geometry = this .getGeometry ();
-
-				if (geometry .getGeometryType () < 2)
-					return;
-
-				var
-					browser            = renderObject .getBrowser (),
-					modelViewMatrix    = this .modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ()),
-					invModelViewMatrix = this .invModelViewMatrix .assign (modelViewMatrix) .inverse (),
-					intersections      = this .intersections;
-
-				this .hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
-
-				if (geometry .intersectsLine (this .hitRay, renderObject .getShaderObjects (), modelViewMatrix, intersections))
+			var
+				modelViewMatrix    = new Matrix4 (),
+				invModelViewMatrix = new Matrix4 (),
+				hitRay             = new Line3 (new Vector3 (0, 0, 0), new Vector3 (0, 0, 0)),
+				intersections      = [ ],
+				intersectionSorter = new QuickSort (intersections, function (lhs, rhs)
 				{
-					// Finally we have intersections and must now find the closest hit in front of the camera.
+					return lhs .point .z > rhs .point .z;
+				});
 
-					// Transform hitPoints to absolute space.
-					for (var i = 0; i < intersections .length; ++ i)
-						modelViewMatrix .multVecMatrix (intersections [i] .point);
-
-					this .intersectionSorter .sort (0, intersections .length);
-
-					// Find first point that is not greater than near plane;
-					var index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
-					                                   function (lhs, rhs)
-					                                   {
-					                                      return lhs .point .z > rhs;
-					                                   });
-
-					// Are there intersections before the camera?
-					if (index !== intersections .length)
-					{
-						// Transform hitNormal to absolute space.
-						invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
-
-						browser .addHit (intersections [index], renderObject .getLayer ());
-					}
-
-					intersections .length = 0;
-				}
-			}
-			catch (error)
+			return function (renderObject)
 			{
-				console .log (error);
-			}
-		},
+				try
+				{
+					var geometry = this .getGeometry ();
+	
+					if (geometry .getGeometryType () < 2)
+						return;
+	
+					var browser = renderObject .getBrowser ();
+
+					modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
+					invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+	
+					hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
+	
+					if (geometry .intersectsLine (hitRay, renderObject .getShaderObjects (), modelViewMatrix, intersections))
+					{
+						// Finally we have intersections and must now find the closest hit in front of the camera.
+	
+						// Transform hitPoints to absolute space.
+						for (var i = 0; i < intersections .length; ++ i)
+							modelViewMatrix .multVecMatrix (intersections [i] .point);
+	
+						intersectionSorter .sort (0, intersections .length);
+	
+						// Find first point that is not greater than near plane;
+						var index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
+						                                   function (lhs, rhs)
+						                                   {
+						                                      return lhs .point .z > rhs;
+						                                   });
+	
+						// Are there intersections before the camera?
+						if (index !== intersections .length)
+						{
+							// Transform hitNormal to absolute space.
+							invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
+	
+							browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
+						}
+	
+						intersections .length = 0;
+					}
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		})(),
 		depth: function (gl, context, shaderNode)
 		{
 			this .getGeometry () .depth (gl, context, shaderNode);
