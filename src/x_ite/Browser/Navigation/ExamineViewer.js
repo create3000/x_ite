@@ -538,7 +538,7 @@ function ($,
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			if (this .rotationChaser .value_changed_ .hasInterest ("set_rotation__", this))
+			if (this .rotationChaser .isActive_ .getValue () && this .rotationChaser .value_changed_ .hasInterest ("set_rotation__", this))
 			{
 				var rotation = this .rotationChaser .set_destination_ .getValue ()
 					.multLeft (rotationChange);
@@ -586,7 +586,7 @@ function ($,
 			{
 				var viewpoint = this .getActiveViewpoint ();
 	
-				if (this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
+				if (this .positionChaser .isActive_ .getValue () && this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
 				{
 					positionOffset
 						.assign (this .positionChaser .set_destination_ .getValue ())
@@ -604,7 +604,7 @@ function ($,
 					this .positionChaser .set_destination_ = positionOffset;
 				}
 	
-				if (this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
+				if (this .centerOfRotationChaser .isActive_ .getValue () && this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
 				{
 					centerOfRotationOffset
 						.assign (this .centerOfRotationChaser .set_destination_ .getValue ())

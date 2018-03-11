@@ -75,7 +75,7 @@ function ($,
 		PAN_SPEED_FACTOR       = SPEED_FACTOR,
 		PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
 		ROLL_ANGLE             = Math .PI / 32,
-		ROLL_TIME              = 0.3;
+		ROTATE_TIME            = 0.3;
 	
 	var
 		MOVE = 0,
@@ -121,7 +121,7 @@ function ($,
 
 			// Setup scroll chaser.
 
-			this .orientationChaser .duration_ = ROLL_TIME;
+			this .orientationChaser .duration_ = ROTATE_TIME;
 			this .orientationChaser .setPrivate (true);
 			this .orientationChaser .setup ();
 		},
@@ -230,74 +230,63 @@ function ($,
 			this .getBrowser () .setCursor ("DEFAULT");
 			this .removeCollision ();
 		},
-		mousemove: (function ()
+		mousemove: function (event)
 		{
-			var
-				userOrientation   = new Rotation4 (0, 0, 1, 0),
-				orientationOffset = new Rotation4 (0, 0, 1, 0);
+			this .getBrowser () .addBrowserEvent ();
 
-			return function (event)
+			this .event = event;
+
+			var
+				offset = this .getBrowser () .getCanvas () .offset (),
+				x      = event .pageX - offset .left,
+				y      = event .pageY - offset .top;
+			
+			switch (this .button)
 			{
-				this .getBrowser () .addBrowserEvent ();
-	
-				this .event = event;
-	
-				var
-					offset = this .getBrowser () .getCanvas () .offset (),
-					x      = event .pageX - offset .left,
-					y      = event .pageY - offset .top;
-				
-				switch (this .button)
+				case 0:
 				{
-					case 0:
-					{
-						if (this .getBrowser () .getControlKey ())
-						{
-							event .preventDefault ();
-	
-							// Look around
-	
-							var
-								viewpoint = this .getActiveViewpoint (),
-								toVector  = this .trackballProjectToSphere (x, y, this .toVector);
-	
-							userOrientation .setFromToVec (toVector, this .fromVector) .multRight (viewpoint .getUserOrientation ());
-							viewpoint .straightenHorizon (userOrientation);
-	
-							viewpoint .orientationOffset_ = orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
-	
-							this .fromVector .assign (toVector);
-						}
-						else
-						{
-							// Fly
-	
-							this .toVector  .set (x, 0, y);
-							this .direction .assign (this .toVector) .subtract (this .fromVector);
-	
-							this .addFly ();
-						}
-					
-						break;
-					}
-					case 1:
+					if (this .getBrowser () .getControlKey ())
 					{
 						// Stop event propagation.
-	
 						event .preventDefault ();
 						event .stopImmediatePropagation ();
-	
-						// Pan
-	
-						this .toVector  .set (x, -y, 0);
+
+						// Look around
+
+						var
+							viewpoint = this .getActiveViewpoint (),
+							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+
+						this .addRotation (this .fromVector, toVector);
+						this .fromVector .assign (toVector);
+						break;
+					}
+					else
+					{
+						// Fly
+
+						this .toVector  .set (x, 0, y);
 						this .direction .assign (this .toVector) .subtract (this .fromVector);
-	
-						this .addPan ();
+						this .addFly ();
 						break;
 					}
 				}
-			};
-		})(),
+				case 1:
+				{
+					// Stop event propagation.
+					event .preventDefault ();
+					event .stopImmediatePropagation ();
+
+					// Pan
+
+					this .toVector  .set (x, -y, 0);
+					this .direction .assign (this .toVector) .subtract (this .fromVector);
+
+					this .addPan ();
+					break;
+				}
+			}
+		},
 		mousewheel: function (event)
 		{
 			// Stop event propagation.
@@ -446,35 +435,84 @@ function ($,
 
 			this .startTime = performance .now ();
 		},
-		addRoll: function (rollAngle)
+		addRoll: (function ()
 		{
-			var viewpoint = this .getActiveViewpoint ();
+			var
+				orientationOffset = new Rotation4 (0, 0, 1, 0),
+				roll              = new Rotation4 (0, 0, 1, 0);
 
-			if (this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+			return function (rollAngle)
 			{
-				var orientationOffset = this .orientationChaser .set_destination_ .getValue ();
+				var viewpoint = this .getActiveViewpoint ();
+	
+				if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+				{
+					orientationOffset
+						.assign (viewpoint .getOrientation ())
+						.inverse ()
+						.multRight (roll .set (1, 0, 0, rollAngle))
+						.multRight (viewpoint .getOrientation ())
+						.multRight (this .orientationChaser .set_destination_ .getValue ());
 
-				orientationOffset
-					.multLeft (viewpoint .getOrientation ())
-					.multLeft (new Rotation4 (1, 0, 0, rollAngle))
-					.multLeft (Rotation4 .inverse (viewpoint .getOrientation ()));
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+				else
+				{
+					orientationOffset
+						.assign (viewpoint .getOrientation ())
+						.inverse ()
+						.multRight (roll .set (1, 0, 0, rollAngle))
+						.multRight (viewpoint .getUserOrientation ());
 
-				this .orientationChaser .set_destination_ = orientationOffset;
-			}
-			else
+					this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+	
+				this .disconnect ();
+				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+			};
+		})(),
+		addRotation: (function ()
+		{
+			var
+				userOrientation   = new Rotation4 (0, 0, 1, 0),
+				orientationOffset = new Rotation4 (0, 0, 1, 0);
+
+			return function (fromVector, toVector)
 			{
-				var orientationOffset = viewpoint .getUserOrientation ()
-					.copy ()
-					.multLeft (new Rotation4 (1, 0, 0, rollAngle))
-					.multLeft (Rotation4 .inverse (viewpoint .getOrientation ()));
+				var viewpoint = this .getActiveViewpoint ();
+	
+				if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+				{
+					userOrientation
+						.setFromToVec (toVector, fromVector)
+						.multRight (viewpoint .getOrientation ())
+						.multRight (this .orientationChaser .set_destination_ .getValue ());
 
-				this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
-				this .orientationChaser .set_destination_ = orientationOffset;
-			}
+					viewpoint .straightenHorizon (userOrientation);
+	
+					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
+	
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+				else
+				{
+					userOrientation
+						.setFromToVec (toVector, fromVector)
+						.multRight (viewpoint .getUserOrientation ());
 
-			this .disconnect ();
-			this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
-		},
+					viewpoint .straightenHorizon (userOrientation);
+	
+					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
+	
+					this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+	
+				this .disconnect ();
+				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+			};
+		})(),
 		display: (function ()
 		{
 			var
