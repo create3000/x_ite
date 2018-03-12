@@ -56830,11 +56830,14 @@ function ($,
 			var canvas = this .getBrowser () .getCanvas ();
 
 			//canvas .bind ("mousewheel.PointingDevice", this .mousewheel .bind (this));
-			canvas .bind ("mousedown.PointingDevice",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.PointingDevice",    this .mouseup    .bind (this));
-			canvas .bind ("dblclick.PointingDevice",   this .dblclick   .bind (this));
-			canvas .bind ("mousemove.PointingDevice",  this .mousemove  .bind (this));
-			canvas .bind ("mouseout.PointingDevice",   this .onmouseout .bind (this));
+			canvas .bind ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
+			canvas .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
+			canvas .bind ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
+			canvas .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
+			canvas .bind ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
+
+			canvas .bind ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
+			canvas .bind ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
 		},
 		mousewheel: function (event)
 		{
@@ -56852,13 +56855,17 @@ function ($,
 			if (event .button === 0)
 			{
 				var
-					offset = browser .getCanvas () .offset (), 
+					canvas = browser .getCanvas (),
+					offset = canvas .offset (), 
 					x      = event .pageX - offset .left,
 					y      = browser .getCanvas () .height () - (event .pageY - offset .top);
 
-				browser .getCanvas () .unbind ("mousemove.PointingDevice");
-				$(document) .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup .bind (this));
+				canvas .unbind ("mousemove.PointingDevice" + this .getId ());
+
+				$(document) .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this));
 				$(document) .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+				$(document) .bind ("touchend.PointingDevice"  + this .getId (), this .touchend  .bind (this));
+				$(document) .bind ("touchmove.PointingDevice" + this .getId (), this .touchmove .bind (this));
 
 				if (browser .buttonPressEvent (x, y))
 				{
@@ -56874,21 +56881,19 @@ function ($,
 		{
 			event .preventDefault ();
 	
-			var browser = this .getBrowser ();
-
 			if (event .button === 0)
 			{
-				event .preventDefault ();
-				browser .buttonReleaseEvent ();
-
 				var
-					offset = browser .getCanvas () .offset (), 
-					x      = event .pageX - offset .left,
-					y      = browser .getCanvas () .height () - (event .pageY - offset .top);
+					browser = this .getBrowser (),
+					canvas  = browser .getCanvas (),
+					offset  = canvas .offset (), 
+					x       = event .pageX - offset .left,
+					y       = browser .getCanvas () .height () - (event .pageY - offset .top);
 			
-				$(document) .unbind (".PointingDevice" + this .getId ());
-				browser .getCanvas () .bind ("mousemove.PointingDevice", this .mousemove .bind (this));
+				$(document) .unbind (".PointingDevice"   + this .getId ());
+				canvas .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
+				browser .buttonReleaseEvent ();
 				browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
 				browser .finished () .addInterest ("onverifymotion", this, x, y);
 				browser .addBrowserEvent ();
@@ -56918,6 +56923,56 @@ function ($,
 				y      = browser .getCanvas () .height () - (event .pageY - offset .top);
 
 			this .onmotion (x, y);
+		},
+		touchstart: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// Start fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+
+					this .mousedown (event);
+					break;
+				}
+				case 2:
+				{
+					this .touchend (event);
+					break;
+				}
+			}
+		},
+		touchend: function (event)
+		{
+			var browser = this .getBrowser ();
+
+			event .button = 0;
+			this .mouseup (event);
+		},
+		touchmove: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// Fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+		
+					this .mousemove (event);
+					break;
+				}
+			}
 		},
 		onmotion: function (x, y)
 		{
@@ -60788,8 +60843,6 @@ function ($,
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
-					
-					this .getBrowser () .getCanvas () .unbind ("mousemove.ExamineViewer");
 
 					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
@@ -60815,8 +60868,6 @@ function ($,
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
-					
-					this .getBrowser () .getCanvas () .unbind ("mousemove.ExamineViewer");
 
 					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
@@ -60839,10 +60890,7 @@ function ($,
 
 			this .button = -1;
 		
-			$(document) .unbind ("mousemove.ExamineViewer" + this .getId ());
-			$(document) .unbind ("mouseup.ExamineViewer"   + this .getId ());
-			$(document) .unbind ("touchend.ExamineViewer"  + this .getId ());
-			$(document) .unbind ("touchmove.ExamineViewer" + this .getId ());
+			$(document) .unbind (".ExamineViewer" + this .getId ());
 
 			switch (event .button)
 			{
@@ -61441,8 +61489,8 @@ function ($,
 			canvas .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
 			canvas .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
 
-			canvas .bind ("touchstart.ExamineViewer", this .touchstart .bind (this));
-			canvas .bind ("touchend.ExamineViewer",   this .touchend   .bind (this));
+			canvas .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
+			canvas .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
 
 			browser .controlKey_ .addInterest ("set_controlKey_", this);
 
@@ -61486,10 +61534,10 @@ function ($,
 
 					this .button = event .button;
 				
-					$(document) .bind ("mouseup.X3DFlyViewer"    + this .getId (), this .mouseup   .bind (this));
-					$(document) .bind ("mousemove.X3DFlyViewer"  + this .getId (), this .mousemove .bind (this));
-					$(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
-					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
+					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
+					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("touchend.X3DFlyViewer"  + this .getId (), this .touchend  .bind (this));
+					$(document) .bind ("touchmove.X3DFlyViewer" + this .getId (), this .touchmove .bind (this));
 
 					this .disconnect ();
 					this .getActiveViewpoint () .transitionStop ();
@@ -61510,7 +61558,6 @@ function ($,
 						this .toVector   .assign (this .fromVector);
 
 						this .getFlyDirection (this .fromVector, this .toVector, this .direction);
-
 						this .addFly ();
 
 						if (this .getBrowser () .getBrowserOption ("Rubberband"))
@@ -61529,8 +61576,8 @@ function ($,
 
 					this .button = event .button;
 				
-					$(document) .bind ("mouseup.X3DFlyViewer"    + this .getId (), this .mouseup   .bind (this));
-					$(document) .bind ("mousemove.X3DFlyViewer"  + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
+					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
 
 					this .disconnect ();
 					this .getActiveViewpoint () .transitionStop ();
@@ -61560,10 +61607,7 @@ function ($,
 			this .event  = null;
 			this .button = -1;
 		
-			$(document) .unbind ("mousemove.X3DFlyViewer"  + this .getId ());
-			$(document) .unbind ("mouseup.X3DFlyViewer"    + this .getId ());
-			$(document) .unbind ("touchend.ExamineViewer"  + this .getId ());
-			$(document) .unbind ("touchmove.ExamineViewer" + this .getId ());
+			$(document) .unbind (".X3DFlyViewer" + this .getId ());
 
 			this .disconnect ();
 			this .getBrowser () .setCursor ("DEFAULT");
@@ -61665,7 +61709,7 @@ function ($,
 
 					this .touchend (event);
 
-					// Start look around.
+					// Start look around (button 0).
 
 					this .lookAround = true;
 					event .button    = 0;
@@ -61673,6 +61717,13 @@ function ($,
 					event .pageY     = (touches [0] .pageY + touches [1] .pageY) / 2;
 
 					this .mousedown (event);
+					break;
+				}
+				case 3:
+				{
+					// End look around (button 0).
+
+					this .touchend (event);
 					break;
 				}
 			}
