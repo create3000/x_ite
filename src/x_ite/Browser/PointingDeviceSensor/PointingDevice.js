@@ -136,7 +136,7 @@ function ($,
 				$(document) .unbind (".PointingDevice"   + this .getId ());
 				canvas .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
-				browser .butonReleaseEvent ();
+				browser .buttonReleaseEvent ();
 				browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
 				browser .finished () .addInterest ("onverifymotion", this, x, y);
 				browser .addBrowserEvent ();
