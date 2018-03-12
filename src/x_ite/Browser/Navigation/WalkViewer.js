@@ -56,8 +56,6 @@ function (X3DFlyViewer, Vector3, Rotation4)
 {
 "use strict";
 	
-	var yAxis = new Vector3 (0, 1, 0);
-	
 	function WalkViewer (executionContext)
 	{
 		X3DFlyViewer .call (this, executionContext);
@@ -72,18 +70,28 @@ function (X3DFlyViewer, Vector3, Rotation4)
 			
 			this .getBrowser () .addCollision (this);
 		},
-		getTranslationOffset: function (velocity)
+		getTranslationOffset: (function ()
 		{
 			var
-				viewpoint = this .getActiveViewpoint (),
-				upVector  = viewpoint .getUpVector ();
+				localYAxis      = new Vector3 (0, 0, 0),
+				userOrientation = new Rotation4 (0, 0, 1, 0),
+				rotation        = new Rotation4 (0, 0, 1, 0);
 
-			var
-				userOrientation = viewpoint .getUserOrientation () .copy (),
-				orientation     = userOrientation .multRight (new Rotation4 (userOrientation .multVecRot (yAxis .copy ()), upVector));
+			return function (velocity)
+			{
+				var
+					viewpoint = this .getActiveViewpoint (),
+					upVector  = viewpoint .getUpVector ();
+	
+				userOrientation .assign (viewpoint .getUserOrientation ());
+				userOrientation .multVecRot (localYAxis .assign (Vector3 .yAxis));
+				rotation        .setFromToVec (localYAxis, upVector);
 
-			return orientation .multVecRot (velocity);
-		},
+				var orientation = userOrientation .multRight (rotation);
+	
+				return orientation .multVecRot (velocity);
+			};
+		})(),
 		constrainPanDirection: function (direction)
 		{
 			if (direction .y < 0)

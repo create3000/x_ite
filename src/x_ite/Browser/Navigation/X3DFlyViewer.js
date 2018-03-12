@@ -97,6 +97,7 @@ function ($,
 		this .lineVertices      = new Array (this .lineCount * 4);
 		this .lineArray         = new Float32Array (this .lineVertices);
 		this .event             = null;
+		this .lookAround        = false;
 		this .orientationChaser = new OrientationChaser (executionContext);
 	}
 
@@ -116,6 +117,9 @@ function ($,
 			canvas .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
 			canvas .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
 			canvas .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
+
+			canvas .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
+			canvas .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
 
 			browser .controlKey_ .addInterest ("set_controlKey_", this);
 
@@ -151,22 +155,25 @@ function ($,
 			{
 				case 0:
 				{
-					// Stop event propagation.
+					// Start walk or fly.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
 				
-					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
-					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
-		
+					$(document) .bind ("mouseup.X3DFlyViewer"    + this .getId (), this .mouseup   .bind (this));
+					$(document) .bind ("mousemove.X3DFlyViewer"  + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
+					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
+
 					this .disconnect ();
 					this .getActiveViewpoint () .transitionStop ();
 					this .getBrowser () .setCursor ("MOVE");
 					this .addCollision ();
 
-					if (this .getBrowser () .getControlKey ())
+					if (this .getBrowser () .getControlKey () || this .lookAround)
 					{
 						// Look around.
 
@@ -188,16 +195,17 @@ function ($,
 				}
 				case 1:
 				{
-					// Stop event propagation.
+					// Start pan.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
 				
-					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
-					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
-		
+					$(document) .bind ("mouseup.X3DFlyViewer"    + this .getId (), this .mouseup   .bind (this));
+					$(document) .bind ("mousemove.X3DFlyViewer"  + this .getId (), this .mousemove .bind (this));
+
 					this .disconnect ();
 					this .getActiveViewpoint () .transitionStop ();
 					this .getBrowser () .setCursor ("MOVE");
@@ -225,6 +233,8 @@ function ($,
 		
 			$(document) .unbind ("mousemove.X3DFlyViewer" + this .getId ());
 			$(document) .unbind ("mouseup.X3DFlyViewer"   + this .getId ());
+			$(document) .unbind ("touchend.ExamineViewer" + this .getId ());
+			$(document) .unbind ("touchmove.ExamineViewer" + this .getId ());
 
 			this .disconnect ();
 			this .getBrowser () .setCursor ("DEFAULT");
@@ -245,7 +255,7 @@ function ($,
 			{
 				case 0:
 				{
-					if (this .getBrowser () .getControlKey ())
+					if (this .getBrowser () .getControlKey () || this .lookAround)
 					{
 						// Stop event propagation.
 						event .preventDefault ();
@@ -306,6 +316,86 @@ function ($,
 			else if (event .deltaY < 0)
 				this .addRoll (ROLL_ANGLE);
 		},
+		touchstart: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// Start fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+		
+					this .mousedown (event);
+					break;
+				}
+				case 2:
+				{
+					// End fly or walk (button 0).
+
+					this .touchend (event);
+
+					// Start look around.
+
+					this .lookAround = true;
+					event .button    = 0;
+					event .pageX     = (touches [0] .pageX + touches [1] .pageX) / 2;
+					event .pageY     = (touches [0] .pageY + touches [1] .pageY) / 2;
+		
+					this .mousedown (event);
+					break;
+				}
+			}
+		},
+		touchend: function (event)
+		{
+			switch (this .button)
+			{
+				case 0:
+				{
+					// End move or look around (button 0).
+					this .lookAround = false;
+					event .button    = 0;
+
+					this .mouseup (event);
+					break;
+				}
+			}
+		},
+		touchmove: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// Fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+		
+					this .mousemove (event);
+					break;
+				}
+				case 2:
+				{
+					// Fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
+					event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
+		
+					this .mousemove (event);
+					break;
+				}
+			}
+		},
 		fly: (function ()
 		{
 			var
@@ -360,7 +450,10 @@ function ($,
 				var weight = ROTATION_SPEED_FACTOR * dt;
 				weight *= Math .pow (rubberBandLength / (rubberBandLength + ROTATION_LIMIT), 2);
 	
-				viewpoint .orientationOffset_ = orientationOffset .assign (Rotation4 .Identity) .slerp (rubberBandRotation, weight) .multLeft (viewpoint .orientationOffset_ .getValue ());
+				viewpoint .orientationOffset_ = orientationOffset
+					.assign (Rotation4 .Identity)
+					.slerp (rubberBandRotation, weight)
+					.multLeft (viewpoint .orientationOffset_ .getValue ());
 	
 				// GeoRotation
 	
