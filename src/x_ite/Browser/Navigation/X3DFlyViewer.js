@@ -185,7 +185,10 @@ function ($,
 
 						this .fromVector .set (x, 0, y);
 						this .toVector   .assign (this .fromVector);
-						this .direction  .set (0, 0, 0);
+
+						this .getDirection (this .fromVector, this .toVector, this .direction);
+
+						this .addFly ();
 
 						if (this .getBrowser () .getBrowserOption ("Rubberband"))
 							this .getBrowser () .finished () .addInterest ("display", this, MOVE);
@@ -213,6 +216,9 @@ function ($,
 
 					this .fromVector .set (x, -y, 0);
 					this .toVector   .assign (this .fromVector);
+					this .direction  .set (0, 0, 0);
+
+					this .addPan ();
 
 					if (this .getBrowser () .getBrowserOption ("Rubberband"))
 						this .getBrowser () .finished () .addInterest ("display", this, PAN);
@@ -275,9 +281,8 @@ function ($,
 					{
 						// Fly
 
-						this .toVector  .set (x, 0, y);
-						this .direction .assign (this .toVector) .subtract (this .fromVector);
-						this .addFly ();
+						this .toVector .set (x, 0, y);
+						this .getDirection (this .fromVector, this .toVector, this .direction);
 						break;
 					}
 				}
@@ -291,8 +296,6 @@ function ($,
 
 					this .toVector  .set (x, -y, 0);
 					this .direction .assign (this .toVector) .subtract (this .fromVector);
-
-					this .addPan ();
 					break;
 				}
 			}
@@ -329,7 +332,7 @@ function ($,
 					event .button = 0;
 					event .pageX  = touches [0] .pageX;
 					event .pageY  = touches [0] .pageY;
-		
+
 					this .mousedown (event);
 					break;
 				}
@@ -345,7 +348,7 @@ function ($,
 					event .button    = 0;
 					event .pageX     = (touches [0] .pageX + touches [1] .pageX) / 2;
 					event .pageY     = (touches [0] .pageY + touches [1] .pageY) / 2;
-		
+
 					this .mousedown (event);
 					break;
 				}
@@ -402,6 +405,7 @@ function ($,
 				upVector           = new Vector3 (0, 0, 0),
 				direction          = new Vector3 (0, 0, 0),
 				axis               = new Vector3 (0, 0, 0),
+				userOrientation    = new Rotation4 (0, 0, 1, 0),
 				orientationOffset  = new Rotation4 (0, 0, 1, 0),
 				rubberBandRotation = new Rotation4 (0, 0, 1, 0),
 				up                 = new Rotation4 (0, 0, 1, 0),
@@ -410,30 +414,28 @@ function ($,
 			return function ()
 			{
 				var
-					now = performance .now (),
-					dt  = (now - this .startTime) / 1000;
-	
-				var
 					navigationInfo = this .getNavigationInfo (),
-					viewpoint      = this .getActiveViewpoint ();
+					viewpoint      = this .getActiveViewpoint (),
+					now            = performance .now (),
+					dt             = (now - this .startTime) / 1000;
 	
 				upVector .assign (viewpoint .getUpVector ());
 	
 				// Rubberband values
 	
 				up .setFromToVec (Vector3 .yAxis, upVector);
-	
+
 				if (this .direction .z > 0)
 					rubberBandRotation .setFromToVec (up .multVecRot (direction .assign (this .direction)), up .multVecRot (axis .set (0, 0, 1)));
 				else
 					rubberBandRotation .setFromToVec (up .multVecRot (axis .set (0, 0, -1)), up .multVecRot (direction .assign (this .direction)));
 	
 				var rubberBandLength = this .direction .abs ();
+
+				// Determine positionOffset.
 	
-				// Position offset
-	
-				var speedFactor = 1 - rubberBandRotation .angle / (Math .PI / 2);
-	
+				var speedFactor = this .getForce () || (1 - rubberBandRotation .angle / (Math .PI / 2));
+
 				speedFactor *= navigationInfo .speed_ .getValue ();
 				speedFactor *= viewpoint .getSpeedFactor ();
 				speedFactor *= this .getBrowser () .getShiftKey () ? SHIFT_SPEED_FACTOR : SPEED_FACTOR;
@@ -445,16 +447,32 @@ function ($,
 	
 				viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
 	
-				// Rotation
-	
-				var weight = ROTATION_SPEED_FACTOR * dt;
-				weight *= Math .pow (rubberBandLength / (rubberBandLength + ROTATION_LIMIT), 2);
-	
-				viewpoint .orientationOffset_ = orientationOffset
+				// Determine weight for rubberBandRotation.
+
+				var weight = ROTATION_SPEED_FACTOR * dt * Math .pow (rubberBandLength / (rubberBandLength + ROTATION_LIMIT), 2);
+
+				// Determine userOrientation.
+
+				userOrientation
 					.assign (Rotation4 .Identity)
 					.slerp (rubberBandRotation, weight)
-					.multLeft (viewpoint .orientationOffset_ .getValue ());
-	
+					.multRight (viewpoint .getUserOrientation ());
+
+				// Straighten horizon of userOrientation.
+
+				viewpoint .straightenHorizon (userOrientation);
+
+				// Determine orientationOffset.
+
+				orientationOffset
+					.assign (viewpoint .getOrientation ())
+					.inverse ()
+					.multRight (userOrientation);
+
+				// Set orientationOffset.
+
+				viewpoint .orientationOffset_ = orientationOffset;
+
 				// GeoRotation
 	
 				geoRotation .setFromToVec (upVector, viewpoint .getUpVector ());
@@ -473,12 +491,10 @@ function ($,
 			return function ()
 			{
 				var
-					now = performance .now (),
-					dt  = (now - this .startTime) / 1000;
-	
-				var
 					navigationInfo = this .getNavigationInfo (),
 					viewpoint      = this .getActiveViewpoint (),
+					now            = performance .now (),
+					dt             = (now - this .startTime) / 1000,
 					upVector       = viewpoint .getUpVector ();
 	
 				this .constrainPanDirection (direction .assign (this .direction));

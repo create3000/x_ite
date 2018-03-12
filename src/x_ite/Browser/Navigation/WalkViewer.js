@@ -52,7 +52,9 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function (X3DFlyViewer, Vector3, Rotation4)
+function (X3DFlyViewer,
+          Vector3,
+          Rotation4)
 {
 "use strict";
 	
@@ -69,6 +71,14 @@ function (X3DFlyViewer, Vector3, Rotation4)
 			X3DFlyViewer .prototype .initialize .call (this);
 			
 			this .getBrowser () .addCollision (this);
+		},
+		getForce: function ()
+		{
+			return 0;
+		},
+		getDirection: function (fromVector, toVector, direction)
+		{
+			return direction .assign (toVector) .subtract (fromVector);
 		},
 		getTranslationOffset: (function ()
 		{

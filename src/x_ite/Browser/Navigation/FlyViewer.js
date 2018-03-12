@@ -49,8 +49,12 @@
 ﻿
 define ([
 	"x_ite/Browser/Navigation/X3DFlyViewer",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
 ],
-function (X3DFlyViewer)
+function (X3DFlyViewer,
+          Vector3,
+          Rotation4)
 {
 "use strict";
 	
@@ -70,6 +74,25 @@ function (X3DFlyViewer)
 		{
 			this .getBrowser () .removeCollision (this);
 		},
+		getForce: function ()
+		{
+			return 0.5;
+		},
+		getDirection: (function ()
+		{
+			var rotation = new Rotation4 (0, 0, 1, 0);
+
+			return function (fromVector, toVector, direction)
+			{
+				direction .assign (toVector) .subtract (fromVector);
+
+				direction .x =   direction .x / 20;
+				direction .y =  -direction .z / 20;
+				direction .z = -100;
+
+				return direction;
+			};
+		})(),
 		getTranslationOffset: function (velocity)
 		{
 			return this .getActiveViewpoint () .getUserOrientation () .multVecRot (velocity);
