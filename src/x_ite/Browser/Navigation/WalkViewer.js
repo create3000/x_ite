@@ -72,11 +72,7 @@ function (X3DFlyViewer,
 			
 			this .getBrowser () .addCollision (this);
 		},
-		getForce: function ()
-		{
-			return 0;
-		},
-		getDirection: function (fromVector, toVector, direction)
+		getFlyDirection: function (fromVector, toVector, direction)
 		{
 			return direction .assign (toVector) .subtract (fromVector);
 		},

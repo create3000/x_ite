@@ -74,11 +74,7 @@ function (X3DFlyViewer,
 		{
 			this .getBrowser () .removeCollision (this);
 		},
-		getForce: function ()
-		{
-			return 0.5;
-		},
-		getDirection: (function ()
+		getFlyDirection: (function ()
 		{
 			var rotation = new Rotation4 (0, 0, 1, 0);
 
@@ -86,9 +82,9 @@ function (X3DFlyViewer,
 			{
 				direction .assign (toVector) .subtract (fromVector);
 
-				direction .x =   direction .x / 20;
-				direction .y =  -direction .z / 20;
-				direction .z = -100;
+				direction .x =  direction .x / 20;
+				direction .y = -direction .z / 20;
+				direction .z = -50;
 
 				return direction;
 			};

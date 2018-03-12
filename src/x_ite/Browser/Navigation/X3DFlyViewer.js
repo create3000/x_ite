@@ -118,8 +118,8 @@ function ($,
 			canvas .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
 			canvas .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
 
-			canvas .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
-			canvas .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
+			canvas .bind ("touchstart.ExamineViewer", this .touchstart .bind (this));
+			canvas .bind ("touchend.ExamineViewer",   this .touchend   .bind (this));
 
 			browser .controlKey_ .addInterest ("set_controlKey_", this);
 
@@ -186,7 +186,7 @@ function ($,
 						this .fromVector .set (x, 0, y);
 						this .toVector   .assign (this .fromVector);
 
-						this .getDirection (this .fromVector, this .toVector, this .direction);
+						this .getFlyDirection (this .fromVector, this .toVector, this .direction);
 
 						this .addFly ();
 
@@ -237,9 +237,9 @@ function ($,
 			this .event  = null;
 			this .button = -1;
 		
-			$(document) .unbind ("mousemove.X3DFlyViewer" + this .getId ());
-			$(document) .unbind ("mouseup.X3DFlyViewer"   + this .getId ());
-			$(document) .unbind ("touchend.ExamineViewer" + this .getId ());
+			$(document) .unbind ("mousemove.X3DFlyViewer"  + this .getId ());
+			$(document) .unbind ("mouseup.X3DFlyViewer"    + this .getId ());
+			$(document) .unbind ("touchend.ExamineViewer"  + this .getId ());
 			$(document) .unbind ("touchmove.ExamineViewer" + this .getId ());
 
 			this .disconnect ();
@@ -282,7 +282,7 @@ function ($,
 						// Fly
 
 						this .toVector .set (x, 0, y);
-						this .getDirection (this .fromVector, this .toVector, this .direction);
+						this .getFlyDirection (this .fromVector, this .toVector, this .direction);
 						break;
 					}
 				}
@@ -433,8 +433,8 @@ function ($,
 				var rubberBandLength = this .direction .abs ();
 
 				// Determine positionOffset.
-	
-				var speedFactor = this .getForce () || (1 - rubberBandRotation .angle / (Math .PI / 2));
+
+				var speedFactor = 1 - rubberBandRotation .angle / (Math .PI / 2);
 
 				speedFactor *= navigationInfo .speed_ .getValue ();
 				speedFactor *= viewpoint .getSpeedFactor ();
