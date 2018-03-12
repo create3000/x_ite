@@ -73,11 +73,14 @@ function ($,
 			var canvas = this .getBrowser () .getCanvas ();
 
 			//canvas .bind ("mousewheel.PointingDevice", this .mousewheel .bind (this));
-			canvas .bind ("mousedown.PointingDevice",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.PointingDevice",    this .mouseup    .bind (this));
-			canvas .bind ("dblclick.PointingDevice",   this .dblclick   .bind (this));
-			canvas .bind ("mousemove.PointingDevice",  this .mousemove  .bind (this));
-			canvas .bind ("mouseout.PointingDevice",   this .onmouseout .bind (this));
+			canvas .bind ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
+			canvas .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
+			canvas .bind ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
+			canvas .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
+			canvas .bind ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
+
+			canvas .bind ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
+			canvas .bind ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
 		},
 		mousewheel: function (event)
 		{
@@ -95,13 +98,17 @@ function ($,
 			if (event .button === 0)
 			{
 				var
-					offset = browser .getCanvas () .offset (), 
+					canvas = browser .getCanvas (),
+					offset = canvas .offset (), 
 					x      = event .pageX - offset .left,
 					y      = browser .getCanvas () .height () - (event .pageY - offset .top);
 
-				browser .getCanvas () .unbind ("mousemove.PointingDevice");
-				$(document) .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup .bind (this));
+				canvas .unbind ("mousemove.PointingDevice" + this .getId ());
+
+				$(document) .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this));
 				$(document) .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+				$(document) .bind ("touchend.PointingDevice"  + this .getId (), this .touchend  .bind (this));
+				$(document) .bind ("touchmove.PointingDevice" + this .getId (), this .touchmove .bind (this));
 
 				if (browser .buttonPressEvent (x, y))
 				{
@@ -117,21 +124,19 @@ function ($,
 		{
 			event .preventDefault ();
 	
-			var browser = this .getBrowser ();
-
 			if (event .button === 0)
 			{
-				event .preventDefault ();
-				browser .buttonReleaseEvent ();
-
 				var
-					offset = browser .getCanvas () .offset (), 
-					x      = event .pageX - offset .left,
-					y      = browser .getCanvas () .height () - (event .pageY - offset .top);
+					browser = this .getBrowser (),
+					canvas  = browser .getCanvas (),
+					offset  = canvas .offset (), 
+					x       = event .pageX - offset .left,
+					y       = browser .getCanvas () .height () - (event .pageY - offset .top);
 			
-				$(document) .unbind (".PointingDevice" + this .getId ());
-				browser .getCanvas () .bind ("mousemove.PointingDevice", this .mousemove .bind (this));
+				$(document) .unbind (".PointingDevice"   + this .getId ());
+				canvas .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
+				browser .butonReleaseEvent ();
 				browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
 				browser .finished () .addInterest ("onverifymotion", this, x, y);
 				browser .addBrowserEvent ();
@@ -161,6 +166,56 @@ function ($,
 				y      = browser .getCanvas () .height () - (event .pageY - offset .top);
 
 			this .onmotion (x, y);
+		},
+		touchstart: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// Start fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+
+					this .mousedown (event);
+					break;
+				}
+				case 2:
+				{
+					this .touchend (event);
+					break;
+				}
+			}
+		},
+		touchend: function (event)
+		{
+			var browser = this .getBrowser ();
+
+			event .button = 0;
+			this .mouseup (event);
+		},
+		touchmove: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// Fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+		
+					this .mousemove (event);
+					break;
+				}
+			}
 		},
 		onmotion: function (x, y)
 		{

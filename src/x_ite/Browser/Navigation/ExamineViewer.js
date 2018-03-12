@@ -162,8 +162,6 @@ function ($,
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
-					
-					this .getBrowser () .getCanvas () .unbind ("mousemove.ExamineViewer");
 
 					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
@@ -189,8 +187,6 @@ function ($,
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
-					
-					this .getBrowser () .getCanvas () .unbind ("mousemove.ExamineViewer");
 
 					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
@@ -213,10 +209,7 @@ function ($,
 
 			this .button = -1;
 		
-			$(document) .unbind ("mousemove.ExamineViewer" + this .getId ());
-			$(document) .unbind ("mouseup.ExamineViewer"   + this .getId ());
-			$(document) .unbind ("touchend.ExamineViewer"  + this .getId ());
-			$(document) .unbind ("touchmove.ExamineViewer" + this .getId ());
+			$(document) .unbind (".ExamineViewer" + this .getId ());
 
 			switch (event .button)
 			{
