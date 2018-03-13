@@ -75,8 +75,11 @@ function ($,
 			   browser = this .getBrowser (),
 			   canvas  = browser .getCanvas ();
 
-			canvas .bind ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
+			canvas .bind ("mousedown.LookAtViewer",   this .mousedown  .bind (this));
+			canvas .bind ("mouseup.LookAtViewer",     this .mouseup    .bind (this));
+
+			canvas .bind ("touchstart.ExamineViewer", this .touchstart .bind (this));
+			canvas .bind ("touchend.ExamineViewer",   this .touchend   .bind (this));
 		},
 		mousedown: function (event)
 		{
@@ -95,8 +98,9 @@ function ($,
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
-					
-					$(document) .bind ("mouseup.LookAtViewer" + this .getId (), this .mouseup .bind (this));
+
+					$(document) .bind ("mouseup.LookAtViewer"  + this .getId (), this .mouseup .bind (this));
+					$(document) .bind ("touchend.LookAtViewer" + this .getId (), this .mouseup .bind (this));
 
 					this .getActiveViewpoint () .transitionStop ();
 					break;
@@ -130,6 +134,37 @@ function ($,
 					break;
 				}
 			}
+		},
+		touchstart: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// button 0.
+
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+
+					this .mousedown (event);
+					break;
+				}
+				case 2:
+				{
+					this .touchend (event);
+					break;
+				}
+			}
+		},
+		touchend: function (event)
+		{
+			var browser = this .getBrowser ();
+
+			event .button = 0;
+			this .mouseup (event);
 		},
 		dispose: function ()
 		{

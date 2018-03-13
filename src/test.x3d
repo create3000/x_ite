@@ -7,7 +7,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Titania V4.0.6a, http://titania.create3000.de'/>
     <meta name='identifier' content='file:///home/holger/Projekte/X_ITE/src/test.x3d'/>
-    <meta name='modified' content='Sat, 03 Mar 2018 17:51:20 GMT'/>
+    <meta name='modified' content='Tue, 13 Mar 2018 01:06:29 GMT'/>
     <meta name='titania-add-metadata' content='true'/>
   </head>
   <Scene>
@@ -40,19 +40,7 @@
               value='false'/>
           <MetadataSet DEF='nodes' containerField='value'
               name='nodes'
-              reference='http://titania.create3000.de'>
-            <Script DEF='PhongShadingScript' containerField='value'>
-<![CDATA[ecmascript:
-
-function initialize ()
-{
-	// Phong shading can be enabled if »X_ITE Compatibility« mode is enabled in Titania.
-
-	Browser .setBrowserOption ("Shading", "PHONG");
-}
-]]>
-            </Script>
-          </MetadataSet>
+              reference='http://titania.create3000.de'/>
         </MetadataSet>
         <MetadataSet DEF='BrowserPanel' containerField='value'
             name='BrowserPanel'
@@ -144,7 +132,8 @@ function initialize ()
         </MetadataSet>
       </MetadataSet>
     </WorldInfo>
-    <NavigationInfo/>
+    <NavigationInfo
+        type='"LOOKAT"'/>
     <Transform DEF='Box'>
       <Shape>
         <Appearance>
@@ -413,27 +402,16 @@ function initialize ()
         <Box/>
       </Shape>
     </Transform>
-    <TouchSensor DEF='_14'/>
-    <Script DEF='TestScript'>
-      <field accessType='inputOnly' type='SFTime' name='set_time'/>
+    <Script DEF='PhongShadingScript'>
 <![CDATA[ecmascript:
 
-function set_time (value, time)
+function initialize ()
 {
-	var t0 = performance .now ();
-	
-	var N = 1000000;
-	var a = new MFInt32 ();
-	
-	for (var i = 0; i < N; ++ i)
-		a .push (i);
+	// Phong shading can be enabled if »X_ITE Compatibility« mode is enabled in Titania.
 
-	print ((performance .now () - t0) / 1000);
-	print (a .length);
+	Browser .setBrowserOption ("Shading", "PHONG");
 }
 ]]>
     </Script>
-    <Script USE='PhongShadingScript'/>
-    <ROUTE fromNode='_14' fromField='touchTime' toNode='TestScript' toField='set_time'/>
   </Scene>
 </X3D>

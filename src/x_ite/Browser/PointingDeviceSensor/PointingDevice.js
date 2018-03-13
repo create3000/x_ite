@@ -175,7 +175,7 @@ function ($,
 			{
 				case 1:
 				{
-					// Start fly or walk (button 0).
+					// button 0.
 
 					event .button = 0;
 					event .pageX  = touches [0] .pageX;
@@ -206,7 +206,7 @@ function ($,
 			{
 				case 1:
 				{
-					// Fly or walk (button 0).
+					// button 0.
 
 					event .button = 0;
 					event .pageX  = touches [0] .pageX;
