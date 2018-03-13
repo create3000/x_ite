@@ -138,7 +138,7 @@ function (X3DBaseNode,
 
 			return vector .set (x, y, tbProjectToSphere (0.5, x, y));
 		},
-		lookAt: (function ()
+		lookAtPoint: (function ()
 		{
 			var bbox = new Box3 ();
 
@@ -148,7 +148,21 @@ function (X3DBaseNode,
 					return;
 	
 				var hit = this .getBrowser () .getNearestHit ();
+
+				this .getActiveViewpoint () .lookAtPoint (hit .intersection .point, 2 - 1.618034, straightenHorizon);
+			};
+		})(),
+		lookAtBBox: (function ()
+		{
+			var bbox = new Box3 ();
+
+			return function (x, y, straightenHorizon)
+			{
+				if (! this .touch (x, y))
+					return;
 	
+				var hit = this .getBrowser () .getNearestHit ();
+
 				hit .shape .getBBox (bbox) .multRight (hit .modelViewMatrix);
 
 				this .getActiveViewpoint () .lookAtBBox (bbox, 2 - 1.618034, straightenHorizon);

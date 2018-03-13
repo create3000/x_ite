@@ -123,7 +123,7 @@ function ($,
 
 			browser .controlKey_ .addInterest ("set_controlKey_", this);
 
-			// Setup scroll chaser.
+			// Setup look around chaser.
 
 			this .orientationChaser .duration_ = ROTATE_TIME;
 			this .orientationChaser .setPrivate (true);

@@ -258,7 +258,7 @@ function ($,
 				y      = this .getBrowser () .getCanvas () .height () - (event .pageY - offset .top);
 
 			this .disconnect ();
-			this .lookAt (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
+			this .lookAtBBox (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
 		},
 		mousemove: (function ()
 		{
@@ -411,8 +411,7 @@ function ($,
 
 					if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
 					{
-						event .button = 1;
-
+						event .button = 0;
 						event .pageX  = this .touch1 .x;
 						event .pageY  = this .touch1 .y;
 
@@ -670,10 +669,9 @@ function ($,
 		{
 			var browser = this .getBrowser ();
 
-			this .positionChaser         .value_changed_ .removeInterest ("set_positionOffset__",         this);
-			this .rotationChaser         .value_changed_ .removeInterest ("set_rotation__",               this);
 			this .positionChaser         .value_changed_ .removeInterest ("set_positionOffset__",         this)
 			this .centerOfRotationChaser .value_changed_ .removeInterest ("set_centerOfRotationOffset__", this)
+			this .rotationChaser         .value_changed_ .removeInterest ("set_rotation__",               this);
 
 			browser .prepareEvents () .removeInterest ("spin", this);
 		},
