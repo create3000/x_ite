@@ -52,6 +52,6 @@
 	"scripts": {
 		"lint": "jshint **",
 		"build": "make",
-		"-prebuild:js": "npm run lint",
+		"-prebuild:js": "npm run lint"
 	}
 }
