@@ -46792,7 +46792,7 @@ function ($,
           urls,
           Parser,
           XMLParser,
-	  JSONParser,
+          JSONParser,
           URI,
           BinaryTransport,
           pako,
@@ -46874,6 +46874,8 @@ function ($,
 					},
 				];
 
+				var errors = [ ];
+
 				for (var i = 0, length = handlers .length; i < length; ++ i)
 				{
 					try
@@ -46884,8 +46886,11 @@ function ($,
 					catch (error)
 					{
 						// Try next handler.
+						errors .push (error);
 					}
 				}
+
+				console .error (errors);
 
 				throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + worldURL + "'.");
 			}
@@ -60983,7 +60988,7 @@ function ($,
 						this .rotation .setFromToVec (toVector, this .fromVector);
 	
 						if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
-							return false;
+							return;
 	
 						this .addRotate (this .rotation);
 	
