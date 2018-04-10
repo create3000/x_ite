@@ -81,7 +81,8 @@ function (Fields,
 
 		this .addType (X3DConstants .LOD);
 
-		this .addAlias ("level", this .children_); // VRML2
+		if (executionContext.getEncoding() == "VRML")
+			this .addAlias ("level", this .children_); // VRML2
 
 		this .center_ .setUnit ("length");
 		this .range_  .setUnit ("length");
