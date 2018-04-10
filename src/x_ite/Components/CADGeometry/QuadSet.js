@@ -62,13 +62,14 @@ function (Fields,
 {
 "use strict";
 
+	// Define two triangles.
+	var indexMap = [0, 1, 2,   0, 2, 3];
+
 	function QuadSet (executionContext)
 	{
 		X3DComposedGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .QuadSet);
-
-		this .triangleIndex = [ ];
 	}
 
 	QuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
@@ -101,32 +102,20 @@ function (Fields,
 		},
 		getTriangleIndex: function (i)
 		{
-			return this .triangleIndex [i];
+			var mod = i % 6;
+
+			return (i - mod) / 6 * 4 + indexMap [mod];
 		},
 		build: function ()
 		{
 			if (! this .getCoord ())
 				return;
 
-			var
-				length        = this .getCoord () .getSize (),
-				triangleIndex = this .triangleIndex;
-
+			var length = this .getCoord () .getSize ();
+	
 			length -= length % 4;
-			triangleIndex .length = 0;
 
-			for (var i = 0; i < length; i += 4)
-			{
-				var
-					i0 = i,
-					i1 = i + 1,
-					i2 = i + 2,
-					i3 = i + 3;
-
-				triangleIndex .push (i0, i1, i2,  i0, i2, i3);
-			}
-
-			X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, triangleIndex .length);
+			X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, length / 4 * 6);
 		},
 		createNormals: function (verticesPerPolygon, polygonsSize)
 		{

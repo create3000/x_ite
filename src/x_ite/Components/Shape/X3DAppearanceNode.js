@@ -63,6 +63,8 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DAppearanceNode);
+		
+		this .addChildObjects ("transparent", new Fields .SFBool ());
 	}
 
 	X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -71,8 +73,6 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DNode .prototype .initialize .call (this);
-			
-			this .addChildObjects ("transparent", new Fields .SFBool ());
 		},
 	});
 

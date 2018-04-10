@@ -1,7 +1,7 @@
 {
 	"name": "x_ite",
-	"version": "4.1.5a",
-	"revision": "216",
+	"version": "4.1.5",
+	"revision": "229",
 	"description": "X_ITE X3D Browser",
 	"main": "src/x_ite.js",
 	"repository": {
@@ -25,6 +25,10 @@
 		{
 			"name": "Andreas Plesh",
 			"email": "andreasplesch@gmail.com"
+		},
+		{
+			"name": "John Carlson",
+			"email": "yottzumm@gmail.com"
 		}
 	],
 	"bugs": {
@@ -33,6 +37,8 @@
 	"devDependencies": {
 		"require": "latest",
 		"requirejs": "latest",
+		"requirejs-text": "latest",
+		"uglify-js-es6": "latest",
 		"jquery": "latest",
 		"jquery-mousewheel": "latest",
 		"jquery.fullscreen": "latest",
@@ -45,13 +51,7 @@
 	},
 	"scripts": {
 		"lint": "jshint **",
-		"build": "npm run build:js && npm run build:min.js && npm run build:css",
-		"-prebuild:js": "npm run lint",
-		"build:js": "sh -c node_modules/.bin/r.js -o require.build.js",
-		"build:min.js": "sh -c node_modules/.bin/r.js -o require.build.min.js",
-		"build:css": "sh -c node_modules/.bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css"
-	},
-	"dependencies": {
-		"requirejs-text": "^2.0.15"
+		"build": "make",
+		"-prebuild:js": "npm run lint"
 	}
 }

@@ -106,7 +106,7 @@ function (Fields,
 				0, 1, 2, 3, -1, // left
 				0, 1, 2, 3, -1, // right
 				0, 1, 2, 3, -1, // top
-				0, 1, 2, 3, -1, // bottom
+				0, 1, 2, 3, -1  // bottom
 			);
 
 			geometry .coordIndex_ = new Fields .MFInt32 (
@@ -115,16 +115,16 @@ function (Fields,
 				1, 5, 6, 2, -1, // left
 				4, 0, 3, 7, -1, // right
 				4, 5, 1, 0, -1, // top
-				3, 2, 6, 7, -1, // bottom
+				3, 2, 6, 7, -1  // bottom
 			);
 
 			texCoord .point_ = new Fields .MFVec2f (
-				new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0), 
+				new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
 			);
 
 			coord .point_ = new Fields .MFVec3f (
 				new Fields .SFVec3f ( 1,  1,  1), new Fields .SFVec3f (-1,  1,  1), new Fields .SFVec3f (-1, -1,  1), new Fields .SFVec3f ( 1, -1,  1), 
-				new Fields .SFVec3f ( 1,  1, -1), new Fields .SFVec3f (-1,  1, -1), new Fields .SFVec3f (-1, -1, -1), new Fields .SFVec3f ( 1, -1, -1), 
+				new Fields .SFVec3f ( 1,  1, -1), new Fields .SFVec3f (-1,  1, -1), new Fields .SFVec3f (-1, -1, -1), new Fields .SFVec3f ( 1, -1, -1)
 			);
 
 			texCoord .setup ();

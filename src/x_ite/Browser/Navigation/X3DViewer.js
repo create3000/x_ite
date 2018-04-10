@@ -50,11 +50,17 @@
 define ([
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Navigation/OrthoViewpoint",
-	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Box3",
+	"standard/Math/Geometry/ViewVolume",
 ],
-function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
+function (X3DBaseNode,
+          OrthoViewpoint,
+          Vector3,
+          Matrix4,
+          Box3,
+          ViewVolume)
 {
 "use strict";
 	
@@ -116,11 +122,14 @@ function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 				return result .set (0, 0, 0);
 			}
 		},
-		getDistanceToCenter: function (distance)
+		getDistanceToCenter: function (distance, positionOffset)
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			return distance .assign (viewpoint .getUserPosition ()) .subtract (viewpoint .getUserCenterOfRotation ());
+			return (distance
+				.assign (viewpoint .getPosition ())
+				.add (positionOffset || viewpoint .positionOffset_ .getValue ())
+				.subtract (viewpoint .getUserCenterOfRotation ()));
 		},
 		trackballProjectToSphere: function (x, y, vector)
 		{
@@ -129,24 +138,41 @@ function (X3DBaseNode, OrthoViewpoint, ViewVolume, Vector3, Matrix4)
 
 			return vector .set (x, y, tbProjectToSphere (0.5, x, y));
 		},
-		lookAt: function (x, y, straightenHorizon)
+		lookAtPoint: (function ()
 		{
-			if (this .touch (x, y))
+			var bbox = new Box3 ();
+
+			return function (x, y, straightenHorizon)
 			{
+				if (! this .touch (x, y))
+					return;
+	
 				var hit = this .getBrowser () .getNearestHit ();
 
 				this .getActiveViewpoint () .lookAtPoint (hit .intersection .point, 2 - 1.618034, straightenHorizon);
-			}
-		},
+			};
+		})(),
+		lookAtBBox: (function ()
+		{
+			var bbox = new Box3 ();
+
+			return function (x, y, straightenHorizon)
+			{
+				if (! this .touch (x, y))
+					return;
+	
+				var hit = this .getBrowser () .getNearestHit ();
+
+				hit .shape .getBBox (bbox) .multRight (hit .modelViewMatrix);
+
+				this .getActiveViewpoint () .lookAtBBox (bbox, 2 - 1.618034, straightenHorizon);
+			};
+		})(),
 		touch: function (x, y)
 		{
 			this .getBrowser () .touch (x, y);
 		
 			return this .getBrowser () .getHits () .length;
-		},
-		easeInEaseOut: function (t)
-		{
-			return (1 - Math .cos (t * Math .PI)) / 2;
 		},
 		dispose: function () { },
 	});

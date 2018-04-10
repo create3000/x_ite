@@ -2,16 +2,15 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
   <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="268" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DBaseNode.js" Line="988" Column="1" />
-      <File FileName="src/standard/Math/Numbers/Vector2.js" Line="219" Column="1" />
-      <File FileName="src/standard/Math/Numbers/Vector3.js" Line="261" Column="1" />
-      <File FileName="src/standard/Math/Numbers/Vector4.js" Line="251" Column="1" />
+      <File FileName="src/x_ite.html" Line="304" Column="1" />
+      <File FileName="src/x_ite/Browser/Navigation/ExamineViewer.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Navigation/X3DFlyViewer.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Navigation/LookAtViewer.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Navigation/X3DViewer.js" Line="1" Column="1" />
+      <File FileName="package.json" Line="40" Column="30" />
+      <File FileName="src/x_ite/Components/Text/FontStyle.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Text/X3DFontStyleNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

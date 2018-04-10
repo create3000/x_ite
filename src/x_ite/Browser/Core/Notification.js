@@ -73,6 +73,8 @@ function ($,
    function Notification (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+
+		this .addChildObjects ("string", new SFString ());
 	}
 
 	Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -81,8 +83,6 @@ function ($,
 		initialize: function ()
 		{
 			X3DBaseNode .prototype .initialize .call (this);
-
-			this .addChildObjects ("string", new SFString ());
 
 			this .element = $("<div></div>")
 				.addClass ("x_ite-private-notification")

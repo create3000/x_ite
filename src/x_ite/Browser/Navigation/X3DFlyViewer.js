@@ -50,6 +50,7 @@
 define ([
 	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
+	"x_ite/Components/Followers/OrientationChaser",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -58,6 +59,7 @@ define ([
 ],
 function ($,
           X3DViewer,
+          OrientationChaser,
           Vector3,
           Rotation4,
           Matrix4,
@@ -73,25 +75,7 @@ function ($,
 		PAN_SPEED_FACTOR       = SPEED_FACTOR,
 		PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
 		ROLL_ANGLE             = Math .PI / 32,
-		ROLL_TIME              = 0.2;
-
-	var
-		yAxis              = new Vector3 (0, 1, 0),
-		zAxis              = new Vector3 (0, 0, 1),
-		black              = new Float32Array ([0, 0, 0]),
-		white              = new Float32Array ([1, 1, 1]),
-		fromPoint          = new Vector3 (0, 0, 0),
-		toPoint            = new Vector3 (0, 0, 0),
-		upVector           = new Vector3 (0, 0, 0),
-		direction          = new Vector3 (0, 0, 0),
-		axis               = new Vector3 (0, 0, 0),
-		rotation           = new Rotation4 (0, 0, 1, 0),
-		orientation        = new Rotation4 (0, 0, 1, 0),
-		orientationOffset  = new Rotation4 (0, 0, 1, 0),
-		rubberBandRotation = new Rotation4 (0, 0, 1, 0),
-		delta              = new Rotation4 (0, 0, 1, 0),
-		up                 = new Rotation4 (0, 0, 1, 0),
-		geoRotation        = new Rotation4 (0, 0, 1, 0);
+		ROTATE_TIME            = 0.3;
 	
 	var
 		MOVE = 0,
@@ -103,22 +87,18 @@ function ($,
 
 		var gl = this .getBrowser () .getContext ();
 
-		this .button              = -1;
-		this .fromVector          = new Vector3 (0, 0, 0);
-		this .toVector            = new Vector3 (0, 0, 0);
-		this .direction           = new Vector3 (0, 0, 0);
-		this .sourceRotation      = new Rotation4 (0, 0, 1, 0);
-		this .destinationRotation = new Rotation4 (0, 0, 1, 0);
-		this .startTime           = 0;
-		this .lineBuffer          = gl .createBuffer ();
-		this .lineCount           = 2;
-		this .lineVertices        = new Array (this .lineCount * 4);
-		this .lineArray           = new Float32Array (this .lineVertices);
-		this .event               = null;
-
-		this .projectionMatrix      = new Matrix4 ();
-		this .projectionMatrixArray = new Float32Array (this .projectionMatrix);
-		this .modelViewMatrixArray  = new Float32Array (this .projectionMatrix);
+		this .button            = -1;
+		this .fromVector        = new Vector3 (0, 0, 0);
+		this .toVector          = new Vector3 (0, 0, 0);
+		this .direction         = new Vector3 (0, 0, 0);
+		this .startTime         = 0;
+		this .lineBuffer        = gl .createBuffer ();
+		this .lineCount         = 2;
+		this .lineVertices      = new Array (this .lineCount * 4);
+		this .lineArray         = new Float32Array (this .lineVertices);
+		this .event             = null;
+		this .lookAround        = false;
+		this .orientationChaser = new OrientationChaser (executionContext);
 	}
 
 	X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
@@ -128,13 +108,26 @@ function ($,
 		{
 			X3DViewer .prototype .initialize .call (this);
 
-			var canvas = this .getBrowser () .getCanvas ();
+			var
+			   browser = this .getBrowser (),
+			   canvas  = browser .getCanvas ();
+
+			// Bind pointing device events.
 
 			canvas .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
 			canvas .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
 			canvas .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
 
-			this .getBrowser () .controlKey_ .addInterest ("set_controlKey_", this);
+			canvas .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
+			canvas .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
+
+			browser .controlKey_ .addInterest ("set_controlKey_", this);
+
+			// Setup look around chaser.
+
+			this .orientationChaser .duration_ = ROTATE_TIME;
+			this .orientationChaser .setPrivate (true);
+			this .orientationChaser .setup ();
 		},
 		addCollision: function () { },
 		removeCollision: function () { },
@@ -162,8 +155,9 @@ function ($,
 			{
 				case 0:
 				{
-					// Stop event propagation.
+					// Start walk or fly.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
@@ -171,13 +165,15 @@ function ($,
 				
 					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
-		
+					$(document) .bind ("touchend.X3DFlyViewer"  + this .getId (), this .touchend  .bind (this));
+					$(document) .bind ("touchmove.X3DFlyViewer" + this .getId (), this .touchmove .bind (this));
+
 					this .disconnect ();
 					this .getActiveViewpoint () .transitionStop ();
 					this .getBrowser () .setCursor ("MOVE");
 					this .addCollision ();
 
-					if (this .getBrowser () .getControlKey ())
+					if (this .getBrowser () .getControlKey () || this .lookAround)
 					{
 						// Look around.
 
@@ -189,7 +185,9 @@ function ($,
 
 						this .fromVector .set (x, 0, y);
 						this .toVector   .assign (this .fromVector);
-						this .direction  .set (0, 0, 0);
+
+						this .getFlyDirection (this .fromVector, this .toVector, this .direction);
+						this .addFly ();
 
 						if (this .getBrowser () .getBrowserOption ("Rubberband"))
 							this .getBrowser () .finished () .addInterest ("display", this, MOVE);
@@ -199,8 +197,9 @@ function ($,
 				}
 				case 1:
 				{
-					// Stop event propagation.
+					// Start pan.
 
+					// Stop event propagation.
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
@@ -208,7 +207,7 @@ function ($,
 				
 					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
-		
+
 					this .disconnect ();
 					this .getActiveViewpoint () .transitionStop ();
 					this .getBrowser () .setCursor ("MOVE");
@@ -216,6 +215,9 @@ function ($,
 
 					this .fromVector .set (x, -y, 0);
 					this .toVector   .assign (this .fromVector);
+					this .direction  .set (0, 0, 0);
+
+					this .addPan ();
 
 					if (this .getBrowser () .getBrowserOption ("Rubberband"))
 						this .getBrowser () .finished () .addInterest ("display", this, PAN);
@@ -234,8 +236,7 @@ function ($,
 			this .event  = null;
 			this .button = -1;
 		
-			$(document) .unbind ("mousemove.X3DFlyViewer" + this .getId ());
-			$(document) .unbind ("mouseup.X3DFlyViewer"   + this .getId ());
+			$(document) .unbind (".X3DFlyViewer" + this .getId ());
 
 			this .disconnect ();
 			this .getBrowser () .setCursor ("DEFAULT");
@@ -256,40 +257,34 @@ function ($,
 			{
 				case 0:
 				{
-					if (this .getBrowser () .getControlKey ())
+					if (this .getBrowser () .getControlKey () || this .lookAround)
 					{
+						// Stop event propagation.
 						event .preventDefault ();
+						event .stopImmediatePropagation ();
 
 						// Look around
 
 						var
-							viewpoint       = this .getActiveViewpoint (),
-							userOrientation = viewpoint .getUserOrientation (),
-							toVector         = this .trackballProjectToSphere (x, y, this .toVector);
+							viewpoint = this .getActiveViewpoint (),
+							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
 
-						orientation .setFromToVec (toVector, this .fromVector) .multRight (userOrientation);
-						viewpoint .straightenHorizon (orientation);
-
-						viewpoint .orientationOffset_ = orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (orientation);
-
+						this .addRotation (this .fromVector, toVector);
 						this .fromVector .assign (toVector);
+						break;
 					}
 					else
 					{
 						// Fly
 
-						this .toVector  .set (x, 0, y);
-						this .direction .assign (this .toVector) .subtract (this .fromVector);
-
-						this .addFly ();
+						this .toVector .set (x, 0, y);
+						this .getFlyDirection (this .fromVector, this .toVector, this .direction);
+						break;
 					}
-				
-					break;
 				}
 				case 1:
 				{
 					// Stop event propagation.
-
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
@@ -297,8 +292,6 @@ function ($,
 
 					this .toVector  .set (x, -y, 0);
 					this .direction .assign (this .toVector) .subtract (this .fromVector);
-
-					this .addPan ();
 					break;
 				}
 			}
@@ -322,103 +315,216 @@ function ($,
 			else if (event .deltaY < 0)
 				this .addRoll (ROLL_ANGLE);
 		},
-		fly: function ()
+		touchstart: function (event)
 		{
-			var
-				now = performance .now (),
-				dt  = (now - this .startTime) / 1000;
+			var touches = event .originalEvent .touches;
 
-			var
-				navigationInfo = this .getNavigationInfo (),
-				viewpoint      = this .getActiveViewpoint ();
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// Start fly or walk (button 0).
 
-			upVector .assign (viewpoint .getUpVector ());
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
 
-			// Rubberband values
+					this .mousedown (event);
+					break;
+				}
+				case 2:
+				{
+					// End fly or walk (button 0).
 
-			up .setFromToVec (yAxis, upVector);
+					this .touchend (event);
 
-			if (this .direction .z > 0)
-				rubberBandRotation .setFromToVec (up .multVecRot (direction .assign (this .direction)), up .multVecRot (axis .set (0, 0, 1)));
-			else
-				rubberBandRotation .setFromToVec (up .multVecRot (axis .set (0, 0, -1)), up .multVecRot (direction .assign (this .direction)));
+					// Start look around (button 0).
 
-			var rubberBandLength = this .direction .abs ();
+					this .lookAround = true;
+					event .button    = 0;
+					event .pageX     = (touches [0] .pageX + touches [1] .pageX) / 2;
+					event .pageY     = (touches [0] .pageY + touches [1] .pageY) / 2;
 
-			// Position offset
+					this .mousedown (event);
+					break;
+				}
+				case 3:
+				{
+					// End look around (button 0).
 
-			var speedFactor = 1 - rubberBandRotation .angle / (Math .PI / 2);
-
-			speedFactor *= navigationInfo .speed_ .getValue ();
-			speedFactor *= viewpoint .getSpeedFactor ();
-			speedFactor *= this .getBrowser () .getShiftKey () ? SHIFT_SPEED_FACTOR : SPEED_FACTOR;
-			speedFactor *= dt;
-
-			var translation = this .getTranslationOffset (direction .assign (this .direction) .multiply (speedFactor));
-
-			this .getActiveLayer () .constrainTranslation (translation, true);
-
-			viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
-
-			// Rotation
-
-			var weight = ROTATION_SPEED_FACTOR * dt;
-			weight *= Math .pow (rubberBandLength / (rubberBandLength + ROTATION_LIMIT), 2);
-
-			viewpoint .orientationOffset_ = orientationOffset .assign (Rotation4 .Identity) .slerp (rubberBandRotation, weight) .multLeft (viewpoint .orientationOffset_ .getValue ());
-
-			// GeoRotation
-
-			geoRotation .setFromToVec (upVector, viewpoint .getUpVector ());
-
-			viewpoint .orientationOffset_ = geoRotation .multLeft (viewpoint .orientationOffset_ .getValue ());
-
-			this .startTime = now;
+					this .touchend (event);
+					break;
+				}
+			}
 		},
-		pan: function ()
+		touchend: function (event)
 		{
-			var
-				now = performance .now (),
-				dt  = (now - this .startTime) / 1000;
+			switch (this .button)
+			{
+				case 0:
+				{
+					// End move or look around (button 0).
+					this .lookAround = false;
+					event .button    = 0;
 
-			var
-				navigationInfo = this .getNavigationInfo (),
-				viewpoint      = this .getActiveViewpoint (),
-				upVector       = viewpoint .getUpVector ();
-
-			this .constrainPanDirection (direction .assign (this .direction));
-
-			var speedFactor = 1;
-
-			speedFactor *= navigationInfo .speed_ .getValue ();
-			speedFactor *= viewpoint .getSpeedFactor ();
-			speedFactor *= this .getBrowser () .getShiftKey () ? PAN_SHIFT_SPEED_FACTOR : PAN_SPEED_FACTOR;
-			speedFactor *= dt;
-
-			var
-				orientation = viewpoint .getUserOrientation () .multRight (rotation .setFromToVec (viewpoint .getUserOrientation () .multVecRot (axis .assign (yAxis)), upVector)),
-				translation = orientation .multVecRot (direction .multiply (speedFactor));
-
-			this .getActiveLayer () .constrainTranslation (translation, true);
-
-			viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
-
-			this .startTime = now;
+					this .mouseup (event);
+					break;
+				}
+			}
 		},
-		roll: function ()
+		touchmove: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// Fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+		
+					this .mousemove (event);
+					break;
+				}
+				case 2:
+				{
+					// Fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
+					event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
+		
+					this .mousemove (event);
+					break;
+				}
+			}
+		},
+		fly: (function ()
 		{
 			var
-				now          = performance .now (),
-				elapsedTime  = (now - this .startTime) / 1000;
+				upVector           = new Vector3 (0, 0, 0),
+				direction          = new Vector3 (0, 0, 0),
+				axis               = new Vector3 (0, 0, 0),
+				userOrientation    = new Rotation4 (0, 0, 1, 0),
+				orientationOffset  = new Rotation4 (0, 0, 1, 0),
+				rubberBandRotation = new Rotation4 (0, 0, 1, 0),
+				up                 = new Rotation4 (0, 0, 1, 0),
+				geoRotation        = new Rotation4 (0, 0, 1, 0);
 
-			if (elapsedTime > ROLL_TIME)
-				return this .disconnect ();
+			return function ()
+			{
+				var
+					navigationInfo = this .getNavigationInfo (),
+					viewpoint      = this .getActiveViewpoint (),
+					now            = performance .now (),
+					dt             = (now - this .startTime) / 1000;
+	
+				upVector .assign (viewpoint .getUpVector ());
+	
+				// Rubberband values
+	
+				up .setFromToVec (Vector3 .yAxis, upVector);
 
+				if (this .direction .z > 0)
+					rubberBandRotation .setFromToVec (up .multVecRot (direction .assign (this .direction)), up .multVecRot (axis .set (0, 0, 1)));
+				else
+					rubberBandRotation .setFromToVec (up .multVecRot (axis .set (0, 0, -1)), up .multVecRot (direction .assign (this .direction)));
+	
+				var rubberBandLength = this .direction .abs ();
+
+				// Determine positionOffset.
+
+				var speedFactor = 1 - rubberBandRotation .angle / (Math .PI / 2);
+
+				speedFactor *= navigationInfo .speed_ .getValue ();
+				speedFactor *= viewpoint .getSpeedFactor ();
+				speedFactor *= this .getBrowser () .getShiftKey () ? SHIFT_SPEED_FACTOR : SPEED_FACTOR;
+				speedFactor *= dt;
+	
+				var translation = this .getTranslationOffset (direction .assign (this .direction) .multiply (speedFactor));
+	
+				this .getActiveLayer () .constrainTranslation (translation, true);
+	
+				viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
+	
+				// Determine weight for rubberBandRotation.
+
+				var weight = ROTATION_SPEED_FACTOR * dt * Math .pow (rubberBandLength / (rubberBandLength + ROTATION_LIMIT), 2);
+
+				// Determine userOrientation.
+
+				userOrientation
+					.assign (Rotation4 .Identity)
+					.slerp (rubberBandRotation, weight)
+					.multRight (viewpoint .getUserOrientation ());
+
+				// Straighten horizon of userOrientation.
+
+				viewpoint .straightenHorizon (userOrientation);
+
+				// Determine orientationOffset.
+
+				orientationOffset
+					.assign (viewpoint .getOrientation ())
+					.inverse ()
+					.multRight (userOrientation);
+
+				// Set orientationOffset.
+
+				viewpoint .orientationOffset_ = orientationOffset;
+
+				// GeoRotation
+	
+				geoRotation .setFromToVec (upVector, viewpoint .getUpVector ());
+	
+				viewpoint .orientationOffset_ = geoRotation .multLeft (viewpoint .orientationOffset_ .getValue ());
+	
+				this .startTime = now;
+			};
+		})(),
+		pan: (function ()
+		{
 			var
-				viewpoint = this .getActiveViewpoint (),
-			   t         = this .easeInEaseOut (elapsedTime / ROLL_TIME);
+				direction = new Vector3 (0, 0, 0),
+				axis      = new Vector3 (0, 0, 0);
 
-			viewpoint .orientationOffset_ = orientationOffset .assign (this .sourceRotation) .slerp (this .destinationRotation, t);
+			return function ()
+			{
+				var
+					navigationInfo = this .getNavigationInfo (),
+					viewpoint      = this .getActiveViewpoint (),
+					now            = performance .now (),
+					dt             = (now - this .startTime) / 1000,
+					upVector       = viewpoint .getUpVector ();
+	
+				this .constrainPanDirection (direction .assign (this .direction));
+	
+				var speedFactor = 1;
+	
+				speedFactor *= navigationInfo .speed_ .getValue ();
+				speedFactor *= viewpoint .getSpeedFactor ();
+				speedFactor *= this .getBrowser () .getShiftKey () ? PAN_SHIFT_SPEED_FACTOR : PAN_SPEED_FACTOR;
+				speedFactor *= dt;
+	
+				var
+					orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .yAxis)), upVector)),
+					translation = orientation .multVecRot (direction .multiply (speedFactor));
+	
+				this .getActiveLayer () .constrainTranslation (translation, true);
+	
+				viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
+	
+				this .startTime = now;
+			};
+		})(),
+		set_orientationOffset__: function (value)
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			viewpoint .orientationOffset_ = value;
 		},
 		addFly: function ()
 		{
@@ -435,93 +541,163 @@ function ($,
 			if (this .startTime)
 				return;
 			
+			this .disconnect ();
 			this .getBrowser () .prepareEvents () .addInterest ("pan", this);
 			this .getBrowser () .addBrowserEvent ();
 
 			this .startTime = performance .now ();
 		},
-		addRoll: function (rollAngle)
+		addRoll: (function ()
 		{
-			var viewpoint = this .getActiveViewpoint ();
+			var
+				orientationOffset = new Rotation4 (0, 0, 1, 0),
+				roll              = new Rotation4 (0, 0, 1, 0);
 
-			if (this .getBrowser () .prepareEvents () .hasInterest ("roll", this))
-				delta .assign (viewpoint .orientationOffset_ .getValue ()) .inverse () .multLeft (this .destinationRotation);
-			else
-				delta .set (0, 0, 1, 0);
+			return function (rollAngle)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+	
+				if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+				{
+					orientationOffset
+						.assign (viewpoint .getOrientation ())
+						.inverse ()
+						.multRight (roll .set (1, 0, 0, rollAngle))
+						.multRight (viewpoint .getOrientation ())
+						.multRight (this .orientationChaser .set_destination_ .getValue ());
 
-			rotation .setAxisAngle (viewpoint .getUserOrientation () .multVecRot (axis .set (1, 0, 0)), rollAngle + delta .angle);
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+				else
+				{
+					orientationOffset
+						.assign (viewpoint .getOrientation ())
+						.inverse ()
+						.multRight (roll .set (1, 0, 0, rollAngle))
+						.multRight (viewpoint .getUserOrientation ());
 
-			this .getBrowser () .prepareEvents () .addInterest ("roll", this);
-			this .getBrowser () .addBrowserEvent ();
-
-			this .sourceRotation .assign (viewpoint .orientationOffset_ .getValue ());
-			this .destinationRotation .assign (this .sourceRotation) .multRight (rotation);
-		
-			this .startTime = performance .now ();
-		},
-		display: function (interest, type)
+					this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+	
+				this .disconnect ();
+				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+			};
+		})(),
+		addRotation: (function ()
 		{
-			// Configure HUD
-
 			var
-				browser  = this .getBrowser (),
-				viewport = browser .getViewport (),
-				width    = viewport [2],
-				height   = viewport [3];
+				userOrientation   = new Rotation4 (0, 0, 1, 0),
+				orientationOffset = new Rotation4 (0, 0, 1, 0);
 
-			Camera .ortho (0, width, 0, height, -1, 1, this .projectionMatrix);
-
-			this .projectionMatrixArray .set (this .projectionMatrix);
-
-			// Display Rubberband.
-
-			if (type === MOVE)
+			return function (fromVector, toVector)
 			{
-				fromPoint .set (this .fromVector .x, height - this .fromVector .z, 0);
-				toPoint   .set (this .toVector   .x, height - this .toVector   .z, 0);
-			}
-			else
-			{
-				fromPoint .set (this .fromVector .x, height + this .fromVector .y, 0);
-				toPoint   .set (this .toVector   .x, height + this .toVector   .y, 0);
-			}
+				var viewpoint = this .getActiveViewpoint ();
+	
+				if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+				{
+					userOrientation
+						.setFromToVec (toVector, fromVector)
+						.multRight (viewpoint .getOrientation ())
+						.multRight (this .orientationChaser .set_destination_ .getValue ());
 
-			this .transfer (fromPoint, toPoint);
+					viewpoint .straightenHorizon (userOrientation);
+	
+					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
+	
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+				else
+				{
+					userOrientation
+						.setFromToVec (toVector, fromVector)
+						.multRight (viewpoint .getUserOrientation ());
 
+					viewpoint .straightenHorizon (userOrientation);
+	
+					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
+	
+					this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+	
+				this .disconnect ();
+				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+			};
+		})(),
+		display: (function ()
+		{
 			var
-				gl         = browser .getContext (),
-				shaderNode = browser .getLineShader (),
-				lineWidth  = gl .getParameter (gl .LINE_WIDTH);
+				fromPoint             = new Vector3 (0, 0, 0),
+				toPoint               = new Vector3 (0, 0, 0),
+				projectionMatrix      = new Matrix4 (),
+				projectionMatrixArray = new Float32Array (Matrix4 .Identity),
+				modelViewMatrixArray  = new Float32Array (Matrix4 .Identity);
 
-			shaderNode .enable (gl);
-			shaderNode .enableVertexAttribute (gl, this .lineBuffer);
+			return function (interest, type)
+			{
+				// Configure HUD
+	
+				var
+					browser  = this .getBrowser (),
+					viewport = browser .getViewport (),
+					width    = viewport [2],
+					height   = viewport [3];
 
-			gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
-			gl .uniform1i (shaderNode .x3d_FogType,       0);
-			gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
-			gl .uniform1i (shaderNode .x3d_Lighting,      true);
-
-			gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-			gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
-			
-			gl .disable (gl .DEPTH_TEST);
-
-			// Draw a black and a white line.
-			gl .lineWidth (2);
-			gl .uniform3fv (shaderNode .x3d_EmissiveColor, black);
-			gl .uniform1f  (shaderNode .x3d_Transparency,  0);
-
-			gl .drawArrays (gl .LINES, 0, this .lineCount);
-
-			gl .lineWidth (1);
-			gl .uniform3fv (shaderNode .x3d_EmissiveColor, white);
-
-			gl .drawArrays (gl .LINES, 0, this .lineCount);
-			gl .enable (gl .DEPTH_TEST);
-
-			gl .lineWidth (lineWidth);
-			shaderNode .disable (gl);
-		},
+				Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix);
+	
+				projectionMatrixArray .set (projectionMatrix);
+	
+				// Display Rubberband.
+	
+				if (type === MOVE)
+				{
+					fromPoint .set (this .fromVector .x, height - this .fromVector .z, 0);
+					toPoint   .set (this .toVector   .x, height - this .toVector   .z, 0);
+				}
+				else
+				{
+					fromPoint .set (this .fromVector .x, height + this .fromVector .y, 0);
+					toPoint   .set (this .toVector   .x, height + this .toVector   .y, 0);
+				}
+	
+				this .transfer (fromPoint, toPoint);
+	
+				var
+					gl         = browser .getContext (),
+					shaderNode = browser .getLineShader (),
+					lineWidth  = gl .getParameter (gl .LINE_WIDTH);
+	
+				shaderNode .enable (gl);
+				shaderNode .enableVertexAttribute (gl, this .lineBuffer);
+	
+				gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
+				gl .uniform1i (shaderNode .x3d_FogType,       0);
+				gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
+				gl .uniform1i (shaderNode .x3d_Lighting,      true);
+	
+				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+				
+				gl .disable (gl .DEPTH_TEST);
+	
+				// Draw a black and a white line.
+				gl .lineWidth (2);
+				gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
+				gl .uniform1f (shaderNode .x3d_Transparency,  0);
+	
+				gl .drawArrays (gl .LINES, 0, this .lineCount);
+	
+				gl .lineWidth (1);
+				gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
+	
+				gl .drawArrays (gl .LINES, 0, this .lineCount);
+				gl .enable (gl .DEPTH_TEST);
+	
+				gl .lineWidth (lineWidth);
+				shaderNode .disable (gl);
+			};
+		})(),
 		transfer: function (fromPoint, toPoint)
 		{
 			var
@@ -553,8 +729,9 @@ function ($,
 
 			browser .prepareEvents () .removeInterest ("fly", this);
 			browser .prepareEvents () .removeInterest ("pan", this);
-			browser .prepareEvents () .removeInterest ("roll", this);
 			browser .finished ()      .removeInterest ("display", this);
+
+			this .orientationChaser .value_changed_ .removeInterest ("set_orientationOffset__", this);
 
 			this .startTime = 0;
 		},

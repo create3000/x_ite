@@ -242,7 +242,7 @@ function (Fields,
 
 			if (this .x3d_Vertex < 0)
 			{
-				console .warning ("Missing »attribute vec4 x3d_Vertex;«.");
+				console .warn ("Missing »attribute vec4 x3d_Vertex;«.");
 				return false;
 			}
 

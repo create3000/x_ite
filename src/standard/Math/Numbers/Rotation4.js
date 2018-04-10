@@ -264,6 +264,11 @@ function (Quaternion,
 		{
 			return this .value .multQuatVec (vector);
 		},
+		pow: function (exponent)
+		{
+			this .value .pow (exponent);
+			return this;
+		},
 		slerp: function (dest, t)
 		{
 			this .value .slerp (dest .value, t);

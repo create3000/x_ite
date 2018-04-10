@@ -71,7 +71,9 @@ define (function ()
 		},
 		clamp: function (value, min, max)
 		{
-			return value < min ? min : (value > max ? max : value);
+			// http://jsperf.com/math-clamp
+			// http://jsperf.com/clamping-methods/2
+			return Math .min (max, Math .max (min, value));
 		},
 		interval: function (value, low, high)
 		{

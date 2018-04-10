@@ -101,19 +101,19 @@ function (Fields,
 				coord    = this .geometry .coord_ .getValue ();
 
 			geometry .texCoordIndex_ = new Fields .MFInt32 (
-				0, 1, 2, 3, -1,
+				0, 1, 2, 3, -1
 			);
 
 			geometry .coordIndex_ = new Fields .MFInt32 (
-				0, 1, 2, 3, -1,
+				0, 1, 2, 3, -1
 			);
 
 			texCoord .point_ = new Fields .MFVec2f (
-				new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0), 
+				new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
 			);
 
 			coord .point_ = new Fields .MFVec3f (
-				new Fields .SFVec3f (1, 1, 0), new Fields .SFVec3f (-1, 1, 0), new Fields .SFVec3f (-1, -1, 0), new Fields .SFVec3f (1, -1, 0), 
+				new Fields .SFVec3f (1, 1, 0), new Fields .SFVec3f (-1, 1, 0), new Fields .SFVec3f (-1, -1, 0), new Fields .SFVec3f (1, -1, 0)
 			);
 
 			texCoord .setup ();

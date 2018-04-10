@@ -78,9 +78,9 @@ function (X3DFollowerNode,
 		{
 			X3DFollowerNode .prototype .initialize .call (this);
 		
-			this .set_value_       .addInterest ("set_value__", this);
+			this .set_value_       .addInterest ("set_value__",       this);
 			this .set_destination_ .addInterest ("set_destination__", this);
-			this .duration_        .addInterest ("set_duration__", this);
+			this .duration_        .addInterest ("set_duration__",    this);
 
 			this .set_duration__ ();
 
@@ -147,7 +147,7 @@ function (X3DFollowerNode,
 				buffer = this .getBuffer (),
 				value  = this .getValue ();
 
-			for (var i = 1, length = buffer .length; i < length; ++ i)
+			for (var i = 0, length = buffer .length; i < length; ++ i)
 				this .assign (buffer, i, value);
 
 			this .setPreviousValue (value);
@@ -157,11 +157,11 @@ function (X3DFollowerNode,
 		},
 		set_destination__: function ()
 		{
-			this .destination = this .duplicate (this .getDestination ());
+			this .setDestination (this .getDestination ());
 
 			if (! this .isActive_ .getValue ())
 				this .bufferEndTime = this .getBrowser () .getCurrentTime ();
-		
+
 			this .set_active (true);
 		},
 		set_duration__: function ()

@@ -448,6 +448,8 @@ function (Fields,
 		},
 		getContours: function (curves)
 		{
+			curves .map (function (curve) { curve .hole = 0; });
+
 			for (var c = 0, cl = curves .length; c < cl; ++ c)
 			{
 				try
@@ -468,7 +470,7 @@ function (Fields,
 
 						if (this .isCurveHole (polygon, hole))
 						{
-							hole .hole = true;
+							hole .hole += 1;
 							curve .holes .push (hole);
 						}
 					}
@@ -486,7 +488,8 @@ function (Fields,
 			{
 				var curve = curves [c];
 
-				if (curve .hole)
+				// If the hole number is odd, this is a hole.
+				if (curve .hole % 2 !== 0)
 					continue;
 
 				contours .push (curve);

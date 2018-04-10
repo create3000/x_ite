@@ -62,6 +62,9 @@ function (Fields,
 	{
 		this .addType (X3DConstants .X3DTimeDependentNode);
 
+		this .addChildObjects ("initialized", new Fields .SFTime (),
+		                       "isEvenLive",  new Fields .SFBool ());
+
 		this .startTimeValue  = 0;
 		this .pauseTimeValue  = 0;
 		this .resumeTimeValue = 0;
@@ -82,9 +85,6 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DChildNode .prototype .initialize .call (this);
-
-			this .addChildObjects ("initialized", new Fields .SFTime (),
-				                    "isEvenLive",  new Fields .SFBool ());
 
 			this .isLive ()   .addInterest ("set_live__", this);
 			this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode

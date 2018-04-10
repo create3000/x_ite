@@ -138,12 +138,18 @@ main.color-management .browser {
 	border-left: 1px solid white;
 }
 
-.links  a:first-child {
+.links a:first-child {
 	border-left: none;
 }
 
 .links a:last-child {
 	border-right: 0px;
+}
+
+.min-links,
+.min-links a:last-child {
+	color: #e06c75;
+	border-color: #e06c75;
 }
 
 .clearfix,
@@ -625,7 +631,6 @@ X3D (function ()
 function (error)
 {
 	console .error ("Please forgive me, your browser may not support all features required by X_ITE!");
-	console .error (error);
 });
 	</script>
 </head>

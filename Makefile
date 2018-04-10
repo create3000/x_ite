@@ -1,15 +1,13 @@
 
 configure:
 	sudo npm install
-	sudo npm install requirejs-text
 
 all:
-	echo
-
-dist: all
 	perl -pi -e 's/return (?:true|false);/return false;/sg' src/x_ite/DEBUG.js
 
-	npm run build
+	node_modules/requirejs/bin/r.js -o require.build.js
+	node_modules/uglify-js-es6/bin/uglifyjs --compress --mangle -- dist/x_ite.js > dist/x_ite.min.js
+	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
 
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.min.js
@@ -21,6 +19,7 @@ dist: all
 	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'                x_ite.min.html
 	perl -pi -e 's|"x_ite.css"|"dist/x_ite.css"|sg'                  x_ite.min.html
 	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'            x_ite.min.html
+	perl -pi -e 's|class="links"|class="links min-links"|sg'         x_ite.min.html
 	perl -pi -e 's|\>x_ite.min.html|>src/x_ite.html|sg'              x_ite.min.html
 	perl -pi -e 's|x_ite-dev|x_ite-min|sg'                           x_ite.min.html
 	perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'             x_ite.min.html
@@ -34,7 +33,8 @@ dist: all
 
 	perl -pi -e 's/return (?:true|false);/return true;/sg' src/x_ite/DEBUG.js
 
-version: dist
+
+version: all
 	perl build/version.pl
 
 

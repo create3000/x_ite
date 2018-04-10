@@ -76,28 +76,18 @@ function (Fields,
 {
 "use strict";
 
-	var
-		yAxis = new Vector3 (0, 1, 0),
-		zAxis = new Vector3 (0, 0, 1);
-
-	var
-		relativePosition         = new Vector3 (0, 0, 0),
-		relativeOrientation      = new Rotation4 (0, 0, 1, 0),
-		relativeScale            = new Vector3 (0, 0, 0),
-		relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
-			
-	var
-		localYAxis = new Vector3 (0, 0, 0),
-		direction  = new Vector3 (0, 0, 0),
-		normal     = new Vector3 (0, 0, 0),
-		vector     = new Vector3 (0, 0, 0),
-		rotation   = new Rotation4 (0, 0, 1, 0);
-
 	function X3DViewpointNode (executionContext)
 	{
 		X3DBindableNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DViewpointNode);
+
+		this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
+		                       "orientationOffset",      new Fields .SFRotation (),
+		                       "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
+		                       "scaleOrientationOffset", new Fields .SFRotation (),
+		                       "centerOfRotationOffset", new Fields .SFVec3f (),
+		                       "fieldOfViewScale",       new Fields .SFFloat (1));
 
 	   this .userPosition             = new Vector3 (0, 1, 0);
 	   this .userOrientation          = new Rotation4 (0, 0, 1, 0);
@@ -122,13 +112,6 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DBindableNode .prototype .initialize .call (this);
-
-			this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
-			                       "orientationOffset",      new Fields .SFRotation (),
-			                       "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
-			                       "scaleOrientationOffset", new Fields .SFRotation (),
-			                       "centerOfRotationOffset", new Fields .SFVec3f (),
-			                       "fieldOfViewScale",       new Fields .SFFloat (1));
 		
 			this .timeSensor .stopTime_ = 1;
 			this .timeSensor .setup ();
@@ -226,7 +209,7 @@ function (Fields,
 		{
 		   // Local y-axis,
 		   // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
-		   return yAxis;
+		   return Vector3 .yAxis;
 		},
 		getSpeedFactor: function ()
 		{
@@ -236,86 +219,95 @@ function (Fields,
 		{
 			return 1e5;
 		},
-		transitionStart: function (fromViewpoint)
+		transitionStart: (function ()
 		{
-			try
-			{
-				if (this .jump_ .getValue ())
-				{
-					var layers = this .getLayers ();
+			var
+				relativePosition         = new Vector3 (0, 0, 0),
+				relativeOrientation      = new Rotation4 (0, 0, 1, 0),
+				relativeScale            = new Vector3 (0, 0, 0),
+				relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
 
-					if (! this .retainUserOffsets_ .getValue ())
-						this .resetUserOffsets ();
+			return function (fromViewpoint)
+			{
+				try
+				{
+					if (this .jump_ .getValue ())
+					{
+						var layers = this .getLayers ();
 	
-					for (var i = 0; i < layers .length; ++ i)
-					{
-						var navigationInfo = layers [i] .getNavigationInfo ();
-
-						navigationInfo .transitionStart_ = true;
-
-						var
-							transitionType = navigationInfo .getTransitionType (),
-							transitionTime = navigationInfo .transitionTime_ .getValue ();
+						if (! this .retainUserOffsets_ .getValue ())
+							this .resetUserOffsets ();
+		
+						for (var i = 0; i < layers .length; ++ i)
+						{
+							var navigationInfo = layers [i] .getNavigationInfo ();
+	
+							navigationInfo .transitionStart_ = true;
+	
+							var
+								transitionType = navigationInfo .getTransitionType (),
+								transitionTime = navigationInfo .transitionTime_ .getValue ();
+						}
+	
+						switch (transitionType)
+						{
+							case "TELEPORT":
+							{
+								for (var i = 0; i < layers .length; ++ i)
+									layers [i] .getNavigationInfo () .transitionComplete_ = true;
+	
+								return;
+							}
+							case "ANIMATE":
+							{
+								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+								break;
+							}
+							default:
+							{
+								// LINEAR
+								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+								break;
+							}
+						}
+						
+						this .timeSensor .cycleInterval_ = transitionTime;
+						this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
+						this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+						this .timeSensor .isActive_ .addInterest ("set_active__", this);
+	
+						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+	
+						this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
+						this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
+						this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
+						this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
+	
+						this .positionOffset_         = relativePosition;
+						this .orientationOffset_      = relativeOrientation;
+						this .scaleOffset_            = relativeScale;
+						this .scaleOrientationOffset_ = relativeScaleOrientation;
+	
+						this .setInterpolators (fromViewpoint);
 					}
-
-					switch (transitionType)
+					else
 					{
-						case "TELEPORT":
-						{
-							for (var i = 0; i < layers .length; ++ i)
-								layers [i] .getNavigationInfo () .transitionComplete_ = true;
-
-							return;
-						}
-						case "ANIMATE":
-						{
-							this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-							break;
-						}
-						default:
-						{
-							// LINEAR
-							this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-							break;
-						}
+						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+		 
+						this .positionOffset_         = relativePosition;
+						this .orientationOffset_      = relativeOrientation;
+						this .scaleOffset_            = relativeScale;
+						this .scaleOrientationOffset_ = relativeScaleOrientation;
+	
+						this .setInterpolators (fromViewpoint);
 					}
-					
-					this .timeSensor .cycleInterval_ = transitionTime;
-					this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-					this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
-					this .timeSensor .isActive_ .addInterest ("set_active__", this);
-
-					this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-					this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
-					this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
-					this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
-					this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
-
-					this .positionOffset_         = relativePosition;
-					this .orientationOffset_      = relativeOrientation;
-					this .scaleOffset_            = relativeScale;
-					this .scaleOrientationOffset_ = relativeScaleOrientation;
-
-					this .setInterpolators (fromViewpoint);
 				}
-				else
+				catch (error)
 				{
-					this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-	 
-					this .positionOffset_         = relativePosition;
-					this .orientationOffset_      = relativeOrientation;
-					this .scaleOffset_            = relativeScale;
-					this .scaleOrientationOffset_ = relativeScaleOrientation;
-
-					this .setInterpolators (fromViewpoint);
+					console .log (error);
 				}
-			}
-			catch (error)
-			{
-				console .log (error);
-			}
-		},
+			};
+		})(),
 		transitionStop: function ()
 		{
 			this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
@@ -340,27 +332,33 @@ function (Fields,
 			relativePosition .subtract (this .getPosition ());
 			relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
 		},
-		straightenHorizon: function (orientation)
+		straightenHorizon: (function ()
 		{
-			// Taken from Billboard
+			var
+				localXAxis = new Vector3 (0, 0, 0),
+				localZAxis = new Vector3 (0, 0, 0),
+				vector     = new Vector3 (0, 0, 0),
+				rotation   = new Rotation4 (0, 0, 1, 0);
 
-			orientation .multVecRot (direction .assign (zAxis));
-			orientation .multVecRot (localYAxis .assign (yAxis));
-
-			normal .assign (direction) .cross (this .getUpVector ());
-			vector .assign (direction) .cross (localYAxis);
-
-			rotation .setFromToVec (vector, normal);
-
-			return orientation .multRight (rotation);
-		},
+			return function (orientation)
+			{
+				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
+	
+				vector .assign (localZAxis) .cross (this .getUpVector ());
+	
+				rotation .setFromToVec (localXAxis, vector);
+	
+				return orientation .multRight (rotation);
+			};
+		})(),
 		lookAtPoint: function (point, factor, straighten)
 		{
-			if (! this .getBrowser () .getActiveLayer ())
-				return;
-
 			try
 			{
+				if (! this .getBrowser () .getActiveLayer ())
+					return;
+	
 				this .getCameraSpaceMatrix () .multVecMatrix (point);
 
 				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
@@ -373,6 +371,22 @@ function (Fields,
 			{
 				console .error (error);
 			}
+		},
+		lookAtBBox: function (bbox, factor, straighten)
+		{
+			try
+			{
+				if (! this .getBrowser () .getActiveLayer ())
+					return;
+
+				bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
+		
+				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
+		
+				this .lookAt (bbox .center, minDistance, factor, straighten);
+			}
+			catch (error)
+			{ }
 		},
 		lookAt: function (point, distance, factor, straighten)
 		{
@@ -398,10 +412,10 @@ function (Fields,
 			if (straighten)
 				rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
 		
-			this .positionInterpolator         .keyValue_ = [ this .positionOffset_ .getValue (),         translation ];
-			this .orientationInterpolator      .keyValue_ = [ this .orientationOffset_ .getValue (),      rotation ];
-			this .scaleInterpolator            .keyValue_ = [ this .scaleOffset_ .getValue (),            this .scaleOffset_ .getValue () ];
-			this .scaleOrientationInterpolator .keyValue_ = [ this .scaleOrientationOffset_ .getValue (), this .scaleOrientationOffset_ .getValue () ];
+			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, translation);
+			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
+			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
+			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
 		
 			this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
 			this .set_bind_               = true;
