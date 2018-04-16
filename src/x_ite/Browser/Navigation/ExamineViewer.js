@@ -288,7 +288,7 @@ function ($,
 						this .rotation .setFromToVec (toVector, this .fromVector);
 	
 						if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
-							return false;
+							return;
 	
 						this .addRotate (this .rotation);
 	
