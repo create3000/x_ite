@@ -107,9 +107,9 @@ function (Fields,
 			X3DChildNode     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
 
-			this .addChildren_    .addInterest ("set_addChildren__", this);
+			this .addChildren_    .addInterest ("set_addChildren__",    this);
 			this .removeChildren_ .addInterest ("set_removeChildren__", this);
-			this .children_       .addInterest ("set_children__", this);
+			this .children_       .addInterest ("set_children__",       this);
 
 			this .set_children__ ();
 		},

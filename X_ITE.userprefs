@@ -1,16 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
     <Files>
-      <File FileName="src/x_ite.html" Line="304" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/ExamineViewer.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/X3DFlyViewer.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/LookAtViewer.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/X3DViewer.js" Line="1" Column="1" />
-      <File FileName="package.json" Line="40" Column="30" />
+      <File FileName="src/x_ite.html" Line="298" Column="35" />
       <File FileName="src/x_ite/Components/Text/FontStyle.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Text/X3DFontStyleNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -78,7 +78,7 @@ function (Vector3)
 			var interval = time - this .currentTime;
 
 			this .currentTime      = time;
-			this .currentFrameRate = interval ? 1 / interval : 0;
+			this .currentFrameRate = interval ? 1 / interval : 60;
 
 			if (this .getWorld () && this .getActiveLayer ())
 			{

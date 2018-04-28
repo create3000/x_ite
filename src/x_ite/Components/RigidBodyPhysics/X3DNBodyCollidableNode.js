@@ -51,24 +51,47 @@ define ([
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Matrix4",
 ],
 function (X3DChildNode, 
           X3DBoundedObject, 
-          X3DConstants)
+          X3DConstants,
+          Matrix4)
 {
 "use strict";
 
 	function X3DNBodyCollidableNode (executionContext)
 	{
-		X3DChildNode .call (this, executionContext);
+		X3DChildNode     .call (this, executionContext);
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DNBodyCollidableNode);
+
+		this .matrix = new Matrix4 ();
 	}
 
-	X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),new X3DBoundedObject (),
+	X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+		X3DBoundedObject .prototype,
 	{
 		constructor: X3DNBodyCollidableNode,
+		initialize: function ()
+		{
+			X3DChildNode     .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
+
+			this .addInterest ("eventsProcessed", this);
+
+			this .eventsProcessed ();
+		},
+		getMatrix: function ()
+		{
+			return this .matrix;
+		},
+		eventsProcessed: function ()
+		{
+			this .matrix .set (this .translation_ .getValue (),
+			                   this .rotation_    .getValue ());
+		},	
 	});
 
 	return X3DNBodyCollidableNode;

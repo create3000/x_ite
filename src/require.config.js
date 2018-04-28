@@ -42,6 +42,11 @@ require .config ({
 			"main": "bezier.js"
 		},
 		{
+			"name": "ammojs",
+			"location": "../node_modules/ammojs",
+			"main": "ammo.js"
+		},
+		{
 			"name": "sprintf",
 			"location": "../node_modules/sprintf-js",
 			"main": "dist/sprintf.min.js"

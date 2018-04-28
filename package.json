@@ -47,6 +47,7 @@
 		"earcut": "latest",
 		"opentype.js": "latest",
 		"bezier-js": "latest",
+		"ammojs": "latest",
 		"sprintf-js": "latest"
 	},
 	"scripts": {

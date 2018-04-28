@@ -52,12 +52,14 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
+	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNBodyCollidableNode, 
+          X3DCast,
           X3DConstants)
 {
 "use strict";
@@ -74,11 +76,11 @@ function (Fields,
 		constructor: CollidableShape,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation", new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",    new Fields .SFRotation ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",    new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation", new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "shape",       new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
@@ -92,6 +94,54 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DNBodyCollidableNode .prototype .initialize .call (this);
+
+			this .enabled_ .addInterest ("set_collidableGeometry__", this);
+			this .shape_   .addInterest ("set_shape__",              this);
+
+			this .set_shape__ ();
+		},
+		set_shape__: function ()
+		{
+			if (this .shapeNode)
+			{
+				this .shapeNode .isCameraObject_ .removeFieldInterest (this .isCameraObject_);
+				this .shapeNode .geometry_ .removeInterest ("set_geometry__", this);
+			}
+
+			this .shapeNode = X3DCast (X3DConstants .Shape, this .shape_);
+
+			if (this .shapeNode)
+			{
+				this .shapeNode .isCameraObject_ .addFieldInterest (this .isCameraObject_);
+				this .shapeNode .geometry_ .addInterest ("set_geometry__", this);
+
+				delete this .traverse;
+			}
+			else
+			{
+				this .traverse = Function .prototype;
+			}
+		},
+		set_geometry__: function ()
+		{
+		},
+		set_collidableGeometry__: function ()
+		{
+		},
+		traverse: function (type, renderObject)
+		{
+			var modelViewMatrix = renderObject .getModelViewMatrix ();
+
+			modelViewMatrix .push ();
+			modelViewMatrix .multLeft (this .getMatrix ());
+	
+			this .shapeNode .traverse (type, renderObject);
+		
+			modelViewMatrix .pop ();
 		},
 	});
 
