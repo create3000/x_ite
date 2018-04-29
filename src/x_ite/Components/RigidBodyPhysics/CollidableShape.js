@@ -52,15 +52,19 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
-	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"standard/Math/Numbers/Vector3",
+	"lib/ammojs/ammo",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNBodyCollidableNode, 
+          X3DConstants,
           X3DCast,
-          X3DConstants)
+          Vector3,
+          Ammo)
 {
 "use strict";
 
@@ -69,6 +73,10 @@ function (Fields,
 		X3DNBodyCollidableNode .call (this, executionContext);
 
 		this .addType (X3DConstants .CollidableShape);
+
+		this .shapeNode      = null;
+		this .geometryNode   = null;
+		this .collisionShape = null;
 	}
 
 	CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
@@ -104,6 +112,38 @@ function (Fields,
 
 			this .set_shape__ ();
 		},
+		getBBox: function (bbox)
+		{
+			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
+			{
+				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .shape_);
+		
+				if (boundedObject)
+					return boundedObject .getBBox (bbox);
+		
+				return bbox .set ();
+			}
+		
+			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+		},
+		createConcaveGeometry: function ()
+		{
+			var vertices = this .geometryNode .getVertices () .getValue ();
+
+			if (vertices .length === 0)
+				return null;
+
+			this .triangleMesh = new Ammo .btTriangleMesh ();
+
+			for (var i = 0, length = vertices .length; i < length; i += 12)
+			{
+				triangleMesh .addTriangle (btVector3 (vertices [i + 0], vertices [i + 1], vertices [i + 2]),
+				                           btVector3 (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
+				                           btVector3 (vertices [i + 8], vertices [i + 9], vertices [i + 10]));	
+			}
+
+			return new Ammo .btBvhTriangleMeshShape (this .triangleMesh, false);
+		},
 		set_shape__: function ()
 		{
 			if (this .shapeNode)
@@ -119,6 +159,8 @@ function (Fields,
 				this .shapeNode .isCameraObject_ .addFieldInterest (this .isCameraObject_);
 				this .shapeNode .geometry_ .addInterest ("set_geometry__", this);
 
+				this .setCameraObject (this .shapeNode .getCameraObject ());
+
 				delete this .traverse;
 			}
 			else
@@ -128,9 +170,78 @@ function (Fields,
 		},
 		set_geometry__: function ()
 		{
+			if (this .geometryNode)
+				this .geometryNode .removeInterest ("set_collidableGeometry__", this);
+
+			if (this .shapeNode)
+				this .geometryNode = this .shapeNode .getGeometry ();
+			else
+				thios .geometryNode = null;
+
+			if (this .geometryNode)
+				this .geometryNode .addInterest ("set_collidableGeometry__", this);
+
+			this .set_collidableGeometry__ ();
 		},
 		set_collidableGeometry__: function ()
 		{
+			if (collisionShape)
+				this .getCompoundShape () .removeChildShape (this .collisionShape);
+
+			this .setOffset (Vector3 .Zero);
+
+			if (this .geometryNode && this .enabled_ .getValue ())
+			{
+				switch (this .geometryNode .getType () [this .geometryNode .getType () .length - 1])
+				{
+					case X3DConstants .Rectangle2D:
+					{
+						break;
+					}
+					case X3DConstants .Box:
+					{
+						var
+							box  = this .geometryNode,
+							size = box .size_ .getValue ();
+
+						this .collisionShape = new Ammo .btBoxShape (new Ammo .btVector3 (size .x / 2, size .y / 2, size .z / 2));
+						break;
+					}
+					case X3DConstants .Cone:
+					{
+						break;
+					}
+					case X3DConstants .Cylinder:
+					{
+						break;
+					}
+					case X3DConstants .ElevationGrid:
+					{
+						break;
+					}
+					case X3DConstants .Sphere:
+					{
+						var sphere = this .geometryNode;
+		
+						this .collisionShape = new Ammo .btSphereShape (this .sphere .radius_ .getValue ());
+						break;
+					}
+					default:
+					{
+						this .collisionShape = this .createConcaveGeometry ();
+						break;
+					}
+				}
+			}
+			else
+			{
+				this .collisionShape = null;
+			}
+
+			if (this .collisionShape)
+				this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collisionShape);
+		
+			this .addNodeEvent ();
 		},
 		traverse: function (type, renderObject)
 		{

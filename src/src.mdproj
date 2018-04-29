@@ -728,6 +728,7 @@
     <None Include="x_ite\Browser\Shaders\Background.fs" />
     <None Include="x_ite\Basic\X3DTypedArrayField.js" />
     <None Include="x_ite\Basic\X3DObjectArrayField.js" />
+    <None Include="lib\ammojs\ammo.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
@@ -737,5 +738,6 @@
     <Folder Include="x_ite\" />
     <Folder Include="x_ite\Components\VolumeRendering\" />
     <Folder Include="x_ite\Components\X_ITE\" />
+    <Folder Include="lib\ammojs\" />
   </ItemGroup>
 </Project>

@@ -145,6 +145,7 @@ function (Fields,
 						case X3DConstants .X3DShapeNode:
 						{
 							node .isCameraObject_ .addFieldInterest (this .isCameraObject_);
+							this .setCameraObject (node .getCameraObject ());
 							this .shapeNode = node;
 							break;
 						}

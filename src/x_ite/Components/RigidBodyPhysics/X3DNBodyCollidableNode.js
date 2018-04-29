@@ -51,12 +51,16 @@ define ([
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
+	"lib/ammojs/ammo",
 ],
 function (X3DChildNode, 
           X3DBoundedObject, 
           X3DConstants,
-          Matrix4)
+          Vector3,
+          Matrix4,
+          Ammo)
 {
 "use strict";
 
@@ -67,7 +71,9 @@ function (X3DChildNode,
 
 		this .addType (X3DConstants .X3DNBodyCollidableNode);
 
-		this .matrix = new Matrix4 ();
+		this .compoundShape = new Ammo .btCompoundShape ()
+		this .offset        = new Vector3 ();
+		this .matrix        = new Matrix4 ();
 	}
 
 	X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -82,6 +88,31 @@ function (X3DChildNode,
 			this .addInterest ("eventsProcessed", this);
 
 			this .eventsProcessed ();
+		},
+		getLocalTransform: function ()
+		{
+			var
+				l = new Ammo .btTransform (),
+				m = new Matrix4 ();
+		
+			m .set (this .translation_ .getValue (), this .rotation_ .getValue ());
+			m .translate (this .offset);
+		
+			l .setFromOpenGLMatrix (m);
+
+			return l;
+		},
+		getCompoundShape: function ()
+		{
+			return this .compoundShape;
+		},
+		setOffset: function (value)
+		{
+			this .offset .assign (value);
+		},
+		getOffset: function ()
+		{
+			return this .offset;
 		},
 		getMatrix: function ()
 		{
