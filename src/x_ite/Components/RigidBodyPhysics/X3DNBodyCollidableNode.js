@@ -64,6 +64,8 @@ function (X3DChildNode,
 {
 "use strict";
 
+	var m = new Matrix4 ();
+
 	function X3DNBodyCollidableNode (executionContext)
 	{
 		X3DChildNode     .call (this, executionContext);
@@ -71,9 +73,10 @@ function (X3DChildNode,
 
 		this .addType (X3DConstants .X3DNBodyCollidableNode);
 
-		this .compoundShape = new Ammo .btCompoundShape ()
-		this .offset        = new Vector3 ();
-		this .matrix        = new Matrix4 ();
+		this .compoundShape  = new Ammo .btCompoundShape ()
+		this .offset         = new Vector3 ();
+		this .matrix         = new Matrix4 ();
+		this .localTransform = new Ammo .btTransform ();
 	}
 
 	X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -91,16 +94,12 @@ function (X3DChildNode,
 		},
 		getLocalTransform: function ()
 		{
-			var
-				l = new Ammo .btTransform (),
-				m = new Matrix4 ();
-		
-			m .set (this .translation_ .getValue (), this .rotation_ .getValue ());
+			m .assign (this .getMatrix ());
 			m .translate (this .offset);
-		
-			l .setFromOpenGLMatrix (m);
 
-			return l;
+			this .localTransform .setFromOpenGLMatrix (m);
+
+			return this .localTransform;
 		},
 		getCompoundShape: function ()
 		{
