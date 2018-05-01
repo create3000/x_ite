@@ -66,8 +66,6 @@ function (Fields,
 {
 "use strict";
 
-	var m = new Matrix4 ();
-
 	function X3DNBodyCollidableNode (executionContext)
 	{
 		X3DChildNode     .call (this, executionContext);
@@ -84,7 +82,7 @@ function (Fields,
 		// Members
 
 		this .compoundShape  = new Ammo .btCompoundShape ()
-		this .offset         = new Vector3 ();
+		this .offset         = new Vector3 (0, 0, 0);
 		this .matrix         = new Matrix4 ();
 		this .localTransform = new Ammo .btTransform ();
 	}
@@ -102,15 +100,26 @@ function (Fields,
 
 			this .eventsProcessed ();
 		},
-		getLocalTransform: function ()
+		getLocalTransform: (function ()
 		{
-			m .assign (this .getMatrix ());
-			m .translate (this .offset);
+			var m = new Matrix4 ();
 
-			this .localTransform .setFromOpenGLMatrix (m);
+			return function ()
+			{
+				m .assign (this .getMatrix ());
+				m .translate (this .offset);
 
-			return this .localTransform;
-		},
+				//this .localTransform .setFromOpenGLMatrix (m);
+
+				this .localTransform .getBasis () .setValue (m [0], m [4], m [8],
+				                                             m [1], m [5], m [9],
+				                                             m [2], m [6], m [10]);
+
+				this .localTransform .setOrigin (new Ammo .btVector3 (m [12], m [13], m [14]));
+	
+				return this .localTransform;
+			};
+		})(),
 		setBody: function (value)
 		{
 			this .body_ = value;
@@ -139,6 +148,9 @@ function (Fields,
 		{
 			this .matrix .set (this .translation_ .getValue (),
 			                   this .rotation_    .getValue ());
+
+			if (this .compoundShape .getNumChildShapes ())
+				this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
 		},	
 	});
 

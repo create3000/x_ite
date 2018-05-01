@@ -183,35 +183,45 @@ function (Fields,
 			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
 				this .geometryNodes [i] .rotation_ = this .orientation_;
 		},
-		set_transform__: function ()
+		set_transform__: (function ()
 		{
 			var
-				p  = this .position_ .getValue (),
-				q  = this .orientation_ .getValue () .value,
-				t  = new Ammo .btTransform (new Ammo .btQuaternion (q .x, q .y, q .z, q .w), new Ammo .btVector3 (p .x, p .y, p .z));
-		
-			var
-				it = new Ammo .btTransform (),
-				im = new Matrix4 ();
-		
-			im .set (this .position_ .getValue (), this .orientation_ .getValue ());
-			im .inverse ();
-	
-			it .setFromOpenGLMatrix (im);
-		
-			var compoundShape = this .compoundShape;
-		
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-				compoundShape .updateChildTransform (i, it, false);
+				it = new Ammo .btTransform ();
 
-			this .compoundShape .recalculateLocalAabb ();
-			this .motionState .setWorldTransform (t);
+			return function ()
+			{
+				var
+					p  = this .position_ .getValue (),
+					q  = this .orientation_ .getValue () .value,
+					t  = new Ammo .btTransform (new Ammo .btQuaternion (q .x, q .y, q .z, q .w), new Ammo .btVector3 (p .x, p .y, p .z));
+			
+				var im = new Matrix4 ();
+
+				im .set (this .position_ .getValue (), this .orientation_ .getValue ());
+				im .inverse ();
 		
-			this .rigidBody .setMotionState (this .motionState);
-		},
+				//it .setFromOpenGLMatrix (im);
+
+				it .getBasis () .setValue (im [0], im [4], im [8],
+				                           im [1], im [5], im [9],
+				                           im [2], im [6], im [10]);
+
+				it .setOrigin (new Ammo .btVector3 (im [12], im [13], im [14]));
+			
+				var compoundShape = this .compoundShape;
+
+				for (var i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
+					compoundShape .updateChildTransform (i, it, false);
+	
+				this .compoundShape .recalculateLocalAabb ();
+				this .motionState .setWorldTransform (t);
+			
+				this .rigidBody .setMotionState (this .motionState);
+			};
+		})(),
 		set_linearVelocity__: function ()
 		{
-			this .rigidBody .setLinearVelocity (new Ammo .btVector3 (this .linearVelocity_ .x, this .linearVelocity_ .y, (this .linearVelocity_ .z)));
+			this .rigidBody .setLinearVelocity (new Ammo .btVector3 (this .linearVelocity_ .x, this .linearVelocity_ .y, this .linearVelocity_ .z));
 			this .rigidBody .activate ();
 		},
 		set_angularVelocity__: function ()
@@ -354,7 +364,7 @@ function (Fields,
 				this .orientation_     = new Rotation4 (new Quaternion (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ()));
 				this .linearVelocity_  = linearVelocity .set (btLinearVeloctity .x (), btLinearVeloctity .y (), btLinearVeloctity .z ());
 				this .angularVelocity_ = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
-			}
+			};
 		})(),
 	});
 
