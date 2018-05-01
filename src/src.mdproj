@@ -728,6 +728,7 @@
     <None Include="x_ite\Browser\Shaders\Background.fs" />
     <None Include="x_ite\Basic\X3DTypedArrayField.js" />
     <None Include="x_ite\Basic\X3DObjectArrayField.js" />
+    <None Include="lib\ammojs\ammo.js.N" />
     <None Include="lib\ammojs\ammo.js" />
   </ItemGroup>
   <ItemGroup>

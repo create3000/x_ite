@@ -55,6 +55,10 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Quaternion",
+	"standard/Math/Numbers/Matrix4",
+	"lib/ammojs/ammo",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,7 +66,11 @@ function (Fields,
           X3DNode, 
           X3DConstants,
           X3DCast,
-          Vector3)
+          Vector3,
+          Rotation4,
+          Quaternion,
+          Matrix4,
+          Ammo)
 {
 "use strict";
 
@@ -165,23 +173,72 @@ function (Fields,
 		{
 			return this .rigidBody;
 		},
-		set_linearVelocity__: function ()
+		set_position__: function ()
 		{
+			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+				this .geometryNodes [i] .translation_ = this .position_;
 		},
-		set_angularVelocity__: function ()
+		set_orientation__: function ()
 		{
+			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+				this .geometryNodes [i] .rotation_ = this .orientation_;
 		},
 		set_transform__: function ()
 		{
+			var
+				p  = this .position_ .getValue (),
+				q  = this .orientation_ .getValue () .value,
+				t  = new Ammo .btTransform (new Ammo .btQuaternion (q .x, q .y, q .z, q .w), new Ammo .btVector3 (p .x, p .y, p .z));
+		
+			var
+				it = new Ammo .btTransform (),
+				im = new Matrix4 ();
+		
+			im .set (this .position_ .getValue (), this .orientation_ .getValue ());
+			im .inverse ();
+	
+			it .setFromOpenGLMatrix (im);
+		
+			var compoundShape = this .compoundShape;
+		
+			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+				compoundShape .updateChildTransform (i, it, false);
+
+			this .compoundShape .recalculateLocalAabb ();
+			this .motionState .setWorldTransform (t);
+		
+			this .rigidBody .setMotionState (this .motionState);
+		},
+		set_linearVelocity__: function ()
+		{
+			this .rigidBody .setLinearVelocity (new Ammo .btVector3 (this .linearVelocity_ .x, this .linearVelocity_ .y, (this .linearVelocity_ .z)));
+			this .rigidBody .activate ();
+		},
+		set_angularVelocity__: function ()
+		{
+			this .rigidBody .setAngularVelocity (new Ammo .btVector3 (this .angularVelocity_ .x, this .angularVelocity_ .y, this .angularVelocity_ .z));
+			this .rigidBody .activate ();
 		},
 		set_finiteRotationAxis__: function ()
 		{
 		},
-		set_massProps__: function ()
-		{
-		},
 		set_damping__: function ()
 		{
+		},
+		set_centerOfMass__: function ()
+		{
+		},
+		set_massProps__: function ()
+		{
+			var
+				inertia      = this .inertia_,
+				localInertia = new Ammo .btVector3 (inertia [0] + inertia [1] + inertia [2],
+			                                       inertia [3] + inertia [4] + inertia [5],
+			                                       inertia [6] + inertia [7] + inertia [8]);
+		
+			this .compoundShape .calculateLocalInertia (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
+		
+			this .rigidBody .setMassProps (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
 		},
 		set_forces__: function ()
 		{
@@ -247,13 +304,58 @@ function (Fields,
 		},
 		set_compoundShape__: function ()
 		{
+			var compoundShape = this .compoundShape;
+
+			for (var i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
+				compoundShape .removeChildShape (compoundShape .getChildShape (i));
+		
+			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+				compoundShape .addChildShape (new Ammo .btTransform (), this .geometryNodes [i] .getCompoundShape ());
+
+			this .set_position__ ();
+			this .set_orientation__ ();
+			this .set_transform__ ();
+			this .set_linearVelocity__ ();
+			this .set_angularVelocity__ ();
+			this .set_finiteRotationAxis__ ();
+			this .set_damping__ ();
+			this .set_centerOfMass__ ();
+			this .set_massProps__ ();
+			this .set_disable__ ();
 		},
 		applyForces: function (gravity)
 		{
+			if (this .fixed_ .getValue ())
+				return;
+		
+			this .rigidBody .setGravity (this .useGlobalGravity_ .getValue () ? new Ammo .btVector3 (gravity .x, gravity .y, gravity .z) : new Ammo .btVector3 (0, 0, 0));
+			this .rigidBody .applyForce (new Ammo .btVector3 (this .force .x, this .force .y, this .force .z), new Ammo .btVector3 (0, 0, 0));
+			this .rigidBody .applyTorque (new Ammo .btVector3 (this .torque .x, this .torque .y, this .torque .z));
 		},
-		update: function ()
+		update: (function ()
 		{
-		},
+			var
+				transform       = new Ammo .btTransform (),
+				position        = new Vector3 (0, 0, 0),
+				linearVelocity  = new Vector3 (0, 0, 0),
+				angularVelocity = new Vector3 (0, 0, 0);
+
+			return function ()
+			{
+				this .motionState .getWorldTransform (transform);
+			
+				var
+					btOrigin          = transform .getOrigin (),
+					btQuaternion      = transform .getRotation (),
+					btLinearVeloctity = this .rigidBody .getLinearVelocity (),
+					btAngularVelocity = this .rigidBody .getAngularVelocity ();
+			
+				this .position_        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
+				this .orientation_     = new Rotation4 (new Quaternion (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ()));
+				this .linearVelocity_  = linearVelocity .set (btLinearVeloctity .x (), btLinearVeloctity .y (), btLinearVeloctity .z ());
+				this .angularVelocity_ = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
+			}
+		})(),
 	});
 
 	return RigidBody;

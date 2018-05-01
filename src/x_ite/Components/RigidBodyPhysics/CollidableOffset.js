@@ -151,7 +151,7 @@ function (Fields,
 		set_collidableGeometry__: function ()
 		{
 			if (this .getCompoundShape () .getNumChildShapes ())
-				this .getCompoundShape () .removeChildShape (this .getCompoundShape () .getChildShape (0));
+				this .getCompoundShape () .removeChildShapeByIndex (0);
 		
 			if (this .collidableNode && this .enabled_ .getValue ())
 				this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collidableNode .getCompoundShape ());
