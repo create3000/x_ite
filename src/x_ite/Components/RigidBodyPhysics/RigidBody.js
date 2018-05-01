@@ -53,12 +53,16 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
-          X3DConstants)
+          X3DConstants,
+          X3DCast,
+          Vector3)
 {
 "use strict";
 
@@ -67,6 +71,16 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .RigidBody);
+
+		this .addChildObjects ("collection", new Fields .SFNode (),
+		                       "transform",  new Fields .SFTime ());
+
+		this .compoundShape = new Ammo .btCompoundShape ();
+		this .motionState   = new Ammo .btDefaultMotionState ();
+		this .rigidBody     = new Ammo .btRigidBody (new Ammo .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape));
+		this .geometryNodes = [ ];
+		this .force         = new Vector3 (0, 0, 0);
+		this .torque        = new Vector3 (0, 0, 0);
 	}
 
 	RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -109,6 +123,136 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "bodies";
+		},
+		initialize: function ()
+		{
+			X3DNode .prototype .initialize .call (this);
+
+			this .linearVelocity_       .addInterest ("set_linearVelocity__",     this);
+			this .angularVelocity_      .addInterest ("set_angularVelocity__",    this);
+			this .useFiniteRotation_    .addInterest ("set_finiteRotationAxis__", this);
+			this .finiteRotationAxis_   .addInterest ("set_finiteRotationAxis__", this);
+			this .autoDamp_             .addInterest ("set_damping__",            this);
+			this .linearDampingFactor_  .addInterest ("set_damping__",            this);
+			this .angularDampingFactor_ .addInterest ("set_damping__",            this);
+			this .forces_               .addInterest ("set_forces__",             this);
+			this .torques_              .addInterest ("set_torques__",            this);
+			this .disableTime_          .addInterest ("set_disable__",            this);
+			this .disableTime_          .addInterest ("set_disable__",            this);
+			this .disableLinearSpeed_   .addInterest ("set_disable__",            this);
+			this .disableAngularSpeed_  .addInterest ("set_disable__",            this);
+			this .geometry_             .addInterest ("set_geometry__",           this);
+
+			this .fixed_   .addInterest ("set_massProps__", this);
+			this .mass_    .addInterest ("set_massProps__", this);
+			this .inertia_ .addInterest ("set_massProps__", this);
+
+			this .transform_ .addInterest ("set_transform__", this);
+
+			this .set_geometry__ ();
+			this .set_forces__ ();
+			this .set_torques__ ();
+		},
+		setCollection: function (value)
+		{
+			this .collection_ = value;
+		},
+		getCollection: function ()
+		{
+			return this .collection_ .getValue ();
+		},
+		getRigidBody: function ()
+		{
+			return this .rigidBody;
+		},
+		set_linearVelocity__: function ()
+		{
+		},
+		set_angularVelocity__: function ()
+		{
+		},
+		set_transform__: function ()
+		{
+		},
+		set_finiteRotationAxis__: function ()
+		{
+		},
+		set_massProps__: function ()
+		{
+		},
+		set_damping__: function ()
+		{
+		},
+		set_forces__: function ()
+		{
+		},
+		set_torques__: function ()
+		{
+		},
+		set_disable__: function ()
+		{
+		},
+		set_geometry__: function ()
+		{
+			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+			{
+				var geometryNode = this .geometryNodes [i];
+
+				geometryNode .removeInterest ("addEvent", this .transform_);
+				geometryNode .body_ .removeInterest ("set_geometry__", this);
+		
+				geometryNode .setBody (null);
+		
+				geometryNode .translation_ .removeFieldInterest (this .position_);
+				geometryNode .rotation_    .removeFieldInterest (this .orientation_);
+		
+				this .position_    .removeFieldInterest (geometryNode .translation_);
+				this .orientation_ .removeFieldInterest (geometryNode .rotation_);
+			}
+
+			this .geometryNodes .length = 0;
+
+			for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
+			{
+				var geometryNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .geometry_ [i]);
+				
+				if (! geometryNode)
+					continue;
+		
+				if (geometryNode .getBody ())
+				{
+					geometryNode .body_ .addInterest ("set_geometry__", this);
+					continue;
+				}
+		
+				geometryNode .setBody (this);
+		
+				this .geometryNodes .push (geometryNode);
+			}
+		
+			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+			{
+				var geometryNode = this .geometryNodes [i];
+
+				geometryNode .addInterest ("addEvent", this .transform_);
+
+				geometryNode .translation_ .addFieldInterest (this .position_);
+				geometryNode .rotation_    .addFieldInterest (this .orientation_);
+
+				this .position_    .addFieldInterest (geometryNode .translation_);
+				this .orientation_ .addFieldInterest (geometryNode .rotation_);
+			}
+
+			this .set_compoundShape__ ();
+		},
+		set_compoundShape__: function ()
+		{
+		},
+		applyForces: function (gravity)
+		{
+		},
+		update: function ()
+		{
 		},
 	});
 

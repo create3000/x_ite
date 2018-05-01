@@ -48,6 +48,7 @@
 
 
 define ([
+	"x_ite/Fields",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DConstants",
@@ -55,7 +56,8 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"lib/ammojs/ammo",
 ],
-function (X3DChildNode, 
+function (Fields,
+          X3DChildNode, 
           X3DBoundedObject, 
           X3DConstants,
           Vector3,
@@ -72,6 +74,14 @@ function (X3DChildNode,
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DNBodyCollidableNode);
+
+		this .addChildObjects ("body", new Fields .SFNode ());
+
+		// Units
+	
+		this .translation_ .setUnit ("length");
+
+		// Members
 
 		this .compoundShape  = new Ammo .btCompoundShape ()
 		this .offset         = new Vector3 ();
@@ -100,6 +110,14 @@ function (X3DChildNode,
 			this .localTransform .setFromOpenGLMatrix (m);
 
 			return this .localTransform;
+		},
+		setBody: function (value)
+		{
+			this .body_ = value;
+		},
+		getBody: function ()
+		{
+			return this .body_ .getValue ();
 		},
 		getCompoundShape: function ()
 		{

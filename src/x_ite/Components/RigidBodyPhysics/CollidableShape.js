@@ -137,9 +137,9 @@ function (Fields,
 
 			for (var i = 0, length = vertices .length; i < length; i += 12)
 			{
-				triangleMesh .addTriangle (btVector3 (vertices [i + 0], vertices [i + 1], vertices [i + 2]),
-				                           btVector3 (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
-				                           btVector3 (vertices [i + 8], vertices [i + 9], vertices [i + 10]));	
+				this .triangleMesh .addTriangle (Ammo .btVector3 (vertices [i + 0], vertices [i + 1], vertices [i + 2]),
+				                                 Ammo .btVector3 (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
+				                                 Ammo .btVector3 (vertices [i + 8], vertices [i + 9], vertices [i + 10]));	
 			}
 
 			return new Ammo .btBvhTriangleMeshShape (this .triangleMesh, false);
@@ -165,8 +165,12 @@ function (Fields,
 			}
 			else
 			{
+				this .setCameraObject (false);
+
 				this .traverse = Function .prototype;
 			}
+
+			this .set_geometry__ ();
 		},
 		set_geometry__: function ()
 		{
@@ -185,10 +189,12 @@ function (Fields,
 		},
 		set_collidableGeometry__: function ()
 		{
-			if (collisionShape)
+			if (this .collisionShape)
 				this .getCompoundShape () .removeChildShape (this .collisionShape);
 
 			this .setOffset (Vector3 .Zero);
+
+			this .triangleMesh = null;
 
 			if (this .geometryNode && this .enabled_ .getValue ())
 			{
@@ -223,7 +229,7 @@ function (Fields,
 					{
 						var sphere = this .geometryNode;
 		
-						this .collisionShape = new Ammo .btSphereShape (this .sphere .radius_ .getValue ());
+						this .collisionShape = new Ammo .btSphereShape (sphere .radius_ .getValue ());
 						break;
 					}
 					default:

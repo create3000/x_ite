@@ -53,12 +53,16 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"lib/ammojs/ammo",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
-          X3DConstants)
+          X3DConstants,
+          X3DCast,
+          Ammo)
 {
 "use strict";
 
@@ -67,6 +71,26 @@ function (Fields,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .RigidBodyCollection);
+
+		// Units
+	
+		this .gravity_                 .setUnit ("acceleration");
+		this .constantForceMix_        .setUnit ("force");
+		this .maxCorrectionSpeed_      .setUnit ("speed");
+		this .contactSurfaceThickness_ .setUnit ("length");
+		this .disableLinearSpeed_      .setUnit ("length");
+		this .disableAngularSpeed_     .setUnit ("angularRate");
+
+		// Members
+
+		this .broadphase             = new Ammo .btDbvtBroadphase ();
+		this .collisionConfiguration = new Ammo .btDefaultCollisionConfiguration ();
+		this .dispatcher             = new Ammo .btCollisionDispatcher (this .collisionConfiguration);
+		this .solver                 = new Ammo .btSequentialImpulseConstraintSolver ();
+		this .dynamicsWorld          = new Ammo .btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
+		this .bodyNodes              = [ ];
+		this .rigidBodies            = [ ];
+		this .deltaTime              = 0;
 	}
 
 	RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -102,6 +126,161 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .isLive () .addInterest ("set_enabled__", this);
+			this .getExecutionContext () .isLive () .addInterest ("set_enabled__", this);
+
+			this .enabled_                 .addInterest ("set_enabled__", this);
+			this .set_contacts_            .addInterest ("set_contacts__", this);
+			this .gravity_                 .addInterest ("set_gravity__", this);
+			this .contactSurfaceThickness_ .addInterest ("set_contactSurfaceThickness__", this);
+			this .collider_                .addInterest ("set_collider__", this);
+			this .bodies_                  .addInterest ("set_bodies__", this);
+			this .joints_                  .addInterest ("set_joints__", this);
+
+			this .set_enabled__ ();
+			this .set_gravity__ ();
+			this .set_collider__ ();
+			this .set_bodies__ ();
+		},
+		getTimeStep: function ()
+		{
+			const DELAY = 15; // Delay in frames when dt full applies.
+		
+			var
+				dt        = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ()),
+				deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
+		
+			return deltaTime;
+		},
+		set_enabled__: function ()
+		{
+			if (this .getExecutionContext () .isLive () .getValue () && this .isLive () .getValue () && this .enabled_ .getValue ())
+				this .getBrowser () .sensorEvents () .addInterest ("update", this);
+			else
+				this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+		},
+		set_contacts__: function ()
+		{
+		},
+		set_gravity__: function ()
+		{
+			this .dynamicsWorld .setGravity (new Ammo .btVector3 (this .gravity_ .x,
+			                                                      this .gravity_ .y,
+			                                                      this .gravity_ .z));
+		},
+		set_contactSurfaceThickness__: function ()
+		{
+		},
+		set_collider__: function ()
+		{
+		},
+		set_frictionCoefficients__: function ()
+		{
+		},
+		set_bounce__: function ()
+		{
+		},
+		set_bodies__: function ()
+		{
+			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+			{
+				var bodyNode = this .bodyNodes [i];
+
+				bodyNode .enabled_    .removeInterest ("set_dynamicsWorld__", this);
+				bodyNode .collection_ .removeInterest ("set_bodies__",        this);
+		
+				bodyNode .setCollection (null);
+			}
+
+			this .bodyNodes .length = 0;
+
+			for (var i = 0, length = this .bodies_ .length; i < length; ++ i)
+			{
+				var bodyNode = X3DCast (X3DConstants .RigidBody, this .bodies_ [i]);
+
+				if (! bodyNode)
+					continue;
+		
+				if (bodyNode .getCollection ())
+				{
+					bodyNode .collection_ .addInterest ("set_bodies__", this);
+					continue;
+				}
+		
+				bodyNode .setCollection (this);
+		
+				this .bodyNodes .push (bodyNode);
+			}
+
+			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+			{
+				this .bodyNodes [i] .enabled_ .addInterest ("set_dynamicsWorld__", this);
+			}
+
+			this .set_contactSurfaceThickness__ ();
+			this .set_joints__ ();
+			this .set_dynamicsWorld__ ();
+		},
+		set_dynamicsWorld__: function ()
+		{
+			for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
+				this .dynamicsWorld .removeRigidBody (this .rigidBodies [i]);
+
+			this .rigidBodies .length = 0;
+
+			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+			{
+				var bodyNode = this .bodyNodes [i];
+
+				if (! bodyNode .enabled_ .getValue ())
+					continue;
+		
+				this .rigidBodies .push (bodyNode .getRigidBody ());
+			}
+		
+			for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
+				this .dynamicsWorld .addRigidBody (this .rigidBodies [i]);
+		},
+		set_joints__: function ()
+		{
+		},
+		update: function ()
+		{
+			var
+				deltaTime  = this .getTimeStep (),
+				iterations = this .iterations_ .getValue (),
+				gravity    = this .gravity_ .getValue ();
+		
+			this .set_bounce__ ();
+			this .set_frictionCoefficients__ ();
+		
+			if (this .preferAccuracy_ .getValue ())
+			{
+				deltaTime /= iterations;
+		
+				for (var i = 0; i < iterations; ++ i)
+				{
+					for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+						this .bodyNodes [i] .applyForces (gravity);
+		
+					this .dynamicsWorld .stepSimulation (deltaTime, 0);
+				}
+			}
+			else
+			{
+				for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+					this .bodyNodes [i] .applyForces (gravity);
+		
+				this .dynamicsWorld .stepSimulation (deltaTime, iterations + 2, deltaTime / iterations);
+			}
+		
+			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+				this .bodyNodes [i] .update ();
 		},
 	});
 
