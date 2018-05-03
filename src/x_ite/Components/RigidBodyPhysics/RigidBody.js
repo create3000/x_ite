@@ -196,6 +196,8 @@ function (Fields,
 			return function ()
 			{
 				m .set (this .position_ .getValue (), this .orientation_ .getValue ())
+		
+				//t .setFromOpenGLMatrix (m);
 
 				o .setValue (m [12], m [13], m [14]);
 
@@ -243,12 +245,18 @@ function (Fields,
 		},
 		set_finiteRotationAxis__: function ()
 		{
+			if (this .useFiniteRotation_ .getValue ())
+				this .rigidBody .setAngularFactor (new Ammo .btVector3 (this .finiteRotationAxis_ .x, this .finiteRotationAxis_ .y, this .finiteRotationAxis_ .z));
+			else
+				this .rigidBody .setAngularFactor (new Ammo .btVector3 (1, 1, 1));
 		},
 		set_damping__: function ()
 		{
 		},
 		set_centerOfMass__: function ()
 		{
+			this .rigidBody .setCenterOfMassTransform (new Ammo .btTransform (new Ammo .btQuaternion (0, 0, 0, 1),
+			                                                                  new Ammo .btVector3 (this .centerOfMass_ .x, this .centerOfMass_ .y, this .centerOfMass_ .z)));
 		},
 		set_massProps__: function ()
 		{
@@ -264,9 +272,17 @@ function (Fields,
 		},
 		set_forces__: function ()
 		{
+			this .force .set (0, 0, 0);
+
+			for (var i = 0, length = this .forces_ .length; i < length; ++ i)
+				this .force .add (this .forces_ [i] .getValue ());
 		},
 		set_torques__: function ()
 		{
+			this .torque .set (0, 0, 0);
+
+			for (var i = 0, length = this .torques_ .length; i < length; ++ i)
+				this .torque .add (this .torques_ [i] .getValue ());
 		},
 		set_disable__: function ()
 		{

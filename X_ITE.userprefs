@@ -1,10 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/RigidBodyPhysics/RigidBody.js">
     <Files>
       <File FileName="src/x_ite.html" Line="298" Column="35" />
-      <File FileName="src/x_ite/Components/Text/FontStyle.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Text/X3DFontStyleNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/RigidBody.js" Line="395" Column="50" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableShape.js" Line="183" Column="8" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableOffset.js" Line="153" Column="52" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode.js" Line="117" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
