@@ -180,7 +180,7 @@ function (Fields,
 			if (this .shapeNode)
 				this .geometryNode = this .shapeNode .getGeometry ();
 			else
-				thios .geometryNode = null;
+				this .geometryNode = null;
 
 			if (this .geometryNode)
 				this .geometryNode .addInterest ("set_collidableGeometry__", this);
@@ -215,10 +215,27 @@ function (Fields,
 					}
 					case X3DConstants .Cone:
 					{
+						var cone = this .geometryNode;
+		
+						if (cone .side_ .getValue () && cone .bottom_ .getValue ())
+							this .collisionShape = new Ammo .btConeShape (cone .bottomRadius_ .getValue (), cone .height_ .getValue ());
+						else
+							this .collisionShape = this .createConcaveGeometry ();
+
 						break;
 					}
 					case X3DConstants .Cylinder:
 					{
+						var
+							cylinder  = this .geometryNode,
+							radius    = cylinder .radius_ .getValue (),
+							height1_2 = cylinder .height_ .getValue () * 0.5;
+		
+						if (cylinder .side_ .getValue () && cylinder .top_ .getValue () && cylinder .bottom_ .getValue ())
+							this .collisionShape = new Ammo .btCylinderShape (new Ammo .btVector3 (radius, height1_2, radius));
+						else
+							this .collisionShape = this .createConcaveGeometry ();
+
 						break;
 					}
 					case X3DConstants .ElevationGrid:

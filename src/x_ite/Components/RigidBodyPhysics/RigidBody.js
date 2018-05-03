@@ -186,27 +186,39 @@ function (Fields,
 		set_transform__: (function ()
 		{
 			var
-				it = new Ammo .btTransform ();
+				o = new Ammo .btVector3 (0, 0, 0),
+				m  = new Matrix4 (),
+				t  = new Ammo .btTransform (),
+				im = new Matrix4 (),
+				it = new Ammo .btTransform (),
+				io = new Ammo .btVector3 (0, 0, 0);
 
 			return function ()
 			{
-				var
-					p  = this .position_ .getValue (),
-					q  = this .orientation_ .getValue () .value,
-					t  = new Ammo .btTransform (new Ammo .btQuaternion (q .x, q .y, q .z, q .w), new Ammo .btVector3 (p .x, p .y, p .z));
-			
-				var im = new Matrix4 ();
+				m .set (this .position_ .getValue (), this .orientation_ .getValue ())
 
-				im .set (this .position_ .getValue (), this .orientation_ .getValue ());
+				o .setValue (m [12], m [13], m [14]);
+
+				t .getBasis () .setValue (m [0], m [4], m [8],
+				                          m [1], m [5], m [9],
+				                          m [2], m [6], m [10]);
+
+				t .setOrigin (o);
+
+				//
+
+				im .assign (m);
 				im .inverse ();
 		
 				//it .setFromOpenGLMatrix (im);
+
+				io .setValue (im [12], im [13], im [14]);
 
 				it .getBasis () .setValue (im [0], im [4], im [8],
 				                           im [1], im [5], im [9],
 				                           im [2], im [6], im [10]);
 
-				it .setOrigin (new Ammo .btVector3 (im [12], im [13], im [14]));
+				it .setOrigin (io);
 			
 				var compoundShape = this .compoundShape;
 
@@ -333,20 +345,38 @@ function (Fields,
 			this .set_massProps__ ();
 			this .set_disable__ ();
 		},
-		applyForces: function (gravity)
+		applyForces: (function ()
 		{
-			if (this .fixed_ .getValue ())
-				return;
-		
-			this .rigidBody .setGravity (this .useGlobalGravity_ .getValue () ? new Ammo .btVector3 (gravity .x, gravity .y, gravity .z) : new Ammo .btVector3 (0, 0, 0));
-			this .rigidBody .applyForce (new Ammo .btVector3 (this .force .x, this .force .y, this .force .z), new Ammo .btVector3 (0, 0, 0));
-			this .rigidBody .applyTorque (new Ammo .btVector3 (this .torque .x, this .torque .y, this .torque .z));
-		},
+			var
+				g = new Ammo .btVector3 (0, 0, 0),
+				f = new Ammo .btVector3 (0, 0, 0),
+				t = new Ammo .btVector3 (0, 0, 0),
+				z = new Ammo .btVector3 (0, 0, 0);
+
+			return function (gravity)
+			{
+				if (this .fixed_ .getValue ())
+					return;
+
+				if (this .useGlobalGravity_ .getValue ())
+					g .setValue (gravity .x, gravity .y, gravity .z);
+				else
+					g .setValue (0, 0, 0);
+
+				f .setValue (this .force  .x, this .force  .y, this .force  .z);
+				t .setValue (this .torque .x, this .torque .y, this .torque .z);
+
+				this .rigidBody .setGravity (g);
+				this .rigidBody .applyForce (f, z);
+				this .rigidBody .applyTorque (t);
+			};
+		})(),
 		update: (function ()
 		{
 			var
 				transform       = new Ammo .btTransform (),
 				position        = new Vector3 (0, 0, 0),
+				orientation     = new Rotation4 (0, 0, 1, 0),
 				linearVelocity  = new Vector3 (0, 0, 0),
 				angularVelocity = new Vector3 (0, 0, 0);
 
@@ -360,8 +390,10 @@ function (Fields,
 					btLinearVeloctity = this .rigidBody .getLinearVelocity (),
 					btAngularVelocity = this .rigidBody .getAngularVelocity ();
 			
+				orientation .value .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
+
 				this .position_        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
-				this .orientation_     = new Rotation4 (new Quaternion (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ()));
+				this .orientation_     = orientation;
 				this .linearVelocity_  = linearVelocity .set (btLinearVeloctity .x (), btLinearVeloctity .y (), btLinearVeloctity .z ());
 				this .angularVelocity_ = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
 			};

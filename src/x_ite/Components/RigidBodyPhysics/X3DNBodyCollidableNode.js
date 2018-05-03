@@ -102,7 +102,9 @@ function (Fields,
 		},
 		getLocalTransform: (function ()
 		{
-			var m = new Matrix4 ();
+			var
+				m = new Matrix4 (),
+				o = new Ammo .btVector3 (0, 0, 0);
 
 			return function ()
 			{
@@ -111,11 +113,13 @@ function (Fields,
 
 				//this .localTransform .setFromOpenGLMatrix (m);
 
+				o .setValue (m [12], m [13], m [14]);
+
 				this .localTransform .getBasis () .setValue (m [0], m [4], m [8],
 				                                             m [1], m [5], m [9],
 				                                             m [2], m [6], m [10]);
 
-				this .localTransform .setOrigin (new Ammo .btVector3 (m [12], m [13], m [14]));
+				this .localTransform .setOrigin (o);
 	
 				return this .localTransform;
 			};
