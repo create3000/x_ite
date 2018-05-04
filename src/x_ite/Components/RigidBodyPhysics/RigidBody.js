@@ -252,6 +252,12 @@ function (Fields,
 		},
 		set_damping__: function ()
 		{
+			if (this .autoDamp_ .getValue ())
+				this .rigidBody .setDamping (this .linearDampingFactor_ .getValue (), this .angularDampingFactor_ .getValue ());
+			else
+				this .rigidBody .setDamping (0, 0);
+		
+			this .rigidBody .activate ();
 		},
 		set_centerOfMass__: function ()
 		{
@@ -286,6 +292,14 @@ function (Fields,
 		},
 		set_disable__: function ()
 		{
+			if (this .autoDisable_ .getValue ())
+			{
+				this .rigidBody .setSleepingThresholds (this .disableLinearSpeed_ .getValue (), this .disableAngularSpeed_ .getValue ());
+			}
+			else
+			{
+				this .rigidBody .setSleepingThresholds (0, 0);
+			}
 		},
 		set_geometry__: function ()
 		{
