@@ -88,6 +88,7 @@ function (Fields,
 		this .dispatcher             = new Ammo .btCollisionDispatcher (this .collisionConfiguration);
 		this .solver                 = new Ammo .btSequentialImpulseConstraintSolver ();
 		this .dynamicsWorld          = new Ammo .btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
+		this .colliderNode           = null;
 		this .bodyNodes              = [ ];
 		this .rigidBodies            = [ ];
 		this .deltaTime              = 0;
@@ -175,15 +176,59 @@ function (Fields,
 		},
 		set_contactSurfaceThickness__: function ()
 		{
+			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+				this .bodyNodes [i] .getRigidBody () .getCollisionShape () .setMargin (this .contactSurfaceThickness_ .getValue ());
 		},
 		set_collider__: function ()
 		{
-		},
-		set_frictionCoefficients__: function ()
-		{
+			this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this .collider_);
 		},
 		set_bounce__: function ()
 		{
+//			if (this .colliderNode)
+//			{
+//				if (colliderNode -> getAppliedParameters () .count (AppliedParametersType::BOUNCE))
+//				{
+//					for (const auto & bodyNode : bodyNodes)
+//					{
+//						const auto & rigidBody = bodyNode -> getRigidBody ();
+//		
+//						if (rigidBody -> getLinearVelocity () .length () > colliderNode -> minBounceSpeed ())
+//							rigidBody -> setRestitution (colliderNode -> bounce ());
+//						else
+//							rigidBody -> setRestitution (0);
+//					}
+//		
+//					return;
+//				}
+//			}
+
+			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+				this .bodyNodes [i] .getRigidBody () .setRestitution (0);
+		},
+		set_frictionCoefficients__: function ()
+		{
+//			if (colliderNode)
+//			{
+//				if (colliderNode -> getAppliedParameters () .count (AppliedParametersType::FRICTION_COEFFICIENT_2))
+//				{
+//					for (const auto & bodyNode : bodyNodes)
+//					{
+//						bodyNode -> getRigidBody () -> setFriction (colliderNode -> frictionCoefficients () .getX ());
+//						bodyNode -> getRigidBody () -> setRollingFriction (colliderNode -> frictionCoefficients () .getY ());
+//					}
+//		
+//					return;
+//				}
+//			}
+		
+			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+			{
+				var bodyNode = this .bodyNodes [i];
+
+				bodyNode .getRigidBody () .setFriction (0.5);
+				//bodyNode .getRigidBody () .setRollingFriction (0);
+			}
 		},
 		set_bodies__: function ()
 		{

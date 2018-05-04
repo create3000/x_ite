@@ -359,7 +359,7 @@ function (Fields,
 			var compoundShape = this .compoundShape;
 
 			for (var i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
-				compoundShape .removeChildShape (compoundShape .getChildShape (i));
+				compoundShape .removeChildShapeByIndex (i);
 		
 			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
 				compoundShape .addChildShape (new Ammo .btTransform (), this .geometryNodes [i] .getCompoundShape ());
