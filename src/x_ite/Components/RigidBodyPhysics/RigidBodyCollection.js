@@ -296,36 +296,43 @@ function (Fields,
 		},
 		update: function ()
 		{
-			var
-				deltaTime  = this .getTimeStep (),
-				iterations = this .iterations_ .getValue (),
-				gravity    = this .gravity_ .getValue ();
-		
-			this .set_bounce__ ();
-			this .set_frictionCoefficients__ ();
-		
-			if (this .preferAccuracy_ .getValue ())
+			try
 			{
-				deltaTime /= iterations;
-		
-				for (var i = 0; i < iterations; ++ i)
+				var
+					deltaTime  = this .getTimeStep (),
+					iterations = this .iterations_ .getValue (),
+					gravity    = this .gravity_ .getValue ();
+			
+				this .set_bounce__ ();
+				this .set_frictionCoefficients__ ();
+			
+				if (this .preferAccuracy_ .getValue ())
+				{
+					deltaTime /= iterations;
+			
+					for (var i = 0; i < iterations; ++ i)
+					{
+						for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+							this .bodyNodes [i] .applyForces (gravity);
+			
+						this .dynamicsWorld .stepSimulation (deltaTime, 0);
+					}
+				}
+				else
 				{
 					for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
 						this .bodyNodes [i] .applyForces (gravity);
-		
-					this .dynamicsWorld .stepSimulation (deltaTime, 0);
+			
+					this .dynamicsWorld .stepSimulation (deltaTime, iterations + 2, deltaTime / iterations);
 				}
-			}
-			else
-			{
+			
 				for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-					this .bodyNodes [i] .applyForces (gravity);
-		
-				this .dynamicsWorld .stepSimulation (deltaTime, iterations + 2, deltaTime / iterations);
+					this .bodyNodes [i] .update ();
 			}
-		
-			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-				this .bodyNodes [i] .update ();
+			catch (error)
+			{
+				console .error (error);
+			}
 		},
 	});
 

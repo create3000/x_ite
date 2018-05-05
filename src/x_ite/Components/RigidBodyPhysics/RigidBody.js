@@ -233,16 +233,36 @@ function (Fields,
 				this .rigidBody .setMotionState (this .motionState);
 			};
 		})(),
-		set_linearVelocity__: function ()
+		set_linearVelocity__: (function ()
 		{
-			this .rigidBody .setLinearVelocity (new Ammo .btVector3 (this .linearVelocity_ .x, this .linearVelocity_ .y, this .linearVelocity_ .z));
-			this .rigidBody .activate ();
-		},
-		set_angularVelocity__: function ()
+			var lv = new Ammo .btVector3 (0, 0, 0);
+
+			return function ()
+			{
+				if (this .fixed_ .getValue ())
+					lv .setValue (0, 0, 0);
+				else
+					lv .setValue (this .linearVelocity_ .x, this .linearVelocity_ .y, this .linearVelocity_ .z);
+
+				this .rigidBody .setLinearVelocity (lv);
+				this .rigidBody .activate ();
+			};
+		}) (),
+		set_angularVelocity__: (function ()
 		{
-			this .rigidBody .setAngularVelocity (new Ammo .btVector3 (this .angularVelocity_ .x, this .angularVelocity_ .y, this .angularVelocity_ .z));
-			this .rigidBody .activate ();
-		},
+			var av = new Ammo .btVector3 (0, 0, 0);
+
+			return function ()
+			{
+				if (this .fixed_ .getValue ())
+					av .setValue (0, 0, 0);
+				else
+					av .setValue (this .angularVelocity_ .x, this .angularVelocity_ .y, this .angularVelocity_ .z);
+
+				this .rigidBody .setAngularVelocity (av);
+				this .rigidBody .activate ();
+			};
+		})(),
 		set_finiteRotationAxis__: function ()
 		{
 			if (this .useFiniteRotation_ .getValue ())

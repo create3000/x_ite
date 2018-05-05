@@ -77,6 +77,8 @@ function (Fields,
 		this .shapeNode      = null;
 		this .geometryNode   = null;
 		this .collisionShape = null;
+		this .triangleMesh   = null;
+		this .heightField    = [ ];
 	}
 
 	CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
@@ -196,14 +198,12 @@ function (Fields,
 
 			this .triangleMesh = null;
 
+			this .heightField .length = 0;
+
 			if (this .geometryNode && this .enabled_ .getValue ())
 			{
 				switch (this .geometryNode .getType () [this .geometryNode .getType () .length - 1])
 				{
-					case X3DConstants .Rectangle2D:
-					{
-						break;
-					}
 					case X3DConstants .Box:
 					{
 						var
@@ -236,10 +236,6 @@ function (Fields,
 						else
 							this .collisionShape = this .createConcaveGeometry ();
 
-						break;
-					}
-					case X3DConstants .ElevationGrid:
-					{
 						break;
 					}
 					case X3DConstants .Sphere:
