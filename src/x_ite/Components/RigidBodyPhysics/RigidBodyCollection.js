@@ -88,10 +88,13 @@ function (Fields,
 		this .dispatcher             = new Ammo .btCollisionDispatcher (this .collisionConfiguration);
 		this .solver                 = new Ammo .btSequentialImpulseConstraintSolver ();
 		this .dynamicsWorld          = new Ammo .btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
+		this .deltaTime              = 0;
 		this .colliderNode           = null;
 		this .bodyNodes              = [ ];
+		this .otherBodyNodes         = [ ];
 		this .rigidBodies            = [ ];
-		this .deltaTime              = 0;
+		this .jointNodes             = [ ];
+		this .otherJointNodes        = [ ];
 	}
 
 	RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -148,6 +151,10 @@ function (Fields,
 			this .set_collider__ ();
 			this .set_bodies__ ();
 		},
+		getDynamicsWorld: function ()
+		{
+			return this .dynamicsWorld;
+		},
 		getTimeStep: function ()
 		{
 			const DELAY = 15; // Delay in frames when dt full applies.
@@ -168,12 +175,19 @@ function (Fields,
 		set_contacts__: function ()
 		{
 		},
-		set_gravity__: function ()
+		set_gravity__: (function ()
 		{
-			this .dynamicsWorld .setGravity (new Ammo .btVector3 (this .gravity_ .x,
-			                                                      this .gravity_ .y,
-			                                                      this .gravity_ .z));
-		},
+			var gravity = new Ammo .btVector3 (0, 0, 0);
+
+			return function ()
+			{
+				gravity .setValue (this .gravity_ .x,
+				                   this .gravity_ .y,
+				                   this .gravity_ .z);
+
+				this .dynamicsWorld .setGravity (gravity);
+			};
+		})(),
 		set_contactSurfaceThickness__: function ()
 		{
 			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
@@ -236,11 +250,12 @@ function (Fields,
 			{
 				var bodyNode = this .bodyNodes [i];
 
-				bodyNode .enabled_    .removeInterest ("set_dynamicsWorld__", this);
-				bodyNode .collection_ .removeInterest ("set_bodies__",        this);
-		
+				bodyNode .enabled_ .removeInterest ("set_dynamicsWorld__", this);
 				bodyNode .setCollection (null);
 			}
+
+			for (var i = 0, length = this .otherBodyNodes .length; i < length; ++ i)
+				this .otherBodyNodes [i] .collection_ .removeInterest ("set_bodies__", this);
 
 			this .bodyNodes .length = 0;
 
@@ -254,6 +269,7 @@ function (Fields,
 				if (bodyNode .getCollection ())
 				{
 					bodyNode .collection_ .addInterest ("set_bodies__", this);
+					this .otherBodyNodes .push (bodyNode);
 					continue;
 				}
 		
@@ -263,9 +279,7 @@ function (Fields,
 			}
 
 			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-			{
 				this .bodyNodes [i] .enabled_ .addInterest ("set_dynamicsWorld__", this);
-			}
 
 			this .set_contactSurfaceThickness__ ();
 			this .set_joints__ ();
@@ -293,6 +307,30 @@ function (Fields,
 		},
 		set_joints__: function ()
 		{
+			for (var i = 0, length = this .jointNodes .length; i < length; ++ i)
+				this .jointNodes [i] .setCollection (null);
+		
+			for (var i = 0, length = this .otherJointNodes .length; i < length; ++ i)
+				this .otherJointNodes [i] .collection_ .removeInterest ("set_joints__", this);
+
+			for (var i = 0, length = this .joints_ .length; i < length; ++ i)
+			{
+				var jointNode = X3DCast (X3DConstants .X3DRigidJointNode, this .joints_ [i]);
+		
+				if (! jointNode)
+					continue;
+		
+				if (jointNode .getCollection ())
+				{
+					jointNode .collection_ .addInterest ("set_joints__", this);
+					this .otherJointNodes .push (bodyNode);
+					continue;
+				}
+
+				jointNode .setCollection (this);
+
+				this .jointNodes .push (jointNode);
+			}
 		},
 		update: function ()
 		{

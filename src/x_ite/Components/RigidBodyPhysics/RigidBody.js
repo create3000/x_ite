@@ -83,12 +83,13 @@ function (Fields,
 		this .addChildObjects ("collection", new Fields .SFNode (),
 		                       "transform",  new Fields .SFTime ());
 
-		this .compoundShape = new Ammo .btCompoundShape ();
-		this .motionState   = new Ammo .btDefaultMotionState ();
-		this .rigidBody     = new Ammo .btRigidBody (new Ammo .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape));
-		this .geometryNodes = [ ];
-		this .force         = new Vector3 (0, 0, 0);
-		this .torque        = new Vector3 (0, 0, 0);
+		this .compoundShape      = new Ammo .btCompoundShape ();
+		this .motionState        = new Ammo .btDefaultMotionState ();
+		this .rigidBody          = new Ammo .btRigidBody (new Ammo .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape));
+		this .geometryNodes      = [ ];
+		this .otherGeometryNodes = [ ];
+		this .force              = new Vector3 (0, 0, 0);
+		this .torque             = new Vector3 (0, 0, 0);
 	}
 
 	RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -263,13 +264,20 @@ function (Fields,
 				this .rigidBody .activate ();
 			};
 		})(),
-		set_finiteRotationAxis__: function ()
+		set_finiteRotationAxis__: (function ()
 		{
-			if (this .useFiniteRotation_ .getValue ())
-				this .rigidBody .setAngularFactor (new Ammo .btVector3 (this .finiteRotationAxis_ .x, this .finiteRotationAxis_ .y, this .finiteRotationAxis_ .z));
-			else
-				this .rigidBody .setAngularFactor (new Ammo .btVector3 (1, 1, 1));
-		},
+			var angularFactor = new Ammo .btVector3 (1, 1, 1);
+
+			return function ()
+			{
+				if (this .useFiniteRotation_ .getValue ())
+					angularFactor .setValue (this .finiteRotationAxis_ .x, this .finiteRotationAxis_ .y, this .finiteRotationAxis_ .z);
+				else
+					angularFactor .setValue (1, 1, 1);
+
+				this .rigidBody .setAngularFactor (angularFactor);
+			};
+		})(),
 		set_damping__: function ()
 		{
 			if (this .autoDamp_ .getValue ())
@@ -279,23 +287,38 @@ function (Fields,
 		
 			this .rigidBody .activate ();
 		},
-		set_centerOfMass__: function ()
-		{
-			this .rigidBody .setCenterOfMassTransform (new Ammo .btTransform (new Ammo .btQuaternion (0, 0, 0, 1),
-			                                                                  new Ammo .btVector3 (this .centerOfMass_ .x, this .centerOfMass_ .y, this .centerOfMass_ .z)));
-		},
-		set_massProps__: function ()
+		set_centerOfMass__: (function ()
 		{
 			var
-				inertia      = this .inertia_,
-				localInertia = new Ammo .btVector3 (inertia [0] + inertia [1] + inertia [2],
-			                                       inertia [3] + inertia [4] + inertia [5],
-			                                       inertia [6] + inertia [7] + inertia [8]);
-		
-			this .compoundShape .calculateLocalInertia (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
-		
-			this .rigidBody .setMassProps (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
-		},
+				rotation     = new Ammo .btQuaternion (0, 0, 0, 1),
+				origin       = new Ammo .btVector3 (0, 0, 0),
+				centerOfMass = new Ammo .btTransform (rotation, origin);
+
+			return function ()
+			{
+				origin .setValue (this .centerOfMass_ .x, this .centerOfMass_ .y, this .centerOfMass_ .z);
+				centerOfMass .setOrigin (origin);
+
+				this .rigidBody .setCenterOfMassTransform (centerOfMass);
+			};
+		})(),
+		set_massProps__: (function ()
+		{
+			var localInertia = new Ammo .btVector3 (0, 0, 0);
+
+			return function ()
+			{
+				var inertia = this .inertia_;
+
+				localInertia .setValue (inertia [0] + inertia [1] + inertia [2],
+				                        inertia [3] + inertia [4] + inertia [5],
+				                        inertia [6] + inertia [7] + inertia [8]);
+
+				this .compoundShape .calculateLocalInertia (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
+			
+				this .rigidBody .setMassProps (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
+			};
+		})(),
 		set_forces__: function ()
 		{
 			this .force .set (0, 0, 0);
@@ -328,7 +351,6 @@ function (Fields,
 				var geometryNode = this .geometryNodes [i];
 
 				geometryNode .removeInterest ("addEvent", this .transform_);
-				geometryNode .body_ .removeInterest ("set_geometry__", this);
 		
 				geometryNode .setBody (null);
 		
@@ -338,6 +360,9 @@ function (Fields,
 				this .position_    .removeFieldInterest (geometryNode .translation_);
 				this .orientation_ .removeFieldInterest (geometryNode .rotation_);
 			}
+
+			for (var i = 0, length = this .otherGeometryNodes .length; i < length; ++ i)
+				this .otherGeometryNodes [i] .body_ .removeInterest ("set_geometry__", this);
 
 			this .geometryNodes .length = 0;
 
@@ -351,6 +376,7 @@ function (Fields,
 				if (geometryNode .getBody ())
 				{
 					geometryNode .body_ .addInterest ("set_geometry__", this);
+					this .otherGeometryNodes .push (geometryNode);
 					continue;
 				}
 		
@@ -374,27 +400,32 @@ function (Fields,
 
 			this .set_compoundShape__ ();
 		},
-		set_compoundShape__: function ()
+		set_compoundShape__: (function ()
 		{
-			var compoundShape = this .compoundShape;
-
-			for (var i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
-				compoundShape .removeChildShapeByIndex (i);
+			var transform = new Ammo .btTransform ();
 		
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-				compoundShape .addChildShape (new Ammo .btTransform (), this .geometryNodes [i] .getCompoundShape ());
-
-			this .set_position__ ();
-			this .set_orientation__ ();
-			this .set_transform__ ();
-			this .set_linearVelocity__ ();
-			this .set_angularVelocity__ ();
-			this .set_finiteRotationAxis__ ();
-			this .set_damping__ ();
-			this .set_centerOfMass__ ();
-			this .set_massProps__ ();
-			this .set_disable__ ();
-		},
+			return function ()
+			{
+				var compoundShape = this .compoundShape;
+	
+				for (var i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
+					compoundShape .removeChildShapeByIndex (i);
+			
+				for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+					compoundShape .addChildShape (transform, this .geometryNodes [i] .getCompoundShape ());
+	
+				this .set_position__ ();
+				this .set_orientation__ ();
+				this .set_transform__ ();
+				this .set_linearVelocity__ ();
+				this .set_angularVelocity__ ();
+				this .set_finiteRotationAxis__ ();
+				this .set_damping__ ();
+				this .set_centerOfMass__ ();
+				this .set_massProps__ ();
+				this .set_disable__ ();
+			};
+		})(),
 		applyForces: (function ()
 		{
 			var

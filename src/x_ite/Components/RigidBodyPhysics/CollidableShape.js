@@ -78,7 +78,6 @@ function (Fields,
 		this .geometryNode   = null;
 		this .collisionShape = null;
 		this .triangleMesh   = null;
-		this .heightField    = [ ];
 	}
 
 	CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
@@ -192,13 +191,19 @@ function (Fields,
 		set_collidableGeometry__: function ()
 		{
 			if (this .collisionShape)
+			{
 				this .getCompoundShape () .removeChildShapeByIndex (0);
+				Ammo .destroy (this .collisionShape);
+console .log (123);
+			}
 
 			this .setOffset (Vector3 .Zero);
 
-			this .triangleMesh = null;
-
-			this .heightField .length = 0;
+			if (this .triangleMesh)
+			{
+				Ammo .destroy (this .triangleMesh);
+				this .triangleMesh = null;
+			}
 
 			if (this .geometryNode && this .enabled_ .getValue ())
 			{

@@ -48,11 +48,17 @@
 
 
 define ([
+	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"standard/Math/Numbers/Matrix4",
 ],
-function (X3DNode, 
-          X3DConstants)
+function (Fields,
+          X3DNode, 
+          X3DConstants,
+          X3DCast,
+          Matrix4)
 {
 "use strict";
 
@@ -61,11 +67,115 @@ function (X3DNode,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DRigidJointNode);
+
+		this .addChildObjects ("collection", new Fields .SFNode ());
+
+		this .bodyNode1      = null;
+		this .bodyNode2      = null;
+		this .inverseMatrix1 = new Matrix4 ();
+		this .inverseMatrix2 = new Matrix4 ();
 	}
 
 	X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DRigidJointNode,
+		initialize: function ()
+		{
+			X3DNode .prototype .initialize .call (this);
+
+			this .body1_ .addInterest ("set_body1__", this);
+			this .body2_ .addInterest ("set_body2__", this);
+		
+			this .set_body1__ ();
+			this .set_body2__ ();
+		},
+		setCollection: function (value)
+		{
+			this .removeJoint ();
+
+			this .collection_ = value;
+
+			this .addJoint ();
+		},
+		getCollection: function ()
+		{
+			return this .collection_ .getValue ();
+		},
+		getBody1: function ()
+		{
+			return this .bodyNode1;
+		},
+		getBody2: function ()
+		{
+			return this .bodyNode2;
+		},
+		getInverseMatrix1: function ()
+		{
+			return this .inverseMatrix1;
+		},
+		getInverseMatrix2: function ()
+		{
+			return this .inverseMatrix2;
+		},
+		set_joint__: function ()
+		{
+			this .removeJoint ();
+			this .addJoint ();
+		},
+		set_body1__: function ()
+		{
+			this .removeJoint ();
+		
+			if (this .bodyNode21)
+			{
+				this .bodyNode1 .removeInterest ("update2", this);
+				this .bodyNode1 .collection_ .removeInterest ("set_joint__", this);
+			}
+		
+			this .bodyNode1 = X3DCast (X3DConstants .RigidBody, this .body1_);
+		
+			if (this .bodyNode1)
+			{
+				this .bodyNode1 .collection_ .addInterest ("set_joint__", this);
+
+				this .initialize1 ();
+			}
+		
+			this .addJoint ();
+		},
+		set_body2__: function ()
+		{
+			this .removeJoint ();
+		
+			if (this .bodyNode2)
+			{
+				this .bodyNode2 .removeInterest ("update2", this);
+				this .bodyNode2 .collection_ .removeInterest ("set_joint__", this);
+			}
+		
+			this .bodyNode2 = X3DCast (X3DConstants .RigidBody, this .body2_);
+		
+			if (this .bodyNode2)
+			{
+				this .bodyNode2 .collection_ .addInterest ("set_joint__", this);
+
+				this .initialize2 ();
+			}
+		
+			this .addJoint ();
+		},
+		initialize1: function ()
+		{
+			this .inverseMatrix1 .set (this .bodyNode1 .position_ .getValue (), this .bodyNode1 .orientation_ .getValue ());
+			this .inverseMatrix1 .inverse ();
+		},
+		initialize2: function ()
+		{
+			this .inverseMatrix2 .set (this .bodyNode2 .position_ .getValue (), this .bodyNode2 .orientation_ .getValue ());
+			this .inverseMatrix2 .inverse ();
+		},
+		addJoint: function () { },
+		removeJoint: function () { },
 	});
 
 	return X3DRigidJointNode;
