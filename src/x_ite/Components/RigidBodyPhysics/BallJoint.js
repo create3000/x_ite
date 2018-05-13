@@ -115,17 +115,15 @@ function (Fields,
 			{
 				if (this .getBody1 () && this .getBody1 () .getCollection () === this .getCollection () && this .getBody2 () && this .getBody2 () .getCollection () === this .getCollection ())
 				{
-					this .joint = new Ammo .btPoint2PointConstraint (this .getBody1 () .getRigidBody (), this .getBody2 () .getRigidBody (), new Ammo .btVector3 (), new Ammo .btVector3 ());
+					this .joint = new Ammo .btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
+					                                                 this .getBody2 () .getRigidBody (),
+					                                                 new Ammo .btVector3 (),
+					                                                 new Ammo .btVector3 ());
 			
 					this .set_anchorPoint__ ();
-				}
-				else
-				{
-					this .joint = null;
-				}
-		
-				if (this .joint)
+
 					this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
+				}
 			}
 		},
 		removeJoint: function ()
@@ -133,7 +131,11 @@ function (Fields,
 			if (this .getCollection ())
 			{
 				if (this .joint)
+				{
 					this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+					Ammo .destroy (this .joint);
+					this .joint = null;
+				}
 			}
 		},
 		set_forceOutput__: function ()
