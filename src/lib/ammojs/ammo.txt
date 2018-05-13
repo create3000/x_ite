@@ -1,4 +1,6 @@
 
+#https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html#installation-instructions
+
 sudo apt-get install default-jre
 
 git clone https://github.com/juj/emsdk.git

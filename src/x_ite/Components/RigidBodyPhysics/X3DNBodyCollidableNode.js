@@ -136,9 +136,9 @@ function (Fields,
 		{
 			return this .compoundShape;
 		},
-		setOffset: function (value)
+		setOffset: function (x, y, z)
 		{
-			this .offset .assign (value);
+			this .offset .set (x, y, z);
 		},
 		getOffset: function ()
 		{

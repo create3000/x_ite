@@ -194,10 +194,15 @@ function (Fields,
 			{
 				this .getCompoundShape () .removeChildShapeByIndex (0);
 				Ammo .destroy (this .collisionShape);
-console .log (123);
 			}
 
-			this .setOffset (Vector3 .Zero);
+			this .setOffset (0, 0, 0);
+
+			if (this .heightField)
+			{
+				Ammo .destroy (this .heightField);
+				this .heightField = null;
+			}
 
 			if (this .triangleMesh)
 			{
@@ -241,6 +246,53 @@ console .log (123);
 						else
 							this .collisionShape = this .createConcaveGeometry ();
 
+						break;
+					}
+					case X3DConstants .ElevationGrid:
+					{
+						var elevationGrid = this .geometryNode;
+		
+						if (elevationGrid .xDimension_ .getValue () > 1 && elevationGrid .zDimension_ .getValue () > 1)
+						{
+							var
+								min         = Number .POSITIVE_INFINITY,
+								max         = Number .NEGATIVE_INFINITY,
+								heightField = this .heightField = Ammo ._malloc (4 * elevationGrid .xDimension_ .getValue () * elevationGrid .zDimension_ .getValue ()),
+								i4          = 0;
+
+							for (var i = 0, length = elevationGrid .height_ .length; i < length; ++ i)
+							{
+								var value = elevationGrid .height_ [i];
+
+								min = Math .min (min, value);
+								max = Math .max (max, value);
+
+								Ammo .HEAPF32 [heightField + i4 >> 2] = elevationGrid .height_ [i];
+
+								i4 += 4;
+							}
+
+							this .collisionShape = new Ammo .btHeightfieldTerrainShape (elevationGrid .xDimension_ .getValue (),
+							                                                            elevationGrid .zDimension_ .getValue (),
+							                                                            heightField,
+							                                                            1,
+							                                                            min,
+							                                                            max,
+							                                                            1,
+							                                                            "PHY_FLOAT",
+							                                                            true);
+			
+							this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid .xSpacing_ .getValue (), 1, elevationGrid .zSpacing_ .getValue ()));
+
+							this .setOffset (elevationGrid .xSpacing_ .getValue () * (elevationGrid .xDimension_ .getValue () - 1) * 0.5,
+							                 (min + max) * 0.5,
+							                 elevationGrid .zSpacing_ .getValue () * (elevationGrid .zDimension_ .getValue () - 1) * 0.5);
+						}
+						else
+						{
+							collisionShape .reset ();	
+						}
+		
 						break;
 					}
 					case X3DConstants .Sphere:
