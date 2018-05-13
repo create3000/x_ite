@@ -194,13 +194,12 @@ function (Fields,
 			{
 				this .getCompoundShape () .removeChildShapeByIndex (0);
 				Ammo .destroy (this .collisionShape);
+				this .collisionShape = null;;	
 			}
-
-			this .setOffset (0, 0, 0);
 
 			if (this .heightField)
 			{
-				Ammo .destroy (this .heightField);
+				Ammo ._free (this .heightField);
 				this .heightField = null;
 			}
 
@@ -209,6 +208,8 @@ function (Fields,
 				Ammo .destroy (this .triangleMesh);
 				this .triangleMesh = null;
 			}
+
+			this .setOffset (0, 0, 0);
 
 			if (this .geometryNode && this .enabled_ .getValue ())
 			{
@@ -287,10 +288,6 @@ function (Fields,
 							this .setOffset (elevationGrid .xSpacing_ .getValue () * (elevationGrid .xDimension_ .getValue () - 1) * 0.5,
 							                 (min + max) * 0.5,
 							                 elevationGrid .zSpacing_ .getValue () * (elevationGrid .zDimension_ .getValue () - 1) * 0.5);
-						}
-						else
-						{
-							collisionShape .reset ();	
 						}
 		
 						break;
