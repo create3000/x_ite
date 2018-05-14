@@ -53,12 +53,16 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector3",
+	"lib/ammojs/ammo",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DRigidJointNode, 
-          X3DConstants)
+          X3DConstants,
+          Vector3,
+          Ammo)
 {
 "use strict";
 
@@ -67,6 +71,9 @@ function (Fields,
 		X3DRigidJointNode .call (this, executionContext);
 
 		this .addType (X3DConstants .DoubleAxisHingeJoint);
+
+		this .joint   = null;
+		this .outputs = { };
 	}
 
 	DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
@@ -74,31 +81,31 @@ function (Fields,
 		constructor: DoubleAxisHingeJoint,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                     new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",               new Fields .MFString ("NONE")),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",               new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                     new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle1",                 new Fields .SFFloat (-3.14159)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle1",                 new Fields .SFFloat (3.14159)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity1",   new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity2",   new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle1",                 new Fields .SFFloat (3.14159)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque1",                new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque2",                new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle1",                 new Fields .SFFloat (-3.14159)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",               new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "stopConstantForceMix1",     new Fields .SFFloat (0.001)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection1",      new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionErrorCorrection", new Fields .SFFloat (0.8)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionForce",           new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionErrorCorrection", new Fields .SFFloat (0.8)),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",          new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",                 new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",          new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",                 new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "body2Axis",                 new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1Angle",               new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1AngleRate",           new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2Angle",               new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1AngleRate",           new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2AngleRate",           new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                     new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                     new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -111,6 +118,104 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "joints";
+		},
+		initialize: function ()
+		{
+			X3DRigidJointNode .prototype .initialize .call (this);
+		
+			this .forceOutput_ .addInterest ("set_forceOutput__", this);
+			this .anchorPoint_ .addInterest ("set_joint__",       this);
+			this .axis1_       .addInterest ("set_joint__",       this);
+			this .axis2_       .addInterest ("set_joint__",       this);
+
+			this .set_forceOutput__ ();
+		},
+		addJoint: (function ()
+		{
+			var
+				anchorPoint1 = new Vector3 (0, 0, 0),
+				anchorPoint2 = new Vector3 (0, 0, 0),
+				axis1        = new Vector3 (0, 0, 0),
+				axis2        = new Vector3 (0, 0, 0);
+
+			return function ()
+			{
+				if (this .getCollection ())
+				{
+					if (this .getBody1 () && this .getBody1 () .getCollection () === this .getCollection () && this .getBody2 () && this .getBody2 () .getCollection () === this .getCollection ())
+					{
+						anchorPoint1 .assign (this .anchorPoint_ .getValue ());
+						anchorPoint2 .assign (this .anchorPoint_ .getValue ());
+						axis1        .assign (this .axis1_ .getValue ());
+						axis2        .assign (this .axis2_ .getValue ());
+
+						this .getInverseMatrix1 () .multVecMatrix (anchorPoint1);
+						this .getInverseMatrix2 () .multVecMatrix (anchorPoint2);
+						this .getInverseMatrix1 () .multDirMatrix (axis1) .normalize ();
+						this .getInverseMatrix2 () .multDirMatrix (axis2) .normalize ();
+
+						this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
+						                                           this .getBody2 () .getRigidBody (),
+						                                           new Ammo .btVector3 (anchorPoint1 .x, anchorPoint1 .y, anchorPoint1 .z),
+						                                           new Ammo .btVector3 (anchorPoint2 .x, anchorPoint2 .y, anchorPoint2 .z),
+						                                           new Ammo .btVector3 (axis1 .x, axis1 .y, axis1 .z),
+						                                           new Ammo .btVector3 (axis2 .x, axis2 .y, axis2 .z),
+						                                           false);
+
+						this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
+
+						if (this .outputs .body1AnchorPoint)
+							this .body1AnchorPoint_ = anchorPoint1;
+
+						if (this .outputs .body2AnchorPoint)
+							this .body2AnchorPoint_ = anchorPoint2;
+
+						if (this .outputs .body1Axis)
+							this .body1AnchorPoint_ = axis1;
+
+						if (this .outputs .body2Axis)
+							this .body2AnchorPoint_ = axis2;
+					}
+				}
+			};
+		})(),
+		removeJoint: function ()
+		{
+			if (this .getCollection ())
+			{
+				if (this .joint)
+				{
+					this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+					Ammo .destroy (this .joint);
+					this .joint = null;
+				}
+			}
+		},
+		set_forceOutput__: function ()
+		{
+			for (var key in this .outputs)
+				delete this .outputs [key];
+
+			for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
+			{
+				var value = this .forceOutput_ [i];
+
+				if (value == "ALL")
+				{
+					this .outputs .body1AnchorPoint = true;
+					this .outputs .body2AnchorPoint = true;
+					this .outputs .body1Axis        = true;
+					this .outputs .body2Axis        = true;
+					this .outputs .hinge1Angle      = true;
+					this .outputs .hinge2Angle      = true;
+					this .outputs .hinge1AngleRate  = true;
+					this .outputs .hinge2AngleRate  = true;
+				}
+				else
+				{
+					this .outputs [value] = true;
+				}
+			}
 		},
 	});
 

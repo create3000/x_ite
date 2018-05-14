@@ -190,25 +190,7 @@ function (Fields,
 		},
 		set_collidableGeometry__: function ()
 		{
-			if (this .collisionShape)
-			{
-				this .getCompoundShape () .removeChildShapeByIndex (0);
-				Ammo .destroy (this .collisionShape);
-				this .collisionShape = null;;	
-			}
-
-			if (this .heightField)
-			{
-				Ammo ._free (this .heightField);
-				this .heightField = null;
-			}
-
-			if (this .triangleMesh)
-			{
-				Ammo .destroy (this .triangleMesh);
-				this .triangleMesh = null;
-			}
-
+			this .removeCollidableGeometry ();
 			this .setOffset (0, 0, 0);
 
 			if (this .geometryNode && this .enabled_ .getValue ())
@@ -316,6 +298,27 @@ function (Fields,
 		
 			this .addNodeEvent ();
 		},
+		removeCollidableGeometry: function ()
+		{
+			if (this .collisionShape)
+			{
+				this .getCompoundShape () .removeChildShapeByIndex (0);
+				Ammo .destroy (this .collisionShape);
+				this .collisionShape = null;;	
+			}
+
+			if (this .heightField)
+			{
+				Ammo ._free (this .heightField);
+				this .heightField = null;
+			}
+
+			if (this .triangleMesh)
+			{
+				Ammo .destroy (this .triangleMesh);
+				this .triangleMesh = null;
+			}
+		},
 		traverse: function (type, renderObject)
 		{
 			var modelViewMatrix = renderObject .getModelViewMatrix ();
@@ -326,6 +329,12 @@ function (Fields,
 			this .shapeNode .traverse (type, renderObject);
 		
 			modelViewMatrix .pop ();
+		},
+		dispose: function ()
+		{
+			this .removeCollidableGeometry ();
+
+			X3DNBodyCollidableNode .prototype .dispose .call (this);
 		},
 	});
 

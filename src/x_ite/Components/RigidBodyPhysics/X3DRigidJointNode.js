@@ -176,6 +176,12 @@ function (Fields,
 		},
 		addJoint: function () { },
 		removeJoint: function () { },
+		dispose: function ()
+		{
+			this .removeJoint ();
+
+			X3DNode .prototype .dispose .call (this);
+		},
 	});
 
 	return X3DRigidJointNode;

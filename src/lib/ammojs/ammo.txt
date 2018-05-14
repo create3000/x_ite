@@ -1,18 +1,20 @@
 
 #https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html#installation-instructions
 
-sudo apt-get install default-jre
+download:
+	git clone https://github.com/juj/emsdk.git
+	cd emsdk/
+	./emsdk install latest
+	./emsdk activate latest
+	cd ..
+	git clone https://github.com/kripken/ammo.js.git
 
-git clone https://github.com/juj/emsdk.git
-cd emsdk/
-./emsdk install latest
-./emsdk activate latest
-source ./emsdk_env.sh
-
-cd ..
-
-cd ammo.js/
-cd bullet/
-./autogen.sh
-cd ..
-python make.py
+compile:
+	cd emsdk/
+	source ./emsdk_env.sh
+	cd ..
+	cd ammo.js/
+	cd bullet/
+	./autogen.sh
+	cd ..
+	python make.py

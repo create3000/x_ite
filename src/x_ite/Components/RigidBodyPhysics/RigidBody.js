@@ -85,7 +85,8 @@ function (Fields,
 
 		this .compoundShape      = new Ammo .btCompoundShape ();
 		this .motionState        = new Ammo .btDefaultMotionState ();
-		this .rigidBody          = new Ammo .btRigidBody (new Ammo .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape));
+		this .constructionInfo   = new Ammo .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);
+		this .rigidBody          = new Ammo .btRigidBody (this .constructionInfo);
 		this .geometryNodes      = [ ];
 		this .otherGeometryNodes = [ ];
 		this .force              = new Vector3 (0, 0, 0);
@@ -479,6 +480,15 @@ function (Fields,
 				this .angularVelocity_ = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
 			};
 		})(),
+		dispose: function ()
+		{
+			Ammo .destroy (this .rigidBody);
+			Ammo .destroy (this .constructionInfo);
+			Ammo .destroy (this .motionState);
+			Ammo .destroy (this .compoundShape);
+
+			X3DNode .prototype .dispose .call (this);
+		},
 	});
 
 	return RigidBody;
