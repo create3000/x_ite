@@ -1,15 +1,14 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/RigidBodyPhysics/BallJoint.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="651" Column="71" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/RigidBody.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableShape.js" Line="58" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableOffset.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode.js" Line="52" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/RigidBodyCollection.js" Line="154" Column="32" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js" Line="116" Column="33" />
+      <File FileName="src/x_ite.html" Line="538" Column="1" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/RigidBody.js" Line="469" Column="8" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableShape.js" Line="339" Column="1" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js" Line="182" Column="1" />
       <File FileName="src/x_ite/Components/RigidBodyPhysics/BallJoint.js" Line="174" Column="1" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint.js" Line="76" Column="23" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint.js" Line="130" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

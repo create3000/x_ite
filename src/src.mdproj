@@ -729,8 +729,8 @@
     <None Include="x_ite\Basic\X3DTypedArrayField.js" />
     <None Include="x_ite\Basic\X3DObjectArrayField.js" />
     <None Include="lib\ammojs\ammo.js" />
-    <None Include="lib\ammojs\ammo.txt" />
     <None Include="lib\ammojs\ammo.idl" />
+    <None Include="lib\ammojs\Makefile" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

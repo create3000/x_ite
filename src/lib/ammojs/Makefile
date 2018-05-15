@@ -1,13 +1,15 @@
 
 #https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html#installation-instructions
 
+all: download compile
+
 download:
 	git clone https://github.com/juj/emsdk.git
+	git clone https://github.com/kripken/ammo.js.git
 	cd emsdk/
 	./emsdk install latest
 	./emsdk activate latest
 	cd ..
-	git clone https://github.com/kripken/ammo.js.git
 
 compile:
 	cd emsdk/
