@@ -72,6 +72,8 @@ function (Fields,
 
 		this .addType (X3DConstants .BallJoint);
 
+		this .anchorPoint_ .setUnit ("length");
+
 		this .joint   = null;
 		this .outputs = { };
 	}

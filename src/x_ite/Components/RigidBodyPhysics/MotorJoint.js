@@ -67,6 +67,18 @@ function (Fields,
 		X3DRigidJointNode .call (this, executionContext);
 
 		this .addType (X3DConstants .MotorJoint);
+
+		// Units
+	
+		this .axis1angle_      .setunit ("angle");
+		this .axis2Angle_      .setUnit ("angle");
+		this .axis3Angle_      .setUnit ("angle");
+		this .motor1Angle_     .setUnit ("angle");
+		this .motor2Angle_     .setUnit ("angle");
+		this .motor3Angle_     .setUnit ("angle");
+		this .motor1AngleRate_ .setUnit ("angularRate");
+		this .motor2AngleRate_ .setUnit ("angularRate");
+		this .motor3AngleRate_ .setUnit ("angularRate");
 	}
 
 	MotorJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),

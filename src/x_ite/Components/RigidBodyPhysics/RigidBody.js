@@ -83,6 +83,15 @@ function (Fields,
 		this .addChildObjects ("collection", new Fields .SFNode (),
 		                       "transform",  new Fields .SFTime ());
 
+		this .position_            .setUnit ("length");
+		this .linearVelocity_      .setUnit ("speed");
+		this .angularVelocity_     .setUnit ("angularRate");
+		this .mass_                .setUnit ("mass");
+		this .forces_              .setUnit ("force");
+		this .torques_             .setUnit ("force");
+		this .disableLinearSpeed_  .setUnit ("speed");
+		this .disableAngularSpeed_ .setUnit ("angularRate");
+
 		this .compoundShape      = new Ammo .btCompoundShape ();
 		this .motionState        = new Ammo .btDefaultMotionState ();
 		this .constructionInfo   = new Ammo .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);

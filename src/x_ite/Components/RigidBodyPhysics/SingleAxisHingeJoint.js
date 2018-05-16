@@ -72,6 +72,14 @@ function (Fields,
 
 		this .addType (X3DConstants .SingleAxisHingeJoint);
 
+		this .anchorPoint_      .setUnit ("length");
+		this .minAngle_         .setUnit ("angle");
+		this .maxAngle_         .setUnit ("angle");
+		this .body1AnchorPoint_ .setUnit ("length");
+		this .body2AnchorPoint_ .setUnit ("length");
+		this .angle_            .setUnit ("angle");
+		this .angleRate_        .setUnit ("angularRate");
+
 		this .joint   = null;
 		this .outputs = { };
 	}

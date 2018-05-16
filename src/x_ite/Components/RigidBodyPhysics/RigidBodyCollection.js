@@ -208,7 +208,7 @@ function (Fields,
 						var rigidBody = this .bodyNodes [i] .getRigidBody ();
 		
 						if (rigidBody .getLinearVelocity () .length () > this .colliderNode .minBounceSpeed_ .getValue ())
-							rigidBody .setRestitution (this .colliderNode .bounce_ .setValue ());
+							rigidBody .setRestitution (this .colliderNode .bounce_ .getValue ());
 						else
 							rigidBody .setRestitution (0);
 					}

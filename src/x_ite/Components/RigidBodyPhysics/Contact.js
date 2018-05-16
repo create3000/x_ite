@@ -67,6 +67,14 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Contact);
+
+		// Units
+	
+		this .position_                 .setUnit ("length");
+		this .depth_                    .setUnit ("length");
+		this .minBounceSpeed_           .setUnit ("speed");
+		this .surfaceSpeed_             .setUnit ("speed");
+		this .softnessConstantForceMix_ .setUnit ("force");
 	}
 
 	Contact .prototype = Object .assign (Object .create (X3DNode .prototype),

@@ -68,6 +68,10 @@ function (Fields,
 
 		this .addType (X3DConstants .CollisionCollection);
 
+		this .minBounceSpeed_           .setUnit ("speed");
+		this .surfaceSpeed_             .setUnit ("speed");
+		this .softnessConstantForceMix_ .setUnit ("force");
+
 		this .appliedParameters = { };
 	}
 
