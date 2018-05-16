@@ -199,49 +199,51 @@ function (Fields,
 		},
 		set_bounce__: function ()
 		{
-//			if (this .colliderNode)
-//			{
-//				if (colliderNode -> getAppliedParameters () .count (AppliedParametersType::BOUNCE))
-//				{
-//					for (const auto & bodyNode : bodyNodes)
-//					{
-//						const auto & rigidBody = bodyNode -> getRigidBody ();
-//		
-//						if (rigidBody -> getLinearVelocity () .length () > colliderNode -> minBounceSpeed ())
-//							rigidBody -> setRestitution (colliderNode -> bounce ());
-//						else
-//							rigidBody -> setRestitution (0);
-//					}
-//		
-//					return;
-//				}
-//			}
+			if (this .colliderNode && this .colliderNode .enabled_ .getValue ())
+			{
+				if (this .colliderNode .getAppliedParameters () .BOUNCE)
+				{
+					for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+					{
+						var rigidBody = this .bodyNodes [i] .getRigidBody ();
+		
+						if (rigidBody .getLinearVelocity () .length () > this .colliderNode .minBounceSpeed_ .getValue ())
+							rigidBody .setRestitution (this .colliderNode .bounce_ .setValue ());
+						else
+							rigidBody .setRestitution (0);
+					}
+		
+					return;
+				}
+			}
 
 			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
 				this .bodyNodes [i] .getRigidBody () .setRestitution (0);
 		},
 		set_frictionCoefficients__: function ()
 		{
-//			if (colliderNode)
-//			{
-//				if (colliderNode -> getAppliedParameters () .count (AppliedParametersType::FRICTION_COEFFICIENT_2))
-//				{
-//					for (const auto & bodyNode : bodyNodes)
-//					{
-//						bodyNode -> getRigidBody () -> setFriction (colliderNode -> frictionCoefficients () .getX ());
-//						bodyNode -> getRigidBody () -> setRollingFriction (colliderNode -> frictionCoefficients () .getY ());
-//					}
-//		
-//					return;
-//				}
-//			}
+			if (this .colliderNode && this .colliderNode .enabled_ .getValue ())
+			{
+				if (this .colliderNode .getAppliedParameters () .FRICTION_COEFFICIENT_2)
+				{
+					for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+					{
+						var rigidBody = this .bodyNodes [i] .getRigidBody ();
+
+						rigidBody .setFriction (this .colliderNode .frictionCoefficients_ .x);
+						rigidBody .setRollingFriction (this .colliderNode .frictionCoefficients_ .y);
+					}
 		
+					return;
+				}
+			}
+
 			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
 			{
-				var bodyNode = this .bodyNodes [i];
+				var rigidBody = this .bodyNodes [i] .getRigidBody ();
 
-				bodyNode .getRigidBody () .setFriction (0.5);
-				//bodyNode .getRigidBody () .setRollingFriction (0);
+				rigidBody .setFriction (0.5);
+				rigidBody .setRollingFriction (0);
 			}
 		},
 		set_bodies__: function ()

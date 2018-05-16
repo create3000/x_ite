@@ -67,6 +67,8 @@ function (Fields,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .CollisionCollection);
+
+		this .appliedParameters = { };
 	}
 
 	CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -96,6 +98,26 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "collidables";
+		},
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .appliedParameters_ .addInterest ("set_appliedParameters__", this);
+
+			this .set_appliedParameters__ ();
+		},
+		getAppliedParameters: function ()
+		{
+			return this .appliedParameters;
+		},
+		set_appliedParameters__: function ()
+		{
+			for (var key in this .appliedParameters)
+				delete this .appliedParameters [key];
+
+			for (var i = 0, length = this .appliedParameters_ .length; i < length; ++ i)
+				this .appliedParameters [this .appliedParameters_ [i]] = true;
 		},
 	});
 
