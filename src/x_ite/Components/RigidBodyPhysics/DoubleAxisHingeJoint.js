@@ -189,14 +189,13 @@ function (Fields,
 		})(),
 		removeJoint: function ()
 		{
-			if (this .getCollection ())
+			if (this .joint)
 			{
-				if (this .joint)
-				{
+				if (this .getCollection ())
 					this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
-					Ammo .destroy (this .joint);
-					this .joint = null;
-				}
+
+				Ammo .destroy (this .joint);
+				this .joint = null;
 			}
 		},
 		set_forceOutput__: function ()

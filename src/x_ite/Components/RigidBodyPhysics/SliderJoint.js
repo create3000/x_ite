@@ -172,23 +172,22 @@ function (Fields,
 						this .joint .setLowerAngLimit (0);
 						this .joint .setUpperAngLimit (0);
 
-						this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-
 						this .set_separation__ ();
+
+						this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
 					}
 				}
 			};
 		})(),
 		removeJoint: function ()
 		{
-			if (this .getCollection ())
+			if (this .joint)
 			{
-				if (this .joint)
-				{
+				if (this .getCollection ())
 					this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
-					Ammo .destroy (this .joint);
-					this .joint = null;
-				}
+
+				Ammo .destroy (this .joint);
+				this .joint = null;
 			}
 		},
 		set_forceOutput__: function ()

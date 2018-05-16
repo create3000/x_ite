@@ -101,6 +101,7 @@
 		{ name: 'Rigid Body Physics' },
 		{ name: 'Collidable Shape', url: [ "http://media.create3000.de/components/RigidBodyPhysics/CollidableShape/CollidableShape.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/CollidableShape/CollidableShape.zip" },
 		{ name: 'Rigid Body', url: [ "http://media.create3000.de/components/RigidBodyPhysics/RigidBody/RigidBody.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/RigidBody/RigidBody.zip" },
+		{ name: 'Single Axis Hinge Joint', url: [ "http://media.create3000.de/components/RigidBodyPhysics/SingleAxisHingeJoint/SingleAxisHingeJoint.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/SingleAxisHingeJoint/SingleAxisHingeJoint.zip" },
 		{ name: 'Slider Joint', url: [ "http://media.create3000.de/components/RigidBodyPhysics/SliderJoint/SliderJoint.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/SliderJoint/SliderJoint.zip" },
 
 		{ name: 'Shaders' },
