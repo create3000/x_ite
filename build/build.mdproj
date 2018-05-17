@@ -18,7 +18,7 @@
     <None Include="build.mdproj" />
     <None Include="dist.pl" />
     <None Include="version.pl" />
-    <None Include="parts\end.frag" />
-    <None Include="parts\start.frag" />
+    <None Include="parts\x_ite.end.frag" />
+    <None Include="parts\x_ite.start.frag" />
   </ItemGroup>
 </Project>
