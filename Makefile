@@ -10,7 +10,7 @@ all:
 	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
 
 	node_modules/requirejs/bin/r.js -o rigid-body-physics.build.js
-	node_modules/uglify-js-es6/bin/uglifyjs --compress --mangle -- dist/rigid-body-physics.js > dist/rigid-body-physics.min.js
+	node_modules/uglify-js-es6/bin/uglifyjs --mangle -- dist/rigid-body-physics.js > dist/rigid-body-physics.min.js
 
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.min.js
@@ -18,7 +18,7 @@ all:
 	cp src/components.js components.js
 	cp src/x_ite.html x_ite.min.html
 	perl -pi -e 's|\s*<script type="text/javascript" src="\.\./node_modules/requirejs/require.js"></script>\n||sg' x_ite.min.html
-	perl -pi -e 's|\s*<script type="text/javascript" src="require.config.js"></script>\n||sg'                      x_ite.min.html
+	perl -pi -e 's|\s*<script type="text/javascript" src="x_ite.config.js"></script>\n||sg'                        x_ite.min.html
 
 	perl -pi -e 's|"x_ite.css"|"dist/x_ite.css"|sg'                             x_ite.min.html
 	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'                           x_ite.min.html
