@@ -5,7 +5,7 @@ configure:
 all:
 	perl -pi -e 's/return (?:true|false);/return false;/sg' src/x_ite/DEBUG.js
 
-	node_modules/requirejs/bin/r.js -o require.build.js
+	node_modules/requirejs/bin/r.js -o x_ite.build.js
 	node_modules/uglify-js-es6/bin/uglifyjs --compress --mangle -- dist/x_ite.js > dist/x_ite.min.js
 	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
 

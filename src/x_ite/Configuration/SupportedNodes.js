@@ -775,7 +775,7 @@ function (Anchor,
 
 		// HTML DOM support
 
-		SupportedNodes [name.toUpperCase()] = interfaceDeclaration; 
+		SupportedNodes [name .toUpperCase ()] = interfaceDeclaration; 
 	}
 	return SupportedNodes;
 });

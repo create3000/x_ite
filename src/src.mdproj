@@ -14,7 +14,6 @@
   <ItemGroup>
     <None Include="src.mdproj" />
     <None Include="spinner.css" />
-    <None Include="require.config.js" />
     <None Include="standard\Geospatial\Geodetic.js" />
     <None Include="standard\Geospatial\ReferenceEllipsoids.js" />
     <None Include="standard\Geospatial\UniversalTransverseMercator.js" />
@@ -731,6 +730,7 @@
     <None Include="lib\ammojs\ammo.js" />
     <None Include="lib\ammojs\ammo.idl" />
     <None Include="lib\ammojs\Makefile" />
+    <None Include="x_ite.config.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
