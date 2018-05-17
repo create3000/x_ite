@@ -45,7 +45,12 @@ require .config ({
 			"name": "sprintf",
 			"location": "../node_modules/sprintf-js",
 			"main": "dist/sprintf.min.js"
-		}
+		},
+		{
+			"name": "ammojs",
+			"location": "../node_modules/ammojs",
+			"main": "ammo.js"
+		},
 	],
 	"shim": { },
 });

@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		components.js = components.js
 		Makefile = Makefile
 		x_ite.build.js = x_ite.build.js
+		rigid-body-physics.build.js = rigid-body-physics.build.js
 	EndProjectSection
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "src", "src\src.mdproj", "{45DFA11C-B569-4954-B1E1-DA0CF12C452A}"

@@ -1,19 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/RigidBodyPhysics/SliderJoint.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/RigidBodyPhysics/RigidBody.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/RigidBodyPhysics/RigidBody.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableShape.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/SliderJoint.js" Line="98" Column="67" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/MotorJoint.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/UniversalJoint.js" Line="97" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/BallJoint.js" Line="1" Column="1" />
-      <File FileName="x_ite.build.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Configuration/SupportedNodes.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

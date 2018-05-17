@@ -9,6 +9,9 @@ all:
 	node_modules/uglify-js-es6/bin/uglifyjs --compress --mangle -- dist/x_ite.js > dist/x_ite.min.js
 	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
 
+	node_modules/requirejs/bin/r.js -o rigid-body-physics.build.js
+	node_modules/uglify-js-es6/bin/uglifyjs --compress --mangle -- dist/rigid-body-physics.js > dist/rigid-body-physics.min.js
+
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.min.js
 
@@ -18,6 +21,7 @@ all:
 	perl -pi -e 's|\s*<script type="text/javascript" src="require.config.js"></script>\n||sg'                      x_ite.min.html
 	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'                x_ite.min.html
 	perl -pi -e 's|"x_ite.css"|"dist/x_ite.css"|sg'                  x_ite.min.html
+	perl -pi -e 's|"rigid-body-physics.js"|"dist/rigid-body-physics.min.js"|sg' x_ite.min.html
 	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'            x_ite.min.html
 	perl -pi -e 's|class="links"|class="links min-links"|sg'         x_ite.min.html
 	perl -pi -e 's|\>x_ite.min.html|>src/x_ite.html|sg'              x_ite.min.html

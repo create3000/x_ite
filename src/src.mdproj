@@ -731,6 +731,8 @@
     <None Include="lib\ammojs\ammo.idl" />
     <None Include="lib\ammojs\Makefile" />
     <None Include="x_ite.config.js" />
+    <None Include="rigid-body-physics.config.js" />
+    <None Include="rigid-body-physics.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
