@@ -19,15 +19,17 @@ all:
 	cp src/x_ite.html x_ite.min.html
 	perl -pi -e 's|\s*<script type="text/javascript" src="\.\./node_modules/requirejs/require.js"></script>\n||sg' x_ite.min.html
 	perl -pi -e 's|\s*<script type="text/javascript" src="require.config.js"></script>\n||sg'                      x_ite.min.html
-	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'                x_ite.min.html
-	perl -pi -e 's|"x_ite.css"|"dist/x_ite.css"|sg'                  x_ite.min.html
+
+	perl -pi -e 's|"x_ite.css"|"dist/x_ite.css"|sg'                             x_ite.min.html
+	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'                           x_ite.min.html
 	perl -pi -e 's|"rigid-body-physics.js"|"dist/rigid-body-physics.min.js"|sg' x_ite.min.html
-	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'            x_ite.min.html
-	perl -pi -e 's|class="links"|class="links min-links"|sg'         x_ite.min.html
-	perl -pi -e 's|\>x_ite.min.html|>src/x_ite.html|sg'              x_ite.min.html
-	perl -pi -e 's|x_ite-dev|x_ite-min|sg'                           x_ite.min.html
-	perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'             x_ite.min.html
-	perl -pi -e 's|\.\./tests/|tests/|sg'                            x_ite.min.html
+
+	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'                       x_ite.min.html
+	perl -pi -e 's|class="links"|class="links min-links"|sg'                    x_ite.min.html
+	perl -pi -e 's|\>x_ite.min.html|>src/x_ite.html|sg'                         x_ite.min.html
+	perl -pi -e 's|x_ite-dev|x_ite-min|sg'                                      x_ite.min.html
+	perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'                        x_ite.min.html
+	perl -pi -e 's|\.\./tests/|tests/|sg'                                       x_ite.min.html
 
 	perl build/dist.pl
 

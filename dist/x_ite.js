@@ -114000,6 +114000,7 @@ function (Anchor,
 
 		SupportedNodes [name .toUpperCase ()] = interfaceDeclaration; 
 	}
+
 	return SupportedNodes;
 });
 
