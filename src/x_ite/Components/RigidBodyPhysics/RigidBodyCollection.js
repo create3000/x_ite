@@ -284,8 +284,8 @@ function (Fields,
 				this .bodyNodes [i] .enabled_ .addInterest ("set_dynamicsWorld__", this);
 
 			this .set_contactSurfaceThickness__ ();
-			this .set_joints__ ();
 			this .set_dynamicsWorld__ ();
+			this .set_joints__ ();
 		},
 		set_dynamicsWorld__: function ()
 		{
