@@ -145,9 +145,8 @@ function (Fields,
 				this .bodyNode1 .collection_ .addInterest ("set_joint__", this);
 
 				this .initialize1 ();
+				this .addJoint ();
 			}
-		
-			this .addJoint ();
 		},
 		set_body2__: function ()
 		{
@@ -166,9 +165,8 @@ function (Fields,
 				this .bodyNode2 .collection_ .addInterest ("set_joint__", this);
 
 				this .initialize2 ();
+				this .addJoint ();
 			}
-		
-			this .addJoint ();
 		},
 		initialize1: function ()
 		{
@@ -347,31 +345,40 @@ function (Fields,
 		},
 		addJoint: function ()
 		{
-			if (this .getCollection ())
-			{
-				if (this .getBody1 () && this .getBody1 () .getCollection () === this .getCollection () && this .getBody2 () && this .getBody2 () .getCollection () === this .getCollection ())
-				{
-					this .joint = new Ammo .btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
-					                                                 this .getBody2 () .getRigidBody (),
-					                                                 new Ammo .btVector3 (),
-					                                                 new Ammo .btVector3 ());
-			
-					this .set_anchorPoint__ ();
+			if (! this .getCollection ())
+				return;
 
-					this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-				}
-			}
+			if (! this .getBody1 ())
+				return;
+	
+			if (! this .getBody2 ())
+				return;
+		
+		   if (this .getBody1 () .getCollection () !== this .getCollection ())
+				return;
+		
+		   if (this .getBody2 () .getCollection () !== this .getCollection ())
+				return;
+
+			this .joint = new Ammo .btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
+			                                                 this .getBody2 () .getRigidBody (),
+			                                                 new Ammo .btVector3 (),
+			                                                 new Ammo .btVector3 ());
+	
+			this .set_anchorPoint__ ();
+
+			this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
 		},
 		removeJoint: function ()
 		{
-			if (this .joint)
-			{
-				if (this .getCollection ())
-					this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+			if (! this .joint)
+				return;
 
-				Ammo .destroy (this .joint);
-				this .joint = null;
-			}
+			if (this .getCollection ())
+				this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+
+			Ammo .destroy (this .joint);
+			this .joint = null;
 		},
 		set_forceOutput__: function ()
 		{
@@ -1493,55 +1500,64 @@ function (Fields,
 
 			return function ()
 			{
-				if (this .getCollection ())
-				{
-					if (this .getBody1 () && this .getBody1 () .getCollection () === this .getCollection () && this .getBody2 () && this .getBody2 () .getCollection () === this .getCollection ())
-					{
-						anchorPoint1 .assign (this .anchorPoint_ .getValue ());
-						anchorPoint2 .assign (this .anchorPoint_ .getValue ());
-						axis1        .assign (this .axis1_ .getValue ());
-						axis2        .assign (this .axis2_ .getValue ());
+				if (! this .getCollection ())
+					return;
+	
+				if (! this .getBody1 ())
+					return;
+		
+				if (! this .getBody2 ())
+					return;
+			
+			   if (this .getBody1 () .getCollection () !== this .getCollection ())
+					return;
+			
+			   if (this .getBody2 () .getCollection () !== this .getCollection ())
+					return;
 
-						this .getInverseMatrix1 () .multVecMatrix (anchorPoint1);
-						this .getInverseMatrix2 () .multVecMatrix (anchorPoint2);
-						this .getInverseMatrix1 () .multDirMatrix (axis1) .normalize ();
-						this .getInverseMatrix2 () .multDirMatrix (axis2) .normalize ();
+				anchorPoint1 .assign (this .anchorPoint_ .getValue ());
+				anchorPoint2 .assign (this .anchorPoint_ .getValue ());
+				axis1        .assign (this .axis1_ .getValue ());
+				axis2        .assign (this .axis2_ .getValue ());
 
-						this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
-						                                           this .getBody2 () .getRigidBody (),
-						                                           new Ammo .btVector3 (anchorPoint1 .x, anchorPoint1 .y, anchorPoint1 .z),
-						                                           new Ammo .btVector3 (anchorPoint2 .x, anchorPoint2 .y, anchorPoint2 .z),
-						                                           new Ammo .btVector3 (axis1 .x, axis1 .y, axis1 .z),
-						                                           new Ammo .btVector3 (axis2 .x, axis2 .y, axis2 .z),
-						                                           false);
+				this .getInverseMatrix1 () .multVecMatrix (anchorPoint1);
+				this .getInverseMatrix2 () .multVecMatrix (anchorPoint2);
+				this .getInverseMatrix1 () .multDirMatrix (axis1) .normalize ();
+				this .getInverseMatrix2 () .multDirMatrix (axis2) .normalize ();
 
-						this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
+				this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
+				                                           this .getBody2 () .getRigidBody (),
+				                                           new Ammo .btVector3 (anchorPoint1 .x, anchorPoint1 .y, anchorPoint1 .z),
+				                                           new Ammo .btVector3 (anchorPoint2 .x, anchorPoint2 .y, anchorPoint2 .z),
+				                                           new Ammo .btVector3 (axis1 .x, axis1 .y, axis1 .z),
+				                                           new Ammo .btVector3 (axis2 .x, axis2 .y, axis2 .z),
+				                                           false);
 
-						if (this .outputs .body1AnchorPoint)
-							this .body1AnchorPoint_ = anchorPoint1;
+				this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
 
-						if (this .outputs .body2AnchorPoint)
-							this .body2AnchorPoint_ = anchorPoint2;
+				if (this .outputs .body1AnchorPoint)
+					this .body1AnchorPoint_ = anchorPoint1;
 
-						if (this .outputs .body1Axis)
-							this .body1AnchorPoint_ = axis1;
+				if (this .outputs .body2AnchorPoint)
+					this .body2AnchorPoint_ = anchorPoint2;
 
-						if (this .outputs .body2Axis)
-							this .body2AnchorPoint_ = axis2;
-					}
-				}
+				if (this .outputs .body1Axis)
+					this .body1AnchorPoint_ = axis1;
+
+				if (this .outputs .body2Axis)
+					this .body2AnchorPoint_ = axis2;
 			};
 		})(),
 		removeJoint: function ()
 		{
-			if (this .joint)
-			{
-				if (this .getCollection ())
-					this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+			if (! this .joint)
+				return;
 
-				Ammo .destroy (this .joint);
-				this .joint = null;
-			}
+			if (this .getCollection ())
+				this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+
+			Ammo .destroy (this .joint);
+			this .joint = null;
 		},
 		set_forceOutput__: function ()
 		{
@@ -1880,9 +1896,9 @@ function (Fields,
 
 			this .transform_ .addInterest ("set_transform__", this);
 
-			this .set_geometry__ ();
 			this .set_forces__ ();
 			this .set_torques__ ();
+			this .set_geometry__ ();
 		},
 		setCollection: function (value)
 		{
@@ -2737,37 +2753,46 @@ function (Fields,
 
 			return function ()
 			{
-				if (this .getCollection ())
-				{
-					if (this .getBody1 () && this .getBody1 () .getCollection () === this .getCollection () && this .getBody2 () && this .getBody2 () .getCollection () === this .getCollection ())
-					{
-						anchorPoint1 .assign (this .anchorPoint_ .getValue ());
-						anchorPoint2 .assign (this .anchorPoint_ .getValue ());
-						axis1        .assign (this .axis_ .getValue ());
-						axis2        .assign (this .axis_ .getValue ());
+				if (! this .getCollection ())
+					return;
+	
+				if (! this .getBody1 ())
+					return;
+		
+				if (! this .getBody2 ())
+					return;
+			
+			   if (this .getBody1 () .getCollection () !== this .getCollection ())
+					return;
+			
+			   if (this .getBody2 () .getCollection () !== this .getCollection ())
+					return;
 
-						this .getInverseMatrix1 () .multVecMatrix (anchorPoint1);
-						this .getInverseMatrix2 () .multVecMatrix (anchorPoint2);
-						this .getInverseMatrix1 () .multDirMatrix (axis1) .normalize ();
-						this .getInverseMatrix2 () .multDirMatrix (axis2) .normalize ();
+				anchorPoint1 .assign (this .anchorPoint_ .getValue ());
+				anchorPoint2 .assign (this .anchorPoint_ .getValue ());
+				axis1        .assign (this .axis_ .getValue ());
+				axis2        .assign (this .axis_ .getValue ());
 
-						this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
-						                                           this .getBody2 () .getRigidBody (),
-						                                           new Ammo .btVector3 (anchorPoint1 .x, anchorPoint1 .y, anchorPoint1 .z),
-						                                           new Ammo .btVector3 (anchorPoint2 .x, anchorPoint2 .y, anchorPoint2 .z),
-						                                           new Ammo .btVector3 (axis1 .x, axis1 .y, axis1 .z),
-						                                           new Ammo .btVector3 (axis2 .x, axis2 .y, axis2 .z),
-						                                           false);
+				this .getInverseMatrix1 () .multVecMatrix (anchorPoint1);
+				this .getInverseMatrix2 () .multVecMatrix (anchorPoint2);
+				this .getInverseMatrix1 () .multDirMatrix (axis1) .normalize ();
+				this .getInverseMatrix2 () .multDirMatrix (axis2) .normalize ();
 
-						this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
+				this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
+				                                           this .getBody2 () .getRigidBody (),
+				                                           new Ammo .btVector3 (anchorPoint1 .x, anchorPoint1 .y, anchorPoint1 .z),
+				                                           new Ammo .btVector3 (anchorPoint2 .x, anchorPoint2 .y, anchorPoint2 .z),
+				                                           new Ammo .btVector3 (axis1 .x, axis1 .y, axis1 .z),
+				                                           new Ammo .btVector3 (axis2 .x, axis2 .y, axis2 .z),
+				                                           false);
 
-						if (this .outputs .body1AnchorPoint)
-							this .body1AnchorPoint_ = anchorPoint1;
-				
-						if (this .outputs .body2AnchorPoint)
-							this .body2AnchorPoint_ = anchorPoint2;
-					}
-				}
+				this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
+
+				if (this .outputs .body1AnchorPoint)
+					this .body1AnchorPoint_ = anchorPoint1;
+		
+				if (this .outputs .body2AnchorPoint)
+					this .body2AnchorPoint_ = anchorPoint2;
 			};
 		})(),
 		removeJoint: function ()
@@ -2950,57 +2975,66 @@ function (Fields,
 
 			return function ()
 			{
-				if (this .getCollection ())
-				{
-					if (this .getBody1 () && this .getBody1 () .getCollection () === this .getCollection () && this .getBody2 () && this .getBody2 () .getCollection () === this .getCollection ())
-					{
-						axisRotation .setFromToVec (Vector3 .xAxis, this .axis_ .getValue ());
-
-						matrixA .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
-						matrixB .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
-
-						origin .setValue (matrixA [12], matrixA [13], matrixA [14]);
-
-						frameInA .getBasis () .setValue (matrixA [0], matrixA [4], matrixA [8],
-						                                 matrixA [1], matrixA [5], matrixA [9],
-						                                 matrixA [2], matrixA [6], matrixA [10]);
+				if (! this .getCollection ())
+					return;
+	
+				if (! this .getBody1 ())
+					return;
 		
-						frameInA .setOrigin (origin);
+				if (! this .getBody2 ())
+					return;
+			
+			   if (this .getBody1 () .getCollection () !== this .getCollection ())
+					return;
+			
+			   if (this .getBody2 () .getCollection () !== this .getCollection ())
+					return;
 
-						origin .setValue (matrixB [12], matrixB [13], matrixB [14]);
+				axisRotation .setFromToVec (Vector3 .xAxis, this .axis_ .getValue ());
 
-						frameInA .getBasis () .setValue (matrixB [0], matrixB [4], matrixB [8],
-						                                 matrixB [1], matrixB [5], matrixB [9],
-						                                 matrixB [2], matrixB [6], matrixB [10]);
-		
-						frameInB .setOrigin (origin);
+				matrixA .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
+				matrixB .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
 
-						this .joint = new Ammo .btSliderConstraint (this .getBody1 () .getRigidBody (),
-						                                            this .getBody2 () .getRigidBody (),
-						                                            frameInA,
-						                                            frameInB,
-						                                            true);
-						
-						this .joint .setLowerAngLimit (0);
-						this .joint .setUpperAngLimit (0);
+				origin .setValue (matrixA [12], matrixA [13], matrixA [14]);
 
-						this .set_separation__ ();
+				frameInA .getBasis () .setValue (matrixA [0], matrixA [4], matrixA [8],
+				                                 matrixA [1], matrixA [5], matrixA [9],
+				                                 matrixA [2], matrixA [6], matrixA [10]);
 
-						this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-					}
-				}
+				frameInA .setOrigin (origin);
+
+				origin .setValue (matrixB [12], matrixB [13], matrixB [14]);
+
+				frameInA .getBasis () .setValue (matrixB [0], matrixB [4], matrixB [8],
+				                                 matrixB [1], matrixB [5], matrixB [9],
+				                                 matrixB [2], matrixB [6], matrixB [10]);
+
+				frameInB .setOrigin (origin);
+
+				this .joint = new Ammo .btSliderConstraint (this .getBody1 () .getRigidBody (),
+				                                            this .getBody2 () .getRigidBody (),
+				                                            frameInA,
+				                                            frameInB,
+				                                            true);
+				
+				this .joint .setLowerAngLimit (0);
+				this .joint .setUpperAngLimit (0);
+
+				this .set_separation__ ();
+
+				this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
 			};
 		})(),
 		removeJoint: function ()
 		{
-			if (this .joint)
-			{
-				if (this .getCollection ())
-					this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+			if (! this .joint)
+				return;
 
-				Ammo .destroy (this .joint);
-				this .joint = null;
-			}
+			if (this .getCollection ())
+				this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+
+			Ammo .destroy (this .joint);
+			this .joint = null;
 		},
 		set_forceOutput__: function ()
 		{
