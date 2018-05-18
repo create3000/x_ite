@@ -1213,7 +1213,7 @@ function (Fields,
 		},
 		getContainerField: function ()
 		{
-			return "collidables";
+			return "collider";
 		},
 		initialize: function ()
 		{
@@ -2357,13 +2357,13 @@ function (Fields,
 			this .isLive () .addInterest ("set_enabled__", this);
 			this .getExecutionContext () .isLive () .addInterest ("set_enabled__", this);
 
-			this .enabled_                 .addInterest ("set_enabled__", this);
-			this .set_contacts_            .addInterest ("set_contacts__", this);
-			this .gravity_                 .addInterest ("set_gravity__", this);
+			this .enabled_                 .addInterest ("set_enabled__",                 this);
+			this .set_contacts_            .addInterest ("set_contacts__",                this);
+			this .gravity_                 .addInterest ("set_gravity__",                 this);
 			this .contactSurfaceThickness_ .addInterest ("set_contactSurfaceThickness__", this);
-			this .collider_                .addInterest ("set_collider__", this);
-			this .bodies_                  .addInterest ("set_bodies__", this);
-			this .joints_                  .addInterest ("set_joints__", this);
+			this .collider_                .addInterest ("set_collider__",                this);
+			this .bodies_                  .addInterest ("set_bodies__",                  this);
+			this .joints_                  .addInterest ("set_joints__",                  this);
 
 			this .set_enabled__ ();
 			this .set_gravity__ ();
@@ -2425,7 +2425,7 @@ function (Fields,
 					for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
 					{
 						var rigidBody = this .bodyNodes [i] .getRigidBody ();
-		
+
 						if (rigidBody .getLinearVelocity () .length () > this .colliderNode .minBounceSpeed_ .getValue ())
 							rigidBody .setRestitution (this .colliderNode .bounce_ .getValue ());
 						else

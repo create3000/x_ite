@@ -101,7 +101,7 @@ function (Fields,
 		},
 		getContainerField: function ()
 		{
-			return "collidables";
+			return "collider";
 		},
 		initialize: function ()
 		{
