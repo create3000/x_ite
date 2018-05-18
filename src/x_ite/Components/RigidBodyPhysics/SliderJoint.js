@@ -138,57 +138,66 @@ function (Fields,
 
 			return function ()
 			{
-				if (this .getCollection ())
-				{
-					if (this .getBody1 () && this .getBody1 () .getCollection () === this .getCollection () && this .getBody2 () && this .getBody2 () .getCollection () === this .getCollection ())
-					{
-						axisRotation .setFromToVec (Vector3 .xAxis, this .axis_ .getValue ());
-
-						matrixA .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
-						matrixB .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
-
-						origin .setValue (matrixA [12], matrixA [13], matrixA [14]);
-
-						frameInA .getBasis () .setValue (matrixA [0], matrixA [4], matrixA [8],
-						                                 matrixA [1], matrixA [5], matrixA [9],
-						                                 matrixA [2], matrixA [6], matrixA [10]);
+				if (! this .getCollection ())
+					return;
+	
+				if (! this .getBody1 ())
+					return;
 		
-						frameInA .setOrigin (origin);
+				if (! this .getBody2 ())
+					return;
+			
+			   if (this .getBody1 () .getCollection () !== this .getCollection ())
+					return;
+			
+			   if (this .getBody2 () .getCollection () !== this .getCollection ())
+					return;
 
-						origin .setValue (matrixB [12], matrixB [13], matrixB [14]);
+				axisRotation .setFromToVec (Vector3 .xAxis, this .axis_ .getValue ());
 
-						frameInA .getBasis () .setValue (matrixB [0], matrixB [4], matrixB [8],
-						                                 matrixB [1], matrixB [5], matrixB [9],
-						                                 matrixB [2], matrixB [6], matrixB [10]);
-		
-						frameInB .setOrigin (origin);
+				matrixA .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
+				matrixB .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
 
-						this .joint = new Ammo .btSliderConstraint (this .getBody1 () .getRigidBody (),
-						                                            this .getBody2 () .getRigidBody (),
-						                                            frameInA,
-						                                            frameInB,
-						                                            true);
-						
-						this .joint .setLowerAngLimit (0);
-						this .joint .setUpperAngLimit (0);
+				origin .setValue (matrixA [12], matrixA [13], matrixA [14]);
 
-						this .set_separation__ ();
+				frameInA .getBasis () .setValue (matrixA [0], matrixA [4], matrixA [8],
+				                                 matrixA [1], matrixA [5], matrixA [9],
+				                                 matrixA [2], matrixA [6], matrixA [10]);
 
-						this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-					}
-				}
+				frameInA .setOrigin (origin);
+
+				origin .setValue (matrixB [12], matrixB [13], matrixB [14]);
+
+				frameInA .getBasis () .setValue (matrixB [0], matrixB [4], matrixB [8],
+				                                 matrixB [1], matrixB [5], matrixB [9],
+				                                 matrixB [2], matrixB [6], matrixB [10]);
+
+				frameInB .setOrigin (origin);
+
+				this .joint = new Ammo .btSliderConstraint (this .getBody1 () .getRigidBody (),
+				                                            this .getBody2 () .getRigidBody (),
+				                                            frameInA,
+				                                            frameInB,
+				                                            true);
+				
+				this .joint .setLowerAngLimit (0);
+				this .joint .setUpperAngLimit (0);
+
+				this .set_separation__ ();
+
+				this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
 			};
 		})(),
 		removeJoint: function ()
 		{
-			if (this .joint)
-			{
-				if (this .getCollection ())
-					this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+			if (! this .joint)
+				return;
 
-				Ammo .destroy (this .joint);
-				this .joint = null;
-			}
+			if (this .getCollection ())
+				this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+
+			Ammo .destroy (this .joint);
+			this .joint = null;
 		},
 		set_forceOutput__: function ()
 		{

@@ -168,9 +168,9 @@ function (Fields,
 
 			this .transform_ .addInterest ("set_transform__", this);
 
-			this .set_geometry__ ();
 			this .set_forces__ ();
 			this .set_torques__ ();
+			this .set_geometry__ ();
 		},
 		setCollection: function (value)
 		{

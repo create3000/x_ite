@@ -113,31 +113,40 @@ function (Fields,
 		},
 		addJoint: function ()
 		{
-			if (this .getCollection ())
-			{
-				if (this .getBody1 () && this .getBody1 () .getCollection () === this .getCollection () && this .getBody2 () && this .getBody2 () .getCollection () === this .getCollection ())
-				{
-					this .joint = new Ammo .btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
-					                                                 this .getBody2 () .getRigidBody (),
-					                                                 new Ammo .btVector3 (),
-					                                                 new Ammo .btVector3 ());
-			
-					this .set_anchorPoint__ ();
+			if (! this .getCollection ())
+				return;
 
-					this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-				}
-			}
+			if (! this .getBody1 ())
+				return;
+	
+			if (! this .getBody2 ())
+				return;
+		
+		   if (this .getBody1 () .getCollection () !== this .getCollection ())
+				return;
+		
+		   if (this .getBody2 () .getCollection () !== this .getCollection ())
+				return;
+
+			this .joint = new Ammo .btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
+			                                                 this .getBody2 () .getRigidBody (),
+			                                                 new Ammo .btVector3 (),
+			                                                 new Ammo .btVector3 ());
+	
+			this .set_anchorPoint__ ();
+
+			this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
 		},
 		removeJoint: function ()
 		{
-			if (this .joint)
-			{
-				if (this .getCollection ())
-					this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+			if (! this .joint)
+				return;
 
-				Ammo .destroy (this .joint);
-				this .joint = null;
-			}
+			if (this .getCollection ())
+				this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+
+			Ammo .destroy (this .joint);
+			this .joint = null;
 		},
 		set_forceOutput__: function ()
 		{

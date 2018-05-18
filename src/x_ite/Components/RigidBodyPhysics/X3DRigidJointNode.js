@@ -139,9 +139,8 @@ function (Fields,
 				this .bodyNode1 .collection_ .addInterest ("set_joint__", this);
 
 				this .initialize1 ();
+				this .addJoint ();
 			}
-		
-			this .addJoint ();
 		},
 		set_body2__: function ()
 		{
@@ -160,9 +159,8 @@ function (Fields,
 				this .bodyNode2 .collection_ .addInterest ("set_joint__", this);
 
 				this .initialize2 ();
+				this .addJoint ();
 			}
-		
-			this .addJoint ();
 		},
 		initialize1: function ()
 		{
