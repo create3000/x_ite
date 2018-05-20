@@ -119,12 +119,9 @@ function (Fields,
 		{
 			X3DRigidJointNode .prototype .initialize .call (this);
 		
-			this .forceOutput_   .addInterest ("set_forceOutput__", this);
 			this .axis_          .addInterest ("set_joint__",       this);
 			this .minSeparation_ .addInterest ("set_separation__",  this);
 			this .maxSeparation_ .addInterest ("set_separation__",  this);
-
-			this .set_forceOutput__ ();
 		},
 		addJoint: (function ()
 		{

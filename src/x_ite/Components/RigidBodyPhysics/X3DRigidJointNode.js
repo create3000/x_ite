@@ -83,9 +83,11 @@ function (Fields,
 		{
 			X3DNode .prototype .initialize .call (this);
 
-			this .body1_ .addInterest ("set_body1__", this);
-			this .body2_ .addInterest ("set_body2__", this);
+			this .forceOutput_ .addInterest ("set_forceOutput__", this);
+			this .body1_       .addInterest ("set_body1__",       this);
+			this .body2_       .addInterest ("set_body2__",       this);
 		
+			this .set_forceOutput__ ();
 			this .set_body1__ ();
 			this .set_body2__ ();
 		},
@@ -117,6 +119,8 @@ function (Fields,
 		{
 			return this .inverseMatrix2;
 		},
+		set_forceOutput__: function ()
+		{ },
 		set_joint__: function ()
 		{
 			this .removeJoint ();
@@ -172,8 +176,10 @@ function (Fields,
 			this .inverseMatrix2 .set (this .bodyNode2 .position_ .getValue (), this .bodyNode2 .orientation_ .getValue ());
 			this .inverseMatrix2 .inverse ();
 		},
-		addJoint: function () { },
-		removeJoint: function () { },
+		addJoint: function ()
+		{ },
+		removeJoint: function ()
+		{ },
 		dispose: function ()
 		{
 			this .removeJoint ();

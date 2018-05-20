@@ -106,10 +106,7 @@ function (Fields,
 		{
 			X3DRigidJointNode .prototype .initialize .call (this);
 		
-			this .forceOutput_ .addInterest ("set_forceOutput__", this);
 			this .anchorPoint_ .addInterest ("set_anchorPoint__", this);
-		
-			this .set_forceOutput__ ();
 		},
 		addJoint: function ()
 		{
@@ -171,24 +168,24 @@ function (Fields,
 		set_anchorPoint__: (function ()
 		{
 			var
-				anchorPoint1 = new Vector3 (0, 0, 0),
-				anchorPoint2 = new Vector3 (0, 0, 0);
+				localAnchorPoint1 = new Vector3 (0, 0, 0),
+				localAnchorPoint2 = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
 				if (this .joint)
 				{
-					this .getInverseMatrix1 () .multVecMatrix (anchorPoint1 .assign (this .anchorPoint_ .getValue ()));
-					this .getInverseMatrix2 () .multVecMatrix (anchorPoint2 .assign (this .anchorPoint_ .getValue ()));
+					this .getInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .anchorPoint_ .getValue ()));
+					this .getInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .anchorPoint_ .getValue ()));
 			
-					this .joint .setPivotA (new Ammo .btVector3 (anchorPoint1 .x, anchorPoint1 .y, anchorPoint1 .z));
-					this .joint .setPivotB (new Ammo .btVector3 (anchorPoint2 .x, anchorPoint2 .y, anchorPoint2 .z));
+					this .joint .setPivotA (new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
+					this .joint .setPivotB (new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
 
 					if (this .outputs .body1AnchorPoint)
-						this .body1AnchorPoint_ = anchorPoint1;
+						this .body1AnchorPoint_ = localAnchorPoint1;
 			
 					if (this .outputs .body2AnchorPoint)
-						this .body2AnchorPoint_ = anchorPoint2;
+						this .body2AnchorPoint_ = localAnchorPoint2;
 				}
 			};
 		})(),

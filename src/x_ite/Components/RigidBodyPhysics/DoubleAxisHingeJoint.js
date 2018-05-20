@@ -131,20 +131,17 @@ function (Fields,
 		{
 			X3DRigidJointNode .prototype .initialize .call (this);
 		
-			this .forceOutput_ .addInterest ("set_forceOutput__", this);
-			this .anchorPoint_ .addInterest ("set_joint__",       this);
-			this .axis1_       .addInterest ("set_joint__",       this);
-			this .axis2_       .addInterest ("set_joint__",       this);
-
-			this .set_forceOutput__ ();
+			this .anchorPoint_ .addInterest ("set_joint__", this);
+			this .axis1_       .addInterest ("set_joint__", this);
+			this .axis2_       .addInterest ("set_joint__", this);
 		},
 		addJoint: (function ()
 		{
 			var
-				anchorPoint1 = new Vector3 (0, 0, 0),
-				anchorPoint2 = new Vector3 (0, 0, 0),
-				axis1        = new Vector3 (0, 0, 0),
-				axis2        = new Vector3 (0, 0, 0);
+				localAnchorPoint1 = new Vector3 (0, 0, 0),
+				localAnchorPoint2 = new Vector3 (0, 0, 0),
+				loclaAxis1        = new Vector3 (0, 0, 0),
+				loclaAxis2        = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
@@ -163,37 +160,37 @@ function (Fields,
 			   if (this .getBody2 () .getCollection () !== this .getCollection ())
 					return;
 
-				anchorPoint1 .assign (this .anchorPoint_ .getValue ());
-				anchorPoint2 .assign (this .anchorPoint_ .getValue ());
-				axis1        .assign (this .axis1_ .getValue ());
-				axis2        .assign (this .axis2_ .getValue ());
+				localAnchorPoint1 .assign (this .anchorPoint_ .getValue ());
+				localAnchorPoint2 .assign (this .anchorPoint_ .getValue ());
+				localAxis1        .assign (this .axis1_ .getValue ());
+				localAxis2        .assign (this .axis2_ .getValue ());
 
-				this .getInverseMatrix1 () .multVecMatrix (anchorPoint1);
-				this .getInverseMatrix2 () .multVecMatrix (anchorPoint2);
-				this .getInverseMatrix1 () .multDirMatrix (axis1) .normalize ();
-				this .getInverseMatrix2 () .multDirMatrix (axis2) .normalize ();
+				this .getInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
+				this .getInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
+				this .getInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
+				this .getInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
 
 				this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
 				                                           this .getBody2 () .getRigidBody (),
-				                                           new Ammo .btVector3 (anchorPoint1 .x, anchorPoint1 .y, anchorPoint1 .z),
-				                                           new Ammo .btVector3 (anchorPoint2 .x, anchorPoint2 .y, anchorPoint2 .z),
-				                                           new Ammo .btVector3 (axis1 .x, axis1 .y, axis1 .z),
-				                                           new Ammo .btVector3 (axis2 .x, axis2 .y, axis2 .z),
+				                                           new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
+				                                           new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
+				                                           new Ammo .btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
+				                                           new Ammo .btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
 				                                           false);
 
 				this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
 
 				if (this .outputs .body1AnchorPoint)
-					this .body1AnchorPoint_ = anchorPoint1;
+					this .body1AnchorPoint_ = localAnchorPoint1;
 
 				if (this .outputs .body2AnchorPoint)
-					this .body2AnchorPoint_ = anchorPoint2;
+					this .body2AnchorPoint_ = localAnchorPoint2;
 
 				if (this .outputs .body1Axis)
-					this .body1AnchorPoint_ = axis1;
+					this .body1AnchorPoint_ = localAxis1;
 
 				if (this .outputs .body2Axis)
-					this .body2AnchorPoint_ = axis2;
+					this .body2AnchorPoint_ = localAxis2;
 			};
 		})(),
 		removeJoint: function ()
