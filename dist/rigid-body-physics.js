@@ -80,6 +80,7 @@ function (Fields,
 		this .bodyNode2      = null;
 		this .inverseMatrix1 = new Matrix4 ();
 		this .inverseMatrix2 = new Matrix4 ();
+		this .output         = false;
 	}
 
 	X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -89,9 +90,11 @@ function (Fields,
 		{
 			X3DNode .prototype .initialize .call (this);
 
-			this .body1_ .addInterest ("set_body1__", this);
-			this .body2_ .addInterest ("set_body2__", this);
+			this .forceOutput_ .addInterest ("set_forceOutput__", this);
+			this .body1_       .addInterest ("set_body1__",       this);
+			this .body2_       .addInterest ("set_body2__",       this);
 		
+			this .set_forceOutput__ ();
 			this .set_body1__ ();
 			this .set_body2__ ();
 		},
@@ -123,6 +126,33 @@ function (Fields,
 		{
 			return this .inverseMatrix2;
 		},
+		setOutput: function (value)
+		{
+			this .output = value;
+
+			if (value)
+			{
+				if (this .bodyNode1)
+					this .bodyNode1 .addInterest ("update1", this);
+
+				if (this .bodyNode2)
+					this .bodyNode2 .addInterest ("update2", this);
+			}
+			else
+			{
+				if (this .bodyNode1)
+					this .bodyNode1 .removeInterest ("update1", this);
+
+				if (this .bodyNode2)
+					this .bodyNode2 .removeInterest ("update2", this);
+			}
+		},
+		addJoint: function ()
+		{ },
+		removeJoint: function ()
+		{ },
+		set_forceOutput__: function ()
+		{ },
 		set_joint__: function ()
 		{
 			this .removeJoint ();
@@ -132,9 +162,9 @@ function (Fields,
 		{
 			this .removeJoint ();
 		
-			if (this .bodyNode21)
+			if (this .bodyNode1)
 			{
-				this .bodyNode1 .removeInterest ("update2", this);
+				this .bodyNode1 .removeInterest ("update1", this);
 				this .bodyNode1 .collection_ .removeInterest ("set_joint__", this);
 			}
 		
@@ -146,6 +176,7 @@ function (Fields,
 
 				this .initialize1 ();
 				this .addJoint ();
+				this .setOutput (this .output);
 			}
 		},
 		set_body2__: function ()
@@ -166,6 +197,7 @@ function (Fields,
 
 				this .initialize2 ();
 				this .addJoint ();
+				this .setOutput (this .output);
 			}
 		},
 		initialize1: function ()
@@ -178,8 +210,10 @@ function (Fields,
 			this .inverseMatrix2 .set (this .bodyNode2 .position_ .getValue (), this .bodyNode2 .orientation_ .getValue ());
 			this .inverseMatrix2 .inverse ();
 		},
-		addJoint: function () { },
-		removeJoint: function () { },
+		update1: function ()
+		{ },
+		update2: function ()
+		{ },
 		dispose: function ()
 		{
 			this .removeJoint ();
@@ -280,6 +314,7 @@ else if (typeof exports === 'object')
 
 
 define ('x_ite/Components/RigidBodyPhysics/BallJoint',[
+	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -288,7 +323,8 @@ define ('x_ite/Components/RigidBodyPhysics/BallJoint',[
 	"standard/Math/Numbers/Vector3",
 	"lib/ammojs/ammo",
 ],
-function (Fields,
+function ($,
+          Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DRigidJointNode, 
@@ -338,10 +374,7 @@ function (Fields,
 		{
 			X3DRigidJointNode .prototype .initialize .call (this);
 		
-			this .forceOutput_ .addInterest ("set_forceOutput__", this);
 			this .anchorPoint_ .addInterest ("set_anchorPoint__", this);
-		
-			this .set_forceOutput__ ();
 		},
 		addJoint: function ()
 		{
@@ -399,28 +432,30 @@ function (Fields,
 					this .outputs [value] = true;
 				}
 			}
+
+			this .setOutput (! $.isEmptyObject (this .outputs));
 		},
 		set_anchorPoint__: (function ()
 		{
 			var
-				anchorPoint1 = new Vector3 (0, 0, 0),
-				anchorPoint2 = new Vector3 (0, 0, 0);
+				localAnchorPoint1 = new Vector3 (0, 0, 0),
+				localAnchorPoint2 = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
 				if (this .joint)
 				{
-					this .getInverseMatrix1 () .multVecMatrix (anchorPoint1 .assign (this .anchorPoint_ .getValue ()));
-					this .getInverseMatrix2 () .multVecMatrix (anchorPoint2 .assign (this .anchorPoint_ .getValue ()));
+					this .getInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .anchorPoint_ .getValue ()));
+					this .getInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .anchorPoint_ .getValue ()));
 			
-					this .joint .setPivotA (new Ammo .btVector3 (anchorPoint1 .x, anchorPoint1 .y, anchorPoint1 .z));
-					this .joint .setPivotB (new Ammo .btVector3 (anchorPoint2 .x, anchorPoint2 .y, anchorPoint2 .z));
+					this .joint .setPivotA (new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
+					this .joint .setPivotB (new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
 
 					if (this .outputs .body1AnchorPoint)
-						this .body1AnchorPoint_ = anchorPoint1;
+						this .body1AnchorPoint_ = localAnchorPoint1;
 			
 					if (this .outputs .body2AnchorPoint)
-						this .body2AnchorPoint_ = anchorPoint2;
+						this .body2AnchorPoint_ = localAnchorPoint2;
 				}
 			};
 		})(),
@@ -1700,6 +1735,7 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint',[
+	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -1708,7 +1744,8 @@ define ('x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint',[
 	"standard/Math/Numbers/Vector3",
 	"lib/ammojs/ammo",
 ],
-function (Fields,
+function ($,
+          Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DRigidJointNode, 
@@ -1783,20 +1820,17 @@ function (Fields,
 		{
 			X3DRigidJointNode .prototype .initialize .call (this);
 		
-			this .forceOutput_ .addInterest ("set_forceOutput__", this);
-			this .anchorPoint_ .addInterest ("set_joint__",       this);
-			this .axis1_       .addInterest ("set_joint__",       this);
-			this .axis2_       .addInterest ("set_joint__",       this);
-
-			this .set_forceOutput__ ();
+			this .anchorPoint_ .addInterest ("set_joint__", this);
+			this .axis1_       .addInterest ("set_joint__", this);
+			this .axis2_       .addInterest ("set_joint__", this);
 		},
 		addJoint: (function ()
 		{
 			var
-				anchorPoint1 = new Vector3 (0, 0, 0),
-				anchorPoint2 = new Vector3 (0, 0, 0),
-				axis1        = new Vector3 (0, 0, 0),
-				axis2        = new Vector3 (0, 0, 0);
+				localAnchorPoint1 = new Vector3 (0, 0, 0),
+				localAnchorPoint2 = new Vector3 (0, 0, 0),
+				localAxis1        = new Vector3 (0, 0, 0),
+				localAxis2        = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
@@ -1815,37 +1849,37 @@ function (Fields,
 			   if (this .getBody2 () .getCollection () !== this .getCollection ())
 					return;
 
-				anchorPoint1 .assign (this .anchorPoint_ .getValue ());
-				anchorPoint2 .assign (this .anchorPoint_ .getValue ());
-				axis1        .assign (this .axis1_ .getValue ());
-				axis2        .assign (this .axis2_ .getValue ());
+				localAnchorPoint1 .assign (this .anchorPoint_ .getValue ());
+				localAnchorPoint2 .assign (this .anchorPoint_ .getValue ());
+				localAxis1        .assign (this .axis1_ .getValue ());
+				localAxis2        .assign (this .axis2_ .getValue ());
 
-				this .getInverseMatrix1 () .multVecMatrix (anchorPoint1);
-				this .getInverseMatrix2 () .multVecMatrix (anchorPoint2);
-				this .getInverseMatrix1 () .multDirMatrix (axis1) .normalize ();
-				this .getInverseMatrix2 () .multDirMatrix (axis2) .normalize ();
+				this .getInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
+				this .getInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
+				this .getInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
+				this .getInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
 
 				this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
 				                                           this .getBody2 () .getRigidBody (),
-				                                           new Ammo .btVector3 (anchorPoint1 .x, anchorPoint1 .y, anchorPoint1 .z),
-				                                           new Ammo .btVector3 (anchorPoint2 .x, anchorPoint2 .y, anchorPoint2 .z),
-				                                           new Ammo .btVector3 (axis1 .x, axis1 .y, axis1 .z),
-				                                           new Ammo .btVector3 (axis2 .x, axis2 .y, axis2 .z),
+				                                           new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
+				                                           new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
+				                                           new Ammo .btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
+				                                           new Ammo .btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
 				                                           false);
 
 				this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
 
 				if (this .outputs .body1AnchorPoint)
-					this .body1AnchorPoint_ = anchorPoint1;
+					this .body1AnchorPoint_ = localAnchorPoint1;
 
 				if (this .outputs .body2AnchorPoint)
-					this .body2AnchorPoint_ = anchorPoint2;
+					this .body2AnchorPoint_ = localAnchorPoint2;
 
 				if (this .outputs .body1Axis)
-					this .body1AnchorPoint_ = axis1;
+					this .body1AnchorPoint_ = localAxis1;
 
 				if (this .outputs .body2Axis)
-					this .body2AnchorPoint_ = axis2;
+					this .body2AnchorPoint_ = localAxis2;
 			};
 		})(),
 		removeJoint: function ()
@@ -1884,6 +1918,8 @@ function (Fields,
 					this .outputs [value] = true;
 				}
 			}
+
+			this .setOutput (! $.isEmptyObject (this .outputs));
 		},
 	});
 
@@ -2126,6 +2162,7 @@ function (Fields,
 		this .rigidBody          = new Ammo .btRigidBody (this .constructionInfo);
 		this .geometryNodes      = [ ];
 		this .otherGeometryNodes = [ ];
+		this .matrix             = new Matrix4 ();
 		this .force              = new Vector3 (0, 0, 0);
 		this .torque             = new Vector3 (0, 0, 0);
 	}
@@ -2212,6 +2249,10 @@ function (Fields,
 		{
 			return this .rigidBody;
 		},
+		getMatrix: function ()
+		{
+			return this .matrix;
+		},
 		set_position__: function ()
 		{
 			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
@@ -2225,8 +2266,7 @@ function (Fields,
 		set_transform__: (function ()
 		{
 			var
-				o = new Ammo .btVector3 (0, 0, 0),
-				m  = new Matrix4 (),
+				o  = new Ammo .btVector3 (0, 0, 0),
 				t  = new Ammo .btTransform (),
 				im = new Matrix4 (),
 				it = new Ammo .btTransform (),
@@ -2234,6 +2274,8 @@ function (Fields,
 
 			return function ()
 			{
+				var m = this .matrix;
+
 				m .set (this .position_ .getValue (), this .orientation_ .getValue ())
 		
 				//t .setFromOpenGLMatrix (m);
@@ -2966,6 +3008,7 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint',[
+	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -2974,7 +3017,8 @@ define ('x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint',[
 	"standard/Math/Numbers/Vector3",
 	"lib/ammojs/ammo",
 ],
-function (Fields,
+function ($,
+          Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DRigidJointNode, 
@@ -3037,19 +3081,16 @@ function (Fields,
 		{
 			X3DRigidJointNode .prototype .initialize .call (this);
 		
-			this .forceOutput_ .addInterest ("set_forceOutput__", this);
-			this .anchorPoint_ .addInterest ("set_joint__",       this);
-			this .axis_        .addInterest ("set_joint__",       this);
-
-			this .set_forceOutput__ ();
+			this .anchorPoint_ .addInterest ("set_joint__", this);
+			this .axis_        .addInterest ("set_joint__", this);
 		},
 		addJoint: (function ()
 		{
 			var
-				anchorPoint1 = new Vector3 (0, 0, 0),
-				anchorPoint2 = new Vector3 (0, 0, 0),
-				axis1        = new Vector3 (0, 0, 0),
-				axis2        = new Vector3 (0, 0, 0);
+				localAnchorPoint1 = new Vector3 (0, 0, 0),
+				localAnchorPoint2 = new Vector3 (0, 0, 0),
+				localAxis1        = new Vector3 (0, 0, 0),
+				localAxis2        = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
@@ -3068,31 +3109,31 @@ function (Fields,
 			   if (this .getBody2 () .getCollection () !== this .getCollection ())
 					return;
 
-				anchorPoint1 .assign (this .anchorPoint_ .getValue ());
-				anchorPoint2 .assign (this .anchorPoint_ .getValue ());
-				axis1        .assign (this .axis_ .getValue ());
-				axis2        .assign (this .axis_ .getValue ());
+				localAnchorPoint1 .assign (this .anchorPoint_ .getValue ());
+				localAnchorPoint2 .assign (this .anchorPoint_ .getValue ());
+				localAxis1        .assign (this .axis_ .getValue ());
+				localAxis2        .assign (this .axis_ .getValue ());
 
-				this .getInverseMatrix1 () .multVecMatrix (anchorPoint1);
-				this .getInverseMatrix2 () .multVecMatrix (anchorPoint2);
-				this .getInverseMatrix1 () .multDirMatrix (axis1) .normalize ();
-				this .getInverseMatrix2 () .multDirMatrix (axis2) .normalize ();
+				this .getInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
+				this .getInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
+				this .getInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
+				this .getInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
 
 				this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
 				                                           this .getBody2 () .getRigidBody (),
-				                                           new Ammo .btVector3 (anchorPoint1 .x, anchorPoint1 .y, anchorPoint1 .z),
-				                                           new Ammo .btVector3 (anchorPoint2 .x, anchorPoint2 .y, anchorPoint2 .z),
-				                                           new Ammo .btVector3 (axis1 .x, axis1 .y, axis1 .z),
-				                                           new Ammo .btVector3 (axis2 .x, axis2 .y, axis2 .z),
+				                                           new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
+				                                           new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
+				                                           new Ammo .btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
+				                                           new Ammo .btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
 				                                           false);
 
 				this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
 
 				if (this .outputs .body1AnchorPoint)
-					this .body1AnchorPoint_ = anchorPoint1;
+					this .body1AnchorPoint_ = localAnchorPoint1;
 		
 				if (this .outputs .body2AnchorPoint)
-					this .body2AnchorPoint_ = anchorPoint2;
+					this .body2AnchorPoint_ = localAnchorPoint2;
 			};
 		})(),
 		removeJoint: function ()
@@ -3127,6 +3168,8 @@ function (Fields,
 					this .outputs [value] = true;
 				}
 			}
+
+			this .setOutput (! $.isEmptyObject (this .outputs));
 		},
 	});
 
@@ -3185,6 +3228,7 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/SliderJoint',[
+	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -3195,7 +3239,8 @@ define ('x_ite/Components/RigidBodyPhysics/SliderJoint',[
 	"standard/Math/Numbers/Matrix4",
 	"lib/ammojs/ammo",
 ],
-function (Fields,
+function ($,
+          Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DRigidJointNode, 
@@ -3256,12 +3301,9 @@ function (Fields,
 		{
 			X3DRigidJointNode .prototype .initialize .call (this);
 		
-			this .forceOutput_   .addInterest ("set_forceOutput__", this);
 			this .axis_          .addInterest ("set_joint__",       this);
 			this .minSeparation_ .addInterest ("set_separation__",  this);
 			this .maxSeparation_ .addInterest ("set_separation__",  this);
-
-			this .set_forceOutput__ ();
 		},
 		addJoint: (function ()
 		{
@@ -3355,6 +3397,8 @@ function (Fields,
 					this .outputs [value] = true;
 				}
 			}
+
+			this .setOutput (! $.isEmptyObject (this .outputs));
 		},
 		set_separation__: function ()
 		{

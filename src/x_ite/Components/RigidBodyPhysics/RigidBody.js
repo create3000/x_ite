@@ -98,6 +98,7 @@ function (Fields,
 		this .rigidBody          = new Ammo .btRigidBody (this .constructionInfo);
 		this .geometryNodes      = [ ];
 		this .otherGeometryNodes = [ ];
+		this .matrix             = new Matrix4 ();
 		this .force              = new Vector3 (0, 0, 0);
 		this .torque             = new Vector3 (0, 0, 0);
 	}
@@ -184,6 +185,10 @@ function (Fields,
 		{
 			return this .rigidBody;
 		},
+		getMatrix: function ()
+		{
+			return this .matrix;
+		},
 		set_position__: function ()
 		{
 			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
@@ -197,8 +202,7 @@ function (Fields,
 		set_transform__: (function ()
 		{
 			var
-				o = new Ammo .btVector3 (0, 0, 0),
-				m  = new Matrix4 (),
+				o  = new Ammo .btVector3 (0, 0, 0),
 				t  = new Ammo .btTransform (),
 				im = new Matrix4 (),
 				it = new Ammo .btTransform (),
@@ -206,6 +210,8 @@ function (Fields,
 
 			return function ()
 			{
+				var m = this .matrix;
+
 				m .set (this .position_ .getValue (), this .orientation_ .getValue ())
 		
 				//t .setFromOpenGLMatrix (m);

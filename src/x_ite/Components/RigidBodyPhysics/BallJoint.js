@@ -48,6 +48,7 @@
 
 
 define ([
+	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -56,7 +57,8 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"lib/ammojs/ammo",
 ],
-function (Fields,
+function ($,
+          Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DRigidJointNode, 
@@ -164,6 +166,8 @@ function (Fields,
 					this .outputs [value] = true;
 				}
 			}
+
+			this .setOutput (! $.isEmptyObject (this .outputs));
 		},
 		set_anchorPoint__: (function ()
 		{

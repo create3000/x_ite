@@ -74,6 +74,7 @@ function (Fields,
 		this .bodyNode2      = null;
 		this .inverseMatrix1 = new Matrix4 ();
 		this .inverseMatrix2 = new Matrix4 ();
+		this .output         = false;
 	}
 
 	X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -119,6 +120,31 @@ function (Fields,
 		{
 			return this .inverseMatrix2;
 		},
+		setOutput: function (value)
+		{
+			this .output = value;
+
+			if (value)
+			{
+				if (this .bodyNode1)
+					this .bodyNode1 .addInterest ("update1", this);
+
+				if (this .bodyNode2)
+					this .bodyNode2 .addInterest ("update2", this);
+			}
+			else
+			{
+				if (this .bodyNode1)
+					this .bodyNode1 .removeInterest ("update1", this);
+
+				if (this .bodyNode2)
+					this .bodyNode2 .removeInterest ("update2", this);
+			}
+		},
+		addJoint: function ()
+		{ },
+		removeJoint: function ()
+		{ },
 		set_forceOutput__: function ()
 		{ },
 		set_joint__: function ()
@@ -130,9 +156,9 @@ function (Fields,
 		{
 			this .removeJoint ();
 		
-			if (this .bodyNode21)
+			if (this .bodyNode1)
 			{
-				this .bodyNode1 .removeInterest ("update2", this);
+				this .bodyNode1 .removeInterest ("update1", this);
 				this .bodyNode1 .collection_ .removeInterest ("set_joint__", this);
 			}
 		
@@ -144,6 +170,7 @@ function (Fields,
 
 				this .initialize1 ();
 				this .addJoint ();
+				this .setOutput (this .output);
 			}
 		},
 		set_body2__: function ()
@@ -164,6 +191,7 @@ function (Fields,
 
 				this .initialize2 ();
 				this .addJoint ();
+				this .setOutput (this .output);
 			}
 		},
 		initialize1: function ()
@@ -176,9 +204,9 @@ function (Fields,
 			this .inverseMatrix2 .set (this .bodyNode2 .position_ .getValue (), this .bodyNode2 .orientation_ .getValue ());
 			this .inverseMatrix2 .inverse ();
 		},
-		addJoint: function ()
+		update1: function ()
 		{ },
-		removeJoint: function ()
+		update2: function ()
 		{ },
 		dispose: function ()
 		{
