@@ -112,11 +112,11 @@ function (Fields,
 		{
 			return this .bodyNode2;
 		},
-		getInverseMatrix1: function ()
+		getInitialInverseMatrix1: function ()
 		{
 			return this .inverseMatrix1;
 		},
-		getInverseMatrix2: function ()
+		getInitialInverseMatrix2: function ()
 		{
 			return this .inverseMatrix2;
 		},

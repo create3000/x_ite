@@ -55,6 +55,8 @@ define ([
 	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix4",
 	"lib/ammojs/ammo",
 ],
 function ($,
@@ -64,6 +66,8 @@ function ($,
           X3DRigidJointNode, 
           X3DConstants,
           Vector3,
+          Rotation4,
+          Matrix4,
           Ammo)
 {
 "use strict";
@@ -82,8 +86,10 @@ function ($,
 		this .angle_            .setUnit ("angle");
 		this .angleRate_        .setUnit ("angularRate");
 
-		this .joint   = null;
-		this .outputs = { };
+		this .joint             = null;
+		this .outputs           = { };
+		this .localAnchorPoint1 = new Vector3 (0, 0, 0);
+		this .localAnchorPoint2 = new Vector3 (0, 0, 0);
 	}
 
 	SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
@@ -127,10 +133,8 @@ function ($,
 		addJoint: (function ()
 		{
 			var
-				localAnchorPoint1 = new Vector3 (0, 0, 0),
-				localAnchorPoint2 = new Vector3 (0, 0, 0),
-				localAxis1        = new Vector3 (0, 0, 0),
-				localAxis2        = new Vector3 (0, 0, 0);
+				localAxis1 = new Vector3 (0, 0, 0),
+				localAxis2 = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
@@ -149,15 +153,19 @@ function ($,
 			   if (this .getBody2 () .getCollection () !== this .getCollection ())
 					return;
 
+				var
+					localAnchorPoint1 = this .localAnchorPoint1,
+					localAnchorPoint2 = this .localAnchorPoint2;
+
 				localAnchorPoint1 .assign (this .anchorPoint_ .getValue ());
 				localAnchorPoint2 .assign (this .anchorPoint_ .getValue ());
 				localAxis1        .assign (this .axis_ .getValue ());
 				localAxis2        .assign (this .axis_ .getValue ());
 
-				this .getInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
-				this .getInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
-				this .getInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
-				this .getInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
+				this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
+				this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
+				this .getInitialInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
+				this .getInitialInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
 
 				this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
 				                                           this .getBody2 () .getRigidBody (),
@@ -168,12 +176,6 @@ function ($,
 				                                           false);
 
 				this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-
-				if (this .outputs .body1AnchorPoint)
-					this .body1AnchorPoint_ = localAnchorPoint1;
-		
-				if (this .outputs .body2AnchorPoint)
-					this .body2AnchorPoint_ = localAnchorPoint2;
 			};
 		})(),
 		removeJoint: function ()
@@ -211,6 +213,42 @@ function ($,
 
 			this .setOutput (! $.isEmptyObject (this .outputs));
 		},
+		update1: (function ()
+		{
+			var localAnchorPoint1 = new Vector3 (0, 0, 0);
+
+			return function ()
+			{
+				if (this .outputs .body1AnchorPoint)
+					this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
+			};
+		})(),
+		update2: (function ()
+		{
+			var
+				localAnchorPoint2 = new Vector3 (0, 0, 0),
+				difference        = new Matrix4 (),
+				rotation          = new Rotation4 (0, 0, 1, 0);
+
+			return function ()
+			{
+				if (this .outputs .body2AnchorPoint)
+					this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
+	
+				if (this .outputs .angle)
+				{
+					var lastAngle  = this .angle_ .getValue ();
+
+					difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
+					difference .get (null, rotation);
+			
+					this .angle_ = rotation .angle;
+
+					if (this .outputs .angleRate)
+						this .angleRate_ = (this .angle_ .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
+				}
+			};
+		})(),
 	});
 
 	return SingleAxisHingeJoint;
