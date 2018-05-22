@@ -78,7 +78,7 @@ function (Fields,
     * Font paths for default SERIF, SANS and TYPWRITER families.
     */
 
-	var version = DEBUG ? "latest" : VERSION;
+	var version = DEBUG || VERSION .match (/a$/) ? "latest" : VERSION;
 
 	var FontDirectories = [
 		"http://media.create3000.de/fonts/",

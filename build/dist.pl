@@ -49,7 +49,7 @@ sub dist {
 
 	my $js_min = `cat dist/x_ite.min.js`;
 	open JS, ">", "dist/x_ite.min.js";
-	print JS "/* X_ITE X3D v$VERSION-$REVISION\n * See LICENCES.txt for a detailed listing of used licences. */\n", $js_min;
+	print JS "/* X_ITE X3D v$VERSION-$REVISION\n * See LICENSE.txt for a detailed listing of used licences. */\n", $js_min;
 	close JS;
 
 	say "Copying files";
@@ -71,10 +71,10 @@ sub licenses {
 	print MIN $min;
 	close MIN;
 
-	open LICENCES, ">", "dist/LICENCES.txt";
-	say LICENCES `cat src/LICENSE.txt`;
-	print LICENCES $licenses;
-	close LICENCES;
+	open LICENSE, ">", "dist/LICENSE.txt";
+	say LICENSE `cat src/LICENSE.txt`;
+	print LICENSE $licenses;
+	close LICENSE;
 }
 
 sub zip {

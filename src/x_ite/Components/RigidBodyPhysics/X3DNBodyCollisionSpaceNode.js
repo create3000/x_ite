@@ -60,13 +60,14 @@ function (X3DNode,
 
 	function X3DNBodyCollisionSpaceNode (executionContext)
 	{
-		X3DNode .call (this, executionContext);
+		X3DNode          .call (this, executionContext);
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DNBodyCollisionSpaceNode);
 	}
 
-	X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode .prototype),new X3DBoundedObject (),
+	X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+		X3DBoundedObject .prototype,
 	{
 		constructor: X3DNBodyCollisionSpaceNode,
 	});

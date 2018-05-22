@@ -89,7 +89,7 @@ function ($,
 		X3DBrowserContext .call (this, element);
 
 		this .currentSpeed         = 0;
-		this .currentFrameRate     = 0;
+		this .currentFrameRate     = 60;
 		this .description_         = "";
 		this .supportedNodes       = SupportedNodes;
 		this .supportedComponents  = SupportedComponents (this);

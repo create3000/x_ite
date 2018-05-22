@@ -31,13 +31,15 @@
     <None Include="images\Time.png" />
     <None Include="images\Viewpoint.png" />
     <None Include="images\WalkViewer.png" />
-    <None Include="LICENCES.txt" />
     <None Include="example.html" />
     <None Include="x_ite.css" />
     <None Include="x_ite.js" />
     <None Include="x_ite.zip" />
     <None Include="x_ite.min.js" />
     <None Include="images\logo.128.png" />
+    <None Include="LICENSE.txt" />
+    <None Include="rigid-body-physics.js" />
+    <None Include="rigid-body-physics.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

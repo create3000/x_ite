@@ -67,6 +67,12 @@ function (Fields,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .CollisionCollection);
+
+		this .minBounceSpeed_           .setUnit ("speed");
+		this .surfaceSpeed_             .setUnit ("speed");
+		this .softnessConstantForceMix_ .setUnit ("force");
+
+		this .appliedParameters = { };
 	}
 
 	CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -74,16 +80,16 @@ function (Fields,
 		constructor: CollisionCollection,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                  new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "collidables",              new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat (0.1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "slipFactors",              new Fields .SFVec2f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "collidables",              new Fields .MFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -95,7 +101,27 @@ function (Fields,
 		},
 		getContainerField: function ()
 		{
-			return "collidables";
+			return "collider";
+		},
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .appliedParameters_ .addInterest ("set_appliedParameters__", this);
+
+			this .set_appliedParameters__ ();
+		},
+		getAppliedParameters: function ()
+		{
+			return this .appliedParameters;
+		},
+		set_appliedParameters__: function ()
+		{
+			for (var key in this .appliedParameters)
+				delete this .appliedParameters [key];
+
+			for (var i = 0, length = this .appliedParameters_ .length; i < length; ++ i)
+				this .appliedParameters [this .appliedParameters_ [i]] = true;
 		},
 	});
 

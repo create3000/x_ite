@@ -1,4 +1,4 @@
-/* X_ITE v4.1.5-229 */
+/* X_ITE v4.1.6a-239 */
 
 (function () {
 
@@ -24501,7 +24501,7 @@ function (SFBool,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.1.5";
+	return "4.1.6a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -65783,9 +65783,9 @@ function (Fields,
 			X3DChildNode     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
 
-			this .addChildren_    .addInterest ("set_addChildren__", this);
+			this .addChildren_    .addInterest ("set_addChildren__",    this);
 			this .removeChildren_ .addInterest ("set_removeChildren__", this);
-			this .children_       .addInterest ("set_children__", this);
+			this .children_       .addInterest ("set_children__",       this);
 
 			this .set_children__ ();
 		},
@@ -68098,7 +68098,7 @@ function (Fields,
     * Font paths for default SERIF, SANS and TYPWRITER families.
     */
 
-	var version = DEBUG ? "latest" : VERSION;
+	var version = DEBUG || VERSION .match (/a$/) ? "latest" : VERSION;
 
 	var FontDirectories = [
 		"http://media.create3000.de/fonts/",
@@ -76239,7 +76239,7 @@ function (Vector3)
 			var interval = time - this .currentTime;
 
 			this .currentTime      = time;
-			this .currentFrameRate = interval ? 1 / interval : 0;
+			this .currentFrameRate = interval ? 1 / interval : 60;
 
 			if (this .getWorld () && this .getActiveLayer ())
 			{
@@ -85252,6 +85252,7 @@ function (Fields,
 						case X3DConstants .X3DShapeNode:
 						{
 							node .isCameraObject_ .addFieldInterest (this .isCameraObject_);
+							this .setCameraObject (node .getCameraObject ());
 							this .shapeNode = node;
 							break;
 						}
@@ -113744,7 +113745,7 @@ function (Anchor,
 {
 "use strict";
 
-	var supportedNodes =
+	var SupportedNodes =
 	{
 		// 3.1
 		MetadataBool:                 MetadataBoolean,
@@ -113989,13 +113990,18 @@ function (Anchor,
 
 	function createInstance (executionContext) { return new this (executionContext); }
 
-	for (var name in supportedNodes)
+	for (var name in SupportedNodes)
 	{
-		supportedNodes [name] .createInstance = createInstance .bind (supportedNodes [name]);
-		supportedNodes [name.toUpperCase()] = supportedNodes [name]; 
-		supportedNodes [name.toUpperCase()] .createInstance = createInstance .bind (supportedNodes [name]);
+		var interfaceDeclaration = SupportedNodes [name];
+
+		interfaceDeclaration .createInstance = createInstance .bind (interfaceDeclaration);
+
+		// HTML DOM support
+
+		SupportedNodes [name .toUpperCase ()] = interfaceDeclaration; 
 	}
-	return supportedNodes;
+
+	return SupportedNodes;
 });
 
 
@@ -114090,7 +114096,7 @@ function ($,
 		X3DBrowserContext .call (this, element);
 
 		this .currentSpeed         = 0;
-		this .currentFrameRate     = 0;
+		this .currentFrameRate     = 60;
 		this .description_         = "";
 		this .supportedNodes       = SupportedNodes;
 		this .supportedComponents  = SupportedComponents (this);

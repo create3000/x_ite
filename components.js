@@ -98,6 +98,14 @@
 		{ name: 'Indexed Triangle Set', url: [ "http://media.create3000.de/components/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d" ], archive: "http://media.create3000.de/components/Rendering/IndexedTriangleSet/IndexedTriangleSet.zip" },
 		{ name: 'Line Set', url: [ "http://media.create3000.de/components/Rendering/LineSet/LineSet.x3d" ], archive: "http://media.create3000.de/components/Rendering/LineSet/LineSet.zip" },
 
+		{ name: 'Rigid Body Physics' },
+		{ name: 'Ball Joint', url: [ "http://media.create3000.de/components/RigidBodyPhysics/BallJoint/BallJoint.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/BallJoint/BallJoint.zip" },
+		{ name: 'Collidable Shape', url: [ "http://media.create3000.de/components/RigidBodyPhysics/CollidableShape/CollidableShape.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/CollidableShape/CollidableShape.zip" },
+		{ name: 'Collision Collection', url: [ "http://media.create3000.de/components/RigidBodyPhysics/CollisionCollection/CollisionCollection.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/CollisionCollection/CollisionCollection.zip" },
+		{ name: 'Rigid Body', url: [ "http://media.create3000.de/components/RigidBodyPhysics/RigidBody/RigidBody.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/RigidBody/RigidBody.zip" },
+		{ name: 'Single Axis Hinge Joint', url: [ "http://media.create3000.de/components/RigidBodyPhysics/SingleAxisHingeJoint/SingleAxisHingeJoint.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/SingleAxisHingeJoint/SingleAxisHingeJoint.zip" },
+		{ name: 'Slider Joint', url: [ "http://media.create3000.de/components/RigidBodyPhysics/SliderJoint/SliderJoint.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/SliderJoint/SliderJoint.zip" },
+
 		{ name: 'Shaders' },
 		{ name: 'Composed Shader', url: [ "http://media.create3000.de/components/Shaders/ComposedShader/ComposedShader.x3d" ], archive: "http://media.create3000.de/components/Shaders/ComposedShader/ComposedShader.zip" },
 		{ name: 'Shader Part', url: [ "http://media.create3000.de/components/Shaders/ShaderPart/ShaderPart.x3d" ], archive: "http://media.create3000.de/components/Shaders/ShaderPart/ShaderPart.zip" },

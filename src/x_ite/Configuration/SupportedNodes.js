@@ -522,7 +522,7 @@ function (Anchor,
 {
 "use strict";
 
-	var supportedNodes =
+	var SupportedNodes =
 	{
 		// 3.1
 		MetadataBool:                 MetadataBoolean,
@@ -767,12 +767,17 @@ function (Anchor,
 
 	function createInstance (executionContext) { return new this (executionContext); }
 
-	for (var name in supportedNodes)
+	for (var name in SupportedNodes)
 	{
-		supportedNodes [name] .createInstance = createInstance .bind (supportedNodes [name]);
-		supportedNodes [name.toUpperCase()] = supportedNodes [name]; 
-		supportedNodes [name.toUpperCase()] .createInstance = createInstance .bind (supportedNodes [name]);
+		var interfaceDeclaration = SupportedNodes [name];
+
+		interfaceDeclaration .createInstance = createInstance .bind (interfaceDeclaration);
+
+		// HTML DOM support
+
+		SupportedNodes [name .toUpperCase ()] = interfaceDeclaration; 
 	}
-	return supportedNodes;
+
+	return SupportedNodes;
 });
 
