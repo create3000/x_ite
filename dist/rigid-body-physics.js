@@ -76,11 +76,11 @@ function (Fields,
 
 		this .addChildObjects ("collection", new Fields .SFNode ());
 
-		this .bodyNode1      = null;
-		this .bodyNode2      = null;
-		this .inverseMatrix1 = new Matrix4 ();
-		this .inverseMatrix2 = new Matrix4 ();
-		this .output         = false;
+		this .bodyNode1             = null;
+		this .bodyNode2             = null;
+		this .initialInverseMatrix1 = new Matrix4 ();
+		this .initialInverseMatrix2 = new Matrix4 ();
+		this .output                = false;
 	}
 
 	X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -120,11 +120,11 @@ function (Fields,
 		},
 		getInitialInverseMatrix1: function ()
 		{
-			return this .inverseMatrix1;
+			return this .initialInverseMatrix1;
 		},
 		getInitialInverseMatrix2: function ()
 		{
-			return this .inverseMatrix2;
+			return this .initialInverseMatrix2;
 		},
 		setOutput: function (value)
 		{
@@ -202,13 +202,13 @@ function (Fields,
 		},
 		initialize1: function ()
 		{
-			this .inverseMatrix1 .set (this .bodyNode1 .position_ .getValue (), this .bodyNode1 .orientation_ .getValue ());
-			this .inverseMatrix1 .inverse ();
+			this .initialInverseMatrix1 .set (this .bodyNode1 .position_ .getValue (), this .bodyNode1 .orientation_ .getValue ());
+			this .initialInverseMatrix1 .inverse ();
 		},
 		initialize2: function ()
 		{
-			this .inverseMatrix2 .set (this .bodyNode2 .position_ .getValue (), this .bodyNode2 .orientation_ .getValue ());
-			this .inverseMatrix2 .inverse ();
+			this .initialInverseMatrix2 .set (this .bodyNode2 .position_ .getValue (), this .bodyNode2 .orientation_ .getValue ());
+			this .initialInverseMatrix2 .inverse ();
 		},
 		update1: function ()
 		{ },
