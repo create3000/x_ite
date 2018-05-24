@@ -103,6 +103,7 @@
 		{ name: 'Collidable Shape', url: [ "http://media.create3000.de/components/RigidBodyPhysics/CollidableShape/CollidableShape.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/CollidableShape/CollidableShape.zip" },
 		{ name: 'Collision Collection', url: [ "http://media.create3000.de/components/RigidBodyPhysics/CollisionCollection/CollisionCollection.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/CollisionCollection/CollisionCollection.zip" },
 		{ name: 'Rigid Body', url: [ "http://media.create3000.de/components/RigidBodyPhysics/RigidBody/RigidBody.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/RigidBody/RigidBody.zip" },
+		{ name: 'Rigid Body Collection', url: [ "http://media.create3000.de/components/RigidBodyPhysics/RigidBodyCollection/RigidBodyCollection.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/RigidBodyCollection/RigidBodyCollection.zip" },
 		{ name: 'Single Axis Hinge Joint', url: [ "http://media.create3000.de/components/RigidBodyPhysics/SingleAxisHingeJoint/SingleAxisHingeJoint.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/SingleAxisHingeJoint/SingleAxisHingeJoint.zip" },
 		{ name: 'Slider Joint', url: [ "http://media.create3000.de/components/RigidBodyPhysics/SliderJoint/SliderJoint.x3d" ], archive: "http://media.create3000.de/components/RigidBodyPhysics/SliderJoint/SliderJoint.zip" },
 
