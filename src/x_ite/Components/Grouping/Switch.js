@@ -70,7 +70,8 @@ function (Fields,
 
 		this .addType (X3DConstants .Switch);
 
-		this .addAlias ("choice", this .children_);
+		if (executionContext .getSpecificationVersion () == "2.0")
+			this .addAlias ("choice", this .children_);
 	}
 
 	Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
