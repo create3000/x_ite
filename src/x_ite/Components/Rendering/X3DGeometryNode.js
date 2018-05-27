@@ -858,7 +858,7 @@ function (Fields,
 			try
 			{
 				var
-					shaderNode    = context .shadow ? context .shaderNode .shadowShader : context .shaderNode,
+					shaderNode    = context .shaderNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
 

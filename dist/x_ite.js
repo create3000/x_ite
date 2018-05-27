@@ -1,4 +1,4 @@
-/* X_ITE v4.1.7-242 */
+/* X_ITE v4.1.7-243 */
 
 (function () {
 
@@ -24501,7 +24501,7 @@ function (SFBool,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.1.6";
+	return "4.1.7";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -53665,7 +53665,7 @@ function (Fields,
 			try
 			{
 				var
-					shaderNode    = context .shadow ? context .shaderNode .shadowShader : context .shaderNode,
+					shaderNode    = context .shaderNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
 
