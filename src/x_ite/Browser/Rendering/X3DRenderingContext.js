@@ -125,6 +125,9 @@ function ($,
 			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS);
 			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS);
 
+			this .gouraudShader .shadowShader = this .createShader (this, "GouraudShader", gouraudVS, gouraudFS, true);
+			this .phongShader   .shadowShader = this .createShader (this, "PhongShader",   phongVS,   phongFS,   true);
+
 			this .pointShader .setGeometryType (0);
 			this .lineShader  .setGeometryType (1);
 
@@ -179,8 +182,14 @@ function ($,
 		{
 			return this .viewport_;
 		},
-		createShader: function (browser, name, vs, fs)
+		createShader: function (browser, name, vs, fs, shadow)
 		{
+			if (shadow)
+			{
+				vs = "\n#define X3D_SHADOWS\n" + vs;
+				fs = "\n#define X3D_SHADOWS\n" + fs;
+			}
+
 			var vertexShader = new ShaderPart (browser .getPrivateScene ());
 			vertexShader .url_ .push ("data:text/plain;charset=utf-8," + vs);
 			vertexShader .setup ();
