@@ -125,8 +125,10 @@ function ($,
 			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS);
 			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS);
 
-			this .gouraudShader .shadowShader = this .createShader (this, "GouraudShader", gouraudVS, gouraudFS, true);
-			this .phongShader   .shadowShader = this .createShader (this, "PhongShader",   phongVS,   phongFS,   true);
+			this .pointShader   .shadowShader = this .pointShader;
+			this .lineShader    .shadowShader = this .lineShader;
+			this .gouraudShader .shadowShader = this .gouraudShader;
+			this .phongShader   .shadowShader = this .createShader (this, "PhongShader", phongVS, phongFS, true);
 
 			this .pointShader .setGeometryType (0);
 			this .lineShader  .setGeometryType (1);
@@ -257,6 +259,10 @@ function ($,
 		{
 			// There must always be a gouraud shader available.
 			return this .gouraudShader;
+		},
+		getPhongShader: function ()
+		{
+			return this .phongShader;
 		},
 		getDepthShader: function ()
 		{

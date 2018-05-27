@@ -167,6 +167,8 @@ function (X3DChildNode,
 						renderObject .getLights ()        .push (lightContainer);
 					}
 				}
+
+				renderObject .pushShadow (this .shadowIntensity_ .getValue () > 0);
 			}
 		},
 		pop: function (renderObject)
@@ -180,6 +182,8 @@ function (X3DChildNode,
 					renderObject .getBrowser () .getLocalLights () .push (renderObject .getShaderObjects () .pop ());
 				else
 					renderObject .getShaderObjects () .pop ();
+
+				renderObject .popShadow ();
 			}
 		},
 	});

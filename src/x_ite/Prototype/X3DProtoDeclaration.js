@@ -103,6 +103,14 @@ function ($,
 
 			this .loadState_ = X3DConstants .COMPLETE_STATE;
 		},
+		getSpecificationVersion: function ()
+		{
+			return this .getExecutionContext () .getSpecificationVersion ();
+		},
+		getEncoding: function ()
+		{
+			return this .getExecutionContext () .getEncoding ();
+		},
 		getURL: function ()
 		{
 			return this .getExecutionContext () .getURL ();

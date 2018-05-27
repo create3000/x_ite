@@ -1,11 +1,18 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Rendering/X3DRenderingContext.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/RigidBodyPhysics/RigidBody.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Basic/X3DBaseNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="260" Column="24" />
+      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="163" Column="6" />
+      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="855" Column="2" />
+      <File FileName="src/x_ite/Components/Lighting/X3DLightNode.js" Line="188" Column="5" />
+      <File FileName="src/x_ite/Components/Lighting/DirectionalLight.js" Line="281" Column="74" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="864" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

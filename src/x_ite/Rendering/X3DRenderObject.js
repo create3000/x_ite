@@ -94,6 +94,7 @@ function ($,
 		this .shaderObjects            = [ ];
 		this .globalLights             = [ ];
 		this .lights                   = [ ];
+		this .shadow                   = [ false ];
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
 		this .generatedCubeMapTextures = [ ];
@@ -170,6 +171,14 @@ function ($,
 		getLights: function ()
 		{
 			return this .lights;
+		},
+		pushShadow: function (value)
+		{
+			this .shadow .push (value || this .shadow [this .shadow .length - 1]);
+		},
+		popShadow: function (value)
+		{
+			this .shadow .pop ();
 		},
 		setGlobalFog: function (fog)
 		{
@@ -485,6 +494,7 @@ function ($,
 				context .shapeNode = shapeNode;
 				context .distance  = bboxCenter .z - radius;
 				context .fogNode   = this .localFog;
+				context .shadow    = this .shadow [this .shadow .length - 1];
 
 				// Clip planes and local lights
 
@@ -502,7 +512,7 @@ function ($,
 		{
 			return {
 				renderer: this,
-				transparent: true,
+				transparent: transparent,
 				geometryType: 3,
 				colorMaterial: false,
 				modelViewMatrix: new Float32Array (16),
@@ -513,6 +523,7 @@ function ($,
 				textureNode: null,
 				textureTransformNode: null,
 				shaderNode: null,
+				shadow: false,
 			};
 		},
 		collide: (function ()
@@ -840,6 +851,7 @@ function ($,
 				browser .getPointShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 				browser .getLineShader    () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 				browser .getDefaultShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getPhongShader   () .shadowShader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 	
 				for (var id in shaders)
 					shaders [id] .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
