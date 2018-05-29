@@ -87,8 +87,6 @@ getMaterialColor (in x3d_MaterialParameters material)
 {
 	if (x3d_Lighting)
 	{
-		initShadows ();
-
 		vec3  N  = normalize (gl_FrontFacing ? vN : -vN);
 		vec3  V  = normalize (-v); // normalized vector from point on geometry to viewer's position
 		float dV = length (v);
@@ -131,7 +129,7 @@ getMaterialColor (in x3d_MaterialParameters material)
 
 		vec3 finalColor = vec3 (0.0, 0.0, 0.0);
 
-		for (int i = 0; i < x3d_MaxLights; ++ i)
+		for (int i = 0; i < x3d_MaxLights; i ++)
 		{
 			if (i == x3d_NumLights)
 				break;
@@ -159,7 +157,7 @@ getMaterialColor (in x3d_MaterialParameters material)
 				float attenuationSpotFactor       = attenuationFactor * spotFactor;
 				vec3  ambientColor                = light .ambientIntensity * ambientTerm;
 				vec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);
-				float shadowIntensity             = getShadowIntensity (i, light .type, x3d_ShadowIntensity [i], x3d_ShadowDiffusion [i], x3d_ShadowMatrix [i], lightAngle);
+				float shadowIntensity             = getShadowIntensity (i, light .type, lightAngle, x3d_ShadowIntensity [i], x3d_ShadowMatrix [i], x3d_ShadowMapSize [i]);
 
 				finalColor += attenuationSpotFactor * mix (light .color * ambientDiffuseSpecularColor, x3d_ShadowColor [i], shadowIntensity);
 			}

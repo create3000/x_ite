@@ -81,9 +81,9 @@ function (Fields,
 		this .x3d_LightCutOffAngle      = [ ];
 		this .x3d_LightRadius           = [ ];
 		this .x3d_ShadowIntensity       = [ ];
-		this .x3d_ShadowDiffusion       = [ ];
 		this .x3d_ShadowColor           = [ ];
 		this .x3d_ShadowMatrix          = [ ];
+		this .x3d_ShadowMapSize         = [ ];
 		this .x3d_ShadowMap             = [ ];
 
 		this .numClipPlanes   = 0;
@@ -156,9 +156,9 @@ function (Fields,
 				this .x3d_LightRadius [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].radius",           "x3d_LightRadius[" + i + "]");
 
 				this .x3d_ShadowIntensity [i] = gl .getUniformLocation (program, "x3d_ShadowIntensity[" + i + "]");
-				this .x3d_ShadowDiffusion [i] = gl .getUniformLocation (program, "x3d_ShadowDiffusion[" + i + "]");
 				this .x3d_ShadowColor [i]     = gl .getUniformLocation (program, "x3d_ShadowColor[" + i + "]");
 				this .x3d_ShadowMatrix [i]    = gl .getUniformLocation (program, "x3d_ShadowMatrix[" + i + "]");
+				this .x3d_ShadowMapSize [i]   = gl .getUniformLocation (program, "x3d_ShadowMapSize[" + i + "]");
 				this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
 			}
 
