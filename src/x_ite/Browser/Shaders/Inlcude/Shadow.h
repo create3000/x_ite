@@ -1,9 +1,5 @@
 /* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/
 
-uniform vec3      x3d_ShadowColor [x3d_MaxLights];
-uniform float     x3d_ShadowIntensity [x3d_MaxLights];
-uniform mat4      x3d_ShadowMatrix [x3d_MaxLights];
-uniform int       x3d_ShadowMapSize [x3d_MaxLights];
 uniform sampler2D x3d_ShadowMap [x3d_MaxLights];
 
 #pragma X3D include "Pack.h"
@@ -128,13 +124,13 @@ getShadowIntensity (in int index, in int lightType, in float lightAngle, in floa
 	}
 	else
 	{
-		float shadowBias    = 0.004;
-		float shadowRadius  = 1.0;
+		float shadowBias   = 0.004;
+		float shadowRadius = 1.0;
 
 		vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
 		vec2 texelSize   = vec2 (1.0) / vec2 (shadowMapSize);
 
-		shadowCoord.z    -= shadowBias;
+		shadowCoord .z   -= shadowBias;
 		shadowCoord .xyz /= shadowCoord .w;
 
 		float dx0 = - texelSize .x * shadowRadius;

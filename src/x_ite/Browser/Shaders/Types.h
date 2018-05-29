@@ -19,6 +19,11 @@ struct x3d_LightSourceParameters {
 	mediump float radius;
 	mediump float beamWidth;
 	mediump float cutOffAngle;
+	// Shadow
+	mediump vec3  shadowColor;
+	mediump float shadowIntensity;
+	mediump mat4  shadowMatrix;
+	mediump int   shadowMapSize;
 };
 
 //uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
