@@ -72,8 +72,6 @@ function (X3DChildNode,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DLightNode);
-
-		this .shadowDiffusion_ .setUnit ("length");
 	}
 
 	X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -107,9 +105,9 @@ function (X3DChildNode,
 		{
 			return Algorithm .clamp (this .shadowIntensity_ .getValue (), 0, 1);
 		},
-		getShadowDiffusion: function ()
+		getShadowBias: function ()
 		{
-			return Math .max (this .shadowDiffusion_ .getValue (), 0);
+			return Algorithm .clamp (this .shadowBias_ .getValue (), 0, 1);
 		},
 		getShadowMapSize: function ()
 		{

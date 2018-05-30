@@ -22,6 +22,7 @@ struct x3d_LightSourceParameters {
 	// Shadow
 	mediump vec3  shadowColor;
 	mediump float shadowIntensity;
+	mediump float shadowBias;
 	mediump mat4  shadowMatrix;
 	mediump int   shadowMapSize;
 };

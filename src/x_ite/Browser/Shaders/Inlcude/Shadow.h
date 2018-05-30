@@ -59,7 +59,7 @@ texture2DCompare (in int i, in vec2 texCoord, in float compare)
 }
 
 float
-getShadowIntensity (in int index, in int lightType, in float lightAngle, in float shadowIntensity, in mat4 shadowMatrix, in int shadowMapSize)
+getShadowIntensity (in int index, in int lightType, in float lightAngle, in float shadowIntensity, in float shadowBias, in mat4 shadowMatrix, in int shadowMapSize)
 {
 	if (shadowIntensity <= 0.0 || lightAngle <= 0.0)
 		return 0.0;
@@ -124,19 +124,16 @@ getShadowIntensity (in int index, in int lightType, in float lightAngle, in floa
 	}
 	else
 	{
-		float shadowBias   = 0.004;
-		float shadowRadius = 1.0;
-
 		vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
 		vec2 texelSize   = vec2 (1.0) / vec2 (shadowMapSize);
 
 		shadowCoord .z   -= shadowBias;
 		shadowCoord .xyz /= shadowCoord .w;
 
-		float dx0 = - texelSize .x * shadowRadius;
-		float dy0 = - texelSize .y * shadowRadius;
-		float dx1 = + texelSize .x * shadowRadius;
-		float dy1 = + texelSize .y * shadowRadius;
+		float dx0 = - texelSize .x;
+		float dy0 = - texelSize .y;
+		float dx1 = + texelSize .x;
+		float dy1 = + texelSize .y;
 
 		float value = (
 			texture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +
@@ -154,13 +151,11 @@ getShadowIntensity (in int index, in int lightType, in float lightAngle, in floa
 	}
 //	else
 //	{
-//		float shadowBias    = 0.005;
-//
 //		vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
 //
+//		shadowCoord .z   -= shadowBias;
 //		shadowCoord .xyz /= shadowCoord .w;
 //
-//		float bias  = shadowBias / shadowCoord .w;
 //		float value = 0.0;
 //
 //		for (int i = 0; i < x3d_ShadowSamples; ++ i)
@@ -177,7 +172,7 @@ getShadowIntensity (in int index, in int lightType, in float lightAngle, in floa
 #else
 
 float
-getShadowIntensity (in int i, in int lightType, in float lightAngle, in float shadowIntensity, in mat4 shadowMatrix, in int shadowMapSize)
+getShadowIntensity (in int i, in int lightType, in float lightAngle, in float shadowIntensity, in float shadowBias, in mat4 shadowMatrix, in int shadowMapSize)
 {
 	return 0.0;
 }

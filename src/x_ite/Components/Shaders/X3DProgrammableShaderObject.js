@@ -82,6 +82,7 @@ function (Fields,
 		this .x3d_LightRadius           = [ ];
 		this .x3d_ShadowIntensity       = [ ];
 		this .x3d_ShadowColor           = [ ];
+		this .x3d_ShadowBias            = [ ];
 		this .x3d_ShadowMatrix          = [ ];
 		this .x3d_ShadowMapSize         = [ ];
 		this .x3d_ShadowMap             = [ ];
@@ -157,6 +158,7 @@ function (Fields,
 
 				this .x3d_ShadowIntensity [i] = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowIntensity");
 				this .x3d_ShadowColor [i]     = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowColor");
+				this .x3d_ShadowBias [i]      = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowBias");
 				this .x3d_ShadowMatrix [i]    = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowMatrix");
 				this .x3d_ShadowMapSize [i]   = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowMapSize");
 				this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");

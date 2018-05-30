@@ -153,17 +153,12 @@ function (Shadow,
 			definitions += "#define x3d_DirectionalLight  1\n";
 			definitions += "#define x3d_PointLight        2\n";
 			definitions += "#define x3d_SpotLight         3\n";
+			definitions += "#define x3d_MaxShadows        4\n";
 
 			definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
 			definitions += "#define x3d_TextureType2D              2\n";
 			definitions += "#define x3d_TextureType3D              3\n";
 			definitions += "#define x3d_TextureTypeCubeMapTexture  4\n";
-
-			//if (DEBUG)
-			//	definitions += "#define X3D_SHADOWS\n";
-
-			definitions += "#define x3d_MaxShadows     4\n";
-			definitions += "#define x3d_ShadowSamples  8\n"; // Range (0, 255)
 
 			// Legacy
 			definitions += "#define x3d_NoneClipPlane  vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
