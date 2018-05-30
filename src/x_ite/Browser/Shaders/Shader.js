@@ -50,17 +50,11 @@
 define ([
 	"text!x_ite/Browser/Shaders/Inlcude/Shadow.h",
 	"text!x_ite/Browser/Shaders/Inlcude/Pack.h",
-	"text!x_ite/Browser/Shaders/Inlcude/Line3.h",
-	"text!x_ite/Browser/Shaders/Inlcude/Plane3.h",
-	"text!x_ite/Browser/Shaders/Inlcude/Random.h",
 	"text!x_ite/Browser/Shaders/Types.h",
 	"x_ite/DEBUG",
 ],
 function (Shadow,
           Pack,
-          Line3,
-          Plane3,
-          Random,
           Types,
           DEBUG)
 {
@@ -69,9 +63,6 @@ function (Shadow,
 	var includes = {
 		Shadow: Shadow,
 		Pack: Pack,
-		Line3: Line3,
-		Plane3: Plane3,
-		Random: Random,
 	};
 
 	var

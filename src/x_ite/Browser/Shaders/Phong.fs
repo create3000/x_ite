@@ -223,6 +223,9 @@ getFogColor (in vec3 color)
 	return mix (x3d_Fog .color, color, getFogInterpolant ());
 }
 
+// DEBUG
+//uniform ivec4 x3d_Viewport;
+
 void
 main ()
 {
@@ -233,4 +236,8 @@ main ()
 	gl_FragColor = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
 
 	gl_FragColor .rgb = getFogColor (gl_FragColor .rgb);
+
+	// DEBUG
+
+	//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;
 }

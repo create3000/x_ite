@@ -7,7 +7,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Titania V4.2.0, http://titania.create3000.de'/>
     <meta name='identifier' content='file:///home/holger/Projekte/X_ITE/src/test.x3d'/>
-    <meta name='modified' content='Wed, 30 May 2018 01:47:24 GMT'/>
+    <meta name='modified' content='Wed, 30 May 2018 11:26:19 GMT'/>
     <meta name='titania-add-metadata' content='true'/>
   </head>
   <Scene>
@@ -44,9 +44,10 @@
             <SpotLight DEF='_2' containerField='value'
                 location='1.53111 7.52086 9.14995'
                 direction='-2.209e-06 -0.601381 -0.798962'
-                beamWidth='0.389552'
-                cutOffAngle='0.432558'
-                shadowIntensity='1'/>
+                beamWidth='0.443725'
+                cutOffAngle='0.564243'
+                shadowIntensity='1'
+                shadowBias='0.00166'/>
           </MetadataSet>
         </MetadataSet>
         <MetadataSet DEF='BrowserPanel' containerField='value'
@@ -109,7 +110,7 @@
               <MetadataDouble DEF='position_11' containerField='value'
                   name='position'
                   reference='http://titania.create3000.de'
-                  value='1.08881643496552, 0.212693317861304, 10000'/>
+                  value='0.926444554827668, 0.520394297178157, 10000'/>
               <MetadataDouble DEF='orientation_12' containerField='value'
                   name='orientation'
                   reference='http://titania.create3000.de'
@@ -117,11 +118,11 @@
               <MetadataDouble DEF='centerOfRotation_13' containerField='value'
                   name='centerOfRotation'
                   reference='http://titania.create3000.de'
-                  value='1.08881643496552, 0.212693317861304, 0'/>
+                  value='0.926444554827668, 0.520394297178157, 0'/>
               <MetadataDouble DEF='fieldOfViewScale_14' containerField='value'
                   name='fieldOfViewScale'
                   reference='http://titania.create3000.de'
-                  value='0.354027197805142'/>
+                  value='0.368947557614882'/>
             </MetadataSet>
           </MetadataSet>
         </MetadataSet>
@@ -135,24 +136,28 @@
           <MetadataInteger DEF='multiView' containerField='value'
               name='multiView'
               reference='http://titania.create3000.de'
-              value='1'/>
+              value='0'/>
+          <MetadataDouble DEF='browserRatio' containerField='value'
+              name='browserRatio'
+              reference='http://titania.create3000.de'
+              value='1.777777'/>
         </MetadataSet>
       </MetadataSet>
     </WorldInfo>
     <NavigationInfo
         headlight='false'/>
-    <Script DEF='PhongShadingScript'>
-<![CDATA[ecmascript:
-
-function initialize ()
-{
-	// Phong shading can be enabled if »X_ITE Compatibility« mode is enabled in Titania.
-
-	Browser .setBrowserOption ("Shading", "PHONG");
-}
-]]>
-    </Script>
-    <Transform DEF='Box_15'
+    <Viewpoint
+        description='Initial View'
+        position='21.2089 6.90394 -6.1421'
+        orientation='-0.061801044992319 0.9948635834963 0.0801690780211337 1.83310280235678'
+        centerOfRotation='3.6774 3.96317 -1.52844'/>
+    <Viewpoint DEF='SpotLight'
+        description='Spot Light'
+        position='1.53111 7.52086 9.14995'
+        orientation='-0.999999999993254 3.67321223026213e-06 0 0.645228715053598'
+        centerOfRotation='3.6774 3.96317 -1.52844'
+        fieldOfView='1.12849'/>
+    <Transform DEF='Floor'
         translation='0 -1 0'
         scale='14.4284 1 14.4284'>
       <Shape>
@@ -180,12 +185,8 @@ function initialize ()
         <Box/>
       </Shape>
     </Transform>
-    <Viewpoint
-        position='21.2089 6.90394 -6.1421'
-        orientation='-0.061801044992319 0.9948635834963 0.0801690780211337 1.83310280235678'
-        centerOfRotation='3.6774 3.96317 -1.52844'/>
     <SpotLight USE='_2'/>
-    <DirectionalLight DEF='_16'
+    <DirectionalLight DEF='_15'
         on='false'
         direction='-2.10118e-06 -0.572029 -0.820233'
         shadowIntensity='1'>
@@ -198,5 +199,24 @@ function initialize ()
             value='1.17603e-05, 9.3483, 5.28007'/>
       </MetadataSet>
     </DirectionalLight>
+    <Script DEF='NewScript'>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+	print (new SFRotation (new SFVec3f (0,0,-1), new SFVec3f (-2.209e-06, -0.601381, -0.798962)));
+}
+
+function set_field (value, time)
+{
+	
+}
+
+function eventsProcessed ()
+{
+	
+}
+]]>
+    </Script>
   </Scene>
 </X3D>
