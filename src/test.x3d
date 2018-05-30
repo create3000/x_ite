@@ -7,7 +7,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Titania V4.2.0, http://titania.create3000.de'/>
     <meta name='identifier' content='file:///home/holger/Projekte/X_ITE/src/test.x3d'/>
-    <meta name='modified' content='Tue, 29 May 2018 03:11:18 GMT'/>
+    <meta name='modified' content='Wed, 30 May 2018 01:47:24 GMT'/>
     <meta name='titania-add-metadata' content='true'/>
   </head>
   <Scene>
@@ -41,18 +41,12 @@
           <MetadataSet DEF='nodes' containerField='value'
               name='nodes'
               reference='http://titania.create3000.de'>
-            <DirectionalLight DEF='_2' containerField='value'
-                direction='-2.10118e-06 -0.572029 -0.820233'
-                shadowIntensity='1'>
-              <MetadataSet DEF='DirectionalLight'
-                  name='DirectionalLight'
-                  reference='http://titania.create3000.de'>
-                <MetadataFloat DEF='location' containerField='value'
-                    name='location'
-                    reference='http://titania.create3000.de'
-                    value='1.17603e-05, 9.3483, 5.28007'/>
-              </MetadataSet>
-            </DirectionalLight>
+            <SpotLight DEF='_2' containerField='value'
+                location='1.53111 7.52086 9.14995'
+                direction='-2.209e-06 -0.601381 -0.798962'
+                beamWidth='0.389552'
+                cutOffAngle='0.432558'
+                shadowIntensity='1'/>
           </MetadataSet>
         </MetadataSet>
         <MetadataSet DEF='BrowserPanel' containerField='value'
@@ -190,13 +184,19 @@ function initialize ()
         position='21.2089 6.90394 -6.1421'
         orientation='-0.061801044992319 0.9948635834963 0.0801690780211337 1.83310280235678'
         centerOfRotation='3.6774 3.96317 -1.52844'/>
-    <SpotLight DEF='_16'
+    <SpotLight USE='_2'/>
+    <DirectionalLight DEF='_16'
         on='false'
-        location='1.53111 7.52086 9.14995'
-        direction='-2.209e-06 -0.601381 -0.798962'
-        beamWidth='0.459541'
-        cutOffAngle='1.35356'
-        shadowIntensity='1'/>
-    <DirectionalLight USE='_2'/>
+        direction='-2.10118e-06 -0.572029 -0.820233'
+        shadowIntensity='1'>
+      <MetadataSet DEF='DirectionalLight'
+          name='DirectionalLight'
+          reference='http://titania.create3000.de'>
+        <MetadataFloat DEF='location' containerField='value'
+            name='location'
+            reference='http://titania.create3000.de'
+            value='1.17603e-05, 9.3483, 5.28007'/>
+      </MetadataSet>
+    </DirectionalLight>
   </Scene>
 </X3D>

@@ -124,11 +124,7 @@ function ($,
 			this .lineShader    = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS);
 			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS);
 			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS);
-
-			this .pointShader   .shadowShader = this .pointShader;
-			this .lineShader    .shadowShader = this .lineShader;
-			this .gouraudShader .shadowShader = this .gouraudShader;
-			this .phongShader   .shadowShader = this .createShader (this, "PhongShader", phongVS, phongFS, true);
+			this .shadowShader  = this .createShader (this, "PhongShader",     phongVS,     phongFS, true);
 
 			this .pointShader .setGeometryType (0);
 			this .lineShader  .setGeometryType (1);
@@ -263,6 +259,10 @@ function ($,
 		getPhongShader: function ()
 		{
 			return this .phongShader;
+		},
+		getShadowShader: function ()
+		{
+			return this .shadowShader;
 		},
 		getDepthShader: function ()
 		{

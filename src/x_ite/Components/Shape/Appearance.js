@@ -270,7 +270,7 @@ function (Fields,
 			context .materialNode         = this .materialNode;
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
-			context .shaderNode           = this .shaderNode || (context .shadow ? browser .getDefaultShader () .shadowShader : browser .getDefaultShader ());
+			context .shaderNode           = this .shaderNode || (context .shadow ? browser .getShadowShader () : browser .getDefaultShader ());
 
 			if (this .blendModeNode)
 				this .blendModeNode .enable (gl);
