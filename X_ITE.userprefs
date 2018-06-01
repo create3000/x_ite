@@ -3,7 +3,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Lighting/X3DLightNode.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="126" Column="70" />
+      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Lighting/X3DLightNode.js" Line="75" Column="1" />

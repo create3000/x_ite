@@ -146,66 +146,69 @@ getShadowIntensity (in int index, in int lightType, in float lightAngle, in floa
 	else
 	{
 		#if defined (X3D_PCF_FILTERING)
-		vec2 texelSize   = vec2 (1.0) / vec2 (shadowMapSize);
-		vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
 
-		shadowCoord .z   -= shadowBias;
-		shadowCoord .xyz /= shadowCoord .w;
-
-		float dx0 = - texelSize .x;
-		float dy0 = - texelSize .y;
-		float dx1 = + texelSize .x;
-		float dy1 = + texelSize .y;
-
-		float value = (
-			texture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +
-			texture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +
-			texture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +
-			texture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +
-			texture2DCompare (index, shadowCoord .xy, shadowCoord .z) +
-			texture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +
-			texture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +
-			texture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +
-			texture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)
-		) * (1.0 / 9.0);
-
-		return shadowIntensity * value;
+			vec2 texelSize   = vec2 (1.0) / vec2 (shadowMapSize);
+			vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
+	
+			shadowCoord .z   -= shadowBias;
+			shadowCoord .xyz /= shadowCoord .w;
+	
+			float dx0 = - texelSize .x;
+			float dy0 = - texelSize .y;
+			float dx1 = + texelSize .x;
+			float dy1 = + texelSize .y;
+	
+			float value = (
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy, shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)
+			) * (1.0 / 9.0);
+	
+			return shadowIntensity * value;
 
 		#elif defined (X3D_PCF_SOFT_FILTERING)
-		vec2 texelSize   = vec2 (1.0) / vec2 (shadowMapSize);
-		vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
 
-		shadowCoord .z   -= shadowBias;
-		shadowCoord .xyz /= shadowCoord .w;
-
-		float dx0 = - texelSize.x;
-		float dy0 = - texelSize.y;
-		float dx1 = + texelSize.x;
-		float dy1 = + texelSize.y;
-		
-		float value = (
-			texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +
-			texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +
-			texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +
-			texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +
-			texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +
-			texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +
-			texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +
-			texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +
-			texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)
-		) * ( 1.0 / 9.0 );
-
-		return shadowIntensity * value;
+			vec2 texelSize   = vec2 (1.0) / vec2 (shadowMapSize);
+			vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
+	
+			shadowCoord .z   -= shadowBias;
+			shadowCoord .xyz /= shadowCoord .w;
+	
+			float dx0 = - texelSize.x;
+			float dy0 = - texelSize.y;
+			float dx1 = + texelSize.x;
+			float dy1 = + texelSize.y;
+			
+			float value = (
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)
+			) * ( 1.0 / 9.0 );
+	
+			return shadowIntensity * value;
 
 		#else
-		vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
 
-		shadowCoord .z   -= shadowBias;
-		shadowCoord .xyz /= shadowCoord .w;
-
-		float value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);
-
-		return shadowIntensity * value;
+			vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
+	
+			shadowCoord .z   -= shadowBias;
+			shadowCoord .xyz /= shadowCoord .w;
+	
+			float value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);
+	
+			return shadowIntensity * value;
 		#endif
 	}
 
