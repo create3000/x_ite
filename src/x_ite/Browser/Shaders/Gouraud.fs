@@ -45,7 +45,7 @@ getTextureColor ()
 	{
 		if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
 			return texture2D (x3d_Texture2D [0], vec2 (t));
-		
+
 		// If dimension is x3d_Geometry2D the texCoords must be flipped.
 		return texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));
 	}
