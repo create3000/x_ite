@@ -219,7 +219,9 @@ function (Fields,
 					gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 
 					if (data instanceof Uint8Array)
+					{
 						gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
+					}
 					else
 					{
 						gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, data);

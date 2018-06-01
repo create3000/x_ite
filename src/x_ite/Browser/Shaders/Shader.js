@@ -145,6 +145,7 @@ function (Shadow,
 			definitions += "#define x3d_PointLight        2\n";
 			definitions += "#define x3d_SpotLight         3\n";
 			definitions += "#define x3d_MaxShadows        4\n";
+			definitions += "#define X3D_PCF_FILTERING\n";
 
 			definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
 			definitions += "#define x3d_TextureType2D              2\n";

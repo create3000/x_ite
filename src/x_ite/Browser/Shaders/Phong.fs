@@ -35,6 +35,7 @@ varying vec3 v;  // point on geometry
 void
 clip ()
 {
+	#pragma unroll_loop
 	for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
 	{
 		if (i == x3d_NumClipPlanes)
@@ -129,6 +130,7 @@ getMaterialColor (in x3d_MaterialParameters material)
 
 		vec3 finalColor = vec3 (0.0, 0.0, 0.0);
 
+		#pragma unroll_loop
 		for (int i = 0; i < x3d_MaxLights; i ++)
 		{
 			if (i == x3d_NumLights)

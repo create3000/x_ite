@@ -145,8 +145,7 @@ getShadowIntensity (in int index, in int lightType, in float lightAngle, in floa
 	}
 	else
 	{
-		#define PCF_FILTERING
-		#ifdef PCF_FILTERING
+		#if defined (X3D_PCF_FILTERING)
 		vec2 texelSize   = vec2 (1.0) / vec2 (shadowMapSize);
 		vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
 
@@ -171,9 +170,8 @@ getShadowIntensity (in int index, in int lightType, in float lightAngle, in floa
 		) * (1.0 / 9.0);
 
 		return shadowIntensity * value;
-		#endif
 
-		#ifdef PCF_SOFT_FILTERING
+		#elif defined (X3D_PCF_SOFT_FILTERING)
 		vec2 texelSize   = vec2 (1.0) / vec2 (shadowMapSize);
 		vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
 
@@ -198,24 +196,18 @@ getShadowIntensity (in int index, in int lightType, in float lightAngle, in floa
 		) * ( 1.0 / 9.0 );
 
 		return shadowIntensity * value;
+
+		#else
+		vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
+
+		shadowCoord .z   -= shadowBias;
+		shadowCoord .xyz /= shadowCoord .w;
+
+		float value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);
+
+		return shadowIntensity * value;
 		#endif
 	}
-//	else
-//	{
-//		vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
-//
-//		shadowCoord .z   -= shadowBias;
-//		shadowCoord .xyz /= shadowCoord .w;
-//
-//		float value = 0.0;
-//
-//		for (int i = 0; i < x3d_ShadowSamples; ++ i)
-//		{
-//			value += step (getShadowDepth (index, shadowCoord .xy), shadowCoord .z - bias);
-//		}
-//
-//		return shadowIntensity * value / float (x3d_ShadowSamples);
-//	}
 
 	return 0.0;
 }

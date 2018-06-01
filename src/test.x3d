@@ -7,7 +7,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Titania V4.2.0, http://titania.create3000.de'/>
     <meta name='identifier' content='file:///home/holger/Projekte/X_ITE/src/test.x3d'/>
-    <meta name='modified' content='Wed, 30 May 2018 11:26:19 GMT'/>
+    <meta name='modified' content='Fri, 01 Jun 2018 03:49:14 GMT'/>
     <meta name='titania-add-metadata' content='true'/>
   </head>
   <Scene>
@@ -149,7 +149,7 @@
     <Viewpoint
         description='Initial View'
         position='21.2089 6.90394 -6.1421'
-        orientation='-0.061801044992319 0.9948635834963 0.0801690780211337 1.83310280235678'
+        orientation='-0.061801044992319 0.994863583496299 0.0801690780211337 1.83310280235678'
         centerOfRotation='3.6774 3.96317 -1.52844'/>
     <Viewpoint DEF='SpotLight'
         description='Spot Light'
@@ -218,5 +218,8 @@ function eventsProcessed ()
 }
 ]]>
     </Script>
+    <PointLight DEF='_16'
+        on='false'
+        location='0 8.28186 -2.81924'/>
   </Scene>
 </X3D>
