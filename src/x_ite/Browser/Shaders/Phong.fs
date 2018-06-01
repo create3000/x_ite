@@ -14,6 +14,7 @@ uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwis
 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
+uniform x3d_ShadowSourceParameters x3d_ShadowSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
 uniform x3d_MaterialParameters x3d_FrontMaterial;  
 uniform x3d_MaterialParameters x3d_BackMaterial;        
@@ -129,6 +130,7 @@ getMaterialColor (in x3d_MaterialParameters material)
 
 		vec3 finalColor = vec3 (0.0, 0.0, 0.0);
 
+		#pragma unroll_loop
 		for (int i = 0; i < x3d_MaxLights; i ++)
 		{
 			if (i == x3d_NumLights)
@@ -142,6 +144,8 @@ getMaterialColor (in x3d_MaterialParameters material)
 
 			if (di || dL <= light .radius)
 			{
+				x3d_ShadowSourceParameters shadow = x3d_ShadowSource [i];
+
 				vec3 d = light .direction;
 				vec3 c = light .attenuation;
 				vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.
@@ -156,9 +160,9 @@ getMaterialColor (in x3d_MaterialParameters material)
 				float spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
 				float attenuationSpotFactor       = attenuationFactor * spotFactor;
 				vec3  ambientColor                = light .color * light .ambientIntensity * ambientTerm;
-				float shadowIntensity             = getShadowIntensity (i, light .type, lightAngle, light .shadowIntensity, light .shadowBias, light .shadowMatrix, light .shadowMapSize);
+				float shadowIntensity             = getShadowIntensity (i, light .type, lightAngle, shadow .shadowIntensity, shadow .shadowBias, shadow .shadowMatrix, shadow .shadowMapSize);
 				vec3  diffuseSpecularColor        = light .color * light .intensity * (diffuseTerm + specularTerm);
-				vec3  ambientDiffuseSpecularColor = ambientColor + mix (diffuseSpecularColor, light .shadowColor, shadowIntensity);
+				vec3  ambientDiffuseSpecularColor = ambientColor + mix (diffuseSpecularColor, shadow .shadowColor, shadowIntensity);
 
 				finalColor += attenuationSpotFactor * ambientDiffuseSpecularColor;
 			}
