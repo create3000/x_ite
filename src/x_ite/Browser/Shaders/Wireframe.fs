@@ -51,7 +51,7 @@ getFogInterpolant ()
 }
 
 vec3
-getFogColor (in vec3 color)
+getFogColor (const in vec3 color)
 {
 	return mix (x3d_Fog .color, color, getFogInterpolant ());
 }

@@ -2,13 +2,13 @@
 
 #ifdef TITANIA
 vec4
-pack (in float value)
+pack (const in float value)
 {
 	return vec4 (0.0, 0.0, 0.0, 0.0);
 }
 
 float
-unpack (in vec4 color)
+unpack (const in vec4 color)
 {
 	return color .z;
 }
@@ -16,7 +16,7 @@ unpack (in vec4 color)
 
 #ifdef X_ITE
 vec4
-pack (in float value)
+pack (const in float value)
 {
 	const vec4 bitShifts = vec4 (1.0,
 	                             255.0,
@@ -27,7 +27,7 @@ pack (in float value)
 }
 
 float
-unpack (vec4 color)
+unpack (const vec4 color)
 {
 	const vec4 bitShifts = vec4 (1.0,
 	                             1.0 / 255.0,

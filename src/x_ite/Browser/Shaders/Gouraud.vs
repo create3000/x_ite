@@ -29,7 +29,7 @@ varying vec4 t;          // texCoord
 varying vec3 v;          // point on geometry
 
 float
-getSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)
+getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)
 {
 	float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
 	
@@ -42,9 +42,9 @@ getSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)
 }
 
 vec4
-getMaterialColor (in vec3 N,
-                  in vec3 v,
-                  in x3d_MaterialParameters material)
+getMaterialColor (const in vec3 N,
+                  const in vec3 v,
+                  const in x3d_MaterialParameters material)
 {
 	vec3 V = normalize (-v); // normalized vector from point on geometry to viewer's position
 
