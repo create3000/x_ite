@@ -124,7 +124,7 @@ function ($,
 			this .lineShader    = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS);
 			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS);
 			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS);
-			this .shadowShader  = this .createShader (this, "PhongShader",     phongVS,     phongFS, true);
+			this .shadowShader  = this .createShader (this, "ShadowShader",    phongVS,     phongFS, true);
 
 			this .pointShader .setGeometryType (0);
 			this .lineShader  .setGeometryType (1);

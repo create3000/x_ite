@@ -80,11 +80,8 @@ texture2DShadowLerp (const in int index, const in vec2 texelSize, const in float
 }
 
 float
-getShadowIntensity (const in int index, const in float lightAngle, const in x3d_LightSourceParameters light)
+getShadowIntensity (const in int index, const in x3d_LightSourceParameters light)
 {
-	if (light .shadowIntensity <= 0.0 || lightAngle <= 0.0)
-		return 0.0;
-
 	if (light .type == x3d_PointLight)
 	{
 //		#define SHADOW_TEXTURE_EPS 0.01

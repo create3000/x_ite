@@ -161,7 +161,8 @@ getMaterialColor (const in x3d_MaterialParameters material)
 				vec3  diffuseSpecularColor  = light .color * light .intensity * (diffuseTerm + specularTerm);
 
 				#ifdef X3D_SHADOWS
-					diffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, lightAngle, light));
+					if (lightAngle > 0.0)
+						diffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, lightAngle, light));
 				#endif
 
 				finalColor += attenuationSpotFactor * (ambientColor + diffuseSpecularColor);
