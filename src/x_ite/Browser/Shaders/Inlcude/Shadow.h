@@ -117,17 +117,23 @@ cubeToUVCompact (in vec3 v, const float texelSizeY)
 
 	if (absV .z >= almostOne)
 	{
+		// zZ
+
 		if (v.z > 0.0)
 			planar .x = 4.0 - v.x;
 	}
 	else if (absV .x >= almostOne)
 	{
+		// xX
+
 		float signX = sign (v.x);
 
 		planar .x = v.z * signX + 2.0 * signX;
 	}
 	else if (absV .y >= almostOne)
 	{
+		// yY
+
 		float signY = sign (v.y);
 
 		planar .x = v.x + 2.0 * signY + 2.0;
@@ -172,9 +178,6 @@ getPointLightRotations (const in vec3 vector)
 	return rotations [3];
 }
 
-// DEBUG
-vec4 tex;
-
 float
 getShadowIntensity (const in int index, const in x3d_LightSourceParameters light)
 {
@@ -217,9 +220,6 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 			return light .shadowIntensity * value;
 
 		#else // no percentage-closer filtering
-
-			// DEBUG
-			tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));
 
 			float value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);
 
