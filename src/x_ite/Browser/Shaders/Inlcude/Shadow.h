@@ -187,45 +187,45 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 
 		const mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);
 
-		float texelSizeY = 1.0 / (float (light .shadowMapSize) * 2.0);
+		vec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));
 
 		// for point lights, the uniform @vShadowCoord is re-purposed to hold
 		// the vector from the light to the world-space position of the fragment.
 		vec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);
 		vec3 lightToPosition = shadowCoord .xyz; // In viewport space!
 
-		shadowCoord       = biasMatrix * projectionMatrix * getPointLightRotations (shadowCoord .xyz) * shadowCoord;
+		shadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));
 		shadowCoord .z   -= light .shadowBias;
 		shadowCoord .xyz /= shadowCoord .w;
 
-//		#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)
-//	
-//			vec2 offset = vec2 (-1, 1) * texelSize .y;
-//	
-//			float value = (
-//				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSizeY), depth) +
-//				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSizeY), depth) +
-//				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSizeY), depth) +
-//				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSizeY), depth) +
-//				texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSizeY), depth) +
-//				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSizeY), depth) +
-//				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSizeY), depth) +
-//				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSizeY), depth) +
-//				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSizeY), depth)
-//			) * (1.0 / 9.0);
-//	
-//			return light .shadowIntensity * value;
-//
-//		#else // no percentage-closer filtering
+		#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)
+	
+			vec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);
+	
+			float value = (
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)
+			) * (1.0 / 9.0);
+	
+			return light .shadowIntensity * value;
+
+		#else // no percentage-closer filtering
 
 			// DEBUG
-			tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSizeY));
+			tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));
 
-			float value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSizeY), shadowCoord .z);
+			float value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);
 
 			return light .shadowIntensity * value;
 	
-//		#endif
+		#endif
 	}
 	else
 	{
