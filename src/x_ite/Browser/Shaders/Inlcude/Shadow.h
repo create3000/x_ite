@@ -86,7 +86,7 @@ cubeToUVCompact (in vec3 v, const float texelSizeY)
 	// Compact layout:
 	//
 	// xzXZ		Char: Axis
-	//  y Y		Case: Sign
+	// yyYY		Case: Sign
 
 	// Number of texels to avoid at the edge of each square
 
@@ -136,7 +136,7 @@ cubeToUVCompact (in vec3 v, const float texelSizeY)
 
 		float signY = sign (v.y);
 
-		planar .x = v.x + 2.0 * signY + 2.0;
+		planar .x = (v.x + 0.5 + signY) * 2.0;
 		planar .y = v.z * signY - 2.0;
 	}
 

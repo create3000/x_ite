@@ -90,7 +90,7 @@ function (Fields,
 	// Compact layout:
 	//
 	// xzXZ		Char: Axis
-	//  y Y		Case: Sign
+	// yyYY		Case: Sign
 
 	var orientationMatrices = [
 		new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 1,  0,  0), Vector3 .zAxis)), // left
@@ -106,8 +106,8 @@ function (Fields,
 		new Vector4 (0.5,  0.5, 0.25, 0.5), // right
 		new Vector4 (0.75, 0.5, 0.25, 0.5), // front
 		new Vector4 (0.25, 0.5, 0.25, 0.5), // back
-		new Vector4 (0.25, 0,   0.25, 0.5), // bottom
-		new Vector4 (0.75, 0,   0.25, 0.5), // top   
+		new Vector4 (0.0,  0,   0.5,  0.5), // bottom
+		new Vector4 (0.5,  0,   0.5,  0.5), // top   
 	];
 
 	var PointLights = ObjectCache (PointLightContainer);
