@@ -144,6 +144,8 @@ function (Fields,
 
 						gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
 						gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 						gl .activeTexture (gl .TEXTURE0);
 					}
 					else
