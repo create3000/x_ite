@@ -138,7 +138,7 @@ getMaterialColor (const in x3d_MaterialParameters material)
 
 			x3d_LightSourceParameters light = x3d_LightSource [i];
 
-			vec3  vL = light .location - v;
+			vec3  vL = light .location - v; // Light to fragment
 			float dL = length (vL);
 			bool  di = light .type == x3d_DirectionalLight;
 
@@ -244,6 +244,11 @@ main ()
 	gl_FragColor .rgb = getFogColor (gl_FragColor .rgb);
 
 	// DEBUG
+	#ifdef X3D_SHADOWS
 
 	//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;
+
+	//gl_FragColor .rgb = tex .rgb;
+
+	#endif
 }

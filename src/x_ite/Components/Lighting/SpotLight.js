@@ -168,7 +168,7 @@ function (Fields,
 					lightNode            = this .lightNode,
 					cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
 					modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+					invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				invLightSpaceMatrix .translate (lightNode .getLocation ());
 				invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
@@ -249,15 +249,13 @@ function (Fields,
 
 			if (this .renderShadow && this .textureUnit)
 			{
-				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
 				gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
 				gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
 				gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
 				gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
 				gl .uniform1i        (shaderObject .x3d_ShadowMap [i],           this .textureUnit);
 			}
-			else
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 		},
 		dispose: function ()
 		{

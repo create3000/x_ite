@@ -86,45 +86,49 @@ function (Fields,
 {
 "use strict";
 
-	var biasMatrix = new Matrix4 (1.0 / 6.0, 0.0,  0.0, 0.0,
-	                              0.0,  0.25, 0.0, 0.0,
-	                              0.0,  0.0,  0.5, 0.0,
-	                              1.0 / 6.0, 0.25, 0.5, 1.0);
+	// Shadow map layout
+	// Compact layout:
+	//
+	// xzXZ		Char: Axis
+	//  y Y		Case: Sign
 
-	// Negated directions
-	var directions = [
-		new Vector3 ( 1,  0,  0), // left
-		new Vector3 (-1,  0,  0), // right
-		new Vector3 ( 0,  0,  1), // back
-		new Vector3 ( 0,  0, -1), // front
-		new Vector3 ( 0,  1,  0), // bottom
-		new Vector3 ( 0, -1,  0), // top
+	var orientationMatrices = [
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 1,  0,  0), Vector3 .zAxis)), // left
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 (-1,  0,  0), Vector3 .zAxis)), // right
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0, -1), Vector3 .zAxis)), // front
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0,  1), Vector3 .zAxis)), // back
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  1,  0), Vector3 .zAxis)), // bottom
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0, -1,  0), Vector3 .zAxis)), // top
+	];
+
+	var viewports = [
+		new Vector4 (0,    0.5, 0.25, 0.5), // left
+		new Vector4 (0.5,  0.5, 0.25, 0.5), // right
+		new Vector4 (0.75, 0.5, 0.25, 0.5), // front
+		new Vector4 (0.25, 0.5, 0.25, 0.5), // back
+		new Vector4 (0.25, 0,   0.25, 0.5), // bottom
+		new Vector4 (0.75, 0,   0.25, 0.5), // top   
 	];
 
 	var PointLights = ObjectCache (PointLightContainer);
 	
 	function PointLightContainer ()
 	{
-		var
-			nearValue        = 0.125,
-			farValue         = 1000,
-			projectionMatrix = Camera .perspective (Algorithm .radians (120), nearValue, farValue, 1, 1, new Matrix4 ());
-
-		this .location             = new Vector3 (0, 0, 0);
-		this .direction            = new Vector3 (0, 0, 0);
-		this .shadowBuffer         = null;
-		this .viewVolume           = new ViewVolume ();
-		this .viewport             = new Vector4 (0, 0, 0, 0);
-		this .projectionMatrix     = projectionMatrix;
-		this .modelViewMatrix      = new MatrixStack (Matrix4);
-		this .modelMatrix          = new Matrix4 ();
-		this .invLightSpaceMatrix  = new Matrix4 ();
-		this .shadowMatrix         = new Matrix4 ();
-		this .shadowMatrixArray    = new Float32Array (16);
-		this .invGroupMatrix       = new Matrix4 ();
-		this .rotation             = new Rotation4 ();
-		this .rotationMatrix       = new Matrix4 ();
-		this .textureUnit          = 0;
+		this .location                      = new Vector3 (0, 0, 0);
+		this .shadowBuffer                  = null;
+		this .viewVolume                    = new ViewVolume ();
+		this .viewport                      = new Vector4 (0, 0, 0, 0);
+		this .projectionMatrix              = new Matrix4 ();
+		this .modelViewMatrix               = new MatrixStack (Matrix4);
+		this .modelMatrix                   = new Matrix4 ();
+		this .invLightSpaceMatrix           = new Matrix4 ();
+		this .invLightSpaceProjectionMatrix = new Matrix4 ();
+		this .shadowMatrix                  = new Matrix4 ();
+		this .shadowMatrixArray             = new Float32Array (16);
+		this .invGroupMatrix                = new Matrix4 ();
+		this .rotation                      = new Rotation4 ();
+		this .rotationMatrix                = new Matrix4 ();
+		this .textureUnit                   = 0;
 	}
 
 	PointLightContainer .prototype =
@@ -181,51 +185,47 @@ function (Fields,
 					return;
 
 				var
-					lightNode            = this .lightNode,
-					cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
-					modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+					lightNode           = this .lightNode,
+					cameraSpaceMatrix   = renderObject .getCameraSpaceMatrix () .get (),
+					modelMatrix         = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+					invLightSpaceMatrix = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				invLightSpaceMatrix .translate (lightNode .getLocation ());
 				invLightSpaceMatrix .inverse ();
 
 				var
-					shadowMapSize1_2 = lightNode .getShadowMapSize () / 2,
-					shadowMapSize1_3 = lightNode .getShadowMapSize () / 3,
-					projectionMatrix = this .projectionMatrix,
+					shadowMapSize    = lightNode .getShadowMapSize (),
 					invGroupMatrix   = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
 
 				this .shadowBuffer .bind ();
-				renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
 
-				for (var y = 0; y < 2; ++ y)
+				for (var i = 0; i < 6; ++ i)
 				{
-					for (var x = 0; x < 3; ++ x)
-					{
-						var
-							rotation = this .rotation .setFromToVec (this .direction .assign (directions [y * 3 + x]), Vector3 .zAxis), // inversed rotation
-							viewport = this .viewport .set (x * shadowMapSize1_3, y * shadowMapSize1_2, shadowMapSize1_3, shadowMapSize1_2);
-		
-						renderObject .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+					var
+						v                = viewports [i],
+						viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
+						projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix), // Use higher far value for better precision.
+						rotationMatrix   = orientationMatrices [i];
 
-						renderObject .getModelViewMatrix  () .pushMatrix (this .rotationMatrix .setRotation (rotation));
-						renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
-						renderObject .getModelViewMatrix  () .multLeft (invGroupMatrix);
-		
-						renderObject .render (TraverseType .DEPTH, this .groupNode);
-		
-						renderObject .getModelViewMatrix  () .pop ();
-						renderObject .getViewVolumes () .pop ();
-
-						//console .log (y * 3 + x, this .rotationMatrix .multRight (this .projectionMatrix) .multRight (biasMatrix) .toString ());
-					}
+					renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+					renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
+					renderObject .getModelViewMatrix  () .pushMatrix (rotationMatrix);
+					renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
+					renderObject .getModelViewMatrix  () .multLeft (invGroupMatrix);
+	
+					renderObject .render (TraverseType .DEPTH, this .groupNode);
+	
+					renderObject .getModelViewMatrix  () .pop ();
+					renderObject .getProjectionMatrix () .pop ();
+					renderObject .getViewVolumes () .pop ();
 				}
 
-				renderObject .getProjectionMatrix () .pop ();
 				this .shadowBuffer .unbind ();
 	
 				if (! lightNode .getGlobal ())
 					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
+
+				this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix);
 			}
 			catch (error)
 			{
@@ -237,7 +237,7 @@ function (Fields,
 		{
 			this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode .location_ .getValue ()));
 
-			this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceMatrix);
+			this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
 			this .shadowMatrixArray .set (this .shadowMatrix);
 		},
 		setShaderUniforms: function (gl, shaderObject)
@@ -264,15 +264,13 @@ function (Fields,
 
 			if (this .textureUnit)
 			{
-				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
 				gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
 				gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
 				gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
 				gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
 				gl .uniform1i        (shaderObject .x3d_ShadowMap [i],           this .textureUnit);
 			}
-			else
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 		},
 		dispose: function ()
 		{
@@ -348,10 +346,6 @@ function (Fields,
 		getRadius: function ()
 		{
 			return Math .max (0, this .radius_ .getValue ());
-		},
-		getBiasMatrix: function ()
-		{
-			return biasMatrix;
 		},
 		getLights: function ()
 		{

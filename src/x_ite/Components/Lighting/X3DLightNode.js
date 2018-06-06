@@ -62,6 +62,7 @@ function (X3DChildNode,
 {
 "use strict";
 
+	// Transforms normalized coords from range (-1, 1) to (0, 1).
 	var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
 		                           0.0, 0.5, 0.0, 0.0,
 		                           0.0, 0.0, 0.5, 0.0,
