@@ -178,6 +178,9 @@ getPointLightRotations (const in vec3 vector)
 	return rotations [3];
 }
 
+// DEBUG
+//vec4 tex;
+
 float
 getShadowIntensity (const in int index, const in x3d_LightSourceParameters light)
 {
@@ -195,11 +198,14 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 		// for point lights, the uniform @vShadowCoord is re-purposed to hold
 		// the vector from the light to the world-space position of the fragment.
 		vec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);
-		vec3 lightToPosition = shadowCoord .xyz; // In viewport space!
+		vec3 lightToPosition = shadowCoord .xyz;
 
 		shadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));
 		shadowCoord .z   -= light .shadowBias;
 		shadowCoord .xyz /= shadowCoord .w;
+
+		// DEBUG
+		//tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));
 
 		#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)
 	
