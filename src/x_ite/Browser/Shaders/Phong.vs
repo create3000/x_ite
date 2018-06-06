@@ -21,6 +21,10 @@ varying vec4 t;  // texCoord
 varying vec3 vN; // normalized normal vector at this point on geometry
 varying vec3 v;  // point on geometry
 
+#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+varying float depth;
+#endif
+
 void
 main ()
 {
@@ -36,4 +40,8 @@ main ()
 	v = p .xyz;
 
 	gl_Position = x3d_ProjectionMatrix * p;
+
+	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+	depth = 1.0 + gl_Position .w;
+	#endif
 }

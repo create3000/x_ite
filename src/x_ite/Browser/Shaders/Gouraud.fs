@@ -1,5 +1,9 @@
 // -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
+#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#extension GL_EXT_frag_depth : enable
+#endif
+
 precision mediump float;
 precision mediump int;
 
@@ -23,6 +27,11 @@ varying vec4 frontColor; // color
 varying vec4 backColor;  // color
 varying vec4 t;          // texCoord
 varying vec3 v;          // point on geometry
+
+#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+uniform float x3d_FarFactor;
+varying float depth;
+#endif
 
 void
 clip ()
@@ -115,4 +124,9 @@ main ()
 
 	gl_FragColor .rgb = getFogColor (finalColor .rgb);
 	gl_FragColor .a   = finalColor .a;
+
+	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
+	gl_FragDepthEXT = log2 (depth) * x3d_FarFactor * 0.5;
+	#endif
 }

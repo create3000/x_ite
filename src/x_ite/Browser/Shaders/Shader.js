@@ -125,11 +125,14 @@ function (Shadow,
 			if (! match)
 				return source;
 
+			var constants = "";
+
+			if (browser .getExtension ("EXT_frag_depth"))
+				constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
+
 			var definitions = "";
 
 			definitions += "#define X_ITE\n";
-
-			definitions += "#define x3d_None 0\n";
 
 			definitions += "#define x3d_GeometryPoints  0\n";
 			definitions += "#define x3d_GeometryLines   1\n";
@@ -160,12 +163,14 @@ function (Shadow,
 			definitions += "#define x3d_NoneLight      0\n";
 			definitions += "#define x3d_NoneTexture    0\n";
 
+			definitions += "#define x3d_None 0\n";
+
 			depreciatedWarning (source, "x3d_NoneClipPlane", "x3d_NumClipPlanes");
 			depreciatedWarning (source, "x3d_NoneFog",       "x3d_None");
 			depreciatedWarning (source, "x3d_NoneLight",     "x3d_NumLights");
 			depreciatedWarning (source, "x3d_NoneTexture",   "x3d_NumTextures");
 
-			return match [1] + definitions + Types + match [2];
+			return constants + match [1] + definitions + Types + match [2];
 		},
 	};
 

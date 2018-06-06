@@ -1,5 +1,9 @@
 // -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
+#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#extension GL_EXT_frag_depth : enable
+#endif
+
 precision mediump float;
 precision mediump int;
 
@@ -29,6 +33,11 @@ varying vec4 C;  // color
 varying vec4 t;  // texCoord
 varying vec3 vN; // normalized normal vector at this point on geometry
 varying vec3 v;  // point on geometry
+
+#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+uniform float x3d_FarFactor;
+varying float depth;
+#endif
 
 #pragma X3D include "Inlcude/Shadow.h"
 
@@ -242,6 +251,11 @@ main ()
 	gl_FragColor = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
 
 	gl_FragColor .rgb = getFogColor (gl_FragColor .rgb);
+
+	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
+	gl_FragDepthEXT = log2 (depth) * x3d_FarFactor * 0.5;
+	#endif
 
 	// DEBUG
 	#ifdef X3D_SHADOWS

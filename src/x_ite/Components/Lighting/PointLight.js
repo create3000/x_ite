@@ -196,8 +196,8 @@ function (Fields,
 				invLightSpaceMatrix .inverse ();
 
 				var
-					shadowMapSize    = lightNode .getShadowMapSize (),
-					invGroupMatrix   = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
+					shadowMapSize  = lightNode .getShadowMapSize (),
+					invGroupMatrix = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
 
 				this .shadowBuffer .bind ();
 
@@ -206,12 +206,11 @@ function (Fields,
 					var
 						v                = viewports [i],
 						viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
-						projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix), // Use higher far value for better precision.
-						rotationMatrix   = orientationMatrices [i];
+						projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
 					renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
 					renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
-					renderObject .getModelViewMatrix  () .pushMatrix (rotationMatrix);
+					renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
 					renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
 					renderObject .getModelViewMatrix  () .multLeft (invGroupMatrix);
 	
