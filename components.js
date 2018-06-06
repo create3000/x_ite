@@ -66,6 +66,7 @@
 
 		{ name: 'Lighting' },
 		{ name: 'Directional Light', url: [ "http://media.create3000.de/components/Lighting/DirectionalLight/DirectionalLight.x3d" ], archive: "http://media.create3000.de/components/Lighting/DirectionalLight/DirectionalLight.zip" },
+		{ name: 'Point Light', url: [ "http://media.create3000.de/components/Lighting/PointLight/PointLight.x3d" ], archive: "http://media.create3000.de/components/Lighting/PointLight/PointLight.zip" },
 		{ name: 'Shadows', url: [ "http://media.create3000.de/components/Lighting/Shadows/Shadows.x3d" ], archive: "http://media.create3000.de/components/Lighting/Shadows/Shadows.zip" },
 		{ name: 'Spot Light', url: [ "http://media.create3000.de/components/Lighting/SpotLight/SpotLight.x3d" ], archive: "http://media.create3000.de/components/Lighting/SpotLight/SpotLight.zip" },
 
