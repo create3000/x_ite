@@ -1,4 +1,4 @@
-/* X_ITE v4.2.0a-261 */
+/* X_ITE v4.2.0a-262 */
 
 (function () {
 
@@ -25873,12 +25873,12 @@ function (Fields,
 		{
 			X3DBaseNode .prototype .initialize .call (this);
 			
-			this .SplashScreen_              .addInterest ("set_splashScreen__", this);
-			this .Rubberband_                .addInterest ("set_rubberband__", this);
-			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__", this);
-			this .TextureQuality_            .addInterest ("set_textureQuality__", this);
-			this .Shading_                   .addInterest ("set_shading__", this);
-			this .getBrowser () .shutdown () .addInterest ("configure", this);
+			this .SplashScreen_              .addInterest ("set_splashScreen__",           this);
+			this .Rubberband_                .addInterest ("set_rubberband__",             this);
+			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__",       this);
+			this .TextureQuality_            .addInterest ("set_textureQuality__",         this);
+			this .Shading_                   .addInterest ("set_shading__",                this);
+			this .getBrowser () .shutdown () .addInterest ("configure",                    this);
 
 			this .configure ();
 		},
