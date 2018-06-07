@@ -131,7 +131,8 @@ function ($,
 
 			this .setShading ("GOURAUD");
 
-			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
+			this .phongShader  .isValid_ .addInterest ("set_phong_shader_valid__",  this);
+			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
 		},
 		set_phong_shader_valid__: function (valid)
 		{
@@ -141,6 +142,15 @@ function ($,
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
 			this .phongShader = this .gouraudShader;
+		},
+		set_shadow_shader_valid__: function (valid)
+		{
+			if (valid .getValue () && verifyShader (this, this .shadowShader))
+				return;
+
+			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
+
+			this .shadowShader = this .gouraudShader;
 		},
 		getVendor: function ()
 		{
