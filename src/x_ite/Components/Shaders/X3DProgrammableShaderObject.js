@@ -51,11 +51,13 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Components/Navigation/OrthoViewpoint",
 	"standard/Math/Numbers/Matrix3",
 ],
 function (Fields,
           X3DCast,
           X3DConstants,
+          OrthoViewpoint,
           Matrix3)
 {
 "use strict";
@@ -830,7 +832,14 @@ function (Fields,
 				globalLights [i] .setShaderUniforms (gl, this);
 
 			// Logarithmic depth buffer support.
-			gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ()) + 1));
+
+			var viewpoint      = renderObject .getViewpoint ();
+			var navigationInfo = renderObject .getNavigationInfo ();
+
+			if (viewpoint instanceof OrthoViewpoint)
+				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
+			else
+				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));		
 		},
 		setLocalUniforms: function (gl, context)
 		{

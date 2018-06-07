@@ -248,21 +248,20 @@ main ()
 
 	bool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;
 
-	gl_FragColor = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
-
+	gl_FragColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
 	gl_FragColor .rgb = getFogColor (gl_FragColor .rgb);
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-	gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+	if (x3d_LogarithmicFarFactor1_2 > 0.0)
+		gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+	else
+		gl_FragDepthEXT = gl_FragCoord .z;
 	#endif
 
 	// DEBUG
 	#ifdef X3D_SHADOWS
-
 	//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;
-
 	//gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);
-
 	#endif
 }

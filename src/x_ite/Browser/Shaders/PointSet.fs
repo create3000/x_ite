@@ -79,6 +79,9 @@ main ()
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-	gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+	if (x3d_LogarithmicFarFactor1_2 > 0.0)
+		gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+	else
+		gl_FragDepthEXT = gl_FragCoord .z;
 	#endif
 }
