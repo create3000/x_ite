@@ -1,4 +1,4 @@
-/* X_ITE v4.2.0a-262 */
+/* X_ITE v4.2.0a-263 */
 
 (function () {
 
@@ -39688,15 +39688,2070 @@ function (X3DAppearanceChildNode,
  ******************************************************************************/
 
 
+define ('x_ite/Components/Core/X3DBindableNode',[
+	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DChildNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function X3DBindableNode (executionContext)
+	{
+		X3DChildNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DBindableNode);
+
+		this .layers = [ ];
+	}
+
+	X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+	{
+		constructor: X3DBindableNode,
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .set_bind_ .addInterest ("set_bind__", this);
+		},
+		getCameraObject: function ()
+		{
+		   return true;
+		},
+		addLayer: function (layer)
+		{
+			this .layers .push (layer);
+		},
+		transitionStart: function ()
+		{ },
+		set_bind__: function ()
+		{
+			if (this .set_bind_ .getValue ())
+			{
+				this .layers = this .getLayers ();
+
+				// Bind
+		
+				for (var i = 0; i < this .layers .length; ++ i)
+					this .bindToLayer (this .layers [i]);
+			}
+			else
+			{
+				// Unbind
+
+				for (var i = 0; i < this .layers .length; ++ i)
+					this .unbindFromLayer (this .layers [i]);
+			}
+		},
+	});
+
+	return X3DBindableNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Time/X3DTimeDependentNode',[
+	"x_ite/Fields",
+	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DChildNode,
+          X3DConstants)
+{
+"use strict";
+
+	function X3DTimeDependentNode (executionContext)
+	{
+		this .addType (X3DConstants .X3DTimeDependentNode);
+
+		this .addChildObjects ("initialized", new Fields .SFTime (),
+		                       "isEvenLive",  new Fields .SFBool ());
+
+		this .startTimeValue  = 0;
+		this .pauseTimeValue  = 0;
+		this .resumeTimeValue = 0;
+		this .stopTimeValue   = 0;
+		this .start           = 0;
+		this .pause           = 0;
+		this .pauseInterval   = 0;
+		this .startTimeout    = null;
+		this .pauseTimeout    = null;
+		this .resumeTimeout   = null;
+		this .stopTimeout     = null;
+		this .disabled        = false;
+	}
+
+	X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+	{
+		constructor: X3DTimeDependentNode,
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .isLive ()   .addInterest ("set_live__", this);
+			this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode
+
+			this .initialized_ .addInterest ("set_loop__",       this);
+			this .enabled_     .addInterest ("set_enabled__",    this);
+			this .loop_        .addInterest ("set_loop__",       this);
+			this .startTime_   .addInterest ("set_startTime__",  this);
+			this .pauseTime_   .addInterest ("set_pauseTime__",  this);
+			this .resumeTime_  .addInterest ("set_resumeTime__", this);
+			this .stopTime_    .addInterest ("set_stopTime__",   this);
+
+			this .startTimeValue  = this .startTime_  .getValue ();
+			this .pauseTimeValue  = this .pauseTime_  .getValue ();
+			this .resumeTimeValue = this .resumeTime_ .getValue ();
+			this .stopTimeValue   = this .stopTime_   .getValue ();
+
+			this .initialized_ = this .getBrowser () .getCurrentTime ();
+		},
+		getDisabled: function ()
+		{
+			return this .disabled;
+		},
+		getElapsedTime: function ()
+		{
+			return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
+		},
+		getLiveState: function ()
+		{
+			///  Determines the live state of this node.
+
+			return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
+		},
+		set_live__: function ()
+		{
+			if (this .isLive () .getValue ())
+			{
+				if (this .disabled)
+				{
+					this .disabled = false;
+
+					if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+						this .real_resume ();
+				}
+			}
+			else
+			{
+				if (! this .disabled && this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+				{
+					// Only disable if needed, ie. if running!
+					this .disabled = true;
+					this .real_pause ();
+				}
+			}
+		},
+		set_enabled__: function ()
+		{
+			if (this .enabled_ .getValue ())
+				this .set_loop__ ();
+
+			else
+				this .stop ();
+		},
+		set_loop__: function ()
+		{
+			if (this .enabled_ .getValue ())
+			{
+				if (this .loop_ .getValue ())
+				{
+					if (this .stopTimeValue <= this .startTimeValue)
+					{
+						if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
+							this .do_start ();
+					}
+				}
+			}
+		},
+		set_startTime__: function ()
+		{
+			this .startTimeValue = this .startTime_ .getValue ();
+
+			if (this .enabled_ .getValue ())
+			{
+				this .removeTimeout ("startTimeout");
+
+				if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
+					this .do_start ();
+
+				else
+					this .addTimeout ("startTimeout", "do_start", this .startTimeValue);
+			}
+		},
+		set_pauseTime__: function ()
+		{
+			this .pauseTimeValue = this .pauseTime_ .getValue ();
+
+			if (this .enabled_ .getValue ())
+			{
+				this .removeTimeout ("pauseTimeout");
+
+				if (this .pauseTimeValue <= this .resumeTimeValue)
+					return;
+
+				if (this .pauseTimeValue <= this .getBrowser () .getCurrentTime ())
+					this .do_pause ();
+
+				else
+					this .addTimeout ("pauseTimeout", "do_pause", this .pauseTimeValue);
+			}
+		},
+		set_resumeTime__: function ()
+		{
+			this .resumeTimeValue = this .resumeTime_ .getValue ();
+
+			if (this .enabled_ .getValue ())
+			{
+				this .removeTimeout ("resumeTimeout");
+
+				if (this .resumeTimeValue <= this .pauseTimeValue)
+					return;
+
+				if (this .resumeTimeValue <= this .getBrowser () .getCurrentTime ())
+					this .do_resume ();
+
+				else
+					this .addTimeout ("resumeTimeout", "do_resume", this .resumeTimeValue);
+			}
+		},
+		set_stopTime__: function ()
+		{
+			this .stopTimeValue = this .stopTime_ .getValue ();
+
+			if (this .enabled_ .getValue ())
+			{
+				this .removeTimeout ("stopTimeout");
+
+				if (this .stopTimeValue <= this .startTimeValue)
+					return;
+
+				if (this .stopTimeValue <= this .getBrowser () .getCurrentTime ())
+					this .do_stop ();
+
+				else
+					this .addTimeout ("stopTimeout","do_stop", this .stopTimeValue);
+			}
+		},
+		do_start: function ()
+		{
+			if (! this .isActive_ .getValue ())
+			{
+				this .start         = this .getBrowser () .getCurrentTime ();
+				this .pauseInterval = 0;
+
+				// The event order below is very important.
+
+				this .isActive_ = true;
+
+				this .set_start ();
+
+				if (this .isLive () .getValue ())
+				{
+					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
+				}
+				else if (! this .disabled)
+				{
+					this .disabled = true;
+					this .real_pause ();
+				}
+
+				this .elapsedTime_ = 0;
+				this .cycleTime_   = this .getBrowser () .getCurrentTime ();
+			}
+		},
+		do_pause: function ()
+		{
+			if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+			{
+				this .isPaused_ = true;
+
+				if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
+					this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
+
+				if (this .isLive () .getValue ())
+					this .real_pause ();
+			}
+		},
+		real_pause: function ()
+		{
+			this .pause = performance .now ();
+
+			this .set_pause ();
+
+			this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+		},
+		do_resume: function ()
+		{
+			if (this .isActive_ .getValue () && this .isPaused_ .getValue ())
+			{
+				this .isPaused_ = false;
+
+				if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
+					this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
+
+				if (this .isLive () .getValue ())
+					this .real_resume ();
+			}
+		},
+		real_resume: function ()
+		{
+			var interval = (performance .now () - this .pause) / 1000;
+
+			this .pauseInterval += interval;
+
+			this .set_resume (interval);
+
+			this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
+			this .getBrowser () .addBrowserEvent ();
+		},
+		do_stop: function ()
+		{
+			this .stop ();
+		},
+		stop: function ()
+		{
+			if (this .isActive_ .getValue ())
+			{
+				// The event order below is very important.
+
+				this .set_stop ();
+
+				this .elapsedTime_ = this .getElapsedTime ();
+
+				if (this .isPaused_ .getValue ())
+					this .isPaused_ = false;
+
+				this .isActive_ = false;
+
+				if (this .isLive () .getValue ())
+					this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+			}
+		},
+		timeout: function (callback)
+		{
+			if (this .enabled_ .getValue ())
+			{
+				this .getBrowser () .advanceTime (performance .now ());
+
+				this [callback] ();
+			}
+		},
+		addTimeout: function (name, callback, time)
+		{
+			this .removeTimeout (name);
+			this [name] = setTimeout (this .timeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000);
+		},
+		removeTimeout: function (name)
+		{
+			clearTimeout (this [name]);
+			this [name] = null;
+		},
+		set_start: function () { },
+		set_pause: function () { },
+		set_resume: function () { },
+		set_stop: function () { },
+		set_time: function () { },
+	});
+
+	return X3DTimeDependentNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Time/TimeSensor',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Core/X3DSensorNode",
+	"x_ite/Components/Time/X3DTimeDependentNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DSensorNode, 
+          X3DTimeDependentNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function TimeSensor (executionContext)
+	{
+		X3DSensorNode        .call (this, executionContext);
+		X3DTimeDependentNode .call (this, executionContext);
+
+		this .addType (X3DConstants .TimeSensor);
+
+		this .addChildObjects ("range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
+		
+		this .cycle    = 0;
+		this .interval = 0;
+		this .fraction = 0;
+		this .first    = 0;
+		this .last     = 1;
+		this .scale    = 1;
+	}
+
+	TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+		X3DTimeDependentNode .prototype,
+	{
+		constructor: TimeSensor,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "cycleInterval",    new Fields .SFTime (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "loop",             new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",        new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",       new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",        new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",         new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",        new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "fraction_changed", new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "time",             new Fields .SFTime ()),
+		]),
+		getTypeName: function ()
+		{
+			return "TimeSensor";
+		},
+		getComponentName: function ()
+		{
+			return "Time";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DSensorNode        .prototype .initialize .call (this);
+			X3DTimeDependentNode .prototype .initialize .call (this);
+
+			this .cycleInterval_ .addInterest ("set_cycleInterval__", this);
+			this .range_         .addInterest ("set_range__",         this);
+		},
+		setRange: function (currentFraction, firstFraction, lastFraction)
+		{
+			this .fraction = currentFraction >= 1 ? 0 : currentFraction;
+			this .first    = firstFraction;
+			this .last     = lastFraction;
+			this .scale    = this .last - this .first;
+
+			var offset = (this .fraction -  this .first) * this .cycleInterval_ .getValue ();
+
+			this .interval = this .cycleInterval_ .getValue () * this .scale;
+			this .cycle    = this .getBrowser () .getCurrentTime () - offset;
+		},
+		set_cycleInterval__: function ()
+		{
+			if (this .isActive_ .getValue ())
+				this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
+		},
+		set_range__: function ()
+		{
+			if (this .isActive_ .getValue ())
+			{
+				this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+
+				if (! this .isPaused_ .getValue ())
+					this .set_fraction (this .getBrowser () .getCurrentTime ());
+			}
+		},
+		set_start: function ()
+		{
+			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+
+			this .fraction_changed_ = this .range_ [0];
+			this .time_             = this .getBrowser () .getCurrentTime ();
+		},			
+		set_resume: function (pauseInterval)
+		{
+			this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
+		},
+		set_fraction: function (time)
+		{
+			var t = (time - this .cycle) / this .interval;
+
+			this .fraction_changed_ = this .fraction = this .first + (t - Math .floor (t)) * this .scale;
+		},
+		set_time: function ()
+		{
+			// The event order below is very important.
+
+			var time = this .getBrowser () .getCurrentTime ();
+
+			if (time - this .cycle >= this .interval)
+			{
+				if (this .loop_ .getValue ())
+				{
+					if (this .interval)
+					{
+						this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
+						
+						this .elapsedTime_ = this .getElapsedTime ();
+						this .cycleTime_   = time;
+
+						this .set_fraction (time);
+					}
+				}
+				else
+				{
+					this .fraction_changed_ = this .fraction = this .last;
+					this .stop ();
+				}
+			}
+			else
+			{
+				this .elapsedTime_ = this .getElapsedTime ();
+
+				this .set_fraction (time);
+			}
+
+			this .time_ = time;
+		},
+	});
+
+	return TimeSensor;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/X3DInterpolatorNode',[
+	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
+],
+function (X3DChildNode, 
+          X3DConstants,
+          Algorithm)
+{
+"use strict";
+
+	function X3DInterpolatorNode (executionContext)
+	{
+		X3DChildNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DInterpolatorNode);
+	}
+
+	X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+	{
+		constructor: X3DInterpolatorNode,
+		setup: function ()
+		{
+			// If an X3DInterpolatorNode value_changed outputOnly field is read before it receives any inputs,
+			// keyValue[0] is returned if keyValue is not empty. If keyValue is empty (i.e., [ ]), the initial
+			// value for the respective field type is returned (EXAMPLE  (0, 0, 0) for Fields .SFVec3f);
+
+			this .set_key__ ();
+
+			if (this .key_ .length)
+				this .interpolate (0, 0, 0);
+
+			X3DChildNode .prototype .setup .call (this);
+		},
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+			
+			this .set_fraction_ .addInterest ("set_fraction__", this);
+			this .key_          .addInterest ("set_key__", this);
+		},
+		set_fraction__: function ()
+		{
+			var
+				key      = this .key_,
+				length   = key .length,
+				fraction = this .set_fraction_ .getValue ();
+
+			switch (length)
+			{
+				case 0:
+					// Interpolator nodes containing no keys in the key field shall not produce any events.
+					return;
+				case 1:
+					return this .interpolate (0, 0, 0);
+				default:
+				{
+					if (fraction <= key [0])
+						return this .interpolate (0, 1, 0);
+
+					var index1 = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
+
+					if (index1 !== length)
+					{
+						var
+							index0 = index1 - 1,
+							weight = (fraction - key [index0]) / (key [index1] - key [index0]);
+
+						this .interpolate (index0, index1, Algorithm .clamp (weight, 0, 1));
+					}
+					else
+						this .interpolate (length - 2, length - 1, 1);
+				}
+			}
+		},
+		set_key__: function ()
+		{
+			this .set_keyValue__ ();
+		},
+		set_keyValue__: function () { },
+		interpolate: function () { },
+	});
+
+	return X3DInterpolatorNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/EaseInEaseOut',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Interpolation/X3DInterpolatorNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DInterpolatorNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function EaseInEaseOut (executionContext)
+	{
+		X3DInterpolatorNode .call (this, executionContext);
+
+		this .addType (X3DConstants .EaseInEaseOut);
+	}
+
+	EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+	{
+		constructor: EaseInEaseOut,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",             new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "key",                      new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "easeInEaseOut",            new Fields .MFVec2f ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "modifiedFraction_changed", new Fields .SFFloat ()),
+		]),
+		getTypeName: function ()
+		{
+			return "EaseInEaseOut";
+		},
+		getComponentName: function ()
+		{
+			return "Interpolation";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DInterpolatorNode .prototype .initialize .call (this);
+
+			this .easeInEaseOut_ .addInterest ("set_keyValue__", this);
+		},
+		set_keyValue__: function ()
+		{
+			if (this .easeInEaseOut_ .length < this .key_ .length)
+				this .easeInEaseOut_ .resize (this .key_ .length, this .easeInEaseOut_ .length ? this .easeInEaseOut_ [this .easeInEaseOut_ .length - 1] : new Fields .SFVec2f ());
+		},
+		interpolate: function (index0, index1, weight)
+		{
+			var
+				easeOut = this .easeInEaseOut_ [index0] .y,
+				easeIn  = this .easeInEaseOut_ [index1] .x,
+				sum     = easeOut + easeIn;
+
+			if (sum < 0)
+			{
+				this .modifiedFraction_changed_ = weight;
+			}
+			else
+			{
+				if (sum > 1)
+				{
+					easeIn  /= sum;
+					easeOut /= sum;
+				}
+
+				var t = 1 / (2 - easeOut - easeIn);
+
+				if (weight < easeOut)
+				{
+					this .modifiedFraction_changed_ = (t / easeOut) * weight * weight;
+				}
+				else if (weight <= 1 - easeIn) // Spec says (weight < 1 - easeIn), but then we get a NaN below if easeIn == 0.
+				{
+					this .modifiedFraction_changed_ = t * (2 * weight - easeOut);
+				}
+				else
+				{
+					var w = 1 - weight;
+
+					this .modifiedFraction_changed_ = 1 - ((t * w * w) / easeIn);
+				}
+			}
+		},
+	});
+
+	return EaseInEaseOut;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/PositionInterpolator',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Interpolation/X3DInterpolatorNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector3",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DInterpolatorNode, 
+          X3DConstants,
+          Vector3)
+{
+"use strict";
+
+	function PositionInterpolator (executionContext)
+	{
+		X3DInterpolatorNode .call (this, executionContext);
+
+		this .addType (X3DConstants .PositionInterpolator);
+	}
+
+	PositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+	{
+		constructor: PositionInterpolator,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
+		]),
+		keyValue: new Vector3 (0, 0, 0),
+		getTypeName: function ()
+		{
+			return "PositionInterpolator";
+		},
+		getComponentName: function ()
+		{
+			return "Interpolation";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DInterpolatorNode .prototype .initialize .call (this);
+
+			this .keyValue_ .addInterest ("set_keyValue__", this);
+		},
+		set_keyValue__: function ()
+		{
+			var
+				key      = this .key_,
+				keyValue = this .keyValue_;
+
+			if (keyValue .length < key .length)
+				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
+		},
+		interpolate: function (index0, index1, weight)
+		{
+			this .value_changed_ = this .keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
+		},
+	});
+
+	return PositionInterpolator;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/OrientationInterpolator',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Interpolation/X3DInterpolatorNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Rotation4"
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DInterpolatorNode, 
+          X3DConstants,
+          Rotation4)
+{
+"use strict";
+
+	function OrientationInterpolator (executionContext)
+	{
+		X3DInterpolatorNode .call (this, executionContext);
+
+		this .addType (X3DConstants .OrientationInterpolator);
+	}
+
+	OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+	{
+		constructor: OrientationInterpolator,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
+		]),
+		keyValue: new Rotation4 (),
+		getTypeName: function ()
+		{
+			return "OrientationInterpolator";
+		},
+		getComponentName: function ()
+		{
+			return "Interpolation";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DInterpolatorNode .prototype .initialize .call (this);
+
+			this .keyValue_ .addInterest ("set_keyValue__", this);
+		},
+		set_keyValue__: function ()
+		{
+			var
+				key      = this .key_,
+				keyValue = this .keyValue_;
+
+			if (keyValue .length < key .length)
+				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
+		},
+		interpolate: function (index0, index1, weight)
+		{
+			try
+			{
+				this .value_changed_ = this .keyValue .assign (this .keyValue_ [index0] .getValue ()) .slerp (this .keyValue_ [index1] .getValue (), weight);
+			}
+			catch (error)
+			{ }
+		},
+	});
+
+	return OrientationInterpolator;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Navigation/X3DViewpointNode',[
+	"x_ite/Fields",
+	"x_ite/Components/Core/X3DBindableNode",
+	"x_ite/Components/Time/TimeSensor",
+	"x_ite/Components/Interpolation/EaseInEaseOut",
+	"x_ite/Components/Interpolation/PositionInterpolator",
+	"x_ite/Components/Interpolation/OrientationInterpolator",
+	"x_ite/Bits/TraverseType",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector2",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix4",
+],
+function (Fields,
+          X3DBindableNode,
+          TimeSensor,
+          EaseInEaseOut,
+          PositionInterpolator,
+          OrientationInterpolator,
+          TraverseType,
+          X3DConstants,
+          Vector2,
+          Vector3,
+          Rotation4,
+          Matrix4)
+{
+"use strict";
+
+	function X3DViewpointNode (executionContext)
+	{
+		X3DBindableNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DViewpointNode);
+
+		this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
+		                       "orientationOffset",      new Fields .SFRotation (),
+		                       "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
+		                       "scaleOrientationOffset", new Fields .SFRotation (),
+		                       "centerOfRotationOffset", new Fields .SFVec3f (),
+		                       "fieldOfViewScale",       new Fields .SFFloat (1));
+
+	   this .userPosition             = new Vector3 (0, 1, 0);
+	   this .userOrientation          = new Rotation4 (0, 0, 1, 0);
+	   this .userCenterOfRotation     = new Vector3 (0, 0, 0);
+		this .modelMatrix              = new Matrix4 ();
+		this .cameraSpaceMatrix        = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
+		this .inverseCameraSpaceMatrix = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
+
+		var browser = this .getBrowser ();
+
+		this .timeSensor                   = new TimeSensor              (browser .getPrivateScene ());
+		this .easeInEaseOut                = new EaseInEaseOut           (browser .getPrivateScene ());
+		this .positionInterpolator         = new PositionInterpolator    (browser .getPrivateScene ());
+		this .orientationInterpolator      = new OrientationInterpolator (browser .getPrivateScene ());
+		this .scaleInterpolator            = new PositionInterpolator    (browser .getPrivateScene ());
+		this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
+	}
+
+	X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+	{
+		constructor: X3DViewpointNode,
+		initialize: function ()
+		{
+			X3DBindableNode .prototype .initialize .call (this);
+		
+			this .timeSensor .stopTime_ = 1;
+			this .timeSensor .setup ();
+
+			this .easeInEaseOut .key_           = new Fields .MFFloat (0, 1);
+			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+			this .easeInEaseOut .setup ();
+
+			this .positionInterpolator         .key_ = new Fields .MFFloat (0, 1);
+			this .orientationInterpolator      .key_ = new Fields .MFFloat (0, 1);
+			this .scaleInterpolator            .key_ = new Fields .MFFloat (0, 1);
+			this .scaleOrientationInterpolator .key_ = new Fields .MFFloat (0, 1);
+
+			this .positionInterpolator         .setup ();
+			this .orientationInterpolator      .setup ();
+			this .scaleInterpolator            .setup ();
+			this .scaleOrientationInterpolator .setup ();
+
+			this .timeSensor .fraction_changed_ .addFieldInterest (this .easeInEaseOut .set_fraction_);
+
+			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .positionInterpolator         .set_fraction_);
+			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .orientationInterpolator      .set_fraction_);
+			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleInterpolator            .set_fraction_);
+			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleOrientationInterpolator .set_fraction_);
+
+			this .positionInterpolator         .value_changed_ .addFieldInterest (this .positionOffset_);
+			this .orientationInterpolator      .value_changed_ .addFieldInterest (this .orientationOffset_);
+			this .scaleInterpolator            .value_changed_ .addFieldInterest (this .scaleOffset_);
+			this .scaleOrientationInterpolator .value_changed_ .addFieldInterest (this .scaleOrientationOffset_);
+
+			this .isBound_ .addInterest ("set_bound__", this);
+		},
+		getEaseInEaseOut: function ()
+		{
+			return this .easeInEaseOut;
+		},
+		setInterpolators: function () { },
+		bindToLayer: function (layer)
+		{
+			layer .getViewpointStack () .push (this);
+		},
+		unbindFromLayer: function (layer)
+		{
+			layer .getViewpointStack () .pop (this);
+		},
+		removeFromLayer: function (layer)
+		{
+			layer .getViewpointStack () .remove (this);
+		},
+		getPosition: function ()
+		{
+			return this .position_ .getValue ();
+		},
+		getUserPosition: function ()
+		{
+			return this .userPosition .assign (this .getPosition ()) .add (this .positionOffset_ .getValue ());
+		},
+		getOrientation: function ()
+		{
+			return this .orientation_ .getValue ();
+		},
+		getUserOrientation: function ()
+		{
+			return this .userOrientation .assign (this .getOrientation ()) .multRight (this .orientationOffset_ .getValue ());
+		},
+		getCenterOfRotation: function ()
+		{
+			return this .centerOfRotation_ .getValue ();
+		},
+		getUserCenterOfRotation: function ()
+		{
+			return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this .centerOfRotationOffset_ .getValue ());
+		},
+		getProjectionMatrix: function (renderObject)
+		{
+			var navigationInfo = renderObject .getNavigationInfo ();
+
+			return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
+                                                     navigationInfo .getFarValue (this),
+                                                     renderObject .getLayer () .getViewport () .getRectangle (renderObject .getBrowser ()));
+		},
+		getCameraSpaceMatrix: function ()
+		{
+			return this .cameraSpaceMatrix;
+		},
+		getInverseCameraSpaceMatrix: function ()
+		{
+			return this .inverseCameraSpaceMatrix;
+		},
+		getModelMatrix: function ()
+		{
+			return this .modelMatrix;
+		},
+		getMaxFarValue: function ()
+		{
+			return this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e5;
+		},
+		getUpVector: function ()
+		{
+		   // Local y-axis,
+		   // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
+		   return Vector3 .yAxis;
+		},
+		getSpeedFactor: function ()
+		{
+			return 1;
+		},
+		transitionStart: (function ()
+		{
+			var
+				relativePosition         = new Vector3 (0, 0, 0),
+				relativeOrientation      = new Rotation4 (0, 0, 1, 0),
+				relativeScale            = new Vector3 (0, 0, 0),
+				relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
+
+			return function (fromViewpoint)
+			{
+				try
+				{
+					if (this .jump_ .getValue ())
+					{
+						var layers = this .getLayers ();
+	
+						if (! this .retainUserOffsets_ .getValue ())
+							this .resetUserOffsets ();
+		
+						for (var i = 0; i < layers .length; ++ i)
+						{
+							var navigationInfo = layers [i] .getNavigationInfo ();
+	
+							navigationInfo .transitionStart_ = true;
+	
+							var
+								transitionType = navigationInfo .getTransitionType (),
+								transitionTime = navigationInfo .transitionTime_ .getValue ();
+						}
+	
+						switch (transitionType)
+						{
+							case "TELEPORT":
+							{
+								for (var i = 0; i < layers .length; ++ i)
+									layers [i] .getNavigationInfo () .transitionComplete_ = true;
+	
+								return;
+							}
+							case "ANIMATE":
+							{
+								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+								break;
+							}
+							default:
+							{
+								// LINEAR
+								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+								break;
+							}
+						}
+						
+						this .timeSensor .cycleInterval_ = transitionTime;
+						this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
+						this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+						this .timeSensor .isActive_ .addInterest ("set_active__", this);
+	
+						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+	
+						this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
+						this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
+						this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
+						this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
+	
+						this .positionOffset_         = relativePosition;
+						this .orientationOffset_      = relativeOrientation;
+						this .scaleOffset_            = relativeScale;
+						this .scaleOrientationOffset_ = relativeScaleOrientation;
+	
+						this .setInterpolators (fromViewpoint);
+					}
+					else
+					{
+						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+		 
+						this .positionOffset_         = relativePosition;
+						this .orientationOffset_      = relativeOrientation;
+						this .scaleOffset_            = relativeScale;
+						this .scaleOrientationOffset_ = relativeScaleOrientation;
+	
+						this .setInterpolators (fromViewpoint);
+					}
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		})(),
+		transitionStop: function ()
+		{
+			this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
+			this .timeSensor .isActive_ .removeInterest ("set_active__", this);
+		},
+		resetUserOffsets: function ()
+		{
+			this .positionOffset_         = Vector3   .Zero;
+			this .orientationOffset_      = Rotation4 .Identity;
+			this .scaleOffset_            = Vector3   .One;
+			this .scaleOrientationOffset_ = Rotation4 .Identity;
+			this .centerOfRotationOffset_ = Vector3   .Zero;
+			this .fieldOfViewScale_       = 1;
+		},
+		getRelativeTransformation: function (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
+		// throw
+		{
+			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpoint .getInverseCameraSpaceMatrix ()) .inverse ();
+
+			differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+			relativePosition .subtract (this .getPosition ());
+			relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
+		},
+		straightenHorizon: (function ()
+		{
+			var
+				localXAxis = new Vector3 (0, 0, 0),
+				localZAxis = new Vector3 (0, 0, 0),
+				vector     = new Vector3 (0, 0, 0),
+				rotation   = new Rotation4 (0, 0, 1, 0);
+
+			return function (orientation)
+			{
+				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
+	
+				vector .assign (localZAxis) .cross (this .getUpVector ());
+	
+				rotation .setFromToVec (localXAxis, vector);
+	
+				return orientation .multRight (rotation);
+			};
+		})(),
+		lookAtPoint: function (point, factor, straighten)
+		{
+			try
+			{
+				if (! this .getBrowser () .getActiveLayer ())
+					return;
+	
+				this .getCameraSpaceMatrix () .multVecMatrix (point);
+
+				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
+
+				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
+		
+				this .lookAt (point, minDistance, factor, straighten);
+			}
+			catch (error)
+			{
+				console .error (error);
+			}
+		},
+		lookAtBBox: function (bbox, factor, straighten)
+		{
+			try
+			{
+				if (! this .getBrowser () .getActiveLayer ())
+					return;
+
+				bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
+		
+				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
+		
+				this .lookAt (bbox .center, minDistance, factor, straighten);
+			}
+			catch (error)
+			{ }
+		},
+		lookAt: function (point, distance, factor, straighten)
+		{
+			var
+				layers = this .getLayers (),
+				offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
+
+			for (var i = 0; i < layers .length; ++ i)
+				layers [i] .getNavigationInfo () .transitionStart_ = true;;
+		
+			this .timeSensor .cycleInterval_ = 0.2;
+			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
+			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+			this .timeSensor .isActive_ .addInterest ("set_active__", this);
+	
+			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+
+			var
+				translation = Vector3 .lerp (this .positionOffset_ .getValue (), offset, factor),
+				direction   = Vector3 .add (this .getPosition (), translation) .subtract (point),
+				rotation    = Rotation4 .multRight (this .orientationOffset_ .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
+		
+			if (straighten)
+				rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
+		
+			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, translation);
+			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
+			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
+			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
+		
+			this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
+			this .set_bind_               = true;
+		},
+		set_active__: function (active)
+		{
+			if (! active .getValue () && this .timeSensor .fraction_changed_ .getValue () === 1)
+			{
+				var layers = this .getLayers ();
+
+				for (var i = 0; i < layers .length; ++ i)
+				{
+					layers [i] .getNavigationInfo () .transitionComplete_ = true;
+				}
+
+				this .easeInEaseOut .set_fraction_ = 1;
+			}
+		},
+		set_bound__: function ()
+		{
+			if (this .isBound_ .getValue ())
+				this .getBrowser () .getNotification () .string_ = this .description_;
+			else
+				this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
+		},
+		traverse: function (type, renderObject)
+		{
+			renderObject .getLayer () .getViewpoints () .push (this);
+
+			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+		},
+		update: function ()
+		{
+			try
+			{
+				this .cameraSpaceMatrix .set (this .getUserPosition (),
+				                              this .getUserOrientation (),
+				                              this .scaleOffset_ .getValue (),
+				                              this .scaleOrientationOffset_ .getValue ());
+
+				this .cameraSpaceMatrix .multRight (this .modelMatrix);
+
+				this .inverseCameraSpaceMatrix .assign (this .cameraSpaceMatrix) .inverse ();
+			}
+			catch (error)
+			{
+			   console .log (error);
+			}
+		},
+	});
+
+	return X3DViewpointNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Math/Geometry/Camera',[
+	"standard/Math/Numbers/Vector3",
+],
+function (Vector3)
+{
+"use strict";
+
+	var
+		min = new Vector3 (0, 0, 0),
+		max = new Vector3 (0, 0, 0);
+
+	return {
+		frustum: function (l, r, b, t, n, f, matrix)
+		{
+			var
+				r_l = r - l,
+				t_b = t - b,
+				f_n = f - n,
+				n_2 = 2 * n,
+
+				A = (r + l) / r_l,
+				B = (t + b) / t_b,
+				C = -(f + n) / f_n,
+				D = -n_2 * f / f_n,
+				E = n_2 / r_l,
+				F = n_2 / t_b;
+
+			return matrix .set (E, 0, 0, 0,
+			                    0, F, 0, 0,
+			                    A, B, C, -1,
+			                    0, 0, D, 0);
+		},
+		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
+		{
+			var ratio = Math .tan (fieldOfView / 2) * zNear;
+
+			if (width > height)
+			{
+				var aspect = width * ratio / height;
+				return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
+			}
+			else
+			{
+				var aspect = height * ratio / width;
+				return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
+			}
+		},
+		perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
+		{
+			var ratio = Math .tan (fieldOfView / 2) * zNear;
+
+			return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
+		},
+		ortho: function (l, r, b, t, n, f, matrix)
+		{
+			var
+				r_l = r - l,
+				t_b = t - b,
+				f_n = f - n,
+
+				A =  2 / r_l,
+				B =  2 / t_b,
+				C = -2 / f_n,
+				D = -(r + l) / r_l,
+				E = -(t + b) / t_b,
+				F = -(f + n) / f_n;
+
+			return matrix .set (A, 0, 0, 0,
+			                    0, B, 0, 0,
+			                    0, 0, C, 0,
+			                    D, E, F, 1);
+		},
+		orthoBox: function (box, matrix)
+		{
+			box .getExtents (min, max);
+
+			return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
+		},
+	};
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Navigation/OrthoViewpoint',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Navigation/X3DViewpointNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Geometry/Camera",
+	"standard/Math/Numbers/Vector2",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Matrix4",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DViewpointNode, 
+          X3DConstants,
+          Camera,
+          Vector2,
+          Vector3,
+          Matrix4)
+{
+"use strict";
+
+	var
+		screenScale  = new Vector3 (0, 0, 0),
+		viewportSize = new Vector2 (0, 0);
+
+	function OrthoViewpoint (executionContext)
+	{
+		X3DViewpointNode .call (this, executionContext);
+
+		this .addType (X3DConstants .OrthoViewpoint);
+
+		this .position_         .setUnit ("length");
+		this .centerOfRotation_ .setUnit ("length");
+		this .fieldOfView_      .setUnit ("length");
+
+		this .projectionMatrix = new Matrix4 ();
+	}
+
+	OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+	{
+		constructor: OrthoViewpoint,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .MFFloat (-1, -1, 1, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
+		]),
+		getTypeName: function ()
+		{
+			return "OrthoViewpoint";
+		},
+		getComponentName: function ()
+		{
+			return "Navigation";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DViewpointNode .prototype .initialize .call (this);
+
+			this .fieldOfView_      .addInterest ("set_fieldOfView___", this);
+			this .fieldOfViewScale_ .addInterest ("set_fieldOfView___", this);
+
+			this .set_fieldOfView___ ();
+		},
+		set_fieldOfView___: function ()
+		{
+			var
+				length           = this .fieldOfView_ .length,
+				fieldOfViewScale = this .fieldOfViewScale_ .getValue ();
+
+			this .minimumX = (length > 0 ? this .fieldOfView_ [0] : -1) * fieldOfViewScale;
+			this .minimumY = (length > 1 ? this .fieldOfView_ [1] : -1) * fieldOfViewScale;
+			this .maximumX = (length > 2 ? this .fieldOfView_ [2] :  1) * fieldOfViewScale;
+			this .maximumY = (length > 3 ? this .fieldOfView_ [3] :  1) * fieldOfViewScale;
+
+			this .sizeX = this .maximumX - this .minimumX;
+			this .sizeY = this .maximumY - this .minimumY;
+		},
+		getMinimumX: function ()
+		{
+			return this .minimumX;
+		},
+		getMinimumY: function ()
+		{
+			return this .minimumY;
+		},
+		getMaximumX: function ()
+		{
+			return this .maximumX;
+		},
+		getMaximumY: function ()
+		{
+			return this .maximumY;
+		},
+		getSizeX: function ()
+		{
+			return this .sizeX;
+		},
+		getSizeY: function ()
+		{
+			return this .sizeY;
+		},
+		getMaxFarValue: function ()
+		{
+			return 1e5;
+		},
+		getScreenScale: function (dummy, viewport)
+		{
+			var
+				width  = viewport [2],
+				height = viewport [3],
+				sizeX  = this .sizeX,
+				sizeY  = this .sizeY,
+				aspect = width / height;
+
+			if (aspect > sizeX / sizeY)
+			{
+				var s = sizeY / height;
+
+				return screenScale .set (s, s, s);
+			}
+
+			var s = sizeX / width;
+
+			return screenScale .set (s, s, s);
+		},
+		getViewportSize: function (viewport)
+		{
+			var
+				width  = viewport [2],
+				height = viewport [3],
+				sizeX  = this .sizeX,
+				sizeY  = this .sizeY,
+				aspect = width / height;
+
+			if (aspect > sizeX / sizeY)
+				return viewportSize .set (sizeY * aspect, sizeY);
+
+			return viewportSize .set (sizeX, sizeX / aspect);
+		},
+		getLookAtDistance: function (bbox)
+		{
+			return bbox .size .abs () / 2 + 10;
+		},
+		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
+		{
+			var
+				width  = viewport [2],
+				height = viewport [3],
+				aspect = width / height,
+				sizeX  = this .sizeX,
+				sizeY  = this .sizeY;
+
+			if (aspect > sizeX / sizeY)
+			{
+				var
+					center  = (this .minimumX + this .maximumX) / 2,
+					size1_2 = (sizeY * aspect) / 2;
+
+				return Camera .ortho (center - size1_2, center + size1_2, this .minimumY, this .maximumY, nearValue, farValue, this .projectionMatrix);
+			}
+
+			var
+				center  = (this .minimumY + this .maximumY) / 2,
+				size1_2 = (sizeX / aspect) / 2;
+
+			return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
+		},
+	});
+
+	return OrthoViewpoint;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Shaders/X3DProgrammableShaderObject',[
 	"x_ite/Fields",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Components/Navigation/OrthoViewpoint",
 	"standard/Math/Numbers/Matrix3",
 ],
 function (Fields,
           X3DCast,
           X3DConstants,
+          OrthoViewpoint,
           Matrix3)
 {
 "use strict";
@@ -39768,7 +41823,7 @@ function (Fields,
 				gl      = this .getBrowser () .getContext (),
 				program = this .getProgram ();
 
-			this .x3d_LogarithmicFarFactor = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor");
+			this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
 
 			this .x3d_GeometryType  = gl .getUniformLocation (program, "x3d_GeometryType");
 			this .x3d_NumClipPlanes = gl .getUniformLocation (program, "x3d_NumClipPlanes");
@@ -40471,7 +42526,14 @@ function (Fields,
 				globalLights [i] .setShaderUniforms (gl, this);
 
 			// Logarithmic depth buffer support.
-			gl .uniform1f (this .x3d_LogarithmicFarFactor, 2 / Math .log2 (renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ()) + 1));
+
+			var viewpoint      = renderObject .getViewpoint ();
+			var navigationInfo = renderObject .getNavigationInfo ();
+
+			if (viewpoint instanceof OrthoViewpoint)
+				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
+			else
+				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));		
 		},
 		setLocalUniforms: function (gl, context)
 		{
@@ -47521,25 +49583,25 @@ function (Fields,
 
 
 
-define('text!x_ite/Browser/Shaders/PointSet.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor * 0.5;\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/PointSet.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
 define('text!x_ite/Browser/Shaders/Wireframe.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_GeometryType == x3d_GeometryLines ? x3d_LinewidthScaleFactor : x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = vec3 (p);\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_FrontMaterial .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tC .rgb = x3d_Color .rgb;\n\t\t\tC .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tC .rgb = x3d_FrontMaterial .emissiveColor;\n\t\t\tC .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tC = x3d_Color;\n\t\telse\n\t\t\tC = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Wireframe.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = C .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor * 0.5;\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/Wireframe.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = C .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
 define('text!x_ite/Browser/Shaders/Gouraud.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor (const in vec3 N,\n                  const in vec3 v,\n                  const in x3d_MaterialParameters material)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (0.0, 0.0, 0.0);\n\tfloat alpha         = 1.0 - material .transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = material .diffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tif (i == x3d_NumLights)\n\t\t\tbreak;\n\n\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\tvec3  vL = light .location - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\tif (di || dL <= light .radius)\n\t\t{\n\t\t\tvec3 d = light .direction;\n\t\t\tvec3 c = light .attenuation;\n\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\tvec3  ambientColor                = light .ambientIntensity * ambientTerm;\n\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\tfinalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);\n\t\t}\n\t}\n\n\tfinalColor += material .emissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfrontColor = getMaterialColor (N, v, x3d_FrontMaterial);\n\n\t\tx3d_MaterialParameters backMaterial = x3d_FrontMaterial;\n\n\t\tif (x3d_SeparateBackColor)\n\t\t\tbackMaterial = x3d_BackMaterial;\n\n\t\tbackColor = getMaterialColor (-N, v, backMaterial);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Gouraud.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_None)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = getFogColor (finalColor .rgb);\n\tgl_FragColor .a   = finalColor .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor * 0.5;\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/Gouraud.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_None)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = getFogColor (finalColor .rgb);\n\tgl_FragColor .a   = finalColor .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
 define('text!x_ite/Browser/Shaders/Phong.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tif (x3d_Lighting)\n\t\tvN = x3d_NormalMatrix * x3d_Normal;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tC = x3d_Color;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Phong.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor;\nvarying float depth;\n#endif\n\n#pragma X3D include "Inlcude/Shadow.h"\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvec4\ngetMaterialColor (const in x3d_MaterialParameters material)\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - material .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * material .diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = material .diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\t#pragma unroll_loop\n\t\tfor (int i = 0; i < x3d_MaxLights; i ++)\n\t\t{\n\t\t\tif (i == x3d_NumLights)\n\t\t\t\tbreak;\n\n\t\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\t\tvec3  vL = light .location - v; // Light to fragment\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= light .radius)\n\t\t\t{\n\t\t\t\tvec3 d = light .direction;\n\t\t\t\tvec3 c = light .attenuation;\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor          = light .color * light .ambientIntensity * ambientTerm;\n\t\t\t\tvec3  diffuseSpecularColor  = light .color * light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\t\t#ifdef X3D_SHADOWS\n\t\t\t\t\tif (lightAngle > 0.0)\n\t\t\t\t\t\tdiffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));\n\t\t\t\t#endif\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (ambientColor + diffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += material .emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\n// DEBUG\n//uniform ivec4 x3d_Viewport;\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\tgl_FragColor = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);\n\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor * 0.5;\n\t#endif\n\n\t// DEBUG\n\t#ifdef X3D_SHADOWS\n\n\t//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;\n\n\t//gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);\n\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/Phong.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\n#pragma X3D include "Inlcude/Shadow.h"\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvec4\ngetMaterialColor (const in x3d_MaterialParameters material)\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - material .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * material .diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = material .diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\t#pragma unroll_loop\n\t\tfor (int i = 0; i < x3d_MaxLights; i ++)\n\t\t{\n\t\t\tif (i == x3d_NumLights)\n\t\t\t\tbreak;\n\n\t\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\t\tvec3  vL = light .location - v; // Light to fragment\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= light .radius)\n\t\t\t{\n\t\t\t\tvec3 d = light .direction;\n\t\t\t\tvec3 c = light .attenuation;\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor          = light .color * light .ambientIntensity * ambientTerm;\n\t\t\t\tvec3  diffuseSpecularColor  = light .color * light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\t\t#ifdef X3D_SHADOWS\n\t\t\t\t\tif (lightAngle > 0.0)\n\t\t\t\t\t\tdiffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));\n\t\t\t\t#endif\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (ambientColor + diffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += material .emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\n// DEBUG\n//uniform ivec4 x3d_Viewport;\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\tgl_FragColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n\n\t// DEBUG\n\t#ifdef X3D_SHADOWS\n\t//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;\n\t//gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);\n\t#endif\n}\n';});
 
 
 define('text!x_ite/Browser/Shaders/Depth.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Vertex;\n\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
@@ -51401,136 +53463,6 @@ function (ViewVolume,
 	};
 
 	return DepthBuffer;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Geometry/Camera',[
-	"standard/Math/Numbers/Vector3",
-],
-function (Vector3)
-{
-"use strict";
-
-	var
-		min = new Vector3 (0, 0, 0),
-		max = new Vector3 (0, 0, 0);
-
-	return {
-		frustum: function (l, r, b, t, n, f, matrix)
-		{
-			var
-				r_l = r - l,
-				t_b = t - b,
-				f_n = f - n,
-				n_2 = 2 * n,
-
-				A = (r + l) / r_l,
-				B = (t + b) / t_b,
-				C = -(f + n) / f_n,
-				D = -n_2 * f / f_n,
-				E = n_2 / r_l,
-				F = n_2 / t_b;
-
-			return matrix .set (E, 0, 0, 0,
-			                    0, F, 0, 0,
-			                    A, B, C, -1,
-			                    0, 0, D, 0);
-		},
-		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
-		{
-			var ratio = Math .tan (fieldOfView / 2) * zNear;
-
-			if (width > height)
-			{
-				var aspect = width * ratio / height;
-				return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
-			}
-			else
-			{
-				var aspect = height * ratio / width;
-				return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
-			}
-		},
-		perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
-		{
-			var ratio = Math .tan (fieldOfView / 2) * zNear;
-
-			return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
-		},
-		ortho: function (l, r, b, t, n, f, matrix)
-		{
-			var
-				r_l = r - l,
-				t_b = t - b,
-				f_n = f - n,
-
-				A =  2 / r_l,
-				B =  2 / t_b,
-				C = -2 / f_n,
-				D = -(r + l) / r_l,
-				E = -(t + b) / t_b,
-				F = -(f + n) / f_n;
-
-			return matrix .set (A, 0, 0, 0,
-			                    0, B, 0, 0,
-			                    0, 0, C, 0,
-			                    D, E, F, 1);
-		},
-		orthoBox: function (box, matrix)
-		{
-			box .getExtents (min, max);
-
-			return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
-		},
-	};
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -57806,1925 +59738,6 @@ function (Fields)
  ******************************************************************************/
 
 
-define ('x_ite/Components/Core/X3DBindableNode',[
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (X3DChildNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DBindableNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DBindableNode);
-
-		this .layers = [ ];
-	}
-
-	X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DBindableNode,
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-
-			this .set_bind_ .addInterest ("set_bind__", this);
-		},
-		getCameraObject: function ()
-		{
-		   return true;
-		},
-		addLayer: function (layer)
-		{
-			this .layers .push (layer);
-		},
-		transitionStart: function ()
-		{ },
-		set_bind__: function ()
-		{
-			if (this .set_bind_ .getValue ())
-			{
-				this .layers = this .getLayers ();
-
-				// Bind
-		
-				for (var i = 0; i < this .layers .length; ++ i)
-					this .bindToLayer (this .layers [i]);
-			}
-			else
-			{
-				// Unbind
-
-				for (var i = 0; i < this .layers .length; ++ i)
-					this .unbindFromLayer (this .layers [i]);
-			}
-		},
-	});
-
-	return X3DBindableNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Time/X3DTimeDependentNode',[
-	"x_ite/Fields",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DChildNode,
-          X3DConstants)
-{
-"use strict";
-
-	function X3DTimeDependentNode (executionContext)
-	{
-		this .addType (X3DConstants .X3DTimeDependentNode);
-
-		this .addChildObjects ("initialized", new Fields .SFTime (),
-		                       "isEvenLive",  new Fields .SFBool ());
-
-		this .startTimeValue  = 0;
-		this .pauseTimeValue  = 0;
-		this .resumeTimeValue = 0;
-		this .stopTimeValue   = 0;
-		this .start           = 0;
-		this .pause           = 0;
-		this .pauseInterval   = 0;
-		this .startTimeout    = null;
-		this .pauseTimeout    = null;
-		this .resumeTimeout   = null;
-		this .stopTimeout     = null;
-		this .disabled        = false;
-	}
-
-	X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DTimeDependentNode,
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-
-			this .isLive ()   .addInterest ("set_live__", this);
-			this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode
-
-			this .initialized_ .addInterest ("set_loop__",       this);
-			this .enabled_     .addInterest ("set_enabled__",    this);
-			this .loop_        .addInterest ("set_loop__",       this);
-			this .startTime_   .addInterest ("set_startTime__",  this);
-			this .pauseTime_   .addInterest ("set_pauseTime__",  this);
-			this .resumeTime_  .addInterest ("set_resumeTime__", this);
-			this .stopTime_    .addInterest ("set_stopTime__",   this);
-
-			this .startTimeValue  = this .startTime_  .getValue ();
-			this .pauseTimeValue  = this .pauseTime_  .getValue ();
-			this .resumeTimeValue = this .resumeTime_ .getValue ();
-			this .stopTimeValue   = this .stopTime_   .getValue ();
-
-			this .initialized_ = this .getBrowser () .getCurrentTime ();
-		},
-		getDisabled: function ()
-		{
-			return this .disabled;
-		},
-		getElapsedTime: function ()
-		{
-			return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
-		},
-		getLiveState: function ()
-		{
-			///  Determines the live state of this node.
-
-			return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
-		},
-		set_live__: function ()
-		{
-			if (this .isLive () .getValue ())
-			{
-				if (this .disabled)
-				{
-					this .disabled = false;
-
-					if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
-						this .real_resume ();
-				}
-			}
-			else
-			{
-				if (! this .disabled && this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
-				{
-					// Only disable if needed, ie. if running!
-					this .disabled = true;
-					this .real_pause ();
-				}
-			}
-		},
-		set_enabled__: function ()
-		{
-			if (this .enabled_ .getValue ())
-				this .set_loop__ ();
-
-			else
-				this .stop ();
-		},
-		set_loop__: function ()
-		{
-			if (this .enabled_ .getValue ())
-			{
-				if (this .loop_ .getValue ())
-				{
-					if (this .stopTimeValue <= this .startTimeValue)
-					{
-						if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
-							this .do_start ();
-					}
-				}
-			}
-		},
-		set_startTime__: function ()
-		{
-			this .startTimeValue = this .startTime_ .getValue ();
-
-			if (this .enabled_ .getValue ())
-			{
-				this .removeTimeout ("startTimeout");
-
-				if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
-					this .do_start ();
-
-				else
-					this .addTimeout ("startTimeout", "do_start", this .startTimeValue);
-			}
-		},
-		set_pauseTime__: function ()
-		{
-			this .pauseTimeValue = this .pauseTime_ .getValue ();
-
-			if (this .enabled_ .getValue ())
-			{
-				this .removeTimeout ("pauseTimeout");
-
-				if (this .pauseTimeValue <= this .resumeTimeValue)
-					return;
-
-				if (this .pauseTimeValue <= this .getBrowser () .getCurrentTime ())
-					this .do_pause ();
-
-				else
-					this .addTimeout ("pauseTimeout", "do_pause", this .pauseTimeValue);
-			}
-		},
-		set_resumeTime__: function ()
-		{
-			this .resumeTimeValue = this .resumeTime_ .getValue ();
-
-			if (this .enabled_ .getValue ())
-			{
-				this .removeTimeout ("resumeTimeout");
-
-				if (this .resumeTimeValue <= this .pauseTimeValue)
-					return;
-
-				if (this .resumeTimeValue <= this .getBrowser () .getCurrentTime ())
-					this .do_resume ();
-
-				else
-					this .addTimeout ("resumeTimeout", "do_resume", this .resumeTimeValue);
-			}
-		},
-		set_stopTime__: function ()
-		{
-			this .stopTimeValue = this .stopTime_ .getValue ();
-
-			if (this .enabled_ .getValue ())
-			{
-				this .removeTimeout ("stopTimeout");
-
-				if (this .stopTimeValue <= this .startTimeValue)
-					return;
-
-				if (this .stopTimeValue <= this .getBrowser () .getCurrentTime ())
-					this .do_stop ();
-
-				else
-					this .addTimeout ("stopTimeout","do_stop", this .stopTimeValue);
-			}
-		},
-		do_start: function ()
-		{
-			if (! this .isActive_ .getValue ())
-			{
-				this .start         = this .getBrowser () .getCurrentTime ();
-				this .pauseInterval = 0;
-
-				// The event order below is very important.
-
-				this .isActive_ = true;
-
-				this .set_start ();
-
-				if (this .isLive () .getValue ())
-				{
-					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
-				}
-				else if (! this .disabled)
-				{
-					this .disabled = true;
-					this .real_pause ();
-				}
-
-				this .elapsedTime_ = 0;
-				this .cycleTime_   = this .getBrowser () .getCurrentTime ();
-			}
-		},
-		do_pause: function ()
-		{
-			if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
-			{
-				this .isPaused_ = true;
-
-				if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
-					this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
-
-				if (this .isLive () .getValue ())
-					this .real_pause ();
-			}
-		},
-		real_pause: function ()
-		{
-			this .pause = performance .now ();
-
-			this .set_pause ();
-
-			this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
-		},
-		do_resume: function ()
-		{
-			if (this .isActive_ .getValue () && this .isPaused_ .getValue ())
-			{
-				this .isPaused_ = false;
-
-				if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
-					this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
-
-				if (this .isLive () .getValue ())
-					this .real_resume ();
-			}
-		},
-		real_resume: function ()
-		{
-			var interval = (performance .now () - this .pause) / 1000;
-
-			this .pauseInterval += interval;
-
-			this .set_resume (interval);
-
-			this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
-			this .getBrowser () .addBrowserEvent ();
-		},
-		do_stop: function ()
-		{
-			this .stop ();
-		},
-		stop: function ()
-		{
-			if (this .isActive_ .getValue ())
-			{
-				// The event order below is very important.
-
-				this .set_stop ();
-
-				this .elapsedTime_ = this .getElapsedTime ();
-
-				if (this .isPaused_ .getValue ())
-					this .isPaused_ = false;
-
-				this .isActive_ = false;
-
-				if (this .isLive () .getValue ())
-					this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
-			}
-		},
-		timeout: function (callback)
-		{
-			if (this .enabled_ .getValue ())
-			{
-				this .getBrowser () .advanceTime (performance .now ());
-
-				this [callback] ();
-			}
-		},
-		addTimeout: function (name, callback, time)
-		{
-			this .removeTimeout (name);
-			this [name] = setTimeout (this .timeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000);
-		},
-		removeTimeout: function (name)
-		{
-			clearTimeout (this [name]);
-			this [name] = null;
-		},
-		set_start: function () { },
-		set_pause: function () { },
-		set_resume: function () { },
-		set_stop: function () { },
-		set_time: function () { },
-	});
-
-	return X3DTimeDependentNode;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Time/TimeSensor',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DSensorNode",
-	"x_ite/Components/Time/X3DTimeDependentNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DSensorNode, 
-          X3DTimeDependentNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function TimeSensor (executionContext)
-	{
-		X3DSensorNode        .call (this, executionContext);
-		X3DTimeDependentNode .call (this, executionContext);
-
-		this .addType (X3DConstants .TimeSensor);
-
-		this .addChildObjects ("range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
-		
-		this .cycle    = 0;
-		this .interval = 0;
-		this .fraction = 0;
-		this .first    = 0;
-		this .last     = 1;
-		this .scale    = 1;
-	}
-
-	TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
-		X3DTimeDependentNode .prototype,
-	{
-		constructor: TimeSensor,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "cycleInterval",    new Fields .SFTime (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "loop",             new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",        new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",       new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",        new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",         new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",        new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "fraction_changed", new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "time",             new Fields .SFTime ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TimeSensor";
-		},
-		getComponentName: function ()
-		{
-			return "Time";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DSensorNode        .prototype .initialize .call (this);
-			X3DTimeDependentNode .prototype .initialize .call (this);
-
-			this .cycleInterval_ .addInterest ("set_cycleInterval__", this);
-			this .range_         .addInterest ("set_range__",         this);
-		},
-		setRange: function (currentFraction, firstFraction, lastFraction)
-		{
-			this .fraction = currentFraction >= 1 ? 0 : currentFraction;
-			this .first    = firstFraction;
-			this .last     = lastFraction;
-			this .scale    = this .last - this .first;
-
-			var offset = (this .fraction -  this .first) * this .cycleInterval_ .getValue ();
-
-			this .interval = this .cycleInterval_ .getValue () * this .scale;
-			this .cycle    = this .getBrowser () .getCurrentTime () - offset;
-		},
-		set_cycleInterval__: function ()
-		{
-			if (this .isActive_ .getValue ())
-				this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
-		},
-		set_range__: function ()
-		{
-			if (this .isActive_ .getValue ())
-			{
-				this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
-
-				if (! this .isPaused_ .getValue ())
-					this .set_fraction (this .getBrowser () .getCurrentTime ());
-			}
-		},
-		set_start: function ()
-		{
-			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
-
-			this .fraction_changed_ = this .range_ [0];
-			this .time_             = this .getBrowser () .getCurrentTime ();
-		},			
-		set_resume: function (pauseInterval)
-		{
-			this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
-		},
-		set_fraction: function (time)
-		{
-			var t = (time - this .cycle) / this .interval;
-
-			this .fraction_changed_ = this .fraction = this .first + (t - Math .floor (t)) * this .scale;
-		},
-		set_time: function ()
-		{
-			// The event order below is very important.
-
-			var time = this .getBrowser () .getCurrentTime ();
-
-			if (time - this .cycle >= this .interval)
-			{
-				if (this .loop_ .getValue ())
-				{
-					if (this .interval)
-					{
-						this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
-						
-						this .elapsedTime_ = this .getElapsedTime ();
-						this .cycleTime_   = time;
-
-						this .set_fraction (time);
-					}
-				}
-				else
-				{
-					this .fraction_changed_ = this .fraction = this .last;
-					this .stop ();
-				}
-			}
-			else
-			{
-				this .elapsedTime_ = this .getElapsedTime ();
-
-				this .set_fraction (time);
-			}
-
-			this .time_ = time;
-		},
-	});
-
-	return TimeSensor;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/X3DInterpolatorNode',[
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
-],
-function (X3DChildNode, 
-          X3DConstants,
-          Algorithm)
-{
-"use strict";
-
-	function X3DInterpolatorNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DInterpolatorNode);
-	}
-
-	X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DInterpolatorNode,
-		setup: function ()
-		{
-			// If an X3DInterpolatorNode value_changed outputOnly field is read before it receives any inputs,
-			// keyValue[0] is returned if keyValue is not empty. If keyValue is empty (i.e., [ ]), the initial
-			// value for the respective field type is returned (EXAMPLE  (0, 0, 0) for Fields .SFVec3f);
-
-			this .set_key__ ();
-
-			if (this .key_ .length)
-				this .interpolate (0, 0, 0);
-
-			X3DChildNode .prototype .setup .call (this);
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-			
-			this .set_fraction_ .addInterest ("set_fraction__", this);
-			this .key_          .addInterest ("set_key__", this);
-		},
-		set_fraction__: function ()
-		{
-			var
-				key      = this .key_,
-				length   = key .length,
-				fraction = this .set_fraction_ .getValue ();
-
-			switch (length)
-			{
-				case 0:
-					// Interpolator nodes containing no keys in the key field shall not produce any events.
-					return;
-				case 1:
-					return this .interpolate (0, 0, 0);
-				default:
-				{
-					if (fraction <= key [0])
-						return this .interpolate (0, 1, 0);
-
-					var index1 = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
-
-					if (index1 !== length)
-					{
-						var
-							index0 = index1 - 1,
-							weight = (fraction - key [index0]) / (key [index1] - key [index0]);
-
-						this .interpolate (index0, index1, Algorithm .clamp (weight, 0, 1));
-					}
-					else
-						this .interpolate (length - 2, length - 1, 1);
-				}
-			}
-		},
-		set_key__: function ()
-		{
-			this .set_keyValue__ ();
-		},
-		set_keyValue__: function () { },
-		interpolate: function () { },
-	});
-
-	return X3DInterpolatorNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/EaseInEaseOut',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Interpolation/X3DInterpolatorNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function EaseInEaseOut (executionContext)
-	{
-		X3DInterpolatorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .EaseInEaseOut);
-	}
-
-	EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-	{
-		constructor: EaseInEaseOut,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",             new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",                      new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "easeInEaseOut",            new Fields .MFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "modifiedFraction_changed", new Fields .SFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "EaseInEaseOut";
-		},
-		getComponentName: function ()
-		{
-			return "Interpolation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DInterpolatorNode .prototype .initialize .call (this);
-
-			this .easeInEaseOut_ .addInterest ("set_keyValue__", this);
-		},
-		set_keyValue__: function ()
-		{
-			if (this .easeInEaseOut_ .length < this .key_ .length)
-				this .easeInEaseOut_ .resize (this .key_ .length, this .easeInEaseOut_ .length ? this .easeInEaseOut_ [this .easeInEaseOut_ .length - 1] : new Fields .SFVec2f ());
-		},
-		interpolate: function (index0, index1, weight)
-		{
-			var
-				easeOut = this .easeInEaseOut_ [index0] .y,
-				easeIn  = this .easeInEaseOut_ [index1] .x,
-				sum     = easeOut + easeIn;
-
-			if (sum < 0)
-			{
-				this .modifiedFraction_changed_ = weight;
-			}
-			else
-			{
-				if (sum > 1)
-				{
-					easeIn  /= sum;
-					easeOut /= sum;
-				}
-
-				var t = 1 / (2 - easeOut - easeIn);
-
-				if (weight < easeOut)
-				{
-					this .modifiedFraction_changed_ = (t / easeOut) * weight * weight;
-				}
-				else if (weight <= 1 - easeIn) // Spec says (weight < 1 - easeIn), but then we get a NaN below if easeIn == 0.
-				{
-					this .modifiedFraction_changed_ = t * (2 * weight - easeOut);
-				}
-				else
-				{
-					var w = 1 - weight;
-
-					this .modifiedFraction_changed_ = 1 - ((t * w * w) / easeIn);
-				}
-			}
-		},
-	});
-
-	return EaseInEaseOut;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/PositionInterpolator',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Interpolation/X3DInterpolatorNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode, 
-          X3DConstants,
-          Vector3)
-{
-"use strict";
-
-	function PositionInterpolator (executionContext)
-	{
-		X3DInterpolatorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .PositionInterpolator);
-	}
-
-	PositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-	{
-		constructor: PositionInterpolator,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
-		]),
-		keyValue: new Vector3 (0, 0, 0),
-		getTypeName: function ()
-		{
-			return "PositionInterpolator";
-		},
-		getComponentName: function ()
-		{
-			return "Interpolation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DInterpolatorNode .prototype .initialize .call (this);
-
-			this .keyValue_ .addInterest ("set_keyValue__", this);
-		},
-		set_keyValue__: function ()
-		{
-			var
-				key      = this .key_,
-				keyValue = this .keyValue_;
-
-			if (keyValue .length < key .length)
-				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
-		},
-		interpolate: function (index0, index1, weight)
-		{
-			this .value_changed_ = this .keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
-		},
-	});
-
-	return PositionInterpolator;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/OrientationInterpolator',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Interpolation/X3DInterpolatorNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Rotation4"
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode, 
-          X3DConstants,
-          Rotation4)
-{
-"use strict";
-
-	function OrientationInterpolator (executionContext)
-	{
-		X3DInterpolatorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .OrientationInterpolator);
-	}
-
-	OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-	{
-		constructor: OrientationInterpolator,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
-		]),
-		keyValue: new Rotation4 (),
-		getTypeName: function ()
-		{
-			return "OrientationInterpolator";
-		},
-		getComponentName: function ()
-		{
-			return "Interpolation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DInterpolatorNode .prototype .initialize .call (this);
-
-			this .keyValue_ .addInterest ("set_keyValue__", this);
-		},
-		set_keyValue__: function ()
-		{
-			var
-				key      = this .key_,
-				keyValue = this .keyValue_;
-
-			if (keyValue .length < key .length)
-				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
-		},
-		interpolate: function (index0, index1, weight)
-		{
-			try
-			{
-				this .value_changed_ = this .keyValue .assign (this .keyValue_ [index0] .getValue ()) .slerp (this .keyValue_ [index1] .getValue (), weight);
-			}
-			catch (error)
-			{ }
-		},
-	});
-
-	return OrientationInterpolator;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Navigation/X3DViewpointNode',[
-	"x_ite/Fields",
-	"x_ite/Components/Core/X3DBindableNode",
-	"x_ite/Components/Time/TimeSensor",
-	"x_ite/Components/Interpolation/EaseInEaseOut",
-	"x_ite/Components/Interpolation/PositionInterpolator",
-	"x_ite/Components/Interpolation/OrientationInterpolator",
-	"x_ite/Bits/TraverseType",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DBindableNode,
-          TimeSensor,
-          EaseInEaseOut,
-          PositionInterpolator,
-          OrientationInterpolator,
-          TraverseType,
-          X3DConstants,
-          Vector2,
-          Vector3,
-          Rotation4,
-          Matrix4)
-{
-"use strict";
-
-	function X3DViewpointNode (executionContext)
-	{
-		X3DBindableNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DViewpointNode);
-
-		this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
-		                       "orientationOffset",      new Fields .SFRotation (),
-		                       "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
-		                       "scaleOrientationOffset", new Fields .SFRotation (),
-		                       "centerOfRotationOffset", new Fields .SFVec3f (),
-		                       "fieldOfViewScale",       new Fields .SFFloat (1));
-
-	   this .userPosition             = new Vector3 (0, 1, 0);
-	   this .userOrientation          = new Rotation4 (0, 0, 1, 0);
-	   this .userCenterOfRotation     = new Vector3 (0, 0, 0);
-		this .modelMatrix              = new Matrix4 ();
-		this .cameraSpaceMatrix        = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
-		this .inverseCameraSpaceMatrix = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
-
-		var browser = this .getBrowser ();
-
-		this .timeSensor                   = new TimeSensor              (browser .getPrivateScene ());
-		this .easeInEaseOut                = new EaseInEaseOut           (browser .getPrivateScene ());
-		this .positionInterpolator         = new PositionInterpolator    (browser .getPrivateScene ());
-		this .orientationInterpolator      = new OrientationInterpolator (browser .getPrivateScene ());
-		this .scaleInterpolator            = new PositionInterpolator    (browser .getPrivateScene ());
-		this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
-	}
-
-	X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
-	{
-		constructor: X3DViewpointNode,
-		initialize: function ()
-		{
-			X3DBindableNode .prototype .initialize .call (this);
-		
-			this .timeSensor .stopTime_ = 1;
-			this .timeSensor .setup ();
-
-			this .easeInEaseOut .key_           = new Fields .MFFloat (0, 1);
-			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-			this .easeInEaseOut .setup ();
-
-			this .positionInterpolator         .key_ = new Fields .MFFloat (0, 1);
-			this .orientationInterpolator      .key_ = new Fields .MFFloat (0, 1);
-			this .scaleInterpolator            .key_ = new Fields .MFFloat (0, 1);
-			this .scaleOrientationInterpolator .key_ = new Fields .MFFloat (0, 1);
-
-			this .positionInterpolator         .setup ();
-			this .orientationInterpolator      .setup ();
-			this .scaleInterpolator            .setup ();
-			this .scaleOrientationInterpolator .setup ();
-
-			this .timeSensor .fraction_changed_ .addFieldInterest (this .easeInEaseOut .set_fraction_);
-
-			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .positionInterpolator         .set_fraction_);
-			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .orientationInterpolator      .set_fraction_);
-			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleInterpolator            .set_fraction_);
-			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleOrientationInterpolator .set_fraction_);
-
-			this .positionInterpolator         .value_changed_ .addFieldInterest (this .positionOffset_);
-			this .orientationInterpolator      .value_changed_ .addFieldInterest (this .orientationOffset_);
-			this .scaleInterpolator            .value_changed_ .addFieldInterest (this .scaleOffset_);
-			this .scaleOrientationInterpolator .value_changed_ .addFieldInterest (this .scaleOrientationOffset_);
-
-			this .isBound_ .addInterest ("set_bound__", this);
-		},
-		getEaseInEaseOut: function ()
-		{
-			return this .easeInEaseOut;
-		},
-		setInterpolators: function () { },
-		bindToLayer: function (layer)
-		{
-			layer .getViewpointStack () .push (this);
-		},
-		unbindFromLayer: function (layer)
-		{
-			layer .getViewpointStack () .pop (this);
-		},
-		removeFromLayer: function (layer)
-		{
-			layer .getViewpointStack () .remove (this);
-		},
-		getPosition: function ()
-		{
-			return this .position_ .getValue ();
-		},
-		getUserPosition: function ()
-		{
-			return this .userPosition .assign (this .getPosition ()) .add (this .positionOffset_ .getValue ());
-		},
-		getOrientation: function ()
-		{
-			return this .orientation_ .getValue ();
-		},
-		getUserOrientation: function ()
-		{
-			return this .userOrientation .assign (this .getOrientation ()) .multRight (this .orientationOffset_ .getValue ());
-		},
-		getCenterOfRotation: function ()
-		{
-			return this .centerOfRotation_ .getValue ();
-		},
-		getUserCenterOfRotation: function ()
-		{
-			return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this .centerOfRotationOffset_ .getValue ());
-		},
-		getProjectionMatrix: function (renderObject)
-		{
-			var navigationInfo = renderObject .getNavigationInfo ();
-
-			return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
-                                                     navigationInfo .getFarValue (this),
-                                                     renderObject .getLayer () .getViewport () .getRectangle (renderObject .getBrowser ()));
-		},
-		getCameraSpaceMatrix: function ()
-		{
-			return this .cameraSpaceMatrix;
-		},
-		getInverseCameraSpaceMatrix: function ()
-		{
-			return this .inverseCameraSpaceMatrix;
-		},
-		getModelMatrix: function ()
-		{
-			return this .modelMatrix;
-		},
-		getUpVector: function ()
-		{
-		   // Local y-axis,
-		   // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
-		   return Vector3 .yAxis;
-		},
-		getSpeedFactor: function ()
-		{
-			return 1;
-		},
-		getMaxFarValue: function ()
-		{
-			return this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e5;
-		},
-		transitionStart: (function ()
-		{
-			var
-				relativePosition         = new Vector3 (0, 0, 0),
-				relativeOrientation      = new Rotation4 (0, 0, 1, 0),
-				relativeScale            = new Vector3 (0, 0, 0),
-				relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
-
-			return function (fromViewpoint)
-			{
-				try
-				{
-					if (this .jump_ .getValue ())
-					{
-						var layers = this .getLayers ();
-	
-						if (! this .retainUserOffsets_ .getValue ())
-							this .resetUserOffsets ();
-		
-						for (var i = 0; i < layers .length; ++ i)
-						{
-							var navigationInfo = layers [i] .getNavigationInfo ();
-	
-							navigationInfo .transitionStart_ = true;
-	
-							var
-								transitionType = navigationInfo .getTransitionType (),
-								transitionTime = navigationInfo .transitionTime_ .getValue ();
-						}
-	
-						switch (transitionType)
-						{
-							case "TELEPORT":
-							{
-								for (var i = 0; i < layers .length; ++ i)
-									layers [i] .getNavigationInfo () .transitionComplete_ = true;
-	
-								return;
-							}
-							case "ANIMATE":
-							{
-								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-								break;
-							}
-							default:
-							{
-								// LINEAR
-								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-								break;
-							}
-						}
-						
-						this .timeSensor .cycleInterval_ = transitionTime;
-						this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-						this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
-						this .timeSensor .isActive_ .addInterest ("set_active__", this);
-	
-						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-	
-						this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
-						this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
-						this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
-						this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
-	
-						this .positionOffset_         = relativePosition;
-						this .orientationOffset_      = relativeOrientation;
-						this .scaleOffset_            = relativeScale;
-						this .scaleOrientationOffset_ = relativeScaleOrientation;
-	
-						this .setInterpolators (fromViewpoint);
-					}
-					else
-					{
-						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-		 
-						this .positionOffset_         = relativePosition;
-						this .orientationOffset_      = relativeOrientation;
-						this .scaleOffset_            = relativeScale;
-						this .scaleOrientationOffset_ = relativeScaleOrientation;
-	
-						this .setInterpolators (fromViewpoint);
-					}
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			};
-		})(),
-		transitionStop: function ()
-		{
-			this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
-			this .timeSensor .isActive_ .removeInterest ("set_active__", this);
-		},
-		resetUserOffsets: function ()
-		{
-			this .positionOffset_         = Vector3   .Zero;
-			this .orientationOffset_      = Rotation4 .Identity;
-			this .scaleOffset_            = Vector3   .One;
-			this .scaleOrientationOffset_ = Rotation4 .Identity;
-			this .centerOfRotationOffset_ = Vector3   .Zero;
-			this .fieldOfViewScale_       = 1;
-		},
-		getRelativeTransformation: function (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
-		// throw
-		{
-			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpoint .getInverseCameraSpaceMatrix ()) .inverse ();
-
-			differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-			relativePosition .subtract (this .getPosition ());
-			relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
-		},
-		straightenHorizon: (function ()
-		{
-			var
-				localXAxis = new Vector3 (0, 0, 0),
-				localZAxis = new Vector3 (0, 0, 0),
-				vector     = new Vector3 (0, 0, 0),
-				rotation   = new Rotation4 (0, 0, 1, 0);
-
-			return function (orientation)
-			{
-				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
-				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
-	
-				vector .assign (localZAxis) .cross (this .getUpVector ());
-	
-				rotation .setFromToVec (localXAxis, vector);
-	
-				return orientation .multRight (rotation);
-			};
-		})(),
-		lookAtPoint: function (point, factor, straighten)
-		{
-			try
-			{
-				if (! this .getBrowser () .getActiveLayer ())
-					return;
-	
-				this .getCameraSpaceMatrix () .multVecMatrix (point);
-
-				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
-
-				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
-		
-				this .lookAt (point, minDistance, factor, straighten);
-			}
-			catch (error)
-			{
-				console .error (error);
-			}
-		},
-		lookAtBBox: function (bbox, factor, straighten)
-		{
-			try
-			{
-				if (! this .getBrowser () .getActiveLayer ())
-					return;
-
-				bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
-		
-				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
-		
-				this .lookAt (bbox .center, minDistance, factor, straighten);
-			}
-			catch (error)
-			{ }
-		},
-		lookAt: function (point, distance, factor, straighten)
-		{
-			var
-				layers = this .getLayers (),
-				offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
-
-			for (var i = 0; i < layers .length; ++ i)
-				layers [i] .getNavigationInfo () .transitionStart_ = true;;
-		
-			this .timeSensor .cycleInterval_ = 0.2;
-			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
-			this .timeSensor .isActive_ .addInterest ("set_active__", this);
-	
-			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-
-			var
-				translation = Vector3 .lerp (this .positionOffset_ .getValue (), offset, factor),
-				direction   = Vector3 .add (this .getPosition (), translation) .subtract (point),
-				rotation    = Rotation4 .multRight (this .orientationOffset_ .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
-		
-			if (straighten)
-				rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
-		
-			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, translation);
-			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
-			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
-			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
-		
-			this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
-			this .set_bind_               = true;
-		},
-		set_active__: function (active)
-		{
-			if (! active .getValue () && this .timeSensor .fraction_changed_ .getValue () === 1)
-			{
-				var layers = this .getLayers ();
-
-				for (var i = 0; i < layers .length; ++ i)
-				{
-					layers [i] .getNavigationInfo () .transitionComplete_ = true;
-				}
-
-				this .easeInEaseOut .set_fraction_ = 1;
-			}
-		},
-		set_bound__: function ()
-		{
-			if (this .isBound_ .getValue ())
-				this .getBrowser () .getNotification () .string_ = this .description_;
-			else
-				this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
-		},
-		traverse: function (type, renderObject)
-		{
-			renderObject .getLayer () .getViewpoints () .push (this);
-
-			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-		},
-		update: function ()
-		{
-			try
-			{
-				this .cameraSpaceMatrix .set (this .getUserPosition (),
-				                              this .getUserOrientation (),
-				                              this .scaleOffset_ .getValue (),
-				                              this .scaleOrientationOffset_ .getValue ());
-
-				this .cameraSpaceMatrix .multRight (this .modelMatrix);
-
-				this .inverseCameraSpaceMatrix .assign (this .cameraSpaceMatrix) .inverse ();
-			}
-			catch (error)
-			{
-			   console .log (error);
-			}
-		},
-	});
-
-	return X3DViewpointNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Navigation/OrthoViewpoint',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Navigation/X3DViewpointNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Geometry/Camera",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DViewpointNode, 
-          X3DConstants,
-          Camera,
-          Vector2,
-          Vector3,
-          Matrix4)
-{
-"use strict";
-
-	var
-		screenScale  = new Vector3 (0, 0, 0),
-		viewportSize = new Vector2 (0, 0);
-
-	function OrthoViewpoint (executionContext)
-	{
-		X3DViewpointNode .call (this, executionContext);
-
-		this .addType (X3DConstants .OrthoViewpoint);
-
-		this .position_         .setUnit ("length");
-		this .centerOfRotation_ .setUnit ("length");
-		this .fieldOfView_      .setUnit ("length");
-
-		this .projectionMatrix = new Matrix4 ();
-	}
-
-	OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
-	{
-		constructor: OrthoViewpoint,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .MFFloat (-1, -1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
-		]),
-		getTypeName: function ()
-		{
-			return "OrthoViewpoint";
-		},
-		getComponentName: function ()
-		{
-			return "Navigation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DViewpointNode .prototype .initialize .call (this);
-
-			this .fieldOfView_      .addInterest ("set_fieldOfView___", this);
-			this .fieldOfViewScale_ .addInterest ("set_fieldOfView___", this);
-
-			this .set_fieldOfView___ ();
-		},
-		set_fieldOfView___: function ()
-		{
-			var
-				length           = this .fieldOfView_ .length,
-				fieldOfViewScale = this .fieldOfViewScale_ .getValue ();
-
-			this .minimumX = (length > 0 ? this .fieldOfView_ [0] : -1) * fieldOfViewScale;
-			this .minimumY = (length > 1 ? this .fieldOfView_ [1] : -1) * fieldOfViewScale;
-			this .maximumX = (length > 2 ? this .fieldOfView_ [2] :  1) * fieldOfViewScale;
-			this .maximumY = (length > 3 ? this .fieldOfView_ [3] :  1) * fieldOfViewScale;
-
-			this .sizeX = this .maximumX - this .minimumX;
-			this .sizeY = this .maximumY - this .minimumY;
-		},
-		getMinimumX: function ()
-		{
-			return this .minimumX;
-		},
-		getMinimumY: function ()
-		{
-			return this .minimumY;
-		},
-		getMaximumX: function ()
-		{
-			return this .maximumX;
-		},
-		getMaximumY: function ()
-		{
-			return this .maximumY;
-		},
-		getSizeX: function ()
-		{
-			return this .sizeX;
-		},
-		getSizeY: function ()
-		{
-			return this .sizeY;
-		},
-		getScreenScale: function (dummy, viewport)
-		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				sizeX  = this .sizeX,
-				sizeY  = this .sizeY,
-				aspect = width / height;
-
-			if (aspect > sizeX / sizeY)
-			{
-				var s = sizeY / height;
-
-				return screenScale .set (s, s, s);
-			}
-
-			var s = sizeX / width;
-
-			return screenScale .set (s, s, s);
-		},
-		getViewportSize: function (viewport)
-		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				sizeX  = this .sizeX,
-				sizeY  = this .sizeY,
-				aspect = width / height;
-
-			if (aspect > sizeX / sizeY)
-				return viewportSize .set (sizeY * aspect, sizeY);
-
-			return viewportSize .set (sizeX, sizeX / aspect);
-		},
-		getLookAtDistance: function (bbox)
-		{
-			return bbox .size .abs () / 2 + 10;
-		},
-		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
-		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				aspect = width / height,
-				sizeX  = this .sizeX,
-				sizeY  = this .sizeY;
-
-			if (aspect > sizeX / sizeY)
-			{
-				var
-					center  = (this .minimumX + this .maximumX) / 2,
-					size1_2 = (sizeY * aspect) / 2;
-
-				return Camera .ortho (center - size1_2, center + size1_2, this .minimumY, this .maximumY, nearValue, farValue, this .projectionMatrix);
-			}
-
-			var
-				center  = (this .minimumY + this .maximumY) / 2,
-				size1_2 = (sizeX / aspect) / 2;
-
-			return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
-		},
-	});
-
-	return OrthoViewpoint;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Browser/Navigation/X3DViewer',[
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Navigation/OrthoViewpoint",
@@ -62477,6 +62490,10 @@ function (Fields,
 
 			return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
 		},
+		getMaxFarValue: function ()
+		{
+			return this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e9;
+		},
 		getUpVector: function ()
 		{
 			return this .getGeoUpVector .call (this, position .assign (this .position) .add (this .positionOffset_ .getValue ()), upVector);
@@ -62484,10 +62501,6 @@ function (Fields,
 		getSpeedFactor: function ()
 		{
 			return (Math .max (this .elevation, 0.0) + 10) / 10 * this .speedFactor_ .getValue ();
-		},
-		getMaxFarValue: function ()
-		{
-			return this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e9;
 		},
 		getScreenScale: function (point, viewport)
 		{
