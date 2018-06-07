@@ -248,7 +248,7 @@ function (Fields,
 		{
 			return (Math .max (this .elevation, 0.0) + 10) / 10 * this .speedFactor_ .getValue ();
 		},
-		getMaxZFar: function ()
+		getMaxFarValue: function ()
 		{
 			return this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e9;
 		},

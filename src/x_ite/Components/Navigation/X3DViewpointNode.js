@@ -215,7 +215,7 @@ function (Fields,
 		{
 			return 1;
 		},
-		getMaxZFar: function ()
+		getMaxFarValue: function ()
 		{
 			return this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e5;
 		},

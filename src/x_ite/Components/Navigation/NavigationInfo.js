@@ -301,7 +301,7 @@ function (Fields,
 		{
 			return this .visibilityLimit_ .getValue ()
 				    ? this .visibilityLimit_ .getValue ()
-				    : viewpoint .getMaxZFar ();
+				    : viewpoint .getMaxFarValue ();
 		},
 		getTransitionType: function ()
 		{

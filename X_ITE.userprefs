@@ -1,15 +1,20 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Navigation/NavigationInfo.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="481" Column="38" />
-      <File FileName="src/x_ite/Components/Lighting/X3DLightNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite.html" Line="480" Column="73" />
       <File FileName="src/x_ite/Browser/Shaders/Phong.vs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="252" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Inlcude/Shadow.h" Line="208" Column="5" />
-      <File FileName="src/x_ite/Components/Lighting/PointLight.js" Line="168" Column="77" />
-      <File FileName="src/x_ite/Components/Lighting/SpotLight.js" Line="182" Column="56" />
-      <File FileName="src/x_ite/Components/Lighting/DirectionalLight.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.vs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Wireframe.vs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Wireframe.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/PointSet.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Navigation/WalkViewer.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Navigation/X3DFlyViewer.js" Line="475" Column="17" />
+      <File FileName="src/x_ite/Components/Navigation/X3DViewpointNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Navigation/FlyViewer.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Navigation/NavigationInfo.js" Line="300" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

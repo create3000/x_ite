@@ -127,7 +127,7 @@ function (Fields,
 				gl      = this .getBrowser () .getContext (),
 				program = this .getProgram ();
 
-			this .x3d_FarFactor = gl .getUniformLocation (program, "x3d_FarFactor");
+			this .x3d_LogarithmicFarFactor = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor");
 
 			this .x3d_GeometryType  = gl .getUniformLocation (program, "x3d_GeometryType");
 			this .x3d_NumClipPlanes = gl .getUniformLocation (program, "x3d_NumClipPlanes");
@@ -830,7 +830,7 @@ function (Fields,
 				globalLights [i] .setShaderUniforms (gl, this);
 
 			// Logarithmic depth buffer support.
-			gl .uniform1f (this .x3d_FarFactor, 2 / Math .log2 (renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ()) + 1));
+			gl .uniform1f (this .x3d_LogarithmicFarFactor, 2 / Math .log2 (renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ()) + 1));
 		},
 		setLocalUniforms: function (gl, context)
 		{

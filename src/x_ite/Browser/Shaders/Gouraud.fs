@@ -29,7 +29,7 @@ varying vec4 t;          // texCoord
 varying vec3 v;          // point on geometry
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-uniform float x3d_FarFactor;
+uniform float x3d_LogarithmicFarFactor;
 varying float depth;
 #endif
 
@@ -127,6 +127,6 @@ main ()
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-	gl_FragDepthEXT = log2 (depth) * x3d_FarFactor * 0.5;
+	gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor * 0.5;
 	#endif
 }
