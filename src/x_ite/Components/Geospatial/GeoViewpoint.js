@@ -250,7 +250,7 @@ function (Fields,
 		},
 		getMaxFarValue: function ()
 		{
-			return this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e9;
+			return this .getBrowser () .getBrowserOption ("LogarithmicDepthBuffer") && this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e9;
 		},
 		getScreenScale: function (point, viewport)
 		{
@@ -276,7 +276,7 @@ function (Fields,
 		},
 		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport, limit)
 		{
-			if (limit || this .getBrowser () .getExtension ("EXT_frag_depth"))
+			if (limit || (this .getBrowser () .getBrowserOption ("LogarithmicDepthBuffer") && this .getBrowser () .getExtension ("EXT_frag_depth")))
 				return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
 				
 			// Linear interpolate nearValue and farValue

@@ -94,6 +94,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (true)),
 		]),
 		getTypeName: function ()
 		{
@@ -111,12 +112,13 @@ function (Fields,
 		{
 			X3DBaseNode .prototype .initialize .call (this);
 			
-			this .SplashScreen_              .addInterest ("set_splashScreen__", this);
-			this .Rubberband_                .addInterest ("set_rubberband__", this);
-			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__", this);
-			this .TextureQuality_            .addInterest ("set_textureQuality__", this);
-			this .Shading_                   .addInterest ("set_shading__", this);
-			this .getBrowser () .shutdown () .addInterest ("configure", this);
+			this .SplashScreen_              .addInterest ("set_splashScreen__",           this);
+			this .Rubberband_                .addInterest ("set_rubberband__",             this);
+			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__",       this);
+			this .TextureQuality_            .addInterest ("set_textureQuality__",         this);
+			this .Shading_                   .addInterest ("set_shading__",                this);
+			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
+			this .getBrowser () .shutdown () .addInterest ("configure",                    this);
 
 			this .configure ();
 		},
@@ -309,6 +311,10 @@ function (Fields,
 		set_shading__: function (shading)
 		{
 			this .getBrowser () .setShading (shading .getValue ());
+		},
+		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
+		{
+			this .createShaders ();
 		},
 	});
 

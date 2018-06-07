@@ -119,19 +119,68 @@ function ($,
 
 			// Create shaders.
 
-			this .depthShader   = this .createShader (this, "DepthShader",     depthVS,     depthFS);
-			this .pointShader   = this .createShader (this, "PointShader",     wireframeVS, pointSetFS);
-			this .lineShader    = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS);
-			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS);
-			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS);
-			this .shadowShader  = this .createShader (this, "ShadowShader",    phongVS,     phongFS, true);
+			this .createShaders ();
+		},
+		createShaders: function ()
+		{
+			this .getLoadSensor () .watchList_ .length = 0;
+			this .getLoadSensor () .loadTime_ .addInterest ("set_loadTime__", this);
 
-			this .pointShader .setGeometryType (0);
-			this .lineShader  .setGeometryType (1);
+			this .depthShaderHalfBaked   = this .createShader (this, "DepthShader",     depthVS,     depthFS);
+			this .pointShaderHalfBaked   = this .createShader (this, "PointShader",     wireframeVS, pointSetFS);
+			this .lineShaderHalfBaked    = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS);
+			this .gouraudShaderHalfBaked = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS);
+			this .phongShaderHalfBaked   = this .createShader (this, "PhongShader",     phongVS,     phongFS);
+			this .shadowShaderHalfBaked  = this .createShader (this, "ShadowShader",    phongVS,     phongFS, true);
 
-			this .setShading ("GOURAUD");
+			this .pointShaderHalfBaked .setGeometryType (0);
+			this .lineShaderHalfBaked  .setGeometryType (1);
 
-			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
+			this .phongShaderHalfBaked .isValid_ .addInterest ("set_phong_shader_valid__", this);
+		},
+		createShader: function (browser, name, vs, fs, shadow)
+		{
+			if (shadow)
+			{
+				vs = "\n#define X3D_SHADOWS\n" + vs;
+				fs = "\n#define X3D_SHADOWS\n" + fs;
+			}
+
+			var vertexShader = new ShaderPart (browser .getPrivateScene ());
+			vertexShader .url_ .push ("data:text/plain;charset=utf-8," + vs);
+			vertexShader .setup ();
+
+			var fragmentShader = new ShaderPart (browser .getPrivateScene ());
+			fragmentShader .type_ = "FRAGMENT";
+			fragmentShader .url_ .push ("data:text/plain;charset=utf-8," + fs);
+			fragmentShader .setup ();
+	
+			var shader = new ComposedShader (browser .getPrivateScene ());
+			shader .setName (name);
+			shader .language_ = "GLSL";
+			shader .parts_ .push (vertexShader);
+			shader .parts_ .push (fragmentShader);
+			shader .setCustom (false);
+			shader .setup ();
+
+			this .getLoadSensor () .watchList_ .push (vertexShader);
+			this .getLoadSensor () .watchList_ .push (fragmentShader);
+
+			return shader;
+		},
+		set_loadTime__: function ()
+		{
+			this .getLoadSensor () .loadTime_ .removeInterest ("set_loadTime__", this);
+
+			this .depthShader   = this .depthShaderHalfBaked;
+			this .pointShader   = this .pointShaderHalfBaked;
+			this .lineShader    = this .lineShaderHalfBaked;
+			this .gouraudShader = this .gouraudShaderHalfBaked;
+			this .phongShader   = this .phongShaderHalfBaked;
+			this .shadowShader  = this .shadowShaderHalfBaked;
+
+			if (! this .defaultShader)
+				this .setShading ("GOURAUD");
 		},
 		set_phong_shader_valid__: function (valid)
 		{
@@ -179,36 +228,6 @@ function ($,
 		getViewport: function ()
 		{
 			return this .viewport_;
-		},
-		createShader: function (browser, name, vs, fs, shadow)
-		{
-			if (shadow)
-			{
-				vs = "\n#define X3D_SHADOWS\n" + vs;
-				fs = "\n#define X3D_SHADOWS\n" + fs;
-			}
-
-			var vertexShader = new ShaderPart (browser .getPrivateScene ());
-			vertexShader .url_ .push ("data:text/plain;charset=utf-8," + vs);
-			vertexShader .setup ();
-
-			var fragmentShader = new ShaderPart (browser .getPrivateScene ());
-			fragmentShader .type_ = "FRAGMENT";
-			fragmentShader .url_ .push ("data:text/plain;charset=utf-8," + fs);
-			fragmentShader .setup ();
-	
-			var shader = new ComposedShader (browser .getPrivateScene ());
-			shader .setName (name);
-			shader .language_ = "GLSL";
-			shader .parts_ .push (vertexShader);
-			shader .parts_ .push (fragmentShader);
-			shader .setCustom (false);
-			shader .setup ();
-
-			this .getLoadSensor () .watchList_ .push (vertexShader);
-			this .getLoadSensor () .watchList_ .push (fragmentShader);
-
-			return shader;
 		},
 		setShading: function (type)
 		{
