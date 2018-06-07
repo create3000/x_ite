@@ -35,7 +35,7 @@ varying vec3 vN; // normalized normal vector at this point on geometry
 varying vec3 v;  // point on geometry
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-uniform float x3d_LogarithmicFarFactor;
+uniform float x3d_LogarithmicFarFactor1_2;
 varying float depth;
 #endif
 
@@ -254,7 +254,7 @@ main ()
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-	gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor * 0.5;
+	gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
 	#endif
 
 	// DEBUG

@@ -1,15 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Rendering/X3DRenderingContext.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Shaders/Gouraud.fs">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Navigation/WalkViewer.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Core/BrowserOptions.js" Line="97" Column="78" />
-      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="183" Column="2" />
       <File FileName="src/x_ite/Components/Geospatial/GeoViewpoint.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="16" Column="72" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
