@@ -1,12 +1,16 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="131" Column="48" />
+      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="266" Column="1" />
       <File FileName="src/x_ite/Browser/Shaders/Phong.vs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Core/BrowserOptions.js" Line="323" Column="1" />
+      <File FileName="src/x_ite/Components/Geospatial/GeoViewpoint.js" Line="279" Column="85" />
+      <File FileName="src/x_ite/Components/Navigation/X3DViewpointNode.js" Line="210" Column="79" />
+      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="82" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

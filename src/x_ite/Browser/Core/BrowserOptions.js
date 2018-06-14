@@ -120,6 +120,8 @@ function (Fields,
 			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
 			this .getBrowser () .shutdown () .addInterest ("configure",                    this);
 
+			this .getBrowser () .getRenderingProperties () .LogarithmicDepthBuffer_ = this .LogarithmicDepthBuffer_ .getValue () && this .getBrowser () .getExtension ("EXT_frag_depth");
+
 			this .configure ();
 		},
 		configure: function ()
@@ -314,7 +316,26 @@ function (Fields,
 		},
 		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
 		{
-			this .getBrowser () .getRenderingProperies () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer .getValue () && this .getBrowser () .getExtension ("EXT_frag_depth");
+			var browser = this .getBrowser ()
+
+			browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer .getValue () && browser .getExtension ("EXT_frag_depth");
+
+			// Recompile shaders.
+
+			browser .getPointShader () .parts_ [0] .url_ .addEvent ();
+			browser .getPointShader () .parts_ [1] .url_ .addEvent ();
+
+			browser .getLineShader () .parts_ [0] .url_ .addEvent ();
+			browser .getLineShader () .parts_ [1] .url_ .addEvent ();
+
+			browser .getGouraudShader () .parts_ [0] .url_ .addEvent ();
+			browser .getGouraudShader () .parts_ [1] .url_ .addEvent ();
+
+			browser .getPhongShader () .parts_ [0] .url_ .addEvent ();
+			browser .getPhongShader () .parts_ [1] .url_ .addEvent ();
+
+			browser .getShadowShader () .parts_ [0] .url_ .addEvent ();
+			browser .getShadowShader () .parts_ [1] .url_ .addEvent ();
 		},
 	});
 
