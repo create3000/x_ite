@@ -1,4 +1,4 @@
-/* X_ITE v4.2.0a-264 */
+/* X_ITE v4.2.0a-265 */
 
 (function () {
 
@@ -25856,6 +25856,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (true)),
 		]),
 		getTypeName: function ()
 		{
@@ -25878,6 +25879,7 @@ function (Fields,
 			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__",       this);
 			this .TextureQuality_            .addInterest ("set_textureQuality__",         this);
 			this .Shading_                   .addInterest ("set_shading__",                this);
+			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
 			this .getBrowser () .shutdown () .addInterest ("configure",                    this);
 
 			this .configure ();
@@ -26072,6 +26074,10 @@ function (Fields,
 		{
 			this .getBrowser () .setShading (shading .getValue ());
 		},
+		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
+		{
+			this .getBrowser () .getRenderingProperies () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer .getValue () && this .getBrowser () .getExtension ("EXT_frag_depth");
+		},
 	});
 
 	return BrowserOptions;
@@ -26251,13 +26257,14 @@ function (Fields,
 	{
 		constructor: RenderingProperties,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "Shading",        new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "MaxTextureSize", new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "TextureUnits",   new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "MaxLights",      new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "Antialiased",    new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ColorDepth",     new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "TextureMemory",  new Fields .SFDouble ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "Shading",                new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "TextureUnits",           new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "MaxLights",              new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "Antialiased",            new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "ColorDepth",             new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "TextureMemory",          new Fields .SFDouble ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
 		]),
 		getTypeName: function ()
 		{
@@ -41060,7 +41067,7 @@ function (Fields,
 		},
 		getMaxFarValue: function ()
 		{
-			return this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e5;
+			return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e5;
 		},
 		getUpVector: function ()
 		{
@@ -43336,10 +43343,11 @@ function (Shadow,
 				IFDEF        = "#ifdef\\s+.*?\\n",
 				IFNDEF       = "#ifndef\\s+.*?\\n",
 				ELSE         = "#else.*?\\n",
-				ENDIF        = "#endif+.*?\\n",
+				ENDIF        = "#endif.*?\\n",
 				DEFINE       = "#define\\s+(?:[^\\n\\\\]|\\\\[^\\r\\n]|\\\\\\r?\\n)*\\n",
+				UNDEF        = "#undef\\s+.*?\\n",
 				PRAGMA       = "#pragma\\s+.*?\\n",
-				PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + PRAGMA,
+				PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
 				VERSION      = "#version\\s+.*?\\n",
 				EXTENSION    = "#extension\\s+.*?\\n",
 				ANY          = "[\\s\\S]*";
@@ -62502,7 +62510,7 @@ function (Fields,
 		},
 		getMaxFarValue: function ()
 		{
-			return this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e9;
+			return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e9;
 		},
 		getUpVector: function ()
 		{
@@ -62536,7 +62544,7 @@ function (Fields,
 		},
 		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport, limit)
 		{
-			if (limit || this .getBrowser () .getExtension ("EXT_frag_depth"))
+			if (limit || this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer"))
 				return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
 				
 			// Linear interpolate nearValue and farValue
@@ -114256,7 +114264,7 @@ function ($,
 
 			if (urlCharacters)
 			{
-	         this .initialized () .set (this .getCurrentTime ());
+				this .initialized () .set (this .getCurrentTime ());
 
 				this .load (urlCharacters);
 			}
