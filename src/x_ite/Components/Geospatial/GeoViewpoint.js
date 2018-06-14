@@ -242,7 +242,7 @@ function (Fields,
 		},
 		getMaxFarValue: function ()
 		{
-			return this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e9;
+			return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e9;
 		},
 		getUpVector: function ()
 		{
@@ -276,7 +276,7 @@ function (Fields,
 		},
 		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport, limit)
 		{
-			if (limit || this .getBrowser () .getExtension ("EXT_frag_depth"))
+			if (limit || this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer"))
 				return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
 				
 			// Linear interpolate nearValue and farValue

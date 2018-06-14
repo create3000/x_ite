@@ -134,7 +134,7 @@ function ($,
 
 			if (urlCharacters)
 			{
-	         this .initialized () .set (this .getCurrentTime ());
+				this .initialized () .set (this .getCurrentTime ());
 
 				this .load (urlCharacters);
 			}

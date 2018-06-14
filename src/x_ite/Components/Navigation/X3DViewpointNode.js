@@ -207,7 +207,7 @@ function (Fields,
 		},
 		getMaxFarValue: function ()
 		{
-			return this .getBrowser () .getExtension ("EXT_frag_depth") ? 1e10 : 1e5;
+			return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e5;
 		},
 		getUpVector: function ()
 		{
