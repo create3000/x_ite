@@ -128,7 +128,7 @@ function (Shadow,
 
 			var constants = "";
 
-			if (browser .getExtension ("EXT_frag_depth"))
+			if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
 				constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
 
 			var definitions = "";

@@ -264,4 +264,8 @@ main ()
 	//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;
 	//gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);
 	#endif
+
+	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+	//gl_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), gl_FragColor .rgb, 0.5);
+	#endif
 }

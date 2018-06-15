@@ -120,8 +120,6 @@ function (Fields,
 			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
 			this .getBrowser () .shutdown () .addInterest ("configure",                    this);
 
-			this .getBrowser () .getRenderingProperties () .LogarithmicDepthBuffer_ = this .LogarithmicDepthBuffer_ .getValue () && this .getBrowser () .getExtension ("EXT_frag_depth");
-
 			this .configure ();
 		},
 		configure: function ()
@@ -151,6 +149,8 @@ function (Fields,
 			if (rubberband       !== undefined && rubberband       !== this .Rubberband_       .getValue ()) this .Rubberband_       = rubberband;
 			if (primitiveQuality !== undefined && primitiveQuality !== this .PrimitiveQuality_ .getValue ()) this .PrimitiveQuality_ = primitiveQuality;
 			if (textureQuality   !== undefined && textureQuality   !== this .TextureQuality_   .getValue ()) this .TextureQuality_   = textureQuality;
+
+			this .set_logarithmicDepthBuffer__ (this .LogarithmicDepthBuffer_);
 		},
 		setAttributeSplashScreen: function ()
 		{
@@ -316,26 +316,36 @@ function (Fields,
 		},
 		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
 		{
-			var browser = this .getBrowser ()
+			try
+			{
+				var browser = this .getBrowser ();
 
-			browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer .getValue () && browser .getExtension ("EXT_frag_depth");
+				logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && browser .getExtension ("EXT_frag_depth");
+	
+				if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
+					return;
 
-			// Recompile shaders.
-
-			browser .getPointShader () .parts_ [0] .url_ .addEvent ();
-			browser .getPointShader () .parts_ [1] .url_ .addEvent ();
-
-			browser .getLineShader () .parts_ [0] .url_ .addEvent ();
-			browser .getLineShader () .parts_ [1] .url_ .addEvent ();
-
-			browser .getGouraudShader () .parts_ [0] .url_ .addEvent ();
-			browser .getGouraudShader () .parts_ [1] .url_ .addEvent ();
-
-			browser .getPhongShader () .parts_ [0] .url_ .addEvent ();
-			browser .getPhongShader () .parts_ [1] .url_ .addEvent ();
-
-			browser .getShadowShader () .parts_ [0] .url_ .addEvent ();
-			browser .getShadowShader () .parts_ [1] .url_ .addEvent ();
+				browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
+	
+				// Recompile shaders.
+	
+				browser .getPointShader () .parts_ [0] .url_ .addEvent ();
+				browser .getPointShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getLineShader () .parts_ [0] .url_ .addEvent ();
+				browser .getLineShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getGouraudShader () .parts_ [0] .url_ .addEvent ();
+				browser .getGouraudShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getPhongShader () .parts_ [0] .url_ .addEvent ();
+				browser .getPhongShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getShadowShader () .parts_ [0] .url_ .addEvent ();
+				browser .getShadowShader () .parts_ [1] .url_ .addEvent ();
+			}
+			catch (error)
+			{ }
 		},
 	});
 
