@@ -1,4 +1,4 @@
-/* X_ITE v4.2.0a-267 */
+/* X_ITE v4.2.0a-268 */
 
 (function () {
 
@@ -25912,7 +25912,7 @@ function (Fields,
 			if (primitiveQuality !== undefined && primitiveQuality !== this .PrimitiveQuality_ .getValue ()) this .PrimitiveQuality_ = primitiveQuality;
 			if (textureQuality   !== undefined && textureQuality   !== this .TextureQuality_   .getValue ()) this .TextureQuality_   = textureQuality;
 
-			this .set_logarithmicDepthBuffer__ (this .LogarithmicDepthBuffer_);
+			this .LogarithmicDepthBuffer_ = false;
 		},
 		setAttributeSplashScreen: function ()
 		{
