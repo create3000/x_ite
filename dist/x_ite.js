@@ -1,4 +1,4 @@
-/* X_ITE v4.2.0-270 */
+/* X_ITE v4.2.0-271 */
 
 (function () {
 
@@ -24501,7 +24501,7 @@ function (SFBool,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.2.0a";
+	return "4.2.0";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -43392,12 +43392,12 @@ function (Shadow,
 
 			var constants = "";
 
+			constants += "#define X_ITE\n";
+
 			if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
 				constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
 
 			var definitions = "";
-
-			definitions += "#define X_ITE\n";
 
 			definitions += "#define x3d_GeometryPoints  0\n";
 			definitions += "#define x3d_GeometryLines   1\n";

@@ -128,12 +128,12 @@ function (Shadow,
 
 			var constants = "";
 
+			constants += "#define X_ITE\n";
+
 			if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
 				constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
 
 			var definitions = "";
-
-			definitions += "#define X_ITE\n";
 
 			definitions += "#define x3d_GeometryPoints  0\n";
 			definitions += "#define x3d_GeometryLines   1\n";
