@@ -1,4 +1,4 @@
-/* X_ITE v4.2.0a-265 */
+/* X_ITE v4.2.0a-266 */
 
 (function () {
 
@@ -25856,7 +25856,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
 		]),
 		getTypeName: function ()
 		{
@@ -25881,6 +25881,8 @@ function (Fields,
 			this .Shading_                   .addInterest ("set_shading__",                this);
 			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
 			this .getBrowser () .shutdown () .addInterest ("configure",                    this);
+
+			this .getBrowser () .getRenderingProperties () .LogarithmicDepthBuffer_ = this .LogarithmicDepthBuffer_ .getValue () && this .getBrowser () .getExtension ("EXT_frag_depth");
 
 			this .configure ();
 		},
@@ -26076,7 +26078,26 @@ function (Fields,
 		},
 		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
 		{
-			this .getBrowser () .getRenderingProperies () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer .getValue () && this .getBrowser () .getExtension ("EXT_frag_depth");
+			var browser = this .getBrowser ()
+
+			browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer .getValue () && browser .getExtension ("EXT_frag_depth");
+
+			// Recompile shaders.
+
+			browser .getPointShader () .parts_ [0] .url_ .addEvent ();
+			browser .getPointShader () .parts_ [1] .url_ .addEvent ();
+
+			browser .getLineShader () .parts_ [0] .url_ .addEvent ();
+			browser .getLineShader () .parts_ [1] .url_ .addEvent ();
+
+			browser .getGouraudShader () .parts_ [0] .url_ .addEvent ();
+			browser .getGouraudShader () .parts_ [1] .url_ .addEvent ();
+
+			browser .getPhongShader () .parts_ [0] .url_ .addEvent ();
+			browser .getPhongShader () .parts_ [1] .url_ .addEvent ();
+
+			browser .getShadowShader () .parts_ [0] .url_ .addEvent ();
+			browser .getShadowShader () .parts_ [1] .url_ .addEvent ();
 		},
 	});
 
@@ -26257,14 +26278,14 @@ function (Fields,
 	{
 		constructor: RenderingProperties,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "Shading",                new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "TextureUnits",           new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "MaxLights",              new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "Antialiased",            new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ColorDepth",             new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "TextureMemory",          new Fields .SFDouble ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxLights",              new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "Antialiased",            new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "ColorDepth",             new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
 		]),
 		getTypeName: function ()
 		{
