@@ -1,4 +1,4 @@
-/* X_ITE v4.2.0-271 */
+/* X_ITE v4.2.0-272 */
 
 (function () {
 
@@ -43199,7 +43199,7 @@ function (Fields,
 define('text!x_ite/Browser/Shaders/Inlcude/Shadow.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Pack.h"\n\n#ifdef X3D_SHADOWS\n\nuniform sampler2D x3d_ShadowMap [x3d_MaxLights];\n\nfloat\ngetShadowDepth (const in int index, const in vec2 shadowCoord)\n{\n\t#if x3d_MaxShadows > 0\n\tif (index == 0)\n\t\treturn unpack (texture2D (x3d_ShadowMap [0], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 1\n\tif (index == 1)\n\t\treturn unpack (texture2D (x3d_ShadowMap [1], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 2\n\tif (index == 2)\n\t\treturn unpack (texture2D (x3d_ShadowMap [2], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 3\n\tif (index == 3)\n\t\treturn unpack (texture2D (x3d_ShadowMap [3], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 4\n\tif (index == 4)\n\t\treturn unpack (texture2D (x3d_ShadowMap [4], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 5\n\tif (index == 5)\n\t\treturn unpack (texture2D (x3d_ShadowMap [5], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 6\n\tif (index == 6)\n\t\treturn unpack (texture2D (x3d_ShadowMap [6], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 7\n\tif (index == 7)\n\t\treturn unpack (texture2D (x3d_ShadowMap [7], shadowCoord));\n\t#endif\n\n\treturn 0.0;\n}\n\nfloat\ntexture2DCompare (const in int index, const in vec2 texCoord, const in float compare)\n{\n\treturn step (getShadowDepth (index, texCoord), compare);\n}\n\nfloat\ntexture2DShadowLerp (const in int index, const in vec2 texelSize, const in float shadowMapSize, const in vec2 texCoord, const in float compare)\n{\n\tconst vec2 offset = vec2 (0.0, 1.0);\n\n\tvec2 centroidTexCoord = floor (texCoord * shadowMapSize + 0.5) / shadowMapSize;\n\n\tfloat lb = texture2DCompare (index, centroidTexCoord + texelSize * offset .xx, compare);\n\tfloat lt = texture2DCompare (index, centroidTexCoord + texelSize * offset .xy, compare);\n\tfloat rb = texture2DCompare (index, centroidTexCoord + texelSize * offset .yx, compare);\n\tfloat rt = texture2DCompare (index, centroidTexCoord + texelSize * offset .yy, compare);\n\n\tvec2 f = fract (texCoord * shadowMapSize + 0.5);\n\n\tfloat a = mix (lb, lt, f.y);\n\tfloat b = mix (rb, rt, f.y);\n\tfloat c = mix (a, b, f.x);\n\n\treturn c;\n}\n\n//https://gist.github.com/tschw/da10c43c467ce8afd0c4\nvec2\ncubeToUVCompact (in vec3 v, const float texelSizeY)\n{\n\t// Compact layout:\n\t//\n\t// xzXZ\t\tChar: Axis\n\t// yyYY\t\tCase: Sign\n\n\t// Number of texels to avoid at the edge of each square\n\n\tvec3 absV = abs (v);\n\n\t// Intersect unit cube\n\n\tfloat scaleToCube = 1.0 / max (absV .x, max (absV .y, absV .z));\n\n\tabsV *= scaleToCube;\n\n\t// Apply scale to avoid seams\n\n\t// one texel less per square (half a texel on each side)\n\tv *= scaleToCube * (1.0 - 2.0 * texelSizeY);\n\n\t// Unwrap\n\n\t// space: -1 ... 1 range for each square\n\t//\n\t// #X##\t\tdim    := ( 4 , 2 )\n\t//  # #\t\tcenter := ( 1 , 1 )\n\n\tvec2 planar = v .xy;\n\n\tfloat almostATexel = 1.5 * texelSizeY;\n\tfloat almostOne    = 1.0 - almostATexel;\n\n\tif (absV .z >= almostOne)\n\t{\n\t\t// zZ\n\n\t\tif (v.z > 0.0)\n\t\t\tplanar .x = 4.0 - v.x;\n\t}\n\telse if (absV .x >= almostOne)\n\t{\n\t\t// xX\n\n\t\tfloat signX = sign (v.x);\n\n\t\tplanar .x = v.z * signX + 2.0 * signX;\n\t}\n\telse if (absV .y >= almostOne)\n\t{\n\t\t// yY\n\n\t\tfloat signY = sign (v.y);\n\n\t\tplanar .x = (v.x + 0.5 + signY) * 2.0;\n\t\tplanar .y = v.z * signY - 2.0;\n\t}\n\n\t// Transform to UV space\n\n\t// scale := 0.5 / dim\n\t// translate := ( center + 0.5 ) / dim\n\treturn vec2 (0.125, 0.25) * planar + vec2 (0.375, 0.75);\n}\n\nmat4\ngetPointLightRotations (const in vec3 vector)\n{\n\tmat4 rotations [6];\n\trotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left\n\trotations [1] = mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1);  // right\n\trotations [2] = mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1);  // front\n\trotations [3] = mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1);  // back\n\trotations [4] = mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1);  // bottom\n\trotations [5] = mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1);  // top\n\n\tvec3 a = abs (vector .xyz);\n\n\tif (a .x > a .y)\n\t{\n\t\tif (a .x > a .z)\n\t\t\treturn vector .x > 0.0 ? rotations [1] : rotations [0];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\telse\n\t{\n\t\tif (a .y > a .z)\n\t\t\treturn vector .y > 0.0 ? rotations [5] : rotations [4];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\n\treturn rotations [3];\n}\n\n// DEBUG\n//vec4 tex;\n\nfloat\ngetShadowIntensity (const in int index, const in x3d_LightSourceParameters light)\n{\n\tif (light .type == x3d_PointLight)\n\t{\n\t\tconst mat4 biasMatrix = mat4 (0.5, 0.0, 0.0, 0.0,\n\t\t\t                           0.0, 0.5, 0.0, 0.0,\n\t\t\t                           0.0, 0.0, 0.5, 0.0,\n\t\t\t                           0.5, 0.5, 0.5, 1.0);\n\n\t\tconst mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);\n\n\t\tvec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));\n\n\t\t// for point lights, the uniform @vShadowCoord is re-purposed to hold\n\t\t// the vector from the light to the world-space position of the fragment.\n\t\tvec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);\n\t\tvec3 lightToPosition = shadowCoord .xyz;\n\n\t\tshadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));\n\t\tshadowCoord .z   -= light .shadowBias;\n\t\tshadowCoord .xyz /= shadowCoord .w;\n\n\t\t// DEBUG\n\t\t//tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));\n\n\t\t#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)\n\t\n\t\t\tvec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tfloat value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);\n\n\t\t\treturn light .shadowIntensity * value;\n\t\n\t\t#endif\n\t}\n\telse\n\t{\n\t\t#if defined (X3D_PCF_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize .x;\n\t\t\tfloat dy0 = - texelSize .y;\n\t\t\tfloat dx1 = + texelSize .x;\n\t\t\tfloat dy1 = + texelSize .y;\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#elif defined (X3D_PCF_SOFT_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize.x;\n\t\t\tfloat dy0 = - texelSize.y;\n\t\t\tfloat dx1 = + texelSize.x;\n\t\t\tfloat dy1 = + texelSize.y;\n\t\t\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * ( 1.0 / 9.0 );\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tvec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#endif\n\t}\n\n\treturn 0.0;\n}\n\n#endif';});
 
 
-define('text!x_ite/Browser/Shaders/Inlcude/Pack.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#ifdef TITANIA\nvec4\npack (const in float value)\n{\n\treturn vec4 (0.0, 0.0, 0.0, 0.0);\n}\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .z;\n}\n#endif\n\n#ifdef X_ITE\nvec4\npack (const in float value)\n{\n\tconst vec3 bitShifts = vec3 (255.0,\n\t                             255.0 * 255.0,\n\t                             255.0 * 255.0 * 255.0);\n\n\treturn vec4 (value, fract (value * bitShifts));\n}\n\nfloat\nunpack (const vec4 color)\n{\n\tconst vec3 bitShifts = vec3 (1.0 / 255.0,\n\t                             1.0 / (255.0 * 255.0),\n\t                             1.0 / (255.0 * 255.0 * 255.0));\n\n\treturn color .x + dot (color .gba, bitShifts);\n}\n#endif\n';});
+define('text!x_ite/Browser/Shaders/Inlcude/Pack.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#ifdef TITANIA\n\nvec4\npack (const in float value)\n{\n\treturn vec4 (0.0, 0.0, 0.0, 0.0);\n}\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .z;\n}\n\n#endif\n\n#ifdef X_ITE\n\nvec4\npack (const in float value)\n{\n\tconst vec3 bitShifts = vec3 (255.0,\n\t                             255.0 * 255.0,\n\t                             255.0 * 255.0 * 255.0);\n\n\treturn vec4 (value, fract (value * bitShifts));\n}\n\n#ifdef X3D_DEPTH_TEXTURE\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .z;\n}\n\n#else\n\nfloat\nunpack (const vec4 color)\n{\n\tconst vec3 bitShifts = vec3 (1.0 / 255.0,\n\t                             1.0 / (255.0 * 255.0),\n\t                             1.0 / (255.0 * 255.0 * 255.0));\n\n\treturn color .x + dot (color .gba, bitShifts);\n}\n\n#endif\n#endif\n';});
 
 
 define('text!x_ite/Browser/Shaders/Types.h',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nstruct x3d_FogParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float visibilityRange;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float intensity;\n\tmediump float ambientIntensity;\n\tmediump vec3  attenuation;\n\tmediump vec3  location;\n\tmediump vec3  direction;\n\tmediump float radius;\n\tmediump float beamWidth;\n\tmediump float cutOffAngle;\n\t#ifdef X3D_SHADOWS\n\tmediump vec3  shadowColor;\n\tmediump float shadowIntensity;\n\tmediump float shadowBias;\n\tmediump mat4  shadowMatrix;\n\tmediump int   shadowMapSize;\n\t#endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_MaterialParameters  \n{   \n\tmediump float ambientIntensity;\n\tmediump vec3  diffuseColor;\n\tmediump vec3  specularColor;\n\tmediump vec3  emissiveColor;\n\tmediump float shininess;\n\tmediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_FrontMaterial;  \n//uniform x3d_MaterialParameters x3d_BackMaterial;        \n';});
@@ -43396,6 +43396,9 @@ function (Shadow,
 
 			if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
 				constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
+
+			if (browser .getExtension ("WEBGL_depth_texture"))
+				constants += "#define X3D_DEPTH_TEXTURE\n";
 
 			var definitions = "";
 
@@ -53357,7 +53360,7 @@ function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
  ******************************************************************************/
 
 
-define ('x_ite/Rendering/DepthBuffer',[
+define ('x_ite/Rendering/TextureBuffer',[
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
@@ -53368,7 +53371,7 @@ function (ViewVolume,
 {
 "use strict";
 
-	function DepthBuffer (browser, width, height)
+	function TextureBuffer (browser, width, height)
 	{
 		var gl = browser .getContext ();
 
@@ -53388,24 +53391,40 @@ function (ViewVolume,
 
 		// The depth texture
 
-		this .depthTexture = gl .createTexture ();
+		this .colorTexture = gl .createTexture ();
 
-		gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
+		gl .bindTexture (gl .TEXTURE_2D, this .colorTexture);
 		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
 		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
 		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
 		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 		gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
-		gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .depthTexture, 0);
+		gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .colorTexture, 0);
 
 		// The depth buffer
 
-		var depthBuffer = gl .createRenderbuffer ();
+		if (browser .getExtension ("WEBGL_depth_texture"))
+		{
+			this .depthTexture = gl .createTexture ();
 
-		gl .bindRenderbuffer (gl .RENDERBUFFER, depthBuffer);
-		gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, width, height);
-		gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, depthBuffer);
+			gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
+			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+			gl .texImage2D (gl .TEXTURE_2D, 0, gl .DEPTH_COMPONENT, width, height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
+
+			gl.framebufferTexture2D (gl .FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, this .depthTexture, 0);
+		}
+		else
+		{
+			this .depthBuffer = gl .createRenderbuffer ();
+
+			gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
+			gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, width, height);
+			gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
+		}
 
 		// Always check that our framebuffer is ok
 
@@ -53419,9 +53438,9 @@ function (ViewVolume,
 		throw new Error ("Couldn't create frame buffer.");
 	}
 
-	DepthBuffer .prototype =
+	TextureBuffer .prototype =
 	{
-		constructor: DepthBuffer,
+		constructor: TextureBuffer,
 		getWidth: function ()
 		{
 			return this .width;
@@ -53429,6 +53448,10 @@ function (ViewVolume,
 		getHeight: function ()
 		{
 			return this .height;
+		},
+		getColorTexture: function ()
+		{
+			return this .colorTexture;
 		},
 		getDepthTexture: function ()
 		{
@@ -53501,7 +53524,7 @@ function (ViewVolume,
 		},
 	};
 
-	return DepthBuffer;
+	return TextureBuffer;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -53554,13 +53577,13 @@ function (ViewVolume,
 
 
 define ('x_ite/Browser/Shaders/ShaderTest',[
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Camera",
 ],
-function (DepthBuffer,
+function (TextureBuffer,
           Vector4,
           Matrix3,
           Matrix4,
@@ -53590,7 +53613,7 @@ function (DepthBuffer,
 	{
 		var
 			gl           = browser .getContext (),
-			frameBuffer  = new DepthBuffer (browser, 16, 16),
+			frameBuffer  = new TextureBuffer (browser, 16, 16),
          normalBuffer = gl .createBuffer (),
          vertexBuffer = gl .createBuffer ();
 
@@ -53795,12 +53818,12 @@ function ($,
 		},
 		set_shadow_shader_valid__: function (valid)
 		{
-			if (valid .getValue () && verifyShader (this, this .shadowShader))
-				return;
-
-			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
-
-			this .shadowShader = this .gouraudShader;
+//			if (valid .getValue () && verifyShader (this, this .shadowShader))
+//				return;
+//
+//			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
+//
+//			this .shadowShader = this .gouraudShader;
 		},
 		getVendor: function ()
 		{
@@ -66675,7 +66698,12 @@ function (Fields,
 						this .textureUnit = browser .getCombinedTextureUnits () .pop ();
 
 						gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-						gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+
+						if (browser .getExtension ("WEBGL_depth_texture"))
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+						else
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
 						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
 						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 						gl .activeTexture (gl .TEXTURE0);
@@ -67838,9 +67866,9 @@ function (ComposedShader,
 
 
 define ('x_ite/Browser/Lighting/X3DLightingContext',[
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 ],
-function (DepthBuffer)
+function (TextureBuffer)
 {
 "use strict";
 	
@@ -67876,7 +67904,7 @@ function (DepthBuffer)
 				else
 					this .shadowBuffers [shadowMapSize] = [ ];
 	
-				return new DepthBuffer (this, shadowMapSize, shadowMapSize);
+				return new TextureBuffer (this, shadowMapSize, shadowMapSize);
 			}
 			catch (error)
 			{
@@ -77171,7 +77199,7 @@ function (PointEmitter)
 
 define ('x_ite/Rendering/X3DRenderObject',[
 	"jquery",
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Algorithm",
 	"standard/Math/Algorithms/MergeSort",
@@ -77185,7 +77213,7 @@ define ('x_ite/Rendering/X3DRenderObject',[
 	"standard/Math/Utility/MatrixStack",
 ],
 function ($,
-          DepthBuffer,
+          TextureBuffer,
 	       TraverseType,
           Algorithm,
           MergeSort,
@@ -77236,7 +77264,7 @@ function ($,
 
 		try
 		{
-			this .depthBuffer = new DepthBuffer (executionContext .getBrowser (), DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT);
+			this .depthBuffer = new TextureBuffer (executionContext .getBrowser (), DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT);
 		}
 		catch (error)
 		{
@@ -91907,7 +91935,7 @@ define ('x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
 	"x_ite/Rendering/DependentRenderer",
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Geometry/Camera",
@@ -91923,7 +91951,7 @@ function (Fields,
           FieldDefinitionArray,
           X3DEnvironmentTextureNode, 
           DependentRenderer, 
-          DepthBuffer, 
+          TextureBuffer, 
           X3DConstants,
           TraverseType,
           Camera,
@@ -92023,7 +92051,7 @@ function (Fields,
 				// Properties
 
 				this .viewport    = new Vector4 (0, 0, size, size);
-				this .frameBuffer = new DepthBuffer (this .getBrowser (), size, size);
+				this .frameBuffer = new TextureBuffer (this .getBrowser (), size, size);
 
 				// Apply texture properties.
 
@@ -103201,7 +103229,12 @@ function (Fields,
 						this .textureUnit = browser .getCombinedTextureUnits () .pop ();
 
 						gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-						gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+
+						if (browser .getExtension ("WEBGL_depth_texture"))
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+						else
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
 						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
 						gl .activeTexture (gl .TEXTURE0);
@@ -108777,7 +108810,12 @@ function (Fields,
 						this .textureUnit = browser .getCombinedTextureUnits () .pop ();
 
 						gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-						gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+
+						if (browser .getExtension ("WEBGL_depth_texture"))
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+						else
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
 						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
 						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 						gl .activeTexture (gl .TEXTURE0);

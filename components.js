@@ -102,6 +102,7 @@
 		{ name: 'Navigation' },
 		{ name: 'Billboard', url: [ "http://media.create3000.de/components/Navigation/Billboard/Billboard.x3d" ], archive: "http://media.create3000.de/components/Navigation/Billboard/Billboard.zip" },
 		{ name: 'Collision', url: [ "http://media.create3000.de/components/Navigation/Collision/Collision.x3d" ], archive: "http://media.create3000.de/components/Navigation/Collision/Collision.zip" },
+		{ name: 'Navigation Info', url: [ "http://media.create3000.de/components/Navigation/NavigationInfo/NavigationInfo.x3d" ], archive: "http://media.create3000.de/components/Navigation/NavigationInfo/NavigationInfo.zip" },
 		{ name: 'Viewpoint', url: [ "http://media.create3000.de/components/Navigation/Viewpoint/Viewpoint.x3d" ], archive: "http://media.create3000.de/components/Navigation/Viewpoint/Viewpoint.zip" },
 
 		{ name: 'Networking' },
