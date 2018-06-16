@@ -1,6 +1,7 @@
 /* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/
 
 #ifdef TITANIA
+
 vec4
 pack (const in float value)
 {
@@ -12,9 +13,11 @@ unpack (const in vec4 color)
 {
 	return color .z;
 }
+
 #endif
 
 #ifdef X_ITE
+
 vec4
 pack (const in float value)
 {
@@ -25,6 +28,16 @@ pack (const in float value)
 	return vec4 (value, fract (value * bitShifts));
 }
 
+#ifdef X3D_DEPTH_TEXTURE
+
+float
+unpack (const in vec4 color)
+{
+	return color .z;
+}
+
+#else
+
 float
 unpack (const vec4 color)
 {
@@ -34,4 +47,6 @@ unpack (const vec4 color)
 
 	return color .x + dot (color .gba, bitShifts);
 }
+
+#endif
 #endif

@@ -49,7 +49,7 @@
 
 define ([
 	"jquery",
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Algorithm",
 	"standard/Math/Algorithms/MergeSort",
@@ -63,7 +63,7 @@ define ([
 	"standard/Math/Utility/MatrixStack",
 ],
 function ($,
-          DepthBuffer,
+          TextureBuffer,
 	       TraverseType,
           Algorithm,
           MergeSort,
@@ -114,7 +114,7 @@ function ($,
 
 		try
 		{
-			this .depthBuffer = new DepthBuffer (executionContext .getBrowser (), DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT);
+			this .depthBuffer = new TextureBuffer (executionContext .getBrowser (), DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT);
 		}
 		catch (error)
 		{

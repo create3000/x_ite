@@ -145,12 +145,12 @@ function ($,
 		},
 		set_shadow_shader_valid__: function (valid)
 		{
-			if (valid .getValue () && verifyShader (this, this .shadowShader))
-				return;
-
-			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
-
-			this .shadowShader = this .gouraudShader;
+//			if (valid .getValue () && verifyShader (this, this .shadowShader))
+//				return;
+//
+//			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
+//
+//			this .shadowShader = this .gouraudShader;
 		},
 		getVendor: function ()
 		{

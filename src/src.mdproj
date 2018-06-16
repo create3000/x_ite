@@ -688,7 +688,6 @@
     <None Include="x_ite\Prototype\X3DProtoDeclaration.js" />
     <None Include="x_ite\Prototype\X3DProtoDeclarationNode.js" />
     <None Include="x_ite\Rendering\DependentRenderer.js" />
-    <None Include="x_ite\Rendering\DepthBuffer.js" />
     <None Include="x_ite\Rendering\X3DRenderObject.js" />
     <None Include="x_ite\Routing\RouteArray.js" />
     <None Include="x_ite\Routing\X3DRoute.js" />
@@ -730,6 +729,7 @@
     <None Include="x_ite.config.js" />
     <None Include="rigid-body-physics.config.js" />
     <None Include="rigid-body-physics.js" />
+    <None Include="x_ite\Rendering\TextureBuffer.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

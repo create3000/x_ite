@@ -137,7 +137,12 @@ function (Fields,
 						this .textureUnit = browser .getCombinedTextureUnits () .pop ();
 
 						gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-						gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+
+						if (browser .getExtension ("WEBGL_depth_texture"))
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+						else
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
 						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
 						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 						gl .activeTexture (gl .TEXTURE0);

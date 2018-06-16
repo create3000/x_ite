@@ -53,7 +53,7 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
 	"x_ite/Rendering/DependentRenderer",
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Geometry/Camera",
@@ -69,7 +69,7 @@ function (Fields,
           FieldDefinitionArray,
           X3DEnvironmentTextureNode, 
           DependentRenderer, 
-          DepthBuffer, 
+          TextureBuffer, 
           X3DConstants,
           TraverseType,
           Camera,
@@ -169,7 +169,7 @@ function (Fields,
 				// Properties
 
 				this .viewport    = new Vector4 (0, 0, size, size);
-				this .frameBuffer = new DepthBuffer (this .getBrowser (), size, size);
+				this .frameBuffer = new TextureBuffer (this .getBrowser (), size, size);
 
 				// Apply texture properties.
 

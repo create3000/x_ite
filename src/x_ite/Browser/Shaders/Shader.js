@@ -133,6 +133,9 @@ function (Shadow,
 			if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
 				constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
 
+			if (browser .getExtension ("WEBGL_depth_texture"))
+				constants += "#define X3D_DEPTH_TEXTURE\n";
+
 			var definitions = "";
 
 			definitions += "#define x3d_GeometryPoints  0\n";
