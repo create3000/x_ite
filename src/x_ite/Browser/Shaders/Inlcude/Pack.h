@@ -11,7 +11,7 @@ pack (const in float value)
 float
 unpack (const in vec4 color)
 {
-	return color .z;
+	return color .r;
 }
 
 #endif
@@ -33,7 +33,7 @@ pack (const in float value)
 float
 unpack (const in vec4 color)
 {
-	return color .z;
+	return color .r;
 }
 
 #else
