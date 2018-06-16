@@ -1,4 +1,4 @@
-/* X_ITE v4.2.0-274 */
+/* X_ITE v4.2.1-275 */
 
 (function () {
 
@@ -37532,59 +37532,59 @@ function ($,
 	var browserNumber = 0;
 
 	var extensions = [
-			"ANGLE_instanced_arrays",
-			"EXT_blend_minmax",
-			"EXT_frag_depth",
-			"EXT_shader_texture_lod",
-			"EXT_texture_filter_anisotropic",
-			"OES_element_index_uint",
-			"OES_standard_derivatives",
-			"OES_texture_float",
-			"OES_texture_float_linear",
-			"OES_texture_half_float",
-			"OES_texture_half_float_linear",
-			"OES_vertex_array_object",
-			"WEBGL_compressed_texture_s3tc",
-			"WEBGL_debug_renderer_info",
-			"WEBGL_debug_shaders",
-			//"WEBGL_depth_texture",
-			"WEBGL_draw_buffers",
-			"WEBGL_lose_context",
+		"ANGLE_instanced_arrays",
+		"EXT_blend_minmax",
+		"EXT_frag_depth",
+		"EXT_shader_texture_lod",
+		"EXT_texture_filter_anisotropic",
+		"OES_element_index_uint",
+		"OES_standard_derivatives",
+		"OES_texture_float",
+		"OES_texture_float_linear",
+		"OES_texture_half_float",
+		"OES_texture_half_float_linear",
+		"OES_vertex_array_object",
+		"WEBGL_compressed_texture_s3tc",
+		"WEBGL_debug_renderer_info",
+		"WEBGL_debug_shaders",
+		//"WEBGL_depth_texture",
+		"WEBGL_draw_buffers",
+		"WEBGL_lose_context",
 
-			"EXT_color_buffer_float",
-			"EXT_color_buffer_half_float",
-			"EXT_disjoint_timer_query",
-			"EXT_disjoint_timer_query_webgl2",
-			"EXT_sRGB",
-			"WEBGL_color_buffer_float",
-			"WEBGL_compressed_texture_astc",
-			"WEBGL_compressed_texture_atc",
-			"WEBGL_compressed_texture_etc",
-			"WEBGL_compressed_texture_etc1",
-			"WEBGL_compressed_texture_pvrtc",
-			"WEBGL_compressed_texture_s3tc_srgb",
+		"EXT_color_buffer_float",
+		"EXT_color_buffer_half_float",
+		"EXT_disjoint_timer_query",
+		"EXT_disjoint_timer_query_webgl2",
+		"EXT_sRGB",
+		"WEBGL_color_buffer_float",
+		"WEBGL_compressed_texture_astc",
+		"WEBGL_compressed_texture_atc",
+		"WEBGL_compressed_texture_etc",
+		"WEBGL_compressed_texture_etc1",
+		"WEBGL_compressed_texture_pvrtc",
+		"WEBGL_compressed_texture_s3tc_srgb",
 
-			"EXT_float_blend",
-			"OES_fbo_render_mipmap",
-			"WEBGL_get_buffer_sub_data_async",
-			"WEBGL_multiview",
-			"WEBGL_security_sensitive_resources",
-			"WEBGL_shared_resources",
+		"EXT_float_blend",
+		"OES_fbo_render_mipmap",
+		"WEBGL_get_buffer_sub_data_async",
+		"WEBGL_multiview",
+		"WEBGL_security_sensitive_resources",
+		"WEBGL_shared_resources",
 
-			"EXT_clip_cull_distance",
-			"WEBGL_debug",
-			"WEBGL_dynamic_texture",
-			"WEBGL_subarray_uploads",
-			"WEBGL_texture_multisample",
-			"WEBGL_texture_source_iframe",
-			"WEBGL_video_texture",
+		"EXT_clip_cull_distance",
+		"WEBGL_debug",
+		"WEBGL_dynamic_texture",
+		"WEBGL_subarray_uploads",
+		"WEBGL_texture_multisample",
+		"WEBGL_texture_source_iframe",
+		"WEBGL_video_texture",
 
-			"EXT_texture_storage",
-			"OES_depth24",
-			"WEBGL_debug_shader_precision",
-			"WEBGL_draw_elements_no_range_check",
-			"WEBGL_subscribe_uniform",
-			"WEBGL_texture_from_depth_video",
+		"EXT_texture_storage",
+		"OES_depth24",
+		"WEBGL_debug_shader_precision",
+		"WEBGL_draw_elements_no_range_check",
+		"WEBGL_subscribe_uniform",
+		"WEBGL_texture_from_depth_video",
 	];
 
 	function getContext (canvas)
@@ -42536,8 +42536,8 @@ function (Fields,
 
 			// Legacy before 4.1.4
 
-			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
-				gl .uniform4f (this .x3d_ClipPlane [this .numClipPlanes], 88, 51, 68, 33);
+			for (var i = this .numClipPlanes; i < this .x3d_MaxClipPlanes; ++ i)
+				gl .uniform4f (this .x3d_ClipPlane [i], 0, 0, -1, 0);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
@@ -42600,8 +42600,8 @@ function (Fields,
 
 			// Legacy before 4.1.4
 
-			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
-				gl .uniform4f (this .x3d_ClipPlane [this .numClipPlanes], 88, 51, 68, 33);
+			for (var i = this .numClipPlanes; i < this .x3d_MaxClipPlanes; ++ i)
+				gl .uniform4f (this .x3d_ClipPlane [i], 0, 0, -1, 0);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
@@ -78846,10 +78846,6 @@ function (X3DBindableNode,
 		y3 = new Complex (0, 0),
 		y4 = new Complex (0, 0);
 
-	var
-		farVector         = new Vector3 (0, 0, 0),
-		projectionMatrix  = new Matrix4 ();
-
 	function X3DBackgroundNode (executionContext)
 	{
 		X3DBindableNode .call (this, executionContext);
@@ -79220,51 +79216,60 @@ function (X3DBindableNode,
 				}
 			}
 		},
-		display: function (gl, renderObject, viewport)
+		display: (function ()
 		{
-			try
+			var
+				farVector         = new Vector3 (0, 0, 0),
+				projectionMatrix  = new Matrix4 ();
+
+			return function (gl, renderObject, viewport)
 			{
-				if (this .hidden)
-					return;
-
-				// Setup context.
+				try
+				{
+					if (this .hidden)
+						return;
 	
-				gl .disable (gl .DEPTH_TEST);
-				gl .depthMask (false);
-				gl .enable (gl .CULL_FACE);
-				gl .frontFace (gl .CCW);
+					// Setup context.
+		
+					gl .disable (gl .DEPTH_TEST);
+					gl .depthMask (false);
+					gl .enable (gl .CULL_FACE);
+					gl .frontFace (gl .CCW);
+	
+					// Get background scale.
+	
+					var
+						viewpoint       = renderObject .getViewpoint (),
+						navigationInfo  = renderObject .getNavigationInfo (),
+						farValue        = navigationInfo .getFarValue (viewpoint) * 0.8,
+						rotation        = this .rotation,
+						modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
 
-				// Get background scale.
-
-				var
-					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 1, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8,
-					rotation        = this .rotation,
-					modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
-
-				// Get projection matrix.
-
-				this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
-
-				// Rotate and scale background.
-
-				modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
-				modelViewMatrix .get (null, rotation);
-				modelViewMatrix .identity ();
-				modelViewMatrix .rotate (rotation);
-				modelViewMatrix .scale (this .scale .set (farValue, farValue, farValue));
-
-				this .modelViewMatrixArray .set (modelViewMatrix);
-
-				// Draw background sphere and texture cube.
-
-				this .drawSphere (renderObject);
-
-				if (this .textures)
-					this .drawCube (renderObject);
-			}
-			catch (error)
-			{ }
-		},
+					// Get projection matrix.
+	
+					this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
+	
+					// Rotate and scale background.
+	
+					modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
+					modelViewMatrix .get (null, rotation);
+					modelViewMatrix .identity ();
+					modelViewMatrix .rotate (rotation);
+					modelViewMatrix .scale (this .scale .set (farValue, farValue, farValue));
+	
+					this .modelViewMatrixArray .set (modelViewMatrix);
+	
+					// Draw background sphere and texture cube.
+	
+					this .drawSphere (renderObject);
+	
+					if (this .textures)
+						this .drawCube (renderObject);
+				}
+				catch (error)
+				{ }
+			};
+		})(),
 		drawSphere: function (renderObject)
 		{
 			var transparency = this .transparency_ .getValue ();

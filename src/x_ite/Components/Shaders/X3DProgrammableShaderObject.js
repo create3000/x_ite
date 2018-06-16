@@ -804,8 +804,8 @@ function (Fields,
 
 			// Legacy before 4.1.4
 
-			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
-				gl .uniform4f (this .x3d_ClipPlane [this .numClipPlanes], 88, 51, 68, 33);
+			for (var i = this .numClipPlanes; i < this .x3d_MaxClipPlanes; ++ i)
+				gl .uniform4f (this .x3d_ClipPlane [i], 0, 0, -1, 0);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
@@ -868,8 +868,8 @@ function (Fields,
 
 			// Legacy before 4.1.4
 
-			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
-				gl .uniform4f (this .x3d_ClipPlane [this .numClipPlanes], 88, 51, 68, 33);
+			for (var i = this .numClipPlanes; i < this .x3d_MaxClipPlanes; ++ i)
+				gl .uniform4f (this .x3d_ClipPlane [i], 0, 0, -1, 0);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
