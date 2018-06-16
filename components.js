@@ -126,6 +126,7 @@
 		{ name: 'Plane Sensor', url: [ "http://media.create3000.de/components/PointingDeviceSensor/PlaneSensor/PlaneSensor.x3d" ], archive: "http://media.create3000.de/components/PointingDeviceSensor/PlaneSensor/PlaneSensor.zip" },
 
 		{ name: 'Rendering' },
+		{ name: 'Clip Plane', url: [ "http://media.create3000.de/components/Rendering/ClipPlane/ClipPlane.x3d" ], archive: "http://media.create3000.de/components/Rendering/ClipPlane/ClipPlane.zip" },
 		{ name: 'Color', url: [ "http://media.create3000.de/components/Rendering/Color/Color.x3d" ], archive: "http://media.create3000.de/components/Rendering/Color/Color.zip" },
 		{ name: 'Coordinate', url: [ "http://media.create3000.de/components/Rendering/Coordinate/Coordinate.x3d" ], archive: "http://media.create3000.de/components/Rendering/Coordinate/Coordinate.zip" },
 		{ name: 'Indexed Triangle Set', url: [ "http://media.create3000.de/components/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d" ], archive: "http://media.create3000.de/components/Rendering/IndexedTriangleSet/IndexedTriangleSet.zip" },
