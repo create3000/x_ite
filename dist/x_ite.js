@@ -1,4 +1,4 @@
-/* X_ITE v4.2.1-278 */
+/* X_ITE v4.2.1-279 */
 
 (function () {
 
@@ -41840,7 +41840,13 @@ function (Fields,
 			this .x3d_MaxLights     = browser .getMaxLights ();
 			this .x3d_MaxTextures   = browser .getMaxTextures ();
 
-			this .textureTypeArray = new Int32Array (this .x3d_MaxTextures);
+			var defaultClipPlanes = [ ];
+
+			for (var i = 0, length = this .x3d_MaxClipPlanes; i < length; ++ i)
+				defaultClipPlanes .push (0, 0, -1, 0);
+
+			this .defaultClipPlanesArray = new Float32Array (defaultClipPlanes);
+			this .textureTypeArray       = new Int32Array (this .x3d_MaxTextures);
 		},
 		hasUserDefinedFields: function ()
 		{
@@ -41865,6 +41871,8 @@ function (Fields,
 
 			this .x3d_GeometryType  = gl .getUniformLocation (program, "x3d_GeometryType");
 			this .x3d_NumClipPlanes = gl .getUniformLocation (program, "x3d_NumClipPlanes");
+
+			this .x3d_ClipPlanes = gl .getUniformLocation (program, "x3d_ClipPlane");
 
 			for (var i = 0; i < this .x3d_MaxClipPlanes; ++ i)
 				this .x3d_ClipPlane [i]  = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
@@ -42531,13 +42539,11 @@ function (Fields,
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
-			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
-			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
+			gl .uniform4fv (this .x3d_ClipPlanes,    this .defaultClipPlanesArray);
+			gl .uniform1i  (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
+			gl .uniform1i  (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
 
 			// Legacy before 4.1.4
-
-			for (var i = this .numClipPlanes; i < this .x3d_MaxClipPlanes; ++ i)
-				gl .uniform4f (this .x3d_ClipPlane [i], 0, 0, -1, 0);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
@@ -42595,13 +42601,11 @@ function (Fields,
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
-			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
-			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
+			gl .uniform4fv (this .x3d_ClipPlanes,    this .defaultClipPlanesArray);
+			gl .uniform1i  (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
+			gl .uniform1i  (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
 
 			// Legacy before 4.1.4
-
-			for (var i = this .numClipPlanes; i < this .x3d_MaxClipPlanes; ++ i)
-				gl .uniform4f (this .x3d_ClipPlane [i], 0, 0, -1, 0);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
@@ -109398,31 +109402,31 @@ function (Fields,
 
 
 define ('x_ite/Components/Grouping/StaticGroup',[
-	"x_ite/Bits/X3DConstants",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Components/Grouping/Group",
+	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Geometry/ViewVolume",
 ],
-function (X3DConstants,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
           X3DBoundedObject, 
           Group,
+          X3DConstants,
           TraverseType,
           Box3,
           ViewVolume)
 {
 "use strict";
 
-	// No support for bindable nodes, local lights. local fog, local clip planes, lod, billboard.
+	// No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
 	function StaticGroup (executionContext)
 	{
