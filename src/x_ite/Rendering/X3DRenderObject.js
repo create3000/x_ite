@@ -216,6 +216,54 @@ function ($,
 		{
 			return this .collisions;
 		},
+		setNumCollisionShapes: function (value)
+		{
+			this .numCollisionShapes = value;
+		},
+		getNumCollisionShapes: function ()
+		{
+			return this .numCollisionShapes;
+		},
+		getCollisionShapes: function ()
+		{
+			return this .collisionShapes;
+		},
+		setNumDepthShapes: function (value)
+		{
+			this .numDepthShapes = value;
+		},
+		getNumDepthShapes: function ()
+		{
+			return this .numDepthShapes;
+		},
+		getDepthShapes: function ()
+		{
+			return this .depthShapes;
+		},
+		setNumOpaqueShapes: function (value)
+		{
+			this .numOpaqueShapes = value;
+		},
+		getNumOpaqueShapes: function ()
+		{
+			return this .numOpaqueShapes;
+		},
+		getOpaqueShapes: function ()
+		{
+			return this .opaqueShapes;
+		},
+		setNumTransparentShapes: function (value)
+		{
+			this .numTransparentShapes = value;
+		},
+		getNumTransparentShapes: function ()
+		{
+			return this .numTransparentShapes;
+		},
+		getTransparentShapes: function ()
+		{
+			return this .transparentShapes;
+		},
 		constrainTranslation: function (translation, stepBack)
 		{
 			///  Contrains @a translation to a possible value the avatar can move.  If the avatar reaches and intersects with an

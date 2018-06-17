@@ -202,7 +202,6 @@ function ($,
 					canvas = this .canvas [0],
 					cx     = canvas .getContext ("2d");
 
-
 				// Scale image if needed and flip vertically.
 
 				if (! Algorithm .isPowerOfTwo (width) || ! Algorithm .isPowerOfTwo (height))
