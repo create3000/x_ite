@@ -75,8 +75,8 @@ function ($,
 		SPIN_ANGLE        = 0.003,
 		SPIN_FACTOR       = 0.6,
 		SCROLL_FACTOR     = 1.0 / 20.0,
-		MOVE_TIME         = 0.3,
-		ROTATE_TIME       = 0.4,
+		MOVE_TIME         = 0.2,
+		ROTATE_TIME       = 0.2,
 		FRAME_RATE        = 60;
 
 	function ExamineViewer (executionContext)

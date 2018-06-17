@@ -129,6 +129,11 @@ function ($,
 			this .pointShader .setGeometryType (0);
 			this .lineShader  .setGeometryType (1);
 
+			this .pointShader   .shadowShader = this .pointShader;
+			this .lineShader    .shadowShader = this .lineShader;
+			this .gouraudShader .shadowShader = this .shadowShader;
+			this .phongShader   .shadowShader = this .shadowShader;
+
 			this .setShading ("GOURAUD");
 
 			this .phongShader  .isValid_ .addInterest ("set_phong_shader_valid__",  this);
@@ -243,6 +248,7 @@ function ($,
 			this .pointShader   .setGeometryType (0);
 			this .lineShader    .setGeometryType (1);
 			this .defaultShader .setGeometryType (3);
+			this .shadowShader  .setGeometryType (3);
 
 			var shaders = this .getShaders ();
 
@@ -272,7 +278,7 @@ function ($,
 		},
 		getShadowShader: function ()
 		{
-			return this .shadowShader;
+			return this .defaultShader .shadowShader;
 		},
 		getDepthShader: function ()
 		{

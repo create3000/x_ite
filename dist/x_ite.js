@@ -1,4 +1,4 @@
-/* X_ITE v4.2.1-280 */
+/* X_ITE v4.2.1-281 */
 
 (function () {
 
@@ -53808,6 +53808,11 @@ function ($,
 			this .pointShader .setGeometryType (0);
 			this .lineShader  .setGeometryType (1);
 
+			this .pointShader   .shadowShader = this .pointShader;
+			this .lineShader    .shadowShader = this .lineShader;
+			this .gouraudShader .shadowShader = this .shadowShader;
+			this .phongShader   .shadowShader = this .shadowShader;
+
 			this .setShading ("GOURAUD");
 
 			this .phongShader  .isValid_ .addInterest ("set_phong_shader_valid__",  this);
@@ -53922,6 +53927,7 @@ function ($,
 			this .pointShader   .setGeometryType (0);
 			this .lineShader    .setGeometryType (1);
 			this .defaultShader .setGeometryType (3);
+			this .shadowShader  .setGeometryType (3);
 
 			var shaders = this .getShaders ();
 
@@ -53951,7 +53957,7 @@ function ($,
 		},
 		getShadowShader: function ()
 		{
-			return this .shadowShader;
+			return this .defaultShader .shadowShader;
 		},
 		getDepthShader: function ()
 		{
@@ -62923,8 +62929,8 @@ function ($,
 		SPIN_ANGLE        = 0.003,
 		SPIN_FACTOR       = 0.6,
 		SCROLL_FACTOR     = 1.0 / 20.0,
-		MOVE_TIME         = 0.3,
-		ROTATE_TIME       = 0.4,
+		MOVE_TIME         = 0.2,
+		ROTATE_TIME       = 0.2,
 		FRAME_RATE        = 60;
 
 	function ExamineViewer (executionContext)
