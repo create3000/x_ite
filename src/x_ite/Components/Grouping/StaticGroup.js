@@ -153,167 +153,174 @@ function (Fields,
 
 			return function (type, renderObject)
 			{
-				switch (type)
+				if (renderObject .isIndependent ())
 				{
-					case TraverseType .CAMERA:
+					switch (type)
 					{
-						break;
-					}
-					case TraverseType .POINTER:
-					case TraverseType .COLLISION:
-					{
-						if (! this .collisionShapes)
+						case TraverseType .CAMERA:
 						{
-							console .log ("Rebuilding StaticGroup collisionShapes");
-
+							break;
+						}
+						case TraverseType .POINTER:
+						case TraverseType .COLLISION:
+						{
+							if (! this .collisionShapes)
+							{
+								console .log ("Rebuilding StaticGroup collisionShapes");
+	
+								var
+									viewVolumes         = renderObject .getViewVolumes (),
+									viewport            = renderObject .getViewport (),
+									projectionMatrix    = renderObject .getProjectionMatrix (),
+									modelViewMatrix     = renderObject .getModelViewMatrix (),
+									firstCollisionShape = renderObject .getNumCollisionShapes ();
+					
+								viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+		
+								modelViewMatrix .push ();
+								modelViewMatrix .identity ();
+		
+								this .group .traverse (type, renderObject);
+		
+								modelViewMatrix .pop ();
+								viewVolumes     .pop ();
+	
+								var lastCollisionShape = renderObject .getNumCollisionShapes ();
+	
+								this .collisionShapes = renderObject .getCollisionShapes () .splice (firstCollisionShape, lastCollisionShape - firstCollisionShape);
+	
+								renderObject .setNumCollisionShapes (firstCollisionShape);
+							}
+	
 							var
-								viewVolumes         = renderObject .getViewVolumes (),
-								viewport            = renderObject .getViewport (),
-								projectionMatrix    = renderObject .getProjectionMatrix (),
-								modelViewMatrix     = renderObject .getModelViewMatrix (),
-								firstCollisionShape = renderObject .getNumCollisionShapes ();
-				
-							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+								collisionShapes = this .collisionShapes,
+								modelViewMatrix = renderObject .getModelViewMatrix ();
 	
-							modelViewMatrix .push ();
-							modelViewMatrix .identity ();
+							for (var i = 0, length = collisionShapes .length; i < length; ++ i)
+							{
+								var collisionShape = collisionShapes [i];
 	
-							this .group .traverse (type, renderObject);
+								modelViewMatrix .push ();
+								modelViewMatrix .multLeft (collisionShape .modelViewMatrix);
+								collisionShape .shapeNode .traverse (type, renderObject);
+								modelViewMatrix .pop ();
+							}
 	
-							modelViewMatrix .pop ();
-							viewVolumes     .pop ();
-
-							var lastCollisionShape = renderObject .getNumCollisionShapes ();
-
-							this .collisionShapes = renderObject .getCollisionShapes () .splice (firstCollisionShape, lastCollisionShape - firstCollisionShape);
-
-							renderObject .setNumCollisionShapes (firstCollisionShape);
+							break;
 						}
-
-						var
-							collisionShapes = this .collisionShapes,
-							modelViewMatrix = renderObject .getModelViewMatrix ();
-
-						for (var i = 0, length = collisionShapes .length; i < length; ++ i)
+						case TraverseType .DEPTH:
 						{
-							var collisionShape = collisionShapes [i];
-
-							modelViewMatrix .push ();
-							modelViewMatrix .multLeft (collisionShape .modelViewMatrix);
-							collisionShape .shapeNode .traverse (type, renderObject);
-							modelViewMatrix .pop ();
-						}
-
-						break;
-					}
-					case TraverseType .DEPTH:
-					{
-						if (! this .depthShapes)
-						{
-							console .log ("Rebuilding StaticGroup depthShapes");
-
+							if (! this .depthShapes)
+							{
+								console .log ("Rebuilding StaticGroup depthShapes");
+	
+								var
+									viewVolumes      = renderObject .getViewVolumes (),
+									viewport         = renderObject .getViewport (),
+									projectionMatrix = renderObject .getProjectionMatrix (),
+									modelViewMatrix  = renderObject .getModelViewMatrix (),
+									firstDepthShape  = renderObject .getNumDepthShapes ();
+					
+								viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+		
+								modelViewMatrix .push ();
+								modelViewMatrix .identity ();
+		
+								this .group .traverse (type, renderObject);
+		
+								modelViewMatrix .pop ();
+								viewVolumes     .pop ();
+	
+								var lastDepthShape = renderObject .getNumDepthShapes ();
+	
+								this .depthShapes = renderObject .getDepthShapes () .splice (firstDepthShape, lastDepthShape - firstDepthShape);
+	
+								renderObject .setNumDepthShapes (firstDepthShape);
+							}
+	
 							var
-								viewVolumes      = renderObject .getViewVolumes (),
-								viewport         = renderObject .getViewport (),
-								projectionMatrix = renderObject .getProjectionMatrix (),
-								modelViewMatrix  = renderObject .getModelViewMatrix (),
-								firstDepthShape  = renderObject .getNumDepthShapes ();
-				
-							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+								depthShapes     = this .depthShapes,
+								modelViewMatrix = renderObject .getModelViewMatrix ();
 	
-							modelViewMatrix .push ();
-							modelViewMatrix .identity ();
+							for (var i = 0, length = depthShapes .length; i < length; ++ i)
+							{
+								var depthShape = depthShapes [i];
 	
-							this .group .traverse (type, renderObject);
+								modelViewMatrix .push ();
+								modelViewMatrix .multLeft (depthShape .modelViewMatrix);
+								depthShape .shapeNode .traverse (type, renderObject);
+								modelViewMatrix .pop ();
+							}
 	
-							modelViewMatrix .pop ();
-							viewVolumes     .pop ();
-
-							var lastDepthShape = renderObject .getNumDepthShapes ();
-
-							this .depthShapes = renderObject .getDepthShapes () .splice (firstDepthShape, lastDepthShape - firstDepthShape);
-
-							renderObject .setNumDepthShapes (firstDepthShape);
+							break;
 						}
-
-						var
-							depthShapes     = this .depthShapes,
-							modelViewMatrix = renderObject .getModelViewMatrix ();
-
-						for (var i = 0, length = depthShapes .length; i < length; ++ i)
+						case TraverseType .DISPLAY:
 						{
-							var depthShape = depthShapes [i];
-
-							modelViewMatrix .push ();
-							modelViewMatrix .multLeft (depthShape .modelViewMatrix);
-							depthShape .shapeNode .traverse (type, renderObject);
-							modelViewMatrix .pop ();
-						}
-
-						break;
-					}
-					case TraverseType .DISPLAY:
-					{
-						if (! this .opaqueShapes)
-						{
-							console .log ("Rebuilding StaticGroup opaqueShapes and transparentShapes");
-
+							if (! this .opaqueShapes)
+							{
+								console .log ("Rebuilding StaticGroup opaqueShapes and transparentShapes");
+	
+								var
+									viewVolumes           = renderObject .getViewVolumes (),
+									viewport              = renderObject .getViewport (),
+									projectionMatrix      = renderObject .getProjectionMatrix (),
+									modelViewMatrix       = renderObject .getModelViewMatrix (),
+									firstOpaqueShape      = renderObject .getNumOpaqueShapes (),
+									firstTransparentShape = renderObject .getNumTransparentShapes ();
+					
+								viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+		
+								modelViewMatrix .push ();
+								modelViewMatrix .identity ();
+		
+								this .group .traverse (type, renderObject);
+		
+								modelViewMatrix .pop ();
+								viewVolumes     .pop ();
+	
+								var
+									lastOpaqueShape      = renderObject .getNumOpaqueShapes (),
+									lastTransparentShape = renderObject .getNumTransparentShapes ();
+	
+								this .opaqueShapes      = renderObject .getOpaqueShapes () .splice (firstOpaqueShape, lastOpaqueShape - firstOpaqueShape);
+								this .transparentShapes = renderObject .getTransparentShapes () .splice (firstTransparentShape, lastTransparentShape - firstTransparentShape);
+	
+								renderObject .setNumOpaqueShapes (firstOpaqueShape);
+								renderObject .setNumTransparentShapes (firstTransparentShape);
+							}
+	
 							var
-								viewVolumes           = renderObject .getViewVolumes (),
-								viewport              = renderObject .getViewport (),
-								projectionMatrix      = renderObject .getProjectionMatrix (),
-								modelViewMatrix       = renderObject .getModelViewMatrix (),
-								firstOpaqueShape      = renderObject .getNumOpaqueShapes (),
-								firstTransparentShape = renderObject .getNumTransparentShapes ();
-				
-							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+								opaqueShapes      = this .opaqueShapes,
+								transparentShapes = this .transparentShapes,
+								modelViewMatrix   = renderObject .getModelViewMatrix ();
 	
-							modelViewMatrix .push ();
-							modelViewMatrix .identity ();
+							for (var i = 0, length = opaqueShapes .length; i < length; ++ i)
+							{
+								var opaqueShape = opaqueShapes [i];
 	
-							this .group .traverse (type, renderObject);
+								modelViewMatrix .push ();
+								modelViewMatrix .multLeft (opaqueShape .modelViewMatrix);
+								opaqueShape .shapeNode .traverse (type, renderObject);
+								modelViewMatrix .pop ();
+							}
 	
-							modelViewMatrix .pop ();
-							viewVolumes     .pop ();
-
-							var
-								lastOpaqueShape      = renderObject .getNumOpaqueShapes (),
-								lastTransparentShape = renderObject .getNumTransparentShapes ();
-
-							this .opaqueShapes      = renderObject .getOpaqueShapes () .splice (firstOpaqueShape, lastOpaqueShape - firstOpaqueShape);
-							this .transparentShapes = renderObject .getTransparentShapes () .splice (firstTransparentShape, lastTransparentShape - firstTransparentShape);
-
-							renderObject .setNumOpaqueShapes (firstOpaqueShape);
-							renderObject .setNumTransparentShapes (firstTransparentShape);
+							for (var i = 0, length = transparentShapes .length; i < length; ++ i)
+							{
+								var transparentShape = transparentShapes [i];
+	
+								modelViewMatrix .push ();
+								modelViewMatrix .multLeft (transparentShape .modelViewMatrix);
+								transparentShape .shapeNode .traverse (type, renderObject);
+								modelViewMatrix .pop ();
+							}
+	
+							break;
 						}
-
-						var
-							opaqueShapes      = this .opaqueShapes,
-							transparentShapes = this .transparentShapes,
-							modelViewMatrix   = renderObject .getModelViewMatrix ();
-
-						for (var i = 0, length = opaqueShapes .length; i < length; ++ i)
-						{
-							var opaqueShape = opaqueShapes [i];
-
-							modelViewMatrix .push ();
-							modelViewMatrix .multLeft (opaqueShape .modelViewMatrix);
-							opaqueShape .shapeNode .traverse (type, renderObject);
-							modelViewMatrix .pop ();
-						}
-
-						for (var i = 0, length = transparentShapes .length; i < length; ++ i)
-						{
-							var transparentShape = transparentShapes [i];
-
-							modelViewMatrix .push ();
-							modelViewMatrix .multLeft (transparentShape .modelViewMatrix);
-							transparentShape .shapeNode .traverse (type, renderObject);
-							modelViewMatrix .pop ();
-						}
-
-						break;
 					}
+				}
+				else
+				{
+					this .group .traverse (type, renderObject);
 				}
 			};
 		})(),
