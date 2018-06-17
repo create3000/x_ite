@@ -1,4 +1,4 @@
-/* X_ITE v4.2.1-279 */
+/* X_ITE v4.2.1-280 */
 
 (function () {
 
@@ -42536,12 +42536,13 @@ function (Fields,
 			this .numClipPlanes = 0;
 			this .numLights     = 0;
 
+			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
+
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
-			gl .uniform4fv (this .x3d_ClipPlanes,    this .defaultClipPlanesArray);
-			gl .uniform1i  (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
-			gl .uniform1i  (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
+			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
+			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
 
 			// Legacy before 4.1.4
 
@@ -42598,12 +42599,13 @@ function (Fields,
 			this .numClipPlanes = 0;
 			this .numLights     = this .numGlobalLights;
 
+			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
+
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
-			gl .uniform4fv (this .x3d_ClipPlanes,    this .defaultClipPlanesArray);
-			gl .uniform1i  (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
-			gl .uniform1i  (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
+			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
+			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
 
 			// Legacy before 4.1.4
 
