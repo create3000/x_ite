@@ -48,31 +48,31 @@
 
 
 define ([
-	"x_ite/Bits/X3DConstants",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Components/Grouping/Group",
+	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Geometry/ViewVolume",
 ],
-function (X3DConstants,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
           X3DBoundedObject, 
           Group,
+          X3DConstants,
           TraverseType,
           Box3,
           ViewVolume)
 {
 "use strict";
 
-	// No support for bindable nodes, local lights. local fog, local clip planes, lod, billboard.
+	// No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
 	function StaticGroup (executionContext)
 	{
