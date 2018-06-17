@@ -1,4 +1,4 @@
-/* X_ITE v4.2.1-282 */
+/* X_ITE v4.2.1-283 */
 
 (function () {
 
@@ -114734,6 +114734,9 @@ function ($,
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
 
+			if (! this .getBrowserOption ("EnableInlineViewpoints"))
+				this .getWorld () .bind ();
+
 			if (this .initialized () .getValue ())
 				this .initialized () .setValue (this .getCurrentTime ());
 		},
@@ -114751,7 +114754,9 @@ function ($,
 		{
 			this .prepareEvents () .removeInterest ("bind", this);
 
-			this .getWorld () .bind ();
+			if (this .getBrowserOption ("EnableInlineViewpoints"))
+				this .getWorld () .bind ();
+
 			this .setBrowserLoading (false);
 		},
 		createVrmlFromString: function (vrmlSyntax)
