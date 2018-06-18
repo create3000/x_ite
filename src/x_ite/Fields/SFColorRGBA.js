@@ -114,15 +114,18 @@ function (X3DField,
 		},
 		lerp: (function ()
 		{
-			var a = [ ];
+			var	
+				s = [ ],
+				d = [ ],
+				r = [ ];
      
 			return function (destination, t)
 			{
-				var
-					hsv1   = this .getHSVA (),
-					hsv2   = destination .getHSVA (),
-					r      = Color4 .lerp (hsv1, hsv2, t, a),
-					result = new SFColorRGBA ();
+				var result = new SFColorRGBA ();
+
+				this .getValue () .getHSVA (s),
+				destination .getValue () .getHSVA (d),
+				Color4 .lerp (s, d, t, r),
 	
 				result .setHSVA (r [0], r [1], r [2], r [3]);
 	

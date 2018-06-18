@@ -117,17 +117,20 @@ function (Color3,
 		},
 		lerp: (function ()
 		{
-			var a = [ ];
+			var	
+				s = [ ],
+				d = [ ],
+				r = [ ];
      
 			return function (destination, t)
 			{
-				var
-					hsv1   = this .getHSV (),
-					hsv2   = destination .getHSV (),
-					r      = Color3 .lerp (hsv1, hsv2, t, a),
-					result = new SFColor ();
+				var result = new SFColor ();
+
+				this .getValue () .getHSV (s),
+				destination .getValue () .getHSV (d),
+				Color3 .lerp (s, d, t, r),
 	
-				result .setHSV (r [0], r [1], r [2]);
+				result .setHSV (r [0], r [1], r [2], r [3]);
 	
 				return result;
 			};

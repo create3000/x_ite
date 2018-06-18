@@ -1,4 +1,4 @@
-/* X_ITE v4.2.1-287 */
+/* X_ITE v4.2.1-288 */
 
 (function () {
 
@@ -14625,6 +14625,9 @@ function (Algorithm)
 		},
 		lerp: function (a, b, t, r)
 		{
+			// Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
+			// Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
+
 			var range = Math .abs (b [0] - a [0]);
 
 			if (range <= Math .PI)
@@ -14775,17 +14778,20 @@ function (Color3,
 		},
 		lerp: (function ()
 		{
-			var a = [ ];
+			var	
+				s = [ ],
+				d = [ ],
+				r = [ ];
      
 			return function (destination, t)
 			{
-				var
-					hsv1   = this .getHSV (),
-					hsv2   = destination .getHSV (),
-					r      = Color3 .lerp (hsv1, hsv2, t, a),
-					result = new SFColor ();
+				var result = new SFColor ();
+
+				this .getValue () .getHSV (s),
+				destination .getValue () .getHSV (d),
+				Color3 .lerp (s, d, t, r),
 	
-				result .setHSV (r [0], r [1], r [2]);
+				result .setHSV (r [0], r [1], r [2], r [3]);
 	
 				return result;
 			};
@@ -15044,6 +15050,9 @@ function (Color3, Algorithm)
 		},
 		lerp: function (a, b, t, r)
 		{
+			// Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
+			// Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
+
 			var range = Math .abs (b [0] - a [0]);
 
 			if (range <= Math .PI)
@@ -15193,15 +15202,18 @@ function (X3DField,
 		},
 		lerp: (function ()
 		{
-			var a = [ ];
+			var	
+				s = [ ],
+				d = [ ],
+				r = [ ];
      
 			return function (destination, t)
 			{
-				var
-					hsv1   = this .getHSVA (),
-					hsv2   = destination .getHSVA (),
-					r      = Color4 .lerp (hsv1, hsv2, t, a),
-					result = new SFColorRGBA ();
+				var result = new SFColorRGBA ();
+
+				this .getValue () .getHSVA (s),
+				destination .getValue () .getHSVA (d),
+				Color4 .lerp (s, d, t, r),
 	
 				result .setHSVA (r [0], r [1], r [2], r [3]);
 	

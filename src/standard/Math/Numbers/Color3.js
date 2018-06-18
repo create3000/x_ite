@@ -221,6 +221,9 @@ function (Algorithm)
 		},
 		lerp: function (a, b, t, r)
 		{
+			// Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
+			// Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
+
 			var range = Math .abs (b [0] - a [0]);
 
 			if (range <= Math .PI)
