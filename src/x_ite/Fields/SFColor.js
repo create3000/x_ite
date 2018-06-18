@@ -115,6 +115,12 @@ function (Color3,
 			this .getValue () .setHSV (h, s, v);
 			this .addEvent ();
 		},
+		lerp: function (destination, t)
+		{
+			var result = Color3 .lerp (this .getValue (), destination .getValue (), t, new Color3 (0, 0, 0));
+
+			return new SFColor (result);
+		},
 		toStream: function (stream)
 		{
 			stream .string += this .getValue () .toString ();

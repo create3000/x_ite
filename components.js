@@ -31,6 +31,9 @@
 		{ name: 'Vattenfall.O.x 3d', url: [ "http://media.create3000.de/components/Basic/Vattenfall.O.x3d/Vattenfall.O.x3d.x3d" ], archive: "http://media.create3000.de/components/Basic/Vattenfall.O.x3d/Vattenfall.O.x3d.zip" },
 		{ name: 'Water Quality', url: [ "http://media.create3000.de/components/Basic/WaterQuality/WaterQuality.x3d" ], archive: "http://media.create3000.de/components/Basic/WaterQuality/WaterQuality.zip" },
 
+		{ name: 'CAD Geometry' },
+		{ name: 'Quad Set', url: [ "http://media.create3000.de/components/CADGeometry/QuadSet/QuadSet.x3d" ], archive: "http://media.create3000.de/components/CADGeometry/QuadSet/QuadSet.zip" },
+
 		{ name: 'Cube Map Texturing' },
 		{ name: 'Composed Cube Map Texture', url: [ "http://media.create3000.de/components/CubeMapTexturing/ComposedCubeMapTexture/ComposedCubeMapTexture.x3d" ], archive: "http://media.create3000.de/components/CubeMapTexturing/ComposedCubeMapTexture/ComposedCubeMapTexture.zip" },
 
