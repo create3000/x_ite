@@ -1,4 +1,4 @@
-/* X_ITE v4.2.1-286 */
+/* X_ITE v4.2.1-287 */
 
 (function () {
 
@@ -14773,12 +14773,23 @@ function (Color3,
 			this .getValue () .setHSV (h, s, v);
 			this .addEvent ();
 		},
-		lerp: function (destination, t)
+		lerp: (function ()
 		{
-			var result = Color3 .lerp (this .getValue (), destination .getValue (), t, new Color3 (0, 0, 0));
-
-			return new SFColor (result);
-		},
+			var a = [ ];
+     
+			return function (destination, t)
+			{
+				var
+					hsv1   = this .getHSV (),
+					hsv2   = destination .getHSV (),
+					r      = Color3 .lerp (hsv1, hsv2, t, a),
+					result = new SFColor ();
+	
+				result .setHSV (r [0], r [1], r [2]);
+	
+				return result;
+			};
+		})(),
 		toStream: function (stream)
 		{
 			stream .string += this .getValue () .toString ();
@@ -15023,12 +15034,45 @@ function (Color3, Algorithm)
 	Object .defineProperty (Color4 .prototype, "2", b);
 	Object .defineProperty (Color4 .prototype, "3", a);
 
-	Color4 .HSVA = function (h, s, v, a)
+	Object .assign (Color4,
 	{
-		var color = new Color4 (0, 0, 0, a);
-		color .setHSV (h, s, v);
-		return color;
-	}
+		HSV: function (h, s, v, a)
+		{
+			var color = new Color4 (0, 0, 0, a);
+			color .setHSV (h, s, v);
+			return color;
+		},
+		lerp: function (a, b, t, r)
+		{
+			var range = Math .abs (b [0] - a [0]);
+
+			if (range <= Math .PI)
+			{
+				r [0] = Algorithm .lerp (a [0], b [0], t);
+				r [1] = Algorithm .lerp (a [1], b [1], t);
+				r [2] = Algorithm .lerp (a [2], b [2], t);
+				r [3] = Algorithm .lerp (a [3], b [3], t);
+				return r;
+			}
+
+			var
+				PI2  = Math .PI * 2,
+				step = (PI2 - range) * t,
+				h    = a [0] < b [0] ? a [0] - step : a [0] + step;
+
+			if (h < 0)
+				h += PI2;
+
+			else if (h > PI2)
+				h -= PI2;
+
+			r [0] = h;
+			r [1] = Algorithm .lerp (a [1], b [1], t);
+			r [2] = Algorithm .lerp (a [2], b [2], t);
+			r [3] = Algorithm .lerp (a [3], b [3], t);
+			return r;
+		},
+	});
 
 	return Color4;
 });
@@ -15147,6 +15191,23 @@ function (X3DField,
 			this .getValue () .setHSVA (h, s, v, a);
 			this .addEvent ();
 		},
+		lerp: (function ()
+		{
+			var a = [ ];
+     
+			return function (destination, t)
+			{
+				var
+					hsv1   = this .getHSVA (),
+					hsv2   = destination .getHSVA (),
+					r      = Color4 .lerp (hsv1, hsv2, t, a),
+					result = new SFColorRGBA ();
+	
+				result .setHSVA (r [0], r [1], r [2], r [3]);
+	
+				return result;
+			};
+		})(),
 		toStream: SFColor .prototype .toStream,
 		toXMLStream: SFColor .prototype .toXMLStream,
 	});
