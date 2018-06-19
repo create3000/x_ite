@@ -147,10 +147,6 @@ function (X3DBindableNode,
 		y3 = new Complex (0, 0),
 		y4 = new Complex (0, 0);
 
-	var
-		farVector         = new Vector3 (0, 0, 0),
-		projectionMatrix  = new Matrix4 ();
-
 	function X3DBackgroundNode (executionContext)
 	{
 		X3DBindableNode .call (this, executionContext);
@@ -521,51 +517,60 @@ function (X3DBindableNode,
 				}
 			}
 		},
-		display: function (gl, renderObject, viewport)
+		display: (function ()
 		{
-			try
+			var
+				farVector         = new Vector3 (0, 0, 0),
+				projectionMatrix  = new Matrix4 ();
+
+			return function (gl, renderObject, viewport)
 			{
-				if (this .hidden)
-					return;
-
-				// Setup context.
+				try
+				{
+					if (this .hidden)
+						return;
 	
-				gl .disable (gl .DEPTH_TEST);
-				gl .depthMask (false);
-				gl .enable (gl .CULL_FACE);
-				gl .frontFace (gl .CCW);
+					// Setup context.
+		
+					gl .disable (gl .DEPTH_TEST);
+					gl .depthMask (false);
+					gl .enable (gl .CULL_FACE);
+					gl .frontFace (gl .CCW);
+	
+					// Get background scale.
+	
+					var
+						viewpoint       = renderObject .getViewpoint (),
+						navigationInfo  = renderObject .getNavigationInfo (),
+						farValue        = navigationInfo .getFarValue (viewpoint) * 0.8,
+						rotation        = this .rotation,
+						modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
 
-				// Get background scale.
-
-				var
-					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 1, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8,
-					rotation        = this .rotation,
-					modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
-
-				// Get projection matrix.
-
-				this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
-
-				// Rotate and scale background.
-
-				modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
-				modelViewMatrix .get (null, rotation);
-				modelViewMatrix .identity ();
-				modelViewMatrix .rotate (rotation);
-				modelViewMatrix .scale (this .scale .set (farValue, farValue, farValue));
-
-				this .modelViewMatrixArray .set (modelViewMatrix);
-
-				// Draw background sphere and texture cube.
-
-				this .drawSphere (renderObject);
-
-				if (this .textures)
-					this .drawCube (renderObject);
-			}
-			catch (error)
-			{ }
-		},
+					// Get projection matrix.
+	
+					this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
+	
+					// Rotate and scale background.
+	
+					modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
+					modelViewMatrix .get (null, rotation);
+					modelViewMatrix .identity ();
+					modelViewMatrix .rotate (rotation);
+					modelViewMatrix .scale (this .scale .set (farValue, farValue, farValue));
+	
+					this .modelViewMatrixArray .set (modelViewMatrix);
+	
+					// Draw background sphere and texture cube.
+	
+					this .drawSphere (renderObject);
+	
+					if (this .textures)
+						this .drawCube (renderObject);
+				}
+				catch (error)
+				{ }
+			};
+		})(),
 		drawSphere: function (renderObject)
 		{
 			var transparency = this .transparency_ .getValue ();

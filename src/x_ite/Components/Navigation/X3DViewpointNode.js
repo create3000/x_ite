@@ -205,6 +205,10 @@ function (Fields,
 		{
 			return this .modelMatrix;
 		},
+		getMaxFarValue: function ()
+		{
+			return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e5;
+		},
 		getUpVector: function ()
 		{
 		   // Local y-axis,
@@ -214,10 +218,6 @@ function (Fields,
 		getSpeedFactor: function ()
 		{
 			return 1;
-		},
-		getMaxZFar: function ()
-		{
-			return 1e5;
 		},
 		transitionStart: (function ()
 		{

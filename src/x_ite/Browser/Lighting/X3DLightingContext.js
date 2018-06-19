@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 ],
-function (DepthBuffer)
+function (TextureBuffer)
 {
 "use strict";
 	
@@ -86,7 +86,7 @@ function (DepthBuffer)
 				else
 					this .shadowBuffers [shadowMapSize] = [ ];
 	
-				return new DepthBuffer (this, shadowMapSize, shadowMapSize);
+				return new TextureBuffer (this, shadowMapSize, shadowMapSize);
 			}
 			catch (error)
 			{

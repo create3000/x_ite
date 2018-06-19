@@ -162,6 +162,10 @@ function (Fields,
 		{
 			return this .sizeY;
 		},
+		getMaxFarValue: function ()
+		{
+			return 1e5;
+		},
 		getScreenScale: function (dummy, viewport)
 		{
 			var

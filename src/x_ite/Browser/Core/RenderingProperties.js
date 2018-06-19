@@ -73,13 +73,14 @@ function (Fields,
 	{
 		constructor: RenderingProperties,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "Shading",        new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "MaxTextureSize", new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "TextureUnits",   new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "MaxLights",      new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "Antialiased",    new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ColorDepth",     new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "TextureMemory",  new Fields .SFDouble ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxLights",              new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "Antialiased",            new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "ColorDepth",             new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
 		]),
 		getTypeName: function ()
 		{

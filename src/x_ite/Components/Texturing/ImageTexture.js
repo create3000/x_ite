@@ -212,6 +212,7 @@ function ($,
 					canvas .width  = width;
 					canvas .height = height;
 
+					cx .clearRect (0, 0, width, height);
 					cx .save ();
 					cx .translate (0, height);
 					cx .scale (1, -1);
@@ -223,6 +224,7 @@ function ($,
 					canvas .width  = width;
 					canvas .height = height;
 
+					cx .clearRect (0, 0, width, height);
 					cx .save ();
 					cx .translate (0, height);
 					cx .scale (1, -1);

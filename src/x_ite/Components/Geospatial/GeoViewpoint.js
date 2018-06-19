@@ -240,6 +240,10 @@ function (Fields,
 
 			return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
 		},
+		getMaxFarValue: function ()
+		{
+			return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e9;
+		},
 		getUpVector: function ()
 		{
 			return this .getGeoUpVector .call (this, position .assign (this .position) .add (this .positionOffset_ .getValue ()), upVector);
@@ -247,10 +251,6 @@ function (Fields,
 		getSpeedFactor: function ()
 		{
 			return (Math .max (this .elevation, 0.0) + 10) / 10 * this .speedFactor_ .getValue ();
-		},
-		getMaxZFar: function ()
-		{
-			return 1e9;
 		},
 		getScreenScale: function (point, viewport)
 		{
@@ -276,7 +276,7 @@ function (Fields,
 		},
 		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport, limit)
 		{
-			if (limit)
+			if (limit || this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer"))
 				return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
 				
 			// Linear interpolate nearValue and farValue

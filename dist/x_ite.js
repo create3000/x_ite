@@ -1,4 +1,4 @@
-/* X_ITE v4.1.6-241 */
+/* X_ITE v4.2.1-288 */
 
 (function () {
 
@@ -14625,6 +14625,9 @@ function (Algorithm)
 		},
 		lerp: function (a, b, t, r)
 		{
+			// Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
+			// Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
+
 			var range = Math .abs (b [0] - a [0]);
 
 			if (range <= Math .PI)
@@ -14773,6 +14776,26 @@ function (Color3,
 			this .getValue () .setHSV (h, s, v);
 			this .addEvent ();
 		},
+		lerp: (function ()
+		{
+			var	
+				s = [ ],
+				d = [ ],
+				r = [ ];
+     
+			return function (destination, t)
+			{
+				var result = new SFColor ();
+
+				this .getValue () .getHSV (s),
+				destination .getValue () .getHSV (d),
+				Color3 .lerp (s, d, t, r),
+	
+				result .setHSV (r [0], r [1], r [2], r [3]);
+	
+				return result;
+			};
+		})(),
 		toStream: function (stream)
 		{
 			stream .string += this .getValue () .toString ();
@@ -15017,12 +15040,48 @@ function (Color3, Algorithm)
 	Object .defineProperty (Color4 .prototype, "2", b);
 	Object .defineProperty (Color4 .prototype, "3", a);
 
-	Color4 .HSVA = function (h, s, v, a)
+	Object .assign (Color4,
 	{
-		var color = new Color4 (0, 0, 0, a);
-		color .setHSV (h, s, v);
-		return color;
-	}
+		HSV: function (h, s, v, a)
+		{
+			var color = new Color4 (0, 0, 0, a);
+			color .setHSV (h, s, v);
+			return color;
+		},
+		lerp: function (a, b, t, r)
+		{
+			// Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
+			// Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
+
+			var range = Math .abs (b [0] - a [0]);
+
+			if (range <= Math .PI)
+			{
+				r [0] = Algorithm .lerp (a [0], b [0], t);
+				r [1] = Algorithm .lerp (a [1], b [1], t);
+				r [2] = Algorithm .lerp (a [2], b [2], t);
+				r [3] = Algorithm .lerp (a [3], b [3], t);
+				return r;
+			}
+
+			var
+				PI2  = Math .PI * 2,
+				step = (PI2 - range) * t,
+				h    = a [0] < b [0] ? a [0] - step : a [0] + step;
+
+			if (h < 0)
+				h += PI2;
+
+			else if (h > PI2)
+				h -= PI2;
+
+			r [0] = h;
+			r [1] = Algorithm .lerp (a [1], b [1], t);
+			r [2] = Algorithm .lerp (a [2], b [2], t);
+			r [3] = Algorithm .lerp (a [3], b [3], t);
+			return r;
+		},
+	});
 
 	return Color4;
 });
@@ -15141,6 +15200,26 @@ function (X3DField,
 			this .getValue () .setHSVA (h, s, v, a);
 			this .addEvent ();
 		},
+		lerp: (function ()
+		{
+			var	
+				s = [ ],
+				d = [ ],
+				r = [ ];
+     
+			return function (destination, t)
+			{
+				var result = new SFColorRGBA ();
+
+				this .getValue () .getHSVA (s),
+				destination .getValue () .getHSVA (d),
+				Color4 .lerp (s, d, t, r),
+	
+				result .setHSVA (r [0], r [1], r [2], r [3]);
+	
+				return result;
+			};
+		})(),
 		toStream: SFColor .prototype .toStream,
 		toXMLStream: SFColor .prototype .toXMLStream,
 	});
@@ -24501,7 +24580,7 @@ function (SFBool,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.1.6a";
+	return "4.2.1";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -25856,6 +25935,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
 		]),
 		getTypeName: function ()
 		{
@@ -25873,12 +25953,13 @@ function (Fields,
 		{
 			X3DBaseNode .prototype .initialize .call (this);
 			
-			this .SplashScreen_              .addInterest ("set_splashScreen__", this);
-			this .Rubberband_                .addInterest ("set_rubberband__", this);
-			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__", this);
-			this .TextureQuality_            .addInterest ("set_textureQuality__", this);
-			this .Shading_                   .addInterest ("set_shading__", this);
-			this .getBrowser () .shutdown () .addInterest ("configure", this);
+			this .SplashScreen_              .addInterest ("set_splashScreen__",           this);
+			this .Rubberband_                .addInterest ("set_rubberband__",             this);
+			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__",       this);
+			this .TextureQuality_            .addInterest ("set_textureQuality__",         this);
+			this .Shading_                   .addInterest ("set_shading__",                this);
+			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
+			this .getBrowser () .shutdown () .addInterest ("configure",                    this);
 
 			this .configure ();
 		},
@@ -25909,6 +25990,8 @@ function (Fields,
 			if (rubberband       !== undefined && rubberband       !== this .Rubberband_       .getValue ()) this .Rubberband_       = rubberband;
 			if (primitiveQuality !== undefined && primitiveQuality !== this .PrimitiveQuality_ .getValue ()) this .PrimitiveQuality_ = primitiveQuality;
 			if (textureQuality   !== undefined && textureQuality   !== this .TextureQuality_   .getValue ()) this .TextureQuality_   = textureQuality;
+
+			this .LogarithmicDepthBuffer_ = false;
 		},
 		setAttributeSplashScreen: function ()
 		{
@@ -26071,6 +26154,39 @@ function (Fields,
 		set_shading__: function (shading)
 		{
 			this .getBrowser () .setShading (shading .getValue ());
+		},
+		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
+		{
+			try
+			{
+				var browser = this .getBrowser ();
+
+				logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && browser .getExtension ("EXT_frag_depth");
+	
+				if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
+					return;
+
+				browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
+	
+				// Recompile shaders.
+	
+				browser .getPointShader () .parts_ [0] .url_ .addEvent ();
+				browser .getPointShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getLineShader () .parts_ [0] .url_ .addEvent ();
+				browser .getLineShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getGouraudShader () .parts_ [0] .url_ .addEvent ();
+				browser .getGouraudShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getPhongShader () .parts_ [0] .url_ .addEvent ();
+				browser .getPhongShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getShadowShader () .parts_ [0] .url_ .addEvent ();
+				browser .getShadowShader () .parts_ [1] .url_ .addEvent ();
+			}
+			catch (error)
+			{ }
 		},
 	});
 
@@ -26251,13 +26367,14 @@ function (Fields,
 	{
 		constructor: RenderingProperties,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "Shading",        new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "MaxTextureSize", new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "TextureUnits",   new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "MaxLights",      new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "Antialiased",    new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ColorDepth",     new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "TextureMemory",  new Fields .SFDouble ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxLights",              new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "Antialiased",            new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "ColorDepth",             new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
 		]),
 		getTypeName: function ()
 		{
@@ -33344,6 +33461,14 @@ function (FieldDefinitionArray,
 				console .error (error .message);
 			}
 		},
+		getSpecificationVersion: function ()
+		{
+			return this .getExecutionContext () .getSpecificationVersion ();
+		},
+		getEncoding: function ()
+		{
+			return this .getExecutionContext () .getEncoding ();
+		},
 		getInnerNode: function ()
 		{
 			var rootNodes = this .getRootNodes () .getValue ();
@@ -34201,6 +34326,14 @@ function ($,
 
 			this .loadState_ = X3DConstants .COMPLETE_STATE;
 		},
+		getSpecificationVersion: function ()
+		{
+			return this .getExecutionContext () .getSpecificationVersion ();
+		},
+		getEncoding: function ()
+		{
+			return this .getExecutionContext () .getEncoding ();
+		},
 		getURL: function ()
 		{
 			return this .getExecutionContext () .getURL ();
@@ -34556,7 +34689,7 @@ function (Fields,
 		Comment:     new RegExp ('#(.*?)(?=[\\n\\r])',   'gy'),
 
 		// Header
-		Header:	    new RegExp ("#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'gy'),
+		Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'gy'),
 
 		// Keywords
 		AS:          new RegExp ('AS',          'gy'),
@@ -34857,6 +34990,8 @@ function (Fields,
 		},
 		headerStatement: function ()
 		{
+			Grammar .Header .lastIndex = 0;
+
 			var result = Grammar .Header .exec (this .input);
 
 			if (result)
@@ -37476,59 +37611,59 @@ function ($,
 	var browserNumber = 0;
 
 	var extensions = [
-			"ANGLE_instanced_arrays",
-			"EXT_blend_minmax",
-			"EXT_frag_depth",
-			"EXT_shader_texture_lod",
-			"EXT_texture_filter_anisotropic",
-			"OES_element_index_uint",
-			"OES_standard_derivatives",
-			"OES_texture_float",
-			"OES_texture_float_linear",
-			"OES_texture_half_float",
-			"OES_texture_half_float_linear",
-			"OES_vertex_array_object",
-			"WEBGL_compressed_texture_s3tc",
-			"WEBGL_debug_renderer_info",
-			"WEBGL_debug_shaders",
-			"WEBGL_depth_texture",
-			"WEBGL_draw_buffers",
-			"WEBGL_lose_context",
+		"ANGLE_instanced_arrays",
+		"EXT_blend_minmax",
+		"EXT_frag_depth",
+		"EXT_shader_texture_lod",
+		"EXT_texture_filter_anisotropic",
+		"OES_element_index_uint",
+		"OES_standard_derivatives",
+		"OES_texture_float",
+		"OES_texture_float_linear",
+		"OES_texture_half_float",
+		"OES_texture_half_float_linear",
+		"OES_vertex_array_object",
+		"WEBGL_compressed_texture_s3tc",
+		"WEBGL_debug_renderer_info",
+		"WEBGL_debug_shaders",
+		"WEBGL_depth_texture",
+		"WEBGL_draw_buffers",
+		"WEBGL_lose_context",
 
-			"EXT_color_buffer_float",
-			"EXT_color_buffer_half_float",
-			"EXT_disjoint_timer_query",
-			"EXT_disjoint_timer_query_webgl2",
-			"EXT_sRGB",
-			"WEBGL_color_buffer_float",
-			"WEBGL_compressed_texture_astc",
-			"WEBGL_compressed_texture_atc",
-			"WEBGL_compressed_texture_etc",
-			"WEBGL_compressed_texture_etc1",
-			"WEBGL_compressed_texture_pvrtc",
-			"WEBGL_compressed_texture_s3tc_srgb",
+		"EXT_color_buffer_float",
+		"EXT_color_buffer_half_float",
+		"EXT_disjoint_timer_query",
+		"EXT_disjoint_timer_query_webgl2",
+		"EXT_sRGB",
+		"WEBGL_color_buffer_float",
+		"WEBGL_compressed_texture_astc",
+		"WEBGL_compressed_texture_atc",
+		"WEBGL_compressed_texture_etc",
+		"WEBGL_compressed_texture_etc1",
+		"WEBGL_compressed_texture_pvrtc",
+		"WEBGL_compressed_texture_s3tc_srgb",
 
-			"EXT_float_blend",
-			"OES_fbo_render_mipmap",
-			"WEBGL_get_buffer_sub_data_async",
-			"WEBGL_multiview",
-			"WEBGL_security_sensitive_resources",
-			"WEBGL_shared_resources",
+		"EXT_float_blend",
+		"OES_fbo_render_mipmap",
+		"WEBGL_get_buffer_sub_data_async",
+		"WEBGL_multiview",
+		"WEBGL_security_sensitive_resources",
+		"WEBGL_shared_resources",
 
-			"EXT_clip_cull_distance",
-			"WEBGL_debug",
-			"WEBGL_dynamic_texture",
-			"WEBGL_subarray_uploads",
-			"WEBGL_texture_multisample",
-			"WEBGL_texture_source_iframe",
-			"WEBGL_video_texture",
+		"EXT_clip_cull_distance",
+		"WEBGL_debug",
+		"WEBGL_dynamic_texture",
+		"WEBGL_subarray_uploads",
+		"WEBGL_texture_multisample",
+		"WEBGL_texture_source_iframe",
+		"WEBGL_video_texture",
 
-			"EXT_texture_storage",
-			"OES_depth24",
-			"WEBGL_debug_shader_precision",
-			"WEBGL_draw_elements_no_range_check",
-			"WEBGL_subscribe_uniform",
-			"WEBGL_texture_from_depth_video",
+		"EXT_texture_storage",
+		"OES_depth24",
+		"WEBGL_debug_shader_precision",
+		"WEBGL_draw_elements_no_range_check",
+		"WEBGL_subscribe_uniform",
+		"WEBGL_texture_from_depth_video",
 	];
 
 	function getContext (canvas)
@@ -39168,12 +39303,18 @@ function (Fields,
 		enable: function (gl, context)
 		{
 			var browser = context .renderer .getBrowser ();
-		
+
 			context .linePropertiesNode   = this .linePropertiesNode;
 			context .materialNode         = this .materialNode;
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
-			context .shaderNode           = this .shaderNode || browser .getDefaultShader ();
+
+			if (this .shaderNode)
+				context .shaderNode = this .shaderNode;
+			else if (context .shadow)
+				context .shaderNode = browser .getShadowShader ();
+			else
+				context .shaderNode = browser .getDefaultShader ();
 
 			if (this .blendModeNode)
 				this .blendModeNode .enable (gl);
@@ -39664,15 +39805,2070 @@ function (X3DAppearanceChildNode,
  ******************************************************************************/
 
 
+define ('x_ite/Components/Core/X3DBindableNode',[
+	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DChildNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function X3DBindableNode (executionContext)
+	{
+		X3DChildNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DBindableNode);
+
+		this .layers = [ ];
+	}
+
+	X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+	{
+		constructor: X3DBindableNode,
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .set_bind_ .addInterest ("set_bind__", this);
+		},
+		getCameraObject: function ()
+		{
+		   return true;
+		},
+		addLayer: function (layer)
+		{
+			this .layers .push (layer);
+		},
+		transitionStart: function ()
+		{ },
+		set_bind__: function ()
+		{
+			if (this .set_bind_ .getValue ())
+			{
+				this .layers = this .getLayers ();
+
+				// Bind
+		
+				for (var i = 0; i < this .layers .length; ++ i)
+					this .bindToLayer (this .layers [i]);
+			}
+			else
+			{
+				// Unbind
+
+				for (var i = 0; i < this .layers .length; ++ i)
+					this .unbindFromLayer (this .layers [i]);
+			}
+		},
+	});
+
+	return X3DBindableNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Time/X3DTimeDependentNode',[
+	"x_ite/Fields",
+	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DChildNode,
+          X3DConstants)
+{
+"use strict";
+
+	function X3DTimeDependentNode (executionContext)
+	{
+		this .addType (X3DConstants .X3DTimeDependentNode);
+
+		this .addChildObjects ("initialized", new Fields .SFTime (),
+		                       "isEvenLive",  new Fields .SFBool ());
+
+		this .startTimeValue  = 0;
+		this .pauseTimeValue  = 0;
+		this .resumeTimeValue = 0;
+		this .stopTimeValue   = 0;
+		this .start           = 0;
+		this .pause           = 0;
+		this .pauseInterval   = 0;
+		this .startTimeout    = null;
+		this .pauseTimeout    = null;
+		this .resumeTimeout   = null;
+		this .stopTimeout     = null;
+		this .disabled        = false;
+	}
+
+	X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+	{
+		constructor: X3DTimeDependentNode,
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .isLive ()   .addInterest ("set_live__", this);
+			this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode
+
+			this .initialized_ .addInterest ("set_loop__",       this);
+			this .enabled_     .addInterest ("set_enabled__",    this);
+			this .loop_        .addInterest ("set_loop__",       this);
+			this .startTime_   .addInterest ("set_startTime__",  this);
+			this .pauseTime_   .addInterest ("set_pauseTime__",  this);
+			this .resumeTime_  .addInterest ("set_resumeTime__", this);
+			this .stopTime_    .addInterest ("set_stopTime__",   this);
+
+			this .startTimeValue  = this .startTime_  .getValue ();
+			this .pauseTimeValue  = this .pauseTime_  .getValue ();
+			this .resumeTimeValue = this .resumeTime_ .getValue ();
+			this .stopTimeValue   = this .stopTime_   .getValue ();
+
+			this .initialized_ = this .getBrowser () .getCurrentTime ();
+		},
+		getDisabled: function ()
+		{
+			return this .disabled;
+		},
+		getElapsedTime: function ()
+		{
+			return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
+		},
+		getLiveState: function ()
+		{
+			///  Determines the live state of this node.
+
+			return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
+		},
+		set_live__: function ()
+		{
+			if (this .isLive () .getValue ())
+			{
+				if (this .disabled)
+				{
+					this .disabled = false;
+
+					if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+						this .real_resume ();
+				}
+			}
+			else
+			{
+				if (! this .disabled && this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+				{
+					// Only disable if needed, ie. if running!
+					this .disabled = true;
+					this .real_pause ();
+				}
+			}
+		},
+		set_enabled__: function ()
+		{
+			if (this .enabled_ .getValue ())
+				this .set_loop__ ();
+
+			else
+				this .stop ();
+		},
+		set_loop__: function ()
+		{
+			if (this .enabled_ .getValue ())
+			{
+				if (this .loop_ .getValue ())
+				{
+					if (this .stopTimeValue <= this .startTimeValue)
+					{
+						if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
+							this .do_start ();
+					}
+				}
+			}
+		},
+		set_startTime__: function ()
+		{
+			this .startTimeValue = this .startTime_ .getValue ();
+
+			if (this .enabled_ .getValue ())
+			{
+				this .removeTimeout ("startTimeout");
+
+				if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
+					this .do_start ();
+
+				else
+					this .addTimeout ("startTimeout", "do_start", this .startTimeValue);
+			}
+		},
+		set_pauseTime__: function ()
+		{
+			this .pauseTimeValue = this .pauseTime_ .getValue ();
+
+			if (this .enabled_ .getValue ())
+			{
+				this .removeTimeout ("pauseTimeout");
+
+				if (this .pauseTimeValue <= this .resumeTimeValue)
+					return;
+
+				if (this .pauseTimeValue <= this .getBrowser () .getCurrentTime ())
+					this .do_pause ();
+
+				else
+					this .addTimeout ("pauseTimeout", "do_pause", this .pauseTimeValue);
+			}
+		},
+		set_resumeTime__: function ()
+		{
+			this .resumeTimeValue = this .resumeTime_ .getValue ();
+
+			if (this .enabled_ .getValue ())
+			{
+				this .removeTimeout ("resumeTimeout");
+
+				if (this .resumeTimeValue <= this .pauseTimeValue)
+					return;
+
+				if (this .resumeTimeValue <= this .getBrowser () .getCurrentTime ())
+					this .do_resume ();
+
+				else
+					this .addTimeout ("resumeTimeout", "do_resume", this .resumeTimeValue);
+			}
+		},
+		set_stopTime__: function ()
+		{
+			this .stopTimeValue = this .stopTime_ .getValue ();
+
+			if (this .enabled_ .getValue ())
+			{
+				this .removeTimeout ("stopTimeout");
+
+				if (this .stopTimeValue <= this .startTimeValue)
+					return;
+
+				if (this .stopTimeValue <= this .getBrowser () .getCurrentTime ())
+					this .do_stop ();
+
+				else
+					this .addTimeout ("stopTimeout","do_stop", this .stopTimeValue);
+			}
+		},
+		do_start: function ()
+		{
+			if (! this .isActive_ .getValue ())
+			{
+				this .start         = this .getBrowser () .getCurrentTime ();
+				this .pauseInterval = 0;
+
+				// The event order below is very important.
+
+				this .isActive_ = true;
+
+				this .set_start ();
+
+				if (this .isLive () .getValue ())
+				{
+					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
+				}
+				else if (! this .disabled)
+				{
+					this .disabled = true;
+					this .real_pause ();
+				}
+
+				this .elapsedTime_ = 0;
+				this .cycleTime_   = this .getBrowser () .getCurrentTime ();
+			}
+		},
+		do_pause: function ()
+		{
+			if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+			{
+				this .isPaused_ = true;
+
+				if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
+					this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
+
+				if (this .isLive () .getValue ())
+					this .real_pause ();
+			}
+		},
+		real_pause: function ()
+		{
+			this .pause = performance .now ();
+
+			this .set_pause ();
+
+			this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+		},
+		do_resume: function ()
+		{
+			if (this .isActive_ .getValue () && this .isPaused_ .getValue ())
+			{
+				this .isPaused_ = false;
+
+				if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
+					this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
+
+				if (this .isLive () .getValue ())
+					this .real_resume ();
+			}
+		},
+		real_resume: function ()
+		{
+			var interval = (performance .now () - this .pause) / 1000;
+
+			this .pauseInterval += interval;
+
+			this .set_resume (interval);
+
+			this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
+			this .getBrowser () .addBrowserEvent ();
+		},
+		do_stop: function ()
+		{
+			this .stop ();
+		},
+		stop: function ()
+		{
+			if (this .isActive_ .getValue ())
+			{
+				// The event order below is very important.
+
+				this .set_stop ();
+
+				this .elapsedTime_ = this .getElapsedTime ();
+
+				if (this .isPaused_ .getValue ())
+					this .isPaused_ = false;
+
+				this .isActive_ = false;
+
+				if (this .isLive () .getValue ())
+					this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+			}
+		},
+		timeout: function (callback)
+		{
+			if (this .enabled_ .getValue ())
+			{
+				this .getBrowser () .advanceTime (performance .now ());
+
+				this [callback] ();
+			}
+		},
+		addTimeout: function (name, callback, time)
+		{
+			this .removeTimeout (name);
+			this [name] = setTimeout (this .timeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000);
+		},
+		removeTimeout: function (name)
+		{
+			clearTimeout (this [name]);
+			this [name] = null;
+		},
+		set_start: function () { },
+		set_pause: function () { },
+		set_resume: function () { },
+		set_stop: function () { },
+		set_time: function () { },
+	});
+
+	return X3DTimeDependentNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Time/TimeSensor',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Core/X3DSensorNode",
+	"x_ite/Components/Time/X3DTimeDependentNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DSensorNode, 
+          X3DTimeDependentNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function TimeSensor (executionContext)
+	{
+		X3DSensorNode        .call (this, executionContext);
+		X3DTimeDependentNode .call (this, executionContext);
+
+		this .addType (X3DConstants .TimeSensor);
+
+		this .addChildObjects ("range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
+		
+		this .cycle    = 0;
+		this .interval = 0;
+		this .fraction = 0;
+		this .first    = 0;
+		this .last     = 1;
+		this .scale    = 1;
+	}
+
+	TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+		X3DTimeDependentNode .prototype,
+	{
+		constructor: TimeSensor,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "cycleInterval",    new Fields .SFTime (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "loop",             new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",        new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",       new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",        new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",         new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",        new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "fraction_changed", new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "time",             new Fields .SFTime ()),
+		]),
+		getTypeName: function ()
+		{
+			return "TimeSensor";
+		},
+		getComponentName: function ()
+		{
+			return "Time";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DSensorNode        .prototype .initialize .call (this);
+			X3DTimeDependentNode .prototype .initialize .call (this);
+
+			this .cycleInterval_ .addInterest ("set_cycleInterval__", this);
+			this .range_         .addInterest ("set_range__",         this);
+		},
+		setRange: function (currentFraction, firstFraction, lastFraction)
+		{
+			this .fraction = currentFraction >= 1 ? 0 : currentFraction;
+			this .first    = firstFraction;
+			this .last     = lastFraction;
+			this .scale    = this .last - this .first;
+
+			var offset = (this .fraction -  this .first) * this .cycleInterval_ .getValue ();
+
+			this .interval = this .cycleInterval_ .getValue () * this .scale;
+			this .cycle    = this .getBrowser () .getCurrentTime () - offset;
+		},
+		set_cycleInterval__: function ()
+		{
+			if (this .isActive_ .getValue ())
+				this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
+		},
+		set_range__: function ()
+		{
+			if (this .isActive_ .getValue ())
+			{
+				this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+
+				if (! this .isPaused_ .getValue ())
+					this .set_fraction (this .getBrowser () .getCurrentTime ());
+			}
+		},
+		set_start: function ()
+		{
+			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+
+			this .fraction_changed_ = this .range_ [0];
+			this .time_             = this .getBrowser () .getCurrentTime ();
+		},			
+		set_resume: function (pauseInterval)
+		{
+			this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
+		},
+		set_fraction: function (time)
+		{
+			var t = (time - this .cycle) / this .interval;
+
+			this .fraction_changed_ = this .fraction = this .first + (t - Math .floor (t)) * this .scale;
+		},
+		set_time: function ()
+		{
+			// The event order below is very important.
+
+			var time = this .getBrowser () .getCurrentTime ();
+
+			if (time - this .cycle >= this .interval)
+			{
+				if (this .loop_ .getValue ())
+				{
+					if (this .interval)
+					{
+						this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
+						
+						this .elapsedTime_ = this .getElapsedTime ();
+						this .cycleTime_   = time;
+
+						this .set_fraction (time);
+					}
+				}
+				else
+				{
+					this .fraction_changed_ = this .fraction = this .last;
+					this .stop ();
+				}
+			}
+			else
+			{
+				this .elapsedTime_ = this .getElapsedTime ();
+
+				this .set_fraction (time);
+			}
+
+			this .time_ = time;
+		},
+	});
+
+	return TimeSensor;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/X3DInterpolatorNode',[
+	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
+],
+function (X3DChildNode, 
+          X3DConstants,
+          Algorithm)
+{
+"use strict";
+
+	function X3DInterpolatorNode (executionContext)
+	{
+		X3DChildNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DInterpolatorNode);
+	}
+
+	X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+	{
+		constructor: X3DInterpolatorNode,
+		setup: function ()
+		{
+			// If an X3DInterpolatorNode value_changed outputOnly field is read before it receives any inputs,
+			// keyValue[0] is returned if keyValue is not empty. If keyValue is empty (i.e., [ ]), the initial
+			// value for the respective field type is returned (EXAMPLE  (0, 0, 0) for Fields .SFVec3f);
+
+			this .set_key__ ();
+
+			if (this .key_ .length)
+				this .interpolate (0, 0, 0);
+
+			X3DChildNode .prototype .setup .call (this);
+		},
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+			
+			this .set_fraction_ .addInterest ("set_fraction__", this);
+			this .key_          .addInterest ("set_key__", this);
+		},
+		set_fraction__: function ()
+		{
+			var
+				key      = this .key_,
+				length   = key .length,
+				fraction = this .set_fraction_ .getValue ();
+
+			switch (length)
+			{
+				case 0:
+					// Interpolator nodes containing no keys in the key field shall not produce any events.
+					return;
+				case 1:
+					return this .interpolate (0, 0, 0);
+				default:
+				{
+					if (fraction <= key [0])
+						return this .interpolate (0, 1, 0);
+
+					var index1 = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
+
+					if (index1 !== length)
+					{
+						var
+							index0 = index1 - 1,
+							weight = (fraction - key [index0]) / (key [index1] - key [index0]);
+
+						this .interpolate (index0, index1, Algorithm .clamp (weight, 0, 1));
+					}
+					else
+						this .interpolate (length - 2, length - 1, 1);
+				}
+			}
+		},
+		set_key__: function ()
+		{
+			this .set_keyValue__ ();
+		},
+		set_keyValue__: function () { },
+		interpolate: function () { },
+	});
+
+	return X3DInterpolatorNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/EaseInEaseOut',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Interpolation/X3DInterpolatorNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DInterpolatorNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function EaseInEaseOut (executionContext)
+	{
+		X3DInterpolatorNode .call (this, executionContext);
+
+		this .addType (X3DConstants .EaseInEaseOut);
+	}
+
+	EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+	{
+		constructor: EaseInEaseOut,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",             new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "key",                      new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "easeInEaseOut",            new Fields .MFVec2f ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "modifiedFraction_changed", new Fields .SFFloat ()),
+		]),
+		getTypeName: function ()
+		{
+			return "EaseInEaseOut";
+		},
+		getComponentName: function ()
+		{
+			return "Interpolation";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DInterpolatorNode .prototype .initialize .call (this);
+
+			this .easeInEaseOut_ .addInterest ("set_keyValue__", this);
+		},
+		set_keyValue__: function ()
+		{
+			if (this .easeInEaseOut_ .length < this .key_ .length)
+				this .easeInEaseOut_ .resize (this .key_ .length, this .easeInEaseOut_ .length ? this .easeInEaseOut_ [this .easeInEaseOut_ .length - 1] : new Fields .SFVec2f ());
+		},
+		interpolate: function (index0, index1, weight)
+		{
+			var
+				easeOut = this .easeInEaseOut_ [index0] .y,
+				easeIn  = this .easeInEaseOut_ [index1] .x,
+				sum     = easeOut + easeIn;
+
+			if (sum < 0)
+			{
+				this .modifiedFraction_changed_ = weight;
+			}
+			else
+			{
+				if (sum > 1)
+				{
+					easeIn  /= sum;
+					easeOut /= sum;
+				}
+
+				var t = 1 / (2 - easeOut - easeIn);
+
+				if (weight < easeOut)
+				{
+					this .modifiedFraction_changed_ = (t / easeOut) * weight * weight;
+				}
+				else if (weight <= 1 - easeIn) // Spec says (weight < 1 - easeIn), but then we get a NaN below if easeIn == 0.
+				{
+					this .modifiedFraction_changed_ = t * (2 * weight - easeOut);
+				}
+				else
+				{
+					var w = 1 - weight;
+
+					this .modifiedFraction_changed_ = 1 - ((t * w * w) / easeIn);
+				}
+			}
+		},
+	});
+
+	return EaseInEaseOut;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/PositionInterpolator',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Interpolation/X3DInterpolatorNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector3",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DInterpolatorNode, 
+          X3DConstants,
+          Vector3)
+{
+"use strict";
+
+	function PositionInterpolator (executionContext)
+	{
+		X3DInterpolatorNode .call (this, executionContext);
+
+		this .addType (X3DConstants .PositionInterpolator);
+	}
+
+	PositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+	{
+		constructor: PositionInterpolator,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
+		]),
+		keyValue: new Vector3 (0, 0, 0),
+		getTypeName: function ()
+		{
+			return "PositionInterpolator";
+		},
+		getComponentName: function ()
+		{
+			return "Interpolation";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DInterpolatorNode .prototype .initialize .call (this);
+
+			this .keyValue_ .addInterest ("set_keyValue__", this);
+		},
+		set_keyValue__: function ()
+		{
+			var
+				key      = this .key_,
+				keyValue = this .keyValue_;
+
+			if (keyValue .length < key .length)
+				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
+		},
+		interpolate: function (index0, index1, weight)
+		{
+			this .value_changed_ = this .keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
+		},
+	});
+
+	return PositionInterpolator;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/OrientationInterpolator',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Interpolation/X3DInterpolatorNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Rotation4"
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DInterpolatorNode, 
+          X3DConstants,
+          Rotation4)
+{
+"use strict";
+
+	function OrientationInterpolator (executionContext)
+	{
+		X3DInterpolatorNode .call (this, executionContext);
+
+		this .addType (X3DConstants .OrientationInterpolator);
+	}
+
+	OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+	{
+		constructor: OrientationInterpolator,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
+		]),
+		keyValue: new Rotation4 (),
+		getTypeName: function ()
+		{
+			return "OrientationInterpolator";
+		},
+		getComponentName: function ()
+		{
+			return "Interpolation";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DInterpolatorNode .prototype .initialize .call (this);
+
+			this .keyValue_ .addInterest ("set_keyValue__", this);
+		},
+		set_keyValue__: function ()
+		{
+			var
+				key      = this .key_,
+				keyValue = this .keyValue_;
+
+			if (keyValue .length < key .length)
+				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
+		},
+		interpolate: function (index0, index1, weight)
+		{
+			try
+			{
+				this .value_changed_ = this .keyValue .assign (this .keyValue_ [index0] .getValue ()) .slerp (this .keyValue_ [index1] .getValue (), weight);
+			}
+			catch (error)
+			{ }
+		},
+	});
+
+	return OrientationInterpolator;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Navigation/X3DViewpointNode',[
+	"x_ite/Fields",
+	"x_ite/Components/Core/X3DBindableNode",
+	"x_ite/Components/Time/TimeSensor",
+	"x_ite/Components/Interpolation/EaseInEaseOut",
+	"x_ite/Components/Interpolation/PositionInterpolator",
+	"x_ite/Components/Interpolation/OrientationInterpolator",
+	"x_ite/Bits/TraverseType",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector2",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix4",
+],
+function (Fields,
+          X3DBindableNode,
+          TimeSensor,
+          EaseInEaseOut,
+          PositionInterpolator,
+          OrientationInterpolator,
+          TraverseType,
+          X3DConstants,
+          Vector2,
+          Vector3,
+          Rotation4,
+          Matrix4)
+{
+"use strict";
+
+	function X3DViewpointNode (executionContext)
+	{
+		X3DBindableNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DViewpointNode);
+
+		this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
+		                       "orientationOffset",      new Fields .SFRotation (),
+		                       "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
+		                       "scaleOrientationOffset", new Fields .SFRotation (),
+		                       "centerOfRotationOffset", new Fields .SFVec3f (),
+		                       "fieldOfViewScale",       new Fields .SFFloat (1));
+
+	   this .userPosition             = new Vector3 (0, 1, 0);
+	   this .userOrientation          = new Rotation4 (0, 0, 1, 0);
+	   this .userCenterOfRotation     = new Vector3 (0, 0, 0);
+		this .modelMatrix              = new Matrix4 ();
+		this .cameraSpaceMatrix        = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
+		this .inverseCameraSpaceMatrix = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
+
+		var browser = this .getBrowser ();
+
+		this .timeSensor                   = new TimeSensor              (browser .getPrivateScene ());
+		this .easeInEaseOut                = new EaseInEaseOut           (browser .getPrivateScene ());
+		this .positionInterpolator         = new PositionInterpolator    (browser .getPrivateScene ());
+		this .orientationInterpolator      = new OrientationInterpolator (browser .getPrivateScene ());
+		this .scaleInterpolator            = new PositionInterpolator    (browser .getPrivateScene ());
+		this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
+	}
+
+	X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+	{
+		constructor: X3DViewpointNode,
+		initialize: function ()
+		{
+			X3DBindableNode .prototype .initialize .call (this);
+		
+			this .timeSensor .stopTime_ = 1;
+			this .timeSensor .setup ();
+
+			this .easeInEaseOut .key_           = new Fields .MFFloat (0, 1);
+			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+			this .easeInEaseOut .setup ();
+
+			this .positionInterpolator         .key_ = new Fields .MFFloat (0, 1);
+			this .orientationInterpolator      .key_ = new Fields .MFFloat (0, 1);
+			this .scaleInterpolator            .key_ = new Fields .MFFloat (0, 1);
+			this .scaleOrientationInterpolator .key_ = new Fields .MFFloat (0, 1);
+
+			this .positionInterpolator         .setup ();
+			this .orientationInterpolator      .setup ();
+			this .scaleInterpolator            .setup ();
+			this .scaleOrientationInterpolator .setup ();
+
+			this .timeSensor .fraction_changed_ .addFieldInterest (this .easeInEaseOut .set_fraction_);
+
+			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .positionInterpolator         .set_fraction_);
+			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .orientationInterpolator      .set_fraction_);
+			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleInterpolator            .set_fraction_);
+			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleOrientationInterpolator .set_fraction_);
+
+			this .positionInterpolator         .value_changed_ .addFieldInterest (this .positionOffset_);
+			this .orientationInterpolator      .value_changed_ .addFieldInterest (this .orientationOffset_);
+			this .scaleInterpolator            .value_changed_ .addFieldInterest (this .scaleOffset_);
+			this .scaleOrientationInterpolator .value_changed_ .addFieldInterest (this .scaleOrientationOffset_);
+
+			this .isBound_ .addInterest ("set_bound__", this);
+		},
+		getEaseInEaseOut: function ()
+		{
+			return this .easeInEaseOut;
+		},
+		setInterpolators: function () { },
+		bindToLayer: function (layer)
+		{
+			layer .getViewpointStack () .push (this);
+		},
+		unbindFromLayer: function (layer)
+		{
+			layer .getViewpointStack () .pop (this);
+		},
+		removeFromLayer: function (layer)
+		{
+			layer .getViewpointStack () .remove (this);
+		},
+		getPosition: function ()
+		{
+			return this .position_ .getValue ();
+		},
+		getUserPosition: function ()
+		{
+			return this .userPosition .assign (this .getPosition ()) .add (this .positionOffset_ .getValue ());
+		},
+		getOrientation: function ()
+		{
+			return this .orientation_ .getValue ();
+		},
+		getUserOrientation: function ()
+		{
+			return this .userOrientation .assign (this .getOrientation ()) .multRight (this .orientationOffset_ .getValue ());
+		},
+		getCenterOfRotation: function ()
+		{
+			return this .centerOfRotation_ .getValue ();
+		},
+		getUserCenterOfRotation: function ()
+		{
+			return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this .centerOfRotationOffset_ .getValue ());
+		},
+		getProjectionMatrix: function (renderObject)
+		{
+			var navigationInfo = renderObject .getNavigationInfo ();
+
+			return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
+                                                     navigationInfo .getFarValue (this),
+                                                     renderObject .getLayer () .getViewport () .getRectangle (renderObject .getBrowser ()));
+		},
+		getCameraSpaceMatrix: function ()
+		{
+			return this .cameraSpaceMatrix;
+		},
+		getInverseCameraSpaceMatrix: function ()
+		{
+			return this .inverseCameraSpaceMatrix;
+		},
+		getModelMatrix: function ()
+		{
+			return this .modelMatrix;
+		},
+		getMaxFarValue: function ()
+		{
+			return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e5;
+		},
+		getUpVector: function ()
+		{
+		   // Local y-axis,
+		   // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
+		   return Vector3 .yAxis;
+		},
+		getSpeedFactor: function ()
+		{
+			return 1;
+		},
+		transitionStart: (function ()
+		{
+			var
+				relativePosition         = new Vector3 (0, 0, 0),
+				relativeOrientation      = new Rotation4 (0, 0, 1, 0),
+				relativeScale            = new Vector3 (0, 0, 0),
+				relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
+
+			return function (fromViewpoint)
+			{
+				try
+				{
+					if (this .jump_ .getValue ())
+					{
+						var layers = this .getLayers ();
+	
+						if (! this .retainUserOffsets_ .getValue ())
+							this .resetUserOffsets ();
+		
+						for (var i = 0; i < layers .length; ++ i)
+						{
+							var navigationInfo = layers [i] .getNavigationInfo ();
+	
+							navigationInfo .transitionStart_ = true;
+	
+							var
+								transitionType = navigationInfo .getTransitionType (),
+								transitionTime = navigationInfo .transitionTime_ .getValue ();
+						}
+	
+						switch (transitionType)
+						{
+							case "TELEPORT":
+							{
+								for (var i = 0; i < layers .length; ++ i)
+									layers [i] .getNavigationInfo () .transitionComplete_ = true;
+	
+								return;
+							}
+							case "ANIMATE":
+							{
+								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+								break;
+							}
+							default:
+							{
+								// LINEAR
+								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+								break;
+							}
+						}
+						
+						this .timeSensor .cycleInterval_ = transitionTime;
+						this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
+						this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+						this .timeSensor .isActive_ .addInterest ("set_active__", this);
+	
+						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+	
+						this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
+						this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
+						this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
+						this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
+	
+						this .positionOffset_         = relativePosition;
+						this .orientationOffset_      = relativeOrientation;
+						this .scaleOffset_            = relativeScale;
+						this .scaleOrientationOffset_ = relativeScaleOrientation;
+	
+						this .setInterpolators (fromViewpoint);
+					}
+					else
+					{
+						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+		 
+						this .positionOffset_         = relativePosition;
+						this .orientationOffset_      = relativeOrientation;
+						this .scaleOffset_            = relativeScale;
+						this .scaleOrientationOffset_ = relativeScaleOrientation;
+	
+						this .setInterpolators (fromViewpoint);
+					}
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		})(),
+		transitionStop: function ()
+		{
+			this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
+			this .timeSensor .isActive_ .removeInterest ("set_active__", this);
+		},
+		resetUserOffsets: function ()
+		{
+			this .positionOffset_         = Vector3   .Zero;
+			this .orientationOffset_      = Rotation4 .Identity;
+			this .scaleOffset_            = Vector3   .One;
+			this .scaleOrientationOffset_ = Rotation4 .Identity;
+			this .centerOfRotationOffset_ = Vector3   .Zero;
+			this .fieldOfViewScale_       = 1;
+		},
+		getRelativeTransformation: function (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
+		// throw
+		{
+			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpoint .getInverseCameraSpaceMatrix ()) .inverse ();
+
+			differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+			relativePosition .subtract (this .getPosition ());
+			relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
+		},
+		straightenHorizon: (function ()
+		{
+			var
+				localXAxis = new Vector3 (0, 0, 0),
+				localZAxis = new Vector3 (0, 0, 0),
+				vector     = new Vector3 (0, 0, 0),
+				rotation   = new Rotation4 (0, 0, 1, 0);
+
+			return function (orientation)
+			{
+				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
+	
+				vector .assign (localZAxis) .cross (this .getUpVector ());
+	
+				rotation .setFromToVec (localXAxis, vector);
+	
+				return orientation .multRight (rotation);
+			};
+		})(),
+		lookAtPoint: function (point, factor, straighten)
+		{
+			try
+			{
+				if (! this .getBrowser () .getActiveLayer ())
+					return;
+	
+				this .getCameraSpaceMatrix () .multVecMatrix (point);
+
+				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
+
+				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
+		
+				this .lookAt (point, minDistance, factor, straighten);
+			}
+			catch (error)
+			{
+				console .error (error);
+			}
+		},
+		lookAtBBox: function (bbox, factor, straighten)
+		{
+			try
+			{
+				if (! this .getBrowser () .getActiveLayer ())
+					return;
+
+				bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
+		
+				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
+		
+				this .lookAt (bbox .center, minDistance, factor, straighten);
+			}
+			catch (error)
+			{ }
+		},
+		lookAt: function (point, distance, factor, straighten)
+		{
+			var
+				layers = this .getLayers (),
+				offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
+
+			for (var i = 0; i < layers .length; ++ i)
+				layers [i] .getNavigationInfo () .transitionStart_ = true;;
+		
+			this .timeSensor .cycleInterval_ = 0.2;
+			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
+			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+			this .timeSensor .isActive_ .addInterest ("set_active__", this);
+	
+			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+
+			var
+				translation = Vector3 .lerp (this .positionOffset_ .getValue (), offset, factor),
+				direction   = Vector3 .add (this .getPosition (), translation) .subtract (point),
+				rotation    = Rotation4 .multRight (this .orientationOffset_ .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
+		
+			if (straighten)
+				rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
+		
+			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, translation);
+			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
+			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
+			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
+		
+			this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
+			this .set_bind_               = true;
+		},
+		set_active__: function (active)
+		{
+			if (! active .getValue () && this .timeSensor .fraction_changed_ .getValue () === 1)
+			{
+				var layers = this .getLayers ();
+
+				for (var i = 0; i < layers .length; ++ i)
+				{
+					layers [i] .getNavigationInfo () .transitionComplete_ = true;
+				}
+
+				this .easeInEaseOut .set_fraction_ = 1;
+			}
+		},
+		set_bound__: function ()
+		{
+			if (this .isBound_ .getValue ())
+				this .getBrowser () .getNotification () .string_ = this .description_;
+			else
+				this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
+		},
+		traverse: function (type, renderObject)
+		{
+			renderObject .getLayer () .getViewpoints () .push (this);
+
+			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+		},
+		update: function ()
+		{
+			try
+			{
+				this .cameraSpaceMatrix .set (this .getUserPosition (),
+				                              this .getUserOrientation (),
+				                              this .scaleOffset_ .getValue (),
+				                              this .scaleOrientationOffset_ .getValue ());
+
+				this .cameraSpaceMatrix .multRight (this .modelMatrix);
+
+				this .inverseCameraSpaceMatrix .assign (this .cameraSpaceMatrix) .inverse ();
+			}
+			catch (error)
+			{
+			   console .log (error);
+			}
+		},
+	});
+
+	return X3DViewpointNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Math/Geometry/Camera',[
+	"standard/Math/Numbers/Vector3",
+],
+function (Vector3)
+{
+"use strict";
+
+	var
+		min = new Vector3 (0, 0, 0),
+		max = new Vector3 (0, 0, 0);
+
+	return {
+		frustum: function (l, r, b, t, n, f, matrix)
+		{
+			var
+				r_l = r - l,
+				t_b = t - b,
+				f_n = f - n,
+				n_2 = 2 * n,
+
+				A = (r + l) / r_l,
+				B = (t + b) / t_b,
+				C = -(f + n) / f_n,
+				D = -n_2 * f / f_n,
+				E = n_2 / r_l,
+				F = n_2 / t_b;
+
+			return matrix .set (E, 0, 0, 0,
+			                    0, F, 0, 0,
+			                    A, B, C, -1,
+			                    0, 0, D, 0);
+		},
+		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
+		{
+			var ratio = Math .tan (fieldOfView / 2) * zNear;
+
+			if (width > height)
+			{
+				var aspect = width * ratio / height;
+				return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
+			}
+			else
+			{
+				var aspect = height * ratio / width;
+				return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
+			}
+		},
+		perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
+		{
+			var ratio = Math .tan (fieldOfView / 2) * zNear;
+
+			return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
+		},
+		ortho: function (l, r, b, t, n, f, matrix)
+		{
+			var
+				r_l = r - l,
+				t_b = t - b,
+				f_n = f - n,
+
+				A =  2 / r_l,
+				B =  2 / t_b,
+				C = -2 / f_n,
+				D = -(r + l) / r_l,
+				E = -(t + b) / t_b,
+				F = -(f + n) / f_n;
+
+			return matrix .set (A, 0, 0, 0,
+			                    0, B, 0, 0,
+			                    0, 0, C, 0,
+			                    D, E, F, 1);
+		},
+		orthoBox: function (box, matrix)
+		{
+			box .getExtents (min, max);
+
+			return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
+		},
+	};
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Navigation/OrthoViewpoint',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Navigation/X3DViewpointNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Geometry/Camera",
+	"standard/Math/Numbers/Vector2",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Matrix4",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DViewpointNode, 
+          X3DConstants,
+          Camera,
+          Vector2,
+          Vector3,
+          Matrix4)
+{
+"use strict";
+
+	var
+		screenScale  = new Vector3 (0, 0, 0),
+		viewportSize = new Vector2 (0, 0);
+
+	function OrthoViewpoint (executionContext)
+	{
+		X3DViewpointNode .call (this, executionContext);
+
+		this .addType (X3DConstants .OrthoViewpoint);
+
+		this .position_         .setUnit ("length");
+		this .centerOfRotation_ .setUnit ("length");
+		this .fieldOfView_      .setUnit ("length");
+
+		this .projectionMatrix = new Matrix4 ();
+	}
+
+	OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+	{
+		constructor: OrthoViewpoint,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .MFFloat (-1, -1, 1, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
+		]),
+		getTypeName: function ()
+		{
+			return "OrthoViewpoint";
+		},
+		getComponentName: function ()
+		{
+			return "Navigation";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DViewpointNode .prototype .initialize .call (this);
+
+			this .fieldOfView_      .addInterest ("set_fieldOfView___", this);
+			this .fieldOfViewScale_ .addInterest ("set_fieldOfView___", this);
+
+			this .set_fieldOfView___ ();
+		},
+		set_fieldOfView___: function ()
+		{
+			var
+				length           = this .fieldOfView_ .length,
+				fieldOfViewScale = this .fieldOfViewScale_ .getValue ();
+
+			this .minimumX = (length > 0 ? this .fieldOfView_ [0] : -1) * fieldOfViewScale;
+			this .minimumY = (length > 1 ? this .fieldOfView_ [1] : -1) * fieldOfViewScale;
+			this .maximumX = (length > 2 ? this .fieldOfView_ [2] :  1) * fieldOfViewScale;
+			this .maximumY = (length > 3 ? this .fieldOfView_ [3] :  1) * fieldOfViewScale;
+
+			this .sizeX = this .maximumX - this .minimumX;
+			this .sizeY = this .maximumY - this .minimumY;
+		},
+		getMinimumX: function ()
+		{
+			return this .minimumX;
+		},
+		getMinimumY: function ()
+		{
+			return this .minimumY;
+		},
+		getMaximumX: function ()
+		{
+			return this .maximumX;
+		},
+		getMaximumY: function ()
+		{
+			return this .maximumY;
+		},
+		getSizeX: function ()
+		{
+			return this .sizeX;
+		},
+		getSizeY: function ()
+		{
+			return this .sizeY;
+		},
+		getMaxFarValue: function ()
+		{
+			return 1e5;
+		},
+		getScreenScale: function (dummy, viewport)
+		{
+			var
+				width  = viewport [2],
+				height = viewport [3],
+				sizeX  = this .sizeX,
+				sizeY  = this .sizeY,
+				aspect = width / height;
+
+			if (aspect > sizeX / sizeY)
+			{
+				var s = sizeY / height;
+
+				return screenScale .set (s, s, s);
+			}
+
+			var s = sizeX / width;
+
+			return screenScale .set (s, s, s);
+		},
+		getViewportSize: function (viewport)
+		{
+			var
+				width  = viewport [2],
+				height = viewport [3],
+				sizeX  = this .sizeX,
+				sizeY  = this .sizeY,
+				aspect = width / height;
+
+			if (aspect > sizeX / sizeY)
+				return viewportSize .set (sizeY * aspect, sizeY);
+
+			return viewportSize .set (sizeX, sizeX / aspect);
+		},
+		getLookAtDistance: function (bbox)
+		{
+			return bbox .size .abs () / 2 + 10;
+		},
+		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
+		{
+			var
+				width  = viewport [2],
+				height = viewport [3],
+				aspect = width / height,
+				sizeX  = this .sizeX,
+				sizeY  = this .sizeY;
+
+			if (aspect > sizeX / sizeY)
+			{
+				var
+					center  = (this .minimumX + this .maximumX) / 2,
+					size1_2 = (sizeY * aspect) / 2;
+
+				return Camera .ortho (center - size1_2, center + size1_2, this .minimumY, this .maximumY, nearValue, farValue, this .projectionMatrix);
+			}
+
+			var
+				center  = (this .minimumY + this .maximumY) / 2,
+				size1_2 = (sizeX / aspect) / 2;
+
+			return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
+		},
+	});
+
+	return OrthoViewpoint;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Shaders/X3DProgrammableShaderObject',[
 	"x_ite/Fields",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Components/Navigation/OrthoViewpoint",
 	"standard/Math/Numbers/Matrix3",
 ],
 function (Fields,
           X3DCast,
           X3DConstants,
+          OrthoViewpoint,
           Matrix3)
 {
 "use strict";
@@ -39698,9 +41894,10 @@ function (Fields,
 		this .x3d_LightCutOffAngle      = [ ];
 		this .x3d_LightRadius           = [ ];
 		this .x3d_ShadowIntensity       = [ ];
-		this .x3d_ShadowDiffusion       = [ ];
 		this .x3d_ShadowColor           = [ ];
+		this .x3d_ShadowBias            = [ ];
 		this .x3d_ShadowMatrix          = [ ];
+		this .x3d_ShadowMapSize         = [ ];
 		this .x3d_ShadowMap             = [ ];
 
 		this .numClipPlanes   = 0;
@@ -39722,7 +41919,13 @@ function (Fields,
 			this .x3d_MaxLights     = browser .getMaxLights ();
 			this .x3d_MaxTextures   = browser .getMaxTextures ();
 
-			this .textureTypeArray = new Int32Array (this .x3d_MaxTextures);
+			var defaultClipPlanes = [ ];
+
+			for (var i = 0, length = this .x3d_MaxClipPlanes; i < length; ++ i)
+				defaultClipPlanes .push (0, 0, -1, 0);
+
+			this .defaultClipPlanesArray = new Float32Array (defaultClipPlanes);
+			this .textureTypeArray       = new Int32Array (this .x3d_MaxTextures);
 		},
 		hasUserDefinedFields: function ()
 		{
@@ -39743,8 +41946,12 @@ function (Fields,
 				gl      = this .getBrowser () .getContext (),
 				program = this .getProgram ();
 
+			this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
+
 			this .x3d_GeometryType  = gl .getUniformLocation (program, "x3d_GeometryType");
 			this .x3d_NumClipPlanes = gl .getUniformLocation (program, "x3d_NumClipPlanes");
+
+			this .x3d_ClipPlanes = gl .getUniformLocation (program, "x3d_ClipPlane");
 
 			for (var i = 0; i < this .x3d_MaxClipPlanes; ++ i)
 				this .x3d_ClipPlane [i]  = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
@@ -39772,10 +41979,11 @@ function (Fields,
 				this .x3d_LightCutOffAngle [i]      = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].cutOffAngle",      "x3d_LightCutOffAngle[" + i + "]");
 				this .x3d_LightRadius [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].radius",           "x3d_LightRadius[" + i + "]");
 
-				this .x3d_ShadowIntensity [i] = gl .getUniformLocation (program, "x3d_ShadowIntensity[" + i + "]");
-				this .x3d_ShadowDiffusion [i] = gl .getUniformLocation (program, "x3d_ShadowDiffusion[" + i + "]");
-				this .x3d_ShadowColor [i]     = gl .getUniformLocation (program, "x3d_ShadowColor[" + i + "]");
-				this .x3d_ShadowMatrix [i]    = gl .getUniformLocation (program, "x3d_ShadowMatrix[" + i + "]");
+				this .x3d_ShadowIntensity [i] = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowIntensity");
+				this .x3d_ShadowColor [i]     = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowColor");
+				this .x3d_ShadowBias [i]      = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowBias");
+				this .x3d_ShadowMatrix [i]    = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowMatrix");
+				this .x3d_ShadowMapSize [i]   = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowMapSize");
 				this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
 			}
 
@@ -40407,6 +42615,8 @@ function (Fields,
 			this .numClipPlanes = 0;
 			this .numLights     = 0;
 
+			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
+
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
@@ -40414,9 +42624,6 @@ function (Fields,
 			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
 
 			// Legacy before 4.1.4
-
-			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
-				gl .uniform4f (this .x3d_ClipPlane [this .numClipPlanes], 88, 51, 68, 33);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
@@ -40441,6 +42648,16 @@ function (Fields,
 
 			for (var i = 0, length = globalLights .length; i < length; ++ i)
 				globalLights [i] .setShaderUniforms (gl, this);
+
+			// Logarithmic depth buffer support.
+
+			var viewpoint      = renderObject .getViewpoint ();
+			var navigationInfo = renderObject .getNavigationInfo ();
+
+			if (viewpoint instanceof OrthoViewpoint)
+				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
+			else
+				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));		
 		},
 		setLocalUniforms: function (gl, context)
 		{
@@ -40461,6 +42678,8 @@ function (Fields,
 			this .numClipPlanes = 0;
 			this .numLights     = this .numGlobalLights;
 
+			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
+
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
@@ -40468,9 +42687,6 @@ function (Fields,
 			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
 
 			// Legacy before 4.1.4
-
-			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
-				gl .uniform4f (this .x3d_ClipPlane [this .numClipPlanes], 88, 51, 68, 33);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
@@ -41065,22 +43281,13 @@ function (Fields,
 });
 
 
-define('text!x_ite/Browser/Shaders/Inlcude/Shadow.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\nuniform vec3      x3d_ShadowColor [x3d_MaxLights];\nuniform float     x3d_ShadowIntensity [x3d_MaxLights];\nuniform float     x3d_ShadowDiffusion [x3d_MaxLights];\nuniform mat4      x3d_ShadowMatrix [x3d_MaxLights];\nuniform sampler2D x3d_ShadowMap [x3d_MaxLights];\n\n#pragma X3D include "Pack.h"\n#pragma X3D include "Plane3.h"\n#pragma X3D include "Random.h"\n\n#ifdef X3D_SHADOWS\n\nPlane3 shadowPlane = Plane3 (vec3 (0.0), 0.0);\n\nfloat\ngetShadowDepth (in int index, in vec2 shadowCoord)\n{\n\t#if x3d_MaxShadows > 0\n\tif (index == 0)\n\t\treturn unpack (texture2D (x3d_ShadowMap [0], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 1\n\tif (index == 1)\n\t\treturn unpack (texture2D (x3d_ShadowMap [1], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 2\n\tif (index == 2)\n\t\treturn unpack (texture2D (x3d_ShadowMap [2], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 3\n\tif (index == 3)\n\t\treturn unpack (texture2D (x3d_ShadowMap [3], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 4\n\tif (index == 4)\n\t\treturn unpack (texture2D (x3d_ShadowMap [4], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 5\n\tif (index == 5)\n\t\treturn unpack (texture2D (x3d_ShadowMap [5], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 6\n\tif (index == 6)\n\t\treturn unpack (texture2D (x3d_ShadowMap [6], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 7\n\tif (index == 7)\n\t\treturn unpack (texture2D (x3d_ShadowMap [7], shadowCoord));\n\t#endif\n\n\treturn 0.0;\n}\n\nfloat\ngetShadowIntensity (in int index, in int lightType, in float shadowIntensity, in float shadowDiffusion, in mat4 shadowMatrix, in float lightAngle)\n{\n\tif (shadowIntensity <= 0.0 || lightAngle <= 0.0)\n\t\treturn 0.0;\n\n\t#define SHADOW_TEXTURE_EPS 0.01\n\t#define SHADOW_BIAS_OFFSET 0.002\n\t#define SHADOW_BIAS_FACTOR 0.004\n\t\t\n\tfloat shadowBias = SHADOW_BIAS_OFFSET + SHADOW_BIAS_FACTOR * (1.0 - abs (lightAngle));\n\n\tif (lightType == x3d_PointLight)\n\t{\n//\t\tmat4 rotationProjectionBias [6];\n//\t\trotationProjectionBias [0] = mat4 (-0.1666666666666667, -0.25, -1.0001250156269537, -1.0, 0, 0.1443375672974065, 0.0, 0.0, -0.09622504486493763, 0.0, 0.0, 0.0, 0.0, 0.0, -0.12501562695336918, 0.0);\n//\t\trotationProjectionBias [1] = mat4 (0.16666666666666666, 0.25, 1.0001250156269537, 1.0, 0, 0.1443375672974065, 0.0, 0.0, 0.09622504486493771, 0.0, 0.0, 0.0, 0.0, 0.0, -0.12501562695336918, 0.0);\n//\t\trotationProjectionBias [2] = mat4 (0.09622504486493766, 0.0, 0.0, 0.0, 0.0, 0.1443375672974065, 0.0, 0.0, -0.16666666666666666, -0.25, -1.0001250156269532, -1.0, 0.0, 0.0, -0.12501562695336918, 0.0);\n//\t\trotationProjectionBias [3] = mat4 (-0.09622504486493766, 0.0, 0.0, 0.0, 0, 0.1443375672974065, 0.0, 0.0, 0.16666666666666666, 0.25, 1.0001250156269532, 1.0, 0.0, 0.0, -0.12501562695336918, 0.0);\n//\t\trotationProjectionBias [4] = mat4 (0.09622504486493766, 0.0, 0.0, 0.0, -0.16666666666666669, -0.25, -1.0001250156269537, -1.0, 0.0, -0.14433756729740646, 0.0, 0.0, 0.0, 0, -0.12501562695336918, 0.0);\n//\t\trotationProjectionBias [5] = mat4 (0.09622504486493766, 0.0, 0.0, 0.0, 0.16666666666666669, 0.25, 1.0001250156269537, 1.0, 0.0, 0.14433756729740657, 0.0, 0.0, 0.0, 0.0, -0.12501562695336918, 0.0);\n//\n//\t\t// Offsets to the shadow map.\n//\t\tvec2 offsets [6];\n//\t\toffsets [0] = vec2 (0.0,       0.0);\n//\t\toffsets [1] = vec2 (1.0 / 3.0, 0.0);\n//\t\toffsets [2] = vec2 (2.0 / 3.0, 0.0);\n//\t\toffsets [3] = vec2 (0.0,       0.5);\n//\t\toffsets [4] = vec2 (1.0 / 3.0, 0.5);\n//\t\toffsets [5] = vec2 (2.0 / 3.0, 0.5);\n//\n//\t\tint value   = 0;\n//\t\tint samples = 0;\n//\n//\t\tfor (int m = 0; m < 6; ++ m)\n//\t\t{\n//\t\t\tfor (int i = 0; i < x3d_ShadowSamples; ++ i)\n//\t\t\t{\n//\t\t\t\tif (samples >= x3d_ShadowSamples)\n//\t\t\t\t\treturn shadowIntensity * float (value) / float (x3d_ShadowSamples);\n//\n//\t\t\t\tvec3  vertex      = closest_point (shadowPlane, v + random3 () * shadowDiffusion);\n//\t\t\t\tvec4  shadowCoord = rotationProjectionBias [m] * shadowMatrix * vec4 (vertex, 1.0);\n//\t\t\t\tfloat bias        = shadowBias / shadowCoord .w; // 0.005 / shadowCoord .w;\n//\n//\t\t\t\tshadowCoord .xyz /= shadowCoord .w;\n//\n//\t\t\t\tif (shadowCoord .x < SHADOW_TEXTURE_EPS || shadowCoord .x > 1.0 / 3.0 - SHADOW_TEXTURE_EPS)\n//\t\t\t\t\tcontinue;\n//\n//\t\t\t\tif (shadowCoord .y < SHADOW_TEXTURE_EPS || shadowCoord .y > 1.0 / 2.0 - SHADOW_TEXTURE_EPS)\n//\t\t\t\t\tcontinue;\n//\n//\t\t\t\tif (shadowCoord .z >= 1.0)\n//\t\t\t\t\tcontinue;\n//\n//\t\t\t\tif (getShadowDepth (index, shadowCoord .xy + offsets [m]) < shadowCoord .z - bias)\n//\t\t\t\t{\n//\t\t\t\t\t++ value;\n//\t\t\t\t}\n//\n//\t\t\t\t// We definitely have a shadow sample.\n//\t\t\t\t++ samples;\n//\t\t\t}\n//\t\t}\n//\n//\t\treturn shadowIntensity * float (value) / float (x3d_ShadowSamples);\n\t}\n\telse\n\t{\n\t\tint value = 0;\n\n\t\tfor (int i = 0; i < x3d_ShadowSamples; ++ i)\n\t\t{\n\t\t\tvec3  vertex      = closest_point (shadowPlane, v + random3 () * shadowDiffusion);\n\t\t\tvec4  shadowCoord = shadowMatrix * vec4 (vertex, 1.0);\n\t\t\tfloat bias        = shadowBias / shadowCoord .w; // 0.005 / shadowCoord .w;\n\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\n\t\t\tif (shadowCoord .z >= 1.0)\n\t\t\t\tcontinue;\n\n\t\t\tif (getShadowDepth (index, shadowCoord .xy) < shadowCoord .z - bias)\n\t\t\t{\n\t\t\t\t++ value;\n\t\t\t}\n\t\t}\n\n\t\treturn shadowIntensity * float (value) / float (x3d_ShadowSamples);\n\t}\n\n\treturn 0.0;\n}\n\nvoid\ninitShadows ()\n{\n\tshadowPlane = plane3 (v, vN);\n\n\tseed (int (fract (dot (v, v)) * float (RAND_MAX)));\n}\n\n#else\n\nfloat\ngetShadowIntensity (in int index, in int lightType, in float shadowIntensity, in float shadowDiffusion, in mat4 shadowMatrix, in float lightAngle)\n{\n\treturn 0.0;\n}\n\nvoid\ninitShadows ()\n{ }\n\n#endif';});
+define('text!x_ite/Browser/Shaders/Inlcude/Shadow.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Pack.h"\n\n#ifdef X3D_SHADOWS\n\nuniform sampler2D x3d_ShadowMap [x3d_MaxLights];\n\nfloat\ngetShadowDepth (const in int index, const in vec2 shadowCoord)\n{\n\t#if x3d_MaxShadows > 0\n\tif (index == 0)\n\t\treturn unpack (texture2D (x3d_ShadowMap [0], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 1\n\tif (index == 1)\n\t\treturn unpack (texture2D (x3d_ShadowMap [1], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 2\n\tif (index == 2)\n\t\treturn unpack (texture2D (x3d_ShadowMap [2], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 3\n\tif (index == 3)\n\t\treturn unpack (texture2D (x3d_ShadowMap [3], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 4\n\tif (index == 4)\n\t\treturn unpack (texture2D (x3d_ShadowMap [4], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 5\n\tif (index == 5)\n\t\treturn unpack (texture2D (x3d_ShadowMap [5], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 6\n\tif (index == 6)\n\t\treturn unpack (texture2D (x3d_ShadowMap [6], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 7\n\tif (index == 7)\n\t\treturn unpack (texture2D (x3d_ShadowMap [7], shadowCoord));\n\t#endif\n\n\treturn 0.0;\n}\n\nfloat\ntexture2DCompare (const in int index, const in vec2 texCoord, const in float compare)\n{\n\treturn step (getShadowDepth (index, texCoord), compare);\n}\n\nfloat\ntexture2DShadowLerp (const in int index, const in vec2 texelSize, const in float shadowMapSize, const in vec2 texCoord, const in float compare)\n{\n\tconst vec2 offset = vec2 (0.0, 1.0);\n\n\tvec2 centroidTexCoord = floor (texCoord * shadowMapSize + 0.5) / shadowMapSize;\n\n\tfloat lb = texture2DCompare (index, centroidTexCoord + texelSize * offset .xx, compare);\n\tfloat lt = texture2DCompare (index, centroidTexCoord + texelSize * offset .xy, compare);\n\tfloat rb = texture2DCompare (index, centroidTexCoord + texelSize * offset .yx, compare);\n\tfloat rt = texture2DCompare (index, centroidTexCoord + texelSize * offset .yy, compare);\n\n\tvec2 f = fract (texCoord * shadowMapSize + 0.5);\n\n\tfloat a = mix (lb, lt, f.y);\n\tfloat b = mix (rb, rt, f.y);\n\tfloat c = mix (a, b, f.x);\n\n\treturn c;\n}\n\n//https://gist.github.com/tschw/da10c43c467ce8afd0c4\nvec2\ncubeToUVCompact (in vec3 v, const float texelSizeY)\n{\n\t// Compact layout:\n\t//\n\t// xzXZ\t\tChar: Axis\n\t// yyYY\t\tCase: Sign\n\n\t// Number of texels to avoid at the edge of each square\n\n\tvec3 absV = abs (v);\n\n\t// Intersect unit cube\n\n\tfloat scaleToCube = 1.0 / max (absV .x, max (absV .y, absV .z));\n\n\tabsV *= scaleToCube;\n\n\t// Apply scale to avoid seams\n\n\t// one texel less per square (half a texel on each side)\n\tv *= scaleToCube * (1.0 - 2.0 * texelSizeY);\n\n\t// Unwrap\n\n\t// space: -1 ... 1 range for each square\n\t//\n\t// #X##\t\tdim    := ( 4 , 2 )\n\t//  # #\t\tcenter := ( 1 , 1 )\n\n\tvec2 planar = v .xy;\n\n\tfloat almostATexel = 1.5 * texelSizeY;\n\tfloat almostOne    = 1.0 - almostATexel;\n\n\tif (absV .z >= almostOne)\n\t{\n\t\t// zZ\n\n\t\tif (v.z > 0.0)\n\t\t\tplanar .x = 4.0 - v.x;\n\t}\n\telse if (absV .x >= almostOne)\n\t{\n\t\t// xX\n\n\t\tfloat signX = sign (v.x);\n\n\t\tplanar .x = v.z * signX + 2.0 * signX;\n\t}\n\telse if (absV .y >= almostOne)\n\t{\n\t\t// yY\n\n\t\tfloat signY = sign (v.y);\n\n\t\tplanar .x = (v.x + 0.5 + signY) * 2.0;\n\t\tplanar .y = v.z * signY - 2.0;\n\t}\n\n\t// Transform to UV space\n\n\t// scale := 0.5 / dim\n\t// translate := ( center + 0.5 ) / dim\n\treturn vec2 (0.125, 0.25) * planar + vec2 (0.375, 0.75);\n}\n\nmat4\ngetPointLightRotations (const in vec3 vector)\n{\n\tmat4 rotations [6];\n\trotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left\n\trotations [1] = mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1);  // right\n\trotations [2] = mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1);  // front\n\trotations [3] = mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1);  // back\n\trotations [4] = mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1);  // bottom\n\trotations [5] = mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1);  // top\n\n\tvec3 a = abs (vector .xyz);\n\n\tif (a .x > a .y)\n\t{\n\t\tif (a .x > a .z)\n\t\t\treturn vector .x > 0.0 ? rotations [1] : rotations [0];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\telse\n\t{\n\t\tif (a .y > a .z)\n\t\t\treturn vector .y > 0.0 ? rotations [5] : rotations [4];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\n\treturn rotations [3];\n}\n\n// DEBUG\n//vec4 tex;\n\nfloat\ngetShadowIntensity (const in int index, const in x3d_LightSourceParameters light)\n{\n\tif (light .type == x3d_PointLight)\n\t{\n\t\tconst mat4 biasMatrix = mat4 (0.5, 0.0, 0.0, 0.0,\n\t\t\t                           0.0, 0.5, 0.0, 0.0,\n\t\t\t                           0.0, 0.0, 0.5, 0.0,\n\t\t\t                           0.5, 0.5, 0.5, 1.0);\n\n\t\tconst mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);\n\n\t\tvec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));\n\n\t\t// for point lights, the uniform @vShadowCoord is re-purposed to hold\n\t\t// the vector from the light to the world-space position of the fragment.\n\t\tvec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);\n\t\tvec3 lightToPosition = shadowCoord .xyz;\n\n\t\tshadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));\n\t\tshadowCoord .z   -= light .shadowBias;\n\t\tshadowCoord .xyz /= shadowCoord .w;\n\n\t\t// DEBUG\n\t\t//tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));\n\n\t\t#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)\n\t\n\t\t\tvec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tfloat value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);\n\n\t\t\treturn light .shadowIntensity * value;\n\t\n\t\t#endif\n\t}\n\telse\n\t{\n\t\t#if defined (X3D_PCF_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize .x;\n\t\t\tfloat dy0 = - texelSize .y;\n\t\t\tfloat dx1 = + texelSize .x;\n\t\t\tfloat dy1 = + texelSize .y;\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#elif defined (X3D_PCF_SOFT_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize.x;\n\t\t\tfloat dy0 = - texelSize.y;\n\t\t\tfloat dx1 = + texelSize.x;\n\t\t\tfloat dy1 = + texelSize.y;\n\t\t\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * ( 1.0 / 9.0 );\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tvec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#endif\n\t}\n\n\treturn 0.0;\n}\n\n#endif';});
 
 
-define('text!x_ite/Browser/Shaders/Inlcude/Pack.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#ifdef TITANIA\nvec4\npack (in float value)\n{\n\treturn vec4 (0.0, 0.0, 0.0, 0.0);\n}\n\nfloat\nunpack (in vec4 color)\n{\n\treturn color .z;\n}\n#endif\n\n#ifdef X_ITE\nvec4\npack (in float value)\n{\n\tconst vec4 bitShifts = vec4 (1.0,\n\t                             255.0,\n\t                             255.0 * 255.0,\n\t                             255.0 * 255.0 * 255.0);\n\n\treturn fract (value * bitShifts);\n}\n\nfloat\nunpack (vec4 color)\n{\n\tconst vec4 bitShifts = vec4 (1.0,\n\t                             1.0 / 255.0,\n\t                             1.0 / (255.0 * 255.0),\n\t                             1.0 / (255.0 * 255.0 * 255.0));\n\n\treturn dot (color, bitShifts);\n}\n#endif\n';});
+define('text!x_ite/Browser/Shaders/Inlcude/Pack.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#ifdef TITANIA\n\nvec4\npack (const in float value)\n{\n\treturn vec4 (0.0, 0.0, 0.0, 0.0);\n}\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .r;\n}\n\n#endif\n\n#ifdef X_ITE\n\nvec4\npack (const in float value)\n{\n\tconst vec3 bitShifts = vec3 (255.0,\n\t                             255.0 * 255.0,\n\t                             255.0 * 255.0 * 255.0);\n\n\treturn vec4 (value, fract (value * bitShifts));\n}\n\n#ifdef X3D_DEPTH_TEXTURE\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .r;\n}\n\n#else\n\nfloat\nunpack (const vec4 color)\n{\n\tconst vec3 bitShifts = vec3 (1.0 / 255.0,\n\t                             1.0 / (255.0 * 255.0),\n\t                             1.0 / (255.0 * 255.0 * 255.0));\n\n\treturn color .x + dot (color .gba, bitShifts);\n}\n\n#endif\n#endif\n';});
 
 
-define('text!x_ite/Browser/Shaders/Inlcude/Line3.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n/* Line */\n\nstruct Line3 {\n\tvec3 point;\n\tvec3 direction;\n};\n\nLine3\nline3 (in vec3 point1, in vec3 point2)\n{\n\treturn Line3 (point1, normalize (point2 - point1));\n}\n';});
-
-
-define('text!x_ite/Browser/Shaders/Inlcude/Plane3.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Line3.h"\n\n/* Plane */\n\nstruct Plane3\n{\n\tvec3  normal;\n\tfloat distanceFromOrigin;\n};\n\nPlane3\nplane3 (in vec3 point, in vec3 normal)\n{\n\treturn Plane3 (normal, dot (normal, point));\n}\n\n/* Plane intersect line */\nbool\nintersects (in Plane3 plane, in Line3 line, out vec3 point)\n{\n\tpoint = vec3 (0.0);\n\n\t// Check if the line is parallel to the plane.\n\tfloat theta = dot (line .direction, plane .normal);\n\n\t// Plane and line are parallel.\n\tif (theta == 0.0)\n\t\treturn false;\n\n\t// Plane and line are not parallel. The intersection point can be calculated now.\n\tfloat t = (plane .distanceFromOrigin - dot (plane .normal, line .point)) / theta;\n\n\tpoint = line .point + line .direction * t;\n\n\treturn true;\n}\n\n///  Returns the closest point on the plane to a given point @a point.\nvec3\nclosest_point (in Plane3 plane, in vec3 point)\n{\n\tvec3 closest_point;\n\tintersects (plane, Line3 (point, plane .normal), closest_point);\n\treturn closest_point;\n}\n';});
-
-
-define('text!x_ite/Browser/Shaders/Inlcude/Random.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\nconst int RAND_MAX = int (0x7fffffff);\nconst int RAND_MIN = int (0x80000000);\n\nint seedValue = 0;\n\nvoid\nseed (in int value)\n{\n\tseedValue = value;\n}\n\n// Return a uniform distributed random floating point number in the interval [-1, 1].\nfloat\nrandom1 ()\n{\n\treturn float (seedValue = seedValue * 1103515245 + 12345) / float (RAND_MAX);\n}\n\nvec2\nrandom2 ()\n{\n\treturn vec2 (random1 (), random1 ());\n}\n\nvec3\nrandom3 ()\n{\n\treturn vec3 (random1 (), random1 (), random1 ());\n}\n';});
-
-
-define('text!x_ite/Browser/Shaders/Types.h',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nstruct x3d_FogParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float visibilityRange;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float intensity;\n\tmediump float ambientIntensity;\n\tmediump vec3  attenuation;\n\tmediump vec3  location;\n\tmediump vec3  direction;\n\tmediump float radius;\n\tmediump float beamWidth;\n\tmediump float cutOffAngle;\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_MaterialParameters  \n{   \n\tmediump float ambientIntensity;\n\tmediump vec3  diffuseColor;\n\tmediump vec3  specularColor;\n\tmediump vec3  emissiveColor;\n\tmediump float shininess;\n\tmediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_FrontMaterial;  \n//uniform x3d_MaterialParameters x3d_BackMaterial;        \n';});
+define('text!x_ite/Browser/Shaders/Types.h',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nstruct x3d_FogParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float visibilityRange;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float intensity;\n\tmediump float ambientIntensity;\n\tmediump vec3  attenuation;\n\tmediump vec3  location;\n\tmediump vec3  direction;\n\tmediump float radius;\n\tmediump float beamWidth;\n\tmediump float cutOffAngle;\n\t#ifdef X3D_SHADOWS\n\tmediump vec3  shadowColor;\n\tmediump float shadowIntensity;\n\tmediump float shadowBias;\n\tmediump mat4  shadowMatrix;\n\tmediump int   shadowMapSize;\n\t#endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_MaterialParameters  \n{   \n\tmediump float ambientIntensity;\n\tmediump vec3  diffuseColor;\n\tmediump vec3  specularColor;\n\tmediump vec3  emissiveColor;\n\tmediump float shininess;\n\tmediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_FrontMaterial;  \n//uniform x3d_MaterialParameters x3d_BackMaterial;        \n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -41192,17 +43399,11 @@ define ('x_ite/DEBUG',[],function ()
 define ('x_ite/Browser/Shaders/Shader',[
 	"text!x_ite/Browser/Shaders/Inlcude/Shadow.h",
 	"text!x_ite/Browser/Shaders/Inlcude/Pack.h",
-	"text!x_ite/Browser/Shaders/Inlcude/Line3.h",
-	"text!x_ite/Browser/Shaders/Inlcude/Plane3.h",
-	"text!x_ite/Browser/Shaders/Inlcude/Random.h",
 	"text!x_ite/Browser/Shaders/Types.h",
 	"x_ite/DEBUG",
 ],
 function (Shadow,
           Pack,
-          Line3,
-          Plane3,
-          Random,
           Types,
           DEBUG)
 {
@@ -41211,9 +43412,6 @@ function (Shadow,
 	var includes = {
 		Shadow: Shadow,
 		Pack: Pack,
-		Line3: Line3,
-		Plane3: Plane3,
-		Random: Random,
 	};
 
 	var
@@ -41256,13 +43454,16 @@ function (Shadow,
 			var
 				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
 				LINE         = "#line\\s+.*?\\n",
+				IF           = "#if\\s+.*?\\n",
+				ELIF         = "#elif\\s+.*?\\n",
 				IFDEF        = "#ifdef\\s+.*?\\n",
 				IFNDEF       = "#ifndef\\s+.*?\\n",
 				ELSE         = "#else.*?\\n",
-				ENDIF        = "#endif+.*?\\n",
+				ENDIF        = "#endif.*?\\n",
 				DEFINE       = "#define\\s+(?:[^\\n\\\\]|\\\\[^\\r\\n]|\\\\\\r?\\n)*\\n",
+				UNDEF        = "#undef\\s+.*?\\n",
 				PRAGMA       = "#pragma\\s+.*?\\n",
-				PREPROCESSOR =  LINE + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + PRAGMA,
+				PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
 				VERSION      = "#version\\s+.*?\\n",
 				EXTENSION    = "#extension\\s+.*?\\n",
 				ANY          = "[\\s\\S]*";
@@ -41274,11 +43475,17 @@ function (Shadow,
 			if (! match)
 				return source;
 
+			var constants = "";
+
+			constants += "#define X_ITE\n";
+
+			if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
+				constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
+
+			if (browser .getExtension ("WEBGL_depth_texture"))
+				constants += "#define X3D_DEPTH_TEXTURE\n";
+
 			var definitions = "";
-
-			definitions += "#define X_ITE\n";
-
-			definitions += "#define x3d_None 0\n";
 
 			definitions += "#define x3d_GeometryPoints  0\n";
 			definitions += "#define x3d_GeometryLines   1\n";
@@ -41295,17 +43502,13 @@ function (Shadow,
 			definitions += "#define x3d_DirectionalLight  1\n";
 			definitions += "#define x3d_PointLight        2\n";
 			definitions += "#define x3d_SpotLight         3\n";
+			definitions += "#define x3d_MaxShadows        4\n";
+			definitions += "#define X3D_PCF_FILTERING\n";
 
 			definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
 			definitions += "#define x3d_TextureType2D              2\n";
 			definitions += "#define x3d_TextureType3D              3\n";
 			definitions += "#define x3d_TextureTypeCubeMapTexture  4\n";
-
-			if (DEBUG)
-				definitions += "#define X3D_SHADOWS\n";
-
-			definitions += "#define x3d_MaxShadows     4\n";
-			definitions += "#define x3d_ShadowSamples  8\n"; // Range (0, 255)
 
 			// Legacy
 			definitions += "#define x3d_NoneClipPlane  vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
@@ -41313,12 +43516,14 @@ function (Shadow,
 			definitions += "#define x3d_NoneLight      0\n";
 			definitions += "#define x3d_NoneTexture    0\n";
 
+			definitions += "#define x3d_None 0\n";
+
 			depreciatedWarning (source, "x3d_NoneClipPlane", "x3d_NumClipPlanes");
 			depreciatedWarning (source, "x3d_NoneFog",       "x3d_None");
 			depreciatedWarning (source, "x3d_NoneLight",     "x3d_NumLights");
 			depreciatedWarning (source, "x3d_NoneTexture",   "x3d_NumTextures");
 
-			return match [1] + definitions + Types + match [2];
+			return constants + match [1] + definitions + Types + match [2];
 		},
 	};
 
@@ -47505,31 +49710,31 @@ function (Fields,
 
 
 
-define('text!x_ite/Browser/Shaders/PointSet.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n}\n';});
+define('text!x_ite/Browser/Shaders/PointSet.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Wireframe.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_GeometryType == x3d_GeometryLines ? x3d_LinewidthScaleFactor : x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = vec3 (p);\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_FrontMaterial .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tC .rgb = x3d_Color .rgb;\n\t\t\tC .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tC .rgb = x3d_FrontMaterial .emissiveColor;\n\t\t\tC .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tC = x3d_Color;\n\t\telse\n\t\t\tC = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!x_ite/Browser/Shaders/Wireframe.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_GeometryType == x3d_GeometryLines ? x3d_LinewidthScaleFactor : x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = vec3 (p);\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_FrontMaterial .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tC .rgb = x3d_Color .rgb;\n\t\t\tC .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tC .rgb = x3d_FrontMaterial .emissiveColor;\n\t\t\tC .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tC = x3d_Color;\n\t\telse\n\t\t\tC = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Wireframe.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = C .a;\n}\n';});
+define('text!x_ite/Browser/Shaders/Wireframe.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = C .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Gouraud.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\nfloat\ngetSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor (in vec3 N,\n                  in vec3 v,\n                  in x3d_MaterialParameters material)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (0.0, 0.0, 0.0);\n\tfloat alpha         = 1.0 - material .transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = material .diffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tif (i == x3d_NumLights)\n\t\t\tbreak;\n\n\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\tvec3  vL = light .location - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\tif (di || dL <= light .radius)\n\t\t{\n\t\t\tvec3 d = light .direction;\n\t\t\tvec3 c = light .attenuation;\n\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\tvec3  ambientColor                = light .ambientIntensity * ambientTerm;\n\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\tfinalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);\n\t\t}\n\t}\n\n\tfinalColor += material .emissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfrontColor = getMaterialColor (N, v, x3d_FrontMaterial);\n\n\t\tx3d_MaterialParameters backMaterial = x3d_FrontMaterial;\n\n\t\tif (x3d_SeparateBackColor)\n\t\t\tbackMaterial = x3d_BackMaterial;\n\n\t\tbackColor = getMaterialColor (-N, v, backMaterial);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!x_ite/Browser/Shaders/Gouraud.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor (const in vec3 N,\n                  const in vec3 v,\n                  const in x3d_MaterialParameters material)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (0.0, 0.0, 0.0);\n\tfloat alpha         = 1.0 - material .transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = material .diffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tif (i == x3d_NumLights)\n\t\t\tbreak;\n\n\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\tvec3  vL = light .location - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\tif (di || dL <= light .radius)\n\t\t{\n\t\t\tvec3 d = light .direction;\n\t\t\tvec3 c = light .attenuation;\n\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\tvec3  ambientColor                = light .ambientIntensity * ambientTerm;\n\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\tfinalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);\n\t\t}\n\t}\n\n\tfinalColor += material .emissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfrontColor = getMaterialColor (N, v, x3d_FrontMaterial);\n\n\t\tx3d_MaterialParameters backMaterial = x3d_FrontMaterial;\n\n\t\tif (x3d_SeparateBackColor)\n\t\t\tbackMaterial = x3d_BackMaterial;\n\n\t\tbackColor = getMaterialColor (-N, v, backMaterial);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Gouraud.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_None)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = getFogColor (finalColor .rgb);\n\tgl_FragColor .a   = finalColor .a;\n}\n';});
+define('text!x_ite/Browser/Shaders/Gouraud.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_None)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = getFogColor (finalColor .rgb);\n\tgl_FragColor .a   = finalColor .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Phong.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tif (x3d_Lighting)\n\t\tvN = x3d_NormalMatrix * x3d_Normal;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tC = x3d_Color;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
+define('text!x_ite/Browser/Shaders/Phong.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tif (x3d_Lighting)\n\t\tvN = x3d_NormalMatrix * x3d_Normal;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tC = x3d_Color;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Phong.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\n#pragma X3D include "Inlcude/Shadow.h"\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvec4\ngetMaterialColor (in x3d_MaterialParameters material)\n{\n\tif (x3d_Lighting)\n\t{\n\t\tinitShadows ();\n\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - material .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * material .diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = material .diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t\t{\n\t\t\tif (i == x3d_NumLights)\n\t\t\t\tbreak;\n\n\t\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\t\tvec3  vL = light .location - v;\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= light .radius)\n\t\t\t{\n\t\t\t\tvec3 d = light .direction;\n\t\t\t\tvec3 c = light .attenuation;\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor                = light .ambientIntensity * ambientTerm;\n\t\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);\n\t\t\t\tfloat shadowIntensity             = getShadowIntensity (i, light .type, x3d_ShadowIntensity [i], x3d_ShadowDiffusion [i], x3d_ShadowMatrix [i], lightAngle);\n\n\t\t\t\tfinalColor += attenuationSpotFactor * mix (light .color * ambientDiffuseSpecularColor, x3d_ShadowColor [i], shadowIntensity);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += material .emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\tgl_FragColor = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);\n\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n}\n';});
+define('text!x_ite/Browser/Shaders/Phong.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\n#pragma X3D include "Inlcude/Shadow.h"\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvec4\ngetMaterialColor (const in x3d_MaterialParameters material)\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - material .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * material .diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = material .diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\t#pragma unroll_loop\n\t\tfor (int i = 0; i < x3d_MaxLights; i ++)\n\t\t{\n\t\t\tif (i == x3d_NumLights)\n\t\t\t\tbreak;\n\n\t\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\t\tvec3  vL = light .location - v; // Light to fragment\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= light .radius)\n\t\t\t{\n\t\t\t\tvec3 d = light .direction;\n\t\t\t\tvec3 c = light .attenuation;\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor          = light .color * light .ambientIntensity * ambientTerm;\n\t\t\t\tvec3  diffuseSpecularColor  = light .color * light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\t\t#ifdef X3D_SHADOWS\n\t\t\t\t\tif (lightAngle > 0.0)\n\t\t\t\t\t\tdiffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));\n\t\t\t\t#endif\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (ambientColor + diffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += material .emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\n// DEBUG\n//uniform ivec4 x3d_Viewport;\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\tgl_FragColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n\n\t// DEBUG\n\t#ifdef X3D_SHADOWS\n\t//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;\n\t//gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);\n\t#endif\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//gl_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), gl_FragColor .rgb, 0.5);\n\t#endif\n}\n';});
 
 
 define('text!x_ite/Browser/Shaders/Depth.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Vertex;\n\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Depth.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec3 v; // point on geometry\n\n#pragma X3D include "Include/Pack.h"\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
+define('text!x_ite/Browser/Shaders/Depth.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec3 v; // point on geometry\n\n#pragma X3D include "Include/Pack.h"\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -51240,7 +53445,7 @@ function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
  ******************************************************************************/
 
 
-define ('x_ite/Rendering/DepthBuffer',[
+define ('x_ite/Rendering/TextureBuffer',[
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
@@ -51251,7 +53456,7 @@ function (ViewVolume,
 {
 "use strict";
 
-	function DepthBuffer (browser, width, height)
+	function TextureBuffer (browser, width, height)
 	{
 		var gl = browser .getContext ();
 
@@ -51271,24 +53476,40 @@ function (ViewVolume,
 
 		// The depth texture
 
-		this .depthTexture = gl .createTexture ();
+		this .colorTexture = gl .createTexture ();
 
-		gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
+		gl .bindTexture (gl .TEXTURE_2D, this .colorTexture);
 		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
 		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
 		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
 		gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 		gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
-		gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .depthTexture, 0);
+		gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .colorTexture, 0);
 
 		// The depth buffer
 
-		var depthBuffer = gl .createRenderbuffer ();
+		if (browser .getExtension ("WEBGL_depth_texture"))
+		{
+			this .depthTexture = gl .createTexture ();
 
-		gl .bindRenderbuffer (gl .RENDERBUFFER, depthBuffer);
-		gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, width, height);
-		gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, depthBuffer);
+			gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
+			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+			gl .texImage2D (gl .TEXTURE_2D, 0, gl .DEPTH_COMPONENT, width, height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
+
+			gl.framebufferTexture2D (gl .FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, this .depthTexture, 0);
+		}
+		else
+		{
+			this .depthBuffer = gl .createRenderbuffer ();
+
+			gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
+			gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, width, height);
+			gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
+		}
 
 		// Always check that our framebuffer is ok
 
@@ -51302,9 +53523,9 @@ function (ViewVolume,
 		throw new Error ("Couldn't create frame buffer.");
 	}
 
-	DepthBuffer .prototype =
+	TextureBuffer .prototype =
 	{
-		constructor: DepthBuffer,
+		constructor: TextureBuffer,
 		getWidth: function ()
 		{
 			return this .width;
@@ -51312,6 +53533,10 @@ function (ViewVolume,
 		getHeight: function ()
 		{
 			return this .height;
+		},
+		getColorTexture: function ()
+		{
+			return this .colorTexture;
 		},
 		getDepthTexture: function ()
 		{
@@ -51384,131 +53609,7 @@ function (ViewVolume,
 		},
 	};
 
-	return DepthBuffer;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Geometry/Camera',[
-	"standard/Math/Numbers/Vector3",
-],
-function (Vector3)
-{
-"use strict";
-
-	var
-		min = new Vector3 (0, 0, 0),
-		max = new Vector3 (0, 0, 0);
-
-	return {
-		frustum: function (l, r, b, t, n, f, matrix)
-		{
-			var
-				r_l = r - l,
-				t_b = t - b,
-				f_n = f - n,
-				n_2 = 2 * n,
-
-				A = (r + l) / r_l,
-				B = (t + b) / t_b,
-				C = -(f + n) / f_n,
-				D = -n_2 * f / f_n,
-				E = n_2 / r_l,
-				F = n_2 / t_b;
-
-			return matrix .set (E, 0, 0, 0,
-			                    0, F, 0, 0,
-			                    A, B, C, -1,
-			                    0, 0, D, 0);
-		},
-		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
-		{
-			var ratio = Math .tan (fieldOfView / 2) * zNear;
-
-			if (width > height)
-			{
-				var aspect = width * ratio / height;
-				return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
-			}
-			else
-			{
-				var aspect = height * ratio / width;
-				return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
-			}
-		},
-		ortho: function (l, r, b, t, n, f, matrix)
-		{
-			var
-				r_l = r - l,
-				t_b = t - b,
-				f_n = f - n,
-
-				A =  2 / r_l,
-				B =  2 / t_b,
-				C = -2 / f_n,
-				D = -(r + l) / r_l,
-				E = -(t + b) / t_b,
-				F = -(f + n) / f_n;
-
-			return matrix .set (A, 0, 0, 0,
-			                    0, B, 0, 0,
-			                    0, 0, C, 0,
-			                    D, E, F, 1);
-		},
-		orthoBox: function (box, matrix)
-		{
-			box .getExtents (min, max);
-
-			return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
-		},
-	};
+	return TextureBuffer;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -51561,13 +53662,13 @@ function (Vector3)
 
 
 define ('x_ite/Browser/Shaders/ShaderTest',[
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Camera",
 ],
-function (DepthBuffer,
+function (TextureBuffer,
           Vector4,
           Matrix3,
           Matrix4,
@@ -51597,7 +53698,7 @@ function (DepthBuffer,
 	{
 		var
 			gl           = browser .getContext (),
-			frameBuffer  = new DepthBuffer (browser, 16, 16),
+			frameBuffer  = new TextureBuffer (browser, 16, 16),
          normalBuffer = gl .createBuffer (),
          vertexBuffer = gl .createBuffer ();
 
@@ -51781,13 +53882,20 @@ function ($,
 			this .lineShader    = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS);
 			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS);
 			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS);
+			this .shadowShader  = this .createShader (this, "ShadowShader",    phongVS,     phongFS, true);
 
 			this .pointShader .setGeometryType (0);
 			this .lineShader  .setGeometryType (1);
 
+			this .pointShader   .shadowShader = this .pointShader;
+			this .lineShader    .shadowShader = this .lineShader;
+			this .gouraudShader .shadowShader = this .shadowShader;
+			this .phongShader   .shadowShader = this .shadowShader;
+
 			this .setShading ("GOURAUD");
 
-			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
+			this .phongShader  .isValid_ .addInterest ("set_phong_shader_valid__",  this);
+			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
 		},
 		set_phong_shader_valid__: function (valid)
 		{
@@ -51797,6 +53905,15 @@ function ($,
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
 			this .phongShader = this .gouraudShader;
+		},
+		set_shadow_shader_valid__: function (valid)
+		{
+			if (valid .getValue () && verifyShader (this, this .shadowShader))
+				return;
+
+			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
+
+			this .shadowShader = this .gouraudShader;
 		},
 		getVendor: function ()
 		{
@@ -51836,8 +53953,14 @@ function ($,
 		{
 			return this .viewport_;
 		},
-		createShader: function (browser, name, vs, fs)
+		createShader: function (browser, name, vs, fs, shadow)
 		{
+			if (shadow)
+			{
+				vs = "\n#define X3D_SHADOWS\n" + vs;
+				fs = "\n#define X3D_SHADOWS\n" + fs;
+			}
+
 			var vertexShader = new ShaderPart (browser .getPrivateScene ());
 			vertexShader .url_ .push ("data:text/plain;charset=utf-8," + vs);
 			vertexShader .setup ();
@@ -51883,6 +54006,7 @@ function ($,
 			this .pointShader   .setGeometryType (0);
 			this .lineShader    .setGeometryType (1);
 			this .defaultShader .setGeometryType (3);
+			this .shadowShader  .setGeometryType (3);
 
 			var shaders = this .getShaders ();
 
@@ -51905,6 +54029,14 @@ function ($,
 		{
 			// There must always be a gouraud shader available.
 			return this .gouraudShader;
+		},
+		getPhongShader: function ()
+		{
+			return this .phongShader;
+		},
+		getShadowShader: function ()
+		{
+			return this .defaultShader .shadowShader;
 		},
 		getDepthShader: function ()
 		{
@@ -57769,1925 +59901,6 @@ function (Fields)
  ******************************************************************************/
 
 
-define ('x_ite/Components/Core/X3DBindableNode',[
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (X3DChildNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DBindableNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DBindableNode);
-
-		this .layers = [ ];
-	}
-
-	X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DBindableNode,
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-
-			this .set_bind_ .addInterest ("set_bind__", this);
-		},
-		getCameraObject: function ()
-		{
-		   return true;
-		},
-		addLayer: function (layer)
-		{
-			this .layers .push (layer);
-		},
-		transitionStart: function ()
-		{ },
-		set_bind__: function ()
-		{
-			if (this .set_bind_ .getValue ())
-			{
-				this .layers = this .getLayers ();
-
-				// Bind
-		
-				for (var i = 0; i < this .layers .length; ++ i)
-					this .bindToLayer (this .layers [i]);
-			}
-			else
-			{
-				// Unbind
-
-				for (var i = 0; i < this .layers .length; ++ i)
-					this .unbindFromLayer (this .layers [i]);
-			}
-		},
-	});
-
-	return X3DBindableNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Time/X3DTimeDependentNode',[
-	"x_ite/Fields",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DChildNode,
-          X3DConstants)
-{
-"use strict";
-
-	function X3DTimeDependentNode (executionContext)
-	{
-		this .addType (X3DConstants .X3DTimeDependentNode);
-
-		this .addChildObjects ("initialized", new Fields .SFTime (),
-		                       "isEvenLive",  new Fields .SFBool ());
-
-		this .startTimeValue  = 0;
-		this .pauseTimeValue  = 0;
-		this .resumeTimeValue = 0;
-		this .stopTimeValue   = 0;
-		this .start           = 0;
-		this .pause           = 0;
-		this .pauseInterval   = 0;
-		this .startTimeout    = null;
-		this .pauseTimeout    = null;
-		this .resumeTimeout   = null;
-		this .stopTimeout     = null;
-		this .disabled        = false;
-	}
-
-	X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DTimeDependentNode,
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-
-			this .isLive ()   .addInterest ("set_live__", this);
-			this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode
-
-			this .initialized_ .addInterest ("set_loop__",       this);
-			this .enabled_     .addInterest ("set_enabled__",    this);
-			this .loop_        .addInterest ("set_loop__",       this);
-			this .startTime_   .addInterest ("set_startTime__",  this);
-			this .pauseTime_   .addInterest ("set_pauseTime__",  this);
-			this .resumeTime_  .addInterest ("set_resumeTime__", this);
-			this .stopTime_    .addInterest ("set_stopTime__",   this);
-
-			this .startTimeValue  = this .startTime_  .getValue ();
-			this .pauseTimeValue  = this .pauseTime_  .getValue ();
-			this .resumeTimeValue = this .resumeTime_ .getValue ();
-			this .stopTimeValue   = this .stopTime_   .getValue ();
-
-			this .initialized_ = this .getBrowser () .getCurrentTime ();
-		},
-		getDisabled: function ()
-		{
-			return this .disabled;
-		},
-		getElapsedTime: function ()
-		{
-			return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
-		},
-		getLiveState: function ()
-		{
-			///  Determines the live state of this node.
-
-			return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
-		},
-		set_live__: function ()
-		{
-			if (this .isLive () .getValue ())
-			{
-				if (this .disabled)
-				{
-					this .disabled = false;
-
-					if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
-						this .real_resume ();
-				}
-			}
-			else
-			{
-				if (! this .disabled && this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
-				{
-					// Only disable if needed, ie. if running!
-					this .disabled = true;
-					this .real_pause ();
-				}
-			}
-		},
-		set_enabled__: function ()
-		{
-			if (this .enabled_ .getValue ())
-				this .set_loop__ ();
-
-			else
-				this .stop ();
-		},
-		set_loop__: function ()
-		{
-			if (this .enabled_ .getValue ())
-			{
-				if (this .loop_ .getValue ())
-				{
-					if (this .stopTimeValue <= this .startTimeValue)
-					{
-						if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
-							this .do_start ();
-					}
-				}
-			}
-		},
-		set_startTime__: function ()
-		{
-			this .startTimeValue = this .startTime_ .getValue ();
-
-			if (this .enabled_ .getValue ())
-			{
-				this .removeTimeout ("startTimeout");
-
-				if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
-					this .do_start ();
-
-				else
-					this .addTimeout ("startTimeout", "do_start", this .startTimeValue);
-			}
-		},
-		set_pauseTime__: function ()
-		{
-			this .pauseTimeValue = this .pauseTime_ .getValue ();
-
-			if (this .enabled_ .getValue ())
-			{
-				this .removeTimeout ("pauseTimeout");
-
-				if (this .pauseTimeValue <= this .resumeTimeValue)
-					return;
-
-				if (this .pauseTimeValue <= this .getBrowser () .getCurrentTime ())
-					this .do_pause ();
-
-				else
-					this .addTimeout ("pauseTimeout", "do_pause", this .pauseTimeValue);
-			}
-		},
-		set_resumeTime__: function ()
-		{
-			this .resumeTimeValue = this .resumeTime_ .getValue ();
-
-			if (this .enabled_ .getValue ())
-			{
-				this .removeTimeout ("resumeTimeout");
-
-				if (this .resumeTimeValue <= this .pauseTimeValue)
-					return;
-
-				if (this .resumeTimeValue <= this .getBrowser () .getCurrentTime ())
-					this .do_resume ();
-
-				else
-					this .addTimeout ("resumeTimeout", "do_resume", this .resumeTimeValue);
-			}
-		},
-		set_stopTime__: function ()
-		{
-			this .stopTimeValue = this .stopTime_ .getValue ();
-
-			if (this .enabled_ .getValue ())
-			{
-				this .removeTimeout ("stopTimeout");
-
-				if (this .stopTimeValue <= this .startTimeValue)
-					return;
-
-				if (this .stopTimeValue <= this .getBrowser () .getCurrentTime ())
-					this .do_stop ();
-
-				else
-					this .addTimeout ("stopTimeout","do_stop", this .stopTimeValue);
-			}
-		},
-		do_start: function ()
-		{
-			if (! this .isActive_ .getValue ())
-			{
-				this .start         = this .getBrowser () .getCurrentTime ();
-				this .pauseInterval = 0;
-
-				// The event order below is very important.
-
-				this .isActive_ = true;
-
-				this .set_start ();
-
-				if (this .isLive () .getValue ())
-				{
-					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
-				}
-				else if (! this .disabled)
-				{
-					this .disabled = true;
-					this .real_pause ();
-				}
-
-				this .elapsedTime_ = 0;
-				this .cycleTime_   = this .getBrowser () .getCurrentTime ();
-			}
-		},
-		do_pause: function ()
-		{
-			if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
-			{
-				this .isPaused_ = true;
-
-				if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
-					this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
-
-				if (this .isLive () .getValue ())
-					this .real_pause ();
-			}
-		},
-		real_pause: function ()
-		{
-			this .pause = performance .now ();
-
-			this .set_pause ();
-
-			this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
-		},
-		do_resume: function ()
-		{
-			if (this .isActive_ .getValue () && this .isPaused_ .getValue ())
-			{
-				this .isPaused_ = false;
-
-				if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
-					this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
-
-				if (this .isLive () .getValue ())
-					this .real_resume ();
-			}
-		},
-		real_resume: function ()
-		{
-			var interval = (performance .now () - this .pause) / 1000;
-
-			this .pauseInterval += interval;
-
-			this .set_resume (interval);
-
-			this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
-			this .getBrowser () .addBrowserEvent ();
-		},
-		do_stop: function ()
-		{
-			this .stop ();
-		},
-		stop: function ()
-		{
-			if (this .isActive_ .getValue ())
-			{
-				// The event order below is very important.
-
-				this .set_stop ();
-
-				this .elapsedTime_ = this .getElapsedTime ();
-
-				if (this .isPaused_ .getValue ())
-					this .isPaused_ = false;
-
-				this .isActive_ = false;
-
-				if (this .isLive () .getValue ())
-					this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
-			}
-		},
-		timeout: function (callback)
-		{
-			if (this .enabled_ .getValue ())
-			{
-				this .getBrowser () .advanceTime (performance .now ());
-
-				this [callback] ();
-			}
-		},
-		addTimeout: function (name, callback, time)
-		{
-			this .removeTimeout (name);
-			this [name] = setTimeout (this .timeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000);
-		},
-		removeTimeout: function (name)
-		{
-			clearTimeout (this [name]);
-			this [name] = null;
-		},
-		set_start: function () { },
-		set_pause: function () { },
-		set_resume: function () { },
-		set_stop: function () { },
-		set_time: function () { },
-	});
-
-	return X3DTimeDependentNode;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Time/TimeSensor',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DSensorNode",
-	"x_ite/Components/Time/X3DTimeDependentNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DSensorNode, 
-          X3DTimeDependentNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function TimeSensor (executionContext)
-	{
-		X3DSensorNode        .call (this, executionContext);
-		X3DTimeDependentNode .call (this, executionContext);
-
-		this .addType (X3DConstants .TimeSensor);
-
-		this .addChildObjects ("range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
-		
-		this .cycle    = 0;
-		this .interval = 0;
-		this .fraction = 0;
-		this .first    = 0;
-		this .last     = 1;
-		this .scale    = 1;
-	}
-
-	TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
-		X3DTimeDependentNode .prototype,
-	{
-		constructor: TimeSensor,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "cycleInterval",    new Fields .SFTime (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "loop",             new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",        new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",       new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",        new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",         new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",        new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "fraction_changed", new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "time",             new Fields .SFTime ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TimeSensor";
-		},
-		getComponentName: function ()
-		{
-			return "Time";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DSensorNode        .prototype .initialize .call (this);
-			X3DTimeDependentNode .prototype .initialize .call (this);
-
-			this .cycleInterval_ .addInterest ("set_cycleInterval__", this);
-			this .range_         .addInterest ("set_range__",         this);
-		},
-		setRange: function (currentFraction, firstFraction, lastFraction)
-		{
-			this .fraction = currentFraction >= 1 ? 0 : currentFraction;
-			this .first    = firstFraction;
-			this .last     = lastFraction;
-			this .scale    = this .last - this .first;
-
-			var offset = (this .fraction -  this .first) * this .cycleInterval_ .getValue ();
-
-			this .interval = this .cycleInterval_ .getValue () * this .scale;
-			this .cycle    = this .getBrowser () .getCurrentTime () - offset;
-		},
-		set_cycleInterval__: function ()
-		{
-			if (this .isActive_ .getValue ())
-				this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
-		},
-		set_range__: function ()
-		{
-			if (this .isActive_ .getValue ())
-			{
-				this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
-
-				if (! this .isPaused_ .getValue ())
-					this .set_fraction (this .getBrowser () .getCurrentTime ());
-			}
-		},
-		set_start: function ()
-		{
-			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
-
-			this .fraction_changed_ = this .range_ [0];
-			this .time_             = this .getBrowser () .getCurrentTime ();
-		},			
-		set_resume: function (pauseInterval)
-		{
-			this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
-		},
-		set_fraction: function (time)
-		{
-			var t = (time - this .cycle) / this .interval;
-
-			this .fraction_changed_ = this .fraction = this .first + (t - Math .floor (t)) * this .scale;
-		},
-		set_time: function ()
-		{
-			// The event order below is very important.
-
-			var time = this .getBrowser () .getCurrentTime ();
-
-			if (time - this .cycle >= this .interval)
-			{
-				if (this .loop_ .getValue ())
-				{
-					if (this .interval)
-					{
-						this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
-						
-						this .elapsedTime_ = this .getElapsedTime ();
-						this .cycleTime_   = time;
-
-						this .set_fraction (time);
-					}
-				}
-				else
-				{
-					this .fraction_changed_ = this .fraction = this .last;
-					this .stop ();
-				}
-			}
-			else
-			{
-				this .elapsedTime_ = this .getElapsedTime ();
-
-				this .set_fraction (time);
-			}
-
-			this .time_ = time;
-		},
-	});
-
-	return TimeSensor;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/X3DInterpolatorNode',[
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
-],
-function (X3DChildNode, 
-          X3DConstants,
-          Algorithm)
-{
-"use strict";
-
-	function X3DInterpolatorNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DInterpolatorNode);
-	}
-
-	X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DInterpolatorNode,
-		setup: function ()
-		{
-			// If an X3DInterpolatorNode value_changed outputOnly field is read before it receives any inputs,
-			// keyValue[0] is returned if keyValue is not empty. If keyValue is empty (i.e., [ ]), the initial
-			// value for the respective field type is returned (EXAMPLE  (0, 0, 0) for Fields .SFVec3f);
-
-			this .set_key__ ();
-
-			if (this .key_ .length)
-				this .interpolate (0, 0, 0);
-
-			X3DChildNode .prototype .setup .call (this);
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-			
-			this .set_fraction_ .addInterest ("set_fraction__", this);
-			this .key_          .addInterest ("set_key__", this);
-		},
-		set_fraction__: function ()
-		{
-			var
-				key      = this .key_,
-				length   = key .length,
-				fraction = this .set_fraction_ .getValue ();
-
-			switch (length)
-			{
-				case 0:
-					// Interpolator nodes containing no keys in the key field shall not produce any events.
-					return;
-				case 1:
-					return this .interpolate (0, 0, 0);
-				default:
-				{
-					if (fraction <= key [0])
-						return this .interpolate (0, 1, 0);
-
-					var index1 = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
-
-					if (index1 !== length)
-					{
-						var
-							index0 = index1 - 1,
-							weight = (fraction - key [index0]) / (key [index1] - key [index0]);
-
-						this .interpolate (index0, index1, Algorithm .clamp (weight, 0, 1));
-					}
-					else
-						this .interpolate (length - 2, length - 1, 1);
-				}
-			}
-		},
-		set_key__: function ()
-		{
-			this .set_keyValue__ ();
-		},
-		set_keyValue__: function () { },
-		interpolate: function () { },
-	});
-
-	return X3DInterpolatorNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/EaseInEaseOut',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Interpolation/X3DInterpolatorNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function EaseInEaseOut (executionContext)
-	{
-		X3DInterpolatorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .EaseInEaseOut);
-	}
-
-	EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-	{
-		constructor: EaseInEaseOut,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",             new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",                      new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "easeInEaseOut",            new Fields .MFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "modifiedFraction_changed", new Fields .SFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "EaseInEaseOut";
-		},
-		getComponentName: function ()
-		{
-			return "Interpolation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DInterpolatorNode .prototype .initialize .call (this);
-
-			this .easeInEaseOut_ .addInterest ("set_keyValue__", this);
-		},
-		set_keyValue__: function ()
-		{
-			if (this .easeInEaseOut_ .length < this .key_ .length)
-				this .easeInEaseOut_ .resize (this .key_ .length, this .easeInEaseOut_ .length ? this .easeInEaseOut_ [this .easeInEaseOut_ .length - 1] : new Fields .SFVec2f ());
-		},
-		interpolate: function (index0, index1, weight)
-		{
-			var
-				easeOut = this .easeInEaseOut_ [index0] .y,
-				easeIn  = this .easeInEaseOut_ [index1] .x,
-				sum     = easeOut + easeIn;
-
-			if (sum < 0)
-			{
-				this .modifiedFraction_changed_ = weight;
-			}
-			else
-			{
-				if (sum > 1)
-				{
-					easeIn  /= sum;
-					easeOut /= sum;
-				}
-
-				var t = 1 / (2 - easeOut - easeIn);
-
-				if (weight < easeOut)
-				{
-					this .modifiedFraction_changed_ = (t / easeOut) * weight * weight;
-				}
-				else if (weight <= 1 - easeIn) // Spec says (weight < 1 - easeIn), but then we get a NaN below if easeIn == 0.
-				{
-					this .modifiedFraction_changed_ = t * (2 * weight - easeOut);
-				}
-				else
-				{
-					var w = 1 - weight;
-
-					this .modifiedFraction_changed_ = 1 - ((t * w * w) / easeIn);
-				}
-			}
-		},
-	});
-
-	return EaseInEaseOut;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/PositionInterpolator',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Interpolation/X3DInterpolatorNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode, 
-          X3DConstants,
-          Vector3)
-{
-"use strict";
-
-	function PositionInterpolator (executionContext)
-	{
-		X3DInterpolatorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .PositionInterpolator);
-	}
-
-	PositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-	{
-		constructor: PositionInterpolator,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
-		]),
-		keyValue: new Vector3 (0, 0, 0),
-		getTypeName: function ()
-		{
-			return "PositionInterpolator";
-		},
-		getComponentName: function ()
-		{
-			return "Interpolation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DInterpolatorNode .prototype .initialize .call (this);
-
-			this .keyValue_ .addInterest ("set_keyValue__", this);
-		},
-		set_keyValue__: function ()
-		{
-			var
-				key      = this .key_,
-				keyValue = this .keyValue_;
-
-			if (keyValue .length < key .length)
-				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
-		},
-		interpolate: function (index0, index1, weight)
-		{
-			this .value_changed_ = this .keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
-		},
-	});
-
-	return PositionInterpolator;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/OrientationInterpolator',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Interpolation/X3DInterpolatorNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Rotation4"
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode, 
-          X3DConstants,
-          Rotation4)
-{
-"use strict";
-
-	function OrientationInterpolator (executionContext)
-	{
-		X3DInterpolatorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .OrientationInterpolator);
-	}
-
-	OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-	{
-		constructor: OrientationInterpolator,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
-		]),
-		keyValue: new Rotation4 (),
-		getTypeName: function ()
-		{
-			return "OrientationInterpolator";
-		},
-		getComponentName: function ()
-		{
-			return "Interpolation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DInterpolatorNode .prototype .initialize .call (this);
-
-			this .keyValue_ .addInterest ("set_keyValue__", this);
-		},
-		set_keyValue__: function ()
-		{
-			var
-				key      = this .key_,
-				keyValue = this .keyValue_;
-
-			if (keyValue .length < key .length)
-				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
-		},
-		interpolate: function (index0, index1, weight)
-		{
-			try
-			{
-				this .value_changed_ = this .keyValue .assign (this .keyValue_ [index0] .getValue ()) .slerp (this .keyValue_ [index1] .getValue (), weight);
-			}
-			catch (error)
-			{ }
-		},
-	});
-
-	return OrientationInterpolator;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Navigation/X3DViewpointNode',[
-	"x_ite/Fields",
-	"x_ite/Components/Core/X3DBindableNode",
-	"x_ite/Components/Time/TimeSensor",
-	"x_ite/Components/Interpolation/EaseInEaseOut",
-	"x_ite/Components/Interpolation/PositionInterpolator",
-	"x_ite/Components/Interpolation/OrientationInterpolator",
-	"x_ite/Bits/TraverseType",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DBindableNode,
-          TimeSensor,
-          EaseInEaseOut,
-          PositionInterpolator,
-          OrientationInterpolator,
-          TraverseType,
-          X3DConstants,
-          Vector2,
-          Vector3,
-          Rotation4,
-          Matrix4)
-{
-"use strict";
-
-	function X3DViewpointNode (executionContext)
-	{
-		X3DBindableNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DViewpointNode);
-
-		this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
-		                       "orientationOffset",      new Fields .SFRotation (),
-		                       "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
-		                       "scaleOrientationOffset", new Fields .SFRotation (),
-		                       "centerOfRotationOffset", new Fields .SFVec3f (),
-		                       "fieldOfViewScale",       new Fields .SFFloat (1));
-
-	   this .userPosition             = new Vector3 (0, 1, 0);
-	   this .userOrientation          = new Rotation4 (0, 0, 1, 0);
-	   this .userCenterOfRotation     = new Vector3 (0, 0, 0);
-		this .modelMatrix              = new Matrix4 ();
-		this .cameraSpaceMatrix        = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
-		this .inverseCameraSpaceMatrix = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
-
-		var browser = this .getBrowser ();
-
-		this .timeSensor                   = new TimeSensor              (browser .getPrivateScene ());
-		this .easeInEaseOut                = new EaseInEaseOut           (browser .getPrivateScene ());
-		this .positionInterpolator         = new PositionInterpolator    (browser .getPrivateScene ());
-		this .orientationInterpolator      = new OrientationInterpolator (browser .getPrivateScene ());
-		this .scaleInterpolator            = new PositionInterpolator    (browser .getPrivateScene ());
-		this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
-	}
-
-	X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
-	{
-		constructor: X3DViewpointNode,
-		initialize: function ()
-		{
-			X3DBindableNode .prototype .initialize .call (this);
-		
-			this .timeSensor .stopTime_ = 1;
-			this .timeSensor .setup ();
-
-			this .easeInEaseOut .key_           = new Fields .MFFloat (0, 1);
-			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-			this .easeInEaseOut .setup ();
-
-			this .positionInterpolator         .key_ = new Fields .MFFloat (0, 1);
-			this .orientationInterpolator      .key_ = new Fields .MFFloat (0, 1);
-			this .scaleInterpolator            .key_ = new Fields .MFFloat (0, 1);
-			this .scaleOrientationInterpolator .key_ = new Fields .MFFloat (0, 1);
-
-			this .positionInterpolator         .setup ();
-			this .orientationInterpolator      .setup ();
-			this .scaleInterpolator            .setup ();
-			this .scaleOrientationInterpolator .setup ();
-
-			this .timeSensor .fraction_changed_ .addFieldInterest (this .easeInEaseOut .set_fraction_);
-
-			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .positionInterpolator         .set_fraction_);
-			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .orientationInterpolator      .set_fraction_);
-			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleInterpolator            .set_fraction_);
-			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleOrientationInterpolator .set_fraction_);
-
-			this .positionInterpolator         .value_changed_ .addFieldInterest (this .positionOffset_);
-			this .orientationInterpolator      .value_changed_ .addFieldInterest (this .orientationOffset_);
-			this .scaleInterpolator            .value_changed_ .addFieldInterest (this .scaleOffset_);
-			this .scaleOrientationInterpolator .value_changed_ .addFieldInterest (this .scaleOrientationOffset_);
-
-			this .isBound_ .addInterest ("set_bound__", this);
-		},
-		getEaseInEaseOut: function ()
-		{
-			return this .easeInEaseOut;
-		},
-		setInterpolators: function () { },
-		bindToLayer: function (layer)
-		{
-			layer .getViewpointStack () .push (this);
-		},
-		unbindFromLayer: function (layer)
-		{
-			layer .getViewpointStack () .pop (this);
-		},
-		removeFromLayer: function (layer)
-		{
-			layer .getViewpointStack () .remove (this);
-		},
-		getPosition: function ()
-		{
-			return this .position_ .getValue ();
-		},
-		getUserPosition: function ()
-		{
-			return this .userPosition .assign (this .getPosition ()) .add (this .positionOffset_ .getValue ());
-		},
-		getOrientation: function ()
-		{
-			return this .orientation_ .getValue ();
-		},
-		getUserOrientation: function ()
-		{
-			return this .userOrientation .assign (this .getOrientation ()) .multRight (this .orientationOffset_ .getValue ());
-		},
-		getCenterOfRotation: function ()
-		{
-			return this .centerOfRotation_ .getValue ();
-		},
-		getUserCenterOfRotation: function ()
-		{
-			return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this .centerOfRotationOffset_ .getValue ());
-		},
-		getProjectionMatrix: function (renderObject)
-		{
-			var navigationInfo = renderObject .getNavigationInfo ();
-
-			return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
-                                                     navigationInfo .getFarValue (this),
-                                                     renderObject .getLayer () .getViewport () .getRectangle (renderObject .getBrowser ()));
-		},
-		getCameraSpaceMatrix: function ()
-		{
-			return this .cameraSpaceMatrix;
-		},
-		getInverseCameraSpaceMatrix: function ()
-		{
-			return this .inverseCameraSpaceMatrix;
-		},
-		getModelMatrix: function ()
-		{
-			return this .modelMatrix;
-		},
-		getUpVector: function ()
-		{
-		   // Local y-axis,
-		   // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
-		   return Vector3 .yAxis;
-		},
-		getSpeedFactor: function ()
-		{
-			return 1;
-		},
-		getMaxZFar: function ()
-		{
-			return 1e5;
-		},
-		transitionStart: (function ()
-		{
-			var
-				relativePosition         = new Vector3 (0, 0, 0),
-				relativeOrientation      = new Rotation4 (0, 0, 1, 0),
-				relativeScale            = new Vector3 (0, 0, 0),
-				relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
-
-			return function (fromViewpoint)
-			{
-				try
-				{
-					if (this .jump_ .getValue ())
-					{
-						var layers = this .getLayers ();
-	
-						if (! this .retainUserOffsets_ .getValue ())
-							this .resetUserOffsets ();
-		
-						for (var i = 0; i < layers .length; ++ i)
-						{
-							var navigationInfo = layers [i] .getNavigationInfo ();
-	
-							navigationInfo .transitionStart_ = true;
-	
-							var
-								transitionType = navigationInfo .getTransitionType (),
-								transitionTime = navigationInfo .transitionTime_ .getValue ();
-						}
-	
-						switch (transitionType)
-						{
-							case "TELEPORT":
-							{
-								for (var i = 0; i < layers .length; ++ i)
-									layers [i] .getNavigationInfo () .transitionComplete_ = true;
-	
-								return;
-							}
-							case "ANIMATE":
-							{
-								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-								break;
-							}
-							default:
-							{
-								// LINEAR
-								this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-								break;
-							}
-						}
-						
-						this .timeSensor .cycleInterval_ = transitionTime;
-						this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-						this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
-						this .timeSensor .isActive_ .addInterest ("set_active__", this);
-	
-						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-	
-						this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
-						this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
-						this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
-						this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
-	
-						this .positionOffset_         = relativePosition;
-						this .orientationOffset_      = relativeOrientation;
-						this .scaleOffset_            = relativeScale;
-						this .scaleOrientationOffset_ = relativeScaleOrientation;
-	
-						this .setInterpolators (fromViewpoint);
-					}
-					else
-					{
-						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-		 
-						this .positionOffset_         = relativePosition;
-						this .orientationOffset_      = relativeOrientation;
-						this .scaleOffset_            = relativeScale;
-						this .scaleOrientationOffset_ = relativeScaleOrientation;
-	
-						this .setInterpolators (fromViewpoint);
-					}
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			};
-		})(),
-		transitionStop: function ()
-		{
-			this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
-			this .timeSensor .isActive_ .removeInterest ("set_active__", this);
-		},
-		resetUserOffsets: function ()
-		{
-			this .positionOffset_         = Vector3   .Zero;
-			this .orientationOffset_      = Rotation4 .Identity;
-			this .scaleOffset_            = Vector3   .One;
-			this .scaleOrientationOffset_ = Rotation4 .Identity;
-			this .centerOfRotationOffset_ = Vector3   .Zero;
-			this .fieldOfViewScale_       = 1;
-		},
-		getRelativeTransformation: function (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
-		// throw
-		{
-			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpoint .getInverseCameraSpaceMatrix ()) .inverse ();
-
-			differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-			relativePosition .subtract (this .getPosition ());
-			relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
-		},
-		straightenHorizon: (function ()
-		{
-			var
-				localXAxis = new Vector3 (0, 0, 0),
-				localZAxis = new Vector3 (0, 0, 0),
-				vector     = new Vector3 (0, 0, 0),
-				rotation   = new Rotation4 (0, 0, 1, 0);
-
-			return function (orientation)
-			{
-				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
-				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
-	
-				vector .assign (localZAxis) .cross (this .getUpVector ());
-	
-				rotation .setFromToVec (localXAxis, vector);
-	
-				return orientation .multRight (rotation);
-			};
-		})(),
-		lookAtPoint: function (point, factor, straighten)
-		{
-			try
-			{
-				if (! this .getBrowser () .getActiveLayer ())
-					return;
-	
-				this .getCameraSpaceMatrix () .multVecMatrix (point);
-
-				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
-
-				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
-		
-				this .lookAt (point, minDistance, factor, straighten);
-			}
-			catch (error)
-			{
-				console .error (error);
-			}
-		},
-		lookAtBBox: function (bbox, factor, straighten)
-		{
-			try
-			{
-				if (! this .getBrowser () .getActiveLayer ())
-					return;
-
-				bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
-		
-				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
-		
-				this .lookAt (bbox .center, minDistance, factor, straighten);
-			}
-			catch (error)
-			{ }
-		},
-		lookAt: function (point, distance, factor, straighten)
-		{
-			var
-				layers = this .getLayers (),
-				offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
-
-			for (var i = 0; i < layers .length; ++ i)
-				layers [i] .getNavigationInfo () .transitionStart_ = true;;
-		
-			this .timeSensor .cycleInterval_ = 0.2;
-			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
-			this .timeSensor .isActive_ .addInterest ("set_active__", this);
-	
-			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-
-			var
-				translation = Vector3 .lerp (this .positionOffset_ .getValue (), offset, factor),
-				direction   = Vector3 .add (this .getPosition (), translation) .subtract (point),
-				rotation    = Rotation4 .multRight (this .orientationOffset_ .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
-		
-			if (straighten)
-				rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
-		
-			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, translation);
-			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
-			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
-			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
-		
-			this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
-			this .set_bind_               = true;
-		},
-		set_active__: function (active)
-		{
-			if (! active .getValue () && this .timeSensor .fraction_changed_ .getValue () === 1)
-			{
-				var layers = this .getLayers ();
-
-				for (var i = 0; i < layers .length; ++ i)
-				{
-					layers [i] .getNavigationInfo () .transitionComplete_ = true;
-				}
-
-				this .easeInEaseOut .set_fraction_ = 1;
-			}
-		},
-		set_bound__: function ()
-		{
-			if (this .isBound_ .getValue ())
-				this .getBrowser () .getNotification () .string_ = this .description_;
-			else
-				this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
-		},
-		traverse: function (type, renderObject)
-		{
-			renderObject .getLayer () .getViewpoints () .push (this);
-
-			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-		},
-		update: function ()
-		{
-			try
-			{
-				this .cameraSpaceMatrix .set (this .getUserPosition (),
-				                              this .getUserOrientation (),
-				                              this .scaleOffset_ .getValue (),
-				                              this .scaleOrientationOffset_ .getValue ());
-
-				this .cameraSpaceMatrix .multRight (this .modelMatrix);
-
-				this .inverseCameraSpaceMatrix .assign (this .cameraSpaceMatrix) .inverse ();
-			}
-			catch (error)
-			{
-			   console .log (error);
-			}
-		},
-	});
-
-	return X3DViewpointNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Navigation/OrthoViewpoint',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Navigation/X3DViewpointNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Geometry/Camera",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DViewpointNode, 
-          X3DConstants,
-          Camera,
-          Vector2,
-          Vector3,
-          Matrix4)
-{
-"use strict";
-
-	var
-		screenScale  = new Vector3 (0, 0, 0),
-		viewportSize = new Vector2 (0, 0);
-
-	function OrthoViewpoint (executionContext)
-	{
-		X3DViewpointNode .call (this, executionContext);
-
-		this .addType (X3DConstants .OrthoViewpoint);
-
-		this .position_         .setUnit ("length");
-		this .centerOfRotation_ .setUnit ("length");
-		this .fieldOfView_      .setUnit ("length");
-
-		this .projectionMatrix = new Matrix4 ();
-	}
-
-	OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
-	{
-		constructor: OrthoViewpoint,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .MFFloat (-1, -1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
-		]),
-		getTypeName: function ()
-		{
-			return "OrthoViewpoint";
-		},
-		getComponentName: function ()
-		{
-			return "Navigation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DViewpointNode .prototype .initialize .call (this);
-
-			this .fieldOfView_      .addInterest ("set_fieldOfView___", this);
-			this .fieldOfViewScale_ .addInterest ("set_fieldOfView___", this);
-
-			this .set_fieldOfView___ ();
-		},
-		set_fieldOfView___: function ()
-		{
-			var
-				length           = this .fieldOfView_ .length,
-				fieldOfViewScale = this .fieldOfViewScale_ .getValue ();
-
-			this .minimumX = (length > 0 ? this .fieldOfView_ [0] : -1) * fieldOfViewScale;
-			this .minimumY = (length > 1 ? this .fieldOfView_ [1] : -1) * fieldOfViewScale;
-			this .maximumX = (length > 2 ? this .fieldOfView_ [2] :  1) * fieldOfViewScale;
-			this .maximumY = (length > 3 ? this .fieldOfView_ [3] :  1) * fieldOfViewScale;
-
-			this .sizeX = this .maximumX - this .minimumX;
-			this .sizeY = this .maximumY - this .minimumY;
-		},
-		getMinimumX: function ()
-		{
-			return this .minimumX;
-		},
-		getMinimumY: function ()
-		{
-			return this .minimumY;
-		},
-		getMaximumX: function ()
-		{
-			return this .maximumX;
-		},
-		getMaximumY: function ()
-		{
-			return this .maximumY;
-		},
-		getSizeX: function ()
-		{
-			return this .sizeX;
-		},
-		getSizeY: function ()
-		{
-			return this .sizeY;
-		},
-		getScreenScale: function (dummy, viewport)
-		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				sizeX  = this .sizeX,
-				sizeY  = this .sizeY,
-				aspect = width / height;
-
-			if (aspect > sizeX / sizeY)
-			{
-				var s = sizeY / height;
-
-				return screenScale .set (s, s, s);
-			}
-
-			var s = sizeX / width;
-
-			return screenScale .set (s, s, s);
-		},
-		getViewportSize: function (viewport)
-		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				sizeX  = this .sizeX,
-				sizeY  = this .sizeY,
-				aspect = width / height;
-
-			if (aspect > sizeX / sizeY)
-				return viewportSize .set (sizeY * aspect, sizeY);
-
-			return viewportSize .set (sizeX, sizeX / aspect);
-		},
-		getLookAtDistance: function (bbox)
-		{
-			return bbox .size .abs () / 2 + 10;
-		},
-		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
-		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				aspect = width / height,
-				sizeX  = this .sizeX,
-				sizeY  = this .sizeY;
-
-			if (aspect > sizeX / sizeY)
-			{
-				var
-					center  = (this .minimumX + this .maximumX) / 2,
-					size1_2 = (sizeY * aspect) / 2;
-
-				return Camera .ortho (center - size1_2, center + size1_2, this .minimumY, this .maximumY, nearValue, farValue, this .projectionMatrix);
-			}
-
-			var
-				center  = (this .minimumY + this .maximumY) / 2,
-				size1_2 = (sizeX / aspect) / 2;
-
-			return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
-		},
-	});
-
-	return OrthoViewpoint;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Browser/Navigation/X3DViewer',[
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Navigation/OrthoViewpoint",
@@ -60470,2193 +60683,6 @@ function (Fields,
 	});
 
 	return OrientationChaser;
-});
-
-
-
-/*!
- * jQuery Mousewheel 3.1.13
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license
- * http://jquery.org/license
- */
-
-(function (factory) {
-    if ( typeof define === 'function' && define.amd ) {
-        // AMD. Register as an anonymous module.
-        define('jquery-mousewheel/jquery.mousewheel',['jquery'], factory);
-    } else if (typeof exports === 'object') {
-        // Node/CommonJS style for Browserify
-        module.exports = factory;
-    } else {
-        // Browser globals
-        factory(jQuery);
-    }
-}(function ($) {
-
-    var toFix  = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
-        toBind = ( 'onwheel' in document || document.documentMode >= 9 ) ?
-                    ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
-        slice  = Array.prototype.slice,
-        nullLowestDeltaTimeout, lowestDelta;
-
-    if ( $.event.fixHooks ) {
-        for ( var i = toFix.length; i; ) {
-            $.event.fixHooks[ toFix[--i] ] = $.event.mouseHooks;
-        }
-    }
-
-    var special = $.event.special.mousewheel = {
-        version: '3.1.12',
-
-        setup: function() {
-            if ( this.addEventListener ) {
-                for ( var i = toBind.length; i; ) {
-                    this.addEventListener( toBind[--i], handler, false );
-                }
-            } else {
-                this.onmousewheel = handler;
-            }
-            // Store the line height and page height for this particular element
-            $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
-            $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
-        },
-
-        teardown: function() {
-            if ( this.removeEventListener ) {
-                for ( var i = toBind.length; i; ) {
-                    this.removeEventListener( toBind[--i], handler, false );
-                }
-            } else {
-                this.onmousewheel = null;
-            }
-            // Clean up the data we added to the element
-            $.removeData(this, 'mousewheel-line-height');
-            $.removeData(this, 'mousewheel-page-height');
-        },
-
-        getLineHeight: function(elem) {
-            var $elem = $(elem),
-                $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
-            if (!$parent.length) {
-                $parent = $('body');
-            }
-            return parseInt($parent.css('fontSize'), 10) || parseInt($elem.css('fontSize'), 10) || 16;
-        },
-
-        getPageHeight: function(elem) {
-            return $(elem).height();
-        },
-
-        settings: {
-            adjustOldDeltas: true, // see shouldAdjustOldDeltas() below
-            normalizeOffset: true  // calls getBoundingClientRect for each event
-        }
-    };
-
-    $.fn.extend({
-        mousewheel: function(fn) {
-            return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
-        },
-
-        unmousewheel: function(fn) {
-            return this.unbind('mousewheel', fn);
-        }
-    });
-
-
-    function handler(event) {
-        var orgEvent   = event || window.event,
-            args       = slice.call(arguments, 1),
-            delta      = 0,
-            deltaX     = 0,
-            deltaY     = 0,
-            absDelta   = 0,
-            offsetX    = 0,
-            offsetY    = 0;
-        event = $.event.fix(orgEvent);
-        event.type = 'mousewheel';
-
-        // Old school scrollwheel delta
-        if ( 'detail'      in orgEvent ) { deltaY = orgEvent.detail * -1;      }
-        if ( 'wheelDelta'  in orgEvent ) { deltaY = orgEvent.wheelDelta;       }
-        if ( 'wheelDeltaY' in orgEvent ) { deltaY = orgEvent.wheelDeltaY;      }
-        if ( 'wheelDeltaX' in orgEvent ) { deltaX = orgEvent.wheelDeltaX * -1; }
-
-        // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
-        if ( 'axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
-            deltaX = deltaY * -1;
-            deltaY = 0;
-        }
-
-        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
-        delta = deltaY === 0 ? deltaX : deltaY;
-
-        // New school wheel delta (wheel event)
-        if ( 'deltaY' in orgEvent ) {
-            deltaY = orgEvent.deltaY * -1;
-            delta  = deltaY;
-        }
-        if ( 'deltaX' in orgEvent ) {
-            deltaX = orgEvent.deltaX;
-            if ( deltaY === 0 ) { delta  = deltaX * -1; }
-        }
-
-        // No change actually happened, no reason to go any further
-        if ( deltaY === 0 && deltaX === 0 ) { return; }
-
-        // Need to convert lines and pages to pixels if we aren't already in pixels
-        // There are three delta modes:
-        //   * deltaMode 0 is by pixels, nothing to do
-        //   * deltaMode 1 is by lines
-        //   * deltaMode 2 is by pages
-        if ( orgEvent.deltaMode === 1 ) {
-            var lineHeight = $.data(this, 'mousewheel-line-height');
-            delta  *= lineHeight;
-            deltaY *= lineHeight;
-            deltaX *= lineHeight;
-        } else if ( orgEvent.deltaMode === 2 ) {
-            var pageHeight = $.data(this, 'mousewheel-page-height');
-            delta  *= pageHeight;
-            deltaY *= pageHeight;
-            deltaX *= pageHeight;
-        }
-
-        // Store lowest absolute delta to normalize the delta values
-        absDelta = Math.max( Math.abs(deltaY), Math.abs(deltaX) );
-
-        if ( !lowestDelta || absDelta < lowestDelta ) {
-            lowestDelta = absDelta;
-
-            // Adjust older deltas if necessary
-            if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
-                lowestDelta /= 40;
-            }
-        }
-
-        // Adjust older deltas if necessary
-        if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
-            // Divide all the things by 40!
-            delta  /= 40;
-            deltaX /= 40;
-            deltaY /= 40;
-        }
-
-        // Get a whole, normalized value for the deltas
-        delta  = Math[ delta  >= 1 ? 'floor' : 'ceil' ](delta  / lowestDelta);
-        deltaX = Math[ deltaX >= 1 ? 'floor' : 'ceil' ](deltaX / lowestDelta);
-        deltaY = Math[ deltaY >= 1 ? 'floor' : 'ceil' ](deltaY / lowestDelta);
-
-        // Normalise offsetX and offsetY properties
-        if ( special.settings.normalizeOffset && this.getBoundingClientRect ) {
-            var boundingRect = this.getBoundingClientRect();
-            offsetX = event.clientX - boundingRect.left;
-            offsetY = event.clientY - boundingRect.top;
-        }
-
-        // Add information to the event object
-        event.deltaX = deltaX;
-        event.deltaY = deltaY;
-        event.deltaFactor = lowestDelta;
-        event.offsetX = offsetX;
-        event.offsetY = offsetY;
-        // Go ahead and set deltaMode to 0 since we converted to pixels
-        // Although this is a little odd since we overwrite the deltaX/Y
-        // properties with normalized deltas.
-        event.deltaMode = 0;
-
-        // Add event and delta to the front of the arguments
-        args.unshift(event, delta, deltaX, deltaY);
-
-        // Clearout lowestDelta after sometime to better
-        // handle multiple device types that give different
-        // a different lowestDelta
-        // Ex: trackpad = 3 and mouse wheel = 120
-        if (nullLowestDeltaTimeout) { clearTimeout(nullLowestDeltaTimeout); }
-        nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
-
-        return ($.event.dispatch || $.event.handle).apply(this, args);
-    }
-
-    function nullLowestDelta() {
-        lowestDelta = null;
-    }
-
-    function shouldAdjustOldDeltas(orgEvent, absDelta) {
-        // If this is an older event and the delta is divisable by 120,
-        // then we are assuming that the browser is treating this as an
-        // older mouse wheel event and that we should divide the deltas
-        // by 40 to try and get a more usable deltaFactor.
-        // Side note, this actually impacts the reported scroll distance
-        // in older browsers and can cause scrolling to be slower than native.
-        // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
-        return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
-    }
-
-}));
-
-define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (main) { return main; });
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Navigation/ExamineViewer',[
-	"jquery",
-	"x_ite/Browser/Navigation/X3DViewer",
-	"x_ite/Components/Followers/PositionChaser",
-	"x_ite/Components/Followers/OrientationChaser",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"jquery-mousewheel",
-],
-function ($,
-          X3DViewer,
-          PositionChaser,
-          OrientationChaser,
-          Vector2,
-          Vector3,
-          Rotation4)
-{
-"use strict";
-
-	var
-		MOTION_TIME       = 0.05 * 1000,
-		SPIN_RELEASE_TIME = 0.04 * 1000,
-		SPIN_ANGLE        = 0.003,
-		SPIN_FACTOR       = 0.6,
-		SCROLL_FACTOR     = 1.0 / 20.0,
-		MOVE_TIME         = 0.3,
-		ROTATE_TIME       = 0.4,
-		FRAME_RATE        = 60;
-
-	function ExamineViewer (executionContext)
-	{
-		X3DViewer .call (this, executionContext);
-
-		this .button                   = -1;
-		this .orientationOffset        = new Rotation4 (0, 0, 1, 0);
-		this .fromVector               = new Vector3 (0, 0, 0);
-		this .toVector                 = new Vector3 (0, 0, 0);
-		this .fromPoint                = new Vector3 (0, 0, 0);
-		this .toPoint                  = new Vector3 (0, 0, 0);
-		this .rotation                 = new Rotation4 (0, 0, 1, 0);
-		this .pressTime                = 0;
-		this .motionTime               = 0;
-
-		this .touch1                   = new Vector2 (0, 0);
-		this .touch2                   = new Vector2 (0, 0);
-		this .tapStart                 = 0;
-		this .dblTapInterval           = 0.4;
-
-		this .initialPositionOffset    = new Vector3 (0, 0, 0);
-		this .initialOrientationOffset = new Rotation4 (0, 0, 1, 0);
-		this .positionChaser           = new PositionChaser (executionContext);
-		this .centerOfRotationChaser   = new PositionChaser (executionContext);
-		this .rotationChaser           = new OrientationChaser (executionContext);
-	}
-
-	ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
-	{
-		constructor: ExamineViewer,
-		initialize: function ()
-		{
-			X3DViewer .prototype .initialize .call (this);
-
-			var
-			   browser   = this .getBrowser (),
-			   canvas    = browser .getCanvas (),
-				viewpoint = this .getActiveViewpoint ();
-
-			// Bind pointing device events.
-
-			canvas .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
-			canvas .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
-			canvas .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
-
-			canvas .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
-			canvas .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
-
-			// Setup scroll chaser.
-
-			this .positionChaser .duration_ = MOVE_TIME;
-			this .positionChaser .setPrivate (true);
-			this .positionChaser .setup ();
-
-			this .centerOfRotationChaser .duration_ = MOVE_TIME;
-			this .centerOfRotationChaser .setPrivate (true);
-			this .centerOfRotationChaser .setup ();
-
-			this .rotationChaser .duration_ = ROTATE_TIME;
-			this .rotationChaser .setPrivate (true);
-			this .rotationChaser .setup ();
-		},
-		mousedown: function (event)
-		{
-			if (this .button >= 0)
-				return;
-		
-			this .pressTime = performance .now ();
-
-			var
-				offset = this .getBrowser () .getCanvas () .offset (),
-				x      = event .pageX - offset .left,
-				y      = event .pageY - offset .top;
-
-			switch (event .button)
-			{
-				case 0:
-				{
-					// Start rotate.
-
-					// Stop event propagation.
-					event .preventDefault ();
-					event .stopImmediatePropagation ();
-
-					this .button = event .button;
-
-					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
-					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
-					$(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
-					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
-
-					this .disconnect ();
-					this .getActiveViewpoint () .transitionStop ();
-					this .getBrowser () .setCursor ("MOVE");
-
-					this .trackballProjectToSphere (x, y, this .fromVector);
-					this .rotation .assign (Rotation4 .Identity);
-
-					this .motionTime = 0;			
-					break;
-				}
-				case 1:
-				{
-					// Start pan.
-
-					// Stop event propagation.
-					event .preventDefault ();
-					event .stopImmediatePropagation ();
-
-					this .button = event .button;
-
-					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
-					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
-					$(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
-					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
-		
-					this .disconnect ();
-					this .getActiveViewpoint () .transitionStop ();
-					this .getBrowser () .setCursor ("MOVE");
-
-					this .getPointOnCenterPlane (x, y, this .fromPoint);
-					break;
-				}
-			}
-		},
-		mouseup: function (event)
-		{
-			if (event .button !== this .button)
-				return;
-
-			this .button = -1;
-		
-			$(document) .unbind (".ExamineViewer" + this .getId ());
-
-			switch (event .button)
-			{
-				case 0:
-				{
-					// End rotate.
-
-					// Stop event propagation.
-					event .preventDefault ();
-					event .stopImmediatePropagation ();
-
-					this .getBrowser () .setCursor ("DEFAULT");
-
-					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
-					{
-						if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
-							this .addRotate (this .rotation .pow (4));
-						else
-							this .addSpinning (this .rotation);
-					}
-
-					break;
-				}
-				case 1:
-				{
-					// End pan.
-
-					// Stop event propagation.
-					event .preventDefault ();
-					event .stopImmediatePropagation ();
-
-					this .getBrowser () .setCursor ("DEFAULT");
-					break;
-				}
-			}
-		},
-		dblclick: function (event)
-		{
-			// Stop event propagation.
-			event .preventDefault ();
-			event .stopImmediatePropagation ();
-
-			var
-				offset = this .getBrowser () .getCanvas () .offset (), 
-				x      = event .pageX - offset .left,
-				y      = this .getBrowser () .getCanvas () .height () - (event .pageY - offset .top);
-
-			this .disconnect ();
-			this .lookAtBBox (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
-		},
-		mousemove: (function ()
-		{
-			var fromPoint = new Vector3 (0, 0, 0);
-
-			return function (event)
-			{
-				var
-					offset = this .getBrowser () .getCanvas () .offset (),
-					x      = event .pageX - offset .left,
-					y      = event .pageY - offset .top;
-	
-				switch (this .button)
-				{
-					case 0:
-					{
-						// Rotate view around Viewpoint.centerOfRotation.
-
-						// Stop event propagation.
-						event .preventDefault ();
-						event .stopImmediatePropagation ();
-	
-						var
-							viewpoint = this .getActiveViewpoint (),
-							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
-	
-						this .rotation .setFromToVec (toVector, this .fromVector);
-	
-						if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
-							return;
-	
-						this .addRotate (this .rotation);
-	
-						this .fromVector .assign (toVector);
-						this .motionTime = performance .now ();
-						break;
-					}
-					case 1:
-					{
-						// Move view along center plane.
-
-						// Stop event propagation.
-						event .preventDefault ();
-						event .stopImmediatePropagation ();
-	
-						var
-							viewpoint   = this .getActiveViewpoint (),
-							toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
-							translation = viewpoint .getUserOrientation () .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
-	
-						this .addMove (translation, translation);
-	
-						this .fromPoint .assign (toPoint);
-						break;
-					}
-				}
-			};
-		})(),
-		mousewheel: (function ()
-		{
-			var
-				step        = new Vector3 (0, 0, 0),
-				translation = new Vector3 (0, 0, 0);
-
-			return function (event)
-			{
-				// Stop event propagation.
-				event .preventDefault ();
-				event .stopImmediatePropagation ();
-	
-				// Change viewpoint position.
-	
-				var
-					browser   = this .getBrowser (),
-					viewpoint = this .getActiveViewpoint ();
-	
-				browser .prepareEvents () .removeInterest ("spin", this);
-				viewpoint .transitionStop ();
-
-				step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
-				translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .abs ()));
-	
-				if (event .deltaY > 0)
-					this .addMove (translation .negate (), Vector3 .Zero);		
-				
-				else if (event .deltaY < 0)
-					this .addMove (translation, Vector3 .Zero);
-			};
-		})(),
-		touchstart: function (event)
-		{
-			var touches = event .originalEvent .touches;
-
-			switch (touches .length)
-			{
-				case 1:
-				{
-					// Start rotate (button 0).
-
-					event .button = 0;
-					event .pageX  = touches [0] .pageX;
-					event .pageY  = touches [0] .pageY;
-		
-					this .mousedown (event);
-
-					// Remember tap.
-
-					this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
-					break;
-				}
-				case 2:
-				{
-					// End rotate (button 0).
-
-					this .touchend (event);
-
-					// Start move (button 1).
-
-					event .button = 1;
-					event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
-					event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
-
-					this .mousedown (event);
-
-					// Start zoom (mouse wheel).
-
-					this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
-					this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
-					break;
-				}
-				case 3:
-				{
-					// End move (button 1).
-					this .touchend (event);
-					break;
-				}
-			}
-		},
-		touchend: function (event)
-		{
-			switch (this .button)
-			{
-				case 0:
-				{
-					// End rotate (button 0).
-					event .button = 0;
-					this .mouseup (event);
-
-					// Start dblclick (button 0).
-
-					if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
-					{
-						event .button = 0;
-						event .pageX  = this .touch1 .x;
-						event .pageY  = this .touch1 .y;
-
-						this .dblclick (event);
-					}
-
-					this .tapStart = this .getBrowser () .getCurrentTime ();
-					break;
-				}
-				case 1:
-				{
-					// End move (button 1).
-					event .button = 1;
-					this .mouseup (event);
-					break;
-				}
-			}
-		},
-		touchmove: (function ()
-		{
-			var
-				MOVE_ANGLE   = 0.7,
-				ZOOM_ANGLE   = -0.7,
-				touch1Change = new Vector2 (0, 0),
-				touch2Change = new Vector2 (0, 0);
-
-			return function (event)
-			{
-				var touches = event .originalEvent .touches;
-	
-				switch (touches .length)
-				{
-					case 1:
-					{
-						// Rotate (button 0).
-	
-						event .pageX = touches [0] .pageX;
-						event .pageY = touches [0] .pageY;
-			
-						this .mousemove (event);
-						break;
-					}
-					case 2:
-					{
-						touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
-						touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
-
-						var
-							move = touch1Change .dot (touch2Change) > MOVE_ANGLE,
-							zoom = touch1Change .dot (touch2Change) < ZOOM_ANGLE;
-
-						if (move)
-						{
-							// Move (button 1).
-		
-							event .pageX = (touches [0] .pageX + touches [1] .pageX) / 2;
-							event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
-		
-							this .mousemove (event);
-						}
-						else if (zoom)
-						{	
-							// Zoom (mouse wheel).
-		
-							var distance1 = this .touch1 .distance (this .touch2);
-			
-							this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
-							this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
-			
-							var
-								distance2 = this .touch1 .distance (this .touch2),
-								delta     = distance2 - distance1;
-			
-							event .deltaY     = delta;
-							event .zoomFactor = Math .abs (delta) / $(window) .width ();
-
-							this .mousewheel (event);
-						}
-		
-						this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
-						this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
-						break;
-					}
-				}
-			};
-		})(),
-		spin: function ()
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			this .orientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
-
-			viewpoint .orientationOffset_ = this .getOrientationOffset (this .rotation, this .orientationOffset);
-			viewpoint .positionOffset_    = this .getPositionOffset (viewpoint .positionOffset_ .getValue (), this .orientationOffset, viewpoint .orientationOffset_ .getValue ());
-		},
-		set_positionOffset__: function (value)
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			viewpoint .positionOffset_ = value;
-		},
-		set_centerOfRotationOffset__: function (value)
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			viewpoint .centerOfRotationOffset_ = value;
-		},
-		set_rotation__: function (value)
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			viewpoint .orientationOffset_ = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset);
-			viewpoint .positionOffset_    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint .orientationOffset_ .getValue ());
-		},
-		addRotate: function (rotationChange)
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			if (this .rotationChaser .isActive_ .getValue () && this .rotationChaser .value_changed_ .hasInterest ("set_rotation__", this))
-			{
-				var rotation = this .rotationChaser .set_destination_ .getValue ()
-					.multLeft (rotationChange);
-
-				this .rotationChaser .set_destination_ = rotation;
-			}
-			else
-			{
-				this .rotationChaser .set_value_       = Rotation4 .Identity;
-				this .rotationChaser .set_destination_ = rotationChange;
-
-				this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
-				this .initialPositionOffset    .assign (viewpoint .positionOffset_    .getValue ());
-			}
-
-			this .disconnect ();
-			this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
-		},
-		addSpinning: (function ()
-		{
-			var rotation = new Rotation4 (0, 0, 1, 0);
-
-			return function (rotationChange)
-			{
-				try
-				{
-					this .disconnect ();
-					this .getBrowser () .prepareEvents () .addInterest ("spin", this);
-	
-					this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR));
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			};
-		})(),
-		addMove: (function ()
-		{
-			var
-				positionOffset         = new Vector3 (0, 0, 0),
-				centerOfRotationOffset = new Vector3 (0, 0, 0);
-
-			return function (positionOffsetChange, centerOfRotationOffsetChange)
-			{
-				var viewpoint = this .getActiveViewpoint ();
-	
-				if (this .positionChaser .isActive_ .getValue () && this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
-				{
-					positionOffset
-						.assign (this .positionChaser .set_destination_ .getValue ())
-						.add (positionOffsetChange);
-	
-					this .positionChaser .set_destination_ = positionOffset;
-				}
-				else
-				{
-					positionOffset
-						.assign (viewpoint .positionOffset_ .getValue ())
-						.add (positionOffsetChange);
-	
-					this .positionChaser .set_value_       = viewpoint .positionOffset_;
-					this .positionChaser .set_destination_ = positionOffset;
-				}
-	
-				if (this .centerOfRotationChaser .isActive_ .getValue () && this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
-				{
-					centerOfRotationOffset
-						.assign (this .centerOfRotationChaser .set_destination_ .getValue ())
-						.add (centerOfRotationOffsetChange);
-
-					this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
-				}
-				else
-				{
-					centerOfRotationOffset
-						.assign (viewpoint .centerOfRotationOffset_ .getValue ())
-						.add (centerOfRotationOffsetChange);
-
-					this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
-					this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
-				}
-	
-				this .disconnect ();
-				this .positionChaser         .value_changed_ .addInterest ("set_positionOffset__",         this);
-				this .centerOfRotationChaser .value_changed_ .addInterest ("set_centerOfRotationOffset__", this);
-			};
-		})(),
-		getPositionOffset: (function ()
-		{
-			var
-				distance = new Vector3 (0, 0, 0),
-				d        = new Vector3 (0, 0, 0),
-				oob      = new Rotation4 (0, 0, 1, 0);
-
-			return function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
-			{
-				var viewpoint = this .getActiveViewpoint ();
-
-				this .getDistanceToCenter (distance, positionOffsetBefore);
-	
-				return (oob
-					.assign (orientationOffsetBefore)
-					.inverse ()
-					.multRight (orientationOffsetAfter)
-					.multVecRot (d .assign (distance))
-					.subtract (distance)
-					.add (positionOffsetBefore));
-			};
-		})(),
-		getOrientationOffset: (function ()
-		{
-			var
-				userOrientation   = new Rotation4 (0, 0, 1, 0),
-				orientationOffset = new Rotation4 (0, 0, 1, 0);
-
-			return function (rotation, orientationOffsetBefore)
-			{
-				var viewpoint = this .getActiveViewpoint ();
-	
-				userOrientation
-					.assign (rotation)
-					.multRight (viewpoint .getOrientation ())
-					.multRight (orientationOffsetBefore);
-	
-				if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
-					viewpoint .straightenHorizon (userOrientation);
-	
-				return (orientationOffset
-					.assign (viewpoint .getOrientation ())
-					.inverse ()
-					.multRight (userOrientation));
-			};
-		})(),
-		disconnect: function ()
-		{
-			var browser = this .getBrowser ();
-
-			this .positionChaser         .value_changed_ .removeInterest ("set_positionOffset__",         this)
-			this .centerOfRotationChaser .value_changed_ .removeInterest ("set_centerOfRotationOffset__", this)
-			this .rotationChaser         .value_changed_ .removeInterest ("set_rotation__",               this);
-
-			browser .prepareEvents () .removeInterest ("spin", this);
-		},
-		dispose: function ()
-		{
-			this .disconnect ();
-			this .getBrowser () .getCanvas () .unbind (".ExamineViewer");
-			$(document) .unbind (".ExamineViewer" + this .getId ());
-		},
-	});
-
-	return ExamineViewer;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-﻿
-define ('x_ite/Browser/Navigation/X3DFlyViewer',[
-	"jquery",
-	"x_ite/Browser/Navigation/X3DViewer",
-	"x_ite/Components/Followers/OrientationChaser",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Geometry/Camera",
-	"jquery-mousewheel",
-],
-function ($,
-          X3DViewer,
-          OrientationChaser,
-          Vector3,
-          Rotation4,
-          Matrix4,
-          Camera)
-{
-"use strict";
-	
-	var
-		SPEED_FACTOR           = 0.007,
-		SHIFT_SPEED_FACTOR     = 4 * SPEED_FACTOR,
-		ROTATION_SPEED_FACTOR  = 1.4,
-		ROTATION_LIMIT         = 40,
-		PAN_SPEED_FACTOR       = SPEED_FACTOR,
-		PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
-		ROLL_ANGLE             = Math .PI / 32,
-		ROTATE_TIME            = 0.3;
-	
-	var
-		MOVE = 0,
-		PAN  = 1;
-	
-	function X3DFlyViewer (executionContext)
-	{
-		X3DViewer .call (this, executionContext);
-
-		var gl = this .getBrowser () .getContext ();
-
-		this .button            = -1;
-		this .fromVector        = new Vector3 (0, 0, 0);
-		this .toVector          = new Vector3 (0, 0, 0);
-		this .direction         = new Vector3 (0, 0, 0);
-		this .startTime         = 0;
-		this .lineBuffer        = gl .createBuffer ();
-		this .lineCount         = 2;
-		this .lineVertices      = new Array (this .lineCount * 4);
-		this .lineArray         = new Float32Array (this .lineVertices);
-		this .event             = null;
-		this .lookAround        = false;
-		this .orientationChaser = new OrientationChaser (executionContext);
-	}
-
-	X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
-	{
-		constructor: X3DFlyViewer,
-		initialize: function ()
-		{
-			X3DViewer .prototype .initialize .call (this);
-
-			var
-			   browser = this .getBrowser (),
-			   canvas  = browser .getCanvas ();
-
-			// Bind pointing device events.
-
-			canvas .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
-			canvas .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
-
-			canvas .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
-			canvas .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
-
-			browser .controlKey_ .addInterest ("set_controlKey_", this);
-
-			// Setup look around chaser.
-
-			this .orientationChaser .duration_ = ROTATE_TIME;
-			this .orientationChaser .setPrivate (true);
-			this .orientationChaser .setup ();
-		},
-		addCollision: function () { },
-		removeCollision: function () { },
-		set_controlKey_: function ()
-		{
-			if (this .event && this .event .button === 0)
-			{
-				this .button = -1;
-				this .mousedown (this .event);
-			}
-		},
-		mousedown: function (event)
-		{
-			if (this .button >= 0)
-				return;
-
-			this .event = event;
-
-			var
-				offset = this .getBrowser () .getCanvas () .offset (),
-				x      = event .pageX - offset .left,
-				y      = event .pageY - offset .top;
-			
-			switch (event .button)
-			{
-				case 0:
-				{
-					// Start walk or fly.
-
-					// Stop event propagation.
-					event .preventDefault ();
-					event .stopImmediatePropagation ();
-
-					this .button = event .button;
-				
-					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
-					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
-					$(document) .bind ("touchend.X3DFlyViewer"  + this .getId (), this .touchend  .bind (this));
-					$(document) .bind ("touchmove.X3DFlyViewer" + this .getId (), this .touchmove .bind (this));
-
-					this .disconnect ();
-					this .getActiveViewpoint () .transitionStop ();
-					this .getBrowser () .setCursor ("MOVE");
-					this .addCollision ();
-
-					if (this .getBrowser () .getControlKey () || this .lookAround)
-					{
-						// Look around.
-
-						this .trackballProjectToSphere (x, y, this .fromVector);
-					}
-					else
-					{
-						// Move.
-
-						this .fromVector .set (x, 0, y);
-						this .toVector   .assign (this .fromVector);
-
-						this .getFlyDirection (this .fromVector, this .toVector, this .direction);
-						this .addFly ();
-
-						if (this .getBrowser () .getBrowserOption ("Rubberband"))
-							this .getBrowser () .finished () .addInterest ("display", this, MOVE);
-					}
-
-					break;
-				}
-				case 1:
-				{
-					// Start pan.
-
-					// Stop event propagation.
-					event .preventDefault ();
-					event .stopImmediatePropagation ();
-
-					this .button = event .button;
-				
-					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
-					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
-
-					this .disconnect ();
-					this .getActiveViewpoint () .transitionStop ();
-					this .getBrowser () .setCursor ("MOVE");
-					this .addCollision ();
-
-					this .fromVector .set (x, -y, 0);
-					this .toVector   .assign (this .fromVector);
-					this .direction  .set (0, 0, 0);
-
-					this .addPan ();
-
-					if (this .getBrowser () .getBrowserOption ("Rubberband"))
-						this .getBrowser () .finished () .addInterest ("display", this, PAN);
-					
-					break;
-				}
-			}
-		},
-		mouseup: function (event)
-		{
-			event .preventDefault ();
-
-			if (event .button !== this .button)
-				return;
-
-			this .event  = null;
-			this .button = -1;
-		
-			$(document) .unbind (".X3DFlyViewer" + this .getId ());
-
-			this .disconnect ();
-			this .getBrowser () .setCursor ("DEFAULT");
-			this .removeCollision ();
-		},
-		mousemove: function (event)
-		{
-			this .getBrowser () .addBrowserEvent ();
-
-			this .event = event;
-
-			var
-				offset = this .getBrowser () .getCanvas () .offset (),
-				x      = event .pageX - offset .left,
-				y      = event .pageY - offset .top;
-			
-			switch (this .button)
-			{
-				case 0:
-				{
-					if (this .getBrowser () .getControlKey () || this .lookAround)
-					{
-						// Stop event propagation.
-						event .preventDefault ();
-						event .stopImmediatePropagation ();
-
-						// Look around
-
-						var
-							viewpoint = this .getActiveViewpoint (),
-							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
-
-						this .addRotation (this .fromVector, toVector);
-						this .fromVector .assign (toVector);
-						break;
-					}
-					else
-					{
-						// Fly
-
-						this .toVector .set (x, 0, y);
-						this .getFlyDirection (this .fromVector, this .toVector, this .direction);
-						break;
-					}
-				}
-				case 1:
-				{
-					// Stop event propagation.
-					event .preventDefault ();
-					event .stopImmediatePropagation ();
-
-					// Pan
-
-					this .toVector  .set (x, -y, 0);
-					this .direction .assign (this .toVector) .subtract (this .fromVector);
-					break;
-				}
-			}
-		},
-		mousewheel: function (event)
-		{
-			// Stop event propagation.
-
-			event .preventDefault ();
-			event .stopImmediatePropagation ();
-
-			// Change viewpoint position.
-
-			var viewpoint = this .getActiveViewpoint ();
-
-			viewpoint .transitionStop ();
-
-			if (event .deltaY > 0)
-				this .addRoll (-ROLL_ANGLE);
-
-			else if (event .deltaY < 0)
-				this .addRoll (ROLL_ANGLE);
-		},
-		touchstart: function (event)
-		{
-			var touches = event .originalEvent .touches;
-
-			switch (touches .length)
-			{
-				case 1:
-				{
-					// Start fly or walk (button 0).
-
-					event .button = 0;
-					event .pageX  = touches [0] .pageX;
-					event .pageY  = touches [0] .pageY;
-
-					this .mousedown (event);
-					break;
-				}
-				case 2:
-				{
-					// End fly or walk (button 0).
-
-					this .touchend (event);
-
-					// Start look around (button 0).
-
-					this .lookAround = true;
-					event .button    = 0;
-					event .pageX     = (touches [0] .pageX + touches [1] .pageX) / 2;
-					event .pageY     = (touches [0] .pageY + touches [1] .pageY) / 2;
-
-					this .mousedown (event);
-					break;
-				}
-				case 3:
-				{
-					// End look around (button 0).
-
-					this .touchend (event);
-					break;
-				}
-			}
-		},
-		touchend: function (event)
-		{
-			switch (this .button)
-			{
-				case 0:
-				{
-					// End move or look around (button 0).
-					this .lookAround = false;
-					event .button    = 0;
-
-					this .mouseup (event);
-					break;
-				}
-			}
-		},
-		touchmove: function (event)
-		{
-			var touches = event .originalEvent .touches;
-
-			switch (touches .length)
-			{
-				case 1:
-				{
-					// Fly or walk (button 0).
-
-					event .button = 0;
-					event .pageX  = touches [0] .pageX;
-					event .pageY  = touches [0] .pageY;
-		
-					this .mousemove (event);
-					break;
-				}
-				case 2:
-				{
-					// Fly or walk (button 0).
-
-					event .button = 0;
-					event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
-					event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
-		
-					this .mousemove (event);
-					break;
-				}
-			}
-		},
-		fly: (function ()
-		{
-			var
-				upVector           = new Vector3 (0, 0, 0),
-				direction          = new Vector3 (0, 0, 0),
-				axis               = new Vector3 (0, 0, 0),
-				userOrientation    = new Rotation4 (0, 0, 1, 0),
-				orientationOffset  = new Rotation4 (0, 0, 1, 0),
-				rubberBandRotation = new Rotation4 (0, 0, 1, 0),
-				up                 = new Rotation4 (0, 0, 1, 0),
-				geoRotation        = new Rotation4 (0, 0, 1, 0);
-
-			return function ()
-			{
-				var
-					navigationInfo = this .getNavigationInfo (),
-					viewpoint      = this .getActiveViewpoint (),
-					now            = performance .now (),
-					dt             = (now - this .startTime) / 1000;
-	
-				upVector .assign (viewpoint .getUpVector ());
-	
-				// Rubberband values
-	
-				up .setFromToVec (Vector3 .yAxis, upVector);
-
-				if (this .direction .z > 0)
-					rubberBandRotation .setFromToVec (up .multVecRot (direction .assign (this .direction)), up .multVecRot (axis .set (0, 0, 1)));
-				else
-					rubberBandRotation .setFromToVec (up .multVecRot (axis .set (0, 0, -1)), up .multVecRot (direction .assign (this .direction)));
-	
-				var rubberBandLength = this .direction .abs ();
-
-				// Determine positionOffset.
-
-				var speedFactor = 1 - rubberBandRotation .angle / (Math .PI / 2);
-
-				speedFactor *= navigationInfo .speed_ .getValue ();
-				speedFactor *= viewpoint .getSpeedFactor ();
-				speedFactor *= this .getBrowser () .getShiftKey () ? SHIFT_SPEED_FACTOR : SPEED_FACTOR;
-				speedFactor *= dt;
-	
-				var translation = this .getTranslationOffset (direction .assign (this .direction) .multiply (speedFactor));
-	
-				this .getActiveLayer () .constrainTranslation (translation, true);
-	
-				viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
-	
-				// Determine weight for rubberBandRotation.
-
-				var weight = ROTATION_SPEED_FACTOR * dt * Math .pow (rubberBandLength / (rubberBandLength + ROTATION_LIMIT), 2);
-
-				// Determine userOrientation.
-
-				userOrientation
-					.assign (Rotation4 .Identity)
-					.slerp (rubberBandRotation, weight)
-					.multRight (viewpoint .getUserOrientation ());
-
-				// Straighten horizon of userOrientation.
-
-				viewpoint .straightenHorizon (userOrientation);
-
-				// Determine orientationOffset.
-
-				orientationOffset
-					.assign (viewpoint .getOrientation ())
-					.inverse ()
-					.multRight (userOrientation);
-
-				// Set orientationOffset.
-
-				viewpoint .orientationOffset_ = orientationOffset;
-
-				// GeoRotation
-	
-				geoRotation .setFromToVec (upVector, viewpoint .getUpVector ());
-	
-				viewpoint .orientationOffset_ = geoRotation .multLeft (viewpoint .orientationOffset_ .getValue ());
-	
-				this .startTime = now;
-			};
-		})(),
-		pan: (function ()
-		{
-			var
-				direction = new Vector3 (0, 0, 0),
-				axis      = new Vector3 (0, 0, 0);
-
-			return function ()
-			{
-				var
-					navigationInfo = this .getNavigationInfo (),
-					viewpoint      = this .getActiveViewpoint (),
-					now            = performance .now (),
-					dt             = (now - this .startTime) / 1000,
-					upVector       = viewpoint .getUpVector ();
-	
-				this .constrainPanDirection (direction .assign (this .direction));
-	
-				var speedFactor = 1;
-	
-				speedFactor *= navigationInfo .speed_ .getValue ();
-				speedFactor *= viewpoint .getSpeedFactor ();
-				speedFactor *= this .getBrowser () .getShiftKey () ? PAN_SHIFT_SPEED_FACTOR : PAN_SPEED_FACTOR;
-				speedFactor *= dt;
-	
-				var
-					orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .yAxis)), upVector)),
-					translation = orientation .multVecRot (direction .multiply (speedFactor));
-	
-				this .getActiveLayer () .constrainTranslation (translation, true);
-	
-				viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
-	
-				this .startTime = now;
-			};
-		})(),
-		set_orientationOffset__: function (value)
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			viewpoint .orientationOffset_ = value;
-		},
-		addFly: function ()
-		{
-			if (this .startTime)
-				return;
-
-			this .getBrowser () .prepareEvents () .addInterest ("fly", this);
-			this .getBrowser () .addBrowserEvent ();
-
-			this .startTime = performance .now ();
-		},
-		addPan: function ()
-		{
-			if (this .startTime)
-				return;
-			
-			this .disconnect ();
-			this .getBrowser () .prepareEvents () .addInterest ("pan", this);
-			this .getBrowser () .addBrowserEvent ();
-
-			this .startTime = performance .now ();
-		},
-		addRoll: (function ()
-		{
-			var
-				orientationOffset = new Rotation4 (0, 0, 1, 0),
-				roll              = new Rotation4 (0, 0, 1, 0);
-
-			return function (rollAngle)
-			{
-				var viewpoint = this .getActiveViewpoint ();
-	
-				if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
-				{
-					orientationOffset
-						.assign (viewpoint .getOrientation ())
-						.inverse ()
-						.multRight (roll .set (1, 0, 0, rollAngle))
-						.multRight (viewpoint .getOrientation ())
-						.multRight (this .orientationChaser .set_destination_ .getValue ());
-
-					this .orientationChaser .set_destination_ = orientationOffset;
-				}
-				else
-				{
-					orientationOffset
-						.assign (viewpoint .getOrientation ())
-						.inverse ()
-						.multRight (roll .set (1, 0, 0, rollAngle))
-						.multRight (viewpoint .getUserOrientation ());
-
-					this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
-					this .orientationChaser .set_destination_ = orientationOffset;
-				}
-	
-				this .disconnect ();
-				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
-			};
-		})(),
-		addRotation: (function ()
-		{
-			var
-				userOrientation   = new Rotation4 (0, 0, 1, 0),
-				orientationOffset = new Rotation4 (0, 0, 1, 0);
-
-			return function (fromVector, toVector)
-			{
-				var viewpoint = this .getActiveViewpoint ();
-	
-				if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
-				{
-					userOrientation
-						.setFromToVec (toVector, fromVector)
-						.multRight (viewpoint .getOrientation ())
-						.multRight (this .orientationChaser .set_destination_ .getValue ());
-
-					viewpoint .straightenHorizon (userOrientation);
-	
-					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
-	
-					this .orientationChaser .set_destination_ = orientationOffset;
-				}
-				else
-				{
-					userOrientation
-						.setFromToVec (toVector, fromVector)
-						.multRight (viewpoint .getUserOrientation ());
-
-					viewpoint .straightenHorizon (userOrientation);
-	
-					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
-	
-					this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
-					this .orientationChaser .set_destination_ = orientationOffset;
-				}
-	
-				this .disconnect ();
-				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
-			};
-		})(),
-		display: (function ()
-		{
-			var
-				fromPoint             = new Vector3 (0, 0, 0),
-				toPoint               = new Vector3 (0, 0, 0),
-				projectionMatrix      = new Matrix4 (),
-				projectionMatrixArray = new Float32Array (Matrix4 .Identity),
-				modelViewMatrixArray  = new Float32Array (Matrix4 .Identity);
-
-			return function (interest, type)
-			{
-				// Configure HUD
-	
-				var
-					browser  = this .getBrowser (),
-					viewport = browser .getViewport (),
-					width    = viewport [2],
-					height   = viewport [3];
-
-				Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix);
-	
-				projectionMatrixArray .set (projectionMatrix);
-	
-				// Display Rubberband.
-	
-				if (type === MOVE)
-				{
-					fromPoint .set (this .fromVector .x, height - this .fromVector .z, 0);
-					toPoint   .set (this .toVector   .x, height - this .toVector   .z, 0);
-				}
-				else
-				{
-					fromPoint .set (this .fromVector .x, height + this .fromVector .y, 0);
-					toPoint   .set (this .toVector   .x, height + this .toVector   .y, 0);
-				}
-	
-				this .transfer (fromPoint, toPoint);
-	
-				var
-					gl         = browser .getContext (),
-					shaderNode = browser .getLineShader (),
-					lineWidth  = gl .getParameter (gl .LINE_WIDTH);
-	
-				shaderNode .enable (gl);
-				shaderNode .enableVertexAttribute (gl, this .lineBuffer);
-	
-				gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
-				gl .uniform1i (shaderNode .x3d_FogType,       0);
-				gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
-				gl .uniform1i (shaderNode .x3d_Lighting,      true);
-	
-				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
-				
-				gl .disable (gl .DEPTH_TEST);
-	
-				// Draw a black and a white line.
-				gl .lineWidth (2);
-				gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
-				gl .uniform1f (shaderNode .x3d_Transparency,  0);
-	
-				gl .drawArrays (gl .LINES, 0, this .lineCount);
-	
-				gl .lineWidth (1);
-				gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
-	
-				gl .drawArrays (gl .LINES, 0, this .lineCount);
-				gl .enable (gl .DEPTH_TEST);
-	
-				gl .lineWidth (lineWidth);
-				shaderNode .disable (gl);
-			};
-		})(),
-		transfer: function (fromPoint, toPoint)
-		{
-			var
-				gl           = this .getBrowser () .getContext (),
-				lineVertices = this .lineVertices;
-
-			lineVertices [0] = fromPoint .x;
-			lineVertices [1] = fromPoint .y;
-			lineVertices [2] = fromPoint .z;
-			lineVertices [3] = 1;
-
-			lineVertices [4] = toPoint .x;
-			lineVertices [5] = toPoint .y;
-			lineVertices [6] = toPoint .z;
-			lineVertices [7] = 1;
-
-			this .lineArray .set (lineVertices);
-
-			// Transfer line.
-
-			gl .bindBuffer (gl .ARRAY_BUFFER, this .lineBuffer);
-			gl .bufferData (gl .ARRAY_BUFFER, this .lineArray, gl .STATIC_DRAW);
-		},
-		disconnect: function ()
-		{
-			var browser = this .getBrowser ();
-
-			browser .addBrowserEvent ();
-
-			browser .prepareEvents () .removeInterest ("fly", this);
-			browser .prepareEvents () .removeInterest ("pan", this);
-			browser .finished ()      .removeInterest ("display", this);
-
-			this .orientationChaser .value_changed_ .removeInterest ("set_orientationOffset__", this);
-
-			this .startTime = 0;
-		},
-		dispose: function ()
-		{
-			this .disconnect ();
-			this .getBrowser () .controlKey_ .removeInterest ("set_controlKey_", this);
-			this .getBrowser () .getCanvas () .unbind (".X3DFlyViewer");
-			$(document) .unbind (".X3DFlyViewer" + this .getId ());
-		},
-	});
-
-	return X3DFlyViewer;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-﻿
-define ('x_ite/Browser/Navigation/WalkViewer',[
-	"x_ite/Browser/Navigation/X3DFlyViewer",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-],
-function (X3DFlyViewer,
-          Vector3,
-          Rotation4)
-{
-"use strict";
-	
-	function WalkViewer (executionContext)
-	{
-		X3DFlyViewer .call (this, executionContext);
-	}
-
-	WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
-	{
-		constructor: WalkViewer,
-		initialize: function ()
-		{
-			X3DFlyViewer .prototype .initialize .call (this);
-			
-			this .getBrowser () .addCollision (this);
-		},
-		getFlyDirection: function (fromVector, toVector, direction)
-		{
-			return direction .assign (toVector) .subtract (fromVector);
-		},
-		getTranslationOffset: (function ()
-		{
-			var
-				localYAxis      = new Vector3 (0, 0, 0),
-				userOrientation = new Rotation4 (0, 0, 1, 0),
-				rotation        = new Rotation4 (0, 0, 1, 0);
-
-			return function (velocity)
-			{
-				var
-					viewpoint = this .getActiveViewpoint (),
-					upVector  = viewpoint .getUpVector ();
-	
-				userOrientation .assign (viewpoint .getUserOrientation ());
-				userOrientation .multVecRot (localYAxis .assign (Vector3 .yAxis));
-				rotation        .setFromToVec (localYAxis, upVector);
-
-				var orientation = userOrientation .multRight (rotation);
-	
-				return orientation .multVecRot (velocity);
-			};
-		})(),
-		constrainPanDirection: function (direction)
-		{
-			if (direction .y < 0)
-				direction .y = 0;
-
-			return direction;
-		},
-		dispose: function ()
-		{
-			this .getBrowser () .removeCollision (this);
-			
-			X3DFlyViewer .prototype .dispose .call (this);
-		},
-	});
-
-	return WalkViewer;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-﻿
-define ('x_ite/Browser/Navigation/FlyViewer',[
-	"x_ite/Browser/Navigation/X3DFlyViewer",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-],
-function (X3DFlyViewer,
-          Vector3,
-          Rotation4)
-{
-"use strict";
-	
-	function FlyViewer (executionContext)
-	{
-		X3DFlyViewer .call (this, executionContext);
-	}
-
-	FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
-	{
-		constructor: FlyViewer,
-		addCollision: function ()
-		{
-			this .getBrowser () .addCollision (this);
-		},
-		removeCollision: function ()
-		{
-			this .getBrowser () .removeCollision (this);
-		},
-		getFlyDirection: (function ()
-		{
-			var rotation = new Rotation4 (0, 0, 1, 0);
-
-			return function (fromVector, toVector, direction)
-			{
-				direction .assign (toVector) .subtract (fromVector);
-
-				direction .x =  direction .x / 20;
-				direction .y = -direction .z / 20;
-				direction .z = -50;
-
-				return direction;
-			};
-		})(),
-		getTranslationOffset: function (velocity)
-		{
-			return this .getActiveViewpoint () .getUserOrientation () .multVecRot (velocity);
-		},
-		constrainPanDirection: function (direction)
-		{
-			return direction;
-		},
-	});
-
-	return FlyViewer;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/ScalarInterpolator',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Interpolation/X3DInterpolatorNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode, 
-          X3DConstants,
-          Algorithm)
-{
-"use strict";
-
-	function ScalarInterpolator (executionContext)
-	{
-		X3DInterpolatorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .ScalarInterpolator);
-	}
-
-	ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-	{
-		constructor: ScalarInterpolator,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "ScalarInterpolator";
-		},
-		getComponentName: function ()
-		{
-			return "Interpolation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DInterpolatorNode .prototype .initialize .call (this);
-
-			this .keyValue_ .addInterest ("set_keyValue__", this);
-		},
-		set_keyValue__: function ()
-		{
-			var
-				key      = this .key_,
-				keyValue = this .keyValue_;
-
-			if (keyValue .length < key .length)
-				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
-		},
-		interpolate: function (index0, index1, weight)
-		{
-			this .value_changed_ = Algorithm .lerp (this .keyValue_ [index0], this .keyValue_ [index1], weight);
-		},
-	});
-
-	return ScalarInterpolator;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Navigation/Viewpoint',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Navigation/X3DViewpointNode",
-	"x_ite/Components/Interpolation/ScalarInterpolator",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Geometry/Camera",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DViewpointNode,
-          ScalarInterpolator,
-          X3DConstants,
-          Camera,
-          Vector3,
-          Matrix4)
-{
-"use strict";
-
-	var
-		zAxis       = new Vector3 (0, 0, 1),
-		screenScale = new Vector3 (0, 0, 0),
-		normalized  = new Vector3 (0, 0, 0);
-
-	function Viewpoint (executionContext)
-	{
-		X3DViewpointNode .call (this, executionContext);
-
-		this .addType (X3DConstants .Viewpoint);
-
-		this .position_         .setUnit ("length");
-		this .centerOfRotation_ .setUnit ("length");
-		this .fieldOfView_      .setUnit ("angle");
-
-		this .projectionMatrix        = new Matrix4 ();
-		this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-	}
-
-	Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
-	{
-		constructor: Viewpoint,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .SFFloat (0.7854)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Viewpoint";
-		},
-		getComponentName: function ()
-		{
-			return "Navigation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DViewpointNode .prototype .initialize .call (this);
-
-			this .fieldOfViewInterpolator .key_ = new Fields .MFFloat (0, 1);
-			this .fieldOfViewInterpolator .setup ();
-
-			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewInterpolator .set_fraction_);
-			this .fieldOfViewInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
-		},
-		setInterpolators: function (fromViewpoint)
-		{
-			if (fromViewpoint .getType () .indexOf (X3DConstants .Viewpoint) < 0)
-			{
-				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (this .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue ());
-			}
-			else
-			{
-				var scale = fromViewpoint .getFieldOfView () / this .fieldOfView_ .getValue ();
-	
-				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, this .fieldOfViewScale_ .getValue ());
-	
-				this .fieldOfViewScale_ = scale;
-			}
-		},
-		getFieldOfView: function ()
-		{
-			var fov = this .fieldOfView_ .getValue () * this .fieldOfViewScale_ .getValue ();
-
-			return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
-		},
-		getScreenScale: function (point, viewport)
-		{
-		   // Returns the screen scale in meter/pixel for on pixel.
-
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				size   = Math .tan (this .getFieldOfView () / 2) * 2 * point .abs (); // Assume we are on sphere.
-
-			size *= Math .abs (normalized .assign (point) .normalize () .dot (zAxis));
-
-			if (width > height)
-				size /= height;
-			else
-				size /= width;
-
-			return screenScale .set (size, size, size);
-		},
-		getLookAtDistance: function (bbox)
-		{
-			return (bbox .size .abs () / 2) / Math .tan (this .getFieldOfView () / 2);
-		},
-		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
-		{
-			return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
-		},
-	});
-
-	return Viewpoint;
 });
 
 
@@ -63975,6 +62001,127 @@ function (X3DConstants,
  ******************************************************************************/
 
 
+define ('x_ite/Components/Interpolation/ScalarInterpolator',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Interpolation/X3DInterpolatorNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DInterpolatorNode, 
+          X3DConstants,
+          Algorithm)
+{
+"use strict";
+
+	function ScalarInterpolator (executionContext)
+	{
+		X3DInterpolatorNode .call (this, executionContext);
+
+		this .addType (X3DConstants .ScalarInterpolator);
+	}
+
+	ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+	{
+		constructor: ScalarInterpolator,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFFloat ()),
+		]),
+		getTypeName: function ()
+		{
+			return "ScalarInterpolator";
+		},
+		getComponentName: function ()
+		{
+			return "Interpolation";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DInterpolatorNode .prototype .initialize .call (this);
+
+			this .keyValue_ .addInterest ("set_keyValue__", this);
+		},
+		set_keyValue__: function ()
+		{
+			var
+				key      = this .key_,
+				keyValue = this .keyValue_;
+
+			if (keyValue .length < key .length)
+				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
+		},
+		interpolate: function (index0, index1, weight)
+		{
+			this .value_changed_ = Algorithm .lerp (this .keyValue_ [index0], this .keyValue_ [index1], weight);
+		},
+	});
+
+	return ScalarInterpolator;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Navigation/NavigationInfo',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -64229,7 +62376,7 @@ function (Fields,
 		{
 			return this .visibilityLimit_ .getValue ()
 				    ? this .visibilityLimit_ .getValue ()
-				    : viewpoint .getMaxZFar ();
+				    : viewpoint .getMaxFarValue ();
 		},
 		getTransitionType: function ()
 		{
@@ -64506,6 +62653,10 @@ function (Fields,
 
 			return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
 		},
+		getMaxFarValue: function ()
+		{
+			return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e9;
+		},
 		getUpVector: function ()
 		{
 			return this .getGeoUpVector .call (this, position .assign (this .position) .add (this .positionOffset_ .getValue ()), upVector);
@@ -64513,10 +62664,6 @@ function (Fields,
 		getSpeedFactor: function ()
 		{
 			return (Math .max (this .elevation, 0.0) + 10) / 10 * this .speedFactor_ .getValue ();
-		},
-		getMaxZFar: function ()
-		{
-			return 1e9;
 		},
 		getScreenScale: function (point, viewport)
 		{
@@ -64542,7 +62689,7 @@ function (Fields,
 		},
 		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport, limit)
 		{
-			if (limit)
+			if (limit || this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer"))
 				return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
 				
 			// Linear interpolate nearValue and farValue
@@ -64556,6 +62703,2079 @@ function (Fields,
 	});
 
 	return GeoViewpoint;
+});
+
+
+
+/*!
+ * jQuery Mousewheel 3.1.13
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license
+ * http://jquery.org/license
+ */
+
+(function (factory) {
+    if ( typeof define === 'function' && define.amd ) {
+        // AMD. Register as an anonymous module.
+        define('jquery-mousewheel/jquery.mousewheel',['jquery'], factory);
+    } else if (typeof exports === 'object') {
+        // Node/CommonJS style for Browserify
+        module.exports = factory;
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function ($) {
+
+    var toFix  = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
+        toBind = ( 'onwheel' in document || document.documentMode >= 9 ) ?
+                    ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
+        slice  = Array.prototype.slice,
+        nullLowestDeltaTimeout, lowestDelta;
+
+    if ( $.event.fixHooks ) {
+        for ( var i = toFix.length; i; ) {
+            $.event.fixHooks[ toFix[--i] ] = $.event.mouseHooks;
+        }
+    }
+
+    var special = $.event.special.mousewheel = {
+        version: '3.1.12',
+
+        setup: function() {
+            if ( this.addEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.addEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = handler;
+            }
+            // Store the line height and page height for this particular element
+            $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
+            $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
+        },
+
+        teardown: function() {
+            if ( this.removeEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.removeEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = null;
+            }
+            // Clean up the data we added to the element
+            $.removeData(this, 'mousewheel-line-height');
+            $.removeData(this, 'mousewheel-page-height');
+        },
+
+        getLineHeight: function(elem) {
+            var $elem = $(elem),
+                $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
+            if (!$parent.length) {
+                $parent = $('body');
+            }
+            return parseInt($parent.css('fontSize'), 10) || parseInt($elem.css('fontSize'), 10) || 16;
+        },
+
+        getPageHeight: function(elem) {
+            return $(elem).height();
+        },
+
+        settings: {
+            adjustOldDeltas: true, // see shouldAdjustOldDeltas() below
+            normalizeOffset: true  // calls getBoundingClientRect for each event
+        }
+    };
+
+    $.fn.extend({
+        mousewheel: function(fn) {
+            return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
+        },
+
+        unmousewheel: function(fn) {
+            return this.unbind('mousewheel', fn);
+        }
+    });
+
+
+    function handler(event) {
+        var orgEvent   = event || window.event,
+            args       = slice.call(arguments, 1),
+            delta      = 0,
+            deltaX     = 0,
+            deltaY     = 0,
+            absDelta   = 0,
+            offsetX    = 0,
+            offsetY    = 0;
+        event = $.event.fix(orgEvent);
+        event.type = 'mousewheel';
+
+        // Old school scrollwheel delta
+        if ( 'detail'      in orgEvent ) { deltaY = orgEvent.detail * -1;      }
+        if ( 'wheelDelta'  in orgEvent ) { deltaY = orgEvent.wheelDelta;       }
+        if ( 'wheelDeltaY' in orgEvent ) { deltaY = orgEvent.wheelDeltaY;      }
+        if ( 'wheelDeltaX' in orgEvent ) { deltaX = orgEvent.wheelDeltaX * -1; }
+
+        // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
+        if ( 'axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
+            deltaX = deltaY * -1;
+            deltaY = 0;
+        }
+
+        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
+        delta = deltaY === 0 ? deltaX : deltaY;
+
+        // New school wheel delta (wheel event)
+        if ( 'deltaY' in orgEvent ) {
+            deltaY = orgEvent.deltaY * -1;
+            delta  = deltaY;
+        }
+        if ( 'deltaX' in orgEvent ) {
+            deltaX = orgEvent.deltaX;
+            if ( deltaY === 0 ) { delta  = deltaX * -1; }
+        }
+
+        // No change actually happened, no reason to go any further
+        if ( deltaY === 0 && deltaX === 0 ) { return; }
+
+        // Need to convert lines and pages to pixels if we aren't already in pixels
+        // There are three delta modes:
+        //   * deltaMode 0 is by pixels, nothing to do
+        //   * deltaMode 1 is by lines
+        //   * deltaMode 2 is by pages
+        if ( orgEvent.deltaMode === 1 ) {
+            var lineHeight = $.data(this, 'mousewheel-line-height');
+            delta  *= lineHeight;
+            deltaY *= lineHeight;
+            deltaX *= lineHeight;
+        } else if ( orgEvent.deltaMode === 2 ) {
+            var pageHeight = $.data(this, 'mousewheel-page-height');
+            delta  *= pageHeight;
+            deltaY *= pageHeight;
+            deltaX *= pageHeight;
+        }
+
+        // Store lowest absolute delta to normalize the delta values
+        absDelta = Math.max( Math.abs(deltaY), Math.abs(deltaX) );
+
+        if ( !lowestDelta || absDelta < lowestDelta ) {
+            lowestDelta = absDelta;
+
+            // Adjust older deltas if necessary
+            if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+                lowestDelta /= 40;
+            }
+        }
+
+        // Adjust older deltas if necessary
+        if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+            // Divide all the things by 40!
+            delta  /= 40;
+            deltaX /= 40;
+            deltaY /= 40;
+        }
+
+        // Get a whole, normalized value for the deltas
+        delta  = Math[ delta  >= 1 ? 'floor' : 'ceil' ](delta  / lowestDelta);
+        deltaX = Math[ deltaX >= 1 ? 'floor' : 'ceil' ](deltaX / lowestDelta);
+        deltaY = Math[ deltaY >= 1 ? 'floor' : 'ceil' ](deltaY / lowestDelta);
+
+        // Normalise offsetX and offsetY properties
+        if ( special.settings.normalizeOffset && this.getBoundingClientRect ) {
+            var boundingRect = this.getBoundingClientRect();
+            offsetX = event.clientX - boundingRect.left;
+            offsetY = event.clientY - boundingRect.top;
+        }
+
+        // Add information to the event object
+        event.deltaX = deltaX;
+        event.deltaY = deltaY;
+        event.deltaFactor = lowestDelta;
+        event.offsetX = offsetX;
+        event.offsetY = offsetY;
+        // Go ahead and set deltaMode to 0 since we converted to pixels
+        // Although this is a little odd since we overwrite the deltaX/Y
+        // properties with normalized deltas.
+        event.deltaMode = 0;
+
+        // Add event and delta to the front of the arguments
+        args.unshift(event, delta, deltaX, deltaY);
+
+        // Clearout lowestDelta after sometime to better
+        // handle multiple device types that give different
+        // a different lowestDelta
+        // Ex: trackpad = 3 and mouse wheel = 120
+        if (nullLowestDeltaTimeout) { clearTimeout(nullLowestDeltaTimeout); }
+        nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
+
+        return ($.event.dispatch || $.event.handle).apply(this, args);
+    }
+
+    function nullLowestDelta() {
+        lowestDelta = null;
+    }
+
+    function shouldAdjustOldDeltas(orgEvent, absDelta) {
+        // If this is an older event and the delta is divisable by 120,
+        // then we are assuming that the browser is treating this as an
+        // older mouse wheel event and that we should divide the deltas
+        // by 40 to try and get a more usable deltaFactor.
+        // Side note, this actually impacts the reported scroll distance
+        // in older browsers and can cause scrolling to be slower than native.
+        // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
+        return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
+    }
+
+}));
+
+define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (main) { return main; });
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Navigation/ExamineViewer',[
+	"jquery",
+	"x_ite/Browser/Navigation/X3DViewer",
+	"x_ite/Components/Followers/PositionChaser",
+	"x_ite/Components/Followers/OrientationChaser",
+	"x_ite/Components/Geospatial/GeoViewpoint",
+	"standard/Math/Numbers/Vector2",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"jquery-mousewheel",
+],
+function ($,
+          X3DViewer,
+          PositionChaser,
+          OrientationChaser,
+          GeoViewpoint,
+          Vector2,
+          Vector3,
+          Rotation4)
+{
+"use strict";
+
+	var
+		MOTION_TIME       = 0.05 * 1000,
+		SPIN_RELEASE_TIME = 0.04 * 1000,
+		SPIN_ANGLE        = 0.003,
+		SPIN_FACTOR       = 0.6,
+		SCROLL_FACTOR     = 1.0 / 20.0,
+		MOVE_TIME         = 0.2,
+		ROTATE_TIME       = 0.2,
+		FRAME_RATE        = 60;
+
+	function ExamineViewer (executionContext)
+	{
+		X3DViewer .call (this, executionContext);
+
+		this .button                   = -1;
+		this .orientationOffset        = new Rotation4 (0, 0, 1, 0);
+		this .fromVector               = new Vector3 (0, 0, 0);
+		this .toVector                 = new Vector3 (0, 0, 0);
+		this .fromPoint                = new Vector3 (0, 0, 0);
+		this .toPoint                  = new Vector3 (0, 0, 0);
+		this .rotation                 = new Rotation4 (0, 0, 1, 0);
+		this .pressTime                = 0;
+		this .motionTime               = 0;
+
+		this .touch1                   = new Vector2 (0, 0);
+		this .touch2                   = new Vector2 (0, 0);
+		this .tapStart                 = 0;
+		this .dblTapInterval           = 0.4;
+
+		this .initialPositionOffset    = new Vector3 (0, 0, 0);
+		this .initialOrientationOffset = new Rotation4 (0, 0, 1, 0);
+		this .positionChaser           = new PositionChaser (executionContext);
+		this .centerOfRotationChaser   = new PositionChaser (executionContext);
+		this .rotationChaser           = new OrientationChaser (executionContext);
+	}
+
+	ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+	{
+		constructor: ExamineViewer,
+		initialize: function ()
+		{
+			X3DViewer .prototype .initialize .call (this);
+
+			var
+			   browser   = this .getBrowser (),
+			   canvas    = browser .getCanvas (),
+				viewpoint = this .getActiveViewpoint ();
+
+			// Bind pointing device events.
+
+			canvas .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
+			canvas .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
+			canvas .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
+			canvas .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+
+			canvas .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
+			canvas .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
+
+			// Setup scroll chaser.
+
+			this .positionChaser .duration_ = MOVE_TIME;
+			this .positionChaser .setPrivate (true);
+			this .positionChaser .setup ();
+
+			this .centerOfRotationChaser .duration_ = MOVE_TIME;
+			this .centerOfRotationChaser .setPrivate (true);
+			this .centerOfRotationChaser .setup ();
+
+			this .rotationChaser .duration_ = ROTATE_TIME;
+			this .rotationChaser .setPrivate (true);
+			this .rotationChaser .setup ();
+		},
+		mousedown: function (event)
+		{
+			if (this .button >= 0)
+				return;
+		
+			this .pressTime = performance .now ();
+
+			var
+				offset = this .getBrowser () .getCanvas () .offset (),
+				x      = event .pageX - offset .left,
+				y      = event .pageY - offset .top;
+
+			switch (event .button)
+			{
+				case 0:
+				{
+					// Start rotate.
+
+					// Stop event propagation.
+					event .preventDefault ();
+					event .stopImmediatePropagation ();
+
+					this .button = event .button;
+
+					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
+					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
+					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
+
+					this .disconnect ();
+					this .getActiveViewpoint () .transitionStop ();
+					this .getBrowser () .setCursor ("MOVE");
+
+					this .trackballProjectToSphere (x, y, this .fromVector);
+					this .rotation .assign (Rotation4 .Identity);
+
+					this .motionTime = 0;			
+					break;
+				}
+				case 1:
+				{
+					// Start pan.
+
+					// Stop event propagation.
+					event .preventDefault ();
+					event .stopImmediatePropagation ();
+
+					this .button = event .button;
+
+					$(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
+					$(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
+					$(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
+		
+					this .disconnect ();
+					this .getActiveViewpoint () .transitionStop ();
+					this .getBrowser () .setCursor ("MOVE");
+
+					this .getPointOnCenterPlane (x, y, this .fromPoint);
+					break;
+				}
+			}
+		},
+		mouseup: function (event)
+		{
+			if (event .button !== this .button)
+				return;
+
+			this .button = -1;
+		
+			$(document) .unbind (".ExamineViewer" + this .getId ());
+
+			switch (event .button)
+			{
+				case 0:
+				{
+					// End rotate.
+
+					// Stop event propagation.
+					event .preventDefault ();
+					event .stopImmediatePropagation ();
+
+					this .getBrowser () .setCursor ("DEFAULT");
+
+					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
+					{
+						if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+							this .addRotate (this .rotation .pow (4));
+						else
+							this .addSpinning (this .rotation);
+					}
+
+					break;
+				}
+				case 1:
+				{
+					// End pan.
+
+					// Stop event propagation.
+					event .preventDefault ();
+					event .stopImmediatePropagation ();
+
+					this .getBrowser () .setCursor ("DEFAULT");
+					break;
+				}
+			}
+		},
+		dblclick: function (event)
+		{
+			// Stop event propagation.
+			event .preventDefault ();
+			event .stopImmediatePropagation ();
+
+			var
+				offset = this .getBrowser () .getCanvas () .offset (), 
+				x      = event .pageX - offset .left,
+				y      = this .getBrowser () .getCanvas () .height () - (event .pageY - offset .top);
+
+			this .disconnect ();
+			this .lookAtBBox (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
+		},
+		mousemove: (function ()
+		{
+			var fromPoint = new Vector3 (0, 0, 0);
+
+			return function (event)
+			{
+				var
+					offset = this .getBrowser () .getCanvas () .offset (),
+					x      = event .pageX - offset .left,
+					y      = event .pageY - offset .top;
+	
+				switch (this .button)
+				{
+					case 0:
+					{
+						// Rotate view around Viewpoint.centerOfRotation.
+
+						// Stop event propagation.
+						event .preventDefault ();
+						event .stopImmediatePropagation ();
+	
+						var
+							viewpoint = this .getActiveViewpoint (),
+							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+	
+						this .rotation .setFromToVec (toVector, this .fromVector);
+	
+						if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
+							return;
+	
+						this .addRotate (this .rotation);
+	
+						this .fromVector .assign (toVector);
+						this .motionTime = performance .now ();
+						break;
+					}
+					case 1:
+					{
+						// Move view along center plane.
+
+						// Stop event propagation.
+						event .preventDefault ();
+						event .stopImmediatePropagation ();
+	
+						var
+							viewpoint   = this .getActiveViewpoint (),
+							toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
+							translation = viewpoint .getUserOrientation () .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
+	
+						this .addMove (translation, translation);
+	
+						this .fromPoint .assign (toPoint);
+						break;
+					}
+				}
+			};
+		})(),
+		mousewheel: (function ()
+		{
+			var
+				step        = new Vector3 (0, 0, 0),
+				translation = new Vector3 (0, 0, 0);
+
+			return function (event)
+			{
+				// Stop event propagation.
+				event .preventDefault ();
+				event .stopImmediatePropagation ();
+	
+				// Change viewpoint position.
+	
+				var
+					browser   = this .getBrowser (),
+					viewpoint = this .getActiveViewpoint ();
+	
+				browser .prepareEvents () .removeInterest ("spin", this);
+				viewpoint .transitionStop ();
+
+				step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
+				translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .abs ()));
+	
+				if (event .deltaY > 0)
+					this .addMove (translation .negate (), Vector3 .Zero);		
+				
+				else if (event .deltaY < 0)
+					this .addMove (translation, Vector3 .Zero);
+			};
+		})(),
+		touchstart: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// Start rotate (button 0).
+
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+		
+					this .mousedown (event);
+
+					// Remember tap.
+
+					this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+					break;
+				}
+				case 2:
+				{
+					// End rotate (button 0).
+
+					this .touchend (event);
+
+					// Start move (button 1).
+
+					event .button = 1;
+					event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
+					event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
+
+					this .mousedown (event);
+
+					// Start zoom (mouse wheel).
+
+					this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+					this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+					break;
+				}
+				case 3:
+				{
+					// End move (button 1).
+					this .touchend (event);
+					break;
+				}
+			}
+		},
+		touchend: function (event)
+		{
+			switch (this .button)
+			{
+				case 0:
+				{
+					// End rotate (button 0).
+					event .button = 0;
+					this .mouseup (event);
+
+					// Start dblclick (button 0).
+
+					if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
+					{
+						event .button = 0;
+						event .pageX  = this .touch1 .x;
+						event .pageY  = this .touch1 .y;
+
+						this .dblclick (event);
+					}
+
+					this .tapStart = this .getBrowser () .getCurrentTime ();
+					break;
+				}
+				case 1:
+				{
+					// End move (button 1).
+					event .button = 1;
+					this .mouseup (event);
+					break;
+				}
+			}
+		},
+		touchmove: (function ()
+		{
+			var
+				MOVE_ANGLE   = 0.7,
+				ZOOM_ANGLE   = -0.7,
+				touch1Change = new Vector2 (0, 0),
+				touch2Change = new Vector2 (0, 0);
+
+			return function (event)
+			{
+				var touches = event .originalEvent .touches;
+	
+				switch (touches .length)
+				{
+					case 1:
+					{
+						// Rotate (button 0).
+	
+						event .pageX = touches [0] .pageX;
+						event .pageY = touches [0] .pageY;
+			
+						this .mousemove (event);
+						break;
+					}
+					case 2:
+					{
+						touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
+						touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
+
+						var
+							move = touch1Change .dot (touch2Change) > MOVE_ANGLE,
+							zoom = touch1Change .dot (touch2Change) < ZOOM_ANGLE;
+
+						if (move)
+						{
+							// Move (button 1).
+		
+							event .pageX = (touches [0] .pageX + touches [1] .pageX) / 2;
+							event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
+		
+							this .mousemove (event);
+						}
+						else if (zoom)
+						{	
+							// Zoom (mouse wheel).
+		
+							var distance1 = this .touch1 .distance (this .touch2);
+			
+							this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+							this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+			
+							var
+								distance2 = this .touch1 .distance (this .touch2),
+								delta     = distance2 - distance1;
+			
+							event .deltaY     = delta;
+							event .zoomFactor = Math .abs (delta) / $(window) .width ();
+
+							this .mousewheel (event);
+						}
+		
+						this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+						this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+						break;
+					}
+				}
+			};
+		})(),
+		spin: function ()
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			this .orientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
+
+			viewpoint .orientationOffset_ = this .getOrientationOffset (this .rotation, this .orientationOffset);
+			viewpoint .positionOffset_    = this .getPositionOffset (viewpoint .positionOffset_ .getValue (), this .orientationOffset, viewpoint .orientationOffset_ .getValue ());
+		},
+		set_positionOffset__: function (value)
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			viewpoint .positionOffset_ = value;
+		},
+		set_centerOfRotationOffset__: function (value)
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			viewpoint .centerOfRotationOffset_ = value;
+		},
+		set_rotation__: function (value)
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			viewpoint .orientationOffset_ = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset);
+			viewpoint .positionOffset_    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint .orientationOffset_ .getValue ());
+		},
+		addRotate: function (rotationChange)
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			if (this .rotationChaser .isActive_ .getValue () && this .rotationChaser .value_changed_ .hasInterest ("set_rotation__", this))
+			{
+				var rotation = this .rotationChaser .set_destination_ .getValue ()
+					.multLeft (rotationChange);
+
+				this .rotationChaser .set_destination_ = rotation;
+			}
+			else
+			{
+				this .rotationChaser .set_value_       = Rotation4 .Identity;
+				this .rotationChaser .set_destination_ = rotationChange;
+
+				this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
+				this .initialPositionOffset    .assign (viewpoint .positionOffset_    .getValue ());
+			}
+
+			this .disconnect ();
+			this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
+		},
+		addSpinning: (function ()
+		{
+			var rotation = new Rotation4 (0, 0, 1, 0);
+
+			return function (rotationChange)
+			{
+				try
+				{
+					this .disconnect ();
+					this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+	
+					this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR));
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		})(),
+		addMove: (function ()
+		{
+			var
+				positionOffset         = new Vector3 (0, 0, 0),
+				centerOfRotationOffset = new Vector3 (0, 0, 0);
+
+			return function (positionOffsetChange, centerOfRotationOffsetChange)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+	
+				if (this .positionChaser .isActive_ .getValue () && this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
+				{
+					positionOffset
+						.assign (this .positionChaser .set_destination_ .getValue ())
+						.add (positionOffsetChange);
+	
+					this .positionChaser .set_destination_ = positionOffset;
+				}
+				else
+				{
+					positionOffset
+						.assign (viewpoint .positionOffset_ .getValue ())
+						.add (positionOffsetChange);
+	
+					this .positionChaser .set_value_       = viewpoint .positionOffset_;
+					this .positionChaser .set_destination_ = positionOffset;
+				}
+	
+				if (this .centerOfRotationChaser .isActive_ .getValue () && this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
+				{
+					centerOfRotationOffset
+						.assign (this .centerOfRotationChaser .set_destination_ .getValue ())
+						.add (centerOfRotationOffsetChange);
+
+					this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+				}
+				else
+				{
+					centerOfRotationOffset
+						.assign (viewpoint .centerOfRotationOffset_ .getValue ())
+						.add (centerOfRotationOffsetChange);
+
+					this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
+					this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+				}
+	
+				this .disconnect ();
+				this .positionChaser         .value_changed_ .addInterest ("set_positionOffset__",         this);
+				this .centerOfRotationChaser .value_changed_ .addInterest ("set_centerOfRotationOffset__", this);
+			};
+		})(),
+		getPositionOffset: (function ()
+		{
+			var
+				distance = new Vector3 (0, 0, 0),
+				d        = new Vector3 (0, 0, 0),
+				oob      = new Rotation4 (0, 0, 1, 0);
+
+			return function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+
+				this .getDistanceToCenter (distance, positionOffsetBefore);
+	
+				return (oob
+					.assign (orientationOffsetBefore)
+					.inverse ()
+					.multRight (orientationOffsetAfter)
+					.multVecRot (d .assign (distance))
+					.subtract (distance)
+					.add (positionOffsetBefore));
+			};
+		})(),
+		getOrientationOffset: (function ()
+		{
+			var
+				userOrientation   = new Rotation4 (0, 0, 1, 0),
+				orientationOffset = new Rotation4 (0, 0, 1, 0);
+
+			return function (rotation, orientationOffsetBefore)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+	
+				userOrientation
+					.assign (rotation)
+					.multRight (viewpoint .getOrientation ())
+					.multRight (orientationOffsetBefore);
+	
+				if (this .getBrowser () .getBrowserOption ("StraightenHorizon") && ! (viewpoint instanceof GeoViewpoint))
+					viewpoint .straightenHorizon (userOrientation);
+	
+				return (orientationOffset
+					.assign (viewpoint .getOrientation ())
+					.inverse ()
+					.multRight (userOrientation));
+			};
+		})(),
+		disconnect: function ()
+		{
+			var browser = this .getBrowser ();
+
+			this .positionChaser         .value_changed_ .removeInterest ("set_positionOffset__",         this)
+			this .centerOfRotationChaser .value_changed_ .removeInterest ("set_centerOfRotationOffset__", this)
+			this .rotationChaser         .value_changed_ .removeInterest ("set_rotation__",               this);
+
+			browser .prepareEvents () .removeInterest ("spin", this);
+		},
+		dispose: function ()
+		{
+			this .disconnect ();
+			this .getBrowser () .getCanvas () .unbind (".ExamineViewer");
+			$(document) .unbind (".ExamineViewer" + this .getId ());
+		},
+	});
+
+	return ExamineViewer;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+﻿
+define ('x_ite/Browser/Navigation/X3DFlyViewer',[
+	"jquery",
+	"x_ite/Browser/Navigation/X3DViewer",
+	"x_ite/Components/Followers/OrientationChaser",
+	"x_ite/Components/Geospatial/GeoViewpoint",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Camera",
+	"jquery-mousewheel",
+],
+function ($,
+          X3DViewer,
+          OrientationChaser,
+          GeoViewpoint,
+          Vector3,
+          Rotation4,
+          Matrix4,
+          Camera)
+{
+"use strict";
+	
+	var
+		SPEED_FACTOR           = 0.007,
+		SHIFT_SPEED_FACTOR     = 4 * SPEED_FACTOR,
+		ROTATION_SPEED_FACTOR  = 1.4,
+		ROTATION_LIMIT         = 40,
+		PAN_SPEED_FACTOR       = SPEED_FACTOR,
+		PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
+		ROLL_ANGLE             = Math .PI / 32,
+		ROTATE_TIME            = 0.3;
+	
+	var
+		MOVE = 0,
+		PAN  = 1;
+	
+	function X3DFlyViewer (executionContext)
+	{
+		X3DViewer .call (this, executionContext);
+
+		var gl = this .getBrowser () .getContext ();
+
+		this .button            = -1;
+		this .fromVector        = new Vector3 (0, 0, 0);
+		this .toVector          = new Vector3 (0, 0, 0);
+		this .direction         = new Vector3 (0, 0, 0);
+		this .startTime         = 0;
+		this .lineBuffer        = gl .createBuffer ();
+		this .lineCount         = 2;
+		this .lineVertices      = new Array (this .lineCount * 4);
+		this .lineArray         = new Float32Array (this .lineVertices);
+		this .event             = null;
+		this .lookAround        = false;
+		this .orientationChaser = new OrientationChaser (executionContext);
+	}
+
+	X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+	{
+		constructor: X3DFlyViewer,
+		initialize: function ()
+		{
+			X3DViewer .prototype .initialize .call (this);
+
+			var
+			   browser = this .getBrowser (),
+			   canvas  = browser .getCanvas ();
+
+			// Bind pointing device events.
+
+			canvas .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
+			canvas .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
+			canvas .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
+
+			canvas .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
+			canvas .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
+
+			browser .controlKey_ .addInterest ("set_controlKey_", this);
+
+			// Setup look around chaser.
+
+			this .orientationChaser .duration_ = ROTATE_TIME;
+			this .orientationChaser .setPrivate (true);
+			this .orientationChaser .setup ();
+		},
+		addCollision: function () { },
+		removeCollision: function () { },
+		set_controlKey_: function ()
+		{
+			if (this .event && this .event .button === 0)
+			{
+				this .button = -1;
+				this .mousedown (this .event);
+			}
+		},
+		mousedown: function (event)
+		{
+			if (this .button >= 0)
+				return;
+
+			this .event = event;
+
+			var
+				offset = this .getBrowser () .getCanvas () .offset (),
+				x      = event .pageX - offset .left,
+				y      = event .pageY - offset .top;
+			
+			switch (event .button)
+			{
+				case 0:
+				{
+					// Start walk or fly.
+
+					// Stop event propagation.
+					event .preventDefault ();
+					event .stopImmediatePropagation ();
+
+					this .button = event .button;
+				
+					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
+					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
+					$(document) .bind ("touchend.X3DFlyViewer"  + this .getId (), this .touchend  .bind (this));
+					$(document) .bind ("touchmove.X3DFlyViewer" + this .getId (), this .touchmove .bind (this));
+
+					this .disconnect ();
+					this .getActiveViewpoint () .transitionStop ();
+					this .getBrowser () .setCursor ("MOVE");
+					this .addCollision ();
+
+					if (this .getBrowser () .getControlKey () || this .lookAround)
+					{
+						// Look around.
+
+						this .trackballProjectToSphere (x, y, this .fromVector);
+					}
+					else
+					{
+						// Move.
+
+						this .fromVector .set (x, 0, y);
+						this .toVector   .assign (this .fromVector);
+
+						this .getFlyDirection (this .fromVector, this .toVector, this .direction);
+						this .addFly ();
+
+						if (this .getBrowser () .getBrowserOption ("Rubberband"))
+							this .getBrowser () .finished () .addInterest ("display", this, MOVE);
+					}
+
+					break;
+				}
+				case 1:
+				{
+					// Start pan.
+
+					// Stop event propagation.
+					event .preventDefault ();
+					event .stopImmediatePropagation ();
+
+					this .button = event .button;
+				
+					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
+					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
+
+					this .disconnect ();
+					this .getActiveViewpoint () .transitionStop ();
+					this .getBrowser () .setCursor ("MOVE");
+					this .addCollision ();
+
+					this .fromVector .set (x, -y, 0);
+					this .toVector   .assign (this .fromVector);
+					this .direction  .set (0, 0, 0);
+
+					this .addPan ();
+
+					if (this .getBrowser () .getBrowserOption ("Rubberband"))
+						this .getBrowser () .finished () .addInterest ("display", this, PAN);
+					
+					break;
+				}
+			}
+		},
+		mouseup: function (event)
+		{
+			event .preventDefault ();
+
+			if (event .button !== this .button)
+				return;
+
+			this .event  = null;
+			this .button = -1;
+		
+			$(document) .unbind (".X3DFlyViewer" + this .getId ());
+
+			this .disconnect ();
+			this .getBrowser () .setCursor ("DEFAULT");
+			this .removeCollision ();
+		},
+		mousemove: function (event)
+		{
+			this .getBrowser () .addBrowserEvent ();
+
+			this .event = event;
+
+			var
+				offset = this .getBrowser () .getCanvas () .offset (),
+				x      = event .pageX - offset .left,
+				y      = event .pageY - offset .top;
+			
+			switch (this .button)
+			{
+				case 0:
+				{
+					if (this .getBrowser () .getControlKey () || this .lookAround)
+					{
+						// Stop event propagation.
+						event .preventDefault ();
+						event .stopImmediatePropagation ();
+
+						// Look around
+
+						var
+							viewpoint = this .getActiveViewpoint (),
+							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+
+						this .addRotation (this .fromVector, toVector);
+						this .fromVector .assign (toVector);
+						break;
+					}
+					else
+					{
+						// Fly
+
+						this .toVector .set (x, 0, y);
+						this .getFlyDirection (this .fromVector, this .toVector, this .direction);
+						break;
+					}
+				}
+				case 1:
+				{
+					// Stop event propagation.
+					event .preventDefault ();
+					event .stopImmediatePropagation ();
+
+					// Pan
+
+					this .toVector  .set (x, -y, 0);
+					this .direction .assign (this .toVector) .subtract (this .fromVector);
+					break;
+				}
+			}
+		},
+		mousewheel: function (event)
+		{
+			// Stop event propagation.
+
+			event .preventDefault ();
+			event .stopImmediatePropagation ();
+
+			// Change viewpoint position.
+
+			var viewpoint = this .getActiveViewpoint ();
+
+			viewpoint .transitionStop ();
+
+			if (event .deltaY > 0)
+				this .addRoll (-ROLL_ANGLE);
+
+			else if (event .deltaY < 0)
+				this .addRoll (ROLL_ANGLE);
+		},
+		touchstart: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// Start fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+
+					this .mousedown (event);
+					break;
+				}
+				case 2:
+				{
+					// End fly or walk (button 0).
+
+					this .touchend (event);
+
+					// Start look around (button 0).
+
+					this .lookAround = true;
+					event .button    = 0;
+					event .pageX     = (touches [0] .pageX + touches [1] .pageX) / 2;
+					event .pageY     = (touches [0] .pageY + touches [1] .pageY) / 2;
+
+					this .mousedown (event);
+					break;
+				}
+				case 3:
+				{
+					// End look around (button 0).
+
+					this .touchend (event);
+					break;
+				}
+			}
+		},
+		touchend: function (event)
+		{
+			switch (this .button)
+			{
+				case 0:
+				{
+					// End move or look around (button 0).
+					this .lookAround = false;
+					event .button    = 0;
+
+					this .mouseup (event);
+					break;
+				}
+			}
+		},
+		touchmove: function (event)
+		{
+			var touches = event .originalEvent .touches;
+
+			switch (touches .length)
+			{
+				case 1:
+				{
+					// Fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = touches [0] .pageX;
+					event .pageY  = touches [0] .pageY;
+		
+					this .mousemove (event);
+					break;
+				}
+				case 2:
+				{
+					// Fly or walk (button 0).
+
+					event .button = 0;
+					event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
+					event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
+		
+					this .mousemove (event);
+					break;
+				}
+			}
+		},
+		fly: (function ()
+		{
+			var
+				upVector           = new Vector3 (0, 0, 0),
+				direction          = new Vector3 (0, 0, 0),
+				axis               = new Vector3 (0, 0, 0),
+				userOrientation    = new Rotation4 (0, 0, 1, 0),
+				orientationOffset  = new Rotation4 (0, 0, 1, 0),
+				rubberBandRotation = new Rotation4 (0, 0, 1, 0),
+				up                 = new Rotation4 (0, 0, 1, 0),
+				geoRotation        = new Rotation4 (0, 0, 1, 0);
+
+			return function ()
+			{
+				var
+					navigationInfo = this .getNavigationInfo (),
+					viewpoint      = this .getActiveViewpoint (),
+					now            = performance .now (),
+					dt             = (now - this .startTime) / 1000;
+	
+				upVector .assign (viewpoint .getUpVector ());
+	
+				// Rubberband values
+	
+				up .setFromToVec (Vector3 .yAxis, upVector);
+
+				if (this .direction .z > 0)
+					rubberBandRotation .setFromToVec (up .multVecRot (direction .assign (this .direction)), up .multVecRot (axis .set (0, 0, 1)));
+				else
+					rubberBandRotation .setFromToVec (up .multVecRot (axis .set (0, 0, -1)), up .multVecRot (direction .assign (this .direction)));
+	
+				var rubberBandLength = this .direction .abs ();
+
+				// Determine positionOffset.
+
+				var speedFactor = 1 - rubberBandRotation .angle / (Math .PI / 2);
+
+				speedFactor *= navigationInfo .speed_ .getValue ();
+				speedFactor *= viewpoint .getSpeedFactor ();
+				speedFactor *= this .getBrowser () .getShiftKey () ? SHIFT_SPEED_FACTOR : SPEED_FACTOR;
+				speedFactor *= dt;
+	
+				var translation = this .getTranslationOffset (direction .assign (this .direction) .multiply (speedFactor));
+	
+				this .getActiveLayer () .constrainTranslation (translation, true);
+	
+				viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
+	
+				// Determine weight for rubberBandRotation.
+
+				var weight = ROTATION_SPEED_FACTOR * dt * Math .pow (rubberBandLength / (rubberBandLength + ROTATION_LIMIT), 2);
+
+				// Determine userOrientation.
+
+				userOrientation
+					.assign (Rotation4 .Identity)
+					.slerp (rubberBandRotation, weight)
+					.multRight (viewpoint .getUserOrientation ());
+
+				// Straighten horizon of userOrientation.
+
+				if (! (viewpoint instanceof GeoViewpoint))
+						viewpoint .straightenHorizon (userOrientation);
+
+				// Determine orientationOffset.
+
+				orientationOffset
+					.assign (viewpoint .getOrientation ())
+					.inverse ()
+					.multRight (userOrientation);
+
+				// Set orientationOffset.
+
+				viewpoint .orientationOffset_ = orientationOffset;
+
+				// GeoRotation
+	
+				geoRotation .setFromToVec (upVector, viewpoint .getUpVector ());
+	
+				viewpoint .orientationOffset_ = geoRotation .multLeft (viewpoint .orientationOffset_ .getValue ());
+	
+				this .startTime = now;
+			};
+		})(),
+		pan: (function ()
+		{
+			var
+				direction = new Vector3 (0, 0, 0),
+				axis      = new Vector3 (0, 0, 0);
+
+			return function ()
+			{
+				var
+					navigationInfo = this .getNavigationInfo (),
+					viewpoint      = this .getActiveViewpoint (),
+					now            = performance .now (),
+					dt             = (now - this .startTime) / 1000,
+					upVector       = viewpoint .getUpVector ();
+	
+				this .constrainPanDirection (direction .assign (this .direction));
+	
+				var speedFactor = 1;
+	
+				speedFactor *= navigationInfo .speed_ .getValue ();
+				speedFactor *= viewpoint .getSpeedFactor ();
+				speedFactor *= this .getBrowser () .getShiftKey () ? PAN_SHIFT_SPEED_FACTOR : PAN_SPEED_FACTOR;
+				speedFactor *= dt;
+	
+				var
+					orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .yAxis)), upVector)),
+					translation = orientation .multVecRot (direction .multiply (speedFactor));
+	
+				this .getActiveLayer () .constrainTranslation (translation, true);
+	
+				viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
+	
+				this .startTime = now;
+			};
+		})(),
+		set_orientationOffset__: function (value)
+		{
+			var viewpoint = this .getActiveViewpoint ();
+
+			viewpoint .orientationOffset_ = value;
+		},
+		addFly: function ()
+		{
+			if (this .startTime)
+				return;
+
+			this .getBrowser () .prepareEvents () .addInterest ("fly", this);
+			this .getBrowser () .addBrowserEvent ();
+
+			this .startTime = performance .now ();
+		},
+		addPan: function ()
+		{
+			if (this .startTime)
+				return;
+			
+			this .disconnect ();
+			this .getBrowser () .prepareEvents () .addInterest ("pan", this);
+			this .getBrowser () .addBrowserEvent ();
+
+			this .startTime = performance .now ();
+		},
+		addRoll: (function ()
+		{
+			var
+				orientationOffset = new Rotation4 (0, 0, 1, 0),
+				roll              = new Rotation4 (0, 0, 1, 0);
+
+			return function (rollAngle)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+	
+				if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+				{
+					orientationOffset
+						.assign (viewpoint .getOrientation ())
+						.inverse ()
+						.multRight (roll .set (1, 0, 0, rollAngle))
+						.multRight (viewpoint .getOrientation ())
+						.multRight (this .orientationChaser .set_destination_ .getValue ());
+
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+				else
+				{
+					orientationOffset
+						.assign (viewpoint .getOrientation ())
+						.inverse ()
+						.multRight (roll .set (1, 0, 0, rollAngle))
+						.multRight (viewpoint .getUserOrientation ());
+
+					this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+	
+				this .disconnect ();
+				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+			};
+		})(),
+		addRotation: (function ()
+		{
+			var
+				userOrientation   = new Rotation4 (0, 0, 1, 0),
+				orientationOffset = new Rotation4 (0, 0, 1, 0);
+
+			return function (fromVector, toVector)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+	
+				if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+				{
+					userOrientation
+						.setFromToVec (toVector, fromVector)
+						.multRight (viewpoint .getOrientation ())
+						.multRight (this .orientationChaser .set_destination_ .getValue ());
+
+					if (! (viewpoint instanceof GeoViewpoint))
+						viewpoint .straightenHorizon (userOrientation);
+	
+					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
+	
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+				else
+				{
+					userOrientation
+						.setFromToVec (toVector, fromVector)
+						.multRight (viewpoint .getUserOrientation ());
+
+					if (! (viewpoint instanceof GeoViewpoint))
+						viewpoint .straightenHorizon (userOrientation);
+	
+					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
+	
+					this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
+					this .orientationChaser .set_destination_ = orientationOffset;
+				}
+	
+				this .disconnect ();
+				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+			};
+		})(),
+		display: (function ()
+		{
+			var
+				fromPoint             = new Vector3 (0, 0, 0),
+				toPoint               = new Vector3 (0, 0, 0),
+				projectionMatrix      = new Matrix4 (),
+				projectionMatrixArray = new Float32Array (Matrix4 .Identity),
+				modelViewMatrixArray  = new Float32Array (Matrix4 .Identity);
+
+			return function (interest, type)
+			{
+				// Configure HUD
+	
+				var
+					browser  = this .getBrowser (),
+					viewport = browser .getViewport (),
+					width    = viewport [2],
+					height   = viewport [3];
+
+				Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix);
+	
+				projectionMatrixArray .set (projectionMatrix);
+	
+				// Display Rubberband.
+	
+				if (type === MOVE)
+				{
+					fromPoint .set (this .fromVector .x, height - this .fromVector .z, 0);
+					toPoint   .set (this .toVector   .x, height - this .toVector   .z, 0);
+				}
+				else
+				{
+					fromPoint .set (this .fromVector .x, height + this .fromVector .y, 0);
+					toPoint   .set (this .toVector   .x, height + this .toVector   .y, 0);
+				}
+	
+				this .transfer (fromPoint, toPoint);
+	
+				var
+					gl         = browser .getContext (),
+					shaderNode = browser .getLineShader (),
+					lineWidth  = gl .getParameter (gl .LINE_WIDTH);
+	
+				shaderNode .enable (gl);
+				shaderNode .enableVertexAttribute (gl, this .lineBuffer);
+	
+				gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
+				gl .uniform1i (shaderNode .x3d_FogType,       0);
+				gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
+				gl .uniform1i (shaderNode .x3d_Lighting,      true);
+	
+				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+				
+				gl .disable (gl .DEPTH_TEST);
+	
+				// Draw a black and a white line.
+				gl .lineWidth (2);
+				gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
+				gl .uniform1f (shaderNode .x3d_Transparency,  0);
+	
+				gl .drawArrays (gl .LINES, 0, this .lineCount);
+	
+				gl .lineWidth (1);
+				gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
+	
+				gl .drawArrays (gl .LINES, 0, this .lineCount);
+				gl .enable (gl .DEPTH_TEST);
+	
+				gl .lineWidth (lineWidth);
+				shaderNode .disable (gl);
+			};
+		})(),
+		transfer: function (fromPoint, toPoint)
+		{
+			var
+				gl           = this .getBrowser () .getContext (),
+				lineVertices = this .lineVertices;
+
+			lineVertices [0] = fromPoint .x;
+			lineVertices [1] = fromPoint .y;
+			lineVertices [2] = fromPoint .z;
+			lineVertices [3] = 1;
+
+			lineVertices [4] = toPoint .x;
+			lineVertices [5] = toPoint .y;
+			lineVertices [6] = toPoint .z;
+			lineVertices [7] = 1;
+
+			this .lineArray .set (lineVertices);
+
+			// Transfer line.
+
+			gl .bindBuffer (gl .ARRAY_BUFFER, this .lineBuffer);
+			gl .bufferData (gl .ARRAY_BUFFER, this .lineArray, gl .STATIC_DRAW);
+		},
+		disconnect: function ()
+		{
+			var browser = this .getBrowser ();
+
+			browser .addBrowserEvent ();
+
+			browser .prepareEvents () .removeInterest ("fly", this);
+			browser .prepareEvents () .removeInterest ("pan", this);
+			browser .finished ()      .removeInterest ("display", this);
+
+			this .orientationChaser .value_changed_ .removeInterest ("set_orientationOffset__", this);
+
+			this .startTime = 0;
+		},
+		dispose: function ()
+		{
+			this .disconnect ();
+			this .getBrowser () .controlKey_ .removeInterest ("set_controlKey_", this);
+			this .getBrowser () .getCanvas () .unbind (".X3DFlyViewer");
+			$(document) .unbind (".X3DFlyViewer" + this .getId ());
+		},
+	});
+
+	return X3DFlyViewer;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+﻿
+define ('x_ite/Browser/Navigation/WalkViewer',[
+	"x_ite/Browser/Navigation/X3DFlyViewer",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+],
+function (X3DFlyViewer,
+          Vector3,
+          Rotation4)
+{
+"use strict";
+	
+	function WalkViewer (executionContext)
+	{
+		X3DFlyViewer .call (this, executionContext);
+	}
+
+	WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
+	{
+		constructor: WalkViewer,
+		initialize: function ()
+		{
+			X3DFlyViewer .prototype .initialize .call (this);
+			
+			this .getBrowser () .addCollision (this);
+		},
+		getFlyDirection: function (fromVector, toVector, direction)
+		{
+			return direction .assign (toVector) .subtract (fromVector);
+		},
+		getTranslationOffset: (function ()
+		{
+			var
+				localYAxis      = new Vector3 (0, 0, 0),
+				userOrientation = new Rotation4 (0, 0, 1, 0),
+				rotation        = new Rotation4 (0, 0, 1, 0);
+
+			return function (velocity)
+			{
+				var
+					viewpoint = this .getActiveViewpoint (),
+					upVector  = viewpoint .getUpVector ();
+	
+				userOrientation .assign (viewpoint .getUserOrientation ());
+				userOrientation .multVecRot (localYAxis .assign (Vector3 .yAxis));
+				rotation        .setFromToVec (localYAxis, upVector);
+
+				var orientation = userOrientation .multRight (rotation);
+	
+				return orientation .multVecRot (velocity);
+			};
+		})(),
+		constrainPanDirection: function (direction)
+		{
+			if (direction .y < 0)
+				direction .y = 0;
+
+			return direction;
+		},
+		dispose: function ()
+		{
+			this .getBrowser () .removeCollision (this);
+			
+			X3DFlyViewer .prototype .dispose .call (this);
+		},
+	});
+
+	return WalkViewer;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+﻿
+define ('x_ite/Browser/Navigation/FlyViewer',[
+	"x_ite/Browser/Navigation/X3DFlyViewer",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+],
+function (X3DFlyViewer,
+          Vector3,
+          Rotation4)
+{
+"use strict";
+	
+	function FlyViewer (executionContext)
+	{
+		X3DFlyViewer .call (this, executionContext);
+	}
+
+	FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
+	{
+		constructor: FlyViewer,
+		addCollision: function ()
+		{
+			this .getBrowser () .addCollision (this);
+		},
+		removeCollision: function ()
+		{
+			this .getBrowser () .removeCollision (this);
+		},
+		getFlyDirection: (function ()
+		{
+			var rotation = new Rotation4 (0, 0, 1, 0);
+
+			return function (fromVector, toVector, direction)
+			{
+				direction .assign (toVector) .subtract (fromVector);
+
+				direction .x =  direction .x / 20;
+				direction .y = -direction .z / 20;
+				direction .z = -50;
+
+				return direction;
+			};
+		})(),
+		getTranslationOffset: function (velocity)
+		{
+			return this .getActiveViewpoint () .getUserOrientation () .multVecRot (velocity);
+		},
+		constrainPanDirection: function (direction)
+		{
+			return direction;
+		},
+	});
+
+	return FlyViewer;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Navigation/Viewpoint',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Navigation/X3DViewpointNode",
+	"x_ite/Components/Interpolation/ScalarInterpolator",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Geometry/Camera",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Matrix4",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DViewpointNode,
+          ScalarInterpolator,
+          X3DConstants,
+          Camera,
+          Vector3,
+          Matrix4)
+{
+"use strict";
+
+	var
+		zAxis       = new Vector3 (0, 0, 1),
+		screenScale = new Vector3 (0, 0, 0),
+		normalized  = new Vector3 (0, 0, 0);
+
+	function Viewpoint (executionContext)
+	{
+		X3DViewpointNode .call (this, executionContext);
+
+		this .addType (X3DConstants .Viewpoint);
+
+		this .position_         .setUnit ("length");
+		this .centerOfRotation_ .setUnit ("length");
+		this .fieldOfView_      .setUnit ("angle");
+
+		this .projectionMatrix        = new Matrix4 ();
+		this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
+	}
+
+	Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+	{
+		constructor: Viewpoint,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .SFFloat (0.7854)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
+		]),
+		getTypeName: function ()
+		{
+			return "Viewpoint";
+		},
+		getComponentName: function ()
+		{
+			return "Navigation";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DViewpointNode .prototype .initialize .call (this);
+
+			this .fieldOfViewInterpolator .key_ = new Fields .MFFloat (0, 1);
+			this .fieldOfViewInterpolator .setup ();
+
+			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewInterpolator .set_fraction_);
+			this .fieldOfViewInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
+		},
+		setInterpolators: function (fromViewpoint)
+		{
+			if (fromViewpoint .getType () .indexOf (X3DConstants .Viewpoint) < 0)
+			{
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (this .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue ());
+			}
+			else
+			{
+				var scale = fromViewpoint .getFieldOfView () / this .fieldOfView_ .getValue ();
+	
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, this .fieldOfViewScale_ .getValue ());
+	
+				this .fieldOfViewScale_ = scale;
+			}
+		},
+		getFieldOfView: function ()
+		{
+			var fov = this .fieldOfView_ .getValue () * this .fieldOfViewScale_ .getValue ();
+
+			return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
+		},
+		getScreenScale: function (point, viewport)
+		{
+		   // Returns the screen scale in meter/pixel for on pixel.
+
+			var
+				width  = viewport [2],
+				height = viewport [3],
+				size   = Math .tan (this .getFieldOfView () / 2) * 2 * point .abs (); // Assume we are on sphere.
+
+			size *= Math .abs (normalized .assign (point) .normalize () .dot (zAxis));
+
+			if (width > height)
+				size /= height;
+			else
+				size /= width;
+
+			return screenScale .set (size, size, size);
+		},
+		getLookAtDistance: function (bbox)
+		{
+			return (bbox .size .abs () / 2) / Math .tan (this .getFieldOfView () / 2);
+		},
+		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
+		{
+			return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
+		},
+	});
+
+	return Viewpoint;
 });
 
 
@@ -65446,6 +65666,7 @@ function (X3DChildNode,
 {
 "use strict";
 
+	// Transforms normalized coords from range (-1, 1) to (0, 1).
 	var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
 		                           0.0, 0.5, 0.0, 0.0,
 		                           0.0, 0.0, 0.5, 0.0,
@@ -65456,8 +65677,6 @@ function (X3DChildNode,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DLightNode);
-
-		this .shadowDiffusion_ .setUnit ("length");
 	}
 
 	X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -65491,9 +65710,9 @@ function (X3DChildNode,
 		{
 			return Algorithm .clamp (this .shadowIntensity_ .getValue (), 0, 1);
 		},
-		getShadowDiffusion: function ()
+		getShadowBias: function ()
 		{
-			return Math .max (this .shadowDiffusion_ .getValue (), 0);
+			return Algorithm .clamp (this .shadowBias_ .getValue (), 0, 1);
 		},
 		getShadowMapSize: function ()
 		{
@@ -65551,6 +65770,8 @@ function (X3DChildNode,
 						renderObject .getLights ()        .push (lightContainer);
 					}
 				}
+
+				renderObject .pushShadow (this .shadowIntensity_ .getValue () > 0);
 			}
 		},
 		pop: function (renderObject)
@@ -65564,6 +65785,8 @@ function (X3DChildNode,
 					renderObject .getBrowser () .getLocalLights () .push (renderObject .getShaderObjects () .pop ());
 				else
 					renderObject .getShaderObjects () .pop ();
+
+				renderObject .popShadow ();
 			}
 		},
 	});
@@ -66566,7 +66789,14 @@ function (Fields,
 						this .textureUnit = browser .getCombinedTextureUnits () .pop ();
 
 						gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-						gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+
+						if (browser .getExtension ("WEBGL_depth_texture"))
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+						else
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
+						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 						gl .activeTexture (gl .TEXTURE0);
 					}
 					else
@@ -66591,7 +66821,7 @@ function (Fields,
 					lightNode            = this .lightNode,
 					cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
 					modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+					invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
 				invLightSpaceMatrix .inverse ();
@@ -66654,14 +66884,13 @@ function (Fields,
 
 			if (this .textureUnit)
 			{
-				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
-				gl .uniform1f        (shaderObject .x3d_ShadowDiffusion [i],     lightNode .getShadowDiffusion ());
 				gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
+				gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
 				gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
+				gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
 				gl .uniform1i        (shaderObject .x3d_ShadowMap [i],           this .textureUnit);
 			}
-			else
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 		},
 		dispose: function ()
 		{
@@ -66708,7 +66937,7 @@ function (Fields,
 
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowDiffusion", new  Fields .SFFloat ()),        // Diffusion of the shadow in length units in the range (0, inf).
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
 		]),
 		getTypeName: function ()
@@ -67581,7 +67810,7 @@ function ($,
 define('text!x_ite/Browser/Shaders/Background.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = p .xyz;\n\tgl_Position = x3d_ProjectionMatrix * p;\n\tC           = x3d_Color;\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Background.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
+define('text!x_ite/Browser/Shaders/Background.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -67728,9 +67957,9 @@ function (ComposedShader,
 
 
 define ('x_ite/Browser/Lighting/X3DLightingContext',[
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 ],
-function (DepthBuffer)
+function (TextureBuffer)
 {
 "use strict";
 	
@@ -67766,7 +67995,7 @@ function (DepthBuffer)
 				else
 					this .shadowBuffers [shadowMapSize] = [ ];
 	
-				return new DepthBuffer (this, shadowMapSize, shadowMapSize);
+				return new TextureBuffer (this, shadowMapSize, shadowMapSize);
 			}
 			catch (error)
 			{
@@ -77061,7 +77290,7 @@ function (PointEmitter)
 
 define ('x_ite/Rendering/X3DRenderObject',[
 	"jquery",
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Algorithm",
 	"standard/Math/Algorithms/MergeSort",
@@ -77075,7 +77304,7 @@ define ('x_ite/Rendering/X3DRenderObject',[
 	"standard/Math/Utility/MatrixStack",
 ],
 function ($,
-          DepthBuffer,
+          TextureBuffer,
 	       TraverseType,
           Algorithm,
           MergeSort,
@@ -77091,25 +77320,8 @@ function ($,
 "use strict";
 
 	var
-		DEPTH_BUFFER_WIDTH          = 16,
-		DEPTH_BUFFER_HEIGHT         = DEPTH_BUFFER_WIDTH,
-		viewportArray               = new Int32Array (4),
-		projectionMatrix            = new Matrix4 (),
-		projectionMatrixArray       = new Float32Array (16),
-		modelViewMatrix             = new Matrix4 (),
-		cameraSpaceProjectionMatrix = new Matrix4 (),
-		cameraSpaceMatrixArray      = new Float32Array (16),
-		localOrientation            = new Rotation4 (0, 0, 1, 0),
-		yAxis                       = new Vector3 (0, 1, 0),
-		zAxis                       = new Vector3 (0, 0, 1),
-		vector                      = new Vector3 (0, 0, 0),
-		rotation                    = new Rotation4 (0, 0, 1, 0),
-		depthBufferViewport         = new Vector4 (0, 0, DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT),
-		depthBufferViewVolume       = new ViewVolume (),
-		collisionBox                = new Box3 (Vector3 .Zero, Vector3 .Zero),
-		collisionSize               = new Vector3 (0, 0, 0);
-
-	depthBufferViewVolume .set (Matrix4 .Identity, depthBufferViewport, depthBufferViewport);
+		DEPTH_BUFFER_WIDTH  = 16,
+		DEPTH_BUFFER_HEIGHT = DEPTH_BUFFER_WIDTH;
 
 	function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
 
@@ -77123,6 +77335,7 @@ function ($,
 		this .shaderObjects            = [ ];
 		this .globalLights             = [ ];
 		this .lights                   = [ ];
+		this .shadow                   = [ false ];
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
 		this .generatedCubeMapTextures = [ ];
@@ -77138,12 +77351,11 @@ function ($,
 		this .collisionShapes          = [ ];
 		this .activeCollisions         = { };
 		this .depthShapes              = [ ];
-		this .invModelViewMatrix       = new Matrix4 ();
 		this .speed                    = 0;
 
 		try
 		{
-			this .depthBuffer = new DepthBuffer (executionContext .getBrowser (), DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT);
+			this .depthBuffer = new TextureBuffer (executionContext .getBrowser (), DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT);
 		}
 		catch (error)
 		{
@@ -77201,6 +77413,14 @@ function ($,
 		{
 			return this .lights;
 		},
+		pushShadow: function (value)
+		{
+			this .shadow .push (value || this .shadow [this .shadow .length - 1]);
+		},
+		popShadow: function (value)
+		{
+			this .shadow .pop ();
+		},
 		setGlobalFog: function (fog)
 		{
 			this .localFog = this .localFogs [0] = fog;
@@ -77236,6 +77456,54 @@ function ($,
 		getCollisions: function ()
 		{
 			return this .collisions;
+		},
+		setNumCollisionShapes: function (value)
+		{
+			this .numCollisionShapes = value;
+		},
+		getNumCollisionShapes: function ()
+		{
+			return this .numCollisionShapes;
+		},
+		getCollisionShapes: function ()
+		{
+			return this .collisionShapes;
+		},
+		setNumDepthShapes: function (value)
+		{
+			this .numDepthShapes = value;
+		},
+		getNumDepthShapes: function ()
+		{
+			return this .numDepthShapes;
+		},
+		getDepthShapes: function ()
+		{
+			return this .depthShapes;
+		},
+		setNumOpaqueShapes: function (value)
+		{
+			this .numOpaqueShapes = value;
+		},
+		getNumOpaqueShapes: function ()
+		{
+			return this .numOpaqueShapes;
+		},
+		getOpaqueShapes: function ()
+		{
+			return this .opaqueShapes;
+		},
+		setNumTransparentShapes: function (value)
+		{
+			this .numTransparentShapes = value;
+		},
+		getNumTransparentShapes: function ()
+		{
+			return this .numTransparentShapes;
+		},
+		getTransparentShapes: function ()
+		{
+			return this .transparentShapes;
 		},
 		constrainTranslation: function (translation, stepBack)
 		{
@@ -77274,78 +77542,97 @@ function ($,
 
 			return translation .assign (Vector3 .Zero);
 		},
-		getDistance: function (direction)
+		getDistance: (function ()
 		{
-			///  Returns the distance to the closest object in @a direction.  The maximum determinable value is avatarHeight * 2.
+			var
+				projectionMatrix            = new Matrix4 (),
+				cameraSpaceProjectionMatrix = new Matrix4 (),
+				localOrientation            = new Rotation4 (0, 0, 1, 0),
+				vector                      = new Vector3 (0, 0, 0),
+				rotation                    = new Rotation4 (0, 0, 1, 0);
 
-			try
+			return function (direction)
 			{
-			   var t0 = performance .now ();
-
-				var
-					viewpoint       = this .getViewpoint (),
-					navigationInfo  = this .getNavigationInfo (),
-					collisionRadius = navigationInfo .getCollisionRadius (),
-					bottom          = navigationInfo .getStepHeight () - navigationInfo .getAvatarHeight (),
-					nearValue       = navigationInfo .getNearValue (),
-					avatarHeight    = navigationInfo .getAvatarHeight ();
-
-				// Determine width and height of camera
-
-				// Reshape camera
-
-				Camera .ortho (-collisionRadius,
-				               collisionRadius,
-				               Math .min (bottom, -collisionRadius), /// TODO: bottom could be a positive value if stepHeight > avatarHeight.
-				               collisionRadius,
-				               nearValue,
-				               Math .max (collisionRadius * 2, avatarHeight * 2),
-				               projectionMatrix);
-
-				// Translate camera to user position and to look in the direction of the direction.
-
-				localOrientation .assign (viewpoint .orientation_ .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
-				rotation .setFromToVec (zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
-				viewpoint .straightenHorizon (rotation);
-
-				cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
-				cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
-				cameraSpaceProjectionMatrix .rotate (rotation);
-				cameraSpaceProjectionMatrix .inverse ();
-
-				cameraSpaceProjectionMatrix .multRight (projectionMatrix);
-				cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
-
-				this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
-
-				var depth = this .getDepth (projectionMatrix);
-
-				this .getProjectionMatrix () .pop ();
-
-				this .collisionTime += performance .now () - t0;
-				return -depth;
-			}
-			catch (error)
-			{
-				console .log (error);
-			}
-		},
-		getDepth: function (projectionMatrix)
+				///  Returns the distance to the closest object in @a direction.  The maximum determinable value is avatarHeight * 2.
+	
+				try
+				{
+				   var t0 = performance .now ();
+	
+					var
+						viewpoint       = this .getViewpoint (),
+						navigationInfo  = this .getNavigationInfo (),
+						collisionRadius = navigationInfo .getCollisionRadius (),
+						bottom          = navigationInfo .getStepHeight () - navigationInfo .getAvatarHeight (),
+						nearValue       = navigationInfo .getNearValue (),
+						avatarHeight    = navigationInfo .getAvatarHeight ();
+	
+					// Determine width and height of camera
+	
+					// Reshape camera
+	
+					Camera .ortho (-collisionRadius,
+					               collisionRadius,
+					               Math .min (bottom, -collisionRadius), /// TODO: bottom could be a positive value if stepHeight > avatarHeight.
+					               collisionRadius,
+					               nearValue,
+					               Math .max (collisionRadius * 2, avatarHeight * 2),
+					               projectionMatrix);
+	
+					// Translate camera to user position and to look in the direction of the direction.
+	
+					localOrientation .assign (viewpoint .orientation_ .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
+					rotation .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
+					viewpoint .straightenHorizon (rotation);
+	
+					cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
+					cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
+					cameraSpaceProjectionMatrix .rotate (rotation);
+					cameraSpaceProjectionMatrix .inverse ();
+	
+					cameraSpaceProjectionMatrix .multRight (projectionMatrix);
+					cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+	
+					this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
+	
+					var depth = this .getDepth (projectionMatrix);
+	
+					this .getProjectionMatrix () .pop ();
+	
+					this .collisionTime += performance .now () - t0;
+					return -depth;
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		})(),
+		getDepth: (function ()
 		{
-			///  Returns the depth value to the closest object.  The maximum determinable value is avatarHeight * 2.
+			var
+				depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT),
+				depthBufferViewVolume = new ViewVolume ();
 
-			this .depthBuffer .bind ();
+			depthBufferViewVolume .set (Matrix4 .Identity, depthBufferViewport, depthBufferViewport);
 
-			this .viewVolumes .push (depthBufferViewVolume);
-			this .depth (this .collisionShapes, this .numCollisionShapes);
-			this .viewVolumes .pop ();	
-
-			var depth = this .depthBuffer .getDepth (projectionMatrix, depthBufferViewport);
-
-			this .depthBuffer .unbind ();
-
-			return depth;
-		},
+			return function (projectionMatrix)
+			{
+				///  Returns the depth value to the closest object.  The maximum determinable value is avatarHeight * 2.
+	
+				this .depthBuffer .bind ();
+	
+				this .viewVolumes .push (depthBufferViewVolume);
+				this .depth (this .collisionShapes, this .numCollisionShapes);
+				this .viewVolumes .pop ();	
+	
+				var depth = this .depthBuffer .getDepth (projectionMatrix, depthBufferViewport);
+	
+				this .depthBuffer .unbind ();
+	
+				return depth;
+			};
+		})(),
 		render: function (type, group)
 		{
 			switch (type)
@@ -77496,6 +77783,7 @@ function ($,
 				context .shapeNode = shapeNode;
 				context .distance  = bboxCenter .z - radius;
 				context .fogNode   = this .localFog;
+				context .shadow    = this .shadow [this .shadow .length - 1];
 
 				// Clip planes and local lights
 
@@ -77513,7 +77801,7 @@ function ($,
 		{
 			return {
 				renderer: this,
-				transparent: true,
+				transparent: transparent,
 				geometryType: 3,
 				colorMaterial: false,
 				modelViewMatrix: new Float32Array (16),
@@ -77524,392 +77812,425 @@ function ($,
 				textureNode: null,
 				textureTransformNode: null,
 				shaderNode: null,
+				shadow: false,
 			};
 		},
-		collide: function ()
+		collide: (function ()
 		{
-			// Collision nodes are handled here.
-
 			var
-				activeCollisions = { }, // current active Collision nodes
-				collisionRadius2 = 2.2 * this .getNavigationInfo () .getCollisionRadius (); // Make the radius a little bit larger.
+				invModelViewMatrix = new Matrix4 (),
+				modelViewMatrix    = new Matrix4 (),
+				collisionBox       = new Box3 (Vector3 .Zero, Vector3 .Zero),
+				collisionSize      = new Vector3 (0, 0, 0);
 
-			collisionSize .set (collisionRadius2, collisionRadius2, collisionRadius2);
-
-			for (var i = 0, length = this .numCollisionShapes; i < length; ++ i)
+			return function ()
 			{
-				try
+				// Collision nodes are handled here.
+	
+				var
+					activeCollisions = { }, // current active Collision nodes
+					collisionRadius2 = 2.2 * this .getNavigationInfo () .getCollisionRadius (); // Make the radius a little bit larger.
+	
+				collisionSize .set (collisionRadius2, collisionRadius2, collisionRadius2);
+	
+				for (var i = 0, length = this .numCollisionShapes; i < length; ++ i)
 				{
-					var
-						context    = this .collisionShapes [i],
-						collisions = context .collisions;
-
-					if (collisions .length)
+					try
 					{
-					   collisionBox .set (collisionSize, Vector3 .Zero);
-						collisionBox .multRight (this .invModelViewMatrix .assign (context .modelViewMatrix) .inverse ());
-
-						if (context .shapeNode .intersectsBox (collisionBox, context .clipPlanes, modelViewMatrix .assign (context .modelViewMatrix)))
+						var
+							context    = this .collisionShapes [i],
+							collisions = context .collisions;
+	
+						if (collisions .length)
 						{
-						   for (var c = 0; c < collisions .length; ++ c)
-								activeCollisions [collisions [c] .getId ()] = collisions [c];
+						   collisionBox .set (collisionSize, Vector3 .Zero);
+							collisionBox .multRight (invModelViewMatrix .assign (context .modelViewMatrix) .inverse ());
+	
+							if (context .shapeNode .intersectsBox (collisionBox, context .clipPlanes, modelViewMatrix .assign (context .modelViewMatrix)))
+							{
+							   for (var c = 0; c < collisions .length; ++ c)
+									activeCollisions [collisions [c] .getId ()] = collisions [c];
+							}
+						}
+					}
+					catch (error)
+					{
+						console .log (error);
+					}
+				}
+	
+				// Set isActive to FALSE for affected nodes.
+	
+				if (! $.isEmptyObject (this .activeCollisions))
+				{
+					var inActiveCollisions = $.isEmptyObject (activeCollisions)
+					                         ? this .activeCollisions
+					                         : Algorithm .set_difference (this .activeCollisions, activeCollisions, { });
+			
+					for (var key in inActiveCollisions)
+						inActiveCollisions [key] .set_active (false);
+				}
+	
+				// Set isActive to TRUE for affected nodes.
+	
+				this .activeCollisions = activeCollisions;
+	
+				for (var key in activeCollisions)
+					activeCollisions [key] .set_active (true);
+			};
+		})(),
+		gravite: (function ()
+		{
+			var
+				projectionMatrix            = new Matrix4 (),
+				cameraSpaceProjectionMatrix = new Matrix4 (),
+				vector                      = new Vector3 (0, 0, 0),
+				rotation                    = new Rotation4 (0, 0, 1, 0);
+
+			return function ()
+			{
+			   try
+			   {
+					// Terrain following and gravitation
+	
+					if (this .getBrowser () .getActiveLayer () === this)
+					{
+						if (this .getBrowser () .getCurrentViewer () !== "WALK")
+							return;
+					}
+					else if (this .getNavigationInfo () .getViewer () !== "WALK")
+						return;
+	
+					// Get NavigationInfo values
+	
+					var
+						navigationInfo  = this .getNavigationInfo (),
+						viewpoint       = this .getViewpoint (),
+						collisionRadius = navigationInfo .getCollisionRadius (),
+						nearValue       = navigationInfo .getNearValue (),
+						avatarHeight    = navigationInfo .getAvatarHeight (),
+						stepHeight      = navigationInfo .getStepHeight ();
+	
+					// Reshape viewpoint for gravite.
+	
+					Camera .ortho (-collisionRadius,
+					               collisionRadius,
+					               -collisionRadius,
+					               collisionRadius,
+					               nearValue,
+					               Math .max (collisionRadius * 2, avatarHeight * 2),
+					               projectionMatrix)
+	
+					// Transform viewpoint to look down the up vector
+	
+					var
+						upVector = viewpoint .getUpVector (),
+						down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
+	
+					cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
+					cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
+					cameraSpaceProjectionMatrix .rotate (down);
+					cameraSpaceProjectionMatrix .inverse ();
+	
+					cameraSpaceProjectionMatrix .multRight (projectionMatrix);
+					cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+	
+					this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
+	
+					var distance = -this .getDepth (projectionMatrix);
+	
+					this .getProjectionMatrix () .pop ();
+	
+					// Gravite or step up
+	
+					distance -= avatarHeight;
+	
+					var up = rotation .setFromToVec (Vector3 .yAxis, upVector);
+	
+					if (distance > 0)
+					{
+						// Gravite and fall down the to the floor
+	
+						var currentFrameRate = this .speed ? this .getBrowser () .getCurrentFrameRate () : 1000000;
+	
+						this .speed -= this .getBrowser () .getBrowserOptions () .Gravity_ .getValue () / currentFrameRate;
+	
+						var translation = this .speed / currentFrameRate;
+	
+						if (translation < -distance)
+						{
+							// The ground is reached.
+							translation = -distance;
+							this .speed = 0;
+						}
+	
+						viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .add (up .multVecRot (vector .set (0, translation, 0)));
+					}
+					else
+					{
+						this .speed = 0;
+	
+						distance = -distance;
+	
+						if (distance > 0.01 && distance < stepHeight)
+						{
+							// Step up
+							var translation = this .constrainTranslation (up .multVecRot (this .translation .set (0, distance, 0)), false);
+	
+							//if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
+							//{
+							//	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
+							//	step = abs (getInverseCameraSpaceMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
+							//
+							//	Vector3f offset = Vector3f (0, step, 0) * up;
+							//
+							//	if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
+							//		offset = translation;
+							//
+							//	getViewpoint () -> positionOffset () += offset;
+							//}
+							//else
+								viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
 						}
 					}
 				}
 				catch (error)
 				{
-					console .log (error);
+				   console .log (error);
 				}
-			}
+			};
+		})(),
+		depth: (function ()
+		{
+			var projectionMatrixArray = new Float32Array (16);
 
-			// Set isActive to FALSE for affected nodes.
-
-			if (! $.isEmptyObject (this .activeCollisions))
+			return function (shapes, numShapes)
 			{
-				var inActiveCollisions = $.isEmptyObject (activeCollisions)
-				                         ? this .activeCollisions
-				                         : Algorithm .set_difference (this .activeCollisions, activeCollisions, { });
+				var
+					browser    = this .getBrowser (),
+					gl         = browser .getContext (),
+					viewport   = this .getViewVolume () .getViewport (),
+					shaderNode = browser .getDepthShader ();
+	
+				// Configure depth shader.
+	
+				shaderNode .enable (gl);
+	
+				projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+	
+				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+	
+				// Configure viewport and background
+	
+				gl .viewport (viewport [0],
+				              viewport [1],
+				              viewport [2],
+				              viewport [3]);
+	
+				gl .scissor (viewport [0],
+				             viewport [1],
+				             viewport [2],
+				             viewport [3]);
+	
+				gl .clearColor (1, 0, 0, 0);
+				gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
+	
+				// Render all objects
+	
+				gl .enable (gl .DEPTH_TEST);
+				gl .depthMask (true);
+				gl .disable (gl .BLEND);
+				gl .disable (gl .CULL_FACE);
+	
+				for (var s = 0; s < numShapes; ++ s)
+				{
+					var
+						context = shapes [s],
+						scissor = context .scissor;
+	
+					// TODO: viewport must not be the browser or layer viewport.
+					gl .scissor (scissor .x,
+					             scissor .y,
+					             scissor .z,
+					             scissor .w);
+	
+					// Clip planes
+	
+					shaderNode .setShaderObjects (gl, context .clipPlanes);
+	
+					// modelViewMatrix
 		
-				for (var key in inActiveCollisions)
-					inActiveCollisions [key] .set_active (false);
-			}
-
-			// Set isActive to TRUE for affected nodes.
-
-			this .activeCollisions = activeCollisions;
-
-			for (var key in activeCollisions)
-				activeCollisions [key] .set_active (true);
-		},
-		gravite: function ()
-		{
-		   try
-		   {
-				// Terrain following and gravitation
-
-				if (this .getBrowser () .getActiveLayer () === this)
-				{
-					if (this .getBrowser () .getCurrentViewer () !== "WALK")
-						return;
+					gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, context .modelViewMatrix);
+	
+					// Draw
+		
+					context .shapeNode .depth (gl, context, shaderNode);
 				}
-				else if (this .getNavigationInfo () .getViewer () !== "WALK")
-					return;
-
-				// Get NavigationInfo values
-
-				var
-					navigationInfo  = this .getNavigationInfo (),
-					viewpoint       = this .getViewpoint (),
-					collisionRadius = navigationInfo .getCollisionRadius (),
-					nearValue       = navigationInfo .getNearValue (),
-					avatarHeight    = navigationInfo .getAvatarHeight (),
-					stepHeight      = navigationInfo .getStepHeight ();
-
-				// Reshape viewpoint for gravite.
-
-				Camera .ortho (-collisionRadius,
-				               collisionRadius,
-				               -collisionRadius,
-				               collisionRadius,
-				               nearValue,
-				               Math .max (collisionRadius * 2, avatarHeight * 2),
-				               projectionMatrix)
-
-				// Transform viewpoint to look down the up vector
-
-				var
-					upVector = viewpoint .getUpVector (),
-					down     = rotation .setFromToVec (zAxis, upVector);
-
-				cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
-				cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
-				cameraSpaceProjectionMatrix .rotate (down);
-				cameraSpaceProjectionMatrix .inverse ();
-
-				cameraSpaceProjectionMatrix .multRight (projectionMatrix);
-				cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
-
-				this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
-
-				var distance = -this .getDepth (projectionMatrix);
-
-				this .getProjectionMatrix () .pop ();
-
-				// Gravite or step up
-
-				distance -= avatarHeight;
-
-				var up = rotation .setFromToVec (yAxis, upVector);
-
-				if (distance > 0)
-				{
-					// Gravite and fall down the to the floor
-
-					var currentFrameRate = this .speed ? this .getBrowser () .getCurrentFrameRate () : 1000000;
-
-					this .speed -= this .getBrowser () .getBrowserOptions () .Gravity_ .getValue () / currentFrameRate;
-
-					var translation = this .speed / currentFrameRate;
-
-					if (translation < -distance)
-					{
-						// The ground is reached.
-						translation = -distance;
-						this .speed = 0;
-					}
-
-					viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .add (up .multVecRot (vector .set (0, translation, 0)));
-				}
-				else
-				{
-					this .speed = 0;
-
-					distance = -distance;
-
-					if (distance > 0.01 && distance < stepHeight)
-					{
-						// Step up
-						var translation = this .constrainTranslation (up .multVecRot (this .translation .set (0, distance, 0)), false);
-
-						//if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
-						//{
-						//	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
-						//	step = abs (getInverseCameraSpaceMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
-						//
-						//	Vector3f offset = Vector3f (0, step, 0) * up;
-						//
-						//	if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
-						//		offset = translation;
-						//
-						//	getViewpoint () -> positionOffset () += offset;
-						//}
-						//else
-							viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
-					}
-				}
-			}
-			catch (error)
-			{
-			   console .log (error);
-			}
-		},
-		depth: function (shapes, numShapes)
+	
+				shaderNode .disable (gl);
+			};
+		})(),
+		draw: (function ()
 		{
 			var
-				browser    = this .getBrowser (),
-				gl         = browser .getContext (),
-				viewport   = this .getViewVolume () .getViewport (),
-				shaderNode = browser .getDepthShader ();
+				viewportArray          = new Int32Array (4),
+				projectionMatrixArray  = new Float32Array (16),
+				cameraSpaceMatrixArray = new Float32Array (16);
 
-			// Configure depth shader.
-
-			shaderNode .enable (gl);
-
-			projectionMatrixArray .set (this .getProjectionMatrix () .get ());
-
-			gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-
-			// Configure viewport and background
-
-			gl .viewport (viewport [0],
-			              viewport [1],
-			              viewport [2],
-			              viewport [3]);
-
-			gl .scissor (viewport [0],
-			             viewport [1],
-			             viewport [2],
-			             viewport [3]);
-
-			gl .clearColor (1, 0, 0, 0);
-			gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
-
-			// Render all objects
-
-			gl .enable (gl .DEPTH_TEST);
-			gl .depthMask (true);
-			gl .disable (gl .BLEND);
-			gl .disable (gl .CULL_FACE);
-
-			for (var s = 0; s < numShapes; ++ s)
+			return function (group)
 			{
 				var
-					context = shapes [s],
-					scissor = context .scissor;
-
-				// TODO: viewport must not be the browser or layer viewport.
-				gl .scissor (scissor .x,
-				             scissor .y,
-				             scissor .z,
-				             scissor .w);
-
-				// Clip planes
-
-				shaderNode .setShaderObjects (gl, context .clipPlanes);
-
-				// modelViewMatrix
+					browser                  = this .getBrowser (),
+					gl                       = browser .getContext (),
+					viewport                 = this .getViewVolume () .getViewport (),
+					shaders                  = this .shaders,
+					lights                   = this .lights,
+					generatedCubeMapTextures = this .generatedCubeMapTextures;
 	
-				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, context .modelViewMatrix);
-
-				// Draw
 	
-				context .shapeNode .depth (gl, context, shaderNode);
-			}
-
-			shaderNode .disable (gl);
-		},
-		draw: function (group)
-		{
-			var
-				browser                  = this .getBrowser (),
-				gl                       = browser .getContext (),
-				viewport                 = this .getViewVolume () .getViewport (),
-				shaders                  = this .shaders,
-				lights                   = this .lights,
-				generatedCubeMapTextures = this .generatedCubeMapTextures;
-
-
-			// PREPARATIONS
-
-
-			if (this .isIndependent ())
-			{
-				// Render shadow maps.
-
-				for (var i = 0, length = lights .length; i < length; ++ i)
-					lights [i] .renderShadowMap (this);
+				// PREPARATIONS
 	
-				// Render GeneratedCubeMapTextures.
-			
-				for (var i = 0, length = generatedCubeMapTextures .length; i < length; ++ i)
-					generatedCubeMapTextures [i] .renderTexture (this, group);
-			}
-
-
-			// DRAW
-
-
-			// Set shadow matrix for all lights.
-
-			browser .getHeadlight () .setGlobalVariables (this);
-
-			for (var i = 0, length = lights .length; i < length; ++ i)
-				lights [i] .setGlobalVariables (this);
-
-			// Configure viewport and background
-
-			gl .viewport (viewport [0],
-			              viewport [1],
-			              viewport [2],
-			              viewport [3]);
-
-			gl .scissor (viewport [0],
-			             viewport [1],
-			             viewport [2],
-			             viewport [3]);
-
-			gl .clear (gl .DEPTH_BUFFER_BIT);
-
-			this .getBackground () .display (gl, this, viewport);
-
-			// Sorted blend
-
-			viewportArray          .set (viewport);
-			cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-			projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
-
-			browser .getPointShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-			browser .getLineShader    () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-			browser .getDefaultShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-
-			for (var id in shaders)
-				shaders [id] .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-
-			// Render opaque objects first
-
-			gl .enable (gl .DEPTH_TEST);
-			gl .depthMask (true);
-			gl .disable (gl .BLEND);
-
-			for (var i = 0; i < this .numOpaqueShapes; ++ i)
-			{
-				var
-					context = this .opaqueShapes [i],
-					scissor = context .scissor;
-
-				gl .scissor (scissor .x,
-				             scissor .y,
-				             scissor .z,
-				             scissor .w);
-
-				context .shapeNode .display (gl, context);
-			}
-
-			// Render transparent objects
-
-			gl .depthMask (false);
-			gl .enable (gl .BLEND);
-
-			this .transparencySorter .sort (0, this .numTransparentShapes);
-
-			for (var i = 0; i < this .numTransparentShapes; ++ i)
-			{
-				var
-					context = this .transparentShapes [i],
-					scissor = context .scissor;
-
-				gl .scissor (scissor .x,
-				             scissor .y,
-				             scissor .z,
-				             scissor .w);
-
-				context .shapeNode .display (gl, context);
-			}
-
-			gl .depthMask (true);
-			gl .disable (gl .BLEND);
-
-
-			// POST DRAW
-
-
-			gl .activeTexture (gl .TEXTURE0);
-
-			// Reset GeneratedCubeMapTextures.
-
-			generatedCubeMapTextures .length = 0;
-
-			if (this .isIndependent ())
-			{
-				// Recycle clip planes.
-
-				var clipPlanes = this .getBrowser () .getClipPlanes ();
 	
-				for (var i = 0, length = clipPlanes .length; i < length; ++ i)
-				   clipPlanes [i] .dispose ();
+				if (this .isIndependent ())
+				{
+					// Render shadow maps.
 	
-				clipPlanes .length = 0;
-
-				// Recycle global lights.
+					for (var i = 0, length = lights .length; i < length; ++ i)
+						lights [i] .renderShadowMap (this);
+		
+					// Render GeneratedCubeMapTextures.
+				
+					for (var i = 0, length = generatedCubeMapTextures .length; i < length; ++ i)
+						generatedCubeMapTextures [i] .renderTexture (this, group);
+				}
 	
-				var lights = this .globalLights;
+	
+				// DRAW
+	
+	
+				// Set shadow matrix for all lights.
+	
+				browser .getHeadlight () .setGlobalVariables (this);
 	
 				for (var i = 0, length = lights .length; i < length; ++ i)
-				   lights [i] .dispose ();
+					lights [i] .setGlobalVariables (this);
 	
-				// Recycle local lights.
+				// Configure viewport and background
 	
-				var lights = this .getBrowser () .getLocalLights ();
+				gl .viewport (viewport [0],
+				              viewport [1],
+				              viewport [2],
+				              viewport [3]);
 	
-				for (var i = 0, length = lights .length; i < length; ++ i)
-				   lights [i] .dispose ();
+				gl .scissor (viewport [0],
+				             viewport [1],
+				             viewport [2],
+				             viewport [3]);
 	
-				lights .length = 0;
-			}
-
-			this .globalLights .length = 0;
-			this .lights       .length = 0;
-		},
+				gl .clear (gl .DEPTH_BUFFER_BIT);
+	
+				this .getBackground () .display (gl, this, viewport);
+	
+				// Sorted blend
+	
+				viewportArray          .set (viewport);
+				cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+				projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
+	
+				browser .getPointShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getLineShader    () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getDefaultShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getShadowShader  () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+	
+				for (var id in shaders)
+					shaders [id] .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+	
+				// Render opaque objects first
+	
+				gl .enable (gl .DEPTH_TEST);
+				gl .depthMask (true);
+				gl .disable (gl .BLEND);
+	
+				for (var i = 0; i < this .numOpaqueShapes; ++ i)
+				{
+					var
+						context = this .opaqueShapes [i],
+						scissor = context .scissor;
+	
+					gl .scissor (scissor .x,
+					             scissor .y,
+					             scissor .z,
+					             scissor .w);
+	
+					context .shapeNode .display (gl, context);
+				}
+	
+				// Render transparent objects
+	
+				gl .depthMask (false);
+				gl .enable (gl .BLEND);
+	
+				this .transparencySorter .sort (0, this .numTransparentShapes);
+	
+				for (var i = 0; i < this .numTransparentShapes; ++ i)
+				{
+					var
+						context = this .transparentShapes [i],
+						scissor = context .scissor;
+	
+					gl .scissor (scissor .x,
+					             scissor .y,
+					             scissor .z,
+					             scissor .w);
+	
+					context .shapeNode .display (gl, context);
+				}
+	
+				gl .depthMask (true);
+				gl .disable (gl .BLEND);
+	
+	
+				// POST DRAW
+	
+	
+				gl .activeTexture (gl .TEXTURE0);
+	
+				// Reset GeneratedCubeMapTextures.
+	
+				generatedCubeMapTextures .length = 0;
+	
+				if (this .isIndependent ())
+				{
+					// Recycle clip planes.
+	
+					var clipPlanes = this .getBrowser () .getClipPlanes ();
+		
+					for (var i = 0, length = clipPlanes .length; i < length; ++ i)
+					   clipPlanes [i] .dispose ();
+		
+					clipPlanes .length = 0;
+	
+					// Recycle global lights.
+		
+					var lights = this .globalLights;
+		
+					for (var i = 0, length = lights .length; i < length; ++ i)
+					   lights [i] .dispose ();
+		
+					// Recycle local lights.
+		
+					var lights = this .getBrowser () .getLocalLights ();
+		
+					for (var i = 0, length = lights .length; i < length; ++ i)
+					   lights [i] .dispose ();
+		
+					lights .length = 0;
+				}
+	
+				this .globalLights .length = 0;
+				this .lights       .length = 0;
+			};
+		})(),
 	};
 
 	return X3DRenderObject;
@@ -78664,10 +78985,6 @@ function (X3DBindableNode,
 		y3 = new Complex (0, 0),
 		y4 = new Complex (0, 0);
 
-	var
-		farVector         = new Vector3 (0, 0, 0),
-		projectionMatrix  = new Matrix4 ();
-
 	function X3DBackgroundNode (executionContext)
 	{
 		X3DBindableNode .call (this, executionContext);
@@ -79038,51 +79355,60 @@ function (X3DBindableNode,
 				}
 			}
 		},
-		display: function (gl, renderObject, viewport)
+		display: (function ()
 		{
-			try
+			var
+				farVector         = new Vector3 (0, 0, 0),
+				projectionMatrix  = new Matrix4 ();
+
+			return function (gl, renderObject, viewport)
 			{
-				if (this .hidden)
-					return;
-
-				// Setup context.
+				try
+				{
+					if (this .hidden)
+						return;
 	
-				gl .disable (gl .DEPTH_TEST);
-				gl .depthMask (false);
-				gl .enable (gl .CULL_FACE);
-				gl .frontFace (gl .CCW);
+					// Setup context.
+		
+					gl .disable (gl .DEPTH_TEST);
+					gl .depthMask (false);
+					gl .enable (gl .CULL_FACE);
+					gl .frontFace (gl .CCW);
+	
+					// Get background scale.
+	
+					var
+						viewpoint       = renderObject .getViewpoint (),
+						navigationInfo  = renderObject .getNavigationInfo (),
+						farValue        = navigationInfo .getFarValue (viewpoint) * 0.8,
+						rotation        = this .rotation,
+						modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
 
-				// Get background scale.
-
-				var
-					farValue        = -ViewVolume .unProjectPointMatrix (0, 0, 1, projectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8,
-					rotation        = this .rotation,
-					modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
-
-				// Get projection matrix.
-
-				this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
-
-				// Rotate and scale background.
-
-				modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
-				modelViewMatrix .get (null, rotation);
-				modelViewMatrix .identity ();
-				modelViewMatrix .rotate (rotation);
-				modelViewMatrix .scale (this .scale .set (farValue, farValue, farValue));
-
-				this .modelViewMatrixArray .set (modelViewMatrix);
-
-				// Draw background sphere and texture cube.
-
-				this .drawSphere (renderObject);
-
-				if (this .textures)
-					this .drawCube (renderObject);
-			}
-			catch (error)
-			{ }
-		},
+					// Get projection matrix.
+	
+					this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
+	
+					// Rotate and scale background.
+	
+					modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
+					modelViewMatrix .get (null, rotation);
+					modelViewMatrix .identity ();
+					modelViewMatrix .rotate (rotation);
+					modelViewMatrix .scale (this .scale .set (farValue, farValue, farValue));
+	
+					this .modelViewMatrixArray .set (modelViewMatrix);
+	
+					// Draw background sphere and texture cube.
+	
+					this .drawSphere (renderObject);
+	
+					if (this .textures)
+						this .drawCube (renderObject);
+				}
+				catch (error)
+				{ }
+			};
+		})(),
 		drawSphere: function (renderObject)
 		{
 			var transparency = this .transparency_ .getValue ();
@@ -79789,6 +80115,7 @@ function ($,
 					canvas .width  = width;
 					canvas .height = height;
 
+					cx .clearRect (0, 0, width, height);
 					cx .save ();
 					cx .translate (0, height);
 					cx .scale (1, -1);
@@ -79800,6 +80127,7 @@ function ($,
 					canvas .width  = width;
 					canvas .height = height;
 
+					cx .clearRect (0, 0, width, height);
 					cx .save ();
 					cx .translate (0, height);
 					cx .scale (1, -1);
@@ -86148,7 +86476,8 @@ function (Fields,
 
 		this .addType (X3DConstants .Collision);
 
-		this .addAlias ("collide", this .enabled_); // VRML2
+		if (executionContext .getSpecificationVersion () == "2.0")
+			this .addAlias ("collide", this .enabled_); // VRML2
 	}
 
 	Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -87582,7 +87911,9 @@ function (Fields,
 					gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 
 					if (data instanceof Uint8Array)
+					{
 						gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
+					}
 					else
 					{
 						gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, data);
@@ -91750,7 +92081,7 @@ define ('x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
 	"x_ite/Rendering/DependentRenderer",
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Geometry/Camera",
@@ -91766,7 +92097,7 @@ function (Fields,
           FieldDefinitionArray,
           X3DEnvironmentTextureNode, 
           DependentRenderer, 
-          DepthBuffer, 
+          TextureBuffer, 
           X3DConstants,
           TraverseType,
           Camera,
@@ -91866,7 +92197,7 @@ function (Fields,
 				// Properties
 
 				this .viewport    = new Vector4 (0, 0, size, size);
-				this .frameBuffer = new DepthBuffer (this .getBrowser (), size, size);
+				this .frameBuffer = new TextureBuffer (this .getBrowser (), size, size);
 
 				// Apply texture properties.
 
@@ -96663,7 +96994,8 @@ function (Fields,
 
 		this .addType (X3DConstants .LOD);
 
-		this .addAlias ("level", this .children_); // VRML2
+		if (executionContext .getSpecificationVersion () == "2.0")
+			this .addAlias ("level", this .children_); // VRML2
 
 		this .center_ .setUnit ("length");
 		this .range_  .setUnit ("length");
@@ -102966,45 +103298,49 @@ function (Fields,
 {
 "use strict";
 
-	var biasMatrix = new Matrix4 (1.0 / 6.0, 0.0,  0.0, 0.0,
-	                              0.0,  0.25, 0.0, 0.0,
-	                              0.0,  0.0,  0.5, 0.0,
-	                              1.0 / 6.0, 0.25, 0.5, 1.0);
+	// Shadow map layout
+	// Compact layout:
+	//
+	// xzXZ		Char: Axis
+	// yyYY		Case: Sign
 
-	// Negated directions
-	var directions = [
-		new Vector3 ( 1,  0,  0), // left
-		new Vector3 (-1,  0,  0), // right
-		new Vector3 ( 0,  0,  1), // back
-		new Vector3 ( 0,  0, -1), // front
-		new Vector3 ( 0,  1,  0), // bottom
-		new Vector3 ( 0, -1,  0), // top
+	var orientationMatrices = [
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 1,  0,  0), Vector3 .zAxis)), // left
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 (-1,  0,  0), Vector3 .zAxis)), // right
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0, -1), Vector3 .zAxis)), // front
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0,  1), Vector3 .zAxis)), // back
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  1,  0), Vector3 .zAxis)), // bottom
+		new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0, -1,  0), Vector3 .zAxis)), // top
+	];
+
+	var viewports = [
+		new Vector4 (0,    0.5, 0.25, 0.5), // left
+		new Vector4 (0.5,  0.5, 0.25, 0.5), // right
+		new Vector4 (0.75, 0.5, 0.25, 0.5), // front
+		new Vector4 (0.25, 0.5, 0.25, 0.5), // back
+		new Vector4 (0.0,  0,   0.5,  0.5), // bottom
+		new Vector4 (0.5,  0,   0.5,  0.5), // top   
 	];
 
 	var PointLights = ObjectCache (PointLightContainer);
 	
 	function PointLightContainer ()
 	{
-		var
-			nearValue        = 0.125,
-			farValue         = 1000,
-			projectionMatrix = Camera .perspective (Algorithm .radians (120), nearValue, farValue, 1, 1, new Matrix4 ());
-
-		this .location             = new Vector3 (0, 0, 0);
-		this .direction            = new Vector3 (0, 0, 0);
-		this .shadowBuffer         = null;
-		this .viewVolume           = new ViewVolume ();
-		this .viewport             = new Vector4 (0, 0, 0, 0);
-		this .projectionMatrix     = projectionMatrix;
-		this .modelViewMatrix      = new MatrixStack (Matrix4);
-		this .modelMatrix          = new Matrix4 ();
-		this .invLightSpaceMatrix  = new Matrix4 ();
-		this .shadowMatrix         = new Matrix4 ();
-		this .shadowMatrixArray    = new Float32Array (16);
-		this .invGroupMatrix       = new Matrix4 ();
-		this .rotation             = new Rotation4 ();
-		this .rotationMatrix       = new Matrix4 ();
-		this .textureUnit          = 0;
+		this .location                      = new Vector3 (0, 0, 0);
+		this .shadowBuffer                  = null;
+		this .viewVolume                    = new ViewVolume ();
+		this .viewport                      = new Vector4 (0, 0, 0, 0);
+		this .projectionMatrix              = new Matrix4 ();
+		this .modelViewMatrix               = new MatrixStack (Matrix4);
+		this .modelMatrix                   = new Matrix4 ();
+		this .invLightSpaceMatrix           = new Matrix4 ();
+		this .invLightSpaceProjectionMatrix = new Matrix4 ();
+		this .shadowMatrix                  = new Matrix4 ();
+		this .shadowMatrixArray             = new Float32Array (16);
+		this .invGroupMatrix                = new Matrix4 ();
+		this .rotation                      = new Rotation4 ();
+		this .rotationMatrix                = new Matrix4 ();
+		this .textureUnit                   = 0;
 	}
 
 	PointLightContainer .prototype =
@@ -103039,7 +103375,14 @@ function (Fields,
 						this .textureUnit = browser .getCombinedTextureUnits () .pop ();
 
 						gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-						gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+
+						if (browser .getExtension ("WEBGL_depth_texture"))
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+						else
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
+						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
 						gl .activeTexture (gl .TEXTURE0);
 					}
 					else
@@ -103061,51 +103404,46 @@ function (Fields,
 					return;
 
 				var
-					lightNode            = this .lightNode,
-					cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
-					modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+					lightNode           = this .lightNode,
+					cameraSpaceMatrix   = renderObject .getCameraSpaceMatrix () .get (),
+					modelMatrix         = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+					invLightSpaceMatrix = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				invLightSpaceMatrix .translate (lightNode .getLocation ());
 				invLightSpaceMatrix .inverse ();
 
 				var
-					shadowMapSize1_2 = lightNode .getShadowMapSize () / 2,
-					shadowMapSize1_3 = lightNode .getShadowMapSize () / 3,
-					projectionMatrix = this .projectionMatrix,
-					invGroupMatrix   = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
+					shadowMapSize  = lightNode .getShadowMapSize (),
+					invGroupMatrix = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
 
 				this .shadowBuffer .bind ();
-				renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
 
-				for (var y = 0; y < 2; ++ y)
+				for (var i = 0; i < 6; ++ i)
 				{
-					for (var x = 0; x < 3; ++ x)
-					{
-						var
-							rotation = this .rotation .setFromToVec (this .direction .assign (directions [y * 3 + x]), Vector3 .zAxis), // inversed rotation
-							viewport = this .viewport .set (x * shadowMapSize1_3, y * shadowMapSize1_2, shadowMapSize1_3, shadowMapSize1_2);
-		
-						renderObject .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+					var
+						v                = viewports [i],
+						viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
+						projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
-						renderObject .getModelViewMatrix  () .pushMatrix (this .rotationMatrix .setRotation (rotation));
-						renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
-						renderObject .getModelViewMatrix  () .multLeft (invGroupMatrix);
-		
-						renderObject .render (TraverseType .DEPTH, this .groupNode);
-		
-						renderObject .getModelViewMatrix  () .pop ();
-						renderObject .getViewVolumes () .pop ();
-
-						//console .log (y * 3 + x, this .rotationMatrix .multRight (this .projectionMatrix) .multRight (biasMatrix) .toString ());
-					}
+					renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+					renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
+					renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
+					renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
+					renderObject .getModelViewMatrix  () .multLeft (invGroupMatrix);
+	
+					renderObject .render (TraverseType .DEPTH, this .groupNode);
+	
+					renderObject .getModelViewMatrix  () .pop ();
+					renderObject .getProjectionMatrix () .pop ();
+					renderObject .getViewVolumes () .pop ();
 				}
 
-				renderObject .getProjectionMatrix () .pop ();
 				this .shadowBuffer .unbind ();
 	
 				if (! lightNode .getGlobal ())
 					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
+
+				this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix);
 			}
 			catch (error)
 			{
@@ -103117,7 +103455,7 @@ function (Fields,
 		{
 			this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode .location_ .getValue ()));
 
-			this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceMatrix);
+			this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
 			this .shadowMatrixArray .set (this .shadowMatrix);
 		},
 		setShaderUniforms: function (gl, shaderObject)
@@ -103144,14 +103482,13 @@ function (Fields,
 
 			if (this .textureUnit)
 			{
-				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
-				gl .uniform1f        (shaderObject .x3d_ShadowDiffusion [i],     lightNode .getShadowDiffusion ());
 				gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
+				gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
 				gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
+				gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
 				gl .uniform1i        (shaderObject .x3d_ShadowMap [i],           this .textureUnit);
 			}
-			else
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 		},
 		dispose: function ()
 		{
@@ -103199,10 +103536,10 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
 																				   
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",      new  Fields .SFColor ()),        // Color of shadow.
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity",  new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowDiffusion",  new  Fields .SFFloat ()),        // Diffusion of the shadow in length units in the range (0, inf).
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",    new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
 		]),
 		getTypeName: function ()
 		{
@@ -103227,10 +103564,6 @@ function (Fields,
 		getRadius: function ()
 		{
 			return Math .max (0, this .radius_ .getValue ());
-		},
-		getBiasMatrix: function ()
-		{
-			return biasMatrix;
 		},
 		getLights: function ()
 		{
@@ -108623,7 +108956,14 @@ function (Fields,
 						this .textureUnit = browser .getCombinedTextureUnits () .pop ();
 
 						gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-						gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+
+						if (browser .getExtension ("WEBGL_depth_texture"))
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+						else
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
+						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 						gl .activeTexture (gl .TEXTURE0);
 					}
 					else
@@ -108648,7 +108988,7 @@ function (Fields,
 					lightNode            = this .lightNode,
 					cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
 					modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+					invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				invLightSpaceMatrix .translate (lightNode .getLocation ());
 				invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
@@ -108661,7 +109001,7 @@ function (Fields,
 					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
-					projectionMatrix = Camera .perspective (lightNode .getCutOffAngle () * 2, 0.125, farValue, shadowMapSize, shadowMapSize, this .projectionMatrix),
+					projectionMatrix = Camera .perspective (lightNode .getCutOffAngle () * 2, 0.125, Math .max (10000, farValue), shadowMapSize, shadowMapSize, this .projectionMatrix), // Use higher far value for better precision.
 					invGroupMatrix   = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
 
 				this .renderShadow = farValue > 0;
@@ -108729,16 +109069,13 @@ function (Fields,
 
 			if (this .renderShadow && this .textureUnit)
 			{
-				this .shadowMatrixArray .set (this .shadowMatrix);
-
-				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
-				gl .uniform1f        (shaderObject .x3d_ShadowDiffusion [i],     lightNode .getShadowDiffusion ());
 				gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
+				gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
 				gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
+				gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
 				gl .uniform1i        (shaderObject .x3d_ShadowMap [i],           this .textureUnit);
 			}
-			else
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 		},
 		dispose: function ()
 		{
@@ -108791,10 +109128,10 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "beamWidth",        new Fields .SFFloat (0.785398)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "cutOffAngle",      new Fields .SFFloat (1.5708)),
 																				   
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",      new  Fields .SFColor ()),        // Color of shadow.
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity",  new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowDiffusion",  new  Fields .SFFloat ()),        // Diffusion of the shadow in length units in the range (0, inf).
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",    new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
 		]),
 		getTypeName: function ()
 		{
@@ -109159,7 +109496,9 @@ define ('x_ite/Components/Grouping/StaticGroup',[
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Components/Grouping/Group",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/TraverseType",
 	"standard/Math/Geometry/Box3",
+	"standard/Math/Geometry/ViewVolume",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -109168,9 +109507,13 @@ function (Fields,
           X3DBoundedObject, 
           Group,
           X3DConstants,
-          Box3)
+          TraverseType,
+          Box3,
+          ViewVolume)
 {
 "use strict";
+
+	// No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
 	function StaticGroup (executionContext)
 	{
@@ -109179,8 +109522,12 @@ function (Fields,
 
 		this .addType (X3DConstants .StaticGroup);
 
-		this .group = new Group (this .getExecutionContext ());
-		this .bbox  = new Box3 ();
+		this .group             = new Group (this .getExecutionContext ());
+		this .collisionShapes   = null;
+		this .depthShapes       = null;
+		this .opaqueShapes      = null;
+		this .transparentShapes = null;
+		this .bbox              = new Box3 ();
 	}
 
 	StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -109233,17 +109580,188 @@ function (Fields,
 		set_children__: function ()
 		{
 			this .group .getBBox (this .bbox);
+
+			this .collisionShapes   = null;
+			this .depthShapes       = null;
+			this .opaqueShapes      = null;
+			this .transparentShapes = null;
 		},
-		traverse: function (type, renderObject)
+		traverse: (function ()
 		{
-			this .group .traverse (type, renderObject);
-		},
+			var viewVolume = new ViewVolume ();
+
+			viewVolume .intersectsSphere = function () { return true; };
+
+			return function (type, renderObject)
+			{
+				switch (type)
+				{
+					case TraverseType .CAMERA:
+					{
+						break;
+					}
+					case TraverseType .POINTER:
+					case TraverseType .COLLISION:
+					{
+						if (! this .collisionShapes)
+						{
+							console .log ("Rebuilding StaticGroup collisionShapes");
+
+							var
+								viewVolumes         = renderObject .getViewVolumes (),
+								viewport            = renderObject .getViewport (),
+								projectionMatrix    = renderObject .getProjectionMatrix (),
+								modelViewMatrix     = renderObject .getModelViewMatrix (),
+								firstCollisionShape = renderObject .getNumCollisionShapes ();
+				
+							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+	
+							modelViewMatrix .push ();
+							modelViewMatrix .identity ();
+	
+							this .group .traverse (type, renderObject);
+	
+							modelViewMatrix .pop ();
+							viewVolumes     .pop ();
+
+							var lastCollisionShape = renderObject .getNumCollisionShapes ();
+
+							this .collisionShapes = renderObject .getCollisionShapes () .splice (firstCollisionShape, lastCollisionShape - firstCollisionShape);
+
+							renderObject .setNumCollisionShapes (firstCollisionShape);
+						}
+
+						var
+							collisionShapes = this .collisionShapes,
+							modelViewMatrix = renderObject .getModelViewMatrix ();
+
+						for (var i = 0, length = collisionShapes .length; i < length; ++ i)
+						{
+							var collisionShape = collisionShapes [i];
+
+							modelViewMatrix .push ();
+							modelViewMatrix .multLeft (collisionShape .modelViewMatrix);
+							collisionShape .shapeNode .traverse (type, renderObject);
+							modelViewMatrix .pop ();
+						}
+
+						break;
+					}
+					case TraverseType .DEPTH:
+					{
+						if (! this .depthShapes)
+						{
+							console .log ("Rebuilding StaticGroup depthShapes");
+
+							var
+								viewVolumes      = renderObject .getViewVolumes (),
+								viewport         = renderObject .getViewport (),
+								projectionMatrix = renderObject .getProjectionMatrix (),
+								modelViewMatrix  = renderObject .getModelViewMatrix (),
+								firstDepthShape  = renderObject .getNumDepthShapes ();
+				
+							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+	
+							modelViewMatrix .push ();
+							modelViewMatrix .identity ();
+	
+							this .group .traverse (type, renderObject);
+	
+							modelViewMatrix .pop ();
+							viewVolumes     .pop ();
+
+							var lastDepthShape = renderObject .getNumDepthShapes ();
+
+							this .depthShapes = renderObject .getDepthShapes () .splice (firstDepthShape, lastDepthShape - firstDepthShape);
+
+							renderObject .setNumDepthShapes (firstDepthShape);
+						}
+
+						var
+							depthShapes     = this .depthShapes,
+							modelViewMatrix = renderObject .getModelViewMatrix ();
+
+						for (var i = 0, length = depthShapes .length; i < length; ++ i)
+						{
+							var depthShape = depthShapes [i];
+
+							modelViewMatrix .push ();
+							modelViewMatrix .multLeft (depthShape .modelViewMatrix);
+							depthShape .shapeNode .traverse (type, renderObject);
+							modelViewMatrix .pop ();
+						}
+
+						break;
+					}
+					case TraverseType .DISPLAY:
+					{
+						if (! this .opaqueShapes)
+						{
+							console .log ("Rebuilding StaticGroup opaqueShapes and transparentShapes");
+
+							var
+								viewVolumes           = renderObject .getViewVolumes (),
+								viewport              = renderObject .getViewport (),
+								projectionMatrix      = renderObject .getProjectionMatrix (),
+								modelViewMatrix       = renderObject .getModelViewMatrix (),
+								firstOpaqueShape      = renderObject .getNumOpaqueShapes (),
+								firstTransparentShape = renderObject .getNumTransparentShapes ();
+				
+							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+	
+							modelViewMatrix .push ();
+							modelViewMatrix .identity ();
+	
+							this .group .traverse (type, renderObject);
+	
+							modelViewMatrix .pop ();
+							viewVolumes     .pop ();
+
+							var
+								lastOpaqueShape      = renderObject .getNumOpaqueShapes (),
+								lastTransparentShape = renderObject .getNumTransparentShapes ();
+
+							this .opaqueShapes      = renderObject .getOpaqueShapes () .splice (firstOpaqueShape, lastOpaqueShape - firstOpaqueShape);
+							this .transparentShapes = renderObject .getTransparentShapes () .splice (firstTransparentShape, lastTransparentShape - firstTransparentShape);
+
+							renderObject .setNumOpaqueShapes (firstOpaqueShape);
+							renderObject .setNumTransparentShapes (firstTransparentShape);
+						}
+
+						var
+							opaqueShapes      = this .opaqueShapes,
+							transparentShapes = this .transparentShapes,
+							modelViewMatrix   = renderObject .getModelViewMatrix ();
+
+						for (var i = 0, length = opaqueShapes .length; i < length; ++ i)
+						{
+							var opaqueShape = opaqueShapes [i];
+
+							modelViewMatrix .push ();
+							modelViewMatrix .multLeft (opaqueShape .modelViewMatrix);
+							opaqueShape .shapeNode .traverse (type, renderObject);
+							modelViewMatrix .pop ();
+						}
+
+						for (var i = 0, length = transparentShapes .length; i < length; ++ i)
+						{
+							var transparentShape = transparentShapes [i];
+
+							modelViewMatrix .push ();
+							modelViewMatrix .multLeft (transparentShape .modelViewMatrix);
+							transparentShape .shapeNode .traverse (type, renderObject);
+							modelViewMatrix .pop ();
+						}
+
+						break;
+					}
+				}
+			};
+		})(),
 	});
 
 	return StaticGroup;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -109575,7 +110093,8 @@ function (Fields,
 
 		this .addType (X3DConstants .Switch);
 
-		this .addAlias ("choice", this .children_);
+		if (executionContext .getSpecificationVersion () == "2.0")
+			this .addAlias ("choice", this .children_);
 	}
 
 	Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -114141,7 +114660,7 @@ function ($,
 
 			if (urlCharacters)
 			{
-	         this .initialized () .set (this .getCurrentTime ());
+				this .initialized () .set (this .getCurrentTime ());
 
 				this .load (urlCharacters);
 			}
@@ -114287,6 +114806,9 @@ function ($,
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
 
+			if (! this .getBrowserOption ("EnableInlineViewpoints"))
+				this .getWorld () .bind ();
+
 			if (this .initialized () .getValue ())
 				this .initialized () .setValue (this .getCurrentTime ());
 		},
@@ -114304,7 +114826,9 @@ function ($,
 		{
 			this .prepareEvents () .removeInterest ("bind", this);
 
-			this .getWorld () .bind ();
+			if (this .getBrowserOption ("EnableInlineViewpoints"))
+				this .getWorld () .bind ();
+
 			this .setBrowserLoading (false);
 		},
 		createVrmlFromString: function (vrmlSyntax)

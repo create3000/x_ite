@@ -1,21 +1,13 @@
 /* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/
 
-uniform vec3      x3d_ShadowColor [x3d_MaxLights];
-uniform float     x3d_ShadowIntensity [x3d_MaxLights];
-uniform float     x3d_ShadowDiffusion [x3d_MaxLights];
-uniform mat4      x3d_ShadowMatrix [x3d_MaxLights];
-uniform sampler2D x3d_ShadowMap [x3d_MaxLights];
-
 #pragma X3D include "Pack.h"
-#pragma X3D include "Plane3.h"
-#pragma X3D include "Random.h"
 
 #ifdef X3D_SHADOWS
 
-Plane3 shadowPlane = Plane3 (vec3 (0.0), 0.0);
+uniform sampler2D x3d_ShadowMap [x3d_MaxLights];
 
 float
-getShadowDepth (in int index, in vec2 shadowCoord)
+getShadowDepth (const in int index, const in vec2 shadowCoord)
 {
 	#if x3d_MaxShadows > 0
 	if (index == 0)
@@ -61,118 +53,257 @@ getShadowDepth (in int index, in vec2 shadowCoord)
 }
 
 float
-getShadowIntensity (in int index, in int lightType, in float shadowIntensity, in float shadowDiffusion, in mat4 shadowMatrix, in float lightAngle)
+texture2DCompare (const in int index, const in vec2 texCoord, const in float compare)
 {
-	if (shadowIntensity <= 0.0 || lightAngle <= 0.0)
-		return 0.0;
+	return step (getShadowDepth (index, texCoord), compare);
+}
 
-	#define SHADOW_TEXTURE_EPS 0.01
-	#define SHADOW_BIAS_OFFSET 0.002
-	#define SHADOW_BIAS_FACTOR 0.004
-		
-	float shadowBias = SHADOW_BIAS_OFFSET + SHADOW_BIAS_FACTOR * (1.0 - abs (lightAngle));
+float
+texture2DShadowLerp (const in int index, const in vec2 texelSize, const in float shadowMapSize, const in vec2 texCoord, const in float compare)
+{
+	const vec2 offset = vec2 (0.0, 1.0);
 
-	if (lightType == x3d_PointLight)
+	vec2 centroidTexCoord = floor (texCoord * shadowMapSize + 0.5) / shadowMapSize;
+
+	float lb = texture2DCompare (index, centroidTexCoord + texelSize * offset .xx, compare);
+	float lt = texture2DCompare (index, centroidTexCoord + texelSize * offset .xy, compare);
+	float rb = texture2DCompare (index, centroidTexCoord + texelSize * offset .yx, compare);
+	float rt = texture2DCompare (index, centroidTexCoord + texelSize * offset .yy, compare);
+
+	vec2 f = fract (texCoord * shadowMapSize + 0.5);
+
+	float a = mix (lb, lt, f.y);
+	float b = mix (rb, rt, f.y);
+	float c = mix (a, b, f.x);
+
+	return c;
+}
+
+//https://gist.github.com/tschw/da10c43c467ce8afd0c4
+vec2
+cubeToUVCompact (in vec3 v, const float texelSizeY)
+{
+	// Compact layout:
+	//
+	// xzXZ		Char: Axis
+	// yyYY		Case: Sign
+
+	// Number of texels to avoid at the edge of each square
+
+	vec3 absV = abs (v);
+
+	// Intersect unit cube
+
+	float scaleToCube = 1.0 / max (absV .x, max (absV .y, absV .z));
+
+	absV *= scaleToCube;
+
+	// Apply scale to avoid seams
+
+	// one texel less per square (half a texel on each side)
+	v *= scaleToCube * (1.0 - 2.0 * texelSizeY);
+
+	// Unwrap
+
+	// space: -1 ... 1 range for each square
+	//
+	// #X##		dim    := ( 4 , 2 )
+	//  # #		center := ( 1 , 1 )
+
+	vec2 planar = v .xy;
+
+	float almostATexel = 1.5 * texelSizeY;
+	float almostOne    = 1.0 - almostATexel;
+
+	if (absV .z >= almostOne)
 	{
-//		mat4 rotationProjectionBias [6];
-//		rotationProjectionBias [0] = mat4 (-0.1666666666666667, -0.25, -1.0001250156269537, -1.0, 0, 0.1443375672974065, 0.0, 0.0, -0.09622504486493763, 0.0, 0.0, 0.0, 0.0, 0.0, -0.12501562695336918, 0.0);
-//		rotationProjectionBias [1] = mat4 (0.16666666666666666, 0.25, 1.0001250156269537, 1.0, 0, 0.1443375672974065, 0.0, 0.0, 0.09622504486493771, 0.0, 0.0, 0.0, 0.0, 0.0, -0.12501562695336918, 0.0);
-//		rotationProjectionBias [2] = mat4 (0.09622504486493766, 0.0, 0.0, 0.0, 0.0, 0.1443375672974065, 0.0, 0.0, -0.16666666666666666, -0.25, -1.0001250156269532, -1.0, 0.0, 0.0, -0.12501562695336918, 0.0);
-//		rotationProjectionBias [3] = mat4 (-0.09622504486493766, 0.0, 0.0, 0.0, 0, 0.1443375672974065, 0.0, 0.0, 0.16666666666666666, 0.25, 1.0001250156269532, 1.0, 0.0, 0.0, -0.12501562695336918, 0.0);
-//		rotationProjectionBias [4] = mat4 (0.09622504486493766, 0.0, 0.0, 0.0, -0.16666666666666669, -0.25, -1.0001250156269537, -1.0, 0.0, -0.14433756729740646, 0.0, 0.0, 0.0, 0, -0.12501562695336918, 0.0);
-//		rotationProjectionBias [5] = mat4 (0.09622504486493766, 0.0, 0.0, 0.0, 0.16666666666666669, 0.25, 1.0001250156269537, 1.0, 0.0, 0.14433756729740657, 0.0, 0.0, 0.0, 0.0, -0.12501562695336918, 0.0);
-//
-//		// Offsets to the shadow map.
-//		vec2 offsets [6];
-//		offsets [0] = vec2 (0.0,       0.0);
-//		offsets [1] = vec2 (1.0 / 3.0, 0.0);
-//		offsets [2] = vec2 (2.0 / 3.0, 0.0);
-//		offsets [3] = vec2 (0.0,       0.5);
-//		offsets [4] = vec2 (1.0 / 3.0, 0.5);
-//		offsets [5] = vec2 (2.0 / 3.0, 0.5);
-//
-//		int value   = 0;
-//		int samples = 0;
-//
-//		for (int m = 0; m < 6; ++ m)
-//		{
-//			for (int i = 0; i < x3d_ShadowSamples; ++ i)
-//			{
-//				if (samples >= x3d_ShadowSamples)
-//					return shadowIntensity * float (value) / float (x3d_ShadowSamples);
-//
-//				vec3  vertex      = closest_point (shadowPlane, v + random3 () * shadowDiffusion);
-//				vec4  shadowCoord = rotationProjectionBias [m] * shadowMatrix * vec4 (vertex, 1.0);
-//				float bias        = shadowBias / shadowCoord .w; // 0.005 / shadowCoord .w;
-//
-//				shadowCoord .xyz /= shadowCoord .w;
-//
-//				if (shadowCoord .x < SHADOW_TEXTURE_EPS || shadowCoord .x > 1.0 / 3.0 - SHADOW_TEXTURE_EPS)
-//					continue;
-//
-//				if (shadowCoord .y < SHADOW_TEXTURE_EPS || shadowCoord .y > 1.0 / 2.0 - SHADOW_TEXTURE_EPS)
-//					continue;
-//
-//				if (shadowCoord .z >= 1.0)
-//					continue;
-//
-//				if (getShadowDepth (index, shadowCoord .xy + offsets [m]) < shadowCoord .z - bias)
-//				{
-//					++ value;
-//				}
-//
-//				// We definitely have a shadow sample.
-//				++ samples;
-//			}
-//		}
-//
-//		return shadowIntensity * float (value) / float (x3d_ShadowSamples);
+		// zZ
+
+		if (v.z > 0.0)
+			planar .x = 4.0 - v.x;
+	}
+	else if (absV .x >= almostOne)
+	{
+		// xX
+
+		float signX = sign (v.x);
+
+		planar .x = v.z * signX + 2.0 * signX;
+	}
+	else if (absV .y >= almostOne)
+	{
+		// yY
+
+		float signY = sign (v.y);
+
+		planar .x = (v.x + 0.5 + signY) * 2.0;
+		planar .y = v.z * signY - 2.0;
+	}
+
+	// Transform to UV space
+
+	// scale := 0.5 / dim
+	// translate := ( center + 0.5 ) / dim
+	return vec2 (0.125, 0.25) * planar + vec2 (0.375, 0.75);
+}
+
+mat4
+getPointLightRotations (const in vec3 vector)
+{
+	mat4 rotations [6];
+	rotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left
+	rotations [1] = mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1);  // right
+	rotations [2] = mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1);  // front
+	rotations [3] = mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1);  // back
+	rotations [4] = mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1);  // bottom
+	rotations [5] = mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1);  // top
+
+	vec3 a = abs (vector .xyz);
+
+	if (a .x > a .y)
+	{
+		if (a .x > a .z)
+			return vector .x > 0.0 ? rotations [1] : rotations [0];
+		else
+			return vector .z > 0.0 ? rotations [2] : rotations [3];
 	}
 	else
 	{
-		int value = 0;
+		if (a .y > a .z)
+			return vector .y > 0.0 ? rotations [5] : rotations [4];
+		else
+			return vector .z > 0.0 ? rotations [2] : rotations [3];
+	}
 
-		for (int i = 0; i < x3d_ShadowSamples; ++ i)
-		{
-			vec3  vertex      = closest_point (shadowPlane, v + random3 () * shadowDiffusion);
-			vec4  shadowCoord = shadowMatrix * vec4 (vertex, 1.0);
-			float bias        = shadowBias / shadowCoord .w; // 0.005 / shadowCoord .w;
+	return rotations [3];
+}
 
+// DEBUG
+//vec4 tex;
+
+float
+getShadowIntensity (const in int index, const in x3d_LightSourceParameters light)
+{
+	if (light .type == x3d_PointLight)
+	{
+		const mat4 biasMatrix = mat4 (0.5, 0.0, 0.0, 0.0,
+			                           0.0, 0.5, 0.0, 0.0,
+			                           0.0, 0.0, 0.5, 0.0,
+			                           0.5, 0.5, 0.5, 1.0);
+
+		const mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);
+
+		vec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));
+
+		// for point lights, the uniform @vShadowCoord is re-purposed to hold
+		// the vector from the light to the world-space position of the fragment.
+		vec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);
+		vec3 lightToPosition = shadowCoord .xyz;
+
+		shadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));
+		shadowCoord .z   -= light .shadowBias;
+		shadowCoord .xyz /= shadowCoord .w;
+
+		// DEBUG
+		//tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));
+
+		#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)
+	
+			vec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);
+	
+			float value = (
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +
+				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)
+			) * (1.0 / 9.0);
+	
+			return light .shadowIntensity * value;
+
+		#else // no percentage-closer filtering
+
+			float value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);
+
+			return light .shadowIntensity * value;
+	
+		#endif
+	}
+	else
+	{
+		#if defined (X3D_PCF_FILTERING)
+
+			vec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);
+			vec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);
+	
+			shadowCoord .z   -= light .shadowBias;
 			shadowCoord .xyz /= shadowCoord .w;
+	
+			float dx0 = - texelSize .x;
+			float dy0 = - texelSize .y;
+			float dx1 = + texelSize .x;
+			float dy1 = + texelSize .y;
+	
+			float value = (
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy, shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +
+				texture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)
+			) * (1.0 / 9.0);
+	
+			return light .shadowIntensity * value;
 
-			if (shadowCoord .z >= 1.0)
-				continue;
+		#elif defined (X3D_PCF_SOFT_FILTERING)
 
-			if (getShadowDepth (index, shadowCoord .xy) < shadowCoord .z - bias)
-			{
-				++ value;
-			}
-		}
+			vec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);
+			vec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);
+	
+			shadowCoord .z   -= light .shadowBias;
+			shadowCoord .xyz /= shadowCoord .w;
+	
+			float dx0 = - texelSize.x;
+			float dy0 = - texelSize.y;
+			float dx1 = + texelSize.x;
+			float dy1 = + texelSize.y;
+			
+			float value = (
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +
+				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)
+			) * ( 1.0 / 9.0 );
+	
+			return light .shadowIntensity * value;
 
-		return shadowIntensity * float (value) / float (x3d_ShadowSamples);
+		#else // no percentage-closer filtering
+
+			vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
+	
+			shadowCoord .z   -= shadowBias;
+			shadowCoord .xyz /= shadowCoord .w;
+	
+			float value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);
+	
+			return light .shadowIntensity * value;
+
+		#endif
 	}
 
 	return 0.0;
 }
-
-void
-initShadows ()
-{
-	shadowPlane = plane3 (v, vN);
-
-	seed (int (fract (dot (v, v)) * float (RAND_MAX)));
-}
-
-#else
-
-float
-getShadowIntensity (in int index, in int lightType, in float shadowIntensity, in float shadowDiffusion, in mat4 shadowMatrix, in float lightAngle)
-{
-	return 0.0;
-}
-
-void
-initShadows ()
-{ }
 
 #endif

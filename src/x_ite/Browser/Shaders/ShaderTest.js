@@ -48,13 +48,13 @@
 
 
 define ([
-	"x_ite/Rendering/DepthBuffer",
+	"x_ite/Rendering/TextureBuffer",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Camera",
 ],
-function (DepthBuffer,
+function (TextureBuffer,
           Vector4,
           Matrix3,
           Matrix4,
@@ -84,7 +84,7 @@ function (DepthBuffer,
 	{
 		var
 			gl           = browser .getContext (),
-			frameBuffer  = new DepthBuffer (browser, 16, 16),
+			frameBuffer  = new TextureBuffer (browser, 16, 16),
          normalBuffer = gl .createBuffer (),
          vertexBuffer = gl .createBuffer ();
 

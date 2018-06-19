@@ -265,12 +265,18 @@ function (Fields,
 		enable: function (gl, context)
 		{
 			var browser = context .renderer .getBrowser ();
-		
+
 			context .linePropertiesNode   = this .linePropertiesNode;
 			context .materialNode         = this .materialNode;
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
-			context .shaderNode           = this .shaderNode || browser .getDefaultShader ();
+
+			if (this .shaderNode)
+				context .shaderNode = this .shaderNode;
+			else if (context .shadow)
+				context .shaderNode = browser .getShadowShader ();
+			else
+				context .shaderNode = browser .getDefaultShader ();
 
 			if (this .blendModeNode)
 				this .blendModeNode .enable (gl);

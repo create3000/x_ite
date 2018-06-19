@@ -137,7 +137,14 @@ function (Fields,
 						this .textureUnit = browser .getCombinedTextureUnits () .pop ();
 
 						gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-						gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+
+						if (browser .getExtension ("WEBGL_depth_texture"))
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+						else
+							gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
+						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+						gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 						gl .activeTexture (gl .TEXTURE0);
 					}
 					else
@@ -162,7 +169,7 @@ function (Fields,
 					lightNode            = this .lightNode,
 					cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
 					modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-					invLightSpaceMatrix  = this .invLightSpaceMatrix  .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+					invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
 				invLightSpaceMatrix .inverse ();
@@ -225,14 +232,13 @@ function (Fields,
 
 			if (this .textureUnit)
 			{
-				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
-				gl .uniform1f        (shaderObject .x3d_ShadowDiffusion [i],     lightNode .getShadowDiffusion ());
 				gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
+				gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
 				gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
+				gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
 				gl .uniform1i        (shaderObject .x3d_ShadowMap [i],           this .textureUnit);
 			}
-			else
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 		},
 		dispose: function ()
 		{
@@ -279,7 +285,7 @@ function (Fields,
 
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowDiffusion", new  Fields .SFFloat ()),        // Diffusion of the shadow in length units in the range (0, inf).
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
 		]),
 		getTypeName: function ()

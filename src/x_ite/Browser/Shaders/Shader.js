@@ -50,17 +50,11 @@
 define ([
 	"text!x_ite/Browser/Shaders/Inlcude/Shadow.h",
 	"text!x_ite/Browser/Shaders/Inlcude/Pack.h",
-	"text!x_ite/Browser/Shaders/Inlcude/Line3.h",
-	"text!x_ite/Browser/Shaders/Inlcude/Plane3.h",
-	"text!x_ite/Browser/Shaders/Inlcude/Random.h",
 	"text!x_ite/Browser/Shaders/Types.h",
 	"x_ite/DEBUG",
 ],
 function (Shadow,
           Pack,
-          Line3,
-          Plane3,
-          Random,
           Types,
           DEBUG)
 {
@@ -69,9 +63,6 @@ function (Shadow,
 	var includes = {
 		Shadow: Shadow,
 		Pack: Pack,
-		Line3: Line3,
-		Plane3: Plane3,
-		Random: Random,
 	};
 
 	var
@@ -114,13 +105,16 @@ function (Shadow,
 			var
 				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
 				LINE         = "#line\\s+.*?\\n",
+				IF           = "#if\\s+.*?\\n",
+				ELIF         = "#elif\\s+.*?\\n",
 				IFDEF        = "#ifdef\\s+.*?\\n",
 				IFNDEF       = "#ifndef\\s+.*?\\n",
 				ELSE         = "#else.*?\\n",
-				ENDIF        = "#endif+.*?\\n",
+				ENDIF        = "#endif.*?\\n",
 				DEFINE       = "#define\\s+(?:[^\\n\\\\]|\\\\[^\\r\\n]|\\\\\\r?\\n)*\\n",
+				UNDEF        = "#undef\\s+.*?\\n",
 				PRAGMA       = "#pragma\\s+.*?\\n",
-				PREPROCESSOR =  LINE + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + PRAGMA,
+				PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
 				VERSION      = "#version\\s+.*?\\n",
 				EXTENSION    = "#extension\\s+.*?\\n",
 				ANY          = "[\\s\\S]*";
@@ -132,11 +126,17 @@ function (Shadow,
 			if (! match)
 				return source;
 
+			var constants = "";
+
+			constants += "#define X_ITE\n";
+
+			if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
+				constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
+
+			if (browser .getExtension ("WEBGL_depth_texture"))
+				constants += "#define X3D_DEPTH_TEXTURE\n";
+
 			var definitions = "";
-
-			definitions += "#define X_ITE\n";
-
-			definitions += "#define x3d_None 0\n";
 
 			definitions += "#define x3d_GeometryPoints  0\n";
 			definitions += "#define x3d_GeometryLines   1\n";
@@ -153,17 +153,13 @@ function (Shadow,
 			definitions += "#define x3d_DirectionalLight  1\n";
 			definitions += "#define x3d_PointLight        2\n";
 			definitions += "#define x3d_SpotLight         3\n";
+			definitions += "#define x3d_MaxShadows        4\n";
+			definitions += "#define X3D_PCF_FILTERING\n";
 
 			definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
 			definitions += "#define x3d_TextureType2D              2\n";
 			definitions += "#define x3d_TextureType3D              3\n";
 			definitions += "#define x3d_TextureTypeCubeMapTexture  4\n";
-
-			if (DEBUG)
-				definitions += "#define X3D_SHADOWS\n";
-
-			definitions += "#define x3d_MaxShadows     4\n";
-			definitions += "#define x3d_ShadowSamples  8\n"; // Range (0, 255)
 
 			// Legacy
 			definitions += "#define x3d_NoneClipPlane  vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
@@ -171,12 +167,14 @@ function (Shadow,
 			definitions += "#define x3d_NoneLight      0\n";
 			definitions += "#define x3d_NoneTexture    0\n";
 
+			definitions += "#define x3d_None 0\n";
+
 			depreciatedWarning (source, "x3d_NoneClipPlane", "x3d_NumClipPlanes");
 			depreciatedWarning (source, "x3d_NoneFog",       "x3d_None");
 			depreciatedWarning (source, "x3d_NoneLight",     "x3d_NumLights");
 			depreciatedWarning (source, "x3d_NoneTexture",   "x3d_NumTextures");
 
-			return match [1] + definitions + Types + match [2];
+			return constants + match [1] + definitions + Types + match [2];
 		},
 	};
 

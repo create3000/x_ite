@@ -94,6 +94,12 @@ function (Vector3)
 				return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
 			}
 		},
+		perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
+		{
+			var ratio = Math .tan (fieldOfView / 2) * zNear;
+
+			return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
+		},
 		ortho: function (l, r, b, t, n, f, matrix)
 		{
 			var

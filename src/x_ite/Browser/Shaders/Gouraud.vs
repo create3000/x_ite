@@ -28,8 +28,12 @@ varying vec4 backColor;  // color
 varying vec4 t;          // texCoord
 varying vec3 v;          // point on geometry
 
+#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+varying float depth;
+#endif
+
 float
-getSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)
+getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)
 {
 	float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
 	
@@ -42,9 +46,9 @@ getSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)
 }
 
 vec4
-getMaterialColor (in vec3 N,
-                  in vec3 v,
-                  in x3d_MaterialParameters material)
+getMaterialColor (const in vec3 N,
+                  const in vec3 v,
+                  const in x3d_MaterialParameters material)
 {
 	vec3 V = normalize (-v); // normalized vector from point on geometry to viewer's position
 
@@ -67,6 +71,7 @@ getMaterialColor (in vec3 N,
 
 	vec3 finalColor = vec3 (0.0, 0.0, 0.0);
 
+	#pragma unroll_loop
 	for (int i = 0; i < x3d_MaxLights; ++ i)
 	{
 		if (i == x3d_NumLights)
@@ -116,6 +121,10 @@ main ()
 	v = p .xyz;
 
 	gl_Position = x3d_ProjectionMatrix * p;
+
+	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+	depth = 1.0 + gl_Position .w;
+	#endif
 
 	if (x3d_Lighting)
 	{

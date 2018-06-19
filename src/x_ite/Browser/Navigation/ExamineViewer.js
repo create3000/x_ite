@@ -52,6 +52,7 @@ define ([
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Followers/PositionChaser",
 	"x_ite/Components/Followers/OrientationChaser",
+	"x_ite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
@@ -61,6 +62,7 @@ function ($,
           X3DViewer,
           PositionChaser,
           OrientationChaser,
+          GeoViewpoint,
           Vector2,
           Vector3,
           Rotation4)
@@ -73,8 +75,8 @@ function ($,
 		SPIN_ANGLE        = 0.003,
 		SPIN_FACTOR       = 0.6,
 		SCROLL_FACTOR     = 1.0 / 20.0,
-		MOVE_TIME         = 0.3,
-		ROTATE_TIME       = 0.4,
+		MOVE_TIME         = 0.2,
+		ROTATE_TIME       = 0.2,
 		FRAME_RATE        = 60;
 
 	function ExamineViewer (executionContext)
@@ -656,7 +658,7 @@ function ($,
 					.multRight (viewpoint .getOrientation ())
 					.multRight (orientationOffsetBefore);
 	
-				if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+				if (this .getBrowser () .getBrowserOption ("StraightenHorizon") && ! (viewpoint instanceof GeoViewpoint))
 					viewpoint .straightenHorizon (userOrientation);
 	
 				return (orientationOffset

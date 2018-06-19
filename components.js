@@ -2,6 +2,38 @@
 	[
 		{ name: 'Components' },
 
+		{ name: 'Basic' },
+		{ name: 'Appartment', url: [ "http://media.create3000.de/components/Basic/Appartment/Appartment.x3d" ], archive: "http://media.create3000.de/components/Basic/Appartment/Appartment.zip" },
+		{ name: 'Approach', url: [ "http://media.create3000.de/components/Basic/Approach/Approach.x3d" ], archive: "http://media.create3000.de/components/Basic/Approach/Approach.zip" },
+		{ name: 'Arcadia', url: [ "http://media.create3000.de/components/Basic/Arcadia/Arcadia.x3d" ], archive: "http://media.create3000.de/components/Basic/Arcadia/Arcadia.zip" },
+		{ name: 'Astronomy', url: [ "http://media.create3000.de/components/Basic/Astronomy/Astronomy.x3d" ], archive: "http://media.create3000.de/components/Basic/Astronomy/Astronomy.zip" },
+		{ name: 'BIC', url: [ "http://media.create3000.de/components/Basic/BIC/BIC.x3d" ], archive: "http://media.create3000.de/components/Basic/BIC/BIC.zip" },
+		{ name: 'Beyond Germany', url: [ "http://media.create3000.de/components/Basic/BeyondGermany/BeyondGermany.x3d" ], archive: "http://media.create3000.de/components/Basic/BeyondGermany/BeyondGermany.zip" },
+		{ name: 'Boyz Noise', url: [ "http://media.create3000.de/components/Basic/BoyzNoise/BoyzNoise.x3d" ], archive: "http://media.create3000.de/components/Basic/BoyzNoise/BoyzNoise.zip" },
+		{ name: 'Chomp', url: [ "http://media.create3000.de/components/Basic/Chomp/Chomp.x3d" ], archive: "http://media.create3000.de/components/Basic/Chomp/Chomp.zip" },
+		{ name: 'Circles', url: [ "http://media.create3000.de/components/Basic/Circles/Circles.x3d" ], archive: "http://media.create3000.de/components/Basic/Circles/Circles.zip" },
+		{ name: 'Crazy Spiral', url: [ "http://media.create3000.de/components/Basic/CrazySpiral/CrazySpiral.x3d" ], archive: "http://media.create3000.de/components/Basic/CrazySpiral/CrazySpiral.zip" },
+		{ name: 'Currencies', url: [ "http://media.create3000.de/components/Basic/Currencies/Currencies.x3d" ], archive: "http://media.create3000.de/components/Basic/Currencies/Currencies.zip" },
+		{ name: 'Flashing Lights', url: [ "http://media.create3000.de/components/Basic/FlashingLights/FlashingLights.x3d" ], archive: "http://media.create3000.de/components/Basic/FlashingLights/FlashingLights.zip" },
+		{ name: 'Fold Up', url: [ "http://media.create3000.de/components/Basic/FoldUp/FoldUp.x3d" ], archive: "http://media.create3000.de/components/Basic/FoldUp/FoldUp.zip" },
+		{ name: 'Logo Pieces', url: [ "http://media.create3000.de/components/Basic/LogoPieces/LogoPieces.x3d" ], archive: "http://media.create3000.de/components/Basic/LogoPieces/LogoPieces.zip" },
+		{ name: 'Lust For Life', url: [ "http://media.create3000.de/components/Basic/LustForLife/LustForLife.x3d" ], archive: "http://media.create3000.de/components/Basic/LustForLife/LustForLife.zip" },
+		{ name: 'Magic Mushrooms', url: [ "http://media.create3000.de/components/Basic/MagicMushrooms/MagicMushrooms.x3d" ], archive: "http://media.create3000.de/components/Basic/MagicMushrooms/MagicMushrooms.zip" },
+		{ name: 'Milkyway And Beyond', url: [ "http://media.create3000.de/components/Basic/MilkywayAndBeyond/MilkywayAndBeyond.x3d" ], archive: "http://media.create3000.de/components/Basic/MilkywayAndBeyond/MilkywayAndBeyond.zip" },
+		{ name: 'Pong', url: [ "http://media.create3000.de/components/Basic/Pong/Pong.x3d" ], archive: "http://media.create3000.de/components/Basic/Pong/Pong.zip" },
+		{ name: 'Secret Labyrinth', url: [ "http://media.create3000.de/components/Basic/SecretLabyrinth/SecretLabyrinth.x3d" ], archive: "http://media.create3000.de/components/Basic/SecretLabyrinth/SecretLabyrinth.zip" },
+		{ name: 'Sliding Puzzle', url: [ "http://media.create3000.de/components/Basic/SlidingPuzzle/SlidingPuzzle.x3d" ], archive: "http://media.create3000.de/components/Basic/SlidingPuzzle/SlidingPuzzle.zip" },
+		{ name: 'Smarty Bubbles', url: [ "http://media.create3000.de/components/Basic/SmartyBubbles/SmartyBubbles.x3d" ], archive: "http://media.create3000.de/components/Basic/SmartyBubbles/SmartyBubbles.zip" },
+		{ name: 'Smashing Boxes', url: [ "http://media.create3000.de/components/Basic/SmashingBoxes/SmashingBoxes.x3d" ], archive: "http://media.create3000.de/components/Basic/SmashingBoxes/SmashingBoxes.zip" },
+		{ name: 'Tiki World', url: [ "http://media.create3000.de/components/Basic/TikiWorld/TikiWorld.x3d" ], archive: "http://media.create3000.de/components/Basic/TikiWorld/TikiWorld.zip" },
+		{ name: 'Treasure Island', url: [ "http://media.create3000.de/components/Basic/TreasureIsland/TreasureIsland.x3d" ], archive: "http://media.create3000.de/components/Basic/TreasureIsland/TreasureIsland.zip" },
+		{ name: 'Vattenfall', url: [ "http://media.create3000.de/components/Basic/Vattenfall/Vattenfall.x3d" ], archive: "http://media.create3000.de/components/Basic/Vattenfall/Vattenfall.zip" },
+		{ name: 'Vattenfall.O.x 3d', url: [ "http://media.create3000.de/components/Basic/Vattenfall.O.x3d/Vattenfall.O.x3d.x3d" ], archive: "http://media.create3000.de/components/Basic/Vattenfall.O.x3d/Vattenfall.O.x3d.zip" },
+		{ name: 'Water Quality', url: [ "http://media.create3000.de/components/Basic/WaterQuality/WaterQuality.x3d" ], archive: "http://media.create3000.de/components/Basic/WaterQuality/WaterQuality.zip" },
+
+		{ name: 'CAD Geometry' },
+		{ name: 'Quad Set', url: [ "http://media.create3000.de/components/CADGeometry/QuadSet/QuadSet.x3d" ], archive: "http://media.create3000.de/components/CADGeometry/QuadSet/QuadSet.zip" },
+
 		{ name: 'Cube Map Texturing' },
 		{ name: 'Composed Cube Map Texture', url: [ "http://media.create3000.de/components/CubeMapTexturing/ComposedCubeMapTexture/ComposedCubeMapTexture.x3d" ], archive: "http://media.create3000.de/components/CubeMapTexturing/ComposedCubeMapTexture/ComposedCubeMapTexture.zip" },
 
@@ -66,10 +98,14 @@
 
 		{ name: 'Lighting' },
 		{ name: 'Directional Light', url: [ "http://media.create3000.de/components/Lighting/DirectionalLight/DirectionalLight.x3d" ], archive: "http://media.create3000.de/components/Lighting/DirectionalLight/DirectionalLight.zip" },
+		{ name: 'Point Light', url: [ "http://media.create3000.de/components/Lighting/PointLight/PointLight.x3d" ], archive: "http://media.create3000.de/components/Lighting/PointLight/PointLight.zip" },
+		{ name: 'Shadows', url: [ "http://media.create3000.de/components/Lighting/Shadows/Shadows.x3d" ], archive: "http://media.create3000.de/components/Lighting/Shadows/Shadows.zip" },
+		{ name: 'Spot Light', url: [ "http://media.create3000.de/components/Lighting/SpotLight/SpotLight.x3d" ], archive: "http://media.create3000.de/components/Lighting/SpotLight/SpotLight.zip" },
 
 		{ name: 'Navigation' },
 		{ name: 'Billboard', url: [ "http://media.create3000.de/components/Navigation/Billboard/Billboard.x3d" ], archive: "http://media.create3000.de/components/Navigation/Billboard/Billboard.zip" },
 		{ name: 'Collision', url: [ "http://media.create3000.de/components/Navigation/Collision/Collision.x3d" ], archive: "http://media.create3000.de/components/Navigation/Collision/Collision.zip" },
+		{ name: 'Navigation Info', url: [ "http://media.create3000.de/components/Navigation/NavigationInfo/NavigationInfo.x3d" ], archive: "http://media.create3000.de/components/Navigation/NavigationInfo/NavigationInfo.zip" },
 		{ name: 'Viewpoint', url: [ "http://media.create3000.de/components/Navigation/Viewpoint/Viewpoint.x3d" ], archive: "http://media.create3000.de/components/Navigation/Viewpoint/Viewpoint.zip" },
 
 		{ name: 'Networking' },
@@ -93,6 +129,7 @@
 		{ name: 'Plane Sensor', url: [ "http://media.create3000.de/components/PointingDeviceSensor/PlaneSensor/PlaneSensor.x3d" ], archive: "http://media.create3000.de/components/PointingDeviceSensor/PlaneSensor/PlaneSensor.zip" },
 
 		{ name: 'Rendering' },
+		{ name: 'Clip Plane', url: [ "http://media.create3000.de/components/Rendering/ClipPlane/ClipPlane.x3d" ], archive: "http://media.create3000.de/components/Rendering/ClipPlane/ClipPlane.zip" },
 		{ name: 'Color', url: [ "http://media.create3000.de/components/Rendering/Color/Color.x3d" ], archive: "http://media.create3000.de/components/Rendering/Color/Color.zip" },
 		{ name: 'Coordinate', url: [ "http://media.create3000.de/components/Rendering/Coordinate/Coordinate.x3d" ], archive: "http://media.create3000.de/components/Rendering/Coordinate/Coordinate.zip" },
 		{ name: 'Indexed Triangle Set', url: [ "http://media.create3000.de/components/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d" ], archive: "http://media.create3000.de/components/Rendering/IndexedTriangleSet/IndexedTriangleSet.zip" },

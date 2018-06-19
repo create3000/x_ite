@@ -97,7 +97,8 @@ X3DCanvas .x_ite-private-browser-timings {
 	background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	border: 4px solid rgba(60,60,60,0.61803);
+	border-top: 4px solid rgba(60,60,60,0.61803);
+	border-right: 4px solid rgba(60,60,60,0.61803);
 	border-radius: 5px;
 	-webkit-background-clip: padding-box; /* for Safari */
 	background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */

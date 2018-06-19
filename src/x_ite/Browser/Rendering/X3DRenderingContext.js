@@ -124,13 +124,20 @@ function ($,
 			this .lineShader    = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS);
 			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS);
 			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS);
+			this .shadowShader  = this .createShader (this, "ShadowShader",    phongVS,     phongFS, true);
 
 			this .pointShader .setGeometryType (0);
 			this .lineShader  .setGeometryType (1);
 
+			this .pointShader   .shadowShader = this .pointShader;
+			this .lineShader    .shadowShader = this .lineShader;
+			this .gouraudShader .shadowShader = this .shadowShader;
+			this .phongShader   .shadowShader = this .shadowShader;
+
 			this .setShading ("GOURAUD");
 
-			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
+			this .phongShader  .isValid_ .addInterest ("set_phong_shader_valid__",  this);
+			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
 		},
 		set_phong_shader_valid__: function (valid)
 		{
@@ -140,6 +147,15 @@ function ($,
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
 			this .phongShader = this .gouraudShader;
+		},
+		set_shadow_shader_valid__: function (valid)
+		{
+			if (valid .getValue () && verifyShader (this, this .shadowShader))
+				return;
+
+			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
+
+			this .shadowShader = this .gouraudShader;
 		},
 		getVendor: function ()
 		{
@@ -179,8 +195,14 @@ function ($,
 		{
 			return this .viewport_;
 		},
-		createShader: function (browser, name, vs, fs)
+		createShader: function (browser, name, vs, fs, shadow)
 		{
+			if (shadow)
+			{
+				vs = "\n#define X3D_SHADOWS\n" + vs;
+				fs = "\n#define X3D_SHADOWS\n" + fs;
+			}
+
 			var vertexShader = new ShaderPart (browser .getPrivateScene ());
 			vertexShader .url_ .push ("data:text/plain;charset=utf-8," + vs);
 			vertexShader .setup ();
@@ -226,6 +248,7 @@ function ($,
 			this .pointShader   .setGeometryType (0);
 			this .lineShader    .setGeometryType (1);
 			this .defaultShader .setGeometryType (3);
+			this .shadowShader  .setGeometryType (3);
 
 			var shaders = this .getShaders ();
 
@@ -248,6 +271,14 @@ function ($,
 		{
 			// There must always be a gouraud shader available.
 			return this .gouraudShader;
+		},
+		getPhongShader: function ()
+		{
+			return this .phongShader;
+		},
+		getShadowShader: function ()
+		{
+			return this .defaultShader .shadowShader;
 		},
 		getDepthShader: function ()
 		{

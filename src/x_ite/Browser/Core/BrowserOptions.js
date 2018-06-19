@@ -94,6 +94,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
 		]),
 		getTypeName: function ()
 		{
@@ -111,12 +112,13 @@ function (Fields,
 		{
 			X3DBaseNode .prototype .initialize .call (this);
 			
-			this .SplashScreen_              .addInterest ("set_splashScreen__", this);
-			this .Rubberband_                .addInterest ("set_rubberband__", this);
-			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__", this);
-			this .TextureQuality_            .addInterest ("set_textureQuality__", this);
-			this .Shading_                   .addInterest ("set_shading__", this);
-			this .getBrowser () .shutdown () .addInterest ("configure", this);
+			this .SplashScreen_              .addInterest ("set_splashScreen__",           this);
+			this .Rubberband_                .addInterest ("set_rubberband__",             this);
+			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__",       this);
+			this .TextureQuality_            .addInterest ("set_textureQuality__",         this);
+			this .Shading_                   .addInterest ("set_shading__",                this);
+			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
+			this .getBrowser () .shutdown () .addInterest ("configure",                    this);
 
 			this .configure ();
 		},
@@ -147,6 +149,8 @@ function (Fields,
 			if (rubberband       !== undefined && rubberband       !== this .Rubberband_       .getValue ()) this .Rubberband_       = rubberband;
 			if (primitiveQuality !== undefined && primitiveQuality !== this .PrimitiveQuality_ .getValue ()) this .PrimitiveQuality_ = primitiveQuality;
 			if (textureQuality   !== undefined && textureQuality   !== this .TextureQuality_   .getValue ()) this .TextureQuality_   = textureQuality;
+
+			this .LogarithmicDepthBuffer_ = false;
 		},
 		setAttributeSplashScreen: function ()
 		{
@@ -309,6 +313,39 @@ function (Fields,
 		set_shading__: function (shading)
 		{
 			this .getBrowser () .setShading (shading .getValue ());
+		},
+		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
+		{
+			try
+			{
+				var browser = this .getBrowser ();
+
+				logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && browser .getExtension ("EXT_frag_depth");
+	
+				if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
+					return;
+
+				browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
+	
+				// Recompile shaders.
+	
+				browser .getPointShader () .parts_ [0] .url_ .addEvent ();
+				browser .getPointShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getLineShader () .parts_ [0] .url_ .addEvent ();
+				browser .getLineShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getGouraudShader () .parts_ [0] .url_ .addEvent ();
+				browser .getGouraudShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getPhongShader () .parts_ [0] .url_ .addEvent ();
+				browser .getPhongShader () .parts_ [1] .url_ .addEvent ();
+	
+				browser .getShadowShader () .parts_ [0] .url_ .addEvent ();
+				browser .getShadowShader () .parts_ [1] .url_ .addEvent ();
+			}
+			catch (error)
+			{ }
 		},
 	});
 

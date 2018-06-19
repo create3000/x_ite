@@ -1,5 +1,9 @@
 // -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
+#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#extension GL_EXT_frag_depth : enable
+#endif
+
 precision mediump float;
 precision mediump int;
 
@@ -30,11 +34,17 @@ varying vec4 t;  // texCoord
 varying vec3 vN; // normalized normal vector at this point on geometry
 varying vec3 v;  // point on geometry
 
+#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+uniform float x3d_LogarithmicFarFactor1_2;
+varying float depth;
+#endif
+
 #pragma X3D include "Inlcude/Shadow.h"
 
 void
 clip ()
 {
+	#pragma unroll_loop
 	for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
 	{
 		if (i == x3d_NumClipPlanes)
@@ -46,7 +56,7 @@ clip ()
 }
 
 float
-getSpotFactor (in float cutOffAngle, in float beamWidth, in vec3 L, in vec3 d)
+getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)
 {
 	float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
 	
@@ -83,12 +93,10 @@ getTextureColor ()
 }
 
 vec4
-getMaterialColor (in x3d_MaterialParameters material)
+getMaterialColor (const in x3d_MaterialParameters material)
 {
 	if (x3d_Lighting)
 	{
-		initShadows ();
-
 		vec3  N  = normalize (gl_FrontFacing ? vN : -vN);
 		vec3  V  = normalize (-v); // normalized vector from point on geometry to viewer's position
 		float dV = length (v);
@@ -131,14 +139,15 @@ getMaterialColor (in x3d_MaterialParameters material)
 
 		vec3 finalColor = vec3 (0.0, 0.0, 0.0);
 
-		for (int i = 0; i < x3d_MaxLights; ++ i)
+		#pragma unroll_loop
+		for (int i = 0; i < x3d_MaxLights; i ++)
 		{
 			if (i == x3d_NumLights)
 				break;
 
 			x3d_LightSourceParameters light = x3d_LightSource [i];
 
-			vec3  vL = light .location - v;
+			vec3  vL = light .location - v; // Light to fragment
 			float dL = length (vL);
 			bool  di = light .type == x3d_DirectionalLight;
 
@@ -154,14 +163,18 @@ getMaterialColor (in x3d_MaterialParameters material)
 				float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
 				vec3  specularTerm   = material .specularColor * specularFactor;
 
-				float attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
-				float spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
-				float attenuationSpotFactor       = attenuationFactor * spotFactor;
-				vec3  ambientColor                = light .ambientIntensity * ambientTerm;
-				vec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);
-				float shadowIntensity             = getShadowIntensity (i, light .type, x3d_ShadowIntensity [i], x3d_ShadowDiffusion [i], x3d_ShadowMatrix [i], lightAngle);
+				float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
+				float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
+				float attenuationSpotFactor = attenuationFactor * spotFactor;
+				vec3  ambientColor          = light .color * light .ambientIntensity * ambientTerm;
+				vec3  diffuseSpecularColor  = light .color * light .intensity * (diffuseTerm + specularTerm);
 
-				finalColor += attenuationSpotFactor * mix (light .color * ambientDiffuseSpecularColor, x3d_ShadowColor [i], shadowIntensity);
+				#ifdef X3D_SHADOWS
+					if (lightAngle > 0.0)
+						diffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));
+				#endif
+
+				finalColor += attenuationSpotFactor * (ambientColor + diffuseSpecularColor);
 			}
 		}
 
@@ -220,10 +233,13 @@ getFogInterpolant ()
 }
 
 vec3
-getFogColor (in vec3 color)
+getFogColor (const in vec3 color)
 {
 	return mix (x3d_Fog .color, color, getFogInterpolant ());
 }
+
+// DEBUG
+//uniform ivec4 x3d_Viewport;
 
 void
 main ()
@@ -232,7 +248,24 @@ main ()
 
 	bool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;
 
-	gl_FragColor = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
-
+	gl_FragColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
 	gl_FragColor .rgb = getFogColor (gl_FragColor .rgb);
+
+	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
+	if (x3d_LogarithmicFarFactor1_2 > 0.0)
+		gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+	else
+		gl_FragDepthEXT = gl_FragCoord .z;
+	#endif
+
+	// DEBUG
+	#ifdef X3D_SHADOWS
+	//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;
+	//gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);
+	#endif
+
+	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+	//gl_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), gl_FragColor .rgb, 0.5);
+	#endif
 }

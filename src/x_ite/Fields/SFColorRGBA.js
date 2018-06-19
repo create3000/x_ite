@@ -112,6 +112,26 @@ function (X3DField,
 			this .getValue () .setHSVA (h, s, v, a);
 			this .addEvent ();
 		},
+		lerp: (function ()
+		{
+			var	
+				s = [ ],
+				d = [ ],
+				r = [ ];
+     
+			return function (destination, t)
+			{
+				var result = new SFColorRGBA ();
+
+				this .getValue () .getHSVA (s),
+				destination .getValue () .getHSVA (d),
+				Color4 .lerp (s, d, t, r),
+	
+				result .setHSVA (r [0], r [1], r [2], r [3]);
+	
+				return result;
+			};
+		})(),
 		toStream: SFColor .prototype .toStream,
 		toXMLStream: SFColor .prototype .toXMLStream,
 	});

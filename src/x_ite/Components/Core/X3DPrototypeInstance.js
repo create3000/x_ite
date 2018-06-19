@@ -206,6 +206,14 @@ function (FieldDefinitionArray,
 				console .error (error .message);
 			}
 		},
+		getSpecificationVersion: function ()
+		{
+			return this .getExecutionContext () .getSpecificationVersion ();
+		},
+		getEncoding: function ()
+		{
+			return this .getExecutionContext () .getEncoding ();
+		},
 		getInnerNode: function ()
 		{
 			var rootNodes = this .getRootNodes () .getValue ();

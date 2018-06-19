@@ -51,11 +51,13 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Components/Navigation/OrthoViewpoint",
 	"standard/Math/Numbers/Matrix3",
 ],
 function (Fields,
           X3DCast,
           X3DConstants,
+          OrthoViewpoint,
           Matrix3)
 {
 "use strict";
@@ -81,9 +83,10 @@ function (Fields,
 		this .x3d_LightCutOffAngle      = [ ];
 		this .x3d_LightRadius           = [ ];
 		this .x3d_ShadowIntensity       = [ ];
-		this .x3d_ShadowDiffusion       = [ ];
 		this .x3d_ShadowColor           = [ ];
+		this .x3d_ShadowBias            = [ ];
 		this .x3d_ShadowMatrix          = [ ];
+		this .x3d_ShadowMapSize         = [ ];
 		this .x3d_ShadowMap             = [ ];
 
 		this .numClipPlanes   = 0;
@@ -105,7 +108,13 @@ function (Fields,
 			this .x3d_MaxLights     = browser .getMaxLights ();
 			this .x3d_MaxTextures   = browser .getMaxTextures ();
 
-			this .textureTypeArray = new Int32Array (this .x3d_MaxTextures);
+			var defaultClipPlanes = [ ];
+
+			for (var i = 0, length = this .x3d_MaxClipPlanes; i < length; ++ i)
+				defaultClipPlanes .push (0, 0, -1, 0);
+
+			this .defaultClipPlanesArray = new Float32Array (defaultClipPlanes);
+			this .textureTypeArray       = new Int32Array (this .x3d_MaxTextures);
 		},
 		hasUserDefinedFields: function ()
 		{
@@ -126,8 +135,12 @@ function (Fields,
 				gl      = this .getBrowser () .getContext (),
 				program = this .getProgram ();
 
+			this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
+
 			this .x3d_GeometryType  = gl .getUniformLocation (program, "x3d_GeometryType");
 			this .x3d_NumClipPlanes = gl .getUniformLocation (program, "x3d_NumClipPlanes");
+
+			this .x3d_ClipPlanes = gl .getUniformLocation (program, "x3d_ClipPlane");
 
 			for (var i = 0; i < this .x3d_MaxClipPlanes; ++ i)
 				this .x3d_ClipPlane [i]  = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
@@ -155,10 +168,11 @@ function (Fields,
 				this .x3d_LightCutOffAngle [i]      = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].cutOffAngle",      "x3d_LightCutOffAngle[" + i + "]");
 				this .x3d_LightRadius [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].radius",           "x3d_LightRadius[" + i + "]");
 
-				this .x3d_ShadowIntensity [i] = gl .getUniformLocation (program, "x3d_ShadowIntensity[" + i + "]");
-				this .x3d_ShadowDiffusion [i] = gl .getUniformLocation (program, "x3d_ShadowDiffusion[" + i + "]");
-				this .x3d_ShadowColor [i]     = gl .getUniformLocation (program, "x3d_ShadowColor[" + i + "]");
-				this .x3d_ShadowMatrix [i]    = gl .getUniformLocation (program, "x3d_ShadowMatrix[" + i + "]");
+				this .x3d_ShadowIntensity [i] = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowIntensity");
+				this .x3d_ShadowColor [i]     = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowColor");
+				this .x3d_ShadowBias [i]      = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowBias");
+				this .x3d_ShadowMatrix [i]    = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowMatrix");
+				this .x3d_ShadowMapSize [i]   = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowMapSize");
 				this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
 			}
 
@@ -790,6 +804,8 @@ function (Fields,
 			this .numClipPlanes = 0;
 			this .numLights     = 0;
 
+			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
+
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
@@ -797,9 +813,6 @@ function (Fields,
 			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
 
 			// Legacy before 4.1.4
-
-			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
-				gl .uniform4f (this .x3d_ClipPlane [this .numClipPlanes], 88, 51, 68, 33);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
@@ -824,6 +837,16 @@ function (Fields,
 
 			for (var i = 0, length = globalLights .length; i < length; ++ i)
 				globalLights [i] .setShaderUniforms (gl, this);
+
+			// Logarithmic depth buffer support.
+
+			var viewpoint      = renderObject .getViewpoint ();
+			var navigationInfo = renderObject .getNavigationInfo ();
+
+			if (viewpoint instanceof OrthoViewpoint)
+				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
+			else
+				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));		
 		},
 		setLocalUniforms: function (gl, context)
 		{
@@ -844,6 +867,8 @@ function (Fields,
 			this .numClipPlanes = 0;
 			this .numLights     = this .numGlobalLights;
 
+			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
+
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
@@ -851,9 +876,6 @@ function (Fields,
 			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
 
 			// Legacy before 4.1.4
-
-			if (this .numClipPlanes < this .x3d_MaxClipPlanes)
-				gl .uniform4f (this .x3d_ClipPlane [this .numClipPlanes], 88, 51, 68, 33);
 
 			if (this .numLights < this .x3d_MaxLights)
 				gl .uniform1i (this .x3d_LightType [this .numLights], 0);

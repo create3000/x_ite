@@ -176,7 +176,7 @@ function (Fields,
 		Comment:     new RegExp ('#(.*?)(?=[\\n\\r])',   'gy'),
 
 		// Header
-		Header:	    new RegExp ("#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'gy'),
+		Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'gy'),
 
 		// Keywords
 		AS:          new RegExp ('AS',          'gy'),
@@ -477,6 +477,8 @@ function (Fields,
 		},
 		headerStatement: function ()
 		{
+			Grammar .Header .lastIndex = 0;
+
 			var result = Grammar .Header .exec (this .input);
 
 			if (result)
