@@ -1,4 +1,4 @@
-/* X_ITE v4.2.1-288 */
+/* X_ITE v4.2.1-289 */
 
 (function () {
 
@@ -81258,8 +81258,6 @@ function (SFNode,
 			this .layer0 .setup ();
 
 			this .set_activeLayer__ ();
-
-			this .bind ();
 		},
 		getLayerSet: function ()
 		{

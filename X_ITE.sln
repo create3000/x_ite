@@ -17,7 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		X_ITE.userprefs = X_ITE.userprefs
 		.bzrignore = .bzrignore
 		.gitignore = .gitignore
-		components.js = components.js
 		Makefile = Makefile
 		x_ite.build.js = x_ite.build.js
 		rigid-body-physics.build.js = rigid-body-physics.build.js

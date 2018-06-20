@@ -15,7 +15,6 @@ all:
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.min.js
 
-	cp src/components.js components.js
 	cp src/x_ite.html x_ite.min.html
 	perl -pi -e 's|\s*<script type="text/javascript" src="\.\./node_modules/requirejs/require.js"></script>\n||sg' x_ite.min.html
 	perl -pi -e 's|\s*<script type="text/javascript" src="x_ite.config.js"></script>\n||sg'                        x_ite.min.html
@@ -29,6 +28,7 @@ all:
 	perl -pi -e 's|\>x_ite.min.html|>src/x_ite.html|sg'                         x_ite.min.html
 	perl -pi -e 's|x_ite-dev|x_ite-min|sg'                                      x_ite.min.html
 	perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'                        x_ite.min.html
+	perl -pi -e 's|"componensts.js"|"src/tests.js"|sg'                          x_ite.min.html
 	perl -pi -e 's|\.\./tests/|tests/|sg'                                       x_ite.min.html
 
 	perl build/dist.pl
