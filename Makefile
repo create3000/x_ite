@@ -28,7 +28,7 @@ all:
 	perl -pi -e 's|\>x_ite.min.html|>src/x_ite.html|sg'                         x_ite.min.html
 	perl -pi -e 's|x_ite-dev|x_ite-min|sg'                                      x_ite.min.html
 	perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'                        x_ite.min.html
-	perl -pi -e 's|"componensts.js"|"src/tests.js"|sg'                          x_ite.min.html
+	perl -pi -e 's|"tests.js"|"src/tests.js"|sg'                                x_ite.min.html
 	perl -pi -e 's|\.\./tests/|tests/|sg'                                       x_ite.min.html
 
 	perl build/dist.pl

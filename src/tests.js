@@ -101,6 +101,7 @@ var X_ITE_EXAMPLES = [
 	{ folder: "RigidBodyPhysics", test: "SingleAxisHingeJoint"},
 	{ folder: "RigidBodyPhysics", test: "SliderJoint"},
 	{ folder: "Shaders", test: "ComposedShader"},
+	{ folder: "Shaders", test: "FloatVertexAttribute"},
 	{ folder: "Shaders", test: "ShaderPart"},
 	{ folder: "Shape", test: "Appearance"},
 	{ folder: "Shape", test: "Material"},
