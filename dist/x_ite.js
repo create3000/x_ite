@@ -1,4 +1,4 @@
-/* X_ITE v4.2.1-289 */
+/* X_ITE v4.2.2-290 */
 
 (function () {
 
@@ -68330,10 +68330,10 @@ function (Fields,
 	var version = DEBUG || VERSION .match (/a$/) ? "latest" : VERSION;
 
 	var FontDirectories = [
-		"http://media.create3000.de/fonts/",
+		"https://code.create3000.de/fonts/",
 		"https://cdn.rawgit.com/create3000/x_ite/" + version + "/fonts/",
 		"https://cdn.jsdelivr.net/gh/create3000/x_ite@" + version + "/fonts/",
-		"https://rawgit.com/create3000/x_ite/" + version + "/fonts/",
+		//"https://rawgit.com/create3000/x_ite/" + version + "/fonts/",
 	];
 
 	shuffle (FontDirectories);
