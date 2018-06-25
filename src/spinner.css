@@ -1,7 +1,7 @@
 
 X3DCanvas .x_ite-private-splash-screen {
 	display: none;
-	z-index: -100;
+	z-index: 100;
 	position: absolute;
 	top: 0;
 	right: 0;
