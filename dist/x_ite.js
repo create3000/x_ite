@@ -1,4 +1,4 @@
-/* X_ITE v4.2.2-290 */
+/* X_ITE v4.2.2-291 */
 
 (function () {
 
@@ -24580,7 +24580,7 @@ function (SFBool,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.2.1";
+	return "4.2.2";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -38790,6 +38790,10 @@ function (Fields,
 					this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
 					this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
 				}
+				else
+				{
+					this .getCanvas () .stop (true, true) .fadeOut (0);
+				}
 			}
 			else
 			{
@@ -38799,7 +38803,7 @@ function (Fields,
 					this .getCanvas ()       .stop (true, true) .fadeOut (0) .fadeIn  (2000);
 				}
 				else
-					this .getCanvas () .fadeIn (0);
+					this .getCanvas () .stop (true, true) .fadeIn (0);
 			}
 		},
 		getLoading: function ()

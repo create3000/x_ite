@@ -133,6 +133,10 @@ function (Fields,
 					this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
 					this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
 				}
+				else
+				{
+					this .getCanvas () .stop (true, true) .fadeOut (0);
+				}
 			}
 			else
 			{
@@ -142,7 +146,7 @@ function (Fields,
 					this .getCanvas ()       .stop (true, true) .fadeOut (0) .fadeIn  (2000);
 				}
 				else
-					this .getCanvas () .fadeIn (0);
+					this .getCanvas () .stop (true, true) .fadeIn (0);
 			}
 		},
 		getLoading: function ()
