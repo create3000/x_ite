@@ -137,7 +137,7 @@ function (X3DGeometryNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
 	
-				if (shaderNode === browser .getDefaultShader ())
+				if (shaderNode === browser .getDefaultShader () || shaderNode === browser .getShadowShader ())
 					shaderNode = this .getShader (browser);
 	
 				// Setup shader.

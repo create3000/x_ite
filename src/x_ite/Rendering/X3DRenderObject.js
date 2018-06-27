@@ -896,10 +896,9 @@ function ($,
 				cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 				projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 	
-				browser .getPointShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getLineShader    () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getDefaultShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getShadowShader  () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getPointShader  () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getLineShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getShadowShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 	
 				for (var id in shaders)
 					shaders [id] .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
