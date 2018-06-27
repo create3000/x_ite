@@ -204,10 +204,12 @@ function ($,
 			}
 
 			var vertexShader = new ShaderPart (browser .getPrivateScene ());
+			vertexShader .setName (name + "Vertex");
 			vertexShader .url_ .push ("data:text/plain;charset=utf-8," + vs);
 			vertexShader .setup ();
 
 			var fragmentShader = new ShaderPart (browser .getPrivateScene ());
+			fragmentShader .setName (name + "Fragment");
 			fragmentShader .type_ = "FRAGMENT";
 			fragmentShader .url_ .push ("data:text/plain;charset=utf-8," + fs);
 			fragmentShader .setup ();
