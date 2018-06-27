@@ -957,7 +957,8 @@ function ($,
 				// Reset GeneratedCubeMapTextures.
 	
 				generatedCubeMapTextures .length = 0;
-	
+				shaders                  .length = 0;
+
 				if (this .isIndependent ())
 				{
 					// Recycle clip planes.
@@ -985,7 +986,7 @@ function ($,
 		
 					lights .length = 0;
 				}
-	
+
 				this .globalLights .length = 0;
 				this .lights       .length = 0;
 			};

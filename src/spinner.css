@@ -26,7 +26,7 @@ X3DCanvas .x_ite-private-spinner {
 }
 @-moz-keyframes spinner-animation-spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+@keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
 
 X3DCanvas .x_ite-private-progress {
 	position: absolute;
