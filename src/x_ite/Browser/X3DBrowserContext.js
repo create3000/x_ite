@@ -55,8 +55,8 @@ define ([
 	"x_ite/Browser/Scripting/X3DScriptingContext",
 	"x_ite/Browser/Networking/X3DNetworkingContext",
 	"x_ite/Browser/Shaders/X3DShadersContext",
-	"x_ite/Browser/Shape/X3DShapeContext",
 	"x_ite/Browser/Rendering/X3DRenderingContext",
+	"x_ite/Browser/Shape/X3DShapeContext",
 	"x_ite/Browser/Geometry2D/X3DGeometry2DContext",
 	"x_ite/Browser/Geometry3D/X3DGeometry3DContext",
 	"x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext",
@@ -81,8 +81,8 @@ function (SFTime,
           X3DScriptingContext,
           X3DNetworkingContext,
           X3DShadersContext,
-          X3DShapeContext,
           X3DRenderingContext,
+          X3DShapeContext,
           X3DGeometry2DContext,
           X3DGeometry3DContext,
           X3DPointingDeviceSensorContext,
@@ -110,8 +110,8 @@ function (SFTime,
 		X3DScriptingContext            .call (this);
 		X3DNetworkingContext           .call (this);
 		X3DShadersContext              .call (this);
-		X3DShapeContext                .call (this);
 		X3DRenderingContext            .call (this);
+		X3DShapeContext                .call (this);
 		X3DGeometry2DContext           .call (this);
 		X3DGeometry3DContext           .call (this);
 		X3DPointingDeviceSensorContext .call (this);
@@ -151,8 +151,8 @@ function (SFTime,
 		X3DScriptingContext .prototype,
 		X3DNetworkingContext .prototype,
 		X3DShadersContext .prototype,
-		X3DShapeContext .prototype,
 		X3DRenderingContext .prototype,
+		X3DShapeContext .prototype,
 		X3DGeometry2DContext .prototype,
 		X3DGeometry3DContext .prototype,
 		X3DPointingDeviceSensorContext .prototype,
@@ -177,8 +177,8 @@ function (SFTime,
 			X3DScriptingContext            .prototype .initialize .call (this);
 			X3DNetworkingContext           .prototype .initialize .call (this);
 			X3DShadersContext              .prototype .initialize .call (this);
-			X3DShapeContext                .prototype .initialize .call (this);
 			X3DRenderingContext            .prototype .initialize .call (this);
+			X3DShapeContext                .prototype .initialize .call (this);
 			X3DGeometry2DContext           .prototype .initialize .call (this);
 			X3DGeometry3DContext           .prototype .initialize .call (this);
 			X3DPointingDeviceSensorContext .prototype .initialize .call (this);
