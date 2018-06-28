@@ -174,7 +174,7 @@ function ($,
 		},
 		pushShadow: function (value)
 		{
-			this .shadow .push (value || this .shadow [this .shadow .length - 1]);
+			this .shadow .unshift (value || this .shadow [0]);
 		},
 		popShadow: function (value)
 		{
@@ -542,7 +542,7 @@ function ($,
 				context .shapeNode = shapeNode;
 				context .distance  = bboxCenter .z - radius;
 				context .fogNode   = this .localFog;
-				context .shadow    = this .shadow [this .shadow .length - 1];
+				context .shadow    = this .shadow [0];
 
 				// Clip planes and local lights
 
