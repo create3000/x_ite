@@ -1,13 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Base/X3DObject.js">
     <Files>
       <File FileName="src/x_ite.html" Line="281" Column="10" />
-      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Lighting/X3DLightNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="803" Column="50" />
+      <File FileName="src/x_ite/Components/Rendering/PointSet.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/Coordinate.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/X3DCoordinateNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Base/X3DEventObject.js" Line="79" Column="1" />
+      <File FileName="src/x_ite/Base/X3DChildObject.js" Line="76" Column="1" />
+      <File FileName="src/x_ite/Base/X3DObject.js" Line="90" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

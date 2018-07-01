@@ -90,12 +90,21 @@ function (X3DArrayField,
 				}
 				else
 				{
-					var value = new (valueType) ();
+					// Return reference to index.
 
-					value .getValue = getValue .bind (value, target, index, value .getValue (), components);
-					value .addEvent = addEvent .bind (value, target, index, value .getValue (), components);
+					var reference = target ._references [index];
 
-					return value;
+					if (reference)
+						return reference;
+
+					var reference = new (valueType) ();
+
+					reference .getValue = getValue .bind (reference, target, index, reference .getValue (), components);
+					reference .addEvent = addEvent .bind (reference, target, index, reference .getValue (), components);
+
+					target ._references [index] = reference;
+
+					return reference;
 				}
 			}
 			catch (error)
@@ -163,7 +172,8 @@ function (X3DArrayField,
 	{
 		X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
-		this .target = this;
+		this ._target     = this;
+		this ._references = [ ];
 
 		if (value [0] instanceof Array)
 			value = value [0];
@@ -177,10 +187,14 @@ function (X3DArrayField,
 	{
 		constructor: X3DTypedArrayField,
 		_length: 0,
+		getTarget: function ()
+		{
+			return this ._target;
+		},
 		copy: function ()
 		{
 			var
-				target     = this .target,
+				target     = this ._target,
 				array      = target .getValue (),
 				copy       = new (target .constructor) (),
 				copyArray  = new (target .getArrayType ()) (array);
@@ -197,7 +211,7 @@ function (X3DArrayField,
 				return true;
 
 			var
-				target = this .target,
+				target = this ._target,
 				length = target ._length;
 
 			if (length !== other ._length)
@@ -217,7 +231,7 @@ function (X3DArrayField,
 		},
 		assign: function (value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			target .set (value .getValue (), value .length);
 			target .addEvent ();
@@ -225,7 +239,7 @@ function (X3DArrayField,
 		set: function (otherArray /* value of field */, l /* length of field */)
 		{
 			var
-				target      = this .target,
+				target      = this ._target,
 				components  = target .getComponents (),
 				array       = target .getValue (),
 				length      = target ._length,
@@ -260,7 +274,7 @@ function (X3DArrayField,
 		},
 		setValue: function (value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			if (value instanceof target .constructor)
 			{
@@ -275,7 +289,7 @@ function (X3DArrayField,
 		unshift: function (value)
 		{
 			var
-				target          = this .target,
+				target          = this ._target,
 				components      = target .getComponents (),
 				length          = target ._length,
 				argumentsLength = arguments .length;
@@ -310,7 +324,7 @@ function (X3DArrayField,
 		shift: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
@@ -349,7 +363,7 @@ function (X3DArrayField,
 		push: function (value)
 		{
 			var
-				target          = this .target,
+				target          = this ._target,
 				components      = target .getComponents (),
 				length          = target ._length,
 				argumentsLength = arguments .length;
@@ -382,7 +396,7 @@ function (X3DArrayField,
 		pop: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
@@ -421,7 +435,7 @@ function (X3DArrayField,
 		splice: function (index, deleteCount)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue (),
 				length = target ._length;
 
@@ -443,7 +457,7 @@ function (X3DArrayField,
 		spliceInsert: function (index, other)
 		{
 			var
-				target      = this .target,
+				target      = this ._target,
 				components  = target .getComponents (),
 				length      = target ._length,
 				otherLength = other .length;
@@ -474,7 +488,7 @@ function (X3DArrayField,
 		insert: function (index, other, first, last)
 		{
 			var
-				target     = this .target,
+				target     = this ._target,
 				length     = target ._length,
 				otherArray = other .getValue (),
 				components = target .getComponents (),
@@ -498,7 +512,7 @@ function (X3DArrayField,
 		erase: function (first, last)
 		{
 			var
-				target     = this .target,
+				target     = this ._target,
 				array      = target .getValue (),
 				components = target .getComponents (),
 				difference = last - first,
@@ -527,13 +541,15 @@ function (X3DArrayField,
 		resize: function (newLength, value, silent)
 		{
 			var
-				target     = this .target,
+				target     = this ._target,
 				length     = target ._length,
 				array      = target .getValue (),
 				components = target .getComponents ();
 
 			if (newLength < length)
 			{
+				target ._references .length = newLength;
+
 				array .fill (0, newLength * components, length * components);
 
 				if (! silent)
@@ -572,7 +588,7 @@ function (X3DArrayField,
 		grow: function (length)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (length < array .length)
@@ -591,7 +607,7 @@ function (X3DArrayField,
 		shrinkToFit: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue (),
 				length = target ._length * target .getComponents ();
 
@@ -607,7 +623,7 @@ function (X3DArrayField,
 		toStream: function (stream)
 		{
 			var
-				target     = this .target,
+				target     = this ._target,
 				generator  = Generator .Get (stream),
 				array      = target .getValue (),
 				length     = target ._length,
@@ -702,7 +718,7 @@ function (X3DArrayField,
 		toXMLStream: function (stream)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				length = target ._length;
 
 			if (length)
@@ -752,14 +768,14 @@ function (X3DArrayField,
 		},
 		dispose: function ()
 		{
-			X3DArrayField .prototype .dispose .call (this .target);
+			X3DArrayField .prototype .dispose .call (this ._target);
 		},
 	});
 
 	Object .defineProperty (X3DTypedArrayField .prototype, "length",
 	{
 		get: function () { return this ._length; },
-		set: function (value) { this .target .resize (value); },
+		set: function (value) { this ._target .resize (value); },
 		enumerable: false,
 		configurable: false,
 	});

@@ -1736,7 +1736,7 @@ function (Fields,
 		sfboolValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfboolValue (this .SFBool))
 			{
@@ -1792,7 +1792,7 @@ function (Fields,
 		sfcolorValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfcolorValue (this .SFColor))
 			{
@@ -1853,7 +1853,7 @@ function (Fields,
 		sfcolorrgbaValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfcolorrgbaValue (this .SFColorRGBA))
 			{
@@ -1899,7 +1899,7 @@ function (Fields,
 		sfdoubleValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFDouble .setUnit (field .getUnit ());
 
@@ -1941,7 +1941,7 @@ function (Fields,
 		sffloatValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFFloat .setUnit (field .getUnit ());
 
@@ -2017,7 +2017,7 @@ function (Fields,
 		sfimageValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfimageValue (this .SFImage))
 			{
@@ -2061,7 +2061,7 @@ function (Fields,
 		sfint32Values: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfint32Value (this .SFInt32))
 			{
@@ -2149,7 +2149,7 @@ function (Fields,
 		sfmatrix3dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix3dValue (this .SFMatrix3d))
 			{
@@ -2187,7 +2187,7 @@ function (Fields,
 		sfmatrix3fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix3fValue (this .SFMatrix3f))
 			{
@@ -2311,7 +2311,7 @@ function (Fields,
 		sfmatrix4dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix4dValue (this .SFMatrix4d))
 			{
@@ -2349,7 +2349,7 @@ function (Fields,
 		sfmatrix4fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix4fValue (this .SFMatrix4f))
 			{
@@ -2459,7 +2459,7 @@ function (Fields,
 		sfrotationValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfrotationValue (this .SFRotation))
 			{
@@ -2503,7 +2503,7 @@ function (Fields,
 		sfstringValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfstringValue (this .SFString))
 			{
@@ -2541,7 +2541,7 @@ function (Fields,
 		sftimeValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sftimeValue (this .SFTime))
 			{
@@ -2597,7 +2597,7 @@ function (Fields,
 		sfvec2dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec2d .setUnit (field .getUnit ());
 
@@ -2639,7 +2639,7 @@ function (Fields,
 		sfvec2fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec2f .setUnit (field .getUnit ());
 
@@ -2703,7 +2703,7 @@ function (Fields,
 		sfvec3dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec3d .setUnit (field .getUnit ());
 
@@ -2745,7 +2745,7 @@ function (Fields,
 		sfvec3fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec3f .setUnit (field .getUnit ());
 
@@ -2815,7 +2815,7 @@ function (Fields,
 		sfvec4dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec4d .setUnit (field .getUnit ());
 
@@ -2857,7 +2857,7 @@ function (Fields,
 		sfvec4fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec4f .setUnit (field .getUnit ());
 

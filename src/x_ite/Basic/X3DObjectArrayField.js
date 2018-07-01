@@ -135,7 +135,7 @@ function ($,
 	{
 		X3DArrayField .call (this, [ ]);
 		
-		this .target = this;
+		this ._target = this;
 
 		if (value [0] instanceof Array)
 			value = value [0];
@@ -148,10 +148,14 @@ function ($,
 	X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
 	{
 		constructor: X3DObjectArrayField,
+		getTarget: function ()
+		{
+			return this ._target;
+		},
 		copy: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				copy   = new (target .constructor) (),
 				array  = target .getValue ();
 
@@ -162,7 +166,7 @@ function ($,
 		equals: function (array)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				a      = target .getValue (),
 				b      = array .getValue (),
 				length = a .length;
@@ -183,7 +187,7 @@ function ($,
 		},
 		set: function (value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			target .resize (value .length, undefined, true);
 
@@ -198,7 +202,7 @@ function ($,
 		},
 		setValue: function (value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			target .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
 			target .addEvent ();
@@ -206,7 +210,7 @@ function ($,
 		unshift: function (value)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			for (var i = arguments .length - 1; i >= 0; -- i)
@@ -227,7 +231,7 @@ function ($,
 		shift: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
@@ -241,7 +245,7 @@ function ($,
 		push: function (value)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
@@ -262,7 +266,7 @@ function ($,
 		pop: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
@@ -276,7 +280,7 @@ function ($,
 		splice: function (index, deleteCount)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (index > array .length)
@@ -295,7 +299,7 @@ function ($,
 		insert: function (index, array, first, last)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				args   = [index, 0];
 
 			for (var i = first; i < last; ++ i)
@@ -314,7 +318,7 @@ function ($,
 		},
 		find: function (first, last, value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			if ($.isFunction (value))
 			{
@@ -341,7 +345,7 @@ function ($,
 		},
 		remove: function (first, last, value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			if ($.isFunction (value))
 			{
@@ -399,7 +403,7 @@ function ($,
 		erase: function (first, last)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				values = target .getValue () .splice (first, last - first);
 				
 			for (var i = 0, length = values .length; i < length; ++ i)
@@ -412,7 +416,7 @@ function ($,
 		resize: function (size, value, silent)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 		
 			if (size < array .length)
@@ -444,16 +448,16 @@ function ($,
 		},
 		addChild: function (value)
 		{
-			value .addParent (this .target);
+			value .addParent (this ._target);
 		},
 		removeChild: function (value)
 		{
-			value .removeParent (this .target);
+			value .removeParent (this ._target);
 		},
 		toStream: function (stream)
 		{
 			var
-				target    = this .target,
+				target    = this ._target,
 				array     = target .getValue (),
 				generator = Generator .Get (stream);
 
@@ -503,7 +507,7 @@ function ($,
 		toXMLStream: function (stream)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				length = target .length;
 
 			if (length)
@@ -528,7 +532,7 @@ function ($,
 		dispose: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			for (var i = 0, length = target .length; i < length; ++ i)
@@ -542,8 +546,8 @@ function ($,
 
 	Object .defineProperty (X3DObjectArrayField .prototype, "length",
 	{
-		get: function () { return this .target .getValue () .length; },
-		set: function (value) { this .target .resize (value); },
+		get: function () { return this ._target .getValue () .length; },
+		set: function (value) { this ._target .resize (value); },
 		enumerable: false,
 		configurable: false,
 	});
