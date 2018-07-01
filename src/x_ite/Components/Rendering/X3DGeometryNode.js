@@ -462,7 +462,7 @@ function (Fields,
 					{
 						var i4 = i * 4;
 
-						v0 .x = vertices [i4 + 0]; v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+						v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
@@ -477,19 +477,19 @@ function (Fields,
 
 							// Determine vectors for X3DPointingDeviceSensors.
 
-							var point = new Vector3 (t * vertices [i4 + 0] + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+							var point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
 							                         t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
 							                         t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
 							if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
 								continue;
 
-							var texCoord = new Vector2 (t * texCoords [i4 + 0] + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
+							var texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
 							                            t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
 
 							var i3 = i * 3;
 
-							var normal = new Vector3 (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],
+							var normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
 							                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
 							                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
@@ -583,7 +583,7 @@ function (Fields,
 					{
 						var i4 = i * 4;
 		
-						v0 .x = vertices [i4 + 0]; v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+						v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
@@ -652,7 +652,7 @@ function (Fields,
 
 					for (var i = 0, length = vertices .length; i < length; i += 12)
 					{
-					   Triangle3 .normal (v0 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]),
+					   Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
 					                      v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
 					                      v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
 					                      normal);
@@ -706,7 +706,7 @@ function (Fields,
 				{
 					for (var i = 0, length = vertices .length; i < length; i += 4)
 					{
-						point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+						point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
 	
 						min .min (point);
 						max .max (point);

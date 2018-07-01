@@ -108,7 +108,7 @@ function (Fields,
 
 			for (var i = 0, length = this .lineSegments_ .length * 2; i < length; i += 2)
 			{
-				vertexArray .push (lineSegments [i + 0], lineSegments [i + 1], 0, 1);
+				vertexArray .push (lineSegments [i], lineSegments [i + 1], 0, 1);
 			}
 
 			this .setSolid (false);

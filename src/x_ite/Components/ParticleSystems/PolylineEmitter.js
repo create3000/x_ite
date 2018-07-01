@@ -157,7 +157,7 @@ function (Fields,
 
 				for (var i = 0, length = vertices .length; i < length; i += 8)
 				{
-					vertex1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+					vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
 					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
 					lengthSoFar += vertex2 .subtract (vertex1) .abs ();
@@ -220,8 +220,8 @@ function (Fields,
 
 			var vertices = this .vertices;
 
-			vertex1 .set (vertices [index0 + 0], vertices [index0 + 1], vertices [index0 + 2]);
-			vertex2 .set (vertices [index1 + 0], vertices [index1 + 1], vertices [index1 + 2]);
+			vertex1 .set (vertices [index0], vertices [index0 + 1], vertices [index0 + 2]);
+			vertex2 .set (vertices [index1], vertices [index1 + 1], vertices [index1 + 2]);
 	
 			position .x = vertex1 .x + weight * (vertex2 .x - vertex1 .x);
 			position .y = vertex1 .y + weight * (vertex2 .y - vertex1 .y);

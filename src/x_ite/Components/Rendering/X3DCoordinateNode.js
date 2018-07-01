@@ -105,7 +105,7 @@ function (X3DGeometricPropertyNode,
 
 				index *= 3;
 
-				return vector .set (point [index + 0], point [index + 1], point [index + 2]);
+				return vector .set (point [index], point [index + 1], point [index + 2]);
 			}
 			else
 			{
@@ -120,7 +120,7 @@ function (X3DGeometricPropertyNode,
 
 				index *= 3;
 
-				array .push (point [index + 0], point [index + 1], point [index + 2], 1);
+				array .push (point [index], point [index + 1], point [index + 2], 1);
 			}
 			else
 			{

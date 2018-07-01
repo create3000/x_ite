@@ -127,12 +127,12 @@ function (Fields,
 			{
 				try
 				{
-					keyValue0 .set (keyValue [index0 + i + 0], keyValue [index0 + i + 1], keyValue [index0 + i + 2]);
-					keyValue1 .set (keyValue [index1 + i + 0], keyValue [index1 + i + 1], keyValue [index1 + i + 2]);
+					keyValue0 .set (keyValue [index0 + i], keyValue [index0 + i + 1], keyValue [index0 + i + 2]);
+					keyValue1 .set (keyValue [index1 + i], keyValue [index1 + i + 1], keyValue [index1 + i + 2]);
 
 					var value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
 
-					value_changed [i + 0] = value [0];
+					value_changed [i]     = value [0];
 					value_changed [i + 1] = value [1];
 					value_changed [i + 2] = value [2];
 				}

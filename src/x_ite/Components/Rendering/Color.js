@@ -115,7 +115,7 @@ function (Fields,
 
 				index *= 3;
 
-				array .push (color [index + 0], color [index + 1], color [index + 2], 1);
+				array .push (color [index], color [index + 1], color [index + 2], 1);
 			}
 			else if (this .length)
 			{
@@ -123,7 +123,7 @@ function (Fields,
 
 				index = (this .length - 1) * 3;
 
-				array .push (color [index + 0], color [index + 1], color [index + 2], 1);
+				array .push (color [index], color [index + 1], color [index + 2], 1);
 			}
 			else
 			{

@@ -1047,13 +1047,13 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .enableVertexAttribArray (location + 0);
+			gl .enableVertexAttribArray (location);
 			gl .enableVertexAttribArray (location + 1);
 			gl .enableVertexAttribArray (location + 2);
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
-			gl .vertexAttribPointer (location + 0, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 0);
+			gl .vertexAttribPointer (location,     3, gl .FLOAT, false, 9 * 4, 3 * 4 * 0);
 			gl .vertexAttribPointer (location + 1, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 1);
 			gl .vertexAttribPointer (location + 2, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 2);
 		},
@@ -1064,7 +1064,7 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .disableVertexAttribArray (location + 0);
+			gl .disableVertexAttribArray (location);
 			gl .disableVertexAttribArray (location + 1);
 			gl .disableVertexAttribArray (location + 2);
 		},
@@ -1075,14 +1075,14 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .enableVertexAttribArray (location + 0);
+			gl .enableVertexAttribArray (location);
 			gl .enableVertexAttribArray (location + 1);
 			gl .enableVertexAttribArray (location + 2);
 			gl .enableVertexAttribArray (location + 3);
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
-			gl .vertexAttribPointer (location + 0, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 0);
+			gl .vertexAttribPointer (location,     4, gl .FLOAT, false, 16 * 4, 4 * 4 * 0);
 			gl .vertexAttribPointer (location + 1, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 1);
 			gl .vertexAttribPointer (location + 2, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 2);
 			gl .vertexAttribPointer (location + 3, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 3);
@@ -1094,7 +1094,7 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .disableVertexAttribArray (location + 0);
+			gl .disableVertexAttribArray (location);
 			gl .disableVertexAttribArray (location + 1);
 			gl .disableVertexAttribArray (location + 2);
 			gl .disableVertexAttribArray (location + 3);

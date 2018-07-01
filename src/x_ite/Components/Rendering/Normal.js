@@ -111,7 +111,7 @@ function (Fields,
 
 				index *= 3;
 
-				array .push (vector [index + 0], vector [index + 1], vector [index + 2]);
+				array .push (vector [index], vector [index + 1], vector [index + 2]);
 			}
 			else
 			{

@@ -152,7 +152,7 @@ function (Fields,
 
 				for (var i = 0, length = vertices .length; i < length; i += 12)
 				{
-					vertex1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+					vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
 					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 					vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
@@ -220,7 +220,7 @@ function (Fields,
 
 			var t = 1 - u - v;
 
-			position .x = u * vertices [i + 0] + v * vertices [i + 4] + t * vertices [i + 8];
+			position .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
 			position .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
 			position .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
 
@@ -228,7 +228,7 @@ function (Fields,
 				i       = index0 * 9,
 				normals = this .normals;
 
-			direction .x = u * normals [i + 0] + v * normals [i + 3] + t * normals [i + 6];
+			direction .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
 			direction .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
 			direction .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
 

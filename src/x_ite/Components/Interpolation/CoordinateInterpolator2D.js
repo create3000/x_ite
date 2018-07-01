@@ -113,7 +113,7 @@ function (Fields,
 
 			for (var i = 0; i < size; i += 2)
 			{
-				value_changed [i + 0] = Algorithm .lerp (keyValue [index0 + i + 0], keyValue [index1 + i + 0], weight);
+				value_changed [i]     = Algorithm .lerp (keyValue [index0 + i],     keyValue [index1 + i],     weight);
 				value_changed [i + 1] = Algorithm .lerp (keyValue [index0 + i + 1], keyValue [index1 + i + 1], weight);
 			}
 
