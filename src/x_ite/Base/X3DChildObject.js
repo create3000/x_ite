@@ -64,6 +64,15 @@ function (X3DObject)
 	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: X3DChildObject,
+		_tainted: false,
+		setTainted: function (value)
+		{
+			this ._tainted = value;
+		},
+		getTainted: function ()
+		{
+			return this ._tainted;
+		},
 		addEvent: function ()
 		{
 			var parents = this ._parents;

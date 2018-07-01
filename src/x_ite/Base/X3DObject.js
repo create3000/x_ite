@@ -72,7 +72,6 @@ function ()
 		constructor: X3DObject,
 		_id: 0,
 		_name: "",
-		_tainted: false,
 		_interests: { },
 		getId: function ()
 		{
@@ -87,14 +86,6 @@ function ()
 		getName: function ()
 		{
 			return this ._name;
-		},
-		setTainted: function (value)
-		{
-			this ._tainted = value;
-		},
-		getTainted: function ()
-		{
-			return this ._tainted;
 		},
 		hasInterest: function (callback, object)
 		{
