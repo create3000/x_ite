@@ -1,4 +1,4 @@
-/* X_ITE v4.2.3a-294 */
+/* X_ITE v4.2.3a-295 */
 
 (function () {
 
@@ -13028,6 +13028,9 @@ function (X3DObject)
 		},
 		addEvent: function ()
 		{
+			if (this ._tainted)
+				return;
+
 			var parents = this ._parents;
 
 			for (var id in parents)
@@ -22860,9 +22863,7 @@ function ($,
 				var field = new (target .getSingleType ()) ();
 
 				field .setValue (arguments [i]);
-	
 				target .addChildObject (field);
-
 				array .unshift (field);
 			}
 
@@ -22895,9 +22896,7 @@ function ($,
 				var field = new (target .getSingleType ()) ();
 
 				field .setValue (arguments [i]);
-
 				target .addChildObject (field);
-
 				array .push (field);
 			}
 
@@ -22949,7 +22948,6 @@ function ($,
 				var field = new (target .getSingleType ()) ();
 
 				field .setValue (array [i]);
-
 				target .addChildObject (field);
 				args .push (field);
 			}
@@ -24206,16 +24204,11 @@ function (SFBool,
 		copy: function (executionContext)
 		{
 			var
-				copy   = new MFNode (),
-				array1 = this .getValue (),
-				array2 = copy .getValue ();
+				copy  = new MFNode (),
+				array = this .getValue ();
 
-			for (var i = 0, length = array1 .length; i < length; ++ i)
-			{
-				var value = array1 [i] .copy (executionContext);
-				value .addParent (copy);
-				array2 .push (value);
-			}
+			for (var i = 0, length = array .length; i < length; ++ i)
+				copy .push (array [i] .copy (executionContext));
 
 			return copy;
 		},
@@ -24721,9 +24714,6 @@ function (X3DChildObject,
 		},
 		addEvent: function (field)
 		{
-			if (field .getTainted ())
-				return;
-
 			field .setTainted (true);
 			field .setSet (true);
 
@@ -26574,6 +26564,14 @@ function ($,
 	Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: Notification,
+		getTypeName: function ()
+		{
+			return "Notification";
+		},
+		getComponentName: function ()
+		{
+			return "X_ITE";
+		},
 		initialize: function ()
 		{
 			X3DBaseNode .prototype .initialize .call (this);
