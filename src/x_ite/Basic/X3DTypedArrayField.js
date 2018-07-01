@@ -60,8 +60,6 @@ function (X3DArrayField,
 {
 "use strict";
 
-	var tmp = [ ]; // Array with components size.
-
 	var handler =
 	{
 		get: function (target, key)
@@ -99,8 +97,12 @@ function (X3DArrayField,
 
 					var reference = new (valueType) ();
 
-					reference .getValue = getValue .bind (reference, target, index, reference .getValue (), components);
-					reference .addEvent = addEvent .bind (reference, target, index, reference .getValue (), components);
+					reference ._target     = target;
+					reference ._index      = index * components;
+					reference ._components = components;
+
+					reference .getValue = getValue;
+					reference .addEvent = addEvent;
 
 					target ._references [index] = reference;
 
@@ -174,6 +176,7 @@ function (X3DArrayField,
 
 		this ._target     = this;
 		this ._references = [ ];
+		this ._tmp        = [ ]; // Array with components size.
 
 		if (value [0] instanceof Array)
 			value = value [0];
@@ -341,10 +344,10 @@ function (X3DArrayField,
 				}
 				else
 				{
+					var tmp = target ._tmp;
+
 					for (var c = 0; c < components; ++ c)
 						tmp [c] = array [c];
-
-					tmp .length = components;
 
 					var value = Object .create (valueType .prototype);
 
@@ -413,10 +416,10 @@ function (X3DArrayField,
 				}
 				else
 				{
+					var tmp = target ._tmp;
+
 					for (var c = 0, a = newLength * components; c < components; ++ c, ++ a)
 						tmp [c] = array [a];
-	
-					tmp .length = components;
 
 					var value = Object .create (valueType .prototype);
 
@@ -782,34 +785,37 @@ function (X3DArrayField,
 
 	// Getter/Setter functions to reference a value for a given index.
 
-	function getValue (field, index, value, components)
+	function getValue ()
 	{
-		var array = field .getValue ();
-
-		index *= components;
+		var
+			target     = this ._target,
+			index      = this ._index,
+			value      = this ._value,
+			components = this ._components,
+			array      = target .getValue (),
+			tmp        = target ._tmp;
 
 		for (var c = 0; c < components; ++ c, ++ index)
 			tmp [c] = array [index];
-
-		tmp .length = components;
 
 		value .set .apply (value, tmp);
 
 		return value;
 	}
 
-	function addEvent (field, index, value, components)
+	function addEvent ()
 	{
-		var array = field .getValue ();
-
-		index *= components;
+		var
+			target     = this ._target,
+			index      = this ._index,
+			value      = this ._value,
+			components = this ._components,
+			array      = target .getValue ();
 
 		for (var c = 0; c < components; ++ c, ++ index)
-		{
 			array [index] = value [c];
-		}
 
-		field .addEvent ();
+		target .addEvent ();
 	}
 
 	return X3DTypedArrayField;
