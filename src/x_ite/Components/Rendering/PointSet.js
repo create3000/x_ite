@@ -179,15 +179,11 @@ function (Fields,
 				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
 					attribNodes [a] .addValue (i, attribs [a]);
 			}
-			
-			if (this .colorNode)
-			{
-				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-					colorNode .addColor (i, colorArray);
-			}
 
-			for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-				coordNode .addPoint (i, vertexArray);
+			if (colorNode)
+				colorNode .addColors (colorArray,  coordNode .point_ .length);
+
+			coordNode .addPoints (vertexArray, coordNode .point_ .length);
 		},
 	});
 

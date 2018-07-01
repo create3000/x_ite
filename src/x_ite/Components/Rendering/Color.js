@@ -130,6 +130,16 @@ function (Fields,
 				array .push (1, 1, 1, 1);
 			}
 		},
+		addColors: function (array, min)
+		{
+			const color = this .color;
+
+			for (var index = 0, length = this .length * 3; index < length; index += 3)
+				array .push (color [index], color [index + 1], color [index + 2], 1);
+
+			for (var index = length, length = min * 3; index < length; index += 3)
+				array .push (1, 1, 1, 1);
+		},
 		getVectors: function (array)
 		{
 			var color = this .color_;

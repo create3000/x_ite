@@ -127,6 +127,16 @@ function (X3DGeometricPropertyNode,
 				array .push (0, 0, 0, 1);
 			}
 		},
+		addPoints: function (array, min)
+		{
+			const point = this .point;
+
+			for (var index = 0, length = this .length * 3; index < length; index += 3)
+				array .push (point [index], point [index + 1], point [index + 2], 1);
+
+			for (var index = length, length = min * 3; index < length; index += 3)
+				array .push (0, 0, 0, 1);
+		},
 		getNormal: function (index1, index2, index3)
 		{
 			// The index[1,2,3] cannot be less than 0.

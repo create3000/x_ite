@@ -693,7 +693,7 @@ function (Fields,
 			this .normals  .shrinkToFit ();
 			this .vertices .shrinkToFit ();
 
-			// Determine bbox and generate texCoord if needed.
+			// Determine bbox.
 
 			var
 				min      = this .min,
@@ -721,6 +721,8 @@ function (Fields,
 			}
 
 			this .bbox_changed_ .addEvent ();
+
+			// Generate texCoord if needed.
 
 			if (this .geometryType > 1)
 			{
