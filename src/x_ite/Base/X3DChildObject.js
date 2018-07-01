@@ -75,6 +75,9 @@ function (X3DObject)
 		},
 		addEvent: function ()
 		{
+			if (this ._tainted)
+				return;
+
 			var parents = this ._parents;
 
 			for (var id in parents)

@@ -153,16 +153,11 @@ function (SFBool,
 		copy: function (executionContext)
 		{
 			var
-				copy   = new MFNode (),
-				array1 = this .getValue (),
-				array2 = copy .getValue ();
+				copy  = new MFNode (),
+				array = this .getValue ();
 
-			for (var i = 0, length = array1 .length; i < length; ++ i)
-			{
-				var value = array1 [i] .copy (executionContext);
-				value .addParent (copy);
-				array2 .push (value);
-			}
+			for (var i = 0, length = array .length; i < length; ++ i)
+				copy .push (array [i] .copy (executionContext));
 
 			return copy;
 		},

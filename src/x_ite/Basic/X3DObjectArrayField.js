@@ -218,9 +218,7 @@ function ($,
 				var field = new (target .getSingleType ()) ();
 
 				field .setValue (arguments [i]);
-	
 				target .addChildObject (field);
-
 				array .unshift (field);
 			}
 
@@ -253,9 +251,7 @@ function ($,
 				var field = new (target .getSingleType ()) ();
 
 				field .setValue (arguments [i]);
-
 				target .addChildObject (field);
-
 				array .push (field);
 			}
 
@@ -307,7 +303,6 @@ function ($,
 				var field = new (target .getSingleType ()) ();
 
 				field .setValue (array [i]);
-
 				target .addChildObject (field);
 				args .push (field);
 			}
