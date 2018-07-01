@@ -58,7 +58,7 @@ function (X3DObject)
 	{
 		X3DObject .call (this);
 
-		this ._parents = [ ];
+		this ._parents = { }; // Sparse arrays are much more expensive than plain objects!
 	}
 
 	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),

@@ -86,12 +86,7 @@ define (function ()
 				};
 			}
 
-			var
-				fromSources = event .sources,
-				toSources   = copy .sources;
-
-			for (var id in fromSources)
-				toSources [id] = fromSources [id];
+			Object .assign (copy .sources, event .sources)
 
 			return copy;
 	   },
