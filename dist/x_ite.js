@@ -1,4 +1,4 @@
-/* X_ITE v4.2.2-292 */
+/* X_ITE v4.2.2-293 */
 
 (function () {
 
@@ -24949,6 +24949,17 @@ function ($,
 		{
 			// First try to get a named node with the node's name.
 
+			function needsName (baseNode)
+			{
+				if (baseNode .getCloneCount () > 1)
+					return true;
+
+				if (baseNode .hasRoutes ())
+					return true;
+
+				return false;
+			}
+
 			var name = this .getName ();
 		
 			if (name .length)
@@ -24959,6 +24970,11 @@ function ($,
 				}
 				catch (error)
 				{ }
+			}
+			else
+			{
+				if (needsName (this))
+					this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (""), this);
 			}
 
 			// Create copy.
@@ -39006,460 +39022,6 @@ define ('x_ite/Browser/Shaders/X3DShadersContext',[],function ()
  ******************************************************************************/
 
 
-define ('x_ite/Components/Shape/X3DAppearanceNode',[
-	"x_ite/Fields",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DAppearanceNode (executionContext)
-	{
-		X3DNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DAppearanceNode);
-		
-		this .addChildObjects ("transparent", new Fields .SFBool ());
-	}
-
-	X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: X3DAppearanceNode,
-		initialize: function ()
-		{
-			X3DNode .prototype .initialize .call (this);
-		},
-	});
-
-	return X3DAppearanceNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Shape/Appearance',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Shape/X3DAppearanceNode",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DAppearanceNode,
-          X3DCast,
-          X3DConstants)
-{
-"use strict";
-
-	function Appearance (executionContext)
-	{
-		X3DAppearanceNode .call (this, executionContext);
-
-		this .addType (X3DConstants .Appearance);
-
-		this .linePropertiesNode   = null;
-		this .materialNode         = null;
-		this .textureNode          = null;
-		this .textureTransformNode = null;
-		this .shaderNodes          = [ ];
-		this .shaderNode           = null;
-		this .blendModeNode        = null;
-	}
-
-	Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
-	{
-		constructor: Appearance,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "material",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",          new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "blendMode",        new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Appearance";
-		},
-		getComponentName: function ()
-		{
-			return "Shape";
-		},
-		getContainerField: function ()
-		{
-			return "appearance";
-		},
-		initialize: function ()
-		{
-			X3DAppearanceNode .prototype .initialize .call (this);
-
-			this .isLive () .addInterest ("set_live__", this);
-
-			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
-			this .material_         .addInterest ("set_material__",         this);
-			this .texture_          .addInterest ("set_texture__",          this);
-			this .textureTransform_ .addInterest ("set_textureTransform__", this);
-			this .shaders_          .addInterest ("set_shaders__",          this);
-			this .blendMode_        .addInterest ("set_blendMode__",        this);
-
-			this .set_lineProperties__ ();
-			this .set_material__ ();
-			this .set_texture__ ();
-			this .set_textureTransform__ ();
-			this .set_shaders__ ();
-			this .set_blendMode__ ();
-		},
-		getLineProperties: function ()
-		{
-			return this .linePropertiesNode;
-		},
-		getMaterial: function ()
-		{
-			return this .materialNode;
-		},
-		getTexture: function ()
-		{
-			return this .textureNode;
-		},
-		getTextureTransform: function ()
-		{
-			return this .textureTransformNode;
-		},
-		set_live__: function ()
-		{
-			if (this .isLive () .getValue ())
-			{
-				if (this .shaderNode)
-					this .getBrowser () .addShader (this .shaderNode);
-			}
-			else
-			{
-				if (this .shaderNode)
-				this .getBrowser () .removeShader (this .shaderNode);
-			}
-		},
-		set_lineProperties__: function ()
-		{
-			this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
-		},
-		set_material__: function ()
-		{
-			if (this .materialNode)
-				this .materialNode .transparent_ .removeInterest ("set_transparent__", this);
-
-			this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this .material_);
-
-			if (this .materialNode)
-				this .materialNode .transparent_ .addInterest ("set_transparent__", this);
-			
-			this .set_transparent__ ();
-		},
-		set_texture__: function ()
-		{
-			if (this .textureNode)
-				this .textureNode .transparent_ .removeInterest ("set_transparent__", this);
-
-			this .textureNode = X3DCast (X3DConstants .X3DTextureNode, this .texture_);
-
-			if (this .textureNode)
-				this .textureNode .transparent_ .addInterest ("set_transparent__", this);
-
-			this .generatedCubeMapTexture = X3DCast (X3DConstants .GeneratedCubeMapTexture, this .texture_);
-
-			this .set_transparent__ ();
-		},
-		set_textureTransform__: function ()
-		{
-			this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this .textureTransform_);
-			
-			if (this .textureTransformNode)
-				return;
-
-			this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
-		},
-		set_shaders__: function ()
-		{
-			var
-				shaders     = this .shaders_ .getValue (),
-				shaderNodes = this .shaderNodes;
-
-			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
-				shaderNodes [i] .isValid_ .removeInterest ("set_shader__", this);
-		
-			shaderNodes .length = 0;
-		
-			for (var i = 0, length = shaders .length; i < length; ++ i)
-			{
-				var shaderNode = X3DCast (X3DConstants .X3DShaderNode, shaders [i]);
-		
-				if (shaderNode)
-				{
-					shaderNodes .push (shaderNode);
-					shaderNode .isValid_ .addInterest ("set_shader__", this);
-				}
-			}
-
-			this .set_shader__ ();
-		},
-		set_shader__: function ()
-		{
-			var shaderNodes = this .shaderNodes;
-
-			if (this .shaderNode)
-				this .getBrowser () .removeShader (this .shaderNode);
-
-			this .shaderNode = null;
-
-			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
-			{
-				if (shaderNodes [i] .isValid_ .getValue ())
-				{
-					this .shaderNode = shaderNodes [i];
-					break;
-				}
-			}
-
-			if (this .isLive () .getValue ())
-			{
-				if (this .shaderNode)
-					this .getBrowser () .addShader (this .shaderNode);
-			}
-
-			this .set_transparent__ ();
-		},
-		set_blendMode__: function ()
-		{
-			this .blendModeNode = X3DCast (X3DConstants .BlendMode, this .blendMode_);
-
-			this .set_transparent__ ();
-		},
-		set_transparent__: function ()
-		{
-			this .transparent_ = (this .materialNode && this .materialNode .transparent_ .getValue ()) ||
-			                     (this .textureNode  && this .textureNode  .transparent_ .getValue () ||
-			                      this .blendModeNode);
-		},
-		traverse: function (type, renderObject)
-		{
-			if (this .generatedCubeMapTexture)
-				this .generatedCubeMapTexture .traverse (type, renderObject);
-
-			if (this .shaderNode)
-				this .shaderNode .traverse (type, renderObject);
-		},
-		enable: function (gl, context)
-		{
-			var browser = context .renderer .getBrowser ();
-
-			context .linePropertiesNode   = this .linePropertiesNode;
-			context .materialNode         = this .materialNode;
-			context .textureNode          = this .textureNode;
-			context .textureTransformNode = this .textureTransformNode;
-
-			if (this .shaderNode)
-				context .shaderNode = this .shaderNode;
-			else if (context .shadow)
-				context .shaderNode = browser .getShadowShader ();
-			else
-				context .shaderNode = browser .getDefaultShader ();
-
-			if (this .blendModeNode)
-				this .blendModeNode .enable (gl);
-		},
-		disable: function (gl, context)
-		{
-			if (this .blendModeNode)
-				this .blendModeNode .disable (gl);
-		},
-	});
-
-	return Appearance;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Shape/X3DShapeContext',[
-	"x_ite/Components/Shape/Appearance",
-],
-function (Appearance)
-{
-"use strict";
-
-	function X3DShapeContext ()
-	{
-		this .defaultAppearance = new Appearance (this .getPrivateScene ());
-	}
-
-	X3DShapeContext .prototype =
-	{
-		initialize: function ()
-		{
-			this .defaultAppearance .setup ();
-		},
-		getDefaultAppearance: function ()
-		{
-			return this .defaultAppearance;
-		},
-	};
-
-	return X3DShapeContext;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Components/Shape/X3DAppearanceChildNode',[
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
@@ -43285,7 +42847,7 @@ function (Fields,
 });
 
 
-define('text!x_ite/Browser/Shaders/Inlcude/Shadow.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Pack.h"\n\n#ifdef X3D_SHADOWS\n\nuniform sampler2D x3d_ShadowMap [x3d_MaxLights];\n\nfloat\ngetShadowDepth (const in int index, const in vec2 shadowCoord)\n{\n\t#if x3d_MaxShadows > 0\n\tif (index == 0)\n\t\treturn unpack (texture2D (x3d_ShadowMap [0], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 1\n\tif (index == 1)\n\t\treturn unpack (texture2D (x3d_ShadowMap [1], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 2\n\tif (index == 2)\n\t\treturn unpack (texture2D (x3d_ShadowMap [2], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 3\n\tif (index == 3)\n\t\treturn unpack (texture2D (x3d_ShadowMap [3], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 4\n\tif (index == 4)\n\t\treturn unpack (texture2D (x3d_ShadowMap [4], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 5\n\tif (index == 5)\n\t\treturn unpack (texture2D (x3d_ShadowMap [5], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 6\n\tif (index == 6)\n\t\treturn unpack (texture2D (x3d_ShadowMap [6], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxShadows > 7\n\tif (index == 7)\n\t\treturn unpack (texture2D (x3d_ShadowMap [7], shadowCoord));\n\t#endif\n\n\treturn 0.0;\n}\n\nfloat\ntexture2DCompare (const in int index, const in vec2 texCoord, const in float compare)\n{\n\treturn step (getShadowDepth (index, texCoord), compare);\n}\n\nfloat\ntexture2DShadowLerp (const in int index, const in vec2 texelSize, const in float shadowMapSize, const in vec2 texCoord, const in float compare)\n{\n\tconst vec2 offset = vec2 (0.0, 1.0);\n\n\tvec2 centroidTexCoord = floor (texCoord * shadowMapSize + 0.5) / shadowMapSize;\n\n\tfloat lb = texture2DCompare (index, centroidTexCoord + texelSize * offset .xx, compare);\n\tfloat lt = texture2DCompare (index, centroidTexCoord + texelSize * offset .xy, compare);\n\tfloat rb = texture2DCompare (index, centroidTexCoord + texelSize * offset .yx, compare);\n\tfloat rt = texture2DCompare (index, centroidTexCoord + texelSize * offset .yy, compare);\n\n\tvec2 f = fract (texCoord * shadowMapSize + 0.5);\n\n\tfloat a = mix (lb, lt, f.y);\n\tfloat b = mix (rb, rt, f.y);\n\tfloat c = mix (a, b, f.x);\n\n\treturn c;\n}\n\n//https://gist.github.com/tschw/da10c43c467ce8afd0c4\nvec2\ncubeToUVCompact (in vec3 v, const float texelSizeY)\n{\n\t// Compact layout:\n\t//\n\t// xzXZ\t\tChar: Axis\n\t// yyYY\t\tCase: Sign\n\n\t// Number of texels to avoid at the edge of each square\n\n\tvec3 absV = abs (v);\n\n\t// Intersect unit cube\n\n\tfloat scaleToCube = 1.0 / max (absV .x, max (absV .y, absV .z));\n\n\tabsV *= scaleToCube;\n\n\t// Apply scale to avoid seams\n\n\t// one texel less per square (half a texel on each side)\n\tv *= scaleToCube * (1.0 - 2.0 * texelSizeY);\n\n\t// Unwrap\n\n\t// space: -1 ... 1 range for each square\n\t//\n\t// #X##\t\tdim    := ( 4 , 2 )\n\t//  # #\t\tcenter := ( 1 , 1 )\n\n\tvec2 planar = v .xy;\n\n\tfloat almostATexel = 1.5 * texelSizeY;\n\tfloat almostOne    = 1.0 - almostATexel;\n\n\tif (absV .z >= almostOne)\n\t{\n\t\t// zZ\n\n\t\tif (v.z > 0.0)\n\t\t\tplanar .x = 4.0 - v.x;\n\t}\n\telse if (absV .x >= almostOne)\n\t{\n\t\t// xX\n\n\t\tfloat signX = sign (v.x);\n\n\t\tplanar .x = v.z * signX + 2.0 * signX;\n\t}\n\telse if (absV .y >= almostOne)\n\t{\n\t\t// yY\n\n\t\tfloat signY = sign (v.y);\n\n\t\tplanar .x = (v.x + 0.5 + signY) * 2.0;\n\t\tplanar .y = v.z * signY - 2.0;\n\t}\n\n\t// Transform to UV space\n\n\t// scale := 0.5 / dim\n\t// translate := ( center + 0.5 ) / dim\n\treturn vec2 (0.125, 0.25) * planar + vec2 (0.375, 0.75);\n}\n\nmat4\ngetPointLightRotations (const in vec3 vector)\n{\n\tmat4 rotations [6];\n\trotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left\n\trotations [1] = mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1);  // right\n\trotations [2] = mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1);  // front\n\trotations [3] = mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1);  // back\n\trotations [4] = mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1);  // bottom\n\trotations [5] = mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1);  // top\n\n\tvec3 a = abs (vector .xyz);\n\n\tif (a .x > a .y)\n\t{\n\t\tif (a .x > a .z)\n\t\t\treturn vector .x > 0.0 ? rotations [1] : rotations [0];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\telse\n\t{\n\t\tif (a .y > a .z)\n\t\t\treturn vector .y > 0.0 ? rotations [5] : rotations [4];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\n\treturn rotations [3];\n}\n\n// DEBUG\n//vec4 tex;\n\nfloat\ngetShadowIntensity (const in int index, const in x3d_LightSourceParameters light)\n{\n\tif (light .type == x3d_PointLight)\n\t{\n\t\tconst mat4 biasMatrix = mat4 (0.5, 0.0, 0.0, 0.0,\n\t\t\t                           0.0, 0.5, 0.0, 0.0,\n\t\t\t                           0.0, 0.0, 0.5, 0.0,\n\t\t\t                           0.5, 0.5, 0.5, 1.0);\n\n\t\tconst mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);\n\n\t\tvec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));\n\n\t\t// for point lights, the uniform @vShadowCoord is re-purposed to hold\n\t\t// the vector from the light to the world-space position of the fragment.\n\t\tvec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);\n\t\tvec3 lightToPosition = shadowCoord .xyz;\n\n\t\tshadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));\n\t\tshadowCoord .z   -= light .shadowBias;\n\t\tshadowCoord .xyz /= shadowCoord .w;\n\n\t\t// DEBUG\n\t\t//tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));\n\n\t\t#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)\n\t\n\t\t\tvec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tfloat value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);\n\n\t\t\treturn light .shadowIntensity * value;\n\t\n\t\t#endif\n\t}\n\telse\n\t{\n\t\t#if defined (X3D_PCF_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize .x;\n\t\t\tfloat dy0 = - texelSize .y;\n\t\t\tfloat dx1 = + texelSize .x;\n\t\t\tfloat dy1 = + texelSize .y;\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#elif defined (X3D_PCF_SOFT_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize.x;\n\t\t\tfloat dy0 = - texelSize.y;\n\t\t\tfloat dx1 = + texelSize.x;\n\t\t\tfloat dy1 = + texelSize.y;\n\t\t\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * ( 1.0 / 9.0 );\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tvec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#endif\n\t}\n\n\treturn 0.0;\n}\n\n#endif';});
+define('text!x_ite/Browser/Shaders/Inlcude/Shadow.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Pack.h"\n\n#ifdef X3D_SHADOWS\n\nuniform sampler2D x3d_ShadowMap [x3d_MaxLights];\n\nfloat\ngetShadowDepth (const in int index, const in vec2 shadowCoord)\n{\n\t#if x3d_MaxLights > 0\n\tif (index == 0)\n\t\treturn unpack (texture2D (x3d_ShadowMap [0], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 1\n\tif (index == 1)\n\t\treturn unpack (texture2D (x3d_ShadowMap [1], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 2\n\tif (index == 2)\n\t\treturn unpack (texture2D (x3d_ShadowMap [2], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 3\n\tif (index == 3)\n\t\treturn unpack (texture2D (x3d_ShadowMap [3], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 4\n\tif (index == 4)\n\t\treturn unpack (texture2D (x3d_ShadowMap [4], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 5\n\tif (index == 5)\n\t\treturn unpack (texture2D (x3d_ShadowMap [5], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 6\n\tif (index == 6)\n\t\treturn unpack (texture2D (x3d_ShadowMap [6], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 7\n\tif (index == 7)\n\t\treturn unpack (texture2D (x3d_ShadowMap [7], shadowCoord));\n\t#endif\n\n\treturn 0.0;\n}\n\nfloat\ntexture2DCompare (const in int index, const in vec2 texCoord, const in float compare)\n{\n\treturn step (getShadowDepth (index, texCoord), compare);\n}\n\nfloat\ntexture2DShadowLerp (const in int index, const in vec2 texelSize, const in float shadowMapSize, const in vec2 texCoord, const in float compare)\n{\n\tconst vec2 offset = vec2 (0.0, 1.0);\n\n\tvec2 centroidTexCoord = floor (texCoord * shadowMapSize + 0.5) / shadowMapSize;\n\n\tfloat lb = texture2DCompare (index, centroidTexCoord + texelSize * offset .xx, compare);\n\tfloat lt = texture2DCompare (index, centroidTexCoord + texelSize * offset .xy, compare);\n\tfloat rb = texture2DCompare (index, centroidTexCoord + texelSize * offset .yx, compare);\n\tfloat rt = texture2DCompare (index, centroidTexCoord + texelSize * offset .yy, compare);\n\n\tvec2 f = fract (texCoord * shadowMapSize + 0.5);\n\n\tfloat a = mix (lb, lt, f.y);\n\tfloat b = mix (rb, rt, f.y);\n\tfloat c = mix (a, b, f.x);\n\n\treturn c;\n}\n\n//https://gist.github.com/tschw/da10c43c467ce8afd0c4\nvec2\ncubeToUVCompact (in vec3 v, const float texelSizeY)\n{\n\t// Compact layout:\n\t//\n\t// xzXZ\t\tChar: Axis\n\t// yyYY\t\tCase: Sign\n\n\t// Number of texels to avoid at the edge of each square\n\n\tvec3 absV = abs (v);\n\n\t// Intersect unit cube\n\n\tfloat scaleToCube = 1.0 / max (absV .x, max (absV .y, absV .z));\n\n\tabsV *= scaleToCube;\n\n\t// Apply scale to avoid seams\n\n\t// one texel less per square (half a texel on each side)\n\tv *= scaleToCube * (1.0 - 2.0 * texelSizeY);\n\n\t// Unwrap\n\n\t// space: -1 ... 1 range for each square\n\t//\n\t// #X##\t\tdim    := ( 4 , 2 )\n\t//  # #\t\tcenter := ( 1 , 1 )\n\n\tvec2 planar = v .xy;\n\n\tfloat almostATexel = 1.5 * texelSizeY;\n\tfloat almostOne    = 1.0 - almostATexel;\n\n\tif (absV .z >= almostOne)\n\t{\n\t\t// zZ\n\n\t\tif (v.z > 0.0)\n\t\t\tplanar .x = 4.0 - v.x;\n\t}\n\telse if (absV .x >= almostOne)\n\t{\n\t\t// xX\n\n\t\tfloat signX = sign (v.x);\n\n\t\tplanar .x = v.z * signX + 2.0 * signX;\n\t}\n\telse if (absV .y >= almostOne)\n\t{\n\t\t// yY\n\n\t\tfloat signY = sign (v.y);\n\n\t\tplanar .x = (v.x + 0.5 + signY) * 2.0;\n\t\tplanar .y = v.z * signY - 2.0;\n\t}\n\n\t// Transform to UV space\n\n\t// scale := 0.5 / dim\n\t// translate := ( center + 0.5 ) / dim\n\treturn vec2 (0.125, 0.25) * planar + vec2 (0.375, 0.75);\n}\n\nmat4\ngetPointLightRotations (const in vec3 vector)\n{\n\tmat4 rotations [6];\n\trotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left\n\trotations [1] = mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1);  // right\n\trotations [2] = mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1);  // front\n\trotations [3] = mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1);  // back\n\trotations [4] = mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1);  // bottom\n\trotations [5] = mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1);  // top\n\n\tvec3 a = abs (vector .xyz);\n\n\tif (a .x > a .y)\n\t{\n\t\tif (a .x > a .z)\n\t\t\treturn vector .x > 0.0 ? rotations [1] : rotations [0];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\telse\n\t{\n\t\tif (a .y > a .z)\n\t\t\treturn vector .y > 0.0 ? rotations [5] : rotations [4];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\n\treturn rotations [3];\n}\n\n// DEBUG\n//vec4 tex;\n\nfloat\ngetShadowIntensity (const in int index, const in x3d_LightSourceParameters light)\n{\n\tif (light .type == x3d_PointLight)\n\t{\n\t\tconst mat4 biasMatrix = mat4 (0.5, 0.0, 0.0, 0.0,\n\t\t\t                           0.0, 0.5, 0.0, 0.0,\n\t\t\t                           0.0, 0.0, 0.5, 0.0,\n\t\t\t                           0.5, 0.5, 0.5, 1.0);\n\n\t\tconst mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);\n\n\t\tvec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));\n\n\t\t// for point lights, the uniform @vShadowCoord is re-purposed to hold\n\t\t// the vector from the light to the world-space position of the fragment.\n\t\tvec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);\n\t\tvec3 lightToPosition = shadowCoord .xyz;\n\n\t\tshadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));\n\t\tshadowCoord .z   -= light .shadowBias;\n\t\tshadowCoord .xyz /= shadowCoord .w;\n\n\t\t// DEBUG\n\t\t//tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));\n\n\t\t#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)\n\t\n\t\t\tvec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tfloat value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);\n\n\t\t\treturn light .shadowIntensity * value;\n\t\n\t\t#endif\n\t}\n\telse\n\t{\n\t\t#if defined (X3D_PCF_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize .x;\n\t\t\tfloat dy0 = - texelSize .y;\n\t\t\tfloat dx1 = + texelSize .x;\n\t\t\tfloat dy1 = + texelSize .y;\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#elif defined (X3D_PCF_SOFT_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize.x;\n\t\t\tfloat dy0 = - texelSize.y;\n\t\t\tfloat dx1 = + texelSize.x;\n\t\t\tfloat dy1 = + texelSize.y;\n\t\t\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * ( 1.0 / 9.0 );\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tvec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#endif\n\t}\n\n\treturn 0.0;\n}\n\n#endif';});
 
 
 define('text!x_ite/Browser/Shaders/Inlcude/Pack.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#ifdef TITANIA\n\nvec4\npack (const in float value)\n{\n\treturn vec4 (0.0, 0.0, 0.0, 0.0);\n}\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .r;\n}\n\n#endif\n\n#ifdef X_ITE\n\nvec4\npack (const in float value)\n{\n\tconst vec3 bitShifts = vec3 (255.0,\n\t                             255.0 * 255.0,\n\t                             255.0 * 255.0 * 255.0);\n\n\treturn vec4 (value, fract (value * bitShifts));\n}\n\n#ifdef X3D_DEPTH_TEXTURE\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .r;\n}\n\n#else\n\nfloat\nunpack (const vec4 color)\n{\n\tconst vec3 bitShifts = vec3 (1.0 / 255.0,\n\t                             1.0 / (255.0 * 255.0),\n\t                             1.0 / (255.0 * 255.0 * 255.0));\n\n\treturn color .x + dot (color .gba, bitShifts);\n}\n\n#endif\n#endif\n';});
@@ -43506,7 +43068,6 @@ function (Shadow,
 			definitions += "#define x3d_DirectionalLight  1\n";
 			definitions += "#define x3d_PointLight        2\n";
 			definitions += "#define x3d_SpotLight         3\n";
-			definitions += "#define x3d_MaxShadows        4\n";
 			definitions += "#define X3D_PCF_FILTERING\n";
 
 			definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
@@ -53966,10 +53527,12 @@ function ($,
 			}
 
 			var vertexShader = new ShaderPart (browser .getPrivateScene ());
+			vertexShader .setName (name + "Vertex");
 			vertexShader .url_ .push ("data:text/plain;charset=utf-8," + vs);
 			vertexShader .setup ();
 
 			var fragmentShader = new ShaderPart (browser .getPrivateScene ());
+			fragmentShader .setName (name + "Fragment");
 			fragmentShader .type_ = "FRAGMENT";
 			fragmentShader .url_ .push ("data:text/plain;charset=utf-8," + fs);
 			fragmentShader .setup ();
@@ -54082,6 +53645,469 @@ function ($,
 	};
 
 	return X3DRenderingContext;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Shape/X3DAppearanceNode',[
+	"x_ite/Fields",
+	"x_ite/Components/Core/X3DNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function X3DAppearanceNode (executionContext)
+	{
+		X3DNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DAppearanceNode);
+		
+		this .addChildObjects ("transparent", new Fields .SFBool ());
+	}
+
+	X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+	{
+		constructor: X3DAppearanceNode,
+		initialize: function ()
+		{
+			X3DNode .prototype .initialize .call (this);
+		},
+	});
+
+	return X3DAppearanceNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Shape/Appearance',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Shape/X3DAppearanceNode",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DAppearanceNode,
+          X3DCast,
+          X3DConstants)
+{
+"use strict";
+
+	function Appearance (executionContext)
+	{
+		X3DAppearanceNode .call (this, executionContext);
+
+		this .addType (X3DConstants .Appearance);
+
+		this .linePropertiesNode   = null;
+		this .materialNode         = null;
+		this .textureNode          = null;
+		this .textureTransformNode = null;
+		this .shaderNodes          = [ ];
+		this .shaderNode           = null;
+		this .blendModeNode        = null;
+	}
+
+	Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
+	{
+		constructor: Appearance,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",   new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",   new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "material",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",          new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "blendMode",        new Fields .SFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "Appearance";
+		},
+		getComponentName: function ()
+		{
+			return "Shape";
+		},
+		getContainerField: function ()
+		{
+			return "appearance";
+		},
+		initialize: function ()
+		{
+			X3DAppearanceNode .prototype .initialize .call (this);
+
+			this .isLive () .addInterest ("set_live__", this);
+
+			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
+			this .material_         .addInterest ("set_material__",         this);
+			this .texture_          .addInterest ("set_texture__",          this);
+			this .textureTransform_ .addInterest ("set_textureTransform__", this);
+			this .shaders_          .addInterest ("set_shaders__",          this);
+			this .blendMode_        .addInterest ("set_blendMode__",        this);
+
+			this .set_live__ ();
+			this .set_lineProperties__ ();
+			this .set_material__ ();
+			this .set_texture__ ();
+			this .set_textureTransform__ ();
+			this .set_shaders__ ();
+			this .set_blendMode__ ();
+		},
+		getLineProperties: function ()
+		{
+			return this .linePropertiesNode;
+		},
+		getMaterial: function ()
+		{
+			return this .materialNode;
+		},
+		getTexture: function ()
+		{
+			return this .textureNode;
+		},
+		getTextureTransform: function ()
+		{
+			return this .textureTransformNode;
+		},
+		set_live__: function ()
+		{
+			if (this .isLive () .getValue ())
+			{
+				this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
+
+				if (this .shaderNode)
+					this .getBrowser () .addShader (this .shaderNode);
+			}
+			else
+			{
+				this .getBrowser () .getBrowserOptions () .Shading_ .removeInterest ("set_shading__", this);
+
+				if (this .shaderNode)
+					this .getBrowser () .removeShader (this .shaderNode);
+			}
+		},
+		set_lineProperties__: function ()
+		{
+			this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
+		},
+		set_material__: function ()
+		{
+			if (this .materialNode)
+				this .materialNode .transparent_ .removeInterest ("set_transparent__", this);
+
+			this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this .material_);
+
+			if (this .materialNode)
+				this .materialNode .transparent_ .addInterest ("set_transparent__", this);
+			
+			this .set_transparent__ ();
+		},
+		set_texture__: function ()
+		{
+			if (this .textureNode)
+				this .textureNode .transparent_ .removeInterest ("set_transparent__", this);
+
+			this .textureNode = X3DCast (X3DConstants .X3DTextureNode, this .texture_);
+
+			if (this .textureNode)
+				this .textureNode .transparent_ .addInterest ("set_transparent__", this);
+
+			this .generatedCubeMapTexture = X3DCast (X3DConstants .GeneratedCubeMapTexture, this .texture_);
+
+			this .set_transparent__ ();
+		},
+		set_textureTransform__: function ()
+		{
+			this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this .textureTransform_);
+			
+			if (this .textureTransformNode)
+				return;
+
+			this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
+		},
+		set_shaders__: function ()
+		{
+			var
+				shaders     = this .shaders_ .getValue (),
+				shaderNodes = this .shaderNodes;
+
+			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
+				shaderNodes [i] .isValid_ .removeInterest ("set_shader__", this);
+		
+			shaderNodes .length = 0;
+		
+			for (var i = 0, length = shaders .length; i < length; ++ i)
+			{
+				var shaderNode = X3DCast (X3DConstants .X3DShaderNode, shaders [i]);
+		
+				if (shaderNode)
+				{
+					shaderNodes .push (shaderNode);
+					shaderNode .isValid_ .addInterest ("set_shader__", this);
+				}
+			}
+
+			this .set_shader__ ();
+		},
+		set_shader__: function ()
+		{
+			var shaderNodes = this .shaderNodes;
+
+			if (this .shaderNode)
+				this .getBrowser () .removeShader (this .shaderNode);
+
+			this .shaderNode = null;
+
+			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
+			{
+				if (shaderNodes [i] .isValid_ .getValue ())
+				{
+					this .shaderNode = shaderNodes [i];
+					break;
+				}
+			}
+
+			if (! this .shaderNode)
+				this .shaderNode = this .getBrowser () .getDefaultShader ();
+
+			if (this .isLive () .getValue ())
+			{
+				if (this .shaderNode)
+					this .getBrowser () .addShader (this .shaderNode);
+			}
+
+			this .set_transparent__ ();
+		},
+		set_shading__: function ()
+		{
+			this .set_shader__ ();
+		},
+		set_blendMode__: function ()
+		{
+			this .blendModeNode = X3DCast (X3DConstants .BlendMode, this .blendMode_);
+
+			this .set_transparent__ ();
+		},
+		set_transparent__: function ()
+		{
+			this .transparent_ = (this .materialNode && this .materialNode .transparent_ .getValue ()) ||
+			                     (this .textureNode  && this .textureNode  .transparent_ .getValue () ||
+			                      this .blendModeNode);
+		},
+		traverse: function (type, renderObject)
+		{
+			if (this .generatedCubeMapTexture)
+				this .generatedCubeMapTexture .traverse (type, renderObject);
+
+			this .shaderNode .traverse (type, renderObject);
+		},
+		enable: function (gl, context)
+		{
+			var browser = context .renderer .getBrowser ();
+
+			context .linePropertiesNode   = this .linePropertiesNode;
+			context .materialNode         = this .materialNode;
+			context .textureNode          = this .textureNode;
+			context .textureTransformNode = this .textureTransformNode;
+
+			if (context .shadow)
+				context .shaderNode = browser .getShadowShader ();
+			else
+				context .shaderNode = this .shaderNode;
+
+			if (this .blendModeNode)
+				this .blendModeNode .enable (gl);
+		},
+		disable: function (gl, context)
+		{
+			if (this .blendModeNode)
+				this .blendModeNode .disable (gl);
+		},
+	});
+
+	return Appearance;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Shape/X3DShapeContext',[
+	"x_ite/Components/Shape/Appearance",
+],
+function (Appearance)
+{
+"use strict";
+
+	function X3DShapeContext ()
+	{
+		this .defaultAppearance = new Appearance (this .getPrivateScene ());
+	}
+
+	X3DShapeContext .prototype =
+	{
+		initialize: function ()
+		{
+			this .defaultAppearance .setup ();
+		},
+		getDefaultAppearance: function ()
+		{
+			return this .defaultAppearance;
+		},
+	};
+
+	return X3DShapeContext;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -77419,7 +77445,7 @@ function ($,
 		},
 		pushShadow: function (value)
 		{
-			this .shadow .push (value || this .shadow [this .shadow .length - 1]);
+			this .shadow .unshift (value || this .shadow [0]);
 		},
 		popShadow: function (value)
 		{
@@ -77787,7 +77813,7 @@ function ($,
 				context .shapeNode = shapeNode;
 				context .distance  = bboxCenter .z - radius;
 				context .fogNode   = this .localFog;
-				context .shadow    = this .shadow [this .shadow .length - 1];
+				context .shadow    = this .shadow [0];
 
 				// Clip planes and local lights
 
@@ -78141,10 +78167,9 @@ function ($,
 				cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 				projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 	
-				browser .getPointShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getLineShader    () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getDefaultShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getShadowShader  () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getPointShader  () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getLineShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getShadowShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 	
 				for (var id in shaders)
 					shaders [id] .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
@@ -78202,7 +78227,8 @@ function ($,
 				// Reset GeneratedCubeMapTextures.
 	
 				generatedCubeMapTextures .length = 0;
-	
+				shaders                  .length = 0;
+
 				if (this .isIndependent ())
 				{
 					// Recycle clip planes.
@@ -78230,7 +78256,7 @@ function ($,
 		
 					lights .length = 0;
 				}
-	
+
 				this .globalLights .length = 0;
 				this .lights       .length = 0;
 			};
@@ -81375,8 +81401,8 @@ define ('x_ite/Browser/X3DBrowserContext',[
 	"x_ite/Browser/Scripting/X3DScriptingContext",
 	"x_ite/Browser/Networking/X3DNetworkingContext",
 	"x_ite/Browser/Shaders/X3DShadersContext",
-	"x_ite/Browser/Shape/X3DShapeContext",
 	"x_ite/Browser/Rendering/X3DRenderingContext",
+	"x_ite/Browser/Shape/X3DShapeContext",
 	"x_ite/Browser/Geometry2D/X3DGeometry2DContext",
 	"x_ite/Browser/Geometry3D/X3DGeometry3DContext",
 	"x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext",
@@ -81401,8 +81427,8 @@ function (SFTime,
           X3DScriptingContext,
           X3DNetworkingContext,
           X3DShadersContext,
-          X3DShapeContext,
           X3DRenderingContext,
+          X3DShapeContext,
           X3DGeometry2DContext,
           X3DGeometry3DContext,
           X3DPointingDeviceSensorContext,
@@ -81430,8 +81456,8 @@ function (SFTime,
 		X3DScriptingContext            .call (this);
 		X3DNetworkingContext           .call (this);
 		X3DShadersContext              .call (this);
-		X3DShapeContext                .call (this);
 		X3DRenderingContext            .call (this);
+		X3DShapeContext                .call (this);
 		X3DGeometry2DContext           .call (this);
 		X3DGeometry3DContext           .call (this);
 		X3DPointingDeviceSensorContext .call (this);
@@ -81471,8 +81497,8 @@ function (SFTime,
 		X3DScriptingContext .prototype,
 		X3DNetworkingContext .prototype,
 		X3DShadersContext .prototype,
-		X3DShapeContext .prototype,
 		X3DRenderingContext .prototype,
+		X3DShapeContext .prototype,
 		X3DGeometry2DContext .prototype,
 		X3DGeometry3DContext .prototype,
 		X3DPointingDeviceSensorContext .prototype,
@@ -81497,8 +81523,8 @@ function (SFTime,
 			X3DScriptingContext            .prototype .initialize .call (this);
 			X3DNetworkingContext           .prototype .initialize .call (this);
 			X3DShadersContext              .prototype .initialize .call (this);
-			X3DShapeContext                .prototype .initialize .call (this);
 			X3DRenderingContext            .prototype .initialize .call (this);
+			X3DShapeContext                .prototype .initialize .call (this);
 			X3DGeometry2DContext           .prototype .initialize .call (this);
 			X3DGeometry3DContext           .prototype .initialize .call (this);
 			X3DPointingDeviceSensorContext .prototype .initialize .call (this);
@@ -83112,7 +83138,7 @@ function (X3DGeometryNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
 	
-				if (shaderNode === browser .getDefaultShader ())
+				if (shaderNode === browser .getDefaultShader () || shaderNode === browser .getShadowShader ())
 					shaderNode = this .getShader (browser);
 	
 				// Setup shader.

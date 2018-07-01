@@ -239,6 +239,17 @@ function ($,
 		{
 			// First try to get a named node with the node's name.
 
+			function needsName (baseNode)
+			{
+				if (baseNode .getCloneCount () > 1)
+					return true;
+
+				if (baseNode .hasRoutes ())
+					return true;
+
+				return false;
+			}
+
 			var name = this .getName ();
 		
 			if (name .length)
@@ -249,6 +260,11 @@ function ($,
 				}
 				catch (error)
 				{ }
+			}
+			else
+			{
+				if (needsName (this))
+					this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (""), this);
 			}
 
 			// Create copy.
