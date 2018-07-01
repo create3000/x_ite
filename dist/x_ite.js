@@ -1,4 +1,4 @@
-/* X_ITE v4.2.2-293 */
+/* X_ITE v4.2.3a-293 */
 
 (function () {
 
@@ -12873,7 +12873,6 @@ function ()
 		constructor: X3DObject,
 		_id: 0,
 		_name: "",
-		_tainted: false,
 		_interests: { },
 		getId: function ()
 		{
@@ -12889,33 +12888,33 @@ function ()
 		{
 			return this ._name;
 		},
-		setTainted: function (value)
+		hasInterest: function (callbackName, object)
 		{
-			this ._tainted = value;
+			return Boolean (this ._interests [object .getId () + callbackName]);
 		},
-		getTainted: function ()
-		{
-			return this ._tainted;
-		},
-		hasInterest: function (callback, object)
-		{
-			return Boolean (this ._interests [object .getId () + callback]);
-		},
-		addInterest: function (callback, object)
+		addInterest: function (callbackName, object)
 		{
 			if (! this .hasOwnProperty ("_interests"))
 				this ._interests = { };
 
-			var args = Array .prototype .slice .call (arguments, 0);
+//			var args = Array .prototype .slice .call (arguments, 0);
+//
+//			args [0] = object;
+//			args [1] = this;
+//
+//			this ._interests [object .getId () + callbackName] = Function .prototype .bind .apply (object [callbackName], args);
 
-			args [0] = arguments [1];
-			args [1] = this;
+			var
+				callback = object [callbackName],
+				args     = Array .prototype .slice .call (arguments, 1);
 
-			this ._interests [object .getId () + callback] = Function .prototype .bind .apply (object [callback], args);
+			args [0] = this;
+
+			this ._interests [object .getId () + callbackName] = function () { callback .apply (object, args); };
 		},
-		removeInterest: function (callback, object)
+		removeInterest: function (callbackName, object)
 		{
-			delete this ._interests [object .getId () + callback];
+			delete this ._interests [object .getId () + callbackName];
 		},
 		getInterests: function ()
 		{
@@ -13012,12 +13011,21 @@ function (X3DObject)
 	{
 		X3DObject .call (this);
 
-		this ._parents = { };
+		this ._parents = { }; // Sparse arrays are much more expensive than plain objects!
 	}
 
 	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: X3DChildObject,
+		_tainted: false,
+		setTainted: function (value)
+		{
+			this ._tainted = value;
+		},
+		getTainted: function ()
+		{
+			return this ._tainted;
+		},
 		addEvent: function ()
 		{
 			var parents = this ._parents;
@@ -13602,12 +13610,7 @@ define ('x_ite/Base/Events',[],function ()
 				};
 			}
 
-			var
-				fromSources = event .sources,
-				toSources   = copy .sources;
-
-			for (var id in fromSources)
-				toSources [id] = fromSources [id];
+			Object .assign (copy .sources, event .sources)
 
 			return copy;
 	   },
@@ -22774,7 +22777,7 @@ function ($,
 	{
 		X3DArrayField .call (this, [ ]);
 		
-		this .target = this;
+		this ._target = this;
 
 		if (value [0] instanceof Array)
 			value = value [0];
@@ -22787,10 +22790,14 @@ function ($,
 	X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
 	{
 		constructor: X3DObjectArrayField,
+		getTarget: function ()
+		{
+			return this ._target;
+		},
 		copy: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				copy   = new (target .constructor) (),
 				array  = target .getValue ();
 
@@ -22801,7 +22808,7 @@ function ($,
 		equals: function (array)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				a      = target .getValue (),
 				b      = array .getValue (),
 				length = a .length;
@@ -22822,7 +22829,7 @@ function ($,
 		},
 		set: function (value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			target .resize (value .length, undefined, true);
 
@@ -22837,7 +22844,7 @@ function ($,
 		},
 		setValue: function (value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			target .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
 			target .addEvent ();
@@ -22845,7 +22852,7 @@ function ($,
 		unshift: function (value)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			for (var i = arguments .length - 1; i >= 0; -- i)
@@ -22854,7 +22861,7 @@ function ($,
 
 				field .setValue (arguments [i]);
 	
-				target .addChild (field);
+				target .addChildObject (field);
 
 				array .unshift (field);
 			}
@@ -22866,13 +22873,13 @@ function ($,
 		shift: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
 			{
 				var field = array .shift ();
-				target .removeChild (field);
+				target .removeChildObject (field);
 				target .addEvent ();
 				return field .valueOf ();
 			}
@@ -22880,7 +22887,7 @@ function ($,
 		push: function (value)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
@@ -22889,7 +22896,7 @@ function ($,
 
 				field .setValue (arguments [i]);
 
-				target .addChild (field);
+				target .addChildObject (field);
 
 				array .push (field);
 			}
@@ -22901,13 +22908,13 @@ function ($,
 		pop: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
 			{
 				var field = array .pop ();
-				target .removeChild (field);
+				target .removeChildObject (field);
 				target .addEvent ();
 				return field .valueOf ();
 			}
@@ -22915,7 +22922,7 @@ function ($,
 		splice: function (index, deleteCount)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (index > array .length)
@@ -22934,7 +22941,7 @@ function ($,
 		insert: function (index, array, first, last)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				args   = [index, 0];
 
 			for (var i = first; i < last; ++ i)
@@ -22943,7 +22950,7 @@ function ($,
 
 				field .setValue (array [i]);
 
-				target .addChild (field);
+				target .addChildObject (field);
 				args .push (field);
 			}
 
@@ -22953,7 +22960,7 @@ function ($,
 		},
 		find: function (first, last, value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			if ($.isFunction (value))
 			{
@@ -22980,7 +22987,7 @@ function ($,
 		},
 		remove: function (first, last, value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			if ($.isFunction (value))
 			{
@@ -23038,11 +23045,11 @@ function ($,
 		erase: function (first, last)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				values = target .getValue () .splice (first, last - first);
 				
 			for (var i = 0, length = values .length; i < length; ++ i)
-				target .removeChild (values [i]);
+				target .removeChildObject (values [i]);
 			
 			target .addEvent ();
 
@@ -23051,13 +23058,13 @@ function ($,
 		resize: function (size, value, silent)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 		
 			if (size < array .length)
 			{
 				for (var i = size, length = array .length; i < length; ++ i)
-					target .removeChild (array [i]);
+					target .removeChildObject (array [i]);
 
 				array .length = size;
 
@@ -23073,7 +23080,7 @@ function ($,
 					if (value !== undefined)
 						field .setValue (value);
 
-					target .addChild (field);
+					target .addChildObject (field);
 					array .push (field);
 				}
 
@@ -23081,18 +23088,18 @@ function ($,
 					target .addEvent ();
 			}
 		},
-		addChild: function (value)
+		addChildObject: function (value)
 		{
-			value .addParent (this .target);
+			value .addParent (this ._target);
 		},
-		removeChild: function (value)
+		removeChildObject: function (value)
 		{
-			value .removeParent (this .target);
+			value .removeParent (this ._target);
 		},
 		toStream: function (stream)
 		{
 			var
-				target    = this .target,
+				target    = this ._target,
 				array     = target .getValue (),
 				generator = Generator .Get (stream);
 
@@ -23142,7 +23149,7 @@ function ($,
 		toXMLStream: function (stream)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				length = target .length;
 
 			if (length)
@@ -23167,11 +23174,11 @@ function ($,
 		dispose: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			for (var i = 0, length = target .length; i < length; ++ i)
-				target .removeChild (array [i]);
+				target .removeChildObject (array [i]);
 
 			array .length = 0;
 
@@ -23181,8 +23188,8 @@ function ($,
 
 	Object .defineProperty (X3DObjectArrayField .prototype, "length",
 	{
-		get: function () { return this .target .getValue () .length; },
-		set: function (value) { this .target .resize (value); },
+		get: function () { return this ._target .getValue () .length; },
+		set: function (value) { this ._target .resize (value); },
 		enumerable: false,
 		configurable: false,
 	});
@@ -23252,8 +23259,6 @@ function (X3DArrayField,
 {
 "use strict";
 
-	var tmp = [ ]; // Array with components size.
-
 	var handler =
 	{
 		get: function (target, key)
@@ -23282,12 +23287,32 @@ function (X3DArrayField,
 				}
 				else
 				{
+					// Return reference to index.
+
+					var value = target ._cache [index];
+
+					if (value)
+						return value;
+
+					target ._cache [index] = value;
+
 					var value = new (valueType) ();
 
-					value .getValue = getValue .bind (value, target, index, value .getValue (), components);
-					value .addEvent = addEvent .bind (value, target, index, value .getValue (), components);
+					value ._target     = target;
+					value ._index      = index * components;
+					value ._components = components;
+
+					value .getValue = getValue;
+					value .addEvent = addEvent;
 
 					return value;
+
+//					var value = new (valueType) ();
+//
+//					value .addEvent = addEvent .bind (value, target, index * components, value .getValue (), components);
+//					value .getValue = getValue .bind (value, target, index * components, value .getValue (), components);
+//
+//					return value;
 				}
 			}
 			catch (error)
@@ -23355,7 +23380,9 @@ function (X3DArrayField,
 	{
 		X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
-		this .target = this;
+		this ._target     = this;
+		this ._cache = [ ];
+		this ._tmp        = [ ]; // Array with components size.
 
 		if (value [0] instanceof Array)
 			value = value [0];
@@ -23369,10 +23396,14 @@ function (X3DArrayField,
 	{
 		constructor: X3DTypedArrayField,
 		_length: 0,
+		getTarget: function ()
+		{
+			return this ._target;
+		},
 		copy: function ()
 		{
 			var
-				target     = this .target,
+				target     = this ._target,
 				array      = target .getValue (),
 				copy       = new (target .constructor) (),
 				copyArray  = new (target .getArrayType ()) (array);
@@ -23389,7 +23420,7 @@ function (X3DArrayField,
 				return true;
 
 			var
-				target = this .target,
+				target = this ._target,
 				length = target ._length;
 
 			if (length !== other ._length)
@@ -23409,7 +23440,7 @@ function (X3DArrayField,
 		},
 		assign: function (value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			target .set (value .getValue (), value .length);
 			target .addEvent ();
@@ -23417,7 +23448,7 @@ function (X3DArrayField,
 		set: function (otherArray /* value of field */, l /* length of field */)
 		{
 			var
-				target      = this .target,
+				target      = this ._target,
 				components  = target .getComponents (),
 				array       = target .getValue (),
 				length      = target ._length,
@@ -23452,7 +23483,7 @@ function (X3DArrayField,
 		},
 		setValue: function (value)
 		{
-			var target = this .target;
+			var target = this ._target;
 
 			if (value instanceof target .constructor)
 			{
@@ -23467,7 +23498,7 @@ function (X3DArrayField,
 		unshift: function (value)
 		{
 			var
-				target          = this .target,
+				target          = this ._target,
 				components      = target .getComponents (),
 				length          = target ._length,
 				argumentsLength = arguments .length;
@@ -23502,7 +23533,7 @@ function (X3DArrayField,
 		shift: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
@@ -23519,10 +23550,10 @@ function (X3DArrayField,
 				}
 				else
 				{
+					var tmp = target ._tmp;
+
 					for (var c = 0; c < components; ++ c)
 						tmp [c] = array [c];
-
-					tmp .length = components;
 
 					var value = Object .create (valueType .prototype);
 
@@ -23541,7 +23572,7 @@ function (X3DArrayField,
 		push: function (value)
 		{
 			var
-				target          = this .target,
+				target          = this ._target,
 				components      = target .getComponents (),
 				length          = target ._length,
 				argumentsLength = arguments .length;
@@ -23574,7 +23605,7 @@ function (X3DArrayField,
 		pop: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
@@ -23591,10 +23622,10 @@ function (X3DArrayField,
 				}
 				else
 				{
+					var tmp = target ._tmp;
+
 					for (var c = 0, a = newLength * components; c < components; ++ c, ++ a)
 						tmp [c] = array [a];
-	
-					tmp .length = components;
 
 					var value = Object .create (valueType .prototype);
 
@@ -23613,7 +23644,7 @@ function (X3DArrayField,
 		splice: function (index, deleteCount)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue (),
 				length = target ._length;
 
@@ -23635,7 +23666,7 @@ function (X3DArrayField,
 		spliceInsert: function (index, other)
 		{
 			var
-				target      = this .target,
+				target      = this ._target,
 				components  = target .getComponents (),
 				length      = target ._length,
 				otherLength = other .length;
@@ -23666,7 +23697,7 @@ function (X3DArrayField,
 		insert: function (index, other, first, last)
 		{
 			var
-				target     = this .target,
+				target     = this ._target,
 				length     = target ._length,
 				otherArray = other .getValue (),
 				components = target .getComponents (),
@@ -23690,7 +23721,7 @@ function (X3DArrayField,
 		erase: function (first, last)
 		{
 			var
-				target     = this .target,
+				target     = this ._target,
 				array      = target .getValue (),
 				components = target .getComponents (),
 				difference = last - first,
@@ -23719,13 +23750,15 @@ function (X3DArrayField,
 		resize: function (newLength, value, silent)
 		{
 			var
-				target     = this .target,
+				target     = this ._target,
 				length     = target ._length,
 				array      = target .getValue (),
 				components = target .getComponents ();
 
 			if (newLength < length)
 			{
+				target ._cache .length = newLength;
+
 				array .fill (0, newLength * components, length * components);
 
 				if (! silent)
@@ -23764,7 +23797,7 @@ function (X3DArrayField,
 		grow: function (length)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue ();
 
 			if (length < array .length)
@@ -23783,7 +23816,7 @@ function (X3DArrayField,
 		shrinkToFit: function ()
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				array  = target .getValue (),
 				length = target ._length * target .getComponents ();
 
@@ -23799,7 +23832,7 @@ function (X3DArrayField,
 		toStream: function (stream)
 		{
 			var
-				target     = this .target,
+				target     = this ._target,
 				generator  = Generator .Get (stream),
 				array      = target .getValue (),
 				length     = target ._length,
@@ -23894,7 +23927,7 @@ function (X3DArrayField,
 		toXMLStream: function (stream)
 		{
 			var
-				target = this .target,
+				target = this ._target,
 				length = target ._length;
 
 			if (length)
@@ -23944,49 +23977,76 @@ function (X3DArrayField,
 		},
 		dispose: function ()
 		{
-			X3DArrayField .prototype .dispose .call (this .target);
+			X3DArrayField .prototype .dispose .call (this ._target);
 		},
 	});
 
 	Object .defineProperty (X3DTypedArrayField .prototype, "length",
 	{
 		get: function () { return this ._length; },
-		set: function (value) { this .target .resize (value); },
+		set: function (value) { this ._target .resize (value); },
 		enumerable: false,
 		configurable: false,
 	});
 
 	// Getter/Setter functions to reference a value for a given index.
 
-	function getValue (field, index, value, components)
+	function getValue ()
 	{
-		var array = field .getValue ();
-
-		index *= components;
+		var
+			target     = this ._target,
+			index      = this ._index,
+			value      = this ._value,
+			components = this ._components,
+			array      = target .getValue (),
+			tmp        = target ._tmp;
 
 		for (var c = 0; c < components; ++ c, ++ index)
 			tmp [c] = array [index];
-
-		tmp .length = components;
 
 		value .set .apply (value, tmp);
 
 		return value;
 	}
 
-	function addEvent (field, index, value, components)
+	function addEvent ()
 	{
-		var array = field .getValue ();
-
-		index *= components;
+		var
+			target     = this ._target,
+			index      = this ._index,
+			value      = this ._value,
+			components = this ._components,
+			array      = target .getValue ();
 
 		for (var c = 0; c < components; ++ c, ++ index)
-		{
 			array [index] = value [c];
-		}
 
-		field .addEvent ();
+		target .addEvent ();
 	}
+
+//	function getValue (target, index, value, components)
+//	{
+//		var
+//			array = target .getValue (),
+//			tmp   = target ._tmp;
+//
+//		for (var c = 0; c < components; ++ c, ++ index)
+//			tmp [c] = array [index];
+//
+//		value .set .apply (value, tmp);
+//
+//		return value;
+//	}
+//
+//	function addEvent (target, index, value, components)
+//	{
+//		var array = target .getValue ();
+//
+//		for (var c = 0; c < components; ++ c, ++ index)
+//			array [index] = value [c];
+//
+//		target .addEvent ();
+//	}
 
 	return X3DTypedArrayField;
 });
@@ -24183,9 +24243,9 @@ function (SFBool,
 
 			value .addClones (this ._cloneCount);
 		},
-		removeChild: function (value)
+		removeChildObject: function (value)
 		{
-			X3DObjectArrayField .prototype .removeChild .call (this, value);
+			X3DObjectArrayField .prototype .removeChildObject .call (this, value);
 
 			value .removeClones (this ._cloneCount);
 		},
@@ -24661,22 +24721,23 @@ function (X3DChildObject,
 		},
 		addEvent: function (field)
 		{
-			field .setSet (true);
-
 			if (field .getTainted ())
 				return;
 
 			field .setTainted (true);
+			field .setSet (true);
 
 			this .addEventObject (field, Events .create (field));
 		},
 		addEventObject: function (field, event)
 		{
-			this .getBrowser () .addBrowserEvent ();
+			var browser = this .getBrowser ();
+
+			browser .addBrowserEvent ();
 
 			// Register for processEvent
 
-			this .getBrowser () .addTaintedField (field, event);
+			browser .addTaintedField (field, event);
 
 			// Register for eventsProcessed
 
@@ -24686,7 +24747,7 @@ function (X3DChildObject,
 			if (field .isInput () || (this .getExtendedEventHandling () && ! field .isOutput ()))
 			{
 				this .setTainted (true);
-				this .getBrowser () .addTaintedNode (this);
+				browser .addTaintedNode (this);
 			}
 		},
 		addNodeEvent: function ()
@@ -24694,9 +24755,11 @@ function (X3DChildObject,
 			if (this .getTainted ())
 			   return;
 
+			var browser = this .getBrowser ();
+
 			this .setTainted (true);
-			this .getBrowser () .addTaintedNode (this);
-			this .getBrowser () .addBrowserEvent ();
+			browser .addTaintedNode (this);
+			browser .addBrowserEvent ();
 		},
 		processEvents: function ()
 		{
@@ -24974,7 +25037,7 @@ function ($,
 			else
 			{
 				if (needsName (this))
-					this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (""), this);
+					this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), this);
 			}
 
 			// Create copy.
@@ -36265,7 +36328,7 @@ function (Fields,
 		sfboolValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfboolValue (this .SFBool))
 			{
@@ -36321,7 +36384,7 @@ function (Fields,
 		sfcolorValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfcolorValue (this .SFColor))
 			{
@@ -36382,7 +36445,7 @@ function (Fields,
 		sfcolorrgbaValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfcolorrgbaValue (this .SFColorRGBA))
 			{
@@ -36428,7 +36491,7 @@ function (Fields,
 		sfdoubleValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFDouble .setUnit (field .getUnit ());
 
@@ -36470,7 +36533,7 @@ function (Fields,
 		sffloatValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFFloat .setUnit (field .getUnit ());
 
@@ -36546,7 +36609,7 @@ function (Fields,
 		sfimageValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfimageValue (this .SFImage))
 			{
@@ -36590,7 +36653,7 @@ function (Fields,
 		sfint32Values: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfint32Value (this .SFInt32))
 			{
@@ -36678,7 +36741,7 @@ function (Fields,
 		sfmatrix3dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix3dValue (this .SFMatrix3d))
 			{
@@ -36716,7 +36779,7 @@ function (Fields,
 		sfmatrix3fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix3fValue (this .SFMatrix3f))
 			{
@@ -36840,7 +36903,7 @@ function (Fields,
 		sfmatrix4dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix4dValue (this .SFMatrix4d))
 			{
@@ -36878,7 +36941,7 @@ function (Fields,
 		sfmatrix4fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix4fValue (this .SFMatrix4f))
 			{
@@ -36988,7 +37051,7 @@ function (Fields,
 		sfrotationValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfrotationValue (this .SFRotation))
 			{
@@ -37032,7 +37095,7 @@ function (Fields,
 		sfstringValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfstringValue (this .SFString))
 			{
@@ -37070,7 +37133,7 @@ function (Fields,
 		sftimeValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sftimeValue (this .SFTime))
 			{
@@ -37126,7 +37189,7 @@ function (Fields,
 		sfvec2dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec2d .setUnit (field .getUnit ());
 
@@ -37168,7 +37231,7 @@ function (Fields,
 		sfvec2fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec2f .setUnit (field .getUnit ());
 
@@ -37232,7 +37295,7 @@ function (Fields,
 		sfvec3dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec3d .setUnit (field .getUnit ());
 
@@ -37274,7 +37337,7 @@ function (Fields,
 		sfvec3fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec3f .setUnit (field .getUnit ());
 
@@ -37344,7 +37407,7 @@ function (Fields,
 		sfvec4dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec4d .setUnit (field .getUnit ());
 
@@ -37386,7 +37449,7 @@ function (Fields,
 		sfvec4fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec4f .setUnit (field .getUnit ());
 
@@ -40490,7 +40553,6 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
 		]),
-		keyValue: new Rotation4 (),
 		getTypeName: function ()
 		{
 			return "OrientationInterpolator";
@@ -40518,15 +40580,28 @@ function (Fields,
 			if (keyValue .length < key .length)
 				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
 		},
-		interpolate: function (index0, index1, weight)
+		interpolate: (function ()
 		{
-			try
+			var
+				keyValue0 = new Rotation4 (0, 0, 1, 0),
+				keyValue1 = new Rotation4 (0, 0, 1, 0);
+
+			return function (index0, index1, weight)
 			{
-				this .value_changed_ = this .keyValue .assign (this .keyValue_ [index0] .getValue ()) .slerp (this .keyValue_ [index1] .getValue (), weight);
-			}
-			catch (error)
-			{ }
-		},
+				try
+				{
+					keyValue0 .assign (this .keyValue_ [index0] .getValue ());
+					keyValue1 .assign (this .keyValue_ [index1] .getValue ());
+
+					this .value_changed_ = keyValue0 .slerp (keyValue1, weight);
+
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		}) (),
 	});
 
 	return OrientationInterpolator;
@@ -42424,13 +42499,13 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .enableVertexAttribArray (location + 0);
+			gl .enableVertexAttribArray (location);
 			gl .enableVertexAttribArray (location + 1);
 			gl .enableVertexAttribArray (location + 2);
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
-			gl .vertexAttribPointer (location + 0, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 0);
+			gl .vertexAttribPointer (location,     3, gl .FLOAT, false, 9 * 4, 3 * 4 * 0);
 			gl .vertexAttribPointer (location + 1, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 1);
 			gl .vertexAttribPointer (location + 2, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 2);
 		},
@@ -42441,7 +42516,7 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .disableVertexAttribArray (location + 0);
+			gl .disableVertexAttribArray (location);
 			gl .disableVertexAttribArray (location + 1);
 			gl .disableVertexAttribArray (location + 2);
 		},
@@ -42452,14 +42527,14 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .enableVertexAttribArray (location + 0);
+			gl .enableVertexAttribArray (location);
 			gl .enableVertexAttribArray (location + 1);
 			gl .enableVertexAttribArray (location + 2);
 			gl .enableVertexAttribArray (location + 3);
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
-			gl .vertexAttribPointer (location + 0, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 0);
+			gl .vertexAttribPointer (location,     4, gl .FLOAT, false, 16 * 4, 4 * 4 * 0);
 			gl .vertexAttribPointer (location + 1, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 1);
 			gl .vertexAttribPointer (location + 2, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 2);
 			gl .vertexAttribPointer (location + 3, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 3);
@@ -42471,7 +42546,7 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .disableVertexAttribArray (location + 0);
+			gl .disableVertexAttribArray (location);
 			gl .disableVertexAttribArray (location + 1);
 			gl .disableVertexAttribArray (location + 2);
 			gl .disableVertexAttribArray (location + 3);
@@ -55398,7 +55473,7 @@ function (Fields,
 					{
 						var i4 = i * 4;
 
-						v0 .x = vertices [i4 + 0]; v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+						v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
@@ -55413,19 +55488,19 @@ function (Fields,
 
 							// Determine vectors for X3DPointingDeviceSensors.
 
-							var point = new Vector3 (t * vertices [i4 + 0] + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+							var point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
 							                         t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
 							                         t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
 							if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
 								continue;
 
-							var texCoord = new Vector2 (t * texCoords [i4 + 0] + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
+							var texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
 							                            t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
 
 							var i3 = i * 3;
 
-							var normal = new Vector3 (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],
+							var normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
 							                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
 							                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
@@ -55519,7 +55594,7 @@ function (Fields,
 					{
 						var i4 = i * 4;
 		
-						v0 .x = vertices [i4 + 0]; v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+						v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
@@ -55588,7 +55663,7 @@ function (Fields,
 
 					for (var i = 0, length = vertices .length; i < length; i += 12)
 					{
-					   Triangle3 .normal (v0 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]),
+					   Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
 					                      v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
 					                      v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
 					                      normal);
@@ -55629,7 +55704,7 @@ function (Fields,
 			this .normals  .shrinkToFit ();
 			this .vertices .shrinkToFit ();
 
-			// Determine bbox and generate texCoord if needed.
+			// Determine bbox.
 
 			var
 				min      = this .min,
@@ -55642,7 +55717,7 @@ function (Fields,
 				{
 					for (var i = 0, length = vertices .length; i < length; i += 4)
 					{
-						point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+						point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
 	
 						min .min (point);
 						max .max (point);
@@ -55657,6 +55732,8 @@ function (Fields,
 			}
 
 			this .bbox_changed_ .addEvent ();
+
+			// Generate texCoord if needed.
 
 			if (this .geometryType > 1)
 			{
@@ -57579,7 +57656,7 @@ function (X3DGeometricPropertyNode,
 
 				index *= 3;
 
-				return vector .set (point [index + 0], point [index + 1], point [index + 2]);
+				return vector .set (point [index], point [index + 1], point [index + 2]);
 			}
 			else
 			{
@@ -57594,12 +57671,22 @@ function (X3DGeometricPropertyNode,
 
 				index *= 3;
 
-				array .push (point [index + 0], point [index + 1], point [index + 2], 1);
+				array .push (point [index], point [index + 1], point [index + 2], 1);
 			}
 			else
 			{
 				array .push (0, 0, 0, 1);
 			}
+		},
+		addPoints: function (array, min)
+		{
+			const point = this .point;
+
+			for (var index = 0, length = this .length * 3; index < length; index += 3)
+				array .push (point [index], point [index + 1], point [index + 2], 1);
+
+			for (var index = length, length = min * 3; index < length; index += 3)
+				array .push (0, 0, 0, 1);
 		},
 		getNormal: function (index1, index2, index3)
 		{
@@ -86797,7 +86884,7 @@ function (Fields,
 
 				index *= 3;
 
-				array .push (color [index + 0], color [index + 1], color [index + 2], 1);
+				array .push (color [index], color [index + 1], color [index + 2], 1);
 			}
 			else if (this .length)
 			{
@@ -86805,12 +86892,22 @@ function (Fields,
 
 				index = (this .length - 1) * 3;
 
-				array .push (color [index + 0], color [index + 1], color [index + 2], 1);
+				array .push (color [index], color [index + 1], color [index + 2], 1);
 			}
 			else
 			{
 				array .push (1, 1, 1, 1);
 			}
+		},
+		addColors: function (array, min)
+		{
+			const color = this .color;
+
+			for (var index = 0, length = this .length * 3; index < length; index += 3)
+				array .push (color [index], color [index + 1], color [index + 2], 1);
+
+			for (var index = length, length = min * 3; index < length; index += 3)
+				array .push (1, 1, 1, 1);
 		},
 		getVectors: function (array)
 		{
@@ -87557,7 +87654,7 @@ function (Fields,
 
 				index *= 4;
 
-				array .push (color [index + 0], color [index + 1], color [index + 2], color [index + 3]);
+				array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
 			}
 			else if (this .color_ .length)
 			{
@@ -87565,12 +87662,22 @@ function (Fields,
 
 				index = (this .color_ .length - 1) * 4;
 
-				array .push (color [index + 0], color [index + 1], color [index + 2], color [index + 3]);
+				array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
 			}
 			else
 			{
 				array .push (1, 1, 1, 1);
 			}
+		},
+		addColors: function (array, min)
+		{
+			const color = this .color;
+
+			for (var index = 0, length = this .length * 4; index < length; index += 4)
+				array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
+
+			for (var index = length, length = min * 4; index < length; index += 4)
+				array .push (1, 1, 1, 1);
 		},
 		getVectors: function (array)
 		{
@@ -89070,7 +89177,7 @@ function (Fields,
 
 			for (var i = 0; i < size; i += 3)
 			{
-				value_changed [i + 0] = Algorithm .lerp (keyValue [index0 + i + 0], keyValue [index1 + i + 0], weight);
+				value_changed [i]     = Algorithm .lerp (keyValue [index0 + i],     keyValue [index1 + i],     weight);
 				value_changed [i + 1] = Algorithm .lerp (keyValue [index0 + i + 1], keyValue [index1 + i + 1], weight);
 				value_changed [i + 2] = Algorithm .lerp (keyValue [index0 + i + 2], keyValue [index1 + i + 2], weight);
 			}
@@ -89199,7 +89306,7 @@ function (Fields,
 
 			for (var i = 0; i < size; i += 2)
 			{
-				value_changed [i + 0] = Algorithm .lerp (keyValue [index0 + i + 0], keyValue [index1 + i + 0], weight);
+				value_changed [i]     = Algorithm .lerp (keyValue [index0 + i],     keyValue [index1 + i],     weight);
 				value_changed [i + 1] = Algorithm .lerp (keyValue [index0 + i + 1], keyValue [index1 + i + 1], weight);
 			}
 
@@ -100335,7 +100442,7 @@ function (Fields,
 
 				index *= 3;
 
-				array .push (vector [index + 0], vector [index + 1], vector [index + 2]);
+				array .push (vector [index], vector [index + 1], vector [index + 2]);
 			}
 			else
 			{
@@ -100478,12 +100585,12 @@ function (Fields,
 			{
 				try
 				{
-					keyValue0 .set (keyValue [index0 + i + 0], keyValue [index0 + i + 1], keyValue [index0 + i + 2]);
-					keyValue1 .set (keyValue [index1 + i + 0], keyValue [index1 + i + 1], keyValue [index1 + i + 2]);
+					keyValue0 .set (keyValue [index0 + i], keyValue [index0 + i + 1], keyValue [index0 + i + 2]);
+					keyValue1 .set (keyValue [index1 + i], keyValue [index1 + i + 1], keyValue [index1 + i + 2]);
 
 					var value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
 
-					value_changed [i + 0] = value [0];
+					value_changed [i]     = value [0];
 					value_changed [i + 1] = value [1];
 					value_changed [i + 2] = value [2];
 				}
@@ -100918,7 +101025,7 @@ function (Vector3,
 				i4       = this .i4,
 				i3       = this .i3;
 
-			v0 .x = vertices [i4 + 0]; v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+			v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 			v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 			v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
@@ -100938,7 +101045,7 @@ function (Vector3,
 				if (i >= intersections .length)
 					intersections .push (new Vector3 (0, 0, 0));
 
-				intersections [i] .set (t * vertices [i4 + 0] + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+				intersections [i] .set (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
 				                        t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
 				                        t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
@@ -100947,7 +101054,7 @@ function (Vector3,
 					if (i >= intersectionNormals .length)
 						intersectionNormals .push (new Vector3 (0, 0, 0));
 
-					intersectionNormals [i] .set (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],
+					intersectionNormals [i] .set (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
 					                              t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
 					                              t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 				}
@@ -100978,7 +101085,7 @@ function (Vector3,
 		{
 			t = triangles [i] * 12;
 
-			v0 .set (vertices [t + 0], vertices [t + 1], vertices [t + 2]);
+			v0 .set (vertices [t],     vertices [t + 1], vertices [t + 2]);
 			v1 .set (vertices [t + 4], vertices [t + 5], vertices [t + 6]);
 			v2 .set (vertices [t + 8], vertices [t + 9], vertices [t + 10]);
 
@@ -102354,12 +102461,12 @@ function (Fields,
 							// p1 ------ p2
 
 
-							positionArray [i18 + 0] = positionArray [i18 + 3] = positionArray [i18 + 6] = positionArray [i18 +  9] = positionArray [i18 + 12] = positionArray [i18 + 15] = x;
+							positionArray [i18]     = positionArray [i18 + 3] = positionArray [i18 + 6] = positionArray [i18 +  9] = positionArray [i18 + 12] = positionArray [i18 + 15] = x;
 							positionArray [i18 + 1] = positionArray [i18 + 4] = positionArray [i18 + 7] = positionArray [i18 + 10] = positionArray [i18 + 13] = positionArray [i18 + 16] = y;
 							positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
 
-							elapsedTimeArray [i6 + 0] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
-							lifeArray [i6 + 0]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
+							elapsedTimeArray [i6] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
+							lifeArray [i6]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
 
 							// p1
 							vertexArray [i24]     = vertexArray [i24 + 12] = x + s1 .x;
@@ -102415,12 +102522,12 @@ function (Fields,
 							// | /       |
 							// p1 ------ p2
 
-							positionArray [i18 + 0] = positionArray [i18 + 3] = positionArray [i18 + 6] = positionArray [i18 +  9] = positionArray [i18 + 12] = positionArray [i18 + 15] = x;
+							positionArray [i18]     = positionArray [i18 + 3] = positionArray [i18 + 6] = positionArray [i18 +  9] = positionArray [i18 + 12] = positionArray [i18 + 15] = x;
 							positionArray [i18 + 1] = positionArray [i18 + 4] = positionArray [i18 + 7] = positionArray [i18 + 10] = positionArray [i18 + 13] = positionArray [i18 + 16] = y;
 							positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
 
-							elapsedTimeArray [i6 + 0] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
-							lifeArray [i6 + 0]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
+							elapsedTimeArray [i6] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
+							lifeArray [i6]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
 			
 							// p1
 							vertexArray [i24]     = vertexArray [i24 + 12] = x - sx1_2;
@@ -103785,15 +103892,11 @@ function (Fields,
 				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
 					attribNodes [a] .addValue (i, attribs [a]);
 			}
-			
-			if (this .colorNode)
-			{
-				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-					colorNode .addColor (i, colorArray);
-			}
 
-			for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-				coordNode .addPoint (i, vertexArray);
+			if (colorNode)
+				colorNode .addColors (colorArray,  coordNode .point_ .length);
+
+			coordNode .addPoints (vertexArray, coordNode .point_ .length);
 		},
 	});
 
@@ -103910,7 +104013,7 @@ function (Fields,
 
 			for (var i = 0, length = this .lineSegments_ .length * 2; i < length; i += 2)
 			{
-				vertexArray .push (lineSegments [i + 0], lineSegments [i + 1], 0, 1);
+				vertexArray .push (lineSegments [i], lineSegments [i + 1], 0, 1);
 			}
 
 			this .setSolid (false);
@@ -104081,7 +104184,7 @@ function (Fields,
 
 				for (var i = 0, length = vertices .length; i < length; i += 8)
 				{
-					vertex1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+					vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
 					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
 					lengthSoFar += vertex2 .subtract (vertex1) .abs ();
@@ -104144,8 +104247,8 @@ function (Fields,
 
 			var vertices = this .vertices;
 
-			vertex1 .set (vertices [index0 + 0], vertices [index0 + 1], vertices [index0 + 2]);
-			vertex2 .set (vertices [index1 + 0], vertices [index1 + 1], vertices [index1 + 2]);
+			vertex1 .set (vertices [index0], vertices [index0 + 1], vertices [index0 + 2]);
+			vertex2 .set (vertices [index1], vertices [index1 + 1], vertices [index1 + 2]);
 	
 			position .x = vertex1 .x + weight * (vertex2 .x - vertex1 .x);
 			position .y = vertex1 .y + weight * (vertex2 .y - vertex1 .y);
@@ -104296,7 +104399,7 @@ function (Fields,
 
 			for (var i = 0, length = this .point_ .length * 2; i < length; i += 2)
 			{
-				vertexArray .push (point [i + 0], point [i + 1], 0, 1);
+				vertexArray .push (point [i], point [i + 1], 0, 1);
 			}
 		},
 	});
@@ -109945,7 +110048,7 @@ function (Fields,
 
 				for (var i = 0, length = vertices .length; i < length; i += 12)
 				{
-					vertex1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+					vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
 					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 					vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
@@ -110013,7 +110116,7 @@ function (Fields,
 
 			var t = 1 - u - v;
 
-			position .x = u * vertices [i + 0] + v * vertices [i + 4] + t * vertices [i + 8];
+			position .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
 			position .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
 			position .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
 
@@ -110021,7 +110124,7 @@ function (Fields,
 				i       = index0 * 9,
 				normals = this .normals;
 
-			direction .x = u * normals [i + 0] + v * normals [i + 3] + t * normals [i + 6];
+			direction .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
 			direction .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
 			direction .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
 
@@ -112102,7 +112205,7 @@ function (Fields,
 			for (var i = 0, length = this .vertices_ .length * 2; i < length; i += 2)
 			{
 				normalArray .push (0, 0, 1);
-				vertexArray .push (vertices [i + 0], vertices [i + 1], 0, 1);
+				vertexArray .push (vertices [i], vertices [i + 1], 0, 1);
 			}
 
 			this .setSolid (this .solid_ .getValue ());
@@ -113189,7 +113292,7 @@ function (Fields,
 
 			for (var i = 0, length = vertices .length; i < length; i += 12)
 			{
-				vertex1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+				vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
 				vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 				vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
@@ -113253,7 +113356,7 @@ function (Fields,
 				i        = index0 * 12,
 				vertices = this .vertices;
 
-			point .x = u * vertices [i + 0] + v * vertices [i + 4] + t * vertices [i + 8];
+			point .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
 			point .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
 			point .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
 
@@ -113261,7 +113364,7 @@ function (Fields,
 				i       = index0 * 9,
 				normals = this .normals;
 
-			normal .x = u * normals [i + 0] + v * normals [i + 3] + t * normals [i + 6];
+			normal .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
 			normal .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
 			normal .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
 
