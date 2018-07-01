@@ -76,9 +76,6 @@ function (X3DChildObject,
 		},
 		addEvent: function (field)
 		{
-			if (field .getTainted ())
-				return;
-
 			field .setTainted (true);
 			field .setSet (true);
 
