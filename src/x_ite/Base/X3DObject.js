@@ -87,25 +87,33 @@ function ()
 		{
 			return this ._name;
 		},
-		hasInterest: function (callback, object)
+		hasInterest: function (callbackName, object)
 		{
-			return Boolean (this ._interests [object .getId () + callback]);
+			return Boolean (this ._interests [object .getId () + callbackName]);
 		},
-		addInterest: function (callback, object)
+		addInterest: function (callbackName, object)
 		{
 			if (! this .hasOwnProperty ("_interests"))
 				this ._interests = { };
 
-			var args = Array .prototype .slice .call (arguments, 0);
+//			var args = Array .prototype .slice .call (arguments, 0);
+//
+//			args [0] = object;
+//			args [1] = this;
+//
+//			this ._interests [object .getId () + callbackName] = Function .prototype .bind .apply (object [callbackName], args);
 
-			args [0] = arguments [1];
-			args [1] = this;
+			var
+				callback = object [callbackName],
+				args     = Array .prototype .slice .call (arguments, 1);
 
-			this ._interests [object .getId () + callback] = Function .prototype .bind .apply (object [callback], args);
+			args [0] = this;
+
+			this ._interests [object .getId () + callbackName] = function () { callback .apply (object, args); };
 		},
-		removeInterest: function (callback, object)
+		removeInterest: function (callbackName, object)
 		{
-			delete this ._interests [object .getId () + callback];
+			delete this ._interests [object .getId () + callbackName];
 		},
 		getInterests: function ()
 		{

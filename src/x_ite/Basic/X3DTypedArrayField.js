@@ -90,23 +90,30 @@ function (X3DArrayField,
 				{
 					// Return reference to index.
 
-					var reference = target ._references [index];
+					var value = target ._cache [index];
 
-					if (reference)
-						return reference;
+					if (value)
+						return value;
 
-					var reference = new (valueType) ();
+					target ._cache [index] = value;
 
-					reference ._target     = target;
-					reference ._index      = index * components;
-					reference ._components = components;
+					var value = new (valueType) ();
 
-					reference .getValue = getValue;
-					reference .addEvent = addEvent;
+					value ._target     = target;
+					value ._index      = index * components;
+					value ._components = components;
 
-					target ._references [index] = reference;
+					value .getValue = getValue;
+					value .addEvent = addEvent;
 
-					return reference;
+					return value;
+
+//					var value = new (valueType) ();
+//
+//					value .addEvent = addEvent .bind (value, target, index * components, value .getValue (), components);
+//					value .getValue = getValue .bind (value, target, index * components, value .getValue (), components);
+//
+//					return value;
 				}
 			}
 			catch (error)
@@ -175,7 +182,7 @@ function (X3DArrayField,
 		X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
 		this ._target     = this;
-		this ._references = [ ];
+		this ._cache = [ ];
 		this ._tmp        = [ ]; // Array with components size.
 
 		if (value [0] instanceof Array)
@@ -551,7 +558,7 @@ function (X3DArrayField,
 
 			if (newLength < length)
 			{
-				target ._references .length = newLength;
+				target ._cache .length = newLength;
 
 				array .fill (0, newLength * components, length * components);
 
@@ -817,6 +824,30 @@ function (X3DArrayField,
 
 		target .addEvent ();
 	}
+
+//	function getValue (target, index, value, components)
+//	{
+//		var
+//			array = target .getValue (),
+//			tmp   = target ._tmp;
+//
+//		for (var c = 0; c < components; ++ c, ++ index)
+//			tmp [c] = array [index];
+//
+//		value .set .apply (value, tmp);
+//
+//		return value;
+//	}
+//
+//	function addEvent (target, index, value, components)
+//	{
+//		var array = target .getValue ();
+//
+//		for (var c = 0; c < components; ++ c, ++ index)
+//			array [index] = value [c];
+//
+//		target .addEvent ();
+//	}
 
 	return X3DTypedArrayField;
 });

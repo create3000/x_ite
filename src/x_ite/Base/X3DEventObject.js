@@ -86,11 +86,13 @@ function (X3DChildObject,
 		},
 		addEventObject: function (field, event)
 		{
-			this .getBrowser () .addBrowserEvent ();
+			var browser = this .getBrowser ();
+
+			browser .addBrowserEvent ();
 
 			// Register for processEvent
 
-			this .getBrowser () .addTaintedField (field, event);
+			browser .addTaintedField (field, event);
 
 			// Register for eventsProcessed
 
@@ -100,7 +102,7 @@ function (X3DChildObject,
 			if (field .isInput () || (this .getExtendedEventHandling () && ! field .isOutput ()))
 			{
 				this .setTainted (true);
-				this .getBrowser () .addTaintedNode (this);
+				browser .addTaintedNode (this);
 			}
 		},
 		addNodeEvent: function ()
@@ -108,9 +110,11 @@ function (X3DChildObject,
 			if (this .getTainted ())
 			   return;
 
+			var browser = this .getBrowser ();
+
 			this .setTainted (true);
-			this .getBrowser () .addTaintedNode (this);
-			this .getBrowser () .addBrowserEvent ();
+			browser .addTaintedNode (this);
+			browser .addBrowserEvent ();
 		},
 		processEvents: function ()
 		{
