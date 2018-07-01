@@ -264,7 +264,7 @@ function ($,
 			else
 			{
 				if (needsName (this))
-					this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (""), this);
+					this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), this);
 			}
 
 			// Create copy.

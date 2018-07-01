@@ -95,6 +95,7 @@ var X_ITE_EXAMPLES = [
 	{ folder: "Rendering", test: "Coordinate"},
 	{ folder: "Rendering", test: "IndexedTriangleSet"},
 	{ folder: "Rendering", test: "LineSet"},
+	{ folder: "Rendering", test: "PointSet"},
 	{ folder: "RigidBodyPhysics", test: "BallJoint"},
 	{ folder: "RigidBodyPhysics", test: "CollidableShape"},
 	{ folder: "RigidBodyPhysics", test: "CollisionCollection"},
