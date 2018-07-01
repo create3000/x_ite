@@ -219,7 +219,7 @@ function ($,
 
 				field .setValue (arguments [i]);
 	
-				target .addChild (field);
+				target .addChildObject (field);
 
 				array .unshift (field);
 			}
@@ -237,7 +237,7 @@ function ($,
 			if (array .length)
 			{
 				var field = array .shift ();
-				target .removeChild (field);
+				target .removeChildObject (field);
 				target .addEvent ();
 				return field .valueOf ();
 			}
@@ -254,7 +254,7 @@ function ($,
 
 				field .setValue (arguments [i]);
 
-				target .addChild (field);
+				target .addChildObject (field);
 
 				array .push (field);
 			}
@@ -272,7 +272,7 @@ function ($,
 			if (array .length)
 			{
 				var field = array .pop ();
-				target .removeChild (field);
+				target .removeChildObject (field);
 				target .addEvent ();
 				return field .valueOf ();
 			}
@@ -308,7 +308,7 @@ function ($,
 
 				field .setValue (array [i]);
 
-				target .addChild (field);
+				target .addChildObject (field);
 				args .push (field);
 			}
 
@@ -407,7 +407,7 @@ function ($,
 				values = target .getValue () .splice (first, last - first);
 				
 			for (var i = 0, length = values .length; i < length; ++ i)
-				target .removeChild (values [i]);
+				target .removeChildObject (values [i]);
 			
 			target .addEvent ();
 
@@ -422,7 +422,7 @@ function ($,
 			if (size < array .length)
 			{
 				for (var i = size, length = array .length; i < length; ++ i)
-					target .removeChild (array [i]);
+					target .removeChildObject (array [i]);
 
 				array .length = size;
 
@@ -438,7 +438,7 @@ function ($,
 					if (value !== undefined)
 						field .setValue (value);
 
-					target .addChild (field);
+					target .addChildObject (field);
 					array .push (field);
 				}
 
@@ -446,11 +446,11 @@ function ($,
 					target .addEvent ();
 			}
 		},
-		addChild: function (value)
+		addChildObject: function (value)
 		{
 			value .addParent (this ._target);
 		},
-		removeChild: function (value)
+		removeChildObject: function (value)
 		{
 			value .removeParent (this ._target);
 		},
@@ -536,7 +536,7 @@ function ($,
 				array  = target .getValue ();
 
 			for (var i = 0, length = target .length; i < length; ++ i)
-				target .removeChild (array [i]);
+				target .removeChildObject (array [i]);
 
 			array .length = 0;
 

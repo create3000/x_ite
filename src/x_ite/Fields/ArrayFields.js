@@ -190,9 +190,9 @@ function (SFBool,
 
 			value .addClones (this ._cloneCount);
 		},
-		removeChild: function (value)
+		removeChildObject: function (value)
 		{
-			X3DObjectArrayField .prototype .removeChild .call (this, value);
+			X3DObjectArrayField .prototype .removeChildObject .call (this, value);
 
 			value .removeClones (this ._cloneCount);
 		},
