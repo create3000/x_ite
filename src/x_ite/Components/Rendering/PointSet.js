@@ -172,18 +172,19 @@ function (Fields,
 				colorNode   = this .colorNode,
 				coordNode   = this .coordNode,
 				colorArray  = this .getColors (),
-				vertexArray = this .getVertices ();
+				vertexArray = this .getVertices (),
+				length      = coordNode .point_ .length;
 
 			for (var a = 0; a < numAttrib; ++ a)
 			{
-				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
+				for (var i = 0; i < length; ++ i)
 					attribNodes [a] .addValue (i, attribs [a]);
 			}
 
 			if (colorNode)
-				colorNode .addColors (colorArray,  coordNode .point_ .length);
+				colorNode .addColors (colorArray, length);
 
-			coordNode .addPoints (vertexArray, coordNode .point_ .length);
+			coordNode .addPoints (vertexArray, length);
 		},
 	});
 
