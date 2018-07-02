@@ -228,6 +228,9 @@ X3D (function ()
 {
 	function loadURL ()
 	{
+		console .log (X3D.getBrowser ("X3DCanvas") .currentScene .toXMLString ());
+return;
+
 		var Browser = X3D .getBrowser ("#browser");
 	
 		Browser .loadURL (new X3D .MFString ($(".location-entry") .val ()), new X3D .MFString ());

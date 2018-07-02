@@ -500,7 +500,7 @@ function (X3DEventObject,
 				changedFields    = [ ],
 				predefinedFields = this .getPredefinedFields ();
 		
-			for (var field of predefinedFields)
+			for (var field of predefinedFields .values ())
 			{
 				if (field .getReferences () .size === 0)
 				{
@@ -771,7 +771,7 @@ function (X3DEventObject,
 
 				if (this .hasUserDefinedFields ())
 				{
-					for (var field of userDefinedFields)
+					for (var field of userDefinedFields .values ())
 					{
 						stream .string += generator .Indent ();
 						stream .string += "<field";
@@ -950,10 +950,10 @@ function (X3DEventObject,
 				predefinedFields  = this .getPredefinedFields (),
 				userDefinedFields = this .getUserDefinedFields ();
 
-			for (var predefinedField of predefinedFields)
+			for (var predefinedField of predefinedFields .values ())
 				predefinedField .dispose ();
 
-			for (var userDefinedField of userDefinedFields)
+			for (var userDefinedField of userDefinedFields .values ())
 				userDefinedField .dispose ();
 
 			// Remove node from entire scene graph.
