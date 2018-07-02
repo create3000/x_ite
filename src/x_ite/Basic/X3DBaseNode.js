@@ -82,9 +82,9 @@ function ($,
 
 		this ._executionContext  = executionContext;
 		this ._type              = [ X3DConstants .X3DBaseNode ];
-		this ._fields            = { };
-		this ._predefinedFields  = { };
-		this ._userDefinedFields = { };
+		this ._fields            = new Map ();
+		this ._predefinedFields  = new Map ();
+		this ._userDefinedFields = new Map ();
 		this ._cloneCount        = 0;
 
 		// Setup fields.
@@ -222,7 +222,7 @@ function ($,
 
 			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
 			{
-				var field = this ._fields [fieldDefinitions [i] .name];
+				var field = this ._fields .get (fieldDefinitions [i] .name);
 				field .updateReferences ();
 				field .setTainted (false);
 			}
@@ -278,13 +278,11 @@ function ($,
 
 			var predefinedFields = this .getPredefinedFields ();
 
-			for (var name in predefinedFields)
+			for (var sourceField of predefinedFields .values ())
 			{
 				try
 				{
-					var
-						sourceField = predefinedFields [name],
-						destfield   = copy .getField (name);
+					var destfield = copy .getField (sourceField .getName ());
 
 					destfield .setSet (sourceField .getSet ());
 
@@ -337,11 +335,9 @@ function ($,
 
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in userDefinedFields)
+			for (var sourceField of userDefinedFields .values ())
 			{
-				var
-					sourceField = userDefinedFields [name],
-					destfield   = sourceField .copy (executionContext);
+				var destfield = sourceField .copy (executionContext);
 
 				copy .addUserDefinedField (sourceField .getAccessType (),
 				                           sourceField .getName (),
@@ -410,22 +406,22 @@ function ($,
 		{
 			if (field .getAccessType () === X3DConstants .inputOutput)
 			{
-				this ._fields ["set_" + name]     = field;
-				this ._fields [name + "_changed"] = field;
+				this ._fields .set ("set_" + name,     field);
+				this ._fields .set (name + "_changed", field);
 			}
 
-			this ._fields [name] = field;
+			this ._fields .set (name, field);
 
 			if (! this .getPrivate ())
 				field .addClones (1);
 
 			if (userDefined)
 			{
-				this ._userDefinedFields [name] = field;
+				this ._userDefinedFields .set (name, field);
 				return;
 			}
 
-			this ._predefinedFields [name] = field;
+			this ._predefinedFields .set (name, field);
 
 			Object .defineProperty (this, name + "_",
 			{
@@ -437,18 +433,18 @@ function ($,
 		},
 		removeField: function (name)
 		{
-			var field = this ._fields [name];
+			var field = this ._fields .get (name);
 
 			if (field)
 			{
 				if (field .getAccessType () === X3DConstants .inputOutput)
 				{
-					delete this ._fields ["set_" + field .getName ()];
-					delete this ._fields [field .getName () + "_changed"];
+					this ._fields .delete ("set_" + field .getName ());
+					this ._fields .delete (field .getName () + "_changed");
 				}
 	
-				delete this ._fields [name];
-				delete this ._userDefinedFields [name];
+				this ._fields            .delete (name);
+				this ._userDefinedFields .delete (name);
 	
 				var fieldDefinitions = this .fieldDefinitions .getValue ();
 	
@@ -467,7 +463,7 @@ function ($,
 		},
 		getField: function (name)
 		{
-			var field = this ._fields [name];
+			var field = this ._fields .get (name);
 			
 			if (field)
 				return field;
@@ -484,7 +480,7 @@ function ($,
 		},
 		addUserDefinedField: function (accessType, name, field)
 		{
-			if (this ._fields [name])
+			if (this ._fields .has (name))
 				this .removeField (name);
 
 			field .setTainted (true);
@@ -510,10 +506,8 @@ function ($,
 				changedFields    = [ ],
 				predefinedFields = this .getPredefinedFields ();
 		
-			for (var name in predefinedFields)
+			for (var field of predefinedFields)
 			{
-				var field = predefinedFields [name];
-
 				if ($.isEmptyObject (field .getReferences ()))
 				{
 					if (! field .isInitializable ())
@@ -771,7 +765,7 @@ function ($,
 			generator .DecIndent ();
 			generator .DecIndent ();
 	
-			if ((! this .hasUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && ! cdata)
+			if ((! this .hasUserDefinedFields () || userDefinedFields .size === 0) && references .length === 0 && childNodes .length === 0 && ! cdata)
 			{
 				stream .string += "/>";
 			}
@@ -783,10 +777,8 @@ function ($,
 
 				if (this .hasUserDefinedFields ())
 				{
-					for (var name in userDefinedFields)
+					for (var field of userDefinedFields)
 					{
-						var field = userDefinedFields [name];
-
 						stream .string += generator .Indent ();
 						stream .string += "<field";
 						stream .string += " ";
@@ -966,11 +958,11 @@ function ($,
 				predefinedFields  = this .getPredefinedFields (),
 				userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in predefinedFields)
-				predefinedFields [name] .dispose ();
+			for (var predefinedField of predefinedFields)
+				predefinedField .dispose ();
 
-			for (var name in userDefinedFields)
-				userDefinedFields [name] .dispose ();
+			for (var userDefinedField of userDefinedFields)
+				userDefinedField .dispose ();
 
 			// Remove node from entire scene graph.
 

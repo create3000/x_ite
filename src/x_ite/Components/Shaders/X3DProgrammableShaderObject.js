@@ -289,11 +289,9 @@ function (Fields,
 
 			this .textures .clear ();
 
-			for (var name in userDefinedFields)
+			for (var values of userDefinedFields .values ())
 			{
-				var
-					field    = userDefinedFields [name],
-					location = gl .getUniformLocation (program, name);
+				var location = gl .getUniformLocation (program, field .getName ());
 
 				if (location)
 				{
@@ -400,17 +398,10 @@ function (Fields,
 		},
 		removeShaderFields: function ()
 		{
-			var
-				gl                = this .getBrowser () .getContext (),
-				program           = this .getProgram (),
-				userDefinedFields = this .getUserDefinedFields ();
+			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in userDefinedFields)
+			for (var field of userDefinedFields .values ())
 			{
-				var
-					field    = userDefinedFields [name],
-					location = gl .getUniformLocation (program, name);
-
 				field .removeInterest ("set_field__", this);
 			}
 		},

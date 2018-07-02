@@ -81,8 +81,11 @@ define (function ()
 				copy .field = event .field;
 				copy .clear ();
 
-				for (var source of event)
-					copy .add (source);
+				event .forEach (function (source)
+				{
+					this .add (source);
+				},
+				copy);
 
 				return copy;
 	      }

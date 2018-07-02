@@ -199,10 +199,8 @@ function ($,
 					callbacks         = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"],
 					userDefinedFields = this .getUserDefinedFields ();
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-
 					switch (field .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
@@ -331,9 +329,9 @@ function ($,
 
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in userDefinedFields)
+			for (var field of userDefinedFields .values ())
 			{
-				var field = userDefinedFields [name];
+				var name = field .getName ();
 
 				if (field .getAccessType () === X3DConstants .inputOnly)
 					continue;
@@ -371,10 +369,8 @@ function ($,
 				if ($.isFunction (this .context .eventsProcessed))
 					this .addInterest ("eventsProcessed__", this);
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-					
 					switch (field .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
@@ -406,10 +402,8 @@ function ($,
 				if (this .context .eventsProcessed)
 					this .removeInterest ("eventsProcessed__", this);
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-
 					switch (field .getAccessType ())
 					{
 						case X3DConstants .inputOnly:

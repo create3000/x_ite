@@ -233,12 +233,10 @@ function ($,
 
 			generator .IncIndent ();
 
-			var fields = this .getUserDefinedFields ();
+			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in fields)
+			for (var field of userDefinedFields .values ())
 			{
-				var field = fields [name];
-
 				stream .string += generator .Indent ();
 				stream .string += "<field";
 				stream .string += " ";

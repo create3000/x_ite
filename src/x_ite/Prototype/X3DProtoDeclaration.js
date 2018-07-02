@@ -154,7 +154,7 @@ function ($,
 		
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			if (! $.isEmptyObject (userDefinedFields))
+			if (userDefinedFields .size !== 0)
 			{
 				generator .IncIndent ();
 
@@ -163,10 +163,8 @@ function ($,
 
 				generator .IncIndent ();
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-
 					stream .string += generator .Indent ();
 					stream .string += "<field";
 					stream .string += " ";
