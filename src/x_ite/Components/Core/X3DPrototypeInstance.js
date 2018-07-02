@@ -404,15 +404,15 @@ function (FieldDefinitionArray,
 
 					if (generator .ExecutionContext ())
 					{
-						if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
+						if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 						{
 							var
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
-							for (var id in fieldReferences)
+							for (var fieldReference of fieldReferences .values ())
 							{
-								initializableReference |= fieldReferences [id] .isInitializable ();
+								initializableReference |= fieldReference .isInitializable ();
 							}
 
 							if (! initializableReference)
@@ -423,7 +423,7 @@ function (FieldDefinitionArray,
 					// If we have no execution context we are not in a proto and must not generate IS references the same is true
 					// if the node is a shared node as the node does not belong to the execution context.
 
-					if ($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext () || mustOutputValue)
+					if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || mustOutputValue)
 					{
 						if (mustOutputValue)
 							references .push (field);
@@ -527,10 +527,8 @@ function (FieldDefinitionArray,
 							field       = references [i],
 							protoFields = field .getReferences ()
 
-						for (var id in protoFields)
+						for (var protoField of protoFields .values ())
 						{
-							var protoField = protoFields [id];
-
 							stream .string += generator .Indent ();
 							stream .string += "<connect";
 							stream .string += " ";

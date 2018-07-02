@@ -73,7 +73,7 @@ function ($,
 	{
 		constructor: X3DField,
 		_value: null,
-		_references: { },
+		_references: new Map (),
 		_fieldInterests: new Map (),
 		_fieldCallbacks: new Map (),
 		_inputRoutes: new Map (),
@@ -159,7 +159,7 @@ function ($,
 		hasReferences: function ()
 		{
 			if (this .hasOwnProperty ("_references"))
-				return ! $.isEmptyObject (this ._references);
+				return this ._references .size !== 0;
 
 			return false;
 		},
@@ -171,10 +171,10 @@ function ($,
 		{
 			var references = this .getReferences ();
 
-			if (references [reference .getId ()])
+			if (references .has (reference .getId ()))
 				return;
 
-			references [reference .getId ()] = reference;
+			references .set (reference .getId (), reference);
 
 			// Create IS relationship
 
@@ -208,10 +208,8 @@ function ($,
 		{
 			if (this .hasOwnProperty ("_references"))
 			{
-				for (var id in this ._references)
+				for (var reference of this ._references .values ())
 				{
-					var reference = this ._references [id];
-
 					switch (this .getAccessType () & reference .getAccessType ())
 					{
 						case X3DConstants .inputOnly:

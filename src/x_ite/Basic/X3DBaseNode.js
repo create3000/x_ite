@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Base/X3DEventObject",
 	"x_ite/Base/Events",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          X3DEventObject,
+function (X3DEventObject,
           Events,
           X3DFieldDefinition,
           FieldDefinitionArray,
@@ -294,12 +292,10 @@ function ($,
 						var references = sourceField .getReferences ();
 
 						// IS relationship
-						for (var id in references)
+						for (var originalReference of references .values ())
 						{
 							try
 							{
-								var originalReference = references [id];
-	
 								destfield .addReference (executionContext .getField (originalReference .getName ()));
 							}
 							catch (error)
@@ -351,12 +347,10 @@ function ($,
 
 					var references = sourceField .getReferences ();
 
-					for (var id in references)
+					for (var originalReference of references .values ())
 					{
 						try
 						{
-							var originalReference = references [id];
-	
 							destfield .addReference (executionContext .getField (originalReference .getName ()));
 						}
 						catch (error)
@@ -508,7 +502,7 @@ function ($,
 		
 			for (var field of predefinedFields)
 			{
-				if ($.isEmptyObject (field .getReferences ()))
+				if (field .getReferences () .size === 0)
 				{
 					if (! field .isInitializable ())
 						continue;
@@ -704,15 +698,15 @@ function ($,
 
 				if (generator .ExecutionContext ())
 				{
-					if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
+					if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 					{
 						var
 							initializableReference = false,
 							fieldReferences        = field .getReferences ();
 		
-						for (var id in fieldReferences)
+						for (var fieldReference of fieldReferences .values ())
 						{
-							initializableReference |= fieldReferences [id] .isInitializable ();
+							initializableReference |= fieldReference .isInitializable ();
 						}
 
 						if (! initializableReference)
@@ -723,7 +717,7 @@ function ($,
 				// If we have no execution context we are not in a proto and must not generate IS references the same is true
 				// if the node is a shared node as the node does not belong to the execution context.
 
-				if ($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext () || mustOutputValue)
+				if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || mustOutputValue)
 				{
 					if (mustOutputValue)
 						references .push (field);
@@ -799,22 +793,22 @@ function ($,
 
 						var mustOutputValue = false;
 
-						if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
+						if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 						{
 							var
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
-							for (var id in fieldReferences)
+							for (var fieldReference of fieldReferences .values ())
 							{
-								initializableReference |= fieldReferences [id] .isInitializable ();
+								initializableReference |= fieldReference .isInitializable ();
 							}
 
 							if (! initializableReference)
 								mustOutputValue = true;
 						}
 
-						if (($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext ()) || mustOutputValue)
+						if ((field .getReferences () .size === 0 || ! generator .ExecutionContext ()) || mustOutputValue)
 						{
 							if (mustOutputValue && generator .ExecutionContext ())
 								references .push (field);
@@ -888,10 +882,8 @@ function ($,
 							field       = references [i],
 							protoFields = field .getReferences ()
 
-						for (var id in protoFields)
+						for (var protoField of protoFields .values ())
 						{
-							var protoField = protoFields [id];
-
 							stream .string += generator .Indent ();
 							stream .string += "<connect";
 							stream .string += " ";
