@@ -1,4 +1,4 @@
-/* X_ITE v4.2.3a-296 */
+/* X_ITE v4.2.3a-297 */
 
 (function () {
 
@@ -12873,7 +12873,7 @@ function ()
 		constructor: X3DObject,
 		_id: 0,
 		_name: "",
-		_interests: { },
+		_interests: new Map (),
 		getId: function ()
 		{
 			this .getId = getId;
@@ -12890,19 +12890,12 @@ function ()
 		},
 		hasInterest: function (callbackName, object)
 		{
-			return Boolean (this ._interests [object .getId () + callbackName]);
+			return this ._interests .has (object .getId () + callbackName);
 		},
 		addInterest: function (callbackName, object)
 		{
 			if (! this .hasOwnProperty ("_interests"))
-				this ._interests = { };
-
-//			var args = Array .prototype .slice .call (arguments, 0);
-//
-//			args [0] = object;
-//			args [1] = this;
-//
-//			this ._interests [object .getId () + callbackName] = Function .prototype .bind .apply (object [callbackName], args);
+				this ._interests = new Map ();
 
 			var
 				callback = object [callbackName],
@@ -12910,11 +12903,11 @@ function ()
 
 			args [0] = this;
 
-			this ._interests [object .getId () + callbackName] = function () { callback .apply (object, args); };
+			this ._interests .set (object .getId () + callbackName, function () { callback .apply (object, args); });
 		},
 		removeInterest: function (callbackName, object)
 		{
-			delete this ._interests [object .getId () + callbackName];
+			this ._interests .delete (object .getId () + callbackName);
 		},
 		getInterests: function ()
 		{
@@ -12922,10 +12915,10 @@ function ()
 		},
 		processInterests: function ()
 		{
-			var interests = this ._interests;
-
-			for (var key in interests)
-				interests [key] ();
+			this ._interests .forEach (function (interest)
+			{
+				interest ();
+			});
 		},
 		toString: function ()
 		{
@@ -13011,7 +13004,7 @@ function (X3DObject)
 	{
 		X3DObject .call (this);
 
-		this ._parents = { }; // Sparse arrays are much more expensive than plain objects!
+		this ._parents = new Map (); // Sparse arrays are much more expensive than plain objects!
 	}
 
 	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
@@ -13031,25 +13024,27 @@ function (X3DObject)
 			if (this ._tainted)
 				return;
 
-			var parents = this ._parents;
-
-			for (var id in parents)
-				parents [id] .addEvent (this);
+			this ._parents .forEach (function (parent)
+			{
+				parent .addEvent (this);
+			},
+			this);
 		},
 		addEventObject: function (field, event)
 		{
-			var parents = this ._parents;
-
-			for (var id in parents)
-				parents [id] .addEventObject (this, event);
+			this ._parents .forEach (function (parent)
+			{
+				parent .addEventObject (this, event);
+			},
+			this);
 		},
 		addParent: function (parent)
 		{
-			this ._parents [parent .getId ()] = parent;
+			this ._parents .set (parent .getId (), parent);
 		},
 		removeParent: function (parent)
 		{
-			delete this ._parents [parent .getId ()];
+			this ._parents .delete (parent .getId ());
 		},
 		getParents: function ()
 		{
@@ -13059,10 +13054,7 @@ function (X3DObject)
 		removeClones: Function .prototype,
 		dispose: function ()
 		{
-//			var parents = this ._parents;
-//
-//			for (var key in parents)
-//				delete parents [key];
+			this ._parents .clear ();
 
 			X3DObject .prototype .dispose .call (this);
 		},
@@ -13588,14 +13580,16 @@ define ('x_ite/Base/Events',[],function ()
 				var event = this .stack .pop ();
 
 				event .field = field;
+				event .clear ();
 
 				return event;
 			}
-            
-			return {
-				field: field,
-				sources: { }, // Sparse arrays are much more expensive than plain objects!
-			};
+ 
+			var event = new Set ();
+
+			event .field = field;
+
+			return event;
 		},
 		copy: function (event)
 	   {
@@ -13604,26 +13598,22 @@ define ('x_ite/Base/Events',[],function ()
 				var copy = this .stack .pop ();
 
 				copy .field = event .field;
-	      }
-			else
-			{
-				var copy = {
-					field: event .field,
-					sources: { },
-				};
-			}
+				copy .clear ();
 
-			Object .assign (copy .sources, event .sources)
+				for (var source of event)
+					copy .add (source);
+
+				return copy;
+	      }
+
+			var copy = new Set (event .sources);
+
+			copy .field = event .field;
 
 			return copy;
 	   },
 		push: function (event)
 		{
-		   var sources = event .sources;
-
-		   for (var id in sources)
-		      delete sources [id];
-
 		   this .stack .push (event);
 		},
 		clear: function ()
@@ -13711,10 +13701,10 @@ function ($,
 		constructor: X3DField,
 		_value: null,
 		_references: { },
-		_fieldInterests: { },
-		_fieldCallbacks: { },
-		_inputRoutes: { },
-		_outputRoutes: { },
+		_fieldInterests: new Map (),
+		_fieldCallbacks: new Map (),
+		_inputRoutes: new Map (),
+		_outputRoutes: new Map (),
 		_accessType: X3DConstants .initializeOnly,
 		_unit: null,
 		_set: false,
@@ -13837,7 +13827,7 @@ function ($,
 		getReferences: function ()
 		{
 			if (! this .hasOwnProperty ("_references"))
-				this ._references = { };
+				this ._references = new Map ();
 
 			return this ._references;
 		},
@@ -13865,13 +13855,13 @@ function ($,
 		addFieldInterest: function (field)
 		{
 			if (! this .hasOwnProperty ("_fieldInterests"))
-				this ._fieldInterests = { };
+				this ._fieldInterests = new Map ();
 
-			this ._fieldInterests [field .getId ()] = field;
+			this ._fieldInterests .set (field .getId (), field);
 		},
 		removeFieldInterest: function (field)
 		{
-			delete this ._fieldInterests [field .getId ()];
+			this ._fieldInterests .delete (field .getId ());
 		},
 		getFieldInterests: function ()
 		{
@@ -13880,13 +13870,13 @@ function ($,
 		addFieldCallback: function (string, object)
 		{
 			if (! this .hasOwnProperty ("_fieldCallbacks"))
-				this ._fieldCallbacks = { };
+				this ._fieldCallbacks = new Map ();
 
-			this ._fieldCallbacks [string] = object;
+			this ._fieldCallbacks .set (string, object);
 		},
 		removeFieldCallback: function (string)
 		{
-			delete this ._fieldCallbacks [string];
+			this ._fieldCallbacks .delete (string);
 		},
 		getFieldCallbacks: function ()
 		{
@@ -13895,13 +13885,13 @@ function ($,
 		addOutputRoute: function (route)
 		{
 			if (! this .hasOwnProperty ("_outputRoutes"))
-				this ._outputRoutes = { };
+				this ._outputRoutes = new Map ();
 
-			this ._outputRoutes [route .getId ()] = route;
+			this ._outputRoutes .set (route .getId (), route);
 		},
 		removeOutputRoute: function (route)
 		{
-			delete this ._outputRoutes [route .getId ()];
+			this ._outputRoutes .delete (route .getId ());
 		},
 		getOutputRoutes: function ()
 		{
@@ -13910,13 +13900,13 @@ function ($,
 		addInputRoute: function (route)
 		{
 			if (! this .hasOwnProperty ("_inputRoutes"))
-				this ._inputRoutes = { };
+				this ._inputRoutes = new Map ();
 
-			this ._inputRoutes [route .getId ()] = route;
+			this ._inputRoutes .set (route .getId (), route);
 		},
 		removeInputRoute: function (route)
 		{
-			delete this ._inputRoutes [route .getId ()];
+			this ._inputRoutes .delete (route .getId ());
 		},
 		getInputRoutes: function ()
 		{
@@ -13924,15 +13914,17 @@ function ($,
 		},
 		processEvent: function (event)
 		{
-			if (event .sources [this .getId ()])
+			if (event .has (this .getId ()))
 				return;
 
-			event .sources [this .getId ()] = true;
+			event .add (this .getId ());
 
 			this .setTainted (false);
 
-			if (event .field !== this)
-				this .set (event .field .getValue (), event .field .length);
+			var field = event .field;
+
+			if (field !== this)
+				this .set (field .getValue (), field .length);
 
 			// Process interests
 
@@ -13940,30 +13932,30 @@ function ($,
 
 			// Process routes
 
-			var
-				fieldInterests = this ._fieldInterests,
-				first          = true;
+			var first = true;
 
-			for (var key in fieldInterests)
+			this ._fieldInterests .forEach (function (fieldInterest)
 			{
 				if (first)
 				{
 					first = false;
-					fieldInterests [key] .addEventObject (this, event);
+					fieldInterest .addEventObject (this, event);
 				}
 				else
-					fieldInterests [key] .addEventObject (this, Events .copy (event));
-			}
+					fieldInterest .addEventObject (this, Events .copy (event));
+			},
+			this);
 
 			if (first)
 			   Events .push (event);
 
 			// Process field callbacks
 
-			var fieldCallbacks = this ._fieldCallbacks;
-
-			for (var key in fieldCallbacks)
-				fieldCallbacks [key] (this .valueOf ());
+			this ._fieldCallbacks .forEach (function (fieldCallback)
+			{
+				fieldCallback (this .valueOf ());
+			},
+			this);
 		},
 		valueOf: function ()
 		{
@@ -23287,12 +23279,12 @@ function (X3DArrayField,
 				{
 					// Return reference to index.
 
-					var value = target ._cache [index];
-
-					if (value)
-						return value;
-
-					target ._cache [index] = value;
+					//var value = target ._cache [index];
+					//
+					//if (value)
+					//	return value;
+					//
+					//target ._cache [index] = value;
 
 					var value = new (valueType) ();
 
@@ -23378,9 +23370,9 @@ function (X3DArrayField,
 	{
 		X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
-		this ._target     = this;
-		this ._cache = [ ];
-		this ._tmp        = [ ]; // Array with components size.
+		this ._target = this;
+		//this ._cache  = [ ];  // Reference values cache.
+		this ._tmp    = [ ];  // Array with components size.
 
 		if (value [0] instanceof Array)
 			value = value [0];
@@ -23755,7 +23747,7 @@ function (X3DArrayField,
 
 			if (newLength < length)
 			{
-				target ._cache .length = newLength;
+				//target ._cache .length = newLength;
 
 				array .fill (0, newLength * components, length * components);
 
@@ -25318,7 +25310,7 @@ function ($,
 			{
 				var field = this .getField (fieldDefinitions [i] .name);
 
-				if ($.isEmptyObject (field .getInputRoutes ()) && $.isEmptyObject (field .getOutputRoutes ()))
+				if (field .getInputRoutes () .size === 0 && field .getOutputRoutes () .size === 0)
 					continue;
 
 				return true;
@@ -25739,18 +25731,14 @@ function ($,
 
 			var firstParents = this .getParents ();
 
-			for (var firstId in firstParents)
+			for (var firstParent of firstParents .values ())
 			{
-				var firstParent = firstParents [firstId];
-
 				if (firstParent instanceof Fields .SFNode)
 				{
 					var secondParents = firstParent .getParents ();
 
-					for (var secondId in secondParents)
+					for (var secondParent of secondParents .values ())
 					{
-						var secondParent = secondParents [secondId];
-
 						if (secondParent instanceof Fields .MFNode)
 						{
 							var length = secondParent .length;
@@ -27345,8 +27333,8 @@ function ($,
 					navigationTime    = activeLayer && browser .getCollisionCount () ? activeLayer .collisionTime : 0,
 					collisionTime     = browser .collisionTime + navigationTime,
 					routingTime       = browser .browserTime - (browser .cameraTime + browser .collisionTime + browser .displayTime + navigationTime),
-					prepareEvents     = Object .keys (browser .prepareEvents () .getInterests ()) .length - 1,
-					sensors           = Object .keys (browser .sensorEvents () .getInterests ()) .length,
+					prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
+					sensors           = browser .sensorEvents () .getInterests () .size,
 					opaqueShapes      = 0,
 					transparentShapes = 0;
 
@@ -33272,21 +33260,23 @@ function (X3DBaseNode,
 		findParents: function (type, object)
 		{
 			var
-				parents = object .getParents (),
-				array   = [ ],
-				seen    = { };
-	
-			for (var id in parents)
-				this .findParentsImpl (type, parents [id], array, seen);
+				array = [ ],
+				seen  = new Set ();
+
+			object .getParents () .forEach (function (parent)
+			{
+				this .findParentsImpl (type, parent, array, seen);
+			},
+			this);
 	
 			return array;
 		},
 		findParentsImpl: function (type, object, array, seen)
 		{
-			if (seen .hasOwnProperty (object .getId ()))
+			if (seen .has (object .getId ()))
 				return;
 
-			seen [object .getId ()] = true;
+			seen .add (object .getId ());
 
 			if (object instanceof X3DBaseNode)
 			{
@@ -33319,10 +33309,11 @@ function (X3DBaseNode,
 				}
 			}
 
-			var parents = object .getParents ();
-
-			for (var id in parents)
-				this .findParentsImpl (type, parents [id], array, seen);
+			object .getParents () .forEach (function (parent)
+			{
+				this .findParentsImpl (type, parent, array, seen);
+			},
+			this);
 		},
 	});
 
@@ -38869,7 +38860,7 @@ function (Fields,
 				}
 				else
 				{
-					this .getCanvas () .stop (true, true) .fadeOut (0);
+					this .getCanvas () .fadeOut (0);
 				}
 			}
 			else
@@ -38880,7 +38871,9 @@ function (Fields,
 					this .getCanvas ()       .stop (true, true) .fadeOut (0) .fadeIn  (2000);
 				}
 				else
-					this .getCanvas () .stop (true, true) .fadeIn (0);
+				{
+					this .getCanvas () .fadeIn (0);
+				}
 			}
 		},
 		getLoading: function ()
@@ -38914,8 +38907,9 @@ function (Fields,
 		setLoadCount: function (value)
 		{
 			if (value)
+			{
 				var string = sprintf .sprintf (value == 1 ? _ ("Loading %d file") : _ ("Loading %d files"), value);
-			
+			}
 			else
 			{
 				var string = _("Loading done");
@@ -49352,31 +49346,31 @@ function (Fields,
 
 
 
-define('text!x_ite/Browser/Shaders/PointSet.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/PointSet.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
 define('text!x_ite/Browser/Shaders/Wireframe.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_GeometryType == x3d_GeometryLines ? x3d_LinewidthScaleFactor : x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = vec3 (p);\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_FrontMaterial .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tC .rgb = x3d_Color .rgb;\n\t\t\tC .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tC .rgb = x3d_FrontMaterial .emissiveColor;\n\t\t\tC .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tC = x3d_Color;\n\t\telse\n\t\t\tC = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Wireframe.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = C .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/Wireframe.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = C .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Gouraud.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor (const in vec3 N,\n                  const in vec3 v,\n                  const in x3d_MaterialParameters material)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (0.0, 0.0, 0.0);\n\tfloat alpha         = 1.0 - material .transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = material .diffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tif (i == x3d_NumLights)\n\t\t\tbreak;\n\n\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\tvec3  vL = light .location - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\tif (di || dL <= light .radius)\n\t\t{\n\t\t\tvec3 d = light .direction;\n\t\t\tvec3 c = light .attenuation;\n\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\tvec3  ambientColor                = light .ambientIntensity * ambientTerm;\n\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\tfinalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);\n\t\t}\n\t}\n\n\tfinalColor += material .emissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfrontColor = getMaterialColor (N, v, x3d_FrontMaterial);\n\n\t\tx3d_MaterialParameters backMaterial = x3d_FrontMaterial;\n\n\t\tif (x3d_SeparateBackColor)\n\t\t\tbackMaterial = x3d_BackMaterial;\n\n\t\tbackColor = getMaterialColor (-N, v, backMaterial);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!x_ite/Browser/Shaders/Gouraud.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor (const in vec3 N,\n                  const in vec3 v,\n                  const in x3d_MaterialParameters material)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (0.0, 0.0, 0.0);\n\tfloat alpha         = 1.0 - material .transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = material .diffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tif (i == x3d_NumLights)\n\t\t\tbreak;\n\n\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\tvec3  vL = light .location - v;\n\t\tfloat dL = length (vL);\n\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\tif (di || dL <= light .radius)\n\t\t{\n\t\t\tvec3 d = light .direction;\n\t\t\tvec3 c = light .attenuation;\n\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\tvec3  ambientColor                = light .ambientIntensity * ambientTerm;\n\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\tfinalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);\n\t\t}\n\t}\n\n\tfinalColor += material .emissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n\n\tif (x3d_Lighting)\n\t{\n\t\tvec3 N = normalize (x3d_NormalMatrix * x3d_Normal);\n\n\t\tfrontColor = getMaterialColor (N, v, x3d_FrontMaterial);\n\n\t\tx3d_MaterialParameters backMaterial = x3d_FrontMaterial;\n\n\t\tif (x3d_SeparateBackColor)\n\t\t\tbackMaterial = x3d_BackMaterial;\n\n\t\tbackColor = getMaterialColor (-N, v, backMaterial);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Gouraud.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_None)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = getFogColor (finalColor .rgb);\n\tgl_FragColor .a   = finalColor .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/Gouraud.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 frontColor; // color\nvarying vec4 backColor;  // color\nvarying vec4 t;          // texCoord\nvarying vec3 v;          // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_None)\n\t{\n\t\tif (x3d_Lighting)\n\t\t\tfinalColor *= getTextureColor ();\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = getFogColor (finalColor .rgb);\n\tgl_FragColor .a   = finalColor .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
 define('text!x_ite/Browser/Shaders/Phong.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_TexCoord;\nattribute vec3 x3d_Normal;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tif (x3d_Lighting)\n\t\tvN = x3d_NormalMatrix * x3d_Normal;\n\n\tt = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tC = x3d_Color;\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Phong.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\n#pragma X3D include "Inlcude/Shadow.h"\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvec4\ngetMaterialColor (const in x3d_MaterialParameters material)\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - material .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * material .diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = material .diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\t#pragma unroll_loop\n\t\tfor (int i = 0; i < x3d_MaxLights; i ++)\n\t\t{\n\t\t\tif (i == x3d_NumLights)\n\t\t\t\tbreak;\n\n\t\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\t\tvec3  vL = light .location - v; // Light to fragment\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= light .radius)\n\t\t\t{\n\t\t\t\tvec3 d = light .direction;\n\t\t\t\tvec3 c = light .attenuation;\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor          = light .color * light .ambientIntensity * ambientTerm;\n\t\t\t\tvec3  diffuseSpecularColor  = light .color * light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\t\t#ifdef X3D_SHADOWS\n\t\t\t\t\tif (lightAngle > 0.0)\n\t\t\t\t\t\tdiffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));\n\t\t\t\t#endif\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (ambientColor + diffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += material .emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\n// DEBUG\n//uniform ivec4 x3d_Viewport;\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\tgl_FragColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n\n\t// DEBUG\n\t#ifdef X3D_SHADOWS\n\t//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;\n\t//gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);\n\t#endif\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//gl_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), gl_FragColor .rgb, 0.5);\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/Phong.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying vec4 C;  // color\nvarying vec4 t;  // texCoord\nvarying vec3 vN; // normalized normal vector at this point on geometry\nvarying vec3 v;  // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\n#pragma X3D include "Inlcude/Shadow.h"\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetTextureColor ()\n{\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (t));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvec4\ngetMaterialColor (const in x3d_MaterialParameters material)\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - material .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * material .diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = material .diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\tfor (int i = 0; i < x3d_MaxLights; i ++)\n\t\t{\n\t\t\tif (i == x3d_NumLights)\n\t\t\t\tbreak;\n\n\t\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\t\tvec3  vL = light .location - v; // Light to fragment\n\t\t\tfloat dL = length (vL);\n\t\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= light .radius)\n\t\t\t{\n\t\t\t\tvec3 d = light .direction;\n\t\t\t\tvec3 c = light .attenuation;\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor          = light .color * light .ambientIntensity * ambientTerm;\n\t\t\t\tvec3  diffuseSpecularColor  = light .color * light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\t\t#ifdef X3D_SHADOWS\n\t\t\t\t\tif (lightAngle > 0.0)\n\t\t\t\t\t\tdiffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));\n\t\t\t\t#endif\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (ambientColor + diffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += material .emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .visibilityRange <= 0.0)\n\t\treturn 0.0;\n\n\tfloat dV = length (v);\n\n\tif (dV >= x3d_Fog .visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (x3d_Fog .visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\n// DEBUG\n//uniform ivec4 x3d_Viewport;\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\tgl_FragColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n\n\t// DEBUG\n\t#ifdef X3D_SHADOWS\n\t//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;\n\t//gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);\n\t#endif\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//gl_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), gl_FragColor .rgb, 0.5);\n\t#endif\n}\n';});
 
 
 define('text!x_ite/Browser/Shaders/Depth.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Vertex;\n\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Depth.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec3 v; // point on geometry\n\n#pragma X3D include "Include/Pack.h"\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
+define('text!x_ite/Browser/Shaders/Depth.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec3 v; // point on geometry\n\n#pragma X3D include "Include/Pack.h"\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -53519,12 +53513,15 @@ function ($,
 
 			// Create shaders.
 
-			this .depthShader   = this .createShader (this, "DepthShader",     depthVS,     depthFS);
-			this .pointShader   = this .createShader (this, "PointShader",     wireframeVS, pointSetFS);
-			this .lineShader    = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS);
-			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS);
-			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS);
-			this .shadowShader  = this .createShader (this, "ShadowShader",    phongVS,     phongFS, true);
+			// Shadow shader causes a memory leak in Edge browser.
+			var shadow = ! /Edge/ .test (navigator .userAgent);
+
+			this .depthShader   = this .createShader (this, "DepthShader",     depthVS,     depthFS,     false);
+			this .pointShader   = this .createShader (this, "PointShader",     wireframeVS, pointSetFS,  false);
+			this .lineShader    = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS, false);
+			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS,   false);
+			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS,     false);
+			this .shadowShader  = this .createShader (this, "ShadowShader",    phongVS,     phongFS,     shadow);
 
 			this .pointShader .setGeometryType (0);
 			this .lineShader  .setGeometryType (1);
@@ -67929,7 +67926,7 @@ function ($,
 define('text!x_ite/Browser/Shaders/Background.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = p .xyz;\n\tgl_Position = x3d_ProjectionMatrix * p;\n\tC           = x3d_Color;\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Background.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\t#pragma unroll_loop\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
+define('text!x_ite/Browser/Shaders/Background.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -103891,18 +103888,19 @@ function (Fields,
 				colorNode   = this .colorNode,
 				coordNode   = this .coordNode,
 				colorArray  = this .getColors (),
-				vertexArray = this .getVertices ();
+				vertexArray = this .getVertices (),
+				length      = coordNode .point_ .length;
 
 			for (var a = 0; a < numAttrib; ++ a)
 			{
-				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
+				for (var i = 0; i < length; ++ i)
 					attribNodes [a] .addValue (i, attribs [a]);
 			}
 
 			if (colorNode)
-				colorNode .addColors (colorArray,  coordNode .point_ .length);
+				colorNode .addColors (colorArray, length);
 
-			coordNode .addPoints (vertexArray, coordNode .point_ .length);
+			coordNode .addPoints (vertexArray, length);
 		},
 	});
 
