@@ -1,4 +1,4 @@
-/* X_ITE v4.2.2-292 */
+/* X_ITE v4.2.2-293 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
@@ -27,7 +27,7 @@ X3DCanvas .x_ite-private-spinner {
 }
 @-moz-keyframes spinner-animation-spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+@keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
 X3DCanvas .x_ite-private-progress {
 	position: absolute;
 	top: calc(50% - 11pt);
