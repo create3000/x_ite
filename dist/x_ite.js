@@ -1,4 +1,4 @@
-/* X_ITE v4.2.3a-295 */
+/* X_ITE v4.2.3a-296 */
 
 (function () {
 
@@ -40429,7 +40429,6 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
 		]),
-		keyValue: new Vector3 (0, 0, 0),
 		getTypeName: function ()
 		{
 			return "PositionInterpolator";
@@ -40457,10 +40456,15 @@ function (Fields,
 			if (keyValue .length < key .length)
 				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
 		},
-		interpolate: function (index0, index1, weight)
+		interpolate: (function ()
 		{
-			this .value_changed_ = this .keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
-		},
+			var keyValue = new Vector3 (0, 0, 0);
+
+			return function (index0, index1, weight)
+			{
+				this .value_changed_ = keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
+			};
+		})(),
 	});
 
 	return PositionInterpolator;
@@ -87491,7 +87495,6 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFColor ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFColor ()),
 		]),
-		value: [ ],
 		getTypeName: function ()
 		{
 			return "ColorInterpolator";
@@ -87522,12 +87525,17 @@ function (Fields,
 			for (var i = 0, length = keyValue .length; i < length; ++ i)
 				this .hsv .push (keyValue [i] .getHSV ([ ]));
 		},
-		interpolate: function (index0, index1, weight)
+		interpolate: (function ()
 		{
-			var value = Color3 .lerp (this .hsv [index0], this .hsv [index1], weight, this .value);
+			var value = [ ];
 
-			this .value_changed_ .setHSV (value [0], value [1], value [2]);
-		},
+			return function (index0, index1, weight)
+			{
+				Color3 .lerp (this .hsv [index0], this .hsv [index1], weight, value);
+	
+				this .value_changed_ .setHSV (value [0], value [1], value [2]);
+			};
+		})(),
 	});
 
 	return ColorInterpolator;
@@ -104819,7 +104827,6 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec2f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec2f ()),
 		]),
-		keyValue: new Vector2 (0, 0),
 		getTypeName: function ()
 		{
 			return "PositionInterpolator2D";
@@ -104847,10 +104854,15 @@ function (Fields,
 			if (keyValue .length < key .length)
 				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec2f ());
 		},
-		interpolate: function (index0, index1, weight)
+		interpolate:  (function ()
 		{
-			this .value_changed_ = this .keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
-		},
+			var keyValue = new Vector2 (0, 0);
+
+			return function (index0, index1, weight)
+			{
+				this .value_changed_ = keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
+			};
+		})(),
 	});
 
 	return PositionInterpolator2D;
