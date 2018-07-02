@@ -555,7 +555,7 @@ function ($,
 			{
 				var field = this .getField (fieldDefinitions [i] .name);
 
-				if ($.isEmptyObject (field .getInputRoutes ()) && $.isEmptyObject (field .getOutputRoutes ()))
+				if (field .getInputRoutes () .size === 0 && field .getOutputRoutes () .size === 0)
 					continue;
 
 				return true;
@@ -976,18 +976,14 @@ function ($,
 
 			var firstParents = this .getParents ();
 
-			for (var firstId in firstParents)
+			for (var firstParent of firstParents .values ())
 			{
-				var firstParent = firstParents [firstId];
-
 				if (firstParent instanceof Fields .SFNode)
 				{
 					var secondParents = firstParent .getParents ();
 
-					for (var secondId in secondParents)
+					for (var secondParent of secondParents .values ())
 					{
-						var secondParent = secondParents [secondId];
-
 						if (secondParent instanceof Fields .MFNode)
 						{
 							var length = secondParent .length;

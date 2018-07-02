@@ -190,8 +190,8 @@ function ($,
 					navigationTime    = activeLayer && browser .getCollisionCount () ? activeLayer .collisionTime : 0,
 					collisionTime     = browser .collisionTime + navigationTime,
 					routingTime       = browser .browserTime - (browser .cameraTime + browser .collisionTime + browser .displayTime + navigationTime),
-					prepareEvents     = Object .keys (browser .prepareEvents () .getInterests ()) .length - 1,
-					sensors           = Object .keys (browser .sensorEvents () .getInterests ()) .length,
+					prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
+					sensors           = browser .sensorEvents () .getInterests () .size,
 					opaqueShapes      = 0,
 					transparentShapes = 0;
 

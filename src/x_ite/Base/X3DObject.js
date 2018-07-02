@@ -72,7 +72,7 @@ function ()
 		constructor: X3DObject,
 		_id: 0,
 		_name: "",
-		_interests: { },
+		_interests: new Map (),
 		getId: function ()
 		{
 			this .getId = getId;
@@ -89,19 +89,12 @@ function ()
 		},
 		hasInterest: function (callbackName, object)
 		{
-			return Boolean (this ._interests [object .getId () + callbackName]);
+			return this ._interests .has (object .getId () + callbackName);
 		},
 		addInterest: function (callbackName, object)
 		{
 			if (! this .hasOwnProperty ("_interests"))
-				this ._interests = { };
-
-//			var args = Array .prototype .slice .call (arguments, 0);
-//
-//			args [0] = object;
-//			args [1] = this;
-//
-//			this ._interests [object .getId () + callbackName] = Function .prototype .bind .apply (object [callbackName], args);
+				this ._interests = new Map ();
 
 			var
 				callback = object [callbackName],
@@ -109,11 +102,11 @@ function ()
 
 			args [0] = this;
 
-			this ._interests [object .getId () + callbackName] = function () { callback .apply (object, args); };
+			this ._interests .set (object .getId () + callbackName, function () { callback .apply (object, args); });
 		},
 		removeInterest: function (callbackName, object)
 		{
-			delete this ._interests [object .getId () + callbackName];
+			this ._interests .delete (object .getId () + callbackName);
 		},
 		getInterests: function ()
 		{
@@ -121,10 +114,10 @@ function ()
 		},
 		processInterests: function ()
 		{
-			var interests = this ._interests;
-
-			for (var key in interests)
-				interests [key] ();
+			this ._interests .forEach (function (interest)
+			{
+				interest ();
+			});
 		},
 		toString: function ()
 		{

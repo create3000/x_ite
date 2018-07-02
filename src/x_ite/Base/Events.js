@@ -61,14 +61,16 @@ define (function ()
 				var event = this .stack .pop ();
 
 				event .field = field;
+				event .clear ();
 
 				return event;
 			}
-            
-			return {
-				field: field,
-				sources: { }, // Sparse arrays are much more expensive than plain objects!
-			};
+ 
+			var event = new Set ();
+
+			event .field = field;
+
+			return event;
 		},
 		copy: function (event)
 	   {
@@ -77,26 +79,22 @@ define (function ()
 				var copy = this .stack .pop ();
 
 				copy .field = event .field;
-	      }
-			else
-			{
-				var copy = {
-					field: event .field,
-					sources: { },
-				};
-			}
+				copy .clear ();
 
-			Object .assign (copy .sources, event .sources)
+				for (var source of event)
+					copy .add (source);
+
+				return copy;
+	      }
+
+			var copy = new Set (event .sources);
+
+			copy .field = event .field;
 
 			return copy;
 	   },
 		push: function (event)
 		{
-		   var sources = event .sources;
-
-		   for (var id in sources)
-		      delete sources [id];
-
 		   this .stack .push (event);
 		},
 		clear: function ()

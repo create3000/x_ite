@@ -181,9 +181,9 @@ function (X3DArrayField,
 	{
 		X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
-		this ._target     = this;
-		this ._cache = [ ];
-		this ._tmp        = [ ]; // Array with components size.
+		this ._target = this;
+		this ._cache  = [ ];  // Reference values cache.
+		this ._tmp    = [ ];  // Array with components size.
 
 		if (value [0] instanceof Array)
 			value = value [0];
