@@ -148,7 +148,7 @@ cubeToUVCompact (in vec3 v, const float texelSizeY)
 }
 
 mat4
-getPointLightRotations (const in vec3 vector)
+getPointLightRotation (const in vec3 vector)
 {
 	mat4 rotations [6];
 	rotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left
@@ -191,6 +191,7 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 			                           0.0, 0.0, 0.5, 0.0,
 			                           0.5, 0.5, 0.5, 1.0);
 
+		// 90° fov, as used in PointLight shadow calculations.
 		const mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);
 
 		vec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));
@@ -200,7 +201,7 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 		vec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);
 		vec3 lightToPosition = shadowCoord .xyz;
 
-		shadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));
+		shadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotation (lightToPosition) * shadowCoord));
 		shadowCoord .z   -= light .shadowBias;
 		shadowCoord .xyz /= shadowCoord .w;
 
