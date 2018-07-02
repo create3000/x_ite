@@ -90,12 +90,12 @@ function (X3DArrayField,
 				{
 					// Return reference to index.
 
-					var value = target ._cache [index];
-
-					if (value)
-						return value;
-
-					target ._cache [index] = value;
+					//var value = target ._cache [index];
+					//
+					//if (value)
+					//	return value;
+					//
+					//target ._cache [index] = value;
 
 					var value = new (valueType) ();
 
@@ -182,7 +182,7 @@ function (X3DArrayField,
 		X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
 		this ._target = this;
-		this ._cache  = [ ];  // Reference values cache.
+		//this ._cache  = [ ];  // Reference values cache.
 		this ._tmp    = [ ];  // Array with components size.
 
 		if (value [0] instanceof Array)
@@ -558,7 +558,7 @@ function (X3DArrayField,
 
 			if (newLength < length)
 			{
-				target ._cache .length = newLength;
+				//target ._cache .length = newLength;
 
 				array .fill (0, newLength * components, length * components);
 

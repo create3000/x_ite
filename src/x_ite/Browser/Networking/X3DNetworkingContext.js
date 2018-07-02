@@ -135,7 +135,7 @@ function (Fields,
 				}
 				else
 				{
-					this .getCanvas () .stop (true, true) .fadeOut (0);
+					this .getCanvas () .fadeOut (0);
 				}
 			}
 			else
@@ -146,7 +146,9 @@ function (Fields,
 					this .getCanvas ()       .stop (true, true) .fadeOut (0) .fadeIn  (2000);
 				}
 				else
-					this .getCanvas () .stop (true, true) .fadeIn (0);
+				{
+					this .getCanvas () .fadeIn (0);
+				}
 			}
 		},
 		getLoading: function ()
@@ -180,8 +182,9 @@ function (Fields,
 		setLoadCount: function (value)
 		{
 			if (value)
+			{
 				var string = sprintf .sprintf (value == 1 ? _ ("Loading %d file") : _ ("Loading %d files"), value);
-			
+			}
 			else
 			{
 				var string = _("Loading done");
