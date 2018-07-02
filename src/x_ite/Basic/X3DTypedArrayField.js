@@ -84,18 +84,12 @@ function (X3DArrayField,
 
 				if (components === 1)
 				{
+					// Return native JavaScript value.
 					return valueType (array [index]);
 				}
 				else
 				{
 					// Return reference to index.
-
-					//var value = target ._cache [index];
-					//
-					//if (value)
-					//	return value;
-					//
-					//target ._cache [index] = value;
 
 					var value = new (valueType) ();
 
@@ -107,13 +101,6 @@ function (X3DArrayField,
 					value .addEvent = addEvent;
 
 					return value;
-
-//					var value = new (valueType) ();
-//
-//					value .addEvent = addEvent .bind (value, target, index * components, value .getValue (), components);
-//					value .getValue = getValue .bind (value, target, index * components, value .getValue (), components);
-//
-//					return value;
 				}
 			}
 			catch (error)
@@ -182,7 +169,6 @@ function (X3DArrayField,
 		X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
 		this ._target = this;
-		//this ._cache  = [ ];  // Reference values cache.
 		this ._tmp    = [ ];  // Array with components size.
 
 		if (value [0] instanceof Array)
@@ -558,8 +544,6 @@ function (X3DArrayField,
 
 			if (newLength < length)
 			{
-				//target ._cache .length = newLength;
-
 				array .fill (0, newLength * components, length * components);
 
 				if (! silent)
@@ -824,30 +808,6 @@ function (X3DArrayField,
 
 		target .addEvent ();
 	}
-
-//	function getValue (target, index, value, components)
-//	{
-//		var
-//			array = target .getValue (),
-//			tmp   = target ._tmp;
-//
-//		for (var c = 0; c < components; ++ c, ++ index)
-//			tmp [c] = array [index];
-//
-//		value .set .apply (value, tmp);
-//
-//		return value;
-//	}
-//
-//	function addEvent (target, index, value, components)
-//	{
-//		var array = target .getValue ();
-//
-//		for (var c = 0; c < components; ++ c, ++ index)
-//			array [index] = value [c];
-//
-//		target .addEvent ();
-//	}
 
 	return X3DTypedArrayField;
 });
