@@ -1,4 +1,4 @@
-/* X_ITE v4.2.3a-298 */
+/* X_ITE v4.2.3a-299 */
 
 (function () {
 
@@ -13609,7 +13609,7 @@ define ('x_ite/Base/Events',[],function ()
 				return copy;
 	      }
 
-			var copy = new Set (event .sources);
+			var copy = new Set (event);
 
 			copy .field = event .field;
 
