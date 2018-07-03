@@ -90,7 +90,7 @@ define (function ()
 				return copy;
 	      }
 
-			var copy = new Set (event .sources);
+			var copy = new Set (event);
 
 			copy .field = event .field;
 
