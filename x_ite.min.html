@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.js"></script>
 	<script type="text/javascript" src="src/bookmarks.js"></script>
 	<script type="text/javascript" src="src/tests.js"></script>
+	<script type="text/javascript" src="examples.js"></script>
 
 	<!-- X_ITE START -->
 	<link rel="stylesheet" type="text/css" href="dist/x_ite.css"/>
@@ -127,20 +128,28 @@ main.color-management .browser {
 	background: #515151;
 }
 
+.buttons {
+	margin: 10px 0px;
+	float: left;
+}
+
 .links {
 	margin: 10px 0px;
 	text-align: right;
 }
 
+.buttons a,
 .links a {
 	padding: 0px 5px;
 	border-left: 1px solid white;
 }
 
+.buttons a:first-child,
 .links a:first-child {
 	border-left: none;
 }
 
+.buttons a:last-child,
 .links a:last-child {
 	border-right: 0px;
 }
@@ -182,7 +191,7 @@ main.color-management .browser {
 
 .example-box {
 	display: block;
-    position: relative;
+	position: relative;
 	float: left;
 	width: 196px;
 	height: 196px;
@@ -213,6 +222,8 @@ main.color-management .browser {
 	height: 100%;
 	background-size: cover;
 	background-position: center center;
+	font-size: 8pt;
+	word-wrap: break-word;
 }
 
 .example-box a.display-example:before {
@@ -231,15 +242,21 @@ X3D (function ()
 		Browser .loadURL (new X3D .MFString ($(".location-entry") .val ()), new X3D .MFString ());
 	}
 
+	function toXMLString ()
+	{
+		console .log (X3D .getBrowser ("#browser") .currentScene .toXMLString ());
+	}
+
 	var
 		Browser   = X3D .getBrowser ("#browser"),
 		bookmarks = new Bookmarks (Browser, $(".examples-box"));
 
-	bookmarks .setup ([X_ITE_EXAMPLES]);
+	bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
 	bookmarks .restore ("https://rawgit.com/create3000/Library/master/Tests/Components/Layout/info.x3d");
 
 	$(".version") .text (Browser .name + " v" + Browser .version);
 	$(".location-go") .click (loadURL);
+	$(".print-button") .click (toXMLString);
 },
 function (error)
 {
@@ -269,6 +286,9 @@ function (error)
 				<div class="location-bar">
 					<input class="location-entry" value="http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>
 					<button class="location-go">Load URL</button>
+				</div>
+				<div class="buttons">
+					<a class="print-button" href="#">print</a>
 				</div>
 				<div class="links min-links">
 					<a href="src/x_ite.html">src/x_ite.html</a><a href="http://rawgit.com/create3000/x_ite/master/x_ite.min.html">github</a>

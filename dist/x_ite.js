@@ -1,4 +1,4 @@
-/* X_ITE v4.2.3a-297 */
+/* X_ITE v4.2.3a-298 */
 
 (function () {
 
@@ -13600,8 +13600,11 @@ define ('x_ite/Base/Events',[],function ()
 				copy .field = event .field;
 				copy .clear ();
 
-				for (var source of event)
-					copy .add (source);
+				event .forEach (function (source)
+				{
+					this .add (source);
+				},
+				copy);
 
 				return copy;
 	      }
@@ -13700,7 +13703,7 @@ function ($,
 	{
 		constructor: X3DField,
 		_value: null,
-		_references: { },
+		_references: new Map (),
 		_fieldInterests: new Map (),
 		_fieldCallbacks: new Map (),
 		_inputRoutes: new Map (),
@@ -13786,7 +13789,7 @@ function ($,
 		hasReferences: function ()
 		{
 			if (this .hasOwnProperty ("_references"))
-				return ! $.isEmptyObject (this ._references);
+				return this ._references .size !== 0;
 
 			return false;
 		},
@@ -13798,10 +13801,10 @@ function ($,
 		{
 			var references = this .getReferences ();
 
-			if (references [reference .getId ()])
-				return;
+			if (references .has (reference .getId ()))
+				return; // throw ???
 
-			references [reference .getId ()] = reference;
+			references .set (reference .getId (), reference);
 
 			// Create IS relationship
 
@@ -13835,10 +13838,8 @@ function ($,
 		{
 			if (this .hasOwnProperty ("_references"))
 			{
-				for (var id in this ._references)
+				for (var reference of this ._references .values ())
 				{
-					var reference = this ._references [id];
-
 					switch (this .getAccessType () & reference .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
@@ -23273,18 +23274,12 @@ function (X3DArrayField,
 
 				if (components === 1)
 				{
+					// Return native JavaScript value.
 					return valueType (array [index]);
 				}
 				else
 				{
 					// Return reference to index.
-
-					//var value = target ._cache [index];
-					//
-					//if (value)
-					//	return value;
-					//
-					//target ._cache [index] = value;
 
 					var value = new (valueType) ();
 
@@ -23296,13 +23291,6 @@ function (X3DArrayField,
 					value .addEvent = addEvent;
 
 					return value;
-
-//					var value = new (valueType) ();
-//
-//					value .addEvent = addEvent .bind (value, target, index * components, value .getValue (), components);
-//					value .getValue = getValue .bind (value, target, index * components, value .getValue (), components);
-//
-//					return value;
 				}
 			}
 			catch (error)
@@ -23371,7 +23359,6 @@ function (X3DArrayField,
 		X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
 		this ._target = this;
-		//this ._cache  = [ ];  // Reference values cache.
 		this ._tmp    = [ ];  // Array with components size.
 
 		if (value [0] instanceof Array)
@@ -23747,8 +23734,6 @@ function (X3DArrayField,
 
 			if (newLength < length)
 			{
-				//target ._cache .length = newLength;
-
 				array .fill (0, newLength * components, length * components);
 
 				if (! silent)
@@ -24013,30 +23998,6 @@ function (X3DArrayField,
 
 		target .addEvent ();
 	}
-
-//	function getValue (target, index, value, components)
-//	{
-//		var
-//			array = target .getValue (),
-//			tmp   = target ._tmp;
-//
-//		for (var c = 0; c < components; ++ c, ++ index)
-//			tmp [c] = array [index];
-//
-//		value .set .apply (value, tmp);
-//
-//		return value;
-//	}
-//
-//	function addEvent (target, index, value, components)
-//	{
-//		var array = target .getValue ();
-//
-//		for (var c = 0; c < components; ++ c, ++ index)
-//			array [index] = value [c];
-//
-//		target .addEvent ();
-//	}
 
 	return X3DTypedArrayField;
 });
@@ -24803,7 +24764,6 @@ function (X3DChildObject,
 
 
 define ('x_ite/Basic/X3DBaseNode',[
-	"jquery",
 	"x_ite/Base/X3DEventObject",
 	"x_ite/Base/Events",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -24812,8 +24772,7 @@ define ('x_ite/Basic/X3DBaseNode',[
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          X3DEventObject,
+function (X3DEventObject,
           Events,
           X3DFieldDefinition,
           FieldDefinitionArray,
@@ -24837,9 +24796,9 @@ function ($,
 
 		this ._executionContext  = executionContext;
 		this ._type              = [ X3DConstants .X3DBaseNode ];
-		this ._fields            = { };
-		this ._predefinedFields  = { };
-		this ._userDefinedFields = { };
+		this ._fields            = new Map ();
+		this ._predefinedFields  = new Map ();
+		this ._userDefinedFields = new Map ();
 		this ._cloneCount        = 0;
 
 		// Setup fields.
@@ -24977,7 +24936,7 @@ function ($,
 
 			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
 			{
-				var field = this ._fields [fieldDefinitions [i] .name];
+				var field = this ._fields .get (fieldDefinitions [i] .name);
 				field .updateReferences ();
 				field .setTainted (false);
 			}
@@ -25033,13 +24992,11 @@ function ($,
 
 			var predefinedFields = this .getPredefinedFields ();
 
-			for (var name in predefinedFields)
+			for (var sourceField of predefinedFields .values ())
 			{
 				try
 				{
-					var
-						sourceField = predefinedFields [name],
-						destfield   = copy .getField (name);
+					var destfield = copy .getField (sourceField .getName ());
 
 					destfield .setSet (sourceField .getSet ());
 
@@ -25051,12 +25008,10 @@ function ($,
 						var references = sourceField .getReferences ();
 
 						// IS relationship
-						for (var id in references)
+						for (var originalReference of references .values ())
 						{
 							try
 							{
-								var originalReference = references [id];
-	
 								destfield .addReference (executionContext .getField (originalReference .getName ()));
 							}
 							catch (error)
@@ -25092,11 +25047,9 @@ function ($,
 
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in userDefinedFields)
+			for (var sourceField of userDefinedFields .values ())
 			{
-				var
-					sourceField = userDefinedFields [name],
-					destfield   = sourceField .copy (executionContext);
+				var destfield = sourceField .copy (executionContext);
 
 				copy .addUserDefinedField (sourceField .getAccessType (),
 				                           sourceField .getName (),
@@ -25110,12 +25063,10 @@ function ($,
 
 					var references = sourceField .getReferences ();
 
-					for (var id in references)
+					for (var originalReference of references .values ())
 					{
 						try
 						{
-							var originalReference = references [id];
-	
 							destfield .addReference (executionContext .getField (originalReference .getName ()));
 						}
 						catch (error)
@@ -25165,22 +25116,22 @@ function ($,
 		{
 			if (field .getAccessType () === X3DConstants .inputOutput)
 			{
-				this ._fields ["set_" + name]     = field;
-				this ._fields [name + "_changed"] = field;
+				this ._fields .set ("set_" + name,     field);
+				this ._fields .set (name + "_changed", field);
 			}
 
-			this ._fields [name] = field;
+			this ._fields .set (name, field);
 
 			if (! this .getPrivate ())
 				field .addClones (1);
 
 			if (userDefined)
 			{
-				this ._userDefinedFields [name] = field;
+				this ._userDefinedFields .set (name, field);
 				return;
 			}
 
-			this ._predefinedFields [name] = field;
+			this ._predefinedFields .set (name, field);
 
 			Object .defineProperty (this, name + "_",
 			{
@@ -25192,18 +25143,18 @@ function ($,
 		},
 		removeField: function (name)
 		{
-			var field = this ._fields [name];
+			var field = this ._fields .get (name);
 
 			if (field)
 			{
 				if (field .getAccessType () === X3DConstants .inputOutput)
 				{
-					delete this ._fields ["set_" + field .getName ()];
-					delete this ._fields [field .getName () + "_changed"];
+					this ._fields .delete ("set_" + field .getName ());
+					this ._fields .delete (field .getName () + "_changed");
 				}
 	
-				delete this ._fields [name];
-				delete this ._userDefinedFields [name];
+				this ._fields            .delete (name);
+				this ._userDefinedFields .delete (name);
 	
 				var fieldDefinitions = this .fieldDefinitions .getValue ();
 	
@@ -25222,7 +25173,7 @@ function ($,
 		},
 		getField: function (name)
 		{
-			var field = this ._fields [name];
+			var field = this ._fields .get (name);
 			
 			if (field)
 				return field;
@@ -25239,7 +25190,7 @@ function ($,
 		},
 		addUserDefinedField: function (accessType, name, field)
 		{
-			if (this ._fields [name])
+			if (this ._fields .has (name))
 				this .removeField (name);
 
 			field .setTainted (true);
@@ -25265,11 +25216,9 @@ function ($,
 				changedFields    = [ ],
 				predefinedFields = this .getPredefinedFields ();
 		
-			for (var name in predefinedFields)
+			for (var field of predefinedFields .values ())
 			{
-				var field = predefinedFields [name];
-
-				if ($.isEmptyObject (field .getReferences ()))
+				if (field .getReferences () .size === 0)
 				{
 					if (! field .isInitializable ())
 						continue;
@@ -25465,15 +25414,15 @@ function ($,
 
 				if (generator .ExecutionContext ())
 				{
-					if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
+					if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 					{
 						var
 							initializableReference = false,
 							fieldReferences        = field .getReferences ();
 		
-						for (var id in fieldReferences)
+						for (var fieldReference of fieldReferences .values ())
 						{
-							initializableReference |= fieldReferences [id] .isInitializable ();
+							initializableReference |= fieldReference .isInitializable ();
 						}
 
 						if (! initializableReference)
@@ -25484,7 +25433,7 @@ function ($,
 				// If we have no execution context we are not in a proto and must not generate IS references the same is true
 				// if the node is a shared node as the node does not belong to the execution context.
 
-				if ($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext () || mustOutputValue)
+				if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || mustOutputValue)
 				{
 					if (mustOutputValue)
 						references .push (field);
@@ -25526,7 +25475,7 @@ function ($,
 			generator .DecIndent ();
 			generator .DecIndent ();
 	
-			if ((! this .hasUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && ! cdata)
+			if ((! this .hasUserDefinedFields () || userDefinedFields .size === 0) && references .length === 0 && childNodes .length === 0 && ! cdata)
 			{
 				stream .string += "/>";
 			}
@@ -25538,10 +25487,8 @@ function ($,
 
 				if (this .hasUserDefinedFields ())
 				{
-					for (var name in userDefinedFields)
+					for (var field of userDefinedFields .values ())
 					{
-						var field = userDefinedFields [name];
-
 						stream .string += generator .Indent ();
 						stream .string += "<field";
 						stream .string += " ";
@@ -25562,22 +25509,22 @@ function ($,
 
 						var mustOutputValue = false;
 
-						if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
+						if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 						{
 							var
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
-							for (var id in fieldReferences)
+							for (var fieldReference of fieldReferences .values ())
 							{
-								initializableReference |= fieldReferences [id] .isInitializable ();
+								initializableReference |= fieldReference .isInitializable ();
 							}
 
 							if (! initializableReference)
 								mustOutputValue = true;
 						}
 
-						if (($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext ()) || mustOutputValue)
+						if ((field .getReferences () .size === 0 || ! generator .ExecutionContext ()) || mustOutputValue)
 						{
 							if (mustOutputValue && generator .ExecutionContext ())
 								references .push (field);
@@ -25651,10 +25598,8 @@ function ($,
 							field       = references [i],
 							protoFields = field .getReferences ()
 
-						for (var id in protoFields)
+						for (var protoField of protoFields .values ())
 						{
-							var protoField = protoFields [id];
-
 							stream .string += generator .Indent ();
 							stream .string += "<connect";
 							stream .string += " ";
@@ -25721,11 +25666,11 @@ function ($,
 				predefinedFields  = this .getPredefinedFields (),
 				userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in predefinedFields)
-				predefinedFields [name] .dispose ();
+			for (var predefinedField of predefinedFields .values ())
+				predefinedField .dispose ();
 
-			for (var name in userDefinedFields)
-				userDefinedFields [name] .dispose ();
+			for (var userDefinedField of userDefinedFields .values ())
+				userDefinedField .dispose ();
 
 			// Remove node from entire scene graph.
 
@@ -31581,19 +31526,24 @@ function (Fields,
 		{
 			X3DBaseNode .prototype .setup .call (this);
 
-			// Setup nodes
+			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration")
 
-			while (this .uninitializedNodes .length)
+			if (! (this instanceof X3DProtoDeclaration))
 			{
-				var uninitializedNodes = this .uninitializedNodes;
+				// Setup nodes.
 
-				this .uninitializedNodes  = this .uninitializedNodes2;
-				this .uninitializedNodes2 = uninitializedNodes;
+				while (this .uninitializedNodes .length)
+				{
+					var uninitializedNodes = this .uninitializedNodes;
 	
-				for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
-					uninitializedNodes [i] .setup ();
-
-				uninitializedNodes .length = 0;
+					this .uninitializedNodes  = this .uninitializedNodes2;
+					this .uninitializedNodes2 = uninitializedNodes;
+		
+					for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
+						uninitializedNodes [i] .setup ();
+	
+					uninitializedNodes .length = 0;
+				}
 			}
 		},
 		isMasterContext: function ()
@@ -33727,15 +33677,15 @@ function (FieldDefinitionArray,
 
 					if (generator .ExecutionContext ())
 					{
-						if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
+						if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 						{
 							var
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
-							for (var id in fieldReferences)
+							for (var fieldReference of fieldReferences .values ())
 							{
-								initializableReference |= fieldReferences [id] .isInitializable ();
+								initializableReference |= fieldReference .isInitializable ();
 							}
 
 							if (! initializableReference)
@@ -33746,7 +33696,7 @@ function (FieldDefinitionArray,
 					// If we have no execution context we are not in a proto and must not generate IS references the same is true
 					// if the node is a shared node as the node does not belong to the execution context.
 
-					if ($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext () || mustOutputValue)
+					if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || mustOutputValue)
 					{
 						if (mustOutputValue)
 							references .push (field);
@@ -33850,10 +33800,8 @@ function (FieldDefinitionArray,
 							field       = references [i],
 							protoFields = field .getReferences ()
 
-						for (var id in protoFields)
+						for (var protoField of protoFields .values ())
 						{
-							var protoField = protoFields [id];
-
 							stream .string += generator .Indent ();
 							stream .string += "<connect";
 							stream .string += " ";
@@ -34220,12 +34168,10 @@ function ($,
 
 			generator .IncIndent ();
 
-			var fields = this .getUserDefinedFields ();
+			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in fields)
+			for (var field of userDefinedFields .values ())
 			{
-				var field = fields [name];
-
 				stream .string += generator .Indent ();
 				stream .string += "<field";
 				stream .string += " ";
@@ -34445,7 +34391,7 @@ function ($,
 		
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			if (! $.isEmptyObject (userDefinedFields))
+			if (userDefinedFields .size !== 0)
 			{
 				generator .IncIndent ();
 
@@ -34454,10 +34400,8 @@ function ($,
 
 				generator .IncIndent ();
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-
 					stream .string += generator .Indent ();
 					stream .string += "<field";
 					stream .string += " ";
@@ -41737,11 +41681,9 @@ function (Fields,
 
 			this .textures .clear ();
 
-			for (var name in userDefinedFields)
+			for (var values of userDefinedFields .values ())
 			{
-				var
-					field    = userDefinedFields [name],
-					location = gl .getUniformLocation (program, name);
+				var location = gl .getUniformLocation (program, field .getName ());
 
 				if (location)
 				{
@@ -41848,17 +41790,10 @@ function (Fields,
 		},
 		removeShaderFields: function ()
 		{
-			var
-				gl                = this .getBrowser () .getContext (),
-				program           = this .getProgram (),
-				userDefinedFields = this .getUserDefinedFields ();
+			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in userDefinedFields)
+			for (var field of userDefinedFields .values ())
 			{
-				var
-					field    = userDefinedFields [name],
-					location = gl .getUniformLocation (program, name);
-
 				field .removeInterest ("set_field__", this);
 			}
 		},
@@ -42918,7 +42853,7 @@ function (Fields,
 });
 
 
-define('text!x_ite/Browser/Shaders/Inlcude/Shadow.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Pack.h"\n\n#ifdef X3D_SHADOWS\n\nuniform sampler2D x3d_ShadowMap [x3d_MaxLights];\n\nfloat\ngetShadowDepth (const in int index, const in vec2 shadowCoord)\n{\n\t#if x3d_MaxLights > 0\n\tif (index == 0)\n\t\treturn unpack (texture2D (x3d_ShadowMap [0], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 1\n\tif (index == 1)\n\t\treturn unpack (texture2D (x3d_ShadowMap [1], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 2\n\tif (index == 2)\n\t\treturn unpack (texture2D (x3d_ShadowMap [2], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 3\n\tif (index == 3)\n\t\treturn unpack (texture2D (x3d_ShadowMap [3], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 4\n\tif (index == 4)\n\t\treturn unpack (texture2D (x3d_ShadowMap [4], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 5\n\tif (index == 5)\n\t\treturn unpack (texture2D (x3d_ShadowMap [5], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 6\n\tif (index == 6)\n\t\treturn unpack (texture2D (x3d_ShadowMap [6], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 7\n\tif (index == 7)\n\t\treturn unpack (texture2D (x3d_ShadowMap [7], shadowCoord));\n\t#endif\n\n\treturn 0.0;\n}\n\nfloat\ntexture2DCompare (const in int index, const in vec2 texCoord, const in float compare)\n{\n\treturn step (getShadowDepth (index, texCoord), compare);\n}\n\nfloat\ntexture2DShadowLerp (const in int index, const in vec2 texelSize, const in float shadowMapSize, const in vec2 texCoord, const in float compare)\n{\n\tconst vec2 offset = vec2 (0.0, 1.0);\n\n\tvec2 centroidTexCoord = floor (texCoord * shadowMapSize + 0.5) / shadowMapSize;\n\n\tfloat lb = texture2DCompare (index, centroidTexCoord + texelSize * offset .xx, compare);\n\tfloat lt = texture2DCompare (index, centroidTexCoord + texelSize * offset .xy, compare);\n\tfloat rb = texture2DCompare (index, centroidTexCoord + texelSize * offset .yx, compare);\n\tfloat rt = texture2DCompare (index, centroidTexCoord + texelSize * offset .yy, compare);\n\n\tvec2 f = fract (texCoord * shadowMapSize + 0.5);\n\n\tfloat a = mix (lb, lt, f.y);\n\tfloat b = mix (rb, rt, f.y);\n\tfloat c = mix (a, b, f.x);\n\n\treturn c;\n}\n\n//https://gist.github.com/tschw/da10c43c467ce8afd0c4\nvec2\ncubeToUVCompact (in vec3 v, const float texelSizeY)\n{\n\t// Compact layout:\n\t//\n\t// xzXZ\t\tChar: Axis\n\t// yyYY\t\tCase: Sign\n\n\t// Number of texels to avoid at the edge of each square\n\n\tvec3 absV = abs (v);\n\n\t// Intersect unit cube\n\n\tfloat scaleToCube = 1.0 / max (absV .x, max (absV .y, absV .z));\n\n\tabsV *= scaleToCube;\n\n\t// Apply scale to avoid seams\n\n\t// one texel less per square (half a texel on each side)\n\tv *= scaleToCube * (1.0 - 2.0 * texelSizeY);\n\n\t// Unwrap\n\n\t// space: -1 ... 1 range for each square\n\t//\n\t// #X##\t\tdim    := ( 4 , 2 )\n\t//  # #\t\tcenter := ( 1 , 1 )\n\n\tvec2 planar = v .xy;\n\n\tfloat almostATexel = 1.5 * texelSizeY;\n\tfloat almostOne    = 1.0 - almostATexel;\n\n\tif (absV .z >= almostOne)\n\t{\n\t\t// zZ\n\n\t\tif (v.z > 0.0)\n\t\t\tplanar .x = 4.0 - v.x;\n\t}\n\telse if (absV .x >= almostOne)\n\t{\n\t\t// xX\n\n\t\tfloat signX = sign (v.x);\n\n\t\tplanar .x = v.z * signX + 2.0 * signX;\n\t}\n\telse if (absV .y >= almostOne)\n\t{\n\t\t// yY\n\n\t\tfloat signY = sign (v.y);\n\n\t\tplanar .x = (v.x + 0.5 + signY) * 2.0;\n\t\tplanar .y = v.z * signY - 2.0;\n\t}\n\n\t// Transform to UV space\n\n\t// scale := 0.5 / dim\n\t// translate := ( center + 0.5 ) / dim\n\treturn vec2 (0.125, 0.25) * planar + vec2 (0.375, 0.75);\n}\n\nmat4\ngetPointLightRotations (const in vec3 vector)\n{\n\tmat4 rotations [6];\n\trotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left\n\trotations [1] = mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1);  // right\n\trotations [2] = mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1);  // front\n\trotations [3] = mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1);  // back\n\trotations [4] = mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1);  // bottom\n\trotations [5] = mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1);  // top\n\n\tvec3 a = abs (vector .xyz);\n\n\tif (a .x > a .y)\n\t{\n\t\tif (a .x > a .z)\n\t\t\treturn vector .x > 0.0 ? rotations [1] : rotations [0];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\telse\n\t{\n\t\tif (a .y > a .z)\n\t\t\treturn vector .y > 0.0 ? rotations [5] : rotations [4];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\n\treturn rotations [3];\n}\n\n// DEBUG\n//vec4 tex;\n\nfloat\ngetShadowIntensity (const in int index, const in x3d_LightSourceParameters light)\n{\n\tif (light .type == x3d_PointLight)\n\t{\n\t\tconst mat4 biasMatrix = mat4 (0.5, 0.0, 0.0, 0.0,\n\t\t\t                           0.0, 0.5, 0.0, 0.0,\n\t\t\t                           0.0, 0.0, 0.5, 0.0,\n\t\t\t                           0.5, 0.5, 0.5, 1.0);\n\n\t\tconst mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);\n\n\t\tvec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));\n\n\t\t// for point lights, the uniform @vShadowCoord is re-purposed to hold\n\t\t// the vector from the light to the world-space position of the fragment.\n\t\tvec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);\n\t\tvec3 lightToPosition = shadowCoord .xyz;\n\n\t\tshadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));\n\t\tshadowCoord .z   -= light .shadowBias;\n\t\tshadowCoord .xyz /= shadowCoord .w;\n\n\t\t// DEBUG\n\t\t//tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));\n\n\t\t#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)\n\t\n\t\t\tvec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tfloat value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);\n\n\t\t\treturn light .shadowIntensity * value;\n\t\n\t\t#endif\n\t}\n\telse\n\t{\n\t\t#if defined (X3D_PCF_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize .x;\n\t\t\tfloat dy0 = - texelSize .y;\n\t\t\tfloat dx1 = + texelSize .x;\n\t\t\tfloat dy1 = + texelSize .y;\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#elif defined (X3D_PCF_SOFT_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize.x;\n\t\t\tfloat dy0 = - texelSize.y;\n\t\t\tfloat dx1 = + texelSize.x;\n\t\t\tfloat dy1 = + texelSize.y;\n\t\t\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * ( 1.0 / 9.0 );\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tvec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#endif\n\t}\n\n\treturn 0.0;\n}\n\n#endif';});
+define('text!x_ite/Browser/Shaders/Inlcude/Shadow.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Pack.h"\n\n#ifdef X3D_SHADOWS\n\nuniform sampler2D x3d_ShadowMap [x3d_MaxLights];\n\nfloat\ngetShadowDepth (const in int index, const in vec2 shadowCoord)\n{\n\t#if x3d_MaxLights > 0\n\tif (index == 0)\n\t\treturn unpack (texture2D (x3d_ShadowMap [0], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 1\n\tif (index == 1)\n\t\treturn unpack (texture2D (x3d_ShadowMap [1], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 2\n\tif (index == 2)\n\t\treturn unpack (texture2D (x3d_ShadowMap [2], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 3\n\tif (index == 3)\n\t\treturn unpack (texture2D (x3d_ShadowMap [3], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 4\n\tif (index == 4)\n\t\treturn unpack (texture2D (x3d_ShadowMap [4], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 5\n\tif (index == 5)\n\t\treturn unpack (texture2D (x3d_ShadowMap [5], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 6\n\tif (index == 6)\n\t\treturn unpack (texture2D (x3d_ShadowMap [6], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 7\n\tif (index == 7)\n\t\treturn unpack (texture2D (x3d_ShadowMap [7], shadowCoord));\n\t#endif\n\n\treturn 0.0;\n}\n\nfloat\ntexture2DCompare (const in int index, const in vec2 texCoord, const in float compare)\n{\n\treturn step (getShadowDepth (index, texCoord), compare);\n}\n\nfloat\ntexture2DShadowLerp (const in int index, const in vec2 texelSize, const in float shadowMapSize, const in vec2 texCoord, const in float compare)\n{\n\tconst vec2 offset = vec2 (0.0, 1.0);\n\n\tvec2 centroidTexCoord = floor (texCoord * shadowMapSize + 0.5) / shadowMapSize;\n\n\tfloat lb = texture2DCompare (index, centroidTexCoord + texelSize * offset .xx, compare);\n\tfloat lt = texture2DCompare (index, centroidTexCoord + texelSize * offset .xy, compare);\n\tfloat rb = texture2DCompare (index, centroidTexCoord + texelSize * offset .yx, compare);\n\tfloat rt = texture2DCompare (index, centroidTexCoord + texelSize * offset .yy, compare);\n\n\tvec2 f = fract (texCoord * shadowMapSize + 0.5);\n\n\tfloat a = mix (lb, lt, f.y);\n\tfloat b = mix (rb, rt, f.y);\n\tfloat c = mix (a, b, f.x);\n\n\treturn c;\n}\n\n//https://gist.github.com/tschw/da10c43c467ce8afd0c4\nvec2\ncubeToUVCompact (in vec3 v, const float texelSizeY)\n{\n\t// Compact layout:\n\t//\n\t// xzXZ\t\tChar: Axis\n\t// yyYY\t\tCase: Sign\n\n\t// Number of texels to avoid at the edge of each square\n\n\tvec3 absV = abs (v);\n\n\t// Intersect unit cube\n\n\tfloat scaleToCube = 1.0 / max (absV .x, max (absV .y, absV .z));\n\n\tabsV *= scaleToCube;\n\n\t// Apply scale to avoid seams\n\n\t// one texel less per square (half a texel on each side)\n\tv *= scaleToCube * (1.0 - 2.0 * texelSizeY);\n\n\t// Unwrap\n\n\t// space: -1 ... 1 range for each square\n\t//\n\t// #X##\t\tdim    := ( 4 , 2 )\n\t//  # #\t\tcenter := ( 1 , 1 )\n\n\tvec2 planar = v .xy;\n\n\tfloat almostATexel = 1.5 * texelSizeY;\n\tfloat almostOne    = 1.0 - almostATexel;\n\n\tif (absV .z >= almostOne)\n\t{\n\t\t// zZ\n\n\t\tif (v.z > 0.0)\n\t\t\tplanar .x = 4.0 - v.x;\n\t}\n\telse if (absV .x >= almostOne)\n\t{\n\t\t// xX\n\n\t\tfloat signX = sign (v.x);\n\n\t\tplanar .x = v.z * signX + 2.0 * signX;\n\t}\n\telse if (absV .y >= almostOne)\n\t{\n\t\t// yY\n\n\t\tfloat signY = sign (v.y);\n\n\t\tplanar .x = (v.x + 0.5 + signY) * 2.0;\n\t\tplanar .y = v.z * signY - 2.0;\n\t}\n\n\t// Transform to UV space\n\n\t// scale := 0.5 / dim\n\t// translate := ( center + 0.5 ) / dim\n\treturn vec2 (0.125, 0.25) * planar + vec2 (0.375, 0.75);\n}\n\nmat4\ngetPointLightRotation (const in vec3 vector)\n{\n\tmat4 rotations [6];\n\trotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left\n\trotations [1] = mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1);  // right\n\trotations [2] = mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1);  // front\n\trotations [3] = mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1);  // back\n\trotations [4] = mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1);  // bottom\n\trotations [5] = mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1);  // top\n\n\tvec3 a = abs (vector .xyz);\n\n\tif (a .x > a .y)\n\t{\n\t\tif (a .x > a .z)\n\t\t\treturn vector .x > 0.0 ? rotations [1] : rotations [0];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\telse\n\t{\n\t\tif (a .y > a .z)\n\t\t\treturn vector .y > 0.0 ? rotations [5] : rotations [4];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\n\treturn rotations [3];\n}\n\n// DEBUG\n//vec4 tex;\n\nfloat\ngetShadowIntensity (const in int index, const in x3d_LightSourceParameters light)\n{\n\tif (light .type == x3d_PointLight)\n\t{\n\t\tconst mat4 biasMatrix = mat4 (0.5, 0.0, 0.0, 0.0,\n\t\t\t                           0.0, 0.5, 0.0, 0.0,\n\t\t\t                           0.0, 0.0, 0.5, 0.0,\n\t\t\t                           0.5, 0.5, 0.5, 1.0);\n\n\t\t// 90° fov, as used in PointLight shadow calculations.\n\t\tconst mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);\n\n\t\tvec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));\n\n\t\t// for point lights, the uniform @vShadowCoord is re-purposed to hold\n\t\t// the vector from the light to the world-space position of the fragment.\n\t\tvec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);\n\t\tvec3 lightToPosition = shadowCoord .xyz;\n\n\t\tshadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotation (lightToPosition) * shadowCoord));\n\t\tshadowCoord .z   -= light .shadowBias;\n\t\tshadowCoord .xyz /= shadowCoord .w;\n\n\t\t// DEBUG\n\t\t//tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));\n\n\t\t#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)\n\t\n\t\t\tvec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tfloat value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);\n\n\t\t\treturn light .shadowIntensity * value;\n\t\n\t\t#endif\n\t}\n\telse\n\t{\n\t\t#if defined (X3D_PCF_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize .x;\n\t\t\tfloat dy0 = - texelSize .y;\n\t\t\tfloat dx1 = + texelSize .x;\n\t\t\tfloat dy1 = + texelSize .y;\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#elif defined (X3D_PCF_SOFT_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize.x;\n\t\t\tfloat dy0 = - texelSize.y;\n\t\t\tfloat dx1 = + texelSize.x;\n\t\t\tfloat dy1 = + texelSize.y;\n\t\t\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * ( 1.0 / 9.0 );\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tvec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#endif\n\t}\n\n\treturn 0.0;\n}\n\n#endif';});
 
 
 define('text!x_ite/Browser/Shaders/Inlcude/Pack.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#ifdef TITANIA\n\nvec4\npack (const in float value)\n{\n\treturn vec4 (0.0, 0.0, 0.0, 0.0);\n}\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .r;\n}\n\n#endif\n\n#ifdef X_ITE\n\nvec4\npack (const in float value)\n{\n\tconst vec3 bitShifts = vec3 (255.0,\n\t                             255.0 * 255.0,\n\t                             255.0 * 255.0 * 255.0);\n\n\treturn vec4 (value, fract (value * bitShifts));\n}\n\n#ifdef X3D_DEPTH_TEXTURE\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .r;\n}\n\n#else\n\nfloat\nunpack (const vec4 color)\n{\n\tconst vec3 bitShifts = vec3 (1.0 / 255.0,\n\t                             1.0 / (255.0 * 255.0),\n\t                             1.0 / (255.0 * 255.0 * 255.0));\n\n\treturn color .x + dot (color .gba, bitShifts);\n}\n\n#endif\n#endif\n';});
@@ -106543,10 +106478,8 @@ function ($,
 					callbacks         = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"],
 					userDefinedFields = this .getUserDefinedFields ();
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-
 					switch (field .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
@@ -106675,9 +106608,9 @@ function ($,
 
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in userDefinedFields)
+			for (var field of userDefinedFields .values ())
 			{
-				var field = userDefinedFields [name];
+				var name = field .getName ();
 
 				if (field .getAccessType () === X3DConstants .inputOnly)
 					continue;
@@ -106715,10 +106648,8 @@ function ($,
 				if ($.isFunction (this .context .eventsProcessed))
 					this .addInterest ("eventsProcessed__", this);
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-					
 					switch (field .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
@@ -106750,10 +106681,8 @@ function ($,
 				if (this .context .eventsProcessed)
 					this .removeInterest ("eventsProcessed__", this);
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-
 					switch (field .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
