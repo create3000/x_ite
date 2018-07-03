@@ -110,19 +110,24 @@ function (Fields,
 		{
 			X3DBaseNode .prototype .setup .call (this);
 
-			// Setup nodes
+			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration")
 
-			while (this .uninitializedNodes .length)
+			if (! (this instanceof X3DProtoDeclaration))
 			{
-				var uninitializedNodes = this .uninitializedNodes;
+				// Setup nodes.
 
-				this .uninitializedNodes  = this .uninitializedNodes2;
-				this .uninitializedNodes2 = uninitializedNodes;
+				while (this .uninitializedNodes .length)
+				{
+					var uninitializedNodes = this .uninitializedNodes;
 	
-				for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
-					uninitializedNodes [i] .setup ();
-
-				uninitializedNodes .length = 0;
+					this .uninitializedNodes  = this .uninitializedNodes2;
+					this .uninitializedNodes2 = uninitializedNodes;
+		
+					for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
+						uninitializedNodes [i] .setup ();
+	
+					uninitializedNodes .length = 0;
+				}
 			}
 		},
 		isMasterContext: function ()

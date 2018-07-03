@@ -730,6 +730,7 @@
     <None Include="rigid-body-physics.js" />
     <None Include="x_ite\Rendering\TextureBuffer.js" />
     <None Include="tests.js" />
+    <None Include="examples.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

@@ -172,7 +172,7 @@ function ($,
 			var references = this .getReferences ();
 
 			if (references .has (reference .getId ()))
-				return;
+				return; // throw ???
 
 			references .set (reference .getId (), reference);
 

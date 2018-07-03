@@ -76,16 +76,32 @@ var Bookmarks = (function ()
 					var
 						bookmark = bookmarks [i],
 						folder   = bookmark .folder,
-						test     = bookmark .test;
+						test     = bookmark .test,
+						path     = bookmark .path;
 	
-					var element = $('<span/>')
-						.addClass ('example-box')
-						.attr ('title', folder + ' » ' + test)
-						.append ($("<a/>")
-							.addClass ('display-example')
-							.attr ('href', server + '/' + folder + '/' + test + '/' + test + '.x3d')
-							.attr ('style', 'background-image:url(' + server + '/' + folder + '/' + test + '/screenshot-small.png)')
-							.click (this .loadURL .bind (this, server + '/' + folder + '/' + test + '/' + test + '.x3d')));
+					if (path)
+					{
+						var element = $('<span/>')
+							.addClass ('example-box')
+							.attr ('title', path)
+							.append ($("<a/>")
+								.addClass ('display-example')
+								.attr ('href', server + '/' + path)
+								.attr ('style', 'background-color: gray')
+								.click (this .loadURL .bind (this, server + '/' + path))
+								.text (path));
+					}
+					else if (test)
+					{
+						var element = $('<span/>')
+							.addClass ('example-box')
+							.attr ('title', folder + ' » ' + test)
+							.append ($("<a/>")
+								.addClass ('display-example')
+								.attr ('href', server + '/' + folder + '/' + test + '/' + test + '.x3d')
+								.attr ('style', 'background-image:url(' + server + '/' + folder + '/' + test + '/screenshot-small.png)')
+								.click (this .loadURL .bind (this, server + '/' + folder + '/' + test + '/' + test + '.x3d')));
+					}
 
 					this .element .append (element);
 				}
