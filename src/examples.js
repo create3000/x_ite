@@ -93,6 +93,7 @@ var X_ITE_EXAMPLES = [
 	{ folder: "Rendering", test: "ClipPlane" },
 	{ folder: "Rendering", test: "Color" },
 	{ folder: "Rendering", test: "Coordinate" },
+	{ folder: "Rendering", test: "IndexedLineSet" },
 	{ folder: "Rendering", test: "IndexedTriangleSet" },
 	{ folder: "Rendering", test: "LineSet" },
 	{ folder: "Rendering", test: "PointSet" },

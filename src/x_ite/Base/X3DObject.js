@@ -96,13 +96,12 @@ function ()
 			if (! this .hasOwnProperty ("_interests"))
 				this ._interests = new Map ();
 
-			var
-				callback = object [callbackName],
-				args     = Array .prototype .slice .call (arguments, 1);
+			var args = Array .prototype .slice .call (arguments, 0);
 
-			args [0] = this;
+			args [0] = object;
+			args [1] = this;
 
-			this ._interests .set (object .getId () + callbackName, function () { callback .apply (object, args); });
+			this ._interests .set (object .getId () + callbackName, Function .prototype .bind .apply (object [callbackName], args));
 		},
 		removeInterest: function (callbackName, object)
 		{

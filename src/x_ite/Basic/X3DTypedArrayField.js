@@ -91,14 +91,12 @@ function (X3DArrayField,
 				{
 					// Return reference to index.
 
-					var value = new (valueType) ();
+					var
+						value         = new (valueType) (),
+						internalValue = value .getValue ();
 
-					value ._target     = target;
-					value ._index      = index * components;
-					value ._components = components;
-
-					value .getValue = getValue;
-					value .addEvent = addEvent;
+					value .addEvent = addEvent .bind (value, target, index * components, internalValue, components);
+					value .getValue = getValue .bind (value, target, index * components, internalValue, components);
 
 					return value;
 				}
@@ -776,15 +774,11 @@ function (X3DArrayField,
 
 	// Getter/Setter functions to reference a value for a given index.
 
-	function getValue ()
+	function getValue (target, index, value, components)
 	{
 		var
-			target     = this ._target,
-			index      = this ._index,
-			value      = this ._value,
-			components = this ._components,
-			array      = target .getValue (),
-			tmp        = target ._tmp;
+			array = target .getValue (),
+			tmp   = target ._tmp;
 
 		for (var c = 0; c < components; ++ c, ++ index)
 			tmp [c] = array [index];
@@ -794,14 +788,9 @@ function (X3DArrayField,
 		return value;
 	}
 
-	function addEvent ()
+	function addEvent (target, index, value, components)
 	{
-		var
-			target     = this ._target,
-			index      = this ._index,
-			value      = this ._value,
-			components = this ._components,
-			array      = target .getValue ();
+		var array = target .getValue ();
 
 		for (var c = 0; c < components; ++ c, ++ index)
 			array [index] = value [c];
