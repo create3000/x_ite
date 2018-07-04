@@ -95,7 +95,7 @@ function (X3DSensorNode,
 			{
 				this .isOver_ = over;
 
-				if (this .isOver_ .getValue ())
+				if (over)
 					this .getBrowser () .getNotification () .string_ = this .description_;
 			}
 		},
