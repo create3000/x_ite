@@ -192,6 +192,7 @@ main.color-management .browser {
 }
 
 .example-box {
+	overflow: hidden;
 	display: block;
 	position: relative;
 	float: left;
@@ -200,6 +201,9 @@ main.color-management .browser {
 	width: 62px;
 	height: 62px;
 	margin: 0px 5px 5px 0px;
+	background-color: gray;
+	font-size: 8pt;
+	word-wrap: break-word;
 }
 
 .example-box::before,
@@ -218,14 +222,16 @@ main.color-management .browser {
     border-top-color: #3d4145;
 }
 
+.display-component {
+	background-color: teal;
+}
+
 .example-box a.display-example {
 	display: block;
 	width: 100%;
 	height: 100%;
 	background-size: cover;
 	background-position: center center;
-	font-size: 8pt;
-	word-wrap: break-word;
 }
 
 .example-box a.display-example:before {

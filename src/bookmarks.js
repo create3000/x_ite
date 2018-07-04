@@ -74,33 +74,46 @@ var Bookmarks = (function ()
 				for (var i = 0, length = bookmarks .length; i < length; ++ i)
 				{
 					var
-						bookmark = bookmarks [i],
-						folder   = bookmark .folder,
-						test     = bookmark .test,
-						path     = bookmark .path;
+						bookmark  = bookmarks [i],
+						component = bookmark .component,
+						test      = bookmark .test,
+						path      = bookmark .path;
 	
-					if (path)
+					if (test)
 					{
+						var element = $('<span/>')
+							.addClass ('example-box')
+							.attr ('title', component + ' » ' + test)
+							.append ($("<a/>")
+								.addClass ('display-example')
+								.attr ('href', server + '/' + component + '/' + test + '/' + test + '.x3d')
+								.attr ('style', 'background-image:url(' + server + '/' + component + '/' + test + '/screenshot-small.png)')
+								.click (this .loadURL .bind (this, server + '/' + component + '/' + test + '/' + test + '.x3d')));
+					}
+					else if (path)
+					{
+						if (! path .match (/\.(?:x3d|x3dz|x3dv|x3dvz|x3dj|x3djz|wrl|wrz)$/))
+							continue;
+
+						var basename = path .match (/([^\/]+)\.\w+$/);
+						var name     = basename [1] .replace (/([A-Z]+)/g, ' $1');
+
 						var element = $('<span/>')
 							.addClass ('example-box')
 							.attr ('title', path)
 							.append ($("<a/>")
 								.addClass ('display-example')
 								.attr ('href', server + '/' + path)
-								.attr ('style', 'background-color: gray')
 								.click (this .loadURL .bind (this, server + '/' + path))
-								.text (path));
+								.text (name));
 					}
-					else if (test)
+					else if (component)
 					{
 						var element = $('<span/>')
 							.addClass ('example-box')
-							.attr ('title', folder + ' » ' + test)
-							.append ($("<a/>")
-								.addClass ('display-example')
-								.attr ('href', server + '/' + folder + '/' + test + '/' + test + '.x3d')
-								.attr ('style', 'background-image:url(' + server + '/' + folder + '/' + test + '/screenshot-small.png)')
-								.click (this .loadURL .bind (this, server + '/' + folder + '/' + test + '/' + test + '.x3d')));
+							.attr ('title', path)
+							.addClass ('display-component')
+							.text (component);
 					}
 
 					this .element .append (element);
