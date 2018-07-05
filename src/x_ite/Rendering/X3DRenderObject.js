@@ -98,7 +98,7 @@ function ($,
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
 		this .generatedCubeMapTextures = [ ];
-		this .shaders                  = [ ];
+		this .shaders                  = new Map ();
 		this .collisions               = [ ];
 		this .numOpaqueShapes          = 0;
 		this .numTransparentShapes     = 0;
@@ -900,8 +900,8 @@ function ($,
 				browser .getLineShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 				browser .getShadowShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 	
-				for (var id in shaders)
-					shaders [id] .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				for (var shader of shaders .values ())
+					shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 	
 				// Render opaque objects first
 	
@@ -956,7 +956,7 @@ function ($,
 				// Reset GeneratedCubeMapTextures.
 	
 				generatedCubeMapTextures .length = 0;
-				shaders                  .length = 0;
+				shaders .clear ();
 
 				if (this .isIndependent ())
 				{

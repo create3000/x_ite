@@ -188,7 +188,7 @@ function (X3DAppearanceChildNode,
 			switch (type)
 			{
 				case TraverseType .DISPLAY:
-					renderObject .getShaders () [this .getId ()] = this;
+					renderObject .getShaders () .set (this .getId (), this);
 					break;
 				default:
 					break;
