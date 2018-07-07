@@ -1,15 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Base/X3DObject.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/x_ite.html" Line="281" Column="10" />
-      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="803" Column="50" />
-      <File FileName="src/x_ite/Components/Rendering/PointSet.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/Coordinate.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DCoordinateNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Base/X3DEventObject.js" Line="79" Column="1" />
-      <File FileName="src/x_ite/Base/X3DChildObject.js" Line="76" Column="1" />
-      <File FileName="src/x_ite/Base/X3DObject.js" Line="90" Column="1" />
+      <File FileName="src/x_ite.html" Line="194" Column="20" />
+      <File FileName="src/bookmarks.js" Line="101" Column="33" />
+      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="903" Column="36" />
+      <File FileName="src/x_ite/Components/Shaders/X3DShaderNode.js" Line="188" Column="17" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

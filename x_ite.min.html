@@ -170,14 +170,11 @@ main.color-management .browser {
     height: 0px;
 }
 
-.example-controls {
-	display: block;
-	padding: 10px 0px;
-}
-
 .examples-box {
+	overflow-x: scroll;
 	display: block;
 	width: calc(100% + 5px);
+	white-space: nowrap;
 }
 
 .examples-box:after {
@@ -190,14 +187,16 @@ main.color-management .browser {
 }
 
 .example-box {
-	display: block;
+	overflow: hidden;
+	display: inline-block;
 	position: relative;
-	float: left;
-	width: 196px;
-	height: 196px;
 	width: 62px;
 	height: 62px;
 	margin: 0px 5px 5px 0px;
+	background-color: gray;
+	font-size: 8pt;
+	white-space: normal;
+	word-wrap: break-word;
 }
 
 .example-box::before,
@@ -216,14 +215,16 @@ main.color-management .browser {
     border-top-color: #3d4145;
 }
 
+.display-component {
+	background-color: teal;
+}
+
 .example-box a.display-example {
 	display: block;
 	width: 100%;
 	height: 100%;
 	background-size: cover;
 	background-position: center center;
-	font-size: 8pt;
-	word-wrap: break-word;
 }
 
 .example-box a.display-example:before {

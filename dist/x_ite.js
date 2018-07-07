@@ -1,4 +1,4 @@
-/* X_ITE v4.2.3a-302 */
+/* X_ITE v4.2.3-303 */
 
 (function () {
 
@@ -39296,7 +39296,7 @@ function (X3DAppearanceChildNode,
 			switch (type)
 			{
 				case TraverseType .DISPLAY:
-					renderObject .getShaders () [this .getId ()] = this;
+					renderObject .getShaders () .set (this .getId (), this);
 					break;
 				default:
 					break;
@@ -77378,7 +77378,7 @@ function ($,
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
 		this .generatedCubeMapTextures = [ ];
-		this .shaders                  = [ ];
+		this .shaders                  = new Map ();
 		this .collisions               = [ ];
 		this .numOpaqueShapes          = 0;
 		this .numTransparentShapes     = 0;
@@ -78180,8 +78180,8 @@ function ($,
 				browser .getLineShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 				browser .getShadowShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 	
-				for (var id in shaders)
-					shaders [id] .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				for (var shader of shaders .values ())
+					shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 	
 				// Render opaque objects first
 	
@@ -78236,7 +78236,7 @@ function ($,
 				// Reset GeneratedCubeMapTextures.
 	
 				generatedCubeMapTextures .length = 0;
-				shaders                  .length = 0;
+				shaders .clear ();
 
 				if (this .isIndependent ())
 				{
@@ -82571,7 +82571,7 @@ function (X3DSensorNode,
 			{
 				this .isOver_ = over;
 
-				if (this .isOver_ .getValue ())
+				if (over)
 					this .getBrowser () .getNotification () .string_ = this .description_;
 			}
 		},
@@ -103812,18 +103812,18 @@ function (Fields,
 				coordNode   = this .coordNode,
 				colorArray  = this .getColors (),
 				vertexArray = this .getVertices (),
-				length      = coordNode .point_ .length;
+				numPoints   = coordNode .point_ .length;
 
 			for (var a = 0; a < numAttrib; ++ a)
 			{
-				for (var i = 0; i < length; ++ i)
+				for (var i = 0; i < numPoints; ++ i)
 					attribNodes [a] .addValue (i, attribs [a]);
 			}
 
 			if (colorNode)
-				colorNode .addColors (colorArray, length);
+				colorNode .addColors (colorArray, numPoints);
 
-			coordNode .addPoints (vertexArray, length);
+			coordNode .addPoints (vertexArray, numPoints);
 		},
 	});
 
