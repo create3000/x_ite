@@ -1,4 +1,4 @@
-/* X_ITE v4.2.3-304 */
+/* X_ITE v4.2.4a-305 */
 
 (function () {
 
@@ -24574,7 +24574,7 @@ function (SFBool,
 ﻿
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.2.3";
+	return "4.2.4a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -59560,7 +59560,9 @@ function ($,
 		motion: function ()
 		{
 			if (this .hits .length)
+			{
 				var nearestHit = this .hits [this .hits .length - 1];
+			}
 			else
 			{
 				var hitRay = this .selectedLayer ? this .hitRay : line;
@@ -59580,10 +59582,15 @@ function ($,
 			// Set isOver to FALSE for appropriate nodes
 
 			if (this .hits .length)
-				var difference = Algorithm .set_difference (this .overSensors, nearestHit .sensors, { });
-
+			{
+				var difference = Algorithm .set_difference (this .overSensors, nearestHit .sensors, { }, function (lhs, rhs) {
+					return lhs .getNode () < rhs .getNode ();
+				});
+			}
 			else
+			{
 				var difference = Object .assign ({ }, this .overSensors);
+			}
 
 			for (var key in difference)
 				difference [key] .set_over__ (false, nearestHit);
@@ -59598,7 +59605,9 @@ function ($,
 					this .overSensors [key] .set_over__ (true, nearestHit);
 			}
 			else
+			{
 				this .overSensors = { };
+			}
 
 			// Forward motion event to active drag sensor nodes
 
@@ -70905,16 +70914,16 @@ function (Fields,
 	{
 		constructor: FontStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "language",    new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "family",      new Fields .MFString ("SERIF")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "style",       new Fields .SFString ("PLAIN")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "size",        new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "spacing",     new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "horizontal",  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "leftToRight", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "topToBottom", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "justify",     new Fields .MFString ("BEGIN")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "style",       new Fields .SFString ("PLAIN")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "size",        new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "spacing",     new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "horizontal",  new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
 		]),
 		getTypeName: function ()
 		{
@@ -89101,11 +89110,15 @@ function (Fields,
 			index1 *= 3;
 			size   *= 3;
 
-			for (var i = 0; i < size; i += 3)
+			for (var i0 = 0; i0 < size; i0 += 3)
 			{
-				value_changed [i]     = Algorithm .lerp (keyValue [index0 + i],     keyValue [index1 + i],     weight);
-				value_changed [i + 1] = Algorithm .lerp (keyValue [index0 + i + 1], keyValue [index1 + i + 1], weight);
-				value_changed [i + 2] = Algorithm .lerp (keyValue [index0 + i + 2], keyValue [index1 + i + 2], weight);
+				var
+					i1 = i0 + 1,
+					i2 = i0 + 2;
+
+				value_changed [i0] = Algorithm .lerp (keyValue [index0 + i0], keyValue [index1 + i0], weight);
+				value_changed [i1] = Algorithm .lerp (keyValue [index0 + i1], keyValue [index1 + i1], weight);
+				value_changed [i2] = Algorithm .lerp (keyValue [index0 + i2], keyValue [index1 + i2], weight);
 			}
 
 			this .value_changed_ .addEvent ();
@@ -89230,10 +89243,12 @@ function (Fields,
 			index1 *= 2;
 			size   *= 2;
 
-			for (var i = 0; i < size; i += 2)
+			for (var i0 = 0; i0 < size; i0 += 2)
 			{
-				value_changed [i]     = Algorithm .lerp (keyValue [index0 + i],     keyValue [index1 + i],     weight);
-				value_changed [i + 1] = Algorithm .lerp (keyValue [index0 + i + 1], keyValue [index1 + i + 1], weight);
+				var i1 = i0 + 1;
+
+				value_changed [i0] = Algorithm .lerp (keyValue [index0 + i0], keyValue [index1 + i0], weight);
+				value_changed [i1] = Algorithm .lerp (keyValue [index0 + i1], keyValue [index1 + i1], weight);
 			}
 
 			this .value_changed_ .addEvent ();
@@ -100507,18 +100522,22 @@ function (Fields,
 			index1 *= 3;
 			size   *= 3;
 
-			for (var i = 0; i < size; i += 3)
+			for (var i0 = 0; i0 < size; i0 += 3)
 			{
 				try
 				{
-					keyValue0 .set (keyValue [index0 + i], keyValue [index0 + i + 1], keyValue [index0 + i + 2]);
-					keyValue1 .set (keyValue [index1 + i], keyValue [index1 + i + 1], keyValue [index1 + i + 2]);
+					var
+						i1 = i0 + 1,
+						i2 = i0 + 2;
+
+					keyValue0 .set (keyValue [index0 + i0], keyValue [index0 + i1], keyValue [index0 + i2]);
+					keyValue1 .set (keyValue [index1 + i0], keyValue [index1 + i1], keyValue [index1 + i2]);
 
 					var value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
 
-					value_changed [i]     = value [0];
-					value_changed [i + 1] = value [1];
-					value_changed [i + 2] = value [2];
+					value_changed [i0] = value [0];
+					value_changed [i1] = value [1];
+					value_changed [i2] = value [2];
 				}
 				catch (error)
 				{ }
@@ -105895,16 +105914,16 @@ function (Fields,
 	{
 		constructor: ScreenFontStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "language",    new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "family",      new Fields .MFString ("SERIF")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "style",       new Fields .SFString ("PLAIN")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "pointSize",   new Fields .SFFloat (12)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "spacing",     new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "horizontal",  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "leftToRight", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "topToBottom", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "justify",     new Fields .MFString ("BEGIN")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "style",       new Fields .SFString ("PLAIN")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "pointSize",   new Fields .SFFloat (12)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "spacing",     new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "horizontal",  new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
 		]),
 		getTypeName: function ()
 		{
