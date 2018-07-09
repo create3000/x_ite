@@ -289,7 +289,7 @@ function (Fields,
 
 			this .textures .clear ();
 
-			for (var values of userDefinedFields .values ())
+			for (var field of userDefinedFields .values ())
 			{
 				var location = gl .getUniformLocation (program, field .getName ());
 
