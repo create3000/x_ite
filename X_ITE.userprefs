@@ -1,13 +1,38 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Rendering/X3DRenderObject.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Fields/SFNode.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Layout/ScreenFontStyle.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Layout/ScreenText.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="590" Column="22" />
+      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Shape/Appearance.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="326" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DField.js" Line="87" Column="21" />
+      <File FileName="src/x_ite/Basic/X3DArrayField.js" Line="43" Column="8" />
+      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="188" Column="7" />
+      <File FileName="src/x_ite/Fields/SFNode.js" Line="142" Column="7" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="X_ITE" expanded="True">
+            <Node name="src" expanded="True">
+              <Node name="x_ite" expanded="True">
+                <Node name="Basic" expanded="True" />
+                <Node name="Browser" expanded="True">
+                  <Node name="Rendering" expanded="True" />
+                </Node>
+                <Node name="Fields" expanded="True">
+                  <Node name="SFNode.js" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

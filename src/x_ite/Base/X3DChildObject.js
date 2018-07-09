@@ -57,14 +57,13 @@ function (X3DObject)
 	function X3DChildObject ()
 	{
 		X3DObject .call (this);
-
-		this ._parents = new Map ();
 	}
 
 	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: X3DChildObject,
 		_tainted: false,
+		_parents: new Map (),
 		setTainted: function (value)
 		{
 			this ._tainted = value;
@@ -94,6 +93,9 @@ function (X3DObject)
 		},
 		addParent: function (parent)
 		{
+			if (! this .hasOwnProperty ("_parents"))
+				this ._parents = new Map ();
+
 			this ._parents .set (parent .getId (), parent);
 		},
 		removeParent: function (parent)

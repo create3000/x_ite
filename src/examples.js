@@ -95,6 +95,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Rendering", test: "Color" },
 	{ component: "Rendering", test: "Coordinate" },
 	{ component: "Rendering", test: "IndexedLineSet" },
+	{ component: "Rendering", test: "IndexedTriangleFanSet" },
 	{ component: "Rendering", test: "IndexedTriangleSet" },
 	{ component: "Rendering", test: "LineSet" },
 	{ component: "Rendering", test: "PointSet" },
