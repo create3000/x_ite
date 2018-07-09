@@ -1,4 +1,4 @@
-/* X_ITE v4.2.4a-308 */
+/* X_ITE v4.2.4a-309 */
 
 (function () {
 
@@ -41671,7 +41671,7 @@ function (Fields,
 
 			this .textures .clear ();
 
-			for (var values of userDefinedFields .values ())
+			for (var field of userDefinedFields .values ())
 			{
 				var location = gl .getUniformLocation (program, field .getName ());
 
