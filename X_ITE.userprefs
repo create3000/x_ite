@@ -1,32 +1,35 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Fields/SFNode.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="package.json">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Layout/ScreenFontStyle.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Layout/ScreenText.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shape/Appearance.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="326" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DField.js" Line="87" Column="21" />
-      <File FileName="src/x_ite/Basic/X3DArrayField.js" Line="43" Column="8" />
-      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="188" Column="7" />
-      <File FileName="src/x_ite/Fields/SFNode.js" Line="142" Column="7" />
+      <File FileName="src/x_ite/Basic/X3DField.js" Line="163" Column="1" />
+      <File FileName="src/standard/Math/Numbers/Vector3.js" Line="279" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="291" Column="1" />
+      <File FileName="package.json" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="X_ITE" expanded="True">
+          <Node name="X_ITE" expanded="True" selected="True">
+            <Node name="Solution Items" expanded="True" />
             <Node name="src" expanded="True">
+              <Node name="standard" expanded="True">
+                <Node name="Math" expanded="True">
+                  <Node name="Numbers" expanded="True" />
+                </Node>
+              </Node>
               <Node name="x_ite" expanded="True">
+                <Node name="Base" expanded="True" />
                 <Node name="Basic" expanded="True" />
                 <Node name="Browser" expanded="True">
                   <Node name="Rendering" expanded="True" />
                 </Node>
-                <Node name="Fields" expanded="True">
-                  <Node name="SFNode.js" selected="True" />
+                <Node name="Components" expanded="True">
+                  <Node name="Shaders" expanded="True" />
                 </Node>
+                <Node name="Fields" expanded="True" />
               </Node>
             </Node>
           </Node>
