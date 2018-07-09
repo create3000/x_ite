@@ -1,4 +1,4 @@
-/* X_ITE v4.2.4-311 */
+/* X_ITE v4.2.4-312 */
 
 (function () {
 
@@ -95945,7 +95945,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "index",           new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "index",           new Fields .MFInt32 ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
@@ -96103,7 +96103,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "index",           new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "index",           new Fields .MFInt32 ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
@@ -96220,7 +96220,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "index",           new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "index",           new Fields .MFInt32 ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),

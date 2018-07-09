@@ -1,18 +1,24 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="package.json">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DField.js" Line="163" Column="1" />
-      <File FileName="src/standard/Math/Numbers/Vector3.js" Line="279" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DField.js" Line="1" Column="1" />
+      <File FileName="src/standard/Math/Numbers/Vector3.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="291" Column="1" />
-      <File FileName="package.json" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
+      <File FileName="package.json" Line="15" Column="4" />
+      <File FileName="src/x_ite/Components/Rendering/IndexedTriangleFanSet.js" Line="83" Column="49" />
+      <File FileName="src/x_ite/Components/Rendering/IndexedLineSet.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/IndexedTriangleSet.js" Line="81" Column="57" />
+      <File FileName="src/x_ite/Components/Rendering/IndexedTriangleStripSet.js" Line="81" Column="61" />
+      <File FileName="src/x_ite/Components/Rendering/TriangleFanSet.js" Line="83" Column="53" />
+      <File FileName="src/x_ite/Components/Rendering/TriangleStripSet.js" Line="77" Column="19" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="X_ITE" expanded="True" selected="True">
+          <Node name="X_ITE" expanded="True">
             <Node name="Solution Items" expanded="True" />
             <Node name="src" expanded="True">
               <Node name="standard" expanded="True">
@@ -27,6 +33,9 @@
                   <Node name="Rendering" expanded="True" />
                 </Node>
                 <Node name="Components" expanded="True">
+                  <Node name="Rendering" expanded="True">
+                    <Node name="TriangleStripSet.js" selected="True" />
+                  </Node>
                   <Node name="Shaders" expanded="True" />
                 </Node>
                 <Node name="Fields" expanded="True" />
