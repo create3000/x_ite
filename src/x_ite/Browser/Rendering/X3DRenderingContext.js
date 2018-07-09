@@ -119,15 +119,12 @@ function ($,
 
 			// Create shaders.
 
-			// Shadow shader causes a memory leak in Edge browser.
-			var shadow = ! /Edge/ .test (navigator .userAgent);
-
 			this .depthShader   = this .createShader (this, "DepthShader",     depthVS,     depthFS,     false);
 			this .pointShader   = this .createShader (this, "PointShader",     wireframeVS, pointSetFS,  false);
 			this .lineShader    = this .createShader (this, "WireframeShader", wireframeVS, wireframeFS, false);
 			this .gouraudShader = this .createShader (this, "GouraudShader",   gouraudVS,   gouraudFS,   false);
 			this .phongShader   = this .createShader (this, "PhongShader",     phongVS,     phongFS,     false);
-			this .shadowShader  = this .createShader (this, "ShadowShader",    phongVS,     phongFS,     shadow);
+			this .shadowShader  = this .createShader (this, "ShadowShader",    phongVS,     phongFS,     true);
 
 			this .pointShader .setGeometryType (0);
 			this .lineShader  .setGeometryType (1);

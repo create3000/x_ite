@@ -1,11 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Layout/ScreenText.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Rendering/X3DRenderObject.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer.js" Line="79" Column="1" />
-      <File FileName="src/x_ite/Components/Layout/ScreenFontStyle.js" Line="73" Column="1" />
+      <File FileName="src/x_ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Layout/ScreenFontStyle.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Layout/ScreenText.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="590" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
