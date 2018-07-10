@@ -10,6 +10,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Basic", test: "Circles" },
 	{ component: "Basic", test: "CrazySpiral" },
 	{ component: "Basic", test: "Currencies" },
+	{ component: "Basic", test: "Eighties" },
 	{ component: "Basic", test: "FlashingLights" },
 	{ component: "Basic", test: "FoldUp" },
 	{ component: "Basic", test: "LogoPieces" },

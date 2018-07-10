@@ -1,40 +1,14 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/CADGeometry/IndexedQuadSet.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="package.json" Line="17" Column="23" />
+      <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/CADGeometry/IndexedQuadSet.js" Line="1" Column="1" />
-      <File FileName="src/standard/Math/Numbers/Vector3.js" Line="264" Column="32" />
+      <File FileName="src/standard/Math/Numbers/Vector3.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="99" Column="63" />
+      <File FileName="src/x_ite/Fields/SFColor.js" Line="147" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="X_ITE" expanded="True">
-            <Node name="Solution Items" expanded="True" />
-            <Node name="src" expanded="True">
-              <Node name="standard" expanded="True">
-                <Node name="Math" expanded="True">
-                  <Node name="Numbers" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="x_ite" expanded="True">
-                <Node name="Base" expanded="True" />
-                <Node name="Basic" expanded="True" />
-                <Node name="Components" expanded="True">
-                  <Node name="CADGeometry" expanded="True">
-                    <Node name="IndexedQuadSet.js" selected="True" />
-                  </Node>
-                  <Node name="Rendering" expanded="True" />
-                  <Node name="Shaders" expanded="True" />
-                </Node>
-                <Node name="Fields" expanded="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
