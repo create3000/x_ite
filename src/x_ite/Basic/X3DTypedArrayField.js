@@ -93,10 +93,11 @@ function (X3DArrayField,
 
 					var
 						value         = new (valueType) (),
-						internalValue = value .getValue ();
+						internalValue = value .getValue (),
+						i             = index * components;
 
-					value .addEvent = addEvent .bind (value, target, index * components, internalValue, components);
-					value .getValue = getValue .bind (value, target, index * components, internalValue, components);
+					value .addEvent = function () { return addEvent (target, i, internalValue, components); };
+					value .getValue = function () { return getValue (target, i, internalValue, components); };
 
 					return value;
 				}
