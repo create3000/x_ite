@@ -1,4 +1,4 @@
-/* X_ITE v4.2.4-313 */
+/* X_ITE v4.2.5a-314 */
 
 (function () {
 
@@ -23122,7 +23122,7 @@ function ($,
 					{
 						stream .string += generator .Indent ();
 						array [i] .toStream (stream);
-						stream .string += ",\n"
+						stream .string += ",\n";
 					}
 
 					stream .string += generator .Indent ();
@@ -23622,7 +23622,6 @@ function (X3DArrayField,
 		{
 			var
 				target = this ._target,
-				array  = target .getValue (),
 				length = target ._length;
 
 			if (index > length)
@@ -23858,7 +23857,7 @@ function (X3DArrayField,
 							value .set (array [i * components]);
 							value .toStream (stream);
 	
-							stream .string += ",\n"
+							stream .string += ",\n";
 						}
 	
 						stream .string += generator .Indent ();
@@ -23878,7 +23877,7 @@ function (X3DArrayField,
 		
 							value .toStream (stream);
 		
-							stream .string += ",\n"
+							stream .string += ",\n";
 						}
 
 						stream .string += generator .Indent ();
@@ -25587,7 +25586,7 @@ function (X3DEventObject,
 					{
 						var
 							field       = references [i],
-							protoFields = field .getReferences ()
+							protoFields = field .getReferences ();
 
 						for (var protoField of protoFields .values ())
 						{
@@ -30984,7 +30983,7 @@ define ('standard/Networking/URI',[],function ()
 			}
 			
 			uri .absolute = Boolean (uri .slashs .length) || uri .path [0] === "/";
-			uri .local    = /^(?:file|data)$/ .test (uri .scheme) || (! uri .scheme && ! uri .authority)
+			uri .local    = /^(?:file|data)$/ .test (uri .scheme) || (! uri .scheme && ! uri .authority);
 		}
 
 		uri .string = string;
@@ -33733,7 +33732,7 @@ function (FieldDefinitionArray,
 									stream .string += "<fieldValue";
 									stream .string += " ";
 									stream .string += "name='";
-									stream .string += generator .XMLEncode (field .getName ())
+									stream .string += generator .XMLEncode (field .getName ());
 									stream .string += "'";
 									stream .string += ">\n";
 									
@@ -33758,7 +33757,7 @@ function (FieldDefinitionArray,
 								stream .string += "<fieldValue";
 								stream .string += " ";
 								stream .string += "name='";
-								stream .string += generator .XMLEncode (field .getName ())
+								stream .string += generator .XMLEncode (field .getName ());
 								stream .string += "'";
 								stream .string += " ";
 								stream .string += "value='";
@@ -33789,7 +33788,7 @@ function (FieldDefinitionArray,
 					{
 						var
 							field       = references [i],
-							protoFields = field .getReferences ()
+							protoFields = field .getReferences ();
 
 						for (var protoField of protoFields .values ())
 						{
@@ -35551,7 +35550,7 @@ function (Fields,
 					throw new Error ("Expected a name for field.");
 				}
 	
-				this .Id ()
+				this .Id ();
 		
 				throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
 			}
@@ -41445,9 +41444,7 @@ function (Fields,
 {
 "use strict";
 
-	var
-		matrix3 = new Matrix3 (),
-		NULL    = new Fields .SFNode ();
+	var matrix3 = new Matrix3 ();
 
 	function X3DProgrammableShaderObject (executionContext)
 	{
@@ -41792,7 +41789,6 @@ function (Fields,
 		{
 			var
 				gl       = this .getBrowser () .getContext (),
-				program  = this .getProgram (),
 				location = field ._uniformLocation;
 
 			if (location)
@@ -42977,9 +42973,7 @@ function (Shadow,
 		Pack: Pack,
 	};
 
-	var
-		include  = /^#pragma\s+X3D\s+include\s+".*?([^\/]+).h"\s*$/,
-		newLines = /\n/g;
+	var include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+).h"\s*$/;
 
 	var Shader =
 	{
@@ -53549,8 +53543,6 @@ function ($,
 		},
 		setShading: function (type)
 		{
-			var gl = this .context;
-
 			switch (type)
 			{
 				case "PHONG":
@@ -58673,7 +58665,7 @@ function (Fields,
 				texCoordIndex .push (p + xDimension);
 				texCoordIndex .push (p + 1);
 				texCoordIndex .push (p);
-				texCoordIndex .push (-1)
+				texCoordIndex .push (-1);
 			}
 		},
 		createTexCoord: function ()
@@ -62540,17 +62532,16 @@ function (Fields,
 "use strict";
 
 	var
-		zAxis               = new Vector3 (0, 0, 1),
-		screenScale         = new Vector3 (0, 0, 0),
-		normalized          = new Vector3 (0, 0, 0),
-		upVector            = new Vector3 (0, 0, 0),
-		locationMatrix      = new Matrix4 (),
-		position            = new Vector3 (0, 0, 0),
-		orientation         = new Rotation4 (0, 0, 1, 0),
-		centerOfRotation    = new Vector3 (0, 0, 0),
-		geoPosition         = new Vector3 (0, 0, 0),
-		geoOrientation      = new Rotation4 (0, 0, 1, 0),
-		geoCenterOfRotation = new Vector3 (0, 0, 0);
+		zAxis            = new Vector3 (0, 0, 1),
+		screenScale      = new Vector3 (0, 0, 0),
+		normalized       = new Vector3 (0, 0, 0),
+		upVector         = new Vector3 (0, 0, 0),
+		locationMatrix   = new Matrix4 (),
+		position         = new Vector3 (0, 0, 0),
+		orientation      = new Rotation4 (0, 0, 1, 0),
+		centerOfRotation = new Vector3 (0, 0, 0),
+		geoPosition      = new Vector3 (0, 0, 0),
+		geoOrientation   = new Rotation4 (0, 0, 1, 0);
 
 	function traverse (type, renderObject)
 	{
@@ -63057,8 +63048,7 @@ function ($,
 		SPIN_FACTOR       = 0.6,
 		SCROLL_FACTOR     = 1.0 / 20.0,
 		MOVE_TIME         = 0.2,
-		ROTATE_TIME       = 0.2,
-		FRAME_RATE        = 60;
+		ROTATE_TIME       = 0.2;
 
 	function ExamineViewer (executionContext)
 	{
@@ -63095,8 +63085,7 @@ function ($,
 
 			var
 			   browser   = this .getBrowser (),
-			   canvas    = browser .getCanvas (),
-				viewpoint = this .getActiveViewpoint ();
+			   canvas    = browser .getCanvas ();
 
 			// Bind pointing device events.
 
@@ -63264,9 +63253,7 @@ function ($,
 						event .preventDefault ();
 						event .stopImmediatePropagation ();
 	
-						var
-							viewpoint = this .getActiveViewpoint (),
-							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+						var toVector = this .trackballProjectToSphere (x, y, this .toVector);
 	
 						this .rotation .setFromToVec (toVector, this .fromVector);
 	
@@ -63611,8 +63598,6 @@ function ($,
 
 			return function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
 			{
-				var viewpoint = this .getActiveViewpoint ();
-
 				this .getDistanceToCenter (distance, positionOffsetBefore);
 	
 				return (oob
@@ -63938,9 +63923,7 @@ function ($,
 
 						// Look around
 
-						var
-							viewpoint = this .getActiveViewpoint (),
-							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+						var toVector = this .trackballProjectToSphere (x, y, this .toVector);
 
 						this .addRotation (this .fromVector, toVector);
 						this .fromVector .assign (toVector);
@@ -64617,21 +64600,16 @@ function (X3DFlyViewer,
 		{
 			this .getBrowser () .removeCollision (this);
 		},
-		getFlyDirection: (function ()
+		getFlyDirection: function (fromVector, toVector, direction)
 		{
-			var rotation = new Rotation4 (0, 0, 1, 0);
+			direction .assign (toVector) .subtract (fromVector);
 
-			return function (fromVector, toVector, direction)
-			{
-				direction .assign (toVector) .subtract (fromVector);
+			direction .x =  direction .x / 20;
+			direction .y = -direction .z / 20;
+			direction .z = -50;
 
-				direction .x =  direction .x / 20;
-				direction .y = -direction .z / 20;
-				direction .z = -50;
-
-				return direction;
-			};
-		})(),
+			return direction;
+		},
 		getTranslationOffset: function (velocity)
 		{
 			return this .getActiveViewpoint () .getUserOrientation () .multVecRot (velocity);
@@ -65355,9 +65333,7 @@ function ($,
 
 					// Look around
 
-					var
-						viewpoint = this .getActiveViewpoint (),
-						toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+					var toVector  = this .trackballProjectToSphere (x, y, this .toVector);
 
 					this .addRotation (this .fromVector, toVector);
 					this .fromVector .assign (toVector);
@@ -65379,9 +65355,7 @@ function ($,
 	
 				// Change viewpoint position.
 	
-				var
-					browser   = this .getBrowser (),
-					viewpoint = this .getActiveViewpoint ();
+				var viewpoint = this .getActiveViewpoint ();
 	
 				viewpoint .transitionStop ();
 
@@ -68571,8 +68545,6 @@ function (Fields,
 		},
 		setError: function (error)
 		{
-			var URL = this .URL .toString ();
-
 			if (this .URL .scheme !== "data")
 				console .warn ("Error loading font '" + this .URL .toString () + "':", error);
 
@@ -69096,7 +69068,7 @@ function (TextAlignment,
 					size .x      = length / scale;
 				}
 
-				this .charSpacings [ll] = charSpacing 
+				this .charSpacings [ll] = charSpacing;
 				text .lineBounds_ [l]   = lineBound;
 
 				// Calculate line translation.
@@ -77967,7 +77939,7 @@ function ($,
 					               collisionRadius,
 					               nearValue,
 					               Math .max (collisionRadius * 2, avatarHeight * 2),
-					               projectionMatrix)
+					               projectionMatrix);
 	
 					// Transform viewpoint to look down the up vector
 	
@@ -79403,60 +79375,53 @@ function (X3DBindableNode,
 				}
 			}
 		},
-		display: (function ()
+		display: function (gl, renderObject, viewport)
 		{
-			var
-				farVector         = new Vector3 (0, 0, 0),
-				projectionMatrix  = new Matrix4 ();
-
-			return function (gl, renderObject, viewport)
+			try
 			{
-				try
-				{
-					if (this .hidden)
-						return;
-	
-					// Setup context.
-		
-					gl .disable (gl .DEPTH_TEST);
-					gl .depthMask (false);
-					gl .enable (gl .CULL_FACE);
-					gl .frontFace (gl .CCW);
-	
-					// Get background scale.
-	
-					var
-						viewpoint       = renderObject .getViewpoint (),
-						navigationInfo  = renderObject .getNavigationInfo (),
-						farValue        = navigationInfo .getFarValue (viewpoint) * 0.8,
-						rotation        = this .rotation,
-						modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
+				if (this .hidden)
+					return;
 
-					// Get projection matrix.
+				// Setup context.
 	
-					this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
-	
-					// Rotate and scale background.
-	
-					modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
-					modelViewMatrix .get (null, rotation);
-					modelViewMatrix .identity ();
-					modelViewMatrix .rotate (rotation);
-					modelViewMatrix .scale (this .scale .set (farValue, farValue, farValue));
-	
-					this .modelViewMatrixArray .set (modelViewMatrix);
-	
-					// Draw background sphere and texture cube.
-	
-					this .drawSphere (renderObject);
-	
-					if (this .textures)
-						this .drawCube (renderObject);
-				}
-				catch (error)
-				{ }
-			};
-		})(),
+				gl .disable (gl .DEPTH_TEST);
+				gl .depthMask (false);
+				gl .enable (gl .CULL_FACE);
+				gl .frontFace (gl .CCW);
+
+				// Get background scale.
+
+				var
+					viewpoint       = renderObject .getViewpoint (),
+					navigationInfo  = renderObject .getNavigationInfo (),
+					farValue        = navigationInfo .getFarValue (viewpoint) * 0.8,
+					rotation        = this .rotation,
+					modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
+
+				// Get projection matrix.
+
+				this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
+
+				// Rotate and scale background.
+
+				modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
+				modelViewMatrix .get (null, rotation);
+				modelViewMatrix .identity ();
+				modelViewMatrix .rotate (rotation);
+				modelViewMatrix .scale (this .scale .set (farValue, farValue, farValue));
+
+				this .modelViewMatrixArray .set (modelViewMatrix);
+
+				// Draw background sphere and texture cube.
+
+				this .drawSphere (renderObject);
+
+				if (this .textures)
+					this .drawCube (renderObject);
+			}
+			catch (error)
+			{ }
+		},
 		drawSphere: function (renderObject)
 		{
 			var transparency = this .transparency_ .getValue ();
@@ -80487,7 +80452,7 @@ function (X3DNode,
 		this .navigationInfoStack = new BindableStack (executionContext, this, this .defaultNavigationInfo);
 		this .viewpointStack      = new BindableStack (executionContext, this, this .defaultViewpoint);
 
-		this .backgrounds     = new BindableList (executionContext, this, this .defaultBackground)
+		this .backgrounds     = new BindableList (executionContext, this, this .defaultBackground);
 		this .fogs            = new BindableList (executionContext, this, this .defaultFog);
 		this .navigationInfos = new BindableList (executionContext, this, this .defaultNavigationInfo);
 		this .viewpoints      = new BindableList (executionContext, this, this .defaultViewpoint);
@@ -80723,7 +80688,7 @@ function (X3DNode,
 
 			this .getViewpoint () .update ();
 
-			this .getModelViewMatrix () .pop ()
+			this .getModelViewMatrix () .pop ();
 		},
 		collision: function (type, renderObject)
 		{
@@ -81500,8 +81465,8 @@ function (SFTime,
 
 		this .changedTime     = 0;
 		this .renderCallback  = this .traverse .bind (this);
-		this .systemTime      = 0
-		this .systemStartTime = 0
+		this .systemTime      = 0;
+		this .systemStartTime = 0;
 		this .browserTime     = 0;
 		this .pickingTime     = 0;
 		this .cameraTime      = 0;
@@ -83544,7 +83509,6 @@ function (Fields,
 				startAngle    = this .startAngle_ .getValue  (),
 				radius        = Math .abs (this .radius_ .getValue ()),
 				sweepAngle    = this .getSweepAngle (),
-				circle        = sweepAngle == (Math .PI * 2),
 				steps         = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
 				texCoordArray = this .getTexCoords (),
 				normalArray   = this .getNormals (),
@@ -106499,7 +106463,7 @@ function ($,
 				}
 
 				text += "\n;var " + callbacks .join (",") + ";";
-				text += "\n[" + callbacks .join (",") + "];"
+				text += "\n[" + callbacks .join (",") + "];";
 
 				var
 					global  = this .getGlobal (),
@@ -109073,7 +109037,6 @@ function (Fields,
 					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
 					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
 					shadowMapSize    = lightNode .getShadowMapSize (),
-					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
 					projectionMatrix = Camera .perspective (lightNode .getCutOffAngle () * 2, 0.125, Math .max (10000, farValue), shadowMapSize, shadowMapSize, this .projectionMatrix), // Use higher far value for better precision.
@@ -109122,14 +109085,13 @@ function (Fields,
 		setShaderUniforms: function (gl, shaderObject)
 		{
 			var 
-				lightNode       = this .lightNode,
-				color           = lightNode .getColor (),
-				attenuation     = lightNode .getAttenuation (),
-				modelViewMatrix = this .modelViewMatrix .get (),
-				location        = this .location,
-				direction       = this .direction,
-				shadowColor     = lightNode .getShadowColor (),
-				i               = shaderObject .numLights ++;
+				lightNode   = this .lightNode,
+				color       = lightNode .getColor (),
+				attenuation = lightNode .getAttenuation (),
+				location    = this .location,
+				direction   = this .direction,
+				shadowColor = lightNode .getShadowColor (),
+				i           = shaderObject .numLights ++;
 
 			gl .uniform1i (shaderObject .x3d_LightType [i],             3);
 			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
@@ -114876,7 +114838,7 @@ function ($,
 			for (var id in scene .getLoadingObjects ())
 				this .addLoadCount (scene .getLoadingObjects () [id]);
 
-			scene .setLive (this .isLive () .getValue ())
+			scene .setLive (this .isLive () .getValue ());
 
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);

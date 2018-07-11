@@ -2345,7 +2345,7 @@ function (Fields,
 			{
 				var m = this .matrix;
 
-				m .set (this .position_ .getValue (), this .orientation_ .getValue ())
+				m .set (this .position_ .getValue (), this .orientation_ .getValue ());
 		
 				//t .setFromOpenGLMatrix (m);
 
