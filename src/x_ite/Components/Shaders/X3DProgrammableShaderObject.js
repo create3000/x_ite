@@ -62,9 +62,7 @@ function (Fields,
 {
 "use strict";
 
-	var
-		matrix3 = new Matrix3 (),
-		NULL    = new Fields .SFNode ();
+	var matrix3 = new Matrix3 ();
 
 	function X3DProgrammableShaderObject (executionContext)
 	{
@@ -409,7 +407,6 @@ function (Fields,
 		{
 			var
 				gl       = this .getBrowser () .getContext (),
-				program  = this .getProgram (),
 				location = field ._uniformLocation;
 
 			if (location)

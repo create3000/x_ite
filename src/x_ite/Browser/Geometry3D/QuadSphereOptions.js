@@ -144,7 +144,7 @@ function (Fields,
 				texCoordIndex .push (p + xDimension);
 				texCoordIndex .push (p + 1);
 				texCoordIndex .push (p);
-				texCoordIndex .push (-1)
+				texCoordIndex .push (-1);
 			}
 		},
 		createTexCoord: function ()

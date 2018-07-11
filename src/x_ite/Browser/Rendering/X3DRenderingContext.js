@@ -229,8 +229,6 @@ function ($,
 		},
 		setShading: function (type)
 		{
-			var gl = this .context;
-
 			switch (type)
 			{
 				case "PHONG":

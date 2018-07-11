@@ -216,9 +216,7 @@ function ($,
 
 					// Look around
 
-					var
-						viewpoint = this .getActiveViewpoint (),
-						toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+					var toVector  = this .trackballProjectToSphere (x, y, this .toVector);
 
 					this .addRotation (this .fromVector, toVector);
 					this .fromVector .assign (toVector);
@@ -240,9 +238,7 @@ function ($,
 	
 				// Change viewpoint position.
 	
-				var
-					browser   = this .getBrowser (),
-					viewpoint = this .getActiveViewpoint ();
+				var viewpoint = this .getActiveViewpoint ();
 	
 				viewpoint .transitionStop ();
 

@@ -185,7 +185,6 @@ function (Fields,
 					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
 					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
 					shadowMapSize    = lightNode .getShadowMapSize (),
-					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
 					projectionMatrix = Camera .perspective (lightNode .getCutOffAngle () * 2, 0.125, Math .max (10000, farValue), shadowMapSize, shadowMapSize, this .projectionMatrix), // Use higher far value for better precision.
@@ -234,14 +233,13 @@ function (Fields,
 		setShaderUniforms: function (gl, shaderObject)
 		{
 			var 
-				lightNode       = this .lightNode,
-				color           = lightNode .getColor (),
-				attenuation     = lightNode .getAttenuation (),
-				modelViewMatrix = this .modelViewMatrix .get (),
-				location        = this .location,
-				direction       = this .direction,
-				shadowColor     = lightNode .getShadowColor (),
-				i               = shaderObject .numLights ++;
+				lightNode   = this .lightNode,
+				color       = lightNode .getColor (),
+				attenuation = lightNode .getAttenuation (),
+				location    = this .location,
+				direction   = this .direction,
+				shadowColor = lightNode .getShadowColor (),
+				i           = shaderObject .numLights ++;
 
 			gl .uniform1i (shaderObject .x3d_LightType [i],             3);
 			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);

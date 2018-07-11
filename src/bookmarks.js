@@ -51,12 +51,8 @@ var Bookmarks = (function ()
 {
 "use strict";
 
-	var mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
-
 	function Bookmarks (browser, element, filesPerPage)
 	{
-		var index = browser .getDataStorage () ["Bookmarks.pageIndex"];
-
 		this .browser = browser;
 		this .element = element;
 	}

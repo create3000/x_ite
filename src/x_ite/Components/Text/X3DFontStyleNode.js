@@ -274,8 +274,6 @@ function (Fields,
 		},
 		setError: function (error)
 		{
-			var URL = this .URL .toString ();
-
 			if (this .URL .scheme !== "data")
 				console .warn ("Error loading font '" + this .URL .toString () + "':", error);
 

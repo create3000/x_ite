@@ -275,7 +275,7 @@ function ($,
 			for (var id in scene .getLoadingObjects ())
 				this .addLoadCount (scene .getLoadingObjects () [id]);
 
-			scene .setLive (this .isLive () .getValue ())
+			scene .setLive (this .isLive () .getValue ());
 
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);

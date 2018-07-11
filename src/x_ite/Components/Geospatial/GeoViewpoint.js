@@ -79,17 +79,16 @@ function (Fields,
 "use strict";
 
 	var
-		zAxis               = new Vector3 (0, 0, 1),
-		screenScale         = new Vector3 (0, 0, 0),
-		normalized          = new Vector3 (0, 0, 0),
-		upVector            = new Vector3 (0, 0, 0),
-		locationMatrix      = new Matrix4 (),
-		position            = new Vector3 (0, 0, 0),
-		orientation         = new Rotation4 (0, 0, 1, 0),
-		centerOfRotation    = new Vector3 (0, 0, 0),
-		geoPosition         = new Vector3 (0, 0, 0),
-		geoOrientation      = new Rotation4 (0, 0, 1, 0),
-		geoCenterOfRotation = new Vector3 (0, 0, 0);
+		zAxis            = new Vector3 (0, 0, 1),
+		screenScale      = new Vector3 (0, 0, 0),
+		normalized       = new Vector3 (0, 0, 0),
+		upVector         = new Vector3 (0, 0, 0),
+		locationMatrix   = new Matrix4 (),
+		position         = new Vector3 (0, 0, 0),
+		orientation      = new Rotation4 (0, 0, 1, 0),
+		centerOfRotation = new Vector3 (0, 0, 0),
+		geoPosition      = new Vector3 (0, 0, 0),
+		geoOrientation   = new Rotation4 (0, 0, 1, 0);
 
 	function traverse (type, renderObject)
 	{

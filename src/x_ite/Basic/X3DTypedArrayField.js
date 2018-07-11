@@ -431,7 +431,6 @@ function (X3DArrayField,
 		{
 			var
 				target = this ._target,
-				array  = target .getValue (),
 				length = target ._length;
 
 			if (index > length)
@@ -667,7 +666,7 @@ function (X3DArrayField,
 							value .set (array [i * components]);
 							value .toStream (stream);
 	
-							stream .string += ",\n"
+							stream .string += ",\n";
 						}
 	
 						stream .string += generator .Indent ();
@@ -687,7 +686,7 @@ function (X3DArrayField,
 		
 							value .toStream (stream);
 		
-							stream .string += ",\n"
+							stream .string += ",\n";
 						}
 
 						stream .string += generator .Indent ();

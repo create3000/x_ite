@@ -1035,7 +1035,7 @@ function (Fields,
 					throw new Error ("Expected a name for field.");
 				}
 	
-				this .Id ()
+				this .Id ();
 		
 				throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
 			}

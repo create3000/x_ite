@@ -483,7 +483,7 @@ function ($,
 					{
 						stream .string += generator .Indent ();
 						array [i] .toStream (stream);
-						stream .string += ",\n"
+						stream .string += ",\n";
 					}
 
 					stream .string += generator .Indent ();

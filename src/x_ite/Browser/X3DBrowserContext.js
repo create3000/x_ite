@@ -136,8 +136,8 @@ function (SFTime,
 
 		this .changedTime     = 0;
 		this .renderCallback  = this .traverse .bind (this);
-		this .systemTime      = 0
-		this .systemStartTime = 0
+		this .systemTime      = 0;
+		this .systemStartTime = 0;
 		this .browserTime     = 0;
 		this .pickingTime     = 0;
 		this .cameraTime      = 0;

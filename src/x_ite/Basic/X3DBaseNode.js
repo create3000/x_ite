@@ -880,7 +880,7 @@ function (X3DEventObject,
 					{
 						var
 							field       = references [i],
-							protoFields = field .getReferences ()
+							protoFields = field .getReferences ();
 
 						for (var protoField of protoFields .values ())
 						{

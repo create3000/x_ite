@@ -469,7 +469,7 @@ function (FieldDefinitionArray,
 									stream .string += "<fieldValue";
 									stream .string += " ";
 									stream .string += "name='";
-									stream .string += generator .XMLEncode (field .getName ())
+									stream .string += generator .XMLEncode (field .getName ());
 									stream .string += "'";
 									stream .string += ">\n";
 									
@@ -494,7 +494,7 @@ function (FieldDefinitionArray,
 								stream .string += "<fieldValue";
 								stream .string += " ";
 								stream .string += "name='";
-								stream .string += generator .XMLEncode (field .getName ())
+								stream .string += generator .XMLEncode (field .getName ());
 								stream .string += "'";
 								stream .string += " ";
 								stream .string += "value='";
@@ -525,7 +525,7 @@ function (FieldDefinitionArray,
 					{
 						var
 							field       = references [i],
-							protoFields = field .getReferences ()
+							protoFields = field .getReferences ();
 
 						for (var protoField of protoFields .values ())
 						{

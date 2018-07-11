@@ -76,8 +76,7 @@ function ($,
 		SPIN_FACTOR       = 0.6,
 		SCROLL_FACTOR     = 1.0 / 20.0,
 		MOVE_TIME         = 0.2,
-		ROTATE_TIME       = 0.2,
-		FRAME_RATE        = 60;
+		ROTATE_TIME       = 0.2;
 
 	function ExamineViewer (executionContext)
 	{
@@ -114,8 +113,7 @@ function ($,
 
 			var
 			   browser   = this .getBrowser (),
-			   canvas    = browser .getCanvas (),
-				viewpoint = this .getActiveViewpoint ();
+			   canvas    = browser .getCanvas ();
 
 			// Bind pointing device events.
 
@@ -283,9 +281,7 @@ function ($,
 						event .preventDefault ();
 						event .stopImmediatePropagation ();
 	
-						var
-							viewpoint = this .getActiveViewpoint (),
-							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+						var toVector = this .trackballProjectToSphere (x, y, this .toVector);
 	
 						this .rotation .setFromToVec (toVector, this .fromVector);
 	
@@ -630,8 +626,6 @@ function ($,
 
 			return function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
 			{
-				var viewpoint = this .getActiveViewpoint ();
-
 				this .getDistanceToCenter (distance, positionOffsetBefore);
 	
 				return (oob

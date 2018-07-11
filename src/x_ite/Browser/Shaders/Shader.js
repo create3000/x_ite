@@ -65,9 +65,7 @@ function (Shadow,
 		Pack: Pack,
 	};
 
-	var
-		include  = /^#pragma\s+X3D\s+include\s+".*?([^\/]+).h"\s*$/,
-		newLines = /\n/g;
+	var include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+).h"\s*$/;
 
 	var Shader =
 	{

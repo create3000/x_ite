@@ -241,7 +241,7 @@ function (TextAlignment,
 					size .x      = length / scale;
 				}
 
-				this .charSpacings [ll] = charSpacing 
+				this .charSpacings [ll] = charSpacing;
 				text .lineBounds_ [l]   = lineBound;
 
 				// Calculate line translation.

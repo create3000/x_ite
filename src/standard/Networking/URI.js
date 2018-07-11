@@ -262,7 +262,7 @@ define (function ()
 			}
 			
 			uri .absolute = Boolean (uri .slashs .length) || uri .path [0] === "/";
-			uri .local    = /^(?:file|data)$/ .test (uri .scheme) || (! uri .scheme && ! uri .authority)
+			uri .local    = /^(?:file|data)$/ .test (uri .scheme) || (! uri .scheme && ! uri .authority);
 		}
 
 		uri .string = string;

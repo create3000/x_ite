@@ -213,7 +213,7 @@ function ($,
 				}
 
 				text += "\n;var " + callbacks .join (",") + ";";
-				text += "\n[" + callbacks .join (",") + "];"
+				text += "\n[" + callbacks .join (",") + "];";
 
 				var
 					global  = this .getGlobal (),

@@ -678,7 +678,7 @@ function ($,
 					               collisionRadius,
 					               nearValue,
 					               Math .max (collisionRadius * 2, avatarHeight * 2),
-					               projectionMatrix)
+					               projectionMatrix);
 	
 					// Transform viewpoint to look down the up vector
 	
