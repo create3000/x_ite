@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-315 */
+/* X_ITE v4.2.5a-316 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
@@ -9,11 +9,10 @@ X3DCanvas .x_ite-private-splash-screen {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	
-	background: #000;
-	background: -moz-radial-gradient(center, ellipse cover, #7b8189 0%, #000 100%);
-	background: -webkit-radial-gradient(center, ellipse cover, #7b8189 0%,#000 100%);
-	background: radial-gradient(ellipse at center, rgb(130,130,130) 0%,#000 100%);
+	background: #3d4145;
+	background: -moz-radial-gradient(center, ellipse cover, #7b8189 0%, #3d4145 100%);
+	background: -webkit-radial-gradient(center, ellipse cover, #7b8189 0%,#3d4145 100%);
+	background: radial-gradient(ellipse at center, rgb(130,130,130) 0%,#3d4145 100%);
 }
 X3DCanvas .x_ite-private-spinner {
 	position: absolute;
