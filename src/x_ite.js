@@ -75,7 +75,12 @@
 	function noConflict ()
 	{
 		if (window .X3D === X_ITE)
-			window .X3D = X3D_;
+		{
+			if (X3D_ === undefined)
+				delete window .X3D;
+			else
+				window .X3D = X3D_;
+		}
 
 		return X_ITE;
 	}
@@ -90,9 +95,9 @@
 		X3D_       = window .X3D,
 		PrivateX3D = null;
 
-	X_ITE .noConfict = noConflict;
-	X_ITE .require   = require;
-	X_ITE .define    = define;
+	X_ITE .noConflict = noConflict;
+	X_ITE .require    = require;
+	X_ITE .define     = define;
 
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
@@ -110,7 +115,7 @@
 	require (["x_ite/X3D"],
 	function (X3D)
 	{
-		X3D .noConfict = noConflict;
+		X3D .noConflict = noConflict;
 
 		// Now assign real X3D.
 		PrivateX3D = X3D;
