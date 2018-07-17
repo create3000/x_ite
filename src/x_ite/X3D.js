@@ -184,7 +184,6 @@ function ($,
 			try
 			{
 				$.map (elements, createBrowserFromElement);
-
 				callbacks .resolve ();
 			}
 			catch (error)
