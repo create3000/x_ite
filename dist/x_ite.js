@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-317 */
+/* X_ITE v4.2.5a-318 */
 
 (function () {
 
@@ -106509,8 +106509,8 @@ function ($,
 				NULL:  { value: null },
 				FALSE: { value: false },
 				TRUE:  { value: true },
-				print: { value: function () { this .print .apply (this, arguments); } .bind (browser) },
-				trace: { value: function () { this .print .apply (this, arguments); } .bind (browser) },
+				print: { value: function () { browser .println .apply (browser, arguments); }},
+				trace: { value: function () { browser .println .apply (browser, arguments); }},
 
 				Browser: { value: browser },
 
@@ -115465,7 +115465,7 @@ function ($,
 	}
 
 	var
-	   initialized = false,
+		initialized = false,
 		callbacks   = $.Deferred (),
 		fallbacks   = $.Deferred ();
 

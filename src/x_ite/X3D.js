@@ -158,7 +158,7 @@ function ($,
 	}
 
 	var
-	   initialized = false,
+		initialized = false,
 		callbacks   = $.Deferred (),
 		fallbacks   = $.Deferred ();
 
