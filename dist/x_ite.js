@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-322 */
+/* X_ITE v4.2.5a-323 */
 
 (function () {
 
@@ -114707,21 +114707,21 @@ function ($,
 			// Print welcome message.
 
 			this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
-			                "        Current Graphics Renderer\n" +
-			                "                Name: " + this .getVendor () + " " + this .getWebGLVersion () + "\n" +
-			                "                Shading language: " + this .getShadingLanguageVersion () + "\n" +
-			                "        Rendering Properties\n" +
-			                "                Antialiased: " + this .getAntialiased () + "\n" +
-			                "                Depth size: " + this .getDepthSize () + " bits\n" +
-			                "                Color depth: " + this .getColorDepth () + " bits\n" +
-			                "                Max clip planes: 6\n" +
-			                "                Max lights: 8\n" +
-			                "                Texture units: " + this .getMaxTextureUnits () + " / " + this .getMaxCombinedTextureUnits () + "\n" +
-			                "                Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
-			                "                Texture memory: " + this .getTextureMemory () + "\n" +
-			                "                Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
-			                "                Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
-			                "                Max vertex attribs: " + this .getMaxVertexAttribs () + "\n");
+			             "        Current Graphics Renderer\n" +
+			             "                Name: " + this .getVendor () + " " + this .getWebGLVersion () + "\n" +
+			             "                Shading language: " + this .getShadingLanguageVersion () + "\n" +
+			             "        Rendering Properties\n" +
+			             "                Antialiased: " + this .getAntialiased () + "\n" +
+			             "                Depth size: " + this .getDepthSize () + " bits\n" +
+			             "                Color depth: " + this .getColorDepth () + " bits\n" +
+			             "                Max clip planes: 6\n" +
+			             "                Max lights: 8\n" +
+			             "                Texture units: " + this .getMaxTextureUnits () + " / " + this .getMaxCombinedTextureUnits () + "\n" +
+			             "                Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
+			             "                Texture memory: " + this .getTextureMemory () + "\n" +
+			             "                Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
+			             "                Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
+			             "                Max vertex attribs: " + this .getMaxVertexAttribs () + "\n");
 		},
 		getName: function ()
 		{
@@ -115644,6 +115644,8 @@ function ($,
 	require (["x_ite/X3D"],
 	function (X3D)
 	{
+		X3D .noConfict = noConflict;
+
 		// Now assign real X3D.
 		PrivateX3D = X3D;
 

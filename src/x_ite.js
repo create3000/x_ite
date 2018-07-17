@@ -110,6 +110,8 @@
 	require (["x_ite/X3D"],
 	function (X3D)
 	{
+		X3D .noConfict = noConflict;
+
 		// Now assign real X3D.
 		PrivateX3D = X3D;
 
