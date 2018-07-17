@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-318 */
+/* X_ITE v4.2.5a-319 */
 
 (function () {
 
@@ -115490,21 +115490,9 @@ function ($,
 
 			try
 			{
-				var browsers = $.map (elements, createBrowserFromElement);
+				$.map (elements, createBrowserFromElement);
 
-				numBrowsers = browsers .length;
-
-				if (elements .length)
-				{
-					for (var i = 0; i < numBrowsers; ++ i)
-					{
-						var browser = browsers [i];
-
-						browser .initialized () .addFieldCallback ("initialized" + browser .getId (), set_initialized .bind (null, browser));
-					}
-				}
-				else
-					set_initialized (null);
+				callbacks .resolve ();
 			}
 			catch (error)
 			{
@@ -115512,19 +115500,6 @@ function ($,
 				fallbacks .resolve (error);
 			}
 		});
-	}
-
-	var numBrowsers = 0;
-
-	function set_initialized (browser)
-	{
-		if (browser)
-			browser .initialized () .removeFieldCallback ("initialized" + browser .getId ());
-
-		if (-- numBrowsers > 0)
-			return;
-
-		callbacks .resolve ();
 	}
 
 	Object .assign (X3D,
