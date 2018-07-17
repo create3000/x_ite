@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-324 */
+/* X_ITE v4.2.5a-325 */
 
 (function () {
 
@@ -115649,8 +115649,6 @@ function ($,
 	require (["x_ite/X3D"],
 	function (X3D)
 	{
-		X3D .noConflict = noConflict;
-
 		// Now assign real X3D.
 		PrivateX3D = X3D;
 
