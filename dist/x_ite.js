@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-320 */
+/* X_ITE v4.2.5a-321 */
 
 (function () {
 
@@ -114724,7 +114724,7 @@ function ($,
 				                "                Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
 				                "                Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
 				                "                Max vertex attribs: " + this .getMaxVertexAttribs () + "\n");
-			}.bind (this), 0);
+			}.bind (this), 10);
 		},
 		getName: function ()
 		{
