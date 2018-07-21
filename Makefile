@@ -1,4 +1,7 @@
 
+dist: all
+	echo
+
 configure:
 	sudo npm install
 

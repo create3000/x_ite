@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-325 */
+/* X_ITE v4.2.5a-326 */
 
 (function () {
 
@@ -31059,7 +31059,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		isRelative: function ()
 		{
-			return ! this .value .absolute ();
+			return ! this .value .absolute;
 		},
 		isAbsolute: function ()
 		{

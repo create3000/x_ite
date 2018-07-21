@@ -338,7 +338,7 @@ define (function ()
 		},
 		isRelative: function ()
 		{
-			return ! this .value .absolute ();
+			return ! this .value .absolute;
 		},
 		isAbsolute: function ()
 		{
