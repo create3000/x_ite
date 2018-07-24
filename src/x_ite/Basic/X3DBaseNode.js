@@ -494,14 +494,33 @@ function (X3DEventObject,
 		{
 			return this ._predefinedFields;
 		},
-		getChangedFields: function ()
+		getChangedFields: function (extented)
 		{
+			/* param routes: also returen fields with routes */
+
 			var
 				changedFields    = [ ],
 				predefinedFields = this .getPredefinedFields ();
-		
+
+			if (extented)
+			{
+				var userDefinedFields = this .getUserDefinedFields ();
+
+				for (var field of userDefinedFields .values ())
+					changedFields .push (field);
+			}
+
 			for (var field of predefinedFields .values ())
 			{
+				if (extented)
+				{
+					if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
+					{
+						changedFields .push (field);
+						continue;
+					}
+				}
+
 				if (field .getReferences () .size === 0)
 				{
 					if (! field .isInitializable ())
@@ -527,7 +546,16 @@ function (X3DEventObject,
 		},
 		getFields: function ()
 		{
-			return this ._fields;
+			var
+				fields           = [ ],
+				fieldDefinitions = this .getFieldDefinitions ();
+
+			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+			{
+				fields .push (this .getField (fieldDefinitions [i] .name));
+			}
+
+			return fields;
 		},
 		getSourceText: function ()
 		{

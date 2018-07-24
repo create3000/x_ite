@@ -48,8 +48,9 @@
 
 
 define ([
+	"x_ite/InputOutput/Generator",
 ],
-function ()
+function (Generator)
 {
 "use strict";
 
@@ -118,9 +119,12 @@ function ()
 				interest ();
 			});
 		},
-		toString: function ()
+		toString: function (scene)
 		{
 			var stream = { string: "" };
+
+			if (scene)
+				Generator .Get (stream) .PushExecutionContext (scene);
 
 			this .toStream (stream);
 

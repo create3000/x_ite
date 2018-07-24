@@ -97,15 +97,12 @@ function (Fields)
 		},
 		keydown: function (event)
 		{
-			//console .log (event .which);
-
-			event .preventDefault ();
-			event .stopImmediatePropagation ();
+			//console .log (event .keyCode);
 
 			if (this .keyDeviceSensorNode)
 			   this .keyDeviceSensorNode .keydown (event);
 	
-			switch (event .which)
+			switch (event .keyCode)
 			{
 				case 16: // Shift
 				{
