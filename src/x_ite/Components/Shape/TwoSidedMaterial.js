@@ -71,7 +71,9 @@ function (Fields,
 		this .addType (X3DConstants .TwoSidedMaterial);
 			
 		this .addChildObjects ("transparent", new Fields .SFBool ());
-			
+
+		this .transparent_ .setAccessType (X3DConstants .outputOnly);
+
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
 		this .emissiveColor = new Float32Array (3);

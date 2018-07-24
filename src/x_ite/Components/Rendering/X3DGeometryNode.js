@@ -103,6 +103,9 @@ function (Fields,
 		this .addChildObjects ("transparent",  new Fields .SFBool (),
 		                       "bbox_changed", new Fields .SFTime ());
 
+		this .transparent_  .setAccessType (X3DConstants .outputOnly);
+		this .bbox_changed_ .setAccessType (X3DConstants .outputOnly);
+
 		// Members
 
 		this .min                 = new Vector3 (0, 0, 0);
@@ -207,10 +210,6 @@ function (Fields,
 			}
 
 			this .set_live__ ();
-		},
-		getExtendedEventHandling: function ()
-		{
-			return false;
 		},
 		setGeometryType: function (value)
 		{

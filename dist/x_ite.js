@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-327 */
+/* X_ITE v4.2.5a-328 */
 
 (function () {
 
@@ -53735,6 +53735,8 @@ function (Fields,
 		this .addType (X3DConstants .X3DAppearanceNode);
 		
 		this .addChildObjects ("transparent", new Fields .SFBool ());
+
+		this .transparent_ .setAccessType (X3DConstants .outputOnly);
 	}
 
 	X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -55060,6 +55062,9 @@ function (Fields,
 		this .addChildObjects ("transparent",  new Fields .SFBool (),
 		                       "bbox_changed", new Fields .SFTime ());
 
+		this .transparent_  .setAccessType (X3DConstants .outputOnly);
+		this .bbox_changed_ .setAccessType (X3DConstants .outputOnly);
+
 		// Members
 
 		this .min                 = new Vector3 (0, 0, 0);
@@ -55164,10 +55169,6 @@ function (Fields,
 			}
 
 			this .set_live__ ();
-		},
-		getExtendedEventHandling: function ()
-		{
-			return false;
 		},
 		setGeometryType: function (value)
 		{
@@ -79636,6 +79637,8 @@ function (Fields,
 		this .addType (X3DConstants .X3DTextureNode);
 
 		this .addChildObjects ("transparent", new Fields .SFBool ());
+
+		this .transparent_ .setAccessType (X3DConstants .outputOnly);
 	}
 
 	X3DTextureNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -98837,6 +98840,8 @@ function (Fields,
 
 		this .addChildObjects ("transparent", new Fields .SFBool ());
 
+		this .transparent_ .setAccessType (X3DConstants .outputOnly);
+
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
 		this .emissiveColor = new Float32Array (3);
@@ -112395,7 +112400,9 @@ function (Fields,
 		this .addType (X3DConstants .TwoSidedMaterial);
 			
 		this .addChildObjects ("transparent", new Fields .SFBool ());
-			
+
+		this .transparent_ .setAccessType (X3DConstants .outputOnly);
+
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
 		this .emissiveColor = new Float32Array (3);
