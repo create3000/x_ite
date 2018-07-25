@@ -14098,15 +14098,16 @@ function ($,
 	{
 		constructor: X3DField,
 		_value: null,
+		_accessType: X3DConstants .initializeOnly,
+		_unit: null,
+		_set: false,
+		_uniformLocation: null,
 		_references: new Map (),
 		_fieldInterests: new Map (),
 		_fieldCallbacks: new Map (),
 		_inputRoutes: new Map (),
 		_outputRoutes: new Map (),
-		_accessType: X3DConstants .initializeOnly,
-		_unit: null,
-		_set: false,
-		_uniformLocation: null,
+		_routeCallbacks: new Map (),
 		clone: function ()
 		{
 			return this .copy ();
@@ -14278,35 +14279,66 @@ function ($,
 		{
 			return this ._fieldCallbacks;
 		},
-		addOutputRoute: function (route)
-		{
-			if (! this .hasOwnProperty ("_outputRoutes"))
-				this ._outputRoutes = new Map ();
-
-			this ._outputRoutes .set (route .getId (), route);
-		},
-		removeOutputRoute: function (route)
-		{
-			this ._outputRoutes .delete (route .getId ());
-		},
-		getOutputRoutes: function ()
-		{
-			return this ._outputRoutes;
-		},
 		addInputRoute: function (route)
 		{
 			if (! this .hasOwnProperty ("_inputRoutes"))
 				this ._inputRoutes = new Map ();
 
 			this ._inputRoutes .set (route .getId (), route);
+
+			this .processRouteCallbacks ();
 		},
 		removeInputRoute: function (route)
 		{
 			this ._inputRoutes .delete (route .getId ());
+
+			this .processRouteCallbacks ();
 		},
 		getInputRoutes: function ()
 		{
 			return this ._inputRoutes;
+		},
+		addOutputRoute: function (route)
+		{
+			if (! this .hasOwnProperty ("_outputRoutes"))
+				this ._outputRoutes = new Map ();
+
+			this ._outputRoutes .set (route .getId (), route);
+
+			this .processRouteCallbacks ();
+		},
+		removeOutputRoute: function (route)
+		{
+			this ._outputRoutes .delete (route .getId ());
+
+			this .processRouteCallbacks ();
+		},
+		getOutputRoutes: function ()
+		{
+			return this ._outputRoutes;
+		},
+		addRouteCallback: function (string, object)
+		{
+			if (! this .hasOwnProperty ("_routeCallbacks"))
+				this ._routeCallbacks = new Map ();
+
+			this ._routeCallbacks .set (string, object);
+		},
+		removeRouteCallback: function (string)
+		{
+			this ._routeCallbacks .delete (string);
+		},
+		getRouteCallbacks: function ()
+		{
+			return this ._routeCallbacks;
+		},
+		processRouteCallbacks: function ()
+		{
+			this ._routeCallbacks .forEach (function (routeCallback)
+			{
+				routeCallback ();
+			},
+			this);
 		},
 		processEvent: function (event)
 		{
@@ -14356,6 +14388,17 @@ function ($,
 		valueOf: function ()
 		{
 			return this;
+		},
+		fromString: function (string, scene)
+		{
+			var
+				Parser = require ("x_ite/Parser/Parser"),
+				parser = new Parser (scene);
+
+			parser .setUnits (Boolean (scene));
+			parser .setInput (string);
+			parser .fieldValue (this);
+			this .addEvent ();
 		},
 	});
 
@@ -100813,12 +100856,12 @@ function (X3DChildNode,
 		set_apparance__: function ()
 		{
 			if (this .apparanceNode)
-				this .apparanceNode .removeInterest ("set_transparent__", this);
+				this .apparanceNode .transparent_ .removeInterest ("set_transparent__", this);
 
 			this .apparanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this .appearance_);
 
 			if (this .apparanceNode)
-				this .apparanceNode .addInterest ("set_transparent__", this);
+				this .apparanceNode .transparent_ .addInterest ("set_transparent__", this);
 
 			else
 				this .apparanceNode = this .getBrowser () .getDefaultAppearance ();
