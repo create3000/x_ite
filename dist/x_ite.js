@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-328 */
+/* X_ITE v4.2.5a-329 */
 
 (function () {
 
@@ -53680,7 +53680,7 @@ function ($,
 		reshape: function ()
 		{
 			var
-			   canvas = this .canvas,
+				canvas = this .canvas,
 				width  = canvas .width (),
 				height = canvas .height ();
 
@@ -114737,6 +114737,7 @@ function ($,
 		this .supportedComponents  = SupportedComponents (this);
 		this .supportedProfiles    = SupportedProfiles (this);
 		this .components           = { };
+		this .browserCallbacks     = new Map ();
 
 		this .replaceWorld (this .createScene ());
 	};
@@ -114884,6 +114885,12 @@ function ($,
 			{
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
+
+				this .browserCallbacks .forEach (function (broserCallback)
+				{
+					broserCallback ("shutdown");
+				},
+				this);
 			}
 
 			// Clear event cache.
@@ -114926,7 +114933,15 @@ function ($,
 				this .getWorld () .bind ();
 
 			if (this .initialized () .getValue ())
+			{
 				this .initialized () .setValue (this .getCurrentTime ());
+
+				this .browserCallbacks .forEach (function (broserCallback)
+				{
+					broserCallback ("initialized");
+				},
+				this);
+			}
 		},
 		set_loadCount__: function (loadCount)
 		{
@@ -115312,6 +115327,18 @@ function ($,
 		{
 			this .setLive (false);
 			this .getExecutionContext () .setLive (false);
+		},
+		addBrowserCallback: function (key, object)
+		{
+			this .browerCallbacks .set (key, object);
+		},
+		removeBrowserCallback: function (key)
+		{
+			this .browerCallbacks .delete (key);
+		},
+		getBrowserCallbacks: function ()
+		{
+			return this .browerCallbacks;
 		},
 		print: function ()
 		{

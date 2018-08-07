@@ -1,19 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Shape/X3DShapeNode.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Networking/X3DNetworkingContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="102" Column="4" />
-      <File FileName="src/x_ite/Base/X3DEventObject.js" Line="101" Column="29" />
-      <File FileName="src/x_ite/Components/Shape/Material.js" Line="76" Column="1" />
-      <File FileName="src/x_ite/Components/Shape/TwoSidedMaterial.js" Line="76" Column="1" />
-      <File FileName="src/x_ite/Components/Shape/X3DAppearanceNode.js" Line="70" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/X3DTextureNode.js" Line="78" Column="1" />
-      <File FileName="src/x_ite/Components/Shape/Appearance.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shape/Shape.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shape/X3DShapeNode.js" Line="145" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

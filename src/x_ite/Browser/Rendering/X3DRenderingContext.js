@@ -291,7 +291,7 @@ function ($,
 		reshape: function ()
 		{
 			var
-			   canvas = this .canvas,
+				canvas = this .canvas,
 				width  = canvas .width (),
 				height = canvas .height ();
 
