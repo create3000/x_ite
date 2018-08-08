@@ -244,9 +244,9 @@ function ($,
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
 
-				this .browserCallbacks .forEach (function (broserCallback)
+				this .browserCallbacks .forEach (function (browserCallback)
 				{
-					broserCallback ("shutdown");
+					browserCallback ("shutdown", this);
 				},
 				this);
 			}
@@ -294,9 +294,9 @@ function ($,
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
 
-				this .browserCallbacks .forEach (function (broserCallback)
+				this .browserCallbacks .forEach (function (browserCallback)
 				{
-					broserCallback ("initialized");
+					browserCallback ("initialized", this);
 				},
 				this);
 			}
@@ -688,15 +688,15 @@ function ($,
 		},
 		addBrowserCallback: function (key, object)
 		{
-			this .browerCallbacks .set (key, object);
+			this .browserCallbacks .set (key, object);
 		},
 		removeBrowserCallback: function (key)
 		{
-			this .browerCallbacks .delete (key);
+			this .browserCallbacks .delete (key);
 		},
 		getBrowserCallbacks: function ()
 		{
-			return this .browerCallbacks;
+			return this .browserCallbacks;
 		},
 		print: function ()
 		{

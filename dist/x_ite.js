@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-329 */
+/* X_ITE v4.2.5a-330 */
 
 (function () {
 
@@ -114886,9 +114886,9 @@ function ($,
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
 
-				this .browserCallbacks .forEach (function (broserCallback)
+				this .browserCallbacks .forEach (function (browserCallback)
 				{
-					broserCallback ("shutdown");
+					browserCallback ("shutdown", this);
 				},
 				this);
 			}
@@ -114936,9 +114936,9 @@ function ($,
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
 
-				this .browserCallbacks .forEach (function (broserCallback)
+				this .browserCallbacks .forEach (function (browserCallback)
 				{
-					broserCallback ("initialized");
+					browserCallback ("initialized", this);
 				},
 				this);
 			}
@@ -115330,15 +115330,15 @@ function ($,
 		},
 		addBrowserCallback: function (key, object)
 		{
-			this .browerCallbacks .set (key, object);
+			this .browserCallbacks .set (key, object);
 		},
 		removeBrowserCallback: function (key)
 		{
-			this .browerCallbacks .delete (key);
+			this .browserCallbacks .delete (key);
 		},
 		getBrowserCallbacks: function ()
 		{
-			return this .browerCallbacks;
+			return this .browserCallbacks;
 		},
 		print: function ()
 		{
@@ -115781,4 +115781,5 @@ define("x_ite", function(){});
 			window [key] = x_iteNoConfict [key];
 	}
 
+	x_iteNoConfict = undefined;
 }());
