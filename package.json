@@ -42,6 +42,7 @@
 		"jquery": "latest",
 		"jquery-mousewheel": "latest",
 		"jquery.fullscreen": "latest",
+		"css-element-queries": "latest",
 		"pako": "latest",
 		"poly2tri": "latest",
 		"earcut": "latest",

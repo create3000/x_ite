@@ -17,6 +17,11 @@ require .config ({
 			"main": "jquery.mousewheel.js"
 		},
 		{
+			"name": "ResizeSensor",
+			"location": "../node_modules/css-element-queries",
+			"main": "src/ResizeSensor.js"
+		},
+		{
 			"name": "pako_inflate",
 			"location": "../node_modules/pako",
 			"main": "dist/pako_inflate.js"

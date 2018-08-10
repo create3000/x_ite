@@ -65,6 +65,7 @@ define ([
 	"text!x_ite/Browser/Shaders/Depth.fs",
 	"x_ite/Browser/Shaders/ShaderTest",
 	"standard/Math/Numbers/Vector4",
+	"ResizeSensor",
 ],
 function ($,
           Fields,
@@ -80,7 +81,8 @@ function ($,
           depthVS,
           depthFS,
           verifyShader,
-          Vector4)
+          Vector4,
+          ResizeSensor)
 {
 "use strict";
 
@@ -113,7 +115,7 @@ function ($,
 
 			$(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
 
-			setInterval (this .reshape .bind (this), 401); // Detect canvas resize.
+			new ResizeSensor (this .getCanvas (), this .reshape .bind (this));
 
 			this .reshape ();
 
@@ -291,24 +293,21 @@ function ($,
 		reshape: function ()
 		{
 			var
-				canvas = this .canvas,
+				canvas = this .getCanvas (),
 				width  = canvas .width (),
 				height = canvas .height ();
 
 			canvas = canvas [0];
 
-			if (width !== canvas .width || height !== canvas .height)
-			{
-				this .viewport_ [2] = width;
-				this .viewport_ [3] = height;
-				this .context .viewport (0, 0, width, height);
-				this .context .scissor  (0, 0, width, height);
+			canvas .width       = width;
+			canvas .height      = height;
+			this .viewport_ [2] = width;
+			this .viewport_ [3] = height;
 
-				canvas .width  = width;
-				canvas .height = height;
+			this .context .viewport (0, 0, width, height);
+			this .context .scissor  (0, 0, width, height);
 
-				this .addBrowserEvent ();
-			}
+			this .addBrowserEvent ();
 		},
 		onfullscreen: function ()
 		{
