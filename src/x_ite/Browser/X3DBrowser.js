@@ -479,13 +479,17 @@ function ($,
 		{
 			// The string describes the name of the callback function to be called within the current ECMAScript context.
 		},
-		addBrowserCallback: function (callback, object)
+		addBrowserCallback: function (key, object)
 		{
-			// Probably to be implemented like addFieldCallback.
+			this .browserCallbacks .set (key, object);
 		},
-		removeBrowserCallback: function (callback)
-		{	
-			// Probably to be implemented like removeFieldCallback.
+		removeBrowserCallback: function (key)
+		{
+			this .browserCallbacks .delete (key);
+		},
+		getBrowserCallbacks: function ()
+		{
+			return this .browserCallbacks;
 		},
 		importJS: function (jsobj) {
 			var
@@ -685,18 +689,6 @@ function ($,
 		{
 			this .setLive (false);
 			this .getExecutionContext () .setLive (false);
-		},
-		addBrowserCallback: function (key, object)
-		{
-			this .browserCallbacks .set (key, object);
-		},
-		removeBrowserCallback: function (key)
-		{
-			this .browserCallbacks .delete (key);
-		},
-		getBrowserCallbacks: function ()
-		{
-			return this .browserCallbacks;
 		},
 		print: function ()
 		{

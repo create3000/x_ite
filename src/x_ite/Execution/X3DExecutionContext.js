@@ -540,6 +540,15 @@ function (Fields,
 		{
 			try
 			{
+				// sourceNode, sourceField, destinationNode, destinationField
+				if (arguments .length === 4)
+				{
+					route = this .getRoute .apply (this, arguments);
+
+					if (! route)
+						return;
+				}
+
 				var
 					sourceField      = route ._sourceField,
 					destinationField = route ._destinationField,
