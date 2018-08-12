@@ -174,6 +174,7 @@ function ($,
 		$("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
 
 		this .splashScreen = splashScreen;
+		this .surface      = surface;
 		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
 		this .context      = getContext (this .canvas [0]);
 		this .extensions   = { };
@@ -242,6 +243,10 @@ function ($,
 		getElement: function ()
 		{
 			return this .element;
+		},
+		getSurface: function ()
+		{
+			return this .surface;
 		},
 		getSplashScreen: function ()
 		{

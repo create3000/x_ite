@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-331 */
+/* X_ITE v4.2.5a-332 */
 
 (function () {
 
@@ -37794,6 +37794,7 @@ function ($,
 		$("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
 
 		this .splashScreen = splashScreen;
+		this .surface      = surface;
 		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
 		this .context      = getContext (this .canvas [0]);
 		this .extensions   = { };
@@ -37862,6 +37863,10 @@ function ($,
 		getElement: function ()
 		{
 			return this .element;
+		},
+		getSurface: function ()
+		{
+			return this .surface;
 		},
 		getSplashScreen: function ()
 		{
@@ -53779,7 +53784,7 @@ function ($,
 
 			$(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
 
-			new ResizeSensor (this .getCanvas (), this .reshape .bind (this));
+			this .resizer = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
 
 			this .reshape ();
 

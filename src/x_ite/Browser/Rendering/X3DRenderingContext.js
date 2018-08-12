@@ -115,7 +115,7 @@ function ($,
 
 			$(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
 
-			new ResizeSensor (this .getCanvas (), this .reshape .bind (this));
+			this .resizer = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
 
 			this .reshape ();
 
