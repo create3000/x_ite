@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-332 */
+/* X_ITE v4.2.5a-333 */
 
 (function () {
 
@@ -31320,6 +31320,9 @@ define ('standard/Networking/URI',[],function ()
 		},
 		transform: function (reference)
 		{
+			if (! (reference instanceof URI))
+				reference = new URI (reference .toString ());
+
 			var T_local    = false;
 			var T_absolute = false;
 
@@ -31429,6 +31432,9 @@ define ('standard/Networking/URI',[],function ()
 		},
 		getRelativePath: function (descendant)
 		{
+			if (! (descendant instanceof URI))
+				descendant = new URI (descendant .toString ());
+
 			if (this .value .scheme !== descendant .scheme)
 				return descendant;
 
