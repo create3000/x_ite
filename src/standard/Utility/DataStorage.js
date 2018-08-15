@@ -65,7 +65,7 @@ function ($)
 			if (value !== undefined)
 				return value;
 
-			var value = localStorage [target .getNameSpace () + key];
+			var value = target .storage [target .getNameSpace () + key];
 
 			if (value === undefined || value === "undefined")
 			   return undefined;
@@ -75,18 +75,19 @@ function ($)
 		set: function (target, key, value)
 		{
 			if (value === undefined)
-				localStorage .removeItem (target .getNameSpace () + key);
+				target .storage .removeItem (target .getNameSpace () + key);
 
 			else
-				localStorage [target .getNameSpace () + key] = JSON .stringify (value);
+				target .storage [target .getNameSpace () + key] = JSON .stringify (value);
 
 			return true;
 		},
 	};
 
-	function DataStorage (namespace)
+	function DataStorage (namespace, storage)
 	{
-		this .target = this;
+		this .target  = this;
+		this .storage = storage || localStorage;
 
 		namespaces .set (this, namespace);
 
@@ -101,12 +102,14 @@ function ($)
 		},
 		clear: function ()
 		{
-			var namespace = this .getNameSpace ();
+			var
+				namespace = this .getNameSpace (),
+				storage   = this .storage;
 
-			$.each (localStorage, function (key)
+			$.each (storage, function (key)
 			{
 				if (key .substr (0, namespace .length) === namespace)
-					localStorage .removeItem (key);
+					storage .removeItem (key);
 			});
 		},
 	}
