@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-333 */
+/* X_ITE v4.2.5a-334 */
 
 (function () {
 
@@ -37570,7 +37570,10 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('standard/Utility/DataStorage',[],function ()
+define ('standard/Utility/DataStorage',[
+	"jquery",
+],
+function ($)
 {
 "use strict";
 
@@ -37587,10 +37590,10 @@ define ('standard/Utility/DataStorage',[],function ()
 
 			var value = localStorage [target .getNameSpace () + key];
 
-			if (value === undefined)
+			if (value === undefined || value === "undefined")
 			   return undefined;
 
-			return JSON .parse (value)
+			return $ .parseJSON (value);
 		},
 		set: function (target, key, value)
 		{

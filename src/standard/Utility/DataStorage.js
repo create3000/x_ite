@@ -47,7 +47,10 @@
  ******************************************************************************/
 
 
-define (function ()
+define ([
+	"jquery",
+],
+function ($)
 {
 "use strict";
 
@@ -64,10 +67,10 @@ define (function ()
 
 			var value = localStorage [target .getNameSpace () + key];
 
-			if (value === undefined)
+			if (value === undefined || value === "undefined")
 			   return undefined;
 
-			return JSON .parse (value)
+			return $ .parseJSON (value);
 		},
 		set: function (target, key, value)
 		{
