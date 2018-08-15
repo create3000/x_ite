@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-338 */
+/* X_ITE v4.2.5a-339 */
 
 (function () {
 
@@ -30977,21 +30977,31 @@ define ('standard/Networking/URI',[],function ()
 				{
 					var segment = this .value [i];
 				
-					if (segment === ".")
-						path .value .trailingSeparator = true;
-
-					else if (segment === "..")
+					switch (segment)
 					{
-						path .value .trailingSeparator = true;
+						case "":
+						{
+							break;
+						}
+						case ".":
+						{
+							path .value .trailingSeparator = true;
+							break;
+						}
+						case "..":
+						{
+							path .value .trailingSeparator = true;
 
-						if (path .value .length)
-							path .value .pop ();
-					}
+							if (path .value .length)
+								path .value .pop ();
 
-					else
-					{
-						path .value .trailingSeparator = false;
-						path .value .push (segment);
+							break;
+						}
+						default:
+						{
+							path .value .trailingSeparator = false;
+							path .value .push (segment);
+						}
 					}
 				}
 
@@ -115184,7 +115194,7 @@ function ($,
 
 				this .browserCallbacks .forEach (function (browserCallback)
 				{
-					browserCallback ("shutdown", this);
+					browserCallback ("shutdown");
 				},
 				this);
 			}
@@ -115234,7 +115244,7 @@ function ($,
 
 				this .browserCallbacks .forEach (function (browserCallback)
 				{
-					browserCallback ("initialized", this);
+					browserCallback ("initialized");
 				},
 				this);
 			}
@@ -115382,9 +115392,19 @@ function ($,
 					this .getCanvas () .fadeIn (0);
 
 				if (scene)
+				{
 					this .replaceWorld (scene);
+				}
 				else
+				{
+					this .browserCallbacks .forEach (function (browserCallback)
+					{
+						browserCallback ("error", url);
+					},
+					this);
+
 					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+				}
 
 				// Must not remove load count, replaceWorld does a resetLoadCount when it sets setBrowserLoading to true.
 				// Don't set browser loading to false.

@@ -246,7 +246,7 @@ function ($,
 
 				this .browserCallbacks .forEach (function (browserCallback)
 				{
-					browserCallback ("shutdown", this);
+					browserCallback ("shutdown");
 				},
 				this);
 			}
@@ -296,7 +296,7 @@ function ($,
 
 				this .browserCallbacks .forEach (function (browserCallback)
 				{
-					browserCallback ("initialized", this);
+					browserCallback ("initialized");
 				},
 				this);
 			}
@@ -444,9 +444,19 @@ function ($,
 					this .getCanvas () .fadeIn (0);
 
 				if (scene)
+				{
 					this .replaceWorld (scene);
+				}
 				else
+				{
+					this .browserCallbacks .forEach (function (browserCallback)
+					{
+						browserCallback ("error", url);
+					},
+					this);
+
 					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+				}
 
 				// Must not remove load count, replaceWorld does a resetLoadCount when it sets setBrowserLoading to true.
 				// Don't set browser loading to false.

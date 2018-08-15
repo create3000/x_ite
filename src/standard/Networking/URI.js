@@ -181,21 +181,31 @@ define (function ()
 				{
 					var segment = this .value [i];
 				
-					if (segment === ".")
-						path .value .trailingSeparator = true;
-
-					else if (segment === "..")
+					switch (segment)
 					{
-						path .value .trailingSeparator = true;
+						case "":
+						{
+							break;
+						}
+						case ".":
+						{
+							path .value .trailingSeparator = true;
+							break;
+						}
+						case "..":
+						{
+							path .value .trailingSeparator = true;
 
-						if (path .value .length)
-							path .value .pop ();
-					}
+							if (path .value .length)
+								path .value .pop ();
 
-					else
-					{
-						path .value .trailingSeparator = false;
-						path .value .push (segment);
+							break;
+						}
+						default:
+						{
+							path .value .trailingSeparator = false;
+							path .value .push (segment);
+						}
 					}
 				}
 
