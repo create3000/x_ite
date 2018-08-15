@@ -98,7 +98,13 @@ function ($)
 		},
 		clear: function ()
 		{
-			return localStorage .clear ();
+			var namespace = this .getNameSpace ();
+
+			$.each (localStorage, function (key)
+			{
+				if (key .substr (0, namespace .length) === namespace)
+					localStorage .removeItem (key);
+			});
 		},
 	}
 

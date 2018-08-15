@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-336 */
+/* X_ITE v4.2.5a-337 */
 
 (function () {
 
@@ -37621,7 +37621,13 @@ function ($)
 		},
 		clear: function ()
 		{
-			return localStorage .clear ();
+			var namespace = this .getNameSpace ();
+
+			$.each (localStorage, function (key)
+			{
+				if (key .substr (0, namespace .length) === namespace)
+					localStorage .removeItem (key);
+			});
 		},
 	}
 
