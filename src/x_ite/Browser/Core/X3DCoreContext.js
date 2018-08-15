@@ -196,8 +196,8 @@ function ($,
 		this .browserTimings      = new BrowserTimings      (this .getPrivateScene ());
 		this .contextMenu         = new ContextMenu         (this .getPrivateScene ());
 
-		this .dataStorage = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this .number + ").");
-		this .mobile      = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
+		this .localStorage = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this .number + ").");
+		this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
 		$(".x_ite-console") .empty ();
 	}
@@ -284,9 +284,9 @@ function ($,
 		{
 			return this .browserTimings;
 		},
-		getDataStorage: function ()
+		getLocalStorage: function ()
 		{
-			return this .dataStorage;
+			return this .localStorage;
 		},
 		getMobile: function ()
 		{

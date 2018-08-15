@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-343 */
+/* X_ITE v4.2.5a-344 */
 
 (function () {
 
@@ -26040,7 +26040,7 @@ function (Fields,
 					fieldDefinition = fieldDefinitions [i],
 					field           = this .getField (fieldDefinition .name);
 
-				if (this .getBrowser () .getDataStorage () ["BrowserOptions." + fieldDefinition .name] !== undefined)
+				if (this .getBrowser () .getLocalStorage () ["BrowserOptions." + fieldDefinition .name] !== undefined)
 					continue;
 
 				if (! field .equals (fieldDefinition .value))
@@ -26048,9 +26048,9 @@ function (Fields,
 			}
 
 			var
-				rubberband       = this .getBrowser () .getDataStorage () ["BrowserOptions.Rubberband"],
-				primitiveQuality = this .getBrowser () .getDataStorage () ["BrowserOptions.PrimitiveQuality"],
-				textureQuality   = this .getBrowser () .getDataStorage () ["BrowserOptions.TextureQuality"];
+				rubberband       = this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"],
+				primitiveQuality = this .getBrowser () .getLocalStorage () ["BrowserOptions.PrimitiveQuality"],
+				textureQuality   = this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"];
 
 			this .setAttributeSplashScreen ();
 
@@ -26102,11 +26102,11 @@ function (Fields,
 		},
 		set_rubberband__: function (rubberband)
 		{
-			this .getBrowser () .getDataStorage () ["BrowserOptions.Rubberband"] = rubberband .getValue ();
+			this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"] = rubberband .getValue ();
 		},
 		set_primitiveQuality__: function (primitiveQuality)
 		{
-			this .getBrowser () .getDataStorage () ["BrowserOptions.PrimitiveQuality"] = primitiveQuality .getValue ();
+			this .getBrowser () .getLocalStorage () ["BrowserOptions.PrimitiveQuality"] = primitiveQuality .getValue ();
 
 			var
 				arc      = this .getBrowser () .getArc2DOptions (),
@@ -26171,7 +26171,7 @@ function (Fields,
 		},
 		set_textureQuality__: function (textureQuality)
 		{
-			this .getBrowser () .getDataStorage () ["BrowserOptions.TextureQuality"] = textureQuality .getValue ();
+			this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"] = textureQuality .getValue ();
 
 			var textureProperties = this .getBrowser () .getDefaultTextureProperties ();
 
@@ -27244,7 +27244,7 @@ function ($,
 			this .enabled_ .addInterest ("set_enabled__", this);
 
 			this .localeOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-			this .type          = this .getBrowser () .getDataStorage () ["BrowserTimings.type"] || "LESS";
+			this .type          = this .getBrowser () .getLocalStorage () ["BrowserTimings.type"] || "LESS";
 			this .startTime     = 0;
 			this .frames        = 0;
 
@@ -27258,7 +27258,7 @@ function ($,
 
 			this .set_button__ ();
 
-			if (this .getBrowser () .getDataStorage () ["BrowserTimings.enabled"])
+			if (this .getBrowser () .getLocalStorage () ["BrowserTimings.enabled"])
 				this .enabled_ = true;
 		},
 		setEnabled: function (value)
@@ -27274,7 +27274,7 @@ function ($,
 			if (! this .getBrowser () .getBrowserOptions () .getTimings ())
 				return;
 
-			this .getBrowser () .getDataStorage () ["BrowserTimings.enabled"] = enabled .getValue ();
+			this .getBrowser () .getLocalStorage () ["BrowserTimings.enabled"] = enabled .getValue ();
 
 			if (enabled .getValue ())
 			{
@@ -27295,7 +27295,7 @@ function ($,
 			else
 				this .type = "MORE";
 
-			this .getBrowser () .getDataStorage () ["BrowserTimings.type"] = this .type;
+			this .getBrowser () .getLocalStorage () ["BrowserTimings.type"] = this .type;
 
 			this .set_button__ ();
 			this .build ();
@@ -37853,8 +37853,8 @@ function ($,
 		this .browserTimings      = new BrowserTimings      (this .getPrivateScene ());
 		this .contextMenu         = new ContextMenu         (this .getPrivateScene ());
 
-		this .dataStorage = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this .number + ").");
-		this .mobile      = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
+		this .localStorage = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this .number + ").");
+		this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
 		$(".x_ite-console") .empty ();
 	}
@@ -37941,9 +37941,9 @@ function ($,
 		{
 			return this .browserTimings;
 		},
-		getDataStorage: function ()
+		getLocalStorage: function ()
 		{
-			return this .dataStorage;
+			return this .localStorage;
 		},
 		getMobile: function ()
 		{
@@ -68497,19 +68497,19 @@ function (Fields)
 			this .mute_   .addInterest ("set_mute__", this);
 
 			var
-				volume = this .getDataStorage () ["X3DSoundContext.volume"],
-				mute   = this .getDataStorage () ["X3DSoundContext.mute"];
+				volume = this .getLocalStorage () ["X3DSoundContext.volume"],
+				mute   = this .getLocalStorage () ["X3DSoundContext.mute"];
 
 			if (volume !== undefined) this .volume_ = volume;
 			if (mute   !== undefined) this .mute_   = mute;
 		},
 		set_volume__: function (volume)
 		{
-			this .getDataStorage () ["X3DSoundContext.volume"] = volume .getValue ();
+			this .getLocalStorage () ["X3DSoundContext.volume"] = volume .getValue ();
 		},
 		set_mute__: function (mute)
 		{
-			this .getDataStorage () ["X3DSoundContext.mute"] = mute .getValue ();
+			this .getLocalStorage () ["X3DSoundContext.mute"] = mute .getValue ();
 		},
 	};
 

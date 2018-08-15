@@ -118,7 +118,7 @@ var Bookmarks = (function ()
 		},
 		restore: function (first)
 		{
-			var url = this .browser .getDataStorage () ["Bookmarks.url"];
+			var url = this .browser .getLocalStorage () ["Bookmarks.url"];
 
 			if (url)
 				this .loadURL (url);
@@ -127,7 +127,7 @@ var Bookmarks = (function ()
 		},
 		loadURL: function (url)
 		{
-			this .browser .getDataStorage () ["Bookmarks.url"] = url;
+			this .browser .getLocalStorage () ["Bookmarks.url"] = url;
 			this .browser .loadURL (new X3D .MFString (url), new X3D .MFString ());
 			return false;
 		},

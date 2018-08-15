@@ -132,7 +132,7 @@ function (Fields,
 					fieldDefinition = fieldDefinitions [i],
 					field           = this .getField (fieldDefinition .name);
 
-				if (this .getBrowser () .getDataStorage () ["BrowserOptions." + fieldDefinition .name] !== undefined)
+				if (this .getBrowser () .getLocalStorage () ["BrowserOptions." + fieldDefinition .name] !== undefined)
 					continue;
 
 				if (! field .equals (fieldDefinition .value))
@@ -140,9 +140,9 @@ function (Fields,
 			}
 
 			var
-				rubberband       = this .getBrowser () .getDataStorage () ["BrowserOptions.Rubberband"],
-				primitiveQuality = this .getBrowser () .getDataStorage () ["BrowserOptions.PrimitiveQuality"],
-				textureQuality   = this .getBrowser () .getDataStorage () ["BrowserOptions.TextureQuality"];
+				rubberband       = this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"],
+				primitiveQuality = this .getBrowser () .getLocalStorage () ["BrowserOptions.PrimitiveQuality"],
+				textureQuality   = this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"];
 
 			this .setAttributeSplashScreen ();
 
@@ -194,11 +194,11 @@ function (Fields,
 		},
 		set_rubberband__: function (rubberband)
 		{
-			this .getBrowser () .getDataStorage () ["BrowserOptions.Rubberband"] = rubberband .getValue ();
+			this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"] = rubberband .getValue ();
 		},
 		set_primitiveQuality__: function (primitiveQuality)
 		{
-			this .getBrowser () .getDataStorage () ["BrowserOptions.PrimitiveQuality"] = primitiveQuality .getValue ();
+			this .getBrowser () .getLocalStorage () ["BrowserOptions.PrimitiveQuality"] = primitiveQuality .getValue ();
 
 			var
 				arc      = this .getBrowser () .getArc2DOptions (),
@@ -263,7 +263,7 @@ function (Fields,
 		},
 		set_textureQuality__: function (textureQuality)
 		{
-			this .getBrowser () .getDataStorage () ["BrowserOptions.TextureQuality"] = textureQuality .getValue ();
+			this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"] = textureQuality .getValue ();
 
 			var textureProperties = this .getBrowser () .getDefaultTextureProperties ();
 
