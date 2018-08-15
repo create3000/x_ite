@@ -81,6 +81,8 @@ function ($)
 
 	function DataStorage (namespace)
 	{
+		this .target = this;
+
 		namespaces .set (this, namespace);
 
 		return new Proxy (this, handler);
@@ -90,7 +92,7 @@ function ($)
 		constructor: DataStorage,
 		getNameSpace: function ()
 		{
-			return namespaces .get (this);
+			return namespaces .get (this .target);
 		},
 		removeItem: function (key)
 		{
