@@ -74,7 +74,12 @@ function ($)
 		},
 		set: function (target, key, value)
 		{
-			localStorage [target .getNameSpace () + key] = JSON .stringify (value);
+			if (value === undefined)
+				localStorage .removeItem (target .getNameSpace () + key);
+
+			else
+				localStorage [target .getNameSpace () + key] = JSON .stringify (value);
+
 			return true;
 		},
 	};
@@ -93,10 +98,6 @@ function ($)
 		getNameSpace: function ()
 		{
 			return namespaces .get (this .target);
-		},
-		removeItem: function (key)
-		{
-			return localStorage .removeItem (this .getNameSpace () + key);
 		},
 		clear: function ()
 		{
