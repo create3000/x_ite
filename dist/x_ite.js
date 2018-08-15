@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-334 */
+/* X_ITE v4.2.5a-335 */
 
 (function () {
 
@@ -37825,7 +37825,7 @@ function ($,
 		this .browserTimings      = new BrowserTimings      (this .getPrivateScene ());
 		this .contextMenu         = new ContextMenu         (this .getPrivateScene ());
 
-		this .dataStorage = new DataStorage ("X3DBrowser(" + this .number + ").");
+		this .dataStorage = new DataStorage ("X_ITE.X3DBrowser(" + this .number + ").");
 		this .mobile      = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
 		$(".x_ite-console") .empty ();
