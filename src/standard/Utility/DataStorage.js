@@ -54,7 +54,9 @@ function ($)
 {
 "use strict";
 
-	var namespaces = new WeakMap ();
+	var
+		storages   = new WeakMap (),
+		namespaces = new WeakMap ();
 
 	var handler =
 	{
@@ -65,7 +67,7 @@ function ($)
 			if (value !== undefined)
 				return value;
 
-			var value = target .storage [target .getNameSpace () + key];
+			var value = target .getStorage () [target .getNameSpace () + key];
 
 			if (value === undefined || value === "undefined")
 			   return undefined;
@@ -75,20 +77,20 @@ function ($)
 		set: function (target, key, value)
 		{
 			if (value === undefined)
-				target .storage .removeItem (target .getNameSpace () + key);
+				target .getStorage () .removeItem (target .getNameSpace () + key);
 
 			else
-				target .storage [target .getNameSpace () + key] = JSON .stringify (value);
+				target .getStorage () [target .getNameSpace () + key] = JSON .stringify (value);
 
 			return true;
 		},
 	};
 
-	function DataStorage (namespace, storage)
+	function DataStorage (storage, namespace)
 	{
 		this .target  = this;
-		this .storage = storage || sessionStorage;
 
+		storages   .set (this, storage);
 		namespaces .set (this, namespace);
 
 		return new Proxy (this, handler);
@@ -96,6 +98,10 @@ function ($)
 
 	DataStorage .prototype = {
 		constructor: DataStorage,
+		getStorage: function ()
+		{
+			return storages .get (this .target);
+		},
 		getNameSpace: function ()
 		{
 			return namespaces .get (this .target);
@@ -103,8 +109,8 @@ function ($)
 		clear: function ()
 		{
 			var
-				namespace = this .getNameSpace (),
-				storage   = this .storage;
+				storage   = this .getStorage (),
+				namespace = this .getNameSpace ();
 
 			$.each (storage, function (key)
 			{
