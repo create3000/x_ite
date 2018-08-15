@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-340 */
+/* X_ITE v4.2.5a-341 */
 
 (function () {
 
@@ -29341,7 +29341,7 @@ function ($,
 
 							$(".context-menu-list") .fadeOut (500);
 							this .getBrowser () .bindViewpoint (viewpoint);
-							this .getBrowser () .getCanvas () .focus ();
+							this .getBrowser () .getElement () .focus ();
 						}
 						.bind (this, currentViewpoint),
 					},
@@ -29354,7 +29354,7 @@ function ($,
 							$(".context-menu-list") .fadeOut (500);
 							this .getBrowser () .viewer_ = viewer;
 							this .getBrowser () .getNotification () .string_ = _(this .getViewerName (viewer));
-							this .getBrowser () .getCanvas () .focus ();
+							this .getBrowser () .getElement () .focus ();
 						}
 						.bind (this, currentViewer),
 					},
@@ -29486,7 +29486,7 @@ function ($,
 							click: function ()
 							{
 								this .getBrowser () .getBrowserTimings () .setEnabled (! this .getBrowser () .getBrowserTimings () .getEnabled ());
-								this .getBrowser () .getCanvas () .focus ();
+								this .getBrowser () .getElement () .focus ();
 							}
 							.bind (this),
 						},
@@ -29566,7 +29566,7 @@ function ($,
 					{
 						$(".context-menu-list") .fadeOut (500);
 						this .getBrowser () .bindViewpoint (viewpoint);
-						this .getBrowser () .getCanvas () .focus ();
+						this .getBrowser () .getElement () .focus ();
 					}
 					.bind (this, viewpoint),
 				};
@@ -29598,7 +29598,7 @@ function ($,
 						$(".context-menu-list") .fadeOut (500);
 						this .getBrowser () .viewer_ = viewer;
 						this .getBrowser () .getNotification () .string_ = _(this .getViewerName (viewer));
-						this .getBrowser () .getCanvas () .focus ();
+						this .getBrowser () .getElement () .focus ();
 					}
 					.bind (this, viewer),
 				};
@@ -59378,17 +59378,17 @@ function ($,
 		constructor: PointingDevice,
 		initialize: function ()
 		{
-			var canvas = this .getBrowser () .getCanvas ();
+			var element = this .getBrowser () .getElement ();
 
-			//canvas .bind ("mousewheel.PointingDevice", this .mousewheel .bind (this));
-			canvas .bind ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
-			canvas .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
-			canvas .bind ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
-			canvas .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
-			canvas .bind ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
+			//element .bind ("mousewheel.PointingDevice", this .mousewheel .bind (this));
+			element .bind ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
+			element .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
+			element .bind ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
+			element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
+			element .bind ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
 
-			canvas .bind ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
-			canvas .bind ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
+			element .bind ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
+			element .bind ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
 		},
 		mousewheel: function (event)
 		{
@@ -59398,7 +59398,7 @@ function ($,
 		{
 			var browser = this .getBrowser ();
 
-			browser .getCanvas () .focus ();
+			browser .getElement () .focus ();
 
 			if (browser .getShiftKey () && browser .getControlKey ())
 				return;
@@ -59406,12 +59406,12 @@ function ($,
 			if (event .button === 0)
 			{
 				var
-					canvas = browser .getCanvas (),
-					offset = canvas .offset (), 
-					x      = event .pageX - offset .left,
-					y      = browser .getCanvas () .height () - (event .pageY - offset .top);
+					element = browser .getElement (),
+					offset  = element .offset (), 
+					x       = event .pageX - offset .left,
+					y       = element .height () - (event .pageY - offset .top);
 
-				canvas .unbind ("mousemove.PointingDevice" + this .getId ());
+				element .unbind ("mousemove.PointingDevice" + this .getId ());
 
 				$(document) .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this));
 				$(document) .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
@@ -59436,13 +59436,13 @@ function ($,
 			{
 				var
 					browser = this .getBrowser (),
-					canvas  = browser .getCanvas (),
-					offset  = canvas .offset (), 
+					element = browser .getElement (),
+					offset  = element .offset (), 
 					x       = event .pageX - offset .left,
-					y       = browser .getCanvas () .height () - (event .pageY - offset .top);
+					y       = element .height () - (event .pageY - offset .top);
 			
 				$(document) .unbind (".PointingDevice"   + this .getId ());
-				canvas .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+				element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
 				browser .buttonReleaseEvent ();
 				browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
@@ -59469,9 +59469,10 @@ function ($,
 			this .motionTime = browser .getCurrentTime ();
 
 			var
-				offset = browser .getCanvas () .offset (), 
-				x      = event .pageX - offset .left,
-				y      = browser .getCanvas () .height () - (event .pageY - offset .top);
+				element = browser .getElement (),
+				offset  = element .offset (), 
+				x       = event .pageX - offset .left,
+				y       = element .height () - (event .pageY - offset .top);
 
 			this .onmotion (x, y);
 		},
@@ -59776,7 +59777,7 @@ function ($,
 	{
 		initialize: function ()
 		{
-			this .getCanvas () .attr ("tabindex", 0);
+			this .getElement () .attr ("tabindex", 0);
 			this .setCursor ("DEFAULT");
 
 			this .pointingDevice .setup ();
@@ -59785,7 +59786,7 @@ function ($,
 		{
 			this .cursorType = value;
 
-			var div = this .getBrowser () .getElement () .find (".x_ite-private-surface");
+			var div = this .getElement () .find (".x_ite-private-surface");
 
 			switch (value)
 			{
@@ -60066,8 +60067,8 @@ function (Fields)
 	{
 		initialize: function ()
 		{
-			this .getCanvas () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown .bind (this));
-			this .getCanvas () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup   .bind (this));
+			this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown .bind (this));
+			this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup   .bind (this));
 		},
 		setKeyDeviceSensorNode: function (value)
 		{
@@ -63464,18 +63465,18 @@ function ($,
 			X3DViewer .prototype .initialize .call (this);
 
 			var
-			   browser   = this .getBrowser (),
-			   canvas    = browser .getCanvas ();
+			   browser = this .getBrowser (),
+			   element = browser .getElement ();
 
 			// Bind pointing device events.
 
-			canvas .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
-			canvas .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
-			canvas .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+			element .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
+			element .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
+			element .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
+			element .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
 
-			canvas .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
-			canvas .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
+			element .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
+			element .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
 
 			// Setup scroll chaser.
 
@@ -63499,7 +63500,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -63605,9 +63606,9 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (), 
+				offset = this .getBrowser () .getElement () .offset (), 
 				x      = event .pageX - offset .left,
-				y      = this .getBrowser () .getCanvas () .height () - (event .pageY - offset .top);
+				y      = this .getBrowser () .getElement () .height () - (event .pageY - offset .top);
 
 			this .disconnect ();
 			this .lookAtBBox (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
@@ -63619,7 +63620,7 @@ function ($,
 			return function (event)
 			{
 				var
-					offset = this .getBrowser () .getCanvas () .offset (),
+					offset = this .getBrowser () .getElement () .offset (),
 					x      = event .pageX - offset .left,
 					y      = event .pageY - offset .top;
 	
@@ -64026,7 +64027,7 @@ function ($,
 		dispose: function ()
 		{
 			this .disconnect ();
-			this .getBrowser () .getCanvas () .unbind (".ExamineViewer");
+			this .getBrowser () .getElement () .unbind (".ExamineViewer");
 			$(document) .unbind (".ExamineViewer" + this .getId ());
 		},
 	});
@@ -64148,16 +64149,16 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   canvas  = browser .getCanvas ();
+			   element = browser .getElement ();
 
 			// Bind pointing device events.
 
-			canvas .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
-			canvas .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
+			element .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
+			element .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
+			element .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
 
-			canvas .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
-			canvas .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
+			element .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
+			element .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
 
 			browser .controlKey_ .addInterest ("set_controlKey_", this);
 
@@ -64185,7 +64186,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 			
@@ -64287,7 +64288,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 			
@@ -64778,7 +64779,7 @@ function ($,
 		{
 			this .disconnect ();
 			this .getBrowser () .controlKey_ .removeInterest ("set_controlKey_", this);
-			this .getBrowser () .getCanvas () .unbind (".X3DFlyViewer");
+			this .getBrowser () .getElement () .unbind (".X3DFlyViewer");
 			$(document) .unbind (".X3DFlyViewer" + this .getId ());
 		},
 	});
@@ -65276,12 +65277,12 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   canvas  = browser .getCanvas ();
+			   element = browser .getElement ();
 
-			canvas .bind ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
-			canvas .bind ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
-			canvas .bind ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
+			element .bind ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
+			element .bind ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
+			element .bind ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
+			element .bind ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
 		},
 		mousedown: function (event)
 		{
@@ -65291,7 +65292,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -65306,7 +65307,7 @@ function ($,
 
 					this .button = event .button;
 					
-					this .getBrowser () .getCanvas () .unbind ("mousemove.PlaneViewer");
+					this .getBrowser () .getElement () .unbind ("mousemove.PlaneViewer");
 					$(document) .bind ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
 					$(document) .bind ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
 		
@@ -65331,14 +65332,14 @@ function ($,
 			this .button = -1;
 		
 			$(document) .unbind (".PlaneViewer" + this .getId ());
-			this .getBrowser () .getCanvas () .bind ("mousemove.PlaneViewer", this .mousemove .bind (this));
+			this .getBrowser () .getElement () .bind ("mousemove.PlaneViewer", this .mousemove .bind (this));
 
 			this .getBrowser () .setCursor ("DEFAULT");
 		},
 		mousemove: function (event)
 		{
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -65374,7 +65375,7 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -65418,7 +65419,7 @@ function ($,
 		},
 		dispose: function ()
 		{
-			this .getBrowser () .getCanvas () .unbind (".PlaneViewer");
+			this .getBrowser () .getElement () .unbind (".PlaneViewer");
 			$(document) .unbind (".PlaneViewer" + this .getId ());
 		},
 	});
@@ -65594,17 +65595,17 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   canvas  = browser .getCanvas ();
+			   element = browser .getElement ();
 
 			// Bind pointing device events.
 
-			canvas .bind ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
-			canvas .bind ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
-			canvas .bind ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
+			element .bind ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
+			element .bind ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
+			element .bind ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
+			element .bind ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
 
-			canvas .bind ("touchstart.LookAtViewer", this .touchstart .bind (this));
-			canvas .bind ("touchend.LookAtViewer",   this .touchend   .bind (this));
+			element .bind ("touchstart.LookAtViewer", this .touchstart .bind (this));
+			element .bind ("touchend.LookAtViewer",   this .touchend   .bind (this));
 
 			// Setup chaser.
 
@@ -65628,7 +65629,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -65685,9 +65686,9 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (), 
+				offset = this .getBrowser () .getElement () .offset (), 
 				x      = event .pageX - offset .left,
-				y      = this .getBrowser () .getCanvas () .height () - (event .pageY - offset .top);
+				y      = this .getBrowser () .getElement () .height () - (event .pageY - offset .top);
 
 			this .disconnect ();
 			this .lookAtPoint (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
@@ -65699,7 +65700,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 			
@@ -65996,7 +65997,7 @@ function ($,
 		},
 		dispose: function ()
 		{
-			this .getBrowser () .getCanvas () .unbind (".LookAtViewer");
+			this .getBrowser () .getElement () .unbind (".LookAtViewer");
 			$(document) .unbind (".LookAtViewer" + this .getId ());
 		},
 	});

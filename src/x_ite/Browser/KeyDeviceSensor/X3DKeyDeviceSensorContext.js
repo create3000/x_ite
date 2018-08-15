@@ -68,8 +68,8 @@ function (Fields)
 	{
 		initialize: function ()
 		{
-			this .getCanvas () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown .bind (this));
-			this .getCanvas () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup   .bind (this));
+			this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown .bind (this));
+			this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup   .bind (this));
 		},
 		setKeyDeviceSensorNode: function (value)
 		{

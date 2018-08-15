@@ -117,7 +117,7 @@ function ($,
 
 							$(".context-menu-list") .fadeOut (500);
 							this .getBrowser () .bindViewpoint (viewpoint);
-							this .getBrowser () .getCanvas () .focus ();
+							this .getBrowser () .getElement () .focus ();
 						}
 						.bind (this, currentViewpoint),
 					},
@@ -130,7 +130,7 @@ function ($,
 							$(".context-menu-list") .fadeOut (500);
 							this .getBrowser () .viewer_ = viewer;
 							this .getBrowser () .getNotification () .string_ = _(this .getViewerName (viewer));
-							this .getBrowser () .getCanvas () .focus ();
+							this .getBrowser () .getElement () .focus ();
 						}
 						.bind (this, currentViewer),
 					},
@@ -262,7 +262,7 @@ function ($,
 							click: function ()
 							{
 								this .getBrowser () .getBrowserTimings () .setEnabled (! this .getBrowser () .getBrowserTimings () .getEnabled ());
-								this .getBrowser () .getCanvas () .focus ();
+								this .getBrowser () .getElement () .focus ();
 							}
 							.bind (this),
 						},
@@ -342,7 +342,7 @@ function ($,
 					{
 						$(".context-menu-list") .fadeOut (500);
 						this .getBrowser () .bindViewpoint (viewpoint);
-						this .getBrowser () .getCanvas () .focus ();
+						this .getBrowser () .getElement () .focus ();
 					}
 					.bind (this, viewpoint),
 				};
@@ -374,7 +374,7 @@ function ($,
 						$(".context-menu-list") .fadeOut (500);
 						this .getBrowser () .viewer_ = viewer;
 						this .getBrowser () .getNotification () .string_ = _(this .getViewerName (viewer));
-						this .getBrowser () .getCanvas () .focus ();
+						this .getBrowser () .getElement () .focus ();
 					}
 					.bind (this, viewer),
 				};

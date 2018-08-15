@@ -112,16 +112,16 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   canvas  = browser .getCanvas ();
+			   element = browser .getElement ();
 
 			// Bind pointing device events.
 
-			canvas .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
-			canvas .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
+			element .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
+			element .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
+			element .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
 
-			canvas .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
-			canvas .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
+			element .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
+			element .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
 
 			browser .controlKey_ .addInterest ("set_controlKey_", this);
 
@@ -149,7 +149,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 			
@@ -251,7 +251,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 			
@@ -742,7 +742,7 @@ function ($,
 		{
 			this .disconnect ();
 			this .getBrowser () .controlKey_ .removeInterest ("set_controlKey_", this);
-			this .getBrowser () .getCanvas () .unbind (".X3DFlyViewer");
+			this .getBrowser () .getElement () .unbind (".X3DFlyViewer");
 			$(document) .unbind (".X3DFlyViewer" + this .getId ());
 		},
 	});

@@ -98,7 +98,7 @@ function ($,
 	{
 		initialize: function ()
 		{
-			this .getCanvas () .attr ("tabindex", 0);
+			this .getElement () .attr ("tabindex", 0);
 			this .setCursor ("DEFAULT");
 
 			this .pointingDevice .setup ();
@@ -107,7 +107,7 @@ function ($,
 		{
 			this .cursorType = value;
 
-			var div = this .getBrowser () .getElement () .find (".x_ite-private-surface");
+			var div = this .getElement () .find (".x_ite-private-surface");
 
 			switch (value)
 			{

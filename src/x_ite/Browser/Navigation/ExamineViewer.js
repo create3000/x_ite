@@ -112,18 +112,18 @@ function ($,
 			X3DViewer .prototype .initialize .call (this);
 
 			var
-			   browser   = this .getBrowser (),
-			   canvas    = browser .getCanvas ();
+			   browser = this .getBrowser (),
+			   element = browser .getElement ();
 
 			// Bind pointing device events.
 
-			canvas .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
-			canvas .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
-			canvas .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+			element .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
+			element .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
+			element .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
+			element .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
 
-			canvas .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
-			canvas .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
+			element .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
+			element .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
 
 			// Setup scroll chaser.
 
@@ -147,7 +147,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -253,9 +253,9 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (), 
+				offset = this .getBrowser () .getElement () .offset (), 
 				x      = event .pageX - offset .left,
-				y      = this .getBrowser () .getCanvas () .height () - (event .pageY - offset .top);
+				y      = this .getBrowser () .getElement () .height () - (event .pageY - offset .top);
 
 			this .disconnect ();
 			this .lookAtBBox (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
@@ -267,7 +267,7 @@ function ($,
 			return function (event)
 			{
 				var
-					offset = this .getBrowser () .getCanvas () .offset (),
+					offset = this .getBrowser () .getElement () .offset (),
 					x      = event .pageX - offset .left,
 					y      = event .pageY - offset .top;
 	
@@ -674,7 +674,7 @@ function ($,
 		dispose: function ()
 		{
 			this .disconnect ();
-			this .getBrowser () .getCanvas () .unbind (".ExamineViewer");
+			this .getBrowser () .getElement () .unbind (".ExamineViewer");
 			$(document) .unbind (".ExamineViewer" + this .getId ());
 		},
 	});

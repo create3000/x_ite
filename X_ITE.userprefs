@@ -1,12 +1,20 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/standard/Utility/DataStorage.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="20" Column="28" />
+      <File FileName="src/x_ite.html" Line="20" Column="47" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Networking/X3DNetworkingContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="195" Column="22" />
-      <File FileName="src/standard/Utility/DataStorage.js" Line="115" Column="4" />
+      <File FileName="src/x_ite/Browser/Networking/X3DNetworkingContext.js" Line="150" Column="12" />
+      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="257" Column="17" />
+      <File FileName="src/standard/Utility/DataStorage.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js" Line="75" Column="13" />
+      <File FileName="src/x_ite/Browser/Core/ContextMenu.js" Line="377" Column="38" />
+      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="303" Column="4" />
+      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="444" Column="12" />
+      <File FileName="src/lib/jquery-contextMenu/dist/jquery.contextMenu.js" Line="1639" Column="78" />
+      <File FileName="src/x_ite/Browser/Layout/ScreenText.js" Line="101" Column="9" />
+      <File FileName="src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js" Line="141" Column="35" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
