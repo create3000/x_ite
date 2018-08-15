@@ -87,7 +87,7 @@ function ($)
 	function DataStorage (namespace, storage)
 	{
 		this .target  = this;
-		this .storage = storage || localStorage;
+		this .storage = storage || sessionStorage;
 
 		namespaces .set (this, namespace);
 
