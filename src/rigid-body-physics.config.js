@@ -52,10 +52,15 @@ require .config ({
 			"main": "dist/sprintf.min.js"
 		},
 		{
+			"name": "contextMenu",
+			"location": "../node_modules/jquery-contextmenu",
+			"main": "dist/jquery.contextMenu.js"
+		},
+		{
 			"name": "ammojs",
 			"location": "../node_modules/ammojs",
 			"main": "ammo.js"
-		},
+		}
 	],
 	"shim": { },
 });

@@ -1,7 +1,7 @@
 {
 	"name": "x_ite",
 	"version": "4.2.5a",
-	"revision": "343",
+	"revision": "344",
 	"description": "X_ITE X3D Browser",
 	"main": "src/x_ite.js",
 	"repository": {
@@ -49,7 +49,8 @@
 		"opentype.js": "latest",
 		"bezier-js": "latest",
 		"ammojs": "latest",
-		"sprintf-js": "latest"
+		"sprintf-js": "latest",
+		"jquery-contextmenu": "latest"
 	},
 	"scripts": {
 		"lint": "jshint **",

@@ -49,12 +49,13 @@
 
 define ([
 	"jquery",
+	"contextMenu",
 	"x_ite/Basic/X3DBaseNode",
 	"locale/gettext",
-	"lib/jquery-contextMenu/dist/jquery.contextMenu",
 	"lib/jquery.fullscreen-min",
 ],
 function ($,
+          contextMenu,
           X3DBaseNode,
           _)
 {
