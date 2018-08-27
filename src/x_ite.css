@@ -339,7 +339,7 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 	display: none;
 }
 
-.x_ite-private-menu .context-menu-item.visible > .context-menu-list {
+.x_ite-private-menu .context-menu-item:hover > .context-menu-list {
 	display: block;
 }
 

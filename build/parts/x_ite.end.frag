@@ -6,6 +6,4 @@
 		else
 			window [key] = x_iteNoConfict [key];
 	}
-
-	x_iteNoConfict = undefined;
 }());

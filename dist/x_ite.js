@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-344 */
+/* X_ITE v4.2.5a-345 */
 
 (function () {
 
@@ -116358,12 +116358,6 @@ function ($,
 		return X_ITE;
 	}
 
-	require (["jquery"],
-	function ($)
-	{
-		$ .noConflict (true);
-	});
-
 	var
 		X3D_       = window .X3D,
 		PrivateX3D = null;
@@ -116385,9 +116379,11 @@ function ($,
 		callbacks = [ ],
 		fallbacks = [ ];
 
-	require (["x_ite/X3D"],
-	function (X3D)
+	require (["jquery", "x_ite/X3D"],
+	function ($, X3D)
 	{
+		$ .noConflict (true);
+
 		// Now assign real X3D.
 		PrivateX3D = X3D;
 
@@ -116413,6 +116409,4 @@ define("x_ite", function(){});
 		else
 			window [key] = x_iteNoConfict [key];
 	}
-
-	x_iteNoConfict = undefined;
 }());

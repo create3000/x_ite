@@ -85,12 +85,6 @@
 		return X_ITE;
 	}
 
-	require (["jquery"],
-	function ($)
-	{
-		$ .noConflict (true);
-	});
-
 	var
 		X3D_       = window .X3D,
 		PrivateX3D = null;
@@ -112,9 +106,11 @@
 		callbacks = [ ],
 		fallbacks = [ ];
 
-	require (["x_ite/X3D"],
-	function (X3D)
+	require (["jquery", "x_ite/X3D"],
+	function ($, X3D)
 	{
+		$ .noConflict (true);
+
 		// Now assign real X3D.
 		PrivateX3D = X3D;
 
