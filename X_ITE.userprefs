@@ -1,6 +1,6 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.css">
     <Files>
       <File FileName="src/x_ite.html" Line="293" Column="26" />
       <File FileName="package.json" Line="1" Column="1" />
@@ -8,6 +8,7 @@
       <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="1" Column="1" />
       <File FileName="src/standard/Utility/DataStorage.js" Line="1" Column="1" />
       <File FileName="src/x_ite.js" Line="87" Column="1" />
+      <File FileName="src/x_ite.css" Line="331" Column="20" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

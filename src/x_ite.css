@@ -255,19 +255,19 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
  	       user-select: text;
 }
 
-.x_ite-private-menu .context-menu-item.hover {
+.x_ite-private-menu .context-menu-hover {
 	cursor: pointer;
 	background-color: #444;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 }
 
-.x_ite-private-menu .context-menu-item.disabled {
+.x_ite-private-menu .context-menu-disabled {
 	color: #666;
 }
 
-.x_ite-private-menu .context-menu-input.hover,
-.x_ite-private-menu .context-menu-item.disabled.hover {
+.x_ite-private-menu .context-menu-input.context-menu-hover,
+.x_ite-private-menu .context-menu-disabled.context-menu-hover {
 	cursor: default;
 }
 
