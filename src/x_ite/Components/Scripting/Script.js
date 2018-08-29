@@ -108,6 +108,7 @@ function ($,
 
 		this .addType (X3DConstants .Script);
 
+		// Map for event loop breaking <callback, time>.
 		this .callbackTimes = new WeakMap ();
 	}
 
