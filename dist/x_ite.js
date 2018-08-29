@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-347 */
+/* X_ITE v4.2.5a-348 */
 
 (function () {
 
@@ -107065,6 +107065,8 @@ function ($,
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .addType (X3DConstants .Script);
+
+		this .callbackTimes = new WeakMap ();
 	}
 
 	Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
@@ -107418,14 +107420,21 @@ function ($,
 		},
 		set_field__: function (field, callback)
 		{
-			var browser = this .getBrowser ();
+			var
+				browser = this .getBrowser (),
+				time   = browser .getCurrentTime ();
+
+			if (this .callbackTimes .get (callback) === time)
+				return; // Event loop detected.
+			else
+				this .callbackTimes .set (callback, time);
 
 			field .setTainted (true);
 			browser .getScriptStack () .push (this);
 
 			try
 			{
-				callback (field .valueOf (), browser .getCurrentTime ());
+				callback (field .valueOf (), time);
 			}
 			catch (error)
 			{
