@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-348 */
+/* X_ITE v4.2.5a-349 */
 
 (function () {
 
@@ -107066,6 +107066,7 @@ function ($,
 
 		this .addType (X3DConstants .Script);
 
+		// Map for event loop breaking <callback, time>.
 		this .callbackTimes = new WeakMap ();
 	}
 
