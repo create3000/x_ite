@@ -46,7 +46,7 @@
  *
  ******************************************************************************/
 
-﻿
+
 define ([
 	"x_ite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",

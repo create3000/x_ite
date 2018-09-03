@@ -55,7 +55,9 @@ sub dist {
 	say "Copying files";
 	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/images", "dist/";
 	system "cp", "-v", "src/example.html",  "dist/";
-	system "perl", "-pi", "-e", "s|/latest/|/$VERSION/|sg", "dist/example.html";
+	
+	system "perl", "-pi", "-e", "s|/latest/|/alpha/|sg", "dist/example.html" if $ALPHA;
+	system "perl", "-pi", "-e", "s|/latest/|/$VERSION/|sg", "dist/example.html" unless $ALPHA;
 }
 
 sub licenses {

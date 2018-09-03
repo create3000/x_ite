@@ -113,10 +113,11 @@ function ($,
 						items: this .getViewpoints (),
 						callback: function (viewpoint)
 						{
-						   if (! viewpoint)
-						      return;
+							$("body > ul.context-menu-list") .fadeOut (500);
 
-							$(".context-menu-list") .fadeOut (500);
+							if (! viewpoint)
+								return;
+
 							this .getBrowser () .bindViewpoint (viewpoint);
 							this .getBrowser () .getElement () .focus ();
 						}
@@ -128,7 +129,8 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
 						callback: function (viewer)
 						{
-							$(".context-menu-list") .fadeOut (500);
+							$("body > ul.context-menu-list") .fadeOut (500);
+
 							this .getBrowser () .viewer_ = viewer;
 							this .getBrowser () .getNotification () .string_ = _(this .getViewerName (viewer));
 							this .getBrowser () .getElement () .focus ();
@@ -152,6 +154,8 @@ function ($,
 								events: {
 									click: function ()
 									{
+										$("body > ul.context-menu-list") .fadeOut (500);
+
 										this .getBrowser () .setBrowserOption ("PrimitiveQuality", "HIGH");
 										this .getBrowser () .getNotification () .string_ = _("Primitive Quality") + ": " + _("high");
 									}
@@ -166,6 +170,8 @@ function ($,
 								events: {
 									click: function ()
 									{
+										$("body > ul.context-menu-list") .fadeOut (500);
+
 										this .getBrowser () .setBrowserOption ("PrimitiveQuality", "MEDIUM");
 										this .getBrowser () .getNotification () .string_ = _("Primitive Quality") + ": " + _("medium");
 									}
@@ -180,6 +186,8 @@ function ($,
 								events: {
 									click: function ()
 									{
+										$("body > ul.context-menu-list") .fadeOut (500);
+
 										this .getBrowser () .setBrowserOption ("PrimitiveQuality", "LOW");
 										this .getBrowser () .getNotification () .string_ = _("Primitive Quality") + ": " + _("low");
 									}
@@ -200,6 +208,8 @@ function ($,
 								events: {
 									click: function ()
 									{
+										$("body > ul.context-menu-list") .fadeOut (500);
+
 										this .getBrowser () .setBrowserOption ("TextureQuality", "HIGH");
 										this .getBrowser () .getNotification () .string_ = _("Texture Quality") + ": " + _("high");
 									}
@@ -214,6 +224,8 @@ function ($,
 								events: {
 									click: function ()
 									{
+										$("body > ul.context-menu-list") .fadeOut (500);
+
 										this .getBrowser () .setBrowserOption ("TextureQuality", "MEDIUM");
 										this .getBrowser () .getNotification () .string_ = _("Texture Quality") + ": " + _("medium");
 									}
@@ -228,6 +240,8 @@ function ($,
 								events: {
 									click: function ()
 									{
+										$("body > ul.context-menu-list") .fadeOut (500);
+
 										this .getBrowser () .setBrowserOption ("TextureQuality", "LOW");
 										this .getBrowser () .getNotification () .string_ = _("Texture Quality") + ": " + _("low");
 									}
@@ -243,7 +257,9 @@ function ($,
 						events: {
 							click: function ()
 							{
-							   var rubberband = ! this .getBrowser () .getBrowserOption ("Rubberband");
+								$("body > ul.context-menu-list") .fadeOut (500);
+
+								var rubberband = ! this .getBrowser () .getBrowserOption ("Rubberband");
 
 								this .getBrowser () .setBrowserOption ("Rubberband", rubberband);
 
@@ -262,6 +278,8 @@ function ($,
 						events: {
 							click: function ()
 							{
+								$("body > ul.context-menu-list") .fadeOut (500);
+
 								this .getBrowser () .getBrowserTimings () .setEnabled (! this .getBrowser () .getBrowserTimings () .getEnabled ());
 								this .getBrowser () .getElement () .focus ();
 							}
@@ -275,7 +293,10 @@ function ($,
 						events: {
 							click: function ()
 							{
-							   var mute = ! this .getBrowser () .mute_ .getValue ();
+								$("body > ul.context-menu-list") .fadeOut (500);
+
+								var mute = ! this .getBrowser () .mute_ .getValue ();
+
 								this .getBrowser () .mute_ = mute;
 								this .getBrowser () .getNotification () .string_ = mute ? _("Browser muted") : _("Browser unmuted");
 							}
@@ -287,7 +308,9 @@ function ($,
 						className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),
 						callback: function ()
 						{
-						   this .getBrowser () .getElement () .toggleFullScreen ();
+							$("body > ul.context-menu-list") .fadeOut (500);
+
+							this .getBrowser () .getElement () .toggleFullScreen ();
 						}
 						.bind (this),
 					},
@@ -297,7 +320,9 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-help-about",
 						callback: function ()
 						{
-						   window .open ("http://create3000.de/x_ite/");
+							$("body > ul.context-menu-list") .fadeOut (500);
+
+							window .open ("http://create3000.de/x_ite/");
 						},
 					},
 				}
@@ -341,7 +366,8 @@ function ($,
 					name: description,
 					callback: function (viewpoint)
 					{
-						$(".context-menu-list") .fadeOut (500);
+						$("body > ul.context-menu-list") .fadeOut (500);
+
 						this .getBrowser () .bindViewpoint (viewpoint);
 						this .getBrowser () .getElement () .focus ();
 					}
@@ -372,7 +398,8 @@ function ($,
 					className: "context-menu-icon x_ite-private-icon-" + viewer .toLowerCase () + "-viewer",
 					callback: function (viewer)
 					{
-						$(".context-menu-list") .fadeOut (500);
+						$("body > ul.context-menu-list") .fadeOut (500);
+						
 						this .getBrowser () .viewer_ = viewer;
 						this .getBrowser () .getNotification () .string_ = _(this .getViewerName (viewer));
 						this .getBrowser () .getElement () .focus ();
