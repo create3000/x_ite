@@ -32,8 +32,8 @@ The HTML5 page is quite easy to create, the HTML5 code below shows you the minim
       <html>
        <head>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/create3000/x_ite/latest/x_ite.js/x_ite.css"/>
-        <script type="text/javascript" src="https://cdn.rawgit.com/create3000/x_ite/latest/x_ite.js/x_ite.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/latest/dist/x_ite.css"/>
+        <script type="text/javascript" src="http://code.create3000.de/x_ite/latest/dist/x_ite.min.js"></script>
         <style>
         X3DCanvas {
           width: 768px;
