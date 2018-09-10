@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-353 */
+/* X_ITE v4.2.5a-354 */
 
 (function () {
 
@@ -60477,6 +60477,7 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
+							event .preventDefault ();
 							this .setBrowserOption ("Shading", "POINTSET");
 							this .getNotification () .string_ = "Shading: Pointset";
 						}
@@ -60490,6 +60491,7 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
+							event .preventDefault ();
 							this .setBrowserOption ("Shading", "WIREFRAME");
 							this .getNotification () .string_ = "Shading: Wireframe";
 						}
@@ -60503,6 +60505,7 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
+							event .preventDefault ();
 							this .setBrowserOption ("Shading", "FLAT");
 							this .getNotification () .string_ = "Shading: Flat";
 						}
@@ -60516,6 +60519,7 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
+							event .preventDefault ();
 							this .setBrowserOption ("Shading", "GOURAUD");
 							this .getNotification () .string_ = "Shading: Gouraud";
 						}
@@ -60529,6 +60533,7 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
+							event .preventDefault ();
 							this .setBrowserOption ("Shading", "PHONG");
 							this .getNotification () .string_ = "Shading: Phong";
 						}
@@ -60542,6 +60547,8 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
+							event .preventDefault ();
+
 							if (this .isLive () .getValue ())
 								this .endUpdate ();
 							else
@@ -60562,26 +60569,34 @@ function (Fields)
 				case 187: // Plus // Opera
 				{
 					if (this .getControlKey ())
+					{
+						event .preventDefault ();
 						this .getBrowserTimings () .setEnabled (! this .getBrowserTimings () .getEnabled ());
+					}
+
 					break;
 				}
 				case 36: // Pos 1
 				{
+					event .preventDefault ();
 					this .firstViewpoint ();
 					break;
 				}
 				case 35: // End
 				{
+					event .preventDefault ();
 					this .lastViewpoint ();
 					break;
 				}
 				case 33: // Page Up
 				{
+					event .preventDefault ();
 					this .previousViewpoint ();
 					break;
 				}
 				case 34: // Page Down
 				{
+					event .preventDefault ();
 					this .nextViewpoint ();
 					break;
 				}
