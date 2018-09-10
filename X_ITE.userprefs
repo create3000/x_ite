@@ -1,16 +1,17 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Scripting/Script.js">
     <Files>
       <File FileName="src/x_ite.html" Line="89" Column="26" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Networking/X3DNetworkingContext.js" Line="86" Column="44" />
-      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="346" Column="37" />
-      <File FileName="src/x_ite/Components/Navigation/X3DViewpointNode.js" Line="271" Column="1" />
-      <File FileName="src/x_ite/Execution/X3DExecutionContext.js" Line="600" Column="33" />
-      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="669" Column="1" />
-      <File FileName="src/x_ite/Components/Core/X3DBindableNode.js" Line="85" Column="3" />
-      <File FileName="src/x_ite/Execution/BindableStack.js" Line="119" Column="12" />
+      <File FileName="src/x_ite/Browser/Networking/X3DNetworkingContext.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Navigation/X3DViewpointNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Execution/X3DExecutionContext.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Core/X3DBindableNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Execution/BindableStack.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Scripting/Script.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

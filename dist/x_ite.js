@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-357 */
+/* X_ITE v4.2.5a-358 */
 
 (function () {
 
@@ -107259,7 +107259,7 @@ function ($,
 			}
 			catch (error)
 			{
-				this .setError ("preprocessing", error);
+				this .setError ("while evaluating script source", error);
 
 				return { };
 			}
@@ -107461,7 +107461,7 @@ function ($,
 				}
 				catch (error)
 				{
-					this .setError ("initialize", error);
+					this .setError ("in function 'initialize'", error);
 				}
 
 				browser .getScriptStack () .pop ();
@@ -107480,7 +107480,7 @@ function ($,
 			}
 			catch (error)
 			{
-				this .setError ("prepareEvents", error);
+				this .setError ("in function 'prepareEvents'", error);
 			}
 
 			browser .getScriptStack () .pop ();
@@ -107505,7 +107505,7 @@ function ($,
 			}
 			catch (error)
 			{
-				this .setError (field .getName (), error);
+				this .setError ("in function '" + field .getName () + "'", error);
 			}
 
 			browser .getScriptStack () .pop ();
@@ -107523,7 +107523,7 @@ function ($,
 			}
 			catch (error)
 			{
-				this .setError ("eventsProcessed", error);
+				this .setError ("in function 'eventsProcessed'", error);
 			}
 
 			browser .getScriptStack () .pop ();
@@ -107540,14 +107540,14 @@ function ($,
 			}
 			catch (error)
 			{
-				this .setError ("shutdown", error);
+				this .setError ("in function 'shutdown'", error);
 			}
 
 			browser .getScriptStack () .pop ();
 		},
-		setError: function (callback, error)
+		setError: function (reason, error)
 		{
-			console .error ("JavaScript Error in Script '" + this .getName () + "', function '" + callback + "'\nworld url is '" + this .getExecutionContext () .getURL () + "':");
+			console .error ("JavaScript Error in Script '" + this .getName () + "', " + reason + "\nworld url is '" + this .getExecutionContext () .getURL () + "':");
 			console .error (error);
 		},
 	});
