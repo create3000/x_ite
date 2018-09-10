@@ -259,10 +259,19 @@ function (Fields,
 								transitionTime = navigationInfo .transitionTime_ .getValue ();
 						}
 
-						if (this .getExecutionContext () .getSpecificationVersion () == "2.0" && ! this .getAnimate ())
-							transitionType = "TELEPORT";
+						// VRML behaviour
+
+						if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
+						{
+							if (this .getAnimate ())
+								transitionType = "LINEAR";
+							else
+								transitionType = "TELEPORT";
+						}
 
 						this .setAnimate (false); // VRML
+
+						// End VRML behaviour
 
 						switch (transitionType)
 						{
