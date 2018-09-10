@@ -597,6 +597,8 @@ function (Fields,
 				if (! viewpoint)
 					throw 1;
 
+				viewpoint .setAnimate (true); // VRML
+
 				if (viewpoint .isBound_ .getValue ())
 					viewpoint .transitionStart (viewpoint);
 

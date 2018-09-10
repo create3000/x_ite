@@ -665,6 +665,8 @@ function ($,
 		},
 		bindViewpoint: function (viewpoint)
 		{
+			viewpoint .setAnimate (true); // VRML
+
 			if (viewpoint .isBound_ .getValue ())
 				viewpoint .transitionStart (viewpoint);
 

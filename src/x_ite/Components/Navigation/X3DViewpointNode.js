@@ -219,6 +219,16 @@ function (Fields,
 		{
 			return 1;
 		},
+		setAnimate: function (value)
+		{
+			// VRML behaviour support.
+			this .animate = value;
+		},
+		getAnimate: function ()
+		{
+			// VRML behaviour support.
+			return this .animate;
+		},
 		transitionStart: (function ()
 		{
 			var
@@ -249,8 +259,10 @@ function (Fields,
 								transitionTime = navigationInfo .transitionTime_ .getValue ();
 						}
 
-						if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
+						if (this .getExecutionContext () .getSpecificationVersion () == "2.0" && ! this .getAnimate ())
 							transitionType = "TELEPORT";
+
+						this .setAnimate (false); // VRML
 
 						switch (transitionType)
 						{
