@@ -248,7 +248,10 @@ function (Fields,
 								transitionType = navigationInfo .getTransitionType (),
 								transitionTime = navigationInfo .transitionTime_ .getValue ();
 						}
-	
+
+						if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
+							transitionType = "TELEPORT";
+
 						switch (transitionType)
 						{
 							case "TELEPORT":
