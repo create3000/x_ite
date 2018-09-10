@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-355 */
+/* X_ITE v4.2.5a-356 */
 
 (function () {
 
@@ -41269,10 +41269,19 @@ function (Fields,
 								transitionTime = navigationInfo .transitionTime_ .getValue ();
 						}
 
-						if (this .getExecutionContext () .getSpecificationVersion () == "2.0" && ! this .getAnimate ())
-							transitionType = "TELEPORT";
+						// VRML behaviour
+
+						if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
+						{
+							if (this .getAnimate ())
+								transitionType = "LINEAR";
+							else
+								transitionType = "TELEPORT";
+						}
 
 						this .setAnimate (false); // VRML
+
+						// End VRML behaviour
 
 						switch (transitionType)
 						{
