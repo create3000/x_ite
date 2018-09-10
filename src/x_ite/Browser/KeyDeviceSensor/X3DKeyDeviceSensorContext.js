@@ -215,21 +215,25 @@ function (Fields)
 				}
 				case 36: // Pos 1
 				{
+					event .preventDefault ();
 					this .firstViewpoint ();
 					break;
 				}
 				case 35: // End
 				{
+					event .preventDefault ();
 					this .lastViewpoint ();
 					break;
 				}
 				case 33: // Page Up
 				{
+					event .preventDefault ();
 					this .previousViewpoint ();
 					break;
 				}
 				case 34: // Page Down
 				{
+					event .preventDefault ();
 					this .nextViewpoint ();
 					break;
 				}
