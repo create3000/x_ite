@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-354 */
+/* X_ITE v4.2.5a-355 */
 
 (function () {
 
@@ -32435,6 +32435,8 @@ function (Fields,
 				if (! viewpoint)
 					throw 1;
 
+				viewpoint .setAnimate (true); // VRML
+
 				if (viewpoint .isBound_ .getValue ())
 					viewpoint .transitionStart (viewpoint);
 
@@ -41227,6 +41229,16 @@ function (Fields,
 		{
 			return 1;
 		},
+		setAnimate: function (value)
+		{
+			// VRML behaviour support.
+			this .animate = value;
+		},
+		getAnimate: function ()
+		{
+			// VRML behaviour support.
+			return this .animate;
+		},
 		transitionStart: (function ()
 		{
 			var
@@ -41257,8 +41269,10 @@ function (Fields,
 								transitionTime = navigationInfo .transitionTime_ .getValue ();
 						}
 
-						if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
+						if (this .getExecutionContext () .getSpecificationVersion () == "2.0" && ! this .getAnimate ())
 							transitionType = "TELEPORT";
+
+						this .setAnimate (false); // VRML
 
 						switch (transitionType)
 						{
@@ -115993,6 +116007,8 @@ function ($,
 		},
 		bindViewpoint: function (viewpoint)
 		{
+			viewpoint .setAnimate (true); // VRML
+
 			if (viewpoint .isBound_ .getValue ())
 				viewpoint .transitionStart (viewpoint);
 
