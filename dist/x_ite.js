@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-356 */
+/* X_ITE v4.2.5a-357 */
 
 (function () {
 
@@ -14334,11 +14334,10 @@ function ($,
 		},
 		processRouteCallbacks: function ()
 		{
-			this ._routeCallbacks .forEach (function (routeCallback)
+			for (var routeCallback of this ._routeCallbacks .values ())
 			{
 				routeCallback ();
-			},
-			this);
+			}
 		},
 		processEvent: function (event)
 		{
@@ -14379,11 +14378,10 @@ function ($,
 
 			// Process field callbacks
 
-			this ._fieldCallbacks .forEach (function (fieldCallback)
+			for (var fieldCallback of this ._fieldCallbacks .values ())
 			{
 				fieldCallback (this .valueOf ());
-			},
-			this);
+			}
 		},
 		valueOf: function ()
 		{
@@ -115595,11 +115593,10 @@ function ($,
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
 
-				this .browserCallbacks .forEach (function (browserCallback)
+				for (var browserCallback of this .browserCallbacks .values ())
 				{
 					browserCallback ("shutdown");
-				},
-				this);
+				}
 			}
 
 			// Clear event cache.
@@ -115645,11 +115642,10 @@ function ($,
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
 
-				this .browserCallbacks .forEach (function (browserCallback)
+				for (var browserCallback of this .browserCallbacks .values ())
 				{
 					browserCallback ("initialized");
-				},
-				this);
+				}
 			}
 		},
 		set_loadCount__: function (loadCount)

@@ -244,11 +244,10 @@ function ($,
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
 
-				this .browserCallbacks .forEach (function (browserCallback)
+				for (var browserCallback of this .browserCallbacks .values ())
 				{
 					browserCallback ("shutdown");
-				},
-				this);
+				}
 			}
 
 			// Clear event cache.
@@ -294,11 +293,10 @@ function ($,
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
 
-				this .browserCallbacks .forEach (function (browserCallback)
+				for (var browserCallback of this .browserCallbacks .values ())
 				{
 					browserCallback ("initialized");
-				},
-				this);
+				}
 			}
 		},
 		set_loadCount__: function (loadCount)
