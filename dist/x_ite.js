@@ -45375,7 +45375,7 @@ function (
 		 */
 	JSONParser .prototype.
 		CDATACreateFunction = function(document, element, str) {
-			var y = str.replace(/\\"/g, "\\\"")
+			var y = str.trim().replace(/\\"/g, "\\\"")
 				.replace(/&lt;/g, "<")
 				.replace(/&gt;/g, ">")
 				.replace(/&amp;/g, "&");
