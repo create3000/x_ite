@@ -205,6 +205,10 @@ function (X3DEventObject,
 				}
 			}
 		},
+		setInitialized: function (value)
+		{
+			this ._initialized = value;
+		},
 		isInitialized: function ()
 		{
 			return this ._initialized;

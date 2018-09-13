@@ -172,8 +172,8 @@ function (FieldDefinitionArray,
 
 				if (this .isInitialized ())
 				{
+					this .setInitialized (false);
 					this .setup ();
-					this .initialize ();
 					this .setTainted (false);
 					X3DChildObject .prototype .addEvent .call (this);
 				}
