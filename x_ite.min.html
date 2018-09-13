@@ -260,6 +260,7 @@ X3D (function ()
 	bookmarks .restore ("https://rawgit.com/create3000/Library/master/Tests/Components/Layout/info.x3d");
 
 	$(".version") .text (Browser .name + " v" + Browser .version);
+	$(".location-entry") .keydown (function (event) { if (event .key == "Enter") loadURL (); });
 	$(".location-go") .click (loadURL);
 	$(".print-button") .click (toXMLString);
 },

@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-358 */
+/* X_ITE v4.2.5a-359 */
 
 (function () {
 
@@ -33877,6 +33877,8 @@ function (FieldDefinitionArray,
 				if (this .isInitialized ())
 				{
 					this .setup ();
+					this .initialize ();
+					this .setTainted (false);
 					X3DChildObject .prototype .addEvent .call (this);
 				}
 			}
