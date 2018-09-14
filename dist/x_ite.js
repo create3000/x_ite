@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-361 */
+/* X_ITE v4.2.5a-362 */
 
 (function () {
 
@@ -31928,7 +31928,7 @@ function (Fields,
 
 		this .addChildObjects ("rootNodes", new Fields .MFNode ());
 
-		this .rootNodes .addClones (1);
+		this .rootNodes_ .addClones (1);
 
 		this .specificationVersion = "3.3";
 		this .encoding             = "SCRIPTED";
