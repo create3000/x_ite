@@ -988,7 +988,7 @@ function ($,
 
 	// Lazy parse functions.
 
-	var whitespaces = /[\s,]+/;
+	var whitespaces = /[\x20\n,\t\r]+/;
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFColor] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] =
