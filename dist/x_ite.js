@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-366 */
+/* X_ITE v4.2.5a-367 */
 
 (function () {
 
@@ -45224,34 +45224,6 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f]     = Parser .prototype .sfvec3fValues;
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d]     = Parser .prototype .sfvec4dValues;
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = Parser .prototype .sfvec4fValues;
-
-	// Lazy parse functions.
-
-	var whitespaces = /[\x20\n,\t\r]+/;
-
-	XMLParser .prototype .fieldTypes [X3DConstants .MFColor] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFDouble] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFFloat] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3d] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3f] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4d] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFRotation] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFVec2d] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFVec2f] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFVec3d] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
-	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
-	{
-		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value) { return parseFloat (value); }));
-	};
-
-	XMLParser .prototype .fieldTypes [X3DConstants .SFInt32] = function (field)
-	{
-		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value) { return parseInt (value); }));
-	};
 
 	return XMLParser;
 });
