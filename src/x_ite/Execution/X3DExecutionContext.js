@@ -88,6 +88,8 @@ function (Fields,
 
 		this .addChildObjects ("rootNodes", new Fields .MFNode ());
 
+		this .rootNodes .addClones (1);
+
 		this .specificationVersion = "3.3";
 		this .encoding             = "SCRIPTED";
 		this .profile              = null;
