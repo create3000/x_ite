@@ -329,6 +329,10 @@ function (Fields,
 			this .lineNumber = 1;
 			this .lastIndex  = 0;
 		},
+		getInput: function ()
+		{
+			return this .input;
+		},
 		exception: function (string)
 		{
 			if (this .getBrowser () .isStrict ())

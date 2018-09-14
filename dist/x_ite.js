@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-364 */
+/* X_ITE v4.2.5a-365 */
 
 (function () {
 
@@ -35293,6 +35293,10 @@ function (Fields,
 			this .lineNumber = 1;
 			this .lastIndex  = 0;
 		},
+		getInput: function ()
+		{
+			return this .input;
+		},
 		exception: function (string)
 		{
 			if (this .getBrowser () .isStrict ())
@@ -45223,6 +45227,8 @@ function ($,
 
 	// Lazy parse functions.
 
+	var whitespaces = /[\s,]+/;
+
 	XMLParser .prototype .fieldTypes [X3DConstants .MFColor] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFDouble] =
@@ -45239,12 +45245,12 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
 	{
-		field .setValue (this .input .trim () .split (/[\s,]+/) .map (function (value) { return parseFloat (value); }));
+		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value) { return parseFloat (value); }));
 	};
 
 	XMLParser .prototype .fieldTypes [X3DConstants .SFInt32] = function (field)
 	{
-		field .setValue (this .input .trim () .split (/[\s,]+/) .map (function (value) { return parseInt (value); }));
+		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value) { return parseInt (value); }));
 	};
 
 	return XMLParser;

@@ -988,6 +988,8 @@ function ($,
 
 	// Lazy parse functions.
 
+	var whitespaces = /[\s,]+/;
+
 	XMLParser .prototype .fieldTypes [X3DConstants .MFColor] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFDouble] =
@@ -1004,12 +1006,12 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
 	{
-		field .setValue (this .input .trim () .split (/[\s,]+/) .map (function (value) { return parseFloat (value); }));
+		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value) { return parseFloat (value); }));
 	};
 
 	XMLParser .prototype .fieldTypes [X3DConstants .SFInt32] = function (field)
 	{
-		field .setValue (this .input .trim () .split (/[\s,]+/) .map (function (value) { return parseInt (value); }));
+		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value) { return parseInt (value); }));
 	};
 
 	return XMLParser;
