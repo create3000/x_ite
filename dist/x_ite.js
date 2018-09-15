@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-368 */
+/* X_ITE v4.2.5a-369 */
 
 (function () {
 
@@ -44346,14 +44346,10 @@ function ($,
 		constructor: XMLParser,
 		parseIntoScene: function (xmlElement)
 		{
-			var t0 = performance .now ();
-
 			this .getScene () .setEncoding ("XML");
 			this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
 			this .xmlElement (xmlElement);
-
-			console .log (performance .now () - t0);
 		},
 		parseIntoNode: function (node, xmlElement)
 		{

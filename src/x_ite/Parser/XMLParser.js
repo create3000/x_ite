@@ -105,14 +105,10 @@ function ($,
 		constructor: XMLParser,
 		parseIntoScene: function (xmlElement)
 		{
-			var t0 = performance .now ();
-
 			this .getScene () .setEncoding ("XML");
 			this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
 			this .xmlElement (xmlElement);
-
-			console .log (performance .now () - t0);
 		},
 		parseIntoNode: function (node, xmlElement)
 		{
