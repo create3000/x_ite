@@ -74,9 +74,6 @@ function (Fields,
 		X3DGeospatialObject .call (this, executionContext);
 
 		this .addType (X3DConstants .GeoCoordinate);
-
-		this .points = [ ];                   // Transformed points in GC.
-		this .origin = new Vector3 (0, 0, 0); // Origin of the reference frame.
 	}
 
 	GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
@@ -105,105 +102,139 @@ function (Fields,
 		{
 			X3DCoordinateNode   .prototype .initialize .call (this);
 			X3DGeospatialObject .prototype .initialize .call (this);
-		
-			this .addInterest ("eventsProcessed", this);
-		
-			this .eventsProcessed ();
+
+			this .point_ .addInterest ("set_point__", this);
+
+			this .set_point__ ();
 		},
-		eventsProcessed: function ()
+		set_point__: function ()
 		{
-			var
-				point  = this .point_,
-				points = this .points;
-
-			for (var i = 0, length = Math .min (point .length, points .length); i < length; ++ i)
-				this .getCoord (point [i] .getValue (), points [i]);
-
-			for (var length = point .length; i < length; ++ i)
-			{
-				var p = points [i] = new Vector3 (0, 0, 0);
-				this .getCoord (point [i] .getValue (), p);
-			}
-		
-			points .length = length;
-
-			this .getCoord (Vector3 .Zero, this .origin);
+			this .point  = this .point_ .getValue ();
+			this .length = this .point_ .length;
 		},
 		isEmpty: function ()
 		{
-			return this .point_ .length == 0;
+			return this .length === 0;
 		},
 		getSize: function ()
 		{
-			return this .point_ .length;
+			return this .length;
 		},
-		get1Point: function (index, vector)
+		get1Point: (function ()
 		{
-			if (index < this .length)
-			{
-				const p = this .points [index];
+			var p = new Vector3 (0, 0, 0);
 
-				return vector .set (p .x, p .y, p .z);
-			}
-			else
+			return function (index, vector)
 			{
-				return vector .set (0, 0, 0);
-			}
-		},
-		addPoint: function (index, array)
+				if (index < this .length)
+				{
+					const point = this .point;
+	
+					index *= 3;
+	
+					return this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), vector);
+				}
+				else
+				{
+					return vector .set (0, 0, 0);
+				}
+			};
+		})(),
+		addPoint: (function ()
 		{
-			// The index cannot be less than 0.
-
-			if (index < this .points .length)
-			{
-				const p = this .points [index];
-
-				array .push (p .x, p .y, p .z, 1);
-			}
-			else
-			{
-				const p = this .origin;
-
-				array .push (p .x, p .y, p .z, 1);
-			}
-		},
-		getNormal: function (index1, index2, index3)
-		{
-			// The index[1,2,3] cannot be less than 0.
-
 			var
-				points = this .points,
-				length = points .length;
+				p = new Vector3 (0, 0, 0),
+				g = new Vector3 (0, 0, 0);
 
-			if (index1 < length && index2 < length && index3 < length)
+			return function (index, array)
 			{
-				return Triangle3 .normal (points [index1],
-				                          points [index2],
-				                          points [index3],
-				                          new Vector3 (0, 0, 0));
-			}
+				if (index < this .length)
+				{
+					const point = this .point;
+	
+					index *= 3;
 
-			return new Vector3 (0, 0, 0);
-		},
-		getQuadNormal: function (index1, index2, index3, index4)
+					this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
+	
+					array .push (g [0], g [1], g [2], 1);
+				}
+				else
+				{
+					array .push (0, 0, 0, 1);
+				}
+			};
+		})(),
+		addPoints: (function ()
 		{
-			// The index[1,2,3,4] cannot be less than 0.
-
 			var
-				points = this .points,
-				length = points .length;
+				p = new Vector3 (0, 0, 0),
+				g = new Vector3 (0, 0, 0);
 
-			if (index1 < length && index2 < length && index3 < length && index4 < length)
+			return function (array, min)
 			{
-				return Triangle3 .quadNormal (points [index1],
-				                              points [index2],
-				                              points [index3],
-				                              points [index4],
-				                              new Vector3 (0, 0, 0));
-			}
+				const point = this .point;
+	
+				for (var index = 0, length = this .length * 3; index < length; index += 3)
+				{
+					this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
+	
+					array .push (g [0], g [1], g [2], 1);
+				}
+	
+				for (var index = length, length = min * 3; index < length; index += 3)
+					array .push (0, 0, 0, 1);
+			};
+		})(),
+		getNormal: (function ()
+		{
+			var
+				point1 = new Vector3 (0, 0, 0),
+				point2 = new Vector3 (0, 0, 0),
+				point3 = new Vector3 (0, 0, 0);
 
-			return new Vector3 (0, 0, 0);
-		},
+			return function (index1, index2, index3)
+			{
+				// The index[1,2,3] cannot be less than 0.
+	
+				var length = this .length;
+	
+				if (index1 < length && index2 < length && index3 < length)
+				{
+					return Triangle3 .normal (this .get1Point (index1, point1),
+					                          this .get1Point (index2, point2),
+					                          this .get1Point (index3, point3),
+					                          new Vector3 (0, 0, 0));
+				}
+	
+				return new Vector3 (0, 0, 0);
+			};
+		})(),
+		getQuadNormal: (function ()
+		{
+			var
+				point1 = new Vector3 (0, 0, 0),
+				point2 = new Vector3 (0, 0, 0),
+				point3 = new Vector3 (0, 0, 0),
+				point4 = new Vector3 (0, 0, 0);
+
+			return function (index1, index2, index3, index4)
+			{
+				// The index[1,2,3,4] cannot be less than 0.
+	
+				var length = this .length;
+	
+				if (index1 < length && index2 < length && index3 < length && index4 < length)
+				{
+					return Triangle3 .quadNormal (this .get1Point (index1, point1),
+					                              this .get1Point (index2, point2),
+					                              this .get1Point (index3, point3),
+					                              this .get1Point (index4, point4),
+					                              new Vector3 (0, 0, 0));
+				}
+	
+				return new Vector3 (0, 0, 0);
+			};
+		})(),
 	});
 
 	return GeoCoordinate;
