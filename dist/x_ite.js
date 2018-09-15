@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-367 */
+/* X_ITE v4.2.5a-368 */
 
 (function () {
 
@@ -36661,6 +36661,8 @@ function (Fields,
 					field .set (false);
 					return true;
 				}
+
+				return false;
 			}
 
 			if (Grammar .TRUE .parse (this))
@@ -44344,10 +44346,14 @@ function ($,
 		constructor: XMLParser,
 		parseIntoScene: function (xmlElement)
 		{
+			var t0 = performance .now ();
+
 			this .getScene () .setEncoding ("XML");
 			this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
 			this .xmlElement (xmlElement);
+
+			console .log (performance .now () - t0);
 		},
 		parseIntoNode: function (node, xmlElement)
 		{
@@ -45224,6 +45230,69 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f]     = Parser .prototype .sfvec3fValues;
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d]     = Parser .prototype .sfvec4dValues;
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = Parser .prototype .sfvec4fValues;
+
+	/*
+	 * Lazy parse functions.
+	 */
+
+	var whitespaces = /[\x20\n,\t\r]+/;
+
+	// Unitless fields.
+
+	XMLParser .prototype .fieldTypes [X3DConstants .MFColor] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3d] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3f] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4d] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
+	{
+		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value)
+		{
+			return parseFloat (value);
+		}));
+	};
+
+	XMLParser .prototype .fieldTypes [X3DConstants .MFBool] = function (field)
+	{
+		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value)
+		{
+			if (value === "false")
+				return false;
+
+			if (value === "true")
+				return true;
+
+			throw new Error ("Invalid boolean value.");
+		}));
+	};
+
+	XMLParser .prototype .fieldTypes [X3DConstants .MFInt32] = function (field)
+	{
+		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value)
+		{
+			return parseInt (value);
+		}));
+	};
+
+	// Unit fields.
+
+	XMLParser .prototype .fieldTypes [X3DConstants .MFDouble] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFFloat] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec2d] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec2f] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec3d] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f] = function (field)
+	{
+		var category = field .getUnit ();
+
+		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value)
+		{
+			return this .fromUnit (category, parseFloat (value));
+		},
+		this));
+	};
 
 	return XMLParser;
 });

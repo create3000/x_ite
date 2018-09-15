@@ -1697,6 +1697,8 @@ function (Fields,
 					field .set (false);
 					return true;
 				}
+
+				return false;
 			}
 
 			if (Grammar .TRUE .parse (this))
