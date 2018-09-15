@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-369 */
+/* X_ITE v4.2.5a-370 */
 
 (function () {
 
@@ -45254,13 +45254,10 @@ function ($,
 	{
 		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value)
 		{
-			if (value === "false")
-				return false;
-
 			if (value === "true")
 				return true;
 
-			throw new Error ("Invalid boolean value.");
+			return false;
 		}));
 	};
 

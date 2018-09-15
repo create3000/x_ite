@@ -1013,13 +1013,10 @@ function ($,
 	{
 		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value)
 		{
-			if (value === "false")
-				return false;
-
 			if (value === "true")
 				return true;
 
-			throw new Error ("Invalid boolean value.");
+			return false;
 		}));
 	};
 
