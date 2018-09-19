@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-372 */
+/* X_ITE v4.2.5a-373 */
 
 (function () {
 
@@ -14334,10 +14334,13 @@ function ($,
 		},
 		processRouteCallbacks: function ()
 		{
-			(new Map (this ._routeCallbacks)) .forEach (function (routeCallback)
+			if (this ._routeCallbacks .size)
 			{
-				routeCallback ();
-			});
+				(new Map (this ._routeCallbacks)) .forEach (function (routeCallback)
+				{
+					routeCallback ();
+				});
+			}
 		},
 		processEvent: function (event)
 		{
@@ -115717,10 +115720,13 @@ function ($,
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
 
-				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+				if (this .browserCallbacks .size)
 				{
-					browserCallback ("shutdown");
-				});
+					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+					{
+						browserCallback ("shutdown");
+					});
+				}
 			}
 
 			// Clear event cache.
@@ -115766,10 +115772,13 @@ function ($,
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
 
-				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+				if (this .browserCallbacks .size)
 				{
-					browserCallback ("initialized");
-				});
+					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+					{
+						browserCallback ("initialized");
+					});
+				}
 			}
 		},
 		set_loadCount__: function (loadCount)
@@ -115920,10 +115929,13 @@ function ($,
 				}
 				else
 				{
-					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+					if (this .browserCallbacks .size)
 					{
-						browserCallback ("error", url);
-					});
+						(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+						{
+							browserCallback ("error", url);
+						});
+					}
 
 					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 				}

@@ -309,10 +309,13 @@ function ($,
 		},
 		processRouteCallbacks: function ()
 		{
-			(new Map (this ._routeCallbacks)) .forEach (function (routeCallback)
+			if (this ._routeCallbacks .size)
 			{
-				routeCallback ();
-			});
+				(new Map (this ._routeCallbacks)) .forEach (function (routeCallback)
+				{
+					routeCallback ();
+				});
+			}
 		},
 		processEvent: function (event)
 		{
