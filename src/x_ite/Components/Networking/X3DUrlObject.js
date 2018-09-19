@@ -81,6 +81,10 @@ function (Fields,
 		{
 			return this .loadState_ .getValue ();
 		},
+		getLoadState: function ()
+		{
+			return this .loadState_;
+		},
 	};
 
 	return X3DUrlObject;

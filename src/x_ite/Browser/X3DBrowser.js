@@ -244,10 +244,10 @@ function ($,
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
 
-				for (var browserCallback of this .browserCallbacks .values ())
+				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
 				{
 					browserCallback ("shutdown");
-				}
+				});
 			}
 
 			// Clear event cache.
@@ -293,10 +293,10 @@ function ($,
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
 
-				for (var browserCallback of this .browserCallbacks .values ())
+				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
 				{
 					browserCallback ("initialized");
-				}
+				});
 			}
 		},
 		set_loadCount__: function (loadCount)
@@ -447,11 +447,10 @@ function ($,
 				}
 				else
 				{
-					this .browserCallbacks .forEach (function (browserCallback)
+					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
 					{
 						browserCallback ("error", url);
-					},
-					this);
+					});
 
 					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 				}

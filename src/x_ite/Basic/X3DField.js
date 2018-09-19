@@ -309,10 +309,10 @@ function ($,
 		},
 		processRouteCallbacks: function ()
 		{
-			for (var routeCallback of this ._routeCallbacks .values ())
+			(new Map (this ._routeCallbacks)) .forEach (function (routeCallback)
 			{
 				routeCallback ();
-			}
+			});
 		},
 		processEvent: function (event)
 		{
@@ -353,9 +353,13 @@ function ($,
 
 			// Process field callbacks
 
-			for (var fieldCallback of this ._fieldCallbacks .values ())
+			if (this ._fieldCallbacks .size)
 			{
-				fieldCallback (this .valueOf ());
+				(new Map (this ._fieldCallbacks)) .forEach (function (fieldCallback)
+				{
+					fieldCallback (this .valueOf ());
+				},
+				this);
 			}
 		},
 		valueOf: function ()
