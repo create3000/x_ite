@@ -349,9 +349,11 @@ function ($,
 				return { };
 
 			var
-				viewpoints       = activeLayer .getViewpoints () .get (),
-				currentViewpoint = activeLayer .getViewpoint (),
-				menu             = { };
+				enableInlineViewpoints = this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
+				currentScene           = this .getBrowser () .currentScene,
+				viewpoints             = activeLayer .getViewpoints () .get (),
+				currentViewpoint       = activeLayer .getViewpoint (),
+				menu                   = { };
 
 			for (var i = 0; i < viewpoints .length; ++ i)
 			{
@@ -360,6 +362,9 @@ function ($,
 					description = viewpoint .description_ .getValue ();
 
 				if (description === "")
+					continue;
+
+				if (! enableInlineViewpoints && viewpoint .getExecutionContext () !== currentScene)
 					continue;
 
 				var item = {
