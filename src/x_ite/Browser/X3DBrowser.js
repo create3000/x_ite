@@ -289,9 +289,6 @@ function ($,
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
 
-			if (! this .getBrowserOption ("EnableInlineViewpoints"))
-				this .getWorld () .bind ();
-
 			if (this .initialized () .getValue ())
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
@@ -319,9 +316,7 @@ function ($,
 		{
 			this .prepareEvents () .removeInterest ("bind", this);
 
-			if (this .getBrowserOption ("EnableInlineViewpoints"))
-				this .getWorld () .bind ();
-
+			this .getWorld () .bind ();
 			this .setBrowserLoading (false);
 		},
 		createVrmlFromString: function (vrmlSyntax)

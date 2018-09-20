@@ -109,6 +109,10 @@ function (X3DEventObject,
 
 			this ._executionContext = value;
 		},
+		getExecutionContext: function ()
+		{
+			return this ._executionContext;
+		},
 		getScene: function ()
 		{
 			var executionContext = this ._executionContext;
@@ -118,9 +122,14 @@ function (X3DEventObject,
 
 			return executionContext;
 		},
-		getExecutionContext: function ()
+		getMasterScene: function ()
 		{
-			return this ._executionContext;
+			var scene = this ._executionContext .getScene ();
+
+			while (! scene .isMasterContext ())
+				scene = scene .getScene ();
+
+			return scene;
 		},
 		addType: function (value)
 		{

@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-373 */
+/* X_ITE v4.2.5a-374 */
 
 (function () {
 
@@ -24867,6 +24867,10 @@ function (X3DEventObject,
 
 			this ._executionContext = value;
 		},
+		getExecutionContext: function ()
+		{
+			return this ._executionContext;
+		},
 		getScene: function ()
 		{
 			var executionContext = this ._executionContext;
@@ -24876,9 +24880,14 @@ function (X3DEventObject,
 
 			return executionContext;
 		},
-		getExecutionContext: function ()
+		getMasterScene: function ()
 		{
-			return this ._executionContext;
+			var scene = this ._executionContext .getScene ();
+
+			while (! scene .isMasterContext ())
+				scene = scene .getScene ();
+
+			return scene;
 		},
 		addType: function (value)
 		{
@@ -79410,27 +79419,47 @@ function (X3DBaseNode)
 		},
 		getBound: function (name)
 		{
-			if (name && name .length)
+			if (this .array .length > 1)
 			{
+				var
+					enableInlineViewpoints = this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
+					masterScene            = this .getMasterScene ();
+
+				if (name && name .length)
+				{
+					for (var i = 1, length = this .array .length; i < length; ++ i)
+					{
+						var node = this .array [i];
+
+						if (! enableInlineViewpoints && node .getExecutionContext () !== masterScene)
+							continue;
+
+						if (node .getName () == name)
+							return node;
+					}
+				}
+
 				for (var i = 1, length = this .array .length; i < length; ++ i)
 				{
 					var node = this .array [i];
 
-					if (node .getName () == name)
+					if (! enableInlineViewpoints && node .getExecutionContext () !== masterScene)
+						continue;
+
+					if (node .isBound_ .getValue ())
 						return node;
 				}
-			}
 
-			for (var i = 1, length = this .array .length; i < length; ++ i)
-			{
-				var node = this .array [i];
+				for (var i = 1, length = this .array .length; i < length; ++ i)
+				{
+					var node = this .array [i];
 
-				if (node .isBound_ .getValue ())
+					if (! enableInlineViewpoints && node .getExecutionContext () !== masterScene)
+						continue;
+
 					return node;
+				}
 			}
-
-			if (length > 1)
-				return this .array [1];
 
 			return this .array [0];
 		},
@@ -115765,9 +115794,6 @@ function ($,
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
 
-			if (! this .getBrowserOption ("EnableInlineViewpoints"))
-				this .getWorld () .bind ();
-
 			if (this .initialized () .getValue ())
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
@@ -115795,9 +115821,7 @@ function ($,
 		{
 			this .prepareEvents () .removeInterest ("bind", this);
 
-			if (this .getBrowserOption ("EnableInlineViewpoints"))
-				this .getWorld () .bind ();
-
+			this .getWorld () .bind ();
 			this .setBrowserLoading (false);
 		},
 		createVrmlFromString: function (vrmlSyntax)

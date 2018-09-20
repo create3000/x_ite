@@ -98,27 +98,47 @@ function (X3DBaseNode)
 		},
 		getBound: function (name)
 		{
-			if (name && name .length)
+			if (this .array .length > 1)
 			{
+				var
+					enableInlineViewpoints = this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
+					masterScene            = this .getMasterScene ();
+
+				if (name && name .length)
+				{
+					for (var i = 1, length = this .array .length; i < length; ++ i)
+					{
+						var node = this .array [i];
+
+						if (! enableInlineViewpoints && node .getExecutionContext () !== masterScene)
+							continue;
+
+						if (node .getName () == name)
+							return node;
+					}
+				}
+
 				for (var i = 1, length = this .array .length; i < length; ++ i)
 				{
 					var node = this .array [i];
 
-					if (node .getName () == name)
+					if (! enableInlineViewpoints && node .getExecutionContext () !== masterScene)
+						continue;
+
+					if (node .isBound_ .getValue ())
 						return node;
 				}
-			}
 
-			for (var i = 1, length = this .array .length; i < length; ++ i)
-			{
-				var node = this .array [i];
+				for (var i = 1, length = this .array .length; i < length; ++ i)
+				{
+					var node = this .array [i];
 
-				if (node .isBound_ .getValue ())
+					if (! enableInlineViewpoints && node .getExecutionContext () !== masterScene)
+						continue;
+
 					return node;
+				}
 			}
-
-			if (length > 1)
-				return this .array [1];
 
 			return this .array [0];
 		},
