@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-374 */
+/* X_ITE v4.2.5a-375 */
 
 (function () {
 
@@ -29904,9 +29904,11 @@ function ($,
 				return { };
 
 			var
-				viewpoints       = activeLayer .getViewpoints () .get (),
-				currentViewpoint = activeLayer .getViewpoint (),
-				menu             = { };
+				enableInlineViewpoints = this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
+				currentScene           = this .getBrowser () .currentScene,
+				viewpoints             = activeLayer .getViewpoints () .get (),
+				currentViewpoint       = activeLayer .getViewpoint (),
+				menu                   = { };
 
 			for (var i = 0; i < viewpoints .length; ++ i)
 			{
@@ -29915,6 +29917,9 @@ function ($,
 					description = viewpoint .description_ .getValue ();
 
 				if (description === "")
+					continue;
+
+				if (! enableInlineViewpoints && viewpoint .getScene () !== currentScene)
 					continue;
 
 				var item = {

@@ -364,7 +364,7 @@ function ($,
 				if (description === "")
 					continue;
 
-				if (! enableInlineViewpoints && viewpoint .getExecutionContext () !== currentScene)
+				if (! enableInlineViewpoints && viewpoint .getScene () !== currentScene)
 					continue;
 
 				var item = {
