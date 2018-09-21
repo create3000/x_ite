@@ -4,7 +4,7 @@
     <Files>
       <File FileName="src/x_ite.html" Line="256" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Core/ContextMenu.js" Line="366" Column="1" />
+      <File FileName="src/x_ite/Browser/Core/ContextMenu.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Execution/BindableList.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

@@ -106,11 +106,13 @@ function (X3DBaseNode)
 
 				if (name && name .length)
 				{
+					// Return first viewpoint with @name.
+
 					for (var i = 1, length = this .array .length; i < length; ++ i)
 					{
 						var node = this .array [i];
 
-						if (! enableInlineViewpoints && node .getExecutionContext () !== masterScene)
+						if (! enableInlineViewpoints && node .getScene () !== masterScene)
 							continue;
 
 						if (node .getName () == name)
@@ -118,27 +120,33 @@ function (X3DBaseNode)
 					}
 				}
 
+				// Return first bound viewpoint in scene.
+
 				for (var i = 1, length = this .array .length; i < length; ++ i)
 				{
 					var node = this .array [i];
 
-					if (! enableInlineViewpoints && node .getExecutionContext () !== masterScene)
+					if (! enableInlineViewpoints && node .getScene () !== masterScene)
 						continue;
 
 					if (node .isBound_ .getValue ())
 						return node;
 				}
 
+				// Return first viewpoint in scene.
+	
 				for (var i = 1, length = this .array .length; i < length; ++ i)
 				{
 					var node = this .array [i];
 
-					if (! enableInlineViewpoints && node .getExecutionContext () !== masterScene)
+					if (! enableInlineViewpoints && node .getScene () !== masterScene)
 						continue;
 
 					return node;
 				}
 			}
+
+			// Return default viewpoint.
 
 			return this .array [0];
 		},
@@ -150,6 +158,8 @@ function (X3DBaseNode)
 		{
 			if (! equals (this .collected, this .array))
 			{
+				// Unbind nodes not in current list (collected);
+
 				for (var i = 0, length = this .array .length; i < length; ++ i)
 				{
 					var node = this .array [i];
