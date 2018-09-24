@@ -121,6 +121,8 @@ function (Fields,
 		},
 		keydown: function (event)
 		{
+			event .preventDefault ();
+
 			switch (event .which)
 			{
 				case 16: // Shift
@@ -233,6 +235,8 @@ function (Fields,
 		},
 		keyup: function (event)
 		{
+			event .preventDefault ();
+
 			switch (event .which)
 			{
 				case 16: // Shift

@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-378 */
+/* X_ITE v4.2.5a-379 */
 
 (function () {
 
@@ -97704,6 +97704,8 @@ function (Fields,
 		},
 		keydown: function (event)
 		{
+			event .preventDefault ();
+
 			switch (event .which)
 			{
 				case 16: // Shift
@@ -97816,6 +97818,8 @@ function (Fields,
 		},
 		keyup: function (event)
 		{
+			event .preventDefault ();
+
 			switch (event .which)
 			{
 				case 16: // Shift
