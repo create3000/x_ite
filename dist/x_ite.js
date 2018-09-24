@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-377 */
+/* X_ITE v4.2.5a-378 */
 
 (function () {
 
@@ -97804,7 +97804,8 @@ function (Fields,
 						      this .keyPress_ = "\t";
 								break;
 							default:
-						      this .keyPress_ = event .key;
+								if (event .key .length == 1)
+						         this .keyPress_ = event .key;
 								break;
 						}
 					}
@@ -97921,7 +97922,8 @@ function (Fields,
 						      this .keyRelease_ = "\t";
 								break;
 							default:
-						      this .keyRelease_ = event .key;
+								if (event .key .length == 1)
+							      this .keyRelease_ = event .key;
 								break;
 						}
 					}
