@@ -629,10 +629,10 @@ function (Fields,
 
 			if (flatShading === this .flatShading)
 				return;
-		   
-		   this .flatShading = flatShading;
 
-		   // Generate flat normals if needed.
+			this .flatShading = flatShading;
+
+			// Generate flat normals if needed.
 
 			var gl = this .getBrowser () .getContext ();
 

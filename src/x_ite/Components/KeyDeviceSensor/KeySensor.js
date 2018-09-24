@@ -197,8 +197,35 @@ function (Fields,
 				////////////////////////////////////
 				default:
 				{
-				   if (event .charCode)
-				      this .keyPress_ = event .key;
+				   if (event .charCode || event .keyCode)
+					{
+						switch (event .key)
+						{
+							case "AltGraph":
+							case "CapsLock":
+							case "Insert":
+								break;
+							case "Backspace":
+						      this .keyPress_ = String .fromCharCode (8);
+								break;
+							case "Delete":
+						      this .keyPress_ = String .fromCharCode (127);
+								break;
+							case "Enter":
+						      this .keyPress_ = "\n";
+								break;
+							case "Escape":
+								this .keyPress_ = String .fromCharCode (27);
+								break;
+							case "Tab":
+						      this .keyPress_ = "\t";
+								break;
+							default:
+						      this .keyPress_ = event .key;
+								break;
+						}
+					}
+
 				   break;
 				}
 			}
@@ -287,8 +314,35 @@ function (Fields,
 				////////////////////////////////////
 				default:
 				{
-				   if (event .charCode)
-				      this .keyRelease_ = event .key;
+				   if (event .charCode || event .keyCode)
+					{
+						switch (event .key)
+						{
+							case "AltGraph":
+							case "CapsLock":
+							case "Insert":
+								break;
+							case "Backspace":
+						      this .keyRelease_ = String .fromCharCode (8);
+								break;
+							case "Delete":
+						      this .keyRelease_ = String .fromCharCode (127);
+								break;
+							case "Enter":
+						      this .keyRelease_ = "\n";
+								break;
+							case "Escape":
+								this .keyRelease_ = String .fromCharCode (27);
+								break;
+							case "Tab":
+						      this .keyRelease_ = "\t";
+								break;
+							default:
+						      this .keyRelease_ = event .key;
+								break;
+						}
+					}
+
 				   break;
 				}
 			}
