@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-379 */
+/* X_ITE v4.2.5a-380 */
 
 (function () {
 
@@ -26072,9 +26072,14 @@ function (Fields,
 
 			this .setAttributeSplashScreen ();
 
-			if (rubberband       !== undefined && rubberband       !== this .Rubberband_       .getValue ()) this .Rubberband_       = rubberband;
-			if (primitiveQuality !== undefined && primitiveQuality !== this .PrimitiveQuality_ .getValue ()) this .PrimitiveQuality_ = primitiveQuality;
-			if (textureQuality   !== undefined && textureQuality   !== this .TextureQuality_   .getValue ()) this .TextureQuality_   = textureQuality;
+			if (rubberband !== undefined && rubberband !== this .Rubberband_ .getValue ())
+				this .Rubberband_ = rubberband;
+
+			if (primitiveQuality !== undefined && primitiveQuality !== this .PrimitiveQuality_ .getValue () .toUpperCase ())
+				this .PrimitiveQuality_ = primitiveQuality;
+
+			if (textureQuality !== undefined && textureQuality !== this .TextureQuality_ .getValue () .toUpperCase ())
+				this .TextureQuality_ = textureQuality;
 
 			this .LogarithmicDepthBuffer_ = false;
 		},
@@ -26112,7 +26117,7 @@ function (Fields,
 		},
 		getShading: function ()
 		{
-			return this .Shading_ .getValue ();
+			return this .Shading_ .getValue () .toUpperCase ();
 		},
 		set_splashScreen__: function (splashScreen)
 		{
@@ -26122,9 +26127,11 @@ function (Fields,
 		{
 			this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"] = rubberband .getValue ();
 		},
-		set_primitiveQuality__: function (primitiveQuality)
+		set_primitiveQuality__: function (value)
 		{
-			this .getBrowser () .getLocalStorage () ["BrowserOptions.PrimitiveQuality"] = primitiveQuality .getValue ();
+			var primitiveQuality = value .getValue () .toUpperCase ();
+
+			this .getBrowser () .getLocalStorage () ["BrowserOptions.PrimitiveQuality"] = primitiveQuality;
 
 			var
 				arc      = this .getBrowser () .getArc2DOptions (),
@@ -26135,7 +26142,7 @@ function (Fields,
 				cylinder = this .getBrowser () .getCylinderOptions (),
 				sphere   = this .getBrowser () .getSphereOptions ();
 
-			switch (primitiveQuality .getValue ())
+			switch (primitiveQuality)
 			{
 				case "LOW":
 				{
@@ -26187,13 +26194,15 @@ function (Fields,
 				}
 			}
 		},
-		set_textureQuality__: function (textureQuality)
+		set_textureQuality__: function (value)
 		{
-			this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"] = textureQuality .getValue ();
+			var textureQuality = value .getValue () .toUpperCase ();
+
+			this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"] = textureQuality;
 
 			var textureProperties = this .getBrowser () .getDefaultTextureProperties ();
 
-			switch (textureQuality .getValue ())
+			switch (textureQuality)
 			{
 				case "LOW":
 				{
@@ -115868,19 +115877,6 @@ function ($,
 
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
-
-			if (this .initialized () .getValue ())
-			{
-				this .initialized () .setValue (this .getCurrentTime ());
-
-				if (this .browserCallbacks .size)
-				{
-					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
-					{
-						browserCallback ("initialized");
-					});
-				}
-			}
 		},
 		set_loadCount__: function (loadCount)
 		{
@@ -115898,6 +115894,19 @@ function ($,
 
 			this .getWorld () .bind ();
 			this .setBrowserLoading (false);
+
+			if (this .initialized () .getValue ())
+			{
+				this .initialized () .setValue (this .getCurrentTime ());
+
+				if (this .browserCallbacks .size)
+				{
+					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+					{
+						browserCallback ("initialized");
+					});
+				}
+			}
 		},
 		createVrmlFromString: function (vrmlSyntax)
 		{
