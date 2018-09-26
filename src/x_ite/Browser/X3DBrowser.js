@@ -288,19 +288,6 @@ function ($,
 
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
-
-			if (this .initialized () .getValue ())
-			{
-				this .initialized () .setValue (this .getCurrentTime ());
-
-				if (this .browserCallbacks .size)
-				{
-					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
-					{
-						browserCallback ("initialized");
-					});
-				}
-			}
 		},
 		set_loadCount__: function (loadCount)
 		{
@@ -318,6 +305,19 @@ function ($,
 
 			this .getWorld () .bind ();
 			this .setBrowserLoading (false);
+
+			if (this .initialized () .getValue ())
+			{
+				this .initialized () .setValue (this .getCurrentTime ());
+
+				if (this .browserCallbacks .size)
+				{
+					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+					{
+						browserCallback ("initialized");
+					});
+				}
+			}
 		},
 		createVrmlFromString: function (vrmlSyntax)
 		{
