@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-384 */
+/* X_ITE v4.2.5a-385 */
 
 (function () {
 
@@ -64005,7 +64005,7 @@ function ($,
 		SPIN_FACTOR       = 0.6,
 		SCROLL_FACTOR     = 1.0 / 20.0,
 		MOVE_TIME         = 0.2,
-		ROTATE_TIME       = 0.2;
+		ROTATE_TIME       = 0.2,
 		MAX_ANGLE         = 0.95;
 
 	function ExamineViewer (executionContext)
