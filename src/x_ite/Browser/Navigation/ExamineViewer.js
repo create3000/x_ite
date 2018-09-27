@@ -527,8 +527,17 @@ function ($,
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			viewpoint .orientationOffset_ = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset);
-			viewpoint .positionOffset_    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint .orientationOffset_ .getValue ());
+			try
+			{
+				viewpoint .orientationOffset_ = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset);
+			}
+			catch (error)
+			{
+				this .rotationChaser .set_destination_ = this .rotationChaser .value_changed_;
+				this .rotationChaser .value_changed_ .removeInterest ("set_rotation__", this)
+			}
+
+			viewpoint .positionOffset_ = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint .orientationOffset_ .getValue ());
 		},
 		addRotate: function (rotationChange)
 		{
@@ -646,25 +655,45 @@ function ($,
 		getOrientationOffset: (function ()
 		{
 			var
-				userOrientation   = new Rotation4 (0, 0, 1, 0),
-				orientationOffset = new Rotation4 (0, 0, 1, 0);
+				userOrientationBefore = new Rotation4 (0, 0, 1, 0),
+				userOrientationAfter  = new Rotation4 (0, 0, 1, 0),
+				orientationOffset     = new Rotation4 (0, 0, 1, 0),
+				zAxis                 = new Vector3 (0, 0, 0);
 
 			return function (rotation, orientationOffsetBefore)
 			{
-				var viewpoint = this .getActiveViewpoint ();
+				var
+					viewpoint         = this .getActiveViewpoint (),
+					straightenHorizon = this .getBrowser () .getBrowserOption ("StraightenHorizon");
 	
-				userOrientation
+				userOrientationBefore
 					.assign (rotation)
 					.multRight (viewpoint .getOrientation ())
 					.multRight (orientationOffsetBefore);
 	
-				if (this .getBrowser () .getBrowserOption ("StraightenHorizon") && ! (viewpoint instanceof GeoViewpoint))
-					viewpoint .straightenHorizon (userOrientation);
+				if (straightenHorizon && ! (viewpoint instanceof GeoViewpoint))
+					viewpoint .straightenHorizon (userOrientationBefore);
 	
-				return (orientationOffset
+				var orientationOffsetAfter = orientationOffset
 					.assign (viewpoint .getOrientation ())
 					.inverse ()
-					.multRight (userOrientation));
+					.multRight (userOrientationBefore);
+
+				userOrientationAfter
+					.assign (viewpoint .getOrientation ())
+					.multRight (orientationOffsetAfter);
+
+				if (straightenHorizon)
+				{
+					if (Math .abs (viewpoint .getUpVector () .dot (userOrientationAfter .multVecRot (zAxis .assign (Vector3 .zAxis)))) < 0.95)
+						return orientationOffsetAfter;
+
+					throw 1;
+				}
+				else
+				{
+					return orientationOffsetAfter;
+				}
 			};
 		})(),
 		disconnect: function ()
