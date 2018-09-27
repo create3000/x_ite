@@ -77,7 +77,7 @@ function ($,
 		SCROLL_FACTOR     = 1.0 / 20.0,
 		MOVE_TIME         = 0.2,
 		ROTATE_TIME       = 0.2,
-		MAX_ANGLE         = 0.95;
+		MAX_ANGLE         = 0.97;
 
 	function ExamineViewer (executionContext)
 	{
