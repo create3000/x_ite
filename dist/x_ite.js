@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-388 */
+/* X_ITE v4.2.5a-389 */
 
 (function () {
 
@@ -64584,10 +64584,9 @@ function ($,
 		getOrientationOffset: (function ()
 		{
 			var
-				userOrientationBefore = new Rotation4 (0, 0, 1, 0),
-				userOrientationAfter  = new Rotation4 (0, 0, 1, 0),
-				orientationOffset     = new Rotation4 (0, 0, 1, 0),
-				zAxis                 = new Vector3 (0, 0, 0);
+				userOrientation   = new Rotation4 (0, 0, 1, 0),
+				orientationOffset = new Rotation4 (0, 0, 1, 0),
+				zAxis             = new Vector3 (0, 0, 0);
 
 			return function (rotation, orientationOffsetBefore)
 			{
@@ -64595,26 +64594,24 @@ function ($,
 					viewpoint         = this .getActiveViewpoint (),
 					straightenHorizon = this .getBrowser () .getBrowserOption ("StraightenHorizon");
 	
-				userOrientationBefore
+				userOrientation
 					.assign (rotation)
 					.multRight (viewpoint .getOrientation ())
 					.multRight (orientationOffsetBefore);
 	
 				if (straightenHorizon && ! (viewpoint instanceof GeoViewpoint))
-					viewpoint .straightenHorizon (userOrientationBefore);
+					viewpoint .straightenHorizon (userOrientation);
 	
 				var orientationOffsetAfter = orientationOffset
 					.assign (viewpoint .getOrientation ())
 					.inverse ()
-					.multRight (userOrientationBefore);
+					.multRight (userOrientation);
 
 				if (straightenHorizon)
 				{
-					userOrientationAfter
-						.assign (viewpoint .getOrientation ())
-						.multRight (orientationOffsetAfter);
-	
-					if (Math .abs (viewpoint .getUpVector () .dot (userOrientationAfter .multVecRot (zAxis .assign (Vector3 .zAxis)))) < MAX_ANGLE)
+					var userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
+
+					if (Math .abs (viewpoint .getUpVector () .dot (userVector)) < MAX_ANGLE)
 						return orientationOffsetAfter;
 
 					throw new Error ("Critical angle");
