@@ -526,19 +526,18 @@ function ($,
 		},
 		set_rotation__: function (value)
 		{
-			var viewpoint = this .getActiveViewpoint ();
-
 			try
 			{
+				var viewpoint = this .getActiveViewpoint ();
+	
 				viewpoint .orientationOffset_ = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset);
+				viewpoint .positionOffset_    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint .orientationOffset_ .getValue ());
 			}
 			catch (error)
 			{
-				this .rotationChaser .set_destination_ = this .rotationChaser .value_changed_;
-				this .rotationChaser .value_changed_ .removeInterest ("set_rotation__", this)
+				// Critical angle.
+				this .disconnect ();
 			}
-
-			viewpoint .positionOffset_ = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint .orientationOffset_ .getValue ());
 		},
 		addRotate: function (rotationChange)
 		{
@@ -689,7 +688,7 @@ function ($,
 					if (Math .abs (viewpoint .getUpVector () .dot (userOrientationAfter .multVecRot (zAxis .assign (Vector3 .zAxis)))) < MAX_ANGLE)
 						return orientationOffsetAfter;
 
-					throw 1;
+					throw new Error ("Critical angle");
 				}
 				else
 				{
