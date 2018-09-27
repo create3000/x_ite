@@ -680,12 +680,12 @@ function ($,
 					.inverse ()
 					.multRight (userOrientationBefore);
 
-				userOrientationAfter
-					.assign (viewpoint .getOrientation ())
-					.multRight (orientationOffsetAfter);
-
 				if (straightenHorizon)
 				{
+					userOrientationAfter
+						.assign (viewpoint .getOrientation ())
+						.multRight (orientationOffsetAfter);
+	
 					if (Math .abs (viewpoint .getUpVector () .dot (userOrientationAfter .multVecRot (zAxis .assign (Vector3 .zAxis)))) < MAX_ANGLE)
 						return orientationOffsetAfter;
 
