@@ -155,9 +155,18 @@ function ($,
 								this .getBrowser () .setBrowserOption ("StraightenHorizon", straightenHorizon);
 
 								if (straightenHorizon)
+								{
 									this .getBrowser () .getNotification () .string_ = _("Straighten Horizon") + ": " + _("on");
+									
+									var activeViewpoint = this .getBrowser () .getActiveViewpoint ();
+
+									if (activeViewpoint)
+										activeViewpoint .straighten (true);
+								}
 								else
+								{
 									this .getBrowser () .getNotification () .string_ = _("Straighten Horizon") + ": " + _("off");
+								}
 							}
 							.bind (this),
 						},

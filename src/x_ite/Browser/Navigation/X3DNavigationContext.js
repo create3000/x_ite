@@ -116,6 +116,14 @@ function (Fields,
 		{
 			return this .activeLayer_ .getValue ();
 		},
+		getActiveNavigationInfo: function ()
+		{
+			return this .activeNavigationInfo_ .getValue ();
+		},
+		getActiveViewpoint: function ()
+		{
+			return this .activeViewpoint_ .getValue ();
+		},
 		getCurrentViewer: function ()
 		{
 			return this .viewer_ .getValue ();

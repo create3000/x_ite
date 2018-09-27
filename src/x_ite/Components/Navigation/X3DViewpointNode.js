@@ -440,9 +440,38 @@ function (Fields,
 			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
 			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
 			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
-		
+			
+			this .setInterpolators (this);
+
 			this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
 			this .set_bind_               = true;
+		},
+		straighten: function (horizon)
+		{
+			var layers = this .getLayers ();
+
+			layers .forEach (function (layer)
+			{
+				layer .getNavigationInfo () .transitionStart_ = true;
+			});
+
+			this .timeSensor .cycleInterval_ = 0.4;
+			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
+			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+			this .timeSensor .isActive_ .addInterest ("set_active__", this);
+			
+			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+		
+			var rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
+
+			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, this .positionOffset_);
+			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
+			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
+			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
+	
+			this .setInterpolators (this);
+		
+			this .set_bind_ = true;
 		},
 		set_active__: function (active)
 		{
