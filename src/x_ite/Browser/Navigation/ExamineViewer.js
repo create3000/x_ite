@@ -77,6 +77,7 @@ function ($,
 		SCROLL_FACTOR     = 1.0 / 20.0,
 		MOVE_TIME         = 0.2,
 		ROTATE_TIME       = 0.2;
+		MAX_ANGLE         = 0.95;
 
 	function ExamineViewer (executionContext)
 	{
@@ -685,7 +686,7 @@ function ($,
 
 				if (straightenHorizon)
 				{
-					if (Math .abs (viewpoint .getUpVector () .dot (userOrientationAfter .multVecRot (zAxis .assign (Vector3 .zAxis)))) < 0.95)
+					if (Math .abs (viewpoint .getUpVector () .dot (userOrientationAfter .multVecRot (zAxis .assign (Vector3 .zAxis)))) < MAX_ANGLE)
 						return orientationOffsetAfter;
 
 					throw 1;
