@@ -164,7 +164,7 @@ function (Fields,
 					{
 						if (! this .collisionShapes)
 						{
-							console .log ("Rebuilding StaticGroup collisionShapes");
+							//console .log ("Rebuilding StaticGroup collisionShapes");
 
 							var
 								viewVolumes         = renderObject .getViewVolumes (),
@@ -210,7 +210,7 @@ function (Fields,
 					{
 						if (! this .depthShapes)
 						{
-							console .log ("Rebuilding StaticGroup depthShapes");
+							//console .log ("Rebuilding StaticGroup depthShapes");
 
 							var
 								viewVolumes      = renderObject .getViewVolumes (),
@@ -256,7 +256,7 @@ function (Fields,
 					{
 						if (! this .opaqueShapes)
 						{
-							console .log ("Rebuilding StaticGroup opaqueShapes and transparentShapes");
+							//console .log ("Rebuilding StaticGroup opaqueShapes and transparentShapes");
 
 							var
 								viewVolumes           = renderObject .getViewVolumes (),

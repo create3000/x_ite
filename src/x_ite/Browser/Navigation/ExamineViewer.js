@@ -117,6 +117,8 @@ function ($,
 
 			// Bind pointing device events.
 
+			browser .activeViewpoint_ .addInterest ("set_activeViewpoint__", this);
+
 			element .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
 			element .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
 			element .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
@@ -138,6 +140,10 @@ function ($,
 			this .rotationChaser .duration_ = ROTATE_TIME;
 			this .rotationChaser .setPrivate (true);
 			this .rotationChaser .setup ();
+		},
+		set_activeViewpoint__: function ()
+		{
+			this .disconnect ();
 		},
 		mousedown: function (event)
 		{
@@ -673,8 +679,11 @@ function ($,
 		},
 		dispose: function ()
 		{
+			var browser = this .getBrowser ();
+
 			this .disconnect ();
-			this .getBrowser () .getElement () .unbind (".ExamineViewer");
+			browser .activeViewpoint_ .removeInterest ("set_activeViewpoint__", this);
+			browser .getElement () .unbind (".ExamineViewer");
 			$(document) .unbind (".ExamineViewer" + this .getId ());
 		},
 	});

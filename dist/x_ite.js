@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-380 */
+/* X_ITE v4.2.5a-381 */
 
 (function () {
 
@@ -63978,6 +63978,8 @@ function ($,
 
 			// Bind pointing device events.
 
+			browser .activeViewpoint_ .addInterest ("set_activeViewpoint__", this);
+
 			element .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
 			element .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
 			element .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
@@ -63999,6 +64001,10 @@ function ($,
 			this .rotationChaser .duration_ = ROTATE_TIME;
 			this .rotationChaser .setPrivate (true);
 			this .rotationChaser .setup ();
+		},
+		set_activeViewpoint__: function ()
+		{
+			this .disconnect ();
 		},
 		mousedown: function (event)
 		{
@@ -64534,8 +64540,11 @@ function ($,
 		},
 		dispose: function ()
 		{
+			var browser = this .getBrowser ();
+
 			this .disconnect ();
-			this .getBrowser () .getElement () .unbind (".ExamineViewer");
+			browser .activeViewpoint_ .removeInterest ("set_activeViewpoint__", this);
+			browser .getElement () .unbind (".ExamineViewer");
 			$(document) .unbind (".ExamineViewer" + this .getId ());
 		},
 	});
@@ -67962,14 +67971,15 @@ function (Fields,
 
 	function X3DNavigationContext ()
 	{
-		this .addChildObjects ("availableViewers", new Fields .MFString (),
-		                       "viewer",           new Fields .SFString ("EXAMINE"));
+		this .addChildObjects ("activeLayer",          new Fields .SFNode (),
+		                       "activeNavigationInfo", new Fields .SFNode (),
+		                       "activeViewpoint",      new Fields .SFNode (),
+		                       "availableViewers",     new Fields .MFString (),
+		                       "viewer",               new Fields .SFString ("EXAMINE"));
 		
-		this .activeCollisions   = { };
-		this .collisionCount     = 0;
-		this .activeLayerNode    = null;
-		this .navigationInfoNode = null;
-		this .viewerNode         = null;
+		this .activeCollisions = { };
+		this .collisionCount   = 0;
+		this .viewerNode       = null;
 	}
 
 	X3DNavigationContext .prototype =
@@ -67989,7 +67999,7 @@ function (Fields,
 		},
 		getActiveLayer: function ()
 		{
-			return this .activeLayerNode;
+			return this .activeLayer_ .getValue ();
 		},
 		getCurrentViewer: function ()
 		{
@@ -68029,39 +68039,53 @@ function (Fields,
 		},
 		set_activeLayer__: function ()
 		{
-			if (this .activeLayerNode)
-				this .activeLayerNode .getNavigationInfoStack () .removeInterest ("set_navigationInfo__", this);
-
-			this .activeLayerNode = this .getWorld () .getActiveLayer ();
-
-			if (this .activeLayerNode)
-				this .activeLayerNode .getNavigationInfoStack () .addInterest ("set_navigationInfo__", this);
-
-			this .set_navigationInfo__ ();
-		},
-		set_navigationInfo__: function ()
-		{
-			if (this .navigationInfoNode)
-				this .navigationInfoNode .viewer_ .removeFieldInterest (this .viewer_);
-
-			if (! this .activeLayerNode)
+			if (this .activeLayer_ .getValue ())
 			{
-				this .navigationInfoNode = null;
-
-				this .viewer_ = "NONE";
-				return;
+				this .activeLayer_ .getValue () .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
+				this .activeLayer_ .getValue () .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
 			}
 
-			this .navigationInfoNode = this .activeLayerNode .getNavigationInfo ();
+			this .activeLayer_ = this .getWorld () .getActiveLayer ();
 
-			this .navigationInfoNode .viewer_ .addFieldInterest (this .viewer_);
+			if (this .activeLayer_ .getValue ())
+			{
+				this .activeLayer_ .getValue () .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
+				this .activeLayer_ .getValue () .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
+			}
 
-			this .viewer_ = this .navigationInfoNode .viewer_;
+			this .set_activeNavigationInfo__ ();
+			this .set_activeViewpoint__ ();
+		},
+		set_activeNavigationInfo__: function ()
+		{
+			if (this .activeNavigationInfo_ .getValue ())
+				this .activeNavigationInfo_ .getValue () .viewer_ .removeFieldInterest (this .viewer_);
+
+			if (this .activeLayer_ .getValue ())
+			{
+				this .activeNavigationInfo_ = this .activeLayer_ .getValue () .getNavigationInfo ();
+	
+				this .activeNavigationInfo_ .getValue () .viewer_ .addFieldInterest (this .viewer_);
+	
+				this .viewer_ = this .activeNavigationInfo_ .getValue () .viewer_;
+			}
+			else
+			{
+				this .activeNavigationInfo_ = null;
+				this .viewer_               = "NONE";
+			}
+		},
+		set_activeViewpoint__: function ()
+		{
+			if (this .activeLayer_ .getValue ())
+				this .activeViewpoint_ = this .activeLayer_ .getValue () .getViewpoint ();
+			else
+				this .activeViewpoint_ = null;
 		},
 		set_viewer__: function (viewer)
 		{
-			if (this .navigationInfoNode)
-				this .availableViewers_ = this .navigationInfoNode .availableViewers_;
+			if (this .activeNavigationInfo_ .getValue ())
+				this .availableViewers_ = this .activeNavigationInfo_ .getValue () .availableViewers_;
 			else
 				this .availableViewers_ .length = 0;
 

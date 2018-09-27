@@ -1,12 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/KeyDeviceSensor/KeySensor.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/x_ite.html" Line="284" Column="63" />
+      <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Core/ContextMenu.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Execution/BindableList.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/KeyDeviceSensor/KeySensor.js" Line="126" Column="1" />
+      <File FileName="src/x_ite/Browser/Core/BrowserOptions.js" Line="269" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
