@@ -141,6 +141,27 @@ function ($,
 						name: _("Available Viewers"),
 						items: this .getAvailableViewers (),
 					},
+					"straighten-horizon": {
+						name: _("Straighten Horizon"),
+						type: "checkbox",
+						selected: this .getBrowser () .getBrowserOption ("StraightenHorizon"),
+						events: {
+							click: function ()
+							{
+								$("body > ul.context-menu-list") .fadeOut (500);
+
+								var straightenHorizon = ! this .getBrowser () .getBrowserOption ("StraightenHorizon");
+
+								this .getBrowser () .setBrowserOption ("StraightenHorizon", straightenHorizon);
+
+								if (straightenHorizon)
+									this .getBrowser () .getNotification () .string_ = _("Straighten Horizon") + ": " + _("on");
+								else
+									this .getBrowser () .getNotification () .string_ = _("Straighten Horizon") + ": " + _("off");
+							}
+							.bind (this),
+						},
+					},
 					"separator2": "--------",
 					"primitive-quality": {
 						name: _("Primitive Quality"),

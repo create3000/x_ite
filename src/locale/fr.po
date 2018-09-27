@@ -103,6 +103,10 @@ msgstr "Points de vue"
 msgid "Available Viewers"
 msgstr "Visionneurs disponibles"
 
+#: Browser/Core/ContextMenu.js:145
+msgid "Straighten Horizon"
+msgstr "Redresser l'horizon"
+
 #: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107
 #: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135
 msgid "Primitive Quality"
