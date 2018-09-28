@@ -572,11 +572,31 @@ function ($,
 				}
 				else
 				{
-					this .rotationChaser .set_value_       = Rotation4 .Identity;
-					this .rotationChaser .set_destination_ = rotationChange;
+					try
+					{
+						this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
+						this .initialPositionOffset    .assign (viewpoint .positionOffset_    .getValue ());
 	
-					this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
-					this .initialPositionOffset    .assign (viewpoint .positionOffset_    .getValue ());
+						// Check for critical angle.
+						this .getOrientationOffset (rotationChange, this .initialOrientationOffset, true);
+	
+						this .rotationChaser .set_value_       = Rotation4 .Identity;
+						this .rotationChaser .set_destination_ = rotationChange;
+					}
+					catch (error)
+					{
+						// Slide along critical angle.
+
+						var
+							V = rotationChange .multVecRot (xAxis .assign (Vector3 .xAxis)) .normalize (),
+							N = Vector3 .cross (viewpoint .getUpVector (), V) .normalize (),
+							H = Vector3 .cross (N, viewpoint .getUpVector ()) .normalize ();
+
+						rotationChange .setFromToVec (Vector3 .xAxis, H);
+
+						this .rotationChaser .set_value_       = Rotation4 .Identity;
+						this .rotationChaser .set_destination_ = rotationChange;
+					}
 				}
 	
 				this .disconnect ();
