@@ -51,12 +51,14 @@ define ([
 	"jquery",
 	"contextMenu",
 	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Components/Geospatial/GeoViewpoint",
 	"locale/gettext",
 	"lib/jquery.fullscreen-min",
 ],
 function ($,
           contextMenu,
           X3DBaseNode,
+          GeoViewpoint,
           _)
 {
 "use strict";
@@ -360,13 +362,18 @@ function ($,
 
 			if ($.isEmptyObject (menu .items .viewpoints .items))
 			{
-				delete menu .items .separator0;
-				delete menu .items .viewpoints;
+				delete menu .items ["separator0"];
+				delete menu .items ["viewpoints"];
 			}
 
 			if (Object .keys (menu .items ["available-viewers"] .items) .length < 2)
 			{
 				delete menu .items ["available-viewers"];
+			}
+
+			if (!(this .getBrowser () .getCurrentViewer () == "EXAMINE" && ! (this .getBrowser () .getActiveViewpoint () instanceof GeoViewpoint)))
+			{
+				delete menu .items ["straighten-horizon"];
 			}
 
 			return menu;
