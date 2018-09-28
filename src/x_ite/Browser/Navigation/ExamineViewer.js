@@ -703,7 +703,10 @@ function ($,
 				{
 					var userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
 
-					if (! _throw || (Math .abs (viewpoint .getUpVector () .dot (userVector)) < MAX_ANGLE))
+					if (! _throw)
+						return orientationOffsetAfter;
+
+					if (Math .abs (viewpoint .getUpVector () .dot (userVector)) < MAX_ANGLE)
 						return orientationOffsetAfter;
 
 					throw new Error ("Critical angle");
