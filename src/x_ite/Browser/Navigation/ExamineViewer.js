@@ -526,42 +526,63 @@ function ($,
 		},
 		set_rotation__: function (value)
 		{
-			try
+			var viewpoint = this .getActiveViewpoint ();
+	
+			viewpoint .orientationOffset_ = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset, false);
+			viewpoint .positionOffset_    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint .orientationOffset_ .getValue ());
+		},
+		addRotate: (function ()
+		{
+			var
+				destination = new Rotation4 (),
+				xAxis       = new Vector3 (0, 0, 0);
+
+			return function (rotationChange)
 			{
 				var viewpoint = this .getActiveViewpoint ();
 	
-				viewpoint .orientationOffset_ = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset);
-				viewpoint .positionOffset_    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint .orientationOffset_ .getValue ());
-			}
-			catch (error)
-			{
-				// Critical angle.
+				if (this .rotationChaser .isActive_ .getValue () && this .rotationChaser .value_changed_ .hasInterest ("set_rotation__", this))
+				{
+					try
+					{
+						destination .assign (this .rotationChaser .set_destination_ .getValue ())
+							.multLeft (rotationChange);
+	
+						// Check for critical angle.
+						this .getOrientationOffset (destination, this .initialOrientationOffset, true);
+
+						this .rotationChaser .set_destination_ = destination;
+					}
+					catch (error)
+					{
+						// Slide along critical angle.
+
+						var
+							V = rotationChange .multVecRot (xAxis .assign (Vector3 .xAxis)) .normalize (),
+							N = Vector3 .cross (viewpoint .getUpVector (), V) .normalize (),
+							H = Vector3 .cross (N, viewpoint .getUpVector ()) .normalize ();
+
+						rotationChange .setFromToVec (Vector3 .xAxis, H);
+
+						destination .assign (this .rotationChaser .set_destination_ .getValue ())
+							.multLeft (rotationChange);
+
+						this .rotationChaser .set_destination_ = destination;
+					}
+				}
+				else
+				{
+					this .rotationChaser .set_value_       = Rotation4 .Identity;
+					this .rotationChaser .set_destination_ = rotationChange;
+	
+					this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
+					this .initialPositionOffset    .assign (viewpoint .positionOffset_    .getValue ());
+				}
+	
 				this .disconnect ();
-			}
-		},
-		addRotate: function (rotationChange)
-		{
-			var viewpoint = this .getActiveViewpoint ();
-
-			if (this .rotationChaser .isActive_ .getValue () && this .rotationChaser .value_changed_ .hasInterest ("set_rotation__", this))
-			{
-				var rotation = this .rotationChaser .set_destination_ .getValue ()
-					.multLeft (rotationChange);
-
-				this .rotationChaser .set_destination_ = rotation;
-			}
-			else
-			{
-				this .rotationChaser .set_value_       = Rotation4 .Identity;
-				this .rotationChaser .set_destination_ = rotationChange;
-
-				this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
-				this .initialPositionOffset    .assign (viewpoint .positionOffset_    .getValue ());
-			}
-
-			this .disconnect ();
-			this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
-		},
+				this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
+			};
+		})(),
 		addSpinning: (function ()
 		{
 			var rotation = new Rotation4 (0, 0, 1, 0);
@@ -659,7 +680,7 @@ function ($,
 				orientationOffset = new Rotation4 (0, 0, 1, 0),
 				zAxis             = new Vector3 (0, 0, 0);
 
-			return function (rotation, orientationOffsetBefore)
+			return function (rotation, orientationOffsetBefore, _throw)
 			{
 				var
 					viewpoint         = this .getActiveViewpoint (),
@@ -682,7 +703,7 @@ function ($,
 				{
 					var userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
 
-					if (Math .abs (viewpoint .getUpVector () .dot (userVector)) < MAX_ANGLE)
+					if (! _throw || (Math .abs (viewpoint .getUpVector () .dot (userVector)) < MAX_ANGLE))
 						return orientationOffsetAfter;
 
 					throw new Error ("Critical angle");
