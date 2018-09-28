@@ -699,7 +699,7 @@ function ($,
 					.inverse ()
 					.multRight (userOrientation);
 
-				if (straightenHorizon)
+				if (straightenHorizon && ! (viewpoint instanceof GeoViewpoint))
 				{
 					var userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
 

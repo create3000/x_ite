@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-390 */
+/* X_ITE v4.2.5a-391 */
 
 (function () {
 
@@ -64628,7 +64628,7 @@ function ($,
 					.inverse ()
 					.multRight (userOrientation);
 
-				if (straightenHorizon)
+				if (straightenHorizon && ! (viewpoint instanceof GeoViewpoint))
 				{
 					var userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
 
