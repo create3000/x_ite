@@ -116,9 +116,12 @@ function ($,
 			   browser = this .getBrowser (),
 			   element = browser .getElement ();
 
-			// Bind pointing device events.
+			// Disconnect from spin.
 
-			browser .activeViewpoint_ .addInterest ("set_activeViewpoint__", this);
+			this .getNavigationInfo () .transitionStart_ .addInterest ("disconnect", this);
+			browser .activeViewpoint_ .addInterest ("disconnect", this);
+
+			// Bind pointing device events.
 
 			element .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
 			element .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
@@ -141,10 +144,6 @@ function ($,
 			this .rotationChaser .duration_ = ROTATE_TIME;
 			this .rotationChaser .setPrivate (true);
 			this .rotationChaser .setup ();
-		},
-		set_activeViewpoint__: function ()
-		{
-			this .disconnect ();
 		},
 		mousedown: function (event)
 		{

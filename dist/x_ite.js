@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-394 */
+/* X_ITE v4.2.5a-395 */
 
 (function () {
 
@@ -31410,7 +31410,7 @@ function (Fields,
 							var navigationInfo = layers [i] .getNavigationInfo ();
 	
 							navigationInfo .transitionStart_ = true;
-	
+
 							var
 								transitionType = navigationInfo .getTransitionType (),
 								transitionTime = navigationInfo .transitionTime_ .getValue ();
@@ -31575,8 +31575,10 @@ function (Fields,
 				layers = this .getLayers (),
 				offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
-			for (var i = 0; i < layers .length; ++ i)
-				layers [i] .getNavigationInfo () .transitionStart_ = true;;
+			layers .forEach (function (layer)
+			{
+				layer .getNavigationInfo () .transitionStart_ = true;
+			});
 		
 			this .timeSensor .cycleInterval_ = 0.2;
 			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
@@ -33228,7 +33230,8 @@ function (Fields,
 
 		this .addType (X3DConstants .NavigationInfo);
 				
-		this .addChildObjects ("availableViewers", new Fields .MFString (),
+		this .addChildObjects ("transitionStart",  new Fields .SFBool (),
+		                       "availableViewers", new Fields .MFString (),
 		                       "viewer",           new Fields .SFString ("EXAMINE"));
 
 		this .avatarSize_      .setUnit ("length");
@@ -64052,9 +64055,12 @@ function ($,
 			   browser = this .getBrowser (),
 			   element = browser .getElement ();
 
-			// Bind pointing device events.
+			// Disconnect from spin.
 
-			browser .activeViewpoint_ .addInterest ("set_activeViewpoint__", this);
+			this .getNavigationInfo () .transitionStart_ .addInterest ("disconnect", this);
+			browser .activeViewpoint_ .addInterest ("disconnect", this);
+
+			// Bind pointing device events.
 
 			element .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
 			element .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
@@ -64077,10 +64083,6 @@ function ($,
 			this .rotationChaser .duration_ = ROTATE_TIME;
 			this .rotationChaser .setPrivate (true);
 			this .rotationChaser .setup ();
-		},
-		set_activeViewpoint__: function ()
-		{
-			this .disconnect ();
 		},
 		mousedown: function (event)
 		{

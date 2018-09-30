@@ -253,7 +253,7 @@ function (Fields,
 							var navigationInfo = layers [i] .getNavigationInfo ();
 	
 							navigationInfo .transitionStart_ = true;
-	
+
 							var
 								transitionType = navigationInfo .getTransitionType (),
 								transitionTime = navigationInfo .transitionTime_ .getValue ();
@@ -418,8 +418,10 @@ function (Fields,
 				layers = this .getLayers (),
 				offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
-			for (var i = 0; i < layers .length; ++ i)
-				layers [i] .getNavigationInfo () .transitionStart_ = true;;
+			layers .forEach (function (layer)
+			{
+				layer .getNavigationInfo () .transitionStart_ = true;
+			});
 		
 			this .timeSensor .cycleInterval_ = 0.2;
 			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();

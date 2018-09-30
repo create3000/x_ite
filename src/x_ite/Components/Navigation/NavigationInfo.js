@@ -77,7 +77,8 @@ function (Fields,
 
 		this .addType (X3DConstants .NavigationInfo);
 				
-		this .addChildObjects ("availableViewers", new Fields .MFString (),
+		this .addChildObjects ("transitionStart",  new Fields .SFBool (),
+		                       "availableViewers", new Fields .MFString (),
 		                       "viewer",           new Fields .SFString ("EXAMINE"));
 
 		this .avatarSize_      .setUnit ("length");
