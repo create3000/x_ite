@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-392 */
+/* X_ITE v4.2.5a-393 */
 
 (function () {
 
@@ -116046,6 +116046,7 @@ function ($,
 
 			this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
+			this .prepareEvents () .removeInterest ("bind", this);
 	
 			for (var id in scene .getLoadingObjects ())
 				this .addLoadCount (scene .getLoadingObjects () [id]);
