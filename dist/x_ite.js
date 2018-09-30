@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-393 */
+/* X_ITE v4.2.5a-394 */
 
 (function () {
 
@@ -64471,7 +64471,7 @@ function ($,
 		{
 			var
 				destination = new Rotation4 (),
-				xAxis       = new Vector3 (0, 0, 0);
+				zAxis       = new Vector3 (0, 0, 0);
 
 			return function (rotationChange)
 			{
@@ -64494,11 +64494,11 @@ function ($,
 						// Slide along critical angle.
 
 						var
-							V = rotationChange .multVecRot (xAxis .assign (Vector3 .xAxis)) .normalize (),
+							V = rotationChange .multVecRot (zAxis .assign (Vector3 .zAxis)) .normalize (),
 							N = Vector3 .cross (viewpoint .getUpVector (), V) .normalize (),
 							H = Vector3 .cross (N, viewpoint .getUpVector ()) .normalize ();
 
-						rotationChange .setFromToVec (Vector3 .xAxis, H);
+						rotationChange .setFromToVec (Vector3 .zAxis, H);
 
 						destination .assign (this .rotationChaser .set_destination_ .getValue ())
 							.multLeft (rotationChange);
@@ -64524,11 +64524,11 @@ function ($,
 						// Slide along critical angle.
 
 						var
-							V = rotationChange .multVecRot (xAxis .assign (Vector3 .xAxis)) .normalize (),
+							V = rotationChange .multVecRot (zAxis .assign (Vector3 .zAxis)) .normalize (),
 							N = Vector3 .cross (viewpoint .getUpVector (), V) .normalize (),
 							H = Vector3 .cross (N, viewpoint .getUpVector ()) .normalize ();
 
-						rotationChange .setFromToVec (Vector3 .xAxis, H);
+						rotationChange .setFromToVec (Vector3 .zAxis, H);
 
 						this .rotationChaser .set_value_       = Rotation4 .Identity;
 						this .rotationChaser .set_destination_ = rotationChange;
