@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-396 */
+/* X_ITE v4.2.5a-397 */
 
 (function () {
 
@@ -64170,7 +64170,7 @@ function ($,
 
 					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
-						if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+						if (this .getBrowser () .getBrowserOption ("StraightenHorizon") && ! (viewpoint instanceof GeoViewpoint))
 							this .rotation = this .straightenHorizon (this .rotation);
 
 						this .addSpinning (this .rotation);
