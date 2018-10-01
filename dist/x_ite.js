@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-397 */
+/* X_ITE v4.2.5a-398 */
 
 (function () {
 
@@ -31513,26 +31513,6 @@ function (Fields,
 			relativePosition .subtract (this .getPosition ());
 			relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
 		},
-		straightenHorizon: (function ()
-		{
-			var
-				localXAxis = new Vector3 (0, 0, 0),
-				localZAxis = new Vector3 (0, 0, 0),
-				vector     = new Vector3 (0, 0, 0),
-				rotation   = new Rotation4 (0, 0, 1, 0);
-
-			return function (orientation)
-			{
-				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
-				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
-	
-				vector .assign (localZAxis) .cross (this .getUpVector ());
-	
-				rotation .setFromToVec (localXAxis, vector);
-	
-				return orientation .multRight (rotation);
-			};
-		})(),
 		lookAtPoint: function (point, factor, straighten)
 		{
 			try
@@ -31632,6 +31612,26 @@ function (Fields,
 		
 			this .set_bind_ = true;
 		},
+		straightenHorizon: (function ()
+		{
+			var
+				localXAxis = new Vector3 (0, 0, 0),
+				localZAxis = new Vector3 (0, 0, 0),
+				vector     = new Vector3 (0, 0, 0),
+				rotation   = new Rotation4 (0, 0, 1, 0);
+
+			return function (orientation)
+			{
+				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
+	
+				vector .assign (localZAxis) .cross (this .getUpVector ());
+	
+				rotation .setFromToVec (localXAxis, vector);
+	
+				return orientation .multRight (rotation);
+			};
+		})(),
 		set_active__: function (active)
 		{
 			if (! active .getValue () && this .timeSensor .fraction_changed_ .getValue () === 1)
@@ -64166,12 +64166,14 @@ function ($,
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
+					var viewpoint = this .getActiveViewpoint ();
+
 					this .getBrowser () .setCursor ("DEFAULT");
 
 					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
 						if (this .getBrowser () .getBrowserOption ("StraightenHorizon") && ! (viewpoint instanceof GeoViewpoint))
-							this .rotation = this .straightenHorizon (this .rotation);
+							this .rotation = this .getHorizonRotation (this .rotation);
 
 						this .addSpinning (this .rotation);
 					}
@@ -64493,7 +64495,7 @@ function ($,
 					{
 						// Slide along critical angle.
 
-						rotationChange = this .straightenHorizon (rotationChange);
+						rotationChange = this .getHorizonRotation (rotationChange);
 
 						destination .assign (this .rotationChaser .set_destination_ .getValue ())
 							.multLeft (rotationChange);
@@ -64519,7 +64521,7 @@ function ($,
 						// Slide along critical angle.
 
 						this .rotationChaser .set_value_       = Rotation4 .Identity;
-						this .rotationChaser .set_destination_ = this .straightenHorizon (rotationChange);
+						this .rotationChaser .set_destination_ = this .getHorizonRotation (rotationChange);
 					}
 				}
 	
@@ -64661,7 +64663,7 @@ function ($,
 				}
 			};
 		})(),
-		straightenHorizon: (function ()
+		getHorizonRotation: (function ()
 		{
 			var zAxis = new Vector3 (0, 0, 0);
 
@@ -64673,7 +64675,7 @@ function ($,
 					V = rotation .multVecRot (zAxis .assign (Vector3 .zAxis)) .normalize (),
 					N = Vector3 .cross (viewpoint .getUpVector (), V) .normalize (),
 					H = Vector3 .cross (N, viewpoint .getUpVector ()) .normalize ();
-	
+
 				return new Rotation4 (Vector3 .zAxis, H);
 			};
 		})(),

@@ -227,6 +227,8 @@ function ($,
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
+					var viewpoint = this .getActiveViewpoint ();
+
 					this .getBrowser () .setCursor ("DEFAULT");
 
 					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
