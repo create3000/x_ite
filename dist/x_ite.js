@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5a-395 */
+/* X_ITE v4.2.5a-396 */
 
 (function () {
 
@@ -64171,9 +64171,9 @@ function ($,
 					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
 						if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
-							this .addRotate (this .rotation .pow (4));
-						else
-							this .addSpinning (this .rotation);
+							this .rotation = this .straightenHorizon (this .rotation);
+
+						this .addSpinning (this .rotation);
 					}
 
 					break;
@@ -64471,9 +64471,7 @@ function ($,
 		},
 		addRotate: (function ()
 		{
-			var
-				destination = new Rotation4 (),
-				zAxis       = new Vector3 (0, 0, 0);
+			var destination = new Rotation4 ();
 
 			return function (rotationChange)
 			{
@@ -64495,12 +64493,7 @@ function ($,
 					{
 						// Slide along critical angle.
 
-						var
-							V = rotationChange .multVecRot (zAxis .assign (Vector3 .zAxis)) .normalize (),
-							N = Vector3 .cross (viewpoint .getUpVector (), V) .normalize (),
-							H = Vector3 .cross (N, viewpoint .getUpVector ()) .normalize ();
-
-						rotationChange .setFromToVec (Vector3 .zAxis, H);
+						rotationChange = this .straightenHorizon (rotationChange);
 
 						destination .assign (this .rotationChaser .set_destination_ .getValue ())
 							.multLeft (rotationChange);
@@ -64525,15 +64518,8 @@ function ($,
 					{
 						// Slide along critical angle.
 
-						var
-							V = rotationChange .multVecRot (zAxis .assign (Vector3 .zAxis)) .normalize (),
-							N = Vector3 .cross (viewpoint .getUpVector (), V) .normalize (),
-							H = Vector3 .cross (N, viewpoint .getUpVector ()) .normalize ();
-
-						rotationChange .setFromToVec (Vector3 .zAxis, H);
-
 						this .rotationChaser .set_value_       = Rotation4 .Identity;
-						this .rotationChaser .set_destination_ = rotationChange;
+						this .rotationChaser .set_destination_ = this .straightenHorizon (rotationChange);
 					}
 				}
 	
@@ -64673,6 +64659,22 @@ function ($,
 				{
 					return orientationOffsetAfter;
 				}
+			};
+		})(),
+		straightenHorizon: (function ()
+		{
+			var zAxis = new Vector3 (0, 0, 0);
+
+			return function (rotation)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+
+				var
+					V = rotation .multVecRot (zAxis .assign (Vector3 .zAxis)) .normalize (),
+					N = Vector3 .cross (viewpoint .getUpVector (), V) .normalize (),
+					H = Vector3 .cross (N, viewpoint .getUpVector ()) .normalize ();
+	
+				return new Rotation4 (Vector3 .zAxis, H);
 			};
 		})(),
 		disconnect: function ()
