@@ -387,7 +387,7 @@ function ($,
 							cx .bezierCurveTo (command .x1, command .y1, command .x2, command .y2, command .x, command .y);
 							continue;
 						}
-						case "Q": // Cubíc
+						case "Q": // Cubic
 						{
 						   cx .quadraticCurveTo (command .x1, command .y1, command .x, command .y);
 							continue;

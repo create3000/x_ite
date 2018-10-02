@@ -1,4 +1,4 @@
-/* X_ITE v4.2.5-400 */
+/* X_ITE v4.2.6a-401 */
 
 (function () {
 
@@ -27172,12 +27172,12 @@ function (de, fr)
 
 	function gettext (string)
 	{
-		var ĺocale = locales [language];
+		var locale = locales [language];
 
-		if (ĺocale === undefined)
+		if (locale === undefined)
 			return string;
 
-		var translation = ĺocale [string];
+		var translation = locale [string];
 
 		if (translation === undefined)
 			return string;
@@ -106900,7 +106900,7 @@ function ($,
 							cx .bezierCurveTo (command .x1, command .y1, command .x2, command .y2, command .x, command .y);
 							continue;
 						}
-						case "Q": // Cubíc
+						case "Q": // Cubic
 						{
 						   cx .quadraticCurveTo (command .x1, command .y1, command .x, command .y);
 							continue;
