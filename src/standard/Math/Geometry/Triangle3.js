@@ -51,12 +51,10 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 	"libtess",
-	"poly2tri",
 ],
 function (Vector3,
           Matrix4,
-          libtess_,
-          poly2tri)
+          libtess_)
 {
 "use strict";
 
@@ -103,12 +101,13 @@ function (Vector3,
 		}
 
 		var tessy = new libtess .GluTesselator ();
-		// tessy.gluTessProperty(libtess.gluEnum.GLU_TESS_WINDING_RULE, libtess.windingRule.GLU_TESS_WINDING_POSITIVE);
-		tessy.gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA, vertexCallback);
-		tessy.gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,       beginCallback);
-		tessy.gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,       errorCallback);
-		tessy.gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,     combineCallback);
-		tessy.gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,   edgeCallback);
+
+		tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
+		tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA, vertexCallback);
+		tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,       beginCallback);
+		tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,       errorCallback);
+		tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,     combineCallback);
+		tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,   edgeCallback);
 		
 		return tessy;
 	})();
@@ -150,8 +149,10 @@ function (Vector3,
 
 			return normal .normalize ();
 		},
-		triangulatePolygon: function (contour, triangles)
+		triangulatePolygon: function (/* contour, [ contour, ... ], triangles */)
 		{
+			var triangles = arguments [arguments .length - 1];
+
 			tessy .gluTessBeginPolygon (triangles);
 			
 			for (var i = 0, length = arguments .length - 1; i < length; ++ i)
@@ -199,50 +200,6 @@ function (Vector3,
 			}
 
 			return normal .normalize ();
-		},
-		removeCoincidentPoints: function (polygon)
-		{
-			for (var i = 1, k = 1, length = polygon .length; i < length; ++ i)
-			{
-				var i0 = i - 1;
-
-				if (polygon [i0] .equals (polygon [i]))
-					continue;
-
-				polygon [k ++] = polygon [i];
-		   }
-
-			polygon .length = k;
-		},
-		removeCollinearPoints: function (polygon)
-		{
-			for (var i = 0, k = 0, length = polygon .length, l1 = length - 1; i < length; ++ i)
-			{
-				var
-					i0 = (i + l1) % length,
-					i1 = (i + 1) % length;
-
-				if (this .isCollinear (polygon [i0], polygon [i], polygon [i1]))
-					continue;
-
-				polygon [k ++] = polygon [i];
-		   }
-
-			polygon .length = k;
-		},
-		isCollinear: function (a, b, c)
-		{
-			var
-				ab = A .assign (a) .subtract (b) .normalize (),
-				cb = C .assign (c) .subtract (b) .normalize ();
-
-			if (ab .abs () == 0)
-				return true;
-	
-			if (cb .abs () == 0)
-				return true;
-	
-			return Math .abs (ab .dot (cb)) >= 1;
 		},
 	};
 });

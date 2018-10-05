@@ -47,8 +47,6 @@
  ******************************************************************************/
 
 
-// https://github.com/r3mi/poly2tri.js
-
 define ([
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",

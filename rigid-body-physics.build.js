@@ -11,7 +11,6 @@
 		"jquery-mousewheel",
 		"pako_inflate",
 		"libtess",
-		"poly2tri",
 		"opentype",
 		"bezier",
 		"sprintf",

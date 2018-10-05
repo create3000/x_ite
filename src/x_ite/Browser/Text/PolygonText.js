@@ -54,9 +54,8 @@ define ([
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Geometry/Triangle2",
+	"standard/Math/Geometry/Triangle3",
 	"bezier",
-	"poly2tri",
 ],
 function (Fields,
           PrimitiveQuality,
@@ -64,9 +63,8 @@ function (Fields,
           X3DGeometryNode,
           Vector3,
           Matrix4,
-          Triangle2,
-          bezier,
-          poly2tri)
+          Triangle3,
+          bezier)
 {
 "use strict";
 
@@ -272,8 +270,7 @@ function (Fields,
 				fontStyle  = this .getFontStyle (),
 				font       = fontStyle .getFont (),
 				components = glyph .components,
-				dimension  = this .getBezierDimension (primitiveQuality),
-				reverse    = font .outlinesFormat === "cff";
+				dimension  = this .getBezierDimension (primitiveQuality);
 
 			paths  .length = 0;
 			points .length = 0;
@@ -315,19 +312,19 @@ function (Fields,
 								if (points [0] .x === points [points .length - 1] .x && points [0] .y === points [points .length - 1] .y)
 									points .pop ();
 
-								curves .push (reverse ? points .reverse () : points);
+								curves .push (points);
 							}
 								
 							points = [ ];
 
 							if (command .type === "M")
-								points .push ({ x: command .x, y: -command .y });
+								points .push (new Vector3 (command .x, -command .y, 0));
 							
 							break;
 						}
 						case "L": // Linear
 						{
-							points .push ({ x: command .x, y: -command .y });
+							points .push (new Vector3 (command .x, -command .y, 0));
 							break;
 						}
 						case "C": // Cubic
@@ -337,7 +334,7 @@ function (Fields,
 								lut   = curve .getLUT (dimension);
 
 							for (var l = 1, ll = lut .length; l < ll; ++ l)
-								points .push (lut [l]);
+								points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
 
 							break;
 						}
@@ -348,7 +345,7 @@ function (Fields,
 								lut   = curve .getLUT (dimension);
 
 							for (var l = 1, ll = lut .length; l < ll; ++ l)
-								points .push (lut [l]);
+								points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
 							
 							break;
 						}
@@ -361,32 +358,21 @@ function (Fields,
 				}
 			}
 
-			// Determine contours and holes.
-
-			curves .forEach (this .removeCoincidentPoints);
-			curves .forEach (this .removeCollinearPoints);
-
-			var contours = this .getContours (curves);
-
-			/*
-			if (glyph .name [0] == "g")
-			{
-				console .log (glyph .name, "\n",
-				              "font: ", font, "\n",
-				              "glyph: ", glyph, "\n",
-				              "paths: ", paths, "\n",
-				              "curves: ", curves .length,
-				              "contours: ", contours .length);
-
-				for (var c = 0; c < contours .length; ++ c)
-					console .log ("Contour #:", c, "Holes: ", contours [c] .holes .length);
-			}
-			*/
-
 			// Triangulate contours.
 
-			for (var i = 0, length = contours .length; i < length; ++ i)
-				this .triangulate (contours [i], contours [i] .holes, vertices);
+			curves = curves .map (function (curve)
+			{
+				var normal = Triangle3 .getPolygonNormal (curve, new Vector3 (0,0,0));
+
+				if (normal .dot (Vector3 .zAxis) > 0)
+					return curve;
+
+				return curve .reverse ();
+			});
+
+			curves .push (vertices);
+
+			Triangle3 .triangulatePolygon .apply (Triangle3, curves);
 		},
 		getBezierDimension: function (primitiveQuality)
 		{
@@ -399,157 +385,6 @@ function (Fields,
 				default:
 					return 5;
 			}
-		},
-		/*getCurveOrientation: function (curve)
-		{
-			// From Wikipedia:
-
-			var
-				minX     = Number .POSITIVE_INFINITY,
-				minIndex = 0;
-
-			for (var i = 0, length = curve .length; i < length; ++ i)
-			{
-				if (curve [i] .x < minX)
-				{
-					minX     = curve [i] .x;
-					minIndex = i;
-				}
-			}
-
-			var
-				a = curve [(minIndex + length - 1) % length],
-				b = curve [minIndex],
-				c = curve [(minIndex + 2) % length];
-
-		   return (b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y);
-		},*/
-		removeCoincidentPoints: function (curve)
-		{
-			function isCoincident (a, b)
-			{
-				return a.x === b.x && a.y === b.y;
-			}
-
-			for (var i = 1, k = 1, length = curve .length; i < length; ++ i)
-			{
-				var i0 = i - 1;
-
-				if (isCoincident (curve [i0], curve [i]))
-					continue;
-
-				curve [k ++] = curve [i];
-		   }
-
-			curve .length = k;
-		},
-		removeCollinearPoints: function (curve)
-		{
-			function isCollinear (a, b, c)
-			{
-				return Math .abs ((a.y - b.y) * (a.x - c.x) - (a.y - c.y) * (a.x - b.x)) < 1e-8;
-			}
-
-			for (var i = 0, k = 0, length = curve .length; i < length; ++ i)
-			{
-				var
-					i0 = (i - 1 + length) % length,
-					i1 = (i + 1) % length;
-
-				if (isCollinear (curve [i0], curve [i], curve [i1]))
-					continue;
-
-				curve [k ++] = curve [i];
-			}
-
-		   curve .length = k;
-		},
-		getContours: function (curves)
-		{
-			curves .forEach (function (curve) { curve .hole = 0; });
-
-			for (var c = 0, cl = curves .length; c < cl; ++ c)
-			{
-				try
-				{
-					var
-						curve   = curves [c],
-						context = new poly2tri .SweepContext (curve .slice ()),
-						polygon = context .triangulate () .getTriangles ();
-
-					curve .holes = [ ];
-
-					for (var h = 0, hl = curves .length; h < hl; ++ h)
-					{
-						if (h == c)
-							continue;
-
-						var hole = curves [h];
-
-						if (this .isCurveHole (polygon, hole))
-						{
-							hole .hole += 1;
-							curve .holes .push (hole);
-						}
-					}
-				}
-				catch (error)
-				{
-					console .error ("X_ITE (PoylgonText.getContours): can't triangulate glyph.", error);
-					return [ ];
-				}
-			}
-
-			var contours = [ ];
-
-			for (var c = 0, cl = curves .length; c < cl; ++ c)
-			{
-				var curve = curves [c];
-
-				// If the hole number is odd, this is a hole.
-				if (curve .hole % 2 !== 0)
-					continue;
-
-				contours .push (curve);
-			}
-
-			return contours;
-		},
-		isCurveHole: function (polygon, curve)
-		{
-			// Polygon must be a triangulated curve.
-
-			for (var i = 0, length = polygon .length; i < length; ++ i)
-			{
-				var  
-					a = polygon [i] .getPoint (0),
-					b = polygon [i] .getPoint (1),
-					c = polygon [i] .getPoint (2);
-
-				if (Triangle2 .isPointInTriangle (a, b, c, curve [0]))
-					return true;
-			}
-
-			return false;
-		},
-		triangulate: function (contour, holes, triangles)
-		{
-		   try
-			{
-				// Triangulate contour.
-				var
-					context = new poly2tri .SweepContext (contour) .addHoles (holes),
-					poylgon = context .triangulate () .getTriangles ();
-
-				for (var i = 0, length = poylgon .length; i < length; ++ i)
-				{
-					triangles .push (poylgon [i] .getPoint (0),
-					                 poylgon [i] .getPoint (1),
-					                 poylgon [i] .getPoint (2));
-				}
-			}
-			catch (error)
-			{ }
 		},
 		display: function (gl, context)
 		{ },

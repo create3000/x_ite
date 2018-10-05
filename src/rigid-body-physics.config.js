@@ -32,11 +32,6 @@ require .config ({
 			"main": "libtess.min.js"
 		},
 		{
-			"name": "poly2tri",
-			"location": "../node_modules/poly2tri",
-			"main": "dist/poly2tri.js"
-		},
-		{
 			"name": "opentype",
 			"location": "../node_modules/opentype.js",
 			"main": "dist/opentype.js"
