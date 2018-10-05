@@ -246,7 +246,7 @@ X3D (function ()
 	{
 		var Browser = X3D .getBrowser ("#browser");
 	
-		Browser .loadURL (new X3D .MFString ($(".location-entry") .val ()), new X3D .MFString ());
+		bookmarks .loadURL ($(".location-entry") .val ());
 	}
 
 	function toXMLString ()

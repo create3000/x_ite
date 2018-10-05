@@ -1,4 +1,6 @@
 
+	var libtess = window .libtess;
+
 	for (var key in x_iteNoConfict)
 	{
 		if (x_iteNoConfict [key] === undefined)

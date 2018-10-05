@@ -1,8 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/test.x3d">
     <Files>
-      <File FileName="src/x_ite.html" Line="26" Column="1" />
+      <File FileName="src/x_ite.html" Line="263" Column="1" />
+      <File FileName="src/tests.js" Line="267" Column="30" />
+      <File FileName="src/test.x3d" Line="210" Column="15" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

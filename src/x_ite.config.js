@@ -27,14 +27,14 @@ require .config ({
 			"main": "dist/pako_inflate.js"
 		},
 		{
+			"name": "libtess",
+			"location": "../node_modules/libtess",
+			"main": "libtess.min.js"
+		},
+		{
 			"name": "poly2tri",
 			"location": "../node_modules/poly2tri",
 			"main": "dist/poly2tri.js"
-		},
-		{
-			"name": "earcut",
-			"location": "../node_modules/earcut",
-			"main": "dist/earcut.dev.js"
 		},
 		{
 			"name": "opentype",

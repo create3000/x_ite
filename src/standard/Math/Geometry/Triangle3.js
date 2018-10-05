@@ -50,10 +50,12 @@
 define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
+	"libtess",
 	"poly2tri",
 ],
 function (Vector3,
           Matrix4,
+          libtess_,
           poly2tri)
 {
 "use strict";
@@ -66,6 +68,50 @@ function (Vector3,
 		yAxis  = new Vector3 (0, 0, 0),
 		zAxis  = new Vector3 (0, 0, 0),
 		matrix = new Matrix4 ();
+
+	var tessy = (function ()
+	{
+		// function called for each vertex of tesselator output
+		function vertexCallback (data, polyVertArray)
+		{
+			//console .log (data);
+			polyVertArray [polyVertArray .length] = data;
+		}
+
+		function beginCallback (type)
+		{
+			if (type !== libtess .primitiveType .GL_TRIANGLES)
+				console .log ('expected TRIANGLES but got type: ' + type);
+		}
+
+		function errorCallback (errno)
+		{
+			console .log ('error callback');
+			console .log ('error number: ' + errno);
+		}
+
+		// callback for when segments intersect and must be split
+		function combineCallback (coords, data, weight)
+		{
+			// console.log('combine callback');
+			return data [0];
+		}
+
+		function edgeCallback (flag) {
+			// don't really care about the flag, but need no-strip/no-fan behavior
+			// console.log('edge flag: ' + flag);
+		}
+
+		var tessy = new libtess .GluTesselator ();
+		// tessy.gluTessProperty(libtess.gluEnum.GLU_TESS_WINDING_RULE, libtess.windingRule.GLU_TESS_WINDING_POSITIVE);
+		tessy.gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA, vertexCallback);
+		tessy.gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,       beginCallback);
+		tessy.gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,       errorCallback);
+		tessy.gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,     combineCallback);
+		tessy.gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,   edgeCallback);
+		
+		return tessy;
+	})();
 
 	return {
 	   area: function (a, b, c)
@@ -104,82 +150,27 @@ function (Vector3,
 
 			return normal .normalize ();
 		},
-		removeCollinearPoints: function (polygon)
+		triangulatePolygon: function (contour, triangles)
 		{
-			for (var i = 0, k = 0, length = polygon .length, l1 = length - 1; i < length; ++ i)
+			tessy .gluTessBeginPolygon (triangles);
+			
+			for (var i = 0, length = arguments .length - 1; i < length; ++ i)
 			{
-				var
-					i0 = (i + l1) % length,
-					i1 = (i + 1) % length;
+				tessy .gluTessBeginContour ();
 
-				if (this .isCollinear (polygon [i0], polygon [i], polygon [i1]))
-					continue;
+				var contour = arguments [i];
 
-				polygon [k ++] = polygon [i];
-		   }
+				for (var j = 0; j < contour .length; ++ j)
+				{
+					tessy .gluTessVertex (contour [j], contour [j]);
+				}
 
-			polygon .length = k;
-		},
-		isCollinear: function (a, b, c)
-		{
-			var
-				ab = A .assign (a) .subtract (b) .normalize (),
-				cb = C .assign (c) .subtract (b) .normalize ();
-	
-			if (ab .abs () == 0)
-				return true;
-	
-			if (cb .abs () == 0)
-				return true;
-	
-			return Math .abs (ab .dot (cb)) >= 1;
-		},
-		triangulatePolygon: function (vertices, triangles)
-		{
-			try
-			{
-				// Filter collinear points.
-
-				this .removeCollinearPoints (vertices);
-
-				// Transform vertices to 2D space.
-
-				var
-					p0 = vertices [0],
-					p1 = vertices [1];
-
-				this .getPolygonNormal (vertices, zAxis);
-
-				xAxis .assign (p1) .subtract (p0);
-				yAxis .assign (zAxis) .cross (xAxis);
-
-				xAxis .normalize ();
-				yAxis .normalize ();
-				
-				matrix .set (xAxis .x, xAxis .y, xAxis .z, 0,
-				             yAxis .x, yAxis .y, yAxis .z, 0,
-				             zAxis .x, zAxis .y, zAxis .z, 0,
-				             p0 .x, p0 .y, p0 .z, 1);
-
-				matrix .inverse ();
-
-				for (var i = 0, length = vertices .length; i < length; ++ i)
-					matrix .multVecMatrix (vertices [i]);
-
-				// Triangulate polygon.
-
-				var
-					context = new poly2tri .SweepContext (vertices),
-					ts      = context .triangulate () .getTriangles ();
-
-				for (var i = 0, length = ts .length; i < length; ++ i)
-					triangles .push (ts [i] .getPoint (0), ts [i] .getPoint (1), ts [i] .getPoint (2));
+				tessy.gluTessEndContour ();
 			}
-			catch (error)
-			{
-				//console .log (error);
-				this .triangulateConvexPolygon (vertices, triangles);
-			}
+
+			tessy .gluTessEndPolygon ();
+
+			return triangles;
 		},
 		triangulateConvexPolygon: function (vertices, triangles)
 		{
@@ -208,6 +199,50 @@ function (Vector3,
 			}
 
 			return normal .normalize ();
+		},
+		removeCoincidentPoints: function (polygon)
+		{
+			for (var i = 1, k = 1, length = polygon .length; i < length; ++ i)
+			{
+				var i0 = i - 1;
+
+				if (polygon [i0] .equals (polygon [i]))
+					continue;
+
+				polygon [k ++] = polygon [i];
+		   }
+
+			polygon .length = k;
+		},
+		removeCollinearPoints: function (polygon)
+		{
+			for (var i = 0, k = 0, length = polygon .length, l1 = length - 1; i < length; ++ i)
+			{
+				var
+					i0 = (i + l1) % length,
+					i1 = (i + 1) % length;
+
+				if (this .isCollinear (polygon [i0], polygon [i], polygon [i1]))
+					continue;
+
+				polygon [k ++] = polygon [i];
+		   }
+
+			polygon .length = k;
+		},
+		isCollinear: function (a, b, c)
+		{
+			var
+				ab = A .assign (a) .subtract (b) .normalize (),
+				cb = C .assign (c) .subtract (b) .normalize ();
+
+			if (ab .abs () == 0)
+				return true;
+	
+			if (cb .abs () == 0)
+				return true;
+	
+			return Math .abs (ab .dot (cb)) >= 1;
 		},
 	};
 });

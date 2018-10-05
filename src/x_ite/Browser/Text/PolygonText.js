@@ -57,7 +57,6 @@ define ([
 	"standard/Math/Geometry/Triangle2",
 	"bezier",
 	"poly2tri",
-	"earcut",
 ],
 function (Fields,
           PrimitiveQuality,
@@ -67,8 +66,7 @@ function (Fields,
           Matrix4,
           Triangle2,
           bezier,
-          poly2tri,
-          earcut)
+          poly2tri)
 {
 "use strict";
 
@@ -365,7 +363,8 @@ function (Fields,
 
 			// Determine contours and holes.
 
-			curves .map (this .removeCollinearPoints);
+			curves .forEach (this .removeCoincidentPoints);
+			curves .forEach (this .removeCollinearPoints);
 
 			var contours = this .getContours (curves);
 
@@ -425,6 +424,25 @@ function (Fields,
 
 		   return (b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y);
 		},*/
+		removeCoincidentPoints: function (curve)
+		{
+			function isCoincident (a, b)
+			{
+				return a.x === b.x && a.y === b.y;
+			}
+
+			for (var i = 1, k = 1, length = curve .length; i < length; ++ i)
+			{
+				var i0 = i - 1;
+
+				if (isCoincident (curve [i0], curve [i]))
+					continue;
+
+				curve [k ++] = curve [i];
+		   }
+
+			curve .length = k;
+		},
 		removeCollinearPoints: function (curve)
 		{
 			function isCollinear (a, b, c)
@@ -448,7 +466,7 @@ function (Fields,
 		},
 		getContours: function (curves)
 		{
-			curves .map (function (curve) { curve .hole = 0; });
+			curves .forEach (function (curve) { curve .hole = 0; });
 
 			for (var c = 0, cl = curves .length; c < cl; ++ c)
 			{
@@ -531,45 +549,7 @@ function (Fields,
 				}
 			}
 			catch (error)
-			{
-				//console .warn (error);
-				this .earcutTriangulate (contour, holes, triangles);
-			}
-		},
-		earcutTriangulate: function (contour, holes, triangles)
-		{
-		   try
-			{
-				// Triangulate contour.
-
-				var
-					coords       = [ ],
-					holesIndices = [ ];
-
-				for (var p = 0, pl = contour .length; p < pl; ++ p)
-					coords .push (contour [p] .x, contour [p] .y);
-
-				for (var h = 0, hsl = holes .length; h < hsl; ++ h)
-				{
-					var hole = holes [h];
-
-					for (var p = 0, hl = hole .length; p < hl; ++ p)
-					{
-						holesIndices .push (coords .length / 2);
-						coords .push (hole [p] .x, hole [p] .y);
-						contour .push (hole [p]);
-					}
-				}
-
-				var t = earcut (coords, holesIndices);
-
-				for (var i = 0, tl = t .length; i < tl; ++ i)
-					triangles .push (contour [t [i]]);
-			}
-			catch (error)
-			{
-				//console .warn (error);
-			}
+			{ }
 		},
 		display: function (gl, context)
 		{ },

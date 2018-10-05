@@ -204,17 +204,17 @@
 
 function initialize ()
 {
-	print (new SFRotation (new SFVec3f (0,0,-1), new SFVec3f (-2.209e-06, -0.601381, -0.798962)));
-}
+	var scene  = Browser .createX3DFromString ("Script { inputOutput MFFloat value [ ] }");
+	var script = scene .rootNodes [0];
 
-function set_field (value, time)
-{
-	
-}
+	script .value = new MFFloat (NaN, Number .POSITIVE_INFINITY, Number .NEGATIVE_INFINITY);
 
-function eventsProcessed ()
-{
-	
+	print (script .toXMLString ());
+
+	var scene  = Browser .createX3DFromString (script .toXMLString ());
+	var script = scene .rootNodes [0];
+
+	print (script .toXMLString ());
 }
 ]]>
     </Script>
