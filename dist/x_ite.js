@@ -57317,7 +57317,7 @@ function (Vector3,
 						tessy .gluTessVertex (contour [j], contour [j]);
 					}
 	
-					tessy.gluTessEndContour ();
+					tessy .gluTessEndContour ();
 				}
 	
 				tessy .gluTessEndPolygon ();
