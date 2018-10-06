@@ -93,7 +93,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (false)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
 		]),
 		getTypeName: function ()
@@ -119,7 +119,6 @@ function (Fields,
 			this .Shading_                   .addInterest ("set_shading__",                this);
 			this .StraightenHorizon_         .addInterest ("set_straightenHorizon__",      this);
 			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
-			this .getBrowser () .shutdown () .addInterest ("configure",                    this);
 
 			this .configure ();
 		},
