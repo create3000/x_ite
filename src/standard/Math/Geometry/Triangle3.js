@@ -156,25 +156,25 @@ function (Vector3,
 			return function (/* contour, [ contour, ... ], triangles */)
 			{
 				var triangles = arguments [arguments .length - 1];
-	
+
 				tessy .gluTessBeginPolygon (triangles);
-				
+
 				for (var i = 0, length = arguments .length - 1; i < length; ++ i)
 				{
 					tessy .gluTessBeginContour ();
-	
+
 					var contour = arguments [i];
-	
+
 					for (var j = 0; j < contour .length; ++ j)
 					{
 						tessy .gluTessVertex (contour [j], contour [j]);
 					}
-	
+
 					tessy .gluTessEndContour ();
 				}
-	
+
 				tessy .gluTessEndPolygon ();
-	
+
 				return triangles;
 			};
 		})(),
