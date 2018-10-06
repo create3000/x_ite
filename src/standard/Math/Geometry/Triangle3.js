@@ -53,25 +53,22 @@ define ([
 	"libtess",
 ],
 function (Vector3,
-          Matrix4,
           libtess_)
 {
 "use strict";
 
-	var
-		A      = new Vector3 (0, 0, 0),
-		B      = new Vector3 (0, 0, 0),
-		C      = new Vector3 (0, 0, 0),
-		xAxis  = new Vector3 (0, 0, 0),
-		yAxis  = new Vector3 (0, 0, 0),
-		zAxis  = new Vector3 (0, 0, 0),
-		matrix = new Matrix4 ();
-
 	return {
-	   area: function (a, b, c)
-	   {
-	      return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .abs () / 2;
-	   },
+	   area: (function ()
+		{
+			var
+				B = new Vector3 (0, 0, 0),
+				C = new Vector3 (0, 0, 0);
+
+			return function (a, b, c)
+		   {
+		      return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .abs () / 2;
+		   };
+		})(),
 		normal: function (v1, v2, v3, normal)
 		{
 			var
