@@ -67,51 +67,6 @@ function (Vector3,
 		zAxis  = new Vector3 (0, 0, 0),
 		matrix = new Matrix4 ();
 
-	var tessy = (function ()
-	{
-		// function called for each vertex of tesselator output
-		function vertexCallback (data, polyVertArray)
-		{
-			//console .log (data);
-			polyVertArray [polyVertArray .length] = data;
-		}
-
-		function beginCallback (type)
-		{
-			if (type !== libtess .primitiveType .GL_TRIANGLES)
-				console .log ('expected TRIANGLES but got type: ' + type);
-		}
-
-		function errorCallback (errno)
-		{
-			console .log ('error callback');
-			console .log ('error number: ' + errno);
-		}
-
-		// callback for when segments intersect and must be split
-		function combineCallback (coords, data, weight)
-		{
-			// console.log('combine callback');
-			return data [0];
-		}
-
-		function edgeCallback (flag) {
-			// don't really care about the flag, but need no-strip/no-fan behavior
-			// console.log('edge flag: ' + flag);
-		}
-
-		var tessy = new libtess .GluTesselator ();
-
-		tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
-		tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA, vertexCallback);
-		tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,       beginCallback);
-		tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,       errorCallback);
-		tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,     combineCallback);
-		tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,   edgeCallback);
-		
-		return tessy;
-	})();
-
 	return {
 	   area: function (a, b, c)
 	   {
@@ -149,30 +104,80 @@ function (Vector3,
 
 			return normal .normalize ();
 		},
-		triangulatePolygon: function (/* contour, [ contour, ... ], triangles */)
+		triangulatePolygon: (function ()
 		{
-			var triangles = arguments [arguments .length - 1];
-
-			tessy .gluTessBeginPolygon (triangles);
-			
-			for (var i = 0, length = arguments .length - 1; i < length; ++ i)
+			var tessy = (function ()
 			{
-				tessy .gluTessBeginContour ();
-
-				var contour = arguments [i];
-
-				for (var j = 0; j < contour .length; ++ j)
+				// Function called for each vertex of tesselator output.
+				function vertexCallback (data, polyVertArray)
 				{
-					tessy .gluTessVertex (contour [j], contour [j]);
+					//console .log (data);
+					polyVertArray [polyVertArray .length] = data;
 				}
 
-				tessy.gluTessEndContour ();
-			}
+				function beginCallback (type)
+				{
+					if (type !== libtess .primitiveType .GL_TRIANGLES)
+						console .log ('expected TRIANGLES but got type: ' + type);
+				}
 
-			tessy .gluTessEndPolygon ();
+				function errorCallback (errno)
+				{
+					console .log ('error callback');
+					console .log ('error number: ' + errno);
+				}
+		
+				// Callback for when segments intersect and must be split.
+				function combineCallback (coords, data, weight)
+				{
+					//console.log ('combine callback');
+					return data [0];
+				}
 
-			return triangles;
-		},
+				function edgeCallback (flag)
+				{
+					// Don't really care about the flag, but need no-strip/no-fan behavior.
+					// console .log ('edge flag: ' + flag);
+				}
+
+				var tessy = new libtess .GluTesselator ();
+
+				tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
+				tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,        beginCallback);
+				tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,        errorCallback);
+				tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
+				tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,    edgeCallback);
+				tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_TOLERANCE,    0);
+				tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
+
+				return tessy;
+			})();
+
+			return function (/* contour, [ contour, ... ], triangles */)
+			{
+				var triangles = arguments [arguments .length - 1];
+	
+				tessy .gluTessBeginPolygon (triangles);
+				
+				for (var i = 0, length = arguments .length - 1; i < length; ++ i)
+				{
+					tessy .gluTessBeginContour ();
+	
+					var contour = arguments [i];
+	
+					for (var j = 0; j < contour .length; ++ j)
+					{
+						tessy .gluTessVertex (contour [j], contour [j]);
+					}
+	
+					tessy .gluTessEndContour ();
+				}
+	
+				tessy .gluTessEndPolygon ();
+	
+				return triangles;
+			};
+		})(),
 		triangulateConvexPolygon: function (vertices, triangles)
 		{
 			// Fallback: Very simple triangulation for convex polygons.

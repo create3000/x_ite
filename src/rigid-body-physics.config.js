@@ -29,7 +29,7 @@ require .config ({
 		{
 			"name": "libtess",
 			"location": "../node_modules/libtess",
-			"main": "libtess.min.js"
+			"main": "libtess.cat.js"
 		},
 		{
 			"name": "opentype",
