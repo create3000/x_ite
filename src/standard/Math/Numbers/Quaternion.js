@@ -55,8 +55,6 @@ function (Vector3, Algorithm)
 {
 "use strict";
 
-	var result = new Vector3 (0, 0, 0);
-
 	function Quaternion (x, y, z, w)
 	{
 		this .x = x;
@@ -454,12 +452,17 @@ function (Vector3, Algorithm)
 
 	Object .defineProperty (Quaternion .prototype, "imag",
 	{
-		get: function ()
+		get: (function ()
 		{
-			return result .set (this .x,
-			                    this .y,
-			                    this .z);
-		},
+			var result = new Vector3 (0, 0, 0);
+
+			return function ()
+			{
+				return result .set (this .x,
+				                    this .y,
+				                    this .z);
+			};
+		})(),
 		enumerable: false,
 		configurable: false
 	});

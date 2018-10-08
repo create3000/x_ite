@@ -708,10 +708,10 @@ function ($,
 
 				if (straightenHorizon && ! (viewpoint instanceof GeoViewpoint))
 				{
-					var userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
-
 					if (! _throw)
 						return orientationOffsetAfter;
+
+					var userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
 
 					if (Math .abs (viewpoint .getUpVector () .dot (userVector)) < MAX_ANGLE)
 						return orientationOffsetAfter;

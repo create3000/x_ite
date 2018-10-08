@@ -150,7 +150,7 @@ function (Vector3,
 				return tessy;
 			})();
 
-			return function (/* contour, [ contour, ... ], triangles */)
+			return function (/* contour, [ contour, ..., ] triangles */)
 			{
 				var triangles = arguments [arguments .length - 1];
 
