@@ -101,8 +101,8 @@ function (X3DBaseNode)
 			if (this .array .length > 1)
 			{
 				var
-					enableInlineViewpoints = false && this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
-					masterScene            = this .getMasterScene ();
+					enableInlineBindables = false,
+					masterScene           = this .getMasterScene ();
 
 				if (name && name .length)
 				{
@@ -112,7 +112,7 @@ function (X3DBaseNode)
 					{
 						var node = this .array [i];
 
-						if (! enableInlineViewpoints && node .getScene () !== masterScene)
+						if (! enableInlineBindables && node .getScene () !== masterScene)
 							continue;
 
 						if (node .getName () == name)
@@ -126,7 +126,7 @@ function (X3DBaseNode)
 				{
 					var node = this .array [i];
 
-					if (! enableInlineViewpoints && node .getScene () !== masterScene)
+					if (! enableInlineBindables && node .getScene () !== masterScene)
 						continue;
 
 					if (node .isBound_ .getValue ())
@@ -139,7 +139,7 @@ function (X3DBaseNode)
 				{
 					var node = this .array [i];
 
-					if (! enableInlineViewpoints && node .getScene () !== masterScene)
+					if (! enableInlineBindables && node .getScene () !== masterScene)
 						continue;
 
 					return node;
