@@ -101,6 +101,7 @@ function (SFNode,
 			this .layer0 .setup ();
 
 			this .set_activeLayer__ ();
+			this .bind ();
 		},
 		getLayerSet: function ()
 		{

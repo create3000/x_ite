@@ -305,7 +305,6 @@ function ($,
 		{
 			this .prepareEvents () .removeInterest ("bind", this);
 
-			this .getWorld () .bind ();
 			this .setBrowserLoading (false);
 
 			if (this .initialized () .getValue ())
