@@ -101,7 +101,7 @@ function (X3DBaseNode)
 			if (this .array .length > 1)
 			{
 				var
-					enableInlineViewpoints = this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
+					enableInlineViewpoints = false && this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
 					masterScene            = this .getMasterScene ();
 
 				if (name && name .length)
