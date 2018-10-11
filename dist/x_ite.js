@@ -1,4 +1,4 @@
-/* X_ITE v4.2.6a-407 */
+/* X_ITE v4.2.6a-408 */
 
 (function () {
 
@@ -83446,6 +83446,7 @@ function (SFNode,
 			this .layer0 .setup ();
 
 			this .set_activeLayer__ ();
+			this .bind ();
 		},
 		getLayerSet: function ()
 		{
@@ -117148,7 +117149,6 @@ function ($,
 		{
 			this .prepareEvents () .removeInterest ("bind", this);
 
-			this .getWorld () .bind ();
 			this .setBrowserLoading (false);
 
 			if (this .initialized () .getValue ())
