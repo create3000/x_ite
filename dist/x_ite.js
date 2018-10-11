@@ -1,4 +1,4 @@
-/* X_ITE v4.2.6a-406 */
+/* X_ITE v4.2.6a-407 */
 
 (function () {
 
@@ -80690,7 +80690,7 @@ function (X3DBaseNode)
 			if (this .array .length > 1)
 			{
 				var
-					enableInlineViewpoints = this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
+					enableInlineViewpoints = false && this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
 					masterScene            = this .getMasterScene ();
 
 				if (name && name .length)
