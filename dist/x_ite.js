@@ -1,4 +1,4 @@
-/* X_ITE v4.2.6a-409 */
+/* X_ITE v4.2.6a-410 */
 
 (function () {
 
@@ -47432,7 +47432,7 @@ function ($,
 
 	var
 		whitespaces     = /[\x20\n,\t\r]+/,
-		trimWhitespaces = /^[\x20\n,\t\r]+(.*?)[\x20\n,\t\r]+$/;
+		trimWhitespaces = /^[\x20\n,\t\r]*(.*?)[\x20\n,\t\r]*$/;
 
 	// Unitless fields.
 
