@@ -243,7 +243,9 @@ function (X3DArrayField,
 
 			if (rest)
 			{
-				throw new Error ("Array length must be multiple of components size, which is " + components + ".");
+				otherLength -= rest;
+
+				console .warning ("Array length must be multiple of components size, which is " + components + ".");
 			}
 
 			otherLength /= components;
@@ -252,6 +254,9 @@ function (X3DArrayField,
 			{
 				array = target .grow (otherArray .length);
 				array .set (otherArray);
+
+				if (rest)
+					array .fill (0, otherLength * components, otherLength * components + rest);
 			}
 			else
 			{

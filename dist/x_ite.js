@@ -1,4 +1,4 @@
-/* X_ITE v4.2.6a-408 */
+/* X_ITE v4.2.6a-409 */
 
 (function () {
 
@@ -23550,7 +23550,9 @@ function (X3DArrayField,
 
 			if (rest)
 			{
-				throw new Error ("Array length must be multiple of components size, which is " + components + ".");
+				otherLength -= rest;
+
+				console .warning ("Array length must be multiple of components size, which is " + components + ".");
 			}
 
 			otherLength /= components;
@@ -23559,6 +23561,9 @@ function (X3DArrayField,
 			{
 				array = target .grow (otherArray .length);
 				array .set (otherArray);
+
+				if (rest)
+					array .fill (0, otherLength * components, otherLength * components + rest);
 			}
 			else
 			{
@@ -47425,7 +47430,9 @@ function ($,
 	 * Lazy parse functions.
 	 */
 
-	var whitespaces = /[\x20\n,\t\r]+/;
+	var
+		whitespaces     = /[\x20\n,\t\r]+/,
+		trimWhitespaces = /^[\x20\n,\t\r]+(.*?)[\x20\n,\t\r]+$/;
 
 	// Unitless fields.
 
@@ -47438,7 +47445,7 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
 	{
-		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value)
+		field .setValue (this .getInput () .replace (trimWhitespaces, "$1") .split (whitespaces) .map (function (value)
 		{
 			return parseFloat (value);
 		}));
@@ -47446,7 +47453,7 @@ function ($,
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFBool] = function (field)
 	{
-		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value)
+		field .setValue (this .getInput () .replace (trimWhitespaces, "$1") .split (whitespaces) .map (function (value)
 		{
 			if (value === "true")
 				return true;
@@ -47457,7 +47464,7 @@ function ($,
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFInt32] = function (field)
 	{
-		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value)
+		field .setValue (this .getInput () .replace (trimWhitespaces, "$1") .split (whitespaces) .map (function (value)
 		{
 			return parseInt (value);
 		}));
@@ -47474,7 +47481,7 @@ function ($,
 	{
 		var category = field .getUnit ();
 
-		field .setValue (this .getInput () .trim () .split (whitespaces) .map (function (value)
+		field .setValue (this .getInput () .replace (trimWhitespaces, "$1") .split (whitespaces) .map (function (value)
 		{
 			return this .fromUnit (category, parseFloat (value));
 		},
@@ -80690,8 +80697,8 @@ function (X3DBaseNode)
 			if (this .array .length > 1)
 			{
 				var
-					enableInlineViewpoints = false && this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
-					masterScene            = this .getMasterScene ();
+					enableInlineBindables = false,
+					masterScene           = this .getMasterScene ();
 
 				if (name && name .length)
 				{
@@ -80701,7 +80708,7 @@ function (X3DBaseNode)
 					{
 						var node = this .array [i];
 
-						if (! enableInlineViewpoints && node .getScene () !== masterScene)
+						if (! enableInlineBindables && node .getScene () !== masterScene)
 							continue;
 
 						if (node .getName () == name)
@@ -80715,7 +80722,7 @@ function (X3DBaseNode)
 				{
 					var node = this .array [i];
 
-					if (! enableInlineViewpoints && node .getScene () !== masterScene)
+					if (! enableInlineBindables && node .getScene () !== masterScene)
 						continue;
 
 					if (node .isBound_ .getValue ())
@@ -80728,7 +80735,7 @@ function (X3DBaseNode)
 				{
 					var node = this .array [i];
 
-					if (! enableInlineViewpoints && node .getScene () !== masterScene)
+					if (! enableInlineBindables && node .getScene () !== masterScene)
 						continue;
 
 					return node;
