@@ -1,4 +1,4 @@
-/* X_ITE v4.2.6a-411 */
+/* X_ITE v4.2.6a-412 */
 
 (function () {
 
@@ -20544,12 +20544,10 @@ function (Quaternion,
 		},
 		toString: function ()
 		{
-			var rotation = this .get ();
-
-			return rotation .x + " " +
-			       rotation .y + " " +
-			       rotation .z + " " +
-			       rotation .w;
+			return this .x_ + " " +
+			       this .y_ + " " +
+			       this .z_ + " " +
+			       this .angle_;
 		}
 	};
 
@@ -22261,12 +22259,12 @@ function (SFVec3,
 		{
 			var
 				generator = Generator .Get (stream),
-				r         = this .getValue () .get ();
+				rotation  = this .getValue ();
 
-			stream .string +=  r .x + " " +
-			                   r .y + " " +
-			                   r .z + " " +
-			                   generator .ToUnit ("angle", r .w);
+			stream .string +=  rotation .x + " " +
+			                   rotation .y + " " +
+			                   rotation .z + " " +
+			                   generator .ToUnit ("angle", rotation .angle);
 		},
 		toXMLStream: function (stream)
 		{

@@ -336,12 +336,10 @@ function (Quaternion,
 		},
 		toString: function ()
 		{
-			var rotation = this .get ();
-
-			return rotation .x + " " +
-			       rotation .y + " " +
-			       rotation .z + " " +
-			       rotation .w;
+			return this .x_ + " " +
+			       this .y_ + " " +
+			       this .z_ + " " +
+			       this .angle_;
 		}
 	};
 

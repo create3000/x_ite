@@ -143,12 +143,12 @@ function (SFVec3,
 		{
 			var
 				generator = Generator .Get (stream),
-				r         = this .getValue () .get ();
+				rotation  = this .getValue ();
 
-			stream .string +=  r .x + " " +
-			                   r .y + " " +
-			                   r .z + " " +
-			                   generator .ToUnit ("angle", r .w);
+			stream .string +=  rotation .x + " " +
+			                   rotation .y + " " +
+			                   rotation .z + " " +
+			                   generator .ToUnit ("angle", rotation .angle);
 		},
 		toXMLStream: function (stream)
 		{
