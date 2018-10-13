@@ -1,4 +1,4 @@
-/* X_ITE v4.2.6a-410 */
+/* X_ITE v4.2.6a-411 */
 
 (function () {
 
@@ -47432,7 +47432,7 @@ function ($,
 
 	var
 		whitespaces     = /[\x20\n,\t\r]+/,
-		trimWhitespaces = /^[\x20\n,\t\r]*(.*?)[\x20\n,\t\r]*$/;
+		trimWhitespaces = /^[\x20\n,\t\r]+|[\x20\n,\t\r]+$/;
 
 	// Unitless fields.
 
@@ -47445,7 +47445,7 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
 	{
-		field .setValue (this .getInput () .replace (trimWhitespaces, "$1") .split (whitespaces) .map (function (value)
+		field .setValue (this .getInput () .replace (trimWhitespaces, "") .split (whitespaces) .map (function (value)
 		{
 			return parseFloat (value);
 		}));
@@ -47453,7 +47453,7 @@ function ($,
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFBool] = function (field)
 	{
-		field .setValue (this .getInput () .replace (trimWhitespaces, "$1") .split (whitespaces) .map (function (value)
+		field .setValue (this .getInput () .replace (trimWhitespaces, "") .split (whitespaces) .map (function (value)
 		{
 			if (value === "true")
 				return true;
@@ -47464,7 +47464,7 @@ function ($,
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFInt32] = function (field)
 	{
-		field .setValue (this .getInput () .replace (trimWhitespaces, "$1") .split (whitespaces) .map (function (value)
+		field .setValue (this .getInput () .replace (trimWhitespaces, "") .split (whitespaces) .map (function (value)
 		{
 			return parseInt (value);
 		}));
@@ -47481,7 +47481,7 @@ function ($,
 	{
 		var category = field .getUnit ();
 
-		field .setValue (this .getInput () .replace (trimWhitespaces, "$1") .split (whitespaces) .map (function (value)
+		field .setValue (this .getInput () .replace (trimWhitespaces, "") .split (whitespaces) .map (function (value)
 		{
 			return this .fromUnit (category, parseFloat (value));
 		},
