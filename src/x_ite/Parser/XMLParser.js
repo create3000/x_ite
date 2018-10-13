@@ -992,7 +992,7 @@ function ($,
 
 	var
 		whitespaces     = /[\x20\n,\t\r]+/,
-		trimWhitespaces = /^[\x20\n,\t\r]+(.*?)[\x20\n,\t\r]+$/;
+		trimWhitespaces = /^[\x20\n,\t\r]*(.*?)[\x20\n,\t\r]*$/;
 
 	// Unitless fields.
 
