@@ -245,7 +245,7 @@ function (X3DArrayField,
 			{
 				otherLength -= rest;
 
-				console .warning ("Array length must be multiple of components size, which is " + components + ".");
+				console .warn ("Array length must be multiple of components size, which is " + components + ".");
 			}
 
 			otherLength /= components;

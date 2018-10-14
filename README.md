@@ -29,8 +29,8 @@ To display your X3D scene in a HTML5 page first save your scene as X3D XML Encod
 The HTML5 page is quite easy to create, the HTML5 code below shows you the minimum requirements. The path to the X3D scene is specified in the src attribute of the <X3DCanvas> tag. 
 
     <!DOCTYPE html>
-      <html>
-       <head>
+    <html>
+      <head>
         <meta charset="utf-8"/>
         <link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/latest/dist/x_ite.css"/>
         <script type="text/javascript" src="http://code.create3000.de/x_ite/latest/dist/x_ite.min.js"></script>

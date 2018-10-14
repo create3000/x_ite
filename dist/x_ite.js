@@ -1,4 +1,4 @@
-/* X_ITE v4.2.6-413 */
+/* X_ITE v4.2.6-414 */
 
 (function () {
 
@@ -23550,7 +23550,7 @@ function (X3DArrayField,
 			{
 				otherLength -= rest;
 
-				console .warning ("Array length must be multiple of components size, which is " + components + ".");
+				console .warn ("Array length must be multiple of components size, which is " + components + ".");
 			}
 
 			otherLength /= components;
@@ -24695,7 +24695,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.2.6a";
+	return "4.2.6";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
