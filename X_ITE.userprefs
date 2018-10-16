@@ -1,17 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Basic/X3DTypedArrayField.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Execution/World.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Execution/BindableList.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Prototype/X3DExternProtoDeclaration.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Parser/XMLParser.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Fields/SFRotation.js" Line="153" Column="33" />
-      <File FileName="src/standard/Math/Numbers/Rotation4.js" Line="342" Column="23" />
-      <File FileName="src/x_ite/Parser/Parser.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="248" Column="18" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
