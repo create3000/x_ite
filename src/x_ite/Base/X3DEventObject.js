@@ -77,7 +77,6 @@ function (X3DChildObject,
 		addEvent: function (field)
 		{
 			field .setTainted (true);
-			field .setSet (true);
 
 			this .addEventObject (field, Events .create (field));
 		},
@@ -85,6 +84,7 @@ function (X3DChildObject,
 		{
 			var browser = this .getBrowser ();
 
+			field .setSet (true);
 			browser .addBrowserEvent ();
 
 			// Register for processEvent

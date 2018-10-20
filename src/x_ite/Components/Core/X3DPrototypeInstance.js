@@ -153,7 +153,8 @@ function (FieldDefinitionArray,
 								continue;
 
 							// If default value of protoField is different from field update default value for field.
-							field .set (protoField);
+							if (! field .equals (protoField))
+								field .setValue (protoField);
 						}
 						catch (error)
 						{
