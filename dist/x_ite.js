@@ -1,4 +1,4 @@
-/* X_ITE v4.2.6-414 */
+/* X_ITE v4.2.7a-415 */
 
 (function () {
 
@@ -13347,8 +13347,11 @@ function (X3DConstants)
 		{
 			this .executionContextStack .push (executionContext);
 
-			this .importedNodesIndex [executionContext .getId ()] = { };
-			this .exportedNodesIndex [executionContext .getId ()] = { };
+			if (! this .importedNodesIndex [executionContext .getId ()])
+				this .importedNodesIndex [executionContext .getId ()] = { };
+
+			if (! this .exportedNodesIndex [executionContext .getId ()])
+				this .exportedNodesIndex [executionContext .getId ()] = { };
 		},
 		PopExecutionContext: function ()
 		{
@@ -38152,7 +38155,8 @@ function (FieldDefinitionArray,
 							if (field .hasReferences ())
 								continue;
 
-							field .setValue (protoField);
+							// If default value of protoField is different from field update default value for field.
+							field .set (protoField);
 						}
 						catch (error)
 						{
