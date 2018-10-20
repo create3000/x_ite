@@ -1,4 +1,4 @@
-/* X_ITE v4.2.7a-415 */
+/* X_ITE v4.2.7a-416 */
 
 (function () {
 
@@ -24698,7 +24698,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.2.6";
+	return "4.2.7a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -24780,7 +24780,6 @@ function (X3DChildObject,
 		addEvent: function (field)
 		{
 			field .setTainted (true);
-			field .setSet (true);
 
 			this .addEventObject (field, Events .create (field));
 		},
@@ -24788,6 +24787,7 @@ function (X3DChildObject,
 		{
 			var browser = this .getBrowser ();
 
+			field .setSet (true);
 			browser .addBrowserEvent ();
 
 			// Register for processEvent
@@ -38156,7 +38156,8 @@ function (FieldDefinitionArray,
 								continue;
 
 							// If default value of protoField is different from field update default value for field.
-							field .set (protoField);
+							if (! field .equals (protoField))
+								field .setValue (protoField);
 						}
 						catch (error)
 						{
