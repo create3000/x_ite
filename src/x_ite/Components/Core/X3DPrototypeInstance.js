@@ -152,9 +152,11 @@ function (FieldDefinitionArray,
 							if (field .hasReferences ())
 								continue;
 
+							if (field .equals (protoField))
+								continue;
+
 							// If default value of protoField is different from field update default value for field.
-							if (! field .equals (protoField))
-								field .setValue (protoField);
+							field .setValue (protoField);
 						}
 						catch (error)
 						{
