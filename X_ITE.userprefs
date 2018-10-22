@@ -1,11 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Parser/XMLParser.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Base/X3DEventObject.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Core/X3DPrototypeInstance.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Parser/XMLParser.js" Line="711" Column="52" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

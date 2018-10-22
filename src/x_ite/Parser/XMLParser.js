@@ -704,14 +704,14 @@ function ($,
 			{
 				var
 					inlineNodeName   = xmlElement .getAttribute ("inlineDEF"),
-					exportedNodeName = xmlElement .getAttribute ("exportedDEF"),
+					exportedNodeName = xmlElement .getAttribute ("importedDEF") || xmlElement .getAttribute ("exportedDEF"),
 					localNodeName    = xmlElement .getAttribute ("AS");
 
 				if (inlineNodeName === null)
-					throw new Error ("Bad IMPORT statement: Expected exportedDEF attribute.");
+					throw new Error ("Bad IMPORT statement: Expected inlineDEF attribute.");
 
 				if (exportedNodeName === null)
-					throw new Error ("Bad IMPORT statement: Expected exportedDEF attribute.");
+					throw new Error ("Bad IMPORT statement: Expected importedDEF attribute.");
 
 				if (! localNodeName)
 					localNodeName = exportedNodeName;
