@@ -1,4 +1,4 @@
-/* X_ITE v4.2.7a-416 */
+/* X_ITE v4.2.7a-417 */
 
 (function () {
 
@@ -34995,7 +34995,7 @@ function (Fields,
 				stream .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
 				stream .string += "'";
 				stream .string += " ";
-				stream .string += "exportedDEF='";
+				stream .string += "importedDEF='";
 				stream .string += generator .XMLEncode (this .getExportedName ());
 				stream .string += "'";
 
@@ -38155,9 +38155,11 @@ function (FieldDefinitionArray,
 							if (field .hasReferences ())
 								continue;
 
+							if (field .equals (protoField))
+								continue;
+
 							// If default value of protoField is different from field update default value for field.
-							if (! field .equals (protoField))
-								field .setValue (protoField);
+							field .setValue (protoField);
 						}
 						catch (error)
 						{
@@ -47147,14 +47149,14 @@ function ($,
 			{
 				var
 					inlineNodeName   = xmlElement .getAttribute ("inlineDEF"),
-					exportedNodeName = xmlElement .getAttribute ("exportedDEF"),
+					exportedNodeName = xmlElement .getAttribute ("importedDEF") || xmlElement .getAttribute ("exportedDEF"),
 					localNodeName    = xmlElement .getAttribute ("AS");
 
 				if (inlineNodeName === null)
-					throw new Error ("Bad IMPORT statement: Expected exportedDEF attribute.");
+					throw new Error ("Bad IMPORT statement: Expected inlineDEF attribute.");
 
 				if (exportedNodeName === null)
-					throw new Error ("Bad IMPORT statement: Expected exportedDEF attribute.");
+					throw new Error ("Bad IMPORT statement: Expected importedDEF attribute.");
 
 				if (! localNodeName)
 					localNodeName = exportedNodeName;
