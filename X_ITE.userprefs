@@ -3,11 +3,8 @@
   <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Base/X3DEventObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Core/X3DPrototypeInstance.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Parser/XMLParser.js" Line="714" Column="66" />
-      <File FileName="src/x_ite/Execution/ImportedNode.js" Line="207" Column="35" />
+      <File FileName="src/x_ite/Browser/Layout/ScreenText.js" Line="463" Column="1" />
+      <File FileName="src/x_ite/Components/Layout/ScreenGroup.js" Line="159" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
