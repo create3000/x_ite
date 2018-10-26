@@ -1,4 +1,4 @@
-/* X_ITE v4.2.7a-418 */
+/* X_ITE v4.2.7a-419 */
 
 (function () {
 
@@ -59717,16 +59717,52 @@ function (Triangle3,
 
 			return axes;
 		},
-		getPlanes: function (planes)
+		getNormals: (function ()
 		{
-			var m = this .matrix;
+			var
+				x = new Vector3 (0, 0, 0),
+				y = new Vector3 (0, 0, 0),
+				z = new Vector3 (0, 0, 0);
 
-			planes [0] .set (m [0], m [1], m [2])  .cross (z);
-			planes [1] .set (m [4], m [5], m [6])  .cross (x);
-			planes [2] .set (m [8], m [9], m [10]) .cross (y);
-		
-			return planes;
-		},
+			return function (planes)
+			{
+				var m = this .matrix;
+
+				x .set (m [0], m [1], m [2]);
+				y .set (m [4], m [5], m [6]);
+				z .set (m [8], m [9], m [10]);
+
+				if (x .abs () == 0)
+				{
+					x .assign (y) .cross (z);
+
+					if (x .abs () == 0)
+						x .set (1, 0, 0);
+				}
+
+				if (y .abs () == 0)
+				{
+					y .assign (z) .cross (x);
+
+					if (y .abs () == 0)
+						y .set (0, 1, 0);
+				}
+
+				if (z .abs () == 0)
+				{
+					z .assign (x) .cross (y);
+
+					if (z .abs () == 0)
+						z .set (0, 0, 1);
+				}
+
+				planes [0] .assign (y) .cross (z) .normalize ();
+				planes [1] .assign (z) .cross (x) .normalize ();
+				planes [2] .assign (x) .cross (y) .normalize ();
+			
+				return planes;
+			};
+		})(),
 		isEmpty: function ()
 		{
 			return this .matrix [15] === 0;
@@ -59782,12 +59818,12 @@ function (Triangle3,
 		
 			// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
 		
-			if (SAT .isSeparated (this .getPlanes (planes), points1, points2))
+			if (SAT .isSeparated (this .getNormals (planes), points1, points2))
 				return false;
 		
 			// Test the three planes spanned by the normal vectors of the faces of the second parallelepiped.
 		
-			if (SAT .isSeparated (other .getPlanes (planes), points1, points2))
+			if (SAT .isSeparated (other .getNormals (planes), points1, points2))
 				return false;
 
 			// Test the nine other planes spanned by the edges of each parallelepiped.
@@ -59829,7 +59865,7 @@ function (Triangle3,
 
 			// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
 
-			if (SAT .isSeparated (this .getPlanes (planes), points1, triangle))
+			if (SAT .isSeparated (this .getNormals (planes), points1, triangle))
 				return false;
 
 			// Test the normal of the triangle.
