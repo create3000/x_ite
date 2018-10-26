@@ -1,4 +1,4 @@
-/* X_ITE v4.2.7a-419 */
+/* X_ITE v4.2.7a-420 */
 
 (function () {
 
@@ -59722,7 +59722,8 @@ function (Triangle3,
 			var
 				x = new Vector3 (0, 0, 0),
 				y = new Vector3 (0, 0, 0),
-				z = new Vector3 (0, 0, 0);
+				z = new Vector3 (0, 0, 0),
+				v = new Vector3 (0, 0, 0);
 
 			return function (planes)
 			{
@@ -59737,7 +59738,14 @@ function (Triangle3,
 					x .assign (y) .cross (z);
 
 					if (x .abs () == 0)
+					{
 						x .set (1, 0, 0);
+
+						if (y .abs ())
+							x .assign (v .assign (y) .cross (x .cross (y)));
+						else if (z .abs ())
+							x .assign (v .assign (z) .cross (x .cross (z)));
+					}
 				}
 
 				if (y .abs () == 0)
@@ -59745,7 +59753,14 @@ function (Triangle3,
 					y .assign (z) .cross (x);
 
 					if (y .abs () == 0)
+					{
 						y .set (0, 1, 0);
+
+						if (x .abs ())
+							y .assign (v .assign (x) .cross (y .cross (x)));
+						else if (z .abs ())
+							y .assign (v .assign (z) .cross (y .cross (z)));
+					}
 				}
 
 				if (z .abs () == 0)
@@ -59753,7 +59768,14 @@ function (Triangle3,
 					z .assign (x) .cross (y);
 
 					if (z .abs () == 0)
+					{
 						z .set (0, 0, 1);
+
+						if (x .abs ())
+							z .assign (v .assign (x) .cross (z .cross (x)));
+						else if (y .abs ())
+							z .assign (v .assign (y) .cross (z .cross (y)));
+					}
 				}
 
 				planes [0] .assign (y) .cross (z) .normalize ();
