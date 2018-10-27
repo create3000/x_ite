@@ -1,4 +1,4 @@
-/* X_ITE v4.2.7a-421 */
+/* X_ITE v4.2.7a-422 */
 
 (function () {
 
@@ -20391,16 +20391,31 @@ function (Quaternion,
 			return function ()
 			{
 				var value = this .value;
-	
-				if (Math .abs (value .w) >= 1)
-					return Vector4 .zAxis;
 
-				var vector = value .imag .normalize ();
-	
-				return result .set (vector .x,
-				                    vector .y,
-				                    vector .z,
-				                    2 * Math .acos (value .w));
+				if (Math .abs (value .w > 1))
+				{
+					return Vector4 .zAxis;
+				}
+				else
+				{
+					var
+						angle = Math .acos (value .w) * 2,
+						scale = Math .sin (angle / 2);
+
+					if (scale === 0)
+					{
+						return Vector4 .zAxis;
+					}
+					else
+					{
+						var axis = value .imag .divide (scale);
+
+						return result .set (axis .x,
+						                    axis .y,
+						                    axis .z,
+						                    angle);
+					}
+				}
 			};
 		})(),
 		setAxisAngle: function (axis, angle)
@@ -20439,11 +20454,11 @@ function (Quaternion,
 					else
 					{
 						// Try crossing with x axis.
-						t  .assign (from) .cross (Vector3 .xAxis);
+						t .assign (from) .cross (Vector3 .xAxis);
 	
 						// If not ok, cross with y axis.
 						if (t .norm () === 0)
-							t  .assign (from) .cross (Vector3 .yAxis);
+							t .assign (from) .cross (Vector3 .yAxis);
 	
 						t .normalize ();
 	
@@ -20460,7 +20475,7 @@ function (Quaternion,
 					this .value .set (crossvec .x,
 					                  crossvec .y,
 					                  crossvec .z,
-					                  Math .sqrt ((1 + cos_angle) / 2));
+					                  Math .sqrt (Math .abs (1 + cos_angle) / 2));
 				}
 	
 				this .update ();
