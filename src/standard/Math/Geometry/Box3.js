@@ -356,8 +356,9 @@ function (Triangle3,
 			var
 				x = new Vector3 (0, 0, 0),
 				y = new Vector3 (0, 0, 0),
-				z = new Vector3 (0, 0, 0),
-				v = new Vector3 (0, 0, 0);
+				z = new Vector3 (0, 0, 0);
+
+			var axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
 
 			return function (planes)
 			{
@@ -367,48 +368,120 @@ function (Triangle3,
 				y .set (m [4], m [5], m [6]);
 				z .set (m [8], m [9], m [10]);
 
-				if (x .abs () == 0)
+				if (x .norm () == 0 && y .norm () == 0 && z .norm () == 0)
 				{
-					x .assign (y) .cross (z);
-
-					if (x .abs () == 0)
-					{
-						x .set (1, 0, 0);
-
-						if (y .abs ())
-							x .assign (v .assign (y) .cross (x .cross (y)));
-						else if (z .abs ())
-							x .assign (v .assign (z) .cross (x .cross (z)));
-					}
+					x .assign (Vector3 .xAxis);
+					y .assign (Vector3 .yAxis);
+					z .assign (Vector3 .zAxis);
 				}
-
-				if (y .abs () == 0)
+				else
 				{
-					y .assign (z) .cross (x);
-
-					if (y .abs () == 0)
+					if (x .norm () == 0)
 					{
-						y .set (0, 1, 0);
+						x .assign (y) .cross (z);
 
-						if (x .abs ())
-							y .assign (v .assign (x) .cross (y .cross (x)));
-						else if (z .abs ())
-							y .assign (v .assign (z) .cross (y .cross (z)));
+						if (x .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								x .assign (axes [i]) .cross (y);
+
+								if (x .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (x .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								x .assign (axes [i]) .cross (z);
+
+								if (x .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (x .norm () == 0)
+							x .assign (Vector3 .xAxis);
+						else
+							x .normalize ();
 					}
-				}
 
-				if (z .abs () == 0)
-				{
-					z .assign (x) .cross (y);
-
-					if (z .abs () == 0)
+					if (y .norm () == 0)
 					{
-						z .set (0, 0, 1);
+						y .assign (z) .cross (x);
 
-						if (x .abs ())
-							z .assign (v .assign (x) .cross (z .cross (x)));
-						else if (y .abs ())
-							z .assign (v .assign (y) .cross (z .cross (y)));
+						if (y .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								y .assign (axes [i]) .cross (z);
+
+								if (y .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (y .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								y .assign (axes [i]) .cross (x);
+
+								if (y .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (y .norm () == 0)
+							y .assign (Vector3 .yAxis);
+						else
+							y .normalize ();
+					}
+
+					if (z .norm () == 0)
+					{
+						z .assign (x) .cross (y);
+
+						if (z .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								z .assign (axes [i]) .cross (x);
+
+								if (z .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (z .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								z .assign (axes [i]) .cross (y);
+
+								if (z .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (z .norm () == 0)
+							z .assign (Vector3 .zAxis);
+						else
+							z .normalize ();
 					}
 				}
 

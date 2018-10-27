@@ -5,7 +5,6 @@
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Layout/ScreenText.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Layout/ScreenGroup.js" Line="1" Column="1" />
-      <File FileName="src/standard/Math/Geometry/Box3.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
