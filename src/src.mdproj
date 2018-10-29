@@ -618,6 +618,7 @@
     <None Include="x_ite\Rendering\TextureBuffer.js" />
     <None Include="tests.js" />
     <None Include="examples.js" />
+    <None Include="x_ite\Browser\Core\evaluate.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

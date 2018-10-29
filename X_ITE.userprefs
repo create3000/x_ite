@@ -1,11 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="package.json">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
+      <File FileName="src/x_ite.html" Line="88" Column="10" />
       <File FileName="src/x_ite/Browser/Layout/ScreenText.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Layout/ScreenGroup.js" Line="1" Column="1" />
-      <File FileName="package.json" Line="27" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

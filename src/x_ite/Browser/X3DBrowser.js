@@ -63,6 +63,7 @@ define ([
 	"x_ite/Parser/XMLParser",
 	"x_ite/Parser/JSONParser",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Core/evaluate",
 	"locale/gettext",
 ],
 function ($,
@@ -80,6 +81,7 @@ function ($,
           XMLParser,
           JSONParser,
           X3DConstants,
+          evaluate,
           _)
 {
 "use strict";
@@ -318,6 +320,11 @@ function ($,
 						browserCallback ("initialized");
 					});
 				}
+
+				var onload = this .getElement () .attr ("onload");
+
+				if (onload !== undefined)
+					evaluate .call (this .getElement () .get (0), onload);
 			}
 		},
 		createVrmlFromString: function (vrmlSyntax)
@@ -456,6 +463,11 @@ function ($,
 							browserCallback ("error", url);
 						});
 					}
+
+					var onerror = this .getElement () .attr ("onerror");
+
+					if (onerror !== undefined)
+						evaluate .call (this .getElement () .get (0), onerror);
 
 					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 				}
