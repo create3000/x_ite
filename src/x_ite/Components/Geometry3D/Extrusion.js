@@ -151,7 +151,7 @@ function (Fields,
 				matrix .translate (spine [i] .getValue ());
 
 				if (orientation .length)
-					matrix .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
+					rotations [i] .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
 
 				matrix .multLeft (rotations [i]);
 

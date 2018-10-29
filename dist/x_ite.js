@@ -1,4 +1,4 @@
-/* X_ITE v4.2.7-423 */
+/* X_ITE v4.2.8a-424 */
 
 (function () {
 
@@ -93433,7 +93433,7 @@ function (Fields,
 				matrix .translate (spine [i] .getValue ());
 
 				if (orientation .length)
-					matrix .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
+					rotations [i] .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
 
 				matrix .multLeft (rotations [i]);
 
