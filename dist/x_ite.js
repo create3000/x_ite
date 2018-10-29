@@ -64522,7 +64522,7 @@ function ($,
 	{
 		initialize: function ()
 		{
-			this .getElement () .attr ("tabindex", 0);
+			this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
 			this .setCursor ("DEFAULT");
 
 			this .pointingDevice .setup ();
