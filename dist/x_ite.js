@@ -93410,9 +93410,7 @@ function (Fields,
 		},
 		createPoints: (function ()
 		{
-			var
-				matrix = new Matrix4 (),
-				scale3 = new Vector3 (1, 1, 1);
+			var scale3 = new Vector3 (1, 1, 1);
 
 			return function ()
 			{
@@ -93431,13 +93429,10 @@ function (Fields,
 				
 				for (var i = 0, length = spine .length; i < length; ++ i)
 				{
-					matrix .identity ();
-					matrix .translate (spine [i] .getValue ());
-	
+					var matrix = rotations [i];
+
 					if (orientation .length)
-						rotations [i] .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
-	
-					matrix .multLeft (rotations [i]);
+						matrix .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
 	
 					if (scale .length)
 					{
@@ -93469,7 +93464,7 @@ function (Fields,
 				SCPzAxisPrevious = new Vector3 (0, 0, 0);
 
 			var
-				vector   = new Vector3 (0, 0, 0),
+				vector3  = new Vector3 (0, 0, 0),
 				rotation = new Rotation4 (0, 0, 1, 0);
 
 			return function ()
@@ -93497,20 +93492,42 @@ function (Fields,
 				// SCP for the first point:
 				if (closedSpine)
 				{
-					SCPyAxis .assign (spine [1] .getValue ()) .subtract (spine [spine .length - 2] .getValue ()) .normalize ();
-					SCPzAxis .assign (spine [1] .getValue ()) .subtract (spine [0] .getValue ())
-					           .cross (vector .assign (spine [spine .length - 2] .getValue ()) .subtract (spine [0] .getValue ()))
-					           .normalize ();
+					// Find first defined Y-axis.
+					for (var i = 1, length = numSpines - 2; i < length; ++ i)
+					{
+						SCPyAxis .assign (spine [i] .getValue ()) .subtract (spine [length] .getValue ()) .normalize ();
+	
+						if (! SCPyAxis .equals (Vector3 .Zero))
+							break;
+					}
+
+					// Find first defined Z-axis.
+					for (var i = 0, length = numSpines - 2; i < length; ++ i)
+					{
+						SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
+						           .cross (vector3 .assign (spine [length] .getValue ()) .subtract (spine [i] .getValue ()))
+						           .normalize ();
+
+						if (! SCPzAxis .equals (Vector3 .Zero))
+							break;
+					}
 				}
 				else
 				{
-					SCPyAxis .assign (spine [1] .getValue ()) .subtract (spine [0] .getValue ()) .normalize ();
+					// Find first defined Y-axis.
+					for (var i = 0, length = numSpines - 1; i < length; ++ i)
+					{
+						SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ()) .normalize ();
 	
+						if (! SCPyAxis .equals (Vector3 .Zero))
+							break;
+					}
+
 					// Find first defined Z-axis.
-					for (var i = 1, length = spine .length - 1; i < length; ++ i)
+					for (var i = 1, length = numSpines - 1; i < length; ++ i)
 					{
 						SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
-						           .cross (vector .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
+						           .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
 						           .normalize ();
 	
 						if (! SCPzAxis .equals (Vector3 .Zero))
@@ -93528,24 +93545,29 @@ function (Fields,
 	
 				// We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
 				SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
-	
+
+				// Get first spine
+				var s = firstSpine;
+
 				rotations [0] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
 				                    SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
 				                    SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
-				                    0,           0,           0,           1);
+				                    s .x,        s .y,        s .z,        1);
 	
 				// For all points other than the first or last:
 	
-				SCPyAxisPrevious .set (0, 0, 0);
-				SCPzAxisPrevious .set (0, 0, 0);
+				SCPyAxisPrevious .assign (SCPyAxis);
+				SCPzAxisPrevious .assign (SCPzAxis);
 	
-				for (var i = 1, length = spine .length - 1; i < length; ++ i)
+				for (var i = 1, length = numSpines - 1; i < length; ++ i)
 				{
+					var s = spine [i] .getValue ();
+
 					SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i - 1] .getValue ()) .normalize ();
-					SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
-					           .cross (vector .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
+					SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (s)
+					           .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
 					           .normalize ();
-	
+
 					// g.
 					if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
 						SCPzAxis .negate ();
@@ -93564,11 +93586,11 @@ function (Fields,
 	
 					// We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
 					SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
-	
+
 					rotations [i] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
 					                    SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
 					                    SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
-					                    0,           0,           0,           1);
+					                    s .x,        s .y,        s .z,        1);
 				}
 	
 				// SCP for the last point
@@ -93579,12 +93601,14 @@ function (Fields,
 				}
 				else
 				{
-					SCPyAxis .assign (spine [spine .length - 1] .getValue ()) .subtract (spine [spine .length - 2] .getValue ()) .normalize ();
+					var s = lastSpine;
+
+					SCPyAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ()) .normalize ();
 					
-					if (spine .length > 2)
+					if (numSpines > 2)
 					{
-						SCPzAxis .assign (spine [spine .length - 1] .getValue ()) .subtract (spine [spine .length - 2] .getValue ())
-						           .cross (vector .assign (spine [spine .length - 3] .getValue ()) .subtract (spine [spine .length - 2] .getValue ()))
+						SCPzAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ())
+						           .cross (vector3 .assign (spine [numSpines - 3] .getValue ()) .subtract (spine [numSpines - 2] .getValue ()))
 						           .normalize ();
 					}
 	
@@ -93606,7 +93630,7 @@ function (Fields,
 					rotations [numSpines - 1] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
 					                                SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
 					                                SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
-					                                0,           0,           0,           1);
+					                                s .x,        s .y,        s .z,        1);
 				}
 	
 				return rotations;
@@ -93615,9 +93639,9 @@ function (Fields,
 		build: (function ()
 		{
 			var
-				min    = new Vector2 (0, 0, 0),
-				max    = new Vector2 (0, 0, 0),
-				vector = new Vector2 (0, 0, 0);
+				min     = new Vector2 (0, 0, 0),
+				max     = new Vector2 (0, 0, 0),
+				vector2 = new Vector2 (0, 0, 0);
 
 			return function ()
 			{
@@ -93625,9 +93649,10 @@ function (Fields,
 					cw            = ! this .ccw_ .getValue (),
 					crossSection  = this .crossSection_,
 					spine         = this .spine_,
+					numSpines     = spine .length,
 					texCoordArray = this .getTexCoords ();
 	
-				if (spine .length < 2 || crossSection .length < 2)
+				if (numSpines < 2 || crossSection .length < 2)
 					return;
 	
 				this .getMultiTexCoords () .push (texCoordArray);
@@ -93638,7 +93663,7 @@ function (Fields,
 	
 				var
 					firstSpine  = spine [0] .getValue (),
-					lastSpine   = spine [spine .length - 1] .getValue (),
+					lastSpine   = spine [numSpines - 1] .getValue (),
 					closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation ();
 	
 				var
@@ -93658,7 +93683,7 @@ function (Fields,
 				}
 	
 				var
-					capSize      = vector .assign (max) .subtract (min),
+					capSize      = vector2 .assign (max) .subtract (min),
 					capMax       = Math .max (capSize .x, capSize .y),
 					numCapPoints = closedCrossSection ? crossSection .length - 1 : crossSection .length;
 	
@@ -93680,7 +93705,7 @@ function (Fields,
 	
 				var
 					numCrossSection_1 = crossSection .length - 1,
-					numSpine_1        = spine .length - 1;
+					numSpine_1        = numSpines - 1;
 	
 				var
 					indexLeft  = INDEX (0, 0),
@@ -93691,7 +93716,7 @@ function (Fields,
 					for (var k = 0; k < numCrossSection_1; ++ k)
 					{
 						var
-							n1 = closedSpine && n === spine .length - 2 ? 0 : n + 1,
+							n1 = closedSpine && n === numSpines - 2 ? 0 : n + 1,
 							k1 = closedCrossSection && k === crossSection .length - 2 ? 0 : k + 1;
 	
 						// k      k+1
@@ -93874,7 +93899,7 @@ function (Fields,
 					if (this .endCap_ .getValue ())
 					{
 						var
-							j         = spine .length - 1, // spine
+							j         = numSpines - 1, // spine
 							polygon   = [ ],
 							triangles = [ ];
 	

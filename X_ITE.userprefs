@@ -1,10 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Geometry3D/Extrusion.js">
     <Files>
       <File FileName="src/x_ite.html" Line="88" Column="10" />
-      <File FileName="src/x_ite/Browser/Layout/ScreenText.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Layout/ScreenGroup.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Geometry3D/Extrusion.js" Line="144" Column="46" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
