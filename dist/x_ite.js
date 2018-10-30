@@ -1,4 +1,4 @@
-/* X_ITE v4.2.8a-428 */
+/* X_ITE v4.2.8a-429 */
 
 (function () {
 
@@ -42593,8 +42593,28 @@ function ($,
 			.bind (this),
 			set: (function (value)
 			{
-				if (value)
-					this .load ('"' + value + '"');
+				this .loadURL (new Fields .MFString (value), new Fields .MFString ());
+			})
+			.bind (this),
+			enumerable: true,
+			configurable: false
+		});
+
+		Object .defineProperty (this .getElement () .get (0), "url",
+		{
+			get: (function ()
+			{
+				var worldURL = this .getExecutionContext () .getWorldURL ();
+
+				if (worldURL)
+					return new Fields .MFString (worldURL);
+				else
+					return new Fields .MFString ();
+			})
+			.bind (this),
+			set: (function (value)
+			{
+				this .loadURL (value, new Fields .MFString ());
 			})
 			.bind (this),
 			enumerable: true,
@@ -42790,8 +42810,10 @@ function ($,
 				element      = this .getElement () .get (0),
 				browserEvent = this .getElement () .attr (name);
 
-			if (browserEvent !== undefined)
+			if (browserEvent)
 				element [name] = (function (browserEvent) { evaluate .call (this, browserEvent); }) .bind (element, browserEvent);
+			else
+				element [name] = Function .prototype;
 		},
 		callBrowserEventHandler: function (name)
 		{
@@ -42799,7 +42821,7 @@ function ($,
 				element             = this .getElement () .get (0),
 				browserEventHandler = element [name];
 
-			if (browserEventHandler !== undefined)
+			if (browserEventHandler)
 				browserEventHandler ();
 		},
 	};
