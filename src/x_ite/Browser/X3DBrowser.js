@@ -142,6 +142,8 @@ function ($,
 			else
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
+				this .callBrowserCallbacks ("initialized");
+				this .callBrowserEventHandler ("onload");
 			}
 
 			// Print welcome message.
@@ -490,11 +492,13 @@ function ($,
 		},
 		callBrowserCallbacks: function (name /* arguments */)
 		{
+			var args = arguments;
+
 			if (this .browserCallbacks .size)
 			{
 				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
 				{
-					browserCallback .apply (null, arguments);
+					browserCallback .apply (null, args);
 				});
 			}
 		},
