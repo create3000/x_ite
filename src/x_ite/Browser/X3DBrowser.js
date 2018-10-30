@@ -133,8 +133,6 @@ function ($,
 			else
 				urlCharacters = this .getElement () .attr ("url");
 
-console .log (urlCharacters);
-
 			if (urlCharacters)
 			{
 				this .initialized () .set (this .getCurrentTime ());

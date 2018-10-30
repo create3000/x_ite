@@ -1,4 +1,4 @@
-/* X_ITE v4.2.8a-431 */
+/* X_ITE v4.2.8a-432 */
 
 (function () {
 
@@ -42787,7 +42787,7 @@ function ($,
 		},
 		load: function (urlCharacters)
 		{
-			if (urlCharacers)
+			if (urlCharacters)
 			{
 			   var
 					parser    = new Parser (this .getExecutionContext (), true),
@@ -117356,8 +117356,6 @@ function ($,
 				urlCharacters = '"' + urlCharacters + '"';
 			else
 				urlCharacters = this .getElement () .attr ("url");
-
-console .log (urlCharacters);
 
 			if (urlCharacters)
 			{

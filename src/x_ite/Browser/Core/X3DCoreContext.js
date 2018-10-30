@@ -406,7 +406,7 @@ function ($,
 		},
 		load: function (urlCharacters)
 		{
-			if (urlCharacers)
+			if (urlCharacters)
 			{
 			   var
 					parser    = new Parser (this .getExecutionContext (), true),
