@@ -1,4 +1,4 @@
-/* X_ITE v4.2.8a-430 */
+/* X_ITE v4.2.8a-431 */
 
 (function () {
 
@@ -42790,14 +42790,15 @@ function ($,
 			if (urlCharacers)
 			{
 			   var
-			      parser    = new Parser (this .getExecutionContext (), true),
-			      url       = new Fields .MFString (),
+					parser    = new Parser (this .getExecutionContext (), true),
+					url       = new Fields .MFString (),
 					parameter = new Fields .MFString ();
 	
 				parser .setInput (urlCharacters);
 				parser .sfstringValues (url);
-	
-				this .loadURL (url, parameter);
+
+				if (url .length)
+					this .loadURL (url, parameter);
 			}
 			else
 			{
@@ -117356,6 +117357,8 @@ function ($,
 			else
 				urlCharacters = this .getElement () .attr ("url");
 
+console .log (urlCharacters);
+
 			if (urlCharacters)
 			{
 				this .initialized () .set (this .getCurrentTime ());
@@ -117363,7 +117366,9 @@ function ($,
 				this .load (urlCharacters);
 			}
 			else
+			{
 				this .initialized () .setValue (this .getCurrentTime ());
+			}
 
 			// Print welcome message.
 

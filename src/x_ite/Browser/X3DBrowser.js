@@ -133,6 +133,8 @@ function ($,
 			else
 				urlCharacters = this .getElement () .attr ("url");
 
+console .log (urlCharacters);
+
 			if (urlCharacters)
 			{
 				this .initialized () .set (this .getCurrentTime ());
@@ -140,7 +142,9 @@ function ($,
 				this .load (urlCharacters);
 			}
 			else
+			{
 				this .initialized () .setValue (this .getCurrentTime ());
+			}
 
 			// Print welcome message.
 

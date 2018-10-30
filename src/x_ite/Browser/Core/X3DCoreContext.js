@@ -409,14 +409,15 @@ function ($,
 			if (urlCharacers)
 			{
 			   var
-			      parser    = new Parser (this .getExecutionContext (), true),
-			      url       = new Fields .MFString (),
+					parser    = new Parser (this .getExecutionContext (), true),
+					url       = new Fields .MFString (),
 					parameter = new Fields .MFString ();
 	
 				parser .setInput (urlCharacters);
 				parser .sfstringValues (url);
-	
-				this .loadURL (url, parameter);
+
+				if (url .length)
+					this .loadURL (url, parameter);
 			}
 			else
 			{
