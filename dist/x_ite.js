@@ -1,4 +1,4 @@
-/* X_ITE v4.2.8a-432 */
+/* X_ITE v4.2.8a-433 */
 
 (function () {
 
@@ -42825,6 +42825,9 @@ function ($,
 
 			if (browserEventHandler)
 				browserEventHandler ();
+
+			if (window .jQuery)
+				window .jQuery (element) .trigger (name .replace (/^on/, ""));
 		},
 	};
 

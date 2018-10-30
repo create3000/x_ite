@@ -444,6 +444,9 @@ function ($,
 
 			if (browserEventHandler)
 				browserEventHandler ();
+
+			if (window .jQuery)
+				window .jQuery (element) .trigger (name .replace (/^on/, ""));
 		},
 	};
 
