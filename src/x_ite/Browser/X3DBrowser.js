@@ -63,7 +63,6 @@ define ([
 	"x_ite/Parser/XMLParser",
 	"x_ite/Parser/JSONParser",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Core/evaluate",
 	"locale/gettext",
 ],
 function ($,
@@ -81,7 +80,6 @@ function ($,
           XMLParser,
           JSONParser,
           X3DConstants,
-          evaluate,
           _)
 {
 "use strict";
@@ -245,14 +243,8 @@ function ($,
 			{
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
-
-				if (this .browserCallbacks .size)
-				{
-					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
-					{
-						browserCallback ("shutdown");
-					});
-				}
+				this .callBrowserCallbacks ("shutdown");
+				this .callBrowserEventHandler ("onshutdown");
 			}
 
 			// Clear event cache.
@@ -312,19 +304,8 @@ function ($,
 			if (this .initialized () .getValue ())
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
-
-				if (this .browserCallbacks .size)
-				{
-					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
-					{
-						browserCallback ("initialized");
-					});
-				}
-
-				var onload = this .getElement () .attr ("onload");
-
-				if (onload !== undefined)
-					evaluate .call (this .getElement () .get (0), onload);
+				this .callBrowserCallbacks ("initialized");
+				this .callBrowserEventHandler ("onload");
 			}
 		},
 		createVrmlFromString: function (vrmlSyntax)
@@ -456,18 +437,8 @@ function ($,
 				}
 				else
 				{
-					if (this .browserCallbacks .size)
-					{
-						(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
-						{
-							browserCallback ("error", url);
-						});
-					}
-
-					var onerror = this .getElement () .attr ("onerror");
-
-					if (onerror !== undefined)
-						evaluate .call (this .getElement () .get (0), onerror);
+					this .callBrowserCallbacks ("error", url);
+					this .callBrowserEventHandler ("onerror");
 
 					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 				}
@@ -514,6 +485,16 @@ function ($,
 		getBrowserCallbacks: function ()
 		{
 			return this .browserCallbacks;
+		},
+		callBrowserCallbacks: function (name /* arguments */)
+		{
+			if (this .browserCallbacks .size)
+			{
+				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+				{
+					browserCallback .apply (null, arguments);
+				});
+			}
 		},
 		importJS: function (jsobj) {
 			var

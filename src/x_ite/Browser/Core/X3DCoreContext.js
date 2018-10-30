@@ -56,6 +56,7 @@ define ([
 	"x_ite/Browser/Core/Notification",
 	"x_ite/Browser/Core/BrowserTimings",
 	"x_ite/Browser/Core/ContextMenu",
+	"x_ite/Browser/Core/evaluate",
 	"x_ite/Execution/Scene",
 	"x_ite/Parser/Parser",
 	"standard/Utility/DataStorage",
@@ -68,6 +69,7 @@ function ($,
           Notification,
           BrowserTimings,
           ContextMenu,
+          evaluate,
           Scene,
           Parser,
           DataStorage)
@@ -200,6 +202,27 @@ function ($,
 		this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
 		$(".x_ite-console") .empty ();
+
+		Object .defineProperty (this .getElement () .get (0), "src",
+		{
+			get: (function ()
+			{
+				return this .getExecutionContext () .getWorldURL ();
+			})
+			.bind (this),
+			set: (function (value)
+			{
+				if (value)
+					this .load ('"' + value + '"');
+			})
+			.bind (this),
+			enumerable: true,
+			configurable: false
+		});
+
+		this .setBrowserEventHandler ("onload");
+		this .setBrowserEventHandler ("onshutdown");
+		this .setBrowserEventHandler ("onerror");
 	}
 
 	X3DCoreContext .prototype =
@@ -292,6 +315,10 @@ function ($,
 		{
 			return this .mobile;
 		},
+		getPrivateScene: function ()
+		{
+			return this .privateScene;
+		},
 		processMutations: function (mutations)
 		{
 			mutations .forEach (function (mutation)
@@ -317,21 +344,42 @@ function ($,
 		{
 			var attributeName = mutation .attributeName;
 
-			switch (attributeName .toLowerCase())
+			switch (attributeName .toLowerCase ())
 			{
+				case "onerror":
+				{
+					this .setBrowserEventHandler ("onerror");
+					break;
+				}
+				case "onload":
+				{
+					this .setBrowserEventHandler ("onload");
+					break;
+				}
+				case "onshutdown":
+				{
+					this .setBrowserEventHandler ("onshutdown");
+					break;
+				}
+				case "splashscreen":
+				{
+					this .getBrowserOptions () .setAttributeSplashScreen ();
+					break;
+				}
 				case "src":
+				{
 					var urlCharacters = this .getElement () .attr ("src");
 		
 					if (urlCharacters)
 						this .load ('"' + urlCharacters + '"');
 
 					break;
+				}
 				case "url":
+				{
 					this .load (this .getElement () .attr ("url"));
 					break;
-				case "splashscreen":
-					this .getBrowserOptions () .setAttributeSplashScreen ();
-					break;
+				}
 			}
 		},
 		load: function (urlCharacters)
@@ -355,9 +403,23 @@ function ($,
 					this .getCanvas () .fadeIn (0);
 			}
 		},
-		getPrivateScene: function ()
+		setBrowserEventHandler: function (name)
 		{
-			return this .privateScene;
+			var
+				element      = this .getElement () .get (0),
+				browserEvent = this .getElement () .attr (name);
+
+			if (browserEvent !== undefined)
+				element [name] = (function (browserEvent) { evaluate .call (this, browserEvent); }) .bind (element, browserEvent);
+		},
+		callBrowserEventHandler: function (name)
+		{
+			var
+				element             = this .getElement () .get (0),
+				browserEventHandler = element [name];
+
+			if (browserEventHandler !== undefined)
+				browserEventHandler ();
 		},
 	};
 

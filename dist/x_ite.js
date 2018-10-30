@@ -1,4 +1,4 @@
-/* X_ITE v4.2.8a-427 */
+/* X_ITE v4.2.8a-428 */
 
 (function () {
 
@@ -34545,6 +34545,63 @@ function ($,
  ******************************************************************************/
 
 
+define ('x_ite/Browser/Core/evaluate',[],function ()
+{
+	return function (/* __text__ */)
+	{
+		return eval (arguments [0]);	
+	};
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Configuration/X3DInfoArray',[],function ()
 {
 "use strict";
@@ -42380,6 +42437,7 @@ define ('x_ite/Browser/Core/X3DCoreContext',[
 	"x_ite/Browser/Core/Notification",
 	"x_ite/Browser/Core/BrowserTimings",
 	"x_ite/Browser/Core/ContextMenu",
+	"x_ite/Browser/Core/evaluate",
 	"x_ite/Execution/Scene",
 	"x_ite/Parser/Parser",
 	"standard/Utility/DataStorage",
@@ -42392,6 +42450,7 @@ function ($,
           Notification,
           BrowserTimings,
           ContextMenu,
+          evaluate,
           Scene,
           Parser,
           DataStorage)
@@ -42524,6 +42583,27 @@ function ($,
 		this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
 		$(".x_ite-console") .empty ();
+
+		Object .defineProperty (this .getElement () .get (0), "src",
+		{
+			get: (function ()
+			{
+				return this .getExecutionContext () .getWorldURL ();
+			})
+			.bind (this),
+			set: (function (value)
+			{
+				if (value)
+					this .load ('"' + value + '"');
+			})
+			.bind (this),
+			enumerable: true,
+			configurable: false
+		});
+
+		this .setBrowserEventHandler ("onload");
+		this .setBrowserEventHandler ("onshutdown");
+		this .setBrowserEventHandler ("onerror");
 	}
 
 	X3DCoreContext .prototype =
@@ -42616,6 +42696,10 @@ function ($,
 		{
 			return this .mobile;
 		},
+		getPrivateScene: function ()
+		{
+			return this .privateScene;
+		},
 		processMutations: function (mutations)
 		{
 			mutations .forEach (function (mutation)
@@ -42641,21 +42725,42 @@ function ($,
 		{
 			var attributeName = mutation .attributeName;
 
-			switch (attributeName .toLowerCase())
+			switch (attributeName .toLowerCase ())
 			{
+				case "onerror":
+				{
+					this .setBrowserEventHandler ("onerror");
+					break;
+				}
+				case "onload":
+				{
+					this .setBrowserEventHandler ("onload");
+					break;
+				}
+				case "onshutdown":
+				{
+					this .setBrowserEventHandler ("onshutdown");
+					break;
+				}
+				case "splashscreen":
+				{
+					this .getBrowserOptions () .setAttributeSplashScreen ();
+					break;
+				}
 				case "src":
+				{
 					var urlCharacters = this .getElement () .attr ("src");
 		
 					if (urlCharacters)
 						this .load ('"' + urlCharacters + '"');
 
 					break;
+				}
 				case "url":
+				{
 					this .load (this .getElement () .attr ("url"));
 					break;
-				case "splashscreen":
-					this .getBrowserOptions () .setAttributeSplashScreen ();
-					break;
+				}
 			}
 		},
 		load: function (urlCharacters)
@@ -42679,9 +42784,23 @@ function ($,
 					this .getCanvas () .fadeIn (0);
 			}
 		},
-		getPrivateScene: function ()
+		setBrowserEventHandler: function (name)
 		{
-			return this .privateScene;
+			var
+				element      = this .getElement () .get (0),
+				browserEvent = this .getElement () .attr (name);
+
+			if (browserEvent !== undefined)
+				element [name] = (function (browserEvent) { evaluate .call (this, browserEvent); }) .bind (element, browserEvent);
+		},
+		callBrowserEventHandler: function (name)
+		{
+			var
+				element             = this .getElement () .get (0),
+				browserEventHandler = element [name];
+
+			if (browserEventHandler !== undefined)
+				browserEventHandler ();
 		},
 	};
 
@@ -117128,63 +117247,6 @@ function (Anchor,
  ******************************************************************************/
 
 
-define ('x_ite/Browser/Core/evaluate',[],function ()
-{
-	return function (/* __text__ */)
-	{
-		return eval (arguments [0]);	
-	};
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Browser/X3DBrowser',[
 	"jquery",
 	"x_ite/Browser/VERSION",
@@ -117201,7 +117263,6 @@ define ('x_ite/Browser/X3DBrowser',[
 	"x_ite/Parser/XMLParser",
 	"x_ite/Parser/JSONParser",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Core/evaluate",
 	"locale/gettext",
 ],
 function ($,
@@ -117219,7 +117280,6 @@ function ($,
           XMLParser,
           JSONParser,
           X3DConstants,
-          evaluate,
           _)
 {
 "use strict";
@@ -117383,14 +117443,8 @@ function ($,
 			{
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
-
-				if (this .browserCallbacks .size)
-				{
-					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
-					{
-						browserCallback ("shutdown");
-					});
-				}
+				this .callBrowserCallbacks ("shutdown");
+				this .callBrowserEventHandler ("onshutdown");
 			}
 
 			// Clear event cache.
@@ -117450,19 +117504,8 @@ function ($,
 			if (this .initialized () .getValue ())
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
-
-				if (this .browserCallbacks .size)
-				{
-					(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
-					{
-						browserCallback ("initialized");
-					});
-				}
-
-				var onload = this .getElement () .attr ("onload");
-
-				if (onload !== undefined)
-					evaluate .call (this .getElement () .get (0), onload);
+				this .callBrowserCallbacks ("initialized");
+				this .callBrowserEventHandler ("onload");
 			}
 		},
 		createVrmlFromString: function (vrmlSyntax)
@@ -117594,18 +117637,8 @@ function ($,
 				}
 				else
 				{
-					if (this .browserCallbacks .size)
-					{
-						(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
-						{
-							browserCallback ("error", url);
-						});
-					}
-
-					var onerror = this .getElement () .attr ("onerror");
-
-					if (onerror !== undefined)
-						evaluate .call (this .getElement () .get (0), onerror);
+					this .callBrowserCallbacks ("error", url);
+					this .callBrowserEventHandler ("onerror");
 
 					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 				}
@@ -117652,6 +117685,16 @@ function ($,
 		getBrowserCallbacks: function ()
 		{
 			return this .browserCallbacks;
+		},
+		callBrowserCallbacks: function (name /* arguments */)
+		{
+			if (this .browserCallbacks .size)
+			{
+				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+				{
+					browserCallback .apply (null, arguments);
+				});
+			}
 		},
 		importJS: function (jsobj) {
 			var
