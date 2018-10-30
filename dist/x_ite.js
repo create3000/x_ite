@@ -42583,47 +42583,6 @@ function ($,
 		this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
 		$(".x_ite-console") .empty ();
-
-		Object .defineProperty (this .getElement () .get (0), "src",
-		{
-			get: (function ()
-			{
-				return this .getExecutionContext () .getWorldURL ();
-			})
-			.bind (this),
-			set: (function (value)
-			{
-				this .loadURL (new Fields .MFString (value), new Fields .MFString ());
-			})
-			.bind (this),
-			enumerable: true,
-			configurable: false
-		});
-
-		Object .defineProperty (this .getElement () .get (0), "url",
-		{
-			get: (function ()
-			{
-				var worldURL = this .getExecutionContext () .getWorldURL ();
-
-				if (worldURL)
-					return new Fields .MFString (worldURL);
-				else
-					return new Fields .MFString ();
-			})
-			.bind (this),
-			set: (function (value)
-			{
-				this .loadURL (value, new Fields .MFString ());
-			})
-			.bind (this),
-			enumerable: true,
-			configurable: false
-		});
-
-		this .setBrowserEventHandler ("onload");
-		this .setBrowserEventHandler ("onshutdown");
-		this .setBrowserEventHandler ("onerror");
 	}
 
 	X3DCoreContext .prototype =
@@ -42651,6 +42610,51 @@ function ($,
 			this .observer = new MutationObserver (this .processMutations .bind (this));
 
 			this .observer .observe (this .element [0], { attributes: true, childList: false, characterData: false, subtree: false });
+
+			// Define src and url property.
+
+			Object .defineProperty (this .getElement () .get (0), "src",
+			{
+				get: (function ()
+				{
+					return this .getExecutionContext () .getWorldURL ();
+				})
+				.bind (this),
+				set: (function (value)
+				{
+					this .loadURL (new Fields .MFString (value), new Fields .MFString ());
+				})
+				.bind (this),
+				enumerable: true,
+				configurable: false
+			});
+	
+			Object .defineProperty (this .getElement () .get (0), "url",
+			{
+				get: (function ()
+				{
+					var worldURL = this .getExecutionContext () .getWorldURL ();
+	
+					if (worldURL)
+						return new Fields .MFString (worldURL);
+					else
+						return new Fields .MFString ();
+				})
+				.bind (this),
+				set: (function (value)
+				{
+					this .loadURL (value, new Fields .MFString ());
+				})
+				.bind (this),
+				enumerable: true,
+				configurable: false
+			});
+
+			// Configure browser event handlers.
+
+			this .setBrowserEventHandler ("onload");
+			this .setBrowserEventHandler ("onshutdown");
+			this .setBrowserEventHandler ("onerror");
 		},
 		getDebug: function ()
 		{
