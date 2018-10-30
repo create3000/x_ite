@@ -390,9 +390,7 @@ function ($,
 				{
 					var urlCharacters = this .getElement () .attr ("src");
 		
-					if (urlCharacters)
-						this .load ('"' + urlCharacters + '"');
-
+					this .load ('"' + urlCharacters + '"');
 					break;
 				}
 				case "url":
@@ -404,18 +402,17 @@ function ($,
 		},
 		load: function (urlCharacters)
 		{
-			if (urlCharacters)
+			if (urlCharacers)
 			{
 			   var
 			      parser    = new Parser (this .getExecutionContext (), true),
 			      url       = new Fields .MFString (),
 					parameter = new Fields .MFString ();
-
+	
 				parser .setInput (urlCharacters);
 				parser .sfstringValues (url);
-
-				if (url .length)
-					this .loadURL (url, parameter);
+	
+				this .loadURL (url, parameter);
 			}
 			else
 			{

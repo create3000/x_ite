@@ -126,12 +126,12 @@ function ($,
 			this .getLoadSensor () .isLoaded_ .removeInterest ("set_loaded__", this);
 			this .getLoadSensor () .enabled_ = false;
 
-			var urlCharacters = this .getElement () [0] .getAttribute ("src");
+			var urlCharacters = this .getElement () .attr ("src");
 
 			if (urlCharacters)
 				urlCharacters = '"' + urlCharacters + '"';
 			else
-				urlCharacters = this .getElement () [0] .getAttribute ("url");
+				urlCharacters = this .getElement () .attr ("url");
 
 			if (urlCharacters)
 			{

@@ -1,4 +1,4 @@
-/* X_ITE v4.2.8a-429 */
+/* X_ITE v4.2.8a-430 */
 
 (function () {
 
@@ -42771,9 +42771,7 @@ function ($,
 				{
 					var urlCharacters = this .getElement () .attr ("src");
 		
-					if (urlCharacters)
-						this .load ('"' + urlCharacters + '"');
-
+					this .load ('"' + urlCharacters + '"');
 					break;
 				}
 				case "url":
@@ -42785,18 +42783,17 @@ function ($,
 		},
 		load: function (urlCharacters)
 		{
-			if (urlCharacters)
+			if (urlCharacers)
 			{
 			   var
 			      parser    = new Parser (this .getExecutionContext (), true),
 			      url       = new Fields .MFString (),
 					parameter = new Fields .MFString ();
-
+	
 				parser .setInput (urlCharacters);
 				parser .sfstringValues (url);
-
-				if (url .length)
-					this .loadURL (url, parameter);
+	
+				this .loadURL (url, parameter);
 			}
 			else
 			{
@@ -117348,12 +117345,12 @@ function ($,
 			this .getLoadSensor () .isLoaded_ .removeInterest ("set_loaded__", this);
 			this .getLoadSensor () .enabled_ = false;
 
-			var urlCharacters = this .getElement () [0] .getAttribute ("src");
+			var urlCharacters = this .getElement () .attr ("src");
 
 			if (urlCharacters)
 				urlCharacters = '"' + urlCharacters + '"';
 			else
-				urlCharacters = this .getElement () [0] .getAttribute ("url");
+				urlCharacters = this .getElement () .attr ("url");
 
 			if (urlCharacters)
 			{
