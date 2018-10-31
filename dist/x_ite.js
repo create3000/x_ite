@@ -1,4 +1,4 @@
-/* X_ITE v4.2.8a-439 */
+/* X_ITE v4.2.8-439 */
 
 (function () {
 
@@ -93758,22 +93758,16 @@ function (Fields,
 					}
 				}
 	
-console .log (SCPyAxis .equals (Vector3 .Zero));
 				// The entire spine is coincident:
 				if (SCPyAxis .equals (Vector3 .Zero))
 					SCPyAxis .set (0, 1, 0);
 	
-console .log (SCPzAxis .equals (Vector3 .Zero));
 				// The entire spine is collinear:
 				if (SCPzAxis .equals (Vector3 .Zero))
 					rotation .setFromToVec (Vector3 .yAxis, SCPyAxis) .multVecRot (SCPzAxis .assign (Vector3 .zAxis));
 	
 				// We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
 				SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
-
-console .log (SCPxAxis .toString ());
-console .log (SCPyAxis .toString ());
-console .log (SCPzAxis .toString ());
 
 				// Get first spine
 				var s = firstSpine;
