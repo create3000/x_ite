@@ -232,7 +232,7 @@ define (function ()
 				value = copy .value;
 
 			for (var i = 0, length = value .length; i < length; ++ i)
-				value [i] = escape (value [i]);
+				value [i] = encodeURI (value [i]);
 
 			return copy;
 		},
@@ -291,7 +291,7 @@ define (function ()
 			uri .scheme    = result [1] || "";
 			uri .slashs    = result [2] || "";
 			uri .path      = unescape (result [4] || "");
-			uri .query     = unescape (result [5] || "");
+			uri .query     = result [5] || "";
 			uri .fragment  = unescape (result [6] || "");
 
 			var result = authority .exec (result [3] || "");
@@ -735,7 +735,7 @@ define (function ()
 			                value .host,
 			                value .port,
 			                new Path (value .path, "/") .escape () .toString (),
-			                escape (value .query),
+			                value .query,
 			                escape (value .fragment));
 		},
 		unescape: function ()
@@ -749,7 +749,7 @@ define (function ()
 			                value .host,
 			                value .port,
 			                new Path (value .path, "/") .unescape () .toString (),
-			                unescape (value .query),
+			                value .query,
 			                unescape (value .fragment));
 		},
 		toString: function ()

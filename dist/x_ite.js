@@ -1,4 +1,4 @@
-/* X_ITE v4.2.8a-436 */
+/* X_ITE v4.2.8a-437 */
 
 (function () {
 
@@ -35868,7 +35868,7 @@ define ('standard/Networking/URI',[],function ()
 				value = copy .value;
 
 			for (var i = 0, length = value .length; i < length; ++ i)
-				value [i] = escape (value [i]);
+				value [i] = encodeURI (value [i]);
 
 			return copy;
 		},
@@ -35927,7 +35927,7 @@ define ('standard/Networking/URI',[],function ()
 			uri .scheme    = result [1] || "";
 			uri .slashs    = result [2] || "";
 			uri .path      = unescape (result [4] || "");
-			uri .query     = unescape (result [5] || "");
+			uri .query     = result [5] || "";
 			uri .fragment  = unescape (result [6] || "");
 
 			var result = authority .exec (result [3] || "");
@@ -36371,7 +36371,7 @@ define ('standard/Networking/URI',[],function ()
 			                value .host,
 			                value .port,
 			                new Path (value .path, "/") .escape () .toString (),
-			                escape (value .query),
+			                value .query,
 			                escape (value .fragment));
 		},
 		unescape: function ()
@@ -36385,7 +36385,7 @@ define ('standard/Networking/URI',[],function ()
 			                value .host,
 			                value .port,
 			                new Path (value .path, "/") .unescape () .toString (),
-			                unescape (value .query),
+			                value .query,
 			                unescape (value .fragment));
 		},
 		toString: function ()
