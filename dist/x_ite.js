@@ -1,4 +1,4 @@
-/* X_ITE v4.2.8a-438 */
+/* X_ITE v4.2.8a-439 */
 
 (function () {
 
@@ -93750,24 +93750,30 @@ function (Fields,
 					for (var i = 1, length = numSpines - 1; i < length; ++ i)
 					{
 						SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
-						           .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
-						           .normalize ();
+						         .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
+						         .normalize ();
 	
 						if (! SCPzAxis .equals (Vector3 .Zero))
 							break;
 					}
 				}
 	
+console .log (SCPyAxis .equals (Vector3 .Zero));
 				// The entire spine is coincident:
 				if (SCPyAxis .equals (Vector3 .Zero))
 					SCPyAxis .set (0, 1, 0);
 	
+console .log (SCPzAxis .equals (Vector3 .Zero));
 				// The entire spine is collinear:
 				if (SCPzAxis .equals (Vector3 .Zero))
 					rotation .setFromToVec (Vector3 .yAxis, SCPyAxis) .multVecRot (SCPzAxis .assign (Vector3 .zAxis));
 	
 				// We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
 				SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
+
+console .log (SCPxAxis .toString ());
+console .log (SCPyAxis .toString ());
+console .log (SCPzAxis .toString ());
 
 				// Get first spine
 				var s = firstSpine;
@@ -93788,8 +93794,8 @@ function (Fields,
 
 					SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i - 1] .getValue ()) .normalize ();
 					SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (s)
-					           .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
-					           .normalize ();
+					         .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
+					         .normalize ();
 
 					// g.
 					if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
@@ -93831,8 +93837,8 @@ function (Fields,
 					if (numSpines > 2)
 					{
 						SCPzAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ())
-						           .cross (vector3 .assign (spine [numSpines - 3] .getValue ()) .subtract (spine [numSpines - 2] .getValue ()))
-						           .normalize ();
+						         .cross (vector3 .assign (spine [numSpines - 3] .getValue ()) .subtract (spine [numSpines - 2] .getValue ()))
+						         .normalize ();
 					}
 	
 					// g.

@@ -245,8 +245,8 @@ function (Fields,
 					for (var i = 1, length = numSpines - 1; i < length; ++ i)
 					{
 						SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
-						           .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
-						           .normalize ();
+						         .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
+						         .normalize ();
 	
 						if (! SCPzAxis .equals (Vector3 .Zero))
 							break;
@@ -283,8 +283,8 @@ function (Fields,
 
 					SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i - 1] .getValue ()) .normalize ();
 					SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (s)
-					           .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
-					           .normalize ();
+					         .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
+					         .normalize ();
 
 					// g.
 					if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
@@ -326,8 +326,8 @@ function (Fields,
 					if (numSpines > 2)
 					{
 						SCPzAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ())
-						           .cross (vector3 .assign (spine [numSpines - 3] .getValue ()) .subtract (spine [numSpines - 2] .getValue ()))
-						           .normalize ();
+						         .cross (vector3 .assign (spine [numSpines - 3] .getValue ()) .subtract (spine [numSpines - 2] .getValue ()))
+						         .normalize ();
 					}
 	
 					// g.
