@@ -1,4 +1,4 @@
-/* X_ITE v4.2.8a-435 */
+/* X_ITE v4.2.8a-436 */
 
 (function () {
 
@@ -51791,7 +51791,7 @@ function ($,
 				this .URL = this .transform (url [i]);
 
 				$.ajax ({
-					url: this .URL,
+					url: this .URL .escape (),
 					dataType: "text",
 					async: false,
 					cache: this .browser .getBrowserOptions () .getCache (),
@@ -51956,7 +51956,7 @@ function ($,
 			// Load URL async
 
 			$.ajax ({
-				url: this .URL,
+				url: this .URL .escape (),
 				dataType: "binary",
 				async: true,
 				cache: this .browser .getBrowserOptions () .getCache (),
