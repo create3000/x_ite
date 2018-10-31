@@ -1,13 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/X3DBrowser.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/InputOutput/FileLoader.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="12" Column="1" />
-      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="494" Column="4" />
+      <File FileName="src/x_ite.html" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="493" Column="1" />
       <File FileName="src/x_ite/Components/Geometry3D/Extrusion.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/InputOutput/FileLoader.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Texturing/ImageTexture.js" Line="1" Column="1" />
+      <File FileName="src/standard/Networking/URI.js" Line="298" Column="1" />
+      <File FileName="src/x_ite/Execution/X3DExecutionContext.js" Line="690" Column="5" />
+      <File FileName="src/x_ite/InputOutput/FileLoader.js" Line="429" Column="10" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
