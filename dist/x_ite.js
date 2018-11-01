@@ -14662,7 +14662,7 @@ define ('standard/Math/Algorithm',[],function ()
 		{
 			// http://jsperf.com/math-clamp
 			// http://jsperf.com/clamping-methods/2
-			return Math .min (max, Math .max (min, value));
+			return Math .min (Math .max (value, min), max);
 		},
 		interval: function (value, low, high)
 		{
@@ -86142,10 +86142,12 @@ define ('x_ite/Components/Sound/X3DSoundSourceNode',[
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Time/X3DTimeDependentNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
 ],
 function (X3DChildNode,
           X3DTimeDependentNode,
-          X3DConstants)
+          X3DConstants,
+          Algorithm)
 {
 "use strict";
 
@@ -86237,7 +86239,7 @@ function (X3DChildNode,
 		set_volume__: function ()
 		{
 			if (this .media)
-				this .media [0] .volume = (! this .getBrowser () .mute_ .getValue ()) * this .getBrowser () .volume_ .getValue () * this .volume;
+				this .media [0] .volume = Algorithm .clamp ((! this .getBrowser () .mute_ .getValue ()) * this .getBrowser () .volume_ .getValue () * this .volume, 0, 1);
 		},
 		set_speed: function ()
 		{ },
