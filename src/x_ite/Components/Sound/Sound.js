@@ -55,10 +55,11 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Line3",
+	"standard/Math/Geometry/Sphere3",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -67,10 +68,11 @@ function (Fields,
           X3DCast,
           TraverseType,
           X3DConstants,
-          Vector2,
           Vector3,
           Rotation4,
-          Matrix4)
+          Matrix4,
+          Line3,
+          Sphere3)
 {
 "use strict";
 
@@ -87,9 +89,6 @@ function (Fields,
 		this .minFront_ .setUnit ("length");
 		this .maxBack_  .setUnit ("length");
 		this .maxFront_ .setUnit ("length");
-
-		this .min = { radius: 0, distance: 0 };
-		this .max = { radius: 0, distance: 0 };
 
 		this .currentTraversed = true;
 	}
@@ -181,64 +180,79 @@ function (Fields,
 
 			this .setTraversed (false);
 		},
-		traverse: function (type, renderObject)
+		traverse: (function ()
 		{
-			try
+			var
+				min = { distance: 0, intersection: new Vector3 (0, 0, 0) },
+				max = { distance: 0, intersection: new Vector3 (0, 0, 0) };
+
+			return function (type, renderObject)
 			{
-				if (type !== TraverseType .DISPLAY)
-					return;
-	
-				if (! this .sourceNode)
-					return;
-	
-				if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
-					return;
-	
-				this .setTraversed (true);
-
-				var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
-
-				this .getEllipsoidParameter (modelViewMatrix, this .maxBack_ .getValue (), this .maxFront_ .getValue (), this .max);
-				this .getEllipsoidParameter (modelViewMatrix, this .minBack_ .getValue (), this .minFront_ .getValue (), this .min);
-
-				if (this .max .distance < this .max .radius)
+				try
 				{
-					if (this .min .distance <= this .min .radius)
+					if (type !== TraverseType .DISPLAY)
+						return;
+		
+					if (! this .sourceNode)
+						return;
+		
+					if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
+						return;
+		
+					this .setTraversed (true);
+	
+					var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+	
+					this .getEllipsoidParameter (modelViewMatrix, this .maxBack_ .getValue (), this .maxFront_ .getValue (), max, 1);
+					this .getEllipsoidParameter (modelViewMatrix, this .minBack_ .getValue (), this .minFront_ .getValue (), min, 0);
+
+					if (max .distance < 1) // Sphere radius is 1
 					{
-						this .sourceNode .setVolume (this .intensity_ .getValue ());
+						if (min .distance < 1) // Sphere radius is 1
+						{
+							this .sourceNode .setVolume (this .intensity_ .getValue ());
+						}
+						else
+						{
+							var
+								d1 = min .intersection .abs (), // Viewer is here at (0, 0, 0)
+								d2 = max .intersection .distance (min .intersection),
+								d  = 1 - (d1 / d2);
+
+							//console .log (d);
+
+							this .sourceNode .setVolume (this .intensity_ .getValue () * d);
+						}
 					}
 					else
 					{
-						var
-							d1 = this .max .radius - this .max .distance,
-							d2 = this .max .radius - this .min .radius;
-
-						this .sourceNode .setVolume (this .intensity_ .getValue () * (d1 / d2));
+						this .sourceNode .setVolume (0);
 					}
 				}
-				else
+				catch (error)
 				{
-					this .sourceNode .setVolume (0);
+					console .log (error);
+	
+					if (this .sourceNode)
+						this .sourceNode .setVolume (0);
 				}
-			}
-			catch (error)
-			{
-				console .log (error);
-
-				if (this .sourceNode)
-					this .sourceNode .setVolume (0);
-			}
-		},
+			};
+		})(),
 		getEllipsoidParameter: (function ()
 		{
 			var
-				matrix      = new Matrix4 (),
-				translation = new Vector3 (0, 0, 0),
-				rotation    = new Rotation4 (),
-				scale       = new Vector3 (1, 1, 1),
-				viewer      = new Vector3 (0, 0, 0);
+				location        = new Vector3 (0, 0, 0),
+				sphereMatrix    = new Matrix4 (),
+				invSphereMatrix = new Matrix4 (),
+				translation     = new Vector3 (0, 0, 0),
+				rotation        = new Rotation4 (),
+				scale           = new Vector3 (1, 1, 1),
+				sphere          = new Sphere3 (1, Vector3 .Zero),
+				line            = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+				intersection1   = new Vector3 (0, 0, 0),
+				intersection2   = new Vector3 (0, 0, 0);
 
-			return function (modelViewMatrix, back, front, value)
+			return function (modelViewMatrix, back, front, value, max)
 			{
 				/*
 				 * http://de.wikipedia.org/wiki/Ellipse
@@ -254,24 +268,30 @@ function (Fields,
 					e = a - back,
 					b = Math .sqrt (a * a - e * e);
 				
-				translation .z = e;
+				location .set (0, 0, e);
+				scale .set (b, b, a);
+
 				rotation .setFromToVec (Vector3 .zAxis, this .direction_ .getValue ());
-				scale .z = a / b;
-	
-				matrix .assign (modelViewMatrix);
-				matrix .translate (this .location_ .getValue ());
-				matrix .rotate (rotation);
-	
-				matrix .translate (translation);
-				matrix .scale (scale);
-	
-				matrix .inverse ();
-	
-				viewer .set (matrix [12],
-				             matrix [13],
-				             matrix [14]);
-	
-				value .radius   = b;
+				sphereMatrix .assign (modelViewMatrix);
+				sphereMatrix .translate (this .location_ .getValue ());
+				sphereMatrix .rotate (rotation);
+				sphereMatrix .translate (location);
+				sphereMatrix .scale (scale);
+
+				invSphereMatrix .assign (sphereMatrix);
+				invSphereMatrix .inverse ();
+
+				var viewer = invSphereMatrix .origin;
+				location .negate () .divVec (scale);
+
+				line .set (viewer, location .subtract (viewer) .normalize ());
+				sphere .intersectsLine (line, intersection1, intersection2);
+
+				if (viewer .distance (intersection1) < viewer .distance (intersection2))
+					value .intersection .assign (sphereMatrix .multVecMatrix (intersection1));
+				else
+					value .intersection .assign (sphereMatrix .multVecMatrix (intersection2));
+
 				value .distance = viewer .abs ();
 			};
 		})(),

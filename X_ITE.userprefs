@@ -1,13 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Sound/Sound.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Sound/Sound.js" Line="208" Column="34" />
-      <File FileName="src/x_ite/Components/Sound/X3DSoundSourceNode.js" Line="155" Column="25" />
-      <File FileName="src/standard/Math/Algorithm.js" Line="77" Column="5" />
+      <File FileName="src/x_ite/Components/Sound/X3DSoundSourceNode.js" Line="150" Column="1" />
+      <File FileName="src/x_ite/Components/Sound/Sound.js" Line="285" Column="1" />
+      <File FileName="src/standard/Math/Geometry/Spheroid3.js" Line="87" Column="1" />
+      <File FileName="src/standard/Math/Geometry/Sphere3.js" Line="81" Column="17" />
+      <File FileName="src/standard/Math/Geometry/Cylinder3.js" Line="1" Column="1" />
+      <File FileName="src/standard/Math/Geometry/Line3.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
