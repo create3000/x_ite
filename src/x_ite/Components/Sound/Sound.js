@@ -203,9 +203,10 @@ function (Fields,
 
 				if (this .max .distance < this .max .radius)
 				{
-					if (this .min .distance < this .min .radius)
+					if (this .min .distance <= this .min .radius)
+					{
 						this .sourceNode .setVolume (this .intensity_ .getValue ());
-
+					}
 					else
 					{
 						var
