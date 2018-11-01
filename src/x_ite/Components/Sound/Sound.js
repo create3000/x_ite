@@ -217,7 +217,9 @@ function (Fields,
 					}
 				}
 				else
+				{
 					this .sourceNode .setVolume (0);
+				}
 			}
 			catch (error)
 			{
@@ -243,8 +245,10 @@ function (Fields,
 				 *
 				 * The ellipsoid is transformed to a sphere for easier calculation and then the viewer position is
 				 * transformed into this coordinate system. The radius and distance can then be obtained.
+				 * 
+				 * throws Error
 				 */
-	
+
 				var
 					a = (back + front) / 2,
 					e = a - back,
