@@ -1,4 +1,4 @@
-/* X_ITE v4.2.9a-442 */
+/* X_ITE v4.2.9a-443 */
 
 (function () {
 
@@ -86479,7 +86479,7 @@ function ($,
 		{
 			if (this .urlStack .length === 0)
 			{
-			   this .duration_changed_ = -1;
+				this .duration_changed_ = -1;
 				this .setLoadState (X3DConstants .FAILED_STATE);
 				return;
 			}
@@ -109805,6 +109805,194 @@ function (X3DChildNode,
  ******************************************************************************/
 
 
+define ('standard/Math/Geometry/Sphere3',[
+	"standard/Math/Numbers/Vector3",
+],
+function (Vector3)
+{
+"use strict";
+
+	var
+		L  = new Vector3 (0, 0, 0),
+		AB = new Vector3 (0, 0, 0),
+		AC = new Vector3 (0, 0, 0),
+		BC = new Vector3 (0, 0, 0),
+		CA = new Vector3 (0, 0, 0),
+		Q1 = new Vector3 (0, 0, 0),
+		Q2 = new Vector3 (0, 0, 0),
+		Q3 = new Vector3 (0, 0, 0);
+
+	function Sphere3 (radius, center)
+	{
+		this .radius = radius;
+		this .center = center .copy ();
+	}
+
+	Sphere3 .prototype =
+	{
+		constructor: Sphere3,
+		set: function (radius, center)
+		{
+			this .radius = radius;
+			this .center .assign (center);
+		},
+		intersectsLine: function (line, intersection1, intersection2)
+		{
+			L .assign (this .center) .subtract (line .point);
+
+			var tca = Vector3 .dot (L, line .direction);
+
+			if (tca < 0)
+				// there is no intersection
+				return false;
+
+			var
+				d2 = Vector3 .dot (L, L) - Math .pow (tca, 2),
+				r2 = Math .pow (this .radius, 2);
+
+			if (d2 > r2)
+				return false;
+
+			var thc = Math .sqrt (r2 - d2);
+
+			var
+				t1 = tca - thc,
+				t2 = tca + thc;
+
+			intersection1 .assign (line .direction) .multiply (t1) .add (line .point);
+			intersection2 .assign (line .direction) .multiply (t2) .add (line .point);
+
+			return true;
+		},
+		intersectsTriangle: function (A, B, C)
+		{
+			var
+				P = this .center,
+				r = this .radius;
+
+			A .subtract (P);
+			B .subtract (P);
+			C .subtract (P);
+
+			// Testing if sphere lies outside the triangle plane.
+
+			AB .assign (B) .subtract (A);
+			AC .assign (C) .subtract (A);
+
+			var
+				rr   = r * r,
+				V    = AB .cross (AC),
+				d    = Vector3 .dot (A, V),
+				e    = Vector3 .dot (V, V),
+				sep1 = d * d > rr * e;
+
+			if (sep1)
+				return false;
+
+			// Testing if sphere lies outside a triangle vertex.
+			var
+				aa   = Vector3 .dot (A, A),
+				ab   = Vector3 .dot (A, B),
+				ac   = Vector3 .dot (A, C),
+				bb   = Vector3 .dot (B, B),
+				bc   = Vector3 .dot (B, C),
+				cc   = Vector3 .dot (C, C),
+				sep2 = (aa > rr) && (ab > aa) && (ac > aa),
+				sep3 = (bb > rr) && (ab > bb) && (bc > bb),
+				sep4 = (cc > rr) && (ac > cc) && (bc > cc);
+
+			if (sep2 || sep3 || sep4)
+				return false;
+
+			// Testing if sphere lies outside a triangle edge.
+
+			AB .assign (B) .subtract (A);
+			BC .assign (C) .subtract (B);
+			CA .assign (A) .subtract (C);
+
+			var
+				d1   = ab - aa,
+				d2   = bc - bb,
+				d3   = ac - cc,
+				e1   = Vector3 .dot (AB, AB),
+				e2   = Vector3 .dot (BC, BC),
+				e3   = Vector3 .dot (CA, CA);
+			
+			Q1 .assign (A) .multiply (e1) .subtract (AB .multiply (d1));
+			Q2 .assign (B) .multiply (e2) .subtract (BC .multiply (d2));
+			Q3 .assign (C) .multiply (e3) .subtract (CA .multiply (d3));
+
+			var
+				QC   = C .multiply (e1) .subtract (Q1),
+				QA   = A .multiply (e2) .subtract (Q2),
+				QB   = B .multiply (e3) .subtract (Q3),
+				sep5 = (Vector3 .dot (Q1, Q1) > rr * e1 * e1) && (Vector3 .dot (Q1, QC) > 0),
+				sep6 = (Vector3 .dot (Q2, Q2) > rr * e2 * e2) && (Vector3 .dot (Q2, QA) > 0),
+				sep7 = (Vector3 .dot (Q3, Q3) > rr * e3 * e3) && (Vector3 .dot (Q3, QB) > 0);
+
+			if (sep5 || sep6 || sep7)
+				return false;
+
+			return true;
+		},
+		toString: function ()
+		{
+			return this .radius + " " + this .center .toString ();
+		},
+	};
+
+	return Sphere3;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Sound/Sound',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -109813,10 +110001,11 @@ define ('x_ite/Components/Sound/Sound',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Line3",
+	"standard/Math/Geometry/Sphere3",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -109825,10 +110014,11 @@ function (Fields,
           X3DCast,
           TraverseType,
           X3DConstants,
-          Vector2,
           Vector3,
           Rotation4,
-          Matrix4)
+          Matrix4,
+          Line3,
+          Sphere3)
 {
 "use strict";
 
@@ -109845,9 +110035,6 @@ function (Fields,
 		this .minFront_ .setUnit ("length");
 		this .maxBack_  .setUnit ("length");
 		this .maxFront_ .setUnit ("length");
-
-		this .min = { radius: 0, distance: 0 };
-		this .max = { radius: 0, distance: 0 };
 
 		this .currentTraversed = true;
 	}
@@ -109939,92 +110126,118 @@ function (Fields,
 
 			this .setTraversed (false);
 		},
-		traverse: function (type, renderObject)
+		traverse: (function ()
 		{
-			try
+			var
+				min = { distance: 0, intersection: new Vector3 (0, 0, 0) },
+				max = { distance: 0, intersection: new Vector3 (0, 0, 0) };
+
+			return function (type, renderObject)
 			{
-				if (type !== TraverseType .DISPLAY)
-					return;
-	
-				if (! this .sourceNode)
-					return;
-	
-				if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
-					return;
-	
-				this .setTraversed (true);
-
-				var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
-
-				this .getEllipsoidParameter (modelViewMatrix, this .maxBack_ .getValue (), this .maxFront_ .getValue (), this .max);
-				this .getEllipsoidParameter (modelViewMatrix, this .minBack_ .getValue (), this .minFront_ .getValue (), this .min);
-
-				if (this .max .distance < this .max .radius)
+				try
 				{
-					if (this .min .distance < this .min .radius)
-						this .sourceNode .setVolume (this .intensity_ .getValue ());
+					if (type !== TraverseType .DISPLAY)
+						return;
+		
+					if (! this .sourceNode)
+						return;
+		
+					if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
+						return;
+		
+					this .setTraversed (true);
+	
+					var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+	
+					this .getEllipsoidParameter (modelViewMatrix, this .maxBack_ .getValue (), this .maxFront_ .getValue (), max, 1);
+					this .getEllipsoidParameter (modelViewMatrix, this .minBack_ .getValue (), this .minFront_ .getValue (), min, 0);
 
+					if (max .distance < 1) // Sphere radius is 1
+					{
+						if (min .distance < 1) // Sphere radius is 1
+						{
+							this .sourceNode .setVolume (this .intensity_ .getValue ());
+						}
+						else
+						{
+							var
+								d1 = min .intersection .abs (), // Viewer is here at (0, 0, 0)
+								d2 = max .intersection .distance (min .intersection),
+								d  = 1 - (d1 / d2);
+
+							//console .log (d);
+
+							this .sourceNode .setVolume (this .intensity_ .getValue () * d);
+						}
+					}
 					else
 					{
-						var
-							d1 = this .max .radius - this .max .distance,
-							d2 = this .max .radius - this .min .radius;
-
-						this .sourceNode .setVolume (this .intensity_ .getValue () * (d1 / d2));
+						this .sourceNode .setVolume (0);
 					}
 				}
-				else
-					this .sourceNode .setVolume (0);
-			}
-			catch (error)
-			{
-				console .log (error);
-
-				if (this .sourceNode)
-					this .sourceNode .setVolume (0);
-			}
-		},
+				catch (error)
+				{
+					console .log (error);
+	
+					if (this .sourceNode)
+						this .sourceNode .setVolume (0);
+				}
+			};
+		})(),
 		getEllipsoidParameter: (function ()
 		{
 			var
-				matrix      = new Matrix4 (),
-				translation = new Vector3 (0, 0, 0),
-				rotation    = new Rotation4 (),
-				scale       = new Vector3 (1, 1, 1),
-				viewer      = new Vector3 (0, 0, 0);
+				location        = new Vector3 (0, 0, 0),
+				sphereMatrix    = new Matrix4 (),
+				invSphereMatrix = new Matrix4 (),
+				translation     = new Vector3 (0, 0, 0),
+				rotation        = new Rotation4 (),
+				scale           = new Vector3 (1, 1, 1),
+				sphere          = new Sphere3 (1, Vector3 .Zero),
+				line            = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+				intersection1   = new Vector3 (0, 0, 0),
+				intersection2   = new Vector3 (0, 0, 0);
 
-			return function (modelViewMatrix, back, front, value)
+			return function (modelViewMatrix, back, front, value, max)
 			{
 				/*
 				 * http://de.wikipedia.org/wiki/Ellipse
 				 *
 				 * The ellipsoid is transformed to a sphere for easier calculation and then the viewer position is
 				 * transformed into this coordinate system. The radius and distance can then be obtained.
+				 * 
+				 * throws Error
 				 */
-	
+
 				var
 					a = (back + front) / 2,
 					e = a - back,
 					b = Math .sqrt (a * a - e * e);
 				
-				translation .z = e;
+				location .set (0, 0, e);
+				scale .set (b, b, a);
+
 				rotation .setFromToVec (Vector3 .zAxis, this .direction_ .getValue ());
-				scale .z = a / b;
-	
-				matrix .assign (modelViewMatrix);
-				matrix .translate (this .location_ .getValue ());
-				matrix .rotate (rotation);
-	
-				matrix .translate (translation);
-				matrix .scale (scale);
-	
-				matrix .inverse ();
-	
-				viewer .set (matrix [12],
-				             matrix [13],
-				             matrix [14]);
-	
-				value .radius   = b;
+				sphereMatrix .assign (modelViewMatrix);
+				sphereMatrix .translate (this .location_ .getValue ());
+				sphereMatrix .rotate (rotation);
+				sphereMatrix .translate (location);
+				sphereMatrix .scale (scale);
+
+				invSphereMatrix .assign (sphereMatrix);
+				invSphereMatrix .inverse ();
+
+				var viewer = invSphereMatrix .origin;
+				location .negate () .divVec (scale);
+
+				line .set (viewer, location .subtract (viewer) .normalize ());
+				sphere .intersectsLine (line, intersection1, intersection2);
+
+				if (viewer .distance (intersection1) < viewer .distance (intersection2))
+					value .intersection .assign (sphereMatrix .multVecMatrix (intersection1));
+				else
+					value .intersection .assign (sphereMatrix .multVecMatrix (intersection2));
+
 				value .distance = viewer .abs ();
 			};
 		})(),
@@ -110182,194 +110395,6 @@ function (Fields,
 });
 
 
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Geometry/Sphere3',[
-	"standard/Math/Numbers/Vector3",
-],
-function (Vector3)
-{
-"use strict";
-
-	var
-		L  = new Vector3 (0, 0, 0),
-		AB = new Vector3 (0, 0, 0),
-		AC = new Vector3 (0, 0, 0),
-		BC = new Vector3 (0, 0, 0),
-		CA = new Vector3 (0, 0, 0),
-		Q1 = new Vector3 (0, 0, 0),
-		Q2 = new Vector3 (0, 0, 0),
-		Q3 = new Vector3 (0, 0, 0);
-
-	function Sphere3 (radius, center)
-	{
-		this .radius = radius;
-		this .center = center .copy ();
-	}
-
-	Sphere3 .prototype =
-	{
-		constructor: Sphere3,
-		set: function (radius, center)
-		{
-			this .radius = radius;
-			this .center .assign (center);
-		},
-		intersectsLine: function (line, intersection1, intersection2)
-		{
-			L .assign (this .center) .subtract (line .point);
-
-			var tca = Vector3 .dot (L, line .direction);
-
-			if (tca < 0)
-				// there is no intersection
-				return false;
-
-			var
-				d2 = Vector3 .dot (L, L) - Math .pow (tca, 2),
-				r2 = Math .pow (this .radius, 2);
-
-			if (d2 > r2)
-				return false;
-
-			var thc = Math .sqrt (r2 - d2);
-
-			var
-				t1 = tca - thc,
-				t2 = tca + thc;
-
-			intersection1 .assign (line .direction) .multiply (t1) .add (line .point);
-			intersection2 .assign (line .direction) .multiply (t2) .add (line .point);
-
-			return true;
-		},
-		intersectsTriangle: function (A, B, C)
-		{
-			var
-				P = this .center,
-				r = this .radius;
-
-			A .subtract (P);
-			B .subtract (P);
-			C .subtract (P);
-
-			// Testing if sphere lies outside the triangle plane.
-
-			AB .assign (B) .subtract (A);
-			AC .assign (C) .subtract (A);
-
-			var
-				rr   = r * r,
-				V    = AB .cross (AC),
-				d    = Vector3 .dot (A, V),
-				e    = Vector3 .dot (V, V),
-				sep1 = d * d > rr * e;
-
-			if (sep1)
-				return false;
-
-			// Testing if sphere lies outside a triangle vertex.
-			var
-				aa   = Vector3 .dot (A, A),
-				ab   = Vector3 .dot (A, B),
-				ac   = Vector3 .dot (A, C),
-				bb   = Vector3 .dot (B, B),
-				bc   = Vector3 .dot (B, C),
-				cc   = Vector3 .dot (C, C),
-				sep2 = (aa > rr) && (ab > aa) && (ac > aa),
-				sep3 = (bb > rr) && (ab > bb) && (bc > bb),
-				sep4 = (cc > rr) && (ac > cc) && (bc > cc);
-
-			if (sep2 || sep3 || sep4)
-				return false;
-
-			// Testing if sphere lies outside a triangle edge.
-
-			AB .assign (B) .subtract (A);
-			BC .assign (C) .subtract (B);
-			CA .assign (A) .subtract (C);
-
-			var
-				d1   = ab - aa,
-				d2   = bc - bb,
-				d3   = ac - cc,
-				e1   = Vector3 .dot (AB, AB),
-				e2   = Vector3 .dot (BC, BC),
-				e3   = Vector3 .dot (CA, CA);
-			
-			Q1 .assign (A) .multiply (e1) .subtract (AB .multiply (d1));
-			Q2 .assign (B) .multiply (e2) .subtract (BC .multiply (d2));
-			Q3 .assign (C) .multiply (e3) .subtract (CA .multiply (d3));
-
-			var
-				QC   = C .multiply (e1) .subtract (Q1),
-				QA   = A .multiply (e2) .subtract (Q2),
-				QB   = B .multiply (e3) .subtract (Q3),
-				sep5 = (Vector3 .dot (Q1, Q1) > rr * e1 * e1) && (Vector3 .dot (Q1, QC) > 0),
-				sep6 = (Vector3 .dot (Q2, Q2) > rr * e2 * e2) && (Vector3 .dot (Q2, QA) > 0),
-				sep7 = (Vector3 .dot (Q3, Q3) > rr * e3 * e3) && (Vector3 .dot (Q3, QB) > 0);
-
-			if (sep5 || sep6 || sep7)
-				return false;
-
-			return true;
-		},
-		toString: function ()
-		{
-			return this .radius + " " + this .center .toString ();
-		},
-	};
-
-	return Sphere3;
-});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
