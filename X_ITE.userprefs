@@ -1,9 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Sound/Sound.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
+      <File FileName="package.json" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Sound/Sound.js" Line="142" Column="26" />
+      <File FileName="src/x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode.js" Line="94" Column="69" />
+      <File FileName="src/x_ite/Components/EnvironmentalSensor/ProximitySensor.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

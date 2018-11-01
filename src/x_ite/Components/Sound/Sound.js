@@ -80,6 +80,8 @@ function (Fields,
 
 		this .addType (X3DConstants .Sound);
 
+		this .addChildObjects ("traversed", new Fields .SFBool (true));
+
 		this .location_ .setUnit ("length");
 		this .minBack_  .setUnit ("length");
 		this .minFront_ .setUnit ("length");
@@ -88,6 +90,8 @@ function (Fields,
 
 		this .min = { radius: 0, distance: 0 };
 		this .max = { radius: 0, distance: 0 };
+
+		this .currentTraversed = true;
 	}
 
 	Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
@@ -106,12 +110,6 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "priority",   new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "source",     new Fields .SFNode ()),
 		]),
-		modelMatrix: new Matrix4 (),
-		translation: new Vector3 (0, 0, 0),
-		rotation: new Rotation4 (),
-		scale: new Vector3 (1, 1, 1),
-		viewer: new Vector3 (0, 0, 0),
-		zAxis: new Vector3 (0, 0, 1),
 		getTypeName: function ()
 		{
 			return "Sound";
@@ -128,9 +126,43 @@ function (Fields,
 		{
 			X3DSoundNode .prototype .initialize .call (this);
 
+			this .isLive ()  .addInterest ("set_live__", this);
+			this .traversed_ .addInterest ("set_live__", this);
+
 			this .source_ .addInterest ("set_source__", this);
 
+			this .set_live__ ();
 			this .set_source__ ();
+		},
+		setTraversed: function (value)
+		{
+		   if (value)
+			{
+				if (this .traversed_ .getValue () === false)
+					this .traversed_ = true;
+			}
+			else
+			{
+				if (this .currentTraversed !== this .traversed_ .getValue ())
+					this .traversed_ = this .currentTraversed;
+			}
+
+		   this .currentTraversed = value;
+		},
+		getTraversed: function ()
+		{
+		   return this .currentTraversed;
+		},
+		set_live__: function ()
+		{
+			if (this .isLive () .getValue () && this .traversed_ .getValue ())
+			{
+				this .getBrowser () .sensorEvents () .addInterest ("update", this);
+			}
+			else
+			{
+				this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+			}
 		},
 		set_source__: function ()
 		{
@@ -139,19 +171,31 @@ function (Fields,
 
 			this .sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this .source_);
 		},
+		update: function ()
+		{
+			if (! this .getTraversed ())
+			{
+				if (this .sourceNode)
+					this .sourceNode .setVolume (0);
+			}
+
+			this .setTraversed (false);
+		},
 		traverse: function (type, renderObject)
 		{
-			if (type !== TraverseType .DISPLAY)
-				return;
-
-			if (! this .sourceNode)
-				return;
-
-			if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
-				return;
-
 			try
 			{
+				if (type !== TraverseType .DISPLAY)
+					return;
+	
+				if (! this .sourceNode)
+					return;
+	
+				if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
+					return;
+	
+				this .setTraversed (true);
+
 				var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 
 				this .getEllipsoidParameter (modelViewMatrix, this .maxBack_ .getValue (), this .maxFront_ .getValue (), this .max);
@@ -176,46 +220,56 @@ function (Fields,
 			}
 			catch (error)
 			{
-			   console .log (error);
-				this .sourceNode .setVolume (0);
+				console .log (error);
+
+				if (this .sourceNode)
+					this .sourceNode .setVolume (0);
 			}
 		},
-		getEllipsoidParameter: function (modelViewMatrix, back, front, value)
+		getEllipsoidParameter: (function ()
 		{
-			/*
-			 * http://de.wikipedia.org/wiki/Ellipse
-			 *
-			 * The ellipsoid is transformed to a sphere for easier calculation and then the viewer position is
-			 * transformed into this coordinate system. The radius and distance can then be obtained.
-			 */
-
 			var
-				a = (back + front) / 2,
-				e = a - back,
-				b = Math .sqrt (a * a - e * e);
-			
-			this .translation .z = e;
-			this .rotation .setFromToVec (this .zAxis, this .direction_ .getValue ());
-			this .scale .z = a / b;
+				modelMatrix = new Matrix4 (),
+				translation = new Vector3 (0, 0, 0),
+				rotation    = new Rotation4 (),
+				scale       = new Vector3 (1, 1, 1),
+				viewer      = new Vector3 (0, 0, 0);
 
-			var modelMatrix = this .modelMatrix;
-
-			modelMatrix .assign (modelViewMatrix);
-			modelMatrix .translate (this .location_ .getValue ());
-			modelMatrix .rotate (this .rotation);
-
-			modelMatrix .translate (this .translation);
-			modelMatrix .scale (this .scale);
-
-			modelMatrix .inverse ();
-
-			this .viewer .set (modelMatrix [12],
-			                   modelMatrix [13],
-			                   modelMatrix [14]);
-
-			value .radius   = b;
-			value .distance = this .viewer .abs ();
-		},
+			return function (modelViewMatrix, back, front, value)
+			{
+				/*
+				 * http://de.wikipedia.org/wiki/Ellipse
+				 *
+				 * The ellipsoid is transformed to a sphere for easier calculation and then the viewer position is
+				 * transformed into this coordinate system. The radius and distance can then be obtained.
+				 */
+	
+				var
+					a = (back + front) / 2,
+					e = a - back,
+					b = Math .sqrt (a * a - e * e);
+				
+				translation .z = e;
+				rotation .setFromToVec (Vector3 .zAxis, this .direction_ .getValue ());
+				scale .z = a / b;
+	
+				modelMatrix .assign (modelViewMatrix);
+				modelMatrix .translate (this .location_ .getValue ());
+				modelMatrix .rotate (rotation);
+	
+				modelMatrix .translate (translation);
+				modelMatrix .scale (scale);
+	
+				modelMatrix .inverse ();
+	
+				viewer .set (modelMatrix [12],
+				             modelMatrix [13],
+				             modelMatrix [14]);
+	
+				value .radius   = b;
+				value .distance = viewer .abs ();
+			};
+		})(),
 	});
 
 	return Sound;
