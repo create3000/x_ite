@@ -444,7 +444,7 @@ function ($,
 				browserEventHandler .call (element);
 
 			if (window .jQuery)
-				window .jQuery (element) .trigger (name .replace (/^on/, ""));
+				window .jQuery (element) .trigger (name .substr (2));
 		},
 	};
 
