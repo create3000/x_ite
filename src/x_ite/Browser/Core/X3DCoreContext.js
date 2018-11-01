@@ -56,7 +56,6 @@ define ([
 	"x_ite/Browser/Core/Notification",
 	"x_ite/Browser/Core/BrowserTimings",
 	"x_ite/Browser/Core/ContextMenu",
-	"x_ite/Browser/Core/evaluate",
 	"x_ite/Execution/Scene",
 	"x_ite/Parser/Parser",
 	"standard/Utility/DataStorage",
@@ -69,7 +68,6 @@ function ($,
           Notification,
           BrowserTimings,
           ContextMenu,
-          evaluate,
           Scene,
           Parser,
           DataStorage)
@@ -432,7 +430,7 @@ function ($,
 				browserEvent = this .getElement () .attr (name);
 
 			if (browserEvent)
-				element [name] = (function (browserEvent) { evaluate .call (this, browserEvent); }) .bind (element, browserEvent);
+				element [name] = new Function (browserEvent);
 			else
 				element [name] = Function .prototype;
 		},
@@ -443,7 +441,7 @@ function ($,
 				browserEventHandler = element [name];
 
 			if (browserEventHandler)
-				browserEventHandler ();
+				browserEventHandler .call (element);
 
 			if (window .jQuery)
 				window .jQuery (element) .trigger (name .replace (/^on/, ""));
