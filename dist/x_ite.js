@@ -109985,7 +109985,7 @@ function (Fields,
 		getEllipsoidParameter: (function ()
 		{
 			var
-				modelMatrix = new Matrix4 (),
+				matrix      = new Matrix4 (),
 				translation = new Vector3 (0, 0, 0),
 				rotation    = new Rotation4 (),
 				scale       = new Vector3 (1, 1, 1),
@@ -110009,18 +110009,18 @@ function (Fields,
 				rotation .setFromToVec (Vector3 .zAxis, this .direction_ .getValue ());
 				scale .z = a / b;
 	
-				modelMatrix .assign (modelViewMatrix);
-				modelMatrix .translate (this .location_ .getValue ());
-				modelMatrix .rotate (rotation);
+				matrix .assign (modelViewMatrix);
+				matrix .translate (this .location_ .getValue ());
+				matrix .rotate (rotation);
 	
-				modelMatrix .translate (translation);
-				modelMatrix .scale (scale);
+				matrix .translate (translation);
+				matrix .scale (scale);
 	
-				modelMatrix .inverse ();
+				matrix .inverse ();
 	
-				viewer .set (modelMatrix [12],
-				             modelMatrix [13],
-				             modelMatrix [14]);
+				viewer .set (matrix [12],
+				             matrix [13],
+				             matrix [14]);
 	
 				value .radius   = b;
 				value .distance = viewer .abs ();
