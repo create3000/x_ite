@@ -204,10 +204,11 @@ function (Fields,
 					var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 	
 					this .getEllipsoidParameter (modelViewMatrix, this .maxBack_ .getValue (), this .maxFront_ .getValue (), max, 1);
-					this .getEllipsoidParameter (modelViewMatrix, this .minBack_ .getValue (), this .minFront_ .getValue (), min, 0);
 
 					if (max .distance < 1) // Sphere radius is 1
 					{
+						this .getEllipsoidParameter (modelViewMatrix, this .minBack_ .getValue (), this .minFront_ .getValue (), min, 0);
+
 						if (min .distance < 1) // Sphere radius is 1
 						{
 							this .sourceNode .setVolume (this .intensity_ .getValue ());
