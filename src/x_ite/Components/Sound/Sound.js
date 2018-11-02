@@ -60,6 +60,7 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Line3",
 	"standard/Math/Geometry/Sphere3",
+	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -72,7 +73,8 @@ function (Fields,
           Rotation4,
           Matrix4,
           Line3,
-          Sphere3)
+          Sphere3,
+          Algorithm)
 {
 "use strict";
 
@@ -216,13 +218,15 @@ function (Fields,
 						else
 						{
 							var
-								d1 = min .intersection .abs (), // Viewer is here at (0, 0, 0)
-								d2 = max .intersection .distance (min .intersection),
-								d  = 1 - (d1 / d2);
+								d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
+								d2        = max .intersection .distance (min .intersection),
+								d         = d1 / d2,
+								intensity = Algorithm .clamp (this .intensity_ .getValue (), 0, 1),
+								volume    = intensity * d;
 
-							//console .log (d);
+							console .log (d);
 
-							this .sourceNode .setVolume (this .intensity_ .getValue () * d);
+							this .sourceNode .setVolume (volume);
 						}
 					}
 					else

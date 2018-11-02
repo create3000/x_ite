@@ -5,7 +5,7 @@
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Sound/X3DSoundSourceNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Sound/Sound.js" Line="285" Column="1" />
+      <File FileName="src/x_ite/Components/Sound/Sound.js" Line="222" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

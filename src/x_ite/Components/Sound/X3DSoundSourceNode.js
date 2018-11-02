@@ -141,14 +141,21 @@ function (X3DChildNode,
 		},
 		setVolume: function (volume)
 		{
-			this .volume = volume;
+			this .volume = Algorithm .clamp (volume, 0, 1);
 
 			this .set_volume__ ();
 		},
 		set_volume__: function ()
 		{
-			if (this .media)
-				this .media [0] .volume = Algorithm .clamp ((! this .getBrowser () .mute_ .getValue ()) * this .getBrowser () .volume_ .getValue () * this .volume, 0, 1);
+			if (! this .media)
+				return;
+
+			var
+				mute      = this .getBrowser () .mute_ .getValue (),
+				intensity = Algorithm .clamp (this .getBrowser () .volume_ .getValue (), 0, 1),
+				volume    = (! mute) * intensity * this .volume;
+
+			this .media [0] .volume = volume;
 		},
 		set_speed: function ()
 		{ },
