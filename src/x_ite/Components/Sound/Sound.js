@@ -205,11 +205,17 @@ function (Fields,
 	
 					var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 	
-					this .getEllipsoidParameter (modelViewMatrix, Math .max (this .maxBack_ .getValue (), 0), Math .max (this .maxFront_ .getValue (), 0), max);
+					this .getEllipsoidParameter (modelViewMatrix,
+					                             Math .max (this .maxBack_  .getValue (), 0),
+					                             Math .max (this .maxFront_ .getValue (), 0),
+					                             max);
 
 					if (max .distance < 1) // Sphere radius is 1
 					{
-						this .getEllipsoidParameter (modelViewMatrix, Math .max (this .minBack_ .getValue (), 0), Math .max (this .minFront_ .getValue (), 0), min);
+						this .getEllipsoidParameter (modelViewMatrix,
+						                             Math .max (this .minBack_  .getValue (), 0),
+						                             Math .max (this .minFront_ .getValue (), 0),
+						                             min);
 
 						if (min .distance < 1) // Sphere radius is 1
 						{
