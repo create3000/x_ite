@@ -1,4 +1,4 @@
-/* X_ITE v4.2.9a-444 */
+/* X_ITE v4.2.9a-445 */
 
 (function () {
 
@@ -110158,11 +110158,17 @@ function (Fields,
 	
 					var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 	
-					this .getEllipsoidParameter (modelViewMatrix, this .maxBack_ .getValue (), this .maxFront_ .getValue (), max, 1);
+					this .getEllipsoidParameter (modelViewMatrix,
+					                             Math .max (this .maxBack_  .getValue (), 0),
+					                             Math .max (this .maxFront_ .getValue (), 0),
+					                             max);
 
 					if (max .distance < 1) // Sphere radius is 1
 					{
-						this .getEllipsoidParameter (modelViewMatrix, this .minBack_ .getValue (), this .minFront_ .getValue (), min, 0);
+						this .getEllipsoidParameter (modelViewMatrix,
+						                             Math .max (this .minBack_  .getValue (), 0),
+						                             Math .max (this .minFront_ .getValue (), 0),
+						                             min);
 
 						if (min .distance < 1) // Sphere radius is 1
 						{
@@ -110173,7 +110179,7 @@ function (Fields,
 							var
 								d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
 								d2        = max .intersection .distance (min .intersection),
-								d         = d1 / d2,
+								d         = Algorithm .clamp (d1 / d2, 0, 1),
 								intensity = Algorithm .clamp (this .intensity_ .getValue (), 0, 1),
 								volume    = intensity * d;
 
@@ -110189,8 +110195,8 @@ function (Fields,
 				}
 				catch (error)
 				{
-					console .log (error);
-	
+					//console .log (error);
+
 					if (this .sourceNode)
 						this .sourceNode .setVolume (0);
 				}
@@ -110210,7 +110216,7 @@ function (Fields,
 				intersection1   = new Vector3 (0, 0, 0),
 				intersection2   = new Vector3 (0, 0, 0);
 
-			return function (modelViewMatrix, back, front, value, max)
+			return function (modelViewMatrix, back, front, value)
 			{
 				/*
 				 * http://de.wikipedia.org/wiki/Ellipse
@@ -110227,7 +110233,7 @@ function (Fields,
 					b = Math .sqrt (a * a - e * e);
 				
 				location .set (0, 0, e);
-				scale .set (b, b, a);
+				scale    .set (b, b, a);
 
 				rotation .setFromToVec (Vector3 .zAxis, this .direction_ .getValue ());
 				sphereMatrix .assign (modelViewMatrix);
