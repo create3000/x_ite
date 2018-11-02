@@ -224,7 +224,7 @@ function (Fields,
 								intensity = Algorithm .clamp (this .intensity_ .getValue (), 0, 1),
 								volume    = intensity * d;
 
-							console .log (d);
+							//console .log (d);
 
 							this .sourceNode .setVolume (volume);
 						}

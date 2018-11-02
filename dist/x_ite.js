@@ -1,4 +1,4 @@
-/* X_ITE v4.2.9a-443 */
+/* X_ITE v4.2.9a-444 */
 
 (function () {
 
@@ -86232,14 +86232,21 @@ function (X3DChildNode,
 		},
 		setVolume: function (volume)
 		{
-			this .volume = volume;
+			this .volume = Algorithm .clamp (volume, 0, 1);
 
 			this .set_volume__ ();
 		},
 		set_volume__: function ()
 		{
-			if (this .media)
-				this .media [0] .volume = Algorithm .clamp ((! this .getBrowser () .mute_ .getValue ()) * this .getBrowser () .volume_ .getValue () * this .volume, 0, 1);
+			if (! this .media)
+				return;
+
+			var
+				mute      = this .getBrowser () .mute_ .getValue (),
+				intensity = Algorithm .clamp (this .getBrowser () .volume_ .getValue (), 0, 1),
+				volume    = (! mute) * intensity * this .volume;
+
+			this .media [0] .volume = volume;
 		},
 		set_speed: function ()
 		{ },
@@ -110006,6 +110013,7 @@ define ('x_ite/Components/Sound/Sound',[
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Line3",
 	"standard/Math/Geometry/Sphere3",
+	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -110018,7 +110026,8 @@ function (Fields,
           Rotation4,
           Matrix4,
           Line3,
-          Sphere3)
+          Sphere3,
+          Algorithm)
 {
 "use strict";
 
@@ -110150,10 +110159,11 @@ function (Fields,
 					var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 	
 					this .getEllipsoidParameter (modelViewMatrix, this .maxBack_ .getValue (), this .maxFront_ .getValue (), max, 1);
-					this .getEllipsoidParameter (modelViewMatrix, this .minBack_ .getValue (), this .minFront_ .getValue (), min, 0);
 
 					if (max .distance < 1) // Sphere radius is 1
 					{
+						this .getEllipsoidParameter (modelViewMatrix, this .minBack_ .getValue (), this .minFront_ .getValue (), min, 0);
+
 						if (min .distance < 1) // Sphere radius is 1
 						{
 							this .sourceNode .setVolume (this .intensity_ .getValue ());
@@ -110161,13 +110171,15 @@ function (Fields,
 						else
 						{
 							var
-								d1 = min .intersection .abs (), // Viewer is here at (0, 0, 0)
-								d2 = max .intersection .distance (min .intersection),
-								d  = 1 - (d1 / d2);
+								d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
+								d2        = max .intersection .distance (min .intersection),
+								d         = d1 / d2,
+								intensity = Algorithm .clamp (this .intensity_ .getValue (), 0, 1),
+								volume    = intensity * d;
 
 							//console .log (d);
 
-							this .sourceNode .setVolume (this .intensity_ .getValue () * d);
+							this .sourceNode .setVolume (volume);
 						}
 					}
 					else
