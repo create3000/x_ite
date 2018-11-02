@@ -236,8 +236,8 @@ function (Fields,
 				}
 				catch (error)
 				{
-					console .log (error);
-	
+					//console .log (error);
+
 					if (this .sourceNode)
 						this .sourceNode .setVolume (0);
 				}
@@ -274,7 +274,7 @@ function (Fields,
 					b = Math .sqrt (a * a - e * e);
 				
 				location .set (0, 0, e);
-				scale .set (b, b, a);
+				scale    .set (b, b, a);
 
 				rotation .setFromToVec (Vector3 .zAxis, this .direction_ .getValue ());
 				sphereMatrix .assign (modelViewMatrix);
