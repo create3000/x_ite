@@ -119,7 +119,7 @@ function ($,
 			// Disconnect from spin.
 
 			this .getNavigationInfo () .transitionStart_ .addInterest ("disconnect", this);
-			browser .activeViewpoint_ .addInterest ("disconnect", this);
+			browser .activeViewpoint_ .addInterest ("set_activeViewpoint__", this);
 
 			// Bind pointing device events.
 
@@ -145,12 +145,19 @@ function ($,
 			this .rotationChaser .setPrivate (true);
 			this .rotationChaser .setup ();
 
-			if (browser .getBrowserOption ("StraightenHorizon"))
+			this .set_activeViewpoint ();
+		},
+		set_activeViewpoint__: function ()
+		{
+			if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
 			{
 				var viewpoint = this .getActiveViewpoint ();
 
-				viewpoint .orientationOffset_ = this .getOrientationOffset (Rotation4 .Identity, viewpoint .orientationOffset_ .getValue (), false);
+				if (viewpoint)
+					viewpoint .orientationOffset_ = this .getOrientationOffset (Rotation4 .Identity, viewpoint .orientationOffset_ .getValue (), false);
 			}
+
+			this .disconnect ();
 		},
 		mousedown: function (event)
 		{

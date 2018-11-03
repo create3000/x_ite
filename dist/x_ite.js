@@ -1,4 +1,4 @@
-/* X_ITE v4.2.9-449 */
+/* X_ITE v4.2.9-450 */
 
 (function () {
 
@@ -66363,7 +66363,7 @@ function ($,
 			// Disconnect from spin.
 
 			this .getNavigationInfo () .transitionStart_ .addInterest ("disconnect", this);
-			browser .activeViewpoint_ .addInterest ("disconnect", this);
+			browser .activeViewpoint_ .addInterest ("set_activeViewpoint__", this);
 
 			// Bind pointing device events.
 
@@ -66388,6 +66388,20 @@ function ($,
 			this .rotationChaser .duration_ = ROTATE_TIME;
 			this .rotationChaser .setPrivate (true);
 			this .rotationChaser .setup ();
+
+			this .set_activeViewpoint ();
+		},
+		set_activeViewpoint__: function ()
+		{
+			if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+			{
+				var viewpoint = this .getActiveViewpoint ();
+
+				if (viewpoint)
+					viewpoint .orientationOffset_ = this .getOrientationOffset (Rotation4 .Identity, viewpoint .orientationOffset_ .getValue (), false);
+			}
+
+			this .disconnect ();
 		},
 		mousedown: function (event)
 		{
