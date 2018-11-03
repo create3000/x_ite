@@ -1,4 +1,4 @@
-/* X_ITE v4.2.9-448 */
+/* X_ITE v4.2.10a-449 */
 
 (function () {
 
@@ -24713,7 +24713,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.2.9";
+	return "4.2.10a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -89896,6 +89896,7 @@ function (Fields,
 		this .addType (X3DConstants .ColorInterpolator);
 
 		this .hsv = [ ];
+console .log (this);
 	}
 
 	ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
@@ -89923,7 +89924,7 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DInterpolatorNode .prototype .initialize .call (this);
-
+console .log (this .getName ());
 			this .keyValue_ .addInterest ("set_keyValue__", this);
 		},
 		set_keyValue__: function ()
@@ -89947,6 +89948,8 @@ function (Fields,
 				Color3 .lerp (this .hsv [index0], this .hsv [index1], weight, value);
 	
 				this .value_changed_ .setHSV (value [0], value [1], value [2]);
+
+console .log (this .value_changed_ .toString ());
 			};
 		})(),
 	});
