@@ -239,9 +239,9 @@ function (Algorithm)
 
 			if (range <= Math .PI)
 			{
-				r [0] = Algorithm .lerp (ha, hb, t);
-				r [1] = Algorithm .lerp (sa, sb, t);
-				r [2] = Algorithm .lerp (va, vb, t);
+				r [0] = ha + t * (hb - ha);
+				r [1] = sa + t * (sb - sa);
+				r [2] = va + t * (vb - va);
 				return r;
 			}
 
@@ -257,8 +257,8 @@ function (Algorithm)
 				h -= PI2;
 
 			r [0] = h;
-			r [1] = Algorithm .lerp (sa, sb, t);
-			r [2] = Algorithm .lerp (va, vb, t);
+			r [1] = sa + t * (sb - sa);
+			r [2] = va + t * (vb - va);
 			return r;
 		},
 	});

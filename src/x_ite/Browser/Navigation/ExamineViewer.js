@@ -145,7 +145,7 @@ function ($,
 			this .rotationChaser .setPrivate (true);
 			this .rotationChaser .setup ();
 
-			this .set_activeViewpoint ();
+			this .set_activeViewpoint__ ();
 		},
 		set_activeViewpoint__: function ()
 		{

@@ -430,10 +430,10 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			return new Vector4 (Algorithm .lerp (source .x, dest .x, t),
-			                    Algorithm .lerp (source .y, dest .y, t),
-			                    Algorithm .lerp (source .z, dest .z, t),
-			                    Algorithm .lerp (source .w, dest .w, t));
+			return new Vector4 (source .x + t * (dest .x - source .x),
+			                    source .y + t * (dest .y - source .y),
+			                    source .z + t * (dest .z - source .z),
+			                    source .w + t * (dest .w - source .w));
 		},
 		min: function (lhs, rhs)
 		{

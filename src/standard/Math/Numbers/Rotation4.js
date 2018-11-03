@@ -446,6 +446,13 @@ function (Quaternion,
 			copy .update ();
 			return copy;
 		},
+		normalize: function ()
+		{
+			var copy = Object .create (this .prototype);
+			copy .value = rotation .value .copy ();
+			copy .update ();
+			return copy;
+		},
 		slerp: function (source, destination, t)
 		{
 			var copy = Object .create (this .prototype);

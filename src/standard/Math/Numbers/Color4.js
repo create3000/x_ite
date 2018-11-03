@@ -188,7 +188,7 @@ function (Color3, Algorithm)
 			// Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
 			// Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
 			Color3 .lerp (a, b, t, r);
-			r [3] = Algorithm .lerp (a [3], b [3], t);
+			r [3] = a [3] + t * (b [3] - a [3]);
 			return r;
 		},
 	});
