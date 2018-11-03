@@ -115,15 +115,21 @@ function (X3DChildNode,
 				this .setVolume (0);
 				this .duration_changed_ = media .duration;
 
-				//this .set_loop__ ();
-
-				if (this .getDisabled ())
+				if (this .isActive_ .getValue ())
 				{
-					media .pause ();
-				}
-				else
-				{
-					if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+					if (this .isPaused_ .getValue ())
+					{
+						if (this .loop_ .getValue ())
+						{
+							this .do_stop ();
+							this .do_pause ();
+						}
+						else
+						{
+							this .do_stop ();
+						}
+					}
+					else
 					{
 						if (this .loop_ .getValue ())
 						{
@@ -135,10 +141,10 @@ function (X3DChildNode,
 							this .do_stop ();
 						}
 					}
-					else
-					{
-						media .pause ();
-					}
+				}
+				else
+				{
+					this .set_stop ();
 				}
 			}
 		},
