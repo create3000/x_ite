@@ -1,4 +1,4 @@
-/* X_ITE v4.2.9-452 */
+/* X_ITE v4.2.9-453 */
 
 (function () {
 
@@ -16950,8 +16950,12 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			return new Vector2 (source .x + t * (dest .x - source .x),
-			                    source .y + t * (dest .y - source .y));
+			var
+				x = source .x,
+				y = source .y;
+
+			return new Vector2 (x + t * (dest .x - x),
+			                    y + t * (dest .y - y));
 		},
 		min: function (lhs, rhs)
 		{
@@ -17528,9 +17532,14 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			return new Vector3 (source .x + t * (dest .x - source .x),
-			                    source .y + t * (dest .y - source .y),
-			                    source .z + t * (dest .z - source .z));
+			var
+				x = source .x,
+				y = source .y,
+				z = source .z;
+
+			return new Vector3 (x + t * (dest .x - x),
+			                    y + t * (dest .y - y),
+			                    z + t * (dest .z - z));
 		},
 		slerp: function (source, destination, t)
 		{
@@ -19501,10 +19510,16 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			return new Vector4 (source .x + t * (dest .x - source .x),
-			                    source .y + t * (dest .y - source .y),
-			                    source .z + t * (dest .z - source .z),
-			                    source .w + t * (dest .w - source .w));
+			var
+				x = source .x,
+				y = source .y,
+				z = source .z,
+				w = source .w;
+
+			return new Vector4 (x + t * (dest .x - x),
+			                    y + t * (dest .y - y),
+			                    z + t * (dest .z - z),
+			                    w + t * (dest .w - w));
 		},
 		min: function (lhs, rhs)
 		{

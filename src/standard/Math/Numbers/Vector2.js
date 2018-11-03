@@ -328,8 +328,12 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			return new Vector2 (source .x + t * (dest .x - source .x),
-			                    source .y + t * (dest .y - source .y));
+			var
+				x = source .x,
+				y = source .y;
+
+			return new Vector2 (x + t * (dest .x - x),
+			                    y + t * (dest .y - y));
 		},
 		min: function (lhs, rhs)
 		{
