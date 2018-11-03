@@ -1,4 +1,4 @@
-/* X_ITE v4.2.9-450 */
+/* X_ITE v4.2.9-451 */
 
 (function () {
 
@@ -15087,9 +15087,9 @@ function (Algorithm)
 
 			if (range <= Math .PI)
 			{
-				r [0] = Algorithm .lerp (ha, hb, t);
-				r [1] = Algorithm .lerp (sa, sb, t);
-				r [2] = Algorithm .lerp (va, vb, t);
+				r [0] = ha + t * (hb - ha);
+				r [1] = sa + t * (sb - sa);
+				r [2] = va + t * (vb - va);
 				return r;
 			}
 
@@ -15105,8 +15105,8 @@ function (Algorithm)
 				h -= PI2;
 
 			r [0] = h;
-			r [1] = Algorithm .lerp (sa, sb, t);
-			r [2] = Algorithm .lerp (va, vb, t);
+			r [1] = sa + t * (sb - sa);
+			r [2] = va + t * (vb - va);
 			return r;
 		},
 	});
@@ -15508,7 +15508,7 @@ function (Color3, Algorithm)
 			// Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
 			// Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
 			Color3 .lerp (a, b, t, r);
-			r [3] = Algorithm .lerp (a [3], b [3], t);
+			r [3] = a [3] + t * (b [3] - a [3]);
 			return r;
 		},
 	});
@@ -16950,8 +16950,8 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			return new Vector2 (Algorithm .lerp (source .x, dest .x, t),
-			                    Algorithm .lerp (source .y, dest .y, t));
+			return new Vector2 (source .x + t * (dest .x - source .x),
+			                    source .y + t * (dest .y - source .y));
 		},
 		min: function (lhs, rhs)
 		{
@@ -17528,9 +17528,9 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			return new Vector3 (Algorithm .lerp (source .x, dest .x, t),
-			                    Algorithm .lerp (source .y, dest .y, t),
-			                    Algorithm .lerp (source .z, dest .z, t));
+			return new Vector3 (source .x + t * (dest .x - source .x),
+			                    source .y + t * (dest .y - source .y),
+			                    source .z + t * (dest .z - source .z));
 		},
 		slerp: function (source, destination, t)
 		{
@@ -19501,10 +19501,10 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			return new Vector4 (Algorithm .lerp (source .x, dest .x, t),
-			                    Algorithm .lerp (source .y, dest .y, t),
-			                    Algorithm .lerp (source .z, dest .z, t),
-			                    Algorithm .lerp (source .w, dest .w, t));
+			return new Vector4 (source .x + t * (dest .x - source .x),
+			                    source .y + t * (dest .y - source .y),
+			                    source .z + t * (dest .z - source .z),
+			                    source .w + t * (dest .w - source .w));
 		},
 		min: function (lhs, rhs)
 		{
@@ -20640,6 +20640,13 @@ function (Quaternion,
 		{
 			var copy = Object .create (this .prototype);
 			copy .value = Quaternion .multRight (lhs .value, rhs .value);
+			copy .update ();
+			return copy;
+		},
+		normalize: function ()
+		{
+			var copy = Object .create (this .prototype);
+			copy .value = rotation .value .copy ();
 			copy .update ();
 			return copy;
 		},
@@ -32194,8 +32201,8 @@ function (Vector3,
 					longitude -= RANGE2;
 		
 				return source .set (longitude,
-				                    Algorithm .lerp (source .y, destination .y, t),
-				                    Algorithm .lerp (source .z, destination .z, t));
+				                    source .y + t * (destination .y - source .y),
+				                    source .z + t * (destination .z - source .z));
 			}
 
 			var longitude = source .y < destination .y ? source .y - step : source .y + step;
@@ -32206,9 +32213,9 @@ function (Vector3,
 			else if (longitude > RANGE)
 				longitude -= RANGE2;
 	
-			return source .set (Algorithm .lerp (source .x, destination .x, t),
+			return source .set (source .x + t * (destination .x - source .x),
 			                    longitude,
-			                    Algorithm .lerp (source .z, destination .z, t));
+			                    source .z + t * (destination .z - source .z));
 		},
 		source: new Vector3 (0, 0, 0),
 		destination: new Vector3 (0, 0, 0),
@@ -66389,7 +66396,7 @@ function ($,
 			this .rotationChaser .setPrivate (true);
 			this .rotationChaser .setup ();
 
-			this .set_activeViewpoint ();
+			this .set_activeViewpoint__ ();
 		},
 		set_activeViewpoint__: function ()
 		{
