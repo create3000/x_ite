@@ -1,11 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Sound/X3DSoundSourceNode.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/x_ite.html" Line="9" Column="36" />
+      <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
-      <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Sound/X3DSoundSourceNode.js" Line="115" Column="25" />
+      <File FileName="package.json" Line="16" Column="53" />
+      <File FileName="src/standard/Math/Numbers/Color3.js" Line="264" Column="1" />
+      <File FileName="src/standard/Math/Numbers/Color4.js" Line="202" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
