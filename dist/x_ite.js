@@ -1,4 +1,4 @@
-/* X_ITE v4.2.9-446 */
+/* X_ITE v4.2.9-447 */
 
 (function () {
 
@@ -86208,20 +86208,27 @@ function (X3DChildNode,
 
 				//this .set_loop__ ();
 
-				if (this .enabled_ .getValue ())
+				if (this .getDisabled ())
 				{
-					if (this .isActive_ .getValue ())
+					media .pause ();
+				}
+				else
+				{
+					if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
 					{
 						if (this .loop_ .getValue ())
-							media .currentTime = this .getElapsedTime () % media .duration;
-						else
-							media .currentTime = this .getElapsedTime ();
-
-						if (! this .isPaused_ .getValue ())
-						{							
-							if (this .speed_ .getValue ())
-								media .play ();
+						{
+							this .do_stop ();
+							this .do_start ();
 						}
+						else
+						{
+							this .do_stop ();
+						}
+					}
+					else
+					{
+						media .pause ();
 					}
 				}
 			}
