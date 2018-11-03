@@ -144,6 +144,13 @@ function ($,
 			this .rotationChaser .duration_ = ROTATE_TIME;
 			this .rotationChaser .setPrivate (true);
 			this .rotationChaser .setup ();
+
+			if (browser .getBrowserOption ("StraightenHorizon"))
+			{
+				var viewpoint = this .getActiveViewpoint ();
+
+				viewpoint .orientationOffset_ = this .getOrientationOffset (Rotation4 .Identity, viewpoint .orientationOffset_ .getValue (), false);
+			}
 		},
 		mousedown: function (event)
 		{
