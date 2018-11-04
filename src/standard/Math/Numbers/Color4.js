@@ -177,10 +177,10 @@ function (Color3, Algorithm)
 
 	Object .assign (Color4,
 	{
-		HSV: function (h, s, v, a)
+		HSVA: function (h, s, v, a)
 		{
-			var color = new Color4 (0, 0, 0, a);
-			color .setHSV (h, s, v);
+			var color = Object .create (this .prototype);
+			color .setHSVA (h, s, v, a);
 			return color;
 		},
 		lerp: function (a, b, t, r)

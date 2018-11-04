@@ -215,7 +215,7 @@ function (Algorithm)
 	{
 		HSV: function (h, s, v)
 		{
-			var color = new Color3 (0, 0, 0);
+			var color = Object .create (this .prototype);
 			color .setHSV (h, s, v);
 			return color;
 		},
