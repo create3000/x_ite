@@ -1,4 +1,4 @@
-/* X_ITE v4.2.9-453 */
+/* X_ITE v4.2.9-454 */
 
 (function () {
 
@@ -15507,8 +15507,9 @@ function (Color3, Algorithm)
 		{
 			// Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
 			// Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
+			var aa = a [3];
 			Color3 .lerp (a, b, t, r);
-			r [3] = a [3] + t * (b [3] - a [3]);
+			r [3] = aa + t * (b [3] - aa);
 			return r;
 		},
 	});
