@@ -871,7 +871,7 @@ function (Fields,
 
 			// Fog, there is always one
 
-			context .fogNode .setShaderUniforms (gl, this, context .renderer);
+			context .fogNode .setShaderUniforms (gl, this);
 
 			// LineProperties
 

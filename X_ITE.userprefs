@@ -1,15 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/EnvironmentalEffects/X3DFogObject.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DFogObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DFogObject.js" Line="90" Column="39" />
       <File FileName="src/x_ite/Components/EnvironmentalEffects/LocalFog.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/EnvironmentalEffects/Fog.js" Line="64" Column="23" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="205" Column="1" />
-      <File FileName="src/x_ite/Components/Lighting/X3DLightNode.js" Line="184" Column="1" />
-      <File FileName="src/x_ite/Components/Lighting/DirectionalLight.js" Line="307" Column="1" />
-      <File FileName="src/x_ite/Rendering/DependentRenderer.js" Line="120" Column="45" />
+      <File FileName="src/x_ite/Components/EnvironmentalEffects/Fog.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Lighting/X3DLightNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Lighting/DirectionalLight.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Rendering/DependentRenderer.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

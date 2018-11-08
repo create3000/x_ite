@@ -74,27 +74,25 @@ function (X3DConstants,
 
 			this .center .assign (modelViewMatrix .origin);
 		},
-		setShaderUniforms: function (gl, shaderObject, renderObject)
+		setShaderUniforms: function (gl, shaderObject)
 		{
-			var fogNode = this .fogNode;
+			var
+				fogNode         = this .fogNode,
+				visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
 
-			if (fogNode .getHidden ())
+			if (fogNode .getHidden () || visibilityRange === 0)
 			{
 				gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
 			}
 			else
 			{
 				var
-					color           = fogNode .color_ .getValue (),
-					center          = this .center,
-					visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
+					color  = fogNode .color_ .getValue (),
+					center = this .center;
 
-				if (visibilityRange === 0)
-					visibilityRange = renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ());
-
-				gl .uniform1i (shaderObject .x3d_FogType,            fogNode .fogType);
-				gl .uniform3f (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
-				gl .uniform3f (shaderObject .x3d_FogCenter,          center .x, center .y, center .z);
+				gl .uniform1i (shaderObject .x3d_FogType,   fogNode .fogType);
+				gl .uniform3f (shaderObject .x3d_FogColor,  color .r, color .g, color .b);
+				gl .uniform3f (shaderObject .x3d_FogCenter, center .x, center .y, center .z);
 				gl .uniform1f (shaderObject .x3d_FogVisibilityRange, visibilityRange);
 			}
 		},
