@@ -200,10 +200,11 @@ function ($,
 					catch (error)
 					{
 						// Try next handler.
+						console .log (error);
 					}
 				}
 
-				return null;
+				throw new Error ("Couldn't parse x3d syntax.");
 			}
 		},
 		importJS: function (scene, jsobj, success, error)
