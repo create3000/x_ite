@@ -168,8 +168,6 @@ function ($,
 		},
 		setInternalSceneAsync: function (value)
 		{
-			this .getScene () .removeInitLoadCount (this);
-		
 			if (value)
 				this .setInternalScene (value);
 
@@ -180,17 +178,22 @@ function ($,
 		{
 			this .scene = value;
 
-			this .setLoadState (X3DConstants .COMPLETE_STATE);
+			var
+				protoName = this .scene .getURL () .fragment || 0,
+				proto     = this .scene .protos [protoName];
+
+			if (! proto)
+				throw new Error ("PROTO not found");
 
 			this .scene .setLive (this .isLive () .getValue ());
 			this .scene .setPrivate (this .getScene () .getPrivate ());
 			//this .scene .setExecutionContext (this .getExecutionContext ());
-
 			this .scene .setup ();
 
-			var protoName = this .scene .getURL () .fragment || 0;
+			this .getScene () .removeInitLoadCount (this);
+			this .setLoadState (X3DConstants .COMPLETE_STATE);
 
-			this .setProtoDeclaration (this .scene .protos [protoName]);
+			this .setProtoDeclaration (proto);
 
 			this .deferred .resolve ();
 		},
@@ -204,6 +207,7 @@ function ($,
 		{
 			console .error ("Error loading extern prototype:", error);
 
+			this .getScene () .removeInitLoadCount (this);
 			this .setLoadState (X3DConstants .FAILED_STATE);
 
 			this .scene = this .getBrowser () .getPrivateScene ();

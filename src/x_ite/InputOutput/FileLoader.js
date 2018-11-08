@@ -144,7 +144,7 @@ function ($,
 						// Try parse X3D Classic Encoding.	
 						new Parser (scene) .parseIntoScene (string);
 				
-						this .setScene (scene, success);
+						this .setScene (scene, success, error);
 					},
 				];
 
@@ -214,7 +214,7 @@ function ($,
 				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj);
 
 				if (success)
-					this .setScene (scene, success);
+					this .setScene (scene, success, error);
 			}
 			catch (exception)
 			{
@@ -234,7 +234,7 @@ function ($,
 				this .node .dom = dom;
 
 				if (success)
-					this .setScene (scene, success);
+					this .setScene (scene, success, error);
 			}
 			catch (exception)
 			{
@@ -244,19 +244,29 @@ function ($,
 					throw exception;
 			}
 		},
-		setScene: function (scene, success)
+		setScene: function (scene, success, error)
 		{
-			scene .initLoadCount_ .addInterest ("set_initLoadCount__", this, scene, success);
+			scene .initLoadCount_ .addInterest ("set_initLoadCount__", this, scene, success, error);
 			scene .initLoadCount_ .addEvent ();
 		},
-		set_initLoadCount__: function (field, scene, success)
+		set_initLoadCount__: function (field, scene, success, error)
 		{
 			if (field .getValue ())
 				return;
 
 			scene .initLoadCount_ .removeInterest ("set_initLoadCount__", this);
 
-			success (scene);
+			try
+			{
+				success (scene);
+			}
+			catch (exception)
+			{
+				if (error)
+					error (exception);
+				else
+					throw exception;
+			}
 
 			if (DEBUG)
 			{
