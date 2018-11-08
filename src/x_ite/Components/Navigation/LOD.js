@@ -70,11 +70,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		FRAMES         = 180, // Number of frames after wich a level change takes in affect.
-		FRAME_RATE_MIN = 20,  // Lowest level of detail.
-		FRAME_RATE_MAX = 55;  // Highest level of detail.
-	
 	function LOD (executionContext)
 	{
 		X3DGroupingNode .call (this, executionContext);
@@ -106,7 +101,6 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
 		]),
-		modelViewMatrix: new Matrix4 (),
 		getTypeName: function ()
 		{
 			return "LOD";
@@ -147,70 +141,81 @@ function (Fields,
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
-		getLevel: function (browser, modelViewMatrix)
+		getLevel: (function ()
 		{
-			if (this .range_ .length === 0)
+			var
+				FRAMES         = 180, // Number of frames after wich a level change takes in affect.
+				FRAME_RATE_MIN = 20,  // Lowest level of detail.
+				FRAME_RATE_MAX = 55;  // Highest level of detail.
+
+			return function (browser, modelViewMatrix)
 			{
-				var size = this .children_ .length;
+				if (this .range_ .length === 0)
+				{
+					var size = this .children_ .length;
+	
+					if (size < 2)
+						return 0;
+	
+					this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
+	
+					if (size === 2)
+						return Number (this .frameRate > FRAME_RATE_MAX);
+	
+					var fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
 
-				if (size < 2)
-					return 0;
-
-				this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
-
-				if (size === 2)
-					return Number (this .frameRate > FRAME_RATE_MAX);
-
-				var
-					n        = size - 1,
-					fraction = Math .max ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0);
-
-				return Math .min (Math .ceil (fraction * (n - 1)), n);
-			}
-
-			var distance = this .getDistance (modelViewMatrix);
-
-			return Algorithm .upperBound (this .range_, 0, this .range_ .length, distance, Algorithm .less);
-		},
+					return Math .min (Math .floor (fraction * size), size - 1);
+				}
+	
+				var distance = this .getDistance (modelViewMatrix);
+	
+				return Algorithm .upperBound (this .range_, 0, this .range_ .length, distance, Algorithm .less);
+			};
+		})(),
 		getDistance: function (modelViewMatrix)
 		{
 			modelViewMatrix .translate (this .center_ .getValue ());
 
 			return modelViewMatrix .origin .abs ();
 		},
-		traverse: function (type, renderObject)
+		traverse: (function ()
 		{
-			if (! this .keepCurrentLevel)
+			var modelViewMatrix = new Matrix4 ();
+
+			return function (type, renderObject)
 			{
-				if (type === TraverseType .DISPLAY)
+				if (! this .keepCurrentLevel)
 				{
-					var
-						level        = this .getLevel (renderObject .getBrowser (), this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-						currentLevel = this .level_changed_ .getValue ();
-	
-					if (this .forceTransitions_ .getValue ())
+					if (type === TraverseType .DISPLAY)
 					{
-						if (level > currentLevel)
-							level = currentLevel + 1;
+						var
+							level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
+							currentLevel = this .level_changed_ .getValue ();
+
+						if (this .forceTransitions_ .getValue ())
+						{
+							if (level > currentLevel)
+								level = currentLevel + 1;
+		
+							else if (level < currentLevel)
+								level = currentLevel - 1;
+						}
 	
-						else if (level < currentLevel)
-							level = currentLevel - 1;
-					}
-
-					if (level !== currentLevel)
-					{
-						this .level_changed_ = level;
-				
-						this .child = this .getChild (Math .min (level, this .children_ .length - 1));
-
-						this .set_cameraObjects__ ();
+						if (level !== currentLevel)
+						{
+							this .level_changed_ = level;
+					
+							this .child = this .getChild (Math .min (level, this .children_ .length - 1));
+	
+							this .set_cameraObjects__ ();
+						}
 					}
 				}
-			}
-
-			if (this .child)
-				this .child .traverse (type, renderObject);
-		},
+	
+				if (this .child)
+					this .child .traverse (type, renderObject);
+			};
+		})(),
 	});
 
 	return LOD;

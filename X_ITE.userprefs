@@ -1,11 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Navigation/ExamineViewer.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Navigation/LOD.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/ExamineViewer.js" Line="122" Column="66" />
+      <File FileName="src/x_ite/InputOutput/FileLoader.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Navigation/X3DViewpointNode.js" Line="464" Column="1" />
+      <File FileName="src/x_ite/Components/Navigation/LOD.js" Line="168" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
