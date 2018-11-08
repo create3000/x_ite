@@ -3,6 +3,7 @@
 struct x3d_FogParameters {
 	mediump int   type;
 	mediump vec3  color;
+	mediump vec3  center;
 	mediump float visibilityRange;
 };
 

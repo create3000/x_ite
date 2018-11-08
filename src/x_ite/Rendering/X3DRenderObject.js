@@ -182,19 +182,25 @@ function ($,
 		},
 		setGlobalFog: function (fog)
 		{
-			this .localFog = this .localFogs [0] = fog;
-		},
-		pushLocalFog: function (fog)
-		{
-			this .localFogs .push (fog);
+			var fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
 
-			this .localFog = fog;
+			fogContainer .set (fog, Matrix4 .Identity);
+
+			this .localFog = this .localFogs [0] = fogContainer;
+		},
+		pushLocalFog: function (localFog)
+		{
+			this .localFogs .push (localFog);
+
+			this .localFog = localFog;
 		},
 		popLocalFog: function ()
 		{
-			this .localFogs .pop ();
+			var localFog = this .localFogs .pop ();
 
 			this .localFog = this .localFogs [this .localFogs .length - 1];
+
+			return localFog;
 		},
 		getLayouts: function ()
 		{
@@ -984,6 +990,15 @@ function ($,
 					   lights [i] .dispose ();
 		
 					lights .length = 0;
+		
+					// Recycle local fogs.
+
+					var fogs = this .getBrowser () .getLocalFogs ();
+		
+					for (var i = 0, length = fogs .length; i < length; ++ i)
+					   fogs [i] .dispose ();
+		
+					fogs .length = 0;
 				}
 
 				this .globalLights .length = 0;

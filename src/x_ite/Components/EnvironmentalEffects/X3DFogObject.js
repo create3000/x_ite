@@ -49,10 +49,60 @@
 
 define ([
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector3",
+	"standard/Utility/ObjectCache",
 ],
-function (X3DConstants)
+function (X3DConstants,
+          Vector3,
+          ObjectCache)
 {
 "use strict";
+
+	var Fogs = ObjectCache (FogContainer);
+	
+	function FogContainer ()
+	{
+		this .center = new Vector3 (0, 0, 0);
+	}
+
+	FogContainer .prototype =
+	{
+		constructor: FogContainer,
+		set: function (fogNode, modelViewMatrix)
+		{
+			this .fogNode = fogNode;
+
+			this .center .assign (modelViewMatrix .origin);
+		},
+		setShaderUniforms: function (gl, shaderObject, renderObject)
+		{
+			var fogNode = this .fogNode;
+
+			if (fogNode .getHidden ())
+			{
+				gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
+			}
+			else
+			{
+				var
+					color           = fogNode .color_ .getValue (),
+					center          = this .center,
+					visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
+
+				if (visibilityRange === 0)
+					visibilityRange = renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ());
+
+				gl .uniform1i (shaderObject .x3d_FogType,            fogNode .fogType);
+				gl .uniform3f (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
+				gl .uniform3f (shaderObject .x3d_FogCenter,          center .x, center .y, center .z);
+				gl .uniform1f (shaderObject .x3d_FogVisibilityRange, visibilityRange);
+			}
+		},
+		dispose: function ()
+		{
+		   Fogs .push (this);
+		},
+	};
 
 	function X3DFogObject (executionContext)
 	{
@@ -97,24 +147,9 @@ function (X3DConstants)
 		{
 			return this .hidden;
 		},
-		setShaderUniforms: function (gl, shaderObject, renderObject)
+		getFogs: function ()
 		{
-			if (this .hidden)
-				gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
-
-			else
-			{
-				var
-					color           = this .color_ .getValue (),
-					visibilityRange = Math .max (0, this .visibilityRange_ .getValue ());
-
-				if (visibilityRange === 0)
-					visibilityRange = renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ());
-
-				gl .uniform1i (shaderObject .x3d_FogType,            this .fogType);
-				gl .uniform3f (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
-				gl .uniform1f (shaderObject .x3d_FogVisibilityRange, visibilityRange);
-			}
+			return Fogs;
 		},
 	};
 

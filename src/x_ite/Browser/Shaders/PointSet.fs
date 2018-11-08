@@ -45,7 +45,7 @@ getFogInterpolant ()
 	if (x3d_Fog .visibilityRange <= 0.0)
 		return 0.0;
 
-	float dV = length (v);
+	float dV = length (v - x3d_Fog .center);
 
 	if (dV >= x3d_Fog .visibilityRange)
 		return 0.0;
