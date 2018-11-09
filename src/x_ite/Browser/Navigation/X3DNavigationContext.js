@@ -92,8 +92,7 @@ function (Fields,
 		                       "availableViewers",     new Fields .MFString (),
 		                       "viewer",               new Fields .SFString ("EXAMINE"));
 		
-		this .activeCollisions = { };
-		this .collisionCount   = 0;
+		this .activeCollisions = new Set ();
 		this .viewerNode       = null;
 	}
 
@@ -130,25 +129,15 @@ function (Fields,
 		},
 		addCollision: function (object)
 		{
-			if (this .activeCollisions .hasOwnProperty (object .getId ()))
-				return;
-
-			this .activeCollisions [object .getId ()] = true;
-
-			++ this .collisionCount;
+			this .activeCollisions .add (object);
 		},
 		removeCollision: function (object)
 		{
-			if (! this .activeCollisions .hasOwnProperty (object .getId ()))
-				return;
-
-			delete this .activeCollisions [object .getId ()];
-
-			-- this .collisionCount;
+			this .activeCollisions .delete (object);
 		},
 		getCollisionCount: function ()
 		{
-			return this .collisionCount;
+			return this .activeCollisions .size;
 		},
 		remove_world__: function ()
 		{
