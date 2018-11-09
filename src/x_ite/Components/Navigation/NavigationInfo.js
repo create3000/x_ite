@@ -124,6 +124,7 @@ function (Fields,
 			this .headlight_          .addInterest ("set_headlight__",          this);
 			this .transitionStart_    .addInterest ("set_transitionStart__",    this);
 			this .transitionComplete_ .addInterest ("set_transitionComplete__", this);
+			this .isBound_            .addInterest ("set_isBound__",            this);
 
 			this .set_type__ ();
 			this .set_headlight__ ();
@@ -311,11 +312,21 @@ function (Fields,
 		},
 		set_transitionStart__: function ()
 		{
-			this .transitionActive_ = true;
+			if (! this .transitionActive_ .getValue ())
+				this .transitionActive_ = true;
 		},
 		set_transitionComplete__: function ()
 		{
-			this .transitionActive_ = false;
+			if (this .transitionActive_ .getValue ())
+				this .transitionActive_ = false;
+		},
+		set_isBound__: function ()
+		{
+			if (this .isBound_ .getValue ())
+				return;
+
+			if (this .transitionActive_ .getValue ())
+				this .transitionActive_ = false;
 		},
 		bindToLayer: function (layer)
 		{

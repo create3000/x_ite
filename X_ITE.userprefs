@@ -1,15 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Navigation/NavigationInfo.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Prototype/X3DExternProtoDeclaration.js" Line="1" Column="1" />
       <File FileName="src/x_ite/InputOutput/FileLoader.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Navigation/NavigationInfo.js" Line="332" Column="1" />
-      <File FileName="src/x_ite/Browser/X3DBrowserContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/X3DNavigationContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Layering/X3DLayerNode.js" Line="349" Column="1" />
+      <File FileName="src/x_ite/Components/Navigation/NavigationInfo.js" Line="325" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
