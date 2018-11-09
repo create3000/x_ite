@@ -140,6 +140,11 @@ function ($,
 			this .url_    .addInterest ("set_url__",    this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
+			var userDefinedFields = this .getUserDefinedFields ();
+
+			for (var field of userDefinedFields .values ())
+				field .setSet (false);
+
 			this .set_url__ ();
 		},
 		set_url__: function ()
@@ -174,13 +179,9 @@ function ($,
 		},
 		set_buffer__: function ()
 		{
-			//this .getScene () .addInitLoadCount (this);
-
 			new FileLoader (this) .loadScript (this .url_,
 			function (data)
 			{
-				//this .getScene () .removeInitLoadCount (this);
-
 				if (data === null)
 				{
 					// No URL could be loaded.
@@ -425,6 +426,8 @@ function ($,
 
 			this .set_live__ ();
 
+			// Call initialize function.
+
 			if (this .context .initialize)
 			{
 				var browser = this .getBrowser ();
@@ -441,6 +444,21 @@ function ($,
 				}
 
 				browser .getScriptStack () .pop ();
+			}
+
+			// Call outstanding events.
+
+			var userDefinedFields = this .getUserDefinedFields ();
+
+			for (var field of userDefinedFields .values ())
+			{
+				if (field .getSet ())
+				{
+					var callback = this .context [field .getName ()];
+
+					if ($.isFunction (callback))
+						this .set_field__ (field, callback);
+				}
 			}
 		},
 		prepareEvents__: function ()
