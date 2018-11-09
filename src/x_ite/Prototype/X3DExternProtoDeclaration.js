@@ -158,7 +158,6 @@ function ($,
 				return;
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-			this .getScene () .addInitLoadCount (this);
 
 			// Don't create scene cache, due to possible default nodes in proto SFNode fields and complete scenes.
 
@@ -190,7 +189,6 @@ function ($,
 			//this .scene .setExecutionContext (this .getExecutionContext ());
 			this .scene .setup ();
 
-			this .getScene () .removeInitLoadCount (this);
 			this .setLoadState (X3DConstants .COMPLETE_STATE);
 
 			this .setProtoDeclaration (proto);
@@ -207,7 +205,6 @@ function ($,
 		{
 			console .error ("Error loading extern prototype:", error);
 
-			this .getScene () .removeInitLoadCount (this);
 			this .setLoadState (X3DConstants .FAILED_STATE);
 
 			this .scene = this .getBrowser () .getPrivateScene ();

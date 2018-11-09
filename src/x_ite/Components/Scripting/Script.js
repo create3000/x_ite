@@ -174,12 +174,12 @@ function ($,
 		},
 		set_buffer__: function ()
 		{
-			this .getScene () .addInitLoadCount (this);
+			//this .getScene () .addInitLoadCount (this);
 
 			new FileLoader (this) .loadScript (this .url_,
 			function (data)
 			{
-				this .getScene () .removeInitLoadCount (this);
+				//this .getScene () .removeInitLoadCount (this);
 
 				if (data === null)
 				{
