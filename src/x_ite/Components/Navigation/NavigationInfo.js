@@ -78,6 +78,7 @@ function (Fields,
 		this .addType (X3DConstants .NavigationInfo);
 				
 		this .addChildObjects ("transitionStart",  new Fields .SFBool (),
+		                       "transitionActive", new Fields .SFBool (),
 		                       "availableViewers", new Fields .MFString (),
 		                       "viewer",           new Fields .SFString ("EXAMINE"));
 
@@ -119,11 +120,71 @@ function (Fields,
 		{
 			X3DBindableNode .prototype .initialize .call (this);
 
-			this .type_      .addInterest ("set_type__", this);
-			this .headlight_ .addInterest ("set_headlight__", this);
+			this .type_               .addInterest ("set_type__",               this);
+			this .headlight_          .addInterest ("set_headlight__",          this);
+			this .transitionStart_    .addInterest ("set_transitionStart__",    this);
+			this .transitionComplete_ .addInterest ("set_transitionComplete__", this);
 
 			this .set_type__ ();
 			this .set_headlight__ ();
+		},
+		getViewer: function ()
+		{
+		   return this .viewer_ .getValue ();
+		},
+		getCollisionRadius: function ()
+		{
+			if (this .avatarSize_ .length > 0)
+			{
+				if (this .avatarSize_ [0] > 0)
+					return this .avatarSize_ [0];
+			}
+
+			return 0.25;
+		},
+		getAvatarHeight: function ()
+		{
+			if (this .avatarSize_ .length > 1)
+				return this .avatarSize_ [1];
+
+			return 1.6;
+		},
+		getStepHeight: function ()
+		{
+			if (this .avatarSize_ .length > 2)
+				return this .avatarSize_ [2];
+
+			return 0.75;
+		},
+		getNearValue: function ()
+		{
+			var nearValue = this .getCollisionRadius ();
+
+			if (nearValue === 0)
+				return 1e-5;
+
+			else
+				return nearValue / 2;
+		},
+		getFarValue: function (viewpoint)
+		{
+			return this .visibilityLimit_ .getValue ()
+				    ? this .visibilityLimit_ .getValue ()
+				    : viewpoint .getMaxFarValue ();
+		},
+		getTransitionType: function ()
+		{
+			for (var i = 0, length = this .transitionType_ .length; i < length; ++ i)
+			{
+				var
+					value          = this .transitionType_ [i],
+					transitionType = TransitionType [value];
+
+				if (transitionType)
+					return value;
+			}
+
+			return "LINEAR";
 		},
 		set_type__: function ()
 		{
@@ -248,6 +309,14 @@ function (Fields,
 			else
 				this .enable = Function .prototype;
 		},
+		set_transitionStart__: function ()
+		{
+			this .transitionActive_ = true;
+		},
+		set_transitionComplete__: function ()
+		{
+			this .transitionActive_ = false;
+		},
 		bindToLayer: function (layer)
 		{
 			layer .getNavigationInfoStack () .push (this);
@@ -259,64 +328,6 @@ function (Fields,
 		removeFromLayer: function (layer)
 		{
 			layer .getNavigationInfoStack () .remove (this);
-		},
-		getViewer: function ()
-		{
-		   return this .viewer_ .getValue ();
-		},
-		getCollisionRadius: function ()
-		{
-			if (this .avatarSize_ .length > 0)
-			{
-				if (this .avatarSize_ [0] > 0)
-					return this .avatarSize_ [0];
-			}
-
-			return 0.25;
-		},
-		getAvatarHeight: function ()
-		{
-			if (this .avatarSize_ .length > 1)
-				return this .avatarSize_ [1];
-
-			return 1.6;
-		},
-		getStepHeight: function ()
-		{
-			if (this .avatarSize_ .length > 2)
-				return this .avatarSize_ [2];
-
-			return 0.75;
-		},
-		getNearValue: function ()
-		{
-			var nearValue = this .getCollisionRadius ();
-
-			if (nearValue === 0)
-				return 1e-5;
-
-			else
-				return nearValue / 2;
-		},
-		getFarValue: function (viewpoint)
-		{
-			return this .visibilityLimit_ .getValue ()
-				    ? this .visibilityLimit_ .getValue ()
-				    : viewpoint .getMaxFarValue ();
-		},
-		getTransitionType: function ()
-		{
-			for (var i = 0, length = this .transitionType_ .length; i < length; ++ i)
-			{
-				var
-					value          = this .transitionType_ [i],
-					transitionType = TransitionType [value];
-
-				if (transitionType)
-					return value;
-			}
-
-			return "LINEAR";
 		},
 		enable: function (type, renderObject)
 		{

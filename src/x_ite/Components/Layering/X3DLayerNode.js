@@ -342,13 +342,17 @@ function (X3DNode,
 		},
 		collision: function (type, renderObject)
 		{
-			this .collisionTime = 0;
+			var navigationInfo = this .getNavigationInfo ();
+
+			if (navigationInfo .transitionActive_ .getValue ())
+				return;
 
 			var
-				navigationInfo  = this .getNavigationInfo (),
 				collisionRadius = navigationInfo .getCollisionRadius (),
 				avatarHeight    = navigationInfo .getAvatarHeight (),
 				size            = Math .max (collisionRadius * 2, avatarHeight * 2);
+
+			this .collisionTime = 0;
 
 			Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
 

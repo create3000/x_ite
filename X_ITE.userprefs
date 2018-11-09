@@ -3,9 +3,12 @@
   <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Prototype/X3DExternProtoDeclaration.js" Line="204" Column="16" />
-      <File FileName="src/x_ite/InputOutput/FileLoader.js" Line="207" Column="29" />
+      <File FileName="src/x_ite/Prototype/X3DExternProtoDeclaration.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/InputOutput/FileLoader.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="328" Column="75" />
+      <File FileName="src/x_ite/Components/Navigation/NavigationInfo.js" Line="328" Column="4" />
+      <File FileName="src/x_ite/Browser/X3DBrowserContext.js" Line="268" Column="1" />
+      <File FileName="src/x_ite/Browser/Navigation/X3DNavigationContext.js" Line="146" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
