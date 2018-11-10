@@ -294,7 +294,7 @@ function ($,
 				SFBool:   { value: Boolean },
 				SFDouble: { value: Number },
 				SFFloat:  { value: Number },
-				SFInt32:  { value: Number },
+				SFInt32:  { value: function () { return arguments .length ? new Number (~~arguments [0]) : new Number (); }},
 				SFString: { value: String },
 				SFTime:   { value: Number },
 
