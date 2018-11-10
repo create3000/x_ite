@@ -164,18 +164,18 @@ define (function ()
 				basePath       = this .removeDotSegments () .base,
 				descendantPath = descendant .removeDotSegments ();
 
-			var i, j;
+			var i, j, l;
 
-			for (i = 0; i < basePath .value .length && i < descendantPath .value .length; ++ i)
+			for (i = 0, l = Math .min (basePath .value .length, descendantPath .value .length); i < l ; ++ i)
 			{
 				if (basePath .value [i] !== descendantPath .value [i])
 					break;
 			}
 
-			for (j = i; j < basePath .value .length; ++ j)
+			for (j = i, l = basePath .value .length; j < l; ++ j)
 				path .value .push ("..");
 
-			for (j = i; j < descendantPath .value .length; ++ j)
+			for (j = i, l = descendantPath .value .length; j < l; ++ j)
 				path .value .push (descendantPath .value [j]);
 
 			return path;
@@ -220,7 +220,7 @@ define (function ()
 					}
 				}
 
-				path .value .trailingSeparator |= value .trailingSeparator;
+				path .value .trailingSeparator = path .value .trailingSeparator || value .trailingSeparator;
 			}
 
 			return path;
@@ -715,7 +715,6 @@ define (function ()
 
 			return new URI (true,
 			                false,
-			                "",
 			                "",
 			                "",
 			                "",
