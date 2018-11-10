@@ -35774,9 +35774,6 @@ define ('standard/Networking/URI',[],function ()
 				basePath       = this .removeDotSegments () .base,
 				descendantPath = descendant .removeDotSegments ();
 
-console .log (basePath);
-console .log (descendantPath);
-
 			var i, j, l;
 
 			for (i = 0, l = Math .min (basePath .value .length, descendantPath .value .length); i < l ; ++ i)
@@ -35790,8 +35787,6 @@ console .log (descendantPath);
 
 			for (j = i, l = descendantPath .value .length; j < l; ++ j)
 				path .value .push (descendantPath .value [j]);
-
-console .log (path);
 
 			return path;
 		},
@@ -36330,7 +36325,6 @@ console .log (path);
 
 			return new URI (true,
 			                false,
-			                "",
 			                "",
 			                "",
 			                "",

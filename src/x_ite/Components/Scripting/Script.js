@@ -291,6 +291,13 @@ function ($,
 				X3DField:      { value: X3DField },
 				X3DArrayField: { value: X3DArrayField },
 
+				SFBool:   { value: function (argument) { return new Boolean (argument); }},
+				SFDouble: { value: function (argument) { return new Number  (argument); }},
+				SFFloat:  { value: function (argument) { return new Number  (argument); }},
+				SFInt32:  { value: function (argument) { return new Number  (argument); }},
+				SFString: { value: function (argument) { return new String  (argument); }},
+				SFTime:   { value: function (argument) { return new Number  (argument); }},
+
 				SFColor:       { value: Fields .SFColor },
 				SFColorRGBA:   { value: Fields .SFColorRGBA },
 				SFImage:       { value: Fields .SFImage },
