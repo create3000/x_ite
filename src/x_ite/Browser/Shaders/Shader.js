@@ -171,7 +171,19 @@ function (Shadow,
 			depreciatedWarning (source, "x3d_NoneLight",     "x3d_NumLights");
 			depreciatedWarning (source, "x3d_NoneTexture",   "x3d_NumTextures");
 
-			return constants + match [1] + definitions + Types + match [2];
+			// Adjust precision of struct types;
+
+			var
+				types = Types,
+				mf    = source .match (/\s*precision\s+(lowp|mediump|highp)\s+float\s*;/),
+				mi    = source .match (/\s*precision\s+(lowp|mediump|highp)\s+int\s*;/),
+				pf    = mf ? mf [1] : "mediump",
+				pi    = mi ? mi [1] : "mediump";
+
+			types = types .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, pf + " $1");
+			types = types .replace (/mediump\s+(int)/g, pi + " $1");
+
+			return constants + match [1] + definitions + types + match [2];
 		},
 	};
 
