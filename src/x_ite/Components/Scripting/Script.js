@@ -291,12 +291,48 @@ function ($,
 				X3DField:      { value: X3DField },
 				X3DArrayField: { value: X3DArrayField },
 
-				SFBool:   { value: Boolean },
-				SFDouble: { value: Number },
-				SFFloat:  { value: Number },
-				SFInt32:  { value: function () { return arguments .length ? new Number (~~arguments [0]) : new Number (); }},
-				SFString: { value: String },
-				SFTime:   { value: Number },
+				SFBool: { value: function SFBool ()
+				{
+					if (this instanceof SFBool)
+						return arguments .length ? new Boolean (arguments [0]) : new Boolean ();
+
+					return arguments .length ? Boolean (arguments [0]) : Boolean ();
+				}},
+				SFDouble: { value: function SFDouble ()
+				{
+					if (this instanceof SFDouble)
+						return arguments .length ? new Number (arguments [0]) : new Number ();
+
+					return arguments .length ? Number (arguments [0]) : Number ();
+				}},
+				SFFloat: { value: function SFFloat ()
+				{
+					if (this instanceof SFFloat)
+						return arguments .length ? new Number (arguments [0]) : new Number ();
+
+					return arguments .length ? Number (arguments [0]) : Number ();
+				}},
+				SFInt32: { value: function SFInt32 ()
+				{
+					if (this instanceof SFInt32)
+						return arguments .length ? new Number (~~arguments [0]) : new Number ();
+
+					return arguments .length ? Number (~~arguments [0]) : Number ();
+				}},
+				SFString: { value: function SFString ()
+				{
+					if (this instanceof SFString)
+						return arguments .length ? new String (arguments [0]) : new String ();
+
+					return arguments .length ? String (arguments [0]) : String ();
+				}},
+				SFTime: { value: function SFTime ()
+				{
+					if (this instanceof SFTime)
+						return arguments .length ? new Number (arguments [0]) : new Number ();
+
+					return arguments .length ? Number (arguments [0]) : Number ();
+				}},
 
 				SFColor:       { value: Fields .SFColor },
 				SFColorRGBA:   { value: Fields .SFColorRGBA },
