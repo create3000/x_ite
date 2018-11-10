@@ -109348,6 +109348,13 @@ function ($,
 				X3DField:      { value: X3DField },
 				X3DArrayField: { value: X3DArrayField },
 
+				SFBool:   { value: Boolean },
+				SFDouble: { value: Number },
+				SFFloat:  { value: Number },
+				SFInt32:  { value: function () { return arguments .length ? new Number (~~arguments [0]) : new Number (); }},
+				SFString: { value: String },
+				SFTime:   { value: Number },
+
 				SFColor:       { value: Fields .SFColor },
 				SFColorRGBA:   { value: Fields .SFColorRGBA },
 				SFImage:       { value: Fields .SFImage },
