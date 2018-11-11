@@ -1,4 +1,4 @@
-/* X_ITE v4.2.10-457 */
+/* X_ITE v4.2.10-458 */
 
 (function () {
 
@@ -25998,6 +25998,77 @@ define ('x_ite/Browser/Core/PrimitiveQuality',[],function ()
  ******************************************************************************/
 
 
+define ('x_ite/Browser/Core/Shading',[],function ()
+{
+"use strict";
+	
+	var i = 0;
+
+	var Shading =
+	{
+		POINT:     i ++,
+		WIREFRAME: i ++,
+		FLAT:      i ++,
+		GOURAUD:   i ++,
+		PHONG:     i ++,
+	};
+
+	Object .preventExtensions (Shading);
+	Object .freeze (Shading);
+	Object .seal (Shading);
+
+	return Shading;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Browser/Core/TextureQuality',[],function ()
 {
 "use strict";
@@ -26074,6 +26145,7 @@ define ('x_ite/Browser/Core/BrowserOptions',[
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Core/PrimitiveQuality",
+	"x_ite/Browser/Core/Shading",
 	"x_ite/Browser/Core/TextureQuality",
 ],
 function (Fields,
@@ -26082,10 +26154,16 @@ function (Fields,
           X3DBaseNode,
           X3DConstants,
           PrimitiveQuality,
+          Shading,
           TextureQuality)
 {
 "use strict";
 	
+	function toBoolean (value)
+	{
+		return value === "true" || value === "FALSE";
+	}
+
 	function BrowserOptions (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
@@ -26096,6 +26174,7 @@ function (Fields,
 
 		this .primitiveQuality = PrimitiveQuality .MEDIUM;
 		this .textureQuality   = TextureQuality   .MEDIUM;
+		this .shading          = Shading          .GOURAUD;
 	}
 
 	BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -26185,37 +26264,41 @@ function (Fields,
 		{
 			this .SplashScreen_ .set (this .getSplashScreen ());
 		},
-		getSplashScreen: function ()
+		getCache: function ()
 		{
-			return this .getBrowser () .getElement () .attr ("splashScreen") !== "false";
-		},
-		getNotifications: function ()
-		{
-			return this .getBrowser () .getElement () .attr ("notifications") !== "false";
-		},
-		getTimings: function ()
-		{
-			return this .getBrowser () .getElement () .attr ("timings") !== "false";
+			return toBoolean (this .getBrowser () .getElement () .attr ("cache"));
 		},
 		getContextMenu: function ()
 		{
-			return this .getBrowser () .getElement () .attr ("contextMenu") !== "false";
+			return toBoolean (this .getBrowser () .getElement () .attr ("contextMenu"));
 		},
-		getCache: function ()
+		getDebug: function ()
 		{
-			return this .getBrowser () .getElement () .attr ("cache") !== "false";
+			return toBoolean (this .getBrowser () .getElement () .attr ("debug"));
+		},
+		getNotifications: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("notifications"));
+		},
+		getSplashScreen: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("splashScreen"));
+		},
+		getTimings: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("timings"));
 		},
 		getPrimitiveQuality: function ()
 		{
 			return this .primitiveQuality;
 		},
+		getShading: function ()
+		{
+			return this .shading;
+		},
 		getTextureQuality: function ()
 		{
 			return this .textureQuality;
-		},
-		getShading: function ()
-		{
-			return this .Shading_ .getValue () .toUpperCase ();
 		},
 		set_splashScreen__: function (splashScreen)
 		{
@@ -26343,9 +26426,41 @@ function (Fields,
 				}
 			}
 		},
-		set_shading__: function (shading)
+		set_shading__: function (value)
 		{
-			this .getBrowser () .setShading (shading .getValue ());
+			var shading = value .getValue () .toUpperCase ();
+
+			switch (shading)
+			{
+				case "POINT":
+				case "POINTSET":
+				{
+					this .shading = Shading .POINT;
+					break;
+				}
+				case "WIREFRAME":
+				{
+					this .shading = Shading .WIREFRAME;
+					break;
+				}
+				case "FLAT":
+				{
+					this .shading = Shading .FLAT;
+					break;
+				}
+				case "PHONG":
+				{
+					this .shading = Shading .PHONG;
+					break;
+				}
+				default:
+				{
+					this .shading = Shading .GOURAUD;
+					break;
+				}
+			}
+
+			this .getBrowser () .setShading (this .shading);
 		},
 		set_straightenHorizon__: function (straightenHorizon)
 		{
@@ -39568,14 +39683,12 @@ function (Fields,
 		DEF:         new RegExp ('DEF',         'gy'),
 		EXPORT:      new RegExp ('EXPORT',      'gy'),
 		EXTERNPROTO: new RegExp ('EXTERNPROTO', 'gy'),
-		FALSE:       new RegExp ('FALSE',       'gy'),
-		false:       new RegExp ('false',       'gy'),
+		FALSE:       new RegExp ('FALSE|false', 'gy'),
 		IMPORT:      new RegExp ('IMPORT',      'gy'),
 		IS:          new RegExp ('IS',          'gy'),
 		META:        new RegExp ('META',        'gy'),
 		NULL:        new RegExp ('NULL',        'gy'),
-		TRUE:        new RegExp ('TRUE',        'gy'),
-		true:        new RegExp ('true',        'gy'),
+		TRUE:        new RegExp ('TRUE|true',   'gy'),
 		PROFILE:     new RegExp ('PROFILE',     'gy'),
 		PROTO:       new RegExp ('PROTO',       'gy'),
 		ROUTE:       new RegExp ('ROUTE',       'gy'),
@@ -39645,11 +39758,9 @@ function (Fields,
 	 *  Parser
 	 */
 
-	function Parser (scene, isXML)
+	function Parser (scene)
 	{
 		X3DParser .call (this, scene);
-
-		this .isXML = isXML;
 	}
 
 	Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -41056,8 +41167,7 @@ function (Fields,
 			{
 				this .value = Fields .SFString .unescape (this .result [1]);
 
-				if (!this .isXML)
-					this .lines (this .value);
+				this .lines (this .value);
 
 				return true;
 			}
@@ -41067,23 +41177,6 @@ function (Fields,
 		sfboolValue: function (field)
 		{
 			this .comments ();
-
-			if (this .isXML)
-			{
-				if (Grammar .true .parse (this))
-				{
-					field .set (true);
-					return true;
-				}
-
-				if (Grammar .false .parse (this))
-				{
-					field .set (false);
-					return true;
-				}
-
-				return false;
-			}
 
 			if (Grammar .TRUE .parse (this))
 			{
@@ -42655,7 +42748,6 @@ function ($,
 
 			// Observe Element's attributes.
 
-			this .debug    = this .getElement () .attr ("debug") == "true";
 			this .observer = new MutationObserver (this .processMutations .bind (this));
 
 			this .observer .observe (this .element [0], { attributes: true, childList: false, characterData: false, subtree: false });
@@ -42707,7 +42799,7 @@ function ($,
 		},
 		getDebug: function ()
 		{
-			return this .debug;
+			return this .getBrowserOptions () .getDebug ();
 		},
 		getNumber: function ()
 		{
@@ -42839,10 +42931,10 @@ function ($,
 			if (urlCharacters)
 			{
 			   var
-					parser    = new Parser (this .getExecutionContext (), true),
+					parser    = new Parser (this .getExecutionContext ()),
 					url       = new Fields .MFString (),
 					parameter = new Fields .MFString ();
-	
+
 				parser .setInput (urlCharacters);
 				parser .sfstringValues (url);
 
@@ -43909,11 +44001,13 @@ function (X3DNode,
 
 
 define ('x_ite/Components/Shaders/X3DShaderNode',[
+	"x_ite/Browser/Core/Shading",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 ],
-function (X3DAppearanceChildNode, 
+function (Shading,
+          X3DAppearanceChildNode, 
           X3DConstants,
           TraverseType)
 {
@@ -43940,7 +44034,7 @@ function (X3DAppearanceChildNode,
 		},
 		setGeometryType: function (value)
 		{
-			this .setShading (value, this .getBrowser () .getBrowserOptions () .Shading_ .getValue ());
+			this .setShading (value, this .getBrowser () .getBrowserOptions () .getShading ());
 		},
 		setShading: function (geometryType, shading)
 		{
@@ -43952,14 +44046,13 @@ function (X3DAppearanceChildNode,
 				{
 					switch (shading)
 					{
-						case "POINT":
-						case "POINTSET":
+						case Shading .POINT:
 						{
 							this .primitiveMode = gl .POINTS;
 							this .wireframe     = true;
 							break;
 						}
-						case "WIREFRAME":
+						case Shading .WIREFRAME:
 						{
 							this .primitiveMode = gl .POINTS;
 							this .wireframe     = true;
@@ -43967,9 +44060,9 @@ function (X3DAppearanceChildNode,
 						}
 						default:
 						{
-							// case FLAT:
-							// case GOURAUD:
-							// case PHONG:
+							// case Shading .FLAT:
+							// case Shading .GOURAUD:
+							// case Shading .PHONG:
 		
 							this .primitiveMode = gl .POINTS;
 							this .wireframe     = true;
@@ -43983,14 +44076,13 @@ function (X3DAppearanceChildNode,
 				{
 					switch (shading)
 					{
-						case "POINT":
-						case "POINTSET":
+						case Shading .POINT:
 						{
 							this .primitiveMode = gl .POINTS;
 							this .wireframe     = true;
 							break;
 						}
-						case "WIREFRAME":
+						case Shading .WIREFRAME:
 						{
 							this .primitiveMode = gl .LINES;
 							this .wireframe     = true;
@@ -43998,9 +44090,9 @@ function (X3DAppearanceChildNode,
 						}
 						default:
 						{
-							// case FLAT:
-							// case GOURAUD:
-							// case PHONG:
+							// case Shading .FLAT:
+							// case Shading .GOURAUD:
+							// case Shading .PHONG:
 
 							this .primitiveMode = gl .LINES;
 							this .wireframe     = true;
@@ -44015,14 +44107,13 @@ function (X3DAppearanceChildNode,
 				{
 					switch (shading)
 					{
-						case "POINT":
-						case "POINTSET":
+						case Shading .POINT:
 						{
 							this .primitiveMode = gl .POINTS;
 							this .wireframe     = true;
 							break;
 						}
-						case "WIREFRAME":
+						case Shading .WIREFRAME:
 						{
 							this .primitiveMode = gl .LINE_LOOP;
 							this .wireframe     = true;
@@ -44030,9 +44121,9 @@ function (X3DAppearanceChildNode,
 						}
 						default:
 						{
-							// case FLAT:
-							// case GOURAUD:
-							// case PHONG:
+							// case Shading .FLAT:
+							// case Shading .GOURAUD:
+							// case Shading .PHONG:
 		
 							this .primitiveMode = gl .TRIANGLES;
 							this .wireframe     = false;
@@ -46756,7 +46847,7 @@ function ($,
 
 		this .protoDeclarations = [ ];
 		this .parents           = [ ];
-		this .parser            = new Parser (scene, true);
+		this .parser            = new Parser (scene);
 		this .url               = new Fields .MFString ();
 
 		try
@@ -47683,7 +47774,7 @@ function ($,
 	{
 		field .setValue (this .getInput () .replace (trimWhitespaces, "") .split (whitespaces) .map (function (value)
 		{
-			if (value === "true")
+			if (value === "true" || value === "TRUE")
 				return true;
 
 			return false;
@@ -47789,9 +47880,9 @@ function (
 		this .executionContexts = [ scene ];
 		this .protoDeclarations = [ ];
 		this .parents           = [ ];
-		this .parser            = new Parser (this .scene, true);
+		this .parser            = new Parser (this .scene);
 		this .url               = new Fields .MFString ();
-		this.x3djsonNS = "http://www.web3d.org/specifications/x3d-namespace";
+		this .x3djsonNS         = "http://www.web3d.org/specifications/x3d-namespace";
 	}
 
 	JSONParser.prototype = Object.create(XMLParser.prototype);
@@ -58574,6 +58665,7 @@ define('ResizeSensor', ['ResizeSensor/src/ResizeSensor'], function (main) { retu
 define ('x_ite/Browser/Rendering/X3DRenderingContext',[
 	"jquery",
 	"x_ite/Fields",
+	"x_ite/Browser/Core/Shading",
 	"x_ite/Components/Shaders/ComposedShader",
 	"x_ite/Components/Shaders/ShaderPart",
 	"text!x_ite/Browser/Shaders/PointSet.fs",
@@ -58591,6 +58683,7 @@ define ('x_ite/Browser/Rendering/X3DRenderingContext',[
 ],
 function ($,
           Fields,
+          Shading,
           ComposedShader,
           ShaderPart,
           pointSetFS,
@@ -58658,7 +58751,7 @@ function ($,
 			this .gouraudShader .shadowShader = this .shadowShader;
 			this .phongShader   .shadowShader = this .shadowShader;
 
-			this .setShading ("GOURAUD");
+			this .setShading (Shading .GOURAUD);
 
 			this .phongShader  .isValid_ .addInterest ("set_phong_shader_valid__",  this);
 			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
@@ -58755,7 +58848,7 @@ function ($,
 		{
 			switch (type)
 			{
-				case "PHONG":
+				case Shading .PHONG:
 				{
 					this .defaultShader = this .phongShader;
 					break;
@@ -60316,6 +60409,7 @@ define ('x_ite/Components/Rendering/X3DGeometryNode',[
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Core/Shading",
 	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -60329,6 +60423,7 @@ define ('x_ite/Components/Rendering/X3DGeometryNode',[
 function (Fields,
           X3DNode,
           X3DConstants,
+          Shading,
           Color3,
           Vector2,
           Vector3,
@@ -60890,7 +60985,7 @@ function (Fields,
 			if (this .geometryType < 2)
 				return;
 			
-			var flatShading = shading .getValue () === "FLAT";
+			var flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
 
 			if (flatShading === this .flatShading)
 				return;
@@ -65090,7 +65185,7 @@ function (Fields)
 						if (this .getControlKey ())
 						{
 							event .preventDefault ();
-							this .setBrowserOption ("Shading", "POINTSET");
+							this .setBrowserOption ("Shading", "POINT");
 							this .getNotification () .string_ = "Shading: Pointset";
 						}
 					}
