@@ -70,7 +70,13 @@ function (Fields,
 	
 	function toBoolean (value, defaultValue)
 	{
-		return value === undefined ? defaultValue : (value === "true" || value === "TRUE");
+		if (value === "true" || value === "TRUE")
+			return true;
+
+		if (value === "false" || value === "FALSE")
+			return false;
+
+		return defaultValue;
 	}
 
 	function BrowserOptions (executionContext)
