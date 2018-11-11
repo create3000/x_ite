@@ -223,7 +223,6 @@ function ($,
 
 			// Observe Element's attributes.
 
-			this .debug    = this .getElement () .attr ("debug") == "true";
 			this .observer = new MutationObserver (this .processMutations .bind (this));
 
 			this .observer .observe (this .element [0], { attributes: true, childList: false, characterData: false, subtree: false });
@@ -275,7 +274,7 @@ function ($,
 		},
 		getDebug: function ()
 		{
-			return this .debug;
+			return this .getBrowserOptions () .getDebug ();
 		},
 		getNumber: function ()
 		{
@@ -407,10 +406,10 @@ function ($,
 			if (urlCharacters)
 			{
 			   var
-					parser    = new Parser (this .getExecutionContext (), true),
+					parser    = new Parser (this .getExecutionContext ()),
 					url       = new Fields .MFString (),
 					parameter = new Fields .MFString ();
-	
+
 				parser .setInput (urlCharacters);
 				parser .sfstringValues (url);
 

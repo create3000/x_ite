@@ -48,11 +48,13 @@
 
 
 define ([
+	"x_ite/Browser/Core/Shading",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 ],
-function (X3DAppearanceChildNode, 
+function (Shading,
+          X3DAppearanceChildNode, 
           X3DConstants,
           TraverseType)
 {
@@ -79,7 +81,7 @@ function (X3DAppearanceChildNode,
 		},
 		setGeometryType: function (value)
 		{
-			this .setShading (value, this .getBrowser () .getBrowserOptions () .Shading_ .getValue ());
+			this .setShading (value, this .getBrowser () .getBrowserOptions () .getShading ());
 		},
 		setShading: function (geometryType, shading)
 		{
@@ -91,14 +93,13 @@ function (X3DAppearanceChildNode,
 				{
 					switch (shading)
 					{
-						case "POINT":
-						case "POINTSET":
+						case Shading .POINT:
 						{
 							this .primitiveMode = gl .POINTS;
 							this .wireframe     = true;
 							break;
 						}
-						case "WIREFRAME":
+						case Shading .WIREFRAME:
 						{
 							this .primitiveMode = gl .POINTS;
 							this .wireframe     = true;
@@ -106,9 +107,9 @@ function (X3DAppearanceChildNode,
 						}
 						default:
 						{
-							// case FLAT:
-							// case GOURAUD:
-							// case PHONG:
+							// case Shading .FLAT:
+							// case Shading .GOURAUD:
+							// case Shading .PHONG:
 		
 							this .primitiveMode = gl .POINTS;
 							this .wireframe     = true;
@@ -122,14 +123,13 @@ function (X3DAppearanceChildNode,
 				{
 					switch (shading)
 					{
-						case "POINT":
-						case "POINTSET":
+						case Shading .POINT:
 						{
 							this .primitiveMode = gl .POINTS;
 							this .wireframe     = true;
 							break;
 						}
-						case "WIREFRAME":
+						case Shading .WIREFRAME:
 						{
 							this .primitiveMode = gl .LINES;
 							this .wireframe     = true;
@@ -137,9 +137,9 @@ function (X3DAppearanceChildNode,
 						}
 						default:
 						{
-							// case FLAT:
-							// case GOURAUD:
-							// case PHONG:
+							// case Shading .FLAT:
+							// case Shading .GOURAUD:
+							// case Shading .PHONG:
 
 							this .primitiveMode = gl .LINES;
 							this .wireframe     = true;
@@ -154,14 +154,13 @@ function (X3DAppearanceChildNode,
 				{
 					switch (shading)
 					{
-						case "POINT":
-						case "POINTSET":
+						case Shading .POINT:
 						{
 							this .primitiveMode = gl .POINTS;
 							this .wireframe     = true;
 							break;
 						}
-						case "WIREFRAME":
+						case Shading .WIREFRAME:
 						{
 							this .primitiveMode = gl .LINE_LOOP;
 							this .wireframe     = true;
@@ -169,9 +168,9 @@ function (X3DAppearanceChildNode,
 						}
 						default:
 						{
-							// case FLAT:
-							// case GOURAUD:
-							// case PHONG:
+							// case Shading .FLAT:
+							// case Shading .GOURAUD:
+							// case Shading .PHONG:
 		
 							this .primitiveMode = gl .TRIANGLES;
 							this .wireframe     = false;

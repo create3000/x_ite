@@ -184,14 +184,12 @@ function (Fields,
 		DEF:         new RegExp ('DEF',         'gy'),
 		EXPORT:      new RegExp ('EXPORT',      'gy'),
 		EXTERNPROTO: new RegExp ('EXTERNPROTO', 'gy'),
-		FALSE:       new RegExp ('FALSE',       'gy'),
-		false:       new RegExp ('false',       'gy'),
+		FALSE:       new RegExp ('FALSE|false', 'gy'),
 		IMPORT:      new RegExp ('IMPORT',      'gy'),
 		IS:          new RegExp ('IS',          'gy'),
 		META:        new RegExp ('META',        'gy'),
 		NULL:        new RegExp ('NULL',        'gy'),
-		TRUE:        new RegExp ('TRUE',        'gy'),
-		true:        new RegExp ('true',        'gy'),
+		TRUE:        new RegExp ('TRUE|true',   'gy'),
 		PROFILE:     new RegExp ('PROFILE',     'gy'),
 		PROTO:       new RegExp ('PROTO',       'gy'),
 		ROUTE:       new RegExp ('ROUTE',       'gy'),
@@ -261,11 +259,9 @@ function (Fields,
 	 *  Parser
 	 */
 
-	function Parser (scene, isXML)
+	function Parser (scene)
 	{
 		X3DParser .call (this, scene);
-
-		this .isXML = isXML;
 	}
 
 	Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -1672,8 +1668,7 @@ function (Fields,
 			{
 				this .value = Fields .SFString .unescape (this .result [1]);
 
-				if (!this .isXML)
-					this .lines (this .value);
+				this .lines (this .value);
 
 				return true;
 			}
@@ -1683,23 +1678,6 @@ function (Fields,
 		sfboolValue: function (field)
 		{
 			this .comments ();
-
-			if (this .isXML)
-			{
-				if (Grammar .true .parse (this))
-				{
-					field .set (true);
-					return true;
-				}
-
-				if (Grammar .false .parse (this))
-				{
-					field .set (false);
-					return true;
-				}
-
-				return false;
-			}
 
 			if (Grammar .TRUE .parse (this))
 			{

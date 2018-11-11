@@ -126,7 +126,7 @@ function (Fields)
 						if (this .getControlKey ())
 						{
 							event .preventDefault ();
-							this .setBrowserOption ("Shading", "POINTSET");
+							this .setBrowserOption ("Shading", "POINT");
 							this .getNotification () .string_ = "Shading: Pointset";
 						}
 					}

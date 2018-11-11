@@ -52,6 +52,7 @@
 define ([
 	"jquery",
 	"x_ite/Fields",
+	"x_ite/Browser/Core/Shading",
 	"x_ite/Components/Shaders/ComposedShader",
 	"x_ite/Components/Shaders/ShaderPart",
 	"text!x_ite/Browser/Shaders/PointSet.fs",
@@ -69,6 +70,7 @@ define ([
 ],
 function ($,
           Fields,
+          Shading,
           ComposedShader,
           ShaderPart,
           pointSetFS,
@@ -136,7 +138,7 @@ function ($,
 			this .gouraudShader .shadowShader = this .shadowShader;
 			this .phongShader   .shadowShader = this .shadowShader;
 
-			this .setShading ("GOURAUD");
+			this .setShading (Shading .GOURAUD);
 
 			this .phongShader  .isValid_ .addInterest ("set_phong_shader_valid__",  this);
 			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
@@ -233,7 +235,7 @@ function ($,
 		{
 			switch (type)
 			{
-				case "PHONG":
+				case Shading .PHONG:
 				{
 					this .defaultShader = this .phongShader;
 					break;

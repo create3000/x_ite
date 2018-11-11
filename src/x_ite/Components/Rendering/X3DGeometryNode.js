@@ -51,6 +51,7 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Core/Shading",
 	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -64,6 +65,7 @@ define ([
 function (Fields,
           X3DNode,
           X3DConstants,
+          Shading,
           Color3,
           Vector2,
           Vector3,
@@ -625,7 +627,7 @@ function (Fields,
 			if (this .geometryType < 2)
 				return;
 			
-			var flatShading = shading .getValue () === "FLAT";
+			var flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
 
 			if (flatShading === this .flatShading)
 				return;

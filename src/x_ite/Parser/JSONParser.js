@@ -68,9 +68,9 @@ function (
 		this .executionContexts = [ scene ];
 		this .protoDeclarations = [ ];
 		this .parents           = [ ];
-		this .parser            = new Parser (this .scene, true);
+		this .parser            = new Parser (this .scene);
 		this .url               = new Fields .MFString ();
-		this.x3djsonNS = "http://www.web3d.org/specifications/x3d-namespace";
+		this .x3djsonNS         = "http://www.web3d.org/specifications/x3d-namespace";
 	}
 
 	JSONParser.prototype = Object.create(XMLParser.prototype);

@@ -88,7 +88,7 @@ function ($,
 
 		this .protoDeclarations = [ ];
 		this .parents           = [ ];
-		this .parser            = new Parser (scene, true);
+		this .parser            = new Parser (scene);
 		this .url               = new Fields .MFString ();
 
 		try
@@ -1015,7 +1015,7 @@ function ($,
 	{
 		field .setValue (this .getInput () .replace (trimWhitespaces, "") .split (whitespaces) .map (function (value)
 		{
-			if (value === "true")
+			if (value === "true" || value === "TRUE")
 				return true;
 
 			return false;

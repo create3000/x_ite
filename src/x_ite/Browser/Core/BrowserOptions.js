@@ -54,6 +54,7 @@ define ([
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Core/PrimitiveQuality",
+	"x_ite/Browser/Core/Shading",
 	"x_ite/Browser/Core/TextureQuality",
 ],
 function (Fields,
@@ -62,10 +63,16 @@ function (Fields,
           X3DBaseNode,
           X3DConstants,
           PrimitiveQuality,
+          Shading,
           TextureQuality)
 {
 "use strict";
 	
+	function toBoolean (value)
+	{
+		return value === "true" || value === "FALSE";
+	}
+
 	function BrowserOptions (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
@@ -76,6 +83,7 @@ function (Fields,
 
 		this .primitiveQuality = PrimitiveQuality .MEDIUM;
 		this .textureQuality   = TextureQuality   .MEDIUM;
+		this .shading          = Shading          .GOURAUD;
 	}
 
 	BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -165,37 +173,41 @@ function (Fields,
 		{
 			this .SplashScreen_ .set (this .getSplashScreen ());
 		},
-		getSplashScreen: function ()
+		getCache: function ()
 		{
-			return this .getBrowser () .getElement () .attr ("splashScreen") !== "false";
-		},
-		getNotifications: function ()
-		{
-			return this .getBrowser () .getElement () .attr ("notifications") !== "false";
-		},
-		getTimings: function ()
-		{
-			return this .getBrowser () .getElement () .attr ("timings") !== "false";
+			return toBoolean (this .getBrowser () .getElement () .attr ("cache"));
 		},
 		getContextMenu: function ()
 		{
-			return this .getBrowser () .getElement () .attr ("contextMenu") !== "false";
+			return toBoolean (this .getBrowser () .getElement () .attr ("contextMenu"));
 		},
-		getCache: function ()
+		getDebug: function ()
 		{
-			return this .getBrowser () .getElement () .attr ("cache") !== "false";
+			return toBoolean (this .getBrowser () .getElement () .attr ("debug"));
+		},
+		getNotifications: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("notifications"));
+		},
+		getSplashScreen: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("splashScreen"));
+		},
+		getTimings: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("timings"));
 		},
 		getPrimitiveQuality: function ()
 		{
 			return this .primitiveQuality;
 		},
+		getShading: function ()
+		{
+			return this .shading;
+		},
 		getTextureQuality: function ()
 		{
 			return this .textureQuality;
-		},
-		getShading: function ()
-		{
-			return this .Shading_ .getValue () .toUpperCase ();
 		},
 		set_splashScreen__: function (splashScreen)
 		{
@@ -323,9 +335,41 @@ function (Fields,
 				}
 			}
 		},
-		set_shading__: function (shading)
+		set_shading__: function (value)
 		{
-			this .getBrowser () .setShading (shading .getValue ());
+			var shading = value .getValue () .toUpperCase ();
+
+			switch (shading)
+			{
+				case "POINT":
+				case "POINTSET":
+				{
+					this .shading = Shading .POINT;
+					break;
+				}
+				case "WIREFRAME":
+				{
+					this .shading = Shading .WIREFRAME;
+					break;
+				}
+				case "FLAT":
+				{
+					this .shading = Shading .FLAT;
+					break;
+				}
+				case "PHONG":
+				{
+					this .shading = Shading .PHONG;
+					break;
+				}
+				default:
+				{
+					this .shading = Shading .GOURAUD;
+					break;
+				}
+			}
+
+			this .getBrowser () .setShading (this .shading);
 		},
 		set_straightenHorizon__: function (straightenHorizon)
 		{
