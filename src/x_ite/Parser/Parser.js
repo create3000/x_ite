@@ -224,10 +224,10 @@ function (Fields,
 		int32:  new RegExp ('((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'gy'),
 		double: new RegExp ('([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'gy'),
 		string: new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'gy'),
-		
-		Inf:         new RegExp ('[+]?inf',  'gyi'),
-		NegativeInf: new RegExp ('-inf',     'gyi'),
-		NaN:         new RegExp ('[+-]?nan', 'gyi'),
+
+		Inf:         new RegExp ('[+]?(?:inf|Infinity)', 'gy'),
+		NegativeInf: new RegExp ('-(?:inf|Infinity)',    'gy'),
+		NaN:         new RegExp ('[+-]?(nan|NaN)',       'gy'),
 
 		// Misc
 		Break: new RegExp ('\\r?\\n', 'g'),

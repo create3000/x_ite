@@ -1,4 +1,4 @@
-/* X_ITE v4.2.10-461 */
+/* X_ITE v4.2.10-462 */
 
 (function () {
 
@@ -39729,10 +39729,10 @@ function (Fields,
 		int32:  new RegExp ('((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'gy'),
 		double: new RegExp ('([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'gy'),
 		string: new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'gy'),
-		
-		Inf:         new RegExp ('[+]?inf',  'gyi'),
-		NegativeInf: new RegExp ('-inf',     'gyi'),
-		NaN:         new RegExp ('[+-]?nan', 'gyi'),
+
+		Inf:         new RegExp ('[+]?(?:inf|Infinity)', 'gy'),
+		NegativeInf: new RegExp ('-(?:inf|Infinity)',    'gy'),
+		NaN:         new RegExp ('[+-]?(nan|NaN)',       'gy'),
 
 		// Misc
 		Break: new RegExp ('\\r?\\n', 'g'),
@@ -47759,6 +47759,26 @@ function ($,
 		whitespaces     = /[\x20\n,\t\r]+/,
 		trimWhitespaces = /^[\x20\n,\t\r]+|[\x20\n,\t\r]+$/;
 
+   function prepareBool (string)
+	{
+		return string .replace (trimWhitespaces, "") .split (whitespaces);
+	}
+
+   function prepareFloat (string)
+	{
+		return (string
+			.replace (trimWhitespaces, "")
+			.replace (/inf/g, "Infinity")
+			.replace (/nan/g, "NaN")
+			.replace (/"/g, "")
+			.split (whitespaces));
+	}
+
+   function prepareInt (string)
+	{
+		return string .replace (trimWhitespaces, "") .split (whitespaces);
+	}
+
 	// Unitless fields.
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFColor] =
@@ -47770,7 +47790,7 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
 	{
-		field .setValue (this .getInput () .replace (trimWhitespaces, "") .split (whitespaces) .map (function (value)
+		field .setValue (prepareFloat (this .getInput ()) .map (function (value)
 		{
 			return parseFloat (value);
 		}));
@@ -47778,7 +47798,7 @@ function ($,
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFBool] = function (field)
 	{
-		field .setValue (this .getInput () .replace (trimWhitespaces, "") .split (whitespaces) .map (function (value)
+		field .setValue (prepareBool (this .getInput ()) .map (function (value)
 		{
 			if (value === "true" || value === "TRUE")
 				return true;
@@ -47789,7 +47809,7 @@ function ($,
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFInt32] = function (field)
 	{
-		field .setValue (this .getInput () .replace (trimWhitespaces, "") .split (whitespaces) .map (function (value)
+		field .setValue (prepareInt (this .getInput ()) .map (function (value)
 		{
 			return parseInt (value);
 		}));
@@ -47806,7 +47826,7 @@ function ($,
 	{
 		var category = field .getUnit ();
 
-		field .setValue (this .getInput () .replace (trimWhitespaces, "") .split (whitespaces) .map (function (value)
+		field .setValue (prepareFloat (this .getInput ()) .map (function (value)
 		{
 			return this .fromUnit (category, parseFloat (value));
 		},
@@ -58055,12 +58075,10 @@ function (ViewVolume,
 	{
 		var gl = browser .getContext ();
 
-		this .browser             = browser;
-		this .width               = width;
-		this .height              = height;
-		this .array               = new Uint8Array (width * height * 4);
-		this .invProjectionMatrix = new Matrix4 ();
-		this .point               = new Vector3 (0, 0, 0);
+		this .browser = browser;
+		this .width   = width;
+		this .height  = height;
+		this .array   = new Uint8Array (width * height * 4);
 
 		// The frame buffer.
 
@@ -58149,46 +58167,54 @@ function (ViewVolume,
 
 			return array;
 		},
-		getDepth: function (projectionMatrix, viewport)
+		getDepth: (function ()
 		{
-			try
+			var
+				invProjectionMatrix = new Matrix4 (),
+				point               = new Vector3 (0, 0, 0);
+
+			return function (projectionMatrix, viewport)
 			{
-				var
-					gl                  = this .browser .getContext (),
-					array               = this .array,
-					width               = this .width,
-					height              = this .height,
-					invProjectionMatrix = this .invProjectionMatrix .assign (projectionMatrix) .inverse (),
-					winx                = 0,
-					winy                = 0,
-					winz                = Number .POSITIVE_INFINITY;
-
-				gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
-
-				for (var wy = 0, i = 0; wy < height; ++ wy)
+				try
 				{
-					for (var wx = 0; wx < width; ++ wx, i += 4)
-					{
-						var wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
+					var
+						gl     = this .browser .getContext (),
+						array  = this .array,
+						width  = this .width,
+						height = this .height,
+						winx   = 0,
+						winy   = 0,
+						winz   = Number .POSITIVE_INFINITY;
 
-						if (wz < winz)
+					invProjectionMatrix .assign (projectionMatrix) .inverse ();
+
+					gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
+	
+					for (var wy = 0, i = 0; wy < height; ++ wy)
+					{
+						for (var wx = 0; wx < width; ++ wx, i += 4)
 						{
-							winx = wx;
-							winy = wy;
-							winz = wz;
+							var wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
+	
+							if (wz < winz)
+							{
+								winx = wx;
+								winy = wy;
+								winz = wz;
+							}
 						}
 					}
+
+					ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
+	
+					return point .z;
 				}
-
-				ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, this .point);
-
-				return this .point .z;
-			}
-			catch (error)
-			{
-				return 0;
-			}
-		},
+				catch (error)
+				{
+					return 0;
+				}
+			};
+		})(),
 		bind: function ()
 		{
 			var gl = this .browser .getContext ();
