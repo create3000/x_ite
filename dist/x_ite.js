@@ -1,4 +1,4 @@
-/* X_ITE v4.2.10-458 */
+/* X_ITE v4.2.10-459 */
 
 (function () {
 
@@ -26159,9 +26159,9 @@ function (Fields,
 {
 "use strict";
 	
-	function toBoolean (value)
+	function toBoolean (value, defaultValue)
 	{
-		return value === "true" || value === "FALSE";
+		return value === undefined ? defaultValue : value === "true" || value === "FALSE";
 	}
 
 	function BrowserOptions (executionContext)
@@ -26266,27 +26266,27 @@ function (Fields,
 		},
 		getCache: function ()
 		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("cache"));
+			return toBoolean (this .getBrowser () .getElement () .attr ("cache"), true);
 		},
 		getContextMenu: function ()
 		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("contextMenu"));
+			return toBoolean (this .getBrowser () .getElement () .attr ("contextMenu"), true);
 		},
 		getDebug: function ()
 		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("debug"));
+			return toBoolean (this .getBrowser () .getElement () .attr ("debug"), false);
 		},
 		getNotifications: function ()
 		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("notifications"));
+			return toBoolean (this .getBrowser () .getElement () .attr ("notifications"), true);
 		},
 		getSplashScreen: function ()
 		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("splashScreen"));
+			return toBoolean (this .getBrowser () .getElement () .attr ("splashScreen"), true);
 		},
 		getTimings: function ()
 		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("timings"));
+			return toBoolean (this .getBrowser () .getElement () .attr ("timings"), true);
 		},
 		getPrimitiveQuality: function ()
 		{
