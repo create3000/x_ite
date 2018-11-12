@@ -991,6 +991,8 @@ function ($,
 	 */
 
 	var
+		infs            = /\binf\b/g,
+		nans            = /\bnan\b/g,
 		trimWhitespaces = /^[\x20\n,\t\r"]+|[\x20\n,\t\r"]+$/g,
 		whitespaces     = /[\x20\n,\t\r"]+/;
 
@@ -1002,8 +1004,8 @@ function ($,
    function prepareFloat (string)
 	{
 		return (string
-			.replace (/\binf\b/g, "Infinity")
-			.replace (/\bnan\b/g, "NaN")
+			.replace (infs, "Infinity")
+			.replace (nans, "NaN")
 			.replace (trimWhitespaces, "")
 			.split (whitespaces));
 	}
