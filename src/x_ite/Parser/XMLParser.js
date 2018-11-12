@@ -1003,9 +1003,9 @@ function ($,
 	{
 		return (string
 			.replace (trimWhitespaces, "")
-			.replace (/inf/g, "Infinity")
-			.replace (/nan/g, "NaN")
-			.replace (/"/g, "")
+			.replace (/\binf\b/g, "Infinity")
+			.replace (/\bnan\b/g, "NaN")
+			.replace (/"/g, "") // JSON parser could wrap special numbers in quotes.
 			.split (whitespaces));
 	}
 

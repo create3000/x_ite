@@ -47768,9 +47768,9 @@ function ($,
 	{
 		return (string
 			.replace (trimWhitespaces, "")
-			.replace (/inf/g, "Infinity")
-			.replace (/nan/g, "NaN")
-			.replace (/"/g, "")
+			.replace (/\binf\b/g, "Infinity")
+			.replace (/\bnan\b/g, "NaN")
+			.replace (/"/g, "") // JSON parser could wrap special numbers in quotes.
 			.split (whitespaces));
 	}
 
@@ -80582,9 +80582,9 @@ function ($,
 					}
 					else if (this .getNavigationInfo () .getViewer () !== "WALK")
 						return;
-	
+
 					// Get NavigationInfo values
-	
+
 					var
 						navigationInfo  = this .getNavigationInfo (),
 						viewpoint       = this .getViewpoint (),
@@ -80592,9 +80592,9 @@ function ($,
 						nearValue       = navigationInfo .getNearValue (),
 						avatarHeight    = navigationInfo .getAvatarHeight (),
 						stepHeight      = navigationInfo .getStepHeight ();
-	
+
 					// Reshape viewpoint for gravite.
-	
+
 					Camera .ortho (-collisionRadius,
 					               collisionRadius,
 					               -collisionRadius,
@@ -80602,29 +80602,29 @@ function ($,
 					               nearValue,
 					               Math .max (collisionRadius * 2, avatarHeight * 2),
 					               projectionMatrix);
-	
+
 					// Transform viewpoint to look down the up vector
-	
+
 					var
 						upVector = viewpoint .getUpVector (),
 						down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
-	
+
 					cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
 					cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
 					cameraSpaceProjectionMatrix .rotate (down);
 					cameraSpaceProjectionMatrix .inverse ();
-	
+
 					cameraSpaceProjectionMatrix .multRight (projectionMatrix);
 					cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
-	
+
 					this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
-	
+
 					var distance = -this .getDepth (projectionMatrix);
-	
+
 					this .getProjectionMatrix () .pop ();
-	
+
 					// Gravite or step up
-	
+
 					distance -= avatarHeight;
 	
 					var up = rotation .setFromToVec (Vector3 .yAxis, upVector);
@@ -80645,20 +80645,20 @@ function ($,
 							translation = -distance;
 							this .speed = 0;
 						}
-	
+
 						viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .add (up .multVecRot (vector .set (0, translation, 0)));
 					}
 					else
 					{
 						this .speed = 0;
-	
+
 						distance = -distance;
 	
 						if (distance > 0.01 && distance < stepHeight)
 						{
 							// Step up
 							var translation = this .constrainTranslation (up .multVecRot (this .translation .set (0, distance, 0)), false);
-	
+
 							//if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
 							//{
 							//	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
