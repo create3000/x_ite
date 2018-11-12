@@ -991,8 +991,8 @@ function ($,
 	 */
 
 	var
-		trimWhitespaces = /^[\x20\n,\t\r\"]+|[\x20\n,\t\r\"]+$/g,
-		whitespaces     = /[\x20\n,\t\r\"]+/;
+		trimWhitespaces = /^[\x20\n,\t\r"]+|[\x20\n,\t\r"]+$/g,
+		whitespaces     = /[\x20\n,\t\r"]+/;
 
    function prepareBool (string)
 	{

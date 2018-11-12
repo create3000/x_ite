@@ -1,4 +1,4 @@
-/* X_ITE v4.2.10-462 */
+/* X_ITE v4.2.10-463 */
 
 (function () {
 
@@ -47756,8 +47756,8 @@ function ($,
 	 */
 
 	var
-		trimWhitespaces = /^[\x20\n,\t\r\"]+|[\x20\n,\t\r\"]+$/g,
-		whitespaces     = /[\x20\n,\t\r\"]+/;
+		trimWhitespaces = /^[\x20\n,\t\r"]+|[\x20\n,\t\r"]+$/g,
+		whitespaces     = /[\x20\n,\t\r"]+/;
 
    function prepareBool (string)
 	{
