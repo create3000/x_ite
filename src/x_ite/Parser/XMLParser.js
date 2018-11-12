@@ -991,8 +991,8 @@ function ($,
 	 */
 
 	var
-		whitespaces     = /[\x20\n,\t\r]+/,
-		trimWhitespaces = /^[\x20\n,\t\r]+|[\x20\n,\t\r]+$/;
+		trimWhitespaces = /^[\x20\n,\t\r\"]+|[\x20\n,\t\r\"]+$/g,
+		whitespaces     = /[\x20\n,\t\r\"]+/;
 
    function prepareBool (string)
 	{
@@ -1002,10 +1002,9 @@ function ($,
    function prepareFloat (string)
 	{
 		return (string
-			.replace (trimWhitespaces, "")
 			.replace (/\binf\b/g, "Infinity")
 			.replace (/\bnan\b/g, "NaN")
-			.replace (/"/g, "") // JSON parser could wrap special numbers in quotes.
+			.replace (trimWhitespaces, "")
 			.split (whitespaces));
 	}
 
