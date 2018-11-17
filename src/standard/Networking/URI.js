@@ -69,16 +69,16 @@ define (function ()
 				
 				if (value .length)
 				{
-					if (value [0] === "")
+					if (value [0] .length === 0)
 					{
 						value .shift ();
 						value .leadingSeparator = true;
 					}
 				}
-				
-				if (value .length)
+
+				if (value .length > 1)
 				{
-					if (value [value .length - 1] === "")
+					if (value [value .length - 1] .length === 0)
 					{
 						value .pop ();
 						value .trailingSeparator = true;
@@ -158,9 +158,9 @@ define (function ()
 		{
 			if (this .isRelative ())
 				return descendant;
-		
+
 			var
-				path           = new Path ([ ], "/", false, false),
+				path           = new Path ([ ], "/", false, descendant .value .trailingSeparator),
 				basePath       = this .removeDotSegments () .base,
 				descendantPath = descendant .removeDotSegments ();
 
