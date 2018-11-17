@@ -82,7 +82,7 @@ function ($,
 		dataURL       = /^data\:([^]*?)(?:;([^]*?))?(;base64)?,([^]*)$/,
 		contentTypeRx = /^(?:(.*?);(.*?)$)/;
 
-	var foreignSuffixes = new RegExp ("\.(?:html|xhtml)$");
+	var foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
 
 	var foreign = {
 		"text/html":             true,
@@ -458,9 +458,9 @@ function ($,
 			if (this .target .length && this .target !== "_self" && this .foreign)
 				return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
 
-			// Handle well known foreign content depending on suffix or if path looks like directory.
+			// Handle well known foreign content depending on extension or if path looks like directory.
 
-			if (this .URL .isDirectory () || this .URL .suffix .match (foreignSuffixes))
+			if (this .URL .isDirectory () || this .URL .extension .match (foreignExtensions))
 			{
 				if (this .foreign)
 				{

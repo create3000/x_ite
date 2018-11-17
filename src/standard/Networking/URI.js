@@ -178,6 +178,9 @@ define (function ()
 			for (j = i, l = descendantPath .value .length; j < l; ++ j)
 				path .value .push (descendantPath .value [j]);
 
+			if (path .value .length === 0)
+				path .value .push (".");
+
 			return path;
 		},
 		removeDotSegments: function ()
@@ -558,32 +561,32 @@ define (function ()
 			var value = this .value;
 
 			if (value .path)
-				return value .path .substr (value .path. lastIndexOf ("/") + 1);
+				return value .path .substr (value .path .lastIndexOf ("/") + 1);
 
 			return "";
 		},
-		get prefix ()
+		get stem ()
 		{
-			if (this .value .path && this .isFile ())
-			{
-				var
-					basename = this .basename,
-					suffix   = this .suffix;
+			var basename = this .basename;
 
-				return basename .substr (0, basename .length - suffix .length);
+			if (this .isFile () && basename .length)
+			{
+				var extension = this .extension;
+
+				if (extension .length)
+					return basename .substr (0, basename .length - extension .length);
 			}
 
-			return this .basename;
+			return basename;
 		},
-		get suffix ()
+		get extension ()
 		{
 			var
-				value = this .value,
-				dot   = value .path .lastIndexOf ("."),
-				slash = value .path .lastIndexOf ("/");
+				basename = this .basename,
+				dot      = basename .lastIndexOf (".");
 
-			if (slash < dot)
-				return value .path .substr (dot);
+			if (dot > 0)
+				return basename .substr (dot);
 
 			return "";
 		},

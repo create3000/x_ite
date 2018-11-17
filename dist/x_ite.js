@@ -24722,7 +24722,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.2.10";
+	return "4.2.11a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -35909,6 +35909,9 @@ define ('standard/Networking/URI',[],function ()
 			for (j = i, l = descendantPath .value .length; j < l; ++ j)
 				path .value .push (descendantPath .value [j]);
 
+			if (path .value .length === 0)
+				path .value .push (".");
+
 			return path;
 		},
 		removeDotSegments: function ()
@@ -36289,32 +36292,32 @@ define ('standard/Networking/URI',[],function ()
 			var value = this .value;
 
 			if (value .path)
-				return value .path .substr (value .path. lastIndexOf ("/") + 1);
+				return value .path .substr (value .path .lastIndexOf ("/") + 1);
 
 			return "";
 		},
-		get prefix ()
+		get stem ()
 		{
-			if (this .value .path && this .isFile ())
-			{
-				var
-					basename = this .basename,
-					suffix   = this .suffix;
+			var basename = this .basename;
 
-				return basename .substr (0, basename .length - suffix .length);
+			if (this .isFile () && basename .length)
+			{
+				var extension = this .extension;
+
+				if (extension .length)
+					return basename .substr (0, basename .length - extension .length);
 			}
 
-			return this .basename;
+			return basename;
 		},
-		get suffix ()
+		get extension ()
 		{
 			var
-				value = this .value,
-				dot   = value .path .lastIndexOf ("."),
-				slash = value .path .lastIndexOf ("/");
+				basename = this .basename,
+				dot      = basename .lastIndexOf (".");
 
-			if (slash < dot)
-				return value .path .substr (dot);
+			if (dot > 0)
+				return basename .substr (dot);
 
 			return "";
 		},
@@ -51681,7 +51684,7 @@ function ($,
 		dataURL       = /^data\:([^]*?)(?:;([^]*?))?(;base64)?,([^]*)$/,
 		contentTypeRx = /^(?:(.*?);(.*?)$)/;
 
-	var foreignSuffixes = new RegExp ("\.(?:html|xhtml)$");
+	var foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
 
 	var foreign = {
 		"text/html":             true,
@@ -52057,9 +52060,9 @@ function ($,
 			if (this .target .length && this .target !== "_self" && this .foreign)
 				return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
 
-			// Handle well known foreign content depending on suffix or if path looks like directory.
+			// Handle well known foreign content depending on extension or if path looks like directory.
 
-			if (this .URL .isDirectory () || this .URL .suffix .match (foreignSuffixes))
+			if (this .URL .isDirectory () || this .URL .extension .match (foreignExtensions))
 			{
 				if (this .foreign)
 				{
