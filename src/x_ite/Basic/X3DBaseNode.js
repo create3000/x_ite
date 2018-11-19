@@ -411,12 +411,6 @@ function (X3DEventObject,
 		},
 		setField: function (name, field, userDefined)
 		{
-			if (field .getAccessType () === X3DConstants .inputOutput)
-			{
-				this ._fields .set ("set_" + name,     field);
-				this ._fields .set (name + "_changed", field);
-			}
-
 			this ._fields .set (name, field);
 
 			if (! this .getPrivate ())
@@ -444,12 +438,6 @@ function (X3DEventObject,
 
 			if (field)
 			{
-				if (field .getAccessType () === X3DConstants .inputOutput)
-				{
-					this ._fields .delete ("set_" + field .getName ());
-					this ._fields .delete (field .getName () + "_changed");
-				}
-	
 				this ._fields            .delete (name);
 				this ._userDefinedFields .delete (name);
 	
@@ -474,6 +462,21 @@ function (X3DEventObject,
 			
 			if (field)
 				return field;
+
+			if (name .substr (0, 4) === "set_")
+			{
+				field = this ._fields .get (name .substr (4));
+
+				if (field && field .getAccessType () === X3DConstants .inputOutput)
+					return field;
+			}
+			else if (name .length > 8 && name .substr (name .length - 8) === "_changed")
+			{
+				field = this ._fields .get (name .substr (0, name .length - 8));
+
+				if (field && field .getAccessType () === X3DConstants .inputOutput)
+					return field;	
+			}
 
 			throw new Error ("Unkown field '" + name + "' in node class " + this .getTypeName () + ".");
 		},
