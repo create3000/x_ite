@@ -68,21 +68,21 @@ function ($,
 		{
 			try
 			{
-				var value = target [key];
+				var index = Number (key);
 
-				if (value !== undefined)
-					return value;
-
-				// value
-				
-				var
-					array = target .getValue (),
-					index = parseInt (key);
-
-				if (index >= array .length)
-					target .resize (index + 1);
-
-				return array [index] .valueOf ();
+				if (Number .isInteger (index))
+				{
+					var array = target .getValue ();
+	
+					if (index >= array .length)
+						target .resize (index + 1);
+	
+					return array [index] .valueOf ();
+				}
+				else
+				{
+					return target [key];
+				}
 			}
 			catch (error)
 			{

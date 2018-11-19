@@ -66,40 +66,41 @@ function (X3DArrayField,
 		{
 			try
 			{
-				var value = target [key];
+				var index = Number (key);
 
-				if (value !== undefined)
-					return value;
-
-				// value
-				
-				var
-					index      = parseInt (key),
-					array      = target .getValue (),
-					components = target .getComponents (),
-					valueType  = target .getValueType ();
-
-				if (index >= target ._length)
-					array = target .resize (index + 1);
-
-				if (components === 1)
+				if (Number .isInteger (index))
 				{
-					// Return native JavaScript value.
-					return valueType (array [index]);
+					var
+						array      = target .getValue (),
+						components = target .getComponents (),
+						valueType  = target .getValueType ();
+	
+					if (index >= target ._length)
+						array = target .resize (index + 1);
+
+					if (components === 1)
+					{
+						// Return native JavaScript value.
+						return valueType (array [index]);
+					}
+					else
+					{
+						// Return reference to index.
+	
+						var
+							value         = new (valueType) (),
+							internalValue = value .getValue (),
+							i             = index * components;
+	
+						value .addEvent = function () { return addEvent (target, i, internalValue, components); };
+						value .getValue = function () { return getValue (target, i, internalValue, components); };
+	
+						return value;
+					}
 				}
 				else
 				{
-					// Return reference to index.
-
-					var
-						value         = new (valueType) (),
-						internalValue = value .getValue (),
-						i             = index * components;
-
-					value .addEvent = function () { return addEvent (target, i, internalValue, components); };
-					value .getValue = function () { return getValue (target, i, internalValue, components); };
-
-					return value;
+					return target [key];
 				}
 			}
 			catch (error)
