@@ -470,7 +470,8 @@ function (X3DEventObject,
 				if (field && field .getAccessType () === X3DConstants .inputOutput)
 					return field;
 			}
-			else if (name .length > 8 && name .substr (name .length - 8) === "_changed")
+
+			if (name .length > 8 && name .substr (name .length - 8) === "_changed")
 			{
 				field = this ._fields .get (name .substr (0, name .length - 8));
 
