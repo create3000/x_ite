@@ -238,7 +238,10 @@ function (Fields,
 		},
 		addRootNode: function (node)
 		{
-			if (! (node instanceof Fields .SFNode || node === null))
+			if (node === null)
+				node = new Fields .SFNode ();
+
+			if (! (node instanceof Fields .SFNode))
 				throw new Error ("Couldn't add root node: node must be of type SFNode.");
 
 			var rootNodes = this .getRootNodes ();
@@ -253,7 +256,10 @@ function (Fields,
 		},
 		removeRootNode: function (node)
 		{
-			if (! (node instanceof Fields .SFNode || node === null))
+			if (node === null)
+				node = new Fields .SFNode ();
+
+			if (! (node instanceof Fields .SFNode))
 				throw new Error ("Couldn't remove root node: node must be of type SFNode.");
 
 			var
