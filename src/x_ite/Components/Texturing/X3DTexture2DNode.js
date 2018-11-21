@@ -151,6 +151,10 @@ function (Fields,
 			catch (error)
 			{ }
 		},
+		clearTexture: function ()
+		{
+			this .setTexture (1, 1, false, defaultData, false);
+		},
 		updateTexture: function (data, flipY)
 		{
 			try
@@ -184,10 +188,6 @@ function (Fields,
 			                                                          this .repeatS_ .getValue (),
 			                                                          this .repeatT_ .getValue (),
 			                                                          false);
-		},
-		clear: function ()
-		{
-			this .setTexture (1, 1, false, defaultData, false);
 		},
 		resize: function (input, inputWidth, inputHeight, outputWidth, outputHeight)
 		{

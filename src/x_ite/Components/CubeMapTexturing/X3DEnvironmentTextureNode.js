@@ -115,7 +115,7 @@ function (X3DTextureNode,
 			gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
 			gl .uniform1iv (shaderObject .x3d_TextureType, shaderObject .textureTypeArray); // TODO: Put this in X3DProgramableShaderObject
 		},
-		clear: (function ()
+		clearTexture: (function ()
 		{
 			var white1x1 = new Uint8Array ([ 255, 255, 255, 255 ]);
 

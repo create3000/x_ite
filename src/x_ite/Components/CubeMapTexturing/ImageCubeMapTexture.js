@@ -167,7 +167,7 @@ function ($,
 		{
 			if (this .urlStack .length === 0)
 			{
-				this .clear ();
+				this .clearTexture ();
 				this .setLoadState (X3DConstants .FAILED_STATE);
 				return;
 			}
