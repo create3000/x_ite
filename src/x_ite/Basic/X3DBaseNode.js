@@ -456,31 +456,42 @@ function (X3DEventObject,
 					field .removeClones (1);
 			}
 		},
-		getField: function (name)
+		getField: (function ()
 		{
-			var field = this ._fields .get (name);
-			
-			if (field)
-				return field;
+			var
+				set_re     = /^set_(.*?)$/,
+				changed_re = /^(.*?)_changed$/;
 
-			if (name .substr (0, 4) === "set_")
+			return function (name)
 			{
-				field = this ._fields .get (name .substr (4));
+				var field = this ._fields .get (name);
 
-				if (field && field .getAccessType () === X3DConstants .inputOutput)
+				if (field)
 					return field;
-			}
 
-			if (name .length > 8 && name .substr (name .length - 8) === "_changed")
-			{
-				field = this ._fields .get (name .substr (0, name .length - 8));
+				var match = name .match (set_re);
 
-				if (field && field .getAccessType () === X3DConstants .inputOutput)
-					return field;	
-			}
+				if (match)
+				{
+					field = this ._fields .get (match [1]);
+	
+					if (field && field .getAccessType () === X3DConstants .inputOutput)
+						return field;
+				}
 
-			throw new Error ("Unkown field '" + name + "' in node class " + this .getTypeName () + ".");
-		},
+				var match = name .match (changed_re);
+
+				if (match)
+				{
+					field = this ._fields .get (match [1]);
+
+					if (field && field .getAccessType () === X3DConstants .inputOutput)
+						return field;	
+				}
+
+				throw new Error ("Unkown field '" + name + "' in node class " + this .getTypeName () + ".");
+			};
+		})(),
 		getFieldDefinitions: function ()
 		{
 			return this .fieldDefinitions;

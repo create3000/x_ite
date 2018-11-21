@@ -470,7 +470,6 @@ function ($,
 
 			// Load URL async
 
-
 			$.ajax ({
 				url: this .URL .escape (),
 				dataType: "binary",
