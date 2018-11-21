@@ -994,14 +994,15 @@ function ($,
 		infs            = /\binf\b/g,
 		nans            = /\bnan\b/g,
 		trimWhitespaces = /^[\x20\n,\t\r"]+|[\x20\n,\t\r"]+$/g,
-		whitespaces     = /[\x20\n,\t\r"]+/;
+		whitespaces     = /[\x20\n,\t\r"]+/,
+		strings         = new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'g');
 
-   function prepareBool (string)
+   function prepareBools (string)
 	{
 		return string .replace (trimWhitespaces, "") .split (whitespaces);
 	}
 
-   function prepareFloat (string)
+   function prepareFloats (string)
 	{
 		return (string
 			.replace (infs, "Infinity")
@@ -1010,9 +1011,21 @@ function ($,
 			.split (whitespaces));
 	}
 
-   function prepareInt (string)
+   function prepareInts (string)
 	{
 		return string .replace (trimWhitespaces, "") .split (whitespaces);
+	}
+
+   function prepareStrings (string)
+	{
+		var
+			match = null,
+			array = [ ];
+
+		while (match = strings .exec (string))
+			array .push (match [1]);
+
+		return array .map (Fields .SFString .unescape);
 	}
 
 	// Unitless fields.
@@ -1026,7 +1039,7 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
 	{
-		field .setValue (prepareFloat (this .getInput ()) .map (function (value)
+		field .setValue (prepareFloats (this .getInput ()) .map (function (value)
 		{
 			return parseFloat (value);
 		}));
@@ -1034,7 +1047,7 @@ function ($,
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFBool] = function (field)
 	{
-		field .setValue (prepareBool (this .getInput ()) .map (function (value)
+		field .setValue (prepareBools (this .getInput ()) .map (function (value)
 		{
 			if (value === "true" || value === "TRUE")
 				return true;
@@ -1045,7 +1058,7 @@ function ($,
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFInt32] = function (field)
 	{
-		field .setValue (prepareInt (this .getInput ()) .map (function (value)
+		field .setValue (prepareInts (this .getInput ()) .map (function (value)
 		{
 			return parseInt (value);
 		}));
@@ -1062,11 +1075,16 @@ function ($,
 	{
 		var category = field .getUnit ();
 
-		field .setValue (prepareFloat (this .getInput ()) .map (function (value)
+		field .setValue (prepareFloats (this .getInput ()) .map (function (value)
 		{
 			return this .fromUnit (category, parseFloat (value));
 		},
 		this));
+	};
+
+	XMLParser .prototype .fieldTypes [X3DConstants .MFString] = function (field)
+	{
+		field .setValue (prepareStrings (this .getInput ()));
 	};
 
 	return XMLParser;

@@ -117,7 +117,7 @@ function (X3DTextureNode,
 		},
 		clearTexture: (function ()
 		{
-			var white1x1 = new Uint8Array ([ 255, 255, 255, 255 ]);
+			var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
 			return function ()
 			{
@@ -128,7 +128,7 @@ function (X3DTextureNode,
 				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
 
 				for (var i = 0, length = targets .length; i < length; ++ i)
-					gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, white1x1);
+					gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 			};
 		})(),
 	});
