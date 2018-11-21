@@ -460,9 +460,9 @@ function ($,
 
 			// Handle well known foreign content depending on extension or if path looks like directory.
 
-			if (this .URL .isDirectory () || this .URL .extension .match (foreignExtensions))
+			if (this .foreign)
 			{
-				if (this .foreign)
+				if (this .URL .extension .match (foreignExtensions))
 				{
 					return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
 				}
