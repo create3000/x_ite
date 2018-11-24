@@ -264,9 +264,9 @@ function (Triangle3,
 		{
 			var m = this .matrix;
 
-			x .set (m [0], m [1], m [2]);
-			y .set (m [4], m [5], m [6]);
-			z .set (m [8], m [9], m [10]);
+			x .assign (m .xAxis);
+			y .assign (m .yAxis);
+			z .assign (m .zAxis);
 
 			r1 .assign (y) .add (z);
 
@@ -309,9 +309,9 @@ function (Triangle3,
 		
 			var m = this .matrix;
 
-			x .set (m [0], m [1], m [2]);
-			y .set (m [4], m [5], m [6]);
-			z .set (m [8], m [9], m [10]);
+			x .assign (m .xAxis);
+			y .assign (m .yAxis);
+			z .assign (m .zAxis);
 		
 			r1 .assign (y) .add (z);
 
@@ -345,9 +345,9 @@ function (Triangle3,
 		{
 			var m = this .matrix;
 
-			axes [0] .set (m [0], m [1], m [2]);
-			axes [1] .set (m [4], m [5], m [6]);
-			axes [2] .set (m [8], m [9], m [10]);
+			axes [0] .assign (m .xAxis);
+			axes [1] .assign (m .yAxis);
+			axes [2] .assign (m .zAxis);
 
 			return axes;
 		},
@@ -364,9 +364,9 @@ function (Triangle3,
 			{
 				var m = this .matrix;
 
-				x .set (m [0], m [1], m [2]);
-				y .set (m [4], m [5], m [6]);
-				z .set (m [8], m [9], m [10]);
+				x .assign (m .xAxis);
+				y .assign (m .yAxis);
+				z .assign (m .zAxis);
 
 				if (x .norm () == 0 && y .norm () == 0 && z .norm () == 0)
 				{

@@ -197,8 +197,8 @@ function (Matrix3, Vector2)
 		{
 		   var m = this .matrix;
 
-			x .set (m [0], m [1]);
-			y .set (m [3], m [4]);
+			x .assign (m .xAxis);
+			y .assign (m .yAxis);
 
 			p1 .assign (x) .add (y);
 
