@@ -613,48 +613,77 @@ function (Vector2,
 
 	Object .defineProperty (Matrix3 .prototype, "x",
 	{
-		get: function () { return new Vector3 (this [0], this [1], this [2]); },
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [0], this [1], this [2]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix3 .prototype, "y",
 	{
-		get: function () { return new Vector3 (this [3], this [4], this [5]); },
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [3], this [4], this [5]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix3 .prototype, "xAxis",
 	{
-		get: function () { return new Vector2 (this [0], this [1]); },
+		get: (function ()
+		{
+			var vector = new Vector2 (0, 0);
+
+			return function () { return vector .set (this [0], this [1]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix3 .prototype, "yAxis",
 	{
-		get: function () { return new Vector2 (this [3], this [4]); },
+		get: (function ()
+		{
+			var vector = new Vector2 (0, 0);
+
+			return function () { return vector .set (this [3], this [4]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix3 .prototype, "origin",
 	{
-		get: function () { return new Vector2 (this [6], this [7]); },
+		get: (function ()
+		{
+			var vector = new Vector2 (0, 0);
+
+			return function () { return vector .set (this [6], this [7]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix3 .prototype, "submatrix",
 	{
-		get: function ()
+		get: (function ()
 		{
-			var matrix = Object .create (Matrix2 .prototype);
-			matrix [0] = this [0]; matrix [1] = this [1];
-			matrix [2] = this [3]; matrix [3] = this [4];
-			return matrix;
-		},
+			var matrix = new Matrix2 ();
+
+			return function ()
+			{
+				matrix [0] = this [0]; matrix [1] = this [1];
+				matrix [2] = this [3]; matrix [3] = this [4];
+				return matrix;
+			};
+		})(),
 		enumerable: false,
 		configurable: false
 	});

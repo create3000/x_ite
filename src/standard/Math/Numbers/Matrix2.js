@@ -203,7 +203,12 @@ function (Vector2,
 
 	Object .defineProperty (Matrix2 .prototype, "x",
 	{
-		get: function () { return new Vector2 (this [0], this [1]); },
+		get: (function ()
+		{
+			var vector = new Vector2 (0, 0);
+
+			return function () { return vector .set (this [0], this [1]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
@@ -217,14 +222,14 @@ function (Vector2,
 
 	Object .defineProperty (Matrix2 .prototype, "origin",
 	{
-		get: function () { return nthis [2]; },
+		get: function () { return this [2]; },
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix2 .prototype, "submatrix",
 	{
-		get: function () { return this .value [0]; },
+		get: function () { return this [0]; },
 		enumerable: false,
 		configurable: false
 	});

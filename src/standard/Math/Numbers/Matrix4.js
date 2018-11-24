@@ -791,63 +791,102 @@ function (Vector3,
 
 	Object .defineProperty (Matrix4 .prototype, "x",
 	{
-		get: function () { return new Vector4 (this [0], this [1], this [2], this [3]); },
+		get: (function ()
+		{
+			var vector = new Vector4 (0, 0, 0, 0);
+
+			return function () { return vector .set (this [0], this [1], this [2], this [3]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix4 .prototype, "y",
 	{
-		get: function () { return new Vector4 (this [4], this [5], this [6], this [7]); },
+		get: (function ()
+		{
+			var vector = new Vector4 (0, 0, 0, 0);
+
+			return function () { return vector .set (this [4], this [5], this [6], this [7]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix4 .prototype, "z",
 	{
-		get: function () { return new Vector4 (this [8], this [9], this [10], this [11]); },
+		get: (function ()
+		{
+			var vector = new Vector4 (0, 0, 0, 0);
+
+			return function () { return vector .set (this [8], this [9], this [10], this [11]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix4 .prototype, "xAxis",
 	{
-		get: function () { return new Vector3 (this [0], this [1], this [2]); },
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [0], this [1], this [2]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix4 .prototype, "yAxis",
 	{
-		get: function () { return new Vector3 (this [4], this [5], this [6]); },
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [4], this [5], this [6]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix4 .prototype, "zAxis",
 	{
-		get: function () { return new Vector3 (this [8], this [9], this [10]); },
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [8], this [9], this [10]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix4 .prototype, "origin",
 	{
-		get: function () { return new Vector4 (this [12], this [13], this [14]); },
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [12], this [13], this [14]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix4 .prototype, "submatrix",
 	{
-		get: function ()
+		get: (function ()
 		{
-			var matrix = Object .create (Matrix3 .prototype);
-			matrix [0] = this [0]; matrix [1] = this [1]; matrix [2] = this [ 2];
-			matrix [3] = this [4]; matrix [4] = this [5]; matrix [5] = this [ 6];
-			matrix [6] = this [8]; matrix [7] = this [9]; matrix [8] = this [10];
-			return matrix;
-		},
+			var matrix = new Matrix3 ();
+
+			return function ()
+			{
+				matrix [0] = this [0]; matrix [1] = this [1]; matrix [2] = this [ 2];
+				matrix [3] = this [4]; matrix [4] = this [5]; matrix [5] = this [ 6];
+				matrix [6] = this [8]; matrix [7] = this [9]; matrix [8] = this [10];
+				return matrix;
+			};
+		})(),
 		enumerable: false,
 		configurable: false
 	});
