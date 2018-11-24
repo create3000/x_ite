@@ -48,9 +48,11 @@
 
 
 define ([
+	"standard/Math/Numbers/Vector2",
 	"standard/Math/Algorithm"
 ],
-function (Algorithm)
+function (Vector2,
+          Algorithm)
 {
 "use strict";
 
@@ -200,6 +202,13 @@ function (Algorithm)
 	};
 
 	Object .defineProperty (Matrix2 .prototype, "x",
+	{
+		get: function () { return new Vector2 (this [0], this [1]); },
+		enumerable: false,
+		configurable: false
+	});
+
+	Object .defineProperty (Matrix2 .prototype, "xAxis",
 	{
 		get: function () { return this [0]; },
 		enumerable: false,

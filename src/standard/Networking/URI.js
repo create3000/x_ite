@@ -61,7 +61,7 @@ define (function ()
 		{
 			case 2:
 			{
-				var value = this .value = path .split (separator);
+				var value = this .value = path ? path .split (separator) : [];
 
 				value .separator         = separator;
 				value .leadingSeparator  = false;
@@ -76,7 +76,7 @@ define (function ()
 					}
 				}
 
-				if (value .length > 1)
+				if (value .length)
 				{
 					if (value [value .length - 1] .length === 0)
 					{
@@ -106,16 +106,28 @@ define (function ()
 			var value = this .value;
 
 			return new Path (value .slice (0, value .length), 
-		                    value .separator,
-		                    value .leadingSeparator,
-		                    value .trailingSeparator);
+			                 value .separator,
+			                 value .leadingSeparator,
+			                 value .trailingSeparator);
 		},
-		get origin ()
+		get length ()
+		{
+			return this .value .length;
+		},
+		get leadingSeparator ()
+		{
+			return this .value .leadingSeparator;
+		},
+		get trailingSeparator ()
+		{
+			return this .value .trailingSeparator;
+		},
+		get root ()
 		{
 			return new Path ([ ], 
-		                    this .value .separator,
-		                    true,
-		                    false);
+			                this .value .separator,
+			                true,
+			                true);
 		},
 		get base ()
 		{
@@ -134,29 +146,59 @@ define (function ()
 				case 1:
 				{
 					if (value .leadingSeparator)
-						return this .origin;
+						return this .root;
 
 					return new Path ([ ".." ], value .separator, false, false);
 				}
 				default:
 				{
 					return new Path (value .slice (0, value .length - 1), 
-				                    value .separator,
-				                    value .leadingSeparator,
-				                    true);
+				                     value .separator,
+				                     value .leadingSeparator,
+				                     true);
 				}
 			}
 
 		},
-		isRelative: function ()
+		get basename ()
 		{
-			var value = this .value;
+			var
+				value  = this .value,
+				length = value .length;
 
-			return ! value .length || value [0] == "..";
+			if (length)
+				return value [length - 1];
+
+			return "";
+		},
+		get stem ()
+		{
+			var basename = this .basename;
+
+			if (this .trailingSeparator && basename .length)
+			{
+				var extension = this .extension;
+
+				if (extension .length)
+					return basename .substr (0, basename .length - extension .length);
+			}
+
+			return basename;
+		},
+		get extension ()
+		{
+			var
+				basename = this .basename,
+				dot      = basename .lastIndexOf (".");
+
+			if (dot > 0)
+				return basename .substr (dot);
+
+			return "";
 		},
 		getRelativePath: function (descendant)
 		{
-			if (this .isRelative ())
+			if (! descendant .leadingSeparator)
 				return descendant;
 
 			var
@@ -261,6 +303,9 @@ define (function ()
 
 			string += value .join (value .separator);
 
+			if (value .leadingSeparator && value .length === 0)
+				return string;
+
 			if (value .trailingSeparator)
 				string += value .separator;
 
@@ -293,7 +338,7 @@ define (function ()
 		{
 			uri .scheme    = result [1] || "";
 			uri .slashs    = result [2] || "";
-			uri .path      = unescape (result [4] || "");
+			uri .path      = new Path (unescape (result [4] || ""), "/");
 			uri .query     = result [5] || "";
 			uri .fragment  = unescape (result [6] || "");
 
@@ -308,13 +353,15 @@ define (function ()
 			uri .absolute = Boolean (uri .slashs .length) || uri .path [0] === "/";
 			uri .local    = /^(?:file|data)$/ .test (uri .scheme) || (! uri .scheme && ! (uri .host || uri .port));
 		}
+		else
+			uri .path = new Path ("", "/");
 
 		uri .string = string;
 	}
 
 	function removeDotSegments (path)
 	{
-		return new Path (path, "/") .removeDotSegments () .toString ();
+		return new Path (path, "/") .removeDotSegments ();
 	}
 
 	function URI (uri)
@@ -327,7 +374,7 @@ define (function ()
 			slashs:    "",
 			host:      "",
 			port:      0,
-			path:      "",
+			path:      null,
 			query:     "",
 			fragment:  "",
 			string:    "",
@@ -336,6 +383,7 @@ define (function ()
 		switch (arguments .length)
 		{
 			case 0:
+				value .path = new Path ("", "/");
 				break;
 			case 1:
 			{
@@ -371,7 +419,7 @@ define (function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                value .path,
+			                value .path .copy (),
 			                value .query,
 			                value .fragment);
 		},
@@ -399,10 +447,10 @@ define (function ()
 		{
 			var value = this .value;
 
-			if (! value .path)
-				return this .isNetwork ();
+			if (value .path .length)
+				return value .path .trailingSeparator;
 
-			return value .path [value .path .length - 1] === "/";
+			return this .isNetwork ();
 		},
 		isFile: function ()
 		{
@@ -416,7 +464,7 @@ define (function ()
 
 			hierarchy += value .slashs;
 			hierarchy += this .authority;
-			hierarchy += value .path;
+			hierarchy += this .path;
 
 			return hierarchy;
 		},
@@ -457,7 +505,7 @@ define (function ()
 		},
 		get path ()
 		{
-			return this .value .path;
+			return this .value .path .toString ();
 		},
 		set query (value)
 		{
@@ -479,7 +527,7 @@ define (function ()
 		{
 			return this .toString ();
 		},
-		get origin ()
+		get root ()
 		{
 			var value = this .value;
 
@@ -489,7 +537,7 @@ define (function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                value .local ? "/" : "",
+			                new Path ("/", "/"),
 			                "",
 			                "");
 		},
@@ -505,7 +553,7 @@ define (function ()
 				                value .slashs,
 				                value .host,
 				                value .port,
-				                value .path,
+				                value .path .copy (),
 				                "",
 				                "");
 			}
@@ -516,29 +564,13 @@ define (function ()
 		{
 			var value = this .value;
 
-			if (this .isDirectory ())
-			{
-				if (value .path .length == 1)
-					return "/";
-
-				var path = value .path .substr (0, value .path .length - 1);
-			}
-			else
-			{
-				var path = this .path;
-			}
-
-			var slash = path .lastIndexOf ("/");
-			
-			path = slash == -1 ? "" : path .substring (0, path .lastIndexOf ("/") + 1);
-
 			return new URI (value .local,
 			                value .absolute,
 			                value .scheme,
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                path,
+			                value .path .parent,
 			                "",
 			                "");	
 		},
@@ -552,43 +584,21 @@ define (function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                value .path,
+			                value .path .copy (),
 			                "",
 			                "");
 		},
 		get basename ()
 		{
-			var value = this .value;
-
-			if (value .path)
-				return value .path .substr (value .path .lastIndexOf ("/") + 1);
-
-			return "";
+			return this .value .path .basename;
 		},
 		get stem ()
 		{
-			var basename = this .basename;
-
-			if (this .isFile () && basename .length)
-			{
-				var extension = this .extension;
-
-				if (extension .length)
-					return basename .substr (0, basename .length - extension .length);
-			}
-
-			return basename;
+			return this .value .path .stem;
 		},
 		get extension ()
 		{
-			var
-				basename = this .basename,
-				dot      = basename .lastIndexOf (".");
-
-			if (dot > 0)
-				return basename .substr (dot);
-
-			return "";
+			return this .value .path .extension;
 		},
 		transform: function (reference)
 		{
@@ -631,9 +641,9 @@ define (function ()
 				}
 				else
 				{
-					if (! reference .path)
+					if (reference .path .length === 0)
 					{
-						var T_path = value .path;
+						T_path = this .path;
 
 						if (reference .query)
 							T_query = reference .query;
@@ -695,7 +705,7 @@ define (function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                removeDotSegments (value .path),
+			                value .path .removeDotSegments (),
 			                value .query,
 			                value .fragment);
 		},
@@ -712,17 +722,13 @@ define (function ()
 			if (this .authority !== descendant .authority)
 				return descendant;
 
-			var
-				path           = new Path (value .path, "/"),
-				descendantPath = new Path (descendant .path,  "/");
-
 			return new URI (true,
 			                false,
 			                "",
 			                "",
 			                "",
 			                0,
-			                path .getRelativePath (descendantPath) .toString (),
+			                value .path .getRelativePath (descendant .value .path),
 			                descendant .query,
 			                descendant .fragment);
 		},
@@ -736,7 +742,7 @@ define (function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                new Path (value .path, "/") .escape () .toString (),
+			                value .path .escape (),
 			                value .query,
 			                escape (value .fragment));
 		},
@@ -750,7 +756,7 @@ define (function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                new Path (value .path, "/") .unescape () .toString (),
+			                value .path .unescape (),
 			                value .query,
 			                unescape (value .fragment));
 		},

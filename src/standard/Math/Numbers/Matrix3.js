@@ -613,12 +613,26 @@ function (Vector2,
 
 	Object .defineProperty (Matrix3 .prototype, "x",
 	{
-		get: function () { return new Vector2 (this [0], this [1]); },
+		get: function () { return new Vector3 (this [0], this [1], this [2]); },
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix3 .prototype, "y",
+	{
+		get: function () { return new Vector3 (this [3], this [4], this [5]); },
+		enumerable: false,
+		configurable: false
+	});
+
+	Object .defineProperty (Matrix3 .prototype, "xAxis",
+	{
+		get: function () { return new Vector2 (this [0], this [1]); },
+		enumerable: false,
+		configurable: false
+	});
+
+	Object .defineProperty (Matrix3 .prototype, "yAxis",
 	{
 		get: function () { return new Vector2 (this [3], this [4]); },
 		enumerable: false,
