@@ -1,4 +1,4 @@
-/* X_ITE v4.2.11a-466 */
+/* X_ITE v4.2.11a-467 */
 
 (function () {
 
@@ -17639,9 +17639,11 @@ function (Algorithm)
 
 
 define ('standard/Math/Numbers/Matrix2',[
+	"standard/Math/Numbers/Vector2",
 	"standard/Math/Algorithm"
 ],
-function (Algorithm)
+function (Vector2,
+          Algorithm)
 {
 "use strict";
 
@@ -17792,6 +17794,18 @@ function (Algorithm)
 
 	Object .defineProperty (Matrix2 .prototype, "x",
 	{
+		get: (function ()
+		{
+			var vector = new Vector2 (0, 0);
+
+			return function () { return vector .set (this [0], this [1]); };
+		})(),
+		enumerable: false,
+		configurable: false
+	});
+
+	Object .defineProperty (Matrix2 .prototype, "xAxis",
+	{
 		get: function () { return this [0]; },
 		enumerable: false,
 		configurable: false
@@ -17799,14 +17813,14 @@ function (Algorithm)
 
 	Object .defineProperty (Matrix2 .prototype, "origin",
 	{
-		get: function () { return nthis [2]; },
+		get: function () { return this [2]; },
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix2 .prototype, "submatrix",
 	{
-		get: function () { return this .value [0]; },
+		get: function () { return this [0]; },
 		enumerable: false,
 		configurable: false
 	});
@@ -18626,34 +18640,77 @@ function (Vector2,
 
 	Object .defineProperty (Matrix3 .prototype, "x",
 	{
-		get: function () { return new Vector2 (this [0], this [1]); },
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [0], this [1], this [2]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix3 .prototype, "y",
 	{
-		get: function () { return new Vector2 (this [3], this [4]); },
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [3], this [4], this [5]); };
+		})(),
+		enumerable: false,
+		configurable: false
+	});
+
+	Object .defineProperty (Matrix3 .prototype, "xAxis",
+	{
+		get: (function ()
+		{
+			var vector = new Vector2 (0, 0);
+
+			return function () { return vector .set (this [0], this [1]); };
+		})(),
+		enumerable: false,
+		configurable: false
+	});
+
+	Object .defineProperty (Matrix3 .prototype, "yAxis",
+	{
+		get: (function ()
+		{
+			var vector = new Vector2 (0, 0);
+
+			return function () { return vector .set (this [3], this [4]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix3 .prototype, "origin",
 	{
-		get: function () { return new Vector2 (this [6], this [7]); },
+		get: (function ()
+		{
+			var vector = new Vector2 (0, 0);
+
+			return function () { return vector .set (this [6], this [7]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix3 .prototype, "submatrix",
 	{
-		get: function ()
+		get: (function ()
 		{
-			var matrix = Object .create (Matrix2 .prototype);
-			matrix [0] = this [0]; matrix [1] = this [1];
-			matrix [2] = this [3]; matrix [3] = this [4];
-			return matrix;
-		},
+			var matrix = new Matrix2 ();
+
+			return function ()
+			{
+				matrix [0] = this [0]; matrix [1] = this [1];
+				matrix [2] = this [3]; matrix [3] = this [4];
+				return matrix;
+			};
+		})(),
 		enumerable: false,
 		configurable: false
 	});
@@ -21492,42 +21549,102 @@ function (Vector3,
 
 	Object .defineProperty (Matrix4 .prototype, "x",
 	{
-		get: function () { return new Vector3 (this [ 0], this [ 1], this [ 2]); },
+		get: (function ()
+		{
+			var vector = new Vector4 (0, 0, 0, 0);
+
+			return function () { return vector .set (this [0], this [1], this [2], this [3]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix4 .prototype, "y",
 	{
-		get: function () { return new Vector3 (this [ 4], this [ 5], this [ 6]); },
+		get: (function ()
+		{
+			var vector = new Vector4 (0, 0, 0, 0);
+
+			return function () { return vector .set (this [4], this [5], this [6], this [7]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix4 .prototype, "z",
 	{
-		get: function () { return new Vector3 (this [ 8], this [ 9], this [10]); },
+		get: (function ()
+		{
+			var vector = new Vector4 (0, 0, 0, 0);
+
+			return function () { return vector .set (this [8], this [9], this [10], this [11]); };
+		})(),
+		enumerable: false,
+		configurable: false
+	});
+
+	Object .defineProperty (Matrix4 .prototype, "xAxis",
+	{
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [0], this [1], this [2]); };
+		})(),
+		enumerable: false,
+		configurable: false
+	});
+
+	Object .defineProperty (Matrix4 .prototype, "yAxis",
+	{
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [4], this [5], this [6]); };
+		})(),
+		enumerable: false,
+		configurable: false
+	});
+
+	Object .defineProperty (Matrix4 .prototype, "zAxis",
+	{
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [8], this [9], this [10]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix4 .prototype, "origin",
 	{
-		get: function () { return new Vector3 (this [12], this [13], this [14]); },
+		get: (function ()
+		{
+			var vector = new Vector3 (0, 0, 0);
+
+			return function () { return vector .set (this [12], this [13], this [14]); };
+		})(),
 		enumerable: false,
 		configurable: false
 	});
 
 	Object .defineProperty (Matrix4 .prototype, "submatrix",
 	{
-		get: function ()
+		get: (function ()
 		{
-			var matrix = Object .create (Matrix3 .prototype);
-			matrix [0] = this [0]; matrix [1] = this [1]; matrix [2] = this [ 2];
-			matrix [3] = this [4]; matrix [4] = this [5]; matrix [5] = this [ 6];
-			matrix [6] = this [8]; matrix [7] = this [9]; matrix [8] = this [10];
-			return matrix;
-		},
+			var matrix = new Matrix3 ();
+
+			return function ()
+			{
+				matrix [0] = this [0]; matrix [1] = this [1]; matrix [2] = this [ 2];
+				matrix [3] = this [4]; matrix [4] = this [5]; matrix [5] = this [ 6];
+				matrix [6] = this [8]; matrix [7] = this [9]; matrix [8] = this [10];
+				return matrix;
+			};
+		})(),
 		enumerable: false,
 		configurable: false
 	});
@@ -22848,21 +22965,21 @@ function ($,
 		{
 			try
 			{
-				var value = target [key];
+				var index = Number (key);
 
-				if (value !== undefined)
-					return value;
-
-				// value
-				
-				var
-					array = target .getValue (),
-					index = parseInt (key);
-
-				if (index >= array .length)
-					target .resize (index + 1);
-
-				return array [index] .valueOf ();
+				if (Number .isInteger (index))
+				{
+					var array = target .getValue ();
+	
+					if (index >= array .length)
+						target .resize (index + 1);
+	
+					return array [index] .valueOf ();
+				}
+				else
+				{
+					return target [key];
+				}
 			}
 			catch (error)
 			{
@@ -23398,40 +23515,41 @@ function (X3DArrayField,
 		{
 			try
 			{
-				var value = target [key];
+				var index = Number (key);
 
-				if (value !== undefined)
-					return value;
-
-				// value
-				
-				var
-					index      = parseInt (key),
-					array      = target .getValue (),
-					components = target .getComponents (),
-					valueType  = target .getValueType ();
-
-				if (index >= target ._length)
-					array = target .resize (index + 1);
-
-				if (components === 1)
+				if (Number .isInteger (index))
 				{
-					// Return native JavaScript value.
-					return valueType (array [index]);
+					var
+						array      = target .getValue (),
+						components = target .getComponents (),
+						valueType  = target .getValueType ();
+	
+					if (index >= target ._length)
+						array = target .resize (index + 1);
+
+					if (components === 1)
+					{
+						// Return native JavaScript value.
+						return valueType (array [index]);
+					}
+					else
+					{
+						// Return reference to index.
+	
+						var
+							value         = new (valueType) (),
+							internalValue = value .getValue (),
+							i             = index * components;
+	
+						value .addEvent = function () { return addEvent (target, i, internalValue, components); };
+						value .getValue = function () { return getValue (target, i, internalValue, components); };
+	
+						return value;
+					}
 				}
 				else
 				{
-					// Return reference to index.
-
-					var
-						value         = new (valueType) (),
-						internalValue = value .getValue (),
-						i             = index * components;
-
-					value .addEvent = function () { return addEvent (target, i, internalValue, components); };
-					value .getValue = function () { return getValue (target, i, internalValue, components); };
-
-					return value;
+					return target [key];
 				}
 			}
 			catch (error)
@@ -25263,12 +25381,6 @@ function (X3DEventObject,
 		},
 		setField: function (name, field, userDefined)
 		{
-			if (field .getAccessType () === X3DConstants .inputOutput)
-			{
-				this ._fields .set ("set_" + name,     field);
-				this ._fields .set (name + "_changed", field);
-			}
-
 			this ._fields .set (name, field);
 
 			if (! this .getPrivate ())
@@ -25296,12 +25408,6 @@ function (X3DEventObject,
 
 			if (field)
 			{
-				if (field .getAccessType () === X3DConstants .inputOutput)
-				{
-					this ._fields .delete ("set_" + field .getName ());
-					this ._fields .delete (field .getName () + "_changed");
-				}
-	
 				this ._fields            .delete (name);
 				this ._userDefinedFields .delete (name);
 	
@@ -25320,15 +25426,42 @@ function (X3DEventObject,
 					field .removeClones (1);
 			}
 		},
-		getField: function (name)
+		getField: (function ()
 		{
-			var field = this ._fields .get (name);
-			
-			if (field)
-				return field;
+			var
+				set_re     = /^set_(.*?)$/,
+				changed_re = /^(.*?)_changed$/;
 
-			throw new Error ("Unkown field '" + name + "' in node class " + this .getTypeName () + ".");
-		},
+			return function (name)
+			{
+				var field = this ._fields .get (name);
+
+				if (field)
+					return field;
+
+				var match = name .match (set_re);
+
+				if (match)
+				{
+					field = this ._fields .get (match [1]);
+	
+					if (field && field .getAccessType () === X3DConstants .inputOutput)
+						return field;
+				}
+
+				var match = name .match (changed_re);
+
+				if (match)
+				{
+					field = this ._fields .get (match [1]);
+
+					if (field && field .getAccessType () === X3DConstants .inputOutput)
+						return field;	
+				}
+
+				throw new Error ("Unkown field '" + name + "' in node class " + this .getTypeName () + ".");
+			};
+		})(),
 		getFieldDefinitions: function ()
 		{
 			return this .fieldDefinitions;
@@ -31838,9 +31971,13 @@ function (Fields,
 			{
 				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
 				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
-	
-				vector .assign (localZAxis) .cross (this .getUpVector ());
-	
+
+				var vector = localZAxis .cross (this .getUpVector ());
+
+				// If viewer looks along the up vector.
+				if (vector .equals (Vector3 .Zero))
+					return orientation;
+
 				rotation .setFromToVec (localXAxis, vector);
 	
 				return orientation .multRight (rotation);
@@ -35792,7 +35929,7 @@ define ('standard/Networking/URI',[],function ()
 		{
 			case 2:
 			{
-				var value = this .value = path .split (separator);
+				var value = this .value = path ? path .split (separator) : [];
 
 				value .separator         = separator;
 				value .leadingSeparator  = false;
@@ -35807,7 +35944,7 @@ define ('standard/Networking/URI',[],function ()
 					}
 				}
 
-				if (value .length > 1)
+				if (value .length)
 				{
 					if (value [value .length - 1] .length === 0)
 					{
@@ -35837,16 +35974,28 @@ define ('standard/Networking/URI',[],function ()
 			var value = this .value;
 
 			return new Path (value .slice (0, value .length), 
-		                    value .separator,
-		                    value .leadingSeparator,
-		                    value .trailingSeparator);
+			                 value .separator,
+			                 value .leadingSeparator,
+			                 value .trailingSeparator);
 		},
-		get origin ()
+		get length ()
+		{
+			return this .value .length;
+		},
+		get leadingSeparator ()
+		{
+			return this .value .leadingSeparator;
+		},
+		get trailingSeparator ()
+		{
+			return this .value .trailingSeparator;
+		},
+		get root ()
 		{
 			return new Path ([ ], 
-		                    this .value .separator,
-		                    true,
-		                    false);
+			                this .value .separator,
+			                true,
+			                true);
 		},
 		get base ()
 		{
@@ -35865,29 +36014,59 @@ define ('standard/Networking/URI',[],function ()
 				case 1:
 				{
 					if (value .leadingSeparator)
-						return this .origin;
+						return this .root;
 
 					return new Path ([ ".." ], value .separator, false, false);
 				}
 				default:
 				{
 					return new Path (value .slice (0, value .length - 1), 
-				                    value .separator,
-				                    value .leadingSeparator,
-				                    true);
+				                     value .separator,
+				                     value .leadingSeparator,
+				                     true);
 				}
 			}
 
 		},
-		isRelative: function ()
+		get basename ()
 		{
-			var value = this .value;
+			var
+				value  = this .value,
+				length = value .length;
 
-			return ! value .length || value [0] == "..";
+			if (length)
+				return value [length - 1];
+
+			return "";
+		},
+		get stem ()
+		{
+			var basename = this .basename;
+
+			if (this .trailingSeparator && basename .length)
+			{
+				var extension = this .extension;
+
+				if (extension .length)
+					return basename .substr (0, basename .length - extension .length);
+			}
+
+			return basename;
+		},
+		get extension ()
+		{
+			var
+				basename = this .basename,
+				dot      = basename .lastIndexOf (".");
+
+			if (dot > 0)
+				return basename .substr (dot);
+
+			return "";
 		},
 		getRelativePath: function (descendant)
 		{
-			if (this .isRelative ())
+			if (! descendant .leadingSeparator)
 				return descendant;
 
 			var
@@ -35992,6 +36171,9 @@ define ('standard/Networking/URI',[],function ()
 
 			string += value .join (value .separator);
 
+			if (value .leadingSeparator && value .length === 0)
+				return string;
+
 			if (value .trailingSeparator)
 				string += value .separator;
 
@@ -36024,7 +36206,7 @@ define ('standard/Networking/URI',[],function ()
 		{
 			uri .scheme    = result [1] || "";
 			uri .slashs    = result [2] || "";
-			uri .path      = unescape (result [4] || "");
+			uri .path      = new Path (unescape (result [4] || ""), "/");
 			uri .query     = result [5] || "";
 			uri .fragment  = unescape (result [6] || "");
 
@@ -36039,13 +36221,15 @@ define ('standard/Networking/URI',[],function ()
 			uri .absolute = Boolean (uri .slashs .length) || uri .path [0] === "/";
 			uri .local    = /^(?:file|data)$/ .test (uri .scheme) || (! uri .scheme && ! (uri .host || uri .port));
 		}
+		else
+			uri .path = new Path ("", "/");
 
 		uri .string = string;
 	}
 
 	function removeDotSegments (path)
 	{
-		return new Path (path, "/") .removeDotSegments () .toString ();
+		return new Path (path, "/") .removeDotSegments ();
 	}
 
 	function URI (uri)
@@ -36058,7 +36242,7 @@ define ('standard/Networking/URI',[],function ()
 			slashs:    "",
 			host:      "",
 			port:      0,
-			path:      "",
+			path:      null,
 			query:     "",
 			fragment:  "",
 			string:    "",
@@ -36067,6 +36251,7 @@ define ('standard/Networking/URI',[],function ()
 		switch (arguments .length)
 		{
 			case 0:
+				value .path = new Path ("", "/");
 				break;
 			case 1:
 			{
@@ -36102,7 +36287,7 @@ define ('standard/Networking/URI',[],function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                value .path,
+			                value .path .copy (),
 			                value .query,
 			                value .fragment);
 		},
@@ -36130,10 +36315,10 @@ define ('standard/Networking/URI',[],function ()
 		{
 			var value = this .value;
 
-			if (! value .path)
-				return this .isNetwork ();
+			if (value .path .length)
+				return value .path .trailingSeparator;
 
-			return value .path [value .path .length - 1] === "/";
+			return this .isNetwork ();
 		},
 		isFile: function ()
 		{
@@ -36147,7 +36332,7 @@ define ('standard/Networking/URI',[],function ()
 
 			hierarchy += value .slashs;
 			hierarchy += this .authority;
-			hierarchy += value .path;
+			hierarchy += this .path;
 
 			return hierarchy;
 		},
@@ -36188,7 +36373,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get path ()
 		{
-			return this .value .path;
+			return this .value .path .toString ();
 		},
 		set query (value)
 		{
@@ -36210,7 +36395,7 @@ define ('standard/Networking/URI',[],function ()
 		{
 			return this .toString ();
 		},
-		get origin ()
+		get root ()
 		{
 			var value = this .value;
 
@@ -36220,7 +36405,7 @@ define ('standard/Networking/URI',[],function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                value .local ? "/" : "",
+			                new Path ("/", "/"),
 			                "",
 			                "");
 		},
@@ -36236,7 +36421,7 @@ define ('standard/Networking/URI',[],function ()
 				                value .slashs,
 				                value .host,
 				                value .port,
-				                value .path,
+				                value .path .copy (),
 				                "",
 				                "");
 			}
@@ -36247,29 +36432,13 @@ define ('standard/Networking/URI',[],function ()
 		{
 			var value = this .value;
 
-			if (this .isDirectory ())
-			{
-				if (value .path .length == 1)
-					return "/";
-
-				var path = value .path .substr (0, value .path .length - 1);
-			}
-			else
-			{
-				var path = this .path;
-			}
-
-			var slash = path .lastIndexOf ("/");
-			
-			path = slash == -1 ? "" : path .substring (0, path .lastIndexOf ("/") + 1);
-
 			return new URI (value .local,
 			                value .absolute,
 			                value .scheme,
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                path,
+			                value .path .parent,
 			                "",
 			                "");	
 		},
@@ -36283,43 +36452,21 @@ define ('standard/Networking/URI',[],function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                value .path,
+			                value .path .copy (),
 			                "",
 			                "");
 		},
 		get basename ()
 		{
-			var value = this .value;
-
-			if (value .path)
-				return value .path .substr (value .path .lastIndexOf ("/") + 1);
-
-			return "";
+			return this .value .path .basename;
 		},
 		get stem ()
 		{
-			var basename = this .basename;
-
-			if (this .isFile () && basename .length)
-			{
-				var extension = this .extension;
-
-				if (extension .length)
-					return basename .substr (0, basename .length - extension .length);
-			}
-
-			return basename;
+			return this .value .path .stem;
 		},
 		get extension ()
 		{
-			var
-				basename = this .basename,
-				dot      = basename .lastIndexOf (".");
-
-			if (dot > 0)
-				return basename .substr (dot);
-
-			return "";
+			return this .value .path .extension;
 		},
 		transform: function (reference)
 		{
@@ -36362,9 +36509,9 @@ define ('standard/Networking/URI',[],function ()
 				}
 				else
 				{
-					if (! reference .path)
+					if (reference .path .length === 0)
 					{
-						var T_path = value .path;
+						T_path = this .path;
 
 						if (reference .query)
 							T_query = reference .query;
@@ -36426,7 +36573,7 @@ define ('standard/Networking/URI',[],function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                removeDotSegments (value .path),
+			                value .path .removeDotSegments (),
 			                value .query,
 			                value .fragment);
 		},
@@ -36443,17 +36590,13 @@ define ('standard/Networking/URI',[],function ()
 			if (this .authority !== descendant .authority)
 				return descendant;
 
-			var
-				path           = new Path (value .path, "/"),
-				descendantPath = new Path (descendant .path,  "/");
-
 			return new URI (true,
 			                false,
 			                "",
 			                "",
 			                "",
 			                0,
-			                path .getRelativePath (descendantPath) .toString (),
+			                value .path .getRelativePath (descendant .value .path),
 			                descendant .query,
 			                descendant .fragment);
 		},
@@ -36467,7 +36610,7 @@ define ('standard/Networking/URI',[],function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                new Path (value .path, "/") .escape () .toString (),
+			                value .path .escape (),
 			                value .query,
 			                escape (value .fragment));
 		},
@@ -36481,7 +36624,7 @@ define ('standard/Networking/URI',[],function ()
 			                value .slashs,
 			                value .host,
 			                value .port,
-			                new Path (value .path, "/") .unescape () .toString (),
+			                value .path .unescape (),
 			                value .query,
 			                unescape (value .fragment));
 		},
@@ -37720,17 +37863,28 @@ function (Fields,
 		},
 		addRootNode: function (node)
 		{
-			if (! (node instanceof Fields .SFNode || node === null))
+			if (node === null)
+				node = new Fields .SFNode ();
+
+			if (! (node instanceof Fields .SFNode))
 				throw new Error ("Couldn't add root node: node must be of type SFNode.");
 
-			//if (node && node .getValue () && node .getValue () .getExecutionContext () !== this)
-			//	throw new Error ("Couldn't add root node: node does not belong to this execution context.");
+			var rootNodes = this .getRootNodes ();
 
-			this .getRootNodes () .push (node);
+			for (var i = 0, length = rootNodes .length; i < length; ++ i)
+			{
+				if (rootNodes [i] .equals (node))
+					return;
+			}
+
+			rootNodes .push (node);
 		},
 		removeRootNode: function (node)
 		{
-			if (! (node instanceof Fields .SFNode || node === null))
+			if (node === null)
+				node = new Fields .SFNode ();
+
+			if (! (node instanceof Fields .SFNode))
 				throw new Error ("Couldn't remove root node: node must be of type SFNode.");
 
 			var
@@ -37927,16 +38081,52 @@ function (Fields,
 {
 "use strict";
 
+	var handler =
+	{
+		get: function (target, key)
+		{
+			var index = Number (key);
+
+			if (Number .isInteger (index))
+				return target .getRootNodes () [index];
+			else
+				return target [key];
+ 		},
+		set: function (target, key, value)
+		{
+			var index = Number (key);
+
+			if (Number .isInteger (index))
+				target .getRootNodes () [index] = value;
+			else
+				target [key] = value;
+
+			return true;
+		},
+		has: function (target, key)
+		{
+			return key in target;
+		},
+		enumerate: function (target)
+		{
+			return Object .keys (target) [Symbol.iterator] ();
+		},
+	};
+
 	function Scene (browser)
 	{
 		this ._browser = browser;
 
-		X3DScene .call (this, this);
+		var proxy = new Proxy (this, handler);
+
+		X3DScene .call (this, proxy);
 
 		this .addChildObjects ("initLoadCount", new Fields .SFInt32 (),  // Pre load count, must be zero before the scene can be passed to the requester.
                              "loadCount",     new Fields .SFInt32 ()); // Load count of all X3DUrlObjects.
 
 		this .loadingObjects = { };
+
+		return proxy;
 	}
 
 	Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
@@ -38016,6 +38206,14 @@ function (Fields,
 		{
 			return this .loadingObjects;
 		},
+	});
+
+	Object .defineProperty (Scene .prototype, "length",
+	{
+		get: function () { return this .getRootNodes () .length; },
+		set: function (value) { this .getRootNodes () .length = value; },
+		enumerable: true,
+		configurable: false
 	});
 
 	return Scene;
@@ -47762,14 +47960,15 @@ function ($,
 		infs            = /\binf\b/g,
 		nans            = /\bnan\b/g,
 		trimWhitespaces = /^[\x20\n,\t\r"]+|[\x20\n,\t\r"]+$/g,
-		whitespaces     = /[\x20\n,\t\r"]+/;
+		whitespaces     = /[\x20\n,\t\r"]+/,
+		strings         = new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'g');
 
-   function prepareBool (string)
+   function prepareBools (string)
 	{
 		return string .replace (trimWhitespaces, "") .split (whitespaces);
 	}
 
-   function prepareFloat (string)
+   function prepareFloats (string)
 	{
 		return (string
 			.replace (infs, "Infinity")
@@ -47778,9 +47977,21 @@ function ($,
 			.split (whitespaces));
 	}
 
-   function prepareInt (string)
+   function prepareInts (string)
 	{
 		return string .replace (trimWhitespaces, "") .split (whitespaces);
+	}
+
+   function prepareStrings (string)
+	{
+		var
+			match = null,
+			array = [ ];
+
+		while (match = strings .exec (string))
+			array .push (match [1]);
+
+		return array .map (Fields .SFString .unescape);
 	}
 
 	// Unitless fields.
@@ -47794,7 +48005,7 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
 	{
-		field .setValue (prepareFloat (this .getInput ()) .map (function (value)
+		field .setValue (prepareFloats (this .getInput ()) .map (function (value)
 		{
 			return parseFloat (value);
 		}));
@@ -47802,7 +48013,7 @@ function ($,
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFBool] = function (field)
 	{
-		field .setValue (prepareBool (this .getInput ()) .map (function (value)
+		field .setValue (prepareBools (this .getInput ()) .map (function (value)
 		{
 			if (value === "true" || value === "TRUE")
 				return true;
@@ -47813,7 +48024,7 @@ function ($,
 
 	XMLParser .prototype .fieldTypes [X3DConstants .MFInt32] = function (field)
 	{
-		field .setValue (prepareInt (this .getInput ()) .map (function (value)
+		field .setValue (prepareInts (this .getInput ()) .map (function (value)
 		{
 			return parseInt (value);
 		}));
@@ -47830,11 +48041,16 @@ function ($,
 	{
 		var category = field .getUnit ();
 
-		field .setValue (prepareFloat (this .getInput ()) .map (function (value)
+		field .setValue (prepareFloats (this .getInput ()) .map (function (value)
 		{
 			return this .fromUnit (category, parseFloat (value));
 		},
 		this));
+	};
+
+	XMLParser .prototype .fieldTypes [X3DConstants .MFString] = function (field)
+	{
+		field .setValue (prepareStrings (this .getInput ()));
 	};
 
 	return XMLParser;
@@ -52062,16 +52278,15 @@ function ($,
 
 			// Handle well known foreign content depending on extension or if path looks like directory.
 
-			if (this .URL .isDirectory () || this .URL .extension .match (foreignExtensions))
+			if (this .foreign)
 			{
-				if (this .foreign)
+				if (this .URL .extension .match (foreignExtensions))
 				{
 					return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
 				}
 			}
 
 			// Load URL async
-
 
 			$.ajax ({
 				url: this .URL .escape (),
@@ -59994,9 +60209,9 @@ function (Triangle3,
 		{
 			var m = this .matrix;
 
-			x .set (m [0], m [1], m [2]);
-			y .set (m [4], m [5], m [6]);
-			z .set (m [8], m [9], m [10]);
+			x .assign (m .xAxis);
+			y .assign (m .yAxis);
+			z .assign (m .zAxis);
 
 			r1 .assign (y) .add (z);
 
@@ -60039,9 +60254,9 @@ function (Triangle3,
 		
 			var m = this .matrix;
 
-			x .set (m [0], m [1], m [2]);
-			y .set (m [4], m [5], m [6]);
-			z .set (m [8], m [9], m [10]);
+			x .assign (m .xAxis);
+			y .assign (m .yAxis);
+			z .assign (m .zAxis);
 		
 			r1 .assign (y) .add (z);
 
@@ -60075,9 +60290,9 @@ function (Triangle3,
 		{
 			var m = this .matrix;
 
-			axes [0] .set (m [0], m [1], m [2]);
-			axes [1] .set (m [4], m [5], m [6]);
-			axes [2] .set (m [8], m [9], m [10]);
+			axes [0] .assign (m .xAxis);
+			axes [1] .assign (m .yAxis);
+			axes [2] .assign (m .zAxis);
 
 			return axes;
 		},
@@ -60094,9 +60309,9 @@ function (Triangle3,
 			{
 				var m = this .matrix;
 
-				x .set (m [0], m [1], m [2]);
-				y .set (m [4], m [5], m [6]);
-				z .set (m [8], m [9], m [10]);
+				x .assign (m .xAxis);
+				y .assign (m .yAxis);
+				z .assign (m .zAxis);
 
 				if (x .norm () == 0 && y .norm () == 0 && z .norm () == 0)
 				{
@@ -72353,8 +72568,8 @@ function (Matrix3, Vector2)
 		{
 		   var m = this .matrix;
 
-			x .set (m [0], m [1]);
-			y .set (m [3], m [4]);
+			x .assign (m .xAxis);
+			y .assign (m .yAxis);
 
 			p1 .assign (x) .add (y);
 
@@ -82572,6 +82787,10 @@ function (Fields,
 			catch (error)
 			{ }
 		},
+		clearTexture: function ()
+		{
+			this .setTexture (1, 1, false, defaultData, false);
+		},
 		updateTexture: function (data, flipY)
 		{
 			try
@@ -82605,10 +82824,6 @@ function (Fields,
 			                                                          this .repeatS_ .getValue (),
 			                                                          this .repeatT_ .getValue (),
 			                                                          false);
-		},
-		clear: function ()
-		{
-			this .setTexture (1, 1, false, defaultData, false);
 		},
 		resize: function (input, inputWidth, inputHeight, outputWidth, outputHeight)
 		{
@@ -82808,7 +83023,7 @@ function ($,
 		{
 			if (this .urlStack .length === 0)
 			{
-				this .clear ();
+				this .clearTexture ();
 				this .setLoadState (X3DConstants .FAILED_STATE);
 				return;
 			}
@@ -90484,6 +90699,22 @@ function (X3DTextureNode,
 			gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
 			gl .uniform1iv (shaderObject .x3d_TextureType, shaderObject .textureTypeArray); // TODO: Put this in X3DProgramableShaderObject
 		},
+		clearTexture: (function ()
+		{
+			var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+
+			return function ()
+			{
+				var
+					gl      = this .getBrowser () .getContext (),
+					targets = this .getTargets ();
+
+				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+
+				for (var i = 0, length = targets .length; i < length; ++ i)
+					gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+			};
+		})(),
 	});
 
 	return X3DEnvironmentTextureNode;
@@ -96268,6 +96499,9 @@ function (Fields,
 			X3DBoundedObject    .prototype .initialize .call (this);
 			X3DGeospatialObject .prototype .initialize .call (this);
 
+			if (this .rootNode_ .length === 0 && this .children_ .length)
+				this .rootNode_ .assign (this .children_);
+
 			this .rootNode_ .addFieldInterest (this .rootGroup .children_);
 		
 			this .rootGroup .children_ = this .rootNode_;
@@ -96351,64 +96585,73 @@ function (Fields,
 				this .childrenLoaded = false;
 			}
 		},
-		set_childLoadState__: function ()
+		set_childLoadState__: (function ()
 		{
-			if (this .level_changed_ .getValue () !== 1)
-				return;
-	
-			var loaded = 0;
+			var nodes = new Fields .MFNode ();
 
-			if (this .child1Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
+			return function ()
 			{
-				var rootNodes = this .child1Inline .getInternalScene () .getRootNodes ();
-
-				for (var i = 0, length = rootNodes .length; i < length; ++ i)
-					this .children_ .push (rootNodes [i]);
-
-				++ loaded;
-			}
-			else if (this .child1Inline .url_ .length === 0)
-				++ loaded;
+				if (this .level_changed_ .getValue () !== 1)
+					return;
 	
-			if (this .child2Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
-			{
-				var rootNodes = this .child2Inline .getInternalScene () .getRootNodes ();
-
-				for (var i = 0, length = rootNodes .length; i < length; ++ i)
-					this .children_ .push (rootNodes [i]);
-
-				++ loaded;
-			}
-			else if (this .child2Inline .url_ .length === 0)
-				++ loaded;
+				var loaded = 0;
 	
-			if (this .child3Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
-			{
-				var rootNodes = this .child3Inline .getInternalScene () .getRootNodes ();
-
-				for (var i = 0, length = rootNodes .length; i < length; ++ i)
-					this .children_ .push (rootNodes [i]);
-
-				++ loaded;
-			}
-			else if (this .child3Inline .url_ .length === 0)
-				++ loaded;
+				if (this .child1Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
+				{
+					var rootNodes = this .child1Inline .getInternalScene () .getRootNodes ();
 	
-			if (this .child4Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
-			{
-				var rootNodes = this .child4Inline .getInternalScene () .getRootNodes ();
-
-				for (var i = 0, length = rootNodes .length; i < length; ++ i)
-					this .children_ .push (rootNodes [i]);
-
-				++ loaded;
-			}
-			else if (this .child4Inline .url_ .length === 0)
-				++ loaded;
-
-			if (loaded === 4)
-				this .childrenLoaded = true;
-		},
+					for (var i = 0, length = rootNodes .length; i < length; ++ i)
+						nodes .push (rootNodes [i]);
+	
+					++ loaded;
+				}
+				else if (this .child1Inline .checkLoadState () === X3DConstants .FAILED_STATE)
+					++ loaded;
+		
+				if (this .child2Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
+				{
+					var rootNodes = this .child2Inline .getInternalScene () .getRootNodes ();
+	
+					for (var i = 0, length = rootNodes .length; i < length; ++ i)
+						nodes .push (rootNodes [i]);
+	
+					++ loaded;
+				}
+				else if (this .child2Inline .checkLoadState () === X3DConstants .FAILED_STATE)
+					++ loaded;
+		
+				if (this .child3Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
+				{
+					var rootNodes = this .child3Inline .getInternalScene () .getRootNodes ();
+	
+					for (var i = 0, length = rootNodes .length; i < length; ++ i)
+						nodes .push (rootNodes [i]);
+	
+					++ loaded;
+				}
+				else if (this .child3Inline .checkLoadState () === X3DConstants .FAILED_STATE)
+					++ loaded;
+		
+				if (this .child4Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
+				{
+					var rootNodes = this .child4Inline .getInternalScene () .getRootNodes ();
+	
+					for (var i = 0, length = rootNodes .length; i < length; ++ i)
+						nodes .push (rootNodes [i]);
+	
+					++ loaded;
+				}
+				else if (this .child4Inline .checkLoadState () === X3DConstants .FAILED_STATE)
+					++ loaded;
+	
+				if (loaded === 4)
+				{
+					this .childrenLoaded = true;
+	
+					this .children_ .assign (nodes);
+				}
+			};
+		})(),
 		getLevel: function (modelViewMatrix)
 		{
 			var distance = this .getDistance (modelViewMatrix);
@@ -98130,7 +98373,7 @@ function ($,
 		{
 			if (this .urlStack .length === 0)
 			{
-				this .clear ();
+				this .clearTexture ();
 				this .setLoadState (X3DConstants .FAILED_STATE);
 				return;
 			}
@@ -102991,7 +103234,7 @@ function ($,
 			if (this .urlStack .length === 0)
 			{
 			   this .duration_changed_ = -1;
-				this .clear (); // clearTexture
+				this .clearTexture (); // clearTexture
 				this .setLoadState (X3DConstants .FAILED_STATE);
 				return;
 			}
@@ -103618,12 +103861,14 @@ define ('x_ite/Components/Shape/X3DShapeNode',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
+	"standard/Math/Numbers/Vector3",
 ],
 function (X3DChildNode, 
           X3DBoundedObject,
           X3DCast,
           X3DConstants,
-          Box3)
+          Box3,
+          Vector3)
 {
 "use strict";
 
@@ -103634,7 +103879,9 @@ function (X3DChildNode,
 
 		this .addType (X3DConstants .X3DShapeNode);
 
-		this .bbox = new Box3 ();
+		this .bbox       = new Box3 ();
+		this .bboxSize   = new Vector3 (0, 0, 0);
+		this .bboxCenter = new Vector3 (0, 0, 0);
 	}
 
 	X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -103695,8 +103942,8 @@ function (X3DChildNode,
 			else
 				this .bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 			
-			this .bboxSize   = this .bbox .size;
-			this .bboxCenter = this .bbox .center;
+			this .bboxSize   .assign (this .bbox .size);
+			this .bboxCenter .assign (this .bbox .center);
 		},
 		set_apparance__: function ()
 		{
@@ -105848,7 +106095,7 @@ function ($,
 			}
 			else
 			{
-				this .clear ();
+				this .clearTexture ();
 				this .loadState_ = X3DConstants .FAILED_STATE;
 			}
 		},
