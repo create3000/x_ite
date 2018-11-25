@@ -25,7 +25,6 @@ var X_ITE_EXAMPLES = [
 	{ component: "Basic", test: "TreasureIsland" },
 	{ component: "Basic", test: "Vattenfall" },
 	{ component: "Basic", test: "WaterQuality" },
-	{ component: "Basic", test: "https://splace.github.io/3d/2005/ship/scene.wrl" },
 	{ component: "CADGeometry", test: "QuadSet" },
 	{ component: "CubeMapTexturing", test: "ComposedCubeMapTexture" },
 	{ component: "EnvironmentalEffects", test: "Background" },
