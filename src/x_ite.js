@@ -114,8 +114,7 @@
 		// Now assign real X3D.
 		PrivateX3D = X3D;
 
-		for (var key in X3D)
-			X_ITE [key] = X3D [key];
+		Object .assign (X_ITE, X3D);
 
 		// Initialize all X3DCanvas tags.
 		X3D (); 
