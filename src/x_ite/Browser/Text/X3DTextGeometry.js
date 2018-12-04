@@ -392,7 +392,7 @@ function (TextAlignment,
 					charSpacing = 0,
 					length      = text .getLength (l);
 
-				lineBound .set (l === 0 ? spacing - padding: spacing, size .y) .multiply (scale);
+				lineBound .set (l === 0 ? spacing - padding: spacing, numChars ? size .y : 0) .multiply (scale);
 
 				if (maxExtent)
 				{

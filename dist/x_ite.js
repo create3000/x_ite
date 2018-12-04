@@ -1,4 +1,4 @@
-/* X_ITE v4.2.12a-471 */
+/* X_ITE v4.2.12a-472 */
 
 (function () {
 
@@ -24840,7 +24840,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.2.11";
+	return "4.2.12a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -73025,7 +73025,7 @@ function (TextAlignment,
 					charSpacing = 0,
 					length      = text .getLength (l);
 
-				lineBound .set (l === 0 ? spacing - padding: spacing, size .y) .multiply (scale);
+				lineBound .set (l === 0 ? spacing - padding: spacing, numChars ? size .y : 0) .multiply (scale);
 
 				if (maxExtent)
 				{
