@@ -1,4 +1,4 @@
-/* X_ITE v4.2.12-473 */
+/* X_ITE v4.2.12-474 */
 
 (function () {
 
@@ -103279,11 +103279,10 @@ function ($,
 					console .info ("Done loading movie:", this .URL .toString ());
 			}
 
-		   var video = this .video [0];
-	
 			try
 			{
 				var
+			      video  = this .video [0],
 					width  = video .videoWidth,
 					height = video .videoHeight,
 					canvas = this .canvas [0],
