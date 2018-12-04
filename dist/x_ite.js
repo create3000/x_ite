@@ -1,4 +1,4 @@
-/* X_ITE v4.2.11-470 */
+/* X_ITE v4.2.12a-471 */
 
 (function () {
 
@@ -73060,7 +73060,8 @@ function (TextAlignment,
 					case TextAlignment .END:
 					{
 						// This is needed to make maxExtend and charSpacing work.
-						this .getGlyphExtents (glyphs [topToBottom ? numChars - 1 : 0] , primitiveQuality, glyphMin, vector);
+						if (numChars)
+							this .getGlyphExtents (glyphs [topToBottom ? numChars - 1 : 0], primitiveQuality, glyphMin .assign (Vector2 .Zero), vector);
 
 						translation .set (lineNumber * spacing, (size .y - max .y + glyphMin .y));
 						break;
