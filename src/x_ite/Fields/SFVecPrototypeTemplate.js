@@ -112,6 +112,10 @@ function (X3DField,
 			{
 				return new (this .constructor) (Type .normalize (this .getValue ()));
 			},
+			lerp: function (destination, t)
+			{
+				return new (this .constructor) (Type .lerp (this .getValue (), destination, t));
+			},
 			length: function ()
 			{
 				return this .getValue () .abs ();

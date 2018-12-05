@@ -1,10 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Fields/SFVec3.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/bookmarks.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/MovieTexture.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/MovieTexture.js" Line="216" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/ImageTexture.js" Line="268" Column="1" />
+      <File FileName="package.json" Line="4" Column="20" />
+      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="127" Column="1" />
+      <File FileName="src/x_ite/Fields/SFVec3.js" Line="153" Column="10" />
+      <File FileName="src/x_ite/Fields/SFVecPrototypeTemplate.js" Line="143" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
