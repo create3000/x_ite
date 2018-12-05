@@ -1,4 +1,4 @@
-/* X_ITE v4.2.12-476 */
+/* X_ITE v4.2.13a-477 */
 
 (function () {
 
@@ -16593,6 +16593,10 @@ function (X3DField,
 			normalize: function (vector)
 			{
 				return new (this .constructor) (Type .normalize (this .getValue ()));
+			},
+			lerp: function (destination, t)
+			{
+				return new (this .constructor) (Type .lerp (this .getValue (), destination, t));
 			},
 			length: function ()
 			{
