@@ -1,4 +1,4 @@
-/* X_ITE v4.2.12-475 */
+/* X_ITE v4.2.12-476 */
 
 (function () {
 
@@ -26367,6 +26367,9 @@ function (Fields,
 		},
 		configure: function ()
 		{
+			if (! this .isInitialized ())
+				return;
+
 			var fieldDefinitions = this .getFieldDefinitions ();
 
 			for (var i = 0; i < fieldDefinitions .length; ++ i)
@@ -118204,9 +118207,7 @@ function ($,
 			// bindWorld
 			this .description = "";
 
-			if (this .initialized () .getValue ())
-				this .getBrowserOptions () .configure ();
-
+			this .getBrowserOptions () .configure ();
 			this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 			this .prepareEvents () .removeInterest ("bind", this);

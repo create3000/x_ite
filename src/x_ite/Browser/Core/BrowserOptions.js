@@ -138,6 +138,9 @@ function (Fields,
 		},
 		configure: function ()
 		{
+			if (! this .isInitialized ())
+				return;
+
 			var fieldDefinitions = this .getFieldDefinitions ();
 
 			for (var i = 0; i < fieldDefinitions .length; ++ i)
