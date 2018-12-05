@@ -75,7 +75,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Navigation", test: "Billboard" },
 	{ component: "Navigation", test: "Collision" },
 	{ component: "Navigation", test: "NavigationInfo" },
-	{ component: "Navigation", test: "OthoViewpoint" },
+	{ component: "Navigation", test: "OrthoViewpoint" },
 	{ component: "Navigation", test: "Viewpoint" },
 	{ component: "Networking", test: "Anchor" },
 	{ component: "Networking", test: "Inline" },

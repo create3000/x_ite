@@ -276,7 +276,9 @@ function ($,
 			// bindWorld
 			this .description = "";
 
-			this .getBrowserOptions () .configure ();
+			if (this .initialized () .getValue ())
+				this .getBrowserOptions () .configure ();
+
 			this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 			this .prepareEvents () .removeInterest ("bind", this);
