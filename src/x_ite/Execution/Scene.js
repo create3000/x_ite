@@ -147,13 +147,5 @@ function (Fields,
 		},
 	});
 
-	Object .defineProperty (Scene .prototype, "length",
-	{
-		get: function () { return this .getRootNodes () .length; },
-		set: function (value) { this .getRootNodes () .length = value; },
-		enumerable: true,
-		configurable: false
-	});
-
 	return Scene;
 });
