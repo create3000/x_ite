@@ -56,52 +56,16 @@ function (Fields,
 {
 "use strict";
 
-	var handler =
-	{
-		get: function (target, key)
-		{
-			var index = Number (key);
-
-			if (Number .isInteger (index))
-				return target .getRootNodes () [index];
-			else
-				return target [key];
- 		},
-		set: function (target, key, value)
-		{
-			var index = Number (key);
-
-			if (Number .isInteger (index))
-				target .getRootNodes () [index] = value;
-			else
-				target [key] = value;
-
-			return true;
-		},
-		has: function (target, key)
-		{
-			return key in target;
-		},
-		enumerate: function (target)
-		{
-			return Object .keys (target) [Symbol.iterator] ();
-		},
-	};
-
 	function Scene (browser)
 	{
 		this ._browser = browser;
 
-		var proxy = new Proxy (this, handler);
-
-		X3DScene .call (this, proxy);
+		X3DScene .call (this, this);
 
 		this .addChildObjects ("initLoadCount", new Fields .SFInt32 (),  // Pre load count, must be zero before the scene can be passed to the requester.
                              "loadCount",     new Fields .SFInt32 ()); // Load count of all X3DUrlObjects.
 
 		this .loadingObjects = { };
-
-		return proxy;
 	}
 
 	Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
