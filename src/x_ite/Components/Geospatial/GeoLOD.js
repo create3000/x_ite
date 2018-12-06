@@ -142,9 +142,6 @@ function (Fields,
 			X3DBoundedObject    .prototype .initialize .call (this);
 			X3DGeospatialObject .prototype .initialize .call (this);
 
-			if (this .rootNode_ .length === 0 && this .children_ .length)
-				this .rootNode_ .assign (this .children_);
-
 			this .rootNode_ .addFieldInterest (this .rootGroup .children_);
 		
 			this .rootGroup .children_ = this .rootNode_;

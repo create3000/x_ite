@@ -826,9 +826,12 @@ function ($,
 		{
 			try
 			{
-				var field = node .getField (this .attributeToCamelCase (xmlAttribute .name));
+				var
+					field      = node .getField (this .attributeToCamelCase (xmlAttribute .name)),
+					accessType = field .getAccessType ();
 
-				this .fieldValue (field, xmlAttribute .value);
+				if (accessType & X3DConstants .initializeOnly)
+					this .fieldValue (field, xmlAttribute .value);
 			}
 			catch (error)
 			{

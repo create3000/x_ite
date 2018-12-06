@@ -1,4 +1,4 @@
-/* X_ITE v4.2.13-482 */
+/* X_ITE v4.2.13-483 */
 
 (function () {
 
@@ -47764,9 +47764,12 @@ function ($,
 		{
 			try
 			{
-				var field = node .getField (this .attributeToCamelCase (xmlAttribute .name));
+				var
+					field      = node .getField (this .attributeToCamelCase (xmlAttribute .name)),
+					accessType = field .getAccessType ();
 
-				this .fieldValue (field, xmlAttribute .value);
+				if (accessType & X3DConstants .initializeOnly)
+					this .fieldValue (field, xmlAttribute .value);
 			}
 			catch (error)
 			{
@@ -96480,9 +96483,6 @@ function (Fields,
 			X3DChildNode        .prototype .initialize .call (this);
 			X3DBoundedObject    .prototype .initialize .call (this);
 			X3DGeospatialObject .prototype .initialize .call (this);
-
-			if (this .rootNode_ .length === 0 && this .children_ .length)
-				this .rootNode_ .assign (this .children_);
 
 			this .rootNode_ .addFieldInterest (this .rootGroup .children_);
 		
