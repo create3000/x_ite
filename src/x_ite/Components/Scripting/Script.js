@@ -107,9 +107,6 @@ function ($,
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .addType (X3DConstants .Script);
-
-		// Map for event loop breaking <callback, time>.
-		this .callbackTimes = new WeakMap ();
 	}
 
 	Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
@@ -527,11 +524,6 @@ function ($,
 			var
 				browser = this .getBrowser (),
 				time   = browser .getCurrentTime ();
-
-			if (this .callbackTimes .get (callback) === time)
-				return; // Event loop detected.
-			else
-				this .callbackTimes .set (callback, time);
 
 			field .setTainted (true);
 			browser .getScriptStack () .push (this);
