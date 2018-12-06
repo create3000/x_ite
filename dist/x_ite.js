@@ -1,4 +1,4 @@
-/* X_ITE v4.2.13a-479 */
+/* X_ITE v4.2.13a-480 */
 
 (function () {
 
@@ -38097,52 +38097,16 @@ function (Fields,
 {
 "use strict";
 
-	var handler =
-	{
-		get: function (target, key)
-		{
-			var index = Number (key);
-
-			if (Number .isInteger (index))
-				return target .getRootNodes () [index];
-			else
-				return target [key];
- 		},
-		set: function (target, key, value)
-		{
-			var index = Number (key);
-
-			if (Number .isInteger (index))
-				target .getRootNodes () [index] = value;
-			else
-				target [key] = value;
-
-			return true;
-		},
-		has: function (target, key)
-		{
-			return key in target;
-		},
-		enumerate: function (target)
-		{
-			return Object .keys (target) [Symbol.iterator] ();
-		},
-	};
-
 	function Scene (browser)
 	{
 		this ._browser = browser;
 
-		var proxy = new Proxy (this, handler);
-
-		X3DScene .call (this, proxy);
+		X3DScene .call (this, this);
 
 		this .addChildObjects ("initLoadCount", new Fields .SFInt32 (),  // Pre load count, must be zero before the scene can be passed to the requester.
                              "loadCount",     new Fields .SFInt32 ()); // Load count of all X3DUrlObjects.
 
 		this .loadingObjects = { };
-
-		return proxy;
 	}
 
 	Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
@@ -38222,14 +38186,6 @@ function (Fields,
 		{
 			return this .loadingObjects;
 		},
-	});
-
-	Object .defineProperty (Scene .prototype, "length",
-	{
-		get: function () { return this .getRootNodes () .length; },
-		set: function (value) { this .getRootNodes () .length = value; },
-		enumerable: true,
-		configurable: false
 	});
 
 	return Scene;
@@ -81997,11 +81953,6 @@ function (X3DBindableNode,
 	X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 	{
 		constructor: X3DBackgroundNode,
-		modelViewMatrix: new Matrix4 (),
-		rotation: new Rotation4 (),
-		scale: new Vector3 (0, 0, 0),
-		textureMatrixArray: new Float32Array (new Matrix4 ()),
-		rectangleCount: 6,
 		initialize: function ()
 		{
 			X3DBindableNode .prototype .initialize .call (this);
@@ -82345,53 +82296,62 @@ function (X3DBindableNode,
 				}
 			}
 		},
-		display: function (gl, renderObject, viewport)
+		display: (function ()
 		{
-			try
+			var
+				invProjectionMatrix = new Matrix4 (),
+				modelViewMatrix     = new Matrix4 (),
+				rotation            = new Rotation4 (),
+				scale               = new Vector3 (0, 0, 0),
+				farVector           = new Vector3 (0, 0, 0);
+
+			return function (gl, renderObject, viewport)
 			{
-				if (this .hidden)
-					return;
-
-				// Setup context.
+				try
+				{
+					if (this .hidden)
+						return;
 	
-				gl .disable (gl .DEPTH_TEST);
-				gl .depthMask (false);
-				gl .enable (gl .CULL_FACE);
-				gl .frontFace (gl .CCW);
+					// Setup context.
+		
+					gl .disable (gl .DEPTH_TEST);
+					gl .depthMask (false);
+					gl .enable (gl .CULL_FACE);
+					gl .frontFace (gl .CCW);
+	
+					// Get background scale.
+	
+					var
+						viewpoint      = renderObject .getViewpoint (),
+						navigationInfo = renderObject .getNavigationInfo (),
+						farValue       = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
 
-				// Get background scale.
+					// Get projection matrix.
+	
+					this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
+	
+					// Rotate and scale background.
+	
+					modelViewMatrix .assign (this .modelMatrix);
+					modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
+					modelViewMatrix .get (null, rotation);
+					modelViewMatrix .identity ();
+					modelViewMatrix .rotate (rotation);
+					modelViewMatrix .scale (scale .set (farValue, farValue, farValue));
 
-				var
-					viewpoint       = renderObject .getViewpoint (),
-					navigationInfo  = renderObject .getNavigationInfo (),
-					farValue        = navigationInfo .getFarValue (viewpoint) * 0.8,
-					rotation        = this .rotation,
-					modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
-
-				// Get projection matrix.
-
-				this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
-
-				// Rotate and scale background.
-
-				modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
-				modelViewMatrix .get (null, rotation);
-				modelViewMatrix .identity ();
-				modelViewMatrix .rotate (rotation);
-				modelViewMatrix .scale (this .scale .set (farValue, farValue, farValue));
-
-				this .modelViewMatrixArray .set (modelViewMatrix);
-
-				// Draw background sphere and texture cube.
-
-				this .drawSphere (renderObject);
-
-				if (this .textures)
-					this .drawCube (renderObject);
-			}
-			catch (error)
-			{ }
-		},
+					this .modelViewMatrixArray .set (modelViewMatrix);
+	
+					// Draw background sphere and texture cube.
+	
+					this .drawSphere (renderObject);
+	
+					if (this .textures)
+						this .drawCube (renderObject);
+				}
+				catch (error)
+				{ }
+			};
+		})(),
 		drawSphere: function (renderObject)
 		{
 			var transparency = this .transparency_ .getValue ();
@@ -82436,47 +82396,52 @@ function (X3DBindableNode,
 			shaderNode .disableColorAttribute (gl);
 			shaderNode .disable (gl);
 		},
-		drawCube: function (renderObject)
+		drawCube: (function ()
 		{
-			var
-				browser    = renderObject .getBrowser (),
-				gl         = browser .getContext (),
-				shaderNode = browser .getGouraudShader ();
+			var textureMatrixArray = new Float32Array (new Matrix4 ());
 
-			shaderNode .enable (gl);
-
-			// Clip planes
-
-			shaderNode .setShaderObjects (gl, this .shaderObjects);
-
-			// Enable vertex attribute arrays.
-
-			shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-
-			// Uniforms
-
-			gl .uniform1i (shaderNode .x3d_FogType,       0);
-			gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
-			gl .uniform1i (shaderNode .x3d_Lighting,      false);
-
-			gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix,    false, this .textureMatrixArray);
-			gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-			gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
-
-			// Draw.
-
-			this .drawRectangle (gl, shaderNode, this .frontTexture,  this .frontBuffer);
-			this .drawRectangle (gl, shaderNode, this .backTexture,   this .backBuffer);
-			this .drawRectangle (gl, shaderNode, this .leftTexture,   this .leftBuffer);
-			this .drawRectangle (gl, shaderNode, this .rightTexture,  this .rightBuffer);
-			this .drawRectangle (gl, shaderNode, this .topTexture,    this .topBuffer);
-			this .drawRectangle (gl, shaderNode, this .bottomTexture, this .bottomBuffer);
-
-			// Disable vertex attribute arrays.
-
-			shaderNode .disableTexCoordAttribute (gl);
-			shaderNode .disable (gl);
-		},
+			return function (renderObject)
+			{
+				var
+					browser    = renderObject .getBrowser (),
+					gl         = browser .getContext (),
+					shaderNode = browser .getGouraudShader ();
+	
+				shaderNode .enable (gl);
+	
+				// Clip planes
+	
+				shaderNode .setShaderObjects (gl, this .shaderObjects);
+	
+				// Enable vertex attribute arrays.
+	
+				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+	
+				// Uniforms
+	
+				gl .uniform1i (shaderNode .x3d_FogType,       0);
+				gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
+				gl .uniform1i (shaderNode .x3d_Lighting,      false);
+	
+				gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix,    false, textureMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+	
+				// Draw.
+	
+				this .drawRectangle (gl, shaderNode, this .frontTexture,  this .frontBuffer);
+				this .drawRectangle (gl, shaderNode, this .backTexture,   this .backBuffer);
+				this .drawRectangle (gl, shaderNode, this .leftTexture,   this .leftBuffer);
+				this .drawRectangle (gl, shaderNode, this .rightTexture,  this .rightBuffer);
+				this .drawRectangle (gl, shaderNode, this .topTexture,    this .topBuffer);
+				this .drawRectangle (gl, shaderNode, this .bottomTexture, this .bottomBuffer);
+	
+				// Disable vertex attribute arrays.
+	
+				shaderNode .disableTexCoordAttribute (gl);
+				shaderNode .disable (gl);
+			};
+		})(),
 		drawRectangle: function (gl, shaderNode, texture, buffer)
 		{
 			if (texture && texture .checkLoadState () === X3DConstants .COMPLETE_STATE)
@@ -82492,7 +82457,7 @@ function (X3DBindableNode,
 
 				// Draw.
 
-				gl .drawArrays (gl .TRIANGLES, 0, this .rectangleCount);
+				gl .drawArrays (gl .TRIANGLES, 0, 6);
 			}
 		},
 	});
@@ -109570,9 +109535,6 @@ function ($,
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .addType (X3DConstants .Script);
-
-		// Map for event loop breaking <callback, time>.
-		this .callbackTimes = new WeakMap ();
 	}
 
 	Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
@@ -109990,11 +109952,6 @@ function ($,
 			var
 				browser = this .getBrowser (),
 				time   = browser .getCurrentTime ();
-
-			if (this .callbackTimes .get (callback) === time)
-				return; // Event loop detected.
-			else
-				this .callbackTimes .set (callback, time);
 
 			field .setTainted (true);
 			browser .getScriptStack () .push (this);
