@@ -1,4 +1,4 @@
-/* X_ITE v4.2.13-485 */
+/* X_ITE v4.2.13-486 */
 
 (function () {
 
@@ -44782,7 +44782,6 @@ function (Fields,
 			this .x3d_ParticleId          = gl .getUniformLocation (program, "x3d_Particle.id");
 			this .x3d_ParticleLife        = gl .getUniformLocation (program, "x3d_Particle.life");
 			this .x3d_ParticleElapsedTime = gl .getUniformLocation (program, "x3d_Particle.elapsedTime");
-			this .x3d_ParticlePosition    = gl .getUniformLocation (program, "x3d_Particle.position");
 
 			// Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
@@ -45704,6 +45703,14 @@ function (Fields,
 		{
 			gl .disableVertexAttribArray (this .x3d_Vertex);
 		},
+		setParticle: function (gl, id, particle, modelViewMatrix)
+		{
+			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+
+			gl .uniform1i (this .x3d_ParticleId,          id);
+			gl .uniform1i (this .x3d_ParticleLife,        particle .life);
+			gl .uniform1f (this .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
+		},
 		getProgramInfo: function ()
 		{
 			function cmp (lhs, rhs) { return lhs < rhs ? -1 : lhs > rhs ? 1 : 0; }
@@ -46041,7 +46048,7 @@ define('text!x_ite/Browser/Shaders/Inlcude/Shadow.h',[],function () { return '/*
 define('text!x_ite/Browser/Shaders/Inlcude/Pack.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#ifdef TITANIA\n\nvec4\npack (const in float value)\n{\n\treturn vec4 (0.0, 0.0, 0.0, 0.0);\n}\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .r;\n}\n\n#endif\n\n#ifdef X_ITE\n\nvec4\npack (const in float value)\n{\n\tconst vec3 bitShifts = vec3 (255.0,\n\t                             255.0 * 255.0,\n\t                             255.0 * 255.0 * 255.0);\n\n\treturn vec4 (value, fract (value * bitShifts));\n}\n\n#ifdef X3D_DEPTH_TEXTURE\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .r;\n}\n\n#else\n\nfloat\nunpack (const vec4 color)\n{\n\tconst vec3 bitShifts = vec3 (1.0 / 255.0,\n\t                             1.0 / (255.0 * 255.0),\n\t                             1.0 / (255.0 * 255.0 * 255.0));\n\n\treturn color .x + dot (color .gba, bitShifts);\n}\n\n#endif\n#endif\n';});
 
 
-define('text!x_ite/Browser/Shaders/Types.h',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nstruct x3d_FogParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump vec3  center;\n\tmediump float visibilityRange;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float intensity;\n\tmediump float ambientIntensity;\n\tmediump vec3  attenuation;\n\tmediump vec3  location;\n\tmediump vec3  direction;\n\tmediump float radius;\n\tmediump float beamWidth;\n\tmediump float cutOffAngle;\n\t#ifdef X3D_SHADOWS\n\tmediump vec3  shadowColor;\n\tmediump float shadowIntensity;\n\tmediump float shadowBias;\n\tmediump mat4  shadowMatrix;\n\tmediump int   shadowMapSize;\n\t#endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_MaterialParameters  \n{   \n\tmediump float ambientIntensity;\n\tmediump vec3  diffuseColor;\n\tmediump vec3  specularColor;\n\tmediump vec3  emissiveColor;\n\tmediump float shininess;\n\tmediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_FrontMaterial;  \n//uniform x3d_MaterialParameters x3d_BackMaterial;        \n\nstruct x3d_ParticleParameters  \n{   \n\tmediump int   id;\n\tmediump int   life;\n\tmediump float elapsedTime;\n\tmediump vec4  position;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;  \n';});
+define('text!x_ite/Browser/Shaders/Types.h',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nstruct x3d_FogParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump vec3  center;\n\tmediump float visibilityRange;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float intensity;\n\tmediump float ambientIntensity;\n\tmediump vec3  attenuation;\n\tmediump vec3  location;\n\tmediump vec3  direction;\n\tmediump float radius;\n\tmediump float beamWidth;\n\tmediump float cutOffAngle;\n\t#ifdef X3D_SHADOWS\n\tmediump vec3  shadowColor;\n\tmediump float shadowIntensity;\n\tmediump float shadowBias;\n\tmediump mat4  shadowMatrix;\n\tmediump int   shadowMapSize;\n\t#endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_MaterialParameters  \n{   \n\tmediump float ambientIntensity;\n\tmediump vec3  diffuseColor;\n\tmediump vec3  specularColor;\n\tmediump vec3  emissiveColor;\n\tmediump float shininess;\n\tmediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_FrontMaterial;  \n//uniform x3d_MaterialParameters x3d_BackMaterial;        \n\nstruct x3d_ParticleParameters  \n{   \n\tmediump int   id;\n\tmediump int   life;\n\tmediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;  \n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -61543,22 +61550,15 @@ function (Fields,
 
 			for (var p = 0; p < numParticles; ++ p)
 			{
-				var
-					particle = particles [p],
-					position = particle .position;
+				var particle = particles [p];
 
 				modelViewMatrix [12] = x;
 				modelViewMatrix [13] = y;
 				modelViewMatrix [14] = z;
 
-				Matrix4 .prototype .translate .call (modelViewMatrix, position);
+				Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
-	
-				gl .uniform1i (shaderNode .x3d_ParticleId,          p);
-				gl .uniform1i (shaderNode .x3d_ParticleLife,        particle .life);
-				gl .uniform1f (shaderNode .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
-				gl .uniform4f (shaderNode .x3d_ParticlePosition,    position .x, position .y, position .z, 1);
+				shaderNode .setParticle (gl, p, particle, modelViewMatrix);
 
 				gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 			}
@@ -61612,15 +61612,13 @@ function (Fields,
 	
 					for (var p = 0; p < numParticles; ++ p)
 					{
-						var
-							particle = particles [p],
-							position = particle .position;
+						var particle = particles [p];
 
 						modelViewMatrix [12] = x;
 						modelViewMatrix [13] = y;
 						modelViewMatrix [14] = z;
 		
-						Matrix4 .prototype .translate .call (modelViewMatrix, position);
+						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
 						if (lighting)
 						{
@@ -61631,13 +61629,8 @@ function (Fields,
 							Matrix3 .prototype .inverse .call (normalMatrix);
 							gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, normalMatrix);
 						}
-		
-						gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
 
-						gl .uniform1i (shaderNode .x3d_ParticleId,          p);
-						gl .uniform1i (shaderNode .x3d_ParticleLife,        particle .life);
-						gl .uniform1f (shaderNode .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
-						gl .uniform4f (shaderNode .x3d_ParticlePosition,    position .x, position .y, position .z, 1);
+						shaderNode .setParticle (gl, p, particle, modelViewMatrix);
 		
 						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 							gl .drawArrays (shaderNode .primitiveMode, i, 3);
@@ -61653,15 +61646,13 @@ function (Fields,
 					{
 						for (var p = 0; p < numParticles; ++ p)
 						{
-							var
-								particle = particles [p],
-								position = particle .position;
+							var particle = particles [p];
 
 							modelViewMatrix [12] = x;
 							modelViewMatrix [13] = y;
 							modelViewMatrix [14] = z;
 	
-							Matrix4 .prototype .translate .call (modelViewMatrix, position);
+							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 	
 							if (lighting)
 							{
@@ -61673,12 +61664,7 @@ function (Fields,
 								gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, normalMatrix);
 							}
 	
-							gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
-	
-							gl .uniform1i (shaderNode .x3d_ParticleId,          p);
-							gl .uniform1i (shaderNode .x3d_ParticleLife,        particle .life);
-							gl .uniform1f (shaderNode .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
-							gl .uniform4f (shaderNode .x3d_ParticlePosition,    position .x, position .y, position .z, 1);
+							shaderNode .setParticle (gl, p, particle, modelViewMatrix);
 
 							gl .enable (gl .CULL_FACE);
 							gl .cullFace (gl .FRONT);
@@ -61697,16 +61683,14 @@ function (Fields,
 	
 						for (var p = 0; p < numParticles; ++ p)
 						{
-							var
-								particle = particles [p],
-								position = particle .position;
+							var particle = particles [p];
 
 							modelViewMatrix [12] = x;
 							modelViewMatrix [13] = y;
 							modelViewMatrix [14] = z;
-	
-							Matrix4 .prototype .translate .call (modelViewMatrix, position);
-	
+
+							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+
 							if (lighting)
 							{
 								// Set normal matrix.
@@ -61717,12 +61701,7 @@ function (Fields,
 								gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, normalMatrix);
 							}
 	
-							gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
-	
-							gl .uniform1i (shaderNode .x3d_ParticleId,          p);
-							gl .uniform1i (shaderNode .x3d_ParticleLife,        particle .life);
-							gl .uniform1f (shaderNode .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
-							gl .uniform4f (shaderNode .x3d_ParticlePosition,    position .x, position .y, position .z, 1);
+							shaderNode .setParticle (gl, p, particle, modelViewMatrix);
 
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 						}
