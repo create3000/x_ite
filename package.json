@@ -1,7 +1,7 @@
 {
 	"name": "x_ite",
 	"version": "4.2.13",
-	"revision": "484",
+	"revision": "485",
 	"description": "X_ITE X3D Browser",
 	"main": "src/x_ite.js",
 	"repository": {

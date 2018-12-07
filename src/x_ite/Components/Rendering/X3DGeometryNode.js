@@ -954,13 +954,22 @@ function (Fields,
 
 			for (var p = 0; p < numParticles; ++ p)
 			{
+				var
+					particle = particles [p],
+					position = particle .position;
+
 				modelViewMatrix [12] = x;
 				modelViewMatrix [13] = y;
 				modelViewMatrix [14] = z;
 
-				Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
+				Matrix4 .prototype .translate .call (modelViewMatrix, position);
 
 				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
+	
+				gl .uniform1i (shaderNode .x3d_ParticleId,          p);
+				gl .uniform1i (shaderNode .x3d_ParticleLife,        particle .life);
+				gl .uniform1f (shaderNode .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
+				gl .uniform4f (shaderNode .x3d_ParticlePosition,    position .x, position .y, position .z, 1);
 
 				gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 			}
@@ -1014,12 +1023,16 @@ function (Fields,
 	
 					for (var p = 0; p < numParticles; ++ p)
 					{
+						var
+							particle = particles [p],
+							position = particle .position;
+
 						modelViewMatrix [12] = x;
 						modelViewMatrix [13] = y;
 						modelViewMatrix [14] = z;
 		
-						Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
-		
+						Matrix4 .prototype .translate .call (modelViewMatrix, position);
+
 						if (lighting)
 						{
 							// Set normal matrix.
@@ -1031,6 +1044,11 @@ function (Fields,
 						}
 		
 						gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
+
+						gl .uniform1i (shaderNode .x3d_ParticleId,          p);
+						gl .uniform1i (shaderNode .x3d_ParticleLife,        particle .life);
+						gl .uniform1f (shaderNode .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
+						gl .uniform4f (shaderNode .x3d_ParticlePosition,    position .x, position .y, position .z, 1);
 		
 						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 							gl .drawArrays (shaderNode .primitiveMode, i, 3);
@@ -1046,11 +1064,15 @@ function (Fields,
 					{
 						for (var p = 0; p < numParticles; ++ p)
 						{
+							var
+								particle = particles [p],
+								position = particle .position;
+
 							modelViewMatrix [12] = x;
 							modelViewMatrix [13] = y;
 							modelViewMatrix [14] = z;
 	
-							Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
+							Matrix4 .prototype .translate .call (modelViewMatrix, position);
 	
 							if (lighting)
 							{
@@ -1064,6 +1086,11 @@ function (Fields,
 	
 							gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
 	
+							gl .uniform1i (shaderNode .x3d_ParticleId,          p);
+							gl .uniform1i (shaderNode .x3d_ParticleLife,        particle .life);
+							gl .uniform1f (shaderNode .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
+							gl .uniform4f (shaderNode .x3d_ParticlePosition,    position .x, position .y, position .z, 1);
+
 							gl .enable (gl .CULL_FACE);
 							gl .cullFace (gl .FRONT);
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
@@ -1081,11 +1108,15 @@ function (Fields,
 	
 						for (var p = 0; p < numParticles; ++ p)
 						{
+							var
+								particle = particles [p],
+								position = particle .position;
+
 							modelViewMatrix [12] = x;
 							modelViewMatrix [13] = y;
 							modelViewMatrix [14] = z;
 	
-							Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
+							Matrix4 .prototype .translate .call (modelViewMatrix, position);
 	
 							if (lighting)
 							{
@@ -1099,6 +1130,11 @@ function (Fields,
 	
 							gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
 	
+							gl .uniform1i (shaderNode .x3d_ParticleId,          p);
+							gl .uniform1i (shaderNode .x3d_ParticleLife,        particle .life);
+							gl .uniform1f (shaderNode .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
+							gl .uniform4f (shaderNode .x3d_ParticlePosition,    position .x, position .y, position .z, 1);
+
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 						}
 					}

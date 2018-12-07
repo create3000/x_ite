@@ -208,6 +208,11 @@ function (Fields,
 			this .x3d_Normal   = gl .getAttribLocation (program, "x3d_Normal");
 			this .x3d_Vertex   = gl .getAttribLocation (program, "x3d_Vertex");	
 
+			this .x3d_ParticleId          = gl .getUniformLocation (program, "x3d_Particle.id");
+			this .x3d_ParticleLife        = gl .getUniformLocation (program, "x3d_Particle.life");
+			this .x3d_ParticleElapsedTime = gl .getUniformLocation (program, "x3d_Particle.elapsedTime");
+			this .x3d_ParticlePosition    = gl .getUniformLocation (program, "x3d_Particle.position");
+
 			// Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
 			gl .uniform1f  (this .x3d_LinewidthScaleFactor, 1);

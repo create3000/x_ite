@@ -43,3 +43,13 @@ struct x3d_MaterialParameters
 
 //uniform x3d_MaterialParameters x3d_FrontMaterial;  
 //uniform x3d_MaterialParameters x3d_BackMaterial;        
+
+struct x3d_ParticleParameters  
+{   
+	mediump int   id;
+	mediump int   life;
+	mediump float elapsedTime;
+	mediump vec4  position;
+};
+
+//uniform x3d_ParticleParameters x3d_Particle;  
