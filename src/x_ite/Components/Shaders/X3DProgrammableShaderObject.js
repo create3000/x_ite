@@ -211,7 +211,6 @@ function (Fields,
 			this .x3d_ParticleId          = gl .getUniformLocation (program, "x3d_Particle.id");
 			this .x3d_ParticleLife        = gl .getUniformLocation (program, "x3d_Particle.life");
 			this .x3d_ParticleElapsedTime = gl .getUniformLocation (program, "x3d_Particle.elapsedTime");
-			this .x3d_ParticlePosition    = gl .getUniformLocation (program, "x3d_Particle.position");
 
 			// Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
@@ -1132,6 +1131,14 @@ function (Fields,
 		disableVertexAttribute: function (gl)
 		{
 			gl .disableVertexAttribArray (this .x3d_Vertex);
+		},
+		setParticle: function (gl, id, particle, modelViewMatrix)
+		{
+			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+
+			gl .uniform1i (this .x3d_ParticleId,          id);
+			gl .uniform1i (this .x3d_ParticleLife,        particle .life);
+			gl .uniform1f (this .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
 		},
 		getProgramInfo: function ()
 		{
