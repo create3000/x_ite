@@ -100,16 +100,11 @@ function (X3DSensorNode,
 		},
 		enable: function ()
 		{
-			var keyDeviceSensorNode = this .getBrowser () .getKeyDeviceSensorNode ();
-
-			if (keyDeviceSensorNode && keyDeviceSensorNode !== this)
-				keyDeviceSensorNode .enabled_ = false;
-
-			this .getBrowser () .setKeyDeviceSensorNode (this);
+			this .getBrowser () .addKeyDeviceSensorNode (this);
 		},
 		disable: function ()
 		{
-			this .getBrowser () .setKeyDeviceSensorNode (null);
+			this .getBrowser () .removeKeyDeviceSensorNode (this);
 
 			this .release ();
 		},
