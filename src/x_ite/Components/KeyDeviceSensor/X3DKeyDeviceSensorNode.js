@@ -61,6 +61,8 @@ function (X3DSensorNode,
 		X3DSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DKeyDeviceSensorNode);
+
+		this .active = false;
 	}
 
 	X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
@@ -101,31 +103,35 @@ function (X3DSensorNode,
 		},
 		enable: function ()
 		{
-			if (this .isActive_ .getValue ())
+			if (this .active)
 				return;
 
 			var keyDeviceSensorNode = this .getBrowser () .getKeyDeviceSensorNode ();
 
 			if (keyDeviceSensorNode)
 			{
-				keyDeviceSensorNode .enabled_  = false;
-				keyDeviceSensorNode .isActive_ = false;
+				keyDeviceSensorNode .enabled_ = false;
+				keyDeviceSensorNode .setActive (false);
 			}
 
 			this .getBrowser () .setKeyDeviceSensorNode (this);
 
-			this .isActive_ = true;
+			this .setActive (true);
 		},
 		disable: function ()
 		{
-			if (! this .isActive_ .getValue ())
+			if (! this .active)
 				return;
 
 			this .getBrowser () .setKeyDeviceSensorNode (null);
 
 			this .release ();
 
-			this .isActive_ = false;
+			this .setActive (false);
+		},
+		setActive: function (value)
+		{
+			this .active = value;
 		},
 		keydown: function () { },
 		keyup: function () { },

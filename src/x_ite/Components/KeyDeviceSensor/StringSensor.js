@@ -92,6 +92,68 @@ function (Fields,
 		{
 			return "children";
 		},
+		keydown: function (event)
+		{
+			event .preventDefault ();
+
+			switch (event .key)
+			{
+				case "Backspace":
+				{
+					if (this .isActive_ .getValue ())
+					{
+						if (this .deletionAllowed_ .getValue ())
+						{
+							if (this .enteredText_ .length)
+								this .enteredText_  = this .enteredText_ .getValue () .substr (0, this .enteredText_ .length - 1);
+						}
+					}
+
+					break;
+				}
+				case "Enter":
+				{
+					if (this .isActive_ .getValue ())
+					{
+						this .finalText_ = this .enteredText_;
+						this .isActive_  = false;
+
+						this .enteredText_ .set ("");
+					}
+
+					break;
+				}
+				case "Escape":
+				{
+					if (this .isActive_ .getValue ())
+					{
+						this .enteredText_ = "";
+						this .isActive_    = false;
+					}
+
+					break;
+				}
+				case "Tab":
+				{
+					break;
+				}
+				default:
+				{
+					if (event .key .length === 1)
+					{
+						if (! this .isActive_ .getValue ())
+						{
+							this .isActive_    = true;
+							this .enteredText_ = "";
+						}
+
+						this .enteredText_ = this .enteredText_ .getValue () + event .key;
+					}
+
+					break;
+				}
+			}
+		},
 	});
 
 	return StringSensor;

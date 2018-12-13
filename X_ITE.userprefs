@@ -2,11 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
   <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
+      <File FileName="src/x_ite.html" Line="8" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DLineGeometryNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="965" Column="28" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1141" Column="23" />
+      <File FileName="src/x_ite/Components/Time/X3DTimeDependentNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/X3D.js" Line="170" Column="36" />
+      <File FileName="src/x_ite/Components/KeyDeviceSensor/StringSensor.js" Line="139" Column="6" />
+      <File FileName="src/x_ite/Components/KeyDeviceSensor/KeySensor.js" Line="226" Column="34" />
+      <File FileName="src/x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

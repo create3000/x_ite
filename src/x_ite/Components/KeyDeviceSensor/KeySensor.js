@@ -119,6 +119,13 @@ function (Fields,
 		{
 			return "children";
 		},
+		setActive: function (value)
+		{
+			X3DKeyDeviceSensorNode .prototype .setActive .call (this, value);
+
+			if (value !== this .isActive_ .getValue ())
+				this .isActive_ = value;
+		},
 		keydown: function (event)
 		{
 			event .preventDefault ();
@@ -199,7 +206,7 @@ function (Fields,
 				////////////////////////////////////
 				default:
 				{
-				   if (event .charCode || event .keyCode)
+					if (event .charCode || event .keyCode)
 					{
 						switch (event .key)
 						{
@@ -223,7 +230,7 @@ function (Fields,
 						      this .keyPress_ = "\t";
 								break;
 							default:
-								if (event .key .length == 1)
+								if (event .key .length === 1)
 						         this .keyPress_ = event .key;
 								break;
 						}
@@ -343,7 +350,7 @@ function (Fields,
 						      this .keyRelease_ = "\t";
 								break;
 							default:
-								if (event .key .length == 1)
+								if (event .key .length === 1)
 							      this .keyRelease_ = event .key;
 								break;
 						}
