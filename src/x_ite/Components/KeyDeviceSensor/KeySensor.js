@@ -123,7 +123,8 @@ function (Fields,
 		{
 			event .preventDefault ();
 
-			this .isActive_ = true;
+			if (! this .isActive_ .getValue ())
+				this .isActive_ = true;
 
 			switch (event .which)
 			{
@@ -355,7 +356,8 @@ function (Fields,
 				}
 			}
 
-			this .isActive_ = false;
+			if (this .isActive_ .getValue ())
+				this .isActive_ = false;
 		},
 		release: function ()
 		{
