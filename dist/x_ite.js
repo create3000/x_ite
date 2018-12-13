@@ -1,4 +1,4 @@
-/* X_ITE v4.2.14a-487 */
+/* X_ITE v4.2.14a-488 */
 
 (function () {
 
@@ -99706,12 +99706,12 @@ function (X3DSensorNode,
 			if (keyDeviceSensorNode)
 			{
 				keyDeviceSensorNode .enabled_ = false;
-				keyDeviceSensorNode .setActive (false);
+				keyDeviceSensorNode .active   = false;
 			}
 
 			this .getBrowser () .setKeyDeviceSensorNode (this);
 
-			this .setActive (true);
+			this .active = true;
 		},
 		disable: function ()
 		{
@@ -99722,11 +99722,7 @@ function (X3DSensorNode,
 
 			this .release ();
 
-			this .setActive (false);
-		},
-		setActive: function (value)
-		{
-			this .active = value;
+			this .active = false;
 		},
 		keydown: function () { },
 		keyup: function () { },
@@ -99859,16 +99855,11 @@ function (Fields,
 		{
 			return "children";
 		},
-		setActive: function (value)
-		{
-			X3DKeyDeviceSensorNode .prototype .setActive .call (this, value);
-
-			if (value !== this .isActive_ .getValue ())
-				this .isActive_ = value;
-		},
 		keydown: function (event)
 		{
 			event .preventDefault ();
+
+			this .isActive_ = true;
 
 			switch (event .which)
 			{
@@ -100099,6 +100090,8 @@ function (Fields,
 				   break;
 				}
 			}
+
+			this .isActive_ = false;
 		},
 		release: function ()
 		{
