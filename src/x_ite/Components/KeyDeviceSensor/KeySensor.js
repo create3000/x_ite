@@ -119,16 +119,11 @@ function (Fields,
 		{
 			return "children";
 		},
-		setActive: function (value)
-		{
-			X3DKeyDeviceSensorNode .prototype .setActive .call (this, value);
-
-			if (value !== this .isActive_ .getValue ())
-				this .isActive_ = value;
-		},
 		keydown: function (event)
 		{
 			event .preventDefault ();
+
+			this .isActive_ = true;
 
 			switch (event .which)
 			{
@@ -359,6 +354,8 @@ function (Fields,
 				   break;
 				}
 			}
+
+			this .isActive_ = false;
 		},
 		release: function ()
 		{

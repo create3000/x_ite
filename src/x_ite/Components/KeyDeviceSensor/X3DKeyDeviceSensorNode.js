@@ -111,12 +111,12 @@ function (X3DSensorNode,
 			if (keyDeviceSensorNode)
 			{
 				keyDeviceSensorNode .enabled_ = false;
-				keyDeviceSensorNode .setActive (false);
+				keyDeviceSensorNode .active   = false;
 			}
 
 			this .getBrowser () .setKeyDeviceSensorNode (this);
 
-			this .setActive (true);
+			this .active = true;
 		},
 		disable: function ()
 		{
@@ -127,11 +127,7 @@ function (X3DSensorNode,
 
 			this .release ();
 
-			this .setActive (false);
-		},
-		setActive: function (value)
-		{
-			this .active = value;
+			this .active = false;
 		},
 		keydown: function () { },
 		keyup: function () { },
