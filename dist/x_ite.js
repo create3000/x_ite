@@ -1,4 +1,4 @@
-/* X_ITE v4.2.14a-490 */
+/* X_ITE v4.2.14a-491 */
 
 (function () {
 
@@ -65361,12 +65361,12 @@ function (Fields)
 	
 	function X3DKeyDeviceSensorContext ()
 	{
-		this .keyDeviceSensorNode = null;
-
 		this .addChildObjects ("controlKey",  new Fields .SFBool (),
 		                       "shiftKey",    new Fields .SFBool (),
 		                       "altKey",      new Fields .SFBool (),
 		                       "altGrKey",    new Fields .SFBool ());
+
+		this .keyDeviceSensorNodes = new Set ();
 	}
 
 	X3DKeyDeviceSensorContext .prototype =
@@ -65376,13 +65376,13 @@ function (Fields)
 			this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown .bind (this));
 			this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup   .bind (this));
 		},
-		setKeyDeviceSensorNode: function (value)
+		addKeyDeviceSensorNode: function (keyDeviceSensorNode)
 		{
-			this .keyDeviceSensorNode = value;
+			this .keyDeviceSensorNodes .add (keyDeviceSensorNode);
 		},
-		getKeyDeviceSensorNode: function ()
+		removeKeyDeviceSensorNode: function (keyDeviceSensorNode)
 		{
-			return this .keyDeviceSensorNode;
+			this .keyDeviceSensorNodes .delete (keyDeviceSensorNode);
 		},
 		getShiftKey: function ()
 		{
@@ -65404,8 +65404,10 @@ function (Fields)
 		{
 			//console .log (event .keyCode);
 
-			if (this .keyDeviceSensorNode)
-			   this .keyDeviceSensorNode .keydown (event);
+			this .keyDeviceSensorNodes .forEach (function (keyDeviceSensorNode)
+			{
+				keyDeviceSensorNode .keydown (event);
+			});
 	
 			switch (event .keyCode)
 			{
@@ -65562,8 +65564,10 @@ function (Fields)
 			event .preventDefault ();
 			event .stopImmediatePropagation ();
 
-			if (this .keyDeviceSensorNode)
-			   this .keyDeviceSensorNode .keyup (event);
+			this .keyDeviceSensorNodes .forEach (function (keyDeviceSensorNode)
+			{
+				keyDeviceSensorNode .keyup (event);
+			});
 
 			switch (event .which)
 			{
@@ -99695,16 +99699,11 @@ function (X3DSensorNode,
 		},
 		enable: function ()
 		{
-			var keyDeviceSensorNode = this .getBrowser () .getKeyDeviceSensorNode ();
-
-			if (keyDeviceSensorNode && keyDeviceSensorNode !== this)
-				keyDeviceSensorNode .enabled_ = false;
-
-			this .getBrowser () .setKeyDeviceSensorNode (this);
+			this .getBrowser () .addKeyDeviceSensorNode (this);
 		},
 		disable: function ()
 		{
-			this .getBrowser () .setKeyDeviceSensorNode (null);
+			this .getBrowser () .removeKeyDeviceSensorNode (this);
 
 			this .release ();
 		},
