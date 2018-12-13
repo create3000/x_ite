@@ -1,4 +1,4 @@
-/* X_ITE v4.2.14a-488 */
+/* X_ITE v4.2.14a-489 */
 
 (function () {
 
@@ -99656,8 +99656,6 @@ function (X3DSensorNode,
 		X3DSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DKeyDeviceSensorNode);
-
-		this .active = false;
 	}
 
 	X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
@@ -99692,37 +99690,23 @@ function (X3DSensorNode,
 		{
 			if (this .enabled_ .getValue ())
 				this .enable ();
-
 			else
 				this .disable ();
 		},
 		enable: function ()
 		{
-			if (this .active)
-				return;
-
 			var keyDeviceSensorNode = this .getBrowser () .getKeyDeviceSensorNode ();
 
-			if (keyDeviceSensorNode)
-			{
+			if (keyDeviceSensorNode && keyDeviceSensorNode !== this)
 				keyDeviceSensorNode .enabled_ = false;
-				keyDeviceSensorNode .active   = false;
-			}
 
 			this .getBrowser () .setKeyDeviceSensorNode (this);
-
-			this .active = true;
 		},
 		disable: function ()
 		{
-			if (! this .active)
-				return;
-
 			this .getBrowser () .setKeyDeviceSensorNode (null);
 
 			this .release ();
-
-			this .active = false;
 		},
 		keydown: function () { },
 		keyup: function () { },
