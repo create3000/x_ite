@@ -1,4 +1,4 @@
-/* X_ITE v4.2.13-486 */
+/* X_ITE v4.2.14a-487 */
 
 (function () {
 
@@ -24848,7 +24848,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.2.13";
+	return "4.2.14a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -99656,6 +99656,8 @@ function (X3DSensorNode,
 		X3DSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DKeyDeviceSensorNode);
+
+		this .active = false;
 	}
 
 	X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
@@ -99696,31 +99698,35 @@ function (X3DSensorNode,
 		},
 		enable: function ()
 		{
-			if (this .isActive_ .getValue ())
+			if (this .active)
 				return;
 
 			var keyDeviceSensorNode = this .getBrowser () .getKeyDeviceSensorNode ();
 
 			if (keyDeviceSensorNode)
 			{
-				keyDeviceSensorNode .enabled_  = false;
-				keyDeviceSensorNode .isActive_ = false;
+				keyDeviceSensorNode .enabled_ = false;
+				keyDeviceSensorNode .setActive (false);
 			}
 
 			this .getBrowser () .setKeyDeviceSensorNode (this);
 
-			this .isActive_ = true;
+			this .setActive (true);
 		},
 		disable: function ()
 		{
-			if (! this .isActive_ .getValue ())
+			if (! this .active)
 				return;
 
 			this .getBrowser () .setKeyDeviceSensorNode (null);
 
 			this .release ();
 
-			this .isActive_ = false;
+			this .setActive (false);
+		},
+		setActive: function (value)
+		{
+			this .active = value;
 		},
 		keydown: function () { },
 		keyup: function () { },
@@ -99853,6 +99859,13 @@ function (Fields,
 		{
 			return "children";
 		},
+		setActive: function (value)
+		{
+			X3DKeyDeviceSensorNode .prototype .setActive .call (this, value);
+
+			if (value !== this .isActive_ .getValue ())
+				this .isActive_ = value;
+		},
 		keydown: function (event)
 		{
 			event .preventDefault ();
@@ -99933,7 +99946,7 @@ function (Fields,
 				////////////////////////////////////
 				default:
 				{
-				   if (event .charCode || event .keyCode)
+					if (event .charCode || event .keyCode)
 					{
 						switch (event .key)
 						{
@@ -99957,7 +99970,7 @@ function (Fields,
 						      this .keyPress_ = "\t";
 								break;
 							default:
-								if (event .key .length == 1)
+								if (event .key .length === 1)
 						         this .keyPress_ = event .key;
 								break;
 						}
@@ -100077,7 +100090,7 @@ function (Fields,
 						      this .keyRelease_ = "\t";
 								break;
 							default:
-								if (event .key .length == 1)
+								if (event .key .length === 1)
 							      this .keyRelease_ = event .key;
 								break;
 						}
@@ -113200,6 +113213,169 @@ function (Fields,
  ******************************************************************************/
 
 
+define ('x_ite/Components/KeyDeviceSensor/StringSensor',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DKeyDeviceSensorNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function StringSensor (executionContext)
+	{
+		X3DKeyDeviceSensorNode .call (this, executionContext);
+
+		this .addType (X3DConstants .StringSensor);
+	}
+
+	StringSensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
+	{
+		constructor: StringSensor,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "deletionAllowed", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "enteredText",     new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "finalText",       new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",        new Fields .SFBool ()),
+		]),
+		getTypeName: function ()
+		{
+			return "StringSensor";
+		},
+		getComponentName: function ()
+		{
+			return "KeyDeviceSensor";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		keydown: function (event)
+		{
+			event .preventDefault ();
+
+			switch (event .key)
+			{
+				case "Backspace":
+				{
+					if (this .isActive_ .getValue ())
+					{
+						if (this .deletionAllowed_ .getValue ())
+						{
+							if (this .enteredText_ .length)
+								this .enteredText_  = this .enteredText_ .getValue () .substr (0, this .enteredText_ .length - 1);
+						}
+					}
+
+					break;
+				}
+				case "Enter":
+				{
+					if (this .isActive_ .getValue ())
+					{
+						this .finalText_ = this .enteredText_;
+						this .isActive_  = false;
+
+						this .enteredText_ .set ("");
+					}
+
+					break;
+				}
+				case "Escape":
+				{
+					if (this .isActive_ .getValue ())
+					{
+						this .enteredText_ = "";
+						this .isActive_    = false;
+					}
+
+					break;
+				}
+				case "Tab":
+				{
+					break;
+				}
+				default:
+				{
+					if (event .key .length === 1)
+					{
+						if (! this .isActive_ .getValue ())
+						{
+							this .isActive_    = true;
+							this .enteredText_ = "";
+						}
+
+						this .enteredText_ = this .enteredText_ .getValue () + event .key;
+					}
+
+					break;
+				}
+			}
+		},
+	});
+
+	return StringSensor;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/ParticleSystems/SurfaceEmitter',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -117376,7 +117552,7 @@ define ('x_ite/Configuration/SupportedNodes',[
 	"x_ite/Components/Lighting/SpotLight", // VRML
 	"x_ite/Components/Interpolation/SquadOrientationInterpolator",
 	"x_ite/Components/Grouping/StaticGroup",
-	//"x_ite/Components/KeyDeviceSensor/StringSensor",
+	"x_ite/Components/KeyDeviceSensor/StringSensor",
 	"x_ite/Components/ParticleSystems/SurfaceEmitter",
 	"x_ite/Components/Grouping/Switch", // VRML
 	"x_ite/Components/Followers/TexCoordChaser2D",
@@ -117612,7 +117788,7 @@ function (Anchor,
           SpotLight,
           SquadOrientationInterpolator,
           StaticGroup,
-          //StringSensor,
+          StringSensor,
           SurfaceEmitter,
           Switch,
           TexCoordChaser2D,
@@ -117855,7 +118031,7 @@ function (Anchor,
 		SpotLight:                    SpotLight,
 		SquadOrientationInterpolator: SquadOrientationInterpolator,
 		StaticGroup:                  StaticGroup,
-		//StringSensor:                 StringSensor,
+		StringSensor:                 StringSensor,
 		SurfaceEmitter:               SurfaceEmitter,
 		Switch:                       Switch,
 		TexCoordChaser2D:             TexCoordChaser2D,
