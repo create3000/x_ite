@@ -1,12 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext.js" Line="100" Column="1" />
+      <File FileName="src/x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/KeyDeviceSensor/StringSensor.js" Line="135" Column="6" />
-      <File FileName="src/x_ite/Components/KeyDeviceSensor/KeySensor.js" Line="207" Column="1" />
+      <File FileName="src/x_ite/Components/KeyDeviceSensor/KeySensor.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -87,8 +87,7 @@ function (X3DSensorNode,
 			{
 				this .enabled_ .removeInterest ("set_enabled__", this);
 
-				if (this .enabled_ .getValue ())
-					this .disable ();
+				this .disable ();
 			}
 		},
 		set_enabled__: function ()
