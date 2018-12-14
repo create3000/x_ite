@@ -66,6 +66,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Interpolation", test: "ScalarInterpolator" },
 	{ component: "Interpolation", test: "SplineScalarInterpolator" },
 	{ component: "Interpolation", test: "SquadOrientationInterpolator" },
+	{ component: "KeyDeviceSensor", test: "KeySensor" },
 	{ component: "KeyDeviceSensor", test: "StringSensor" },
 	{ component: "Layering", test: "LayerSet" },
 	{ component: "Layering", test: "Viewport" },
