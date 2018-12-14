@@ -113,23 +113,21 @@ function (Fields,
 				}
 				case "Enter":
 				{
-					if (this .isActive_ .getValue ())
-					{
-						this .finalText_ = this .enteredText_;
-						this .isActive_  = false;
+					this .finalText_ = this .enteredText_;
 
-						this .enteredText_ .set ("");
-					}
+					this .enteredText_ .set ("");
+
+					if (this .isActive_ .getValue ())
+						this .isActive_ = false;
 
 					break;
 				}
 				case "Escape":
 				{
+					this .enteredText_ .set ("");
+
 					if (this .isActive_ .getValue ())
-					{
-						this .enteredText_ = "";
-						this .isActive_    = false;
-					}
+						this .isActive_ = false;
 
 					break;
 				}
