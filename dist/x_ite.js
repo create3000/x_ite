@@ -1,4 +1,4 @@
-/* X_ITE v4.2.14a-493 */
+/* X_ITE v4.2.14a-494 */
 
 (function () {
 
@@ -62537,7 +62537,7 @@ function (X3DGeometryNode,
 
 			for (var i = 0; i < polygonsSize; i += verticesPerPolygon)
 			{
-				var normal = this .getPolygonNormal (verticesPerPolygon, coord);
+				var normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
 
 				if (cw)
 					normal .negate ();
@@ -62548,14 +62548,15 @@ function (X3DGeometryNode,
 
 			return normals;
 		},
-		getPolygonNormal: function (verticesPerPolygon, coord)
+		getPolygonNormal: function (index, verticesPerPolygon, coord)
 		{
+
 			// Determine polygon normal.
 			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
 			var normal = new Vector3 (0, 0, 0);
 
-			coord .get1Point (this .getPolygonIndex (0), next);
+			coord .get1Point (this .getPolygonIndex (index), next);
 
 			for (var i = 0; i < verticesPerPolygon; ++ i)
 			{
@@ -62563,7 +62564,7 @@ function (X3DGeometryNode,
 				current = next;
 				next    = tmp;
 
-				coord .get1Point (this .getPolygonIndex ((i + 1) % verticesPerPolygon), next);
+				coord .get1Point (this .getPolygonIndex (index + (i + 1) % verticesPerPolygon), next);
 
 				normal .x += (current .y - next .y) * (current .z + next .z);
 				normal .y += (current .z - next .z) * (current .x + next .x);
