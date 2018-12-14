@@ -1,4 +1,4 @@
-/* X_ITE v4.2.14a-491 */
+/* X_ITE v4.2.14a-492 */
 
 (function () {
 
@@ -113257,23 +113257,21 @@ function (Fields,
 				}
 				case "Enter":
 				{
-					if (this .isActive_ .getValue ())
-					{
-						this .finalText_ = this .enteredText_;
-						this .isActive_  = false;
+					this .finalText_ = this .enteredText_;
 
-						this .enteredText_ .set ("");
-					}
+					this .enteredText_ .set ("");
+
+					if (this .isActive_ .getValue ())
+						this .isActive_ = false;
 
 					break;
 				}
 				case "Escape":
 				{
+					this .enteredText_ .set ("");
+
 					if (this .isActive_ .getValue ())
-					{
-						this .enteredText_ = "";
-						this .isActive_    = false;
-					}
+						this .isActive_ = false;
 
 					break;
 				}
@@ -113283,15 +113281,18 @@ function (Fields,
 				}
 				default:
 				{
-					if (event .key .length === 1)
+					if (event .charCode || event .keyCode)
 					{
-						if (! this .isActive_ .getValue ())
+						if (event .key .length === 1)
 						{
-							this .isActive_    = true;
-							this .enteredText_ = "";
+							if (! this .isActive_ .getValue ())
+							{
+								this .isActive_    = true;
+								this .enteredText_ = "";
+							}
+	
+							this .enteredText_ = this .enteredText_ .getValue () + event .key;
 						}
-
-						this .enteredText_ = this .enteredText_ .getValue () + event .key;
 					}
 
 					break;
