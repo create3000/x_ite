@@ -139,15 +139,18 @@ function (Fields,
 				}
 				default:
 				{
-					if (event .key .length === 1)
+					if (event .charCode || event .keyCode)
 					{
-						if (! this .isActive_ .getValue ())
+						if (event .key .length === 1)
 						{
-							this .isActive_    = true;
-							this .enteredText_ = "";
+							if (! this .isActive_ .getValue ())
+							{
+								this .isActive_    = true;
+								this .enteredText_ = "";
+							}
+	
+							this .enteredText_ = this .enteredText_ .getValue () + event .key;
 						}
-
-						this .enteredText_ = this .enteredText_ .getValue () + event .key;
 					}
 
 					break;
