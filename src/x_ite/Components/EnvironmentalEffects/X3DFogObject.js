@@ -60,19 +60,14 @@ function (X3DConstants,
 
 	var Fogs = ObjectCache (FogContainer);
 	
-	function FogContainer ()
-	{
-		this .center = new Vector3 (0, 0, 0);
-	}
+	function FogContainer () { }
 
 	FogContainer .prototype =
 	{
 		constructor: FogContainer,
-		set: function (fogNode, modelViewMatrix)
+		set: function (fogNode)
 		{
 			this .fogNode = fogNode;
-
-			this .center .assign (modelViewMatrix .origin);
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
@@ -86,13 +81,10 @@ function (X3DConstants,
 			}
 			else
 			{
-				var
-					color  = fogNode .color_ .getValue (),
-					center = this .center;
+				var color = fogNode .color_ .getValue ();
 
-				gl .uniform1i (shaderObject .x3d_FogType,   fogNode .fogType);
-				gl .uniform3f (shaderObject .x3d_FogColor,  color .r, color .g, color .b);
-				gl .uniform3f (shaderObject .x3d_FogCenter, center .x, center .y, center .z);
+				gl .uniform1i (shaderObject .x3d_FogType,            fogNode .fogType);
+				gl .uniform3f (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
 				gl .uniform1f (shaderObject .x3d_FogVisibilityRange, visibilityRange);
 			}
 		},

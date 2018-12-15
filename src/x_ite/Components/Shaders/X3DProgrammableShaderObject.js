@@ -145,7 +145,6 @@ function (Fields,
 
 			this .x3d_FogType            = this .getUniformLocation (gl, program, "x3d_Fog.type",            "x3d_FogType");
 			this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
-			this .x3d_FogCenter          = this .getUniformLocation (gl, program, "x3d_Fog.center",          "x3d_FogCenter");
 			this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
 
 			this .x3d_LinewidthScaleFactor = gl .getUniformLocation (program, "x3d_LinewidthScaleFactor");

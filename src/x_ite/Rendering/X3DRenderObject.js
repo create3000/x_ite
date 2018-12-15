@@ -184,7 +184,7 @@ function ($,
 		{
 			var fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
 
-			fogContainer .set (fog, Matrix4 .Identity);
+			fogContainer .set (fog);
 
 			this .localFog = this .localFogs [0] = fogContainer;
 		},
@@ -968,7 +968,7 @@ function ($,
 				{
 					// Recycle clip planes.
 	
-					var clipPlanes = this .getBrowser () .getClipPlanes ();
+					var clipPlanes = browser .getClipPlanes ();
 		
 					for (var i = 0, length = clipPlanes .length; i < length; ++ i)
 					   clipPlanes [i] .dispose ();
@@ -984,7 +984,7 @@ function ($,
 		
 					// Recycle local lights.
 		
-					var lights = this .getBrowser () .getLocalLights ();
+					var lights = browser .getLocalLights ();
 		
 					for (var i = 0, length = lights .length; i < length; ++ i)
 					   lights [i] .dispose ();
@@ -993,7 +993,7 @@ function ($,
 		
 					// Recycle local fogs.
 
-					var fogs = this .getBrowser () .getLocalFogs ();
+					var fogs = browser .getLocalFogs ();
 		
 					for (var i = 0, length = fogs .length; i < length; ++ i)
 					   fogs [i] .dispose ();

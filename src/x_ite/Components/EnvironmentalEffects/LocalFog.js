@@ -106,7 +106,7 @@ function (Fields,
 			{
 				var fogContainer = this .getFogs () .pop ();
 
-				fogContainer .set (this, renderObject .getModelViewMatrix () .get ());
+				fogContainer .set (this);
 
 				renderObject .pushLocalFog (fogContainer);
 			}
