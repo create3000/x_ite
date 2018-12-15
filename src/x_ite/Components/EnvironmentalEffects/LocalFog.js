@@ -103,18 +103,12 @@ function (Fields,
 		push: function (renderObject)
 		{
 			if (this .enabled_ .getValue ())
-			{
-				var fogContainer = this .getFogs () .pop ();
-
-				fogContainer .set (this);
-
-				renderObject .pushLocalFog (fogContainer);
-			}
+				renderObject .pushLocalFog (this);
 		},
 		pop: function (renderObject)
 		{
 			if (this .enabled_ .getValue ())
-				renderObject .getBrowser () .getLocalFogs () .push (renderObject .popLocalFog ());
+				renderObject .popLocalFog ();
 		},
 	});
 

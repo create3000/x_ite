@@ -182,11 +182,7 @@ function ($,
 		},
 		setGlobalFog: function (fog)
 		{
-			var fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
-
-			fogContainer .set (fog);
-
-			this .localFog = this .localFogs [0] = fogContainer;
+			this .localFog = this .localFogs [0] = fog;
 		},
 		pushLocalFog: function (localFog)
 		{
@@ -196,11 +192,9 @@ function ($,
 		},
 		popLocalFog: function ()
 		{
-			var localFog = this .localFogs .pop ();
+			this .localFogs .pop ();
 
 			this .localFog = this .localFogs [this .localFogs .length - 1];
-
-			return localFog;
 		},
 		getLayouts: function ()
 		{
@@ -990,15 +984,6 @@ function ($,
 					   lights [i] .dispose ();
 		
 					lights .length = 0;
-		
-					// Recycle local fogs.
-
-					var fogs = browser .getLocalFogs ();
-		
-					for (var i = 0, length = fogs .length; i < length; ++ i)
-					   fogs [i] .dispose ();
-		
-					fogs .length = 0;
 				}
 
 				this .globalLights .length = 0;

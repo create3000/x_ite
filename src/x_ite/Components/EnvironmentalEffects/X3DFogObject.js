@@ -49,50 +49,10 @@
 
 define ([
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Utility/ObjectCache",
 ],
-function (X3DConstants,
-          Vector3,
-          ObjectCache)
+function (X3DConstants)
 {
 "use strict";
-
-	var Fogs = ObjectCache (FogContainer);
-	
-	function FogContainer () { }
-
-	FogContainer .prototype =
-	{
-		constructor: FogContainer,
-		set: function (fogNode)
-		{
-			this .fogNode = fogNode;
-		},
-		setShaderUniforms: function (gl, shaderObject)
-		{
-			var
-				fogNode         = this .fogNode,
-				visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
-
-			if (fogNode .getHidden () || visibilityRange === 0)
-			{
-				gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
-			}
-			else
-			{
-				var color = fogNode .color_ .getValue ();
-
-				gl .uniform1i (shaderObject .x3d_FogType,            fogNode .fogType);
-				gl .uniform3f (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
-				gl .uniform1f (shaderObject .x3d_FogVisibilityRange, visibilityRange);
-			}
-		},
-		dispose: function ()
-		{
-		   Fogs .push (this);
-		},
-	};
 
 	function X3DFogObject (executionContext)
 	{
@@ -137,9 +97,22 @@ function (X3DConstants,
 		{
 			return this .hidden;
 		},
-		getFogs: function ()
+		setShaderUniforms: function (gl, shaderObject)
 		{
-			return Fogs;
+			var visibilityRange = Math .max (0, this .visibilityRange_ .getValue ());
+
+			if (this .hidden || visibilityRange === 0)
+			{
+				gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
+			}
+			else
+			{
+				var color = this .color_ .getValue ();
+
+				gl .uniform1i (shaderObject .x3d_FogType,            this .fogType);
+				gl .uniform3f (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
+				gl .uniform1f (shaderObject .x3d_FogVisibilityRange, visibilityRange);
+			}
 		},
 	};
 
