@@ -1,4 +1,4 @@
-/* X_ITE v4.2.14a-495 */
+/* X_ITE v4.2.14a-496 */
 
 (function () {
 
@@ -71696,7 +71696,6 @@ function (ComposedShader,
 	function X3DEnvironmentalEffectsContext ()
 	{
 		this .backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
-		this .localFogs                   = [ ];
 	}
 
 	X3DEnvironmentalEffectsContext .prototype =
@@ -71719,10 +71718,6 @@ function (ComposedShader,
 		getBackgroundTextureProperties: function ()
 		{
 			return this .backgroundTextureProperties;
-		},
-		getLocalFogs: function ()
-		{
-			return this .localFogs;
 		},
 	};
 
@@ -80318,11 +80313,7 @@ function ($,
 		},
 		setGlobalFog: function (fog)
 		{
-			var fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
-
-			fogContainer .set (fog);
-
-			this .localFog = this .localFogs [0] = fogContainer;
+			this .localFog = this .localFogs [0] = fog;
 		},
 		pushLocalFog: function (localFog)
 		{
@@ -80332,11 +80323,9 @@ function ($,
 		},
 		popLocalFog: function ()
 		{
-			var localFog = this .localFogs .pop ();
+			this .localFogs .pop ();
 
 			this .localFog = this .localFogs [this .localFogs .length - 1];
-
-			return localFog;
 		},
 		getLayouts: function ()
 		{
@@ -81126,15 +81115,6 @@ function ($,
 					   lights [i] .dispose ();
 		
 					lights .length = 0;
-		
-					// Recycle local fogs.
-
-					var fogs = browser .getLocalFogs ();
-		
-					for (var i = 0, length = fogs .length; i < length; ++ i)
-					   fogs [i] .dispose ();
-		
-					fogs .length = 0;
 				}
 
 				this .globalLights .length = 0;
@@ -81573,50 +81553,10 @@ function (X3DBaseNode)
 
 define ('x_ite/Components/EnvironmentalEffects/X3DFogObject',[
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Utility/ObjectCache",
 ],
-function (X3DConstants,
-          Vector3,
-          ObjectCache)
+function (X3DConstants)
 {
 "use strict";
-
-	var Fogs = ObjectCache (FogContainer);
-	
-	function FogContainer () { }
-
-	FogContainer .prototype =
-	{
-		constructor: FogContainer,
-		set: function (fogNode)
-		{
-			this .fogNode = fogNode;
-		},
-		setShaderUniforms: function (gl, shaderObject)
-		{
-			var
-				fogNode         = this .fogNode,
-				visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
-
-			if (fogNode .getHidden () || visibilityRange === 0)
-			{
-				gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
-			}
-			else
-			{
-				var color = fogNode .color_ .getValue ();
-
-				gl .uniform1i (shaderObject .x3d_FogType,            fogNode .fogType);
-				gl .uniform3f (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
-				gl .uniform1f (shaderObject .x3d_FogVisibilityRange, visibilityRange);
-			}
-		},
-		dispose: function ()
-		{
-		   Fogs .push (this);
-		},
-	};
 
 	function X3DFogObject (executionContext)
 	{
@@ -81661,9 +81601,22 @@ function (X3DConstants,
 		{
 			return this .hidden;
 		},
-		getFogs: function ()
+		setShaderUniforms: function (gl, shaderObject)
 		{
-			return Fogs;
+			var visibilityRange = Math .max (0, this .visibilityRange_ .getValue ());
+
+			if (this .hidden || visibilityRange === 0)
+			{
+				gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
+			}
+			else
+			{
+				var color = this .color_ .getValue ();
+
+				gl .uniform1i (shaderObject .x3d_FogType,            this .fogType);
+				gl .uniform3f (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
+				gl .uniform1f (shaderObject .x3d_FogVisibilityRange, visibilityRange);
+			}
 		},
 	};
 
@@ -101786,18 +101739,12 @@ function (Fields,
 		push: function (renderObject)
 		{
 			if (this .enabled_ .getValue ())
-			{
-				var fogContainer = this .getFogs () .pop ();
-
-				fogContainer .set (this);
-
-				renderObject .pushLocalFog (fogContainer);
-			}
+				renderObject .pushLocalFog (this);
 		},
 		pop: function (renderObject)
 		{
 			if (this .enabled_ .getValue ())
-				renderObject .getBrowser () .getLocalFogs () .push (renderObject .popLocalFog ());
+				renderObject .popLocalFog ();
 		},
 	});
 
