@@ -1,16 +1,14 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Shaders/Phong.fs">
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
+      <File FileName="src/x_ite.html" Line="8" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DFogObject.js" Line="76" Column="5" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/PointSet.fs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Wireframe.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Types.h" Line="24" Column="20" />
+      <File FileName="src/x_ite/Components/Lighting/PointLight.js" Line="162" Column="1" />
+      <File FileName="src/x_ite/Components/Lighting/SpotLight.js" Line="142" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.vs" Line="82" Column="23" />
+      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="155" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -61,6 +61,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Utility/MatrixStack",
 	"standard/Math/Algorithm",
@@ -79,6 +80,7 @@ function (Fields,
           Vector3,
           Vector4,
           Rotation4,
+          Matrix3,
           Matrix4,
           MatrixStack,
           Algorithm,
@@ -115,6 +117,7 @@ function (Fields,
 	function PointLightContainer ()
 	{
 		this .location                      = new Vector3 (0, 0, 0);
+		this .matrixArray                   = new Float32Array (9);
 		this .shadowBuffer                  = null;
 		this .viewVolume                    = new ViewVolume ();
 		this .viewport                      = new Vector4 (0, 0, 0, 0);
@@ -147,6 +150,15 @@ function (Fields,
 			this .browser   = browser;
 			this .lightNode = lightNode;
 			this .groupNode = groupNode;
+
+			try
+			{
+				this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
+			}
+			catch (error)
+			{
+				this .matrixArray .set (Matrix3 .Identity);
+			}
 
 			this .modelViewMatrix .pushMatrix (modelViewMatrix);
 
@@ -260,13 +272,14 @@ function (Fields,
 				shadowColor = lightNode .getShadowColor (),
 				i           = shaderObject .numLights ++;
 
-			gl .uniform1i (shaderObject .x3d_LightType [i],             2);
-			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
-			gl .uniform1f (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
-			gl .uniform1f (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-			gl .uniform3f (shaderObject .x3d_LightAttenuation [i],      Math .max (0, attenuation .x), Math .max (0, attenuation .y), Math .max (0, attenuation .z));
-			gl .uniform3f (shaderObject .x3d_LightLocation [i],         location .x, location .y, location .z);
-			gl .uniform1f (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
+			gl .uniform1i        (shaderObject .x3d_LightType [i],             2);
+			gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
+			gl .uniform1f        (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
+			gl .uniform1f        (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
+			gl .uniform3f        (shaderObject .x3d_LightAttenuation [i],      Math .max (0, attenuation .x), Math .max (0, attenuation .y), Math .max (0, attenuation .z));
+			gl .uniform3f        (shaderObject .x3d_LightLocation [i],         location .x, location .y, location .z);
+			gl .uniform1f        (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
+			gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
 
 			if (this .textureUnit)
 			{

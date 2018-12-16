@@ -111,6 +111,7 @@ var X_ITE_TESTS = [
 	{ path: "Layout/info.x3d" },
 	{ path: "Layout/library" },
 	{ component: "Lighting" },
+	{ path: "Lighting/LightScale.x3d" },
 	{ path: "Lighting/LocalLight.x3d" },
 	{ path: "Lighting/PointLight.x3d" },
 	{ path: "Lighting/PointLight.x3dv" },

@@ -80,6 +80,7 @@ function (Fields,
 		this .x3d_LightBeamWidth        = [ ];
 		this .x3d_LightCutOffAngle      = [ ];
 		this .x3d_LightRadius           = [ ];
+		this .x3d_LightMatrix           = [ ];
 		this .x3d_ShadowIntensity       = [ ];
 		this .x3d_ShadowColor           = [ ];
 		this .x3d_ShadowBias            = [ ];
@@ -166,6 +167,7 @@ function (Fields,
 				this .x3d_LightBeamWidth [i]        = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].beamWidth",        "x3d_LightBeamWidth[" + i + "]");
 				this .x3d_LightCutOffAngle [i]      = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].cutOffAngle",      "x3d_LightCutOffAngle[" + i + "]");
 				this .x3d_LightRadius [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].radius",           "x3d_LightRadius[" + i + "]");
+				this .x3d_LightMatrix [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].matrix",           "x3d_LightMatrix[" + i + "]");
 
 				this .x3d_ShadowIntensity [i] = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowIntensity");
 				this .x3d_ShadowColor [i]     = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowColor");

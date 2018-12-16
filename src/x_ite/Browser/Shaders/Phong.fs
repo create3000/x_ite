@@ -146,7 +146,7 @@ getMaterialColor (const in x3d_MaterialParameters material)
 			x3d_LightSourceParameters light = x3d_LightSource [i];
 
 			vec3  vL = light .location - v; // Light to fragment
-			float dL = length (vL);
+			float dL = length (light .matrix * vL);
 			bool  di = light .type == x3d_DirectionalLight;
 
 			if (di || dL <= light .radius)
