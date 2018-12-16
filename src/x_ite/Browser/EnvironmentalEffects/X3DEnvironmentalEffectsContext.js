@@ -65,6 +65,7 @@ function (ComposedShader,
 	function X3DEnvironmentalEffectsContext ()
 	{
 		this .backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
+		this .localFogs                   = [ ];
 	}
 
 	X3DEnvironmentalEffectsContext .prototype =
@@ -87,6 +88,10 @@ function (ComposedShader,
 		getBackgroundTextureProperties: function ()
 		{
 			return this .backgroundTextureProperties;
+		},
+		getLocalFogs: function ()
+		{
+			return this .localFogs;
 		},
 	};
 

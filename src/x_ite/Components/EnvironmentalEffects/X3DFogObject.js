@@ -49,10 +49,65 @@
 
 define ([
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Matrix3",
+	"standard/Utility/ObjectCache",
 ],
-function (X3DConstants)
+function (X3DConstants,
+          Matrix3,
+          ObjectCache)
 {
 "use strict";
+
+	var Fogs = ObjectCache (FogContainer);
+	
+	function FogContainer ()
+	{
+		this .fogMatrix = new Float32Array (9);
+	}
+
+	FogContainer .prototype =
+	{
+		constructor: FogContainer,
+		set: function (fogNode, modelViewMatrix)
+		{
+			this .fogNode = fogNode;
+
+			try
+			{
+				this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
+			}
+			catch (error)
+			{
+				this .fogMatrix .set (Matrix3 .Identity);
+			}
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			var
+				fogNode         = this .fogNode,
+				visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
+
+			if (fogNode .getHidden () || visibilityRange === 0)
+			{
+				gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
+			}
+			else
+			{
+				var
+					color  = fogNode .color_ .getValue (),
+					center = this .center;
+
+				gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
+				gl .uniform3f        (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
+				gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, visibilityRange);
+				gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
+			}
+		},
+		dispose: function ()
+		{
+		   Fogs .push (this);
+		},
+	};
 
 	function X3DFogObject (executionContext)
 	{
@@ -97,22 +152,9 @@ function (X3DConstants)
 		{
 			return this .hidden;
 		},
-		setShaderUniforms: function (gl, shaderObject)
+		getFogs: function ()
 		{
-			var visibilityRange = Math .max (0, this .visibilityRange_ .getValue ());
-
-			if (this .hidden || visibilityRange === 0)
-			{
-				gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
-			}
-			else
-			{
-				var color = this .color_ .getValue ();
-
-				gl .uniform1i (shaderObject .x3d_FogType,            this .fogType);
-				gl .uniform3f (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
-				gl .uniform1f (shaderObject .x3d_FogVisibilityRange, visibilityRange);
-			}
+			return Fogs;
 		},
 	};
 
