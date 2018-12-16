@@ -1,16 +1,16 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/EnvironmentalEffects/X3DFogObject.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DFogObject.js" Line="76" Column="12" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="940" Column="27" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="985" Column="30" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="85" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="220" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/PointSet.fs" Line="49" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Wireframe.fs" Line="48" Column="1" />
+      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DFogObject.js" Line="76" Column="5" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/PointSet.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Wireframe.fs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
