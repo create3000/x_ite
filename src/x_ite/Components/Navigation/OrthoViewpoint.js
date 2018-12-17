@@ -186,7 +186,7 @@ function (Fields,
 
 			return screenScale .set (s, s, s);
 		},
-		getViewportSize: function (viewport)
+		getViewportSize: function (viewport, nearValue)
 		{
 			var
 				width  = viewport [2],

@@ -57,6 +57,7 @@ define ([
 	"x_ite/Components/Navigation/NavigationInfo",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Camera",
+	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -71,6 +72,7 @@ function (Fields,
           NavigationInfo,
           X3DConstants,
           Camera,
+          Vector2,
           Vector3,
           Rotation4,
           Matrix4,
@@ -81,6 +83,7 @@ function (Fields,
 	var
 		zAxis            = new Vector3 (0, 0, 1),
 		screenScale      = new Vector3 (0, 0, 0),
+		viewportSize     = new Vector2 (0, 0),
 		normalized       = new Vector3 (0, 0, 0),
 		upVector         = new Vector3 (0, 0, 0),
 		locationMatrix   = new Matrix4 (),
@@ -268,6 +271,19 @@ function (Fields,
 				size /= width;
 
 			return screenScale .set (size, size, size);
+		},
+		getViewportSize: function (viewport, nearValue)
+		{
+			var
+				width  = viewport [2],
+				height = viewport [3],
+				size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
+				aspect = width / height;
+		
+			if (aspect > 1)
+				return viewportSize .set (size * aspect, size);
+
+			return viewportSize .set (size, size / aspect);
 		},
 		getLookAtDistance: function (bbox)
 		{
