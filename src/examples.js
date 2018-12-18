@@ -50,6 +50,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Lighting", test: "SpotLight" },
 	{ component: "Navigation", test: "Billboard" },
 	{ component: "Navigation", test: "Collision" },
+	{ component: "Navigation", test: "LogarithmicDepthBuffer" },
 	{ component: "Navigation", test: "NavigationInfo" },
 	{ component: "Navigation", test: "OrthoViewpoint" },
 	{ component: "Navigation", test: "Viewpoint" },

@@ -139,25 +139,28 @@ function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
 		},
 		intersectsSphere: function (radius, center)
 		{
-			var planes = this .planes;
-		
-			if (planes [0] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [1] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [2] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [3] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [4] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [5] .getDistanceToPoint (center) > radius)
-				return false;
+			if (this .valid)
+			{
+				var planes = this .planes;
+			
+				if (planes [0] .getDistanceToPoint (center) > radius)
+					return false;
+	
+				if (planes [1] .getDistanceToPoint (center) > radius)
+					return false;
+	
+				if (planes [2] .getDistanceToPoint (center) > radius)
+					return false;
+	
+				if (planes [3] .getDistanceToPoint (center) > radius)
+					return false;
+	
+				if (planes [4] .getDistanceToPoint (center) > radius)
+					return false;
+	
+				if (planes [5] .getDistanceToPoint (center) > radius)
+					return false;
+			}
 
 			return true;
 		},

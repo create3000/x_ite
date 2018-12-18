@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-502 */
+/* X_ITE v4.2.15a-503 */
 
 (function () {
 
@@ -39519,6 +39519,8 @@ function ($,
 		this .addType (X3DConstants .X3DProtoDeclaration);
 
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+
+		this .setLive (false);
 	}
 
 	X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
@@ -58189,25 +58191,28 @@ function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
 		},
 		intersectsSphere: function (radius, center)
 		{
-			var planes = this .planes;
-		
-			if (planes [0] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [1] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [2] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [3] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [4] .getDistanceToPoint (center) > radius)
-				return false;
-
-			if (planes [5] .getDistanceToPoint (center) > radius)
-				return false;
+			if (this .valid)
+			{
+				var planes = this .planes;
+			
+				if (planes [0] .getDistanceToPoint (center) > radius)
+					return false;
+	
+				if (planes [1] .getDistanceToPoint (center) > radius)
+					return false;
+	
+				if (planes [2] .getDistanceToPoint (center) > radius)
+					return false;
+	
+				if (planes [3] .getDistanceToPoint (center) > radius)
+					return false;
+	
+				if (planes [4] .getDistanceToPoint (center) > radius)
+					return false;
+	
+				if (planes [5] .getDistanceToPoint (center) > radius)
+					return false;
+			}
 
 			return true;
 		},
@@ -118754,7 +118759,7 @@ function ($,
 		},
 		getRenderingProperty: function (name)
 		{
-			this .getRenderingProperties () .getField (name) .getValue ();
+			return this .getRenderingProperties () .getField (name) .getValue ();
 		},
 		firstViewpoint: function ()
 		{
