@@ -561,7 +561,7 @@ function ($,
 		},
 		getRenderingProperty: function (name)
 		{
-			this .getRenderingProperties () .getField (name) .getValue ();
+			return this .getRenderingProperties () .getField (name) .getValue ();
 		},
 		firstViewpoint: function ()
 		{
