@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-501 */
+/* X_ITE v4.2.15a-502 */
 
 (function () {
 
@@ -24848,7 +24848,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.2.14";
+	return "4.2.15a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -34091,19 +34091,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		zAxis            = new Vector3 (0, 0, 1),
-		screenScale      = new Vector3 (0, 0, 0),
-		viewportSize     = new Vector2 (0, 0),
-		normalized       = new Vector3 (0, 0, 0),
-		upVector         = new Vector3 (0, 0, 0),
-		locationMatrix   = new Matrix4 (),
-		position         = new Vector3 (0, 0, 0),
-		orientation      = new Rotation4 (0, 0, 1, 0),
-		centerOfRotation = new Vector3 (0, 0, 0),
-		geoPosition      = new Vector3 (0, 0, 0),
-		geoOrientation   = new Rotation4 (0, 0, 1, 0);
-
 	function traverse (type, renderObject)
 	{
 		X3DViewpointNode .prototype .traverse .call (this, type, renderObject);
@@ -34124,7 +34111,6 @@ function (Fields,
 		this .navigationInfoNode      = new NavigationInfo (executionContext);
 		this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
 		this .projectionMatrix        = new Matrix4 ();
-		this .position                = new Vector3 ();
 		this .elevation               = 0;
 
 		switch (executionContext .specificationVersion)
@@ -34209,44 +34195,78 @@ function (Fields,
 				this .fieldOfViewScale_ = scale;
 			}
 		},
-		setPosition: function (value)
+		setPosition: (function ()
 		{
-			this .position_ .setValue (this .getGeoCoord (value, geoPosition));
-		},
-		getPosition: function () 
+			var geoPosition = new Vector3 (0, 0, 0);
+
+			return function (value)
+			{
+				this .position_ .setValue (this .getGeoCoord (value, geoPosition));
+			};
+		})(),
+		getPosition: (function ()
 		{
-			return this .getCoord (this .position_ .getValue (), position);
-		},
-		set_position__: function ()
+			var position = new Vector3 (0, 0, 0);
+
+			return function () 
+			{
+				return this .getCoord (this .position_ .getValue (), position);
+			};
+		})(),
+		set_position__: (function ()
 		{
-			this .getCoord (this .position_ .getValue (), this .position);
+			var position = new Vector3 (0, 0, 0);
 
-			this .elevation = this .getGeoElevation (position .assign (this .position) .add (this .positionOffset_ .getValue ()));
-		},
-		setOrientation: function (value)
+			return function ()
+			{
+				this .getCoord (this .position_ .getValue (), position);
+	
+				this .elevation = this .getGeoElevation (position .add (this .positionOffset_ .getValue ()));
+			};
+		})(),
+		setOrientation: (function ()
 		{
-			///  Returns the resulting orientation for this viewpoint.
+			var
+				locationMatrix = new Matrix4 (),
+				geoOrientation = new Rotation4 (0, 0, 1, 0);
 
-			var rotationMatrix = this .getLocationMatrix (this .position_ .getValue (), locationMatrix) .submatrix;
-
-			geoOrientation .setMatrix (rotationMatrix);
-
-			this .orientation_ .setValue (geoOrientation .inverse () .multLeft (value));
-		},
-		getOrientation: function ()
+			return function (value)
+			{
+				///  Returns the resulting orientation for this viewpoint.
+	
+				var rotationMatrix = this .getLocationMatrix (this .position_ .getValue (), locationMatrix) .submatrix;
+	
+				geoOrientation .setMatrix (rotationMatrix);
+	
+				this .orientation_ .setValue (geoOrientation .inverse () .multLeft (value));
+			};
+		})(),
+		getOrientation: (function ()
 		{
-			///  Returns the resulting orientation for this viewpoint.
+			var
+				locationMatrix = new Matrix4 (),
+				orientation    = new Rotation4 (0, 0, 1, 0);
 
-			var rotationMatrix = this .getLocationMatrix (this .position_ .getValue (), locationMatrix) .submatrix;
-
-			orientation .setMatrix (rotationMatrix);
-		
-			return orientation .multLeft (this .orientation_ .getValue ());
-		},
-		getCenterOfRotation: function ()
+			return function ()
+			{
+				///  Returns the resulting orientation for this viewpoint.
+	
+				var rotationMatrix = this .getLocationMatrix (this .position_ .getValue (), locationMatrix) .submatrix;
+	
+				orientation .setMatrix (rotationMatrix);
+			
+				return orientation .multLeft (this .orientation_ .getValue ());
+			};
+		})(),
+		getCenterOfRotation: (function ()
 		{
-			return this .getCoord (this .centerOfRotation_ .getValue (), centerOfRotation);
-		},
+			var centerOfRotation = new Vector3 (0, 0, 0);
+
+			return function ()
+			{
+				return this .getCoord (this .centerOfRotation_ .getValue (), centerOfRotation);
+			};
+		})(),
 		getFieldOfView: function ()
 		{
 			var fov = this .fieldOfView_ * this .fieldOfViewScale_;
@@ -34257,45 +34277,62 @@ function (Fields,
 		{
 			return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e9;
 		},
-		getUpVector: function ()
+		getUpVector: (function ()
 		{
-			return this .getGeoUpVector .call (this, position .assign (this .position) .add (this .positionOffset_ .getValue ()), upVector);
-		},
+			var
+				position = new Vector3 (0, 0, 0),
+				upVector = new Vector3 (0, 0, 0);
+
+			return function ()
+			{
+				this .getCoord (this .position_ .getValue (), position);
+
+				return this .getGeoUpVector .call (this, position .add (this .positionOffset_ .getValue ()), upVector);
+			};
+		})(),
 		getSpeedFactor: function ()
 		{
 			return (Math .max (this .elevation, 0.0) + 10) / 10 * this .speedFactor_ .getValue ();
 		},
-		getScreenScale: function (point, viewport)
+		getScreenScale: (function ()
 		{
-		   // Returns the screen scale in meter/pixel for on pixel.
+			var screenScale = new Vector3 (0, 0, 0);
 
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				size   = Math .tan (this .getFieldOfView () / 2) * 2 * point .abs (); // Assume we are on sphere.
-
-			size *= Math .abs (normalized .assign (point) .normalize () .dot (zAxis));
-
-			if (width > height)
-				size /= height;
-			else
-				size /= width;
-
-			return screenScale .set (size, size, size);
-		},
-		getViewportSize: function (viewport, nearValue)
+			return function (point, viewport)
+			{
+			   // Returns the screen scale in meter/pixel for on pixel.
+	
+				var
+					width  = viewport [2],
+					height = viewport [3],
+					size   = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+	
+				if (width > height)
+					size /= height;
+				else
+					size /= width;
+	
+				return screenScale .set (size, size, size);
+			};
+		})(),
+		getViewportSize: (function ()
 		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
-				aspect = width / height;
-		
-			if (aspect > 1)
-				return viewportSize .set (size * aspect, size);
+			var viewportSize = new Vector2 (0, 0);
 
-			return viewportSize .set (size, size / aspect);
-		},
+			return function (viewport, nearValue)
+			{
+				var
+					width  = viewport [2],
+					height = viewport [3],
+					size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
+					aspect = width / height;
+			
+				if (aspect > 1)
+					return viewportSize .set (size * aspect, size);
+	
+				return viewportSize .set (size, size / aspect);
+			};
+		})(),
 		getLookAtDistance: function (bbox)
 		{
 			return (bbox .size .abs () / 2) / Math .tan (this .getFieldOfView () / 2);
@@ -44420,10 +44457,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		screenScale  = new Vector3 (0, 0, 0),
-		viewportSize = new Vector2 (0, 0);
-
 	function OrthoViewpoint (executionContext)
 	{
 		X3DViewpointNode .call (this, executionContext);
@@ -44516,40 +44549,50 @@ function (Fields,
 		{
 			return 1e5;
 		},
-		getScreenScale: function (dummy, viewport)
+		getScreenScale: (function ()
 		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				sizeX  = this .sizeX,
-				sizeY  = this .sizeY,
-				aspect = width / height;
+			var screenScale = new Vector3 (0, 0, 0);
 
-			if (aspect > sizeX / sizeY)
+			return function (point, viewport)
 			{
-				var s = sizeY / height;
-
+				var
+					width  = viewport [2],
+					height = viewport [3],
+					sizeX  = this .sizeX,
+					sizeY  = this .sizeY,
+					aspect = width / height;
+	
+				if (aspect > sizeX / sizeY)
+				{
+					var s = sizeY / height;
+	
+					return screenScale .set (s, s, s);
+				}
+	
+				var s = sizeX / width;
+	
 				return screenScale .set (s, s, s);
-			}
-
-			var s = sizeX / width;
-
-			return screenScale .set (s, s, s);
-		},
-		getViewportSize: function (viewport, nearValue)
+			};
+		})(),
+		getViewportSize: (function ()
 		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				sizeX  = this .sizeX,
-				sizeY  = this .sizeY,
-				aspect = width / height;
+			var viewportSize = new Vector2 (0, 0);
 
-			if (aspect > sizeX / sizeY)
-				return viewportSize .set (sizeY * aspect, sizeY);
-
-			return viewportSize .set (sizeX, sizeX / aspect);
-		},
+			return function (viewport, nearValue)
+			{
+				var
+					width  = viewport [2],
+					height = viewport [3],
+					sizeX  = this .sizeX,
+					sizeY  = this .sizeY,
+					aspect = width / height;
+	
+				if (aspect > sizeX / sizeY)
+					return viewportSize .set (sizeY * aspect, sizeY);
+	
+				return viewportSize .set (sizeX, sizeX / aspect);
+			};
+		})(),
 		getLookAtDistance: function (bbox)
 		{
 			return bbox .size .abs () / 2 + 10;
@@ -68499,12 +68542,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		zAxis        = new Vector3 (0, 0, 1),
-		screenScale  = new Vector3 (0, 0, 0),
-		viewportSize = new Vector2 (0, 0),
-		normalized   = new Vector3 (0, 0, 0);
-
 	function Viewpoint (executionContext)
 	{
 		X3DViewpointNode .call (this, executionContext);
@@ -68578,37 +68615,47 @@ function (Fields,
 
 			return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
 		},
-		getScreenScale: function (point, viewport)
+		getScreenScale: (function ()
 		{
-		   // Returns the screen scale in meter/pixel for on pixel.
+			var screenScale = new Vector3 (0, 0, 0);
 
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				size   = Math .tan (this .getFieldOfView () / 2) * 2 * point .abs (); // Assume we are on sphere.
-
-			size *= Math .abs (normalized .assign (point) .normalize () .dot (zAxis));
-
-			if (width > height)
-				size /= height;
-			else
-				size /= width;
-
-			return screenScale .set (size, size, size);
-		},
-		getViewportSize: function (viewport, nearValue)
+			return function (point, viewport)
+			{
+			   // Returns the screen scale in meter/pixel for on pixel.
+	
+				var
+					width  = viewport [2],
+					height = viewport [3],
+					size   = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+	
+				if (width > height)
+					size /= height;
+				else
+					size /= width;
+	
+				return screenScale .set (size, size, size);
+			};
+		})(),
+		getViewportSize: (function ()
 		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
-				aspect = width / height;
+			var viewportSize = new Vector2 (0, 0);
 
-			if (aspect > 1)
-				return viewportSize .set (size * aspect, size);
+			return function (viewport, nearValue)
+			{
+				// Returns viewport size in meters.
+	
+				var
+					width  = viewport [2],
+					height = viewport [3],
+					size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
+					aspect = width / height;
 
-			return viewportSize .set (size, size / aspect);
-		},
+				if (aspect > 1)
+					return viewportSize .set (size * aspect, size);
+	
+				return viewportSize .set (size, size / aspect);
+			};
+		})(),
 		getLookAtDistance: function (bbox)
 		{
 			return (bbox .size .abs () / 2) / Math .tan (this .getFieldOfView () / 2);
