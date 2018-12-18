@@ -125,6 +125,7 @@ var X_ITE_TESTS = [
 	{ path: "Navigation/Depth.x3d" },
 	{ path: "Navigation/Gravitation.x3d" },
 	{ path: "Navigation/LogarithmicDepthBuffer.x3d" },
+	{ path: "Navigation/ScreenScale.x3d" },
 	{ path: "Navigation/ViewpointJump.x3d" },
 	{ path: "Navigation/WalkViewer.x3d" },
 	{ component: "Networking" },

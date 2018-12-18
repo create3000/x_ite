@@ -72,12 +72,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		zAxis        = new Vector3 (0, 0, 1),
-		screenScale  = new Vector3 (0, 0, 0),
-		viewportSize = new Vector2 (0, 0),
-		normalized   = new Vector3 (0, 0, 0);
-
 	function Viewpoint (executionContext)
 	{
 		X3DViewpointNode .call (this, executionContext);
@@ -151,37 +145,47 @@ function (Fields,
 
 			return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
 		},
-		getScreenScale: function (point, viewport)
+		getScreenScale: (function ()
 		{
-		   // Returns the screen scale in meter/pixel for on pixel.
+			var screenScale = new Vector3 (0, 0, 0);
 
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				size   = Math .tan (this .getFieldOfView () / 2) * 2 * point .abs (); // Assume we are on sphere.
-
-			size *= Math .abs (normalized .assign (point) .normalize () .dot (zAxis));
-
-			if (width > height)
-				size /= height;
-			else
-				size /= width;
-
-			return screenScale .set (size, size, size);
-		},
-		getViewportSize: function (viewport, nearValue)
+			return function (point, viewport)
+			{
+			   // Returns the screen scale in meter/pixel for on pixel.
+	
+				var
+					width  = viewport [2],
+					height = viewport [3],
+					size   = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+	
+				if (width > height)
+					size /= height;
+				else
+					size /= width;
+	
+				return screenScale .set (size, size, size);
+			};
+		})(),
+		getViewportSize: (function ()
 		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
-				aspect = width / height;
+			var viewportSize = new Vector2 (0, 0);
 
-			if (aspect > 1)
-				return viewportSize .set (size * aspect, size);
+			return function (viewport, nearValue)
+			{
+				// Returns viewport size in meters.
+	
+				var
+					width  = viewport [2],
+					height = viewport [3],
+					size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
+					aspect = width / height;
 
-			return viewportSize .set (size, size / aspect);
-		},
+				if (aspect > 1)
+					return viewportSize .set (size * aspect, size);
+	
+				return viewportSize .set (size, size / aspect);
+			};
+		})(),
 		getLookAtDistance: function (bbox)
 		{
 			return (bbox .size .abs () / 2) / Math .tan (this .getFieldOfView () / 2);
