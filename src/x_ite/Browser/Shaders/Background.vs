@@ -12,6 +12,10 @@ attribute vec4 x3d_Vertex;
 varying vec4 C; // color
 varying vec3 v; // point on geometry
 
+#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+varying float depth;
+#endif
+
 void
 main ()
 {
@@ -20,4 +24,8 @@ main ()
 	v           = p .xyz;
 	gl_Position = x3d_ProjectionMatrix * p;
 	C           = x3d_Color;
+
+	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+	depth = 1.0 + gl_Position .w;
+	#endif
 }
