@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-504 */
+/* X_ITE v4.2.15a-505 */
 
 (function () {
 
@@ -26623,36 +26623,31 @@ function (Fields,
 		},
 		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
 		{
-			try
-			{
-				var browser = this .getBrowser ();
+			var browser = this .getBrowser ();
 
-				logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && browser .getExtension ("EXT_frag_depth");
-	
-				if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
-					return;
+			logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && Boolean (browser .getExtension ("EXT_frag_depth"));
 
-				browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
-	
-				// Recompile shaders.
-	
-				browser .getPointShader () .parts_ [0] .url_ .addEvent ();
-				browser .getPointShader () .parts_ [1] .url_ .addEvent ();
-	
-				browser .getLineShader () .parts_ [0] .url_ .addEvent ();
-				browser .getLineShader () .parts_ [1] .url_ .addEvent ();
-	
-				browser .getGouraudShader () .parts_ [0] .url_ .addEvent ();
-				browser .getGouraudShader () .parts_ [1] .url_ .addEvent ();
-	
-				browser .getPhongShader () .parts_ [0] .url_ .addEvent ();
-				browser .getPhongShader () .parts_ [1] .url_ .addEvent ();
-	
-				browser .getShadowShader () .parts_ [0] .url_ .addEvent ();
-				browser .getShadowShader () .parts_ [1] .url_ .addEvent ();
-			}
-			catch (error)
-			{ }
+			if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
+				return;
+
+			browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
+
+			// Recompile shaders.
+
+			browser .getPointShader () .parts_ [0] .getValue () .url_ .addEvent ();
+			browser .getPointShader () .parts_ [1] .getValue () .url_ .addEvent ();
+
+			browser .getLineShader () .parts_ [0] .getValue () .url_ .addEvent ();
+			browser .getLineShader () .parts_ [1] .getValue () .url_ .addEvent ();
+
+			browser .getGouraudShader () .parts_ [0] .getValue () .url_ .addEvent ();
+			browser .getGouraudShader () .parts_ [1] .getValue () .url_ .addEvent ();
+
+			browser .getPhongShader () .parts_ [0] .getValue () .url_ .addEvent ();
+			browser .getPhongShader () .parts_ [1] .getValue () .url_ .addEvent ();
+
+			browser .getShadowShader () .parts_ [0] .getValue () .url_ .addEvent ();
+			browser .getShadowShader () .parts_ [1] .getValue () .url_ .addEvent ();
 		},
 	});
 
