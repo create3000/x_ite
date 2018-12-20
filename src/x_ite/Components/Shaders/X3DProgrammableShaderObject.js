@@ -98,7 +98,6 @@ function (Fields,
 	X3DProgrammableShaderObject .prototype =
 	{
 		constructor: X3DProgrammableShaderObject,
-		normalMatrixArray: new Float32Array (9),
 		initialize: function ()
 		{
 			var browser = this .getBrowser ();
@@ -843,129 +842,138 @@ function (Fields,
 			else
 				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));		
 		},
-		setLocalUniforms: function (gl, context)
+		setLocalUniforms: (function ()
 		{
-			var
-				linePropertiesNode   = context .linePropertiesNode,
-				materialNode         = context .materialNode,
-				textureNode          = context .textureNode,
-				textureTransformNode = context .textureTransformNode,
-				modelViewMatrix      = context .modelViewMatrix,
-				shaderObjects        = context .shaderObjects;
+			var normalMatrix = new Float32Array (9);
 
-			// Geometry type
-
-			gl .uniform1i (this .x3d_GeometryType, context .geometryType);
-
-			// Clip planes and local lights
-
-			this .numClipPlanes = 0;
-			this .numLights     = this .numGlobalLights;
-
-			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
-
-			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
-				shaderObjects [i] .setShaderUniforms (gl, this);
-
-			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
-			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
-
-			// Legacy before 4.1.4
-
-			if (this .numLights < this .x3d_MaxLights)
-				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
-
-			// Fog, there is always one
-
-			context .fogNode .setShaderUniforms (gl, this);
-
-			// LineProperties
-
-			if (linePropertiesNode && linePropertiesNode .applied_ .getValue ())
+			return function (gl, context)
 			{
-				var linewidthScaleFactor = linePropertiesNode .getLinewidthScaleFactor ();
-
-				gl .lineWidth (linewidthScaleFactor);
-				gl .uniform1f (this .x3d_LinewidthScaleFactor, linewidthScaleFactor);
-			}
-			else
-			{
-				gl .lineWidth (1);
-				gl .uniform1f (this .x3d_LinewidthScaleFactor, 1);
-			}
+				var
+					linePropertiesNode   = context .linePropertiesNode,
+					materialNode         = context .materialNode,
+					textureNode          = context .textureNode,
+					textureTransformNode = context .textureTransformNode,
+					modelViewMatrix      = context .modelViewMatrix,
+					shaderObjects        = context .shaderObjects;
 	
-			// Material
-
-			gl .uniform1i (this .x3d_ColorMaterial, context .colorMaterial);
-
-			if (materialNode)
-			{
-				// Lights
-
-				gl .uniform1i  (this .x3d_Lighting, true);
-
+				// Geometry type
+	
+				gl .uniform1i (this .x3d_GeometryType, context .geometryType);
+	
+				// Clip planes and local lights
+	
+				this .numClipPlanes = 0;
+				this .numLights     = this .numGlobalLights;
+	
+				gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
+	
+				for (var i = 0, length = shaderObjects .length; i < length; ++ i)
+					shaderObjects [i] .setShaderUniforms (gl, this);
+	
+				gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
+				gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
+	
+				// Legacy before 4.1.4
+	
+				if (this .numLights < this .x3d_MaxLights)
+					gl .uniform1i (this .x3d_LightType [this .numLights], 0);
+	
+				// Fog, there is always one
+	
+				context .fogNode .setShaderUniforms (gl, this);
+	
+				// LineProperties
+	
+				if (linePropertiesNode && linePropertiesNode .applied_ .getValue ())
+				{
+					var linewidthScaleFactor = linePropertiesNode .getLinewidthScaleFactor ();
+	
+					gl .lineWidth (linewidthScaleFactor);
+					gl .uniform1f (this .x3d_LinewidthScaleFactor, linewidthScaleFactor);
+				}
+				else
+				{
+					gl .lineWidth (1);
+					gl .uniform1f (this .x3d_LinewidthScaleFactor, 1);
+				}
+		
 				// Material
+	
+				gl .uniform1i (this .x3d_ColorMaterial, context .colorMaterial);
+	
+				if (materialNode)
+				{
+					// Lights
+	
+					gl .uniform1i  (this .x3d_Lighting, true);
+	
+					// Material
+	
+					materialNode .setShaderUniforms (gl, this);
+	
+					// Normal matrix
+	
+					gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
+				}
+				else
+				{
+					gl .uniform1i (this .x3d_Lighting, false);
+	
+					if (this .getCustom ())
+						gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
+				}
+	
+				if (textureNode)
+				{
+					textureNode .setShaderUniforms (gl, this, 0);
+					textureTransformNode .setShaderUniforms (gl, this);
+				}
+				else
+				{
+					this .textureTypeArray [0] = 0;
+					gl .uniform1iv (this .x3d_TextureType, this .textureTypeArray);
+	
+					if (this .getCustom ())
+					{
+						textureTransformNode .setShaderUniforms (gl, this);
+					}
+				}
+	
+				gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+			};
+		})(),
+		getNormalMatrix: (function ()
+		{
+			var normalMatrix = new Float32Array (9);
 
-				materialNode .setShaderUniforms (gl, this);
-
-				// Normal matrix
-
+			return function (modelViewMatrix)
+			{
 				try
 				{
-					// Set normal matrix.
-					var normalMatrix = this .normalMatrixArray;
-					normalMatrix [0] = modelViewMatrix [0]; normalMatrix [1] = modelViewMatrix [4]; normalMatrix [2] = modelViewMatrix [ 8];
-					normalMatrix [3] = modelViewMatrix [1]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [5] = modelViewMatrix [ 9];
-					normalMatrix [6] = modelViewMatrix [2]; normalMatrix [7] = modelViewMatrix [6]; normalMatrix [8] = modelViewMatrix [10];
+					var
+						x0 = modelViewMatrix [0], x1 = modelViewMatrix [1], x2 = modelViewMatrix [ 2],
+						y0 = modelViewMatrix [4], y1 = modelViewMatrix [5], y2 = modelViewMatrix [ 6],
+						z0 = modelViewMatrix [8], z1 = modelViewMatrix [9], z2 = modelViewMatrix [10];
+
+					var
+						xl = Math .sqrt (x0 * x0 + x1 * x1 + x2 * x2),
+						yl = Math .sqrt (y0 * y0 + y1 * y1 + y2 * y2),
+						zl = Math .sqrt (z0 * z0 + z1 * z1 + z2 * z2);
+
+					normalMatrix [0] = x0 / xl; normalMatrix [3] = x1 / xl; normalMatrix [6] = x2 / xl;
+					normalMatrix [1] = y0 / yl; normalMatrix [4] = y1 / yl; normalMatrix [7] = y2 / yl;
+					normalMatrix [2] = z0 / zl; normalMatrix [5] = z1 / zl; normalMatrix [8] = z2 / zl;
+
 					Matrix3 .prototype .inverse .call (normalMatrix);
-					gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
+
+					return normalMatrix;
 				}
 				catch (error)
 				{
-					gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, new Float32Array (Matrix3 .Identity));
+					new Float32Array (Matrix3 .Identity);
 				}
-			}
-			else
-			{
-				gl .uniform1i (this .x3d_Lighting, false);
-
-				if (this .getCustom ())
-				{
-					try
-					{
-						// Set normal matrix.
-						var normalMatrix = this .normalMatrixArray;
-						normalMatrix [0] = modelViewMatrix [0]; normalMatrix [1] = modelViewMatrix [4]; normalMatrix [2] = modelViewMatrix [ 8];
-						normalMatrix [3] = modelViewMatrix [1]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [5] = modelViewMatrix [ 9];
-						normalMatrix [6] = modelViewMatrix [2]; normalMatrix [7] = modelViewMatrix [6]; normalMatrix [8] = modelViewMatrix [10];
-						Matrix3 .prototype .inverse .call (normalMatrix);
-						gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
-					}
-					catch (error)
-					{
-						gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, new Float32Array (Matrix3 .Identity));
-					}
-				}
-			}
-
-			if (textureNode)
-			{
-				textureNode .setShaderUniforms (gl, this, 0);
-				textureTransformNode .setShaderUniforms (gl, this);
-			}
-			else
-			{
-				this .textureTypeArray [0] = 0;
-				gl .uniform1iv (this .x3d_TextureType, this .textureTypeArray);
-
-				if (this .getCustom ())
-				{
-					textureTransformNode .setShaderUniforms (gl, this);
-				}
-			}
-
-			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
-		},
+			};
+		})(),
 		enable: function (gl)
 		{
 			var browser = this .getBrowser ();

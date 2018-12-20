@@ -130,5 +130,6 @@ main ()
 		gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
 	else
 		gl_FragDepthEXT = gl_FragCoord .z;
+	//gl_FragColor .rgb = vec3 (1.0, 0.0, 0.0);
 	#endif
 }
