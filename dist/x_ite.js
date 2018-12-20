@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-503 */
+/* X_ITE v4.2.15a-504 */
 
 (function () {
 
@@ -58176,7 +58176,7 @@ function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
 			catch (error)
 			{
 				this .valid = false;
-				console .log (error);
+				//console .log (error);
 			}
 
 			return this;

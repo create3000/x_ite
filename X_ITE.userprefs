@@ -1,13 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Navigation/X3DViewpointNode.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Navigation/X3DViewpointNode.js" Line="206" Column="9" />
-      <File FileName="src/x_ite/Browser/Core/BrowserOptions.js" Line="399" Column="1" />
-      <File FileName="src/x_ite/Browser/Core/RenderingProperties.js" Line="83" Column="77" />
-      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="565" Column="5" />
+      <File FileName="src/x_ite/Components/Navigation/X3DViewpointNode.js" Line="213" Column="4" />
+      <File FileName="src/x_ite/Browser/Core/BrowserOptions.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Core/RenderingProperties.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
+      <File FileName="src/standard/Math/Geometry/ViewVolume.js" Line="185" Column="10" />
+      <File FileName="src/x_ite/Components/Navigation/NavigationInfo.js" Line="172" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
