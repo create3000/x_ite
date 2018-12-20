@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-508 */
+/* X_ITE v4.2.15a-509 */
 
 (function () {
 
@@ -45467,106 +45467,101 @@ function (Fields,
 			else
 				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));		
 		},
-		setLocalUniforms: (function ()
+		setLocalUniforms: function (gl, context)
 		{
-			var normalMatrix = new Float32Array (9);
+			var
+				linePropertiesNode   = context .linePropertiesNode,
+				materialNode         = context .materialNode,
+				textureNode          = context .textureNode,
+				textureTransformNode = context .textureTransformNode,
+				modelViewMatrix      = context .modelViewMatrix,
+				shaderObjects        = context .shaderObjects;
 
-			return function (gl, context)
+			// Geometry type
+
+			gl .uniform1i (this .x3d_GeometryType, context .geometryType);
+
+			// Clip planes and local lights
+
+			this .numClipPlanes = 0;
+			this .numLights     = this .numGlobalLights;
+
+			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
+
+			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
+				shaderObjects [i] .setShaderUniforms (gl, this);
+
+			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
+			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
+
+			// Legacy before 4.1.4
+
+			if (this .numLights < this .x3d_MaxLights)
+				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
+
+			// Fog, there is always one
+
+			context .fogNode .setShaderUniforms (gl, this);
+
+			// LineProperties
+
+			if (linePropertiesNode && linePropertiesNode .applied_ .getValue ())
 			{
-				var
-					linePropertiesNode   = context .linePropertiesNode,
-					materialNode         = context .materialNode,
-					textureNode          = context .textureNode,
-					textureTransformNode = context .textureTransformNode,
-					modelViewMatrix      = context .modelViewMatrix,
-					shaderObjects        = context .shaderObjects;
+				var linewidthScaleFactor = linePropertiesNode .getLinewidthScaleFactor ();
+
+				gl .lineWidth (linewidthScaleFactor);
+				gl .uniform1f (this .x3d_LinewidthScaleFactor, linewidthScaleFactor);
+			}
+			else
+			{
+				gl .lineWidth (1);
+				gl .uniform1f (this .x3d_LinewidthScaleFactor, 1);
+			}
 	
-				// Geometry type
-	
-				gl .uniform1i (this .x3d_GeometryType, context .geometryType);
-	
-				// Clip planes and local lights
-	
-				this .numClipPlanes = 0;
-				this .numLights     = this .numGlobalLights;
-	
-				gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
-	
-				for (var i = 0, length = shaderObjects .length; i < length; ++ i)
-					shaderObjects [i] .setShaderUniforms (gl, this);
-	
-				gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
-				gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
-	
-				// Legacy before 4.1.4
-	
-				if (this .numLights < this .x3d_MaxLights)
-					gl .uniform1i (this .x3d_LightType [this .numLights], 0);
-	
-				// Fog, there is always one
-	
-				context .fogNode .setShaderUniforms (gl, this);
-	
-				// LineProperties
-	
-				if (linePropertiesNode && linePropertiesNode .applied_ .getValue ())
-				{
-					var linewidthScaleFactor = linePropertiesNode .getLinewidthScaleFactor ();
-	
-					gl .lineWidth (linewidthScaleFactor);
-					gl .uniform1f (this .x3d_LinewidthScaleFactor, linewidthScaleFactor);
-				}
-				else
-				{
-					gl .lineWidth (1);
-					gl .uniform1f (this .x3d_LinewidthScaleFactor, 1);
-				}
-		
+			// Material
+
+			gl .uniform1i (this .x3d_ColorMaterial, context .colorMaterial);
+
+			if (materialNode)
+			{
+				// Lights
+
+				gl .uniform1i  (this .x3d_Lighting, true);
+
 				// Material
-	
-				gl .uniform1i (this .x3d_ColorMaterial, context .colorMaterial);
-	
-				if (materialNode)
-				{
-					// Lights
-	
-					gl .uniform1i  (this .x3d_Lighting, true);
-	
-					// Material
-	
-					materialNode .setShaderUniforms (gl, this);
-	
-					// Normal matrix
-	
+
+				materialNode .setShaderUniforms (gl, this);
+
+				// Normal matrix
+
+				gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
+			}
+			else
+			{
+				gl .uniform1i (this .x3d_Lighting, false);
+
+				if (this .getCustom ())
 					gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
-				}
-				else
+			}
+
+			if (textureNode)
+			{
+				textureNode .setShaderUniforms (gl, this, 0);
+				textureTransformNode .setShaderUniforms (gl, this);
+			}
+			else
+			{
+				this .textureTypeArray [0] = 0;
+				gl .uniform1iv (this .x3d_TextureType, this .textureTypeArray);
+
+				if (this .getCustom ())
 				{
-					gl .uniform1i (this .x3d_Lighting, false);
-	
-					if (this .getCustom ())
-						gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
-				}
-	
-				if (textureNode)
-				{
-					textureNode .setShaderUniforms (gl, this, 0);
 					textureTransformNode .setShaderUniforms (gl, this);
 				}
-				else
-				{
-					this .textureTypeArray [0] = 0;
-					gl .uniform1iv (this .x3d_TextureType, this .textureTypeArray);
-	
-					if (this .getCustom ())
-					{
-						textureTransformNode .setShaderUniforms (gl, this);
-					}
-				}
-	
-				gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
-			};
-		})(),
+			}
+
+			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+		},
 		getNormalMatrix: (function ()
 		{
 			var normalMatrix = new Float32Array (9);
@@ -45595,7 +45590,7 @@ function (Fields,
 				}
 				catch (error)
 				{
-					new Float32Array (Matrix3 .Identity);
+					return new Float32Array (Matrix3 .Identity);
 				}
 			};
 		})(),
