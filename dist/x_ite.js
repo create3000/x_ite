@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-505 */
+/* X_ITE v4.2.15a-506 */
 
 (function () {
 
@@ -26412,8 +26412,6 @@ function (Fields,
 
 			if (straightenHorizon !== undefined && straightenHorizon !== this .StraightenHorizon_ .getValue ())
 				this .StraightenHorizon_ = straightenHorizon;
-
-			this .LogarithmicDepthBuffer_ = false;
 		},
 		setAttributeSplashScreen: function ()
 		{

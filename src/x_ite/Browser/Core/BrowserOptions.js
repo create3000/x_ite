@@ -175,8 +175,6 @@ function (Fields,
 
 			if (straightenHorizon !== undefined && straightenHorizon !== this .StraightenHorizon_ .getValue ())
 				this .StraightenHorizon_ = straightenHorizon;
-
-			this .LogarithmicDepthBuffer_ = false;
 		},
 		setAttributeSplashScreen: function ()
 		{
