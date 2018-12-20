@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-509 */
+/* X_ITE v4.2.15a-510 */
 
 (function () {
 
@@ -26631,6 +26631,9 @@ function (Fields,
 			browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
 
 			// Recompile shaders.
+
+			browser .getBackgroundSphereShader () .parts_ [0] .getValue () .url_ .addEvent ();
+			browser .getBackgroundSphereShader () .parts_ [1] .getValue () .url_ .addEvent ();
 
 			browser .getPointShader () .parts_ [0] .getValue () .url_ .addEvent ();
 			browser .getPointShader () .parts_ [1] .getValue () .url_ .addEvent ();
@@ -71707,10 +71710,10 @@ function ($,
 });
 
 
-define('text!x_ite/Browser/Shaders/Background.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = p .xyz;\n\tgl_Position = x3d_ProjectionMatrix * p;\n\tC           = x3d_Color;\n}\n';});
+define('text!x_ite/Browser/Shaders/Background.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv           = p .xyz;\n\tgl_Position = x3d_ProjectionMatrix * p;\n\tC           = x3d_Color;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Background.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
+define('text!x_ite/Browser/Shaders/Background.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
