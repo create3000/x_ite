@@ -395,8 +395,7 @@ function (Fields,
 
 			// Recompile shaders.
 
-			browser .getBackgroundSphereShader () .parts_ [0] .getValue () .url_ .addEvent ();
-			browser .getBackgroundSphereShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			// There's no need to update background shader.
 
 			browser .getPointShader () .parts_ [0] .getValue () .url_ .addEvent ();
 			browser .getPointShader () .parts_ [1] .getValue () .url_ .addEvent ();
