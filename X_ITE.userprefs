@@ -1,12 +1,9 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Core/BrowserOptions.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
+      <File FileName="src/x_ite.html" Line="9" Column="41" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Background.fs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Background.vs" Line="24" Column="1" />
-      <File FileName="src/x_ite/Browser/Core/BrowserOptions.js" Line="398" Column="51" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

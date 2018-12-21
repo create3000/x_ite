@@ -65,7 +65,7 @@ function (Fields,
 		this .addChildObjects ("initLoadCount", new Fields .SFInt32 (),  // Pre load count, must be zero before the scene can be passed to the requester.
                              "loadCount",     new Fields .SFInt32 ()); // Load count of all X3DUrlObjects.
 
-		this .loadingObjects = { };
+		this .loadingObjects = new Set ();
 	}
 
 	Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
@@ -79,24 +79,20 @@ function (Fields,
 		{
 			if (! this .isMasterContext ())
 			{
-				var
-					scene          = this .getScene (),
-					loadingObjects = this .loadingObjects;
+				var scene = this .getScene ();
 
-				for (var id in loadingObjects)
-					scene .removeLoadCount (loadingObjects [id]);
+				for (var object of this .loadingObjects)
+					scene .removeLoadCount (object);
 			}
 
 			X3DScene .prototype .setExecutionContext .call (this, value);
 
 			if (! this .isMasterContext ())
 			{
-				var
-					scene          = this .getScene (),
-					loadingObjects = this .loadingObjects;
+				var scene = this .getScene ();
 
-				for (var id in loadingObjects)
-					scene .addLoadCount (loadingObjects [id]);
+				for (var object in this .loadingObjects)
+					scene .addLoadCount (object);
 			}
 		},
 		addInitLoadCount: function (node)
@@ -109,14 +105,12 @@ function (Fields,
 		},
 		addLoadCount: function (node)
 		{
-			var id = node .getId ();
-
-			if (this .loadingObjects .hasOwnProperty (id))
+			if (this .loadingObjects .has (node))
 				return;
 
-			this .loadingObjects [id] = node;
+			this .loadingObjects .add (node);
 
-			this .loadCount_ = this .loadCount_ .getValue () + 1;
+			this .loadCount_ = this .loadingObjects .size;
 
 			if (this === this .getBrowser () .getExecutionContext ())
 				this .getBrowser () .addLoadCount (node);
@@ -126,14 +120,12 @@ function (Fields,
 		},
 		removeLoadCount: function (node)
 		{
-			var id = node .getId ();
-
-			if (! this .loadingObjects .hasOwnProperty (id))
+			if (! this .loadingObjects .has (node))
 				return;
 
-			delete this .loadingObjects [id];
+			this .loadingObjects .delete (node);
 
-			this .loadCount_ = this .loadCount_ .getValue () - 1;
+			this .loadCount_ = this .loadingObjects .size;
 
 			if (this === this .getBrowser () .getExecutionContext ())
 				this .getBrowser () .removeLoadCount (node);
