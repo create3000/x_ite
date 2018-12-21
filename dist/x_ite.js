@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-511 */
+/* X_ITE v4.2.15a-512 */
 
 (function () {
 
@@ -38154,7 +38154,7 @@ function (Fields,
 		this .addChildObjects ("initLoadCount", new Fields .SFInt32 (),  // Pre load count, must be zero before the scene can be passed to the requester.
                              "loadCount",     new Fields .SFInt32 ()); // Load count of all X3DUrlObjects.
 
-		this .loadingObjects = { };
+		this .loadingObjects = new Set ();
 	}
 
 	Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
@@ -38168,24 +38168,20 @@ function (Fields,
 		{
 			if (! this .isMasterContext ())
 			{
-				var
-					scene          = this .getScene (),
-					loadingObjects = this .loadingObjects;
+				var scene = this .getScene ();
 
-				for (var id in loadingObjects)
-					scene .removeLoadCount (loadingObjects [id]);
+				for (var object of this .loadingObjects)
+					scene .removeLoadCount (object);
 			}
 
 			X3DScene .prototype .setExecutionContext .call (this, value);
 
 			if (! this .isMasterContext ())
 			{
-				var
-					scene          = this .getScene (),
-					loadingObjects = this .loadingObjects;
+				var scene = this .getScene ();
 
-				for (var id in loadingObjects)
-					scene .addLoadCount (loadingObjects [id]);
+				for (var object in this .loadingObjects)
+					scene .addLoadCount (object);
 			}
 		},
 		addInitLoadCount: function (node)
@@ -38198,14 +38194,12 @@ function (Fields,
 		},
 		addLoadCount: function (node)
 		{
-			var id = node .getId ();
-
-			if (this .loadingObjects .hasOwnProperty (id))
+			if (this .loadingObjects .has (node))
 				return;
 
-			this .loadingObjects [id] = node;
+			this .loadingObjects .add (node);
 
-			this .loadCount_ = this .loadCount_ .getValue () + 1;
+			this .loadCount_ = this .loadingObjects .size;
 
 			if (this === this .getBrowser () .getExecutionContext ())
 				this .getBrowser () .addLoadCount (node);
@@ -38215,14 +38209,12 @@ function (Fields,
 		},
 		removeLoadCount: function (node)
 		{
-			var id = node .getId ();
-
-			if (! this .loadingObjects .hasOwnProperty (id))
+			if (! this .loadingObjects .has (node))
 				return;
 
-			delete this .loadingObjects [id];
+			this .loadingObjects .delete (node);
 
-			this .loadCount_ = this .loadCount_ .getValue () - 1;
+			this .loadCount_ = this .loadingObjects .size;
 
 			if (this === this .getBrowser () .getExecutionContext ())
 				this .getBrowser () .removeLoadCount (node);
@@ -43883,7 +43875,7 @@ function (Fields,
 
 		this .loadSensor     = new LoadSensor (this .getPrivateScene ());
 		this .loadingTotal   = 0;
-		this .loadingObjects = { };
+		this .loadingObjects = new Set ();
 		this .loading        = false;
 		this .location       = getBaseURI (this .getElement () [0]);
 		this .defaultScene   = this .createScene (); // Inline node's empty scene.
@@ -43959,30 +43951,29 @@ function (Fields,
 		},
 		addLoadCount: function (object)
 		{
-		   var id = object .getId ();
-
-			if (this .loadingObjects .hasOwnProperty (id))
+			if (this .loadingObjects .has (object))
 				return;
 
 			++ this .loadingTotal;
-			this .loadingObjects [id] = object;
+
+			this .loadingObjects .add (object);
 			
-			this .setLoadCount (this .loadCount_ = this .loadCount_ .getValue () + 1);
+			this .setLoadCount (this .loadingObjects .size);
 			this .setCursor ("DEFAULT");
 		},
 		removeLoadCount: function (object)
 		{
-         var id = object .getId ();
-
-			if (! this .loadingObjects .hasOwnProperty (id))
+			if (! this .loadingObjects .has (object))
 				return;
 
-			delete this .loadingObjects [id];
+			this .loadingObjects .delete (object);
 
-			this .setLoadCount (this .loadCount_ = this .loadCount_ .getValue () - 1);
+			this .setLoadCount (this .loadingObjects .size);
 		},
 		setLoadCount: function (value)
 		{
+			this .loadCount_ = value;
+
 			if (value)
 			{
 				var string = sprintf .sprintf (value == 1 ? _ ("Loading %d file") : _ ("Loading %d files"), value);
@@ -44001,9 +43992,10 @@ function (Fields,
 		},
 		resetLoadCount: function ()
 		{
-			this .loadCount_     = 0;
-			this .loadingTotal   = 0;
-			this .loadingObjects = { };			   
+			this .loadCount_   = 0;
+			this .loadingTotal = 0;
+
+			this .loadingObjects .clear ();			   
 		},
 	};
 
