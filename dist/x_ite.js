@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-523 */
+/* X_ITE v4.2.15a-524 */
 
 (function () {
 
@@ -86926,6 +86926,7 @@ function ($,
 		
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
+		this .audio    = $("<audio></audio>");
 		this .urlStack = new Fields .MFString ();
 	}
 
@@ -86971,7 +86972,6 @@ function ($,
 			this .url_    .addInterest ("set_url__",    this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
-			this .audio = $("<audio></audio>");
 			this .audio .on ("error", this .setError .bind (this));
 			this .audio .bind ("abort", this .setError .bind (this));
 
@@ -103170,6 +103170,8 @@ function ($,
 		
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
+		this .canvas   = $("<canvas></canvas>");
+		this .video    = $("<video></video>");
 		this .urlStack = new Fields .MFString ();
 	}
 
@@ -103220,9 +103222,6 @@ function ($,
 			this .url_    .addInterest ("set_url__",    this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
-			this .canvas = $("<canvas></canvas>");
-
-			this .video = $("<video></video>");
 			this .video .on ("error", this .setError .bind (this));
 			this .video .bind ("abort", this .setError .bind (this));
 
