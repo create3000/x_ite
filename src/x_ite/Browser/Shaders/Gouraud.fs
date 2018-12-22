@@ -4,12 +4,8 @@
 #extension GL_EXT_frag_depth : enable
 #endif
 
-//precision lowp float;
-//precision lowp int;
-/*precision mediump float;
-precision mediump int;*/
-precision highp float;
-precision highp int;
+precision mediump float;
+precision mediump int;
 
 uniform int x3d_GeometryType;
 

@@ -1,11 +1,7 @@
 // -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
-//precision lowp float;
-//precision lowp int;
-/*precision mediump float;
-precision mediump int;*/
-precision highp float;
-precision highp int;
+precision mediump float;
+precision mediump int;
 
 uniform mat4 x3d_TextureMatrix [1];
 uniform mat3 x3d_NormalMatrix;
