@@ -318,23 +318,6 @@ function ($,
 							.bind (this),
 						},
 					} : undefined,
-					"mute-browser": {
-						name: _("Mute Browser"),
-						type: "checkbox",
-						selected: this .getBrowser () .mute_ .getValue (),
-						events: {
-							click: function ()
-							{
-								$("body > ul.context-menu-list") .fadeOut (500);
-
-								var mute = ! this .getBrowser () .mute_ .getValue ();
-
-								this .getBrowser () .mute_ = mute;
-								this .getBrowser () .getNotification () .string_ = mute ? _("Browser muted") : _("Browser unmuted");
-							}
-							.bind (this),
-						},
-					},
 					"fullscreen": {
 						name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
 						className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),
