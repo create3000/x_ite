@@ -951,13 +951,13 @@ function (Fields,
 						z0 = modelViewMatrix [8], z1 = modelViewMatrix [9], z2 = modelViewMatrix [10];
 
 					var
-						xl = Math .sqrt (x0 * x0 + x1 * x1 + x2 * x2),
-						yl = Math .sqrt (y0 * y0 + y1 * y1 + y2 * y2),
-						zl = Math .sqrt (z0 * z0 + z1 * z1 + z2 * z2);
+						xLength = Math .sqrt (x0 * x0 + x1 * x1 + x2 * x2),
+						yLength = Math .sqrt (y0 * y0 + y1 * y1 + y2 * y2),
+						zLength = Math .sqrt (z0 * z0 + z1 * z1 + z2 * z2);
 
-					normalMatrix [0] = x0 / xl; normalMatrix [3] = x1 / xl; normalMatrix [6] = x2 / xl;
-					normalMatrix [1] = y0 / yl; normalMatrix [4] = y1 / yl; normalMatrix [7] = y2 / yl;
-					normalMatrix [2] = z0 / zl; normalMatrix [5] = z1 / zl; normalMatrix [8] = z2 / zl;
+					normalMatrix [0] = x0 / xLength; normalMatrix [3] = x1 / xLength; normalMatrix [6] = x2 / xLength;
+					normalMatrix [1] = y0 / yLength; normalMatrix [4] = y1 / yLength; normalMatrix [7] = y2 / yLength;
+					normalMatrix [2] = z0 / zLength; normalMatrix [5] = z1 / zLength; normalMatrix [8] = z2 / zLength;
 
 					Matrix3 .prototype .inverse .call (normalMatrix);
 
