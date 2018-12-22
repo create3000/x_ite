@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-515 */
+/* X_ITE v4.2.15a-516 */
 
 (function () {
 
@@ -109861,9 +109861,9 @@ function ($,
 				SFMatrix4f:    { value: Fields .SFMatrix4f },
 				SFNode:        { value: SFNode },
 				SFRotation:    { value: Fields .SFRotation },
-				SFVec3d:       { value: Fields .SFVec2d },
+				SFVec2d:       { value: Fields .SFVec2d },
 				SFVec2f:       { value: Fields .SFVec2f },
-				SFVec2d:       { value: Fields .SFVec3d },
+				SFVec3d:       { value: Fields .SFVec3d },
 				SFVec3f:       { value: Fields .SFVec3f },
 				SFVec4d:       { value: Fields .SFVec4d },
 				SFVec4f:       { value: Fields .SFVec4f },
