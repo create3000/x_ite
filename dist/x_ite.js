@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-522 */
+/* X_ITE v4.2.15a-523 */
 
 (function () {
 
@@ -34689,23 +34689,6 @@ function ($,
 							.bind (this),
 						},
 					} : undefined,
-					"mute-browser": {
-						name: _("Mute Browser"),
-						type: "checkbox",
-						selected: this .getBrowser () .mute_ .getValue (),
-						events: {
-							click: function ()
-							{
-								$("body > ul.context-menu-list") .fadeOut (500);
-
-								var mute = ! this .getBrowser () .mute_ .getValue ();
-
-								this .getBrowser () .mute_ = mute;
-								this .getBrowser () .getNotification () .string_ = mute ? _("Browser muted") : _("Browser unmuted");
-							}
-							.bind (this),
-						},
-					},
 					"fullscreen": {
 						name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
 						className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),
@@ -71951,26 +71934,7 @@ function (Fields)
 
 	X3DSoundContext .prototype =
 	{
-		initialize: function ()
-		{
-			this .volume_ .addInterest ("set_volume__", this);
-			this .mute_   .addInterest ("set_mute__", this);
-
-			var
-				volume = this .getLocalStorage () ["X3DSoundContext.volume"],
-				mute   = this .getLocalStorage () ["X3DSoundContext.mute"];
-
-			if (volume !== undefined) this .volume_ = volume;
-			if (mute   !== undefined) this .mute_   = mute;
-		},
-		set_volume__: function (volume)
-		{
-			this .getLocalStorage () ["X3DSoundContext.volume"] = volume .getValue ();
-		},
-		set_mute__: function (mute)
-		{
-			this .getLocalStorage () ["X3DSoundContext.mute"] = mute .getValue ();
-		},
+		initialize: function () { },
 	};
 
 	return X3DSoundContext;
