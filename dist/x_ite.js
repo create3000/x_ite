@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-517 */
+/* X_ITE v4.2.15a-518 */
 
 (function () {
 
@@ -45570,13 +45570,13 @@ function (Fields,
 						z0 = modelViewMatrix [8], z1 = modelViewMatrix [9], z2 = modelViewMatrix [10];
 
 					var
-						xl = Math .sqrt (x0 * x0 + x1 * x1 + x2 * x2),
-						yl = Math .sqrt (y0 * y0 + y1 * y1 + y2 * y2),
-						zl = Math .sqrt (z0 * z0 + z1 * z1 + z2 * z2);
+						xLength = Math .sqrt (x0 * x0 + x1 * x1 + x2 * x2),
+						yLength = Math .sqrt (y0 * y0 + y1 * y1 + y2 * y2),
+						zLength = Math .sqrt (z0 * z0 + z1 * z1 + z2 * z2);
 
-					normalMatrix [0] = x0 / xl; normalMatrix [3] = x1 / xl; normalMatrix [6] = x2 / xl;
-					normalMatrix [1] = y0 / yl; normalMatrix [4] = y1 / yl; normalMatrix [7] = y2 / yl;
-					normalMatrix [2] = z0 / zl; normalMatrix [5] = z1 / zl; normalMatrix [8] = z2 / zl;
+					normalMatrix [0] = x0 / xLength; normalMatrix [3] = x1 / xLength; normalMatrix [6] = x2 / xLength;
+					normalMatrix [1] = y0 / yLength; normalMatrix [4] = y1 / yLength; normalMatrix [7] = y2 / yLength;
+					normalMatrix [2] = z0 / zLength; normalMatrix [5] = z1 / zLength; normalMatrix [8] = z2 / zLength;
 
 					Matrix3 .prototype .inverse .call (normalMatrix);
 
@@ -119092,17 +119092,15 @@ function ($,
 	}
 
 	Object .assign (X3D,
-		Fields,
 	{
 		require:                     require,
 		define:                      define,
+
 		getBrowser:                  getBrowser,
 		createBrowser:               createBrowser,
+
 		X3DConstants:                X3DConstants,
-		X3DFieldDefinition:          X3DFieldDefinition,
-		FieldDefinitionArray:        FieldDefinitionArray,
-		X3DField:                    X3DField,
-		X3DArrayField:               X3DArrayField,
+		X3DBrowser:                  X3DBrowser,
 		X3DExecutionContext:         X3DExecutionContext,
 		X3DScene:                    X3DScene,
 		ComponentInfo:               ComponentInfo,
@@ -119117,6 +119115,51 @@ function ($,
 		X3DProtoDeclaration:         X3DProtoDeclaration,
 		RouteArray:                  RouteArray,
 		X3DRoute:                    X3DRoute,
+
+		X3DFieldDefinition:          X3DFieldDefinition,
+		FieldDefinitionArray:        FieldDefinitionArray,
+
+		X3DField:                    X3DField,
+		X3DArrayField:               X3DArrayField,
+
+		SFColor:                     Fields .SFColor,
+		SFColorRGBA:                 Fields .SFColorRGBA,
+		SFImage:                     Fields .SFImage,
+		SFMatrix3d:                  Fields .SFMatrix3d,
+		SFMatrix3f:                  Fields .SFMatrix3f,
+		SFMatrix4d:                  Fields .SFMatrix4d,
+		SFMatrix4f:                  Fields .SFMatrix4f,
+		SFNode:                      Fields .SFNode,
+		SFRotation:                  Fields .SFRotation,
+		SFVec2d:                     Fields .SFVec2d,
+		SFVec2f:                     Fields .SFVec2f,
+		SFVec3d:                     Fields .SFVec3d,
+		SFVec3f:                     Fields .SFVec3f,
+		SFVec4d:                     Fields .SFVec4d,
+		SFVec4f:                     Fields .SFVec4f,
+		VrmlMatrix:                  Fields .VrmlMatrix,
+							              
+		MFBool:                      Fields .MFBool,
+		MFColor:                     Fields .MFColor,
+		MFColorRGBA:                 Fields .MFColorRGBA,
+		MFDouble:                    Fields .MFDouble,
+		MFFloat:                     Fields .MFFloat,
+		MFImage:                     Fields .MFImage,
+		MFInt32:                     Fields .MFInt32,
+		MFMatrix3d:                  Fields .MFMatrix3d,
+		MFMatrix3f:                  Fields .MFMatrix3f,
+		MFMatrix4d:                  Fields .MFMatrix4d,
+		MFMatrix4f:                  Fields .MFMatrix4f,
+		MFNode:                      Fields .MFNode,
+		MFRotation:                  Fields .MFRotation,
+		MFString:                    Fields .MFString,
+		MFTime:                      Fields .MFTime,
+		MFVec2d:                     Fields .MFVec2d,
+		MFVec2f:                     Fields .MFVec2f,
+		MFVec3d:                     Fields .MFVec3d,
+		MFVec3f:                     Fields .MFVec3f,
+		MFVec4d:                     Fields .MFVec4d,
+		MFVec4f:                     Fields .MFVec4f,
 	});
 
 	return X3D;
