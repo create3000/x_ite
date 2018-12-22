@@ -136,6 +136,10 @@ function ($,
 
 			this .set_url__ ();
 		},
+		getElement: function ()
+		{
+			return this .audio [0];
+		},
 		set_url__: function ()
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);

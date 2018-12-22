@@ -90,6 +90,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Shape", test: "Appearance" },
 	{ component: "Shape", test: "Material" },
 	{ component: "Shape", test: "TwoSidedMaterial" },
+	{ component: "Sound", test: "AudioClip" },
 	{ component: "Text", test: "FontStyle" },
 	{ component: "Text", test: "Text" },
 	{ component: "Texturing", test: "ImageTexture" },

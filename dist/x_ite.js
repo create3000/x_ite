@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-520 */
+/* X_ITE v4.2.15a-521 */
 
 (function () {
 
@@ -87016,6 +87016,10 @@ function ($,
 			this .audio [0] .crossOrigin = "Anonymous";
 
 			this .set_url__ ();
+		},
+		getElement: function ()
+		{
+			return this .audio [0];
 		},
 		set_url__: function ()
 		{
