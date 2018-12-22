@@ -1023,7 +1023,7 @@ function (Fields,
 		
 						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-						if (lighting || shaderNode .getCustom ())
+						if (lighting)
 							gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, shaderNode .getNormalMatrix (modelViewMatrix));
 
 						shaderNode .setParticle (gl, p, particle, modelViewMatrix);
@@ -1050,7 +1050,7 @@ function (Fields,
 	
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 	
-							if (lighting || shaderNode .getCustom ())
+							if (lighting)
 								gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, shaderNode .getNormalMatrix (modelViewMatrix));
 	
 							shaderNode .setParticle (gl, p, particle, modelViewMatrix);

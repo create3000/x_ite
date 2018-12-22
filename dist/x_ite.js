@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-514 */
+/* X_ITE v4.2.15a-515 */
 
 (function () {
 
@@ -61675,7 +61675,7 @@ function (Fields,
 		
 						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-						if (lighting || shaderNode .getCustom ())
+						if (lighting)
 							gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, shaderNode .getNormalMatrix (modelViewMatrix));
 
 						shaderNode .setParticle (gl, p, particle, modelViewMatrix);
@@ -61702,7 +61702,7 @@ function (Fields,
 	
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 	
-							if (lighting || shaderNode .getCustom ())
+							if (lighting)
 								gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, shaderNode .getNormalMatrix (modelViewMatrix));
 	
 							shaderNode .setParticle (gl, p, particle, modelViewMatrix);
