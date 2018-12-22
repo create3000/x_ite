@@ -451,6 +451,8 @@ function (FieldDefinitionArray,
 								}
 								else
 								{
+									generator .PushContainerField (field);
+
 									stream .string += ">\n";
 
 									generator .IncIndent ();
@@ -463,6 +465,8 @@ function (FieldDefinitionArray,
 
 									stream .string += generator .Indent ();
 									stream .string += "</fieldValue>\n";
+
+									generator .PopContainerField ();
 								}
 
 								break;
@@ -471,6 +475,8 @@ function (FieldDefinitionArray,
 							{
 								if (field .getValue () !== null)
 								{
+									generator .PushContainerField (field);
+
 									stream .string += generator .Indent ();
 									stream .string += "<fieldValue";
 									stream .string += " ";
@@ -488,7 +494,9 @@ function (FieldDefinitionArray,
 									generator .DecIndent ();
 
 									stream .string += generator .Indent ();
-									stream .string += "</fieldValue>\n";		
+									stream .string += "</fieldValue>\n";	
+	
+									generator .PopContainerField ();
 									break;
 								}
 		

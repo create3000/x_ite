@@ -882,7 +882,7 @@ function (X3DEventObject,
 									case X3DConstants .SFNode:
 									case X3DConstants .MFNode:
 									{
-										generator .PushContainerField (null);
+										generator .PushContainerField (field);
 
 										stream .string += ">\n";
 
