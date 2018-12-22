@@ -81,6 +81,7 @@ function ($,
 		
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
+		this .audio    = $("<audio></audio>");
 		this .urlStack = new Fields .MFString ();
 	}
 
@@ -126,7 +127,6 @@ function ($,
 			this .url_    .addInterest ("set_url__",    this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
-			this .audio = $("<audio></audio>");
 			this .audio .on ("error", this .setError .bind (this));
 			this .audio .bind ("abort", this .setError .bind (this));
 

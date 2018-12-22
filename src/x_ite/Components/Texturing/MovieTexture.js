@@ -86,6 +86,8 @@ function ($,
 		
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
+		this .canvas   = $("<canvas></canvas>");
+		this .video    = $("<video></video>");
 		this .urlStack = new Fields .MFString ();
 	}
 
@@ -136,9 +138,6 @@ function ($,
 			this .url_    .addInterest ("set_url__",    this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
-			this .canvas = $("<canvas></canvas>");
-
-			this .video = $("<video></video>");
 			this .video .on ("error", this .setError .bind (this));
 			this .video .bind ("abort", this .setError .bind (this));
 
