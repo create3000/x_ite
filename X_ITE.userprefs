@@ -1,11 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Sound/AudioClip.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Sound/AudioClip.js" Line="83" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/MovieTexture.js" Line="88" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/MovieTexture.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DBaseNode.js" Line="901" Column="1" />
+      <File FileName="src/x_ite/Components/Core/X3DPrototypeInstance.js" Line="455" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

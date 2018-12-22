@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-524 */
+/* X_ITE v4.2.15a-525 */
 
 (function () {
 
@@ -25865,7 +25865,7 @@ function (X3DEventObject,
 									case X3DConstants .SFNode:
 									case X3DConstants .MFNode:
 									{
-										generator .PushContainerField (null);
+										generator .PushContainerField (field);
 
 										stream .string += ">\n";
 
@@ -38893,6 +38893,8 @@ function (FieldDefinitionArray,
 								}
 								else
 								{
+									generator .PushContainerField (field);
+
 									stream .string += ">\n";
 
 									generator .IncIndent ();
@@ -38905,6 +38907,8 @@ function (FieldDefinitionArray,
 
 									stream .string += generator .Indent ();
 									stream .string += "</fieldValue>\n";
+
+									generator .PopContainerField ();
 								}
 
 								break;
@@ -38913,6 +38917,8 @@ function (FieldDefinitionArray,
 							{
 								if (field .getValue () !== null)
 								{
+									generator .PushContainerField (field);
+
 									stream .string += generator .Indent ();
 									stream .string += "<fieldValue";
 									stream .string += " ";
@@ -38930,7 +38936,9 @@ function (FieldDefinitionArray,
 									generator .DecIndent ();
 
 									stream .string += generator .Indent ();
-									stream .string += "</fieldValue>\n";		
+									stream .string += "</fieldValue>\n";	
+	
+									generator .PopContainerField ();
 									break;
 								}
 		
