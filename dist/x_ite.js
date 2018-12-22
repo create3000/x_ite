@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-518 */
+/* X_ITE v4.2.15a-519 */
 
 (function () {
 
@@ -45756,8 +45756,11 @@ function (Fields,
 		{
 			gl .disableVertexAttribArray (this .x3d_Vertex);
 		},
-		setParticle: function (gl, id, particle, modelViewMatrix)
+		setParticle: function (gl, id, particle, modelViewMatrix, normalMatrix)
 		{
+			if (normalMatrix)
+				gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
+
 			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 
 			gl .uniform1i (this .x3d_ParticleId,          id);
@@ -61614,7 +61617,7 @@ function (Fields,
 
 				Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-				shaderNode .setParticle (gl, p, particle, modelViewMatrix);
+				shaderNode .setParticle (gl, p, particle, modelViewMatrix, false);
 
 				gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 			}
@@ -61655,7 +61658,7 @@ function (Fields,
 	
 				var
 					materialNode    = context .materialNode,
-					lighting        = materialNode || shaderNode .getCustom (),
+					normalMatrix    = materialNode || shaderNode .getCustom (),
 					modelViewMatrix = context .modelViewMatrix,
 					x               = modelViewMatrix [12],
 					y               = modelViewMatrix [13],
@@ -61675,10 +61678,7 @@ function (Fields,
 		
 						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-						if (lighting)
-							gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, shaderNode .getNormalMatrix (modelViewMatrix));
-
-						shaderNode .setParticle (gl, p, particle, modelViewMatrix);
+						shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
 		
 						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 							gl .drawArrays (shaderNode .primitiveMode, i, 3);
@@ -61702,10 +61702,7 @@ function (Fields,
 	
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 	
-							if (lighting)
-								gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, shaderNode .getNormalMatrix (modelViewMatrix));
-	
-							shaderNode .setParticle (gl, p, particle, modelViewMatrix);
+							shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
 
 							gl .enable (gl .CULL_FACE);
 							gl .cullFace (gl .FRONT);
@@ -61732,10 +61729,7 @@ function (Fields,
 
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-							if (lighting)
-								gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, shaderNode .getNormalMatrix (modelViewMatrix));
-	
-							shaderNode .setParticle (gl, p, particle, modelViewMatrix);
+							shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
 
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 						}
