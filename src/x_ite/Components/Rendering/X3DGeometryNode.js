@@ -1004,7 +1004,6 @@ function (Fields,
 				var
 					materialNode    = context .materialNode,
 					lighting        = materialNode || shaderNode .getCustom (),
-					normalMatrix    = shaderNode .normalMatrixArray,
 					modelViewMatrix = context .modelViewMatrix,
 					x               = modelViewMatrix [12],
 					y               = modelViewMatrix [13],
@@ -1024,15 +1023,8 @@ function (Fields,
 		
 						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-						if (lighting)
-						{
-							// Set normal matrix.
-							normalMatrix [0] = modelViewMatrix [0]; normalMatrix [1] = modelViewMatrix [4]; normalMatrix [2] = modelViewMatrix [ 8];
-							normalMatrix [3] = modelViewMatrix [1]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [5] = modelViewMatrix [ 9];
-							normalMatrix [6] = modelViewMatrix [2]; normalMatrix [7] = modelViewMatrix [6]; normalMatrix [8] = modelViewMatrix [10];
-							Matrix3 .prototype .inverse .call (normalMatrix);
-							gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, normalMatrix);
-						}
+						if (lighting || shaderNode .getCustom ())
+							gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, shaderNode .getNormalMatrix (modelViewMatrix));
 
 						shaderNode .setParticle (gl, p, particle, modelViewMatrix);
 		
@@ -1058,15 +1050,8 @@ function (Fields,
 	
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 	
-							if (lighting)
-							{
-								// Set normal matrix.
-								normalMatrix [0] = modelViewMatrix [0]; normalMatrix [1] = modelViewMatrix [4]; normalMatrix [2] = modelViewMatrix [ 8];
-								normalMatrix [3] = modelViewMatrix [1]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [5] = modelViewMatrix [ 9];
-								normalMatrix [6] = modelViewMatrix [2]; normalMatrix [7] = modelViewMatrix [6]; normalMatrix [8] = modelViewMatrix [10];
-								Matrix3 .prototype .inverse .call (normalMatrix);
-								gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, normalMatrix);
-							}
+							if (lighting || shaderNode .getCustom ())
+								gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, shaderNode .getNormalMatrix (modelViewMatrix));
 	
 							shaderNode .setParticle (gl, p, particle, modelViewMatrix);
 
