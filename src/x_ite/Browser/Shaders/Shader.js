@@ -174,11 +174,12 @@ function (Shadow,
 			// Adjust precision of struct types;
 
 			var
-				types = Types,
-				mf    = source .match (/\s*precision\s+(lowp|mediump|highp)\s+float\s*;/),
-				mi    = source .match (/\s*precision\s+(lowp|mediump|highp)\s+int\s*;/),
-				pf    = mf ? mf [1] : "mediump",
-				pi    = mi ? mi [1] : "mediump";
+				sourceNoComments = source .replace (/\/\*[\s\S]*?\*\/|\/\/.*?\n/g, ""),
+				types            = Types,
+				mf               = sourceNoComments .match (/\s*precision\s+(lowp|mediump|highp)\s+float\s*;/),
+				mi               = sourceNoComments .match (/\s*precision\s+(lowp|mediump|highp)\s+int\s*;/),
+				pf               = mf ? mf [1] : "mediump",
+				pi               = mi ? mi [1] : "mediump";
 
 			types = types .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, pf + " $1");
 			types = types .replace (/mediump\s+(int)/g, pi + " $1");
