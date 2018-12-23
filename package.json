@@ -1,7 +1,7 @@
 {
 	"name": "x_ite",
-	"version": "4.2.15a",
-	"revision": "536",
+	"version": "4.2.15",
+	"revision": "537",
 	"description": "X_ITE X3D Browser",
 	"main": "src/x_ite.js",
 	"repository": {
@@ -15,7 +15,7 @@
 	],
 	"author": "Holger Seelig <holger.seelig@yahoo.de>",
 	"license": "GPL-3.0",
-	"homepage": "https://github.com/create3000/x_ite#readme",
+	"homepage": "http://create3000.de/x_ite/getting-started/",
 	"contributors": [
 		{
 			"name": "Holger Seelig",
