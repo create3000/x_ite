@@ -945,19 +945,9 @@ function (Fields,
 			{
 				try
 				{
-					var
-						x0 = modelViewMatrix [0], x1 = modelViewMatrix [1], x2 = modelViewMatrix [ 2],
-						y0 = modelViewMatrix [4], y1 = modelViewMatrix [5], y2 = modelViewMatrix [ 6],
-						z0 = modelViewMatrix [8], z1 = modelViewMatrix [9], z2 = modelViewMatrix [10];
-
-					var
-						xLength = Math .sqrt (x0 * x0 + x1 * x1 + x2 * x2),
-						yLength = Math .sqrt (y0 * y0 + y1 * y1 + y2 * y2),
-						zLength = Math .sqrt (z0 * z0 + z1 * z1 + z2 * z2);
-
-					normalMatrix [0] = x0 / xLength; normalMatrix [3] = x1 / xLength; normalMatrix [6] = x2 / xLength;
-					normalMatrix [1] = y0 / yLength; normalMatrix [4] = y1 / yLength; normalMatrix [7] = y2 / yLength;
-					normalMatrix [2] = z0 / zLength; normalMatrix [5] = z1 / zLength; normalMatrix [8] = z2 / zLength;
+					normalMatrix [0] = modelViewMatrix [0], normalMatrix [3] = modelViewMatrix [1], normalMatrix [6] = modelViewMatrix [ 2],
+					normalMatrix [1] = modelViewMatrix [4], normalMatrix [4] = modelViewMatrix [5], normalMatrix [7] = modelViewMatrix [ 6],
+					normalMatrix [2] = modelViewMatrix [8], normalMatrix [5] = modelViewMatrix [9], normalMatrix [8] = modelViewMatrix [10];
 
 					Matrix3 .prototype .inverse .call (normalMatrix);
 
