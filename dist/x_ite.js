@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-527 */
+/* X_ITE v4.2.15a-528 */
 
 (function () {
 
@@ -86716,27 +86716,13 @@ function (X3DChildNode,
 				{
 					if (this .isPaused_ .getValue ())
 					{
-						if (this .loop_ .getValue ())
-						{
-							this .do_stop ();
-							this .do_pause ();
-						}
-						else
-						{
-							this .do_stop ();
-						}
+						this .do_stop ();
+						this .do_pause ();
 					}
 					else
 					{
-						if (this .loop_ .getValue ())
-						{
-							this .do_stop ();
-							this .do_start ();
-						}
-						else
-						{
-							this .do_stop ();
-						}
+						this .do_stop ();
+						this .do_start ();
 					}
 				}
 				else
