@@ -158,7 +158,6 @@ function ($,
 		{
 			this .setMedia (null);
 			this .urlStack .setValue (this .url_);
-			this .audio .bind ("abort", this .setError .bind (this));
 			this .audio .bind ("canplaythrough", this .setAudio .bind (this));
 			this .loadNext ();
 		},
@@ -166,7 +165,6 @@ function ($,
 		{
 			if (this .urlStack .length === 0)
 			{
-				this .audio .unbind ("abort");
 				this .audio .unbind ("canplaythrough");
 				this .duration_changed_ = -1;
 				this .setLoadState (X3DConstants .FAILED_STATE);
@@ -207,7 +205,6 @@ function ($,
 					console .info ("Done loading audio:", this .URL .toString ());
 			}
 
-			this .audio .unbind ("abort");
 			this .audio .unbind ("canplaythrough");
 			this .setMedia (this .audio);
 			this .setLoadState (X3DConstants .COMPLETE_STATE);
