@@ -139,7 +139,6 @@ function ($,
 			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .video .on ("error", this .setError .bind (this));
-			//this .video .bind ("abort", this .setError .bind (this));
 
 			this .video [0] .preload     = "auto";
 			this .video [0] .volume      = 0;
@@ -170,6 +169,7 @@ function ($,
 		{
 			this .setMedia (null);
 			this .urlStack .setValue (this .url_);
+			this .video .bind ("abort", this .setError .bind (this));
 			this .video .bind ("canplaythrough", this .setVideo .bind (this));
 			this .loadNext ();
 		},
@@ -177,6 +177,8 @@ function ($,
 		{
 			if (this .urlStack .length === 0)
 			{
+				this .video .unbind ("abort");
+				this .video .unbind ("canplaythrough");
 			   this .duration_changed_ = -1;
 				this .clearTexture (); // clearTexture
 				this .setLoadState (X3DConstants .FAILED_STATE);
@@ -219,6 +221,9 @@ function ($,
 
 			try
 			{
+				this .video .unbind ("abort");
+				this .video .unbind ("canplaythrough");
+
 				var
 			      video  = this .video [0],
 					width  = video .videoWidth,
@@ -238,8 +243,7 @@ function ($,
 
 				setTimeout (function ()
 				{
-				   this .video .unbind ("canplaythrough");
-				   this .setMedia (this .video);
+					this .setMedia (this .video);
 					this .setTexture (width, height, false, new Uint8Array (data), true);
 					this .setLoadState (X3DConstants .COMPLETE_STATE);
 				}
