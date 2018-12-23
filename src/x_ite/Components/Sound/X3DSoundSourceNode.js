@@ -120,6 +120,7 @@ function (X3DChildNode,
 					if (this .isPaused_ .getValue ())
 					{
 						this .do_stop ();
+						this .do_start ();
 						this .do_pause ();
 					}
 					else
