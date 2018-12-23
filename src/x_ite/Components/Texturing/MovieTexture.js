@@ -178,8 +178,9 @@ function ($,
 			{
 				this .video .unbind ("canplaythrough");
 			   this .duration_changed_ = -1;
-				this .clearTexture (); // clearTexture
+				this .clearTexture ();
 				this .setLoadState (X3DConstants .FAILED_STATE);
+				this .stop ();
 				return;
 			}
 
@@ -187,7 +188,6 @@ function ($,
 
 			this .URL = new URI (this .urlStack .shift ());
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
-			// In Firefox we don't need getRelativePath if there is a file scheme, do we in Chrome???
 	
 			this .video .attr ("src", this .URL);
 		},

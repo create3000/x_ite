@@ -1,14 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Texturing/MovieTexture.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Sound/X3DSoundSourceNode.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Sound/X3DSoundSourceNode.js" Line="132" Column="9" />
-      <File FileName="src/x_ite/Components/Sound/AudioClip.js" Line="131" Column="6" />
+      <File FileName="src/x_ite/Components/Sound/X3DSoundSourceNode.js" Line="121" Column="26" />
+      <File FileName="src/x_ite/Components/Sound/AudioClip.js" Line="131" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/MovieTexture.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Time/X3DTimeDependentNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/MovieTexture.js" Line="143" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/ImageTexture.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

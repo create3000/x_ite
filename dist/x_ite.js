@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-534 */
+/* X_ITE v4.2.15a-535 */
 
 (function () {
 
@@ -86715,16 +86715,9 @@ function (X3DChildNode,
 				if (this .isActive_ .getValue ())
 				{
 					if (this .isPaused_ .getValue ())
-					{
-						this .do_stop ();
-						this .do_start ();
-						this .do_pause ();
-					}
+						this .set_pause ();
 					else
-					{
-						this .do_stop ();
-						this .do_start ();
-					}
+						this .set_start ();
 				}
 				else
 				{
@@ -86813,7 +86806,9 @@ function (X3DChildNode,
 					this .cycleTime_   = this .getBrowser () .getCurrentTime ();
 				}
 				else
+				{
 					this .stop ();
+				}
 			}
 		},
 		set_time: function ()
@@ -86998,6 +86993,7 @@ function ($,
 				this .audio .unbind ("canplaythrough");
 				this .duration_changed_ = -1;
 				this .setLoadState (X3DConstants .FAILED_STATE);
+				this .stop ();
 				return;
 			}
 
@@ -87005,7 +87001,6 @@ function ($,
 
 			this .URL = new URI (this .urlStack .shift ());
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
-			// In Firefox we don't need getRelativePath if there is a file scheme, do we in Chrome???
 	
 			this .audio .attr ("src", this .URL);
 		},
@@ -103247,8 +103242,9 @@ function ($,
 			{
 				this .video .unbind ("canplaythrough");
 			   this .duration_changed_ = -1;
-				this .clearTexture (); // clearTexture
+				this .clearTexture ();
 				this .setLoadState (X3DConstants .FAILED_STATE);
+				this .stop ();
 				return;
 			}
 
@@ -103256,7 +103252,6 @@ function ($,
 
 			this .URL = new URI (this .urlStack .shift ());
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
-			// In Firefox we don't need getRelativePath if there is a file scheme, do we in Chrome???
 	
 			this .video .attr ("src", this .URL);
 		},

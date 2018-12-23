@@ -118,16 +118,9 @@ function (X3DChildNode,
 				if (this .isActive_ .getValue ())
 				{
 					if (this .isPaused_ .getValue ())
-					{
-						this .do_stop ();
-						this .do_start ();
-						this .do_pause ();
-					}
+						this .set_pause ();
 					else
-					{
-						this .do_stop ();
-						this .do_start ();
-					}
+						this .set_start ();
 				}
 				else
 				{
@@ -216,7 +209,9 @@ function (X3DChildNode,
 					this .cycleTime_   = this .getBrowser () .getCurrentTime ();
 				}
 				else
+				{
 					this .stop ();
+				}
 			}
 		},
 		set_time: function ()
