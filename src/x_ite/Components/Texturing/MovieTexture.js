@@ -139,7 +139,7 @@ function ($,
 			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .video .on ("error", this .setError .bind (this));
-			this .video .bind ("abort", this .setError .bind (this));
+			//this .video .bind ("abort", this .setError .bind (this));
 
 			this .video [0] .preload     = "auto";
 			this .video [0] .volume      = 0;

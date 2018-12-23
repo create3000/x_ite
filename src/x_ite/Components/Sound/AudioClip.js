@@ -128,7 +128,7 @@ function ($,
 			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .audio .on ("error", this .setError .bind (this));
-			this .audio .bind ("abort", this .setError .bind (this));
+			//this .audio .bind ("abort", this .setError .bind (this));
 
 			this .audio [0] .preload     = "auto";
 			this .audio [0] .volume      = 0;

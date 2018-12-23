@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-529 */
+/* X_ITE v4.2.15a-530 */
 
 (function () {
 
@@ -86958,7 +86958,7 @@ function ($,
 			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .audio .on ("error", this .setError .bind (this));
-			this .audio .bind ("abort", this .setError .bind (this));
+			//this .audio .bind ("abort", this .setError .bind (this));
 
 			this .audio [0] .preload     = "auto";
 			this .audio [0] .volume      = 0;
@@ -103208,7 +103208,7 @@ function ($,
 			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .video .on ("error", this .setError .bind (this));
-			this .video .bind ("abort", this .setError .bind (this));
+			//this .video .bind ("abort", this .setError .bind (this));
 
 			this .video [0] .preload     = "auto";
 			this .video [0] .volume      = 0;

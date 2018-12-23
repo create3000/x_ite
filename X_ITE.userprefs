@@ -1,10 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Sound/X3DSoundSourceNode.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="953" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Sound/X3DSoundSourceNode.js" Line="132" Column="9" />
+      <File FileName="src/x_ite/Components/Sound/AudioClip.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Time/X3DTimeDependentNode.js" Line="351" Column="11" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
