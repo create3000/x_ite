@@ -5,9 +5,9 @@
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Sound/X3DSoundSourceNode.js" Line="121" Column="26" />
-      <File FileName="src/x_ite/Components/Sound/AudioClip.js" Line="131" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/MovieTexture.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Sound/X3DSoundSourceNode.js" Line="166" Column="5" />
+      <File FileName="src/x_ite/Components/Sound/AudioClip.js" Line="174" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/MovieTexture.js" Line="191" Column="2" />
       <File FileName="src/x_ite/Components/Time/X3DTimeDependentNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Texturing/ImageTexture.js" Line="1" Column="1" />
     </Files>
