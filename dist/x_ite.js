@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15a-531 */
+/* X_ITE v4.2.15a-532 */
 
 (function () {
 
@@ -103313,13 +103313,9 @@ function ($,
 
 				var data = cx .getImageData (0, 0, width, height) .data;
 
-				setTimeout (function ()
-				{
-					this .setMedia (this .video);
-					this .setTexture (width, height, false, new Uint8Array (data), true);
-					this .setLoadState (X3DConstants .COMPLETE_STATE);
-				}
-				.bind (this), 16);
+				this .setMedia (this .video);
+				this .setTexture (width, height, false, new Uint8Array (data), true);
+				this .setLoadState (X3DConstants .COMPLETE_STATE);
 			}
 			catch (error)
 			{
