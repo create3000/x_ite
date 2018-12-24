@@ -955,7 +955,9 @@ function (Fields,
 				}
 				catch (error)
 				{
-					return new Float32Array (Matrix3 .Identity);
+					normalMatrix .set (Matrix3 .Identity);
+
+					return normalMatrix;
 				}
 			};
 		})(),
