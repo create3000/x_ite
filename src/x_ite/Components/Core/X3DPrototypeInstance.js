@@ -309,12 +309,12 @@ function (FieldDefinitionArray,
 		{
 			var generator = Generator .Get (stream);
 
-			if (generator .IsSharedNode (this))
-			{
-				stream .string += generator .Indent ();
-				stream .string += "<!-- NULL -->";		
-				return;
-			}
+//			if (generator .IsSharedNode (this))
+//			{
+//				stream .string += generator .Indent ();
+//				stream .string += "<!-- NULL -->";		
+//				return;
+//			}
 
 			generator .EnterScope ();
 
