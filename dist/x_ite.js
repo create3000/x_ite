@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16a-538 */
+/* X_ITE v4.2.16a-539 */
 
 (function () {
 
@@ -25640,12 +25640,12 @@ function (X3DEventObject,
 		{
 			var generator = Generator .Get (stream);
 
-//			if (generator .IsSharedNode (this))
-//			{
-//				stream .string += generator .Indent ();
-//				stream .string += "<!-- NULL -->";		
-//				return;
-//			}
+			if (generator .IsSharedNode (this))
+			{
+				stream .string += generator .Indent ();
+				stream .string += "<!-- NULL -->";		
+				return;
+			}
 
 			generator .EnterScope ();
 
@@ -38751,12 +38751,12 @@ function (FieldDefinitionArray,
 		{
 			var generator = Generator .Get (stream);
 
-//			if (generator .IsSharedNode (this))
-//			{
-//				stream .string += generator .Indent ();
-//				stream .string += "<!-- NULL -->";		
-//				return;
-//			}
+			if (generator .IsSharedNode (this))
+			{
+				stream .string += generator .Indent ();
+				stream .string += "<!-- NULL -->";		
+				return;
+			}
 
 			generator .EnterScope ();
 
