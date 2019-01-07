@@ -1,4 +1,4 @@
-/* X_ITE v4.2.15-537 */
+/* X_ITE v4.2.16a-538 */
 
 (function () {
 
@@ -24848,7 +24848,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.2.15";
+	return "4.2.16a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -25640,12 +25640,12 @@ function (X3DEventObject,
 		{
 			var generator = Generator .Get (stream);
 
-			if (generator .IsSharedNode (this))
-			{
-				stream .string += generator .Indent ();
-				stream .string += "<!-- NULL -->";		
-				return;
-			}
+//			if (generator .IsSharedNode (this))
+//			{
+//				stream .string += generator .Indent ();
+//				stream .string += "<!-- NULL -->";		
+//				return;
+//			}
 
 			generator .EnterScope ();
 
@@ -38751,12 +38751,12 @@ function (FieldDefinitionArray,
 		{
 			var generator = Generator .Get (stream);
 
-			if (generator .IsSharedNode (this))
-			{
-				stream .string += generator .Indent ();
-				stream .string += "<!-- NULL -->";		
-				return;
-			}
+//			if (generator .IsSharedNode (this))
+//			{
+//				stream .string += generator .Indent ();
+//				stream .string += "<!-- NULL -->";		
+//				return;
+//			}
 
 			generator .EnterScope ();
 
@@ -45565,7 +45565,9 @@ function (Fields,
 				}
 				catch (error)
 				{
-					return new Float32Array (Matrix3 .Identity);
+					normalMatrix .set (Matrix3 .Identity);
+
+					return normalMatrix;
 				}
 			};
 		})(),
