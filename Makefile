@@ -28,7 +28,7 @@ all:
 	perl -pi -e 's|"x_ite.css"|"dist/x_ite.css"|sg'   x_ite.min.html
 	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg' x_ite.min.html
 
-	perl -pi -e 's|"components/nurbs.js"|"dist/nurbs.js"|sg'                               x_ite.min.html
+	perl -pi -e 's|"components/nurbs.js"|"dist/nurbs.min.js"|sg'                           x_ite.min.html
 	perl -pi -e 's|"components/rigid-body-physics.js"|"dist/rigid-body-physics.min.js"|sg' x_ite.min.html
 
 	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'                       x_ite.min.html
