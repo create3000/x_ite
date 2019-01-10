@@ -4,7 +4,7 @@
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Scripting/Script.js" Line="344" Column="41" />
+      <File FileName="src/x_ite/Components/Scripting/Script.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Fields/SFBool.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Basic/X3DField.js" Line="1" Column="1" />
     </Files>

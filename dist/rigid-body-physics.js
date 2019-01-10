@@ -3742,21 +3742,21 @@ function (SupportedNodes,
 
 	function createInstance (executionContext) { return new this (executionContext); }
 
-	for (var name in RigidBodyPhysics)
+	for (var typeName in RigidBodyPhysics)
 	{
-		var interfaceDeclaration = RigidBodyPhysics [name];
+		var interfaceDeclaration = RigidBodyPhysics [typeName];
 
 		interfaceDeclaration .createInstance = createInstance .bind (interfaceDeclaration);
 
-		SupportedNodes [name]                 = interfaceDeclaration; 
-		SupportedNodes [name .toUpperCase ()] = interfaceDeclaration; 
+		SupportedNodes [typeName]                 = interfaceDeclaration; 
+		SupportedNodes [typeName .toUpperCase ()] = interfaceDeclaration; 
 	}
 
 	return RigidBodyPhysics;
 });
 
 
-define("rigid-body-physics", function(){});
+define("components/rigid-body-physics", function(){});
 
 
 }());

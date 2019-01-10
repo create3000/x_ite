@@ -35,25 +35,27 @@
 		"url": "https://github.com/create3000/x_ite/issues"
 	},
 	"devDependencies": {
-		"require": "latest",
-		"requirejs": "latest",
-		"requirejs-text": "latest",
-		"uglify-js-es6": "latest",
-		"jquery": "latest",
+		"ammojs": "latest",
+		"bezier-js": "latest",
+		"css-element-queries": "latest",
+		"jquery": "^3.3.1",
+		"jquery-contextmenu": "^2.7.1",
 		"jquery-mousewheel": "latest",
 		"jquery.fullscreen": "latest",
-		"css-element-queries": "latest",
-		"pako": "latest",
 		"libtess": "latest",
+		"nurbs": "latest",
 		"opentype.js": "latest",
-		"bezier-js": "latest",
-		"ammojs": "latest",
+		"pako": "^1.0.7",
+		"require": "latest",
+		"requirejs": "^2.3.6",
+		"requirejs-text": "latest",
 		"sprintf-js": "latest",
-		"jquery-contextmenu": "latest"
+		"uglify-js-es6": "latest"
 	},
 	"scripts": {
 		"lint": "jshint **",
 		"build": "make",
 		"-prebuild:js": "npm run lint"
-	}
+	},
+	"dependencies": {}
 }

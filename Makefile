@@ -12,6 +12,9 @@ all:
 	node_modules/uglify-js-es6/bin/uglifyjs --compress --mangle -- dist/x_ite.js > dist/x_ite.min.js
 	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
 
+	node_modules/requirejs/bin/r.js -o nurbs.build.js
+	node_modules/uglify-js-es6/bin/uglifyjs --compress --mangle -- dist/nurbs.js > dist/nurbs.min.js
+
 	node_modules/requirejs/bin/r.js -o rigid-body-physics.build.js
 	node_modules/uglify-js-es6/bin/uglifyjs --mangle -- dist/rigid-body-physics.js > dist/rigid-body-physics.min.js
 
@@ -22,9 +25,11 @@ all:
 	perl -pi -e 's|\s*<script type="text/javascript" src="\.\./node_modules/requirejs/require.js"></script>\n||sg' x_ite.min.html
 	perl -pi -e 's|\s*<script type="text/javascript" src="x_ite.config.js"></script>\n||sg'                        x_ite.min.html
 
-	perl -pi -e 's|"x_ite.css"|"dist/x_ite.css"|sg'                             x_ite.min.html
-	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'                           x_ite.min.html
-	perl -pi -e 's|"rigid-body-physics.js"|"dist/rigid-body-physics.min.js"|sg' x_ite.min.html
+	perl -pi -e 's|"x_ite.css"|"dist/x_ite.css"|sg'   x_ite.min.html
+	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg' x_ite.min.html
+
+	perl -pi -e 's|"components/nurbs.js"|"dist/nurbs.js"|sg'                               x_ite.min.html
+	perl -pi -e 's|"components/rigid-body-physics.js"|"dist/rigid-body-physics.min.js"|sg' x_ite.min.html
 
 	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'                       x_ite.min.html
 	perl -pi -e 's|class="links"|class="links min-links"|sg'                    x_ite.min.html

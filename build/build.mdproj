@@ -22,5 +22,7 @@
     <None Include="parts\x_ite.start.frag" />
     <None Include="parts\rigid-body-physics.end.frag" />
     <None Include="parts\rigid-body-physics.start.frag" />
+    <None Include="parts\nurbs.start.frag" />
+    <None Include="parts\nurbs.end.frag" />
   </ItemGroup>
 </Project>

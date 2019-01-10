@@ -40,6 +40,8 @@
     <None Include="LICENSE.txt" />
     <None Include="rigid-body-physics.js" />
     <None Include="rigid-body-physics.min.js" />
+    <None Include="nurbs.js" />
+    <None Include="nurbs.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

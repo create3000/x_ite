@@ -1,10 +1,10 @@
 
 ({
 	baseUrl: "src",
-	name: "rigid-body-physics",
+	name: "components/rigid-body-physics",
 	out: "dist/rigid-body-physics.js",
 	optimize: "none",
-	mainConfigFile: "src/rigid-body-physics.config.js",
+	mainConfigFile: "src/components/rigid-body-physics.config.js",
 	exclude: [
 		"jquery",
 		"text",
