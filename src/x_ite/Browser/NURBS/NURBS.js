@@ -205,12 +205,10 @@ function (Vector3)
 		
 			if (closed)
 			{
-				var last = knots [knots .length - 1];
-
 				for (var i = 1, length = order - 1; i < length; ++ i)
-					knots .push (last + (knots [i] - knots [i - 1]));
+					knots .push (knots [knots .length - 1] + (knots [i] - knots [i - 1]));
 			}
-		
+
 			return knots;
 		},
 		getUVWeights: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)

@@ -164,6 +164,8 @@ function (NURBS,
 				vClosed       = this .getVClosed (this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .vKnot_ .getValue (), this .weight_, this .controlPointNode),
 				controlPoints = this .getUVControlPoints (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .controlPointNode);
 
+//			console .log (uClosed, vClosed, this .uClosed_ .getValue (), this .vClosed_ .getValue ());
+
 			// Knots
 		
 			var
