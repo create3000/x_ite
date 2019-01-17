@@ -632,5 +632,6 @@
     <Folder Include="x_ite\Components\X_ITE\" />
     <Folder Include="lib\ammojs\" />
     <Folder Include="components\" />
+    <Folder Include="lib\Neuer Ordner\" />
   </ItemGroup>
 </Project>

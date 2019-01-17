@@ -50,9 +50,11 @@
 define ([
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 	"x_ite/Bits/X3DConstants",
+	"verb",
 ],
 function (X3DParametricGeometryNode, 
-          X3DConstants)
+          X3DConstants,
+          verb)
 {
 "use strict";
 
@@ -66,6 +68,14 @@ function (X3DParametricGeometryNode,
 	X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
 	{
 		constructor: X3DNurbsSurfaceGeometryNode,
+		initialize: function ()
+		{
+			X3DParametricGeometryNode .prototype .initialize .call (this);
+		},
+		build: function ()
+		{
+			console .log (verb .geom .NurbsSurface);
+		},
 	});
 
 	return X3DNurbsSurfaceGeometryNode;

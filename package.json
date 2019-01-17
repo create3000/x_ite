@@ -43,7 +43,6 @@
 		"jquery-mousewheel": "latest",
 		"jquery.fullscreen": "latest",
 		"libtess": "latest",
-		"nurbs": "latest",
 		"opentype.js": "latest",
 		"pako": "^1.0.7",
 		"require": "latest",
