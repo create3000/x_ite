@@ -213,6 +213,39 @@ function (Vector3)
 		
 			return knots;
 		},
+		getUVWeights: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)
+		{
+			if (weight .length !== uDimension * vDimension)
+				return undefined;
+
+			var weights = [ ];
+
+			for (var u = 0; u < uDimension; ++ u)
+			{
+				var w = [ ];
+
+				weights .push (w);
+
+				for (var v = 0; v < vDimension; ++ v)
+				{
+					w .push (weight [v * uDimension + u]);
+				}
+
+				if (vClosed)
+				{
+					for (var i = 1, length = vOrder - 1; i < length; ++ i)
+						w .push (w [i]);
+				}
+			}
+	
+			if (uClosed)
+			{
+				for (var i = 1, length = uOrder - 1; i < length; ++ i)
+					weights .push (weights [i]);
+			}
+	
+			return weights;
+		},
 		getUVControlPoints: (function ()
 		{
 			var point = new Vector3 (0, 0, 0)

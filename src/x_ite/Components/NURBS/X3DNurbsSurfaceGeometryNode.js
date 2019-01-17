@@ -69,6 +69,8 @@ function (NURBS,
 		X3DParametricGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DNurbsSurfaceGeometryNode);
+
+		this .mesh = { };
 	}
 
 	X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
@@ -125,6 +127,10 @@ function (NURBS,
 
 			return false;
 		},
+		getUVWeights: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)
+		{
+			return NURBS .getUVWeights (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight);
+		},
 		getUVControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
 		{
 			return NURBS .getUVControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode);
@@ -166,6 +172,8 @@ function (NURBS,
 				uScale = uKnots [uKnots .length - 1] - uKnots [0],
 				vScale = vKnots [vKnots .length - 1] - vKnots [0];
 
+			var weights = this .getUVWeights (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .weight_);
+
 			// Initialize NURBS tesselllator
 
 //			console .log (this .uOrder_ .getValue (), this .vOrder_ .getValue ());
@@ -176,58 +184,17 @@ function (NURBS,
 				uDegree = this .uOrder_ .getValue () - 1,
 				vDegree = this .vOrder_ .getValue () - 1;
 
-			var surface = nurbs ({
+			var surface = this .surface = (this .surface || nurbs) ({
 				boundary: ["open", "open"],
 				degree: [uDegree, vDegree],
 				knots: [uKnots, vKnots],
-				//weights: weights,
+				weights: weights,
 				points: controlPoints,
 				debug: false,
 			});
 
-//			var state = {
-//				uPoints: 6,
-//				vPoints: 6,
-//				twist: 0,
-//				minorRadius: 1,
-//				majorRadius: 4,
-//				uFrequency: 0,
-//				vFrequency: 0,
-//				weightStrength: 0,
-//			};
-//
-//			var controlPoints = [];
-//			var controlWeights = [];
-//			controlPoints.length = state.uPoints;
-//			controlWeights.length = state.uPoints;
-//			for (var i = 0; i < state.uPoints; i++) {
-//				if (!controlPoints[i]) controlPoints[i] = [];
-//				if (!controlWeights[i]) controlWeights[i] = [];
-//				controlPoints[i].length = state.vPoints;
-//				controlWeights[i].length = state.vPoints;
-//				for (var j = 0; j < state.vPoints; j++) {
-//					var theta2 = j / state.vPoints * Math.PI * 2;
-//					var theta1 = (i + 0.5) / state.uPoints * Math.PI * 2 + (theta2 - Math.PI) * state.twist;
-//					var r2 = state.minorRadius * (1.0 + 0.5 * Math.cos(theta1 * state.uFrequency) * Math.sin(theta2 * state.vFrequency));
-//					var a = state.majorRadius + r2 * Math.cos(theta1);
-//					if (!controlPoints[i][j]) controlPoints[i][j] = [];
-//					controlPoints[i][j][0] = a * Math.cos(theta2);
-//					controlPoints[i][j][1] = r2 * Math.sin(theta1);
-//					controlPoints[i][j][2] = a * Math.sin(theta2);
-//					controlWeights[i][j] = 1.0 / (1.0 + 0.99 * state.weightStrength * Math.cos(theta2) * Math.sin(theta1));
-//				}
-//			}
-//
-//			var surface = nurbs ({
-//				boundary: ["open", "open"],
-//				degree: [2, 3],
-//				weights: controlWeights,
-//				points: controlPoints,
-//				debug: false,
-//			});
-
 			var
-				mesh        = sample ({ }, surface),
+				mesh        = sample (this .mesh, surface),
 				cells       = mesh .cells,
 				normals     = mesh .normals,
 				points      = mesh .positions,
