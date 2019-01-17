@@ -116,7 +116,7 @@ function (X3DGeometryNode,
 			var attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("addNodeEvent", this);
+				attribNodes [i] .removeInterest ("eventsProcessed", this);
 
 			attribNodes .length = 0;
 
@@ -129,13 +129,13 @@ function (X3DGeometryNode,
 			}
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("addNodeEvent", this);
+				attribNodes [i] .addInterest ("eventsProcessed", this);
 		},
 		set_color__: function ()
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("addNodeEvent", this);
+				this .colorNode .removeInterest ("eventsProcessed",   this);
 				this .colorNode .removeInterest ("set_transparent__", this);
 			}
 
@@ -143,7 +143,7 @@ function (X3DGeometryNode,
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("addNodeEvent", this);
+				this .colorNode .addInterest ("eventsProcessed",   this);
 				this .colorNode .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
@@ -158,34 +158,34 @@ function (X3DGeometryNode,
 		set_texCoord__: function ()
 		{
 			if (this .texCoordNode)
-				this .texCoordNode .removeInterest ("addNodeEvent", this);
+				this .texCoordNode .removeInterest ("eventsProcessed", this);
 
 			this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
 
 			if (this .texCoordNode)
-				this .texCoordNode .addInterest ("addNodeEvent", this);
+				this .texCoordNode .addInterest ("eventsProcessed", this);
 
 			this .setCurrentTexCoord (this .texCoordNode);
 		},
 		set_normal__: function ()
 		{
 			if (this .normalNode)
-				this .normalNode .removeInterest ("addNodeEvent", this);
+				this .normalNode .removeInterest ("eventsProcessed", this);
 
 			this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
 
 			if (this .normalNode)
-				this .normalNode .addInterest ("addNodeEvent", this);
+				this .normalNode .addInterest ("eventsProcessed", this);
 		},
 		set_coord__: function ()
 		{
 			if (this .coordNode)
-				this .coordNode .removeInterest ("addNodeEvent", this);
+				this .coordNode .removeInterest ("eventsProcessed", this);
 
 			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
 			if (this .coordNode)
-				this .coordNode .addInterest ("addNodeEvent", this);
+				this .coordNode .addInterest ("eventsProcessed", this);
 		},
 		getPolygonIndex: function (index)
 		{

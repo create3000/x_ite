@@ -135,14 +135,14 @@ function (Fields,
 		set_fontStyle__: function ()
 		{
 		   if (this .fontStyleNode)
-		      this .fontStyleNode .removeInterest ("addNodeEvent", this);
+		      this .fontStyleNode .removeInterest ("eventsProcessed", this);
 
 			this .fontStyleNode = X3DCast (X3DConstants .X3DFontStyleNode, this .fontStyle_);
 
 			if (! this .fontStyleNode)
 				this .fontStyleNode = this .getBrowser () .getDefaultFontStyle ();
 
-		   this .fontStyleNode .addInterest ("addNodeEvent", this);
+		   this .fontStyleNode .addInterest ("eventsProcessed", this);
 
 		   this .textGeometry = this .fontStyleNode .getTextGeometry (this);
 		},

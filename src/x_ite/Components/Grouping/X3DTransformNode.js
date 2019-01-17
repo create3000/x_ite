@@ -79,8 +79,6 @@ function (X3DTransformMatrix3DNode,
 		},
 		eventsProcessed: function ()
 		{
-			X3DTransformMatrix3DNode .prototype .eventsProcessed .call (this); // XXX, empty function call???
-			
 			this .setHidden (this .scale_ .x === 0 ||
 			                 this .scale_ .y === 0 ||
 			                 this .scale_ .z === 0);

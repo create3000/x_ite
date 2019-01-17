@@ -241,7 +241,6 @@ function (X3DEventObject,
 			this .initialize ();
 		},
 		initialize: function () { },
-		eventsProcessed: function () { },
 		create: function (executionContext)
 		{
 			return new (this .constructor) (executionContext);

@@ -621,6 +621,7 @@
     <None Include="components\nurbs.config.js" />
     <None Include="components\rigid-body-physics.js" />
     <None Include="components\rigid-body-physics.config.js" />
+    <None Include="x_ite\Browser\NURBS\NURBS.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
@@ -632,6 +633,6 @@
     <Folder Include="x_ite\Components\X_ITE\" />
     <Folder Include="lib\ammojs\" />
     <Folder Include="components\" />
-    <Folder Include="lib\Neuer Ordner\" />
+    <Folder Include="x_ite\Browser\NURBS\" />
   </ItemGroup>
 </Project>

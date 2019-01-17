@@ -48,81 +48,23 @@
 
 
 define ([
-	"x_ite/Base/X3DChildObject",
-	"x_ite/Base/Events",
 ],
-function (X3DChildObject,
-	       Events)
+function ()
 {
 "use strict";
 
-	function X3DEventObject (browser)
-	{
-		X3DChildObject .call (this);
-
-		this ._browser = browser;
-	}
-
-	X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prototype),
-	{
-		constructor: X3DEventObject,
-		getBrowser: function ()
+	var NURBS = {
+		getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
 		{
-			return this ._browser;
-		},
-		getExtendedEventHandling: function ()
-		{
+
 			return true;
 		},
-		addEvent: function (field)
+		getVClosed: function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
 		{
-			field .setSet (true);
 
-			if (field .getTainted ())
-				return;
-
-			field .setTainted (true);
-
-			this .addEventObject (field, Events .create (field));
+			return true;
 		},
-		addEventObject: function (field, event)
-		{
-			var browser = this .getBrowser ();
+	};
 
-			field .setSet (true);
-			browser .addBrowserEvent ();
-
-			// Register for processEvent
-
-			browser .addTaintedField (field, event);
-
-			// Register for eventsProcessed
-
-			if (this .getTainted ())
-			   return;
-
-			if (field .isInput () || (this .getExtendedEventHandling () && ! field .isOutput ()))
-			{
-				this .addNodeEvent ();
-			}
-		},
-		addNodeEvent: function ()
-		{
-			if (this .getTainted ())
-			   return;
-
-			var browser = this .getBrowser ();
-
-			this .setTainted (true);
-			browser .addTaintedNode (this);
-			browser .addBrowserEvent ();
-		},
-		processEvents: function ()
-		{
-			this .setTainted (false);
-			this .processInterests ();
-		},
-	});
-
-	return X3DEventObject;
+	return NURBS;
 });

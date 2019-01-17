@@ -102,18 +102,18 @@ function (X3DConstants,
 		{
 			if (this .geoOriginNode)
 			{
-				this .geoOriginNode .removeInterest ("set_origin__", this);
+				this .geoOriginNode .removeInterest ("set_origin__",    this);
 				this .geoOriginNode .removeInterest ("set_rotateYUp__", this);
-				this .geoOriginNode .removeInterest ("addNodeEvent", this);
+				this .geoOriginNode .removeInterest ("addNodeEvent",    this);
 			}
-		
+
 			this .geoOriginNode = X3DCast (X3DConstants .GeoOrigin, this .geoOrigin_);
-		
+
 			if (this .geoOriginNode)
 			{
-				this .geoOriginNode .addInterest ("set_origin__", this);
+				this .geoOriginNode .addInterest ("set_origin__",    this);
 				this .geoOriginNode .addInterest ("set_rotateYUp__", this);
-				this .geoOriginNode .addInterest ("addNodeEvent", this);
+				this .geoOriginNode .addInterest ("addNodeEvent",    this);
 			}
 		
 			this .set_origin__ ();

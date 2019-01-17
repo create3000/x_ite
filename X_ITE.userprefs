@@ -1,8 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="21" Column="39" />
+      <File FileName="src/x_ite.html" Line="21" Column="57" />
+      <File FileName="src/x_ite/Components/NURBS/X3DParametricGeometryNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js" Line="131" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/NurbsPatchSurface.js" Line="77" Column="63" />
+      <File FileName="src/x_ite/Components/Sound/Sound.js" Line="174" Column="1" />
+      <File FileName="src/x_ite/Components/Sound/AudioClip.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/PointSet.js" Line="152" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="188" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

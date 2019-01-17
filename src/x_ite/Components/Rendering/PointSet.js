@@ -125,7 +125,7 @@ function (Fields,
 			var attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("addNodeEvent", this);
+				attribNodes [i] .removeInterest ("eventsProcessed", this);
 
 			attribNodes .length = 0;
 
@@ -138,27 +138,27 @@ function (Fields,
 			}
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("addNodeEvent", this);
+				attribNodes [i] .addInterest ("eventsProcessed", this);
 		},
 		set_color__: function ()
 		{
 			if (this .colorNode)
-				this .colorNode .removeInterest ("addNodeEvent", this);
+				this .colorNode .removeInterest ("eventsProcessed", this);
 
 			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
 
 			if (this .colorNode)
-				this .colorNode .addInterest ("addNodeEvent", this);
+				this .colorNode .addInterest ("eventsProcessed", this);
 		},
 		set_coord__: function ()
 		{
 			if (this .coordNode)
-				this .coordNode .removeInterest ("addNodeEvent", this);
+				this .coordNode .removeInterest ("eventsProcessed", this);
 
 			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
 			if (this .coordNode)
-				this .coordNode .addInterest ("addNodeEvent", this);
+				this .coordNode .addInterest ("eventsProcessed", this);
 		},
 		build: function ()
 		{

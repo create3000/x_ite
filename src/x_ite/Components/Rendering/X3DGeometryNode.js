@@ -103,10 +103,12 @@ function (Fields,
 		this .addType (X3DConstants .X3DGeometryNode);
 			
 		this .addChildObjects ("transparent",  new Fields .SFBool (),
-		                       "bbox_changed", new Fields .SFTime ());
+		                       "bbox_changed", new Fields .SFTime (),
+		                       "rebuild",      new Fields .SFTime ());
 
 		this .transparent_  .setAccessType (X3DConstants .outputOnly);
 		this .bbox_changed_ .setAccessType (X3DConstants .outputOnly);
+		this .rebuild_      .setAccessType (X3DConstants .outputOnly);
 
 		// Members
 
@@ -179,20 +181,17 @@ function (Fields,
 		normal: new Vector3 (0, 0, 0),
 		setup: function ()
 		{
-			this .setTainted (true);
-		
 			X3DNode .prototype .setup .call (this);
 
-			this .addInterest ("eventsProcessed", this);
-			this .eventsProcessed ();
-
-			this .setTainted (false);
+			this .rebuild ();
 		},
 		initialize: function ()
 		{
 			X3DNode .prototype .initialize .call (this);
 
 			this .isLive () .addInterest ("set_live__", this);
+			this .addInterest ("eventsProcessed", this);
+			this .rebuild_ .addInterest ("rebuild", this);
 
 			var gl = this .getBrowser () .getContext ();
 
@@ -677,7 +676,11 @@ function (Fields,
 		},
 		eventsProcessed: function ()
 		{
-			X3DNode .prototype .eventsProcessed .call (this);
+			this .rebuild_ .addEvent ();
+		},
+		rebuild: function ()
+		{
+console .log (this .getId (), this .getTypeName ());
 
 			this .clear ();
 			this .build ();

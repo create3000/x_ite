@@ -90,8 +90,6 @@ function (Fields,
 		},
 		eventsProcessed: function ()
 		{
-			X3DTextureTransformNode .prototype .eventsProcessed .call (this);
-			
 			var matrix4 = this .getMatrix ();
 
 			matrix4 .assign (this .matrix_ .getValue ());

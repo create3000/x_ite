@@ -48,11 +48,15 @@
 
 
 define ([
+	"x_ite/Browser/NURBS/NURBS",
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
+	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"verb",
 ],
-function (X3DParametricGeometryNode, 
+function (NURBS,
+          X3DParametricGeometryNode, 
+          X3DCast,
           X3DConstants,
           verb)
 {
@@ -71,9 +75,83 @@ function (X3DParametricGeometryNode,
 		initialize: function ()
 		{
 			X3DParametricGeometryNode .prototype .initialize .call (this);
+
+			this .texCoord_     .addInterest ("set_texCoord__",     this);
+			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+
+			this .set_texCoord__ ();
+			this .set_controlPoint__ ();
+		},
+		set_texCoord__: function ()
+		{
+			if (this .texCoordNode)
+				this .texCoordNode .removeInterest ("eventsProcessed", this);
+
+			if (this .nurbsTexCoordNode)
+				this .nurbsTexCoordNode .removeInterest ("eventsProcessed", this);
+
+			this .texCoordNode      = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
+			this .nurbsTexCoordNode = X3DCast (X3DConstants .NurbsTextureCoordinate,   this .texCoord_);
+
+			if (this .texCoordNode)
+				this .texCoordNode .addInterest ("eventsProcessed", this);
+
+			if (this .nurbsTexCoordNode)
+				this .nurbsTexCoordNode .addInterest ("eventsProcessed", this);
+		},
+		set_controlPoint__: function ()
+		{
+			if (this .controlPointNode)
+				this .controlPointNode .removeInterest ("eventsProcessed", this);
+
+			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+
+			if (this .controlPointNode)
+				this .controlPointNode .addInterest ("eventsProcessed", this);
+		},
+		getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
+		{
+			if (this .uClosed_ .getValue ())
+				return NURBS .getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode);
+
+			return false;
+		},
+		getVClosed: function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
+		{
+			if (this .vClosed_ .getValue ())
+				return NURBS .getVClosed (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode);
+
+			return false;
 		},
 		build: function ()
 		{
+			if (this .uOrder_ .getValue () < 2)
+				return;
+		
+			if (this .vOrder_ .getValue () < 2)
+				return;
+		
+			if (this .uDimension_ .getValue () < this .uOrder_ .getValue ())
+				return;
+		
+			if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
+				return;
+		
+			if (! this .controlPointNode)
+				return;
+
+			if (this .controlPointNode .getSize () !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
+				return;
+
+			// Order and dimension are now positive numbers.
+
+			// ControlPoints
+
+			var
+				uClosed = this .getUClosed (this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .uKnot_ .getValue (), this .weight_, this .controlPointNode),
+				vClosed = this .getVClosed (this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .vKnot_ .getValue (), this .weight_, this .controlPointNode);
+
+			console .log (uClosed, vClosed);
 			console .log (verb .geom .NurbsSurface);
 		},
 	});

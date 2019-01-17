@@ -86,10 +86,6 @@ function (Fields,
 		this .addAlias ("AntiAliased", this .Antialiased_);
 
 		this .setAttributeSplashScreen ();
-
-		this .primitiveQuality = PrimitiveQuality .MEDIUM;
-		this .textureQuality   = TextureQuality   .MEDIUM;
-		this .shading          = Shading          .GOURAUD;
 	}
 
 	BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -243,8 +239,11 @@ function (Fields,
 			{
 				case "LOW":
 				{
+					if (this .primitiveQuality === PrimitiveQuality .LOW)
+						break;
+
 					this .primitiveQuality = PrimitiveQuality .LOW;
-				
+
 					arc .dimension_      = 20;
 					arcClose .dimension_ = 20;
 					circle .dimension_   = 20;
@@ -259,6 +258,9 @@ function (Fields,
 				}
 				case "HIGH":
 				{
+					if (this .primitiveQuality === PrimitiveQuality .HIGH)
+						break;
+
 					this .primitiveQuality = PrimitiveQuality .HIGH;
 
 					arc .dimension_      = 80;
@@ -275,6 +277,9 @@ function (Fields,
 				}
 				default:
 				{
+					if (this .primitiveQuality === PrimitiveQuality .MEDIUM)
+						break;
+
 					this .primitiveQuality = PrimitiveQuality .MEDIUM;
 
 					arc .dimension_      = 40;
@@ -303,6 +308,9 @@ function (Fields,
 			{
 				case "LOW":
 				{
+					if (this .textureQuality === TextureQuality .HIGH)
+						break;
+
 					this .textureQuality = TextureQuality .LOW;
 
 					textureProperties .magnificationFilter_ = "AVG_PIXEL";
@@ -316,6 +324,9 @@ function (Fields,
 				}
 				case "HIGH":
 				{
+					if (this .textureQuality === TextureQuality .HIGH)
+						break;
+
 					this .textureQuality = TextureQuality .HIGH;
 
 					textureProperties .magnificationFilter_ = "NICEST";
@@ -329,6 +340,9 @@ function (Fields,
 				}
 				default:
 				{
+					if (this .textureQuality === TextureQuality .MEDIUM)
+						break;
+
 					this .textureQuality = TextureQuality .MEDIUM;
 
 					textureProperties .magnificationFilter_ = "NICEST";
