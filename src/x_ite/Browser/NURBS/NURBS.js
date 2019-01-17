@@ -221,27 +221,27 @@ function (Vector3)
 			{
 				var controlPoints = [ ];
 	
-				for (var v = 0, i = 0; v < vDimension; ++ v)
+				for (var u = 0; u < uDimension; ++ u)
 				{
 					var cp = [ ];
 	
 					controlPoints .push (cp);
 
-					for (var u = 0; u < uDimension; ++ u, ++ i)
+					for (var v = 0; v < vDimension; ++ v)
 					{
-						cp .push (Array .prototype .slice .call (controlPointNode .get1Point (i, point)));
+						cp .push (Array .prototype .slice .call (controlPointNode .get1Point (v * uDimension + u, point)));
 					}
 	
-					if (uClosed)
+					if (vClosed)
 					{
-						for (var i = 1, length = uOrder - 1; i < length; ++ i)
+						for (var i = 1, length = vOrder - 1; i < length; ++ i)
 							cp .push (cp [i]);
 					}
 				}
 	
-				if (vClosed)
+				if (uClosed)
 				{
-					for (var i = 1, length = vOrder - 1; i < length; ++ i)
+					for (var i = 1, length = uOrder - 1; i < length; ++ i)
 						controlPoints .push (controlPoints [i]);
 				}
 	

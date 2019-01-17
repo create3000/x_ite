@@ -178,12 +178,53 @@ function (NURBS,
 
 			var surface = nurbs ({
 				boundary: ["open", "open"],
-				degree: [vDegree, uDegree],
-				knots: [vKnots, uKnots],
+				degree: [uDegree, vDegree],
+				knots: [uKnots, vKnots],
 				//weights: weights,
 				points: controlPoints,
 				debug: false,
 			});
+
+//			var state = {
+//				uPoints: 6,
+//				vPoints: 6,
+//				twist: 0,
+//				minorRadius: 1,
+//				majorRadius: 4,
+//				uFrequency: 0,
+//				vFrequency: 0,
+//				weightStrength: 0,
+//			};
+//
+//			var controlPoints = [];
+//			var controlWeights = [];
+//			controlPoints.length = state.uPoints;
+//			controlWeights.length = state.uPoints;
+//			for (var i = 0; i < state.uPoints; i++) {
+//				if (!controlPoints[i]) controlPoints[i] = [];
+//				if (!controlWeights[i]) controlWeights[i] = [];
+//				controlPoints[i].length = state.vPoints;
+//				controlWeights[i].length = state.vPoints;
+//				for (var j = 0; j < state.vPoints; j++) {
+//					var theta2 = j / state.vPoints * Math.PI * 2;
+//					var theta1 = (i + 0.5) / state.uPoints * Math.PI * 2 + (theta2 - Math.PI) * state.twist;
+//					var r2 = state.minorRadius * (1.0 + 0.5 * Math.cos(theta1 * state.uFrequency) * Math.sin(theta2 * state.vFrequency));
+//					var a = state.majorRadius + r2 * Math.cos(theta1);
+//					if (!controlPoints[i][j]) controlPoints[i][j] = [];
+//					controlPoints[i][j][0] = a * Math.cos(theta2);
+//					controlPoints[i][j][1] = r2 * Math.sin(theta1);
+//					controlPoints[i][j][2] = a * Math.sin(theta2);
+//					controlWeights[i][j] = 1.0 / (1.0 + 0.99 * state.weightStrength * Math.cos(theta2) * Math.sin(theta1));
+//				}
+//			}
+//
+//			var surface = nurbs ({
+//				boundary: ["open", "open"],
+//				degree: [2, 3],
+//				weights: controlWeights,
+//				points: controlPoints,
+//				debug: false,
+//			});
 
 			var
 				mesh        = sample ({ }, surface),
@@ -195,7 +236,7 @@ function (NURBS,
 
 			for (var i = 0, length = cells .length; i < length; ++ i)
 			{
-				var index = cells [i];
+				var index = cells [i] * 3;
 
 				normalArray .push (normals [index], normals [index + 1], normals [index + 2]);
 				vertexArray .push (points [index], points [index + 1], points [index + 2], 1);

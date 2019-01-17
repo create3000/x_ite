@@ -56,7 +56,5 @@
 		"build": "make",
 		"-prebuild:js": "npm run lint"
 	},
-	"dependencies": {
-		"nurbs": "file:nurbs"
-	}
+	"dependencies": {}
 }
