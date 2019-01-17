@@ -163,6 +163,55 @@ function (Vector3)
 			}
 
 			return true;
+		},
+		getKnots: function (closed, order, dimension, knot)
+		{
+			var knots = [ ];
+
+			for (var i = 0, length = knot .length; i < length; ++ i)
+				knots .push (knot [i]);
+
+			// check the knot-vectors. If they are not according to standard
+			// default uniform knot vectors will be generated.
+		
+			var generateUniform = true;
+		
+			if (knots .length === dimension + order)
+			{
+				generateUniform = false;
+		
+				var consecutiveKnots = 0;
+		
+				for (var i = 1, length = knots .length; i < length; ++ i)
+				{
+					if (knots [i] == knots [i - 1])
+						++ consecutiveKnots;
+					else
+						consecutiveKnots = 0;
+		
+					if (consecutiveKnots > order - 1)
+						generateUniform = true;
+		
+					if (knots [i - 1] > knots [i])
+						generateUniform = true;
+				}
+			}
+		
+			if (generateUniform)
+			{
+				for (var i = 0, length = dimension + order; i < length; ++ i)
+					knots [i] = i / (length - 1);
+			}
+		
+			if (closed)
+			{
+				var last = knots [knots .length - 1];
+
+				for (var i = 1, length = order - 1; i < length; ++ i)
+					knots .push (last + (knots [i] - knots [i - 1]));
+			}
+		
+			return knots;
 		}
 	};
 

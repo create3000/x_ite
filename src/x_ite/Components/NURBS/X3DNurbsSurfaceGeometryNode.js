@@ -151,7 +151,16 @@ function (NURBS,
 				uClosed = this .getUClosed (this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .uKnot_ .getValue (), this .weight_, this .controlPointNode),
 				vClosed = this .getVClosed (this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .vKnot_ .getValue (), this .weight_, this .controlPointNode);
 
-			console .log (uClosed, vClosed);
+			// Knots
+		
+			var
+				uKnots = this .getKnots (uClosed, this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .uKnot_),
+				vKnots = this .getKnots (vClosed, this .vOrder_ .getValue (), this .vDimension_ .getValue (), this .vKnot_),
+				uScale = uKnots [uKnots .length - 1] - uKnots [0],
+				vScale = vKnots [vKnots .length - 1] - vKnots [0];
+
+			console .log (uScale, vScale);
+			console .log (uKnots, vKnots);
 			console .log (verb .geom .NurbsSurface);
 		},
 	});

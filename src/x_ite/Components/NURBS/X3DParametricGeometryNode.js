@@ -48,10 +48,12 @@
 
 
 define ([
+	"x_ite/Browser/NURBS/NURBS",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DGeometryNode, 
+function (NURBS,
+          X3DGeometryNode, 
           X3DConstants)
 {
 "use strict";
@@ -66,6 +68,10 @@ function (X3DGeometryNode,
 	X3DParametricGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: X3DParametricGeometryNode,
+		getKnots: function (closed, order, dimension, knot)
+		{
+			return NURBS .getKnots (closed, order, dimension, knot);
+		},
 	});
 
 	return X3DParametricGeometryNode;
