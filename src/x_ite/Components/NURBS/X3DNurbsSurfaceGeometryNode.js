@@ -85,29 +85,29 @@ function (NURBS,
 		set_texCoord__: function ()
 		{
 			if (this .texCoordNode)
-				this .texCoordNode .removeInterest ("eventsProcessed", this);
+				this .texCoordNode .removeInterest ("requestRebuild", this);
 
 			if (this .nurbsTexCoordNode)
-				this .nurbsTexCoordNode .removeInterest ("eventsProcessed", this);
+				this .nurbsTexCoordNode .removeInterest ("requestRebuild", this);
 
 			this .texCoordNode      = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
 			this .nurbsTexCoordNode = X3DCast (X3DConstants .NurbsTextureCoordinate,   this .texCoord_);
 
 			if (this .texCoordNode)
-				this .texCoordNode .addInterest ("eventsProcessed", this);
+				this .texCoordNode .addInterest ("requestRebuild", this);
 
 			if (this .nurbsTexCoordNode)
-				this .nurbsTexCoordNode .addInterest ("eventsProcessed", this);
+				this .nurbsTexCoordNode .addInterest ("requestRebuild", this);
 		},
 		set_controlPoint__: function ()
 		{
 			if (this .controlPointNode)
-				this .controlPointNode .removeInterest ("eventsProcessed", this);
+				this .controlPointNode .removeInterest ("requestRebuild", this);
 
 			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
 
 			if (this .controlPointNode)
-				this .controlPointNode .addInterest ("eventsProcessed", this);
+				this .controlPointNode .addInterest ("requestRebuild", this);
 		},
 		getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
 		{

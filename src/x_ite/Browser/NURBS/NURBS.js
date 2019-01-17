@@ -48,22 +48,122 @@
 
 
 define ([
+	"standard/Math/Numbers/Vector3",
 ],
-function ()
+function (Vector3)
 {
 "use strict";
 
 	var NURBS = {
-		getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
+		getUClosed: (function ()
 		{
+			var
+				firstPoint = new Vector3 (0, 0, 0),
+				lastPoint  = new Vector3 (0, 0, 0);
+
+			return function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
+			{
+				var haveWeights = weight .length === controlPointNode .getSize ();
+			
+				for (var v = 0, length = vDimension; v < length; ++ v)
+				{
+					var
+						first = v * uDimension,
+						last  = v * uDimension + uDimension - 1;
+			
+					// Check if first and last weights are unitary.
+			
+					if (haveWeights)
+					{
+						if (weight [first] !== weight [last])
+							return false;
+					}
+			
+					// Check if first and last point are coincident.
+			
+					if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
+						return false;
+				}
+
+				// Check if knots are periodic.
+
+				if (! this .isPeriodic (uOrder, uDimension, uKnot))
+					return false;
+			
+				return true;
+			};
+		})(),
+		getVClosed: (function ()
+		{
+			var
+				firstPoint = new Vector3 (0, 0, 0),
+				lastPoint  = new Vector3 (0, 0, 0);
+
+			return function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
+			{
+				var haveWeights = weight .length === controlPointNode .getSize ();
+			
+				for (var u = 0, size = uDimension; u < size; ++ u)
+				{
+					var
+						first = u,
+						last  = (vDimension - 1) * uDimension + u;
+			
+					// Check if first and last weights are unitary.
+			
+					if (haveWeights)
+					{
+						if (weight [first] !== weight [last])
+							return false;
+					}
+			
+					// Check if first and last point are coincident.
+			
+					if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
+						return false;
+				}
+			
+				// Check if knots are periodic.
+			
+				if (! this .isPeriodic (vOrder, vDimension, vKnot))
+					return false;
+	
+				return true;
+			};
+		})(),
+		isPeriodic: function (order, dimension, knot)
+		{
+			// Check if knots are periodic.
+
+			if (knot .length === dimension + order)
+			{
+				{
+					var count = 1;
+
+					for (var i = 1, size = order; i < size; ++ i)
+					{
+						count += knot [i] == knot [0];
+					}
+
+					if (count === order)
+						return false;
+				}
+
+				{
+					var count = 1;
+
+					for (var i = knot .length - order, size = knot .length - 1; i < size; ++ i)
+					{
+						count += knot [i] == knot [size];
+					}
+
+					if (count === order)
+						return false;
+				}
+			}
 
 			return true;
-		},
-		getVClosed: function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
-		{
-
-			return true;
-		},
+		}
 	};
 
 	return NURBS;

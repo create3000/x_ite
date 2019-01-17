@@ -140,7 +140,7 @@ function (Fields,
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("eventsProcessed",   this);
+				this .colorNode .removeInterest ("requestRebuild",    this);
 				this .colorNode .removeInterest ("set_transparent__", this);
 			}
 
@@ -148,7 +148,7 @@ function (Fields,
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("eventsProcessed",   this);
+				this .colorNode .addInterest ("requestRebuild",    this);
 				this .colorNode .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
@@ -163,24 +163,24 @@ function (Fields,
 		set_texCoord__: function ()
 		{
 			if (this .texCoordNode)
-				this .texCoordNode .removeInterest ("eventsProcessed", this);
+				this .texCoordNode .removeInterest ("requestRebuild", this);
 
 			this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
 
 			if (this .texCoordNode)
-				this .texCoordNode .addInterest ("eventsProcessed", this);
+				this .texCoordNode .addInterest ("requestRebuild", this);
 
 			this .setCurrentTexCoord (this .texCoordNode);
 		},
 		set_normal__: function ()
 		{
 			if (this .normalNode)
-				this .normalNode .removeInterest ("eventsProcessed", this);
+				this .normalNode .removeInterest ("requestRebuild", this);
 
 			this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
 
 			if (this .normalNode)
-				this .normalNode .addInterest ("eventsProcessed", this);
+				this .normalNode .addInterest ("requestRebuild", this);
 		},
 		getColor: function ()
 		{

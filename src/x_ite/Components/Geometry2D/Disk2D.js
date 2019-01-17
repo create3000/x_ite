@@ -115,9 +115,9 @@ function (Fields,
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getDisk2DOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getDisk2DOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
 		},
 		build: function ()
 		{

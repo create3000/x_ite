@@ -116,7 +116,7 @@ function (X3DGeometryNode,
 			var attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("eventsProcessed", this);
+				attribNodes [i] .removeInterest ("requestRebuild", this);
 
 			attribNodes .length = 0;
 
@@ -129,13 +129,13 @@ function (X3DGeometryNode,
 			}
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("eventsProcessed", this);
+				attribNodes [i] .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("eventsProcessed",   this);
+				this .colorNode .removeInterest ("requestRebuild",    this);
 				this .colorNode .removeInterest ("set_transparent__", this);
 			}
 
@@ -143,7 +143,7 @@ function (X3DGeometryNode,
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("eventsProcessed",   this);
+				this .colorNode .addInterest ("requestRebuild",    this);
 				this .colorNode .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
@@ -158,34 +158,34 @@ function (X3DGeometryNode,
 		set_texCoord__: function ()
 		{
 			if (this .texCoordNode)
-				this .texCoordNode .removeInterest ("eventsProcessed", this);
+				this .texCoordNode .removeInterest ("requestRebuild", this);
 
 			this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
 
 			if (this .texCoordNode)
-				this .texCoordNode .addInterest ("eventsProcessed", this);
+				this .texCoordNode .addInterest ("requestRebuild", this);
 
 			this .setCurrentTexCoord (this .texCoordNode);
 		},
 		set_normal__: function ()
 		{
 			if (this .normalNode)
-				this .normalNode .removeInterest ("eventsProcessed", this);
+				this .normalNode .removeInterest ("requestRebuild", this);
 
 			this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
 
 			if (this .normalNode)
-				this .normalNode .addInterest ("eventsProcessed", this);
+				this .normalNode .addInterest ("requestRebuild", this);
 		},
 		set_coord__: function ()
 		{
 			if (this .coordNode)
-				this .coordNode .removeInterest ("eventsProcessed", this);
+				this .coordNode .removeInterest ("requestRebuild", this);
 
 			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
 			if (this .coordNode)
-				this .coordNode .addInterest ("eventsProcessed", this);
+				this .coordNode .addInterest ("requestRebuild", this);
 		},
 		getPolygonIndex: function (index)
 		{

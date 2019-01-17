@@ -110,7 +110,6 @@ function (Fields,
 		   this .fontStyle_ .addInterest ("set_fontStyle__", this);
 	
 			this .set_fontStyle__ ();
-			this .eventsProcessed ();
 		},
 		getMatrix: function ()
 		{
@@ -128,21 +127,21 @@ function (Fields,
 		    X3DGeometryNode .prototype .set_live__ .call (this);
 
 		   if (this .isLive () .getValue ())
-				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .addInterest ("requestRebuild", this);
 		   else
-				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .removeInterest ("requestRebuild", this);
 		},
 		set_fontStyle__: function ()
 		{
 		   if (this .fontStyleNode)
-		      this .fontStyleNode .removeInterest ("eventsProcessed", this);
+		      this .fontStyleNode .removeInterest ("requestRebuild", this);
 
 			this .fontStyleNode = X3DCast (X3DConstants .X3DFontStyleNode, this .fontStyle_);
 
 			if (! this .fontStyleNode)
 				this .fontStyleNode = this .getBrowser () .getDefaultFontStyle ();
 
-		   this .fontStyleNode .addInterest ("eventsProcessed", this);
+		   this .fontStyleNode .addInterest ("requestRebuild", this);
 
 		   this .textGeometry = this .fontStyleNode .getTextGeometry (this);
 		},

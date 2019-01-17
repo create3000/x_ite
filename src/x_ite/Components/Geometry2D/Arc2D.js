@@ -107,9 +107,9 @@ function (Fields,
 			X3DLineGeometryNode .prototype .set_live__ .call (this);
 
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getArc2DOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getArc2DOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
 		},
 		getSweepAngle: function ()
 		{

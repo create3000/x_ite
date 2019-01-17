@@ -111,9 +111,9 @@ function (Fields,
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getArcClose2DOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getArcClose2DOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getArcClose2DOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
 		},
 		getSweepAngle: function ()
 		{

@@ -183,6 +183,9 @@ function (Fields,
 		{
 			X3DNode .prototype .setup .call (this);
 
+			this .addInterest ("requestRebuild", this);
+			this .rebuild_ .addInterest ("rebuild", this);
+
 			this .rebuild ();
 		},
 		initialize: function ()
@@ -190,8 +193,6 @@ function (Fields,
 			X3DNode .prototype .initialize .call (this);
 
 			this .isLive () .addInterest ("set_live__", this);
-			this .addInterest ("eventsProcessed", this);
-			this .rebuild_ .addInterest ("rebuild", this);
 
 			var gl = this .getBrowser () .getContext ();
 
@@ -674,14 +675,12 @@ function (Fields,
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
 			gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
 		},
-		eventsProcessed: function ()
+		requestRebuild: function ()
 		{
 			this .rebuild_ .addEvent ();
 		},
 		rebuild: function ()
 		{
-console .log (this .getId (), this .getTypeName ());
-
 			this .clear ();
 			this .build ();
 
