@@ -212,7 +212,42 @@ function (Vector3)
 			}
 		
 			return knots;
-		}
+		},
+		getUVControlPoints: (function ()
+		{
+			var point = new Vector3 (0, 0, 0)
+
+			return function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+			{
+				var controlPoints = [ ];
+	
+				for (var v = 0, i = 0; v < vDimension; ++ v)
+				{
+					var cp = [ ];
+	
+					controlPoints .push (cp);
+
+					for (var u = 0; u < uDimension; ++ u, ++ i)
+					{
+						cp .push (Array .prototype .slice .call (controlPointNode .get1Point (i, point)));
+					}
+	
+					if (uClosed)
+					{
+						for (var i = 1, length = uOrder - 1; i < length; ++ i)
+							cp .push (cp [i]);
+					}
+				}
+	
+				if (vClosed)
+				{
+					for (var i = 1, length = vOrder - 1; i < length; ++ i)
+						controlPoints .push (controlPoints [i]);
+				}
+	
+				return controlPoints;
+			};
+		})(),
 	};
 
 	return NURBS;

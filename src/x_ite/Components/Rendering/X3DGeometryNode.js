@@ -145,7 +145,7 @@ function (Fields,
 
 		var array = [ ];
 
-		array .typedArray  = new Float32Array ();
+		array .typedArray = new Float32Array ();
 
 		array .assign = function (value)
 		{

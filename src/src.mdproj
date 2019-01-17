@@ -622,6 +622,23 @@
     <None Include="components\rigid-body-physics.js" />
     <None Include="components\rigid-body-physics.config.js" />
     <None Include="x_ite\Browser\NURBS\NURBS.js" />
+    <None Include="lib\nurbs\nurbs.js" />
+    <None Include="lib\nurbs\src\evaluate.js" />
+    <None Include="lib\nurbs\src\numerical-derivative.js" />
+    <None Include="lib\nurbs\src\support.js" />
+    <None Include="lib\nurbs\src\transform.js" />
+    <None Include="lib\nurbs\src\utils\accessor-preamble.js" />
+    <None Include="lib\nurbs\src\utils\bisection-search.js" />
+    <None Include="lib\nurbs\src\utils\cache-key.js" />
+    <None Include="lib\nurbs\src\utils\create-accessors.js" />
+    <None Include="lib\nurbs\src\utils\infer-type.js" />
+    <None Include="lib\nurbs\src\utils\is-array-like.js" />
+    <None Include="lib\nurbs\src\utils\is-ndarray.js" />
+    <None Include="lib\nurbs\src\utils\is-ndarray-like.js" />
+    <None Include="lib\nurbs\src\utils\ndloop.js" />
+    <None Include="lib\nurbs\src\utils\size-getter.js" />
+    <None Include="lib\nurbs\src\utils\variable.js" />
+    <None Include="lib\nurbs\extras\sample.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
@@ -634,5 +651,9 @@
     <Folder Include="lib\ammojs\" />
     <Folder Include="components\" />
     <Folder Include="x_ite\Browser\NURBS\" />
+    <Folder Include="lib\nurbs\" />
+    <Folder Include="lib\nurbs\src\" />
+    <Folder Include="lib\nurbs\src\utils\" />
+    <Folder Include="lib\nurbs\extras\" />
   </ItemGroup>
 </Project>

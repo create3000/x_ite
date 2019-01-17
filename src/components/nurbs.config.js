@@ -52,9 +52,9 @@ require .config ({
 			"main": "dist/jquery.contextMenu.js"
 		},
 		{
-			"name": "verb",
-			"location": "../node_modules/verb",
-			"main": "build/js/verb.js"
+			"name": "nurbs",
+			"location": "lib/nurbs",
+			"main": "nurbs.js"
 		}
 	],
 	"shim": { },

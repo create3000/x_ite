@@ -52,13 +52,15 @@ define ([
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
-	"verb",
+	"nurbs",
+	"nurbs/extras/sample",
 ],
 function (NURBS,
           X3DParametricGeometryNode, 
           X3DCast,
           X3DConstants,
-          verb)
+          nurbs,
+          sample)
 {
 "use strict";
 
@@ -123,6 +125,10 @@ function (NURBS,
 
 			return false;
 		},
+		getUVControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		{
+			return NURBS .getUVControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode);
+		},
 		build: function ()
 		{
 			if (this .uOrder_ .getValue () < 2)
@@ -148,8 +154,9 @@ function (NURBS,
 			// ControlPoints
 
 			var
-				uClosed = this .getUClosed (this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .uKnot_ .getValue (), this .weight_, this .controlPointNode),
-				vClosed = this .getVClosed (this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .vKnot_ .getValue (), this .weight_, this .controlPointNode);
+				uClosed       = this .getUClosed (this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .uKnot_ .getValue (), this .weight_, this .controlPointNode),
+				vClosed       = this .getVClosed (this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .vKnot_ .getValue (), this .weight_, this .controlPointNode),
+				controlPoints = this .getUVControlPoints (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .controlPointNode);
 
 			// Knots
 		
@@ -159,9 +166,43 @@ function (NURBS,
 				uScale = uKnots [uKnots .length - 1] - uKnots [0],
 				vScale = vKnots [vKnots .length - 1] - vKnots [0];
 
-			console .log (uScale, vScale);
-			console .log (uKnots, vKnots);
-			console .log (verb .geom .NurbsSurface);
+			// Initialize NURBS tesselllator
+
+//			console .log (this .uOrder_ .getValue (), this .vOrder_ .getValue ());
+//			console .log (uKnots, vKnots);
+//			console .log (controlPoints);
+
+			var
+				uDegree = this .uOrder_ .getValue () - 1,
+				vDegree = this .vOrder_ .getValue () - 1;
+
+			var surface = nurbs ({
+				boundary: ["open", "open"],
+				degree: [vDegree, uDegree],
+				knots: [vKnots, uKnots],
+				//weights: weights,
+				points: controlPoints,
+				debug: false,
+			});
+
+			var
+				mesh        = sample ({ }, surface),
+				cells       = mesh .cells,
+				normals     = mesh .normals,
+				points      = mesh .positions,
+				normalArray = this .getNormals (),
+				vertexArray = this .getVertices ();
+
+			for (var i = 0, length = cells .length; i < length; ++ i)
+			{
+				var index = cells [i];
+
+				normalArray .push (normals [index], normals [index + 1], normals [index + 2]);
+				vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
+			}
+
+			this .setSolid (this .solid_ .getValue ());
+			this .setCCW (true);
 		},
 	});
 
