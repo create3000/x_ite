@@ -123,7 +123,7 @@ function (Fields,
 		{
 			return NURBS .getControlPoints2D (closed, order, controlPoint);
 		},
-		tessellate: function ()
+		tessellate: function (spine)
 		{
 			if (this .order_ .getValue () < 2)
 				return [ ];
@@ -165,8 +165,16 @@ function (Fields,
 				points = mesh .points,
 				array  = [ ];
 
-			for (var i = 0, length = points .length; i < length; i += 3)
-				array .push (points [i], points [i + 1]);
+			if (spine)
+			{
+				for (var i = 0, length = points .length; i < length; i += 3)
+					array .push (points [i], 0, points [i + 1]);
+			}
+			else
+			{
+				for (var i = 0, length = points .length; i < length; i += 3)
+					array .push (points [i], points [i + 1]);
+			}
 
 			return array;
 		},

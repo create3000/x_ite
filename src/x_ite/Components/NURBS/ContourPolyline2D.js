@@ -88,17 +88,29 @@ function (Fields,
 		{
 			return "children";
 		},
-		tessellate: function ()
+		tessellate: function (spine)
 		{
 			var
 				controlPoint = this .controlPoint_,
 				array        = [ ];
 
-			for (var i = 0, length = controlPoint .length; i < length; ++ i)
+			if (spine)
 			{
-				var point = controlPoint [i];
-
-				array .push (point .x, point .y);
+				for (var i = 0, length = controlPoint .length; i < length; ++ i)
+				{
+					var point = controlPoint [i];
+	
+					array .push (point .x, 0, point .y);
+				}
+			}
+			else
+			{
+				for (var i = 0, length = controlPoint .length; i < length; ++ i)
+				{
+					var point = controlPoint [i];
+	
+					array .push (point .x, point .y);
+				}
 			}
 
 			return array;
