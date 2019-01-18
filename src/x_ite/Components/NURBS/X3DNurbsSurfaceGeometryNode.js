@@ -160,11 +160,9 @@ function (NURBS,
 			// ControlPoints
 
 			var
-				uClosed       = this .getUClosed (this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .uKnot_ .getValue (), this .weight_, this .controlPointNode),
-				vClosed       = this .getVClosed (this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .vKnot_ .getValue (), this .weight_, this .controlPointNode),
+				uClosed       = this .getUClosed (this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .uKnot_, this .weight_, this .controlPointNode),
+				vClosed       = this .getVClosed (this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .vKnot_, this .weight_, this .controlPointNode),
 				controlPoints = this .getUVControlPoints (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .controlPointNode);
-
-//			console .log (uClosed, vClosed, this .uClosed_ .getValue (), this .vClosed_ .getValue ());
 
 			// Knots
 		
@@ -177,10 +175,6 @@ function (NURBS,
 			var weights = this .getUVWeights (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .weight_);
 
 			// Initialize NURBS tesselllator
-
-//			console .log (this .uOrder_ .getValue (), this .vOrder_ .getValue ());
-//			console .log (uKnots, vKnots);
-//			console .log (controlPoints);
 
 			var
 				uDegree = this .uOrder_ .getValue () - 1,

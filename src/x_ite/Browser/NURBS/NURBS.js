@@ -142,7 +142,7 @@ function (Vector3)
 
 					for (var i = 1, size = order; i < size; ++ i)
 					{
-						count += knot [i] == knot [0];
+						count += knot [i] === knot [0];
 					}
 
 					if (count === order)
@@ -154,7 +154,7 @@ function (Vector3)
 
 					for (var i = knot .length - order, size = knot .length - 1; i < size; ++ i)
 					{
-						count += knot [i] == knot [size];
+						count += knot [i] === knot [size];
 					}
 
 					if (count === order)
