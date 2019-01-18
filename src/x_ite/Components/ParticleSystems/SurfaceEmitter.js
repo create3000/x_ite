@@ -124,12 +124,12 @@ function (Fields,
 		set_surface__: function ()
 		{
 			if (this .surfaceNode)
-				this .surfaceNode .removeInterest ("set_geometry__", this);
+				this .surfaceNode .rebuild_ .removeInterest ("set_geometry__", this);
 
 			this .surfaceNode = X3DCast (X3DConstants .X3DGeometryNode, this .surface_);
 
 			if (this .surfaceNode)
-				this .surfaceNode .addInterest ("set_geometry__", this);
+				this .surfaceNode .rebuild_ .addInterest ("set_geometry__", this);
 
 			this .set_geometry__ ();
 		},

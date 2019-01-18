@@ -134,12 +134,12 @@ function (X3DCast,
 		set_trajectoryCurve__: function ()
 		{
 			if (this .trajectoryCurveNode)
-				this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
+				this .trajectoryCurveNode .rebuild_ .removeInterest ("requestRebuild", this);
 
 			this .trajectoryCurveNode = X3DCast (X3DConstants .NurbsCurve, this .trajectoryCurve_);
 
 			if (this .trajectoryCurveNode)
-				this .trajectoryCurveNode .addInterest ("requestRebuild", this);
+				this .trajectoryCurveNode .rebuild_ .addInterest ("requestRebuild", this);
 		},
 		build: function ()
 		{

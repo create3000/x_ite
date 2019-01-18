@@ -125,7 +125,7 @@ function (Fields,
 			this .polylineNode .coordIndex_ = this .coordIndex_;
 			this .polylineNode .coord_      = this .coord_;
 
-			this .polylineNode .addInterest ("set_polyline", this);
+			this .polylineNode .rebuild_ .addInterest ("set_polyline", this);
 			this .polylineNode .setPrivate (true);
 			this .polylineNode .setup ();
 

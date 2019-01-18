@@ -1,16 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/NURBS/NurbsSweptSurface.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/NURBS/X3DParametricGeometryNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js" Line="167" Column="21" />
-      <File FileName="src/x_ite/Components/NURBS/NurbsPatchSurface.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/NURBS/NURBS.js" Line="205" Column="3" />
-      <File FileName="src/x_ite/Components/Rendering/X3DComposedGeometryNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="1" Column="1" />
-      <File FileName="src/lib/nurbs/nurbs.js" Line="1" Column="1" />
-      <File FileName="package.json" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/X3DParametricGeometryNode.js" Line="75" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js" Line="203" Column="26" />
+      <File FileName="src/x_ite/Browser/NURBS/NURBS.js" Line="350" Column="50" />
+      <File FileName="src/components/nurbs.js" Line="72" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/NurbsSweptSurface.js" Line="176" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

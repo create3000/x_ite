@@ -152,7 +152,7 @@ function (Fields,
 			this .volumeNode .coordIndex_  = this .coordIndex_;
 			this .volumeNode .coord_       = this .coord_;
 
-			this .volumeNode .addInterest ("set_geometry__", this);
+			this .volumeNode .rebuild_ .addInterest ("set_geometry__", this);
 			this .volumeNode .setPrivate (true);
 			this .volumeNode .setup ();
 
