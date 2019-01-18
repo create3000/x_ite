@@ -55,6 +55,16 @@ function (Vector3)
 "use strict";
 
 	var NURBS = {
+		getTessellation: function (tessellation, dimension)
+		{
+			if (tessellation > 0)
+				return tessellation + 1;
+
+			if (tessellation < 0)
+				return -tessellation * dimension + 1;
+
+			return 2 * dimension + 1;
+		},
 		getUClosed: (function ()
 		{
 			var

@@ -113,6 +113,14 @@ function (NURBS,
 			if (this .controlPointNode)
 				this .controlPointNode .addInterest ("requestRebuild", this);
 		},
+		getUTessellation: function (numKnots)
+		{
+			return NURBS .getTessellation (this .uTessellation_ .getValue (), numKnots - this .uOrder_ .getValue ());
+		},
+		getVTessellation: function (numKnots)
+		{
+			return NURBS .getTessellation (this .vTessellation_ .getValue (), numKnots - this .vOrder_ .getValue ());
+		},
 		getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
 		{
 			if (this .uClosed_ .getValue ())
@@ -190,7 +198,7 @@ function (NURBS,
 			});
 
 			var
-				mesh        = sample (this .mesh, surface),
+				mesh        = sample (this .mesh, surface, { resolution: [this .getUTessellation (uKnots .length), this .getVTessellation (vKnots .length)] }),
 				cells       = mesh .cells,
 				normals     = mesh .normals,
 				points      = mesh .positions,
