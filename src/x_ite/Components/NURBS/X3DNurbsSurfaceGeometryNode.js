@@ -70,7 +70,8 @@ function (NURBS,
 
 		this .addType (X3DConstants .X3DNurbsSurfaceGeometryNode);
 
-		this .mesh = { };
+		this .mesh          = { };
+		this .sampleOptions = { resolution: [ ] };
 	}
 
 	X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
@@ -197,8 +198,11 @@ function (NURBS,
 				debug: false,
 			});
 
+			this .sampleOptions .resolution [0] = this .getUTessellation (uKnots .length);
+			this .sampleOptions .resolution [1] = this .getVTessellation (vKnots .length);
+
 			var
-				mesh        = sample (this .mesh, surface, { resolution: [this .getUTessellation (uKnots .length), this .getVTessellation (vKnots .length)] }),
+				mesh        = sample (this .mesh, surface, this .sampleOptions),
 				cells       = mesh .cells,
 				normals     = mesh .normals,
 				points      = mesh .positions,

@@ -72,8 +72,8 @@ define (function ()
 					nv = resolution [1];
 
 				var
-					nuBound = nu + (nurbs .boundary [0] === 'closed' ? 0 : 1),
-					nvBound = nv + (nurbs .boundary [1] === 'closed' ? 0 : 1);
+					nuBound = nu + (nurbs .boundary [0] !== 'closed'),
+					nvBound = nv + (nurbs .boundary [1] !== 'closed');
 				
 				var nbVertices = nuBound * nvBound * 3;
 				// var nbFaces = nu * nv * 4;
@@ -87,15 +87,15 @@ define (function ()
 					uDomain = domain [0],
 					vDomain = domain [1];
 
-				for (var i = 0; i < nuBound; i++)
+				for (var i = 0; i < nuBound; ++ i)
 				{
 					var u = uDomain [0] + (uDomain [1] - uDomain [0]) * i / nu;
 	
-					for (var j = 0; j < nvBound; j++)
+					for (var j = 0; j < nvBound; ++ j)
 					{
-						var v = vDomain [0] + (vDomain [1] - vDomain [0]) * j / nv;
-						
-						var ptr = 3 * (i + nuBound * j);
+						var
+							v   = vDomain [0] + (vDomain [1] - vDomain [0]) * j / nv,
+							ptr = 3 * (i + nuBound * j);
 
 						nurbs .evaluate (tmp1, u, v);
 	
@@ -119,7 +119,7 @@ define (function ()
 				
 				var c = 0;
 	
-				for (var i = 0; i < nu; i++)
+				for (var i = 0; i < nu; ++ i)
 				{
 		        var
 						i0 = i,
@@ -128,7 +128,7 @@ define (function ()
 					if (nurbs .boundary [0] === 'closed')
 						i1 = i1 % nu;
 	
-	            for (var j = 0; j < nv; j++)
+	            for (var j = 0; j < nv; ++ j)
 					{
 						var j0 = j;
 						var j1 = j + 1;
