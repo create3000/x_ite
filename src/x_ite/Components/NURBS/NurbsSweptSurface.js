@@ -71,6 +71,8 @@ function (X3DCast,
 		X3DParametricGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsSweptSurface);
+
+		this .extrusion = new Extrusion (executionContext);
 	}
 
 	NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
@@ -101,6 +103,20 @@ function (X3DCast,
 
 			this .crossSectionCurve_ .addInterest ("set_crossSectionCurve__", this);
 			this .trajectoryCurve_   .addInterest ("set_trajectoryCurve__",   this);
+
+			var extrusion = this .extrusion;
+
+			extrusion .beginCap_     = false;
+			extrusion .endCap_       = false;
+			extrusion .solid_        = true;
+			extrusion .ccw_          = true;
+			extrusion .convex_       = true;
+			extrusion .creaseAngle_  = Math .PI;
+
+			extrusion .setup ();
+
+			extrusion .crossSection_ .setTainted (true);
+			extrusion .spine_        .setTainted (true);
 
 			this .set_crossSectionCurve__ ();
 			this .set_trajectoryCurve__ ();
@@ -133,18 +149,12 @@ function (X3DCast,
 			if (! this .trajectoryCurveNode)
 				return;
 
-			var extrusion = new Extrusion (this .getExecutionContext ());
-		
-			extrusion .beginCap_     = false;
-			extrusion .endCap_       = false;
-			extrusion .solid_        = true;
-			extrusion .ccw_          = true;
-			extrusion .convex_       = true;
-			extrusion .creaseAngle_  = Math .PI;
+			var extrusion = this .extrusion;
+
 			extrusion .crossSection_ = this .crossSectionCurveNode .tessellate ();
 			extrusion .spine_        = this .trajectoryCurveNode   .tessellate ();
 
-			extrusion .setup ();
+			extrusion .rebuild ();
 
 			this .getColors ()    .assign (extrusion .getColors ());
 			this .getTexCoords () .assign (extrusion .getTexCoords ());
