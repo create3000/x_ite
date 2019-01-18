@@ -48,17 +48,17 @@
 
 
 define ([
-	"x_ite/Browser/NURBS/NURBS",
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/NURBS/NURBS",
 	"nurbs",
 	"nurbs/extras/sample",
 ],
-function (NURBS,
-          X3DParametricGeometryNode, 
+function (X3DParametricGeometryNode, 
           X3DCast,
           X3DConstants,
+          NURBS,
           nurbs,
           sample)
 {
@@ -203,15 +203,15 @@ function (NURBS,
 
 			var
 				mesh        = sample (this .mesh, surface, this .sampleOptions),
-				cells       = mesh .cells,
+				faces       = mesh .faces,
 				normals     = mesh .normals,
-				points      = mesh .positions,
+				points      = mesh .points,
 				normalArray = this .getNormals (),
 				vertexArray = this .getVertices ();
 
-			for (var i = 0, length = cells .length; i < length; ++ i)
+			for (var i = 0, length = faces .length; i < length; ++ i)
 			{
-				var index = cells [i] * 3;
+				var index = faces [i] * 3;
 
 				normalArray .push (normals [index], normals [index + 1], normals [index + 2]);
 				vertexArray .push (points [index], points [index + 1], points [index + 2], 1);

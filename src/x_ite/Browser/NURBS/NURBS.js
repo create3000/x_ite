@@ -65,6 +65,39 @@ function (Vector3)
 
 			return 2 * dimension + 1;
 		},
+		getClosed: (function ()
+		{
+			var
+				firstPoint = new Vector3 (0, 0, 0),
+				lastPoint  = new Vector3 (0, 0, 0);
+
+			return function (order, knot, weight, controlPointNode)
+			{
+				var
+					dimension   = controlPointNode .getSize (),
+					haveWeights = weight .length === dimension;
+
+				// Check if first and last weights are unitary.
+
+				if (haveWeights)
+				{
+					if (weight [0] !== weight [dimension - 1])
+						return false;
+				}
+
+				// Check if first and last point are coincident.
+
+				if (! controlPointNode .get1Point (0, firstPoint) .equals (controlPointNode .get1Point (dimension - 1, lastPoint)))
+					return false;
+
+				// Check if knots are periodic.
+
+				if (! this .isPeriodic (order, dimension, knot))
+					return false;
+
+				return true;
+			};
+		})(),
 		getUClosed: (function ()
 		{
 			var
@@ -221,6 +254,26 @@ function (Vector3)
 
 			return knots;
 		},
+		getWeights: function (closed, order, dimension, weight)
+		{
+			if (weight .length !== dimension)
+				return undefined;
+
+			var weights = [ ];
+		
+			for (var i = 0; i < dimension; ++ i)
+			{
+				weights .push (weight [i]);
+			}
+	
+			if (closed)
+			{
+				for (var i = 1, size = order - 1; i < size; ++ i)
+					weights .push (weights [i]);
+			}
+
+			return weights;
+		},
 		getUVWeights: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)
 		{
 			if (weight .length !== uDimension * vDimension)
@@ -254,6 +307,30 @@ function (Vector3)
 	
 			return weights;
 		},
+		getControlPoints: (function ()
+		{
+			var point = new Vector3 (0, 0, 0)
+
+			return function (closed, order, controlPointNode)
+			{
+				var
+					controlPoints = [ ],
+					dimension     = controlPointNode .getSize ();
+			
+				for (var i = 0; i < dimension; ++ i)
+				{
+					controlPoints .push (Array .prototype .slice .call (controlPointNode .get1Point (i, point)));
+				}
+		
+				if (closed)
+				{
+					for (var i = 1, size = order - 1; i < size; ++ i)
+						controlPoints .push (controlPoints [i]);
+				}
+	
+				return controlPoints;
+			};
+		})(),
 		getUVControlPoints: (function ()
 		{
 			var point = new Vector3 (0, 0, 0)

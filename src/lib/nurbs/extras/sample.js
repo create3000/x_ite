@@ -45,9 +45,9 @@ define (function ()
 		opts = opts || { };
 
 		var
-			positions = mesh .positions = mesh .positions || [ ],
-			normals   = mesh .normals   = mesh .normals   || [ ],
-			cells     = mesh .cells     = mesh .cells     || [ ];
+			points  = mesh .points  = mesh .points  || [ ],
+			normals = mesh .normals = mesh .normals || [ ],
+			faces   = mesh .faces   = mesh .faces   || [ ];
 	
 		if (Array .isArray (opts .resolution))
 		{
@@ -63,8 +63,33 @@ define (function ()
 		switch (nurbs .splineDimension)
 		{
 			case 1:
-				break;
+			{
+				var
+					nu         = resolution [0],
+					nuBound    = nu + (nurbs .boundary [0] !== 'closed'),
+					nbVertices = nuBound * 3,
+					uDer       = nurbs .evaluator ([1, 0]);
 
+				var
+					domain  = nurbs .domain,
+					uDomain = domain [0];
+
+				for (var i = 0; i < nuBound; ++ i)
+				{
+					var
+						u   = uDomain [0] + (uDomain [1] - uDomain [0]) * i / nu,
+						ptr = 3 * i;
+
+					nurbs .evaluate (tmp1, u);
+
+					points [ptr]     = tmp1 [0];
+					points [ptr + 1] = tmp1 [1];
+					points [ptr + 2] = tmp1 [2];
+				}
+	
+				points .length = nbVertices;
+				break;
+			}
 			case 2:
 			{
 				var
@@ -99,9 +124,9 @@ define (function ()
 
 						nurbs .evaluate (tmp1, u, v);
 	
-						positions [ptr]     = tmp1 [0];
-						positions [ptr + 1] = tmp1 [1];
-						positions [ptr + 2] = tmp1 [2];
+						points [ptr]     = tmp1 [0];
+						points [ptr + 1] = tmp1 [1];
+						points [ptr + 2] = tmp1 [2];
 	
 						normalize (tmp1, cross (tmp1,
 							uDer (tmp1, u, v),
@@ -114,8 +139,8 @@ define (function ()
 					}
 				}
 	
-				normals   .length = nbVertices;
-				positions .length = nbVertices;
+				normals .length = nbVertices;
+				points  .length = nbVertices;
 				
 				var c = 0;
 	
@@ -136,18 +161,17 @@ define (function ()
 						if (nurbs .boundary [1] === 'closed')
 							j1 = j1 % nv;
 						
-						cells [c++] = i0 + nuBound * j0;
-						cells [c++] = i1 + nuBound * j0;
-						cells [c++] = i1 + nuBound * j1;
+						faces [c++] = i0 + nuBound * j0;
+						faces [c++] = i1 + nuBound * j0;
+						faces [c++] = i1 + nuBound * j1;
 						
-						cells [c++] = i0 + nuBound * j0;
-						cells [c++] = i1 + nuBound * j1;
-						cells [c++] = i0 + nuBound * j1;
+						faces [c++] = i0 + nuBound * j0;
+						faces [c++] = i1 + nuBound * j1;
+						faces [c++] = i0 + nuBound * j1;
 					}
 				}
 		
-				cells .length = c;
-		
+				faces .length = c;
 				break;
 			}
 			default:

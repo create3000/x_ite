@@ -48,17 +48,27 @@
 
 
 define ([
+	"x_ite/Bits/X3DCast",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
+	"x_ite/Components/Rendering/X3DLineGeometryNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/NURBS/NURBS",
+	"nurbs",
+	"nurbs/extras/sample",
 ],
-function (Fields,
+function (X3DCast,
+          Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParametricGeometryNode, 
-          X3DConstants)
+          X3DLineGeometryNode, 
+          X3DConstants,
+          NURBS,
+          nurbs,
+          sample)
 {
 "use strict";
 
@@ -67,9 +77,15 @@ function (Fields,
 		X3DParametricGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsCurve);
+
+		this .setGeometryType (1);
+
+		this .mesh          = { };
+		this .sampleOptions = { resolution: [ ] };
 	}
 
 	NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+		X3DLineGeometryNode .prototype,
 	{
 		constructor: NurbsCurve,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -92,6 +108,99 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "geometry";
+		},
+		initialize: function ()
+		{
+			X3DParametricGeometryNode .prototype .initialize .call (this);
+
+			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+
+			this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
+			this .setSolid (false);
+
+			this .set_controlPoint__ ();
+		},
+		set_controlPoint__: function ()
+		{
+			if (this .controlPointNode)
+				this .controlPointNode .removeInterest ("requestRebuild", this);
+
+			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+
+			if (this .controlPointNode)
+				this .controlPointNode .addInterest ("requestRebuild", this);
+		},
+		getTessellation: function (numKnots)
+		{
+			return NURBS .getTessellation (this .tessellation_ .getValue (), numKnots - this .order_ .getValue ());
+		},
+		getClosed: function (order, knot, weight, controlPointNode)
+		{
+			if (! this .closed_ .getValue ())
+				return false;
+
+			return NURBS .getClosed (order, knot, weight, controlPointNode);
+		},
+		getWeights: function (closed, order, dimension, weight)
+		{
+			return NURBS .getWeights (closed, order, dimension, weight);
+		},
+		getControlPoints: function (closed, order, controlPointNode)
+		{
+			return NURBS .getControlPoints (closed, order, controlPointNode);
+		},
+		build: function ()
+		{
+			if (this .order_ .getValue () < 2)
+				return;
+		
+			if (! this .controlPointNode)
+				return;
+		
+			if (this .controlPointNode .getSize () < this .order_ .getValue ())
+				return;
+
+			// Order and dimension are now positive numbers.
+
+			var
+				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
+				controlPoints = this .getControlPoints (closed, this .order_ .getValue (), this .controlPointNode);
+		
+			// Knots
+		
+			var
+				knots = this .getKnots (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+				scale = knots [knots .length - 1] - knots [0];
+
+			var weights = this .getWeights (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
+
+			// Initialize NURBS tesselllator
+
+			var degree = this .order_ .getValue () - 1;
+
+			var surface = this .surface = (this .surface || nurbs) ({
+				boundary: ["open"],
+				degree: [degree],
+				knots: [knots],
+				weights: weights,
+				points: controlPoints,
+				debug: false,
+			});
+
+			this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
+
+			var
+				mesh       = sample (this .mesh, surface, this .sampleOptions),
+				points      = mesh .points,
+				vertexArray = this .getVertices ();
+
+			for (var i2= 3, length = points .length; i2 < length; i2 += 3)
+			{
+				var i1 = i2 - 3;
+
+				vertexArray .push (points [i1], points [i1 + 1], points [i1 + 2], 1);
+				vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
+			}
 		},
 	});
 

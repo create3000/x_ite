@@ -50,10 +50,12 @@
 require ([
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/NURBS/CoordinateDouble",
+	"x_ite/Components/NURBS/NurbsCurve",
 	"x_ite/Components/NURBS/NurbsPatchSurface",
 ],
 function (SupportedNodes,
           CoordinateDouble,
+          NurbsCurve,
           NurbsPatchSurface)
 {
 "use strict";
@@ -61,6 +63,7 @@ function (SupportedNodes,
 	var NURBS =
 	{
 		CoordinateDouble:  CoordinateDouble,
+		NurbsCurve:        NurbsCurve,
 		NurbsPatchSurface: NurbsPatchSurface,
 	};
 

@@ -48,13 +48,13 @@
 
 
 define ([
-	"x_ite/Browser/NURBS/NURBS",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/NURBS/NURBS",
 ],
-function (NURBS,
-          X3DGeometryNode, 
-          X3DConstants)
+function (X3DGeometryNode, 
+          X3DConstants,
+          NURBS)
 {
 "use strict";
 
