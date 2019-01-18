@@ -80,7 +80,7 @@ function (Fields,
 
 	   this .interpolator  = new PositionInterpolator (executionContext);
 		this .mesh          = { };
-		this .sampleOptions = { resolution: [ ] };
+		this .sampleOptions = { resolution: [ 128 ] };
 	}
 
 	NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -139,7 +139,7 @@ function (Fields,
 		},
 		getClosed: function (order, knot, weight, controlPointNode)
 		{
-			return NURBS .getClosed (order, knot, weight, controlPointNode);
+			return false && NURBS .getClosed (order, knot, weight, controlPointNode);
 		},
 		getKnots: function (closed, order, dimension, knot)
 		{
@@ -194,8 +194,6 @@ function (Fields,
 				points: controlPoints,
 				debug: false,
 			});
-
-			this .sampleOptions .resolution [0] = 128;
 
 			var
 				mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
