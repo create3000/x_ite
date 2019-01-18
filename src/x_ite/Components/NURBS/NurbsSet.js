@@ -127,8 +127,10 @@ function (Fields,
 		},
 		set_tessellationScale__: function ()
 		{
+			var tessellationScale = Math .max (0, this .tessellationScale_ .getValue ());
+
 			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-				this .geometryNodes [i] .setTessellationScale (this .tessellationScale_ .getValue ());
+				this .geometryNodes [i] .setTessellationScale (tessellationScale);
 		},
 		set_addGeometry__: function ()
 		{

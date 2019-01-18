@@ -121,11 +121,11 @@ function (X3DParametricGeometryNode,
 		},
 		getUTessellation: function (numKnots)
 		{
-			return NURBS .getTessellation (this .uTessellation_ .getValue (), numKnots - this .uOrder_ .getValue ());
+			return Math .floor (NURBS .getTessellation (this .uTessellation_ .getValue (), numKnots - this .uOrder_ .getValue ()) * this .tessellationScale);
 		},
 		getVTessellation: function (numKnots)
 		{
-			return NURBS .getTessellation (this .vTessellation_ .getValue (), numKnots - this .vOrder_ .getValue ());
+			return Math .floor (NURBS .getTessellation (this .vTessellation_ .getValue (), numKnots - this .vOrder_ .getValue ()) * this .tessellationScale);
 		},
 		getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
 		{
@@ -203,8 +203,8 @@ function (X3DParametricGeometryNode,
 				debug: false,
 			});
 
-			this .sampleOptions .resolution [0] = Math .floor (this .getUTessellation (uKnots .length) * this .tessellationScale);
-			this .sampleOptions .resolution [1] = Math .floor (this .getVTessellation (vKnots .length) * this .tessellationScale);
+			this .sampleOptions .resolution [0] = this .getUTessellation (uKnots .length);
+			this .sampleOptions .resolution [1] = this .getVTessellation (vKnots .length);
 
 			var
 				mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),

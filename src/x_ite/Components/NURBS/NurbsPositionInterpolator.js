@@ -52,13 +52,21 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Components/Interpolation/PositionInterpolator",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Browser/NURBS/NURBS",
+	"nurbs",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
-          X3DConstants)
+          PositionInterpolator, 
+          X3DConstants,
+          X3DCast,
+          NURBS,
+          nurbs)
 {
 "use strict";
 
@@ -67,6 +75,12 @@ function (Fields,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsPositionInterpolator);
+			
+		this .addChildObjects ("rebuild", new Fields .SFTime ());
+
+	   this .interpolator  = new PositionInterpolator (executionContext);
+		this .mesh          = { };
+		this .sampleOptions = { resolution: [ ] };
 	}
 
 	NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -92,6 +106,110 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .order_        .addInterest ("requestRebuild",     this);
+			this .knot_         .addInterest ("requestRebuild",     this);
+			this .weight_       .addInterest ("requestRebuild",     this);
+			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+
+			this .rebuild_ .addInterest ("build", this);
+		
+			this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
+			this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
+
+			this .interpolator .setup ();
+
+			this .set_controlPoint__ ();
+		},
+		set_controlPoint__: function ()
+		{
+			if (this .controlPointNode)
+				this .controlPointNode .removeInterest ("requestRebuild", this);
+
+			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+
+			if (this .controlPointNode)
+				this .controlPointNode .addInterest ("requestRebuild", this);
+
+			this .requestRebuild ();
+		},
+		getClosed: function (order, knot, weight, controlPointNode)
+		{
+			return NURBS .getClosed (order, knot, weight, controlPointNode);
+		},
+		getKnots: function (closed, order, dimension, knot)
+		{
+			return NURBS .getKnots (closed, order, dimension, knot);
+		},
+		getWeights: function (closed, order, dimension, weight)
+		{
+			return NURBS .getWeights (closed, order, dimension, weight);
+		},
+		getControlPoints: function (closed, order, controlPointNode)
+		{
+			return NURBS .getControlPoints (closed, order, controlPointNode);
+		},
+		requestRebuild: function ()
+		{
+			this .rebuild_ .addEvent ();
+		},
+		build: function ()
+		{
+			if (this .order_ .getValue () < 2)
+				return;
+		
+			if (! this .controlPointNode)
+				return;
+		
+			if (this .controlPointNode .getSize () < this .order_ .getValue ())
+				return;
+
+			// Order and dimension are now positive numbers.
+
+			var
+				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
+				controlPoints = this .getControlPoints (closed, this .order_ .getValue (), this .controlPointNode);
+		
+			// Knots
+		
+			var
+				knots = this .getKnots (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+				scale = knots [knots .length - 1] - knots [0];
+
+			var weights = this .getWeights (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
+
+			// Initialize NURBS tesselllator
+
+			var degree = this .order_ .getValue () - 1;
+
+			var surface = this .surface = (this .surface || nurbs) ({
+				boundary: ["open"],
+				degree: [degree],
+				knots: [knots],
+				weights: weights,
+				points: controlPoints,
+				debug: false,
+			});
+
+			this .sampleOptions .resolution [0] = 128;
+
+			var
+				mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
+				points       = mesh .points,
+				interpolator = this .interpolator;
+
+			interpolator .key_      .length = 0;
+			interpolator .keyValue_ .length = 0;
+
+			for (var i = 0, length = points .length; i < length; i += 3)
+			{
+				interpolator .key_      .push (knots [0] + i / (length - 3) * scale);
+				interpolator .keyValue_. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
+			}
 		},
 	});
 

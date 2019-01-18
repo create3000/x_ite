@@ -998,7 +998,7 @@ function (Fields,
 		set_geometry__: function ()
 		{
 			if (this .geometryNode)
-				this .geometryNode .removeInterest ("set_collidableGeometry__", this);
+				this .geometryNode .rebuild_ .removeInterest ("set_collidableGeometry__", this);
 
 			if (this .shapeNode)
 				this .geometryNode = this .shapeNode .getGeometry ();
@@ -1006,7 +1006,7 @@ function (Fields,
 				this .geometryNode = null;
 
 			if (this .geometryNode)
-				this .geometryNode .addInterest ("set_collidableGeometry__", this);
+				this .geometryNode .rebuild_ .addInterest ("set_collidableGeometry__", this);
 
 			this .set_collidableGeometry__ ();
 		},

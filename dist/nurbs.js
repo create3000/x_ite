@@ -2929,16 +2929,118 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode',[
-	"x_ite/Bits/X3DCast",
+define ('x_ite/Components/NURBS/NurbsOrientationInterpolator',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DChildNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function NurbsOrientationInterpolator (executionContext)
+	{
+		X3DChildNode .call (this, executionContext);
+
+		this .addType (X3DConstants .NurbsOrientationInterpolator);
+	}
+
+	NurbsOrientationInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+	{
+		constructor: NurbsOrientationInterpolator,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
+		]),
+		getTypeName: function ()
+		{
+			return "NurbsOrientationInterpolator";
+		},
+		getComponentName: function ()
+		{
+			return "NURBS";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+	});
+
+	return NurbsOrientationInterpolator;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode',[
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 	"x_ite/Browser/NURBS/NURBS",
 	"nurbs",
 ],
-function (X3DCast,
+function (X3DParametricGeometryNode, 
           X3DConstants,
-          X3DParametricGeometryNode, 
+          X3DCast,
           NURBS,
           nurbs)
 {
@@ -2950,8 +3052,9 @@ function (X3DCast,
 
 		this .addType (X3DConstants .X3DNurbsSurfaceGeometryNode);
 
-		this .mesh          = { };
-		this .sampleOptions = { resolution: [ ] };
+		this .tessellationScale = 1;
+		this .mesh              = { };
+		this .sampleOptions     = { resolution: [ ] };
 	}
 
 	X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
@@ -2993,6 +3096,12 @@ function (X3DCast,
 
 			if (this .controlPointNode)
 				this .controlPointNode .addInterest ("requestRebuild", this);
+		},
+		setTessellationScale: function (value)
+		{
+			this .tessellationScale = value;
+
+			this .requestRebuild ();
 		},
 		getUTessellation: function (numKnots)
 		{
@@ -3078,8 +3187,8 @@ function (X3DCast,
 				debug: false,
 			});
 
-			this .sampleOptions .resolution [0] = this .getUTessellation (uKnots .length);
-			this .sampleOptions .resolution [1] = this .getVTessellation (vKnots .length);
+			this .sampleOptions .resolution [0] = Math .floor (this .getUTessellation (uKnots .length) * this .tessellationScale);
+			this .sampleOptions .resolution [1] = Math .floor (this .getVTessellation (vKnots .length) * this .tessellationScale);
 
 			var
 				mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
@@ -3266,22 +3375,406 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/NURBS/NurbsSweptSurface',[
+define ('x_ite/Components/NURBS/NurbsPositionInterpolator',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DChildNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function NurbsPositionInterpolator (executionContext)
+	{
+		X3DChildNode .call (this, executionContext);
+
+		this .addType (X3DConstants .NurbsPositionInterpolator);
+	}
+
+	NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+	{
+		constructor: NurbsPositionInterpolator,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
+		]),
+		getTypeName: function ()
+		{
+			return "NurbsPositionInterpolator";
+		},
+		getComponentName: function ()
+		{
+			return "NURBS";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+	});
+
+	return NurbsPositionInterpolator;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/NURBS/NurbsSet',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Components/Grouping/X3DBoundedObject",
+	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DChildNode, 
+          X3DBoundedObject, 
+          X3DConstants,
+          X3DCast)
+{
+"use strict";
+
+	function remove (array, first, last, range, rfirst, rlast)
+	{
+		var set = { };
+
+		for (var i = rfirst; i < rlast; ++ i)
+			set [getId (range [i])] = true;
+
+		function compare (value) { return set [getId (value)]; }
+
+		return array .remove (first, last, compare);
+	}
+
+	function NurbsSet (executionContext)
+	{
+		X3DChildNode     .call (this, executionContext);
+		X3DBoundedObject .call (this, executionContext);
+
+		this .addType (X3DConstants .NurbsSet);
+
+		this .geometryNodes = [ ];
+	}
+
+	NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+		X3DBoundedObject .prototype,
+	{
+		constructor: NurbsSet,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellationScale", new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "addGeometry",       new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeGeometry",    new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",          new Fields .MFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "NurbsSet";
+		},
+		getComponentName: function ()
+		{
+			return "NURBS";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DChildNode     .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
+
+			this .tessellationScale_ .addInterest ("set_tessellationScale__", this);
+			this .addGeometry_       .addInterest ("set_addGeometry__",       this);
+			this .removeGeometry_    .addInterest ("set_removeGeometry__",    this);
+			this .geometry_          .addInterest ("set_geometry__",          this);
+		
+			this .set_geometry__ ();
+		},
+		set_tessellationScale__: function ()
+		{
+			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+				this .geometryNodes [i] .setTessellationScale (this .tessellationScale_ .getValue ());
+		},
+		set_addGeometry__: function ()
+		{
+			this .addGeometry_ .setTainted (true);
+
+			this .addGeometry_ .erase (remove (this .addGeometry_, 0, this .addGeometry_ .length,
+			                                   this .geometry_, 0, this .geometry_ .length),
+			                           this .addGeometry_ .length);
+
+			for (var i = 0, length = this .addGeometry_ .length; i < length; ++ i)
+				this .geometry_ .push (this .addGeometry_ [i]);
+
+			this .addGeometry_ .setTainted (false);
+		},
+		set_removeGeometry__: function ()
+		{
+			this .geometry_ .erase (remove (this .geometry_,       0, this .geometry_ .length,
+			                                this .removeGeometry_, 0, this .removeGeometry_ .length),
+			                        this .geometry__ .length);
+		},
+		set_geometry__: function ()
+		{
+			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+				this .geometryNodes [i] .setTessellationScale (1);
+
+			this .geometryNodes .length = 0;
+
+			for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
+			{
+				var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this .geometry_ [i]);
+		
+				if (geometryNode)
+					this .geometryNodes .push (geometryNode);
+			}
+
+			this .set_tessellationScale__ ();
+		},
+	});
+
+	return NurbsSet;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/NURBS/NurbsSurfaceInterpolator',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DChildNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function NurbsSurfaceInterpolator (executionContext)
+	{
+		X3DChildNode .call (this, executionContext);
+
+		this .addType (X3DConstants .NurbsSurfaceInterpolator);
+	}
+
+	NurbsSurfaceInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+	{
+		constructor: NurbsSurfaceInterpolator,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_fraction",     new Fields .SFVec2f ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",           new Fields .SFInt32 (3)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",           new Fields .SFInt32 (3)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",       new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",       new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",            new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",            new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",           new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",     new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "normal_changed",   new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "position_changed", new Fields .SFVec3f ()),
+		]),
+		getTypeName: function ()
+		{
+			return "NurbsSurfaceInterpolator";
+		},
+		getComponentName: function ()
+		{
+			return "NURBS";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+	});
+
+	return NurbsSurfaceInterpolator;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/NURBS/NurbsSweptSurface',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Geometry3D/Extrusion",
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
-function (X3DCast,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           Extrusion, 
           X3DParametricGeometryNode, 
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
@@ -3448,21 +3941,21 @@ function (X3DCast,
 
 
 define ('x_ite/Components/NURBS/NurbsSwungSurface',[
-	"x_ite/Bits/X3DCast",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Geometry3D/Extrusion",
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
-function (X3DCast,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           Extrusion, 
           X3DParametricGeometryNode, 
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
@@ -3628,6 +4121,223 @@ function (X3DCast,
  ******************************************************************************/
 
 
+define ('x_ite/Components/NURBS/NurbsTextureCoordinate',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Core/X3DNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function NurbsTextureCoordinate (executionContext)
+	{
+		X3DNode .call (this, executionContext);
+
+		this .addType (X3DConstants .NurbsTextureCoordinate);
+	}
+
+	NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .prototype),
+	{
+		constructor: NurbsTextureCoordinate,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",       new Fields .SFInt32 (3)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",       new Fields .SFInt32 (3)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",   new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",   new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",        new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",        new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2f ()),
+		]),
+		getTypeName: function ()
+		{
+			return "NurbsTextureCoordinate";
+		},
+		getComponentName: function ()
+		{
+			return "NURBS";
+		},
+		getContainerField: function ()
+		{
+			return "texCoord";
+		},
+	});
+
+	return NurbsTextureCoordinate;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/NURBS/NurbsTrimmedSurface',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DNurbsSurfaceGeometryNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function NurbsTrimmedSurface (executionContext)
+	{
+		X3DNurbsSurfaceGeometryNode .call (this, executionContext);
+
+		this .addType (X3DConstants .NurbsTrimmedSurface);
+	}
+
+	NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
+	{
+		constructor: NurbsTrimmedSurface,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",              new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",                 new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "uTessellation",         new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "vTessellation",         new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "uClosed",               new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "vClosed",               new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",                new Fields .SFInt32 (3)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",                new Fields .SFInt32 (3)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",            new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",            new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",                 new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",                 new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",                new Fields .MFDouble ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",              new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "addTrimmingContour",    new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeTrimmingContour", new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "trimmingContour",       new Fields .MFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "NurbsTrimmedSurface";
+		},
+		getComponentName: function ()
+		{
+			return "NURBS";
+		},
+		getContainerField: function ()
+		{
+			return "geometry";
+		},
+	});
+
+	return NurbsTrimmedSurface;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 require ([
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/NURBS/Contour2D",
@@ -3635,9 +4345,15 @@ require ([
 	"x_ite/Components/NURBS/CoordinateDouble",
 	"x_ite/Components/NURBS/NurbsCurve",
 	"x_ite/Components/NURBS/NurbsCurve2D",
+	"x_ite/Components/NURBS/NurbsOrientationInterpolator",
 	"x_ite/Components/NURBS/NurbsPatchSurface",
+	"x_ite/Components/NURBS/NurbsPositionInterpolator",
+	"x_ite/Components/NURBS/NurbsSet",
+	"x_ite/Components/NURBS/NurbsSurfaceInterpolator",
 	"x_ite/Components/NURBS/NurbsSweptSurface",
 	"x_ite/Components/NURBS/NurbsSwungSurface",
+	"x_ite/Components/NURBS/NurbsTextureCoordinate",
+	"x_ite/Components/NURBS/NurbsTrimmedSurface",
 ],
 function (SupportedNodes,
           Contour2D,
@@ -3645,22 +4361,34 @@ function (SupportedNodes,
           CoordinateDouble,
           NurbsCurve,
           NurbsCurve2D,
+          NurbsOrientationInterpolator,
           NurbsPatchSurface,
+          NurbsPositionInterpolator,
+          NurbsSet,
+          NurbsSurfaceInterpolator,
           NurbsSweptSurface,
-          NurbsSwungSurface)
+          NurbsSwungSurface,
+          NurbsTextureCoordinate,
+          NurbsTrimmedSurface)
 {
 "use strict";
 
 	var NURBS =
 	{
-		Contour2D:         Contour2D,
-		ContourPolyline2D: ContourPolyline2D,
-		CoordinateDouble:  CoordinateDouble,
-		NurbsCurve:        NurbsCurve,
-		NurbsCurve2D:      NurbsCurve2D,
-		NurbsPatchSurface: NurbsPatchSurface,
-		NurbsSweptSurface: NurbsSweptSurface,
-		NurbsSwungSurface: NurbsSwungSurface,
+		Contour2D:                    Contour2D,
+		ContourPolyline2D:            ContourPolyline2D,
+		CoordinateDouble:             CoordinateDouble,
+		NurbsCurve:                   NurbsCurve,
+		NurbsCurve2D:                 NurbsCurve2D,
+		NurbsOrientationInterpolator: NurbsOrientationInterpolator,
+		NurbsPatchSurface:            NurbsPatchSurface,
+		NurbsPositionInterpolator:    NurbsPositionInterpolator,
+		NurbsSet:                     NurbsSet,
+		NurbsSurfaceInterpolator:     NurbsSurfaceInterpolator,
+		NurbsSweptSurface:            NurbsSweptSurface,
+		NurbsSwungSurface:            NurbsSwungSurface,
+		NurbsTextureCoordinate:       NurbsTextureCoordinate,
+		NurbsTrimmedSurface:          NurbsTrimmedSurface,
 	};
 
 	function createInstance (executionContext) { return new this (executionContext); }
