@@ -54,25 +54,42 @@ define ([
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
           X3DBoundedObject, 
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
+	function remove (array, first, last, range, rfirst, rlast)
+	{
+		var set = { };
+
+		for (var i = rfirst; i < rlast; ++ i)
+			set [getId (range [i])] = true;
+
+		function compare (value) { return set [getId (value)]; }
+
+		return array .remove (first, last, compare);
+	}
+
 	function NurbsSet (executionContext)
 	{
-		X3DChildNode .call (this, executionContext);
+		X3DChildNode     .call (this, executionContext);
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsSet);
+
+		this .geometryNodes = [ ];
 	}
 
-	NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),new X3DBoundedObject (),
+	NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+		X3DBoundedObject .prototype,
 	{
 		constructor: NurbsSet,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -95,6 +112,59 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DChildNode     .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
+
+			this .tessellationScale_ .addInterest ("set_tessellationScale__", this);
+			this .addGeometry_       .addInterest ("set_addGeometry__",       this);
+			this .removeGeometry_    .addInterest ("set_removeGeometry__",    this);
+			this .geometry_          .addInterest ("set_geometry__",          this);
+		
+			this .set_geometry__ ();
+		},
+		set_tessellationScale__: function ()
+		{
+			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+				this .geometryNodes [i] .setTessellationScale (this .tessellationScale_ .getValue ());
+		},
+		set_addGeometry__: function ()
+		{
+			this .addGeometry_ .setTainted (true);
+
+			this .addGeometry_ .erase (remove (this .addGeometry_, 0, this .addGeometry_ .length,
+			                                   this .geometry_, 0, this .geometry_ .length),
+			                           this .addGeometry_ .length);
+
+			for (var i = 0, length = this .addGeometry_ .length; i < length; ++ i)
+				this .geometry_ .push (this .addGeometry_ [i]);
+
+			this .addGeometry_ .setTainted (false);
+		},
+		set_removeGeometry__: function ()
+		{
+			this .geometry_ .erase (remove (this .geometry_,       0, this .geometry_ .length,
+			                                this .removeGeometry_, 0, this .removeGeometry_ .length),
+			                        this .geometry__ .length);
+		},
+		set_geometry__: function ()
+		{
+			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+				this .geometryNodes [i] .setTessellationScale (1);
+
+			this .geometryNodes .length = 0;
+
+			for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
+			{
+				var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this .geometry_ [i]);
+		
+				if (geometryNode)
+					this .geometryNodes .push (geometryNode);
+			}
+
+			this .set_tessellationScale__ ();
 		},
 	});
 

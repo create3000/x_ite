@@ -48,21 +48,21 @@
 
 
 define ([
-	"x_ite/Bits/X3DCast",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Geometry3D/Extrusion",
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
-function (X3DCast,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           Extrusion, 
           X3DParametricGeometryNode, 
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 

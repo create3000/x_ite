@@ -48,15 +48,15 @@
 
 
 define ([
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 	"x_ite/Browser/NURBS/NURBS",
 	"nurbs",
 ],
-function (X3DCast,
+function (X3DParametricGeometryNode, 
           X3DConstants,
-          X3DParametricGeometryNode, 
+          X3DCast,
           NURBS,
           nurbs)
 {
@@ -68,8 +68,9 @@ function (X3DCast,
 
 		this .addType (X3DConstants .X3DNurbsSurfaceGeometryNode);
 
-		this .mesh          = { };
-		this .sampleOptions = { resolution: [ ] };
+		this .tessellationScale = 1;
+		this .mesh              = { };
+		this .sampleOptions     = { resolution: [ ] };
 	}
 
 	X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
@@ -111,6 +112,12 @@ function (X3DCast,
 
 			if (this .controlPointNode)
 				this .controlPointNode .addInterest ("requestRebuild", this);
+		},
+		setTessellationScale: function (value)
+		{
+			this .tessellationScale = value;
+
+			this .requestRebuild ();
 		},
 		getUTessellation: function (numKnots)
 		{
@@ -196,8 +203,8 @@ function (X3DCast,
 				debug: false,
 			});
 
-			this .sampleOptions .resolution [0] = this .getUTessellation (uKnots .length);
-			this .sampleOptions .resolution [1] = this .getVTessellation (vKnots .length);
+			this .sampleOptions .resolution [0] = Math .floor (this .getUTessellation (uKnots .length) * this .tessellationScale);
+			this .sampleOptions .resolution [1] = Math .floor (this .getVTessellation (vKnots .length) * this .tessellationScale);
 
 			var
 				mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),

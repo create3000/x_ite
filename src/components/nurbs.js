@@ -55,6 +55,7 @@ require ([
 	"x_ite/Components/NURBS/NurbsCurve",
 	"x_ite/Components/NURBS/NurbsCurve2D",
 	"x_ite/Components/NURBS/NurbsPatchSurface",
+	"x_ite/Components/NURBS/NurbsSet",
 	"x_ite/Components/NURBS/NurbsSweptSurface",
 	"x_ite/Components/NURBS/NurbsSwungSurface",
 ],
@@ -65,6 +66,7 @@ function (SupportedNodes,
           NurbsCurve,
           NurbsCurve2D,
           NurbsPatchSurface,
+          NurbsSet,
           NurbsSweptSurface,
           NurbsSwungSurface)
 {
@@ -78,6 +80,7 @@ function (SupportedNodes,
 		NurbsCurve:        NurbsCurve,
 		NurbsCurve2D:      NurbsCurve2D,
 		NurbsPatchSurface: NurbsPatchSurface,
+		NurbsSet:          NurbsSet,
 		NurbsSweptSurface: NurbsSweptSurface,
 		NurbsSwungSurface: NurbsSwungSurface,
 	};

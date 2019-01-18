@@ -1,13 +1,15 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/NURBS/NurbsSweptSurface.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/NURBS/X3DParametricGeometryNode.js" Line="75" Column="1" />
-      <File FileName="src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js" Line="203" Column="26" />
-      <File FileName="src/x_ite/Browser/NURBS/NURBS.js" Line="350" Column="50" />
-      <File FileName="src/components/nurbs.js" Line="72" Column="1" />
-      <File FileName="src/x_ite/Components/NURBS/NurbsSweptSurface.js" Line="176" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/X3DParametricGeometryNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/NurbsSweptSurface.js" Line="174" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/NurbsSwungSurface.js" Line="177" Column="26" />
+      <File FileName="src/x_ite/Components/NURBS/ContourPolyline2D.js" Line="96" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/NurbsCurve2D.js" Line="126" Column="30" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableShape.js" Line="185" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
