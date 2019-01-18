@@ -57,7 +57,6 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/NURBS/NURBS",
 	"nurbs",
-	"nurbs/extras/sample",
 ],
 function (X3DCast,
           Fields,
@@ -67,8 +66,7 @@ function (X3DCast,
           X3DLineGeometryNode, 
           X3DConstants,
           NURBS,
-          nurbs,
-          sample)
+          nurbs)
 {
 "use strict";
 
@@ -149,6 +147,28 @@ function (X3DCast,
 		{
 			return NURBS .getControlPoints (closed, order, controlPointNode);
 		},
+		tessellate: function ()
+		{
+			if (this .order_ .getValue () < 2)
+				return [ ];
+		
+			if (! this .controlPointNode)
+				return [ ];
+		
+			if (this .controlPointNode .getSize () < this .order_ .getValue ())
+				return [ ];
+
+			var
+				vertexArray = this .getVertices (),
+				array       = [ ];
+			
+			for (var i = 0, length = vertexArray .length; i < length; i += 8)
+				array .push (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2]);
+
+			array .push (vertexArray [length - 4], vertexArray [length - 3], vertexArray [length - 2]);
+
+			return array;
+		},
 		build: function ()
 		{
 			if (this .order_ .getValue () < 2)
@@ -190,7 +210,7 @@ function (X3DCast,
 			this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
 
 			var
-				mesh       = sample (this .mesh, surface, this .sampleOptions),
+				mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
 				points      = mesh .points,
 				vertexArray = this .getVertices ();
 

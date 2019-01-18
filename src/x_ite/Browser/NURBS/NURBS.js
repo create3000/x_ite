@@ -65,6 +65,32 @@ function (Vector3)
 
 			return 2 * dimension + 1;
 		},
+		getClosed2D: function (order, knot, weight, controlPoint)
+		{
+			var
+				dimension   = controlPoint .length,
+				haveWeights = weight .length === dimension;
+
+			// Check if first and last weights are unitary.
+
+			if (haveWeights)
+			{
+				if (weight [0] !== weight [dimension - 1])
+					return false;
+			}
+
+			// Check if first and last point are coincident.
+
+			if (! controlPoint [0] .equals (controlPoint [dimension - 1]))
+				return false;
+
+			// Check if knots are periodic.
+
+			if (! this .isPeriodic (order, dimension, knot))
+				return false;
+
+			return true;
+		},
 		getClosed: (function ()
 		{
 			var
@@ -307,6 +333,32 @@ function (Vector3)
 	
 			return weights;
 		},
+		getControlPoints2D: (function ()
+		{
+			var point = new Vector3 (0, 0, 0)
+
+			return function (closed, order, controlPoint)
+			{
+				var
+					controlPoints = [ ],
+					dimension     = controlPoint .length;
+			
+				for (var i = 0; i < dimension; ++ i)
+				{
+					var point = controlPoint [i];
+
+					controlPoints .push ([ point .x, point .y, 0 ]);
+				}
+		
+				if (closed)
+				{
+					for (var i = 1, size = order - 1; i < size; ++ i)
+						controlPoints .push (controlPoints [i]);
+				}
+	
+				return controlPoints;
+			};
+		})(),
 		getControlPoints: (function ()
 		{
 			var point = new Vector3 (0, 0, 0)

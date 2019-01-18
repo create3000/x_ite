@@ -48,15 +48,19 @@
 
 
 define ([
+	"x_ite/Bits/X3DCast",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Geometry3D/Extrusion",
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (Fields,
+function (X3DCast,
+          Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
+          Extrusion, 
           X3DParametricGeometryNode, 
           X3DConstants)
 {
@@ -90,6 +94,73 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "geometry";
+		},
+		initialize: function ()
+		{
+			X3DParametricGeometryNode .prototype .initialize .call (this);
+
+			this .crossSectionCurve_ .addInterest ("set_crossSectionCurve__", this);
+			this .trajectoryCurve_   .addInterest ("set_trajectoryCurve__",   this);
+
+			this .set_crossSectionCurve__ ();
+			this .set_trajectoryCurve__ ();
+		},
+		set_crossSectionCurve__: function ()
+		{
+			if (this .crossSectionCurveNode)
+				this .crossSectionCurveNode .removeInterest ("requestRebuild", this);
+
+			this .crossSectionCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .crossSectionCurve_);
+
+			if (this .crossSectionCurveNode)
+				this .crossSectionCurveNode .addInterest ("requestRebuild", this);
+		},
+		set_trajectoryCurve__: function ()
+		{
+			if (this .trajectoryCurveNode)
+				this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
+
+			this .trajectoryCurveNode = X3DCast (X3DConstants .NurbsCurve, this .trajectoryCurve_);
+
+			if (this .trajectoryCurveNode)
+				this .trajectoryCurveNode .addInterest ("requestRebuild", this);
+		},
+		build: function ()
+		{
+			if (! this .crossSectionCurveNode)
+				return;
+		
+			if (! this .trajectoryCurveNode)
+				return;
+
+			var extrusion = new Extrusion (this .getExecutionContext ());
+		
+			extrusion .beginCap_     = false;
+			extrusion .endCap_       = false;
+			extrusion .solid_        = true;
+			extrusion .ccw_          = true;
+			extrusion .convex_       = true;
+			extrusion .creaseAngle_  = Math .PI;
+			extrusion .crossSection_ = this .crossSectionCurveNode .tessellate ();
+			extrusion .spine_        = this .trajectoryCurveNode   .tessellate ();
+
+			extrusion .setup ();
+
+			this .getColors ()    .assign (extrusion .getColors ());
+			this .getTexCoords () .assign (extrusion .getTexCoords ());
+			this .getNormals ()   .assign (extrusion .getNormals ());
+			this .getVertices ()  .assign (extrusion .getVertices ());
+
+			if (! this .ccw_ .getValue ())
+			{
+				var normals = this .getNormals ();
+
+				for (var i = 0, length = normals .length; i < length; ++ i)
+					normals [i] = -normals [i];
+			}
+
+			this .setSolid (this .solid_ .getValue ());
+			this .setCCW (this .ccw_ .getValue ());
 		},
 	});
 

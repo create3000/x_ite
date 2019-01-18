@@ -10,6 +10,7 @@ define ([
 	'nurbs/src/evaluate',
 	'nurbs/src/transform',
 	'nurbs/src/support',
+	"nurbs/extras/sample",
 ],
 function (inferType,
           computeCacheKey, 
@@ -20,7 +21,8 @@ function (inferType,
           isArrayLike,
           createEvaluator,
           createTransform,
-          createSupport)
+          createSupport,
+          sample)
 {
 'use strict';
 
@@ -333,5 +335,7 @@ function (inferType,
 		return ctor;
 	}
 	
+	nurbs .sample = sample;
+
 	return nurbs;
 });

@@ -91,6 +91,10 @@ function (Fields,
 		{
 			return "geometry";
 		},
+		build: function ()
+		{
+
+		},
 	});
 
 	return NurbsSwungSurface;

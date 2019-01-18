@@ -49,22 +49,37 @@
 
 require ([
 	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components/NURBS/Contour2D",
+	"x_ite/Components/NURBS/ContourPolyline2D",
 	"x_ite/Components/NURBS/CoordinateDouble",
 	"x_ite/Components/NURBS/NurbsCurve",
+	"x_ite/Components/NURBS/NurbsCurve2D",
 	"x_ite/Components/NURBS/NurbsPatchSurface",
+	"x_ite/Components/NURBS/NurbsSweptSurface",
+	"x_ite/Components/NURBS/NurbsSwungSurface",
 ],
 function (SupportedNodes,
+          Contour2D,
+          ContourPolyline2D,
           CoordinateDouble,
           NurbsCurve,
-          NurbsPatchSurface)
+          NurbsCurve2D,
+          NurbsPatchSurface,
+          NurbsSweptSurface,
+          NurbsSwungSurface)
 {
 "use strict";
 
 	var NURBS =
 	{
+		Contour2D:         Contour2D,
+		ContourPolyline2D: ContourPolyline2D,
 		CoordinateDouble:  CoordinateDouble,
 		NurbsCurve:        NurbsCurve,
+		NurbsCurve2D:      NurbsCurve2D,
 		NurbsPatchSurface: NurbsPatchSurface,
+		NurbsSweptSurface: NurbsSweptSurface,
+		NurbsSwungSurface: NurbsSwungSurface,
 	};
 
 	function createInstance (executionContext) { return new this (executionContext); }

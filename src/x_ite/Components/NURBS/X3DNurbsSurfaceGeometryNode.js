@@ -48,19 +48,17 @@
 
 
 define ([
-	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 	"x_ite/Browser/NURBS/NURBS",
 	"nurbs",
-	"nurbs/extras/sample",
 ],
-function (X3DParametricGeometryNode, 
-          X3DCast,
+function (X3DCast,
           X3DConstants,
+          X3DParametricGeometryNode, 
           NURBS,
-          nurbs,
-          sample)
+          nurbs)
 {
 "use strict";
 
@@ -202,7 +200,7 @@ function (X3DParametricGeometryNode,
 			this .sampleOptions .resolution [1] = this .getVTessellation (vKnots .length);
 
 			var
-				mesh        = sample (this .mesh, surface, this .sampleOptions),
+				mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
 				faces       = mesh .faces,
 				normals     = mesh .normals,
 				points      = mesh .points,
