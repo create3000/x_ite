@@ -24956,8 +24956,7 @@ function (X3DChildObject,
 
 			if (field .isInput () || (this .getExtendedEventHandling () && ! field .isOutput ()))
 			{
-				this .setTainted (true);
-				browser .addTaintedNode (this);
+				this .addNodeEvent ();
 			}
 		},
 		addNodeEvent: function ()
@@ -25224,7 +25223,6 @@ function (X3DEventObject,
 			this .initialize ();
 		},
 		initialize: function () { },
-		eventsProcessed: function () { },
 		create: function (executionContext)
 		{
 			return new (this .constructor) (executionContext);
@@ -26323,10 +26321,6 @@ function (Fields,
 		this .addAlias ("AntiAliased", this .Antialiased_);
 
 		this .setAttributeSplashScreen ();
-
-		this .primitiveQuality = PrimitiveQuality .MEDIUM;
-		this .textureQuality   = TextureQuality   .MEDIUM;
-		this .shading          = Shading          .GOURAUD;
 	}
 
 	BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -26480,8 +26474,11 @@ function (Fields,
 			{
 				case "LOW":
 				{
+					if (this .primitiveQuality === PrimitiveQuality .LOW)
+						break;
+
 					this .primitiveQuality = PrimitiveQuality .LOW;
-				
+
 					arc .dimension_      = 20;
 					arcClose .dimension_ = 20;
 					circle .dimension_   = 20;
@@ -26496,6 +26493,9 @@ function (Fields,
 				}
 				case "HIGH":
 				{
+					if (this .primitiveQuality === PrimitiveQuality .HIGH)
+						break;
+
 					this .primitiveQuality = PrimitiveQuality .HIGH;
 
 					arc .dimension_      = 80;
@@ -26512,6 +26512,9 @@ function (Fields,
 				}
 				default:
 				{
+					if (this .primitiveQuality === PrimitiveQuality .MEDIUM)
+						break;
+
 					this .primitiveQuality = PrimitiveQuality .MEDIUM;
 
 					arc .dimension_      = 40;
@@ -26540,6 +26543,9 @@ function (Fields,
 			{
 				case "LOW":
 				{
+					if (this .textureQuality === TextureQuality .HIGH)
+						break;
+
 					this .textureQuality = TextureQuality .LOW;
 
 					textureProperties .magnificationFilter_ = "AVG_PIXEL";
@@ -26553,6 +26559,9 @@ function (Fields,
 				}
 				case "HIGH":
 				{
+					if (this .textureQuality === TextureQuality .HIGH)
+						break;
+
 					this .textureQuality = TextureQuality .HIGH;
 
 					textureProperties .magnificationFilter_ = "NICEST";
@@ -26566,6 +26575,9 @@ function (Fields,
 				}
 				default:
 				{
+					if (this .textureQuality === TextureQuality .MEDIUM)
+						break;
+
 					this .textureQuality = TextureQuality .MEDIUM;
 
 					textureProperties .magnificationFilter_ = "NICEST";
@@ -27788,19 +27800,19 @@ function ($,
 });
 
 /**
- * jQuery contextMenu v2.7.0 - Plugin for simple contextMenu handling
+ * jQuery contextMenu v2.8.0 - Plugin for simple contextMenu handling
  *
- * Version: v2.7.0
+ * Version: v2.8.0
  *
  * Authors: Björn Brala (SWIS.nl), Rodney Rehm, Addy Osmani (patches for FF)
  * Web: http://swisnl.github.io/jQuery-contextMenu/
  *
- * Copyright (c) 2011-2018 SWIS BV and contributors
+ * Copyright (c) 2011-2019 SWIS BV and contributors
  *
  * Licensed under
  *   MIT License http://www.opensource.org/licenses/mit-license
  *
- * Date: 2018-10-02T14:29:27.777Z
+ * Date: 2019-01-16T15:45:48.370Z
  */
 
 // jscs:disable
@@ -28028,6 +28040,7 @@ function ($,
             },
             // events
             events: {
+                preShow: $.noop,
                 show: $.noop,
                 hide: $.noop,
                 activated: $.noop
@@ -28067,6 +28080,11 @@ function ($,
             // contextmenu show dispatcher
             contextmenu: function (e) {
                 var $this = $(this);
+                
+                //Show browser context-menu when preShow returns false
+                if (e.data.events.preShow($this,e) === false) {
+                    return;
+                }
 
                 // disable actual context-menu if we are using the right mouse button as the trigger
                 if (e.data.trigger === 'right') {
@@ -33216,18 +33234,18 @@ function (X3DConstants,
 		{
 			if (this .geoOriginNode)
 			{
-				this .geoOriginNode .removeInterest ("set_origin__", this);
+				this .geoOriginNode .removeInterest ("set_origin__",    this);
 				this .geoOriginNode .removeInterest ("set_rotateYUp__", this);
-				this .geoOriginNode .removeInterest ("addNodeEvent", this);
+				this .geoOriginNode .removeInterest ("addNodeEvent",    this);
 			}
-		
+
 			this .geoOriginNode = X3DCast (X3DConstants .GeoOrigin, this .geoOrigin_);
-		
+
 			if (this .geoOriginNode)
 			{
-				this .geoOriginNode .addInterest ("set_origin__", this);
+				this .geoOriginNode .addInterest ("set_origin__",    this);
 				this .geoOriginNode .addInterest ("set_rotateYUp__", this);
-				this .geoOriginNode .addInterest ("addNodeEvent", this);
+				this .geoOriginNode .addInterest ("addNodeEvent",    this);
 			}
 		
 			this .set_origin__ ();
@@ -43777,8 +43795,8 @@ define ('x_ite/Browser/Networking/urls',[],function ()
 	};
 });
 
-/*! sprintf-js v1.1.1 | Copyright (c) 2007-present, Alexandru Mărășteanu <hello@alexei.ro> | BSD-3-Clause */
-!function(){"use strict";function e(e){return r(n(e),arguments)}function t(t,r){return e.apply(null,[t].concat(r||[]))}function r(t,r){var n,i,a,o,p,c,u,f,l,d=1,g=t.length,b="";for(i=0;i<g;i++)if("string"==typeof t[i])b+=t[i];else if(Array.isArray(t[i])){if((o=t[i])[2])for(n=r[d],a=0;a<o[2].length;a++){if(!n.hasOwnProperty(o[2][a]))throw new Error(e('[sprintf] property "%s" does not exist',o[2][a]));n=n[o[2][a]]}else n=o[1]?r[o[1]]:r[d++];if(s.not_type.test(o[8])&&s.not_primitive.test(o[8])&&n instanceof Function&&(n=n()),s.numeric_arg.test(o[8])&&"number"!=typeof n&&isNaN(n))throw new TypeError(e("[sprintf] expecting number but found %T",n));switch(s.number.test(o[8])&&(f=n>=0),o[8]){case"b":n=parseInt(n,10).toString(2);break;case"c":n=String.fromCharCode(parseInt(n,10));break;case"d":case"i":n=parseInt(n,10);break;case"j":n=JSON.stringify(n,null,o[6]?parseInt(o[6]):0);break;case"e":n=o[7]?parseFloat(n).toExponential(o[7]):parseFloat(n).toExponential();break;case"f":n=o[7]?parseFloat(n).toFixed(o[7]):parseFloat(n);break;case"g":n=o[7]?String(Number(n.toPrecision(o[7]))):parseFloat(n);break;case"o":n=(parseInt(n,10)>>>0).toString(8);break;case"s":n=String(n),n=o[7]?n.substring(0,o[7]):n;break;case"t":n=String(!!n),n=o[7]?n.substring(0,o[7]):n;break;case"T":n=Object.prototype.toString.call(n).slice(8,-1).toLowerCase(),n=o[7]?n.substring(0,o[7]):n;break;case"u":n=parseInt(n,10)>>>0;break;case"v":n=n.valueOf(),n=o[7]?n.substring(0,o[7]):n;break;case"x":n=(parseInt(n,10)>>>0).toString(16);break;case"X":n=(parseInt(n,10)>>>0).toString(16).toUpperCase()}s.json.test(o[8])?b+=n:(!s.number.test(o[8])||f&&!o[3]?l="":(l=f?"+":"-",n=n.toString().replace(s.sign,"")),c=o[4]?"0"===o[4]?"0":o[4].charAt(1):" ",u=o[6]-(l+n).length,p=o[6]&&u>0?c.repeat(u):"",b+=o[5]?l+n+p:"0"===c?l+p+n:p+l+n)}return b}function n(e){if(i[e])return i[e];for(var t,r=e,n=[],a=0;r;){if(null!==(t=s.text.exec(r)))n.push(t[0]);else if(null!==(t=s.modulo.exec(r)))n.push("%");else{if(null===(t=s.placeholder.exec(r)))throw new SyntaxError("[sprintf] unexpected placeholder");if(t[2]){a|=1;var o=[],p=t[2],c=[];if(null===(c=s.key.exec(p)))throw new SyntaxError("[sprintf] failed to parse named argument key");for(o.push(c[1]);""!==(p=p.substring(c[0].length));)if(null!==(c=s.key_access.exec(p)))o.push(c[1]);else{if(null===(c=s.index_access.exec(p)))throw new SyntaxError("[sprintf] failed to parse named argument key");o.push(c[1])}t[2]=o}else a|=2;if(3===a)throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported");n.push(t)}r=r.substring(t[0].length)}return i[e]=n}var s={not_string:/[^s]/,not_bool:/[^t]/,not_type:/[^T]/,not_primitive:/[^v]/,number:/[diefg]/,numeric_arg:/[bcdiefguxX]/,json:/[j]/,not_json:/[^j]/,text:/^[^\x25]+/,modulo:/^\x25{2}/,placeholder:/^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,key:/^([a-z_][a-z_\d]*)/i,key_access:/^\.([a-z_][a-z_\d]*)/i,index_access:/^\[(\d+)\]/,sign:/^[\+\-]/},i=Object.create(null);"undefined"!=typeof exports&&(exports.sprintf=e,exports.vsprintf=t),"undefined"!=typeof window&&(window.sprintf=e,window.vsprintf=t,"function"==typeof define&&define.amd&&define('sprintf/dist/sprintf.min',[],function(){return{sprintf:e,vsprintf:t}}))}();
+/*! sprintf-js v1.1.2 | Copyright (c) 2007-present, Alexandru Mărășteanu <hello@alexei.ro> | BSD-3-Clause */
+!function(){"use strict";var g={not_string:/[^s]/,not_bool:/[^t]/,not_type:/[^T]/,not_primitive:/[^v]/,number:/[diefg]/,numeric_arg:/[bcdiefguxX]/,json:/[j]/,not_json:/[^j]/,text:/^[^\x25]+/,modulo:/^\x25{2}/,placeholder:/^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,key:/^([a-z_][a-z_\d]*)/i,key_access:/^\.([a-z_][a-z_\d]*)/i,index_access:/^\[(\d+)\]/,sign:/^[+-]/};function y(e){return function(e,t){var r,n,i,s,a,o,p,c,l,u=1,f=e.length,d="";for(n=0;n<f;n++)if("string"==typeof e[n])d+=e[n];else if("object"==typeof e[n]){if((s=e[n]).keys)for(r=t[u],i=0;i<s.keys.length;i++){if(null==r)throw new Error(y('[sprintf] Cannot access property "%s" of undefined value "%s"',s.keys[i],s.keys[i-1]));r=r[s.keys[i]]}else r=s.param_no?t[s.param_no]:t[u++];if(g.not_type.test(s.type)&&g.not_primitive.test(s.type)&&r instanceof Function&&(r=r()),g.numeric_arg.test(s.type)&&"number"!=typeof r&&isNaN(r))throw new TypeError(y("[sprintf] expecting number but found %T",r));switch(g.number.test(s.type)&&(c=0<=r),s.type){case"b":r=parseInt(r,10).toString(2);break;case"c":r=String.fromCharCode(parseInt(r,10));break;case"d":case"i":r=parseInt(r,10);break;case"j":r=JSON.stringify(r,null,s.width?parseInt(s.width):0);break;case"e":r=s.precision?parseFloat(r).toExponential(s.precision):parseFloat(r).toExponential();break;case"f":r=s.precision?parseFloat(r).toFixed(s.precision):parseFloat(r);break;case"g":r=s.precision?String(Number(r.toPrecision(s.precision))):parseFloat(r);break;case"o":r=(parseInt(r,10)>>>0).toString(8);break;case"s":r=String(r),r=s.precision?r.substring(0,s.precision):r;break;case"t":r=String(!!r),r=s.precision?r.substring(0,s.precision):r;break;case"T":r=Object.prototype.toString.call(r).slice(8,-1).toLowerCase(),r=s.precision?r.substring(0,s.precision):r;break;case"u":r=parseInt(r,10)>>>0;break;case"v":r=r.valueOf(),r=s.precision?r.substring(0,s.precision):r;break;case"x":r=(parseInt(r,10)>>>0).toString(16);break;case"X":r=(parseInt(r,10)>>>0).toString(16).toUpperCase()}g.json.test(s.type)?d+=r:(!g.number.test(s.type)||c&&!s.sign?l="":(l=c?"+":"-",r=r.toString().replace(g.sign,"")),o=s.pad_char?"0"===s.pad_char?"0":s.pad_char.charAt(1):" ",p=s.width-(l+r).length,a=s.width&&0<p?o.repeat(p):"",d+=s.align?l+r+a:"0"===o?l+a+r:a+l+r)}return d}(function(e){if(p[e])return p[e];var t,r=e,n=[],i=0;for(;r;){if(null!==(t=g.text.exec(r)))n.push(t[0]);else if(null!==(t=g.modulo.exec(r)))n.push("%");else{if(null===(t=g.placeholder.exec(r)))throw new SyntaxError("[sprintf] unexpected placeholder");if(t[2]){i|=1;var s=[],a=t[2],o=[];if(null===(o=g.key.exec(a)))throw new SyntaxError("[sprintf] failed to parse named argument key");for(s.push(o[1]);""!==(a=a.substring(o[0].length));)if(null!==(o=g.key_access.exec(a)))s.push(o[1]);else{if(null===(o=g.index_access.exec(a)))throw new SyntaxError("[sprintf] failed to parse named argument key");s.push(o[1])}t[2]=s}else i|=2;if(3===i)throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported");n.push({placeholder:t[0],param_no:t[1],keys:t[2],sign:t[3],pad_char:t[4],align:t[5],width:t[6],precision:t[7],type:t[8]})}r=r.substring(t[0].length)}return p[e]=n}(e),arguments)}function e(e,t){return y.apply(null,[e].concat(t||[]))}var p=Object.create(null);"undefined"!=typeof exports&&(exports.sprintf=y,exports.vsprintf=e),"undefined"!=typeof window&&(window.sprintf=y,window.vsprintf=e,"function"==typeof define&&define.amd&&define('sprintf/dist/sprintf.min',[],function(){return{sprintf:y,vsprintf:e}}))}();
 //# sourceMappingURL=sprintf.min.js.map
 ;
 define('sprintf', ['sprintf/dist/sprintf.min'], function (main) { return main; });
@@ -48548,7 +48566,7 @@ define ('standard/Networking/BinaryTransport',[],function ()
 		});
 	};
 });
-/* pako 1.0.7 nodeca/pako */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('pako_inflate/dist/pako_inflate',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.pako = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+/* pako 1.0.8 nodeca/pako */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('pako_inflate/dist/pako_inflate',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.pako = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
 
 
@@ -51568,6 +51586,22 @@ function Inflate(options) {
   this.header = new GZheader();
 
   zlib_inflate.inflateGetHeader(this.strm, this.header);
+
+  // Setup dictionary
+  if (opt.dictionary) {
+    // Convert data if needed
+    if (typeof opt.dictionary === 'string') {
+      opt.dictionary = strings.string2buf(opt.dictionary);
+    } else if (toString.call(opt.dictionary) === '[object ArrayBuffer]') {
+      opt.dictionary = new Uint8Array(opt.dictionary);
+    }
+    if (opt.raw) { //In raw mode we need to set the dictionary early
+      status = zlib_inflate.inflateSetDictionary(this.strm, opt.dictionary);
+      if (status !== c.Z_OK) {
+        throw new Error(msg[status]);
+      }
+    }
+  }
 }
 
 /**
@@ -51604,7 +51638,6 @@ Inflate.prototype.push = function (data, mode) {
   var dictionary = this.options.dictionary;
   var status, _mode;
   var next_out_utf8, tail, utf8str;
-  var dict;
 
   // Flag to properly process Z_BUF_ERROR on testing inflate call
   // when we check that all output data was flushed.
@@ -51636,17 +51669,7 @@ Inflate.prototype.push = function (data, mode) {
     status = zlib_inflate.inflate(strm, c.Z_NO_FLUSH);    /* no bad return value */
 
     if (status === c.Z_NEED_DICT && dictionary) {
-      // Convert data if needed
-      if (typeof dictionary === 'string') {
-        dict = strings.string2buf(dictionary);
-      } else if (toString.call(dictionary) === '[object ArrayBuffer]') {
-        dict = new Uint8Array(dictionary);
-      } else {
-        dict = dictionary;
-      }
-
-      status = zlib_inflate.inflateSetDictionary(this.strm, dict);
-
+      status = zlib_inflate.inflateSetDictionary(this.strm, dictionary);
     }
 
     if (status === c.Z_BUF_ERROR && allowBufError === true) {
@@ -58725,9 +58748,9 @@ function (TextureBuffer,
             };
 
             var i, j;
-            this.call = function() {
+            this.call = function(sizeInfo) {
                 for (i = 0, j = q.length; i < j; i++) {
-                    q[i].call();
+                    q[i].call(this, sizeInfo);
                 }
             };
 
@@ -58762,7 +58785,8 @@ function (TextureBuffer,
             element.resizeSensor = document.createElement('div');
             element.resizeSensor.dir = 'ltr';
             element.resizeSensor.className = 'resize-sensor';
-            var style = 'position: absolute; left: -10px; top: -10px; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;';
+            var style = 'pointer-events: none; position: absolute; left: 0px; top: 0px; right: 0; bottom: 0; ' +
+                'overflow: hidden; z-index: -1; visibility: hidden; max-width: 100%;';
             var styleChild = 'position: absolute; left: 0; top: 0; transition: 0s;';
 
             element.resizeSensor.style.cssText = style;
@@ -58775,7 +58799,8 @@ function (TextureBuffer,
                 '</div>';
             element.appendChild(element.resizeSensor);
 
-            var position = window.getComputedStyle(element).getPropertyValue('position');
+            var computedStyle = window.getComputedStyle(element);
+            var position = computedStyle ? computedStyle.getPropertyValue('position') : null;
             if ('absolute' !== position && 'relative' !== position && 'fixed' !== position) {
                 element.style.position = 'relative';
             }
@@ -58783,32 +58808,49 @@ function (TextureBuffer,
             var expand = element.resizeSensor.childNodes[0];
             var expandChild = expand.childNodes[0];
             var shrink = element.resizeSensor.childNodes[1];
-            var dirty, rafId, newWidth, newHeight;
+            var dirty, rafId;
             var size = getElementSize(element);
             var lastWidth = size.width;
             var lastHeight = size.height;
+            var initialHiddenCheck = true;
+            var lastAnimationFrame = 0;
+
+            var resetExpandShrink = function () {
+                var width = element.offsetWidth;
+                var height = element.offsetHeight;
+
+                expandChild.style.width = (width + 10) + 'px';
+                expandChild.style.height = (height + 10) + 'px';
+
+                expand.scrollLeft = width + 10;
+                expand.scrollTop = height + 10;
+
+                shrink.scrollLeft = width + 10;
+                shrink.scrollTop = height + 10;
+            };
 
             var reset = function() {
-                //set display to block, necessary otherwise hidden elements won't ever work
-                var invisible = element.offsetWidth === 0 && element.offsetHeight === 0;
+                // Check if element is hidden
+                if (initialHiddenCheck) {
+                    var invisible = element.offsetWidth === 0 && element.offsetHeight === 0;
+                    if (invisible) {
+                        // Check in next frame
+                        if (!lastAnimationFrame){
+                            lastAnimationFrame = requestAnimationFrame(function(){
+                                lastAnimationFrame = 0;
 
-                if (invisible) {
-                    var saveDisplay = element.style.display;
-                    element.style.display = 'block';
+                                reset();
+                            });
+                        }
+
+                        return;
+                    } else {
+                        // Stop checking
+                        initialHiddenCheck = false;
+                    }
                 }
 
-                expandChild.style.width = '100000px';
-                expandChild.style.height = '100000px';
-
-                expand.scrollLeft = 100000;
-                expand.scrollTop = 100000;
-
-                shrink.scrollLeft = 100000;
-                shrink.scrollTop = 100000;
-
-                if (invisible) {
-                    element.style.display = saveDisplay;
-                }
+                resetExpandShrink();
             };
             element.resizeSensor.resetSensor = reset;
 
@@ -58817,19 +58859,17 @@ function (TextureBuffer,
 
                 if (!dirty) return;
 
-                lastWidth = newWidth;
-                lastHeight = newHeight;
+                lastWidth = size.width;
+                lastHeight = size.height;
 
                 if (element.resizedAttached) {
-                    element.resizedAttached.call();
+                    element.resizedAttached.call(size);
                 }
             };
 
             var onScroll = function() {
-                var size = getElementSize(element);
-                var newWidth = size.width;
-                var newHeight = size.height;
-                dirty = newWidth != lastWidth || newHeight != lastHeight;
+                size = getElementSize(element);
+                dirty = size.width !== lastWidth || size.height !== lastHeight;
 
                 if (dirty && !rafId) {
                     rafId = requestAnimationFrame(onResized);
@@ -58848,9 +58888,9 @@ function (TextureBuffer,
 
             addEvent(expand, 'scroll', onScroll);
             addEvent(shrink, 'scroll', onScroll);
-            
-			// Fix for custom Elements
-			requestAnimationFrame(reset);
+
+            // Fix for custom Elements
+            requestAnimationFrame(reset);
         }
 
         forEachElement(element, function(elem){
@@ -58866,7 +58906,7 @@ function (TextureBuffer,
         };
     };
 
-    ResizeSensor.reset = function(element, ev) {
+    ResizeSensor.reset = function(element) {
         forEachElement(element, function(elem){
             elem.resizeSensor.resetSensor();
         });
@@ -58888,6 +58928,28 @@ function (TextureBuffer,
             }
         });
     };
+
+    if (typeof MutationObserver !== "undefined") {
+        var observer = new MutationObserver(function (mutations) {
+            for (var i in mutations) {
+                if (mutations.hasOwnProperty(i)) {
+                    var items = mutations[i].addedNodes;
+                    for (var j = 0; j < items.length; j++) {
+                        if (items[j].resizeSensor) {
+                            ResizeSensor.reset(items[j]);
+                        }
+                    }
+                }
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true,
+            });
+        });
+    }
 
     return ResizeSensor;
 
@@ -60745,10 +60807,12 @@ function (Fields,
 		this .addType (X3DConstants .X3DGeometryNode);
 			
 		this .addChildObjects ("transparent",  new Fields .SFBool (),
-		                       "bbox_changed", new Fields .SFTime ());
+		                       "bbox_changed", new Fields .SFTime (),
+		                       "rebuild",      new Fields .SFTime ());
 
 		this .transparent_  .setAccessType (X3DConstants .outputOnly);
 		this .bbox_changed_ .setAccessType (X3DConstants .outputOnly);
+		this .rebuild_      .setAccessType (X3DConstants .outputOnly);
 
 		// Members
 
@@ -60785,7 +60849,7 @@ function (Fields,
 
 		var array = [ ];
 
-		array .typedArray  = new Float32Array ();
+		array .typedArray = new Float32Array ();
 
 		array .assign = function (value)
 		{
@@ -60821,14 +60885,12 @@ function (Fields,
 		normal: new Vector3 (0, 0, 0),
 		setup: function ()
 		{
-			this .setTainted (true);
-		
 			X3DNode .prototype .setup .call (this);
 
-			this .addInterest ("eventsProcessed", this);
-			this .eventsProcessed ();
+			this .addInterest ("requestRebuild", this);
+			this .rebuild_ .addInterest ("rebuild", this);
 
-			this .setTainted (false);
+			this .rebuild ();
 		},
 		initialize: function ()
 		{
@@ -61317,10 +61379,12 @@ function (Fields,
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
 			gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
 		},
-		eventsProcessed: function ()
+		requestRebuild: function ()
 		{
-			X3DNode .prototype .eventsProcessed .call (this);
-
+			this .rebuild_ .addEvent ();
+		},
+		rebuild: function ()
+		{
 			this .clear ();
 			this .build ();
 
@@ -62357,7 +62421,7 @@ function (X3DGeometryNode,
 			var attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("addNodeEvent", this);
+				attribNodes [i] .removeInterest ("requestRebuild", this);
 
 			attribNodes .length = 0;
 
@@ -62370,13 +62434,13 @@ function (X3DGeometryNode,
 			}
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("addNodeEvent", this);
+				attribNodes [i] .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("addNodeEvent", this);
+				this .colorNode .removeInterest ("requestRebuild",    this);
 				this .colorNode .removeInterest ("set_transparent__", this);
 			}
 
@@ -62384,7 +62448,7 @@ function (X3DGeometryNode,
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("addNodeEvent", this);
+				this .colorNode .addInterest ("requestRebuild",    this);
 				this .colorNode .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
@@ -62399,34 +62463,34 @@ function (X3DGeometryNode,
 		set_texCoord__: function ()
 		{
 			if (this .texCoordNode)
-				this .texCoordNode .removeInterest ("addNodeEvent", this);
+				this .texCoordNode .removeInterest ("requestRebuild", this);
 
 			this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
 
 			if (this .texCoordNode)
-				this .texCoordNode .addInterest ("addNodeEvent", this);
+				this .texCoordNode .addInterest ("requestRebuild", this);
 
 			this .setCurrentTexCoord (this .texCoordNode);
 		},
 		set_normal__: function ()
 		{
 			if (this .normalNode)
-				this .normalNode .removeInterest ("addNodeEvent", this);
+				this .normalNode .removeInterest ("requestRebuild", this);
 
 			this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
 
 			if (this .normalNode)
-				this .normalNode .addInterest ("addNodeEvent", this);
+				this .normalNode .addInterest ("requestRebuild", this);
 		},
 		set_coord__: function ()
 		{
 			if (this .coordNode)
-				this .coordNode .removeInterest ("addNodeEvent", this);
+				this .coordNode .removeInterest ("requestRebuild", this);
 
 			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
 			if (this .coordNode)
-				this .coordNode .addInterest ("addNodeEvent", this);
+				this .coordNode .addInterest ("requestRebuild", this);
 		},
 		getPolygonIndex: function (index)
 		{
@@ -79075,8 +79139,6 @@ function (Fields,
 		},
 		eventsProcessed: function ()
 		{
-			X3DTextureTransformNode .prototype .eventsProcessed .call (this);
-			
 			var
 				translation = this .translation_ .getValue (),
 				rotation    = this .rotation_ .getValue (),
@@ -86301,9 +86363,9 @@ function (Fields,
 			X3DLineGeometryNode .prototype .set_live__ .call (this);
 
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getArc2DOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getArc2DOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
 		},
 		getSweepAngle: function ()
 		{
@@ -86485,9 +86547,9 @@ function (Fields,
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getArcClose2DOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getArcClose2DOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getArcClose2DOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
 		},
 		getSweepAngle: function ()
 		{
@@ -88967,8 +89029,6 @@ function (X3DTransformMatrix3DNode,
 		},
 		eventsProcessed: function ()
 		{
-			X3DTransformMatrix3DNode .prototype .eventsProcessed .call (this); // XXX, empty function call???
-			
 			this .setHidden (this .scale_ .x === 0 ||
 			                 this .scale_ .y === 0 ||
 			                 this .scale_ .z === 0);
@@ -89206,9 +89266,9 @@ function (Fields,
 			X3DLineGeometryNode .prototype .set_live__ .call (this);
 
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getCircle2DOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getCircle2DOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getCircle2DOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);
 		},
 		build: function ()
 		{
@@ -91135,9 +91195,9 @@ function (Fields,
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getConeOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getConeOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getConeOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getConeOptions () .removeInterest ("requestRebuild", this);
 		},
 		build: function ()
 		{
@@ -92269,9 +92329,9 @@ function (Fields,
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getCylinderOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getCylinderOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getCylinderOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getCylinderOptions () .removeInterest ("requestRebuild", this);
 		},
 		build: function ()
 		{
@@ -93150,9 +93210,9 @@ function (Fields,
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getDisk2DOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getDisk2DOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
 		},
 		build: function ()
 		{
@@ -93464,7 +93524,7 @@ function (Fields,
 			var attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("addNodeEvent", this);
+				attribNodes [i] .removeInterest ("requestRebuild", this);
 
 			attribNodes .length = 0;
 
@@ -93477,13 +93537,13 @@ function (Fields,
 			}
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("addNodeEvent", this);
+				attribNodes [i] .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("addNodeEvent", this);
+				this .colorNode .removeInterest ("requestRebuild",    this);
 				this .colorNode .removeInterest ("set_transparent__", this);
 			}
 
@@ -93491,7 +93551,7 @@ function (Fields,
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("addNodeEvent", this);
+				this .colorNode .addInterest ("requestRebuild",    this);
 				this .colorNode .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
@@ -93506,24 +93566,24 @@ function (Fields,
 		set_texCoord__: function ()
 		{
 			if (this .texCoordNode)
-				this .texCoordNode .removeInterest ("addNodeEvent", this);
+				this .texCoordNode .removeInterest ("requestRebuild", this);
 
 			this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
 
 			if (this .texCoordNode)
-				this .texCoordNode .addInterest ("addNodeEvent", this);
+				this .texCoordNode .addInterest ("requestRebuild", this);
 
 			this .setCurrentTexCoord (this .texCoordNode);
 		},
 		set_normal__: function ()
 		{
 			if (this .normalNode)
-				this .normalNode .removeInterest ("addNodeEvent", this);
+				this .normalNode .removeInterest ("requestRebuild", this);
 
 			this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
 
 			if (this .normalNode)
-				this .normalNode .addInterest ("addNodeEvent", this);
+				this .normalNode .addInterest ("requestRebuild", this);
 		},
 		getColor: function ()
 		{
@@ -95741,7 +95801,7 @@ function (Fields,
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("addNodeEvent", this);
+				this .colorNode .removeInterest ("requestRebuild",    this);
 				this .colorNode .removeInterest ("set_transparent__", this);
 			}
 
@@ -95749,7 +95809,7 @@ function (Fields,
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("addNodeEvent", this);
+				this .colorNode .addInterest ("requestRebuild",    this);
 				this .colorNode .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
@@ -95764,24 +95824,24 @@ function (Fields,
 		set_texCoord__: function ()
 		{
 			if (this .texCoordNode)
-				this .texCoordNode .removeInterest ("addNodeEvent", this);
+				this .texCoordNode .removeInterest ("requestRebuild", this);
 
 			this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
 
 			if (this .texCoordNode)
-				this .texCoordNode .addInterest ("addNodeEvent", this);
+				this .texCoordNode .addInterest ("requestRebuild", this);
 
 			this .setCurrentTexCoord (this .texCoordNode);
 		},
 		set_normal__: function ()
 		{
 			if (this .normalNode)
-				this .normalNode .removeInterest ("addNodeEvent", this);
+				this .normalNode .removeInterest ("requestRebuild", this);
 
 			this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
 
 			if (this .normalNode)
-				this .normalNode .addInterest ("addNodeEvent", this);
+				this .normalNode .addInterest ("requestRebuild", this);
 		},
 		getColor: function ()
 		{
@@ -98564,7 +98624,7 @@ function (Fields,
 			var attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("addNodeEvent", this);
+				attribNodes [i] .removeInterest ("requestRebuild", this);
 
 			attribNodes .length = 0;
 
@@ -98577,13 +98637,13 @@ function (Fields,
 			}
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("addNodeEvent", this);
+				attribNodes [i] .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("addNodeEvent", this);
+				this .colorNode .removeInterest ("requestRebuild",    this);
 				this .colorNode .removeInterest ("set_transparent__", this);
 			}
 
@@ -98591,7 +98651,7 @@ function (Fields,
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("addNodeEvent", this);
+				this .colorNode .addInterest ("requestRebuild",    this);
 				this .colorNode .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
@@ -98606,12 +98666,12 @@ function (Fields,
 		set_coord__: function ()
 		{
 			if (this .coordNode)
-				this .coordNode .removeInterest ("addNodeEvent", this);
+				this .coordNode .removeInterest ("requestRebuild", this);
 
 			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
 			if (this .coordNode)
-				this .coordNode .addInterest ("addNodeEvent", this);
+				this .coordNode .addInterest ("requestRebuild", this);
 		},
 		getColorPerVertexIndex: function (index)
 		{
@@ -101507,7 +101567,7 @@ function (Fields,
 			var attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("addNodeEvent", this);
+				attribNodes [i] .removeInterest ("requestRebuild", this);
 
 			attribNodes .length = 0;
 
@@ -101520,13 +101580,13 @@ function (Fields,
 			}
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("addNodeEvent", this);
+				attribNodes [i] .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("addNodeEvent", this);
+				this .colorNode .removeInterest ("requestRebuild",    this);
 				this .colorNode .removeInterest ("set_transparent__", this);
 			}
 
@@ -101534,7 +101594,7 @@ function (Fields,
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("addNodeEvent", this);
+				this .colorNode .addInterest ("requestRebuild",    this);
 				this .colorNode .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
@@ -101549,12 +101609,12 @@ function (Fields,
 		set_coord__: function ()
 		{
 			if (this .coordNode)
-				this .coordNode .removeInterest ("addNodeEvent", this);
+				this .coordNode .removeInterest ("requestRebuild", this);
 
 			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
 			if (this .coordNode)
-				this .coordNode .addInterest ("addNodeEvent", this);
+				this .coordNode .addInterest ("requestRebuild", this);
 		},
 		build: function ()
 		{
@@ -106845,7 +106905,7 @@ function (Fields,
 			var attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("addNodeEvent", this);
+				attribNodes [i] .removeInterest ("requestRebuild", this);
 
 			attribNodes .length = 0;
 
@@ -106858,27 +106918,27 @@ function (Fields,
 			}
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("addNodeEvent", this);
+				attribNodes [i] .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
 			if (this .colorNode)
-				this .colorNode .removeInterest ("addNodeEvent", this);
+				this .colorNode .removeInterest ("requestRebuild", this);
 
 			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
 
 			if (this .colorNode)
-				this .colorNode .addInterest ("addNodeEvent", this);
+				this .colorNode .addInterest ("requestRebuild", this);
 		},
 		set_coord__: function ()
 		{
 			if (this .coordNode)
-				this .coordNode .removeInterest ("addNodeEvent", this);
+				this .coordNode .removeInterest ("requestRebuild", this);
 
 			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
 			if (this .coordNode)
-				this .coordNode .addInterest ("addNodeEvent", this);
+				this .coordNode .addInterest ("requestRebuild", this);
 		},
 		build: function ()
 		{
@@ -107160,7 +107220,7 @@ function (Fields,
 			this .polylineNode .coordIndex_ = this .coordIndex_;
 			this .polylineNode .coord_      = this .coord_;
 
-			this .polylineNode .addInterest ("set_polyline", this);
+			this .polylineNode .rebuild_ .addInterest ("set_polyline", this);
 			this .polylineNode .setPrivate (true);
 			this .polylineNode .setup ();
 
@@ -110819,9 +110879,9 @@ function (Fields,
 			X3DGeometryNode .prototype .set_live__ .call (this);
 		   
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getSphereOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getSphereOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getSphereOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getSphereOptions () .removeInterest ("requestRebuild", this);
 		},
 		build: function ()
 		{
@@ -113337,12 +113397,12 @@ function (Fields,
 		set_surface__: function ()
 		{
 			if (this .surfaceNode)
-				this .surfaceNode .removeInterest ("set_geometry__", this);
+				this .surfaceNode .rebuild_ .removeInterest ("set_geometry__", this);
 
 			this .surfaceNode = X3DCast (X3DConstants .X3DGeometryNode, this .surface_);
 
 			if (this .surfaceNode)
-				this .surfaceNode .addInterest ("set_geometry__", this);
+				this .surfaceNode .rebuild_ .addInterest ("set_geometry__", this);
 
 			this .set_geometry__ ();
 		},
@@ -113968,7 +114028,6 @@ function (Fields,
 		   this .fontStyle_ .addInterest ("set_fontStyle__", this);
 	
 			this .set_fontStyle__ ();
-			this .eventsProcessed ();
 		},
 		getMatrix: function ()
 		{
@@ -113986,21 +114045,21 @@ function (Fields,
 		    X3DGeometryNode .prototype .set_live__ .call (this);
 
 		   if (this .isLive () .getValue ())
-				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .addInterest ("requestRebuild", this);
 		   else
-				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .removeInterest ("requestRebuild", this);
 		},
 		set_fontStyle__: function ()
 		{
 		   if (this .fontStyleNode)
-		      this .fontStyleNode .removeInterest ("addNodeEvent", this);
+		      this .fontStyleNode .removeInterest ("requestRebuild", this);
 
 			this .fontStyleNode = X3DCast (X3DConstants .X3DFontStyleNode, this .fontStyle_);
 
 			if (! this .fontStyleNode)
 				this .fontStyleNode = this .getBrowser () .getDefaultFontStyle ();
 
-		   this .fontStyleNode .addInterest ("addNodeEvent", this);
+		   this .fontStyleNode .addInterest ("requestRebuild", this);
 
 		   this .textGeometry = this .fontStyleNode .getTextGeometry (this);
 		},
@@ -114593,8 +114652,6 @@ function (Fields,
 		},
 		eventsProcessed: function ()
 		{
-			X3DTextureTransformNode .prototype .eventsProcessed .call (this);
-			
 			var
 				translation = this .translation_ .getValue (),
 				rotation    = this .rotation_ .getValue (),
@@ -114720,8 +114777,6 @@ function (Fields,
 		},
 		eventsProcessed: function ()
 		{
-			X3DTextureTransformNode .prototype .eventsProcessed .call (this);
-			
 			var matrix4 = this .getMatrix ();
 
 			matrix4 .assign (this .matrix_ .getValue ());
@@ -116580,7 +116635,7 @@ function (Fields,
 			this .volumeNode .coordIndex_  = this .coordIndex_;
 			this .volumeNode .coord_       = this .coord_;
 
-			this .volumeNode .addInterest ("set_geometry__", this);
+			this .volumeNode .rebuild_ .addInterest ("set_geometry__", this);
 			this .volumeNode .setPrivate (true);
 			this .volumeNode .setup ();
 
