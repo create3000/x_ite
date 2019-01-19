@@ -361,7 +361,7 @@ function (Vector3)
 		})(),
 		getControlPoints: (function ()
 		{
-			var point = new Vector3 (0, 0, 0)
+			var point = new Vector3 (0, 0, 0);
 
 			return function (closed, order, controlPointNode)
 			{
@@ -385,7 +385,7 @@ function (Vector3)
 		})(),
 		getUVControlPoints: (function ()
 		{
-			var point = new Vector3 (0, 0, 0)
+			var point = new Vector3 (0, 0, 0);
 
 			return function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
 			{
