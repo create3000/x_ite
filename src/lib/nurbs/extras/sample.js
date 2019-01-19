@@ -48,7 +48,9 @@ define (function ()
 			points  = mesh .points  = mesh .points  || [ ],
 			normals = mesh .normals = mesh .normals || [ ],
 			faces   = mesh .faces   = mesh .faces   || [ ];
-	
+
+		var dimension = nurbs .dimension;
+
 		if (Array .isArray (opts .resolution))
 		{
 			var resolution = opts .resolution;
@@ -60,7 +62,7 @@ define (function ()
 				resolution = new Array (nurbs .splineDimension) .fill (res);
 		}
 
-		var generateNormals = opts .generateNormals !== undefined ? opts .generateNormals : true;
+		var generateNormals = dimension === 3 && (opts .generateNormals !== undefined ? opts .generateNormals : true);
 
 		switch (nurbs .splineDimension)
 		{
@@ -69,7 +71,7 @@ define (function ()
 				var
 					nu         = resolution [0],
 					nuBound    = nu + (nurbs .boundary [0] !== 'closed'),
-					nbVertices = nuBound * 3,
+					nbVertices = nuBound * dimension,
 					uDer       = nurbs .evaluator ([1, 0]);
 
 				var
@@ -80,13 +82,12 @@ define (function ()
 				{
 					var
 						u   = uDomain [0] + (uDomain [1] - uDomain [0]) * i / nu,
-						ptr = 3 * i;
+						ptr = i * dimension;
 
 					nurbs .evaluate (tmp1, u);
 
-					points [ptr]     = tmp1 [0];
-					points [ptr + 1] = tmp1 [1];
-					points [ptr + 2] = tmp1 [2];
+					for (var d = 0; d < dimension; ++ d)
+						points [ptr + d] = tmp1 [d];
 				}
 	
 				points .length = nbVertices;
@@ -102,8 +103,9 @@ define (function ()
 					nuBound = nu + (nurbs .boundary [0] !== 'closed'),
 					nvBound = nv + (nurbs .boundary [1] !== 'closed');
 				
-				var nbVertices = nuBound * nvBound * 3;
-				// var nbFaces = nu * nv * 4;
+				var
+					nbNormals  = nuBound * nvBound * 3,
+					nbVertices = nuBound * nvBound * dimension;
 				
 				var
 					uDer = nurbs .evaluator ([1, 0]),
@@ -122,13 +124,12 @@ define (function ()
 					{
 						var
 							v   = vDomain [0] + (vDomain [1] - vDomain [0]) * j / nv,
-							ptr = 3 * (i + nuBound * j);
+							ptr = (i + nuBound * j) * dimension;
 
 						nurbs .evaluate (tmp1, u, v);
 	
-						points [ptr]     = tmp1 [0];
-						points [ptr + 1] = tmp1 [1];
-						points [ptr + 2] = tmp1 [2];
+						for (var d = 0; d < dimension; ++ d)
+							points [ptr + d] = tmp1 [d];
 
 						if (generateNormals)
 						{
@@ -144,7 +145,7 @@ define (function ()
 					}
 				}
 	
-				normals .length = nbVertices;
+				normals .length = nbNormals;
 				points  .length = nbVertices;
 				
 				var c = 0;
@@ -166,13 +167,13 @@ define (function ()
 						if (nurbs .boundary [1] === 'closed')
 							j1 = j1 % nv;
 						
-						faces [c++] = i0 + nuBound * j0;
-						faces [c++] = i1 + nuBound * j0;
-						faces [c++] = i1 + nuBound * j1;
+						faces [c ++] = i0 + nuBound * j0;
+						faces [c ++] = i1 + nuBound * j0;
+						faces [c ++] = i1 + nuBound * j1;
 						
-						faces [c++] = i0 + nuBound * j0;
-						faces [c++] = i1 + nuBound * j1;
-						faces [c++] = i0 + nuBound * j1;
+						faces [c ++] = i0 + nuBound * j0;
+						faces [c ++] = i1 + nuBound * j1;
+						faces [c ++] = i0 + nuBound * j1;
 					}
 				}
 		

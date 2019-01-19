@@ -262,7 +262,7 @@ function (X3DParametricGeometryNode,
 					texUKnots        = [uKnots [0], uKnots [0], uKnots [uKnots .length - 1], uKnots [uKnots .length - 1]],
 					texVKnots        = [vKnots [0], vKnots [0], vKnots [vKnots .length - 1], vKnots [vKnots .length - 1]],
 					texWeights       = undefined,
-					texControlPoints = [[[0, 0, 0], [0, 1, 0]], [[1, 0, 0], [1, 1, 0]]];
+					texControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
 			}
 
 			var surface = this .surface = (this .surface || nurbs) ({
@@ -283,9 +283,9 @@ function (X3DParametricGeometryNode,
 
 			for (var i = 0, length = faces .length; i < length; ++ i)
 			{
-				var index = faces [i] * 3;
+				var index = faces [i] * 4;
 
-				texCoordArray .push (points [index], points [index + 1], points [index + 2], 1);
+				texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
 			}
 
 			this .getMultiTexCoords () .push (this .getTexCoords ());

@@ -167,12 +167,12 @@ function (Fields,
 
 			if (spine)
 			{
-				for (var i = 0, length = points .length; i < length; i += 3)
+				for (var i = 0, length = points .length; i < length; i += 2)
 					array .push (points [i], 0, points [i + 1]);
 			}
 			else
 			{
-				for (var i = 0, length = points .length; i < length; i += 3)
+				for (var i = 0, length = points .length; i < length; i += 2)
 					array .push (points [i], points [i + 1]);
 			}
 
