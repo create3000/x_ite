@@ -145,6 +145,10 @@ function (X3DParametricGeometryNode,
 		{
 			return NURBS .getUVWeights (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight);
 		},
+		getTexControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
+		{
+			return NURBS .getTexControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
+		},
 		getUVControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
 		{
 			return NURBS .getUVControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode);
@@ -226,10 +230,6 @@ function (X3DParametricGeometryNode,
 			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights);
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (true);
-		},
-		getTexControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
-		{
-			return NURBS .getUVControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
 		},
 		buildNurbsTexCoords: function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, weights)
 		{

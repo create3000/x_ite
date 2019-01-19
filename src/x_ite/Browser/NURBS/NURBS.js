@@ -49,8 +49,10 @@
 
 define ([
 	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Vector4",
 ],
-function (Vector3)
+function (Vector3,
+          Vector4)
 {
 "use strict";
 
@@ -341,9 +343,7 @@ function (Vector3)
 		
 			for (var i = 0; i < dimension; ++ i)
 			{
-				var point = controlPoint [i];
-
-				controlPoints .push (new Vector3 (point .x, point .y, 0));
+				controlPoints .push (controlPoint [i] .getValue ());
 			}
 	
 			if (closed)
@@ -386,6 +386,36 @@ function (Vector3)
 				for (var v = 0; v < vDimension; ++ v)
 				{
 					cp .push (controlPointNode .get1Point (v * uDimension + u, new Vector3 (0, 0, 0)));
+				}
+
+				if (vClosed)
+				{
+					for (var i = 1, length = vOrder - 1; i < length; ++ i)
+						cp .push (cp [i]);
+				}
+			}
+
+			if (uClosed)
+			{
+				for (var i = 1, length = uOrder - 1; i < length; ++ i)
+					controlPoints .push (controlPoints [i]);
+			}
+
+			return controlPoints;
+		},
+		getTexControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		{
+			var controlPoints = [ ];
+
+			for (var u = 0; u < uDimension; ++ u)
+			{
+				var cp = [ ];
+
+				controlPoints .push (cp);
+
+				for (var v = 0; v < vDimension; ++ v)
+				{
+					cp .push (controlPointNode .get1Point (v * uDimension + u, new Vector4 (0, 0, 0, 0)));
 				}
 
 				if (vClosed)
