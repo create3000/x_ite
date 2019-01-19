@@ -61,9 +61,9 @@ function (inferType,
 	    Object.defineProperty(this, 'size', {value: opts.size, writable: true, configurable: true});
 	  }
 
-	  var pointType = inferType(this.points);
+	  var pointType  = inferType(this.points);
 	  var weightType = inferType(this.weights);
-	  var knotType = inferType(this.knots);
+	  var knotType   = inferType(this.knots);
 	
 	  if (this.points) {
 	    //
@@ -95,6 +95,7 @@ function (inferType,
 	        });
 	        break;
 	
+	      case inferType.ARRAY_OF_OBJECTS:
 	      case inferType.ARRAY_OF_ARRAYS:
 	        // Follow the zeroth entries until we hit something that's not an array
 	        var splineDimension = 0;

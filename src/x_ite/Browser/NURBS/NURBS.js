@@ -347,7 +347,7 @@ function (Vector3)
 				{
 					var point = controlPoint [i];
 
-					controlPoints .push ([ point .x, point .y, 0 ]);
+					controlPoints .push (new Vector3 (point .x, point .y, 0));
 				}
 		
 				if (closed)
@@ -371,7 +371,7 @@ function (Vector3)
 			
 				for (var i = 0; i < dimension; ++ i)
 				{
-					controlPoints .push (Array .prototype .slice .call (controlPointNode .get1Point (i, point)));
+					controlPoints .push (controlPointNode .get1Point (i, new Vector3 (0, 0, 0)));
 				}
 		
 				if (closed)
@@ -399,7 +399,7 @@ function (Vector3)
 
 					for (var v = 0; v < vDimension; ++ v)
 					{
-						cp .push (Array .prototype .slice .call (controlPointNode .get1Point (v * uDimension + u, point)));
+						cp .push (controlPointNode .get1Point (v * uDimension + u, new Vector3 (0, 0, 0)));
 					}
 	
 					if (vClosed)

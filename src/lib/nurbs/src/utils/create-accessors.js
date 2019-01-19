@@ -7,7 +7,9 @@ function (inferType,
           createVariable)
 {
 'use strict';
-	
+
+	var properties = ['.x', '.y', '.z', '.w'];
+
 	function wrapAccessor (callback)
 	{
 		return function (i, period)
@@ -33,34 +35,38 @@ function (inferType,
 			return callback (dimAccessors);
 		};
 	}
-	
-//	function elementAccessor (e)
-//	{
-//		return ['.x', '.y', '.z'] [e] || '[' + e + ']';
-//	}
 
 	function createAccessor (name, data)
 	{
-		if (!data)
+		if (! data)
 			return undefined;
-		
+
 		switch (inferType(data))
 		{
-			case inferType.ARRAY_OF_ARRAYS:
+			case inferType .ARRAY_OF_OBJECTS:
+			{
+				return wrapAccessor (function (accessors)
+				{
+					var e = accessors .pop ();
+
+					return name + '[' + accessors .join ('][') + ']' + properties [e];
+				});
+			}
+			case inferType .ARRAY_OF_ARRAYS:
 			{
 				return wrapAccessor (function (accessors)
 				{
 					return name + '[' + accessors .join ('][') + ']';
 				});
 			}
-			case inferType.GENERIC_NDARRAY:
+			case inferType .GENERIC_NDARRAY:
 			{
 				return wrapAccessor(function (accessors)
 				{
 					return name + '.get(' + accessors.join(',') + ')';
 				});
 			}
-			case inferType.NDARRAY:
+			case inferType .NDARRAY:
 			{
 				return wrapAccessor(function (accessors)
 				{

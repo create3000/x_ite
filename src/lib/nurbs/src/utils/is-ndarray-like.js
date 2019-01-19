@@ -9,7 +9,7 @@ define (function ()
 			return false;
 
 		return (
-			arr .data !== undefined &&
+			arr .data   !== undefined &&
 			Array .isArray (arr .shape) &&
 			arr .offset !== undefined &&
 			arr .stride !== undefined
