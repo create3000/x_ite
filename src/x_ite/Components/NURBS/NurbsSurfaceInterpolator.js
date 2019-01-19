@@ -52,13 +52,21 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Components/NURBS/NurbsPatchSurface",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Geometry/Line3",
+	"standard/Math/Geometry/Triangle2",
+	"standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
-          X3DConstants)
+          NurbsPatchSurface, 
+          X3DConstants,
+          Line3,
+          Triangle2,
+          Vector3)
 {
 "use strict";
 
@@ -67,6 +75,8 @@ function (Fields,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsSurfaceInterpolator);
+
+		this .geometry = new NurbsPatchSurface (executionContext);
 	}
 
 	NurbsSurfaceInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -98,6 +108,83 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			this .set_fraction_ .addInterest ("set_fraction__", this);
+
+			this .uOrder_       .addFieldInterest (this .geometry .uOrder_);
+			this .vOrder_       .addFieldInterest (this .geometry .vOrder_);
+			this .uDimension_   .addFieldInterest (this .geometry .uDimension_);
+			this .vDimension_   .addFieldInterest (this .geometry .vDimension_);
+			this .uKnot_        .addFieldInterest (this .geometry .uKnot_);
+			this .vKnot_        .addFieldInterest (this .geometry .vKnot_);
+			this .weight_       .addFieldInterest (this .geometry .weight_);
+			this .controlPoint_ .addFieldInterest (this .geometry .controlPoint_);
+
+			this .geometry .uTessellation_ = 128;
+			this .geometry .vTessellation_ = 128;
+			this .geometry .uOrder_        = this .uOrder_;
+			this .geometry .vOrder_        = this .vOrder_;
+			this .geometry .uDimension_    = this .uDimension_;
+			this .geometry .vDimension_    = this .vDimension_;
+			this .geometry .uKnot_         = this .uKnot_;
+			this .geometry .vKnot_         = this .vKnot_;
+			this .geometry .weight_        = this .weight_;
+			this .geometry .controlPoint_  = this .controlPoint_;
+
+			this .geometry .setup ();
+		},
+		set_fraction__: (function ()
+		{
+			var
+				a     = new Vector3 (0, 0, 0),
+				b     = new Vector3 (0, 0, 0),
+				c     = new Vector3 (0, 0, 0),
+				point = new Vector3 (0, 0, 0),
+				line  = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+				uvt   = { };
+
+			return function ()
+			{
+				var
+					fraction       = this .set_fraction_ .getValue (),
+					texCoordsArray = this .geometry .getTexCoords (),
+					normalArray    = this .geometry .getNormals (),
+					verticesArray  = this .geometry .getVertices ();
+	
+				for (var i = 0, length = texCoordsArray .length; i < length; i += 12)
+				{
+					a .set (texCoordsArray [i + 0], texCoordsArray [i + 1], 0);
+					b .set (texCoordsArray [i + 4], texCoordsArray [i + 5], 0);
+					c .set (texCoordsArray [i + 7], texCoordsArray [i + 9], 0);
+	
+					if (Triangle2 .isPointInTriangle (a, b, c, fraction))
+					{
+						line .set (point .set (fraction .x, fraction .y, 0), Vector3 .zAxis);
+
+						if (line .intersectsTriangle (a, b, c, uvt))
+						{
+							var
+								u  = uvt .u,
+								v  = uvt .v,
+								t  = 1 - u - v,
+								i3 = i / 4 * 3;
+
+							var normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
+							                          t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
+							                          t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
+
+							var position = new Vector3 (t * verticesArray [i + 0] + u * verticesArray [i + 4] + v * verticesArray [i +  8],
+							                            t * verticesArray [i + 1] + u * verticesArray [i + 5] + v * verticesArray [i +  9],
+							                            t * verticesArray [i + 2] + u * verticesArray [i + 6] + v * verticesArray [i + 10]);
+
+							this .normal_changed_   = normal;
+							this .position_changed_ = position;
+						}
+					}
+				}
+			};
+		})(),
 	});
 
 	return NurbsSurfaceInterpolator;
