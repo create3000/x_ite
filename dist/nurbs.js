@@ -2056,7 +2056,9 @@ define ('nurbs/extras/sample',[],function ()
 			points  = mesh .points  = mesh .points  || [ ],
 			normals = mesh .normals = mesh .normals || [ ],
 			faces   = mesh .faces   = mesh .faces   || [ ];
-	
+
+		var dimension = nurbs .dimension;
+
 		if (Array .isArray (opts .resolution))
 		{
 			var resolution = opts .resolution;
@@ -2068,7 +2070,7 @@ define ('nurbs/extras/sample',[],function ()
 				resolution = new Array (nurbs .splineDimension) .fill (res);
 		}
 
-		var generateNormals = opts .generateNormals !== undefined ? opts .generateNormals : true;
+		var generateNormals = dimension === 3 && (opts .generateNormals !== undefined ? opts .generateNormals : true);
 
 		switch (nurbs .splineDimension)
 		{
@@ -2077,24 +2079,23 @@ define ('nurbs/extras/sample',[],function ()
 				var
 					nu         = resolution [0],
 					nuBound    = nu + (nurbs .boundary [0] !== 'closed'),
-					nbVertices = nuBound * 3,
+					nbVertices = nuBound * dimension,
 					uDer       = nurbs .evaluator ([1, 0]);
 
 				var
-					domain  = nurbs .domain,
+					domain  = opts .domain || nurbs .domain,
 					uDomain = domain [0];
 
 				for (var i = 0; i < nuBound; ++ i)
 				{
 					var
 						u   = uDomain [0] + (uDomain [1] - uDomain [0]) * i / nu,
-						ptr = 3 * i;
+						ptr = i * dimension;
 
 					nurbs .evaluate (tmp1, u);
 
-					points [ptr]     = tmp1 [0];
-					points [ptr + 1] = tmp1 [1];
-					points [ptr + 2] = tmp1 [2];
+					for (var d = 0; d < dimension; ++ d)
+						points [ptr + d] = tmp1 [d];
 				}
 	
 				points .length = nbVertices;
@@ -2110,15 +2111,16 @@ define ('nurbs/extras/sample',[],function ()
 					nuBound = nu + (nurbs .boundary [0] !== 'closed'),
 					nvBound = nv + (nurbs .boundary [1] !== 'closed');
 				
-				var nbVertices = nuBound * nvBound * 3;
-				// var nbFaces = nu * nv * 4;
+				var
+					nbNormals  = nuBound * nvBound * 3,
+					nbVertices = nuBound * nvBound * dimension;
 				
 				var
 					uDer = nurbs .evaluator ([1, 0]),
 					vDer = nurbs .evaluator ([0, 1]);
 				
 				var
-					domain  = nurbs .domain,
+					domain  = opts .domain || nurbs .domain,
 					uDomain = domain [0],
 					vDomain = domain [1];
 
@@ -2130,13 +2132,12 @@ define ('nurbs/extras/sample',[],function ()
 					{
 						var
 							v   = vDomain [0] + (vDomain [1] - vDomain [0]) * j / nv,
-							ptr = 3 * (i + nuBound * j);
+							ptr = (i + nuBound * j) * dimension;
 
 						nurbs .evaluate (tmp1, u, v);
 	
-						points [ptr]     = tmp1 [0];
-						points [ptr + 1] = tmp1 [1];
-						points [ptr + 2] = tmp1 [2];
+						for (var d = 0; d < dimension; ++ d)
+							points [ptr + d] = tmp1 [d];
 
 						if (generateNormals)
 						{
@@ -2152,7 +2153,7 @@ define ('nurbs/extras/sample',[],function ()
 					}
 				}
 	
-				normals .length = nbVertices;
+				normals .length = nbNormals;
 				points  .length = nbVertices;
 				
 				var c = 0;
@@ -2174,13 +2175,13 @@ define ('nurbs/extras/sample',[],function ()
 						if (nurbs .boundary [1] === 'closed')
 							j1 = j1 % nv;
 						
-						faces [c++] = i0 + nuBound * j0;
-						faces [c++] = i1 + nuBound * j0;
-						faces [c++] = i1 + nuBound * j1;
+						faces [c ++] = i0 + nuBound * j0;
+						faces [c ++] = i1 + nuBound * j0;
+						faces [c ++] = i1 + nuBound * j1;
 						
-						faces [c++] = i0 + nuBound * j0;
-						faces [c++] = i1 + nuBound * j1;
-						faces [c++] = i0 + nuBound * j1;
+						faces [c ++] = i0 + nuBound * j0;
+						faces [c ++] = i1 + nuBound * j1;
+						faces [c ++] = i0 + nuBound * j1;
 					}
 				}
 		
@@ -2938,12 +2939,12 @@ function (Fields,
 
 			if (spine)
 			{
-				for (var i = 0, length = points .length; i < length; i += 3)
+				for (var i = 0, length = points .length; i < length; i += 2)
 					array .push (points [i], 0, points [i + 1]);
 			}
 			else
 			{
-				for (var i = 0, length = points .length; i < length; i += 3)
+				for (var i = 0, length = points .length; i < length; i += 2)
 					array .push (points [i], points [i + 1]);
 			}
 
@@ -3397,12 +3398,15 @@ function (X3DParametricGeometryNode,
 				debug: false,
 			});
 
-			this .sampleOptions .resolution [0]  = this .getUTessellation (uKnots .length);
-			this .sampleOptions .resolution [1]  = this .getVTessellation (vKnots .length);
-			this .sampleOptions .generateNormals = true;
+			var sampleOptions = this .sampleOptions;
+
+			sampleOptions .resolution [0]  = this .getUTessellation (uKnots .length);
+			sampleOptions .resolution [1]  = this .getVTessellation (vKnots .length);
+			sampleOptions .generateNormals = true;
+			sampleOptions .domain          = undefined;
 
 			var
-				mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
+				mesh        = nurbs .sample (this .mesh, surface, sampleOptions),
 				faces       = mesh .faces,
 				normals     = mesh .normals,
 				points      = mesh .points,
@@ -3417,12 +3421,14 @@ function (X3DParametricGeometryNode,
 				vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
 			}
 
-			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights);
+			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights, surface .domain);
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (true);
 		},
-		buildNurbsTexCoords: function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, weights)
-		{
+		buildNurbsTexCoords: function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, weights, domain)
+		{	
+			var sampleOptions = this .sampleOptions;
+
 			if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
 			{
 				var
@@ -3452,7 +3458,9 @@ function (X3DParametricGeometryNode,
 					texUKnots        = [uKnots [0], uKnots [0], uKnots [uKnots .length - 1], uKnots [uKnots .length - 1]],
 					texVKnots        = [vKnots [0], vKnots [0], vKnots [vKnots .length - 1], vKnots [vKnots .length - 1]],
 					texWeights       = undefined,
-					texControlPoints = [[[0, 0, 0], [0, 1, 0]], [[1, 0, 0], [1, 1, 0]]];
+					texControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
+
+				sampleOptions .domain = domain;
 			}
 
 			var surface = this .surface = (this .surface || nurbs) ({
@@ -3463,19 +3471,19 @@ function (X3DParametricGeometryNode,
 				points: texControlPoints,
 			});
 
-			this .sampleOptions .generateNormals = false;
+			sampleOptions .generateNormals = false;
 
 			var
-				mesh          = nurbs .sample (this .mesh, surface, this .sampleOptions),
+				mesh          = nurbs .sample (this .mesh, surface, sampleOptions),
 				faces         = mesh .faces,
 				points        = mesh .points,
 				texCoordArray = this .getTexCoords ();
 
 			for (var i = 0, length = faces .length; i < length; ++ i)
 			{
-				var index = faces [i] * 3;
+				var index = faces [i] * 4;
 
-				texCoordArray .push (points [index], points [index + 1], points [index + 2], 1);
+				texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
 			}
 
 			this .getMultiTexCoords () .push (this .getTexCoords ());
@@ -4229,11 +4237,11 @@ function (Fields,
 					normalArray    = this .geometry .getNormals (),
 					verticesArray  = this .geometry .getVertices ();
 	
-				for (var i = 0, length = texCoordsArray .length; i < length; i += 12)
+				for (var i4 = 0, i3 = 0, length = texCoordsArray .length; i4 < length; i4 += 12, i3 += 9)
 				{
-					a .set (texCoordsArray [i + 0], texCoordsArray [i + 1], 0);
-					b .set (texCoordsArray [i + 4], texCoordsArray [i + 5], 0);
-					c .set (texCoordsArray [i + 7], texCoordsArray [i + 9], 0);
+					a .set (texCoordsArray [i4 + 0], texCoordsArray [i4 + 1], 0);
+					b .set (texCoordsArray [i4 + 4], texCoordsArray [i4 + 5], 0);
+					c .set (texCoordsArray [i4 + 7], texCoordsArray [i4 + 9], 0);
 	
 					if (Triangle2 .isPointInTriangle (a, b, c, fraction))
 					{
@@ -4242,18 +4250,17 @@ function (Fields,
 						if (line .intersectsTriangle (a, b, c, uvt))
 						{
 							var
-								u  = uvt .u,
-								v  = uvt .v,
-								t  = 1 - u - v,
-								i3 = i / 12 * 9;
+								u = uvt .u,
+								v = uvt .v,
+								t = uvt .t;
 
 							var normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
 							                          t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
 							                          t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
 
-							var position = new Vector3 (t * verticesArray [i + 0] + u * verticesArray [i + 4] + v * verticesArray [i +  8],
-							                            t * verticesArray [i + 1] + u * verticesArray [i + 5] + v * verticesArray [i +  9],
-							                            t * verticesArray [i + 2] + u * verticesArray [i + 6] + v * verticesArray [i + 10]);
+							var position = new Vector3 (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
+							                            t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
+							                            t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
 
 							this .normal_changed_   = normal;
 							this .position_changed_ = position;

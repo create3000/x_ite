@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16a-540 */
+/* X_ITE v4.2.16a-541 */
 
 (function () {
 
@@ -44248,6 +44248,8 @@ function (Shading,
 		X3DAppearanceChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DShaderNode);
+
+		this .geometryType = 3;
 	}
 
 	X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -44264,13 +44266,13 @@ function (Shading,
 		},
 		setGeometryType: function (value)
 		{
-			this .setShading (value, this .getBrowser () .getBrowserOptions () .getShading ());
+			this .geometryType = value;
 		},
-		setShading: function (geometryType, shading)
+		setShading: function (shading)
 		{
 			var gl = this .getBrowser () .getContext ();
 
-			switch (geometryType)
+			switch (this .geometryType)
 			{
 				case 0:
 				{
@@ -52752,10 +52754,6 @@ function (Vector3)
 	Line3 .prototype =
 	{
 		constructor: Line3,
-		// Static vectors for line / triangle intersection.
-		u: new Vector3 (0, 0, 0),
-		pvec: new Vector3 (0, 0, 0),
-		tvec: new Vector3 (0, 0, 0),
 		copy: function ()
 		{
 			var copy = Object .create (Line3 .prototype);
@@ -52801,78 +52799,90 @@ function (Vector3)
 
 			return result .assign (this .direction) .multiply (d) .add (this .point);
 		},
-		getClosestPointToLine: function (line, point)
+		getClosestPointToLine: (function ()
 		{
-			var
-				p1 = this .point,
-				p2 = line .point,
-				d1 = this .direction,
-				d2 = line .direction;
+			var u = new Vector3 (0, 0, 0);
 
-			var t = Vector3 .dot (d1, d2);
-
-			if (Math .abs (t) >= 1)
-				return false;  // lines are parallel
-
-			var u = this .u .assign (p2) .subtract (p1);
-
-			t = (Vector3 .dot (u, d1) - t * Vector3 .dot (u, d2)) / (1 - t * t);
-
-			point .assign (d1) .multiply (t) .add (p1);
-			return true;
-		},
+			return function (line, point)
+			{
+				var
+					p1 = this .point,
+					p2 = line .point,
+					d1 = this .direction,
+					d2 = line .direction;
+	
+				var t = Vector3 .dot (d1, d2);
+	
+				if (Math .abs (t) >= 1)
+					return false;  // lines are parallel
+	
+				u .assign (p2) .subtract (p1);
+	
+				t = (u .dot (d1) - t * u .dot (d2)) / (1 - t * t);
+	
+				point .assign (d1) .multiply (t) .add (p1);
+				return true;
+			};
+		})(),
 		getPerpendicularVector: function (point)
 		{
 			var d = Vector3 .subtract (this .point, point);
 
 			return d .subtract (this .direction .copy () .multiply (Vector3 .dot (d, this .direction)));
 		},
-		intersectsTriangle: function (A, B, C, uvt)
+		intersectsTriangle: (function ()
 		{
-			// Find vectors for two edges sharing vert0.
 			var
-				edge1 = B .subtract (A),
-				edge2 = C .subtract (A);
+				pvec = new Vector3 (0, 0, 0),
+				tvec = new Vector3 (0, 0, 0);
 
-			// Begin calculating determinant - also used to calculate U parameter.
-			var pvec = this .pvec .assign (this .direction) .cross (edge2);
-
-			// If determinant is near zero, ray lies in plane of triangle.
-			var det = edge1 .dot (pvec);
-
-			// Non culling intersection.
-
-			if (det === 0)
-				return false;
-
-			var inv_det = 1 / det;
-
-			// Calculate distance from vert0 to ray point.
-			var tvec = this .tvec .assign (this .point) .subtract (A);
-
-			// Calculate U parameter and test bounds.
-			var u = tvec .dot (pvec) * inv_det;
-
-			if (u < 0 || u > 1)
-				return false;
-
-			// Prepare to test V parameter.
-			var qvec = tvec .cross (edge1);
-
-			// Calculate V parameter and test bounds.
-			var v = this .direction .dot (qvec) * inv_det;
-
-			if (v < 0 || u + v > 1)
-				return false;
-
-			var t = edge2 .dot (qvec) * inv_det;
-
-			uvt .u = u;
-			uvt .v = v;
-			uvt .t = t;
-
-			return true;
-		},
+			return function (A, B, C, uvt)
+			{
+				// Find vectors for two edges sharing vert0.
+				var
+					edge1 = B .subtract (A),
+					edge2 = C .subtract (A);
+	
+				// Begin calculating determinant - also used to calculate U parameter.
+				pvec .assign (this .direction) .cross (edge2);
+	
+				// If determinant is near zero, ray lies in plane of triangle.
+				var det = edge1 .dot (pvec);
+	
+				// Non culling intersection.
+	
+				if (det === 0)
+					return false;
+	
+				var inv_det = 1 / det;
+	
+				// Calculate distance from vert0 to ray point.
+				tvec .assign (this .point) .subtract (A);
+	
+				// Calculate U parameter and test bounds.
+				var u = tvec .dot (pvec) * inv_det;
+	
+				if (u < 0 || u > 1)
+					return false;
+	
+				// Prepare to test V parameter.
+				var qvec = tvec .cross (edge1);
+	
+				// Calculate V parameter and test bounds.
+				var v = this .direction .dot (qvec) * inv_det;
+	
+				if (v < 0 || u + v > 1)
+					return false;
+	
+				//var t = edge2 .dot (qvec) * inv_det;
+	
+				uvt .u = u;
+				uvt .v = v;
+				uvt .t = 1 - u - v;
+	
+				return true;
+			};
+		})(),
 		toString: function ()
 		{
 			return this .point + ", " + this .direction;
@@ -61178,7 +61188,7 @@ function (Fields,
 							var
 								u = uvt .u,
 								v = uvt .v,
-								t = 1 - u - v;
+								t = uvt .t;
 
 							// Determine vectors for X3DPointingDeviceSensors.
 
@@ -61596,7 +61606,7 @@ function (Fields,
 				if (shaderNode .wireframe)
 				{
 					// Wireframes are always solid so only one drawing call is needed.
-	
+
 					for (var i = 0, length = this .vertexCount; i < length; i += 3)
 						gl .drawArrays (shaderNode .primitiveMode, i, 3);
 				}
