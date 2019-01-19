@@ -63706,6 +63706,29 @@ function (Fields,
 			this .point  = this .point_ .getValue ();
 			this .length = this .point_ .length;
 		},
+		isEmpty: function ()
+		{
+			return this .length === 0;
+		},
+		getSize: function ()
+		{
+			return this .length;
+		},
+		get1Point: function (index, vector)
+		{
+			if (index < this .length)
+			{
+				const point = this .point;
+
+				index *= 2;
+
+				return vector .set (point [index], point [index + 1], 0, 1);
+			}
+			else
+			{
+				return vector .set (0, 0, 0, 1);
+			}
+		},
 		addTexCoordToChannel: function (index, array)
 		{
 			if (index >= 0 && index < this .length)
@@ -114370,6 +114393,29 @@ function (Fields,
 			this .point  = this .point_ .getValue ();
 			this .length = this .point_ .length;
 		},
+		isEmpty: function ()
+		{
+			return this .length === 0;
+		},
+		getSize: function ()
+		{
+			return this .length;
+		},
+		get1Point: function (index, vector)
+		{
+			if (index < this .length)
+			{
+				const point = this .point;
+
+				index *= 3;
+
+				return vector .set (point [index], point [index + 1], point [index + 2], 1);
+			}
+			else
+			{
+				return vector .set (0, 0, 0, 1);
+			}
+		},
 		addTexCoordToChannel: function (index, array)
 		{
 			if (index >= 0 && index < this .length)
@@ -114507,6 +114553,29 @@ function (Fields,
 		{
 			this .point  = this .point_ .getValue ();
 			this .length = this .point_ .length;
+		},
+		isEmpty: function ()
+		{
+			return this .length === 0;
+		},
+		getSize: function ()
+		{
+			return this .length;
+		},
+		get1Point: function (index, vector)
+		{
+			if (index < this .length)
+			{
+				const point = this .point;
+
+				index *= 4;
+
+				return vector .set (point [index], point [index + 1], point [index + 2], point [index + 3]);
+			}
+			else
+			{
+				return vector .set (0, 0, 0, 1);
+			}
 		},
 		addTexCoordToChannel: function (index, array)
 		{

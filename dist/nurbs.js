@@ -450,8 +450,10 @@ function (Fields,
 
 define ('x_ite/Browser/NURBS/NURBS',[
 	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Vector4",
 ],
-function (Vector3)
+function (Vector3,
+          Vector4)
 {
 "use strict";
 
@@ -734,91 +736,104 @@ function (Vector3)
 	
 			return weights;
 		},
-		getControlPoints2D: (function ()
+		getControlPoints2D: function (closed, order, controlPoint)
 		{
-			var point = new Vector3 (0, 0, 0)
-
-			return function (closed, order, controlPoint)
-			{
-				var
-					controlPoints = [ ],
-					dimension     = controlPoint .length;
-			
-				for (var i = 0; i < dimension; ++ i)
-				{
-					var point = controlPoint [i];
-
-					controlPoints .push ([ point .x, point .y, 0 ]);
-				}
+			var
+				controlPoints = [ ],
+				dimension     = controlPoint .length;
 		
-				if (closed)
-				{
-					for (var i = 1, size = order - 1; i < size; ++ i)
-						controlPoints .push (controlPoints [i]);
-				}
-	
-				return controlPoints;
-			};
-		})(),
-		getControlPoints: (function ()
-		{
-			var point = new Vector3 (0, 0, 0)
-
-			return function (closed, order, controlPointNode)
+			for (var i = 0; i < dimension; ++ i)
 			{
-				var
-					controlPoints = [ ],
-					dimension     = controlPointNode .getSize ();
-			
-				for (var i = 0; i < dimension; ++ i)
-				{
-					controlPoints .push (Array .prototype .slice .call (controlPointNode .get1Point (i, point)));
-				}
+				controlPoints .push (controlPoint [i] .getValue ());
+			}
+	
+			if (closed)
+			{
+				for (var i = 1, size = order - 1; i < size; ++ i)
+					controlPoints .push (controlPoints [i]);
+			}
+
+			return controlPoints;
+		},
+		getControlPoints: function (closed, order, controlPointNode)
+		{
+			var
+				controlPoints = [ ],
+				dimension     = controlPointNode .getSize ();
 		
-				if (closed)
-				{
-					for (var i = 1, size = order - 1; i < size; ++ i)
-						controlPoints .push (controlPoints [i]);
-				}
-	
-				return controlPoints;
-			};
-		})(),
-		getUVControlPoints: (function ()
-		{
-			var point = new Vector3 (0, 0, 0)
-
-			return function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+			for (var i = 0; i < dimension; ++ i)
 			{
-				var controlPoints = [ ];
+				controlPoints .push (controlPointNode .get1Point (i, new Vector3 (0, 0, 0)));
+			}
 	
-				for (var u = 0; u < uDimension; ++ u)
-				{
-					var cp = [ ];
-	
-					controlPoints .push (cp);
+			if (closed)
+			{
+				for (var i = 1, size = order - 1; i < size; ++ i)
+					controlPoints .push (controlPoints [i]);
+			}
 
-					for (var v = 0; v < vDimension; ++ v)
-					{
-						cp .push (Array .prototype .slice .call (controlPointNode .get1Point (v * uDimension + u, point)));
-					}
-	
-					if (vClosed)
-					{
-						for (var i = 1, length = vOrder - 1; i < length; ++ i)
-							cp .push (cp [i]);
-					}
-				}
-	
-				if (uClosed)
+			return controlPoints;
+		},
+		getUVControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		{
+			var controlPoints = [ ];
+
+			for (var u = 0; u < uDimension; ++ u)
+			{
+				var cp = [ ];
+
+				controlPoints .push (cp);
+
+				for (var v = 0; v < vDimension; ++ v)
 				{
-					for (var i = 1, length = uOrder - 1; i < length; ++ i)
-						controlPoints .push (controlPoints [i]);
+					cp .push (controlPointNode .get1Point (v * uDimension + u, new Vector3 (0, 0, 0)));
 				}
-	
-				return controlPoints;
-			};
-		})(),
+
+				if (vClosed)
+				{
+					for (var i = 1, length = vOrder - 1; i < length; ++ i)
+						cp .push (cp [i]);
+				}
+			}
+
+			if (uClosed)
+			{
+				for (var i = 1, length = uOrder - 1; i < length; ++ i)
+					controlPoints .push (controlPoints [i]);
+			}
+
+			return controlPoints;
+		},
+		getTexControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		{
+			var controlPoints = [ ];
+
+			for (var u = 0; u < uDimension; ++ u)
+			{
+				var cp = [ ];
+
+				controlPoints .push (cp);
+
+				for (var v = 0; v < vDimension; ++ v)
+				{
+					cp .push (controlPointNode .get1Point (v * uDimension + u, new Vector4 (0, 0, 0, 0)));
+				}
+
+				if (vClosed)
+				{
+					for (var i = 1, length = vOrder - 1; i < length; ++ i)
+						cp .push (cp [i]);
+				}
+			}
+
+			if (uClosed)
+			{
+				for (var i = 1, length = uOrder - 1; i < length; ++ i)
+					controlPoints .push (controlPoints [i]);
+			}
+
+			return controlPoints;
+		},
 	};
 
 	return NURBS;
@@ -938,7 +953,7 @@ define ('nurbs/src/utils/is-ndarray-like',[],function ()
 			return false;
 
 		return (
-			arr .data !== undefined &&
+			arr .data   !== undefined &&
 			Array .isArray (arr .shape) &&
 			arr .offset !== undefined &&
 			arr .stride !== undefined
@@ -969,30 +984,43 @@ function (isNdarray,
 {
 'use strict';
 	
-	function inferType (x) {
-	  if (!x) {
-	    return undefined;
-	  }
-	  if (isNdarray(x) || isNdarrayLike(x)) {
-	    if (x.dtype === 'generic') {
-	      return inferType.GENERIC_NDARRAY;
-	    }
-	    return inferType.NDARRAY;
-	  } else {
-	    if (isArrayLike(x)) {
-	      // if (isArrayLike(x[0])) {
-	      return inferType.ARRAY_OF_ARRAYS;
-	      // }
-	      // return inferType.PACKED;
-	    }
-	    throw new Error('Unhandled data type. Got type: ' + (typeof x));
-	  }
+	function inferType (x)
+	{
+		if (! x)
+			return undefined;
+
+		if (isNdarray (x) || isNdarrayLike (x))
+		{
+			if (x.dtype === 'generic')
+				return inferType .GENERIC_NDARRAY;
+
+			return inferType .NDARRAY;
+		}
+		else
+		{
+			if (isArrayLike (x))
+			{
+				for (var ptr = x; isArrayLike (ptr [0]); ptr = ptr [0])
+					;
+
+				if ('x' in ptr)
+					return inferType .ARRAY_OF_OBJECTS;
+	
+				// if (isArrayLike(x[0])) {
+				return inferType .ARRAY_OF_ARRAYS;
+				// }
+				// return inferType.PACKED;
+			}
+
+			throw new Error('Unhandled data type. Got type: ' + (typeof x));
+		}
 	}
 	
-	inferType.ARRAY_OF_ARRAYS = 'Arr';
-	inferType.NDARRAY = 'Nd';
-	inferType.GENERIC_NDARRAY = 'GenNd';
-	inferType.PACKED = 'PackArr';
+	inferType .ARRAY_OF_OBJECTS = 'Obj';
+	inferType .ARRAY_OF_ARRAYS  = 'Arr';
+	inferType .NDARRAY          = 'Nd';
+	inferType .GENERIC_NDARRAY  = 'GenNd';
+	inferType .PACKED           = 'PackArr';
 	
 	return inferType;
 });
@@ -1096,64 +1124,105 @@ function (inferType,
           createVariable)
 {
 'use strict';
-	
-	function wrapAccessor (callback) {
-	  return function (i, period) {
-	    if (i !== undefined && !Array.isArray(i)) i = [i];
-	    var dimAccessors = [];
-	    for (var j = 0; j < i.length; j++) {
-	      dimAccessors.push(createVariable.sum(i[j]));
-	    }
-	    if (period) {
-	      for (i = 0; i < dimAccessors.length; i++) {
-	        if (period[i] === undefined) continue;
-	        dimAccessors[i] = '(' + dimAccessors[i] + ' + ' + period[i] + ') % ' + period[i];
-	      }
-	    }
-	    return callback(dimAccessors);
-	  };
+
+	var properties = ['.x', '.y', '.z', '.w'];
+
+	function wrapAccessor (callback)
+	{
+		return function (i, period)
+		{
+			if (i !== undefined && ! Array .isArray(i))
+				i = [i];
+
+			var dimAccessors = [ ];
+
+			for (var j = 0; j < i .length; j ++)
+				dimAccessors .push (createVariable .sum (i [j]));
+
+			if (period)
+			{
+				for (i = 0; i < dimAccessors .length; i++)
+				{
+					if (period [i] === undefined)
+						continue;
+
+					dimAccessors [i] = '(' + dimAccessors [i] + ' + ' + period [i] + ') % ' + period [i];
+				}
+			}
+			return callback (dimAccessors);
+		};
+	}
+
+	function createAccessor (name, data)
+	{
+		if (! data)
+			return undefined;
+
+		switch (inferType(data))
+		{
+			case inferType .ARRAY_OF_OBJECTS:
+			{
+				return wrapAccessor (function (accessors)
+				{
+					var e = accessors .pop ();
+
+					return name + '[' + accessors .join ('][') + ']' + properties [e];
+				});
+			}
+			case inferType .ARRAY_OF_ARRAYS:
+			{
+				return wrapAccessor (function (accessors)
+				{
+					return name + '[' + accessors .join ('][') + ']';
+				});
+			}
+			case inferType .GENERIC_NDARRAY:
+			{
+				return wrapAccessor(function (accessors)
+				{
+					return name + '.get(' + accessors.join(',') + ')';
+				});
+			}
+			case inferType .NDARRAY:
+			{
+				return wrapAccessor(function (accessors)
+				{
+					var code = [name + 'Offset'];
+
+					for (var i = 0; i < accessors.length; i++)
+					{
+						code.push(name + 'Stride' + i + ' * (' + accessors[i] + ')');
+					}
+
+					return name + '[' + code.join(' + ') + ']';
+				});
+			}
+			case inferType.PACKED:
+			default:
+				return undefined;
+		}
 	}
 	
-	function createAccessor (name, data) {
-	  var i;
-	  if (!data) return undefined;
-	  switch (inferType(data)) {
-	    case inferType.ARRAY_OF_ARRAYS:
-	      return wrapAccessor(function (accessors) {
-	        return name + '[' + accessors.join('][') + ']';
-	      });
-	    case inferType.GENERIC_NDARRAY:
-	      return wrapAccessor(function (accessors) {
-	        return name + '.get(' + accessors.join(',') + ')';
-	      });
-	    case inferType.NDARRAY:
-	      return wrapAccessor(function (accessors) {
-	        var code = [name + 'Offset'];
-	        for (i = 0; i < accessors.length; i++) {
-	          code.push(name + 'Stride' + i + ' * (' + accessors[i] + ')');
-	        }
-	        return name + '[' + code.join(' + ') + ']';
-	      });
-	    case inferType.PACKED:
-	    default:
-	      return undefined;
-	  }
-	}
-	
-	return function (nurbs) {
-	  var accessors = {};
-	  var accessor;
-	
-	  accessor = createAccessor('x', nurbs.points);
-	  if (accessor) accessors.point = accessor;
-	
-	  accessor = createAccessor('w', nurbs.weights);
-	  if (accessor) accessors.weight = accessor;
-	
-	  accessor = createAccessor('k', nurbs.knots);
-	  if (accessor) accessors.knot = accessor;
-	
-	  return accessors;
+	return function (nurbs)
+	{
+		var accessors = { };
+		
+		var accessor = createAccessor ('x', nurbs .points);
+
+		if (accessor)
+			accessors .point = accessor;
+		
+		var accessor = createAccessor ('w', nurbs .weights);
+
+		if (accessor)
+			accessors .weight = accessor;
+		
+		var accessor = createAccessor ('k', nurbs .knots);
+
+		if (accessor)
+			accessors .knot = accessor;
+		
+		return accessors;
 	};
 });
 
@@ -1261,6 +1330,7 @@ function (inferType)
 
 				break;
 			}
+			case inferType .ARRAY_OF_OBJECTS:
 			case inferType .ARRAY_OF_ARRAYS:
 				code .push ('  var ' + variableName + ' = ' + propertyName + ';');
 		}
@@ -1998,6 +2068,8 @@ define ('nurbs/extras/sample',[],function ()
 				resolution = new Array (nurbs .splineDimension) .fill (res);
 		}
 
+		var generateNormals = opts .generateNormals !== undefined ? opts .generateNormals : true;
+
 		switch (nurbs .splineDimension)
 		{
 			case 1:
@@ -2065,15 +2137,18 @@ define ('nurbs/extras/sample',[],function ()
 						points [ptr]     = tmp1 [0];
 						points [ptr + 1] = tmp1 [1];
 						points [ptr + 2] = tmp1 [2];
-	
-						normalize (tmp1, cross (tmp1,
-							uDer (tmp1, u, v),
-							vDer (tmp2, u, v)
-						));
-	
-						normals [ptr]     = tmp1 [0];
-						normals [ptr + 1] = tmp1 [1];
-						normals [ptr + 2] = tmp1 [2];
+
+						if (generateNormals)
+						{
+							normalize (tmp1, cross (tmp1,
+								uDer (tmp1, u, v),
+								vDer (tmp2, u, v)
+							));
+		
+							normals [ptr]     = tmp1 [0];
+							normals [ptr + 1] = tmp1 [1];
+							normals [ptr + 2] = tmp1 [2];
+						}
 					}
 				}
 	
@@ -2182,9 +2257,9 @@ function (inferType,
 	    Object.defineProperty(this, 'size', {value: opts.size, writable: true, configurable: true});
 	  }
 
-	  var pointType = inferType(this.points);
+	  var pointType  = inferType(this.points);
 	  var weightType = inferType(this.weights);
-	  var knotType = inferType(this.knots);
+	  var knotType   = inferType(this.knots);
 	
 	  if (this.points) {
 	    //
@@ -2216,6 +2291,7 @@ function (inferType,
 	        });
 	        break;
 	
+	      case inferType.ARRAY_OF_OBJECTS:
 	      case inferType.ARRAY_OF_ARRAYS:
 	        // Follow the zeroth entries until we hit something that's not an array
 	        var splineDimension = 0;
@@ -2934,13 +3010,25 @@ define ('x_ite/Components/NURBS/NurbsOrientationInterpolator',[
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Components/Interpolation/OrientationInterpolator",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Browser/NURBS/NURBS",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"nurbs",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
-          X3DConstants)
+          OrientationInterpolator, 
+          X3DConstants,
+          X3DCast,
+          NURBS,
+          Vector3,
+          Rotation4,
+          nurbs)
 {
 "use strict";
 
@@ -2949,6 +3037,12 @@ function (Fields,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsOrientationInterpolator);
+			
+		this .addChildObjects ("rebuild", new Fields .SFTime ());
+
+	   this .interpolator  = new OrientationInterpolator (executionContext);
+		this .mesh          = { };
+		this .sampleOptions = { resolution: [ 128 ] };
 	}
 
 	NurbsOrientationInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -2974,6 +3068,118 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .order_        .addInterest ("requestRebuild",     this);
+			this .knot_         .addInterest ("requestRebuild",     this);
+			this .weight_       .addInterest ("requestRebuild",     this);
+			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+
+			this .rebuild_ .addInterest ("build", this);
+		
+			this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
+			this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
+
+			this .interpolator .setup ();
+
+			this .set_controlPoint__ ();
+		},
+		set_controlPoint__: function ()
+		{
+			if (this .controlPointNode)
+				this .controlPointNode .removeInterest ("requestRebuild", this);
+
+			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+
+			if (this .controlPointNode)
+				this .controlPointNode .addInterest ("requestRebuild", this);
+
+			this .requestRebuild ();
+		},
+		getClosed: function (order, knot, weight, controlPointNode)
+		{
+			return false && NURBS .getClosed (order, knot, weight, controlPointNode);
+		},
+		getKnots: function (closed, order, dimension, knot)
+		{
+			return NURBS .getKnots (closed, order, dimension, knot);
+		},
+		getWeights: function (closed, order, dimension, weight)
+		{
+			return NURBS .getWeights (closed, order, dimension, weight);
+		},
+		getControlPoints: function (closed, order, controlPointNode)
+		{
+			return NURBS .getControlPoints (closed, order, controlPointNode);
+		},
+		requestRebuild: function ()
+		{
+			this .rebuild_ .addEvent ();
+		},
+		build: function ()
+		{
+			if (this .order_ .getValue () < 2)
+				return;
+		
+			if (! this .controlPointNode)
+				return;
+		
+			if (this .controlPointNode .getSize () < this .order_ .getValue ())
+				return;
+
+			// Order and dimension are now positive numbers.
+
+			var
+				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
+				controlPoints = this .getControlPoints (closed, this .order_ .getValue (), this .controlPointNode);
+		
+			// Knots
+		
+			var
+				knots = this .getKnots (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+				scale = knots [knots .length - 1] - knots [0];
+
+			var weights = this .getWeights (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
+
+			// Initialize NURBS tesselllator
+
+			var degree = this .order_ .getValue () - 1;
+
+			var surface = this .surface = (this .surface || nurbs) ({
+				boundary: ["open"],
+				degree: [degree],
+				knots: [knots],
+				weights: weights,
+				points: controlPoints,
+				debug: false,
+			});
+
+			var
+				mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
+				points       = mesh .points,
+				interpolator = this .interpolator;
+
+			interpolator .key_      .length = 0;
+			interpolator .keyValue_ .length = 0;
+
+			for (var i = 0, length = points .length - 3; i < length; i += 3)
+			{
+				var direction = new Vector3 (points [i + 3] - points [i + 0],
+				                             points [i + 4] - points [i + 1],
+				                             points [i + 5] - points [i + 2])
+
+				interpolator .key_      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
+				interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
+			}
+
+			if (closed)
+			{
+				interpolator .key_      .push (knots [0] + scale);
+				interpolator .keyValue_. push (interpolator .keyValue_ [0]);
+			}
 		},
 	});
 
@@ -3105,11 +3311,11 @@ function (X3DParametricGeometryNode,
 		},
 		getUTessellation: function (numKnots)
 		{
-			return NURBS .getTessellation (this .uTessellation_ .getValue (), numKnots - this .uOrder_ .getValue ());
+			return Math .floor (NURBS .getTessellation (this .uTessellation_ .getValue (), numKnots - this .uOrder_ .getValue ()) * this .tessellationScale);
 		},
 		getVTessellation: function (numKnots)
 		{
-			return NURBS .getTessellation (this .vTessellation_ .getValue (), numKnots - this .vOrder_ .getValue ());
+			return Math .floor (NURBS .getTessellation (this .vTessellation_ .getValue (), numKnots - this .vOrder_ .getValue ()) * this .tessellationScale);
 		},
 		getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
 		{
@@ -3128,6 +3334,10 @@ function (X3DParametricGeometryNode,
 		getUVWeights: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)
 		{
 			return NURBS .getUVWeights (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight);
+		},
+		getTexControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
+		{
+			return NURBS .getTexControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
 		},
 		getUVControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
 		{
@@ -3187,8 +3397,9 @@ function (X3DParametricGeometryNode,
 				debug: false,
 			});
 
-			this .sampleOptions .resolution [0] = Math .floor (this .getUTessellation (uKnots .length) * this .tessellationScale);
-			this .sampleOptions .resolution [1] = Math .floor (this .getVTessellation (vKnots .length) * this .tessellationScale);
+			this .sampleOptions .resolution [0]  = this .getUTessellation (uKnots .length);
+			this .sampleOptions .resolution [1]  = this .getVTessellation (vKnots .length);
+			this .sampleOptions .generateNormals = true;
 
 			var
 				mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
@@ -3206,8 +3417,68 @@ function (X3DParametricGeometryNode,
 				vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
 			}
 
+			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights);
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (true);
+		},
+		buildNurbsTexCoords: function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, weights)
+		{
+			if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
+			{
+				var
+					texUDegree       = uOrder - 1,
+					texVDegree       = vOrder - 1,
+					texUKnots        = uKnots,
+					texVKnots        = vKnots,
+					texWeights       = undefined,
+					texControlPoints = this .getTexControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
+			}
+			else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
+			{
+				var
+					n                = this .nurbsTexCoordNode,
+					texUDegree       = n .uOrder_ .getValue () - 1,
+					texVDegree       = n .vOrder_ .getValue () - 1,
+					texUKnots        = this .getKnots (false, n .uOrder_ .getValue (), n .uDimension_ .getValue (), n .uKnot_),
+					texVKnots        = this .getKnots (false, n .vOrder_ .getValue (), n .vDimension_ .getValue (), n .vKnot_),
+					texWeights       = this .getUVWeights (false, false, n .uOrder_ .getValue (), n .vOrder_ .getValue (), n .uDimension_ .getValue (), n .vDimension_ .getValue (), n .weight_);
+					texControlPoints = this .getTexControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, n .getControlPoint ());
+			}
+			else
+			{
+				var
+					texUDegree       = 1,
+					texVDegree       = 1,
+					texUKnots        = [uKnots [0], uKnots [0], uKnots [uKnots .length - 1], uKnots [uKnots .length - 1]],
+					texVKnots        = [vKnots [0], vKnots [0], vKnots [vKnots .length - 1], vKnots [vKnots .length - 1]],
+					texWeights       = undefined,
+					texControlPoints = [[[0, 0, 0], [0, 1, 0]], [[1, 0, 0], [1, 1, 0]]];
+			}
+
+			var surface = this .surface = (this .surface || nurbs) ({
+				boundary: ["open", "open"],
+				degree: [texUDegree, texVDegree],
+				knots: [texUKnots, texVKnots],
+				weights: texWeights,
+				points: texControlPoints,
+			});
+
+			this .sampleOptions .generateNormals = false;
+
+			var
+				mesh          = nurbs .sample (this .mesh, surface, this .sampleOptions),
+				faces         = mesh .faces,
+				points        = mesh .points,
+				texCoordArray = this .getTexCoords ();
+
+			for (var i = 0, length = faces .length; i < length; ++ i)
+			{
+				var index = faces [i] * 3;
+
+				texCoordArray .push (points [index], points [index + 1], points [index + 2], 1);
+			}
+
+			this .getMultiTexCoords () .push (this .getTexCoords ());
 		},
 	});
 
@@ -3380,13 +3651,21 @@ define ('x_ite/Components/NURBS/NurbsPositionInterpolator',[
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Components/Interpolation/PositionInterpolator",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Browser/NURBS/NURBS",
+	"nurbs",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
-          X3DConstants)
+          PositionInterpolator, 
+          X3DConstants,
+          X3DCast,
+          NURBS,
+          nurbs)
 {
 "use strict";
 
@@ -3395,6 +3674,12 @@ function (Fields,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsPositionInterpolator);
+			
+		this .addChildObjects ("rebuild", new Fields .SFTime ());
+
+	   this .interpolator  = new PositionInterpolator (executionContext);
+		this .mesh          = { };
+		this .sampleOptions = { resolution: [ 128 ] };
 	}
 
 	NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -3420,6 +3705,108 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .order_        .addInterest ("requestRebuild",     this);
+			this .knot_         .addInterest ("requestRebuild",     this);
+			this .weight_       .addInterest ("requestRebuild",     this);
+			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+
+			this .rebuild_ .addInterest ("build", this);
+		
+			this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
+			this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
+
+			this .interpolator .setup ();
+
+			this .set_controlPoint__ ();
+		},
+		set_controlPoint__: function ()
+		{
+			if (this .controlPointNode)
+				this .controlPointNode .removeInterest ("requestRebuild", this);
+
+			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+
+			if (this .controlPointNode)
+				this .controlPointNode .addInterest ("requestRebuild", this);
+
+			this .requestRebuild ();
+		},
+		getClosed: function (order, knot, weight, controlPointNode)
+		{
+			return false && NURBS .getClosed (order, knot, weight, controlPointNode);
+		},
+		getKnots: function (closed, order, dimension, knot)
+		{
+			return NURBS .getKnots (closed, order, dimension, knot);
+		},
+		getWeights: function (closed, order, dimension, weight)
+		{
+			return NURBS .getWeights (closed, order, dimension, weight);
+		},
+		getControlPoints: function (closed, order, controlPointNode)
+		{
+			return NURBS .getControlPoints (closed, order, controlPointNode);
+		},
+		requestRebuild: function ()
+		{
+			this .rebuild_ .addEvent ();
+		},
+		build: function ()
+		{
+			if (this .order_ .getValue () < 2)
+				return;
+		
+			if (! this .controlPointNode)
+				return;
+		
+			if (this .controlPointNode .getSize () < this .order_ .getValue ())
+				return;
+
+			// Order and dimension are now positive numbers.
+
+			var
+				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
+				controlPoints = this .getControlPoints (closed, this .order_ .getValue (), this .controlPointNode);
+		
+			// Knots
+		
+			var
+				knots = this .getKnots (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+				scale = knots [knots .length - 1] - knots [0];
+
+			var weights = this .getWeights (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
+
+			// Initialize NURBS tesselllator
+
+			var degree = this .order_ .getValue () - 1;
+
+			var surface = this .surface = (this .surface || nurbs) ({
+				boundary: ["open"],
+				degree: [degree],
+				knots: [knots],
+				weights: weights,
+				points: controlPoints,
+				debug: false,
+			});
+
+			var
+				mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
+				points       = mesh .points,
+				interpolator = this .interpolator;
+
+			interpolator .key_      .length = 0;
+			interpolator .keyValue_ .length = 0;
+
+			for (var i = 0, length = points .length; i < length; i += 3)
+			{
+				interpolator .key_      .push (knots [0] + i / (length - 3) * scale);
+				interpolator .keyValue_. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
+			}
 		},
 	});
 
@@ -3557,8 +3944,10 @@ function (Fields,
 		},
 		set_tessellationScale__: function ()
 		{
+			var tessellationScale = Math .max (0, this .tessellationScale_ .getValue ());
+
 			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-				this .geometryNodes [i] .setTessellationScale (this .tessellationScale_ .getValue ());
+				this .geometryNodes [i] .setTessellationScale (tessellationScale);
 		},
 		set_addGeometry__: function ()
 		{
@@ -3652,18 +4041,109 @@ function (Fields,
  ******************************************************************************/
 
 
+define ('standard/Math/Geometry/Triangle2',[],function ()
+{
+"use strict";
+
+	return {
+		isPointInTriangle: function (a, b, c, point)
+		{
+		   // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
+
+		   var det = (b.y - c.y) * (a.x - c.x) + (c.x - b.x) * (a.y - c.y);
+
+			if (det == 0)
+				return false;
+
+		   var u = ((b.y - c.y) * (point .x - c.x) + (c.x - b.x) * (point .y - c.y)) / det;
+
+		   if (u < 0 || u > 1)
+		      return false;
+
+		   var v = ((c.y - a.y) * (point .x - c.x) + (a.x - c.x) * (point .y - c.y)) / det;
+
+		   if (v < 0 || v > 1)
+		      return false;
+
+		   var t = 1 - u - v;
+
+		   if (t < 0 || t > 1)
+		      return false;
+		   
+			return true;
+		},
+	};
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/NURBS/NurbsSurfaceInterpolator',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Components/NURBS/NurbsPatchSurface",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Geometry/Line3",
+	"standard/Math/Geometry/Triangle2",
+	"standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
-          X3DConstants)
+          NurbsPatchSurface, 
+          X3DConstants,
+          Line3,
+          Triangle2,
+          Vector3)
 {
 "use strict";
 
@@ -3672,6 +4152,8 @@ function (Fields,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsSurfaceInterpolator);
+
+		this .geometry = new NurbsPatchSurface (executionContext);
 	}
 
 	NurbsSurfaceInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -3703,6 +4185,83 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			this .set_fraction_ .addInterest ("set_fraction__", this);
+
+			this .uOrder_       .addFieldInterest (this .geometry .uOrder_);
+			this .vOrder_       .addFieldInterest (this .geometry .vOrder_);
+			this .uDimension_   .addFieldInterest (this .geometry .uDimension_);
+			this .vDimension_   .addFieldInterest (this .geometry .vDimension_);
+			this .uKnot_        .addFieldInterest (this .geometry .uKnot_);
+			this .vKnot_        .addFieldInterest (this .geometry .vKnot_);
+			this .weight_       .addFieldInterest (this .geometry .weight_);
+			this .controlPoint_ .addFieldInterest (this .geometry .controlPoint_);
+
+			this .geometry .uTessellation_ = 128;
+			this .geometry .vTessellation_ = 128;
+			this .geometry .uOrder_        = this .uOrder_;
+			this .geometry .vOrder_        = this .vOrder_;
+			this .geometry .uDimension_    = this .uDimension_;
+			this .geometry .vDimension_    = this .vDimension_;
+			this .geometry .uKnot_         = this .uKnot_;
+			this .geometry .vKnot_         = this .vKnot_;
+			this .geometry .weight_        = this .weight_;
+			this .geometry .controlPoint_  = this .controlPoint_;
+
+			this .geometry .setup ();
+		},
+		set_fraction__: (function ()
+		{
+			var
+				a     = new Vector3 (0, 0, 0),
+				b     = new Vector3 (0, 0, 0),
+				c     = new Vector3 (0, 0, 0),
+				point = new Vector3 (0, 0, 0),
+				line  = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+				uvt   = { };
+
+			return function ()
+			{
+				var
+					fraction       = this .set_fraction_ .getValue (),
+					texCoordsArray = this .geometry .getTexCoords (),
+					normalArray    = this .geometry .getNormals (),
+					verticesArray  = this .geometry .getVertices ();
+	
+				for (var i = 0, length = texCoordsArray .length; i < length; i += 12)
+				{
+					a .set (texCoordsArray [i + 0], texCoordsArray [i + 1], 0);
+					b .set (texCoordsArray [i + 4], texCoordsArray [i + 5], 0);
+					c .set (texCoordsArray [i + 7], texCoordsArray [i + 9], 0);
+	
+					if (Triangle2 .isPointInTriangle (a, b, c, fraction))
+					{
+						line .set (point .set (fraction .x, fraction .y, 0), Vector3 .zAxis);
+
+						if (line .intersectsTriangle (a, b, c, uvt))
+						{
+							var
+								u  = uvt .u,
+								v  = uvt .v,
+								t  = 1 - u - v,
+								i3 = i / 12 * 9;
+
+							var normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
+							                          t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
+							                          t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
+
+							var position = new Vector3 (t * verticesArray [i + 0] + u * verticesArray [i + 4] + v * verticesArray [i +  8],
+							                            t * verticesArray [i + 1] + u * verticesArray [i + 5] + v * verticesArray [i +  9],
+							                            t * verticesArray [i + 2] + u * verticesArray [i + 6] + v * verticesArray [i + 10]);
+
+							this .normal_changed_   = normal;
+							this .position_changed_ = position;
+						}
+					}
+				}
+			};
+		})(),
 	});
 
 	return NurbsSurfaceInterpolator;
@@ -3872,6 +4431,8 @@ function (Fields,
 			this .getTexCoords () .assign (extrusion .getTexCoords ());
 			this .getNormals ()   .assign (extrusion .getNormals ());
 			this .getVertices ()  .assign (extrusion .getVertices ());
+
+			this .getMultiTexCoords () .push (this .getTexCoords ());
 
 			if (! this .ccw_ .getValue ())
 			{
@@ -4054,6 +4615,8 @@ function (Fields,
 			this .getNormals ()   .assign (extrusion .getNormals ());
 			this .getVertices ()  .assign (extrusion .getVertices ());
 
+			this .getMultiTexCoords () .push (this .getTexCoords ());
+
 			if (! this .ccw_ .getValue ())
 			{
 				var normals = this .getNormals ();
@@ -4169,6 +4732,50 @@ function (Fields,
 		{
 			return "texCoord";
 		},
+		initialize: function ()
+		{
+			X3DNode .prototype .initialize .call (this);
+
+			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+
+			this .set_controlPoint__ ();
+		},
+		getControlPoint: function ()
+		{
+			return this .controlPointNode;
+		},
+		set_controlPoint__: function ()
+		{
+			if (this .controlPointNode)
+				this .controlPointNode .removeInterest ("requestRebuild", this);
+
+			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+
+			if (this .controlPointNode)
+				this .controlPointNode .addInterest ("requestRebuild", this);
+		},
+		build: function ()
+		{
+			if (this .uOrder_ .getValue () < 2)
+				return false;
+		
+			if (this .vOrder_ .getValue () < 2)
+				return false;
+		
+			if (this .uDimension_ .getValue () < this .uOrder_ .getValue ())
+				return false;
+		
+			if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
+				return false;
+		
+			if (! this .controlPointNode)
+				return false;
+
+			if (this .controlPointNode .getSize () !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
+				return false;
+
+			return true;
+		}
 	});
 
 	return NurbsTextureCoordinate;
