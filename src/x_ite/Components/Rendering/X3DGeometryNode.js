@@ -474,7 +474,7 @@ function (Fields,
 							var
 								u = uvt .u,
 								v = uvt .v,
-								t = 1 - u - v;
+								t = uvt .t;
 
 							// Determine vectors for X3DPointingDeviceSensors.
 
