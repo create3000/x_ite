@@ -168,7 +168,7 @@ function (Fields,
 								u  = uvt .u,
 								v  = uvt .v,
 								t  = 1 - u - v,
-								i3 = i / 4 * 3;
+								i3 = i / 12 * 9;
 
 							var normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
 							                          t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
