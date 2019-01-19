@@ -23,6 +23,7 @@ function (inferType)
 
 				break;
 			}
+			case inferType .ARRAY_OF_OBJECTS:
 			case inferType .ARRAY_OF_ARRAYS:
 				code .push ('  var ' + variableName + ' = ' + propertyName + ';');
 		}
