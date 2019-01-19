@@ -271,7 +271,6 @@ function (X3DParametricGeometryNode,
 				knots: [texUKnots, texVKnots],
 				weights: texWeights,
 				points: texControlPoints,
-				debug: false,
 			});
 
 			this .sampleOptions .generateNormals = false;

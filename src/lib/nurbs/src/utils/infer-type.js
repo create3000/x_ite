@@ -26,11 +26,11 @@ function (isNdarray,
 		{
 			if (isArrayLike (x))
 			{
-				for (var ptr = x; isArrayLike (ptr); ptr = ptr [0])
-				{
-					if ('x' in ptr)
-						return inferType .ARRAY_OF_OBJECTS;
-				}
+				for (var ptr = x; isArrayLike (ptr [0]); ptr = ptr [0])
+					;
+
+				if ('x' in ptr)
+					return inferType .ARRAY_OF_OBJECTS;
 	
 				// if (isArrayLike(x[0])) {
 				return inferType .ARRAY_OF_ARRAYS;
