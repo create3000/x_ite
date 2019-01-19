@@ -333,91 +333,76 @@ function (Vector3)
 	
 			return weights;
 		},
-		getControlPoints2D: (function ()
+		getControlPoints2D: function (closed, order, controlPoint)
 		{
-			var point = new Vector3 (0, 0, 0)
-
-			return function (closed, order, controlPoint)
-			{
-				var
-					controlPoints = [ ],
-					dimension     = controlPoint .length;
-			
-				for (var i = 0; i < dimension; ++ i)
-				{
-					var point = controlPoint [i];
-
-					controlPoints .push (new Vector3 (point .x, point .y, 0));
-				}
+			var
+				controlPoints = [ ],
+				dimension     = controlPoint .length;
 		
-				if (closed)
-				{
-					for (var i = 1, size = order - 1; i < size; ++ i)
-						controlPoints .push (controlPoints [i]);
-				}
-	
-				return controlPoints;
-			};
-		})(),
-		getControlPoints: (function ()
-		{
-			var point = new Vector3 (0, 0, 0);
-
-			return function (closed, order, controlPointNode)
+			for (var i = 0; i < dimension; ++ i)
 			{
-				var
-					controlPoints = [ ],
-					dimension     = controlPointNode .getSize ();
-			
-				for (var i = 0; i < dimension; ++ i)
-				{
-					controlPoints .push (controlPointNode .get1Point (i, new Vector3 (0, 0, 0)));
-				}
+				var point = controlPoint [i];
+
+				controlPoints .push (new Vector3 (point .x, point .y, 0));
+			}
+	
+			if (closed)
+			{
+				for (var i = 1, size = order - 1; i < size; ++ i)
+					controlPoints .push (controlPoints [i]);
+			}
+
+			return controlPoints;
+		},
+		getControlPoints: function (closed, order, controlPointNode)
+		{
+			var
+				controlPoints = [ ],
+				dimension     = controlPointNode .getSize ();
 		
-				if (closed)
-				{
-					for (var i = 1, size = order - 1; i < size; ++ i)
-						controlPoints .push (controlPoints [i]);
-				}
-	
-				return controlPoints;
-			};
-		})(),
-		getUVControlPoints: (function ()
-		{
-			var point = new Vector3 (0, 0, 0);
-
-			return function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+			for (var i = 0; i < dimension; ++ i)
 			{
-				var controlPoints = [ ];
+				controlPoints .push (controlPointNode .get1Point (i, new Vector3 (0, 0, 0)));
+			}
 	
-				for (var u = 0; u < uDimension; ++ u)
-				{
-					var cp = [ ];
-	
-					controlPoints .push (cp);
+			if (closed)
+			{
+				for (var i = 1, size = order - 1; i < size; ++ i)
+					controlPoints .push (controlPoints [i]);
+			}
 
-					for (var v = 0; v < vDimension; ++ v)
-					{
-						cp .push (controlPointNode .get1Point (v * uDimension + u, new Vector3 (0, 0, 0)));
-					}
-	
-					if (vClosed)
-					{
-						for (var i = 1, length = vOrder - 1; i < length; ++ i)
-							cp .push (cp [i]);
-					}
-				}
-	
-				if (uClosed)
+			return controlPoints;
+		},
+		getUVControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		{
+			var controlPoints = [ ];
+
+			for (var u = 0; u < uDimension; ++ u)
+			{
+				var cp = [ ];
+
+				controlPoints .push (cp);
+
+				for (var v = 0; v < vDimension; ++ v)
 				{
-					for (var i = 1, length = uOrder - 1; i < length; ++ i)
-						controlPoints .push (controlPoints [i]);
+					cp .push (controlPointNode .get1Point (v * uDimension + u, new Vector3 (0, 0, 0)));
 				}
-	
-				return controlPoints;
-			};
-		})(),
+
+				if (vClosed)
+				{
+					for (var i = 1, length = vOrder - 1; i < length; ++ i)
+						cp .push (cp [i]);
+				}
+			}
+
+			if (uClosed)
+			{
+				for (var i = 1, length = uOrder - 1; i < length; ++ i)
+					controlPoints .push (controlPoints [i]);
+			}
+
+			return controlPoints;
+		},
 	};
 
 	return NURBS;
