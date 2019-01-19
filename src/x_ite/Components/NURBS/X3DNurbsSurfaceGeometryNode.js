@@ -207,12 +207,15 @@ function (X3DParametricGeometryNode,
 				debug: false,
 			});
 
-			this .sampleOptions .resolution [0]  = this .getUTessellation (uKnots .length);
-			this .sampleOptions .resolution [1]  = this .getVTessellation (vKnots .length);
-			this .sampleOptions .generateNormals = true;
+			var sampleOptions = this .sampleOptions;
+
+			sampleOptions .resolution [0]  = this .getUTessellation (uKnots .length);
+			sampleOptions .resolution [1]  = this .getVTessellation (vKnots .length);
+			sampleOptions .generateNormals = true;
+			sampleOptions .domain          = undefined;
 
 			var
-				mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
+				mesh        = nurbs .sample (this .mesh, surface, sampleOptions),
 				faces       = mesh .faces,
 				normals     = mesh .normals,
 				points      = mesh .points,
@@ -227,12 +230,14 @@ function (X3DParametricGeometryNode,
 				vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
 			}
 
-			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights);
+			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights, surface .domain);
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (true);
 		},
-		buildNurbsTexCoords: function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, weights)
-		{
+		buildNurbsTexCoords: function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, weights, domain)
+		{	
+			var sampleOptions = this .sampleOptions;
+
 			if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
 			{
 				var
@@ -263,6 +268,8 @@ function (X3DParametricGeometryNode,
 					texVKnots        = [vKnots [0], vKnots [0], vKnots [vKnots .length - 1], vKnots [vKnots .length - 1]],
 					texWeights       = undefined,
 					texControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
+
+				sampleOptions .domain = domain;
 			}
 
 			var surface = this .surface = (this .surface || nurbs) ({
@@ -273,10 +280,10 @@ function (X3DParametricGeometryNode,
 				points: texControlPoints,
 			});
 
-			this .sampleOptions .generateNormals = false;
+			sampleOptions .generateNormals = false;
 
 			var
-				mesh          = nurbs .sample (this .mesh, surface, this .sampleOptions),
+				mesh          = nurbs .sample (this .mesh, surface, sampleOptions),
 				faces         = mesh .faces,
 				points        = mesh .points,
 				texCoordArray = this .getTexCoords ();
