@@ -1,12 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/NURBS/NurbsPositionInterpolator.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/NURBS/X3DParametricGeometryNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/NURBS/NurbsPositionInterpolator.js" Line="142" Column="20" />
-      <File FileName="src/x_ite/Components/NURBS/NurbsOrientationInterpolator.js" Line="146" Column="11" />
+      <File FileName="src/x_ite/Components/NURBS/NurbsOrientationInterpolator.js" Line="228" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

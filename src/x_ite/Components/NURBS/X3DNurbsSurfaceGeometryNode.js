@@ -203,8 +203,9 @@ function (X3DParametricGeometryNode,
 				debug: false,
 			});
 
-			this .sampleOptions .resolution [0] = this .getUTessellation (uKnots .length);
-			this .sampleOptions .resolution [1] = this .getVTessellation (vKnots .length);
+			this .sampleOptions .resolution [0]  = this .getUTessellation (uKnots .length);
+			this .sampleOptions .resolution [1]  = this .getVTessellation (vKnots .length);
+			this .sampleOptions .generateNormals = true;
 
 			var
 				mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
@@ -222,8 +223,73 @@ function (X3DParametricGeometryNode,
 				vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
 			}
 
+			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights);
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (true);
+		},
+		getTexControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
+		{
+			return NURBS .getUVControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
+		},
+		buildNurbsTexCoords: function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, weights)
+		{
+			if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
+			{
+				var
+					texUDegree       = uOrder - 1,
+					texVDegree       = vOrder - 1,
+					texUKnots        = uKnots,
+					texVKnots        = vKnots,
+					texWeights       = undefined,
+					texControlPoints = this .getTexControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
+			}
+			else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
+			{
+				var
+					n                = this .nurbsTexCoordNode,
+					texUDegree       = n .uOrder_ .getValue () - 1,
+					texVDegree       = n .vOrder_ .getValue () - 1,
+					texUKnots        = this .getKnots (false, n .uOrder_ .getValue (), n .uDimension_ .getValue (), n .uKnot_),
+					texVKnots        = this .getKnots (false, n .vOrder_ .getValue (), n .vDimension_ .getValue (), n .vKnot_),
+					texWeights       = this .getUVWeights (false, false, n .uOrder_ .getValue (), n .vOrder_ .getValue (), n .uDimension_ .getValue (), n .vDimension_ .getValue (), n .weight_);
+					texControlPoints = this .getTexControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, n .getControlPoint ());
+			}
+			else
+			{
+				var
+					texUDegree       = 1,
+					texVDegree       = 1,
+					texUKnots        = [uKnots [0], uKnots [0], uKnots [uKnots .length - 1], uKnots [uKnots .length - 1]],
+					texVKnots        = [vKnots [0], vKnots [0], vKnots [vKnots .length - 1], vKnots [vKnots .length - 1]],
+					texWeights       = undefined,
+					texControlPoints = [[[0, 0, 0], [0, 1, 0]], [[1, 0, 0], [1, 1, 0]]];
+			}
+
+			var surface = this .surface = (this .surface || nurbs) ({
+				boundary: ["open", "open"],
+				degree: [texUDegree, texVDegree],
+				knots: [texUKnots, texVKnots],
+				weights: texWeights,
+				points: texControlPoints,
+				debug: false,
+			});
+
+			this .sampleOptions .generateNormals = false;
+
+			var
+				mesh          = nurbs .sample (this .mesh, surface, this .sampleOptions),
+				faces         = mesh .faces,
+				points        = mesh .points,
+				texCoordArray = this .getTexCoords ();
+
+			for (var i = 0, length = faces .length; i < length; ++ i)
+			{
+				var index = faces [i] * 3;
+
+				texCoordArray .push (points [index], points [index + 1], points [index + 2], 1);
+			}
+
+			this .getMultiTexCoords () .push (this .getTexCoords ());
 		},
 	});
 

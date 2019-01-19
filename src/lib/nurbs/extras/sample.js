@@ -60,6 +60,8 @@ define (function ()
 				resolution = new Array (nurbs .splineDimension) .fill (res);
 		}
 
+		var generateNormals = opts .generateNormals !== undefined ? opts .generateNormals : true;
+
 		switch (nurbs .splineDimension)
 		{
 			case 1:
@@ -127,15 +129,18 @@ define (function ()
 						points [ptr]     = tmp1 [0];
 						points [ptr + 1] = tmp1 [1];
 						points [ptr + 2] = tmp1 [2];
-	
-						normalize (tmp1, cross (tmp1,
-							uDer (tmp1, u, v),
-							vDer (tmp2, u, v)
-						));
-	
-						normals [ptr]     = tmp1 [0];
-						normals [ptr + 1] = tmp1 [1];
-						normals [ptr + 2] = tmp1 [2];
+
+						if (generateNormals)
+						{
+							normalize (tmp1, cross (tmp1,
+								uDer (tmp1, u, v),
+								vDer (tmp2, u, v)
+							));
+		
+							normals [ptr]     = tmp1 [0];
+							normals [ptr + 1] = tmp1 [1];
+							normals [ptr + 2] = tmp1 [2];
+						}
 					}
 				}
 	

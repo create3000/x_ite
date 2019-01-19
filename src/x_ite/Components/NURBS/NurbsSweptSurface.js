@@ -161,6 +161,8 @@ function (Fields,
 			this .getNormals ()   .assign (extrusion .getNormals ());
 			this .getVertices ()  .assign (extrusion .getVertices ());
 
+			this .getMultiTexCoords () .push (this .getTexCoords ());
+
 			if (! this .ccw_ .getValue ())
 			{
 				var normals = this .getNormals ();

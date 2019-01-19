@@ -95,6 +95,50 @@ function (Fields,
 		{
 			return "texCoord";
 		},
+		initialize: function ()
+		{
+			X3DNode .prototype .initialize .call (this);
+
+			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+
+			this .set_controlPoint__ ();
+		},
+		getControlPoint: function ()
+		{
+			return this .controlPointNode;
+		},
+		set_controlPoint__: function ()
+		{
+			if (this .controlPointNode)
+				this .controlPointNode .removeInterest ("requestRebuild", this);
+
+			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+
+			if (this .controlPointNode)
+				this .controlPointNode .addInterest ("requestRebuild", this);
+		},
+		build: function ()
+		{
+			if (this .uOrder_ .getValue () < 2)
+				return false;
+		
+			if (this .vOrder_ .getValue () < 2)
+				return false;
+		
+			if (this .uDimension_ .getValue () < this .uOrder_ .getValue ())
+				return false;
+		
+			if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
+				return false;
+		
+			if (! this .controlPointNode)
+				return false;
+
+			if (this .controlPointNode .getSize () !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
+				return false;
+
+			return true;
+		}
 	});
 
 	return NurbsTextureCoordinate;

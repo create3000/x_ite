@@ -92,6 +92,18 @@ function (Fields,
 		{
 			return array;
 		},
+		isEmpty: function ()
+		{
+			return true;
+		},
+		getSize: function ()
+		{
+			return 0;
+		},
+		get1Point: function (index, vector)
+		{
+			return vector .set (0, 0, 0, 1);
+		},
 	});
 
 	return MultiTextureCoordinate;
