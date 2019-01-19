@@ -892,7 +892,7 @@ function (Fields,
 				if (shaderNode .wireframe)
 				{
 					// Wireframes are always solid so only one drawing call is needed.
-	
+
 					for (var i = 0, length = this .vertexCount; i < length; i += 3)
 						gl .drawArrays (shaderNode .primitiveMode, i, 3);
 				}

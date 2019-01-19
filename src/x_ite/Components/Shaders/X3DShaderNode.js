@@ -65,6 +65,8 @@ function (Shading,
 		X3DAppearanceChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DShaderNode);
+
+		this .geometryType = 3;
 	}
 
 	X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -81,13 +83,13 @@ function (Shading,
 		},
 		setGeometryType: function (value)
 		{
-			this .setShading (value, this .getBrowser () .getBrowserOptions () .getShading ());
+			this .geometryType = value;
 		},
-		setShading: function (geometryType, shading)
+		setShading: function (shading)
 		{
 			var gl = this .getBrowser () .getContext ();
 
-			switch (geometryType)
+			switch (this .geometryType)
 			{
 				case 0:
 				{

@@ -152,11 +152,11 @@ function (Fields,
 					normalArray    = this .geometry .getNormals (),
 					verticesArray  = this .geometry .getVertices ();
 	
-				for (var i = 0, length = texCoordsArray .length; i < length; i += 12)
+				for (var i4 = 0, i3 = 0, length = texCoordsArray .length; i4 < length; i4 += 12, i3 += 9)
 				{
-					a .set (texCoordsArray [i + 0], texCoordsArray [i + 1], 0);
-					b .set (texCoordsArray [i + 4], texCoordsArray [i + 5], 0);
-					c .set (texCoordsArray [i + 7], texCoordsArray [i + 9], 0);
+					a .set (texCoordsArray [i4 + 0], texCoordsArray [i4 + 1], 0);
+					b .set (texCoordsArray [i4 + 4], texCoordsArray [i4 + 5], 0);
+					c .set (texCoordsArray [i4 + 7], texCoordsArray [i4 + 9], 0);
 	
 					if (Triangle2 .isPointInTriangle (a, b, c, fraction))
 					{
@@ -165,18 +165,17 @@ function (Fields,
 						if (line .intersectsTriangle (a, b, c, uvt))
 						{
 							var
-								u  = uvt .u,
-								v  = uvt .v,
-								t  = 1 - u - v,
-								i3 = i / 12 * 9;
+								u = uvt .u,
+								v = uvt .v,
+								t = 1 - u - v;
 
 							var normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
 							                          t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
 							                          t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
 
-							var position = new Vector3 (t * verticesArray [i + 0] + u * verticesArray [i + 4] + v * verticesArray [i +  8],
-							                            t * verticesArray [i + 1] + u * verticesArray [i + 5] + v * verticesArray [i +  9],
-							                            t * verticesArray [i + 2] + u * verticesArray [i + 6] + v * verticesArray [i + 10]);
+							var position = new Vector3 (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
+							                            t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
+							                            t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
 
 							this .normal_changed_   = normal;
 							this .position_changed_ = position;
