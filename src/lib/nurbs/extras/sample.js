@@ -75,7 +75,7 @@ define (function ()
 					uDer       = nurbs .evaluator ([1, 0]);
 
 				var
-					domain  = opts .domain || nurbs .domain,
+					domain  = nurbs .domain,
 					uDomain = domain [0];
 
 				for (var i = 0; i < nuBound; ++ i)

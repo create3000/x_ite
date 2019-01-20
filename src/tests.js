@@ -142,6 +142,7 @@ var X_ITE_TESTS = [
 	{ path: "NURBS/NurbsSurfaceInterpolator.x3d" },
 	{ path: "NURBS/NurbsSweptSurface.x3d" },
 	{ path: "NURBS/NurbsSwungSurface.x3d" },
+	{ path: "NURBS/NurbsTextureCoordinate.x3dv" },
 	{ path: "NURBS/Rectangle2D.x3dv" },
 	{ path: "NURBS/gradient.png" },
 	{ path: "NURBS/torus.x3d" },
