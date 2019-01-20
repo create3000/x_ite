@@ -4962,6 +4962,9 @@ require ([
 	"x_ite/Components/NURBS/NurbsSwungSurface",
 	"x_ite/Components/NURBS/NurbsTextureCoordinate",
 	"x_ite/Components/NURBS/NurbsTrimmedSurface",
+	"x_ite/Components/NURBS/X3DNurbsControlCurveNode",
+	"x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
+	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 ],
 function (SupportedNodes,
           Contour2D,
@@ -4977,11 +4980,14 @@ function (SupportedNodes,
           NurbsSweptSurface,
           NurbsSwungSurface,
           NurbsTextureCoordinate,
-          NurbsTrimmedSurface)
+          NurbsTrimmedSurface,
+          X3DNurbsControlCurveNode,
+          X3DNurbsSurfaceGeometryNode,
+          X3DParametricGeometryNode)
 {
 "use strict";
 
-	var NURBS =
+	var Types =
 	{
 		Contour2D:                    Contour2D,
 		ContourPolyline2D:            ContourPolyline2D,
@@ -4999,10 +5005,20 @@ function (SupportedNodes,
 		NurbsTrimmedSurface:          NurbsTrimmedSurface,
 	};
 
-	for (var typeName in NURBS)
-		SupportedNodes .addType (typeName, NURBS [typeName]); 
+	var AbstractTypes =
+	{
+		X3DNurbsControlCurveNode:    X3DNurbsControlCurveNode,
+		X3DNurbsSurfaceGeometryNode: X3DNurbsSurfaceGeometryNode,
+		X3DParametricGeometryNode:   X3DParametricGeometryNode,
+	};
 
-	return NURBS;
+	for (var typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]); 
+
+	for (var typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+
+	return Types;
 });
 
 

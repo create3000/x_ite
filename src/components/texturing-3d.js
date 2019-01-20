@@ -65,7 +65,7 @@ function (SupportedNodes,
           TextureCoordinate3D,
           TextureCoordinate4D,
           TextureTransform3D,
-          TextureTransformMatrix3D,
+          TextureTransformMatrix3D
 //          X3DTexture3DNode
           )
 {

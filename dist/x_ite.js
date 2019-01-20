@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16a-551 */
+/* X_ITE v4.2.16a-552 */
 
 (function () {
 
@@ -116613,6 +116613,9 @@ function (Anchor,
 		{
 			this .index .set (typeName,                 interfaceDeclaration); 
 			this .index .set (typeName .toUpperCase (), interfaceDeclaration); 
+		},
+		addAbstractType: function (typeName, interfaceDeclaration)
+		{
 		},
 		getType: function (typeName)
 		{
