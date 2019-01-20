@@ -229,11 +229,11 @@ function (X3DParametricGeometryNode,
 				vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
 			}
 
-			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights, surface .domain);
+			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue ());
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (true);
 		},
-		buildNurbsTexCoords: function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, weights, domain)
+		buildNurbsTexCoords: function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension)
 		{	
 			var sampleOptions = this .sampleOptions;
 
