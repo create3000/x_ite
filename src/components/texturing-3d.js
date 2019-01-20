@@ -80,7 +80,7 @@ function (SupportedNodes,
 	};
 
 	for (var typeName in Texturing3D)
-		SupportedNodes .add (typeName, Texturing3D [typeName]); 
+		SupportedNodes .addType (typeName, Texturing3D [typeName]); 
 
 	return Texturing3D;
 });

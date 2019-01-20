@@ -101,7 +101,7 @@ function (SupportedNodes,
 	};
 
 	for (var typeName in NURBS)
-		SupportedNodes .add (typeName, NURBS [typeName]); 
+		SupportedNodes .addType (typeName, NURBS [typeName]); 
 
 	return NURBS;
 });

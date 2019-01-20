@@ -929,7 +929,7 @@ function (SupportedNodes,
 	};
 
 	for (var typeName in CADGeometry)
-		SupportedNodes .add (typeName, CADGeometry [typeName]); 
+		SupportedNodes .addType (typeName, CADGeometry [typeName]); 
 
 	return CADGeometry;
 });

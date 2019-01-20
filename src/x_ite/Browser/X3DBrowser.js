@@ -220,7 +220,7 @@ function ($,
 		},
 		getSupportedNode: function (typeName)
 		{
-			return this .supportedNodes .get (typeName);
+			return this .supportedNodes .getType (typeName);
 		},
 		createScene: function ()
 		{

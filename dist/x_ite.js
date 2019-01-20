@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16a-550 */
+/* X_ITE v4.2.16a-551 */
 
 (function () {
 
@@ -116604,17 +116604,17 @@ function (Anchor,
 		this .index = new Map ();
 
 		for (var typeName in supportedNodes)
-			this .add (typeName, supportedNodes [typeName]);
+			this .addType (typeName, supportedNodes [typeName]);
 	}
 
 	SupportedNodes .prototype =
 	{
-		add: function (typeName, interfaceDeclaration)
+		addType: function (typeName, interfaceDeclaration)
 		{
 			this .index .set (typeName,                 interfaceDeclaration); 
 			this .index .set (typeName .toUpperCase (), interfaceDeclaration); 
 		},
-		get: function (typeName)
+		getType: function (typeName)
 		{
 			return this .index .get (typeName); 
 		},
@@ -116846,7 +116846,7 @@ function ($,
 		},
 		getSupportedNode: function (typeName)
 		{
-			return this .supportedNodes .get (typeName);
+			return this .supportedNodes .getType (typeName);
 		},
 		createScene: function ()
 		{

@@ -770,17 +770,17 @@ function (Anchor,
 		this .index = new Map ();
 
 		for (var typeName in supportedNodes)
-			this .add (typeName, supportedNodes [typeName]);
+			this .addType (typeName, supportedNodes [typeName]);
 	}
 
 	SupportedNodes .prototype =
 	{
-		add: function (typeName, interfaceDeclaration)
+		addType: function (typeName, interfaceDeclaration)
 		{
 			this .index .set (typeName,                 interfaceDeclaration); 
 			this .index .set (typeName .toUpperCase (), interfaceDeclaration); 
 		},
-		get: function (typeName)
+		getType: function (typeName)
 		{
 			return this .index .get (typeName); 
 		},

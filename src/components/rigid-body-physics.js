@@ -103,7 +103,7 @@ function (SupportedNodes,
 	function createInstance (executionContext) { return new this (executionContext); }
 
 	for (var typeName in RigidBodyPhysics)
-		SupportedNodes .add (typeName, RigidBodyPhysics [typeName]); 
+		SupportedNodes .addType (typeName, RigidBodyPhysics [typeName]); 
 
 	return RigidBodyPhysics;
 });
