@@ -52,6 +52,7 @@ define ([
 	"x_ite/Browser/VERSION",
 	"x_ite/Base/Events",
 	"x_ite/Fields",
+	"x_ite/Components",
 	"x_ite/Browser/X3DBrowserContext",
 	"x_ite/Configuration/ComponentInfo",
 	"x_ite/Configuration/SupportedProfiles",
@@ -69,6 +70,7 @@ function ($,
           VERSION,
           Events,
           Fields,
+          Components,
           X3DBrowserContext,
           ComponentInfo,
           SupportedProfiles,
@@ -91,9 +93,6 @@ function ($,
 		this .currentSpeed         = 0;
 		this .currentFrameRate     = 60;
 		this .description_         = "";
-		this .supportedNodes       = SupportedNodes;
-		this .supportedComponents  = SupportedComponents (this);
-		this .supportedProfiles    = SupportedProfiles (this);
 		this .components           = { };
 		this .browserCallbacks     = new Map ();
 
@@ -191,7 +190,7 @@ function ($,
 		},
 		getProfile: function (name)
 		{
-			var profile = this .supportedProfiles .get (name);
+			var profile = SupportedProfiles .get (name);
 
 			if (profile)
 				return profile;
@@ -200,7 +199,7 @@ function ($,
 		},
 		getComponent: function (name, level)
 		{
-			var component = this .supportedComponents .get (name);
+			var component = SupportedComponents .get (name);
 
 			if (component)
 			{
@@ -220,7 +219,7 @@ function ($,
 		},
 		getSupportedNode: function (typeName)
 		{
-			return this .supportedNodes .getType (typeName);
+			return SupportedNodes .getType (typeName);
 		},
 		createScene: function ()
 		{

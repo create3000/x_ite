@@ -48,35 +48,40 @@
 
 
 define ([
-	"x_ite/Configuration/X3DInfoArray",
-	"x_ite/Configuration/ComponentInfo",
+	"x_ite/Configuration/SupportedComponents",
+	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components/X_ITE/BlendMode",
+	"x_ite/Browser/Networking/urls",
 ],
-function (X3DInfoArray,
-          ComponentInfo)
+function (SupportedComponents,
+          SupportedNodes,
+          BlendMode,
+          urls)
 {
 "use strict";
 
-	function ComponentInfoArray (array)
+	var Types =
 	{
-		var proxy = X3DInfoArray .call (this);
-	
-		if (array)
-		{
-			for (var i = 0, length = array .length; i < length; ++ i)
-				this .add (array [i] .name, array [i]);
-		}
+		BlendMode: BlendMode,
+	};
 
-		return proxy;
-	}
-
-	ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+	var AbstractTypes =
 	{
-		constructor: ComponentInfoArray,
-		addComponent: function (value)
-		{
-			this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
-		},
+	};
+
+	SupportedComponents .addComponent (
+	{
+		title:      "X_ITE",
+		name:       "X_ITE",
+		level:       1,
+		providerUrl: urls .provider,
 	});
 
-	return ComponentInfoArray;
+	for (var typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]); 
+
+	for (var typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+
+	return Types;
 });

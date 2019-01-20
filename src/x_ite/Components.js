@@ -48,35 +48,9 @@
 
 
 define ([
-	"x_ite/Configuration/X3DInfoArray",
-	"x_ite/Configuration/ComponentInfo",
+	"x_ite/Components/X_ITE",
 ],
-function (X3DInfoArray,
-          ComponentInfo)
+function ()
 {
 "use strict";
-
-	function ComponentInfoArray (array)
-	{
-		var proxy = X3DInfoArray .call (this);
-	
-		if (array)
-		{
-			for (var i = 0, length = array .length; i < length; ++ i)
-				this .add (array [i] .name, array [i]);
-		}
-
-		return proxy;
-	}
-
-	ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-	{
-		constructor: ComponentInfoArray,
-		addComponent: function (value)
-		{
-			this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
-		},
-	});
-
-	return ComponentInfoArray;
 });

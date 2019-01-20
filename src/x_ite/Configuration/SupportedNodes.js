@@ -282,7 +282,6 @@ define ([
 	//"x_ite/Components/Picking/VolumePickSensor",
 	"x_ite/Components/ParticleSystems/WindPhysicsModel",
 	"x_ite/Components/Core/WorldInfo", // VRML
-	"x_ite/Components/X_ITE/BlendMode",
 ],
 function (Anchor,
           Appearance,
@@ -517,8 +516,7 @@ function (Anchor,
           VolumeEmitter,
           //VolumePickSensor,
           WindPhysicsModel,
-          WorldInfo,
-          BlendMode)
+          WorldInfo)
 {
 "use strict";
 
@@ -761,34 +759,36 @@ function (Anchor,
 		//VolumePickSensor:             VolumePickSensor,
 		WindPhysicsModel:             WindPhysicsModel,
 		WorldInfo:                    WorldInfo,
-
-		BlendMode:                    BlendMode,
 	};
 
-	function SupportedNodes (supportedNodes)
+	function SupportedNodes (types, abstractTypes)
 	{
-		this .index = new Map ();
+		this .types         = new Map ();
+		this .abstractTypes = new Map ();
 
-		for (var typeName in supportedNodes)
-			this .addType (typeName, supportedNodes [typeName]);
+		for (var typeName in types)
+			this .addType (typeName, types [typeName]);
+
+		for (var typeName in abstractTypes)
+			this .addAbstractType (typeName, abstractTypes [typeName]);
 	}
 
 	SupportedNodes .prototype =
 	{
 		addType: function (typeName, interfaceDeclaration)
 		{
-			this .index .set (typeName,                 interfaceDeclaration); 
-			this .index .set (typeName .toUpperCase (), interfaceDeclaration); 
+			this .types .set (typeName,                 interfaceDeclaration); 
+			this .types .set (typeName .toUpperCase (), interfaceDeclaration); 
 		},
 		addAbstractType: function (typeName, interfaceDeclaration)
 		{
 		},
 		getType: function (typeName)
 		{
-			return this .index .get (typeName); 
+			return this .types .get (typeName); 
 		},
 	};
 
-	return new SupportedNodes (supportedNodes);
+	return new SupportedNodes (supportedNodes, { });
 });
 
