@@ -1,11 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Shaders/Wireframe.vs">
     <Files>
-      <File FileName="src/x_ite.html" Line="12" Column="47" />
-      <File FileName="src/x_ite/Components/NURBS/X3DParametricGeometryNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/NURBS/NURBS.js" Line="1" Column="1" />
+      <File FileName="src/x_ite.html" Line="8" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Wireframe.vs" Line="5" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="56" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
