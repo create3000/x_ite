@@ -2083,7 +2083,7 @@ define ('nurbs/extras/sample',[],function ()
 					uDer       = nurbs .evaluator ([1, 0]);
 
 				var
-					domain  = opts .domain || nurbs .domain,
+					domain  = nurbs .domain,
 					uDomain = domain [0];
 
 				for (var i = 0; i < nuBound; ++ i)
@@ -3403,7 +3403,6 @@ function (X3DParametricGeometryNode,
 			sampleOptions .resolution [0]  = this .getUTessellation (uKnots .length);
 			sampleOptions .resolution [1]  = this .getVTessellation (vKnots .length);
 			sampleOptions .generateNormals = true;
-			sampleOptions .domain          = undefined;
 
 			var
 				mesh        = nurbs .sample (this .mesh, surface, sampleOptions),
@@ -3442,25 +3441,23 @@ function (X3DParametricGeometryNode,
 			else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
 			{
 				var
-					n                = this .nurbsTexCoordNode,
-					texUDegree       = n .uOrder_ .getValue () - 1,
-					texVDegree       = n .vOrder_ .getValue () - 1,
-					texUKnots        = this .getKnots (false, n .uOrder_ .getValue (), n .uDimension_ .getValue (), n .uKnot_),
-					texVKnots        = this .getKnots (false, n .vOrder_ .getValue (), n .vDimension_ .getValue (), n .vKnot_),
-					texWeights       = this .getUVWeights (false, false, n .uOrder_ .getValue (), n .vOrder_ .getValue (), n .uDimension_ .getValue (), n .vDimension_ .getValue (), n .weight_);
-					texControlPoints = this .getTexControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, n .getControlPoint ());
+					node             = this .nurbsTexCoordNode,
+					texUDegree       = node .uOrder_ .getValue () - 1,
+					texVDegree       = node .vOrder_ .getValue () - 1,
+					texUKnots        = this .getKnots (false, node .uOrder_ .getValue (), node .uDimension_ .getValue (), node .uKnot_),
+					texVKnots        = this .getKnots (false, node .vOrder_ .getValue (), node .vDimension_ .getValue (), node .vKnot_),
+					texWeights       = this .getUVWeights (false, false, node .uOrder_ .getValue (), node .vOrder_ .getValue (), node .uDimension_ .getValue (), node .vDimension_ .getValue (), node .weight_);
+					texControlPoints = node .getControlPoints ();
 			}
 			else
 			{
 				var
 					texUDegree       = 1,
 					texVDegree       = 1,
-					texUKnots        = [uKnots [0], uKnots [0], uKnots [uKnots .length - 1], uKnots [uKnots .length - 1]],
-					texVKnots        = [vKnots [0], vKnots [0], vKnots [vKnots .length - 1], vKnots [vKnots .length - 1]],
+					texUKnots        = [0, 1/3, 2/3, 1],
+					texVKnots        = [0, 1/3, 2/3, 1],
 					texWeights       = undefined,
 					texControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
-
-				sampleOptions .domain = domain;
 			}
 
 			var surface = this .surface = (this .surface || nurbs) ({
@@ -4697,12 +4694,14 @@ define ('x_ite/Components/NURBS/NurbsTextureCoordinate',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
-          X3DConstants)
+          X3DConstants, 
+          Vector4)
 {
 "use strict";
 
@@ -4742,26 +4741,28 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DNode .prototype .initialize .call (this);
-
-			this .controlPoint_ .addInterest ("set_controlPoint__", this);
-
-			this .set_controlPoint__ ();
 		},
-		getControlPoint: function ()
+		getControlPoints: function ()
 		{
-			return this .controlPointNode;
-		},
-		set_controlPoint__: function ()
-		{
-			if (this .controlPointNode)
-				this .controlPointNode .removeInterest ("requestRebuild", this);
+			var constrolPoints = [ ];
 
-			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+			for (var u = 0, uDimension = this .uDimension_ .getValue (); u < uDimension; ++ u)
+			{
+				var cp = [ ];
 
-			if (this .controlPointNode)
-				this .controlPointNode .addInterest ("requestRebuild", this);
+				constrolPoints .push (cp);
+
+				for (var v = 0, vDimension = this .vDimension_ .getValue (); v < vDimension; ++ v)
+				{
+					var point = this .controlPoint_ [v * uDimension + u];
+
+					cp .push (new Vector4 (point .x, point .y, 0, 1));
+				}
+			}
+
+			return constrolPoints;
 		},
-		build: function ()
+		isValid: function ()
 		{
 			if (this .uOrder_ .getValue () < 2)
 				return false;
@@ -4774,11 +4775,8 @@ function (Fields,
 		
 			if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
 				return false;
-		
-			if (! this .controlPointNode)
-				return false;
 
-			if (this .controlPointNode .getSize () !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
+			if (this .controlPoint_ .length !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
 				return false;
 
 			return true;
