@@ -780,6 +780,9 @@ function (Anchor,
 			this .index .set (typeName,                 interfaceDeclaration); 
 			this .index .set (typeName .toUpperCase (), interfaceDeclaration); 
 		},
+		addAbstractType: function (typeName, interfaceDeclaration)
+		{
+		},
 		getType: function (typeName)
 		{
 			return this .index .get (typeName); 

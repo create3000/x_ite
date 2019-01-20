@@ -56,6 +56,7 @@ require ([
 	"x_ite/Components/Texturing3D/TextureCoordinate4D",
 	"x_ite/Components/Texturing3D/TextureTransform3D",
 	"x_ite/Components/Texturing3D/TextureTransformMatrix3D",
+	"x_ite/Components/Texturing3D/X3DTexture3DNode",
 ],
 function (SupportedNodes,
 //          ComposedTexture3D,
@@ -64,11 +65,13 @@ function (SupportedNodes,
           TextureCoordinate3D,
           TextureCoordinate4D,
           TextureTransform3D,
-          TextureTransformMatrix3D)
+          TextureTransformMatrix3D,
+//          X3DTexture3DNode
+          )
 {
 "use strict";
 
-	var Texturing3D =
+	var Types =
 	{
 //		ComposedTexture3D:        ComposedTexture3D,
 //		ImageTexture3D:           ImageTexture3D,
@@ -79,9 +82,17 @@ function (SupportedNodes,
 		TextureTransformMatrix3D: TextureTransformMatrix3D,
 	};
 
-	for (var typeName in Texturing3D)
-		SupportedNodes .addType (typeName, Texturing3D [typeName]); 
+	var AbstractTypes =
+	{
+//		X3DTexture3DNode: X3DTexture3DNode,
+	};
 
-	return Texturing3D;
+	for (var typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]); 
+
+	for (var typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+
+	return Types;
 });
 

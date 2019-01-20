@@ -63,6 +63,9 @@ require ([
 	"x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint",
 	"x_ite/Components/RigidBodyPhysics/SliderJoint",
 	"x_ite/Components/RigidBodyPhysics/UniversalJoint",
+	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
+	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
+	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
 ],
 function (SupportedNodes,
           BallJoint,
@@ -78,11 +81,14 @@ function (SupportedNodes,
           RigidBodyCollection,
           SingleAxisHingeJoint,
           SliderJoint,
-          UniversalJoint)
+          UniversalJoint,
+          X3DNBodyCollidableNode,
+          X3DNBodyCollisionSpaceNode,
+          X3DRigidJointNode)
 {
 "use strict";
 
-	var RigidBodyPhysics =
+	var Types =
 	{
 		BallJoint:            BallJoint,
 		CollidableOffset:     CollidableOffset,
@@ -100,11 +106,19 @@ function (SupportedNodes,
 		UniversalJoint:       UniversalJoint,
 	};
 
-	function createInstance (executionContext) { return new this (executionContext); }
+	var AbstractTypes =
+	{
+		X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
+		X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
+		X3DRigidJointNode:          X3DRigidJointNode,
+	};
 
-	for (var typeName in RigidBodyPhysics)
-		SupportedNodes .addType (typeName, RigidBodyPhysics [typeName]); 
+	for (var typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	return RigidBodyPhysics;
+	for (var typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+
+	return Types;
 });
 

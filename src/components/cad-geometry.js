@@ -55,6 +55,7 @@ require ([
 	"x_ite/Components/CADGeometry/CADPart",
 	"x_ite/Components/CADGeometry/IndexedQuadSet",
 	"x_ite/Components/CADGeometry/QuadSet",
+	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
 ],
 function (SupportedNodes,
           CADAssembly,
@@ -62,11 +63,12 @@ function (SupportedNodes,
           CADLayer,
           CADPart,
           IndexedQuadSet,
-          QuadSet)
+          QuadSet,
+          X3DProductStructureChildNode)
 {
 "use strict";
 
-	var CADGeometry =
+	var Types =
 	{
 		CADAssembly:    CADAssembly,
 		CADFace:        CADFace,
@@ -76,9 +78,17 @@ function (SupportedNodes,
 		QuadSet:        QuadSet,
 	};
 
-	for (var typeName in CADGeometry)
-		SupportedNodes .addType (typeName, CADGeometry [typeName]); 
+	var AbstractTypes =
+	{
+		X3DProductStructureChildNode: X3DProductStructureChildNode,
+	};
 
-	return CADGeometry;
+	for (var typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]); 
+
+	for (var typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+
+	return Types;
 });
 
