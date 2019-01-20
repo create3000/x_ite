@@ -42,6 +42,10 @@
     <None Include="rigid-body-physics.min.js" />
     <None Include="nurbs.js" />
     <None Include="nurbs.min.js" />
+    <None Include="texturing-3d.min.js" />
+    <None Include="texturing-3d.js" />
+    <None Include="cad-geometry.min.js" />
+    <None Include="cad-geometry.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

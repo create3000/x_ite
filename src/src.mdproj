@@ -639,6 +639,10 @@
     <None Include="lib\nurbs\extras\sample.js" />
     <None Include="x_ite\Browser\Shaders\Include\Shadow.h" />
     <None Include="x_ite\Browser\Shaders\Include\Pack.h" />
+    <None Include="components\texturing-3d.config.js" />
+    <None Include="components\texturing-3d.js" />
+    <None Include="components\cad-geometry.js" />
+    <None Include="components\cad-geometry.config.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

@@ -24,5 +24,9 @@
     <None Include="parts\rigid-body-physics.start.frag" />
     <None Include="parts\nurbs.start.frag" />
     <None Include="parts\nurbs.end.frag" />
+    <None Include="parts\texturing-3d.end.frag" />
+    <None Include="parts\texturing-3d.start.frag" />
+    <None Include="parts\cad-geometry.end.frag" />
+    <None Include="parts\cad-geometry.start.frag" />
   </ItemGroup>
 </Project>
