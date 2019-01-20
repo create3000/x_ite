@@ -928,17 +928,8 @@ function (SupportedNodes,
 		QuadSet:        QuadSet,
 	};
 
-	function createInstance (executionContext) { return new this (executionContext); }
-
 	for (var typeName in CADGeometry)
-	{
-		var interfaceDeclaration = CADGeometry [typeName];
-
-		interfaceDeclaration .createInstance = createInstance .bind (interfaceDeclaration);
-
-		SupportedNodes [typeName]                 = interfaceDeclaration; 
-		SupportedNodes [typeName .toUpperCase ()] = interfaceDeclaration; 
-	}
+		SupportedNodes .add (typeName, CADGeometry [typeName]); 
 
 	return CADGeometry;
 });

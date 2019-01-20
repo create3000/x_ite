@@ -654,17 +654,8 @@ function (SupportedNodes,
 		TextureTransformMatrix3D: TextureTransformMatrix3D,
 	};
 
-	function createInstance (executionContext) { return new this (executionContext); }
-
 	for (var typeName in Texturing3D)
-	{
-		var interfaceDeclaration = Texturing3D [typeName];
-
-		interfaceDeclaration .createInstance = createInstance .bind (interfaceDeclaration);
-
-		SupportedNodes [typeName]                 = interfaceDeclaration; 
-		SupportedNodes [typeName .toUpperCase ()] = interfaceDeclaration; 
-	}
+		SupportedNodes .add (typeName, Texturing3D [typeName]); 
 
 	return Texturing3D;
 });

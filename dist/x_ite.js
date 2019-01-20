@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16a-549 */
+/* X_ITE v4.2.16a-550 */
 
 (function () {
 
@@ -36905,12 +36905,12 @@ function (Fields,
 		},
 		createNode: function (typeName, setup)
 		{
-			var interfaceDeclaration = this .getBrowser () .supportedNodes [typeName];
+			var interfaceDeclaration = this .getBrowser () .getSupportedNode (typeName);
 
 			if (! interfaceDeclaration)
 				throw new Error ("Unknown node type '" + typeName + "'.");
 
-			var node = interfaceDeclaration .createInstance (this);
+			var node = new interfaceDeclaration (this);
 
 			if (setup === false)
 				return node;
@@ -116356,7 +116356,7 @@ function (Anchor,
 {
 "use strict";
 
-	var SupportedNodes =
+	var supportedNodes =
 	{
 		// 3.1
 		MetadataBool:                 MetadataBoolean,
@@ -116599,20 +116599,28 @@ function (Anchor,
 		BlendMode:                    BlendMode,
 	};
 
-	function createInstance (executionContext) { return new this (executionContext); }
-
-	for (var name in SupportedNodes)
+	function SupportedNodes (supportedNodes)
 	{
-		var interfaceDeclaration = SupportedNodes [name];
+		this .index = new Map ();
 
-		interfaceDeclaration .createInstance = createInstance .bind (interfaceDeclaration);
-
-		// HTML DOM support
-
-		SupportedNodes [name .toUpperCase ()] = interfaceDeclaration; 
+		for (var typeName in supportedNodes)
+			this .add (typeName, supportedNodes [typeName]);
 	}
 
-	return SupportedNodes;
+	SupportedNodes .prototype =
+	{
+		add: function (typeName, interfaceDeclaration)
+		{
+			this .index .set (typeName,                 interfaceDeclaration); 
+			this .index .set (typeName .toUpperCase (), interfaceDeclaration); 
+		},
+		get: function (typeName)
+		{
+			return this .index .get (typeName); 
+		},
+	};
+
+	return new SupportedNodes (supportedNodes);
 });
 
 
@@ -116835,6 +116843,10 @@ function ($,
 			}
 
 			throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
+		},
+		getSupportedNode: function (typeName)
+		{
+			return this .supportedNodes .get (typeName);
 		},
 		createScene: function ()
 		{

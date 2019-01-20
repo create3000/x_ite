@@ -3743,14 +3743,7 @@ function (SupportedNodes,
 	function createInstance (executionContext) { return new this (executionContext); }
 
 	for (var typeName in RigidBodyPhysics)
-	{
-		var interfaceDeclaration = RigidBodyPhysics [typeName];
-
-		interfaceDeclaration .createInstance = createInstance .bind (interfaceDeclaration);
-
-		SupportedNodes [typeName]                 = interfaceDeclaration; 
-		SupportedNodes [typeName .toUpperCase ()] = interfaceDeclaration; 
-	}
+		SupportedNodes .add (typeName, RigidBodyPhysics [typeName]); 
 
 	return RigidBodyPhysics;
 });

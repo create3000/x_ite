@@ -4999,17 +4999,8 @@ function (SupportedNodes,
 		NurbsTrimmedSurface:          NurbsTrimmedSurface,
 	};
 
-	function createInstance (executionContext) { return new this (executionContext); }
-
 	for (var typeName in NURBS)
-	{
-		var interfaceDeclaration = NURBS [typeName];
-
-		interfaceDeclaration .createInstance = createInstance .bind (interfaceDeclaration);
-
-		SupportedNodes [typeName]                 = interfaceDeclaration; 
-		SupportedNodes [typeName .toUpperCase ()] = interfaceDeclaration; 
-	}
+		SupportedNodes .add (typeName, NURBS [typeName]); 
 
 	return NURBS;
 });
