@@ -123,6 +123,7 @@ var X_ITE_TESTS = [
 	{ component: "NURBS" },
 	{ path: "NURBS/AnimatedNurbsPatchSurfaceHead.x3dv" },
 	{ path: "NURBS/B.x3d" },
+	{ path: "NURBS/DefaultTextureCoordClosed.x3dv" },
 	{ path: "NURBS/FourDucks.x3dv" },
 	{ path: "NURBS/FredTheBunny.x3dv" },
 	{ path: "NURBS/HoleCentered.x3dv" },

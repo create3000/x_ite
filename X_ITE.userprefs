@@ -4,11 +4,10 @@
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/NURBS/X3DParametricGeometryNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js" Line="215" Column="1" />
-      <File FileName="src/x_ite/Browser/NURBS/NURBS.js" Line="53" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js" Line="262" Column="5" />
+      <File FileName="src/x_ite/Browser/NURBS/NURBS.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/NURBS/NurbsSurfaceInterpolator.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="891" Column="2" />
-      <File FileName="src/x_ite/Components/NURBS/NurbsTextureCoordinate.js" Line="137" Column="1" />
+      <File FileName="src/x_ite/Components/NURBS/NurbsTextureCoordinate.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
