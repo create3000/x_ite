@@ -48,8 +48,8 @@
 
 
 define ([
-	"text!x_ite/Browser/Shaders/Inlcude/Shadow.h",
-	"text!x_ite/Browser/Shaders/Inlcude/Pack.h",
+	"text!x_ite/Browser/Shaders/Include/Shadow.h",
+	"text!x_ite/Browser/Shaders/Include/Pack.h",
 	"text!x_ite/Browser/Shaders/Types.h",
 	"x_ite/DEBUG",
 ],

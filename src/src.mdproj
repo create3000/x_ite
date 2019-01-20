@@ -603,8 +603,6 @@
     <None Include="x_ite\Components\X_ITE\BlendMode.js" />
     <None Include="x_ite\Browser\Shaders\Types.h" />
     <None Include="test.x3d" />
-    <None Include="x_ite\Browser\Shaders\Inlcude\Shadow.h" />
-    <None Include="x_ite\Browser\Shaders\Inlcude\Pack.h" />
     <None Include="x_ite\Browser\Shaders\Background.vs" />
     <None Include="x_ite\Browser\Shaders\Background.fs" />
     <None Include="x_ite\Basic\X3DTypedArrayField.js" />
@@ -639,6 +637,8 @@
     <None Include="lib\nurbs\src\utils\size-getter.js" />
     <None Include="lib\nurbs\src\utils\variable.js" />
     <None Include="lib\nurbs\extras\sample.js" />
+    <None Include="x_ite\Browser\Shaders\Include\Shadow.h" />
+    <None Include="x_ite\Browser\Shaders\Include\Pack.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
