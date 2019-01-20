@@ -76,8 +76,6 @@ function ($,
 		X3DProtoDeclarationNode .call (this, executionContext);
 		X3DUrlObject            .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DExternProtoDeclaration);
-
 		this .addChildObjects ("url", new Fields .MFString ());
 
 		this .deferred = $.Deferred ();

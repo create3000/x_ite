@@ -63,8 +63,6 @@ function (Fields,
 	function X3DProtoDeclarationNode (executionContext)
 	{
 		X3DNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DProtoDeclarationNode);
 	}
 
 	X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DNode .prototype),

@@ -47,9 +47,14 @@
  ******************************************************************************/
 
 
-define (function ()
+define ([
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DConstants)
 {
 "use strict";
+
+	var nodeType = 0;
 
 	function SupportedNodes ()
 	{
@@ -61,11 +66,14 @@ define (function ()
 	{
 		addType: function (typeName, interfaceDeclaration)
 		{
+			X3DConstants [typeName] = ++ nodeType;
+
 			this .types .set (typeName,                 interfaceDeclaration); 
 			this .types .set (typeName .toUpperCase (), interfaceDeclaration); 
 		},
 		addAbstractType: function (typeName, interfaceDeclaration)
 		{
+			X3DConstants [typeName] = ++ nodeType;
 		},
 		getType: function (typeName)
 		{
