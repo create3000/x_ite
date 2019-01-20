@@ -1,5 +1,4 @@
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -48,40 +47,49 @@
 
 
 define ([
-	"x_ite/Components/Core",
-	"x_ite/Components/CubeMapTexturing",
-	"x_ite/Components/DIS",
-	"x_ite/Components/EnvironmentalEffects",
-	"x_ite/Components/EnvironmentalSensor",
-	"x_ite/Components/EventUtilities",
-	"x_ite/Components/Followers",
-	"x_ite/Components/Geometry2D",
-	"x_ite/Components/Geometry3D",
-	"x_ite/Components/Geospatial",
-	"x_ite/Components/Grouping",
-	"x_ite/Components/H-Anim",
-	"x_ite/Components/Interpolation",
-	"x_ite/Components/KeyDeviceSensor",
-	"x_ite/Components/Layering",
-	"x_ite/Components/Layout",
-	"x_ite/Components/Lighting",
-	"x_ite/Components/Navigation",
-	"x_ite/Components/Networking",
-	"x_ite/Components/ParticleSystems",
-	"x_ite/Components/Picking",
-	"x_ite/Components/PointingDeviceSensor",
-	"x_ite/Components/Rendering",
-	"x_ite/Components/Scripting",
-	"x_ite/Components/Shaders",
-	"x_ite/Components/Shape",
-	"x_ite/Components/Sound",
-	"x_ite/Components/Text",
-	"x_ite/Components/Texturing",
-	"x_ite/Components/Time",
-	"x_ite/Components/VolumeRendering",
-	"x_ite/Components/X_ITE",
+	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components/EnvironmentalEffects/Background",
+	"x_ite/Components/EnvironmentalEffects/Fog",
+	"x_ite/Components/EnvironmentalEffects/FogCoordinate",
+	"x_ite/Components/EnvironmentalEffects/LocalFog",
+	"x_ite/Components/EnvironmentalEffects/TextureBackground",
+	"x_ite/Components/EnvironmentalEffects/X3DBackgroundNode",
+	"x_ite/Components/EnvironmentalEffects/X3DFogObject",
+	"x_ite/Browser/Networking/urls",
 ],
-function ()
+function (SupportedNodes,
+          Background,
+          Fog,
+          FogCoordinate,
+          LocalFog,
+          TextureBackground,
+          X3DBackgroundNode,
+          X3DFogObject,
+          urls)
 {
 "use strict";
+
+	var Types =
+	{
+		Background:        Background,
+		Fog:               Fog,
+		FogCoordinate:     FogCoordinate,
+		LocalFog:          LocalFog,
+		TextureBackground: TextureBackground,
+	};
+
+	var AbstractTypes =
+	{
+		X3DBackgroundNode: X3DBackgroundNode,
+		X3DFogObject:      X3DFogObject,
+	};
+	
+	for (var typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]); 
+
+	for (var typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+
+	return Types;
 });
+

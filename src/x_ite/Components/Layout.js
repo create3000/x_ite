@@ -1,5 +1,4 @@
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -48,57 +47,46 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DGroupingNode",
-	"x_ite/Components/Core/X3DSensorNode",
-	"x_ite/Bits/X3DConstants",
+	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components/Layout/Layout",
+	"x_ite/Components/Layout/LayoutGroup",
+	"x_ite/Components/Layout/LayoutLayer",
+	"x_ite/Components/Layout/ScreenFontStyle",
+	"x_ite/Components/Layout/ScreenGroup",
+	"x_ite/Components/Layout/X3DLayoutNode",
+	"x_ite/Browser/Networking/urls",
 ],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGroupingNode, 
-          X3DSensorNode, 
-          X3DConstants)
+function (SupportedNodes,
+          Layout,
+          LayoutGroup,
+          LayoutLayer,
+          ScreenFontStyle,
+          ScreenGroup,
+          X3DLayoutNode,
+          urls)
 {
 "use strict";
 
-	function TouchGroup (executionContext)
+	var Types =
 	{
-		X3DGroupingNode .call (this, executionContext);
-		X3DSensorNode .call (this, executionContext);
+		Layout:          Layout,
+		LayoutGroup:     LayoutGroup,
+		LayoutLayer:     LayoutLayer,
+		ScreenFontStyle: ScreenFontStyle,
+		ScreenGroup:     ScreenGroup,
+	};
 
-		this .addType (X3DConstants .TouchGroup);
-	}
-
-	TouchGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),new X3DSensorNode (),
+	var AbstractTypes =
 	{
-		constructor: TouchGroup,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TouchGroup";
-		},
-		getComponentName: function ()
-		{
-			return "Titania";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-	});
+		X3DLayoutNode: X3DLayoutNode,
+	};
+	
+	for (var typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	return TouchGroup;
+	for (var typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+
+	return Types;
 });
-
 
