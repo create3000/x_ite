@@ -258,6 +258,7 @@ var X_ITE_TESTS = [
 	{ path: "Shaders/PointFloatVertexAttribute.x3d" },
 	{ path: "Shaders/PointMatrix3VertexAttribute.x3d" },
 	{ path: "Shaders/PointMatrix4VertexAttribute.x3d" },
+	{ path: "Shaders/Shading.x3d" },
 	{ path: "Shaders/Waves.x3d" },
 	{ path: "Shaders/ggreynoise512.png" },
 	{ path: "Shaders/images.x3d" },

@@ -112,7 +112,7 @@ function (X3DGeometryNode,
 				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 	
 				// Wireframes are always solid so only one drawing call is needed.
-	
+
 				gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
 	
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
