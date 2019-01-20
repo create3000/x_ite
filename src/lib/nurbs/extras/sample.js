@@ -70,13 +70,12 @@ define (function ()
 			{
 				var
 					nu         = resolution [0],
-					nuBound    = nu + (nurbs .boundary [0] !== 'closed'),
+					uClosed    = nurbs .boundary [0] === 'closed',
+					nuBound    = nu + ! uClosed,
 					nbVertices = nuBound * dimension,
-					uDer       = nurbs .evaluator ([1, 0]);
-
-				var
-					domain  = opts .domain || nurbs .domain,
-					uDomain = domain [0];
+					uDer       = nurbs .evaluator ([1, 0]),
+					domain     = opts .domain || nurbs .domain,
+					uDomain    = domain [0];
 
 				for (var i = 0; i < nuBound; ++ i)
 				{
@@ -96,25 +95,19 @@ define (function ()
 			case 2:
 			{
 				var
-					nu = resolution [0],
-					nv = resolution [1];
-
-				var
-					nuBound = nu + (nurbs .boundary [0] !== 'closed'),
-					nvBound = nv + (nurbs .boundary [1] !== 'closed');
-				
-				var
+					nu         = resolution [0],
+					nv         = resolution [1],
+					uClosed    = nurbs .boundary [0] === 'closed',
+					vClosed    = nurbs .boundary [1] === 'closed',
+					nuBound    = nu + ! uClosed,
+					nvBound    = nv + ! vClosed,
 					nbNormals  = nuBound * nvBound * 3,
-					nbVertices = nuBound * nvBound * dimension;
-				
-				var
-					uDer = nurbs .evaluator ([1, 0]),
-					vDer = nurbs .evaluator ([0, 1]);
-				
-				var
-					domain  = opts .domain || nurbs .domain,
-					uDomain = domain [0],
-					vDomain = domain [1];
+					nbVertices = nuBound * nvBound * dimension,
+					uDer       = nurbs .evaluator ([1, 0]),
+					vDer       = nurbs .evaluator ([0, 1]),
+					domain     = opts .domain || nurbs .domain,
+					uDomain    = domain [0],
+					vDomain    = domain [1];
 
 				for (var i = 0; i < nuBound; ++ i)
 				{
@@ -156,7 +149,7 @@ define (function ()
 						i0 = i,
 						i1 = i + 1;
 	
-					if (nurbs .boundary [0] === 'closed')
+					if (uClosed)
 						i1 = i1 % nu;
 	
 	            for (var j = 0; j < nv; ++ j)
@@ -164,7 +157,7 @@ define (function ()
 						var j0 = j;
 						var j1 = j + 1;
 	
-						if (nurbs .boundary [1] === 'closed')
+						if (vClosed)
 							j1 = j1 % nv;
 						
 						faces [c ++] = i0 + nuBound * j0;
