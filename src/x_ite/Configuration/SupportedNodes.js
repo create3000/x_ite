@@ -522,7 +522,7 @@ function (Anchor,
 {
 "use strict";
 
-	var SupportedNodes =
+	var supportedNodes =
 	{
 		// 3.1
 		MetadataBool:                 MetadataBoolean,
@@ -765,19 +765,27 @@ function (Anchor,
 		BlendMode:                    BlendMode,
 	};
 
-	function createInstance (executionContext) { return new this (executionContext); }
-
-	for (var name in SupportedNodes)
+	function SupportedNodes (supportedNodes)
 	{
-		var interfaceDeclaration = SupportedNodes [name];
+		this .index = new Map ();
 
-		interfaceDeclaration .createInstance = createInstance .bind (interfaceDeclaration);
-
-		// HTML DOM support
-
-		SupportedNodes [name .toUpperCase ()] = interfaceDeclaration; 
+		for (var typeName in supportedNodes)
+			this .add (typeName, supportedNodes [typeName]);
 	}
 
-	return SupportedNodes;
+	SupportedNodes .prototype =
+	{
+		add: function (typeName, interfaceDeclaration)
+		{
+			this .index .set (typeName,                 interfaceDeclaration); 
+			this .index .set (typeName .toUpperCase (), interfaceDeclaration); 
+		},
+		get: function (typeName)
+		{
+			return this .index .get (typeName); 
+		},
+	};
+
+	return new SupportedNodes (supportedNodes);
 });
 

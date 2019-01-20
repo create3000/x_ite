@@ -218,6 +218,10 @@ function ($,
 
 			throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
 		},
+		getSupportedNode: function (typeName)
+		{
+			return this .supportedNodes .get (typeName);
+		},
 		createScene: function ()
 		{
 		   var scene = new Scene (this);
