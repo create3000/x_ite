@@ -46,6 +46,18 @@
  *
  ******************************************************************************/
 
+var getScriptURL = (function ()
+{
+	var
+		scripts  = document .getElementsByTagName ('script'),
+		self     = scripts [scripts .length - 1];
+	
+	return function ()
+	{
+		return self .src;
+	};
+})();
+
 (function ()
 {
 "use strict";

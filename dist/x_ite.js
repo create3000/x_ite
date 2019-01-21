@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16a-552 */
+/* X_ITE v4.2.16a-553 */
 
 (function () {
 
@@ -30334,9 +30334,18 @@ function (X3DChildNode,
  ******************************************************************************/
 
 
-define ('x_ite/Browser/Networking/urls',[],function ()
+define ('x_ite/Browser/Networking/urls',[
+	"jquery",
+],
+function ($)
 {
 "use strict";
+
+	var
+		scripts = $("script"),
+		self    = $(scripts [scripts .length - 1]);
+
+	console .log (self .attr ("src"));
 
 	return {
 		providerUrl:       "http://create3000.de/x_ite",

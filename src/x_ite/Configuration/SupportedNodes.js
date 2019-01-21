@@ -64,14 +64,14 @@ function (X3DConstants)
 
 	SupportedNodes .prototype =
 	{
-		addType: function (typeName, interfaceDeclaration)
+		addType: function (typeName, Type)
 		{
-			X3DConstants [typeName] = ++ nodeType;
+			X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
 
-			this .types .set (typeName,                 interfaceDeclaration); 
-			this .types .set (typeName .toUpperCase (), interfaceDeclaration); 
+			this .types .set (typeName,                 Type); 
+			this .types .set (typeName .toUpperCase (), Type); 
 		},
-		addAbstractType: function (typeName, interfaceDeclaration)
+		addAbstractType: function (typeName, Type)
 		{
 			X3DConstants [typeName] = ++ nodeType;
 		},

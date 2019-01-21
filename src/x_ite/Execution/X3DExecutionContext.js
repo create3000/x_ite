@@ -186,12 +186,12 @@ function (Fields,
 		},
 		createNode: function (typeName, setup)
 		{
-			var interfaceDeclaration = this .getBrowser () .getSupportedNode (typeName);
+			var Type = this .getBrowser () .getSupportedNode (typeName);
 
-			if (! interfaceDeclaration)
+			if (! Type)
 				throw new Error ("Unknown node type '" + typeName + "'.");
 
-			var node = new interfaceDeclaration (this);
+			var node = new Type (this);
 
 			if (setup === false)
 				return node;
