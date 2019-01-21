@@ -49,12 +49,12 @@
 var getScriptURL = (function ()
 {
 	var
-		scripts  = document .getElementsByTagName ('script'),
-		self     = scripts [scripts .length - 1];
+		scripts = document .getElementsByTagName ('script'),
+		src     = scripts [scripts .length - 1] .src;
 	
 	return function ()
 	{
-		return self .src;
+		return src;
 	};
 })();
 

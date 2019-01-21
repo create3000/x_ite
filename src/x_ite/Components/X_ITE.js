@@ -74,7 +74,7 @@ function (SupportedComponents,
 		title:      "X_ITE",
 		name:       "X_ITE",
 		level:       1,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	for (var typeName in Types)

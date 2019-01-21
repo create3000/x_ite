@@ -67,7 +67,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Computer-Aided Design (CAD) interchange",
 		name: "CADInterchange",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Networking"],
@@ -85,7 +85,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Core",
 		name: "Core",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 		],
@@ -94,7 +94,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Full",
 		name: "Full",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -137,7 +137,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Immersive",
 		name: "Immersive",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -165,7 +165,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Interactive",
 		name: "Interactive",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -189,7 +189,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Interchange",
 		name: "Interchange",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -209,7 +209,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Medical interchange",
 		name: "MedicalInterchange",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -234,7 +234,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "MPEG-4 interactive",
 		name: "MPEG-4",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
