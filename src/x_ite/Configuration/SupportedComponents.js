@@ -63,7 +63,7 @@ function (ComponentInfoArray,
 		title:      "Computer-Aided Design (CAD) model geometry",
 		name:       "CADGeometry",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .provider ("cad-geometry"),
 	});
 
 	SupportedComponents .addComponent (
@@ -223,7 +223,7 @@ function (ComponentInfoArray,
 		title:      "Non-uniform Rational B-Spline (NURBS)",
 		name:       "NURBS",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .provider ("nurbs"),
 	});
 
 	SupportedComponents .addComponent (
@@ -271,7 +271,7 @@ function (ComponentInfoArray,
 		title:      "Rigid body physics",
 		name:       "RigidBodyPhysics",
 		level:       5,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .provider ("rigid-body-physics"),
 	});
 
 	SupportedComponents .addComponent (
@@ -319,7 +319,7 @@ function (ComponentInfoArray,
 		title:      "Texturing3D",
 		name:       "Texturing3D",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .provider ("texturing-3d"),
 	});
 
 	SupportedComponents .addComponent (

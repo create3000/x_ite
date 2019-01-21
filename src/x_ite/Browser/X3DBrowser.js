@@ -203,16 +203,8 @@ function ($,
 
 			if (component)
 			{
-				//if (level <= component .level)
-				//{
-					return new ComponentInfo (this,
-					{
-						title: component .title,
-						name:  name,
-						level: level,
-						providerUrl: this .getProviderUrl ()
-					});
-				//}
+				if (level <= component .level || true)
+					return new ComponentInfo (name, level, component .title, component. providerUrl);
 			}
 
 			throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");

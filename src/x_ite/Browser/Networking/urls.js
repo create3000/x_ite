@@ -46,14 +46,29 @@
  *
  ******************************************************************************/
 
-define (function ()
+define ([
+	"standard/Networking/URI",
+	"x_ite/DEBUG",
+],
+function (URI,
+          DEBUG)
 {
 "use strict";
 
+	var scriptUrl = new URI (getScriptURL ())
+
+	function provider (component)
+	{
+		if (DEBUG)
+			return scriptUrl .transform ("components/" + component + ".js") .toString ();
+
+		return scriptUrl .transform (component + ".js") .toString ();
+	}
+
 	return {
-		scriptUrl:         getScriptURL (),
-		providerUrl:       "http://create3000.de/x_ite",
-		fallbackUrl:       "http://cors.create3000.de/",
+		provider: provider,
+		providerUrl: "http://create3000.de/x_ite",
+		fallbackUrl: "http://cors.create3000.de/",
 		fallbackExpression: new RegExp ("^http://cors.create3000.de/"),
 	};
 });
