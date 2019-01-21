@@ -60,7 +60,7 @@ function (X3DBaseNode,
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .addChildObjects ("dimension", new Fields .SFInt32 (32))
+		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
 	}
 
 	ArcClose2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),

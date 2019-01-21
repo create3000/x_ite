@@ -76,10 +76,10 @@ function (TextureProperties,
 
 			// BrowserOptions
 			{
-				this .defaultTextureProperties .magnificationFilter_ .setValue ("NICEST");
-				this .defaultTextureProperties .minificationFilter_  .setValue ("AVG_PIXEL_AVG_MIPMAP");
-				this .defaultTextureProperties .textureCompression_  .setValue ("NICEST");
-				this .defaultTextureProperties .generateMipMaps_     .setValue (true);
+				this .defaultTextureProperties .magnificationFilter_ = "NICEST";
+				this .defaultTextureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
+				this .defaultTextureProperties .textureCompression_  = "NICEST";
+				this .defaultTextureProperties .generateMipMaps_     = true;
 			}
 
 			this .maxTextureSize          = gl .getParameter (gl .MAX_TEXTURE_SIZE);

@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16-556 */
+/* X_ITE v4.2.16-557 */
 
 (function () {
 
@@ -107170,7 +107170,7 @@ function (X3DBaseNode,
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .addChildObjects ("dimension", new Fields .SFInt32 (32))
+		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
 	}
 
 	ArcClose2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -107255,7 +107255,7 @@ function (X3DBaseNode,
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .addChildObjects ("dimension", new Fields .SFInt32 (32))
+		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
 	}
 
 	Arc2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -118207,10 +118207,10 @@ function (TextureProperties,
 
 			// BrowserOptions
 			{
-				this .defaultTextureProperties .magnificationFilter_ .setValue ("NICEST");
-				this .defaultTextureProperties .minificationFilter_  .setValue ("AVG_PIXEL_AVG_MIPMAP");
-				this .defaultTextureProperties .textureCompression_  .setValue ("NICEST");
-				this .defaultTextureProperties .generateMipMaps_     .setValue (true);
+				this .defaultTextureProperties .magnificationFilter_ = "NICEST";
+				this .defaultTextureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
+				this .defaultTextureProperties .textureCompression_  = "NICEST";
+				this .defaultTextureProperties .generateMipMaps_     = true;
 			}
 
 			this .maxTextureSize          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
