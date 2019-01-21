@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16-557 */
+/* X_ITE v4.2.16-558 */
 
 (function () {
 
@@ -56263,7 +56263,7 @@ define ('x_ite/Parser/X3DParser',[],function ()
 		},
 		getProviderUrls: (function ()
 		{
-			var componentsUrl = /\/components\/.*?\.js$/;
+			var componentsUrl = /\.js$/;
 
 			function unique (value, index, self)
 			{ 

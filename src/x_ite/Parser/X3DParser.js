@@ -86,7 +86,7 @@ define (function ()
 		},
 		getProviderUrls: (function ()
 		{
-			var componentsUrl = /\/components\/.*?\.js$/;
+			var componentsUrl = /\.js$/;
 
 			function unique (value, index, self)
 			{ 
