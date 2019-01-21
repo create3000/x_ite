@@ -207,12 +207,14 @@ function ($,
 				throw new Error ("Couldn't parse x3d syntax.");
 			}
 		},
-		importJS: function (scene, jsobj, success, error)
+		importDocument: function (scene, dom, success, error)
 		{
 			try
 			{
+				new XMLParser (scene) .parseIntoScene (dom);
+				
 				//AP: add reference to dom for later access.
-				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj);
+				this .node .dom = dom;
 
 				if (success)
 					this .setScene (scene, success, error);
@@ -225,14 +227,12 @@ function ($,
 					throw exception;
 			}
 		},
-		importDocument: function (scene, dom, success, error)
+		importJS: function (scene, jsobj, success, error)
 		{
 			try
 			{
-				new XMLParser (scene) .parseIntoScene (dom);
-				
 				//AP: add reference to dom for later access.
-				this .node .dom = dom;
+				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj);
 
 				if (success)
 					this .setScene (scene, success, error);
