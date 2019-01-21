@@ -88,6 +88,11 @@ define (function ()
 		{
 			var componentsUrl = /\/components\/.*?\.js$/;
 
+			function unique (value, index, self)
+			{ 
+				return self .indexOf (value) === index;
+			}
+
 			return function ()
 			{
 				var
@@ -109,11 +114,6 @@ define (function ()
 	
 					if (providerUrl .match (componentsUrl))
 						providerUrls .push (providerUrl);
-				}
-	
-				function unique (value, index, self)
-				{ 
-					return self .indexOf (value) === index;
 				}
 	
 				return providerUrls .filter (unique);

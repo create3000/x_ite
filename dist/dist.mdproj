@@ -46,6 +46,7 @@
     <None Include="components\rigid-body-physics.min.js" />
     <None Include="components\texturing-3d.js" />
     <None Include="components\texturing-3d.min.js" />
+    <None Include="components\README" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

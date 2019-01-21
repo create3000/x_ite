@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16a-553 */
+/* X_ITE v4.2.16a-554 */
 
 (function () {
 
@@ -56265,6 +56265,11 @@ define ('x_ite/Parser/X3DParser',[],function ()
 		{
 			var componentsUrl = /\/components\/.*?\.js$/;
 
+			function unique (value, index, self)
+			{ 
+				return self .indexOf (value) === index;
+			}
+
 			return function ()
 			{
 				var
@@ -56286,11 +56291,6 @@ define ('x_ite/Parser/X3DParser',[],function ()
 	
 					if (providerUrl .match (componentsUrl))
 						providerUrls .push (providerUrl);
-				}
-	
-				function unique (value, index, self)
-				{ 
-					return self .indexOf (value) === index;
 				}
 	
 				return providerUrls .filter (unique);
