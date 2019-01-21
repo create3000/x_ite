@@ -85,6 +85,10 @@ function (Fields,
 
 		this .addAlias ("AntiAliased", this .Antialiased_);
 
+		this .textureQuality   = TextureQuality .MEDIUM
+		this .primitiveQuality = PrimitiveQuality .MEDIUM;
+		this .shading          = Shading .GOURAUD;
+
 		this .setAttributeSplashScreen ();
 	}
 

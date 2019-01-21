@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16-555 */
+/* X_ITE v4.2.16-556 */
 
 (function () {
 
@@ -101320,6 +101320,10 @@ function (Fields,
 		X3DBaseNode .call (this, executionContext);
 
 		this .addAlias ("AntiAliased", this .Antialiased_);
+
+		this .textureQuality   = TextureQuality .MEDIUM
+		this .primitiveQuality = PrimitiveQuality .MEDIUM;
+		this .shading          = Shading .GOURAUD;
 
 		this .setAttributeSplashScreen ();
 	}
