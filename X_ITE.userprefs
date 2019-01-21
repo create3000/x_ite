@@ -1,10 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Fields/SFNode.js">
     <Files>
       <File FileName="src/x_ite.html" Line="26" Column="61" />
-      <File FileName="src/x_ite/Components/X_ITE.js" Line="62" Column="1" />
-      <File FileName="src/x_ite/Parser/XMLParser.js" Line="93" Column="1" />
+      <File FileName="src/x_ite/Components/X_ITE.js" Line="76" Column="18" />
+      <File FileName="src/x_ite/Configuration/SupportedNodes.js" Line="73" Column="5" />
+      <File FileName="src/x_ite/Fields/SFNode.js" Line="253" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
