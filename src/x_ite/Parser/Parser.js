@@ -336,10 +336,13 @@ function (Fields,
 
 			this .getBrowser () .println (string);
 		},
-		parseIntoScene: function (input)
+		parseIntoScene: function (input, success, error)
 		{
 			try
 			{
+				this .success = success;
+				this .error   = error;
+
 				this .getScene () .setEncoding ("VRML");
 				this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
@@ -468,12 +471,41 @@ function (Fields,
 			catch (error)
 			{ }
 
-			this .statements ();
+			if (this .success)
+			{
+				require (this .getProviderUrls (),
+				function ()
+				{
+					try
+					{
+						this .statements ();
+						this .popExecutionContext (this .getScene ());
 
-			this .popExecutionContext (this .getScene ());
+						if (this .lastIndex < this .input .length)
+							throw new Error ("Unknown statement.");
 
-			if (this .lastIndex < this .input .length)
-				throw new Error ("Unknown statement.");
+						this .success ();
+					}
+					catch (error)
+					{
+						this .error (new Error (this .getError (error)));
+					}
+				}
+				.bind (this),
+				function (error)
+				{
+					this .error (error);
+				}
+				.bind (this));
+			}
+			else
+			{
+				this .statements ();
+				this .popExecutionContext (this .getScene ());
+	
+				if (this .lastIndex < this .input .length)
+					throw new Error ("Unknown statement.");
+			}
 		},
 		headerStatement: function ()
 		{

@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-require ([
+define ([
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/NURBS/Contour2D",
 	"x_ite/Components/NURBS/ContourPolyline2D",

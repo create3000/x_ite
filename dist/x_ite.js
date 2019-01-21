@@ -24594,14 +24594,14 @@ function (X3DConstants)
 
 	SupportedNodes .prototype =
 	{
-		addType: function (typeName, interfaceDeclaration)
+		addType: function (typeName, Type)
 		{
-			X3DConstants [typeName] = ++ nodeType;
+			X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
 
-			this .types .set (typeName,                 interfaceDeclaration); 
-			this .types .set (typeName .toUpperCase (), interfaceDeclaration); 
+			this .types .set (typeName,                 Type); 
+			this .types .set (typeName .toUpperCase (), Type); 
 		},
-		addAbstractType: function (typeName, interfaceDeclaration)
+		addAbstractType: function (typeName, Type)
 		{
 			X3DConstants [typeName] = ++ nodeType;
 		},
@@ -29124,12 +29124,12 @@ function (Fields,
 		},
 		createNode: function (typeName, setup)
 		{
-			var interfaceDeclaration = this .getBrowser () .getSupportedNode (typeName);
+			var Type = this .getBrowser () .getSupportedNode (typeName);
 
-			if (! interfaceDeclaration)
+			if (! Type)
 				throw new Error ("Unknown node type '" + typeName + "'.");
 
-			var node = new interfaceDeclaration (this);
+			var node = new Type (this);
 
 			if (setup === false)
 				return node;
@@ -30333,23 +30333,24 @@ function (X3DChildNode,
  *
  ******************************************************************************/
 
-
 define ('x_ite/Browser/Networking/urls',[
-	"jquery",
+	"standard/Networking/URI",
 ],
-function ($)
+function (URI)
 {
 "use strict";
 
-	var
-		scripts = $("script"),
-		self    = $(scripts [scripts .length - 1]);
+	var scriptUrl = new URI (getScriptURL ())
 
-	console .log (self .attr ("src"));
+	function provider (component)
+	{
+		return scriptUrl .transform ("components/" + component + ".js") .toString ();
+	}
 
 	return {
-		providerUrl:       "http://create3000.de/x_ite",
-		fallbackUrl:       "http://cors.create3000.de/",
+		provider: provider,
+		providerUrl: "http://create3000.de/x_ite",
+		fallbackUrl: "http://cors.create3000.de/",
 		fallbackExpression: new RegExp ("^http://cors.create3000.de/"),
 	};
 });
@@ -47545,6 +47546,89 @@ define ('x_ite/Browser/Core/Shading',[],function ()
  ******************************************************************************/
 
 
+define ('standard/Math/Geometry/Triangle2',[],function ()
+{
+"use strict";
+
+	return {
+		isPointInTriangle: function (a, b, c, point)
+		{
+		   // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
+
+		   var det = (b.y - c.y) * (a.x - c.x) + (c.x - b.x) * (a.y - c.y);
+
+			if (det == 0)
+				return false;
+
+		   var u = ((b.y - c.y) * (point .x - c.x) + (c.x - b.x) * (point .y - c.y)) / det;
+
+		   if (u < 0 || u > 1)
+		      return false;
+
+		   var v = ((c.y - a.y) * (point .x - c.x) + (a.x - c.x) * (point .y - c.y)) / det;
+
+		   if (v < 0 || v > 1)
+		      return false;
+
+		   var t = 1 - u - v;
+
+		   if (t < 0 || t > 1)
+		      return false;
+		   
+			return true;
+		},
+	};
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Rendering/X3DGeometryNode',[
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
@@ -47557,6 +47641,7 @@ define ('x_ite/Components/Rendering/X3DGeometryNode',[
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Geometry/Plane3",
+	"standard/Math/Geometry/Triangle2",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Algorithm",
 ],
@@ -47571,6 +47656,7 @@ function (Fields,
           Matrix4,
           Box3,
           Plane3,
+          Triangle2,
           Triangle3,
           Algorithm)
 {
@@ -56175,6 +56261,41 @@ define ('x_ite/Parser/X3DParser',[],function ()
 		{
 			return this .executionContexts .length > 1;
 		},
+		getProviderUrls: (function ()
+		{
+			var componentsUrl = /\/components\/.*?\.js$/;
+
+			return function ()
+			{
+				var
+					profileComponents = this .getScene () .getProfile () .components,
+					components        = this .getScene () .getComponents (),
+					providerUrls      = [ ];
+	
+				for (var i = 0, length = profileComponents .length; i < length; ++ i)
+				{
+					var providerUrl = profileComponents [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .push (providerUrl);
+				}
+	
+				for (var i = 0, length = components .length; i < length; ++ i)
+				{
+					var providerUrl = components [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .push (providerUrl);
+				}
+	
+				function unique (value, index, self)
+				{ 
+					return self .indexOf (value) === index;
+				}
+	
+				return providerUrls .filter (unique);
+			};
+		})(),
 		addRootNode: function (node)
 		{
 			this .getExecutionContext () .rootNodes .push (node);
@@ -57242,10 +57363,13 @@ function (Fields,
 
 			this .getBrowser () .println (string);
 		},
-		parseIntoScene: function (input)
+		parseIntoScene: function (input, success, error)
 		{
 			try
 			{
+				this .success = success;
+				this .error   = error;
+
 				this .getScene () .setEncoding ("VRML");
 				this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
@@ -57374,12 +57498,41 @@ function (Fields,
 			catch (error)
 			{ }
 
-			this .statements ();
+			if (this .success)
+			{
+				require (this .getProviderUrls (),
+				function ()
+				{
+					try
+					{
+						this .statements ();
+						this .popExecutionContext (this .getScene ());
 
-			this .popExecutionContext (this .getScene ());
+						if (this .lastIndex < this .input .length)
+							throw new Error ("Unknown statement.");
 
-			if (this .lastIndex < this .input .length)
-				throw new Error ("Unknown statement.");
+						this .success ();
+					}
+					catch (error)
+					{
+						this .error (new Error (this .getError (error)));
+					}
+				}
+				.bind (this),
+				function (error)
+				{
+					this .error (error);
+				}
+				.bind (this));
+			}
+			else
+			{
+				this .statements ();
+				this .popExecutionContext (this .getScene ());
+	
+				if (this .lastIndex < this .input .length)
+					throw new Error ("Unknown statement.");
+			}
 		},
 		headerStatement: function ()
 		{
@@ -60551,8 +60704,11 @@ function ($,
 	XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 	{
 		constructor: XMLParser,
-		parseIntoScene: function (xmlElement)
+		parseIntoScene: function (xmlElement, success, error)
 		{
+			this .success = success;
+			this .error   = error;
+
 			this .getScene () .setEncoding ("XML");
 			this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
@@ -60627,9 +60783,39 @@ function ($,
 			var childNodes = xmlElement .childNodes;
 
 			for (var i = 0; i < childNodes .length; ++ i)
-				this .x3dElementChild (childNodes [i])
+				this .x3dElementChildHead (childNodes [i])
+
+			if (this .success)
+			{
+				require (this .getProviderUrls (),
+				function ()
+				{
+					try
+					{
+						for (var i = 0; i < childNodes .length; ++ i)
+							this .x3dElementChildScene (childNodes [i])
+
+						this .success ();
+					}
+					catch (error)
+					{
+						this .error (error);
+					}
+				}
+				.bind (this),
+				function (error)
+				{
+					this .error (error);
+				}
+				.bind (this));
+			}
+			else
+			{
+				for (var i = 0; i < childNodes .length; ++ i)
+					this .x3dElementChildScene (childNodes [i])
+			}
 		},
-		x3dElementChild: function (xmlElement)
+		x3dElementChildHead: function (xmlElement)
 		{
 			switch (xmlElement .nodeName)
 			{
@@ -60637,6 +60823,12 @@ function ($,
 				case "HEAD":
 					this .headElement (xmlElement);
 					return;
+			}
+		},
+		x3dElementChildScene: function (xmlElement)
+		{
+			switch (xmlElement .nodeName)
+			{
 				case "Scene":
 				case "SCENE":
 					this .sceneElement (xmlElement);
@@ -61626,11 +61818,11 @@ function (
 		 * jsobj - the JavaScript object to convert to DOM.
 		 */
 	JSONParser .prototype.
-		parseJavaScript = function(jsobj) {
+		parseJavaScript = function(jsobj, success, error) {
 			var child = this.CreateElement('X3D');
 			this.ConvertToX3DOM(jsobj, "", child);
 			// call the DOM parser
-			this.parseIntoScene(child);
+			this.parseIntoScene(child, success, error);
 			return child;
 		};
 
@@ -65452,10 +65644,17 @@ function ($,
 					},
 					function (scene, string, success, error)
 					{
+						if (success)
+						{
+							success = function (scene, success, error)
+							{
+								this .setScene (scene, success, error);
+							}
+							.bind (this, scene, success, error);
+						}
+	
 						// Try parse X3D Classic Encoding.	
-						new Parser (scene) .parseIntoScene (string);
-				
-						this .setScene (scene, success, error);
+						new Parser (scene) .parseIntoScene (string, success, error);
 					},
 				];
 
@@ -65518,15 +65717,23 @@ function ($,
 				throw new Error ("Couldn't parse x3d syntax.");
 			}
 		},
-		importJS: function (scene, jsobj, success, error)
+		importDocument: function (scene, dom, success, error)
 		{
 			try
 			{
-				//AP: add reference to dom for later access.
-				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj);
-
 				if (success)
-					this .setScene (scene, success, error);
+				{
+					success = function (scene, success, error)
+					{
+						this .setScene (scene, success, error);
+					}
+					.bind (this, scene, success, error);
+				}
+	
+				new XMLParser (scene) .parseIntoScene (dom, success, error);
+		
+				//AP: add reference to dom for later access.
+				this .node .dom = dom;
 			}
 			catch (exception)
 			{
@@ -65536,17 +65743,21 @@ function ($,
 					throw exception;
 			}
 		},
-		importDocument: function (scene, dom, success, error)
+		importJS: function (scene, jsobj, success, error)
 		{
 			try
 			{
-				new XMLParser (scene) .parseIntoScene (dom);
-				
-				//AP: add reference to dom for later access.
-				this .node .dom = dom;
-
 				if (success)
-					this .setScene (scene, success, error);
+				{
+					success = function (scene, success, error)
+					{
+						this .setScene (scene, success, error);
+					}
+					.bind (this, scene, success, error);
+				}
+
+				//AP: add reference to dom for later access.
+				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj, success, error);
 			}
 			catch (exception)
 			{
@@ -100293,7 +100504,7 @@ function (ComponentInfoArray,
 		title:      "Computer-Aided Design (CAD) model geometry",
 		name:       "CADGeometry",
 		level:       2,
-		providerUrl: urls .provider,
+		providerUrl: urls .provider ("cad-geometry"),
 	});
 
 	SupportedComponents .addComponent (
@@ -100301,7 +100512,7 @@ function (ComponentInfoArray,
 		title:      "Core",
 		name:       "Core",
 		level:       2,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100309,7 +100520,7 @@ function (ComponentInfoArray,
 		title:      "Cube map environmental texturing",
 		name:       "CubeMapTexturing",
 		level:       3,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100317,7 +100528,7 @@ function (ComponentInfoArray,
 		title:      "Distributed interactive simulation (DIS)",
 		name:       "DIS",
 		level:       2,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100325,7 +100536,7 @@ function (ComponentInfoArray,
 		title:      "Environmental effects",
 		name:       "EnvironmentalEffects",
 		level:       4,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100333,7 +100544,7 @@ function (ComponentInfoArray,
 		title:      "Environmental sensor",
 		name:       "EnvironmentalSensor",
 		level:       4,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100341,7 +100552,7 @@ function (ComponentInfoArray,
 		title:      "Event utilities",
 		name:       "EventUtilities",
 		level:       4,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100349,7 +100560,7 @@ function (ComponentInfoArray,
 		title:      "Followers",
 		name:       "Followers",
 		level:       4,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100357,7 +100568,7 @@ function (ComponentInfoArray,
 		title:      "Geometry2D",
 		name:       "Geometry2D",
 		level:       2,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100365,7 +100576,7 @@ function (ComponentInfoArray,
 		title:      "Geometry3D",
 		name:       "Geometry3D",
 		level:       4,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100373,7 +100584,7 @@ function (ComponentInfoArray,
 		title:      "Geospatial",
 		name:       "Geospatial",
 		level:       2,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100381,7 +100592,7 @@ function (ComponentInfoArray,
 		title:      "Grouping",
 		name:       "Grouping",
 		level:       3,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100389,7 +100600,7 @@ function (ComponentInfoArray,
 		title:      "Humanoid animation (H-Anim)",
 		name:       "H-Anim",
 		level:       3,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100397,7 +100608,7 @@ function (ComponentInfoArray,
 		title:      "Interpolation",
 		name:       "Interpolation",
 		level:       5,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100405,7 +100616,7 @@ function (ComponentInfoArray,
 		title:      "Key device sensor",
 		name:       "KeyDeviceSensor",
 		level:       2,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100413,7 +100624,7 @@ function (ComponentInfoArray,
 		title:      "Layering",
 		name:       "Layering",
 		level:       1,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100421,7 +100632,7 @@ function (ComponentInfoArray,
 		title:      "Layout",
 		name:       "Layout",
 		level:       1,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100429,7 +100640,7 @@ function (ComponentInfoArray,
 		title:      "Lighting",
 		name:       "Lighting",
 		level:       3,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100437,7 +100648,7 @@ function (ComponentInfoArray,
 		title:      "Navigation",
 		name:       "Navigation",
 		level:       3,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100445,7 +100656,7 @@ function (ComponentInfoArray,
 		title:      "Networking",
 		name:       "Networking",
 		level:       4,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100453,7 +100664,7 @@ function (ComponentInfoArray,
 		title:      "Non-uniform Rational B-Spline (NURBS)",
 		name:       "NURBS",
 		level:       4,
-		providerUrl: urls .provider,
+		providerUrl: urls .provider ("nurbs"),
 	});
 
 	SupportedComponents .addComponent (
@@ -100461,7 +100672,7 @@ function (ComponentInfoArray,
 		title:      "Particle systems",
 		name:       "ParticleSystems",
 		level:       3,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100469,7 +100680,7 @@ function (ComponentInfoArray,
 		title:      "Picking sensor",
 		name:       "Picking",
 		level:       3,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100477,7 +100688,7 @@ function (ComponentInfoArray,
 		title:      "Pointing device sensor",
 		name:       "PointingDeviceSensor",
 		level:       1,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100485,7 +100696,7 @@ function (ComponentInfoArray,
 		title:      "Programmable shaders",
 		name:       "Shaders",
 		level:       1,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100493,7 +100704,7 @@ function (ComponentInfoArray,
 		title:      "Rendering",
 		name:       "Rendering",
 		level:       5,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100501,7 +100712,7 @@ function (ComponentInfoArray,
 		title:      "Rigid body physics",
 		name:       "RigidBodyPhysics",
 		level:       5,
-		providerUrl: urls .provider,
+		providerUrl: urls .provider ("rigid-body-physics"),
 	});
 
 	SupportedComponents .addComponent (
@@ -100509,7 +100720,7 @@ function (ComponentInfoArray,
 		title:      "Scripting",
 		name:       "Scripting",
 		level:       1,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100517,7 +100728,7 @@ function (ComponentInfoArray,
 		title:      "Shape",
 		name:       "Shape",
 		level:       4,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100525,7 +100736,7 @@ function (ComponentInfoArray,
 		title:      "Sound",
 		name:       "Sound",
 		level:       1,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100533,7 +100744,7 @@ function (ComponentInfoArray,
 		title:      "Text",
 		name:       "Text",
 		level:       1,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100541,7 +100752,7 @@ function (ComponentInfoArray,
 		title:      "Texturing",
 		name:       "Texturing",
 		level:       3,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100549,7 +100760,7 @@ function (ComponentInfoArray,
 		title:      "Texturing3D",
 		name:       "Texturing3D",
 		level:       3,
-		providerUrl: urls .provider,
+		providerUrl: urls .provider ("texturing-3d"),
 	});
 
 	SupportedComponents .addComponent (
@@ -100557,7 +100768,7 @@ function (ComponentInfoArray,
 		title:      "Time",
 		name:       "Time",
 		level:       2,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	SupportedComponents .addComponent (
@@ -100565,7 +100776,7 @@ function (ComponentInfoArray,
 		title:      "Volume rendering",
 		name:       "VolumeRendering",
 		level:       2,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	return SupportedComponents;
@@ -100854,7 +101065,7 @@ function (SupportedComponents,
 		title:      "X_ITE",
 		name:       "X_ITE",
 		level:       1,
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 	});
 
 	for (var typeName in Types)
@@ -118794,7 +119005,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Computer-Aided Design (CAD) interchange",
 		name: "CADInterchange",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Networking"],
@@ -118812,7 +119023,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Core",
 		name: "Core",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 		],
@@ -118821,7 +119032,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Full",
 		name: "Full",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -118864,7 +119075,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Immersive",
 		name: "Immersive",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -118892,7 +119103,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Interactive",
 		name: "Interactive",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -118916,7 +119127,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Interchange",
 		name: "Interchange",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -118936,7 +119147,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Medical interchange",
 		name: "MedicalInterchange",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -118961,7 +119172,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "MPEG-4 interactive",
 		name: "MPEG-4",
-		providerUrl: urls .provider,
+		providerUrl: urls .providerUrl,
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -119188,16 +119399,8 @@ function ($,
 
 			if (component)
 			{
-				//if (level <= component .level)
-				//{
-					return new ComponentInfo (this,
-					{
-						title: component .title,
-						name:  name,
-						level: level,
-						providerUrl: this .getProviderUrl ()
-					});
-				//}
+				if (level <= component .level || true)
+					return new ComponentInfo (name, level, component .title, component. providerUrl);
 			}
 
 			throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
@@ -120079,6 +120282,18 @@ function ($,
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
+var getScriptURL = (function ()
+{
+	var
+		scripts = document .getElementsByTagName ('script'),
+		src     = scripts [scripts .length - 1] .src;
+	
+	return function ()
+	{
+		return src;
+	};
+})();
 
 (function ()
 {

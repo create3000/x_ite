@@ -103,8 +103,11 @@ function ($,
 	XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 	{
 		constructor: XMLParser,
-		parseIntoScene: function (xmlElement)
+		parseIntoScene: function (xmlElement, success, error)
 		{
+			this .success = success;
+			this .error   = error;
+
 			this .getScene () .setEncoding ("XML");
 			this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
@@ -179,9 +182,39 @@ function ($,
 			var childNodes = xmlElement .childNodes;
 
 			for (var i = 0; i < childNodes .length; ++ i)
-				this .x3dElementChild (childNodes [i])
+				this .x3dElementChildHead (childNodes [i])
+
+			if (this .success)
+			{
+				require (this .getProviderUrls (),
+				function ()
+				{
+					try
+					{
+						for (var i = 0; i < childNodes .length; ++ i)
+							this .x3dElementChildScene (childNodes [i])
+
+						this .success ();
+					}
+					catch (error)
+					{
+						this .error (error);
+					}
+				}
+				.bind (this),
+				function (error)
+				{
+					this .error (error);
+				}
+				.bind (this));
+			}
+			else
+			{
+				for (var i = 0; i < childNodes .length; ++ i)
+					this .x3dElementChildScene (childNodes [i])
+			}
 		},
-		x3dElementChild: function (xmlElement)
+		x3dElementChildHead: function (xmlElement)
 		{
 			switch (xmlElement .nodeName)
 			{
@@ -189,6 +222,12 @@ function ($,
 				case "HEAD":
 					this .headElement (xmlElement);
 					return;
+			}
+		},
+		x3dElementChildScene: function (xmlElement)
+		{
+			switch (xmlElement .nodeName)
+			{
 				case "Scene":
 				case "SCENE":
 					this .sceneElement (xmlElement);

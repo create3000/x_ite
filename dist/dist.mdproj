@@ -38,16 +38,17 @@
     <None Include="x_ite.min.js" />
     <None Include="images\logo.128.png" />
     <None Include="LICENSE.txt" />
-    <None Include="rigid-body-physics.js" />
-    <None Include="rigid-body-physics.min.js" />
-    <None Include="nurbs.js" />
-    <None Include="nurbs.min.js" />
-    <None Include="texturing-3d.min.js" />
-    <None Include="texturing-3d.js" />
-    <None Include="cad-geometry.min.js" />
-    <None Include="cad-geometry.js" />
+    <None Include="components\cad-geometry.js" />
+    <None Include="components\cad-geometry.min.js" />
+    <None Include="components\nurbs.js" />
+    <None Include="components\nurbs.min.js" />
+    <None Include="components\rigid-body-physics.js" />
+    <None Include="components\rigid-body-physics.min.js" />
+    <None Include="components\texturing-3d.js" />
+    <None Include="components\texturing-3d.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
+    <Folder Include="components\" />
   </ItemGroup>
 </Project>

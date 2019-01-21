@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-require ([
+define ([
 	"x_ite/Configuration/SupportedNodes",
 //	"x_ite/Components/Texturing3D/ComposedTexture3D",
 //	"x_ite/Components/Texturing3D/ImageTexture3D",

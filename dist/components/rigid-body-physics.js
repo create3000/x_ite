@@ -3687,7 +3687,7 @@ function (Fields,
  ******************************************************************************/
 
 
-require ([
+define ([
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/RigidBodyPhysics/BallJoint",
 	"x_ite/Components/RigidBodyPhysics/CollidableOffset",
@@ -3762,8 +3762,6 @@ function (SupportedNodes,
 	return Types;
 });
 
-
-define("components/rigid-body-physics", function(){});
 
 
 }());

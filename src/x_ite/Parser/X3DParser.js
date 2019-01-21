@@ -84,6 +84,41 @@ define (function ()
 		{
 			return this .executionContexts .length > 1;
 		},
+		getProviderUrls: (function ()
+		{
+			var componentsUrl = /\/components\/.*?\.js$/;
+
+			return function ()
+			{
+				var
+					profileComponents = this .getScene () .getProfile () .components,
+					components        = this .getScene () .getComponents (),
+					providerUrls      = [ ];
+	
+				for (var i = 0, length = profileComponents .length; i < length; ++ i)
+				{
+					var providerUrl = profileComponents [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .push (providerUrl);
+				}
+	
+				for (var i = 0, length = components .length; i < length; ++ i)
+				{
+					var providerUrl = components [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .push (providerUrl);
+				}
+	
+				function unique (value, index, self)
+				{ 
+					return self .indexOf (value) === index;
+				}
+	
+				return providerUrls .filter (unique);
+			};
+		})(),
 		addRootNode: function (node)
 		{
 			this .getExecutionContext () .rootNodes .push (node);

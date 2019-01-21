@@ -141,10 +141,17 @@ function ($,
 					},
 					function (scene, string, success, error)
 					{
+						if (success)
+						{
+							success = function (scene, success, error)
+							{
+								this .setScene (scene, success, error);
+							}
+							.bind (this, scene, success, error);
+						}
+	
 						// Try parse X3D Classic Encoding.	
-						new Parser (scene) .parseIntoScene (string);
-				
-						this .setScene (scene, success, error);
+						new Parser (scene) .parseIntoScene (string, success, error);
 					},
 				];
 
@@ -211,13 +218,19 @@ function ($,
 		{
 			try
 			{
-				new XMLParser (scene) .parseIntoScene (dom);
-				
+				if (success)
+				{
+					success = function (scene, success, error)
+					{
+						this .setScene (scene, success, error);
+					}
+					.bind (this, scene, success, error);
+				}
+	
+				new XMLParser (scene) .parseIntoScene (dom, success, error);
+		
 				//AP: add reference to dom for later access.
 				this .node .dom = dom;
-
-				if (success)
-					this .setScene (scene, success, error);
 			}
 			catch (exception)
 			{
@@ -231,11 +244,17 @@ function ($,
 		{
 			try
 			{
-				//AP: add reference to dom for later access.
-				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj);
-
 				if (success)
-					this .setScene (scene, success, error);
+				{
+					success = function (scene, success, error)
+					{
+						this .setScene (scene, success, error);
+					}
+					.bind (this, scene, success, error);
+				}
+
+				//AP: add reference to dom for later access.
+				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj, success, error);
 			}
 			catch (exception)
 			{

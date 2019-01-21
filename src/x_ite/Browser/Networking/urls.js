@@ -48,10 +48,8 @@
 
 define ([
 	"standard/Networking/URI",
-	"x_ite/DEBUG",
 ],
-function (URI,
-          DEBUG)
+function (URI)
 {
 "use strict";
 
@@ -59,10 +57,7 @@ function (URI,
 
 	function provider (component)
 	{
-		if (DEBUG)
-			return scriptUrl .transform ("components/" + component + ".js") .toString ();
-
-		return scriptUrl .transform (component + ".js") .toString ();
+		return scriptUrl .transform ("components/" + component + ".js") .toString ();
 	}
 
 	return {

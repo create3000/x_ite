@@ -2,7 +2,7 @@
 ({
 	baseUrl: "src",
 	name: "components/texturing-3d",
-	out: "dist/texturing-3d.js",
+	out: "dist/components/texturing-3d.js",
 	optimize: "none",
 	mainConfigFile: "src/components/texturing-3d.config.js",
 	exclude: [
@@ -17,17 +17,25 @@
 		"x_ite/Fields",
 		"x_ite/Basic/X3DFieldDefinition",
 		"x_ite/Basic/FieldDefinitionArray",
+		'x_ite/Browser/Core/Shading',
 		"x_ite/Components/Core/X3DSensorNode",
 		"x_ite/Components/Core/X3DNode",
 		"x_ite/Components/Core/X3DChildNode",
 		"x_ite/Components/Grouping/X3DBoundedObject",
+		'x_ite/Components/Rendering/X3DGeometricPropertyNode',
+		'x_ite/Components/Rendering/X3DGeometryNode',
+		'x_ite/Components/Shape/X3DAppearanceChildNode',
+		'x_ite/Components/Texturing/X3DTextureCoordinateNode',
+		'x_ite/Components/Texturing/X3DTextureNode',
+		'x_ite/Components/Texturing/X3DTextureTransformNode',
 		"x_ite/Configuration/SupportedNodes",
 		"x_ite/Bits/X3DConstants",
 		"x_ite/Bits/X3DCast",
 		"standard/Math/Numbers/Vector3",
 		"standard/Math/Numbers/Rotation4",
 		"standard/Math/Numbers/Quaternion",
-		"standard/Math/Numbers/Matrix4"
+		"standard/Math/Numbers/Matrix4",
+		'standard/Math/Geometry/Plane3'
 	],
 	wrap: {
 		startFile: "build/parts/texturing-3d.start.frag",

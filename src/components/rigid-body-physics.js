@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-require ([
+define ([
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/RigidBodyPhysics/BallJoint",
 	"x_ite/Components/RigidBodyPhysics/CollidableOffset",
