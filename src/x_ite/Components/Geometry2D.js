@@ -56,7 +56,6 @@ define ([
 	"x_ite/Components/Geometry2D/Polypoint2D",
 	"x_ite/Components/Geometry2D/Rectangle2D",
 	"x_ite/Components/Geometry2D/TriangleSet2D",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           Arc2D,
@@ -66,8 +65,7 @@ function (SupportedNodes,
           Polyline2D,
           Polypoint2D,
           Rectangle2D,
-          TriangleSet2D,
-          urls)
+          TriangleSet2D)
 {
 "use strict";
 

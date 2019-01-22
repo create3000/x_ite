@@ -57,7 +57,6 @@ define ([
 	"x_ite/Components/EventUtilities/TimeTrigger",
 	"x_ite/Components/EventUtilities/X3DSequencerNode",
 	"x_ite/Components/EventUtilities/X3DTriggerNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           BooleanFilter,
@@ -68,8 +67,7 @@ function (SupportedNodes,
           IntegerTrigger,
           TimeTrigger,
           X3DSequencerNode,
-          X3DTriggerNode,
-          urls)
+          X3DTriggerNode)
 {
 "use strict";
 

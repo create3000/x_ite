@@ -55,7 +55,6 @@ define ([
 	"x_ite/Components/EnvironmentalEffects/TextureBackground",
 	"x_ite/Components/EnvironmentalEffects/X3DBackgroundNode",
 	"x_ite/Components/EnvironmentalEffects/X3DFogObject",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           Background,
@@ -64,8 +63,7 @@ function (SupportedNodes,
           LocalFog,
           TextureBackground,
           X3DBackgroundNode,
-          X3DFogObject,
-          urls)
+          X3DFogObject)
 {
 "use strict";
 

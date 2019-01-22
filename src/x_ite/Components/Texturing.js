@@ -62,7 +62,6 @@ define ([
 	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Components/Texturing/X3DTextureNode",
 	"x_ite/Components/Texturing/X3DTextureTransformNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           ImageTexture,
@@ -78,8 +77,7 @@ function (SupportedNodes,
           X3DTexture2DNode,
           X3DTextureCoordinateNode,
           X3DTextureNode,
-          X3DTextureTransformNode,
-          urls)
+          X3DTextureTransformNode)
 {
 "use strict";
 

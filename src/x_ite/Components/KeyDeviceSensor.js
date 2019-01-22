@@ -51,13 +51,11 @@ define ([
 	"x_ite/Components/KeyDeviceSensor/KeySensor",
 	"x_ite/Components/KeyDeviceSensor/StringSensor",
 	"x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           KeySensor,
           StringSensor,
-          X3DKeyDeviceSensorNode,
-          urls)
+          X3DKeyDeviceSensorNode)
 {
 "use strict";
 

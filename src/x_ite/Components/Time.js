@@ -50,12 +50,10 @@ define ([
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/Time/TimeSensor",
 	"x_ite/Components/Time/X3DTimeDependentNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           TimeSensor,
-          X3DTimeDependentNode,
-          urls)
+          X3DTimeDependentNode)
 {
 "use strict";
 

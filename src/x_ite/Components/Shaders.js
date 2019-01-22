@@ -59,7 +59,6 @@ define ([
 	"x_ite/Components/Shaders/X3DProgrammableShaderObject",
 	"x_ite/Components/Shaders/X3DShaderNode",
 	"x_ite/Components/Shaders/X3DVertexAttributeNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           ComposedShader,
@@ -72,8 +71,7 @@ function (SupportedNodes,
 //          ShaderProgram,
           X3DProgrammableShaderObject,
           X3DShaderNode,
-          X3DVertexAttributeNode,
-          urls)
+          X3DVertexAttributeNode)
 {
 "use strict";
 

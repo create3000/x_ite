@@ -60,7 +60,6 @@ define ([
 	"x_ite/Components/ParticleSystems/WindPhysicsModel",
 	"x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
 	"x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           BoundedPhysicsModel,
@@ -74,8 +73,7 @@ function (SupportedNodes,
           VolumeEmitter,
           WindPhysicsModel,
           X3DParticleEmitterNode,
-          X3DParticlePhysicsModelNode,
-          urls)
+          X3DParticlePhysicsModelNode)
 {
 "use strict";
 

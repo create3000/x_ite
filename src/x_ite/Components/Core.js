@@ -62,7 +62,6 @@ define ([
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Components/Core/X3DSensorNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           MetadataBoolean,
@@ -78,8 +77,7 @@ function (SupportedNodes,
           X3DMetadataObject,
           X3DNode,
           X3DPrototypeInstance,
-          X3DSensorNode,
-          urls)
+          X3DSensorNode)
 {
 "use strict";
 

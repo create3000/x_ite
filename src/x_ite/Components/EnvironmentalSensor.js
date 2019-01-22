@@ -52,14 +52,12 @@ define ([
 	"x_ite/Components/EnvironmentalSensor/TransformSensor",
 	"x_ite/Components/EnvironmentalSensor/VisibilitySensor",
 	"x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           ProximitySensor,
           TransformSensor,
           VisibilitySensor,
-          X3DEnvironmentalSensorNode,
-          urls)
+          X3DEnvironmentalSensorNode)
 {
 "use strict";
 

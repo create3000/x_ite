@@ -51,13 +51,11 @@ define ([
 	"x_ite/Components/Text/FontStyle",
 	"x_ite/Components/Text/Text",
 	"x_ite/Components/Text/X3DFontStyleNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           FontStyle,
           Text,
-          X3DFontStyleNode,
-          urls)
+          X3DFontStyleNode)
 {
 "use strict";
 

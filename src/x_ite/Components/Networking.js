@@ -53,15 +53,13 @@ define ([
 	"x_ite/Components/Networking/LoadSensor",
 	"x_ite/Components/Networking/X3DNetworkSensorNode",
 	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           Anchor,
           Inline,
           LoadSensor,
           X3DNetworkSensorNode,
-          X3DUrlObject,
-          urls)
+          X3DUrlObject)
 {
 "use strict";
 

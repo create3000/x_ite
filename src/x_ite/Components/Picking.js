@@ -47,7 +47,7 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Configuration/SupportedNodes"//,
 //	"x_ite/Components/Picking/LinePickSensor",
 //	"x_ite/Components/Picking/PickableGroup",
 //	"x_ite/Components/Picking/PointPickSensor",
@@ -55,7 +55,6 @@ define ([
 //	"x_ite/Components/Picking/VolumePickSensor",
 //	"x_ite/Components/Picking/X3DPickSensorNode",
 //	"x_ite/Components/Picking/X3DPickableObject",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
 //          LinePickSensor,
@@ -64,8 +63,7 @@ function (SupportedNodes,
 //          PrimitivePickSensor,
 //          VolumePickSensor,
 //          X3DPickSensorNode,
-//          X3DPickableObject,
-          urls)
+//          X3DPickableObject)
 {
 "use strict";
 

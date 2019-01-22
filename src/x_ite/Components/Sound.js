@@ -52,14 +52,12 @@ define ([
 	"x_ite/Components/Sound/Sound",
 	"x_ite/Components/Sound/X3DSoundNode",
 	"x_ite/Components/Sound/X3DSoundSourceNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           AudioClip,
           Sound,
           X3DSoundNode,
-          X3DSoundSourceNode,
-          urls)
+          X3DSoundSourceNode)
 {
 "use strict";
 

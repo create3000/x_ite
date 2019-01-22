@@ -55,7 +55,6 @@ define ([
 	"x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
 	"x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
 	"x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           CylinderSensor,
@@ -64,8 +63,7 @@ function (SupportedNodes,
           TouchSensor,
           X3DDragSensorNode,
           X3DPointingDeviceSensorNode,
-          X3DTouchSensorNode,
-          urls)
+          X3DTouchSensorNode)
 {
 "use strict";
 

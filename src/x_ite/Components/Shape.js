@@ -58,7 +58,6 @@ define ([
 	"x_ite/Components/Shape/X3DAppearanceNode",
 	"x_ite/Components/Shape/X3DMaterialNode",
 	"x_ite/Components/Shape/X3DShapeNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           Appearance,
@@ -70,8 +69,7 @@ function (SupportedNodes,
           X3DAppearanceChildNode,
           X3DAppearanceNode,
           X3DMaterialNode,
-          X3DShapeNode,
-          urls)
+          X3DShapeNode)
 {
 "use strict";
 

@@ -47,21 +47,19 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Configuration/SupportedNodes"//,
 //	"x_ite/Components/H-Anim/HAnimDisplacer",
 //	"x_ite/Components/H-Anim/HAnimHumanoid",
 //	"x_ite/Components/H-Anim/HAnimJoint",
 //	"x_ite/Components/H-Anim/HAnimSegment",
 //	"x_ite/Components/H-Anim/HAnimSite",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
 //          HAnimDisplacer,
 //          HAnimHumanoid,
 //          HAnimJoint,
 //          HAnimSegment,
-//          HAnimSite,
-          urls)
+//          HAnimSite)
 {
 "use strict";
 

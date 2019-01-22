@@ -50,12 +50,10 @@ define ([
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/Scripting/Script",
 	"x_ite/Components/Scripting/X3DScriptNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           Script,
-          X3DScriptNode,
-          urls)
+          X3DScriptNode)
 {
 "use strict";
 

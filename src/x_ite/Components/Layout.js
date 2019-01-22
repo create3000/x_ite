@@ -54,7 +54,6 @@ define ([
 	"x_ite/Components/Layout/ScreenFontStyle",
 	"x_ite/Components/Layout/ScreenGroup",
 	"x_ite/Components/Layout/X3DLayoutNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           Layout,
@@ -62,8 +61,7 @@ function (SupportedNodes,
           LayoutLayer,
           ScreenFontStyle,
           ScreenGroup,
-          X3DLayoutNode,
-          urls)
+          X3DLayoutNode)
 {
 "use strict";
 

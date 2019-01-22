@@ -69,7 +69,6 @@ define ([
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Components/Rendering/X3DLineGeometryNode",
 	"x_ite/Components/Rendering/X3DNormalNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           ClipPlane,
@@ -92,8 +91,7 @@ function (SupportedNodes,
           X3DGeometricPropertyNode,
           X3DGeometryNode,
           X3DLineGeometryNode,
-          X3DNormalNode,
-          urls)
+          X3DNormalNode)
 {
 "use strict";
 

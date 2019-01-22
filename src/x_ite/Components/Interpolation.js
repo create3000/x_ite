@@ -62,7 +62,6 @@ define ([
 	"x_ite/Components/Interpolation/SplineScalarInterpolator",
 	"x_ite/Components/Interpolation/SquadOrientationInterpolator",
 	"x_ite/Components/Interpolation/X3DInterpolatorNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           ColorInterpolator,
@@ -78,8 +77,7 @@ function (SupportedNodes,
           SplinePositionInterpolator2D,
           SplineScalarInterpolator,
           SquadOrientationInterpolator,
-          X3DInterpolatorNode,
-          urls)
+          X3DInterpolatorNode)
 {
 "use strict";
 

@@ -53,15 +53,13 @@ define ([
 	"x_ite/Components/Layering/Viewport",
 	"x_ite/Components/Layering/X3DLayerNode",
 	"x_ite/Components/Layering/X3DViewportNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           Layer,
           LayerSet,
           Viewport,
           X3DLayerNode,
-          X3DViewportNode,
-          urls)
+          X3DViewportNode)
 {
 "use strict";
 

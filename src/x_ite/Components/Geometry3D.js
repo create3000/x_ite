@@ -55,7 +55,6 @@ define ([
 	"x_ite/Components/Geometry3D/Extrusion",
 	"x_ite/Components/Geometry3D/IndexedFaceSet",
 	"x_ite/Components/Geometry3D/Sphere",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           Box,
@@ -64,8 +63,7 @@ function (SupportedNodes,
           ElevationGrid,
           Extrusion,
           IndexedFaceSet,
-          Sphere,
-          urls)
+          Sphere)
 {
 "use strict";
 

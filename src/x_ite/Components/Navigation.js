@@ -56,7 +56,6 @@ define ([
 	"x_ite/Components/Navigation/Viewpoint",
 	"x_ite/Components/Navigation/ViewpointGroup",
 	"x_ite/Components/Navigation/X3DViewpointNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           Billboard,
@@ -66,8 +65,7 @@ function (SupportedNodes,
           OrthoViewpoint,
           Viewpoint,
           ViewpointGroup,
-          X3DViewpointNode,
-          urls)
+          X3DViewpointNode)
 {
 "use strict";
 

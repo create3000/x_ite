@@ -54,16 +54,14 @@ define ([
 //	"x_ite/Components/DIS/ReceiverPdu",
 //	"x_ite/Components/DIS/SignalPdu",
 //	"x_ite/Components/DIS/TransmitterPdu",
-	"x_ite/Browser/Networking/urls",
 ],
-function (SupportedNodes,
+function (SupportedNodes//,
 //          DISEntityManager,
 //          DISEntityTypeMapping,
 //          EspduTransform,
 //          ReceiverPdu,
 //          SignalPdu,
-//          TransmitterPdu,
-          urls)
+//          TransmitterPdu)
 {
 "use strict";
 

@@ -56,7 +56,6 @@ define ([
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Components/Grouping/X3DTransformMatrix3DNode",
 	"x_ite/Components/Grouping/X3DTransformNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           Group,
@@ -66,8 +65,7 @@ function (SupportedNodes,
           X3DBoundedObject,
           X3DGroupingNode,
           X3DTransformMatrix3DNode,
-          X3DTransformNode,
-          urls)
+          X3DTransformNode)
 {
 "use strict";
 

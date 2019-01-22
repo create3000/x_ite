@@ -65,7 +65,6 @@ define ([
 	"x_ite/Components/Followers/X3DChaserNode",
 	"x_ite/Components/Followers/X3DDamperNode",
 	"x_ite/Components/Followers/X3DFollowerNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           ColorChaser,
@@ -84,8 +83,7 @@ function (SupportedNodes,
           TexCoordDamper2D,
           X3DChaserNode,
           X3DDamperNode,
-          X3DFollowerNode,
-          urls)
+          X3DFollowerNode)
 {
 "use strict";
 

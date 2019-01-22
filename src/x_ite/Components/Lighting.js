@@ -52,14 +52,12 @@ define ([
 	"x_ite/Components/Lighting/PointLight",
 	"x_ite/Components/Lighting/SpotLight",
 	"x_ite/Components/Lighting/X3DLightNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           DirectionalLight,
           PointLight,
           SpotLight,
-          X3DLightNode,
-          urls)
+          X3DLightNode)
 {
 "use strict";
 

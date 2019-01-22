@@ -52,14 +52,12 @@ define ([
 	"x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture",
 	"x_ite/Components/CubeMapTexturing/ImageCubeMapTexture",
 	"x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           ComposedCubeMapTexture,
           GeneratedCubeMapTexture,
           ImageCubeMapTexture,
-          X3DEnvironmentTextureNode,
-          urls)
+          X3DEnvironmentTextureNode)
 {
 "use strict";
 

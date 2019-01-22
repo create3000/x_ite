@@ -60,7 +60,6 @@ define ([
 	"x_ite/Components/Geospatial/GeoTransform",
 	"x_ite/Components/Geospatial/GeoViewpoint",
 	"x_ite/Components/Geospatial/X3DGeospatialObject",
-	"x_ite/Browser/Networking/urls",
 ],
 function (SupportedNodes,
           GeoCoordinate,
@@ -74,8 +73,7 @@ function (SupportedNodes,
           GeoTouchSensor,
           GeoTransform,
           GeoViewpoint,
-          X3DGeospatialObject,
-          urls)
+          X3DGeospatialObject)
 {
 "use strict";
 
