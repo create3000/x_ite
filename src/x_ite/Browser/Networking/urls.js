@@ -48,8 +48,10 @@
 
 define ([
 	"standard/Networking/URI",
+	"x_ite/DEBUG",
 ],
-function (URI)
+function (URI,
+          DEBUG)
 {
 "use strict";
 
@@ -57,7 +59,9 @@ function (URI)
 
 	function provider (component)
 	{
-		return scriptUrl .transform ("components/" + component + ".js") .toString ();
+		var min = DEBUG ? "" : ".min";
+
+		return scriptUrl .transform ("components/" + component + min + ".js") .toString ();
 	}
 
 	return {

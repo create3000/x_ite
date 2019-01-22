@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16-559 */
+/* X_ITE v4.2.16-560 */
 
 (function () {
 
@@ -39690,26 +39690,14 @@ function (Fields,
  *
  ******************************************************************************/
 
-define ('x_ite/Browser/Networking/urls',[
-	"standard/Networking/URI",
-],
-function (URI)
+
+define ('x_ite/DEBUG',[],function ()
 {
 "use strict";
 
-	var scriptUrl = new URI (getScriptURL ())
+	// Modified during dist build.
 
-	function provider (component)
-	{
-		return scriptUrl .transform ("components/" + component + ".js") .toString ();
-	}
-
-	return {
-		provider: provider,
-		providerUrl: "http://create3000.de/x_ite",
-		fallbackUrl: "http://cors.create3000.de/",
-		fallbackExpression: new RegExp ("^http://cors.create3000.de/"),
-	};
+	return false;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -39760,14 +39748,30 @@ function (URI)
  *
  ******************************************************************************/
 
-
-define ('x_ite/DEBUG',[],function ()
+define ('x_ite/Browser/Networking/urls',[
+	"standard/Networking/URI",
+	"x_ite/DEBUG",
+],
+function (URI,
+          DEBUG)
 {
 "use strict";
 
-	// Modified during dist build.
+	var scriptUrl = new URI (getScriptURL ())
 
-	return false;
+	function provider (component)
+	{
+		var min = DEBUG ? "" : ".min";
+
+		return scriptUrl .transform ("components/" + component + min + ".js") .toString ();
+	}
+
+	return {
+		provider: provider,
+		providerUrl: "http://create3000.de/x_ite",
+		fallbackUrl: "http://cors.create3000.de/",
+		fallbackExpression: new RegExp ("^http://cors.create3000.de/"),
+	};
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
