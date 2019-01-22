@@ -28,5 +28,7 @@
     <None Include="parts\texturing-3d.start.frag" />
     <None Include="parts\cad-geometry.end.frag" />
     <None Include="parts\cad-geometry.start.frag" />
+    <None Include="parts\geospatial.end.frag" />
+    <None Include="parts\geospatial.start.frag" />
   </ItemGroup>
 </Project>

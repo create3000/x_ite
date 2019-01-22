@@ -654,7 +654,6 @@
     <None Include="x_ite\Components\Followers.js" />
     <None Include="x_ite\Components\Geometry2D.js" />
     <None Include="x_ite\Components\Geometry3D.js" />
-    <None Include="x_ite\Components\Geospatial.js" />
     <None Include="x_ite\Components\Grouping.js" />
     <None Include="x_ite\Components\H-Anim.js" />
     <None Include="x_ite\Components\Interpolation.js" />
@@ -675,6 +674,8 @@
     <None Include="x_ite\Components\Texturing.js" />
     <None Include="x_ite\Components\Time.js" />
     <None Include="x_ite\Components\VolumeRendering.js" />
+    <None Include="components\geospatial.config.js" />
+    <None Include="components\geospatial.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

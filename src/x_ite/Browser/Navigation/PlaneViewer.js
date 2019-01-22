@@ -51,14 +51,12 @@ define ([
 	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Navigation/Viewpoint",
-	"x_ite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector3",
 	"jquery-mousewheel",
 ],
 function ($,
           X3DViewer,
           Viewpoint,
-          GeoViewpoint,
           Vector3)
 {
 "use strict";
@@ -222,7 +220,7 @@ function ($,
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			if (viewpoint instanceof Viewpoint || viewpoint instanceof GeoViewpoint)
+			if (viewpoint instanceof Viewpoint || viewpoint .getTypeName () === "GeoViewpoint")
 			{
 				if (viewpoint .fieldOfView_ .getValue () * viewpoint .fieldOfViewScale_ .getValue () >= Math .PI)
 					viewpoint .fieldOfViewScale_ = (Math .PI - 0.001) / viewpoint .fieldOfView_ .getValue ();

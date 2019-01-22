@@ -51,7 +51,6 @@ define ([
 	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Followers/OrientationChaser",
-	"x_ite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -61,7 +60,6 @@ define ([
 function ($,
           X3DViewer,
           OrientationChaser,
-          GeoViewpoint,
           Vector3,
           Rotation4,
           Matrix4,
@@ -463,7 +461,7 @@ function ($,
 
 				// Straighten horizon of userOrientation.
 
-				if (! (viewpoint instanceof GeoViewpoint))
+				if (viewpoint .getTypeName () !== "GeoViewpoint")
 						viewpoint .straightenHorizon (userOrientation);
 
 				// Determine orientationOffset.
@@ -602,7 +600,7 @@ function ($,
 						.multRight (viewpoint .getOrientation ())
 						.multRight (this .orientationChaser .set_destination_ .getValue ());
 
-					if (! (viewpoint instanceof GeoViewpoint))
+					if (viewpoint .getTypeName () !== "GeoViewpoint")
 						viewpoint .straightenHorizon (userOrientation);
 	
 					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
@@ -615,7 +613,7 @@ function ($,
 						.setFromToVec (toVector, fromVector)
 						.multRight (viewpoint .getUserOrientation ());
 
-					if (! (viewpoint instanceof GeoViewpoint))
+					if (viewpoint .getTypeName () !== "GeoViewpoint")
 						viewpoint .straightenHorizon (userOrientation);
 	
 					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);

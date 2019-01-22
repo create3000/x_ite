@@ -1,11 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="package.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="X_ITE.sln">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Networking/urls.js" Line="1" Column="1" />
-      <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Parser/X3DParser.js" Line="1" Column="1" />
+      <File FileName="package.json" Line="15" Column="4" />
+      <File FileName="src/x_ite/Browser/Navigation/ExamineViewer.js" Line="713" Column="73" />
+      <File FileName="dist/components/geospatial.js" Line="16649" Column="10" />
+      <File FileName="X_ITE.sln" Line="26" Column="35" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

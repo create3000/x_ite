@@ -52,7 +52,6 @@ define ([
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Followers/PositionChaser",
 	"x_ite/Components/Followers/OrientationChaser",
-	"x_ite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
@@ -62,7 +61,6 @@ function ($,
           X3DViewer,
           PositionChaser,
           OrientationChaser,
-          GeoViewpoint,
           Vector2,
           Vector3,
           Rotation4)
@@ -247,7 +245,7 @@ function ($,
 
 					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
-						if (this .getBrowser () .getBrowserOption ("StraightenHorizon") && ! (viewpoint instanceof GeoViewpoint))
+						if (this .getBrowser () .getBrowserOption ("StraightenHorizon") && viewpoint .getTypeName () !== "GeoViewpoint")
 							this .rotation = this .getHorizonRotation (this .rotation);
 
 						this .addSpinning (this .rotation);
@@ -712,7 +710,7 @@ function ($,
 					.multRight (viewpoint .getOrientation ())
 					.multRight (orientationOffsetBefore);
 	
-				if (straightenHorizon && ! (viewpoint instanceof GeoViewpoint))
+				if (straightenHorizon && viewpoint .getTypeName () !== "GeoViewpoint")
 					viewpoint .straightenHorizon (userOrientation);
 	
 				var orientationOffsetAfter = orientationOffset
@@ -720,7 +718,7 @@ function ($,
 					.inverse ()
 					.multRight (userOrientation);
 
-				if (straightenHorizon && ! (viewpoint instanceof GeoViewpoint))
+				if (straightenHorizon && viewpoint .getTypeName () !== "GeoViewpoint")
 				{
 					if (! _throw)
 						return orientationOffsetAfter;

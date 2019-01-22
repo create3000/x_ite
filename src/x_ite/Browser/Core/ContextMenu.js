@@ -51,14 +51,12 @@ define ([
 	"jquery",
 	"contextMenu",
 	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Components/Geospatial/GeoViewpoint",
 	"locale/gettext",
 	"lib/jquery.fullscreen-min",
 ],
 function ($,
           contextMenu,
           X3DBaseNode,
-          GeoViewpoint,
           _)
 {
 "use strict";
@@ -89,21 +87,24 @@ function ($,
 		{
 			X3DBaseNode .prototype .initialize .call (this);
 
-			if (! this .getBrowser () .getBrowserOptions () .getContextMenu ())
+			var browser = this .getBrowser ();
+
+			if (! browser .getBrowserOptions () .getContextMenu ())
 				return;
 
 			$.contextMenu ({
-				selector: ".x_ite-private-surface-" + this .getBrowser () .getId (), 
+				selector: ".x_ite-private-surface-" + browser .getId (), 
 				build: this .build .bind (this),
 			});
 		},
 		build: function (trigger, event)
 		{
 			var
-				activeLayer      = this .getBrowser () .getActiveLayer (),
+				browser          = this .getBrowser (),
+				activeLayer      = browser .getActiveLayer (),
 				currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
-				currentViewer    = this .getBrowser () .viewer_ .getValue (),
-				fullscreen       = this .getBrowser () .getElement () .fullScreen ();
+				currentViewer    = browser .viewer_ .getValue (),
+				fullscreen       = browser .getElement () .fullScreen ();
 
 			var menu = {
 				className: "x_ite-private-menu x_ite-private-menu-title",
@@ -120,8 +121,8 @@ function ($,
 							if (! viewpoint)
 								return;
 
-							this .getBrowser () .bindViewpoint (viewpoint);
-							this .getBrowser () .getElement () .focus ();
+							browser .bindViewpoint (viewpoint);
+							browser .getElement () .focus ();
 						}
 						.bind (this, currentViewpoint),
 					},
@@ -133,9 +134,9 @@ function ($,
 						{
 							$("body > ul.context-menu-list") .fadeOut (500);
 
-							this .getBrowser () .viewer_ = viewer;
-							this .getBrowser () .getNotification () .string_ = _(this .getViewerName (viewer));
-							this .getBrowser () .getElement () .focus ();
+							browser .viewer_ = viewer;
+							browser .getNotification () .string_ = _(this .getViewerName (viewer));
+							browser .getElement () .focus ();
 						}
 						.bind (this, currentViewer),
 					},
@@ -146,28 +147,28 @@ function ($,
 					"straighten-horizon": {
 						name: _("Straighten Horizon"),
 						type: "checkbox",
-						selected: this .getBrowser () .getBrowserOption ("StraightenHorizon"),
+						selected: browser .getBrowserOption ("StraightenHorizon"),
 						events: {
 							click: function ()
 							{
 								$("body > ul.context-menu-list") .fadeOut (500);
 
-								var straightenHorizon = ! this .getBrowser () .getBrowserOption ("StraightenHorizon");
+								var straightenHorizon = ! browser .getBrowserOption ("StraightenHorizon");
 
-								this .getBrowser () .setBrowserOption ("StraightenHorizon", straightenHorizon);
+								browser .setBrowserOption ("StraightenHorizon", straightenHorizon);
 
 								if (straightenHorizon)
 								{
-									this .getBrowser () .getNotification () .string_ = _("Straighten Horizon") + ": " + _("on");
+									browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("on");
 									
-									var activeViewpoint = this .getBrowser () .getActiveViewpoint ();
+									var activeViewpoint = browser .getActiveViewpoint ();
 
 									if (activeViewpoint)
 										activeViewpoint .straighten (true);
 								}
 								else
 								{
-									this .getBrowser () .getNotification () .string_ = _("Straighten Horizon") + ": " + _("off");
+									browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("off");
 								}
 							}
 							.bind (this),
@@ -182,14 +183,14 @@ function ($,
 								name: _("High"),
 								type: "radio",
 								radio: "primitive-quality",
-								selected: this .getBrowser () .getBrowserOption ("PrimitiveQuality") === "HIGH",
+								selected: browser .getBrowserOption ("PrimitiveQuality") === "HIGH",
 								events: {
 									click: function ()
 									{
 										$("body > ul.context-menu-list") .fadeOut (500);
 
-										this .getBrowser () .setBrowserOption ("PrimitiveQuality", "HIGH");
-										this .getBrowser () .getNotification () .string_ = _("Primitive Quality") + ": " + _("high");
+										browser .setBrowserOption ("PrimitiveQuality", "HIGH");
+										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("high");
 									}
 									.bind (this),
 								},
@@ -198,14 +199,14 @@ function ($,
 								name: _("Medium"),
 								type: "radio",
 								radio: "primitive-quality",
-								selected: this .getBrowser () .getBrowserOption ("PrimitiveQuality") === "MEDIUM",
+								selected: browser .getBrowserOption ("PrimitiveQuality") === "MEDIUM",
 								events: {
 									click: function ()
 									{
 										$("body > ul.context-menu-list") .fadeOut (500);
 
-										this .getBrowser () .setBrowserOption ("PrimitiveQuality", "MEDIUM");
-										this .getBrowser () .getNotification () .string_ = _("Primitive Quality") + ": " + _("medium");
+										browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
+										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("medium");
 									}
 									.bind (this),
 								},
@@ -214,14 +215,14 @@ function ($,
 								name: _("Low"),
 								type: "radio",
 								radio: "primitive-quality",
-								selected: this .getBrowser () .getBrowserOption ("PrimitiveQuality") === "LOW",
+								selected: browser .getBrowserOption ("PrimitiveQuality") === "LOW",
 								events: {
 									click: function ()
 									{
 										$("body > ul.context-menu-list") .fadeOut (500);
 
-										this .getBrowser () .setBrowserOption ("PrimitiveQuality", "LOW");
-										this .getBrowser () .getNotification () .string_ = _("Primitive Quality") + ": " + _("low");
+										browser .setBrowserOption ("PrimitiveQuality", "LOW");
+										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("low");
 									}
 									.bind (this),
 								},
@@ -236,14 +237,14 @@ function ($,
 								name: _("High"),
 								type: "radio",
 								radio: "texture-quality",
-								selected: this .getBrowser () .getBrowserOption ("TextureQuality") === "HIGH",
+								selected: browser .getBrowserOption ("TextureQuality") === "HIGH",
 								events: {
 									click: function ()
 									{
 										$("body > ul.context-menu-list") .fadeOut (500);
 
-										this .getBrowser () .setBrowserOption ("TextureQuality", "HIGH");
-										this .getBrowser () .getNotification () .string_ = _("Texture Quality") + ": " + _("high");
+										browser .setBrowserOption ("TextureQuality", "HIGH");
+										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("high");
 									}
 									.bind (this),
 								},
@@ -252,14 +253,14 @@ function ($,
 								name: _("Medium"),
 								type: "radio",
 								radio: "texture-quality",
-								selected: this .getBrowser () .getBrowserOption ("TextureQuality") === "MEDIUM",
+								selected: browser .getBrowserOption ("TextureQuality") === "MEDIUM",
 								events: {
 									click: function ()
 									{
 										$("body > ul.context-menu-list") .fadeOut (500);
 
-										this .getBrowser () .setBrowserOption ("TextureQuality", "MEDIUM");
-										this .getBrowser () .getNotification () .string_ = _("Texture Quality") + ": " + _("medium");
+										browser .setBrowserOption ("TextureQuality", "MEDIUM");
+										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("medium");
 									}
 									.bind (this),
 								},
@@ -268,14 +269,14 @@ function ($,
 								name: _("Low"),
 								type: "radio",
 								radio: "texture-quality",
-								selected: this .getBrowser () .getBrowserOption ("TextureQuality") === "LOW",
+								selected: browser .getBrowserOption ("TextureQuality") === "LOW",
 								events: {
 									click: function ()
 									{
 										$("body > ul.context-menu-list") .fadeOut (500);
 
-										this .getBrowser () .setBrowserOption ("TextureQuality", "LOW");
-										this .getBrowser () .getNotification () .string_ = _("Texture Quality") + ": " + _("low");
+										browser .setBrowserOption ("TextureQuality", "LOW");
+										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("low");
 									}
 									.bind (this),
 								},
@@ -285,35 +286,35 @@ function ($,
 					"display-rubberband": {
 						name: _("Display Rubberband"),
 						type: "checkbox",
-						selected: this .getBrowser () .getBrowserOption ("Rubberband"),
+						selected: browser .getBrowserOption ("Rubberband"),
 						events: {
 							click: function ()
 							{
 								$("body > ul.context-menu-list") .fadeOut (500);
 
-								var rubberband = ! this .getBrowser () .getBrowserOption ("Rubberband");
+								var rubberband = ! browser .getBrowserOption ("Rubberband");
 
-								this .getBrowser () .setBrowserOption ("Rubberband", rubberband);
+								browser .setBrowserOption ("Rubberband", rubberband);
 
 								if (rubberband)
-									this .getBrowser () .getNotification () .string_ = _("Rubberband") + ": " + _("on");
+									browser .getNotification () .string_ = _("Rubberband") + ": " + _("on");
 								else
-									this .getBrowser () .getNotification () .string_ = _("Rubberband") + ": " + _("off");
+									browser .getNotification () .string_ = _("Rubberband") + ": " + _("off");
 							}
 							.bind (this),
 						},
 					},
-					"browser-timings": this .getBrowser () .getBrowserOptions () .getTimings () ? {
+					"browser-timings": browser .getBrowserOptions () .getTimings () ? {
 						name: _("Browser Timings"),
 						type: "checkbox",
-						selected: this .getBrowser () .getBrowserTimings () .getEnabled (),
+						selected: browser .getBrowserTimings () .getEnabled (),
 						events: {
 							click: function ()
 							{
 								$("body > ul.context-menu-list") .fadeOut (500);
 
-								this .getBrowser () .getBrowserTimings () .setEnabled (! this .getBrowser () .getBrowserTimings () .getEnabled ());
-								this .getBrowser () .getElement () .focus ();
+								browser .getBrowserTimings () .setEnabled (! browser .getBrowserTimings () .getEnabled ());
+								browser .getElement () .focus ();
 							}
 							.bind (this),
 						},
@@ -325,7 +326,7 @@ function ($,
 						{
 							$("body > ul.context-menu-list") .fadeOut (500);
 
-							this .getBrowser () .getElement () .toggleFullScreen ();
+							browser .getElement () .toggleFullScreen ();
 						}
 						.bind (this),
 					},
@@ -354,7 +355,7 @@ function ($,
 				delete menu .items ["available-viewers"];
 			}
 
-			if (!(this .getBrowser () .getCurrentViewer () == "EXAMINE" && ! (this .getBrowser () .getActiveViewpoint () instanceof GeoViewpoint)))
+			if (!(browser .getCurrentViewer () == "EXAMINE" && browser .getActiveViewpoint () .getTypeName () !== "GeoViewpoint"))
 			{
 				delete menu .items ["straighten-horizon"];
 			}
@@ -363,14 +364,16 @@ function ($,
 		},
 		getViewpoints: function ()
 		{
-			var activeLayer = this .getBrowser () .getActiveLayer ();
+			var
+				browser     = this .getBrowser (),
+				activeLayer = browser .getActiveLayer ();
 
 			if (! activeLayer)
 				return { };
 
 			var
-				enableInlineViewpoints = this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
-				currentScene           = this .getBrowser () .currentScene,
+				enableInlineViewpoints = browser .getBrowserOption ("EnableInlineViewpoints"),
+				currentScene           = browser .currentScene,
 				viewpoints             = activeLayer .getViewpoints () .get (),
 				currentViewpoint       = activeLayer .getViewpoint (),
 				menu                   = { };
@@ -393,8 +396,8 @@ function ($,
 					{
 						$("body > ul.context-menu-list") .fadeOut (500);
 
-						this .getBrowser () .bindViewpoint (viewpoint);
-						this .getBrowser () .getElement () .focus ();
+						browser .bindViewpoint (viewpoint);
+						browser .getElement () .focus ();
 					}
 					.bind (this, viewpoint),
 				};
@@ -410,8 +413,9 @@ function ($,
 		getAvailableViewers: function ()
 		{
 			var
-				currentViewer    = this .getBrowser () .viewer_ .getValue (),
-				availableViewers = this .getBrowser () .availableViewers_,
+				browser          = this .getBrowser (),
+				currentViewer    = browser .viewer_ .getValue (),
+				availableViewers = browser .availableViewers_,
 				menu             = { };
 
 			for (var i = 0; i < availableViewers .length; ++ i)
@@ -425,9 +429,9 @@ function ($,
 					{
 						$("body > ul.context-menu-list") .fadeOut (500);
 						
-						this .getBrowser () .viewer_ = viewer;
-						this .getBrowser () .getNotification () .string_ = _(this .getViewerName (viewer));
-						this .getBrowser () .getElement () .focus ();
+						browser .viewer_ = viewer;
+						browser .getNotification () .string_ = _(this .getViewerName (viewer));
+						browser .getElement () .focus ();
 					}
 					.bind (this, viewer),
 				};

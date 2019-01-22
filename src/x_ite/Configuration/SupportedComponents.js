@@ -143,7 +143,7 @@ function (ComponentInfoArray,
 		title:      "Geospatial",
 		name:       "Geospatial",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .provider ("geospatial"),
 	});
 
 	SupportedComponents .addComponent (

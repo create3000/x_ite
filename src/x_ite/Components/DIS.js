@@ -61,7 +61,8 @@ function (SupportedNodes//,
 //          EspduTransform,
 //          ReceiverPdu,
 //          SignalPdu,
-//          TransmitterPdu)
+//          TransmitterPdu
+)
 {
 "use strict";
 

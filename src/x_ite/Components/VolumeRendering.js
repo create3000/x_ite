@@ -65,7 +65,7 @@ define ([
 //	"x_ite/Components/VolumeRendering/X3DVolumeDataNode",
 //	"x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
 ],
-function (SupportedNodes,
+function (SupportedNodes//,
 //          BlendedVolumeStyle,
 //          BoundaryEnhancementVolumeStyle,
 //          CartoonVolumeStyle,
@@ -81,7 +81,8 @@ function (SupportedNodes,
 //          VolumeData,
 //          X3DComposableVolumeRenderStyleNode,
 //          X3DVolumeDataNode,
-//          X3DVolumeRenderStyleNode)
+//          X3DVolumeRenderStyleNode
+)
 {
 "use strict";
 

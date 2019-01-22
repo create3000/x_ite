@@ -56,14 +56,15 @@ define ([
 //	"x_ite/Components/Picking/X3DPickSensorNode",
 //	"x_ite/Components/Picking/X3DPickableObject",
 ],
-function (SupportedNodes,
+function (SupportedNodes//,
 //          LinePickSensor,
 //          PickableGroup,
 //          PointPickSensor,
 //          PrimitivePickSensor,
 //          VolumePickSensor,
 //          X3DPickSensorNode,
-//          X3DPickableObject)
+//          X3DPickableObject
+)
 {
 "use strict";
 

@@ -57,7 +57,6 @@ define ([
 	"x_ite/Components/Followers",
 	"x_ite/Components/Geometry2D",
 	"x_ite/Components/Geometry3D",
-	"x_ite/Components/Geospatial",
 	"x_ite/Components/Grouping",
 	"x_ite/Components/H-Anim",
 	"x_ite/Components/Interpolation",

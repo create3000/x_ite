@@ -54,12 +54,13 @@ define ([
 //	"x_ite/Components/H-Anim/HAnimSegment",
 //	"x_ite/Components/H-Anim/HAnimSite",
 ],
-function (SupportedNodes,
+function (SupportedNodes//,
 //          HAnimDisplacer,
 //          HAnimHumanoid,
 //          HAnimJoint,
 //          HAnimSegment,
-//          HAnimSite)
+//          HAnimSite
+)
 {
 "use strict";
 
