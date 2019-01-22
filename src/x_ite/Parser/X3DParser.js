@@ -88,35 +88,30 @@ define (function ()
 		{
 			var componentsUrl = /\.js$/;
 
-			function unique (value, index, self)
-			{ 
-				return self .indexOf (value) === index;
-			}
-
 			return function ()
 			{
 				var
 					profileComponents = this .getScene () .getProfile () .components,
 					components        = this .getScene () .getComponents (),
-					providerUrls      = [ ];
-	
+					providerUrls      = new Set ();
+
 				for (var i = 0, length = profileComponents .length; i < length; ++ i)
 				{
 					var providerUrl = profileComponents [i] .providerUrl;
 	
 					if (providerUrl .match (componentsUrl))
-						providerUrls .push (providerUrl);
+						providerUrls .add (providerUrl);
 				}
-	
+
 				for (var i = 0, length = components .length; i < length; ++ i)
 				{
 					var providerUrl = components [i] .providerUrl;
 	
 					if (providerUrl .match (componentsUrl))
-						providerUrls .push (providerUrl);
+						providerUrls .add (providerUrl);
 				}
-	
-				return providerUrls .filter (unique);
+
+				return Array .from (providerUrls);
 			};
 		})(),
 		addRootNode: function (node)
