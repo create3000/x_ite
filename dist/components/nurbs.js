@@ -2696,11 +2696,14 @@ function (X3DCast,
 				vertexArray = this .getVertices (),
 				array       = [ ];
 			
-			for (var i = 0, length = vertexArray .length; i < length; i += 8)
-				array .push (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2]);
-
-			array .push (vertexArray [length - 4], vertexArray [length - 3], vertexArray [length - 2]);
-
+			if (vertexArray .length)
+			{
+				for (var i = 0, length = vertexArray .length; i < length; i += 8)
+					array .push (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2]);
+				
+				array .push (vertexArray [length - 4], vertexArray [length - 3], vertexArray [length - 2]);
+			}
+			
 			return array;
 		},
 		build: function ()
