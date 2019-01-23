@@ -2088,7 +2088,7 @@ define ('nurbs/extras/sample',[],function ()
 		tmp1 = [ ],
 		tmp2 = [ ];
 
-	return function (mesh, nurbs, opts)
+	return function (mesh, surface, opts)
 	{
 		mesh = mesh || { };
 		opts = opts || { };
@@ -2098,7 +2098,7 @@ define ('nurbs/extras/sample',[],function ()
 			normals = mesh .normals = mesh .normals || [ ],
 			faces   = mesh .faces   = mesh .faces   || [ ];
 
-		var dimension = nurbs .dimension;
+		var dimension = surface .dimension;
 
 		if (Array .isArray (opts .resolution))
 		{
@@ -2108,31 +2108,32 @@ define ('nurbs/extras/sample',[],function ()
 		{
 			var
 				res        = opts .resolution === undefined ? 31 : opts .resolution,
-				resolution = new Array (nurbs .splineDimension) .fill (res);
+				resolution = new Array (surface .splineDimension) .fill (res);
 		}
 
 		var generateNormals = dimension === 3 && (opts .generateNormals !== undefined ? opts .generateNormals : true);
 
-		switch (nurbs .splineDimension)
+		switch (surface .splineDimension)
 		{
 			case 1:
 			{
 				var
 					nu         = resolution [0],
-					uClosed    = nurbs .boundary [0] === 'closed',
+					uClosed    = surface .boundary [0] === 'closed',
 					nuBound    = nu + ! uClosed,
 					nbVertices = nuBound * dimension,
-					uDer       = nurbs .evaluator ([1, 0]),
-					domain     = opts .domain || nurbs .domain,
-					uDomain    = domain [0];
+					uDer       = surface .evaluator ([1, 0]),
+					domain     = opts .domain || surface .domain,
+					uDomain    = domain [0],
+					uDistance  = uDomain [1] - uDomain [0];
 
 				for (var i = 0; i < nuBound; ++ i)
 				{
 					var
-						u   = uDomain [0] + (uDomain [1] - uDomain [0]) * i / nu,
+						u   = uDomain [0] + uDistance * i / nu,
 						ptr = i * dimension;
 
-					nurbs .evaluate (tmp1, u);
+					surface .evaluate (tmp1, u);
 
 					for (var d = 0; d < dimension; ++ d)
 						points [ptr + d] = tmp1 [d];
@@ -2146,29 +2147,31 @@ define ('nurbs/extras/sample',[],function ()
 				var
 					nu         = resolution [0],
 					nv         = resolution [1],
-					uClosed    = nurbs .boundary [0] === 'closed',
-					vClosed    = nurbs .boundary [1] === 'closed',
+					uClosed    = surface .boundary [0] === 'closed',
+					vClosed    = surface .boundary [1] === 'closed',
 					nuBound    = nu + ! uClosed,
 					nvBound    = nv + ! vClosed,
 					nbNormals  = nuBound * nvBound * 3,
 					nbVertices = nuBound * nvBound * dimension,
-					uDer       = nurbs .evaluator ([1, 0]),
-					vDer       = nurbs .evaluator ([0, 1]),
-					domain     = opts .domain || nurbs .domain,
+					uDer       = surface .evaluator ([1, 0]),
+					vDer       = surface .evaluator ([0, 1]),
+					domain     = opts .domain || surface .domain,
 					uDomain    = domain [0],
-					vDomain    = domain [1];
+					vDomain    = domain [1],
+					uDistance  = uDomain [1] - uDomain [0],
+					vDistance  = vDomain [1] - vDomain [0];
 
 				for (var i = 0; i < nuBound; ++ i)
 				{
-					var u = uDomain [0] + (uDomain [1] - uDomain [0]) * i / nu;
+					var u = uDomain [0] + uDistance * i / nu;
 	
 					for (var j = 0; j < nvBound; ++ j)
 					{
 						var
-							v   = vDomain [0] + (vDomain [1] - vDomain [0]) * j / nv,
+							v   = vDomain [0] + vDistance * j / nv,
 							ptr = (i + nuBound * j) * dimension;
 
-						nurbs .evaluate (tmp1, u, v);
+						surface .evaluate (tmp1, u, v);
 	
 						for (var d = 0; d < dimension; ++ d)
 							points [ptr + d] = tmp1 [d];
