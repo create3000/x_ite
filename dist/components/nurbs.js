@@ -247,6 +247,8 @@ function (Fields,
 		X3DNurbsControlCurveNode .call (this, executionContext);
 
 		this .addType (X3DConstants .ContourPolyline2D);
+
+		this .controlPoints = [ ];
 	}
 
 	ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
@@ -271,29 +273,38 @@ function (Fields,
 		tessellate: function (spine)
 		{
 			var
-				controlPoint = this .controlPoint_,
-				array        = [ ];
+				controlPointArray = this .controlPoint_ .getValue (),
+				controlPoints     = this .controlPoints;
 
 			if (spine)
 			{
-				for (var i = 0, length = controlPoint .length; i < length; ++ i)
+				for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
 				{
-					var point = controlPoint [i];
-	
-					array .push (point .x, 0, point .y);
+					var
+						i2 = i * 2,
+						i3 = i * 3;
+
+					controlPoints [i3 + 0] = controlPointArray [i2 + 0];
+					controlPoints [i3 + 1] = 0;
+					controlPoints [i3 + 2] = controlPointArray [i2 + 1];
 				}
+
+				controlPoints .length = length * 3;
 			}
 			else
 			{
-				for (var i = 0, length = controlPoint .length; i < length; ++ i)
+				for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
 				{
-					var point = controlPoint [i];
-	
-					array .push (point .x, point .y);
+					var i2 = i * 2;
+
+					controlPoints [i2 + 0] = controlPointArray [i2 + 0];
+					controlPoints [i2 + 1] = controlPointArray [i2 + 1];
 				}
+
+				controlPoints .length = length * 2;
 			}
 
-			return array;
+			return controlPoints;
 		},
 	});
 
@@ -449,10 +460,12 @@ function (Fields,
 
 
 define ('x_ite/Browser/NURBS/NURBS',[
+	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 ],
-function (Vector3,
+function (Vector2,
+          Vector3,
           Vector4)
 {
 "use strict";
@@ -636,12 +649,14 @@ function (Vector3,
 
 			return true;
 		},
-		getKnots: function (closed, order, dimension, knot)
+		getKnots: function (result, closed, order, dimension, knot)
 		{
-			var knots = [ ];
+			var knots = result || [ ];
 
 			for (var i = 0, length = knot .length; i < length; ++ i)
-				knots .push (knot [i]);
+				knots [i] = knot [i];
+
+			knots .length = knot .length;
 
 			// check the knot-vectors. If they are not according to standard
 			// default uniform knot vectors will be generated.
@@ -683,18 +698,20 @@ function (Vector3,
 
 			return knots;
 		},
-		getWeights: function (closed, order, dimension, weight)
+		getWeights: function (result, closed, order, dimension, weight)
 		{
 			if (weight .length !== dimension)
 				return undefined;
 
-			var weights = [ ];
+			var weights = result || [ ];
 		
 			for (var i = 0; i < dimension; ++ i)
 			{
-				weights .push (weight [i]);
+				weights [i] = weight [i];
 			}
 	
+			weights .length = dimension;
+
 			if (closed)
 			{
 				for (var i = 1, size = order - 1; i < size; ++ i)
@@ -703,23 +720,26 @@ function (Vector3,
 
 			return weights;
 		},
-		getUVWeights: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)
+		getUVWeights: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)
 		{
 			if (weight .length !== uDimension * vDimension)
 				return undefined;
 
-			var weights = [ ];
+			var weights = result || [ ];
 
 			for (var u = 0; u < uDimension; ++ u)
 			{
-				var w = [ ];
+				var w = weights [u];
 
-				weights .push (w);
+				if (! w)
+					w = weights [u] = [ ];
 
 				for (var v = 0; v < vDimension; ++ v)
 				{
-					w .push (weight [v * uDimension + u]);
+					w [v] = weight [v * uDimension + u];
 				}
+
+				w .length = vDimension;
 
 				if (vClosed)
 				{
@@ -728,6 +748,8 @@ function (Vector3,
 				}
 			}
 	
+			weights .length = uDimension;
+
 			if (uClosed)
 			{
 				for (var i = 1, length = uOrder - 1; i < length; ++ i)
@@ -736,17 +758,24 @@ function (Vector3,
 	
 			return weights;
 		},
-		getControlPoints2D: function (closed, order, controlPoint)
+		getControlPoints2D: function (result, closed, order, controlPoint)
 		{
 			var
-				controlPoints = [ ],
-				dimension     = controlPoint .length;
+				controlPoints     = result || [ ],
+				controlPointArray = controlPoint .getValue (),
+				dimension         = controlPoint .length;
 		
 			for (var i = 0; i < dimension; ++ i)
 			{
-				controlPoints .push (controlPoint [i] .getValue ());
+				var
+					i2 = i * 2,
+					p  = controlPoints [i] || new Vector2 (0, 0);
+
+				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1])
 			}
-	
+
+			controlPoints .length = dimension;
+
 			if (closed)
 			{
 				for (var i = 1, size = order - 1; i < size; ++ i)
@@ -755,17 +784,19 @@ function (Vector3,
 
 			return controlPoints;
 		},
-		getControlPoints: function (closed, order, controlPointNode)
+		getControlPoints: function (result, closed, order, controlPointNode)
 		{
 			var
-				controlPoints = [ ],
+				controlPoints = result || [ ],
 				dimension     = controlPointNode .getSize ();
 		
 			for (var i = 0; i < dimension; ++ i)
 			{
-				controlPoints .push (controlPointNode .get1Point (i, new Vector3 (0, 0, 0)));
+				controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector3 (0, 0, 0));
 			}
 	
+			controlPoints .length = dimension;
+
 			if (closed)
 			{
 				for (var i = 1, size = order - 1; i < size; ++ i)
@@ -774,20 +805,23 @@ function (Vector3,
 
 			return controlPoints;
 		},
-		getUVControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
 		{
-			var controlPoints = [ ];
+			var controlPoints = result || [ ];
 
 			for (var u = 0; u < uDimension; ++ u)
 			{
-				var cp = [ ];
+				var cp = controlPoints [u];
 
-				controlPoints .push (cp);
+				if (! cp)
+					cp = controlPoints [u] = [ ];
 
 				for (var v = 0; v < vDimension; ++ v)
 				{
-					cp .push (controlPointNode .get1Point (v * uDimension + u, new Vector3 (0, 0, 0)));
+					cp [v] = controlPointNode .get1Point (v * uDimension + u, cp [v] || new Vector3 (0, 0, 0));
 				}
+
+				cp .length = vDimension;
 
 				if (vClosed)
 				{
@@ -795,6 +829,8 @@ function (Vector3,
 						cp .push (cp [i]);
 				}
 			}
+
+			controlPoints .length = uDimension;
 
 			if (uClosed)
 			{
@@ -804,20 +840,23 @@ function (Vector3,
 
 			return controlPoints;
 		},
-		getTexControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
 		{
-			var controlPoints = [ ];
+			var controlPoints = result || [ ];
 
 			for (var u = 0; u < uDimension; ++ u)
 			{
-				var cp = [ ];
+				var cp = controlPoints [u];
 
-				controlPoints .push (cp);
+				if (! cp)
+					cp = controlPoints [u] = [ ];
 
 				for (var v = 0; v < vDimension; ++ v)
 				{
-					cp .push (controlPointNode .get1Point (v * uDimension + u, new Vector4 (0, 0, 0, 0)));
+					cp [v] = controlPointNode .get1Point (v * uDimension + u, cp [v] || new Vector4 (0, 0, 0, 0));
 				}
+
+				cp .length = vDimension;
 
 				if (vClosed)
 				{
@@ -825,6 +864,8 @@ function (Vector3,
 						cp .push (cp [i]);
 				}
 			}
+
+			controlPoints .length = uDimension;
 
 			if (uClosed)
 			{
@@ -909,9 +950,9 @@ function (X3DGeometryNode,
 	X3DParametricGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 	{
 		constructor: X3DParametricGeometryNode,
-		getKnots: function (closed, order, dimension, knot)
+		getKnots: function (result, closed, order, dimension, knot)
 		{
-			return NURBS .getKnots (closed, order, dimension, knot);
+			return NURBS .getKnots (result, closed, order, dimension, knot);
 		},
 	});
 
@@ -2612,6 +2653,9 @@ function (X3DCast,
 
 		this .setGeometryType (1);
 
+		this .knots         = [ ];
+		this .weights       = [ ];
+		this .controlPoints = [ ];
 		this .mesh          = { };
 		this .sampleOptions = { resolution: [ ] };
 	}
@@ -2673,13 +2717,13 @@ function (X3DCast,
 
 			return NURBS .getClosed (order, knot, weight, controlPointNode);
 		},
-		getWeights: function (closed, order, dimension, weight)
+		getWeights: function (result, closed, order, dimension, weight)
 		{
-			return NURBS .getWeights (closed, order, dimension, weight);
+			return NURBS .getWeights (result, closed, order, dimension, weight);
 		},
-		getControlPoints: function (closed, order, controlPointNode)
+		getControlPoints: function (result, closed, order, controlPointNode)
 		{
-			return NURBS .getControlPoints (closed, order, controlPointNode);
+			return NURBS .getControlPoints (result, closed, order, controlPointNode);
 		},
 		tessellate: function ()
 		{
@@ -2721,15 +2765,15 @@ function (X3DCast,
 
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-				controlPoints = this .getControlPoints (closed, this .order_ .getValue (), this .controlPointNode);
+				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPointNode);
 		
 			// Knots
 		
 			var
-				knots = this .getKnots (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			var weights = this .getWeights (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
+			var weights = this .getWeights (this .weights, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
 
 			// Initialize NURBS tesselllator
 
@@ -2840,8 +2884,12 @@ function (Fields,
 
 		this .addType (X3DConstants .NurbsCurve2D);
 
+		this .knots         = [ ];
+		this .weights       = [ ];
+		this .controlPoints = [ ];
 		this .mesh          = { };
 		this .sampleOptions = { resolution: [ ] };
+		this .array         = [ ];
 	}
 
 	NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
@@ -2879,39 +2927,43 @@ function (Fields,
 
 			return NURBS .getClosed2D (order, knot, weight, controlPoint);
 		},
-		getKnots: function (closed, order, dimension, knot)
+		getKnots: function (result, closed, order, dimension, knot)
 		{
-			return NURBS .getKnots (closed, order, dimension, knot);
+			return NURBS .getKnots (result, closed, order, dimension, knot);
 		},
-		getWeights: function (closed, order, dimension, weight)
+		getWeights: function (result, closed, order, dimension, weight)
 		{
-			return NURBS .getWeights (closed, order, dimension, weight);
+			return NURBS .getWeights (result, closed, order, dimension, weight);
 		},
-		getControlPoints: function (closed, order, controlPoint)
+		getControlPoints: function (result, closed, order, controlPoint)
 		{
-			return NURBS .getControlPoints2D (closed, order, controlPoint);
+			return NURBS .getControlPoints2D (result, closed, order, controlPoint);
 		},
 		tessellate: function (spine)
 		{
+			var array = this .array;
+
+			array .length = 0;
+
 			if (this .order_ .getValue () < 2)
-				return [ ];
+				return array;
 		
 			if (this .controlPoint_ .length < this .order_ .getValue ())
-				return [ ];
+				return array;
 
 			// Order and dimension are now positive numbers.
 
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPoint_),
-				controlPoints = this .getControlPoints (closed, this .order_ .getValue (), this .controlPoint_);
+				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPoint_);
 		
 			// Knots
 		
 			var
-				knots = this .getKnots (closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
+				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			var weights = this .getWeights (closed, this .order_ .getValue (), this .controlPoint_ .length, this .weight_);
+			var weights = this .getWeights (this .weights, closed, this .order_ .getValue (), this .controlPoint_ .length, this .weight_);
 
 			// Initialize NURBS tesselllator
 
@@ -2930,8 +2982,7 @@ function (Fields,
 
 			var
 				mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
-				points = mesh .points,
-				array  = [ ];
+				points = mesh .points;
 
 			if (spine)
 			{
@@ -3038,6 +3089,9 @@ function (Fields,
 		this .addChildObjects ("rebuild", new Fields .SFTime ());
 
 	   this .interpolator  = new OrientationInterpolator (executionContext);
+		this .knots         = [ ];
+		this .weights       = [ ];
+		this .controlPoints = [ ];
 		this .mesh          = { };
 		this .sampleOptions = { resolution: [ 128 ] };
 	}
@@ -3100,17 +3154,17 @@ function (Fields,
 		{
 			return false && NURBS .getClosed (order, knot, weight, controlPointNode);
 		},
-		getKnots: function (closed, order, dimension, knot)
+		getKnots: function (result, closed, order, dimension, knot)
 		{
-			return NURBS .getKnots (closed, order, dimension, knot);
+			return NURBS .getKnots (result, closed, order, dimension, knot);
 		},
-		getWeights: function (closed, order, dimension, weight)
+		getWeights: function (result, closed, order, dimension, weight)
 		{
-			return NURBS .getWeights (closed, order, dimension, weight);
+			return NURBS .getWeights (result, closed, order, dimension, weight);
 		},
-		getControlPoints: function (closed, order, controlPointNode)
+		getControlPoints: function (result, closed, order, controlPointNode)
 		{
-			return NURBS .getControlPoints (closed, order, controlPointNode);
+			return NURBS .getControlPoints (result, closed, order, controlPointNode);
 		},
 		requestRebuild: function ()
 		{
@@ -3131,15 +3185,15 @@ function (Fields,
 
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-				controlPoints = this .getControlPoints (closed, this .order_ .getValue (), this .controlPointNode);
+				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPointNode);
 		
 			// Knots
 		
 			var
-				knots = this .getKnots (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			var weights = this .getWeights (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
+			var weights = this .getWeights (this .weights, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
 
 			// Initialize NURBS tesselllator
 
@@ -3256,8 +3310,17 @@ function (X3DParametricGeometryNode,
 		this .addType (X3DConstants .X3DNurbsSurfaceGeometryNode);
 
 		this .tessellationScale = 1;
+		this .uKnots            = [ ];
+		this .vKnots            = [ ];
+		this .weights           = [ ];
+		this .controlPoints     = [ ];
 		this .mesh              = { };
 		this .sampleOptions     = { resolution: [ ] };
+		this .textUKnots        = [ ];
+		this .textVKnots        = [ ];
+		this .textWeights       = [ ];
+		this .texControlPoints  = [ ];
+		this .texMesh           = { };
 	}
 
 	X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
@@ -3328,17 +3391,17 @@ function (X3DParametricGeometryNode,
 
 			return false;
 		},
-		getUVWeights: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)
+		getUVWeights: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)
 		{
-			return NURBS .getUVWeights (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight);
+			return NURBS .getUVWeights (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight);
 		},
-		getTexControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
+		getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
 		{
-			return NURBS .getTexControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
+			return NURBS .getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
 		},
-		getUVControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
 		{
-			return NURBS .getUVControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode);
+			return NURBS .getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode);
 		},
 		build: function ()
 		{
@@ -3367,17 +3430,17 @@ function (X3DParametricGeometryNode,
 			var
 				uClosed       = this .getUClosed (this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .uKnot_, this .weight_, this .controlPointNode),
 				vClosed       = this .getVClosed (this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .vKnot_, this .weight_, this .controlPointNode),
-				controlPoints = this .getUVControlPoints (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .controlPointNode);
+				controlPoints = this .getUVControlPoints (this .controlPoints, uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .controlPointNode);
 
 			// Knots
 		
 			var
-				uKnots = this .getKnots (uClosed, this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .uKnot_),
-				vKnots = this .getKnots (vClosed, this .vOrder_ .getValue (), this .vDimension_ .getValue (), this .vKnot_),
+				uKnots = this .getKnots (this .uKnots, uClosed, this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .uKnot_),
+				vKnots = this .getKnots (this .vKnots, vClosed, this .vOrder_ .getValue (), this .vDimension_ .getValue (), this .vKnot_),
 				uScale = uKnots [uKnots .length - 1] - uKnots [0],
 				vScale = vKnots [vKnots .length - 1] - vKnots [0];
 
-			var weights = this .getUVWeights (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .weight_);
+			var weights = this .getUVWeights (this .weights, uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .weight_);
 
 			// Initialize NURBS tesselllator
 
@@ -3421,69 +3484,84 @@ function (X3DParametricGeometryNode,
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (true);
 		},
-		buildNurbsTexCoords: function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
-		{	
-			var sampleOptions = this .sampleOptions;
-
-			if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
-			{
-				var
-					texUDegree       = uOrder - 1,
-					texVDegree       = vOrder - 1,
-					texUKnots        = uKnots,
-					texVKnots        = vKnots,
-					texWeights       = undefined,
-					texControlPoints = this .getTexControlPoints (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
-			}
-			else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
-			{
-				var
-					node             = this .nurbsTexCoordNode,
-					texUDegree       = node .uOrder_ .getValue () - 1,
-					texVDegree       = node .vOrder_ .getValue () - 1,
-					texUKnots        = this .getKnots (false, node .uOrder_ .getValue (), node .uDimension_ .getValue (), node .uKnot_),
-					texVKnots        = this .getKnots (false, node .vOrder_ .getValue (), node .vDimension_ .getValue (), node .vKnot_),
-					texWeights       = this .getUVWeights (false, false, node .uOrder_ .getValue (), node .vOrder_ .getValue (), node .uDimension_ .getValue (), node .vDimension_ .getValue (), node .weight_);
-					texControlPoints = node .getControlPoints ();
-			}
-			else
-			{
-				var
-					texUDegree       = 1,
-					texVDegree       = 1,
-					texUKnots        = [uKnots [0], uKnots [0], uKnots [uKnots .length - 1], uKnots [uKnots .length - 1]],
-					texVKnots        = [vKnots [0], vKnots [0], vKnots [vKnots .length - 1], vKnots [vKnots .length - 1]],
-					texWeights       = undefined,
-					texControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
-
-				sampleOptions .domain = domain;
-			}
-
-			var surface = this .surface = (this .surface || nurbs) ({
-				boundary: ["open", "open"],
-				degree: [texUDegree, texVDegree],
-				knots: [texUKnots, texVKnots],
-				weights: texWeights,
-				points: texControlPoints,
-			});
-
-			sampleOptions .generateNormals = false;
-
+		buildNurbsTexCoords: (function ()
+		{
 			var
-				mesh          = nurbs .sample (this .mesh, surface, sampleOptions),
-				faces         = mesh .faces,
-				points        = mesh .points,
-				texCoordArray = this .getTexCoords ();
+				defaultTexUKnots        = [ ],
+				defaultTexVKnots        = [ ],
+				defaultTexControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
 
-			for (var i = 0, length = faces .length; i < length; ++ i)
+			function getDefaultTexKnots (result, knots)
 			{
-				var index = faces [i] * 4;
-
-				texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
+				result [0] = result [1] = knots [0];
+				result [2] = result [3] = knots [knots .length - 1];
+				return result;
 			}
 
-			this .getMultiTexCoords () .push (this .getTexCoords ());
-		},
+			return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
+			{	
+				var sampleOptions = this .sampleOptions;
+	
+				if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
+				{
+					var
+						texUDegree       = uOrder - 1,
+						texVDegree       = vOrder - 1,
+						texUKnots        = uKnots,
+						texVKnots        = vKnots,
+						texWeights       = undefined,
+						texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
+				}
+				else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
+				{
+					var
+						node             = this .nurbsTexCoordNode,
+						texUDegree       = node .uOrder_ .getValue () - 1,
+						texVDegree       = node .vOrder_ .getValue () - 1,
+						texUKnots        = this .getKnots (this .texUKnots, false, node .uOrder_ .getValue (), node .uDimension_ .getValue (), node .uKnot_),
+						texVKnots        = this .getKnots (this .texVKnots, false, node .vOrder_ .getValue (), node .vDimension_ .getValue (), node .vKnot_),
+						texWeights       = this .getUVWeights (this .texWeights, false, false, node .uOrder_ .getValue (), node .vOrder_ .getValue (), node .uDimension_ .getValue (), node .vDimension_ .getValue (), node .weight_);
+						texControlPoints = node .getControlPoints ();
+				}
+				else
+				{
+					var
+						texUDegree       = 1,
+						texVDegree       = 1,
+						texUKnots        = getDefaultTexKnots (defaultTexUKnots, uKnots),
+						texVKnots        = getDefaultTexKnots (defaultTexVKnots, vKnots),
+						texWeights       = undefined,
+						texControlPoints = defaultTexControlPoints;
+	
+					sampleOptions .domain = domain;
+				}
+	
+				var texSurface = this .texSurface = (this .texSurface || nurbs) ({
+					boundary: ["open", "open"],
+					degree: [texUDegree, texVDegree],
+					knots: [texUKnots, texVKnots],
+					weights: texWeights,
+					points: texControlPoints,
+				});
+	
+				sampleOptions .generateNormals = false;
+	
+				var
+					texMesh       = nurbs .sample (this .texMesh, texSurface, sampleOptions),
+					faces         = texMesh .faces,
+					points        = texMesh .points,
+					texCoordArray = this .getTexCoords ();
+	
+				for (var i = 0, length = faces .length; i < length; ++ i)
+				{
+					var index = faces [i] * 4;
+	
+					texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
+				}
+	
+				this .getMultiTexCoords () .push (this .getTexCoords ());
+			};
+		})(),
 	});
 
 	return X3DNurbsSurfaceGeometryNode;
@@ -3682,6 +3760,9 @@ function (Fields,
 		this .addChildObjects ("rebuild", new Fields .SFTime ());
 
 	   this .interpolator  = new PositionInterpolator (executionContext);
+		this .knots         = [ ];
+		this .weights       = [ ];
+		this .controlPoints = [ ];
 		this .mesh          = { };
 		this .sampleOptions = { resolution: [ 128 ] };
 	}
@@ -3744,17 +3825,17 @@ function (Fields,
 		{
 			return false && NURBS .getClosed (order, knot, weight, controlPointNode);
 		},
-		getKnots: function (closed, order, dimension, knot)
+		getKnots: function (result, closed, order, dimension, knot)
 		{
-			return NURBS .getKnots (closed, order, dimension, knot);
+			return NURBS .getKnots (result, closed, order, dimension, knot);
 		},
-		getWeights: function (closed, order, dimension, weight)
+		getWeights: function (result, closed, order, dimension, weight)
 		{
-			return NURBS .getWeights (closed, order, dimension, weight);
+			return NURBS .getWeights (result, closed, order, dimension, weight);
 		},
-		getControlPoints: function (closed, order, controlPointNode)
+		getControlPoints: function (result, closed, order, controlPointNode)
 		{
-			return NURBS .getControlPoints (closed, order, controlPointNode);
+			return NURBS .getControlPoints (result, closed, order, controlPointNode);
 		},
 		requestRebuild: function ()
 		{
@@ -3775,15 +3856,15 @@ function (Fields,
 
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-				controlPoints = this .getControlPoints (closed, this .order_ .getValue (), this .controlPointNode);
+				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPointNode);
 		
 			// Knots
 		
 			var
-				knots = this .getKnots (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			var weights = this .getWeights (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
+			var weights = this .getWeights (this .weights, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
 
 			// Initialize NURBS tesselllator
 
@@ -4626,6 +4707,8 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsTextureCoordinate);
+
+		this .constrolPoints = [ ];
 	}
 
 	NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -4660,19 +4743,24 @@ function (Fields,
 		},
 		getControlPoints: function ()
 		{
-			var constrolPoints = [ ];
+			var
+				controlPointArray = this .controlPoint_ .getValue (),
+				constrolPoints    = this .constrolPoints;
 
 			for (var u = 0, uDimension = this .uDimension_ .getValue (); u < uDimension; ++ u)
 			{
-				var cp = [ ];
+				var cp = constrolPoints [u];
 
-				constrolPoints .push (cp);
+				if (! cp)
+					cp = constrolPoints [u] = [ ];
 
 				for (var v = 0, vDimension = this .vDimension_ .getValue (); v < vDimension; ++ v)
 				{
-					var point = this .controlPoint_ [v * uDimension + u];
+					var
+						p = cp [v] || new Vector4 (),
+						i = (v * uDimension + u) * 2;
 
-					cp .push (new Vector4 (point .x, point .y, 0, 1));
+					cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, 1);
 				}
 			}
 
