@@ -50,6 +50,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Lighting", test: "SpotLight" },
 	{ component: "NURBS", test: "NurbsCurve" },
 	{ component: "NURBS", test: "NurbsPatchSurface" },
+	{ component: "NURBS", test: "NurbsSweptSurface" },
 	{ component: "Navigation", test: "Billboard" },
 	{ component: "Navigation", test: "Collision" },
 	{ component: "Navigation", test: "LogarithmicDepthBuffer" },

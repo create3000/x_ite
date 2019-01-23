@@ -78,6 +78,9 @@ function (X3DCast,
 
 		this .setGeometryType (1);
 
+		this .knots         = [ ];
+		this .weights       = [ ];
+		this .controlPoints = [ ];
 		this .mesh          = { };
 		this .sampleOptions = { resolution: [ ] };
 	}
@@ -139,13 +142,13 @@ function (X3DCast,
 
 			return NURBS .getClosed (order, knot, weight, controlPointNode);
 		},
-		getWeights: function (closed, order, dimension, weight)
+		getWeights: function (result, closed, order, dimension, weight)
 		{
-			return NURBS .getWeights (closed, order, dimension, weight);
+			return NURBS .getWeights (result, closed, order, dimension, weight);
 		},
-		getControlPoints: function (closed, order, controlPointNode)
+		getControlPoints: function (result, closed, order, controlPointNode)
 		{
-			return NURBS .getControlPoints (closed, order, controlPointNode);
+			return NURBS .getControlPoints (result, closed, order, controlPointNode);
 		},
 		tessellate: function ()
 		{
@@ -187,15 +190,15 @@ function (X3DCast,
 
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-				controlPoints = this .getControlPoints (closed, this .order_ .getValue (), this .controlPointNode);
+				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPointNode);
 		
 			// Knots
 		
 			var
-				knots = this .getKnots (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			var weights = this .getWeights (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
+			var weights = this .getWeights (this .weights, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
 
 			// Initialize NURBS tesselllator
 

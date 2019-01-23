@@ -69,6 +69,8 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsTextureCoordinate);
+
+		this .constrolPoints = [ ];
 	}
 
 	NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -103,19 +105,24 @@ function (Fields,
 		},
 		getControlPoints: function ()
 		{
-			var constrolPoints = [ ];
+			var
+				controlPointArray = this .controlPoint_ .getValue (),
+				constrolPoints    = this .constrolPoints;
 
 			for (var u = 0, uDimension = this .uDimension_ .getValue (); u < uDimension; ++ u)
 			{
-				var cp = [ ];
+				var cp = constrolPoints [u];
 
-				constrolPoints .push (cp);
+				if (! cp)
+					cp = constrolPoints [u] = [ ];
 
 				for (var v = 0, vDimension = this .vDimension_ .getValue (); v < vDimension; ++ v)
 				{
-					var point = this .controlPoint_ [v * uDimension + u];
+					var
+						p = cp [v] || new Vector4 (),
+						i = (v * uDimension + u) * 2;
 
-					cp .push (new Vector4 (point .x, point .y, 0, 1));
+					cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, 1);
 				}
 			}
 

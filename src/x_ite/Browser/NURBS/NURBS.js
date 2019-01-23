@@ -48,10 +48,12 @@
 
 
 define ([
+	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 ],
-function (Vector3,
+function (Vector2,
+          Vector3,
           Vector4)
 {
 "use strict";
@@ -235,12 +237,14 @@ function (Vector3,
 
 			return true;
 		},
-		getKnots: function (closed, order, dimension, knot)
+		getKnots: function (result, closed, order, dimension, knot)
 		{
-			var knots = [ ];
+			var knots = result || [ ];
 
 			for (var i = 0, length = knot .length; i < length; ++ i)
-				knots .push (knot [i]);
+				knots [i] = knot [i];
+
+			knots .length = knot .length;
 
 			// check the knot-vectors. If they are not according to standard
 			// default uniform knot vectors will be generated.
@@ -282,18 +286,20 @@ function (Vector3,
 
 			return knots;
 		},
-		getWeights: function (closed, order, dimension, weight)
+		getWeights: function (result, closed, order, dimension, weight)
 		{
 			if (weight .length !== dimension)
 				return undefined;
 
-			var weights = [ ];
+			var weights = result || [ ];
 		
 			for (var i = 0; i < dimension; ++ i)
 			{
-				weights .push (weight [i]);
+				weights [i] = weight [i];
 			}
 	
+			weights .length = dimension;
+
 			if (closed)
 			{
 				for (var i = 1, size = order - 1; i < size; ++ i)
@@ -302,23 +308,26 @@ function (Vector3,
 
 			return weights;
 		},
-		getUVWeights: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)
+		getUVWeights: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)
 		{
 			if (weight .length !== uDimension * vDimension)
 				return undefined;
 
-			var weights = [ ];
+			var weights = result || [ ];
 
 			for (var u = 0; u < uDimension; ++ u)
 			{
-				var w = [ ];
+				var w = weights [u];
 
-				weights .push (w);
+				if (! w)
+					w = weights [u] = [ ];
 
 				for (var v = 0; v < vDimension; ++ v)
 				{
-					w .push (weight [v * uDimension + u]);
+					w [v] = weight [v * uDimension + u];
 				}
+
+				w .length = vDimension;
 
 				if (vClosed)
 				{
@@ -327,6 +336,8 @@ function (Vector3,
 				}
 			}
 	
+			weights .length = uDimension;
+
 			if (uClosed)
 			{
 				for (var i = 1, length = uOrder - 1; i < length; ++ i)
@@ -335,17 +346,24 @@ function (Vector3,
 	
 			return weights;
 		},
-		getControlPoints2D: function (closed, order, controlPoint)
+		getControlPoints2D: function (result, closed, order, controlPoint)
 		{
 			var
-				controlPoints = [ ],
-				dimension     = controlPoint .length;
+				controlPoints     = result || [ ],
+				controlPointArray = controlPoint .getValue (),
+				dimension         = controlPoint .length;
 		
 			for (var i = 0; i < dimension; ++ i)
 			{
-				controlPoints .push (controlPoint [i] .getValue ());
+				var
+					i2 = i * 2,
+					p  = controlPoints [i] || new Vector2 (0, 0);
+
+				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1])
 			}
-	
+
+			controlPoints .length = dimension;
+
 			if (closed)
 			{
 				for (var i = 1, size = order - 1; i < size; ++ i)
@@ -354,17 +372,19 @@ function (Vector3,
 
 			return controlPoints;
 		},
-		getControlPoints: function (closed, order, controlPointNode)
+		getControlPoints: function (result, closed, order, controlPointNode)
 		{
 			var
-				controlPoints = [ ],
+				controlPoints = result || [ ],
 				dimension     = controlPointNode .getSize ();
 		
 			for (var i = 0; i < dimension; ++ i)
 			{
-				controlPoints .push (controlPointNode .get1Point (i, new Vector3 (0, 0, 0)));
+				controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector3 (0, 0, 0));
 			}
 	
+			controlPoints .length = dimension;
+
 			if (closed)
 			{
 				for (var i = 1, size = order - 1; i < size; ++ i)
@@ -373,20 +393,23 @@ function (Vector3,
 
 			return controlPoints;
 		},
-		getUVControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
 		{
-			var controlPoints = [ ];
+			var controlPoints = result || [ ];
 
 			for (var u = 0; u < uDimension; ++ u)
 			{
-				var cp = [ ];
+				var cp = controlPoints [u];
 
-				controlPoints .push (cp);
+				if (! cp)
+					cp = controlPoints [u] = [ ];
 
 				for (var v = 0; v < vDimension; ++ v)
 				{
-					cp .push (controlPointNode .get1Point (v * uDimension + u, new Vector3 (0, 0, 0)));
+					cp [v] = controlPointNode .get1Point (v * uDimension + u, cp [v] || new Vector3 (0, 0, 0));
 				}
+
+				cp .length = vDimension;
 
 				if (vClosed)
 				{
@@ -394,6 +417,8 @@ function (Vector3,
 						cp .push (cp [i]);
 				}
 			}
+
+			controlPoints .length = uDimension;
 
 			if (uClosed)
 			{
@@ -403,20 +428,23 @@ function (Vector3,
 
 			return controlPoints;
 		},
-		getTexControlPoints: function (uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
 		{
-			var controlPoints = [ ];
+			var controlPoints = result || [ ];
 
 			for (var u = 0; u < uDimension; ++ u)
 			{
-				var cp = [ ];
+				var cp = controlPoints [u];
 
-				controlPoints .push (cp);
+				if (! cp)
+					cp = controlPoints [u] = [ ];
 
 				for (var v = 0; v < vDimension; ++ v)
 				{
-					cp .push (controlPointNode .get1Point (v * uDimension + u, new Vector4 (0, 0, 0, 0)));
+					cp [v] = controlPointNode .get1Point (v * uDimension + u, cp [v] || new Vector4 (0, 0, 0, 0));
 				}
+
+				cp .length = vDimension;
 
 				if (vClosed)
 				{
@@ -424,6 +452,8 @@ function (Vector3,
 						cp .push (cp [i]);
 				}
 			}
+
+			controlPoints .length = uDimension;
 
 			if (uClosed)
 			{

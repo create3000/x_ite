@@ -67,6 +67,8 @@ function (Fields,
 		X3DNurbsControlCurveNode .call (this, executionContext);
 
 		this .addType (X3DConstants .ContourPolyline2D);
+
+		this .controlPoints = [ ];
 	}
 
 	ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
@@ -91,29 +93,38 @@ function (Fields,
 		tessellate: function (spine)
 		{
 			var
-				controlPoint = this .controlPoint_,
-				array        = [ ];
+				controlPointArray = this .controlPoint_ .getValue (),
+				controlPoints     = this .controlPoints;
 
 			if (spine)
 			{
-				for (var i = 0, length = controlPoint .length; i < length; ++ i)
+				for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
 				{
-					var point = controlPoint [i];
-	
-					array .push (point .x, 0, point .y);
+					var
+						i2 = i * 2,
+						i3 = i * 3;
+
+					controlPoints [i3 + 0] = controlPointArray [i2 + 0];
+					controlPoints [i3 + 1] = 0;
+					controlPoints [i3 + 2] = controlPointArray [i2 + 1];
 				}
+
+				controlPoints .length = length * 3;
 			}
 			else
 			{
-				for (var i = 0, length = controlPoint .length; i < length; ++ i)
+				for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
 				{
-					var point = controlPoint [i];
-	
-					array .push (point .x, point .y);
+					var i2 = i * 2;
+
+					controlPoints [i2 + 0] = controlPointArray [i2 + 0];
+					controlPoints [i2 + 1] = controlPointArray [i2 + 1];
 				}
+
+				controlPoints .length = length * 2;
 			}
 
-			return array;
+			return controlPoints;
 		},
 	});
 

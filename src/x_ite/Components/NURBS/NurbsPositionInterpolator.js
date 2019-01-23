@@ -79,6 +79,9 @@ function (Fields,
 		this .addChildObjects ("rebuild", new Fields .SFTime ());
 
 	   this .interpolator  = new PositionInterpolator (executionContext);
+		this .knots         = [ ];
+		this .weights       = [ ];
+		this .controlPoints = [ ];
 		this .mesh          = { };
 		this .sampleOptions = { resolution: [ 128 ] };
 	}
@@ -141,17 +144,17 @@ function (Fields,
 		{
 			return false && NURBS .getClosed (order, knot, weight, controlPointNode);
 		},
-		getKnots: function (closed, order, dimension, knot)
+		getKnots: function (result, closed, order, dimension, knot)
 		{
-			return NURBS .getKnots (closed, order, dimension, knot);
+			return NURBS .getKnots (result, closed, order, dimension, knot);
 		},
-		getWeights: function (closed, order, dimension, weight)
+		getWeights: function (result, closed, order, dimension, weight)
 		{
-			return NURBS .getWeights (closed, order, dimension, weight);
+			return NURBS .getWeights (result, closed, order, dimension, weight);
 		},
-		getControlPoints: function (closed, order, controlPointNode)
+		getControlPoints: function (result, closed, order, controlPointNode)
 		{
-			return NURBS .getControlPoints (closed, order, controlPointNode);
+			return NURBS .getControlPoints (result, closed, order, controlPointNode);
 		},
 		requestRebuild: function ()
 		{
@@ -172,15 +175,15 @@ function (Fields,
 
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-				controlPoints = this .getControlPoints (closed, this .order_ .getValue (), this .controlPointNode);
+				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPointNode);
 		
 			// Knots
 		
 			var
-				knots = this .getKnots (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			var weights = this .getWeights (closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
+			var weights = this .getWeights (this .weights, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
 
 			// Initialize NURBS tesselllator
 

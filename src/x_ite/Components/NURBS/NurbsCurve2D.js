@@ -72,8 +72,12 @@ function (Fields,
 
 		this .addType (X3DConstants .NurbsCurve2D);
 
+		this .knots         = [ ];
+		this .weights       = [ ];
+		this .controlPoints = [ ];
 		this .mesh          = { };
 		this .sampleOptions = { resolution: [ ] };
+		this .array         = [ ];
 	}
 
 	NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
@@ -111,39 +115,43 @@ function (Fields,
 
 			return NURBS .getClosed2D (order, knot, weight, controlPoint);
 		},
-		getKnots: function (closed, order, dimension, knot)
+		getKnots: function (result, closed, order, dimension, knot)
 		{
-			return NURBS .getKnots (closed, order, dimension, knot);
+			return NURBS .getKnots (result, closed, order, dimension, knot);
 		},
-		getWeights: function (closed, order, dimension, weight)
+		getWeights: function (result, closed, order, dimension, weight)
 		{
-			return NURBS .getWeights (closed, order, dimension, weight);
+			return NURBS .getWeights (result, closed, order, dimension, weight);
 		},
-		getControlPoints: function (closed, order, controlPoint)
+		getControlPoints: function (result, closed, order, controlPoint)
 		{
-			return NURBS .getControlPoints2D (closed, order, controlPoint);
+			return NURBS .getControlPoints2D (result, closed, order, controlPoint);
 		},
 		tessellate: function (spine)
 		{
+			var array = this .array;
+
+			array .length = 0;
+
 			if (this .order_ .getValue () < 2)
-				return [ ];
+				return array;
 		
 			if (this .controlPoint_ .length < this .order_ .getValue ())
-				return [ ];
+				return array;
 
 			// Order and dimension are now positive numbers.
 
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPoint_),
-				controlPoints = this .getControlPoints (closed, this .order_ .getValue (), this .controlPoint_);
+				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPoint_);
 		
 			// Knots
 		
 			var
-				knots = this .getKnots (closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
+				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			var weights = this .getWeights (closed, this .order_ .getValue (), this .controlPoint_ .length, this .weight_);
+			var weights = this .getWeights (this .weights, closed, this .order_ .getValue (), this .controlPoint_ .length, this .weight_);
 
 			// Initialize NURBS tesselllator
 
@@ -162,8 +170,7 @@ function (Fields,
 
 			var
 				mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
-				points = mesh .points,
-				array  = [ ];
+				points = mesh .points;
 
 			if (spine)
 			{
