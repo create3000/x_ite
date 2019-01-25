@@ -183,6 +183,8 @@ function (Fields,
 			this .skinNode       .setup ();
 			this .transformNode  .setup ();
 
+			this .setCameraObject (this .transformNode .getCameraObject ());
+
 			// Skinning
 
 			this .joints_     .addInterest ("set_joints__",     this);
