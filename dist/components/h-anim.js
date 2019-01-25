@@ -341,6 +341,8 @@ function (Fields,
 			var
 				invModelMatrix = new Matrix4 (),
 				vector         = new Vector3 (0, 0, 0),
+				rest           = new Vector3 (0, 0, 0),
+				skin           = new Vector3 (0, 0, 0),
 				point          = new Vector3 (0, 0, 0);
 
 			return function (type, renderObject)
@@ -360,7 +362,18 @@ function (Fields,
 						normalNode     = this .normalNode,
 						coordNode      = this .coordNode;
 
+					// Reset skin normals and coords.
+
+					if (skinNormalNode)
+						skinNormalNode .vector_ .assign (normalNode .vector_);
+
+					skinCoordNode .point_ .assign (coordNode .point_);
+
+					// Determine inverse model matrix of humanoid.
+
 					invModelMatrix .assign (this .transformNode .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
+
+					// Apply joint transformations.
 
 					for (var j = 0, jointNodesLength = jointNodes .length; j < jointNodesLength; ++ j)
 					{
@@ -373,17 +386,57 @@ function (Fields,
 
 						var
 							jointMatrix    = jointNode .getModelMatrix () .multRight (invModelMatrix),
-							normalMatrix   = jointMatrix .submatrix .transpose () .inverse (),
-							skinCoordIndex = jointNode .skinCoordIndex_ .getValue ();
+							displacerNodes = jointNode .getDisplacers ();
+
+						for (var d = 0, displacerNodesLength = displacerNodes .length; d < displacerNodesLength; ++ d)
+						{
+							var
+								displacerNode       = displacerNodes [d],
+								coordIndex          = displacerNode .coordIndex_ .getValue (),
+								coordIndexLength    = displacerNode .coordIndex_ .length,
+								weight              = displacerNode .weight_ .getValue (),
+								displacements       = displacerNode .displacements_ .getValue (),
+								displacementsLength = displacerNode .displacements_ .length;
+
+							for (var i = 0; i < coordIndexLength; ++ i)
+							{
+								var
+									i3           = i * 3,
+									index        = coordIndex [i],
+									displacement = i < displacementsLength ? point .set (displacements [i3], displacements [i3 + 1], displacements [i3 + 2]) : point .set (Vector3 .Zero);
+
+								skinCoordNode .get1Point (index, skin);
+								jointMatrix .multDirMatrix (displacement) .multiply (weight) .add (skin);
+								skinCoordNode .set1Point (index, displacement);
+							}
+						}
+
+						var
+							normalMatrix          = skinNormalNode ? jointMatrix .submatrix .transpose () .inverse () : null,
+							skinCoordIndex        = jointNode .skinCoordIndex_ .getValue (),
+							skinCoordWeight       = jointNode .skinCoordWeight_ .getValue (),
+							skinCoordWeightLength = jointNode .skinCoordWeight_ .length;
 
 						for (var i = 0; i < skinCoordIndexLength; ++ i)
 						{
-							var index = skinCoordIndex [i];
+							var
+								index  = skinCoordIndex [i],
+								weight = i < skinCoordWeightLength ? skinCoordWeight [i] : 1;
 
 							if (skinNormalNode)
-								skinNormalNode .set1Vector (index, normalMatrix .multVecMatrix (normalNode .get1Vector (index, vector)));
+							{
+								rest .assign (normalNode .get1Vector (index, vector));
+								skinNormalNode .get1Vector (index, skin);
+								normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
+								skinNormalNode .set1Vector (index, vector);
+								// Should the normals be normalzed at end, or let it the shader do?
+							}
 
-							skinCoordNode .set1Point (index, jointMatrix .multVecMatrix (coordNode .get1Point (index, point)));
+							//skin += (rest * J - rest) * weight
+							rest .assign (coordNode .get1Point (index, point));
+							skinCoordNode .get1Point (index, skin);
+							jointMatrix .multVecMatrix (point) .subtract (rest) .multiply (weight) .add (skin);
+							skinCoordNode .set1Point (index, point);
 						}
 					}
 				}
@@ -457,6 +510,7 @@ define ('x_ite/Components/H-Anim/HAnimJoint',[
 	"x_ite/Components/Grouping/X3DTransformNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
@@ -465,7 +519,8 @@ function (Fields,
           X3DGroupingNode, 
           X3DTransformNode, 
           TraverseType, 
-          X3DConstants, 
+          X3DConstants,
+          X3DCast,
           Matrix4)
 {
 "use strict";
@@ -480,7 +535,8 @@ function (Fields,
 		                       X3DConstants .HAnimSegment,
 		                       X3DConstants .HAnimSite);
 
-		this .modelMatrix = new Matrix4 ();
+		this .displacerNodes = [ ];
+		this .modelMatrix    = new Matrix4 ();
 	}
 
 	HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
@@ -519,6 +575,14 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DTransformNode .prototype .initialize .call (this);
+
+			this .displacers_ .addInterest ("set_displacers__", this);
+
+			this .set_displacers__ ();
+		},
 		setCameraObject: function (value)
 		{
 			X3DTransformNode .prototype .setCameraObject .call (this, value || Boolean (this .skinCoordIndex_ .length));
@@ -526,6 +590,24 @@ function (Fields,
 		getModelMatrix: function ()
 		{
 			return this .modelMatrix;
+		},
+		getDisplacers: function ()
+		{
+			return this .displacerNodes;
+		},
+		set_displacers__: function ()
+		{
+			var displacerNodes = this .displacerNodes;
+
+			displacerNodes .length = 0;
+
+			for (var i = 0, length = this .displacers_ .length; i < length; ++ i)
+			{
+				var displacerNode = X3DCast (X3DConstants .HAnimDisplacer, this .displacers_ [i]);
+
+				if (displacerNode)
+					displacerNodes .push (displacerNode);
+			}
 		},
 		traverse: function (type, renderObject)
 		{
