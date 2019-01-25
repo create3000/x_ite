@@ -259,7 +259,7 @@ function (Fields,
 					// Reset skin normals and coords.
 
 					if (skinNormalNode)
-						skinNormalNode .setToZero ();
+						skinNormalNode .vector_ .assign (normalNode .vector_);
 
 					skinCoordNode .point_ .assign (coordNode .point_);
 
@@ -297,6 +297,7 @@ function (Fields,
 								skinNormalNode .get1Vector (index, skin);
 								normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
 								skinNormalNode .set1Vector (index, vector);
+								// Should the normals be normalzed at end, or let it the shader do?
 							}
 
 							//skin += (rest * J - rest) * weight
