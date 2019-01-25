@@ -88,6 +88,7 @@ function (Fields,
 		this .addType (X3DConstants .X3DGroupingNode);
 	               
 		this .hidden                = false;
+		this .allowedTypes          = new Set ();
 		this .pointingDeviceSensors = [ ];
 		this .maybeCameraObjects    = [ ];
 		this .cameraObjects         = [ ];
@@ -136,6 +137,15 @@ function (Fields,
 		getVisible: function ()
 		{
 			return visible;
+		},
+		setAllowedTypes: function (type)
+		{
+			var allowedTypes = this .allowedTypes;
+
+			allowedTypes .clear ();
+
+			for (var i = 0, length = arguments .length; i < length; ++ i)
+				allowedTypes .add (arguments [i]);
 		},
 		getChild: function (index)
 		{
@@ -235,6 +245,12 @@ function (Fields,
 
 						for (var t = type .length - 1; t >= 0; -- t)
 						{
+//							if (this .allowedTypes .size)
+//							{
+//								if (! innerNode .isType (this .allowedTypes))
+//									continue;
+//							}
+
 							switch (type [t])
 							{
 								case X3DConstants .X3DPointingDeviceSensorNode:

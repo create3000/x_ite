@@ -139,6 +139,18 @@ function (X3DEventObject,
 		{
 			return this ._type;
 		},
+		isType: function (types)
+		{
+			var type = this ._type;
+
+			for (var i = type .length - 1; i >= 0; -- i)
+			{
+				if (types .has (type [i]))
+					return true;
+			}
+
+			return false;
+		},
 		getInnerNode: function ()
 		{
 			return this;

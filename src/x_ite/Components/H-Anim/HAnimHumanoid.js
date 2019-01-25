@@ -52,6 +52,8 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Components/Grouping/Group",
+	"x_ite/Components/Grouping/Transform",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DConstants",
 ],
@@ -59,6 +61,8 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
+          Group, 
+          Transform, 
           X3DBoundedObject, 
           X3DConstants)
 {
@@ -70,6 +74,13 @@ function (Fields,
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .HAnimHumanoid);
+
+		this .viewpointsNode = new Group (executionContext);
+		this .skeletonNode   = new Group (executionContext);
+		this .skinNode       = new Group (executionContext);
+		this .transformNode  = new Transform (executionContext);
+
+		this .getBBox = this .transformNode .getBBox  .bind (this .transformNode);
 	}
 
 	HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -108,6 +119,63 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DChildNode     .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
+
+			// Groups
+
+			this .viewpointsNode .setAllowedTypes (X3DConstants .HAnimSite);
+			this .skeletonNode   .setAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSite);
+
+			this .viewpoints_ .addFieldInterest (this .viewpointsNode .children_);
+			this .skeleton_   .addFieldInterest (this .skeletonNode   .children_);
+			this .skin_       .addFieldInterest (this .skinNode       .children_);
+
+			this .viewpointsNode .children_ = this .viewpoints_;
+			this .skeletonNode   .children_ = this .skeleton_;
+			this .skinNode       .children_ = this .skin_;
+
+			this .viewpointsNode .setPrivate (true);
+			this .skeletonNode   .setPrivate (true);
+			this .skinNode       .setPrivate (true);
+
+			// Transform
+
+			this .translation_      .addFieldInterest (this .transformNode .translation_);
+			this .rotation_         .addFieldInterest (this .transformNode .rotation_);
+			this .scale_            .addFieldInterest (this .transformNode .scale_);
+			this .scaleOrientation_ .addFieldInterest (this .transformNode .scaleOrientation_);
+			this .center_           .addFieldInterest (this .transformNode .center_);
+			this .bboxSize_         .addFieldInterest (this .transformNode .bboxSize_);
+			this .bboxCenter_       .addFieldInterest (this .transformNode .bboxCenter_);
+
+			this .transformNode .translation_      = this .translation_;
+			this .transformNode .rotation_         = this .rotation_;
+			this .transformNode .scale_            = this .scale_;
+			this .transformNode .scaleOrientation_ = this .scaleOrientation_;
+			this .transformNode .center_           = this .center_;
+			this .transformNode .bboxSize_         = this .bboxSize_;
+			this .transformNode .bboxCenter_       = this .bboxCenter_;
+			this .transformNode .children_         = [ this .viewpointsNode, this .skeletonNode, this .skinNode ];
+
+			this .transformNode .isCameraObject_ .addFieldInterest (this .isCameraObject_);
+
+			// Setup
+
+			this .viewpointsNode .setup ();
+			this .skeletonNode   .setup ();
+			this .skinNode       .setup ();
+			this .transformNode  .setup ();
+
+			// Skinning
+
+		},
+		traverse: function (type, renderObject)
+		{
+			this .transformNode .traverse (type, renderObject);
 		},
 	});
 
