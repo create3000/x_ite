@@ -365,12 +365,18 @@ function (Fields,
 					for (var j = 0, jl = jointNodes .length; j < jl; ++ j)
 					{
 						var
-							jointNode      = jointNodes [j],
+							jointNode            = jointNodes [j],
+							skinCoordIndexLength = jointNode .skinCoordIndex_ .length;
+
+						if (skinCoordIndexLength === 0)
+							continue;
+
+						var
 							jointMatrix    = jointNode .getModelMatrix () .multRight (invModelMatrix),
 							normalMatrix   = jointMatrix .submatrix .transpose () .inverse (),
 							skinCoordIndex = jointNode .skinCoordIndex_ .getValue ();
 
-						for (var i = 0, il = jointNode .skinCoordIndex_ .length; i < il; ++ i)
+						for (var i = 0; i < skinCoordIndexLength; ++ i)
 						{
 							var index = skinCoordIndex [i];
 
