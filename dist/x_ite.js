@@ -1,4 +1,4 @@
-/* X_ITE v4.2.16-565 */
+/* X_ITE v4.2.17-565 */
 
 (function () {
 
@@ -24885,6 +24885,18 @@ function (X3DEventObject,
 		{
 			return this ._type;
 		},
+		isType: function (types)
+		{
+			var type = this ._type;
+
+			for (var i = type .length - 1; i >= 0; -- i)
+			{
+				if (types .has (type [i]))
+					return true;
+			}
+
+			return false;
+		},
 		getInnerNode: function ()
 		{
 			return this;
@@ -25120,6 +25132,23 @@ function (X3DEventObject,
 			}
 
 			executionContext .addUninitializedNode (copy);
+			return copy;
+		},
+		flatCopy: function (executionContext)
+		{
+			var
+				copy             = this .create (executionContext || this .getExecutionContext ()),
+				fieldDefinitions = this .fieldDefinitions .getValue ();
+
+			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+			{
+				var field = this ._fields .get (fieldDefinitions [i] .name);
+
+				copy ._fields .get (fieldDefinitions [i] .name) .assign (field);
+			}
+
+			copy .setup ();
+
 			return copy;
 		},
 		addChildObjects: function (name, field)
@@ -53460,6 +53489,7 @@ function (Fields,
 		this .addType (X3DConstants .X3DGroupingNode);
 	               
 		this .hidden                = false;
+		this .allowedTypes          = new Set ();
 		this .pointingDeviceSensors = [ ];
 		this .maybeCameraObjects    = [ ];
 		this .cameraObjects         = [ ];
@@ -53508,6 +53538,15 @@ function (Fields,
 		getVisible: function ()
 		{
 			return visible;
+		},
+		setAllowedTypes: function (type)
+		{
+			var allowedTypes = this .allowedTypes;
+
+			allowedTypes .clear ();
+
+			for (var i = 0, length = arguments .length; i < length; ++ i)
+				allowedTypes .add (arguments [i]);
 		},
 		getChild: function (index)
 		{
@@ -53607,6 +53646,12 @@ function (Fields,
 
 						for (var t = type .length - 1; t >= 0; -- t)
 						{
+//							if (this .allowedTypes .size)
+//							{
+//								if (! innerNode .isType (this .allowedTypes))
+//									continue;
+//							}
+
 							switch (type [t])
 							{
 								case X3DConstants .X3DPointingDeviceSensorNode:
@@ -54567,17 +54612,17 @@ function (X3DGroupingNode,
 		{
 			var bbox = X3DGroupingNode .prototype .getBBox .call (this, bbox);
 
-			if (this .traverse === X3DTransformMatrix3DNode .prototype .traverse)
-				return bbox .multRight (this .matrix);
+			if (this .traverse === this .groupTraverse)
+				return bbox;
 
-			return bbox;
+			return bbox .multRight (this .matrix);
 		},
 		setMatrix: function (matrix)
 		{
 			if (matrix .equals (Matrix4 .Identity))
 			{
 				this .matrix .identity ();
-				this .traverse = X3DGroupingNode .prototype .traverse;
+				this .traverse = this .groupTraverse;
 			}
 			else
 			{
@@ -54591,16 +54636,15 @@ function (X3DGroupingNode,
 		},
 		setTransform: function (t, r, s, so, c)
 		{
-
 			if (t .equals (Vector3 .Zero) && r .equals (Rotation4 .Identity) && s .equals (Vector3 .One))
 			{
 				this .matrix .identity ();
-				this .traverse = X3DGroupingNode .prototype .traverse;
+				this .traverse = this .groupTraverse;
 			}
 			else
 			{
 			   this .matrix .set (t, r, s, so, c);
-				delete this .traverse ;
+				delete this .traverse;
 			}
 		},
 		traverse: function (type, renderObject)
@@ -54614,6 +54658,7 @@ function (X3DGroupingNode,
 
 			modelViewMatrix .pop ();
 		},
+		groupTraverse: X3DGroupingNode .prototype .traverse,
 	});
 
 	return X3DTransformMatrix3DNode;
@@ -78193,6 +78238,7 @@ function (Fields,
 		this .scene    = this .getBrowser () .getDefaultScene ();
 		this .group    = new Group (executionContext);
 		this .getBBox  = this .group .getBBox  .bind (this .group);
+		this .traverse = this .group .traverse  .bind (this .group);
 
 		this .group .addParent (this);
 	}
@@ -78344,10 +78390,6 @@ function (Fields,
 			///  nodes (due to performance reasons).
 
 			return this .scene;
-		},
-		traverse: function (type, renderObject)
-		{
-			this .group .traverse (type, renderObject);
 		},
 	});
 
@@ -85648,7 +85690,11 @@ function (X3DGeometricPropertyNode,
 		{
 			return this .length;
 		},
-		get1Point: function (index, vector)
+		set1Point: function (index, point)
+		{
+			this .point_ [index] = point;
+		},
+		get1Point: function (index, result)
 		{
 			if (index < this .length)
 			{
@@ -85656,11 +85702,11 @@ function (X3DGeometricPropertyNode,
 
 				index *= 3;
 
-				return vector .set (point [index], point [index + 1], point [index + 2]);
+				return result .set (point [index], point [index + 1], point [index + 2]);
 			}
 			else
 			{
-				return vector .set (0, 0, 0);
+				return result .set (0, 0, 0);
 			}
 		},
 		addPoint: function (index, array)
@@ -86693,6 +86739,25 @@ function (Fields,
 		{
 			this .vector = this .vector_ .getValue ();
 			this .length = this .vector_ .length;
+		},
+		set1Vector: function (index, vector)
+		{
+			this .vector_ [index] = vector;
+		},
+		get1Vector: function (index, result)
+		{
+			if (index < this .length)
+			{
+				const vector = this .vector;
+
+				index *= 3;
+
+				return result .set (vector [index], vector [index + 1], vector [index + 2]);
+			}
+			else
+			{
+				return result .set (0, 0, 0);
+			}
 		},
 		addVector: function (index, array)
 		{
@@ -96698,7 +96763,7 @@ function (ComponentInfoArray,
 		title:      "Humanoid animation (H-Anim)",
 		name:       "H-Anim",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .provider ("h-anim"),
 	});
 
 	SupportedComponents .addComponent (

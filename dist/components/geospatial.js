@@ -1391,11 +1391,20 @@ function (Fields,
 		{
 			return this .length;
 		},
+		set1Point: (function ()
+		{
+			var result = new Vector3 (0, 0, 0);
+
+			return function (index, point)
+			{
+				this .point_ [index] = this .getGeoCoord (point, result);
+			};
+		})(),
 		get1Point: (function ()
 		{
 			var p = new Vector3 (0, 0, 0);
 
-			return function (index, vector)
+			return function (index, result)
 			{
 				if (index < this .length)
 				{
@@ -1403,11 +1412,11 @@ function (Fields,
 	
 					index *= 3;
 	
-					return this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), vector);
+					return this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), result);
 				}
 				else
 				{
-					return vector .set (0, 0, 0);
+					return result .set (0, 0, 0);
 				}
 			};
 		})(),

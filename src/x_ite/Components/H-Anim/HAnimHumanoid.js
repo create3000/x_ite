@@ -55,7 +55,11 @@ define ([
 	"x_ite/Components/Grouping/Group",
 	"x_ite/Components/Grouping/Transform",
 	"x_ite/Components/Grouping/X3DBoundedObject",
+	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,7 +68,11 @@ function (Fields,
           Group, 
           Transform, 
           X3DBoundedObject, 
-          X3DConstants)
+          TraverseType, 
+          X3DConstants,
+          X3DCast,
+          Matrix4,
+          Vector3)
 {
 "use strict";
 
@@ -79,6 +87,11 @@ function (Fields,
 		this .skeletonNode   = new Group (executionContext);
 		this .skinNode       = new Group (executionContext);
 		this .transformNode  = new Transform (executionContext);
+		this .jointNodes     = [ ];
+		this .skinNormalNode = null;
+		this .skinCoordNode  = null;
+		this .normalNode     = null;
+		this .coordNode      = null;
 
 		this .getBBox = this .transformNode .getBBox  .bind (this .transformNode);
 	}
@@ -172,11 +185,102 @@ function (Fields,
 
 			// Skinning
 
+			this .joints_     .addInterest ("set_joints__",     this);
+			this .skinNormal_ .addInterest ("set_skinNormal__", this);
+			this .skinCoord_  .addInterest ("set_skinCoord__",  this);
+
+			this .set_joints__ ();
+			this .set_skinNormal__ ();
+			this .set_skinCoord__ ();
+		},
+		set_joints__: function ()
+		{
+			var jointNodes = this .jointNodes;
+
+			jointNodes .length = 0;
+
+			for (var i = 0, length = this .joints_ .length; i < length; ++ i)
+			{
+				var jointNode = X3DCast (X3DConstants .HAnimJoint, this .joints_ [i]);
+
+				if (jointNode)
+					jointNodes .push (jointNode);
+			}
+		},
+		set_skinNormal__: function ()
+		{
+			this .normalNode = null;
+
+			this .skinNormalNode = X3DCast (X3DConstants .X3DNormalNode, this .skinNormal_);
+
+			if (this .skinNormalNode)
+				this .normalNode = this .skinNormalNode .flatCopy ();
+		},
+		set_skinCoord__: function ()
+		{
+			this .coordNode = null;
+
+			this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .skinCoord_);
+
+			if (this .skinCoordNode)
+				this .coordNode = this .skinCoordNode .flatCopy ();
 		},
 		traverse: function (type, renderObject)
 		{
 			this .transformNode .traverse (type, renderObject);
+			this .skinning (type, renderObject);
 		},
+		skinning: (function ()
+		{
+			var
+				invModelMatrix = new Matrix4 (),
+				vector         = new Vector3 (0, 0, 0),
+				point          = new Vector3 (0, 0, 0);
+
+			return function (type, renderObject)
+			{
+				try
+				{
+					if (type !== TraverseType .CAMERA)
+						return;
+	
+					if (! this .skinCoordNode)
+						return;
+	
+					var
+						jointNodes     = this .jointNodes,
+						skinNormalNode = this .skinNormalNode,
+						skinCoordNode  = this .skinCoordNode,
+						normalNode     = this .normalNode,
+						coordNode      = this .coordNode;
+
+					invModelMatrix .assign (this .transformNode .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
+
+					for (var j = 0, jl = jointNodes .length; j < jl; ++ j)
+					{
+						var
+							jointNode      = jointNodes [j],
+							jointMatrix    = jointNode .getModelMatrix () .multRight (invModelMatrix),
+							normalMatrix   = jointMatrix .submatrix .transpose () .inverse (),
+							skinCoordIndex = jointNode .skinCoordIndex_ .getValue ();
+
+						for (var i = 0, il = jointNode .skinCoordIndex_ .length; i < il; ++ i)
+						{
+							var index = skinCoordIndex [i];
+
+							if (skinNormalNode)
+								skinNormalNode .set1Vector (index, normalMatrix .multVecMatrix (normalNode .get1Vector (index, vector)));
+
+							skinCoordNode .set1Point (index, jointMatrix .multVecMatrix (coordNode .get1Point (index, point)));
+						}
+					}
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		})(),
 	});
 
 	return HAnimHumanoid;

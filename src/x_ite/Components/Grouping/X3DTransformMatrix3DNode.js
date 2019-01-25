@@ -78,17 +78,17 @@ function (X3DGroupingNode,
 		{
 			var bbox = X3DGroupingNode .prototype .getBBox .call (this, bbox);
 
-			if (this .traverse === X3DTransformMatrix3DNode .prototype .traverse)
-				return bbox .multRight (this .matrix);
+			if (this .traverse === this .groupTraverse)
+				return bbox;
 
-			return bbox;
+			return bbox .multRight (this .matrix);
 		},
 		setMatrix: function (matrix)
 		{
 			if (matrix .equals (Matrix4 .Identity))
 			{
 				this .matrix .identity ();
-				this .traverse = X3DGroupingNode .prototype .traverse;
+				this .traverse = this .groupTraverse;
 			}
 			else
 			{
@@ -102,16 +102,15 @@ function (X3DGroupingNode,
 		},
 		setTransform: function (t, r, s, so, c)
 		{
-
 			if (t .equals (Vector3 .Zero) && r .equals (Rotation4 .Identity) && s .equals (Vector3 .One))
 			{
 				this .matrix .identity ();
-				this .traverse = X3DGroupingNode .prototype .traverse;
+				this .traverse = this .groupTraverse;
 			}
 			else
 			{
 			   this .matrix .set (t, r, s, so, c);
-				delete this .traverse ;
+				delete this .traverse;
 			}
 		},
 		traverse: function (type, renderObject)
@@ -125,6 +124,7 @@ function (X3DGroupingNode,
 
 			modelViewMatrix .pop ();
 		},
+		groupTraverse: X3DGroupingNode .prototype .traverse,
 	});
 
 	return X3DTransformMatrix3DNode;

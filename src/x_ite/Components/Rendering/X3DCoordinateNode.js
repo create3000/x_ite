@@ -91,7 +91,11 @@ function (X3DGeometricPropertyNode,
 		{
 			return this .length;
 		},
-		get1Point: function (index, vector)
+		set1Point: function (index, point)
+		{
+			this .point_ [index] = point;
+		},
+		get1Point: function (index, result)
 		{
 			if (index < this .length)
 			{
@@ -99,11 +103,11 @@ function (X3DGeometricPropertyNode,
 
 				index *= 3;
 
-				return vector .set (point [index], point [index + 1], point [index + 2]);
+				return result .set (point [index], point [index + 1], point [index + 2]);
 			}
 			else
 			{
-				return vector .set (0, 0, 0);
+				return result .set (0, 0, 0);
 			}
 		},
 		addPoint: function (index, array)

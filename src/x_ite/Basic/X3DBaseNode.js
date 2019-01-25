@@ -388,6 +388,23 @@ function (X3DEventObject,
 			executionContext .addUninitializedNode (copy);
 			return copy;
 		},
+		flatCopy: function (executionContext)
+		{
+			var
+				copy             = this .create (executionContext || this .getExecutionContext ()),
+				fieldDefinitions = this .fieldDefinitions .getValue ();
+
+			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+			{
+				var field = this ._fields .get (fieldDefinitions [i] .name);
+
+				copy ._fields .get (fieldDefinitions [i] .name) .assign (field);
+			}
+
+			copy .setup ();
+
+			return copy;
+		},
 		addChildObjects: function (name, field)
 		{
 			for (var i = 0, length = arguments .length; i < length; i += 2)
