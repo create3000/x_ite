@@ -90,8 +90,8 @@ function (Fields,
 		this .jointNodes     = [ ];
 		this .skinNormalNode = null;
 		this .skinCoordNode  = null;
-		this .normalNode     = null;
-		this .coordNode      = null;
+		this .restNormalNode = null;
+		this .restCoordNode  = null;
 
 		this .getBBox = this .transformNode .getBBox  .bind (this .transformNode);
 	}
@@ -211,21 +211,21 @@ function (Fields,
 		},
 		set_skinNormal__: function ()
 		{
-			this .normalNode = null;
+			this .restNormalNode = null;
 
 			this .skinNormalNode = X3DCast (X3DConstants .X3DNormalNode, this .skinNormal_);
 
 			if (this .skinNormalNode)
-				this .normalNode = this .skinNormalNode .flatCopy ();
+				this .restNormalNode = this .skinNormalNode .flatCopy ();
 		},
 		set_skinCoord__: function ()
 		{
-			this .coordNode = null;
+			this .restCoordNode = null;
 
 			this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .skinCoord_);
 
 			if (this .skinCoordNode)
-				this .coordNode = this .skinCoordNode .flatCopy ();
+				this .restCoordNode = this .skinCoordNode .flatCopy ();
 		},
 		traverse: function (type, renderObject)
 		{
@@ -255,15 +255,15 @@ function (Fields,
 						jointNodes     = this .jointNodes,
 						skinNormalNode = this .skinNormalNode,
 						skinCoordNode  = this .skinCoordNode,
-						normalNode     = this .normalNode,
-						coordNode      = this .coordNode;
+						restNormalNode = this .restNormalNode,
+						restCoordNode  = this .restCoordNode;
 
 					// Reset skin normals and coords.
 
 					if (skinNormalNode)
-						skinNormalNode .vector_ .assign (normalNode .vector_);
+						skinNormalNode .vector_ .assign (restNormalNode .vector_);
 
-					skinCoordNode .point_ .assign (coordNode .point_);
+					skinCoordNode .point_ .assign (restCoordNode .point_);
 
 					// Determine inverse model matrix of humanoid.
 
@@ -321,7 +321,7 @@ function (Fields,
 
 							if (skinNormalNode)
 							{
-								rest .assign (normalNode .get1Vector (index, vector));
+								rest .assign (restNormalNode .get1Vector (index, vector));
 								skinNormalNode .get1Vector (index, skin);
 								normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
 								skinNormalNode .set1Vector (index, vector);
@@ -329,7 +329,7 @@ function (Fields,
 							}
 
 							//skin += (rest * J - rest) * weight
-							rest .assign (coordNode .get1Point (index, point));
+							rest .assign (restCoordNode .get1Point (index, point));
 							skinCoordNode .get1Point (index, skin);
 							jointMatrix .multVecMatrix (point) .subtract (rest) .multiply (weight) .add (skin);
 							skinCoordNode .set1Point (index, point);
