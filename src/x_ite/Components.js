@@ -58,7 +58,6 @@ define ([
 	"x_ite/Components/Geometry2D",
 	"x_ite/Components/Geometry3D",
 	"x_ite/Components/Grouping",
-	"x_ite/Components/H-Anim",
 	"x_ite/Components/Interpolation",
 	"x_ite/Components/KeyDeviceSensor",
 	"x_ite/Components/Layering",

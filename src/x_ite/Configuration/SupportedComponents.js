@@ -159,7 +159,7 @@ function (ComponentInfoArray,
 		title:      "Humanoid animation (H-Anim)",
 		name:       "H-Anim",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .provider ("h-anim"),
 	});
 
 	SupportedComponents .addComponent (

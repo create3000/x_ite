@@ -49,6 +49,8 @@
     <None Include="components\README" />
     <None Include="components\geospatial.js" />
     <None Include="components\geospatial.min.js" />
+    <None Include="components\h-anim.js" />
+    <None Include="components\h-anim.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

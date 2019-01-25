@@ -30,5 +30,7 @@
     <None Include="parts\cad-geometry.start.frag" />
     <None Include="parts\geospatial.end.frag" />
     <None Include="parts\geospatial.start.frag" />
+    <None Include="parts\h-anim.end.frag" />
+    <None Include="parts\h-anim.start.frag" />
   </ItemGroup>
 </Project>

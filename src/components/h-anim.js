@@ -47,30 +47,29 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes"//,
-//	"x_ite/Components/H-Anim/HAnimDisplacer",
-//	"x_ite/Components/H-Anim/HAnimHumanoid",
-//	"x_ite/Components/H-Anim/HAnimJoint",
-//	"x_ite/Components/H-Anim/HAnimSegment",
-//	"x_ite/Components/H-Anim/HAnimSite",
+	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components/H-Anim/HAnimDisplacer",
+	"x_ite/Components/H-Anim/HAnimHumanoid",
+	"x_ite/Components/H-Anim/HAnimJoint",
+	"x_ite/Components/H-Anim/HAnimSegment",
+	"x_ite/Components/H-Anim/HAnimSite",
 ],
-function (SupportedNodes//,
-//          HAnimDisplacer,
-//          HAnimHumanoid,
-//          HAnimJoint,
-//          HAnimSegment,
-//          HAnimSite
-)
+function (SupportedNodes,
+          HAnimDisplacer,
+          HAnimHumanoid,
+          HAnimJoint,
+          HAnimSegment,
+          HAnimSite)
 {
 "use strict";
 
 	var Types =
 	{
-//		HAnimDisplacer: HAnimDisplacer,
-//		HAnimHumanoid:  HAnimHumanoid,
-//		HAnimJoint:     HAnimJoint,
-//		HAnimSegment:   HAnimSegment,
-//		HAnimSite:      HAnimSite,
+		HAnimDisplacer: HAnimDisplacer,
+		HAnimHumanoid:  HAnimHumanoid,
+		HAnimJoint:     HAnimJoint,
+		HAnimSegment:   HAnimSegment,
+		HAnimSite:      HAnimSite,
 	};
 
 	var AbstractTypes =

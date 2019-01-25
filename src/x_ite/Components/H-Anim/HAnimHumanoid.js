@@ -72,7 +72,8 @@ function (Fields,
 		this .addType (X3DConstants .HAnimHumanoid);
 	}
 
-	HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototype),new X3DBoundedObject (),
+	HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+		X3DBoundedObject .prototype,
 	{
 		constructor: HAnimHumanoid,
 		fieldDefinitions: new FieldDefinitionArray ([
