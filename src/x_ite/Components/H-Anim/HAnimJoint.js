@@ -55,6 +55,7 @@ define ([
 	"x_ite/Components/Grouping/X3DTransformNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
@@ -63,7 +64,8 @@ function (Fields,
           X3DGroupingNode, 
           X3DTransformNode, 
           TraverseType, 
-          X3DConstants, 
+          X3DConstants,
+          X3DCast,
           Matrix4)
 {
 "use strict";
@@ -78,7 +80,8 @@ function (Fields,
 		                       X3DConstants .HAnimSegment,
 		                       X3DConstants .HAnimSite);
 
-		this .modelMatrix = new Matrix4 ();
+		this .displacerNodes = [ ];
+		this .modelMatrix    = new Matrix4 ();
 	}
 
 	HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
@@ -117,6 +120,14 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DTransformNode .prototype .initialize .call (this);
+
+			this .displacers_ .addInterest ("set_displacers__", this);
+
+			this .set_displacers__ ();
+		},
 		setCameraObject: function (value)
 		{
 			X3DTransformNode .prototype .setCameraObject .call (this, value || Boolean (this .skinCoordIndex_ .length));
@@ -124,6 +135,24 @@ function (Fields,
 		getModelMatrix: function ()
 		{
 			return this .modelMatrix;
+		},
+		getDisplacers: function ()
+		{
+			return this .displacerNodes;
+		},
+		set_displacers__: function ()
+		{
+			var displacerNodes = this .displacerNodes;
+
+			displacerNodes .length = 0;
+
+			for (var i = 0, length = this .displacers_ .length; i < length; ++ i)
+			{
+				var displacerNode = X3DCast (X3DConstants .HAnimDisplacer, this .displacers_ [i]);
+
+				if (displacerNode)
+					displacerNodes .push (displacerNode);
+			}
 		},
 		traverse: function (type, renderObject)
 		{
