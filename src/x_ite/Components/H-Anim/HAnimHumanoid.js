@@ -235,6 +235,8 @@ function (Fields,
 			var
 				invModelMatrix = new Matrix4 (),
 				vector         = new Vector3 (0, 0, 0),
+				rest           = new Vector3 (0, 0, 0),
+				skin           = new Vector3 (0, 0, 0),
 				point          = new Vector3 (0, 0, 0);
 
 			return function (type, renderObject)
@@ -254,6 +256,8 @@ function (Fields,
 						normalNode     = this .normalNode,
 						coordNode      = this .coordNode;
 
+					skinCoordNode .point_ .assign (coordNode .point_);
+
 					invModelMatrix .assign (this .transformNode .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
 
 					for (var j = 0, jointNodesLength = jointNodes .length; j < jointNodesLength; ++ j)
@@ -266,18 +270,26 @@ function (Fields,
 							continue;
 
 						var
-							jointMatrix    = jointNode .getModelMatrix () .multRight (invModelMatrix),
-							normalMatrix   = jointMatrix .submatrix .transpose () .inverse (),
-							skinCoordIndex = jointNode .skinCoordIndex_ .getValue ();
+							jointMatrix           = jointNode .getModelMatrix () .multRight (invModelMatrix),
+							normalMatrix          = jointMatrix .submatrix .transpose () .inverse (),
+							skinCoordIndex        = jointNode .skinCoordIndex_ .getValue (),
+							skinCoordWeight       = jointNode .skinCoordWeight_ .getValue (),
+							skinCoordWeightLength = jointNode .skinCoordWeight_ .length;
 
 						for (var i = 0; i < skinCoordIndexLength; ++ i)
 						{
-							var index = skinCoordIndex [i];
+							var
+								index  = skinCoordIndex [i],
+								weight = i < skinCoordWeightLength ? skinCoordWeight [i] : 1;
 
 							if (skinNormalNode)
 								skinNormalNode .set1Vector (index, normalMatrix .multVecMatrix (normalNode .get1Vector (index, vector)));
 
-							skinCoordNode .set1Point (index, jointMatrix .multVecMatrix (coordNode .get1Point (index, point)));
+							//s += (r * J - r) * w;
+							rest .assign (coordNode .get1Point (index, point));
+							skinCoordNode .get1Point (index, skin);
+							jointMatrix .multVecMatrix (point) .subtract (rest) .multiply (weight) .add (skin);
+							skinCoordNode .set1Point (index, point);
 						}
 					}
 				}
