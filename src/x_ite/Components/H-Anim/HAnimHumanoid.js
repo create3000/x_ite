@@ -256,9 +256,18 @@ function (Fields,
 						normalNode     = this .normalNode,
 						coordNode      = this .coordNode;
 
+					// Reset skin normals and coords.
+
+					if (skinNormalNode)
+						skinNormalNode .setToZero ();
+
 					skinCoordNode .point_ .assign (coordNode .point_);
 
+					// Determine inverse model matrix of humanoid.
+
 					invModelMatrix .assign (this .transformNode .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
+
+					// Apply joint translations.
 
 					for (var j = 0, jointNodesLength = jointNodes .length; j < jointNodesLength; ++ j)
 					{
@@ -283,9 +292,14 @@ function (Fields,
 								weight = i < skinCoordWeightLength ? skinCoordWeight [i] : 1;
 
 							if (skinNormalNode)
-								skinNormalNode .set1Vector (index, normalMatrix .multVecMatrix (normalNode .get1Vector (index, vector)));
+							{
+								rest .assign (normalNode .get1Vector (index, vector));
+								skinNormalNode .get1Vector (index, skin);
+								normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
+								skinNormalNode .set1Vector (index, vector);
+							}
 
-							//s += (r * J - r) * w;
+							//skin += (rest * J - rest) * weight
 							rest .assign (coordNode .get1Point (index, point));
 							skinCoordNode .get1Point (index, skin);
 							jointMatrix .multVecMatrix (point) .subtract (rest) .multiply (weight) .add (skin);

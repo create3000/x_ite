@@ -137,6 +137,13 @@ function (Fields,
 				return array .push (0, 0, 0);
 			}
 		},
+		setToZero: function ()
+		{
+			const vector = this .vector;
+
+			for (var i = 0, length = this .length * 3; i < length; ++ i)
+				vector [i] = 0;
+		},
 	});
 
 	return Normal;
