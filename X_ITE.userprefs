@@ -3,10 +3,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/H-Anim/HAnimHumanoid.js">
     <Files>
       <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/H-Anim/HAnimHumanoid.js" Line="282" Column="15" />
-      <File FileName="src/x_ite/Components/H-Anim/HAnimJoint.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DCoordinateNode.js" Line="123" Column="5" />
+      <File FileName="src/x_ite/Components/H-Anim/HAnimHumanoid.js" Line="283" Column="104" />
+      <File FileName="src/x_ite/Components/H-Anim/HAnimDisplacer.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

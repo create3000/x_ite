@@ -267,7 +267,7 @@ function (Fields,
 
 					invModelMatrix .assign (this .transformNode .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
 
-					// Apply joint translations.
+					// Apply joint transformations.
 
 					for (var j = 0, jointNodesLength = jointNodes .length; j < jointNodesLength; ++ j)
 					{
@@ -279,8 +279,34 @@ function (Fields,
 							continue;
 
 						var
-							jointMatrix           = jointNode .getModelMatrix () .multRight (invModelMatrix),
-							normalMatrix          = jointMatrix .submatrix .transpose () .inverse (),
+							jointMatrix    = jointNode .getModelMatrix () .multRight (invModelMatrix),
+							displacerNodes = jointNode .getDisplacers ();
+
+						for (var d = 0, displacerNodesLength = displacerNodes .length; d < displacerNodesLength; ++ d)
+						{
+							var
+								displacerNode       = displacerNodes [d],
+								coordIndex          = displacerNode .coordIndex_ .getValue (),
+								coordIndexLength    = displacerNode .coordIndex_ .length,
+								weight              = displacerNode .weight_ .getValue (),
+								displacements       = displacerNode .displacements_ .getValue (),
+								displacementsLength = displacerNode .displacements_ .length;
+
+							for (var i = 0; i < coordIndexLength; ++ i)
+							{
+								var
+									i3           = i * 3,
+									index        = coordIndex [i],
+									displacement = i < displacementsLength ? point .set (displacements [i3], displacements [i3 + 1], displacements [i3 + 2]) : point .set (Vector3 .Zero);
+
+								skinCoordNode .get1Point (index, skin);
+								jointMatrix .multDirMatrix (displacement) .multiply (weight) .add (skin);
+								skinCoordNode .set1Point (index, displacement);
+							}
+						}
+
+						var
+							normalMatrix          = skinNormalNode ? jointMatrix .submatrix .transpose () .inverse () : null,
 							skinCoordIndex        = jointNode .skinCoordIndex_ .getValue (),
 							skinCoordWeight       = jointNode .skinCoordWeight_ .getValue (),
 							skinCoordWeightLength = jointNode .skinCoordWeight_ .length;
