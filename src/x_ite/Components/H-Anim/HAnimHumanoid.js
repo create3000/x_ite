@@ -256,7 +256,7 @@ function (Fields,
 
 					invModelMatrix .assign (this .transformNode .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
 
-					for (var j = 0, jl = jointNodes .length; j < jl; ++ j)
+					for (var j = 0, jointNodesLength = jointNodes .length; j < jointNodesLength; ++ j)
 					{
 						var
 							jointNode            = jointNodes [j],

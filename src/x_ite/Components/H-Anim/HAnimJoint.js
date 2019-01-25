@@ -127,14 +127,14 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			if (type === TraverseType .CAMERA)
+			if (type === TraverseType .CAMERA && this .skinCoordIndex_ .length)
 				this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
 
 			X3DTransformNode .prototype .traverse .call (this, type, renderObject);
 		},
 		groupTraverse: function (type, renderObject)
 		{
-			if (type === TraverseType .CAMERA)
+			if (type === TraverseType .CAMERA && this .skinCoordIndex_ .length)
 				this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
 
 			X3DGroupingNode .prototype .traverse .call (this, type, renderObject);

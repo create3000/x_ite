@@ -362,7 +362,7 @@ function (Fields,
 
 					invModelMatrix .assign (this .transformNode .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
 
-					for (var j = 0, jl = jointNodes .length; j < jl; ++ j)
+					for (var j = 0, jointNodesLength = jointNodes .length; j < jointNodesLength; ++ j)
 					{
 						var
 							jointNode            = jointNodes [j],
@@ -529,14 +529,14 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			if (type === TraverseType .CAMERA)
+			if (type === TraverseType .CAMERA && this .skinCoordIndex_ .length)
 				this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
 
 			X3DTransformNode .prototype .traverse .call (this, type, renderObject);
 		},
 		groupTraverse: function (type, renderObject)
 		{
-			if (type === TraverseType .CAMERA)
+			if (type === TraverseType .CAMERA && this .skinCoordIndex_ .length)
 				this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
 
 			X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
