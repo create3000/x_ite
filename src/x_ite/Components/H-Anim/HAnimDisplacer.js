@@ -74,10 +74,10 @@ function (Fields,
 		constructor: HAnimDisplacer,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",    new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "displacements", new Fields .MFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "name",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",    new Fields .MFInt32 ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "displacements", new Fields .MFVec3f ()),
 		]),
 		getTypeName: function ()
 		{
