@@ -2,12 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="X_ITE.sln">
     <Files>
-      <File FileName="src/x_ite.html" Line="24" Column="65" />
-      <File FileName="src/components/particle-systems.config.js" Line="57" Column="1" />
-      <File FileName="src/components/particle-systems.js" Line="111" Column="1" />
-      <File FileName="src/x_ite/Browser/X3DBrowserContext.js" Line="190" Column="71" />
-      <File FileName="src/x_ite/Browser/ParticleSystems/X3DParticleSystemsContext.js" Line="68" Column="1" />
-      <File FileName="X_ITE.sln" Line="28" Column="53" />
+      <File FileName="src/x_ite.html" Line="15" Column="1" />
+      <File FileName="Makefile" Line="34" Column="34" />
+      <File FileName="X_ITE.sln" Line="20" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

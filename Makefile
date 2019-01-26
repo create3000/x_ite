@@ -8,7 +8,7 @@ configure:
 all:
 	perl -pi -e 's/return (?:true|false);/return false;/sg' src/x_ite/DEBUG.js
 
-	node_modules/requirejs/bin/r.js -o x_ite.build.js
+	node_modules/requirejs/bin/r.js -o build/x_ite.build.js
 	node_modules/uglify-js-es6/bin/uglifyjs --compress --mangle -- dist/x_ite.js > dist/x_ite.min.js
 	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
 
@@ -39,7 +39,7 @@ all:
 	perl -pi -e 's|"tests.js"|"src/tests.js"|sg'                                x_ite.min.html
 	perl -pi -e 's|\.\./tests/|tests/|sg'                                       x_ite.min.html
 
-	perl build/dist.pl
+	perl build/bin/dist.pl
 
 	echo
 	ls -la dist/x_ite.min.js
@@ -49,7 +49,7 @@ all:
 
 
 version: all
-	perl build/version.pl
+	perl build/bin/version.pl
 
 
 clean:
@@ -58,7 +58,7 @@ clean:
 	rm x_ite.min.js
 
 define generate_component
-	node_modules/requirejs/bin/r.js -o $(1).build.js
+	node_modules/requirejs/bin/r.js -o build/$(1).build.js
 	perl -pi -e "s|'components/$(1)',||" dist/components/$(1).js
 	node_modules/uglify-js-es6/bin/uglifyjs --mangle -- dist/components/$(1).js > dist/components/$(1).min.js
 endef

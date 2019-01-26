@@ -13,11 +13,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="parts\" />
+    <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="build.mdproj" />
-    <None Include="dist.pl" />
-    <None Include="version.pl" />
     <None Include="parts\x_ite.end.frag" />
     <None Include="parts\x_ite.start.frag" />
     <None Include="parts\rigid-body-physics.end.frag" />
@@ -34,5 +33,15 @@
     <None Include="parts\h-anim.start.frag" />
     <None Include="parts\particle-systems.end.frag" />
     <None Include="parts\particle-systems.start.frag" />
+    <None Include="cad-geometry.build.js" />
+    <None Include="geospatial.build.js" />
+    <None Include="h-anim.build.js" />
+    <None Include="nurbs.build.js" />
+    <None Include="particle-systems.build.js" />
+    <None Include="rigid-body-physics.build.js" />
+    <None Include="texturing-3d.build.js" />
+    <None Include="bin\dist.pl" />
+    <None Include="bin\version.pl" />
+    <None Include="x_ite.build.js" />
   </ItemGroup>
 </Project>
