@@ -1,4 +1,4 @@
-/* X_ITE v4.2.17-570 */
+/* X_ITE v4.2.17-571 */
 
 (function () {
 
@@ -72672,15 +72672,28 @@ function ($,
 							return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
 					}
 
-					this .fileReader .onload = this .readAsText .bind (this, blob);
+					this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
 
-					this .fileReader .readAsText (blob);
+					this .fileReader .readAsArrayBuffer (blob);
 				},
 				error: function (xhr, textStatus, exception)
 				{
 					this .loadDocumentError (new Error (exception));
 				},
 			});
+		},
+		readAsArrayBuffer: function (blob)
+		{
+			try
+			{
+				this .callback (pako .ungzip (this .fileReader .result, { to: "string" }));
+			}
+			catch (exception)
+			{
+				this .fileReader .onload = this .readAsText .bind (this, blob);
+
+				this .fileReader .readAsText (blob);
+			}
 		},
 		readAsText: function (blob)
 		{
@@ -72690,20 +72703,7 @@ function ($,
 			}
 			catch (exception)
 			{
-				this .fileReader .onload = this .readAsArrayBuffer .bind (this, exception);
-
-				this .fileReader .readAsArrayBuffer (blob);
-			}
-		},
-		readAsArrayBuffer: function (exceptionReadAsText)
-		{
-			try
-			{
-				this .callback (pako .ungzip (this .fileReader .result, { to: "string" }));
-			}
-			catch (exception)
-			{
-				this .loadDocumentError (exceptionReadAsText);
+				this .loadDocumentError (exception);
 			}
 		},
 		loadDocumentError: function (exception)
