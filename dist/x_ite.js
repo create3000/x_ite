@@ -1,4 +1,4 @@
-/* X_ITE v4.2.17-572 */
+/* X_ITE v4.2.17-573 */
 
 (function () {
 
@@ -47566,89 +47566,6 @@ define ('x_ite/Browser/Core/Shading',[],function ()
  ******************************************************************************/
 
 
-define ('standard/Math/Geometry/Triangle2',[],function ()
-{
-"use strict";
-
-	return {
-		isPointInTriangle: function (a, b, c, point)
-		{
-		   // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
-
-		   var det = (b.y - c.y) * (a.x - c.x) + (c.x - b.x) * (a.y - c.y);
-
-			if (det == 0)
-				return false;
-
-		   var u = ((b.y - c.y) * (point .x - c.x) + (c.x - b.x) * (point .y - c.y)) / det;
-
-		   if (u < 0 || u > 1)
-		      return false;
-
-		   var v = ((c.y - a.y) * (point .x - c.x) + (a.x - c.x) * (point .y - c.y)) / det;
-
-		   if (v < 0 || v > 1)
-		      return false;
-
-		   var t = 1 - u - v;
-
-		   if (t < 0 || t > 1)
-		      return false;
-		   
-			return true;
-		},
-	};
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Components/Rendering/X3DGeometryNode',[
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
@@ -47661,7 +47578,6 @@ define ('x_ite/Components/Rendering/X3DGeometryNode',[
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Geometry/Plane3",
-	"standard/Math/Geometry/Triangle2",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Algorithm",
 ],
@@ -47676,7 +47592,6 @@ function (Fields,
           Matrix4,
           Box3,
           Plane3,
-          Triangle2,
           Triangle3,
           Algorithm)
 {

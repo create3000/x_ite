@@ -59,7 +59,6 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Geometry/Plane3",
-	"standard/Math/Geometry/Triangle2",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Algorithm",
 ],
@@ -74,7 +73,6 @@ function (Fields,
           Matrix4,
           Box3,
           Plane3,
-          Triangle2,
           Triangle3,
           Algorithm)
 {
