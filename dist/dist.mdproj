@@ -51,6 +51,8 @@
     <None Include="components\geospatial.min.js" />
     <None Include="components\h-anim.js" />
     <None Include="components\h-anim.min.js" />
+    <None Include="components\particle-systems.js" />
+    <None Include="components\particle-systems.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

@@ -231,7 +231,7 @@ function (ComponentInfoArray,
 		title:      "Particle systems",
 		name:       "ParticleSystems",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .provider ("particle-systems"),
 	});
 
 	SupportedComponents .addComponent (

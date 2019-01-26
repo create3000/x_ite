@@ -70,7 +70,6 @@ define ([
 	"x_ite/Browser/Text/X3DTextContext",
 	"x_ite/Browser/Texturing/X3DTexturingContext",
 	"x_ite/Browser/Time/X3DTimeContext",
-	"x_ite/Browser/ParticleSystems/X3DParticleSystemsContext",
 	"x_ite/Execution/World",
 	"x_ite/Bits/TraverseType",
 ],
@@ -96,7 +95,6 @@ function (SFTime,
           X3DTextContext,
           X3DTexturingContext,
           X3DTimeContext,
-          X3DParticleSystemsContext,
           World,
           TraverseType)
 {
@@ -125,7 +123,6 @@ function (SFTime,
 		X3DTextContext                 .call (this);
 		X3DTexturingContext            .call (this);
 		X3DTimeContext                 .call (this);
-		X3DParticleSystemsContext      .call (this);
 
 		this .addChildObjects ("initialized",   new SFTime (),
 		                       "shutdown",      new SFTime (),
@@ -166,7 +163,6 @@ function (SFTime,
 		X3DTextContext .prototype,
 		X3DTexturingContext .prototype,
 		X3DTimeContext .prototype,
-		X3DParticleSystemsContext .prototype,
 	{
 		constructor: X3DBrowserContext,
 		initialize: function ()
@@ -192,7 +188,6 @@ function (SFTime,
 			X3DTextContext                 .prototype .initialize .call (this);
 			X3DTexturingContext            .prototype .initialize .call (this);
 			X3DTimeContext                 .prototype .initialize .call (this);
-			X3DParticleSystemsContext      .prototype .initialize .call (this);
 		},
 		initialized: function ()
 		{

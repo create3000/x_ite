@@ -16,6 +16,7 @@ all:
 	$(call generate_component,geospatial)
 	$(call generate_component,h-anim)
 	$(call generate_component,nurbs)
+	$(call generate_component,particle-systems)
 	$(call generate_component,rigid-body-physics)
 	$(call generate_component,texturing-3d)
 

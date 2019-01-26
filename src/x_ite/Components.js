@@ -65,7 +65,6 @@ define ([
 	"x_ite/Components/Lighting",
 	"x_ite/Components/Navigation",
 	"x_ite/Components/Networking",
-	"x_ite/Components/ParticleSystems",
 	"x_ite/Components/Picking",
 	"x_ite/Components/PointingDeviceSensor",
 	"x_ite/Components/Rendering",

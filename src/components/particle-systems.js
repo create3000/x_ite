@@ -48,6 +48,8 @@
 
 define ([
 	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Browser/X3DBrowserContext",
+	"x_ite/Browser/ParticleSystems/X3DParticleSystemsContext",
 	"x_ite/Components/ParticleSystems/BoundedPhysicsModel",
 	"x_ite/Components/ParticleSystems/ConeEmitter",
 	"x_ite/Components/ParticleSystems/ExplosionEmitter",
@@ -62,6 +64,8 @@ define ([
 	"x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
 ],
 function (SupportedNodes,
+          X3DBrowserContext,
+          X3DParticleSystemsContext,
           BoundedPhysicsModel,
           ConeEmitter,
           ExplosionEmitter,
@@ -102,6 +106,8 @@ function (SupportedNodes,
 
 	for (var typeName in AbstractTypes)
 		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+
+	Object .assign (X3DBrowserContext .prototype, X3DParticleSystemsContext .prototype);
 
 	return Types;
 });

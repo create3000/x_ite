@@ -32,5 +32,7 @@
     <None Include="parts\geospatial.start.frag" />
     <None Include="parts\h-anim.end.frag" />
     <None Include="parts\h-anim.start.frag" />
+    <None Include="parts\particle-systems.end.frag" />
+    <None Include="parts\particle-systems.start.frag" />
   </ItemGroup>
 </Project>

@@ -662,7 +662,6 @@
     <None Include="x_ite\Components\Lighting.js" />
     <None Include="x_ite\Components\Navigation.js" />
     <None Include="x_ite\Components\Networking.js" />
-    <None Include="x_ite\Components\ParticleSystems.js" />
     <None Include="x_ite\Components\Picking.js" />
     <None Include="x_ite\Components\PointingDeviceSensor.js" />
     <None Include="x_ite\Components\Rendering.js" />
@@ -677,6 +676,8 @@
     <None Include="components\geospatial.js" />
     <None Include="components\h-anim.js" />
     <None Include="components\h-anim.config.js" />
+    <None Include="components\particle-systems.config.js" />
+    <None Include="components\particle-systems.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
