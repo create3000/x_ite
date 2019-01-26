@@ -48,7 +48,7 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components",
 	"x_ite/Components/NURBS/Contour2D",
 	"x_ite/Components/NURBS/ContourPolyline2D",
 	"x_ite/Components/NURBS/CoordinateDouble",
@@ -67,7 +67,7 @@ define ([
 	"x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
 	"x_ite/Components/NURBS/X3DParametricGeometryNode",
 ],
-function (SupportedNodes,
+function (Components,
           Contour2D,
           ContourPolyline2D,
           CoordinateDouble,
@@ -88,37 +88,31 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
-	{
-		Contour2D:                    Contour2D,
-		ContourPolyline2D:            ContourPolyline2D,
-		CoordinateDouble:             CoordinateDouble,
-		NurbsCurve:                   NurbsCurve,
-		NurbsCurve2D:                 NurbsCurve2D,
-		NurbsOrientationInterpolator: NurbsOrientationInterpolator,
-		NurbsPatchSurface:            NurbsPatchSurface,
-		NurbsPositionInterpolator:    NurbsPositionInterpolator,
-		NurbsSet:                     NurbsSet,
-		NurbsSurfaceInterpolator:     NurbsSurfaceInterpolator,
-		NurbsSweptSurface:            NurbsSweptSurface,
-		NurbsSwungSurface:            NurbsSwungSurface,
-		NurbsTextureCoordinate:       NurbsTextureCoordinate,
-		NurbsTrimmedSurface:          NurbsTrimmedSurface,
-	};
-
-	var AbstractTypes =
-	{
-		X3DNurbsControlCurveNode:    X3DNurbsControlCurveNode,
-		X3DNurbsSurfaceGeometryNode: X3DNurbsSurfaceGeometryNode,
-		X3DParametricGeometryNode:   X3DParametricGeometryNode,
-	};
-
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-
-	return Types;
+	Components .addComponent ({
+		name: "NURBS",
+		types:
+		{
+			Contour2D:                    Contour2D,
+			ContourPolyline2D:            ContourPolyline2D,
+			CoordinateDouble:             CoordinateDouble,
+			NurbsCurve:                   NurbsCurve,
+			NurbsCurve2D:                 NurbsCurve2D,
+			NurbsOrientationInterpolator: NurbsOrientationInterpolator,
+			NurbsPatchSurface:            NurbsPatchSurface,
+			NurbsPositionInterpolator:    NurbsPositionInterpolator,
+			NurbsSet:                     NurbsSet,
+			NurbsSurfaceInterpolator:     NurbsSurfaceInterpolator,
+			NurbsSweptSurface:            NurbsSweptSurface,
+			NurbsSwungSurface:            NurbsSwungSurface,
+			NurbsTextureCoordinate:       NurbsTextureCoordinate,
+			NurbsTrimmedSurface:          NurbsTrimmedSurface,
+		},
+		abstractTypes:
+		{
+			X3DNurbsControlCurveNode:    X3DNurbsControlCurveNode,
+			X3DNurbsSurfaceGeometryNode: X3DNurbsSurfaceGeometryNode,
+			X3DParametricGeometryNode:   X3DParametricGeometryNode,
+		},
+	});
 });
 

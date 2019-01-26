@@ -47,14 +47,14 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components",
 	"x_ite/Components/H-Anim/HAnimDisplacer",
 	"x_ite/Components/H-Anim/HAnimHumanoid",
 	"x_ite/Components/H-Anim/HAnimJoint",
 	"x_ite/Components/H-Anim/HAnimSegment",
 	"x_ite/Components/H-Anim/HAnimSite",
 ],
-function (SupportedNodes,
+function (Components,
           HAnimDisplacer,
           HAnimHumanoid,
           HAnimJoint,
@@ -63,25 +63,19 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
-	{
-		HAnimDisplacer: HAnimDisplacer,
-		HAnimHumanoid:  HAnimHumanoid,
-		HAnimJoint:     HAnimJoint,
-		HAnimSegment:   HAnimSegment,
-		HAnimSite:      HAnimSite,
-	};
-
-	var AbstractTypes =
-	{
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-
-	return Types;
+	Components .addComponent ({
+		name: "H-Anim",
+		types:
+		{
+			HAnimDisplacer: HAnimDisplacer,
+			HAnimHumanoid:  HAnimHumanoid,
+			HAnimJoint:     HAnimJoint,
+			HAnimSegment:   HAnimSegment,
+			HAnimSite:      HAnimSite,
+		},
+		abstractTypes:
+		{
+		},
+	});
 });
 

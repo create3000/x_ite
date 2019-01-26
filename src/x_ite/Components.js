@@ -48,6 +48,8 @@
 
 
 define ([
+	"x_ite/Browser/X3DBrowserContext",
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/Core",
 	"x_ite/Components/CubeMapTexturing",
 	"x_ite/Components/DIS",
@@ -78,7 +80,36 @@ define ([
 	"x_ite/Components/VolumeRendering",
 	"x_ite/Components/X_ITE",
 ],
-function ()
+function (X3DBrowserContext,
+          SupportedNodes)
 {
 "use strict";
+
+	function Components () { }
+
+	Components .prototype =
+	{
+		addComponent: function (component)
+		{
+			if (component .types)
+			{
+				for (var typeName in component .types)
+					SupportedNodes .addType (typeName, component .types [typeName]); 
+			}
+
+			if (component .abstractTypes)
+			{
+				for (var typeName in component .abstractTypes)
+					SupportedNodes .addAbstractType (typeName, component .abstractTypes [typeName]);
+			}
+
+			if (component .browser)
+				Object .assign (X3DBrowserContext .prototype, component .browser);
+
+			if (component .name)
+				console .log ("Done loading component '" + component .name + "'.");
+		},
+	};
+
+	return new Components ();
 });

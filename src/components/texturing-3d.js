@@ -48,7 +48,7 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components",
 //	"x_ite/Components/Texturing3D/ComposedTexture3D",
 //	"x_ite/Components/Texturing3D/ImageTexture3D",
 //	"x_ite/Components/Texturing3D/PixelTexture3D",
@@ -58,7 +58,7 @@ define ([
 	"x_ite/Components/Texturing3D/TextureTransformMatrix3D",
 	"x_ite/Components/Texturing3D/X3DTexture3DNode",
 ],
-function (SupportedNodes,
+function (Components,
 //          ComposedTexture3D,
 //          ImageTexture3D,
 //          PixelTexture3D,
@@ -71,28 +71,22 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
-	{
-//		ComposedTexture3D:        ComposedTexture3D,
-//		ImageTexture3D:           ImageTexture3D,
-//		PixelTexture3D:           PixelTexture3D,
-		TextureCoordinate3D:      TextureCoordinate3D,
-		TextureCoordinate4D:      TextureCoordinate4D,
-		TextureTransform3D:       TextureTransform3D,
-		TextureTransformMatrix3D: TextureTransformMatrix3D,
-	};
-
-	var AbstractTypes =
-	{
-//		X3DTexture3DNode: X3DTexture3DNode,
-	};
-
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-
-	return Types;
+	Components .addComponent ({
+		name: "Texturing3D",
+		types:
+		{
+//			ComposedTexture3D:        ComposedTexture3D,
+//			ImageTexture3D:           ImageTexture3D,
+//			PixelTexture3D:           PixelTexture3D,
+			TextureCoordinate3D:      TextureCoordinate3D,
+			TextureCoordinate4D:      TextureCoordinate4D,
+			TextureTransform3D:       TextureTransform3D,
+			TextureTransformMatrix3D: TextureTransformMatrix3D,
+		},
+		abstractTypes:
+		{
+//	   	X3DTexture3DNode: X3DTexture3DNode,
+		},
+	});
 });
 

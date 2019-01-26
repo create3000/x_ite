@@ -3688,7 +3688,7 @@ function (Fields,
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components",
 	"x_ite/Components/RigidBodyPhysics/BallJoint",
 	"x_ite/Components/RigidBodyPhysics/CollidableOffset",
 	"x_ite/Components/RigidBodyPhysics/CollidableShape",
@@ -3707,7 +3707,7 @@ define ([
 	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
 	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
 ],
-function (SupportedNodes,
+function (Components,
           BallJoint,
           CollidableOffset,
           CollidableShape,
@@ -3728,38 +3728,32 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
-	{
-		BallJoint:            BallJoint,
-		CollidableOffset:     CollidableOffset,
-		CollidableShape:      CollidableShape,
-		CollisionCollection:  CollisionCollection,
-		CollisionSensor:      CollisionSensor,
-		CollisionSpace:       CollisionSpace,
-		Contact:              Contact,
-		DoubleAxisHingeJoint: DoubleAxisHingeJoint,
-		MotorJoint:           MotorJoint,
-		RigidBody:            RigidBody,
-		RigidBodyCollection:  RigidBodyCollection,
-		SingleAxisHingeJoint: SingleAxisHingeJoint,
-		SliderJoint:          SliderJoint,
-		UniversalJoint:       UniversalJoint,
-	};
-
-	var AbstractTypes =
-	{
-		X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
-		X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
-		X3DRigidJointNode:          X3DRigidJointNode,
-	};
-
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-
-	return Types;
+	Components .addComponent ({
+		name: "RigidBodyPhysics",
+		types:
+		{
+			BallJoint:            BallJoint,
+			CollidableOffset:     CollidableOffset,
+			CollidableShape:      CollidableShape,
+			CollisionCollection:  CollisionCollection,
+			CollisionSensor:      CollisionSensor,
+			CollisionSpace:       CollisionSpace,
+			Contact:              Contact,
+			DoubleAxisHingeJoint: DoubleAxisHingeJoint,
+			MotorJoint:           MotorJoint,
+			RigidBody:            RigidBody,
+			RigidBodyCollection:  RigidBodyCollection,
+			SingleAxisHingeJoint: SingleAxisHingeJoint,
+			SliderJoint:          SliderJoint,
+			UniversalJoint:       UniversalJoint,
+		},
+		abstractTypes:
+		{
+			X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
+			X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
+			X3DRigidJointNode:          X3DRigidJointNode,
+		},
+	});
 });
 
 

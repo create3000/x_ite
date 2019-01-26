@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Configuration/X3DInfoArray",
 	"x_ite/Configuration/ComponentInfo",
+	"x_ite/Configuration/X3DInfoArray",
 ],
-function (X3DInfoArray,
-          ComponentInfo)
+function (ComponentInfo,
+          X3DInfoArray)
 {
 "use strict";
 
@@ -72,7 +72,7 @@ function (X3DInfoArray,
 	ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ComponentInfoArray,
-		addComponent: function (value)
+		addBaseComponent: function (value)
 		{
 			this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
 		},

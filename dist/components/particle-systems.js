@@ -4127,8 +4127,7 @@ function (Fields,
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Browser/X3DBrowserContext",
+	"x_ite/Components",
 	"x_ite/Browser/ParticleSystems/X3DParticleSystemsContext",
 	"x_ite/Components/ParticleSystems/BoundedPhysicsModel",
 	"x_ite/Components/ParticleSystems/ConeEmitter",
@@ -4143,8 +4142,7 @@ define ([
 	"x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
 	"x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
 ],
-function (SupportedNodes,
-          X3DBrowserContext,
+function (Components,
           X3DParticleSystemsContext,
           BoundedPhysicsModel,
           ConeEmitter,
@@ -4161,35 +4159,28 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
-	{
-		BoundedPhysicsModel: BoundedPhysicsModel,
-		ConeEmitter:         ConeEmitter,
-		ExplosionEmitter:    ExplosionEmitter,
-		ForcePhysicsModel:   ForcePhysicsModel,
-		ParticleSystem:      ParticleSystem,
-		PointEmitter:        PointEmitter,
-		PolylineEmitter:     PolylineEmitter,
-		SurfaceEmitter:      SurfaceEmitter,
-		VolumeEmitter:       VolumeEmitter,
-		WindPhysicsModel:    WindPhysicsModel,
-	};
-
-	var AbstractTypes =
-	{
-		X3DParticleEmitterNode:      X3DParticleEmitterNode,
-		X3DParticlePhysicsModelNode: X3DParticlePhysicsModelNode,
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-
-	Object .assign (X3DBrowserContext .prototype, X3DParticleSystemsContext .prototype);
-
-	return Types;
+	Components .addComponent ({
+		name: "ParticleSystems",
+		types:
+		{
+			BoundedPhysicsModel: BoundedPhysicsModel,
+			ConeEmitter:         ConeEmitter,
+			ExplosionEmitter:    ExplosionEmitter,
+			ForcePhysicsModel:   ForcePhysicsModel,
+			ParticleSystem:      ParticleSystem,
+			PointEmitter:        PointEmitter,
+			PolylineEmitter:     PolylineEmitter,
+			SurfaceEmitter:      SurfaceEmitter,
+			VolumeEmitter:       VolumeEmitter,
+			WindPhysicsModel:    WindPhysicsModel,
+		},
+		abstractTypes:
+		{
+			X3DParticleEmitterNode:      X3DParticleEmitterNode,
+			X3DParticlePhysicsModelNode: X3DParticlePhysicsModelNode,
+		},
+		browser: X3DParticleSystemsContext .prototype,
+	});
 });
 
 

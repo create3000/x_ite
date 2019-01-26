@@ -69,7 +69,7 @@ function (SupportedComponents,
 	{
 	};
 
-	SupportedComponents .addComponent (
+	SupportedComponents .addBaseComponent (
 	{
 		title:      "X_ITE",
 		name:       "X_ITE",

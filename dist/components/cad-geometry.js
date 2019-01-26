@@ -900,7 +900,7 @@ function (Fields,
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components",
 	"x_ite/Components/CADGeometry/CADAssembly",
 	"x_ite/Components/CADGeometry/CADFace",
 	"x_ite/Components/CADGeometry/CADLayer",
@@ -909,7 +909,7 @@ define ([
 	"x_ite/Components/CADGeometry/QuadSet",
 	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
 ],
-function (SupportedNodes,
+function (Components,
           CADAssembly,
           CADFace,
           CADLayer,
@@ -920,28 +920,22 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
-	{
-		CADAssembly:    CADAssembly,
-		CADFace:        CADFace,
-		CADLayer:       CADLayer,
-		CADPart:        CADPart,
-		IndexedQuadSet: IndexedQuadSet,
-		QuadSet:        QuadSet,
-	};
-
-	var AbstractTypes =
-	{
-		X3DProductStructureChildNode: X3DProductStructureChildNode,
-	};
-
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-
-	return Types;
+	Components .addComponent ({
+		name: "CADGeometry",
+		types:
+		{
+			CADAssembly:    CADAssembly,
+			CADFace:        CADFace,
+			CADLayer:       CADLayer,
+			CADPart:        CADPart,
+			IndexedQuadSet: IndexedQuadSet,
+			QuadSet:        QuadSet,
+		},
+		abstractTypes:
+		{
+			X3DProductStructureChildNode: X3DProductStructureChildNode,
+		},
+	});
 });
 
 

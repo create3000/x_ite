@@ -47,7 +47,7 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components",
 	"x_ite/Components/Geospatial/GeoCoordinate",
 	"x_ite/Components/Geospatial/GeoElevationGrid",
 	"x_ite/Components/Geospatial/GeoLOD",
@@ -61,7 +61,7 @@ define ([
 	"x_ite/Components/Geospatial/GeoViewpoint",
 	"x_ite/Components/Geospatial/X3DGeospatialObject",
 ],
-function (SupportedNodes,
+function (Components,
           GeoCoordinate,
           GeoElevationGrid,
           GeoLOD,
@@ -77,32 +77,26 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
-	{
-		GeoCoordinate:           GeoCoordinate,
-		GeoElevationGrid:        GeoElevationGrid,
-		GeoLOD:                  GeoLOD,
-		GeoLocation:             GeoLocation,
-		GeoMetadata:             GeoMetadata,
-		GeoOrigin:               GeoOrigin,
-		GeoPositionInterpolator: GeoPositionInterpolator,
-		GeoProximitySensor:      GeoProximitySensor,
-		GeoTouchSensor:          GeoTouchSensor,
-		GeoTransform:            GeoTransform,
-		GeoViewpoint:            GeoViewpoint,
-	};
-
-	var AbstractTypes =
-	{
-		X3DGeospatialObject: X3DGeospatialObject,
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-
-	return Types;
+	Components .addComponent ({
+		name: "Geospatial",
+		types:
+		{
+			GeoCoordinate:           GeoCoordinate,
+			GeoElevationGrid:        GeoElevationGrid,
+			GeoLOD:                  GeoLOD,
+			GeoLocation:             GeoLocation,
+			GeoMetadata:             GeoMetadata,
+			GeoOrigin:               GeoOrigin,
+			GeoPositionInterpolator: GeoPositionInterpolator,
+			GeoProximitySensor:      GeoProximitySensor,
+			GeoTouchSensor:          GeoTouchSensor,
+			GeoTransform:            GeoTransform,
+			GeoViewpoint:            GeoViewpoint,
+		},
+		abstractTypes:
+		{
+			X3DGeospatialObject: X3DGeospatialObject,
+		},
+	});
 });
 
