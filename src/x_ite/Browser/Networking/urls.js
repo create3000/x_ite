@@ -66,6 +66,7 @@ function (URI,
 
 	return {
 		provider: provider,
+		fontsUrl: scriptUrl .transform ("fonts/") .toString (),
 		providerUrl: "http://create3000.de/x_ite",
 		fallbackUrl: "http://cors.create3000.de/",
 		fallbackExpression: new RegExp ("^http://cors.create3000.de/"),

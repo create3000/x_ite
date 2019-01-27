@@ -678,6 +678,19 @@
     <None Include="components\h-anim.config.js" />
     <None Include="components\particle-systems.config.js" />
     <None Include="components\particle-systems.js" />
+    <None Include="fonts\DroidSerif-Bold.ttf" />
+    <None Include="fonts\DroidSerif-BoldItalic.ttf" />
+    <None Include="fonts\DroidSerif-Italic.ttf" />
+    <None Include="fonts\DroidSerif-Regular.ttf" />
+    <None Include="fonts\fonts.mdproj" />
+    <None Include="fonts\Ubuntu-B.ttf" />
+    <None Include="fonts\Ubuntu-BI.ttf" />
+    <None Include="fonts\UbuntuMono-B.ttf" />
+    <None Include="fonts\UbuntuMono-BI.ttf" />
+    <None Include="fonts\UbuntuMono-R.ttf" />
+    <None Include="fonts\UbuntuMono-RI.ttf" />
+    <None Include="fonts\Ubuntu-R.ttf" />
+    <None Include="fonts\Ubuntu-RI.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
@@ -694,5 +707,6 @@
     <Folder Include="lib\nurbs\src\" />
     <Folder Include="lib\nurbs\src\utils\" />
     <Folder Include="lib\nurbs\extras\" />
+    <Folder Include="fonts\" />
   </ItemGroup>
 </Project>

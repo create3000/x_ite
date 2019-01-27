@@ -1,10 +1,8 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="X_ITE.sln">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
     <Files>
-      <File FileName="src/x_ite.html" Line="15" Column="1" />
-      <File FileName="Makefile" Line="34" Column="34" />
-      <File FileName="X_ITE.sln" Line="20" Column="22" />
+      <File FileName="src/x_ite.html" Line="10" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

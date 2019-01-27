@@ -39572,6 +39572,7 @@ function (URI,
 
 	return {
 		provider: provider,
+		fontsUrl: scriptUrl .transform ("fonts/") .toString (),
 		providerUrl: "http://create3000.de/x_ite",
 		fallbackUrl: "http://cors.create3000.de/",
 		fallbackExpression: new RegExp ("^http://cors.create3000.de/"),
@@ -69962,79 +69963,6 @@ define ('x_ite/Browser/Text/TextAlignment',[],function ()
  ******************************************************************************/
 
 
-define ('standard/Utility/Shuffle',[],function ()
-{
-"use strict";
-
-   return function shuffle (array)
-	{
-		var i = array .length;
-	
-		while (i > 1)
-		{
-			var
-				a = -- i,
-				b = Math .floor (Math .random () * a),
-				t = array [a];
-	
-			array [a] = array [b];
-			array [b] = t;
-		}
-	
-		return array;
-	};
-});
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Components/Text/X3DFontStyleNode',[
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
@@ -70043,10 +69971,6 @@ define ('x_ite/Components/Text/X3DFontStyleNode',[
 	"x_ite/InputOutput/FileLoader",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Networking/urls",
-	"standard/Utility/Shuffle",
-	"standard/Networking/URI",
-	"x_ite/Browser/VERSION",
-	"x_ite/DEBUG",
 ],
 function (Fields,
           X3DNode,
@@ -70054,49 +69978,34 @@ function (Fields,
           TextAlignment,
           FileLoader,
           X3DConstants,
-          urls,
-          shuffle,
-          URI,
-          VERSION,
-          DEBUG)
+          urls)
 {
 "use strict";
 
-   /*
-    * Font paths for default SERIF, SANS and TYPWRITER families.
-    */
-
-	var version = DEBUG || VERSION .match (/a$/) ? "latest" : VERSION;
-
-	var FontDirectories = [
-		"https://code.create3000.de/fonts/",
-		"https://cdn.rawgit.com/create3000/x_ite/" + version + "/fonts/",
-		"https://cdn.jsdelivr.net/gh/create3000/x_ite@" + version + "/fonts/",
-		//"https://rawgit.com/create3000/x_ite/" + version + "/fonts/",
-	];
-
-	shuffle (FontDirectories);
+	/*
+	 * Font paths for default SERIF, SANS and TYPWRITER families.
+	 */
 
 	var Fonts =
 	{
-	   SERIF: {
-	      PLAIN:      "DroidSerif-Regular.ttf",
-	      ITALIC:     "DroidSerif-Italic.ttf",
-	      BOLD:       "DroidSerif-Bold.ttf",
-	      BOLDITALIC: "DroidSerif-BoldItalic.ttf",
-	   },
-	   SANS: {
-	      PLAIN:      "Ubuntu-R.ttf",
-	      ITALIC:     "Ubuntu-RI.ttf",
-	      BOLD:       "Ubuntu-B.ttf",
-	      BOLDITALIC: "Ubuntu-BI.ttf",
-	   },
-	   TYPEWRITER: {
-	      PLAIN:      "UbuntuMono-R.ttf",
-	      ITALIC:     "UbuntuMono-RI.ttf",
-	      BOLD:       "UbuntuMono-B.ttf",
-	      BOLDITALIC: "UbuntuMono-BI.ttf",
-	   },
+		SERIF: {
+			PLAIN:      "DroidSerif-Regular.ttf",
+			ITALIC:     "DroidSerif-Italic.ttf",
+			BOLD:       "DroidSerif-Bold.ttf",
+			BOLDITALIC: "DroidSerif-BoldItalic.ttf",
+		},
+		SANS: {
+			PLAIN:      "Ubuntu-R.ttf",
+			ITALIC:     "Ubuntu-RI.ttf",
+			BOLD:       "Ubuntu-B.ttf",
+			BOLDITALIC: "Ubuntu-BI.ttf",
+		},
+		TYPEWRITER: {
+			PLAIN:      "UbuntuMono-R.ttf",
+			ITALIC:     "UbuntuMono-RI.ttf",
+			BOLD:       "UbuntuMono-B.ttf",
+			BOLDITALIC: "UbuntuMono-BI.ttf",
+		},
 	};
 
 	function X3DFontStyleNode (executionContext)
@@ -70152,13 +70061,13 @@ function (Fields,
 
 			this .alignments [0] = this .justify_ .length > 0
 			                       ? this .getAlignment (0, majorNormal)
-								        : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
+			                       : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
 
 			var minorNormal = this .horizontal_ .getValue () ? this .topToBottom_ .getValue () : this .leftToRight_ .getValue ();
 
 			this .alignments [1] = this .justify_ .length > 1
 			                       ? this .getAlignment (1, minorNormal)
-								        : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
+			                       : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
 		},
 		getAlignment: function (index, normal)
 		{
@@ -70208,15 +70117,12 @@ function (Fields,
 
 			for (var i = 0, length = family .length; i < length; ++ i)
 			{
-			   var
-			      familyName  = family [i],
-			      defaultFont = this .getDefaultFont (familyName);
-			   
+				var
+					familyName  = family [i],
+					defaultFont = this .getDefaultFont (familyName);
+				
 				if (defaultFont)
-				{
-				   for (var d = 0; d < FontDirectories .length; ++ d)
-				      this .familyStack .push (FontDirectories [d] + defaultFont);
-				}
+					this .familyStack .push (urls .fontsUrl + defaultFont);
 				else
 					this .familyStack .push (familyName);
 			}
@@ -70225,19 +70131,19 @@ function (Fields,
 		},
 		getDefaultFont: function (familyName)
 		{
-		   var family = Fonts [familyName];
+			var family = Fonts [familyName];
 
-		   if (family)
-		   {
-		      var style = family [this .style_ .getValue ()];
+			if (family)
+			{
+				var style = family [this .style_ .getValue ()];
 
-		      if (style)
-		         return style;
+				if (style)
+					return style;
 
-		      return family .PLAIN;
-		   }
+				return family .PLAIN;
+			}
 
-		   return;
+			return;
 		},
 		loadNext: function ()
 		{
@@ -70276,7 +70182,7 @@ function (Fields,
 		},
 		getFont: function ()
 		{
-		   return this .font;
+			return this .font;
 		},
 	});
 

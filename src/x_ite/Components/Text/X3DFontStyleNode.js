@@ -55,10 +55,6 @@ define ([
 	"x_ite/InputOutput/FileLoader",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Networking/urls",
-	"standard/Utility/Shuffle",
-	"standard/Networking/URI",
-	"x_ite/Browser/VERSION",
-	"x_ite/DEBUG",
 ],
 function (Fields,
           X3DNode,
@@ -66,49 +62,34 @@ function (Fields,
           TextAlignment,
           FileLoader,
           X3DConstants,
-          urls,
-          shuffle,
-          URI,
-          VERSION,
-          DEBUG)
+          urls)
 {
 "use strict";
 
-   /*
-    * Font paths for default SERIF, SANS and TYPWRITER families.
-    */
-
-	var version = DEBUG || VERSION .match (/a$/) ? "latest" : VERSION;
-
-	var FontDirectories = [
-		"https://code.create3000.de/fonts/",
-		"https://cdn.rawgit.com/create3000/x_ite/" + version + "/fonts/",
-		"https://cdn.jsdelivr.net/gh/create3000/x_ite@" + version + "/fonts/",
-		//"https://rawgit.com/create3000/x_ite/" + version + "/fonts/",
-	];
-
-	shuffle (FontDirectories);
+	/*
+	 * Font paths for default SERIF, SANS and TYPWRITER families.
+	 */
 
 	var Fonts =
 	{
-	   SERIF: {
-	      PLAIN:      "DroidSerif-Regular.ttf",
-	      ITALIC:     "DroidSerif-Italic.ttf",
-	      BOLD:       "DroidSerif-Bold.ttf",
-	      BOLDITALIC: "DroidSerif-BoldItalic.ttf",
-	   },
-	   SANS: {
-	      PLAIN:      "Ubuntu-R.ttf",
-	      ITALIC:     "Ubuntu-RI.ttf",
-	      BOLD:       "Ubuntu-B.ttf",
-	      BOLDITALIC: "Ubuntu-BI.ttf",
-	   },
-	   TYPEWRITER: {
-	      PLAIN:      "UbuntuMono-R.ttf",
-	      ITALIC:     "UbuntuMono-RI.ttf",
-	      BOLD:       "UbuntuMono-B.ttf",
-	      BOLDITALIC: "UbuntuMono-BI.ttf",
-	   },
+		SERIF: {
+			PLAIN:      "DroidSerif-Regular.ttf",
+			ITALIC:     "DroidSerif-Italic.ttf",
+			BOLD:       "DroidSerif-Bold.ttf",
+			BOLDITALIC: "DroidSerif-BoldItalic.ttf",
+		},
+		SANS: {
+			PLAIN:      "Ubuntu-R.ttf",
+			ITALIC:     "Ubuntu-RI.ttf",
+			BOLD:       "Ubuntu-B.ttf",
+			BOLDITALIC: "Ubuntu-BI.ttf",
+		},
+		TYPEWRITER: {
+			PLAIN:      "UbuntuMono-R.ttf",
+			ITALIC:     "UbuntuMono-RI.ttf",
+			BOLD:       "UbuntuMono-B.ttf",
+			BOLDITALIC: "UbuntuMono-BI.ttf",
+		},
 	};
 
 	function X3DFontStyleNode (executionContext)
@@ -164,13 +145,13 @@ function (Fields,
 
 			this .alignments [0] = this .justify_ .length > 0
 			                       ? this .getAlignment (0, majorNormal)
-								        : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
+			                       : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
 
 			var minorNormal = this .horizontal_ .getValue () ? this .topToBottom_ .getValue () : this .leftToRight_ .getValue ();
 
 			this .alignments [1] = this .justify_ .length > 1
 			                       ? this .getAlignment (1, minorNormal)
-								        : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
+			                       : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
 		},
 		getAlignment: function (index, normal)
 		{
@@ -220,15 +201,12 @@ function (Fields,
 
 			for (var i = 0, length = family .length; i < length; ++ i)
 			{
-			   var
-			      familyName  = family [i],
-			      defaultFont = this .getDefaultFont (familyName);
-			   
+				var
+					familyName  = family [i],
+					defaultFont = this .getDefaultFont (familyName);
+				
 				if (defaultFont)
-				{
-				   for (var d = 0; d < FontDirectories .length; ++ d)
-				      this .familyStack .push (FontDirectories [d] + defaultFont);
-				}
+					this .familyStack .push (urls .fontsUrl + defaultFont);
 				else
 					this .familyStack .push (familyName);
 			}
@@ -237,19 +215,19 @@ function (Fields,
 		},
 		getDefaultFont: function (familyName)
 		{
-		   var family = Fonts [familyName];
+			var family = Fonts [familyName];
 
-		   if (family)
-		   {
-		      var style = family [this .style_ .getValue ()];
+			if (family)
+			{
+				var style = family [this .style_ .getValue ()];
 
-		      if (style)
-		         return style;
+				if (style)
+					return style;
 
-		      return family .PLAIN;
-		   }
+				return family .PLAIN;
+			}
 
-		   return;
+			return;
 		},
 		loadNext: function ()
 		{
@@ -288,7 +266,7 @@ function (Fields,
 		},
 		getFont: function ()
 		{
-		   return this .font;
+			return this .font;
 		},
 	});
 

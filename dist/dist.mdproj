@@ -53,9 +53,23 @@
     <None Include="components\h-anim.min.js" />
     <None Include="components\particle-systems.js" />
     <None Include="components\particle-systems.min.js" />
+    <None Include="fonts\Ubuntu-RI.ttf" />
+    <None Include="fonts\Ubuntu-R.ttf" />
+    <None Include="fonts\UbuntuMono-RI.ttf" />
+    <None Include="fonts\UbuntuMono-R.ttf" />
+    <None Include="fonts\UbuntuMono-BI.ttf" />
+    <None Include="fonts\UbuntuMono-B.ttf" />
+    <None Include="fonts\Ubuntu-BI.ttf" />
+    <None Include="fonts\Ubuntu-B.ttf" />
+    <None Include="fonts\fonts.mdproj" />
+    <None Include="fonts\DroidSerif-Regular.ttf" />
+    <None Include="fonts\DroidSerif-Italic.ttf" />
+    <None Include="fonts\DroidSerif-BoldItalic.ttf" />
+    <None Include="fonts\DroidSerif-Bold.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
     <Folder Include="components\" />
+    <Folder Include="fonts\" />
   </ItemGroup>
 </Project>
