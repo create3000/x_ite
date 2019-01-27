@@ -93,6 +93,8 @@ var X_ITE_TESTS = [
 	{ component: "Grouping" },
 	{ path: "Grouping/AddRemoveChildren.x3dv" },
 	{ path: "Grouping/StaticGroup.x3d" },
+	{ component: "H-Anim" },
+	{ path: "H-Anim/BoxManC.x3d" },
 	{ component: "Interpolation" },
 	{ path: "Interpolation/NormalInterpolator.x3d" },
 	{ path: "Interpolation/OrientationInterpolator.x3d" },

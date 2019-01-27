@@ -66,6 +66,8 @@
     <None Include="fonts\DroidSerif-Italic.ttf" />
     <None Include="fonts\DroidSerif-BoldItalic.ttf" />
     <None Include="fonts\DroidSerif-Bold.ttf" />
+    <None Include="components\x_ite.js" />
+    <None Include="components\x_ite.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

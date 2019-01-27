@@ -9,16 +9,17 @@ all:
 	perl -pi -e 's/return (?:true|false);/return false;/sg' src/x_ite/DEBUG.js
 
 	node_modules/requirejs/bin/r.js -o build/x_ite.build.js
-	node_modules/uglify-js-es6/bin/uglifyjs --compress --mangle -- dist/x_ite.js > dist/x_ite.min.js
+	node_modules/uglify-js-es6/bin/uglifyjs --mangle --compress -- dist/x_ite.js > dist/x_ite.min.js
 	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
 
-	$(call generate_component,cad-geometry)
-	$(call generate_component,geospatial)
-	$(call generate_component,h-anim)
-	$(call generate_component,nurbs)
-	$(call generate_component,particle-systems)
+	$(call generate_component,cad-geometry,--compress)
+	$(call generate_component,geospatial,--compress)
+	$(call generate_component,h-anim,--compress)
+	$(call generate_component,nurbs,--compress)
+	$(call generate_component,particle-systems,--compress)
 	$(call generate_component,rigid-body-physics)
-	$(call generate_component,texturing-3d)
+	$(call generate_component,texturing-3d,--compress)
+	$(call generate_component,x_ite,--compress)
 
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.min.js
@@ -58,7 +59,7 @@ clean:
 	rm x_ite.min.js
 
 define generate_component
-	node_modules/requirejs/bin/r.js -o build/$(1).build.js
+	node_modules/requirejs/bin/r.js -o build/components/$(1).build.js
 	perl -pi -e "s|'components/$(1)',||" dist/components/$(1).js
-	node_modules/uglify-js-es6/bin/uglifyjs --mangle -- dist/components/$(1).js > dist/components/$(1).min.js
+	node_modules/uglify-js-es6/bin/uglifyjs --mangle $(2) -- dist/components/$(1).js > dist/components/$(1).min.js
 endef

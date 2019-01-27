@@ -78,7 +78,6 @@ define ([
 	"x_ite/Components/Texturing",
 	"x_ite/Components/Time",
 	"x_ite/Components/VolumeRendering",
-	"x_ite/Components/X_ITE",
 ],
 function (X3DBrowserContext,
           SupportedNodes)

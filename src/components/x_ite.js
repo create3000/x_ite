@@ -48,40 +48,22 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedComponents",
-	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components",
 	"x_ite/Components/X_ITE/BlendMode",
-	"x_ite/Browser/Networking/urls",
 ],
-function (SupportedComponents,
-          SupportedNodes,
-          BlendMode,
-          urls)
+function (Components,
+          BlendMode)
 {
 "use strict";
 
-	var Types =
-	{
-		BlendMode: BlendMode,
-	};
-
-	var AbstractTypes =
-	{
-	};
-
-	SupportedComponents .addBaseComponent (
-	{
-		title:      "X_ITE",
-		name:       "X_ITE",
-		level:       1,
-		providerUrl: urls .providerUrl,
+	Components .addComponent ({
+		name: "X_ITE",
+		types:
+		{
+			BlendMode: BlendMode,
+		},
+		abstractTypes:
+		{
+		},
 	});
-
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-
-	return Types;
 });

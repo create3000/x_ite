@@ -338,5 +338,13 @@ function (ComponentInfoArray,
 		providerUrl: urls .providerUrl,
 	});
 
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "X_ITE",
+		name:       "X_ITE",
+		level:       1,
+		providerUrl: urls .provider ("x_ite"),
+	});
+
 	return SupportedComponents;
 });
