@@ -151,8 +151,8 @@ function (Fields,
 
 			var extrusion = this .extrusion;
 
-			extrusion .crossSection_ = this .profileCurveNode    .tessellate ();
-			extrusion .spine_        = this .trajectoryCurveNode .tessellate (true);
+			extrusion .crossSection_ = this .profileCurveNode    .tessellate (0);
+			extrusion .spine_        = this .trajectoryCurveNode .tessellate (1);
 
 			extrusion .rebuild ();
 

@@ -53,12 +53,14 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/NURBS/X3DNurbsControlCurveNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNurbsControlCurveNode, 
-          X3DConstants)
+          X3DConstants,
+          Vector3)
 {
 "use strict";
 
@@ -90,41 +92,67 @@ function (Fields,
 		{
 			return "children";
 		},
-		tessellate: function (spine)
+		tessellate: function (type)
 		{
-			var
-				controlPointArray = this .controlPoint_ .getValue (),
-				controlPoints     = this .controlPoints;
-
-			if (spine)
+			switch (type)
 			{
-				for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+				case 0:
 				{
 					var
-						i2 = i * 2,
-						i3 = i * 3;
+						controlPointArray = this .controlPoint_ .getValue (),
+						controlPoints     = this .controlPoints;
 
-					controlPoints [i3 + 0] = controlPointArray [i2 + 0];
-					controlPoints [i3 + 1] = 0;
-					controlPoints [i3 + 2] = controlPointArray [i2 + 1];
+					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+					{
+						var i2 = i * 2;
+	
+						controlPoints [i2 + 0] = controlPointArray [i2 + 0];
+						controlPoints [i2 + 1] = controlPointArray [i2 + 1];
+					}
+	
+					controlPoints .length = length * 2;
+
+					return controlPoints;
 				}
-
-				controlPoints .length = length * 3;
-			}
-			else
-			{
-				for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+				case 1:
 				{
-					var i2 = i * 2;
+					var
+						controlPointArray = this .controlPoint_ .getValue (),
+						controlPoints     = this .controlPoints;
 
-					controlPoints [i2 + 0] = controlPointArray [i2 + 0];
-					controlPoints [i2 + 1] = controlPointArray [i2 + 1];
+					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+					{
+						var
+							i2 = i * 2,
+							i3 = i * 3;
+	
+						controlPoints [i3 + 0] = controlPointArray [i2 + 0];
+						controlPoints [i3 + 1] = 0;
+						controlPoints [i3 + 2] = controlPointArray [i2 + 1];
+					}
+	
+					controlPoints .length = length * 3;
+
+					return controlPoints;
 				}
+				case 3:
+				{
+					var
+						controlPointArray = this .controlPoint_ .getValue (),
+						controlPoints     = this .controlPoints;
 
-				controlPoints .length = length * 2;
+					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+					{
+						var i2 = i * 2;
+
+						controlPoints [i] = new Vector3 (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0);
+					}
+	
+					controlPoints .length = length;
+
+					return controlPoints;
+				}
 			}
-
-			return controlPoints;
 		},
 	});
 

@@ -162,6 +162,10 @@ function (X3DParametricGeometryNode,
 		{
 			return NURBS .getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode);
 		},
+		getTrimmingContours: function ()
+		{
+			return undefined;
+		},
 		build: function ()
 		{
 			if (this .uOrder_ .getValue () < 2)

@@ -54,6 +54,7 @@ define ([
 	"x_ite/Components/NURBS/X3DNurbsControlCurveNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/NURBS/NURBS",
+	"standard/Math/Numbers/Vector3",
 	"nurbs",
 ],
 function (Fields,
@@ -62,6 +63,7 @@ function (Fields,
           X3DNurbsControlCurveNode, 
           X3DConstants,
           NURBS,
+          Vector3,
           nurbs)
 {
 "use strict";
@@ -127,7 +129,7 @@ function (Fields,
 		{
 			return NURBS .getControlPoints2D (result, closed, order, controlPoint);
 		},
-		tessellate: function (spine)
+		tessellate: function (type)
 		{
 			var array = this .array;
 
@@ -172,15 +174,29 @@ function (Fields,
 				mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
 				points = mesh .points;
 
-			if (spine)
+			switch (type)
 			{
-				for (var i = 0, length = points .length; i < length; i += 2)
-					array .push (points [i], 0, points [i + 1]);
-			}
-			else
-			{
-				for (var i = 0, length = points .length; i < length; i += 2)
-					array .push (points [i], points [i + 1]);
+				case 0:
+				{
+					for (var i = 0, length = points .length; i < length; i += 2)
+						array .push (points [i], points [i + 1]);
+
+					break;
+				}
+				case 1:
+				{
+					for (var i = 0, length = points .length; i < length; i += 2)
+						array .push (points [i], 0, points [i + 1]);
+
+					break;
+				}
+				case 2:
+				{
+					for (var i = 0, length = points .length; i < length; i += 2)
+						array .push (new Vector3 (points [i], points [i + 1], 0));
+
+					break;
+				}
 			}
 
 			return array;

@@ -71,6 +71,7 @@ function (Fields,
 	var
 		min    = new Vector3 (0, 0, 0),
 		max    = new Vector3 (0, 0, 0),
+		normal = new Vector3 (0, 0, 0),
 		paths  = [ ],
 		points = [ ],
 		curves = [ ];
@@ -362,7 +363,7 @@ function (Fields,
 
 			curves = curves .map (function (curve)
 			{
-				var normal = Triangle3 .getPolygonNormal (curve, new Vector3 (0,0,0));
+				var normal = Triangle3 .getPolygonNormal (curve, normal);
 
 				if (normal .dot (Vector3 .zAxis) > 0)
 					return curve;

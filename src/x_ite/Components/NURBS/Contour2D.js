@@ -53,12 +53,14 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
-          X3DConstants)
+          X3DConstants, 
+          X3DCast)
 {
 "use strict";
 
@@ -67,6 +69,8 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Contour2D);
+
+		this .childNodes = [ ];
 	}
 
 	Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -90,6 +94,46 @@ function (Fields,
 		{
 			return "trimmingContour";
 		},
+		initialize: function ()
+		{
+			X3DNode .prototype .initialize .call (this);
+
+			this .children_ .addInterest ("set_children__", this);
+
+			this .set_children__ ();
+		},
+		set_children__: function ()
+		{
+			var childNodes = this .childNodes;
+
+			childNodes .length = 0;
+
+			for (var i = 0, length = this .children_ .length; i < length; ++ i)
+			{
+				var childNode = X3DCast (X3DConstants .NurbsCurve2D, this .children_ [i]);
+
+				if (childNode)
+				{
+					childNodes .push (childNode);
+					continue;
+				}
+
+				var childNode = X3DCast (X3DConstants .ContourPolyline2D, this .children_ [i]);
+
+				if (childNode)
+				{
+					childNodes .push (childNode);
+					continue;
+				}
+			}
+		},
+		addTrimmingContour: function (trimmingContours)
+		{
+			var childNodes = this .childNodes;
+
+			for (var i = 0, length = childNodes .length; i < length; ++ i)
+				trimmingContours .push (childNodes [i] .tessellate (2));
+		}
 	});
 
 	return Contour2D;

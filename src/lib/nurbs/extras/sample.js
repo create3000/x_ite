@@ -102,7 +102,7 @@ define (function ()
 					vClosed    = surface .boundary [1] === 'closed',
 					nuBound    = nu + ! uClosed,
 					nvBound    = nv + ! vClosed,
-					nbNormals  = nuBound * nvBound * 3,
+					nbNormals  = nuBound * nvBound * 3 * generateNormals,
 					nbVertices = nuBound * nvBound * dimension,
 					uDer       = surface .evaluator ([1, 0]),
 					vDer       = surface .evaluator ([0, 1]),
@@ -111,6 +111,8 @@ define (function ()
 					vDomain    = domain [1],
 					uDistance  = uDomain [1] - uDomain [0],
 					vDistance  = vDomain [1] - vDomain [0];
+
+				// Generate points and normals.
 
 				for (var i = 0; i < nuBound; ++ i)
 				{
@@ -141,9 +143,11 @@ define (function ()
 					}
 				}
 	
-				normals .length = nbNormals;
 				points  .length = nbVertices;
+				normals .length = nbNormals;
 				
+				// Generate faces.
+
 				var c = 0;
 	
 				for (var i = 0; i < nu; ++ i)
@@ -163,13 +167,17 @@ define (function ()
 						if (vClosed)
 							j1 = j1 % nv;
 						
-						faces [c ++] = i0 + nuBound * j0;
-						faces [c ++] = i1 + nuBound * j0;
-						faces [c ++] = i1 + nuBound * j1;
+						// Triangle 1
+
+						faces [c ++] = i0 + nuBound * j0; // 1
+						faces [c ++] = i1 + nuBound * j0; // 2
+						faces [c ++] = i1 + nuBound * j1; // 3
 						
-						faces [c ++] = i0 + nuBound * j0;
-						faces [c ++] = i1 + nuBound * j1;
-						faces [c ++] = i0 + nuBound * j1;
+						// Triangle 2
+
+						faces [c ++] = i0 + nuBound * j0; // 1
+						faces [c ++] = i1 + nuBound * j1; // 3
+						faces [c ++] = i0 + nuBound * j1; // 4
 					}
 				}
 		
