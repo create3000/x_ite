@@ -645,7 +645,6 @@
     <None Include="x_ite\Components.js" />
     <None Include="x_ite\Components\Text.js" />
     <None Include="x_ite\Components\Core.js" />
-    <None Include="x_ite\Components\CubeMapTexturing.js" />
     <None Include="x_ite\Components\DIS.js" />
     <None Include="x_ite\Components\EnvironmentalEffects.js" />
     <None Include="x_ite\Components\EnvironmentalSensor.js" />
@@ -692,6 +691,8 @@
     <None Include="fonts\Ubuntu-RI.ttf" />
     <None Include="components\x_ite.config.js" />
     <None Include="components\x_ite.js" />
+    <None Include="components\cube-map-texturing.config.js" />
+    <None Include="components\cube-map-texturing.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

@@ -68,6 +68,8 @@
     <None Include="fonts\DroidSerif-Bold.ttf" />
     <None Include="components\x_ite.js" />
     <None Include="components\x_ite.min.js" />
+    <None Include="components\cube-map-texturing.js" />
+    <None Include="components\cube-map-texturing.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

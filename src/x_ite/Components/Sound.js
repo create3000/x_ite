@@ -78,7 +78,5 @@ function (SupportedNodes,
 
 	for (var typeName in AbstractTypes)
 		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-
-	return Types;
 });
 

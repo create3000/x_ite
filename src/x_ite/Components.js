@@ -51,7 +51,6 @@ define ([
 	"x_ite/Browser/X3DBrowserContext",
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/Core",
-	"x_ite/Components/CubeMapTexturing",
 	"x_ite/Components/DIS",
 	"x_ite/Components/EnvironmentalEffects",
 	"x_ite/Components/EnvironmentalSensor",

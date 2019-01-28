@@ -47,13 +47,13 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components",
 	"x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture",
 	"x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture",
 	"x_ite/Components/CubeMapTexturing/ImageCubeMapTexture",
 	"x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
 ],
-function (SupportedNodes,
+function (Components,
           ComposedCubeMapTexture,
           GeneratedCubeMapTexture,
           ImageCubeMapTexture,
@@ -61,24 +61,18 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
-	{
-		ComposedCubeMapTexture:  ComposedCubeMapTexture,
-		GeneratedCubeMapTexture: GeneratedCubeMapTexture,
-		ImageCubeMapTexture:     ImageCubeMapTexture,
-	};
-
-	var AbstractTypes =
-	{
-		X3DEnvironmentTextureNode: X3DEnvironmentTextureNode,
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-
-	return Types;
+	Components .addComponent ({
+		name: "CubeMapTexturing",
+		types:
+		{
+			ComposedCubeMapTexture:  ComposedCubeMapTexture,
+			GeneratedCubeMapTexture: GeneratedCubeMapTexture,
+			ImageCubeMapTexture:     ImageCubeMapTexture,
+		},
+		abstractTypes:
+		{
+			X3DEnvironmentTextureNode: X3DEnvironmentTextureNode,
+		},
+	});
 });
 

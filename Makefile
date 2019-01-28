@@ -13,6 +13,7 @@ all:
 	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
 
 	$(call generate_component,cad-geometry,--compress)
+	$(call generate_component,cube-map-texturing,--compress)
 	$(call generate_component,geospatial,--compress)
 	$(call generate_component,h-anim,--compress)
 	$(call generate_component,nurbs,--compress)

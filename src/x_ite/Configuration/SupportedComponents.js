@@ -79,7 +79,7 @@ function (ComponentInfoArray,
 		title:      "Cube map environmental texturing",
 		name:       "CubeMapTexturing",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .provider ("cube-map-texturing"),
 	});
 
 	SupportedComponents .addBaseComponent (
