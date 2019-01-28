@@ -4,7 +4,7 @@
 	name: "components/geospatial",
 	out: "../../dist/components/geospatial.js",
 	optimize: "none",
-	mainConfigFile: "../../src/components/geospatial.config.js",
+	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [
 		"x_ite"
 	],

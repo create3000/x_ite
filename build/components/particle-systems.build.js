@@ -4,7 +4,7 @@
 	name: "components/particle-systems",
 	out: "../../dist/components/particle-systems.js",
 	optimize: "none",
-	mainConfigFile: "../../src/components/particle-systems.config.js",
+	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [
 		"x_ite"
 	],

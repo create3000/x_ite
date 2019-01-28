@@ -4,7 +4,7 @@
 	name: "components/cube-map-texturing",
 	out: "../../dist/components/cube-map-texturing.js",
 	optimize: "none",
-	mainConfigFile: "../../src/components/cube-map-texturing.config.js",
+	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [
 		"x_ite"
 	],

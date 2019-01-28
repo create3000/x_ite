@@ -4,7 +4,7 @@
 	name: "components/x_ite",
 	out: "../../dist/components/x_ite.js",
 	optimize: "none",
-	mainConfigFile: "../../src/components/x_ite.config.js",
+	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [
 		"x_ite"
 	],

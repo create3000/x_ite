@@ -50,6 +50,16 @@ require .config ({
 			"name": "contextMenu",
 			"location": "../node_modules/jquery-contextmenu",
 			"main": "dist/jquery.contextMenu.js"
+		},
+		{
+			"name": "nurbs",
+			"location": "lib/nurbs",
+			"main": "nurbs.js"
+		},
+		{
+			"name": "ammojs",
+			"location": "../node_modules/ammojs",
+			"main": "ammo.js"
 		}
 	],
 	"shim": { },

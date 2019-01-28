@@ -4,7 +4,7 @@
 	name: "components/rigid-body-physics",
 	out: "../../dist/components/rigid-body-physics.js",
 	optimize: "none",
-	mainConfigFile: "../../src/components/rigid-body-physics.config.js",
+	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [
 		"x_ite"
 	],

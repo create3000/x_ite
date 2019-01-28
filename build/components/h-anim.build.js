@@ -4,7 +4,7 @@
 	name: "components/h-anim",
 	out: "../../dist/components/h-anim.js",
 	optimize: "none",
-	mainConfigFile: "../../src/components/h-anim.config.js",
+	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [
 		"x_ite"
 	],

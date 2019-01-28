@@ -4,7 +4,7 @@
 	name: "components/nurbs",
 	out: "../../dist/components/nurbs.js",
 	optimize: "none",
-	mainConfigFile: "../../src/components/nurbs.config.js",
+	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [
 		"x_ite"
 	],

@@ -615,9 +615,7 @@
     <None Include="examples.js" />
     <None Include="x_ite\Browser\Core\Shading.js" />
     <None Include="components\nurbs.js" />
-    <None Include="components\nurbs.config.js" />
     <None Include="components\rigid-body-physics.js" />
-    <None Include="components\rigid-body-physics.config.js" />
     <None Include="x_ite\Browser\NURBS\NURBS.js" />
     <None Include="lib\nurbs\nurbs.js" />
     <None Include="lib\nurbs\src\evaluate.js" />
@@ -638,10 +636,8 @@
     <None Include="lib\nurbs\extras\sample.js" />
     <None Include="x_ite\Browser\Shaders\Include\Shadow.h" />
     <None Include="x_ite\Browser\Shaders\Include\Pack.h" />
-    <None Include="components\texturing-3d.config.js" />
     <None Include="components\texturing-3d.js" />
     <None Include="components\cad-geometry.js" />
-    <None Include="components\cad-geometry.config.js" />
     <None Include="x_ite\Components.js" />
     <None Include="x_ite\Components\Text.js" />
     <None Include="x_ite\Components\Core.js" />
@@ -669,11 +665,8 @@
     <None Include="x_ite\Components\Texturing.js" />
     <None Include="x_ite\Components\Time.js" />
     <None Include="x_ite\Components\VolumeRendering.js" />
-    <None Include="components\geospatial.config.js" />
     <None Include="components\geospatial.js" />
     <None Include="components\h-anim.js" />
-    <None Include="components\h-anim.config.js" />
-    <None Include="components\particle-systems.config.js" />
     <None Include="components\particle-systems.js" />
     <None Include="fonts\DroidSerif-Bold.ttf" />
     <None Include="fonts\DroidSerif-BoldItalic.ttf" />
@@ -688,11 +681,8 @@
     <None Include="fonts\UbuntuMono-RI.ttf" />
     <None Include="fonts\Ubuntu-R.ttf" />
     <None Include="fonts\Ubuntu-RI.ttf" />
-    <None Include="components\x_ite.config.js" />
     <None Include="components\x_ite.js" />
-    <None Include="components\cube-map-texturing.config.js" />
     <None Include="components\cube-map-texturing.js" />
-    <None Include="components\layout.config.js" />
     <None Include="components\layout.js" />
   </ItemGroup>
   <ItemGroup>

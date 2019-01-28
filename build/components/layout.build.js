@@ -4,7 +4,7 @@
 	name: "components/layout",
 	out: "../../dist/components/layout.js",
 	optimize: "none",
-	mainConfigFile: "../../src/components/layout.config.js",
+	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [
 		"x_ite"
 	],
