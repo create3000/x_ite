@@ -85,7 +85,7 @@ X3DCanvas .x_ite-private-notification {
 
 X3DCanvas .x_ite-private-notification span {
 	padding: 0px 24px 0px 20px;
-	background: url(images/icon.bw.png) no-repeat 0px center;
+	background: url(images/icon.bw.png) no-repeat 0px 3px;
 }
 
 X3DCanvas .x_ite-private-browser-timings {
