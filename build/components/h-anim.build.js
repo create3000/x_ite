@@ -9,7 +9,7 @@
 		"x_ite"
 	],
 	wrap: {
-		startFile: "../parts/components/h-anim.start.frag",
-		endFile: "../parts/components/h-anim.end.frag"
+		startFile: "../parts/default.start.frag",
+		endFile: "../parts/default.end.frag"
 	},
 })

@@ -9,7 +9,7 @@
 		"x_ite"
 	],
 	wrap: {
-		startFile: "../parts/components/cad-geometry.start.frag",
-		endFile: "../parts/components/cad-geometry.end.frag"
+		startFile: "../parts/default.start.frag",
+		endFile: "../parts/default.end.frag"
 	},
 })

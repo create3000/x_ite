@@ -9,7 +9,7 @@
 		"x_ite"
 	],
 	wrap: {
-		startFile: "../parts/components/texturing-3d.start.frag",
-		endFile: "../parts/components/texturing-3d.end.frag"
+		startFile: "../parts/default.start.frag",
+		endFile: "../parts/default.end.frag"
 	},
 })

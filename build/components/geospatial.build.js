@@ -9,7 +9,7 @@
 		"x_ite"
 	],
 	wrap: {
-		startFile: "../parts/components/geospatial.start.frag",
-		endFile: "../parts/components/geospatial.end.frag"
+		startFile: "../parts/default.start.frag",
+		endFile: "../parts/default.end.frag"
 	},
 })

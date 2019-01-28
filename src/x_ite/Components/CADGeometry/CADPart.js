@@ -102,10 +102,6 @@ function (Fields,
 		{
 			return "children";
 		},
-		initialize: function ()
-		{
-			X3DTransformNode .prototype .initialize .call (this);
-		},
 	});
 
 	return CADPart;

@@ -68,7 +68,8 @@ function (X3DGroupingNode,
 
 		this .addType (X3DConstants .X3DTransformMatrix3DNode);
 
-		this .matrix = new Matrix4 ();
+		this .matrix   = new Matrix4 ();
+		this .traverse = this .getGroupTraverse ();
 	}
 
 	X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -78,7 +79,7 @@ function (X3DGroupingNode,
 		{
 			var bbox = X3DGroupingNode .prototype .getBBox .call (this, bbox);
 
-			if (this .traverse === this .groupTraverse)
+			if (this .traverse === this .getGroupTraverse ())
 				return bbox;
 
 			return bbox .multRight (this .matrix);
@@ -88,12 +89,12 @@ function (X3DGroupingNode,
 			if (matrix .equals (Matrix4 .Identity))
 			{
 				this .matrix .identity ();
-				this .traverse = this .groupTraverse;
+				this .traverse = this .getGroupTraverse ();
 			}
 			else
 			{
 			   this .matrix .assign (matrix);
-				delete this .traverse;
+				this .traverse = this .getTraverse ();
 			}
 		},
 		getMatrix: function ()
@@ -105,26 +106,37 @@ function (X3DGroupingNode,
 			if (t .equals (Vector3 .Zero) && r .equals (Rotation4 .Identity) && s .equals (Vector3 .One))
 			{
 				this .matrix .identity ();
-				this .traverse = this .groupTraverse;
+				this .traverse = this .getGroupTraverse ();
 			}
 			else
 			{
 			   this .matrix .set (t, r, s, so, c);
-				delete this .traverse;
+				this .traverse = this .getTraverse ();
 			}
 		},
-		traverse: function (type, renderObject)
+		getTraverse: (function ()
 		{
-			var modelViewMatrix = renderObject .getModelViewMatrix ();
+			function traverse (type, renderObject)
+			{
+				var modelViewMatrix = renderObject .getModelViewMatrix ();
+	
+				modelViewMatrix .push ();
+				modelViewMatrix .multLeft (this .matrix);
+				
+				X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+	
+				modelViewMatrix .pop ();
+			}
 
-			modelViewMatrix .push ();
-			modelViewMatrix .multLeft (this .matrix);
-			
-			X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-
-			modelViewMatrix .pop ();
+			return function ()
+			{
+				return traverse;
+			};
+		})(),
+		getGroupTraverse: function ()
+		{
+			return X3DGroupingNode .prototype .traverse;
 		},
-		groupTraverse: X3DGroupingNode .prototype .traverse,
 	});
 
 	return X3DTransformMatrix3DNode;

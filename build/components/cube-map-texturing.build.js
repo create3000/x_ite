@@ -9,7 +9,7 @@
 		"x_ite"
 	],
 	wrap: {
-		startFile: "../parts/components/cube-map-texturing.start.frag",
-		endFile: "../parts/components/cube-map-texturing.end.frag"
+		startFile: "../parts/default.start.frag",
+		endFile: "../parts/default.end.frag"
 	},
 })

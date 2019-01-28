@@ -2,10 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
   <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/x_ite.html" Line="27" Column="54" />
-      <File FileName="src/components/x_ite.js" Line="60" Column="17" />
-      <File FileName="src/components/nurbs.js" Line="52" Column="1" />
-      <File FileName="Makefile" Line="50" Column="1" />
+      <File FileName="src/x_ite.html" Line="22" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

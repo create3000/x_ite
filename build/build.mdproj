@@ -32,27 +32,9 @@
     <None Include="components\rigid-body-physics.build.js" />
     <None Include="components\texturing-3d.build.js" />
     <None Include="components\x_ite.build.js" />
-    <None Include="parts\components\cad-geometry.end.frag" />
-    <None Include="parts\components\cad-geometry.start.frag" />
-    <None Include="parts\components\geospatial.end.frag" />
-    <None Include="parts\components\geospatial.start.frag" />
-    <None Include="parts\components\h-anim.end.frag" />
-    <None Include="parts\components\h-anim.start.frag" />
-    <None Include="parts\components\nurbs.end.frag" />
-    <None Include="parts\components\nurbs.start.frag" />
-    <None Include="parts\components\particle-systems.end.frag" />
-    <None Include="parts\components\particle-systems.start.frag" />
-    <None Include="parts\components\rigid-body-physics.end.frag" />
-    <None Include="parts\components\rigid-body-physics.start.frag" />
-    <None Include="parts\components\texturing-3d.end.frag" />
-    <None Include="parts\components\texturing-3d.start.frag" />
-    <None Include="parts\components\x_ite.end.frag" />
-    <None Include="parts\components\x_ite.start.frag" />
     <None Include="components\cube-map-texturing.build.js" />
-    <None Include="parts\components\cube-map-texturing.end.frag" />
-    <None Include="parts\components\cube-map-texturing.start.frag" />
     <None Include="components\layout.build.js" />
-    <None Include="parts\components\layout.start.frag" />
-    <None Include="parts\components\layout.end.frag" />
+    <None Include="parts\default.start.frag" />
+    <None Include="parts\default.end.frag" />
   </ItemGroup>
 </Project>

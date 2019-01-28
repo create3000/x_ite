@@ -154,20 +154,46 @@ function (Fields,
 					displacerNodes .push (displacerNode);
 			}
 		},
-		traverse: function (type, renderObject)
+		getTraverse: (function ()
 		{
-			if (type === TraverseType .CAMERA && this .skinCoordIndex_ .length)
-				this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
+			var base = X3DTransformNode .prototype .getTraverse ();
 
-			X3DTransformNode .prototype .traverse .call (this, type, renderObject);
-		},
-		groupTraverse: function (type, renderObject)
+			function traverse (type, renderObject)
+			{
+				if (type === TraverseType .CAMERA)
+					this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
+
+				base .call (this, type, renderObject);
+			}
+
+			return function ()
+			{
+				if (this .skinCoordIndex_ .length)
+					return traverse;
+
+				return base;
+			};
+		})(),
+		getGroupTraverse: (function ()
 		{
-			if (type === TraverseType .CAMERA && this .skinCoordIndex_ .length)
-				this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+			var base = X3DTransformNode .prototype .getGroupTraverse ();
 
-			X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-		},
+			function traverse (type, renderObject)
+			{
+				if (type === TraverseType .CAMERA)
+					this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+
+				base .call (this, type, renderObject);
+			}
+
+			return function ()
+			{
+				if (this .skinCoordIndex_ .length)
+					return traverse;
+
+				return base;
+			};
+		})(),
 	});
 
 	return HAnimJoint;
