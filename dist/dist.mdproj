@@ -70,6 +70,8 @@
     <None Include="components\x_ite.min.js" />
     <None Include="components\cube-map-texturing.js" />
     <None Include="components\cube-map-texturing.min.js" />
+    <None Include="components\layout.js" />
+    <None Include="components\layout.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

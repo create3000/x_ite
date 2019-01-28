@@ -47,7 +47,8 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
+	"x_ite/Components",
+	"x_ite/Browser/Layout/X3DLayoutContext",
 	"x_ite/Components/Layout/Layout",
 	"x_ite/Components/Layout/LayoutGroup",
 	"x_ite/Components/Layout/LayoutLayer",
@@ -55,7 +56,8 @@ define ([
 	"x_ite/Components/Layout/ScreenGroup",
 	"x_ite/Components/Layout/X3DLayoutNode",
 ],
-function (SupportedNodes,
+function (Components,
+          X3DLayoutContext,
           Layout,
           LayoutGroup,
           LayoutLayer,
@@ -65,24 +67,21 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
-	{
-		Layout:          Layout,
-		LayoutGroup:     LayoutGroup,
-		LayoutLayer:     LayoutLayer,
-		ScreenFontStyle: ScreenFontStyle,
-		ScreenGroup:     ScreenGroup,
-	};
-
-	var AbstractTypes =
-	{
-		X3DLayoutNode: X3DLayoutNode,
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	Components .addComponent ({
+		name: "Layout",
+		types:
+		{
+			Layout:          Layout,
+			LayoutGroup:     LayoutGroup,
+			LayoutLayer:     LayoutLayer,
+			ScreenFontStyle: ScreenFontStyle,
+			ScreenGroup:     ScreenGroup,
+		},
+		abstractTypes:
+		{
+			X3DLayoutNode: X3DLayoutNode,
+		},
+		browser: X3DLayoutContext .prototype,
+	});
 });
 

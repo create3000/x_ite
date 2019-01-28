@@ -60,7 +60,7 @@ function (PointEmitter)
 	{
 		getDefaultEmitter: function ()
 		{
-			if (! this .defaultEmitter)
+			if (this .defaultEmitter === undefined)
 			{
 				this .defaultEmitter = new PointEmitter (this .getPrivateScene ());
 				this .defaultEmitter .setup ();

@@ -62,7 +62,6 @@ define ([
 	"x_ite/Components/Interpolation",
 	"x_ite/Components/KeyDeviceSensor",
 	"x_ite/Components/Layering",
-	"x_ite/Components/Layout",
 	"x_ite/Components/Lighting",
 	"x_ite/Components/Navigation",
 	"x_ite/Components/Networking",

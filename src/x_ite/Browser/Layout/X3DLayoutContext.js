@@ -56,34 +56,37 @@ function ($,
 {
 "use strict";
 
-	function X3DLayoutContext ()
-	{
-		this .screenTextureProperties = new TextureProperties (this .getPrivateScene ());
-	}
+	function X3DLayoutContext () { }
 
 	X3DLayoutContext .prototype =
 	{
-		initialize: function ()
-		{
-			this .screenTextureProperties .boundaryModeS_       = "CLAMP";
-			this .screenTextureProperties .boundaryModeT_       = "CLAMP";
-			this .screenTextureProperties .boundaryModeR_       = "CLAMP";
-			this .screenTextureProperties .minificationFilter_  = "NEAREST";
-			this .screenTextureProperties .magnificationFilter_ = "NEAREST";
-			this .screenTextureProperties .generateMipMaps_     = false;
-
-			this .screenTextureProperties .setup ();
-
-			var div = $("<div></div>");
-			this .pointSize = div .appendTo ($("body")) .css ("height", "1in") .css ("display", "none") .height () / 72;
-			div .remove ();
-		},
 		getScreenTextureProperties: function ()
 		{
+			if (this .screenTextureProperties === undefined)
+			{
+				this .screenTextureProperties = new TextureProperties (this .getPrivateScene ());
+
+				this .screenTextureProperties .boundaryModeS_       = "CLAMP";
+				this .screenTextureProperties .boundaryModeT_       = "CLAMP";
+				this .screenTextureProperties .boundaryModeR_       = "CLAMP";
+				this .screenTextureProperties .minificationFilter_  = "NEAREST";
+				this .screenTextureProperties .magnificationFilter_ = "NEAREST";
+				this .screenTextureProperties .generateMipMaps_     = false;
+	
+				this .screenTextureProperties .setup ();
+			}
+
 		   return this .screenTextureProperties;
 		},
 		getPointSize: function ()
 		{
+			if (this .pointSize === undefined)
+			{
+				var div = $("<div></div>");
+				this .pointSize = div .appendTo ($("body")) .css ("height", "1in") .css ("display", "none") .height () / 72;
+				div .remove ();
+			}
+
 		   return this .pointSize;
 		},
 	};

@@ -63,7 +63,6 @@ define ([
 	"x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext",
 	"x_ite/Browser/Navigation/X3DNavigationContext",
 	"x_ite/Browser/Layering/X3DLayeringContext",
-	"x_ite/Browser/Layout/X3DLayoutContext",
 	"x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext",
 	"x_ite/Browser/Lighting/X3DLightingContext",
 	"x_ite/Browser/Sound/X3DSoundContext",
@@ -88,7 +87,6 @@ function (SFTime,
           X3DKeyDeviceSensorContext,
           X3DNavigationContext,
           X3DLayeringContext,
-          X3DLayoutContext,
           X3DEnvironmentalEffectsContext,
           X3DLightingContext,
           X3DSoundContext,
@@ -116,7 +114,6 @@ function (SFTime,
 		X3DKeyDeviceSensorContext      .call (this);
 		X3DNavigationContext           .call (this);
 		X3DLayeringContext             .call (this);
-		X3DLayoutContext               .call (this);
 		X3DEnvironmentalEffectsContext .call (this);
 		X3DLightingContext             .call (this);
 		X3DSoundContext                .call (this);
@@ -156,7 +153,6 @@ function (SFTime,
 		X3DKeyDeviceSensorContext .prototype,
 		X3DNavigationContext .prototype,
 		X3DLayeringContext .prototype,
-		X3DLayoutContext .prototype,
 		X3DEnvironmentalEffectsContext .prototype,
 		X3DLightingContext .prototype,
 		X3DSoundContext .prototype,
@@ -181,7 +177,6 @@ function (SFTime,
 			X3DKeyDeviceSensorContext      .prototype .initialize .call (this);
 			X3DNavigationContext           .prototype .initialize .call (this);
 			X3DLayeringContext             .prototype .initialize .call (this);
-			X3DLayoutContext               .prototype .initialize .call (this);
 			X3DEnvironmentalEffectsContext .prototype .initialize .call (this);
 			X3DLightingContext             .prototype .initialize .call (this);
 			X3DSoundContext                .prototype .initialize .call (this);

@@ -656,7 +656,6 @@
     <None Include="x_ite\Components\Interpolation.js" />
     <None Include="x_ite\Components\KeyDeviceSensor.js" />
     <None Include="x_ite\Components\Layering.js" />
-    <None Include="x_ite\Components\Layout.js" />
     <None Include="x_ite\Components\Lighting.js" />
     <None Include="x_ite\Components\Navigation.js" />
     <None Include="x_ite\Components\Networking.js" />
@@ -693,6 +692,8 @@
     <None Include="components\x_ite.js" />
     <None Include="components\cube-map-texturing.config.js" />
     <None Include="components\cube-map-texturing.js" />
+    <None Include="components\layout.config.js" />
+    <None Include="components\layout.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

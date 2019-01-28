@@ -51,5 +51,8 @@
     <None Include="components\cube-map-texturing.build.js" />
     <None Include="parts\components\cube-map-texturing.end.frag" />
     <None Include="parts\components\cube-map-texturing.start.frag" />
+    <None Include="components\layout.build.js" />
+    <None Include="parts\components\layout.start.frag" />
+    <None Include="parts\components\layout.end.frag" />
   </ItemGroup>
 </Project>

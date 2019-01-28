@@ -16,6 +16,7 @@ all:
 	$(call generate_component,cube-map-texturing,--compress)
 	$(call generate_component,geospatial,--compress)
 	$(call generate_component,h-anim,--compress)
+	$(call generate_component,layout,--compress)
 	$(call generate_component,nurbs,--compress)
 	$(call generate_component,particle-systems,--compress)
 	$(call generate_component,rigid-body-physics)

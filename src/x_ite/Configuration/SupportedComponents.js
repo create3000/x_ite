@@ -191,7 +191,7 @@ function (ComponentInfoArray,
 		title:      "Layout",
 		name:       "Layout",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .provider ("layout"),
 	});
 
 	SupportedComponents .addBaseComponent (
