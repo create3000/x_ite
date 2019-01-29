@@ -72,7 +72,8 @@ function (Fields,
 		this .addType (X3DConstants .ImageTexture3D);
 	}
 
-	ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),new X3DUrlObject (),
+	ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+		X3DUrlObject .prototype,
 	{
 		constructor: ImageTexture3D,
 		fieldDefinitions: new FieldDefinitionArray ([

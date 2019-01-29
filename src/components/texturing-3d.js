@@ -49,9 +49,9 @@
 
 define ([
 	"x_ite/Components",
-//	"x_ite/Components/Texturing3D/ComposedTexture3D",
-//	"x_ite/Components/Texturing3D/ImageTexture3D",
-//	"x_ite/Components/Texturing3D/PixelTexture3D",
+	"x_ite/Components/Texturing3D/ComposedTexture3D",
+	"x_ite/Components/Texturing3D/ImageTexture3D",
+	"x_ite/Components/Texturing3D/PixelTexture3D",
 	"x_ite/Components/Texturing3D/TextureCoordinate3D",
 	"x_ite/Components/Texturing3D/TextureCoordinate4D",
 	"x_ite/Components/Texturing3D/TextureTransform3D",
@@ -59,15 +59,14 @@ define ([
 	"x_ite/Components/Texturing3D/X3DTexture3DNode",
 ],
 function (Components,
-//          ComposedTexture3D,
-//          ImageTexture3D,
-//          PixelTexture3D,
+          ComposedTexture3D,
+          ImageTexture3D,
+          PixelTexture3D,
           TextureCoordinate3D,
           TextureCoordinate4D,
           TextureTransform3D,
-          TextureTransformMatrix3D
-//          X3DTexture3DNode
-          )
+          TextureTransformMatrix3D,
+          X3DTexture3DNode)
 {
 "use strict";
 
@@ -75,9 +74,9 @@ function (Components,
 		name: "Texturing3D",
 		types:
 		{
-//			ComposedTexture3D:        ComposedTexture3D,
-//			ImageTexture3D:           ImageTexture3D,
-//			PixelTexture3D:           PixelTexture3D,
+			ComposedTexture3D:        ComposedTexture3D,        // Not implemented yet.
+			ImageTexture3D:           ImageTexture3D,           // Not implemented yet.
+			PixelTexture3D:           PixelTexture3D,           // Not implemented yet.
 			TextureCoordinate3D:      TextureCoordinate3D,
 			TextureCoordinate4D:      TextureCoordinate4D,
 			TextureTransform3D:       TextureTransform3D,
@@ -85,7 +84,7 @@ function (Components,
 		},
 		abstractTypes:
 		{
-//	   	X3DTexture3DNode: X3DTexture3DNode,
+	   	X3DTexture3DNode: X3DTexture3DNode, // Not implemented yet.
 		},
 	});
 });
