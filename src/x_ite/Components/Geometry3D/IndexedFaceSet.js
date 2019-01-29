@@ -189,7 +189,7 @@ function (Fields,
 				for (var v = 0, numVertices = triangles .length; v < numVertices; ++ v)
 				{
 					var
-						i     = vertices [triangles [v]],
+						i     = triangles [v],
 						index = coordIndex [i];
 
 					for (var a = 0; a < numAttrib; ++ a)
@@ -229,105 +229,100 @@ function (Fields,
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (this .ccw_ .getValue ());
 		},
-		triangulate: (function ()
+		triangulate: function ()
 		{
-			var triangle = [0, 1, 2];
+			var
+				convex      = this .convex_ .getValue (),
+				coordLength = this .coordIndex_ .length,
+				polygons    = [ ];
 
-			return function ()
+			if (! this .getCoord ())
+				return polygons;
+
+			if (coordLength)
 			{
+				// Add -1 (polygon end marker) to coordIndex if not present.
+				if (this .coordIndex_ [coordLength - 1] > -1)
+					this .coordIndex_ .push (-1);
+
 				var
-					convex      = this .convex_ .getValue (),
-					coordLength = this .coordIndex_ .length,
-					polygons    = [ ];
-	
-				if (! this .getCoord ())
-					return polygons;
-	
-				if (coordLength)
+					coordIndex  = this .coordIndex_ .getValue (),
+					coordLength = this .coordIndex_ .length;
+
+				// Construct triangle array and determine the number of used points.
+				var
+					vertices = [ ],
+					face     = 0;
+
+				for (var i = 0; i < coordLength; ++ i)
 				{
-					// Add -1 (polygon end marker) to coordIndex if not present.
-					if (this .coordIndex_ [coordLength - 1] > -1)
-						this .coordIndex_ .push (-1);
+					var index = coordIndex [i];
 	
-					var
-						coordIndex  = this .coordIndex_ .getValue (),
-						coordLength = this .coordIndex_ .length;
-	
-					// Construct triangle array and determine the number of used points.
-					var
-						vertices = [ ],
-						face     = 0;
-	
-					for (var i = 0; i < coordLength; ++ i)
+					if (index > -1)
 					{
-						var index = coordIndex [i];
-		
-						if (index > -1)
+						// Add vertex index.
+						vertices .push (i);
+					}
+					else
+					{
+						// Negativ index.
+
+						if (vertices .length)
 						{
-							// Add vertex index.
-							vertices .push (i);
-						}
-						else
-						{
-							// Negativ index.
-	
-							if (vertices .length)
+							// Closed polygon.
+							//if (coordIndex [vertices [0]] === coordIndex [vertices [vertices .length - 1]])
+							//	vertices .pop ();
+
+							switch (vertices .length)
 							{
-								// Closed polygon.
-								//if (coordIndex [vertices [0]] === coordIndex [vertices [vertices .length - 1]])
-								//	vertices .pop ();
-	
-								switch (vertices .length)
+								case 0:
+								case 1:
+								case 2:
 								{
-									case 0:
-									case 1:
-									case 2:
+									vertices .length = 0;
+									break;
+								}
+								case 3:
+								{
+									// Add polygon with one triangle.
+									polygons .push ({ vertices: vertices, triangles: vertices, face: face });
+									vertices = [ ];
+									break;
+								}
+								default:
+								{
+									// Triangulate polygons.
+									var
+										triangles = [ ],
+										polygon   = { vertices: vertices, triangles: triangles, face: face };
+
+									if (convex)
+										this .triangulateConvexPolygon (vertices, triangles);
+									else
+										this .triangulatePolygon (vertices, triangles);
+
+									if (triangles .length < 3)
 									{
 										vertices .length = 0;
-										break;
 									}
-									case 3:
+									else
 									{
-										// Add polygon with one triangle.
-										polygons .push ({ vertices: vertices, triangles: triangle, face: face });
+										polygons .push (polygon);
 										vertices = [ ];
-										break;
 									}
-									default:
-									{
-										// Triangulate polygons.
-										var
-											triangles = [ ],
-											polygon   = { vertices: vertices, triangles: triangles, face: face };
-	
-										if (convex)
-											this .triangulateConvexPolygon (vertices, triangles);
-										else
-											this .triangulatePolygon (vertices, triangles);
-	
-										if (triangles .length < 3)
-										{
-											vertices .length = 0;
-										}
-										else
-										{
-											polygons .push (polygon);
-											vertices = [ ];
-										}
-	
-										break;
-									}
+
+									break;
 								}
 							}
-							
-							++ face;
 						}
+						
+						++ face;
 					}
 				}
-	
-				return polygons;
-			};
-		})(),
+			}
+
+			return polygons;
+		},
 		triangulatePolygon: (function ()
 		{
 			var polygon = [ ];
@@ -338,17 +333,18 @@ function (Fields,
 					coordIndex = this .coordIndex_ .getValue (),
 					coord      = this .getCoord ();
 
-				for (var i = 0, length = vertices .length; i < length; ++ i)
+				for (var v = 0, length = vertices .length; v < length; ++ v)
 				{
-					var vertex = polygon [i];
+					var
+						vertex = polygon [v],
+						i      = vertices [v];
 
 					if (! vertex)
-					{
-						vertex = polygon [i] = new Vector3 (0, 0, 0);
-						vertex .index = i;
-					}
+						vertex = polygon [v] = new Vector3 (0, 0, 0);
 
-					coord .get1Point (coordIndex [vertices [i]], vertex);
+					vertex .index = i;
+
+					coord .get1Point (coordIndex [i], vertex);
 				}
 
 				polygon .length = length;
@@ -363,30 +359,24 @@ function (Fields,
 		{
 			// Fallback: Very simple triangulation for convex polygons.
 			for (var i = 1, length = vertices .length - 1; i < length; ++ i)
-				triangles .push (0, i, i + 1);
+				triangles .push (vertices [0], vertices [i], vertices [i + 1]);
 		},
 		buildNormals: function (polygons)
 		{
 			var
-				first       = 0,
 				normals     = this .createNormals (polygons),
 				normalArray = this .getNormals ();
 
 			for (var p = 0, pl = polygons .length; p < pl; ++ p)
 			{
-				var
-					polygon   = polygons [p],
-					vertices  = polygon .vertices,
-					triangles = polygon .triangles;
+				var triangles = polygons [p] .triangles;
 
 				for (var v = 0, tl = triangles .length; v < tl; ++ v)
 				{
-					var normal = normals [first + triangles [v]];
+					var normal = normals [triangles [v]];
 
 					normalArray .push (normal .x, normal .y, normal .z);
 				}
-
-				first += vertices .length;
 			}
 		},
 		createNormals: (function ()
@@ -460,6 +450,9 @@ function (Fields,
 	
 					for (var i = 0; i < length; ++ i)
 						normals .push (normal);
+
+					// Add one more for -1.
+					normals .push (undefined);
 				}
 	
 				return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
