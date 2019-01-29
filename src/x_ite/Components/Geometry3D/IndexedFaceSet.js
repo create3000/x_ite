@@ -438,12 +438,14 @@ function (Fields,
 					// Add a normal index for each point.
 					for (var i = 0; i < length; ++ i)
 					{
-						var index = coordIndex [vertices [i]];
+						var
+							index        = coordIndex [vertices [i]],
+							pointNormals = normalIndex [index];
 	
-						if (! normalIndex [index])
-							normalIndex [index] = [ ];
+						if (! pointNormals)
+							pointNormals = normalIndex [index] = [ ];
 	
-						normalIndex [index] .push (normals .length + i);
+						pointNormals .push (normals .length + i);
 					}
 	
 					if (cw)
