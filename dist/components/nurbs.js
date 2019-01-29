@@ -59,12 +59,14 @@ define ('x_ite/Components/NURBS/Contour2D',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
-          X3DConstants)
+          X3DConstants, 
+          X3DCast)
 {
 "use strict";
 
@@ -73,6 +75,8 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Contour2D);
+
+		this .childNodes = [ ];
 	}
 
 	Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -96,6 +100,46 @@ function (Fields,
 		{
 			return "trimmingContour";
 		},
+		initialize: function ()
+		{
+			X3DNode .prototype .initialize .call (this);
+
+			this .children_ .addInterest ("set_children__", this);
+
+			this .set_children__ ();
+		},
+		set_children__: function ()
+		{
+			var childNodes = this .childNodes;
+
+			childNodes .length = 0;
+
+			for (var i = 0, length = this .children_ .length; i < length; ++ i)
+			{
+				var childNode = X3DCast (X3DConstants .NurbsCurve2D, this .children_ [i]);
+
+				if (childNode)
+				{
+					childNodes .push (childNode);
+					continue;
+				}
+
+				var childNode = X3DCast (X3DConstants .ContourPolyline2D, this .children_ [i]);
+
+				if (childNode)
+				{
+					childNodes .push (childNode);
+					continue;
+				}
+			}
+		},
+		addTrimmingContour: function (trimmingContours)
+		{
+			var childNodes = this .childNodes;
+
+			for (var i = 0, length = childNodes .length; i < length; ++ i)
+				trimmingContours .push (childNodes [i] .tessellate (2));
+		}
 	});
 
 	return Contour2D;
@@ -233,12 +277,14 @@ define ('x_ite/Components/NURBS/ContourPolyline2D',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/NURBS/X3DNurbsControlCurveNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNurbsControlCurveNode, 
-          X3DConstants)
+          X3DConstants,
+          Vector3)
 {
 "use strict";
 
@@ -270,41 +316,67 @@ function (Fields,
 		{
 			return "children";
 		},
-		tessellate: function (spine)
+		tessellate: function (type)
 		{
-			var
-				controlPointArray = this .controlPoint_ .getValue (),
-				controlPoints     = this .controlPoints;
-
-			if (spine)
+			switch (type)
 			{
-				for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+				case 0:
 				{
 					var
-						i2 = i * 2,
-						i3 = i * 3;
+						controlPointArray = this .controlPoint_ .getValue (),
+						controlPoints     = this .controlPoints;
 
-					controlPoints [i3 + 0] = controlPointArray [i2 + 0];
-					controlPoints [i3 + 1] = 0;
-					controlPoints [i3 + 2] = controlPointArray [i2 + 1];
+					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+					{
+						var i2 = i * 2;
+	
+						controlPoints [i2 + 0] = controlPointArray [i2 + 0];
+						controlPoints [i2 + 1] = controlPointArray [i2 + 1];
+					}
+	
+					controlPoints .length = length * 2;
+
+					return controlPoints;
 				}
-
-				controlPoints .length = length * 3;
-			}
-			else
-			{
-				for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+				case 1:
 				{
-					var i2 = i * 2;
+					var
+						controlPointArray = this .controlPoint_ .getValue (),
+						controlPoints     = this .controlPoints;
 
-					controlPoints [i2 + 0] = controlPointArray [i2 + 0];
-					controlPoints [i2 + 1] = controlPointArray [i2 + 1];
+					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+					{
+						var
+							i2 = i * 2,
+							i3 = i * 3;
+	
+						controlPoints [i3 + 0] = controlPointArray [i2 + 0];
+						controlPoints [i3 + 1] = 0;
+						controlPoints [i3 + 2] = controlPointArray [i2 + 1];
+					}
+	
+					controlPoints .length = length * 3;
+
+					return controlPoints;
 				}
+				case 3:
+				{
+					var
+						controlPointArray = this .controlPoint_ .getValue (),
+						controlPoints     = this .controlPoints;
 
-				controlPoints .length = length * 2;
+					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+					{
+						var i2 = i * 2;
+
+						controlPoints [i] = new Vector3 (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0);
+					}
+	
+					controlPoints .length = length;
+
+					return controlPoints;
+				}
 			}
-
-			return controlPoints;
 		},
 	});
 
@@ -2151,7 +2223,7 @@ define ('nurbs/extras/sample',[],function ()
 					vClosed    = surface .boundary [1] === 'closed',
 					nuBound    = nu + ! uClosed,
 					nvBound    = nv + ! vClosed,
-					nbNormals  = nuBound * nvBound * 3,
+					nbNormals  = nuBound * nvBound * 3 * generateNormals,
 					nbVertices = nuBound * nvBound * dimension,
 					uDer       = surface .evaluator ([1, 0]),
 					vDer       = surface .evaluator ([0, 1]),
@@ -2160,6 +2232,8 @@ define ('nurbs/extras/sample',[],function ()
 					vDomain    = domain [1],
 					uDistance  = uDomain [1] - uDomain [0],
 					vDistance  = vDomain [1] - vDomain [0];
+
+				// Generate points and normals.
 
 				for (var i = 0; i < nuBound; ++ i)
 				{
@@ -2190,9 +2264,11 @@ define ('nurbs/extras/sample',[],function ()
 					}
 				}
 	
-				normals .length = nbNormals;
 				points  .length = nbVertices;
+				normals .length = nbNormals;
 				
+				// Generate faces.
+
 				var c = 0;
 	
 				for (var i = 0; i < nu; ++ i)
@@ -2212,13 +2288,17 @@ define ('nurbs/extras/sample',[],function ()
 						if (vClosed)
 							j1 = j1 % nv;
 						
-						faces [c ++] = i0 + nuBound * j0;
-						faces [c ++] = i1 + nuBound * j0;
-						faces [c ++] = i1 + nuBound * j1;
+						// Triangle 1
+
+						faces [c ++] = i0 + nuBound * j0; // 1
+						faces [c ++] = i1 + nuBound * j0; // 2
+						faces [c ++] = i1 + nuBound * j1; // 3
 						
-						faces [c ++] = i0 + nuBound * j0;
-						faces [c ++] = i1 + nuBound * j1;
-						faces [c ++] = i0 + nuBound * j1;
+						// Triangle 2
+
+						faces [c ++] = i0 + nuBound * j0; // 1
+						faces [c ++] = i1 + nuBound * j1; // 3
+						faces [c ++] = i0 + nuBound * j1; // 4
 					}
 				}
 		
@@ -2869,6 +2949,7 @@ define ('x_ite/Components/NURBS/NurbsCurve2D',[
 	"x_ite/Components/NURBS/X3DNurbsControlCurveNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/NURBS/NURBS",
+	"standard/Math/Numbers/Vector3",
 	"nurbs",
 ],
 function (Fields,
@@ -2877,6 +2958,7 @@ function (Fields,
           X3DNurbsControlCurveNode, 
           X3DConstants,
           NURBS,
+          Vector3,
           nurbs)
 {
 "use strict";
@@ -2942,7 +3024,7 @@ function (Fields,
 		{
 			return NURBS .getControlPoints2D (result, closed, order, controlPoint);
 		},
-		tessellate: function (spine)
+		tessellate: function (type)
 		{
 			var array = this .array;
 
@@ -2987,15 +3069,29 @@ function (Fields,
 				mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
 				points = mesh .points;
 
-			if (spine)
+			switch (type)
 			{
-				for (var i = 0, length = points .length; i < length; i += 2)
-					array .push (points [i], 0, points [i + 1]);
-			}
-			else
-			{
-				for (var i = 0, length = points .length; i < length; i += 2)
-					array .push (points [i], points [i + 1]);
+				case 0:
+				{
+					for (var i = 0, length = points .length; i < length; i += 2)
+						array .push (points [i], points [i + 1]);
+
+					break;
+				}
+				case 1:
+				{
+					for (var i = 0, length = points .length; i < length; i += 2)
+						array .push (points [i], 0, points [i + 1]);
+
+					break;
+				}
+				case 2:
+				{
+					for (var i = 0, length = points .length; i < length; i += 2)
+						array .push (new Vector3 (points [i], points [i + 1], 0));
+
+					break;
+				}
 			}
 
 			return array;
@@ -3405,6 +3501,10 @@ function (X3DParametricGeometryNode,
 		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
 		{
 			return NURBS .getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode);
+		},
+		getTrimmingContours: function ()
+		{
+			return undefined;
 		},
 		build: function ()
 		{
@@ -4509,8 +4609,8 @@ function (Fields,
 
 			var extrusion = this .extrusion;
 
-			extrusion .crossSection_ = this .crossSectionCurveNode .tessellate ();
-			extrusion .spine_        = this .trajectoryCurveNode   .tessellate ();
+			extrusion .crossSection_ = this .crossSectionCurveNode .tessellate (0);
+			extrusion .spine_        = this .trajectoryCurveNode   .tessellate (0);
 
 			extrusion .rebuild ();
 
@@ -4692,8 +4792,8 @@ function (Fields,
 
 			var extrusion = this .extrusion;
 
-			extrusion .crossSection_ = this .profileCurveNode    .tessellate ();
-			extrusion .spine_        = this .trajectoryCurveNode .tessellate (true);
+			extrusion .crossSection_ = this .profileCurveNode    .tessellate (0);
+			extrusion .spine_        = this .trajectoryCurveNode .tessellate (1);
 
 			extrusion .rebuild ();
 
@@ -4933,12 +5033,14 @@ define ('x_ite/Components/NURBS/NurbsTrimmedSurface',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNurbsSurfaceGeometryNode, 
-          X3DConstants)
+          X3DConstants, 
+          X3DCast)
 {
 "use strict";
 
@@ -4947,6 +5049,8 @@ function (Fields,
 		X3DNurbsSurfaceGeometryNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsTrimmedSurface);
+
+		this .trimmingContourNodes = [ ];
 	}
 
 	NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
@@ -4983,6 +5087,39 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "geometry";
+		},
+		initialize: function ()
+		{
+			X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
+
+			this .trimmingContour_ .addInterest ("set_trimmingContour__", this);
+
+			this .set_trimmingContour__ ();
+		},
+		set_trimmingContour__: function ()
+		{
+			var trimmingContourNodes = this .trimmingContourNodes;
+
+			trimmingContourNodes .length = 0;
+
+			for (var i = 0, length = this .trimmingContour_ .length; i < length; ++ i)
+			{
+				var trimmingContourNode = X3DCast (X3DConstants .Contour2D, this .trimmingContour_ [i]);
+
+				if (trimmingContourNode)
+					trimmingContourNodes .push (trimmingContourNode);
+			}
+		},
+		getTrimmingContours: function ()
+		{
+			var
+				trimmingContourNodes = this .trimmingContourNodes,
+				trimmingContours     = [ ];
+
+			for (var i = 0, length = trimmingContourNodes .length; i < length; ++ i)
+				trimmingContourNodes [i] .addTrimmingContour (trimmingContours);
+
+			return trimmingContours;
 		},
 	});
 

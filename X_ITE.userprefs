@@ -1,8 +1,9 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Geometry3D/IndexedFaceSet.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="22" Column="1" />
+      <File FileName="src/x_ite.html" Line="8" Column="1" />
+      <File FileName="src/x_ite/Components/Geometry3D/IndexedFaceSet.js" Line="373" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

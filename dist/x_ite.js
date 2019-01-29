@@ -1,4 +1,4 @@
-/* X_ITE v4.2.17-580 */
+/* X_ITE v4.2.18a-581 */
 
 (function () {
 
@@ -60044,10 +60044,6 @@ function (X3DGeometryNode,
 {
 "use strict";
 
-	var
-		current = new Vector3 (0, 0, 0),
-		next    = new Vector3 (0, 0, 0);
-
 	function X3DComposedGeometryNode (executionContext)
 	{
 		X3DGeometryNode .call (this, executionContext);
@@ -60067,11 +60063,11 @@ function (X3DGeometryNode,
 		{
 			X3DGeometryNode .prototype .initialize .call (this);
 
-			this .attrib_   .addInterest ("set_attrib__", this);
-			this .color_    .addInterest ("set_color__", this);
+			this .attrib_   .addInterest ("set_attrib__",   this);
+			this .color_    .addInterest ("set_color__",    this);
 			this .texCoord_ .addInterest ("set_texCoord__", this);
-			this .normal_   .addInterest ("set_normal__", this);
-			this .coord_    .addInterest ("set_coord__", this);
+			this .normal_   .addInterest ("set_normal__",   this);
+			this .coord_    .addInterest ("set_coord__",    this);
 
 			this .set_attrib__ ();
 			this .set_color__ ();
@@ -60273,12 +60269,14 @@ function (X3DGeometryNode,
 		
 				for (var i = 0; i < polygonsSize; ++ i)
 				{
-					var index = this .getPolygonIndex (i);
+					var
+						index      = this .getPolygonIndex (i),
+						pointIndex = normalIndex [index];
 
-					if (! normalIndex [index])
-						normalIndex [index] = [ ];
+					if (! pointIndex)
+						pointIndex = normalIndex [index] = [ ];
 
-					normalIndex [index] .push (i);
+					pointIndex .push (i);
 				}
 
 				return this .refineNormals (normalIndex, normals, Math .PI);
@@ -60306,31 +60304,37 @@ function (X3DGeometryNode,
 
 			return normals;
 		},
-		getPolygonNormal: function (index, verticesPerPolygon, coord)
+		getPolygonNormal: (function ()
 		{
+			var
+				current = new Vector3 (0, 0, 0),
+				next    = new Vector3 (0, 0, 0);
 
-			// Determine polygon normal.
-			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
-
-			var normal = new Vector3 (0, 0, 0);
-
-			coord .get1Point (this .getPolygonIndex (index), next);
-
-			for (var i = 0; i < verticesPerPolygon; ++ i)
+			return function (index, verticesPerPolygon, coord)
 			{
-				var tmp = current;
-				current = next;
-				next    = tmp;
+				// Determine polygon normal.
+				// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
+	
+				var normal = new Vector3 (0, 0, 0);
 
-				coord .get1Point (this .getPolygonIndex (index + (i + 1) % verticesPerPolygon), next);
+				coord .get1Point (this .getPolygonIndex (index), next);
 
-				normal .x += (current .y - next .y) * (current .z + next .z);
-				normal .y += (current .z - next .z) * (current .x + next .x);
-				normal .z += (current .x - next .x) * (current .y + next .y);
-			}
+				for (var i = 0; i < verticesPerPolygon; ++ i)
+				{
+					var tmp = current;
+					current = next;
+					next    = tmp;
 
-			return normal .normalize ();
-		},
+					coord .get1Point (this .getPolygonIndex (index + (i + 1) % verticesPerPolygon), next);
+
+					normal .x += (current .y - next .y) * (current .z + next .z);
+					normal .y += (current .z - next .z) * (current .x + next .x);
+					normal .z += (current .x - next .x) * (current .y + next .y);
+				}
+
+				return normal .normalize ();
+			};
+		})(),
 	});
 
 	return X3DComposedGeometryNode;
@@ -60407,14 +60411,6 @@ function (Fields,
           Triangle3)
 {
 "use strict";
-
-	var
-		Triangle    = [0, 1, 2],
-		Polygon     = [ ],
-		normals     = [ ],
-		normalIndex = [ ],
-		current     = new Vector3 (0, 0, 0),
-		next        = new Vector3 (0, 0, 0);
 
 	function IndexedFaceSet (executionContext)
 	{
@@ -60510,7 +60506,7 @@ function (Fields,
 			var
 				colorPerVertex     = this .colorPerVertex_ .getValue (),
 				normalPerVertex    = this .normalPerVertex_ .getValue (),
-				coordIndex         = this .coordIndex_,
+				coordIndex         = this .coordIndex_ .getValue (),
 				attribNodes        = this .getAttrib (),
 				numAttrib          = attribNodes .length,
 				attribs            = this .getAttribs (),
@@ -60537,7 +60533,7 @@ function (Fields,
 				for (var v = 0, numVertices = triangles .length; v < numVertices; ++ v)
 				{
 					var
-						i     = vertices [triangles [v]],
+						i     = triangles [v],
 						index = coordIndex [i];
 
 					for (var a = 0; a < numAttrib; ++ a)
@@ -60581,8 +60577,7 @@ function (Fields,
 		{
 			var
 				convex      = this .convex_ .getValue (),
-				coordIndex  = this .coordIndex_,
-				coordLength = coordIndex .length,
+				coordLength = this .coordIndex_ .length,
 				polygons    = [ ];
 
 			if (! this .getCoord ())
@@ -60591,12 +60586,12 @@ function (Fields,
 			if (coordLength)
 			{
 				// Add -1 (polygon end marker) to coordIndex if not present.
-				if (coordIndex [coordLength - 1] > -1)
-				{
-					coordIndex .push (-1);
+				if (this .coordIndex_ [coordLength - 1] > -1)
+					this .coordIndex_ .push (-1);
 
-					++ coordLength;
-				}
+				var
+					coordIndex  = this .coordIndex_ .getValue (),
+					coordLength = this .coordIndex_ .length;
 
 				// Construct triangle array and determine the number of used points.
 				var
@@ -60619,8 +60614,8 @@ function (Fields,
 						if (vertices .length)
 						{
 							// Closed polygon.
-							if (vertices [0] === vertices [vertices .length - 1])
-								vertices .pop ();
+							//if (coordIndex [vertices [0]] === coordIndex [vertices [vertices .length - 1]])
+							//	vertices .pop ();
 
 							switch (vertices .length)
 							{
@@ -60634,7 +60629,7 @@ function (Fields,
 								case 3:
 								{
 									// Add polygon with one triangle.
-									polygons .push ({ vertices: vertices, triangles: Triangle, face: face });
+									polygons .push ({ vertices: vertices, triangles: vertices, face: face });
 									vertices = [ ];
 									break;
 								}
@@ -60646,12 +60641,14 @@ function (Fields,
 										polygon   = { vertices: vertices, triangles: triangles, face: face };
 
 									if (convex)
-										this .triangulateConvexPolygon (polygon);
+										this .triangulateConvexPolygon (vertices, triangles);
 									else
-										this .triangulatePolygon (polygon);
+										this .triangulatePolygon (vertices, triangles);
 
 									if (triangles .length < 3)
+									{
 										vertices .length = 0;
+									}
 									else
 									{
 										polygons .push (polygon);
@@ -60670,154 +60667,172 @@ function (Fields,
 
 			return polygons;
 		},
-		triangulatePolygon: function (polygon)
+		triangulatePolygon: (function ()
 		{
-			// Transform vertices to 2D space.
+			var polygon = [ ];
 
-			var
-				vertices   = polygon .vertices,
-				triangles  = polygon .triangles,
-				coordIndex = this .coordIndex_,
-				coord      = this .getCoord ();
-
-			for (var i = 0, length = vertices .length; i < length; ++ i)
+			return function (vertices, triangles)
 			{
-				var vertex = coord .get1Point (coordIndex [vertices [i]], new Vector3 (0, 0, 0));
+				var
+					coordIndex = this .coordIndex_ .getValue (),
+					coord      = this .getCoord ();
 
-				vertex .index = i;
+				for (var v = 0, length = vertices .length; v < length; ++ v)
+				{
+					var
+						vertex = polygon [v],
+						i      = vertices [v];
 
-				Polygon [i] = vertex;
-			}
+					if (! vertex)
+						vertex = polygon [v] = new Vector3 (0, 0, 0);
 
-			Polygon .length = length;
+					vertex .index = i;
 
-			Triangle3 .triangulatePolygon (Polygon, triangles);
+					coord .get1Point (coordIndex [i], vertex);
+				}
 
-			for (var i = 0, length = triangles .length; i < length; ++ i)
-				triangles [i] = triangles [i] .index;
-		},
-		triangulateConvexPolygon: function (polygon)
+				polygon .length = length;
+	
+				Triangle3 .triangulatePolygon (polygon, triangles);
+
+				for (var i = 0, length = triangles .length; i < length; ++ i)
+					triangles [i] = triangles [i] .index;
+			};
+		})(),
+		triangulateConvexPolygon: function (vertices, triangles)
 		{
-			var
-				vertices  = polygon .vertices,
-				triangles = polygon .triangles;
-
 			// Fallback: Very simple triangulation for convex polygons.
 			for (var i = 1, length = vertices .length - 1; i < length; ++ i)
-				triangles .push (0, i, i + 1);
+				triangles .push (vertices [0], vertices [i], vertices [i + 1]);
 		},
 		buildNormals: function (polygons)
 		{
 			var
-				first       = 0,
 				normals     = this .createNormals (polygons),
 				normalArray = this .getNormals ();
 
 			for (var p = 0, pl = polygons .length; p < pl; ++ p)
 			{
-				var
-					polygon   = polygons [p],
-					vertices  = polygon .vertices,
-					triangles = polygon .triangles;
+				var triangles = polygons [p] .triangles;
 
 				for (var v = 0, tl = triangles .length; v < tl; ++ v)
 				{
-					var normal = normals [first + triangles [v]];
+					var normal = normals [triangles [v]];
 
 					normalArray .push (normal .x, normal .y, normal .z);
 				}
-
-				first += vertices .length;
 			}
 		},
-		createNormals: function (polygons)
+		createNormals: (function ()
 		{
 			var
-				cw          = ! this .ccw_ .getValue (),
-				coordIndex  = this .coordIndex_,
-				coord       = this .getCoord (),
-				normal      = null;
+				normals     = [ ],
+				normalIndex = [ ];
 
-			normals     .length = 0;
-			normalIndex .length = 0;
-
-			for (var p = 0, pl = polygons .length; p < pl; ++ p)
+			return function (polygons)
 			{
 				var
-					polygon  = polygons [p],
-					vertices = polygon .vertices,
-					length   = vertices .length;
-
-				switch (length)
+					cw          = ! this .ccw_ .getValue (),
+					coordIndex  = this .coordIndex_ .getValue (),
+					coord       = this .getCoord (),
+					normal      = null;
+	
+				normals     .length = 0;
+				normalIndex .length = 0;
+	
+				for (var p = 0, pl = polygons .length; p < pl; ++ p)
 				{
-					case 3:
+					var
+						polygon  = polygons [p],
+						vertices = polygon .vertices,
+						length   = vertices .length;
+	
+					switch (length)
 					{
-						normal = coord .getNormal (coordIndex [vertices [0]],
-						                           coordIndex [vertices [1]],
-						                           coordIndex [vertices [2]]);
-						break;
+						case 3:
+						{
+							normal = coord .getNormal (coordIndex [vertices [0]],
+							                           coordIndex [vertices [1]],
+							                           coordIndex [vertices [2]]);
+							break;
+						}
+						case 4:
+						{
+							normal = coord .getQuadNormal (coordIndex [vertices [0]],
+							                               coordIndex [vertices [1]],
+							                               coordIndex [vertices [2]],
+							                               coordIndex [vertices [3]]);
+							break;
+						}
+						default:
+						{
+							normal = this .getPolygonNormal (vertices, coordIndex, coord);
+							break;
+						}
 					}
-					case 4:
+
+					// Add a normal index for each point.
+
+					var numNormals = normals .length;
+
+					for (var i = 0; i < length; ++ i)
 					{
-						normal = coord .getQuadNormal (coordIndex [vertices [0]],
-						                               coordIndex [vertices [1]],
-						                               coordIndex [vertices [2]],
-						                               coordIndex [vertices [3]]);
-						break;
+						var
+							index        = coordIndex [vertices [i]],
+							pointNormals = normalIndex [index];
+	
+						if (! pointNormals)
+							pointNormals = normalIndex [index] = [ ];
+	
+						pointNormals .push (numNormals + i);
 					}
-					default:
-					{
-						normal = this .getPolygonNormal (vertices, coordIndex, coord);
-						break;
-					}
+	
+					if (cw)
+						normal .negate ();
+	
+					// Add this normal for each vertex.
+	
+					for (var i = 0; i < length; ++ i)
+						normals .push (normal);
+
+					// Add one more for -1.
+					normals .push (undefined);
 				}
-
-				// Add a normal index for each point.
-				for (var i = 0; i < length; ++ i)
-				{
-					var index = coordIndex [vertices [i]];
-
-					if (! normalIndex [index])
-						normalIndex [index] = [ ];
-
-					normalIndex [index] .push (normals .length + i);
-				}
-
-				if (cw)
-					normal .negate ();
-
-				// Add this normal for each vertex.
-
-				for (var i = 0, nl = length; i < nl; ++ i)
-					normals .push (normal);
-			}
-
-			return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
-		},
-		getPolygonNormal: function (vertices, coordIndex, coord)
+	
+				return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
+			};
+		})(),
+		getPolygonNormal: (function ()
 		{
-			// Determine polygon normal.
-			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
+			var
+				current = new Vector3 (0, 0, 0),
+				next    = new Vector3 (0, 0, 0);
 
-			var normal = new Vector3 (0, 0, 0);
-
-			coord .get1Point (coordIndex [vertices [0]], next);
-
-			for (var i = 0, length = vertices .length; i < length; ++ i)
+			return function (vertices, coordIndex, coord)
 			{
-				var tmp = current;
-				current = next;
-				next    = tmp;
+				// Determine polygon normal.
+				// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-				coord .get1Point (coordIndex [vertices [(i + 1) % length]], next);
+				var normal = new Vector3 (0, 0, 0);
 
-				normal .x += (current .y - next .y) * (current .z + next .z);
-				normal .y += (current .z - next .z) * (current .x + next .x);
-				normal .z += (current .x - next .x) * (current .y + next .y);
-			}
+				coord .get1Point (coordIndex [vertices [0]], next);
 
-			return normal .normalize ();
-		},
+				for (var i = 0, length = vertices .length; i < length; ++ i)
+				{
+					var tmp = current;
+					current = next;
+					next    = tmp;
+
+					coord .get1Point (coordIndex [vertices [(i + 1) % length]], next);
+
+					normal .x += (current .y - next .y) * (current .z + next .z);
+					normal .y += (current .z - next .z) * (current .x + next .x);
+					normal .z += (current .x - next .x) * (current .y + next .y);
+				}
+
+				return normal .normalize ();
+			};
+		})(),
 	});
 
 	return IndexedFaceSet;
@@ -71083,13 +71098,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		min    = new Vector3 (0, 0, 0),
-		max    = new Vector3 (0, 0, 0),
-		paths  = [ ],
-		points = [ ],
-		curves = [ ];
-
 	function PolygonText (text, fontStyle)
 	{
 		X3DTextGeometry .call (this, text, fontStyle);
@@ -71106,117 +71114,124 @@ function (Fields,
 		{
 			return Matrix4 .Identity;
 		},
-		build: function ()
+		build: (function ()
 		{
 			var
-				fontStyle = this .getFontStyle (),
-				font      = fontStyle .getFont ();
+				min = new Vector3 (0, 0, 0),
+				max = new Vector3 (0, 0, 0);
 
-			if (! font)
-				return;
-
-			var
-				text             = this .getText (),
-				glyphs           = this .getGlyphs (),
-				minorAlignment   = this .getMinorAlignment (),
-				translations     = this .getTranslations (),
-				charSpacings     = this .getCharSpacings (),
-				size             = fontStyle .getScale (),
-				spacing          = fontStyle .spacing_ .getValue (),
-				origin           = text .origin_ .getValue (),
-				sizeUnitsPerEm   = size / font .unitsPerEm,
-				primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
-				texCoordArray    = this .texCoordArray,
-				normalArray      = text .getNormals (),
-				vertexArray      = text .getVertices ();
-
-			// Set texCoords.
-
-			texCoordArray .length = 0;
-
-			text .getMultiTexCoords () .push (texCoordArray);
-
-			this .getBBox () .getExtents (min, max);
-			text .getMin () .assign (min);
-			text .getMax () .assign (max);
-
-			if (fontStyle .horizontal_ .getValue ())
-			{
-				for (var l = 0, length = glyphs .length; l < length; ++ l)
-				{
-					var
-						line         = glyphs [l],
-						charSpacing  = charSpacings [l],
-						translation  = translations [l],
-						advanceWidth = 0;
-
-					for (var g = 0, gl = line .length; g < gl; ++ g)
-					{
-						var
-							glyph         = line [g],
-							glyphVertices = this .getGlyphGeometry (glyph, primitiveQuality);
-						
-						for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
-						{
-							var
-								x = glyphVertices [v] .x * size + minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
-								y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
-		
-							texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
-							normalArray   .push (0, 0, 1);
-							vertexArray   .push (x, y, 0, 1);
-						}
-		
-						// Calculate advanceWidth.
-		
-						var kerning = 0;
-		
-						if (g + 1 < line .length)
-							kerning = font .getKerningValue (glyph, line [g + 1]);
-		
-						advanceWidth += (glyph .advanceWidth + kerning) * sizeUnitsPerEm;
-					}
-				}
-			}
-			else
+			return function ()
 			{
 				var
-					leftToRight = fontStyle .leftToRight_ .getValue (),
-					topToBottom = fontStyle .topToBottom_ .getValue (),
-					first       = leftToRight ? 0 : text .string_ .length - 1,
-					last        = leftToRight ? text .string_ .length  : -1,
-					step        = leftToRight ? 1 : -1;
-
-				for (var l = first, t = 0; l !== last; l += step)
+					fontStyle = this .getFontStyle (),
+					font      = fontStyle .getFont ();
+	
+				if (! font)
+					return;
+	
+				var
+					text             = this .getText (),
+					glyphs           = this .getGlyphs (),
+					minorAlignment   = this .getMinorAlignment (),
+					translations     = this .getTranslations (),
+					charSpacings     = this .getCharSpacings (),
+					size             = fontStyle .getScale (),
+					spacing          = fontStyle .spacing_ .getValue (),
+					origin           = text .origin_ .getValue (),
+					sizeUnitsPerEm   = size / font .unitsPerEm,
+					primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
+					texCoordArray    = this .texCoordArray,
+					normalArray      = text .getNormals (),
+					vertexArray      = text .getVertices ();
+	
+				// Set texCoords.
+	
+				texCoordArray .length = 0;
+	
+				text .getMultiTexCoords () .push (texCoordArray);
+	
+				this .getBBox () .getExtents (min, max);
+				text .getMin () .assign (min);
+				text .getMax () .assign (max);
+	
+				if (fontStyle .horizontal_ .getValue ())
 				{
-					var line = glyphs [l];
-
-					var
-					   numChars = line .length,
-						firstG   = topToBottom ? 0 : numChars - 1,
-						lastG    = topToBottom ? numChars : -1,
-						stepG    = topToBottom ? 1 : -1;
-
-					for (var g = firstG; g !== lastG; g += stepG, ++ t)
+					for (var l = 0, length = glyphs .length; l < length; ++ l)
 					{
 						var
-							translation   = translations [t],
-							glyphVertices = this .getGlyphGeometry (line [g], primitiveQuality);
-
-						for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
+							line         = glyphs [l],
+							charSpacing  = charSpacings [l],
+							translation  = translations [l],
+							advanceWidth = 0;
+	
+						for (var g = 0, gl = line .length; g < gl; ++ g)
 						{
 							var
-								x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
-								y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
+								glyph         = line [g],
+								glyphVertices = this .getGlyphGeometry (glyph, primitiveQuality);
+							
+							for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
+							{
+								var
+									x = glyphVertices [v] .x * size + minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
+									y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
 			
-							texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
-							normalArray   .push (0, 0, 1);
-							vertexArray   .push (x, y, 0, 1);
+								texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
+								normalArray   .push (0, 0, 1);
+								vertexArray   .push (x, y, 0, 1);
+							}
+			
+							// Calculate advanceWidth.
+			
+							var kerning = 0;
+			
+							if (g + 1 < line .length)
+								kerning = font .getKerningValue (glyph, line [g + 1]);
+			
+							advanceWidth += (glyph .advanceWidth + kerning) * sizeUnitsPerEm;
 						}
 					}
 				}
-			}
-		},
+				else
+				{
+					var
+						leftToRight = fontStyle .leftToRight_ .getValue (),
+						topToBottom = fontStyle .topToBottom_ .getValue (),
+						first       = leftToRight ? 0 : text .string_ .length - 1,
+						last        = leftToRight ? text .string_ .length  : -1,
+						step        = leftToRight ? 1 : -1;
+	
+					for (var l = first, t = 0; l !== last; l += step)
+					{
+						var line = glyphs [l];
+	
+						var
+						   numChars = line .length,
+							firstG   = topToBottom ? 0 : numChars - 1,
+							lastG    = topToBottom ? numChars : -1,
+							stepG    = topToBottom ? 1 : -1;
+	
+						for (var g = firstG; g !== lastG; g += stepG, ++ t)
+						{
+							var
+								translation   = translations [t],
+								glyphVertices = this .getGlyphGeometry (line [g], primitiveQuality);
+	
+							for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
+							{
+								var
+									x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
+									y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
+				
+								texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
+								normalArray   .push (0, 0, 1);
+								vertexArray   .push (x, y, 0, 1);
+							}
+						}
+					}
+				}
+			};
+		})(),
 		getGlyphExtents: function (glyph, primitiveQuality, min, max)
 		{
 			var extents = glyph .extents [primitiveQuality];
@@ -71279,116 +71294,125 @@ function (Fields,
 
 		   return cachedGeometry;
 		},
-		createGlyphGeometry: function (glyph, vertices, primitiveQuality)
+		createGlyphGeometry: (function ()
 		{
 			var
-				fontStyle  = this .getFontStyle (),
-				font       = fontStyle .getFont (),
-				components = glyph .components,
-				dimension  = this .getBezierDimension (primitiveQuality);
+				paths  = [ ],
+				points = [ ],
+				curves = [ ],
+				normal = new Vector3 (0, 0, 0);
 
-			paths  .length = 0;
-			points .length = 0;
-			curves .length = 0;
-		
-			if (glyph .isComposite)
+			return function (glyph, vertices, primitiveQuality)
 			{
-				for (var c = 0, cl = components .length; c < cl; ++ c)
+				var
+					fontStyle  = this .getFontStyle (),
+					font       = fontStyle .getFont (),
+					components = glyph .components,
+					dimension  = this .getBezierDimension (primitiveQuality);
+	
+				paths  .length = 0;
+				points .length = 0;
+				curves .length = 0;
+			
+				if (glyph .isComposite)
 				{
-					var component = components [c];
-
-					paths .push (font .glyphs .get (component .glyphIndex) .getPath (component .dx / font .unitsPerEm, component .dy / -font .unitsPerEm, 1));
-				}
-			}
-			else
-				paths .push (glyph .getPath (0, 0, 1));
-
-			// Get curves for the current glyph.
-
-			var
-				x = 0,
-				y = 0;
-
-			for (var p = 0, pl = paths .length; p < pl; ++ p)
-			{
-				var commands = paths [p] .commands;
-
-				for (var i = 0, cl = commands .length; i < cl; ++ i)
-				{
-					var command = commands [i];
-										      
-					switch (command .type)
+					for (var c = 0, cl = components .length; c < cl; ++ c)
 					{
-						case "M": // Start
-						case "Z": // End
-						{
-							if (points .length > 2)
-							{
-								if (points [0] .x === points [points .length - 1] .x && points [0] .y === points [points .length - 1] .y)
-									points .pop ();
-
-								curves .push (points);
-							}
-								
-							points = [ ];
-
-							if (command .type === "M")
-								points .push (new Vector3 (command .x, -command .y, 0));
-							
-							break;
-						}
-						case "L": // Linear
-						{
-							points .push (new Vector3 (command .x, -command .y, 0));
-							break;
-						}
-						case "C": // Cubic
-						{
-							var
-								curve = new Bezier (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
-								lut   = curve .getLUT (dimension);
-
-							for (var l = 1, ll = lut .length; l < ll; ++ l)
-								points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
-
-							break;
-						}
-						case "Q": // Quadric
-						{
-							var
-								curve = new Bezier (x, -y, command .x1, -command .y1, command .x, -command .y),
-								lut   = curve .getLUT (dimension);
-
-							for (var l = 1, ll = lut .length; l < ll; ++ l)
-								points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
-							
-							break;
-						}
-						default:
-						   continue;
+						var component = components [c];
+	
+						paths .push (font .glyphs .get (component .glyphIndex) .getPath (component .dx / font .unitsPerEm, component .dy / -font .unitsPerEm, 1));
 					}
-
-					x = command .x;
-					y = command .y;
 				}
-			}
-
-			// Triangulate contours.
-
-			curves = curves .map (function (curve)
-			{
-				var normal = Triangle3 .getPolygonNormal (curve, new Vector3 (0,0,0));
-
-				if (normal .dot (Vector3 .zAxis) > 0)
-					return curve;
-
-				return curve .reverse ();
-			});
-
-			curves .push (vertices);
-
-			Triangle3 .triangulatePolygon .apply (Triangle3, curves);
-		},
+				else
+					paths .push (glyph .getPath (0, 0, 1));
+	
+				// Get curves for the current glyph.
+	
+				var
+					x = 0,
+					y = 0;
+	
+				for (var p = 0, pl = paths .length; p < pl; ++ p)
+				{
+					var commands = paths [p] .commands;
+	
+					for (var i = 0, cl = commands .length; i < cl; ++ i)
+					{
+						var command = commands [i];
+											      
+						switch (command .type)
+						{
+							case "M": // Start
+							case "Z": // End
+							{
+								if (points .length > 2)
+								{
+									if (points [0] .x === points [points .length - 1] .x && points [0] .y === points [points .length - 1] .y)
+										points .pop ();
+	
+									curves .push (points);
+								}
+									
+								points = [ ];
+	
+								if (command .type === "M")
+									points .push (new Vector3 (command .x, -command .y, 0));
+								
+								break;
+							}
+							case "L": // Linear
+							{
+								points .push (new Vector3 (command .x, -command .y, 0));
+								break;
+							}
+							case "C": // Cubic
+							{
+								var
+									curve = new Bezier (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
+									lut   = curve .getLUT (dimension);
+	
+								for (var l = 1, ll = lut .length; l < ll; ++ l)
+									points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
+	
+								break;
+							}
+							case "Q": // Quadric
+							{
+								var
+									curve = new Bezier (x, -y, command .x1, -command .y1, command .x, -command .y),
+									lut   = curve .getLUT (dimension);
+	
+								for (var l = 1, ll = lut .length; l < ll; ++ l)
+									points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
+								
+								break;
+							}
+							default:
+							   continue;
+						}
+	
+						x = command .x;
+						y = command .y;
+					}
+				}
+	
+				// Triangulate contours.
+	
+				curves = curves .map (function (curve)
+				{
+					Triangle3 .getPolygonNormal (curve, normal);
+	
+					if (normal .dot (Vector3 .zAxis) > 0)
+						return curve;
+	
+					return curve .reverse ();
+				});
+	
+				curves .push (vertices);
+	
+				Triangle3 .triangulatePolygon .apply (Triangle3, curves);
+			};
+		})(),
 		getBezierDimension: function (primitiveQuality)
 		{
 			switch (primitiveQuality)
