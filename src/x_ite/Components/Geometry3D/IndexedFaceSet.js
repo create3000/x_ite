@@ -342,7 +342,7 @@ function (Fields,
 
 				for (var i = 0, length = vertices .length; i < length; ++ i)
 				{
-					var vertex = coord .get1Point (coordIndex [vertices [i]], new Vector3 (0, 0, 0));
+					var vertex = coord .get1Point (coordIndex [vertices [i]], polygon [i] || new Vector3 (0, 0, 0));
 	
 					vertex .index = i;
 	
@@ -434,8 +434,11 @@ function (Fields,
 							break;
 						}
 					}
-	
+
 					// Add a normal index for each point.
+
+					var numNormals = normals .length;
+
 					for (var i = 0; i < length; ++ i)
 					{
 						var
@@ -445,7 +448,7 @@ function (Fields,
 						if (! pointNormals)
 							pointNormals = normalIndex [index] = [ ];
 	
-						pointNormals .push (normals .length + i);
+						pointNormals .push (numNormals + i);
 					}
 	
 					if (cw)
