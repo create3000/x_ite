@@ -47,30 +47,47 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Scripting/Script",
-	"x_ite/Components/Scripting/X3DScriptNode",
+	"x_ite/Components",
+	"x_ite/Components/EventUtilities/BooleanFilter",
+	"x_ite/Components/EventUtilities/BooleanSequencer",
+	"x_ite/Components/EventUtilities/BooleanToggle",
+	"x_ite/Components/EventUtilities/BooleanTrigger",
+	"x_ite/Components/EventUtilities/IntegerSequencer",
+	"x_ite/Components/EventUtilities/IntegerTrigger",
+	"x_ite/Components/EventUtilities/TimeTrigger",
+	"x_ite/Components/EventUtilities/X3DSequencerNode",
+	"x_ite/Components/EventUtilities/X3DTriggerNode",
 ],
-function (SupportedNodes,
-          Script,
-          X3DScriptNode)
+function (Components,
+          BooleanFilter,
+          BooleanSequencer,
+          BooleanToggle,
+          BooleanTrigger,
+          IntegerSequencer,
+          IntegerTrigger,
+          TimeTrigger,
+          X3DSequencerNode,
+          X3DTriggerNode)
 {
 "use strict";
 
-	var Types =
-	{
-		Script: Script,
-	};
-
-	var AbstractTypes =
-	{
-		X3DScriptNode: X3DScriptNode,
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	Components .addComponent ({
+		name: "EventUtilities",
+		types:
+		{
+			BooleanFilter:    BooleanFilter,
+			BooleanSequencer: BooleanSequencer,
+			BooleanToggle:    BooleanToggle,
+			BooleanTrigger:   BooleanTrigger,
+			IntegerSequencer: IntegerSequencer,
+			IntegerTrigger:   IntegerTrigger,
+			TimeTrigger:      TimeTrigger,
+		},
+		abstractTypes:
+		{
+			X3DSequencerNode: X3DSequencerNode,
+			X3DTriggerNode:   X3DTriggerNode,
+		},
+	});
 });
 

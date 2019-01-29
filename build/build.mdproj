@@ -36,5 +36,7 @@
     <None Include="components\layout.build.js" />
     <None Include="parts\default.start.frag" />
     <None Include="parts\default.end.frag" />
+    <None Include="components\event-utilities.build.js" />
+    <None Include="components\scripting.build.js" />
   </ItemGroup>
 </Project>

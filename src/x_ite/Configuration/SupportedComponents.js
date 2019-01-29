@@ -111,7 +111,7 @@ function (ComponentInfoArray,
 		title:      "Event utilities",
 		name:       "EventUtilities",
 		level:       4,
-		providerUrl: urls .getProviderUrl (),
+		providerUrl: urls .getProviderUrl ("event-utilities"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -279,7 +279,7 @@ function (ComponentInfoArray,
 		title:      "Scripting",
 		name:       "Scripting",
 		level:       1,
-		providerUrl: urls .getProviderUrl (),
+		providerUrl: urls .getProviderUrl ("scripting"),
 	});
 
 	SupportedComponents .addBaseComponent (

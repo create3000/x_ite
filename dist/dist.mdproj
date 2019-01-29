@@ -72,6 +72,10 @@
     <None Include="components\cube-map-texturing.min.js" />
     <None Include="components\layout.js" />
     <None Include="components\layout.min.js" />
+    <None Include="components\event-utilities.js" />
+    <None Include="components\event-utilities.min.js" />
+    <None Include="components\scripting.js" />
+    <None Include="components\scripting.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

@@ -47,51 +47,26 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/EventUtilities/BooleanFilter",
-	"x_ite/Components/EventUtilities/BooleanSequencer",
-	"x_ite/Components/EventUtilities/BooleanToggle",
-	"x_ite/Components/EventUtilities/BooleanTrigger",
-	"x_ite/Components/EventUtilities/IntegerSequencer",
-	"x_ite/Components/EventUtilities/IntegerTrigger",
-	"x_ite/Components/EventUtilities/TimeTrigger",
-	"x_ite/Components/EventUtilities/X3DSequencerNode",
-	"x_ite/Components/EventUtilities/X3DTriggerNode",
+	"x_ite/Components",
+	"x_ite/Components/Scripting/Script",
+	"x_ite/Components/Scripting/X3DScriptNode",
 ],
-function (SupportedNodes,
-          BooleanFilter,
-          BooleanSequencer,
-          BooleanToggle,
-          BooleanTrigger,
-          IntegerSequencer,
-          IntegerTrigger,
-          TimeTrigger,
-          X3DSequencerNode,
-          X3DTriggerNode)
+function (Components,
+          Script,
+          X3DScriptNode)
 {
 "use strict";
 
-	var Types =
-	{
-		BooleanFilter:    BooleanFilter,
-		BooleanSequencer: BooleanSequencer,
-		BooleanToggle:    BooleanToggle,
-		BooleanTrigger:   BooleanTrigger,
-		IntegerSequencer: IntegerSequencer,
-		IntegerTrigger:   IntegerTrigger,
-		TimeTrigger:      TimeTrigger,
-	};
-
-	var AbstractTypes =
-	{
-		X3DSequencerNode: X3DSequencerNode,
-		X3DTriggerNode:   X3DTriggerNode,
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	Components .addComponent ({
+		name: "Scripting",
+		types:
+		{
+			Script: Script,
+		},
+		abstractTypes:
+		{
+			X3DScriptNode: X3DScriptNode,
+		},
+	});
 });
 

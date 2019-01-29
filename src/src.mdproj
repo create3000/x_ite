@@ -644,7 +644,6 @@
     <None Include="x_ite\Components\DIS.js" />
     <None Include="x_ite\Components\EnvironmentalEffects.js" />
     <None Include="x_ite\Components\EnvironmentalSensor.js" />
-    <None Include="x_ite\Components\EventUtilities.js" />
     <None Include="x_ite\Components\Followers.js" />
     <None Include="x_ite\Components\Geometry2D.js" />
     <None Include="x_ite\Components\Geometry3D.js" />
@@ -658,7 +657,6 @@
     <None Include="x_ite\Components\Picking.js" />
     <None Include="x_ite\Components\PointingDeviceSensor.js" />
     <None Include="x_ite\Components\Rendering.js" />
-    <None Include="x_ite\Components\Scripting.js" />
     <None Include="x_ite\Components\Shaders.js" />
     <None Include="x_ite\Components\Shape.js" />
     <None Include="x_ite\Components\Sound.js" />
@@ -684,6 +682,8 @@
     <None Include="components\x_ite.js" />
     <None Include="components\cube-map-texturing.js" />
     <None Include="components\layout.js" />
+    <None Include="components\event-utilities.js" />
+    <None Include="components\scripting.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
