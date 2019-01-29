@@ -311,7 +311,9 @@ function (Fields,
 										this .triangulatePolygon (polygon);
 
 									if (triangles .length < 3)
+									{
 										vertices .length = 0;
+									}
 									else
 									{
 										polygons .push (polygon);
