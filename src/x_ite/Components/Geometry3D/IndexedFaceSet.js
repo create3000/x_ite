@@ -453,7 +453,7 @@ function (Fields,
 	
 					// Add this normal for each vertex.
 	
-					for (var i = 0, nl = length; i < nl; ++ i)
+					for (var i = 0; i < length; ++ i)
 						normals .push (normal);
 				}
 	
