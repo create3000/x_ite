@@ -274,7 +274,7 @@ function (Fields,
 							if (vertices .length)
 							{
 								// Closed polygon.
-								if (vertices [0] === vertices [vertices .length - 1])
+								if (coordIndex [vertices [0]] === coordIndex [vertices [vertices .length - 1]])
 									vertices .pop ();
 	
 								switch (vertices .length)
