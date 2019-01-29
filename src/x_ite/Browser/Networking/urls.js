@@ -55,20 +55,38 @@ function (URI,
 {
 "use strict";
 
-	var scriptUrl = new URI (getScriptURL ())
-
-	function provider (component)
+	function URLs ()
 	{
-		var min = DEBUG ? "" : ".min";
-
-		return scriptUrl .transform ("components/" + component + min + ".js") .toString ();
+		this .scriptUrl          = new URI (getScriptURL ())
+		this .fallbackExpression = new RegExp ("^http://cors.create3000.de/");
 	}
 
-	return {
-		provider: provider,
-		fontsUrl: scriptUrl .transform ("fonts/") .toString (),
-		providerUrl: "http://create3000.de/x_ite",
-		fallbackUrl: "http://cors.create3000.de/",
-		fallbackExpression: new RegExp ("^http://cors.create3000.de/"),
+	URLs .prototype =
+	{
+		getProviderUrl: function (file)
+		{
+			if (file)
+			{
+				var min = DEBUG ? "" : ".min";
+
+				return this .scriptUrl .transform ("components/" + file + min + ".js") .toString ();
+			}
+
+			return "http://create3000.de/x_ite";
+		},
+		getFontsUrl: function (file)
+		{
+			return this .scriptUrl .transform ("fonts/" + file) .toString ();
+		},
+		getFallbackUrl: function (url)
+		{
+			return "http://cors.create3000.de/" + url;
+		},
+		getFallbackExpression: function ()
+		{
+			return this .fallbackExpression;
+		},
 	};
+
+	return new URLs ();
 });

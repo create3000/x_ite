@@ -173,8 +173,8 @@ function ($,
 			{
 				if (! (this .URL .isLocal () || this .URL .host === "localhost"))
 				{
-					if (! URL .match (urls .fallbackExpression))
-						this .urlStack .unshift (urls .fallbackUrl + URL);
+					if (! URL .match (urls .getFallbackExpression ()))
+						this .urlStack .unshift (urls .getFallbackUrl (URL));
 				}
 			}
 

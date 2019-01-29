@@ -63,7 +63,7 @@ function (ComponentInfoArray,
 		title:      "Computer-Aided Design (CAD) model geometry",
 		name:       "CADGeometry",
 		level:       2,
-		providerUrl: urls .provider ("cad-geometry"),
+		providerUrl: urls .getProviderUrl ("cad-geometry"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -71,7 +71,7 @@ function (ComponentInfoArray,
 		title:      "Core",
 		name:       "Core",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -79,7 +79,7 @@ function (ComponentInfoArray,
 		title:      "Cube map environmental texturing",
 		name:       "CubeMapTexturing",
 		level:       3,
-		providerUrl: urls .provider ("cube-map-texturing"),
+		providerUrl: urls .getProviderUrl ("cube-map-texturing"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -87,7 +87,7 @@ function (ComponentInfoArray,
 		title:      "Distributed interactive simulation (DIS)",
 		name:       "DIS",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -95,7 +95,7 @@ function (ComponentInfoArray,
 		title:      "Environmental effects",
 		name:       "EnvironmentalEffects",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -103,7 +103,7 @@ function (ComponentInfoArray,
 		title:      "Environmental sensor",
 		name:       "EnvironmentalSensor",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -111,7 +111,7 @@ function (ComponentInfoArray,
 		title:      "Event utilities",
 		name:       "EventUtilities",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -119,7 +119,7 @@ function (ComponentInfoArray,
 		title:      "Followers",
 		name:       "Followers",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -127,7 +127,7 @@ function (ComponentInfoArray,
 		title:      "Geometry2D",
 		name:       "Geometry2D",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -135,7 +135,7 @@ function (ComponentInfoArray,
 		title:      "Geometry3D",
 		name:       "Geometry3D",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -143,7 +143,7 @@ function (ComponentInfoArray,
 		title:      "Geospatial",
 		name:       "Geospatial",
 		level:       2,
-		providerUrl: urls .provider ("geospatial"),
+		providerUrl: urls .getProviderUrl ("geospatial"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -151,7 +151,7 @@ function (ComponentInfoArray,
 		title:      "Grouping",
 		name:       "Grouping",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -159,7 +159,7 @@ function (ComponentInfoArray,
 		title:      "Humanoid animation (H-Anim)",
 		name:       "H-Anim",
 		level:       3,
-		providerUrl: urls .provider ("h-anim"),
+		providerUrl: urls .getProviderUrl ("h-anim"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -167,7 +167,7 @@ function (ComponentInfoArray,
 		title:      "Interpolation",
 		name:       "Interpolation",
 		level:       5,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -175,7 +175,7 @@ function (ComponentInfoArray,
 		title:      "Key device sensor",
 		name:       "KeyDeviceSensor",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -183,7 +183,7 @@ function (ComponentInfoArray,
 		title:      "Layering",
 		name:       "Layering",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -191,7 +191,7 @@ function (ComponentInfoArray,
 		title:      "Layout",
 		name:       "Layout",
 		level:       1,
-		providerUrl: urls .provider ("layout"),
+		providerUrl: urls .getProviderUrl ("layout"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -199,7 +199,7 @@ function (ComponentInfoArray,
 		title:      "Lighting",
 		name:       "Lighting",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -207,7 +207,7 @@ function (ComponentInfoArray,
 		title:      "Navigation",
 		name:       "Navigation",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -215,7 +215,7 @@ function (ComponentInfoArray,
 		title:      "Networking",
 		name:       "Networking",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -223,7 +223,7 @@ function (ComponentInfoArray,
 		title:      "Non-uniform Rational B-Spline (NURBS)",
 		name:       "NURBS",
 		level:       4,
-		providerUrl: urls .provider ("nurbs"),
+		providerUrl: urls .getProviderUrl ("nurbs"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -231,7 +231,7 @@ function (ComponentInfoArray,
 		title:      "Particle systems",
 		name:       "ParticleSystems",
 		level:       3,
-		providerUrl: urls .provider ("particle-systems"),
+		providerUrl: urls .getProviderUrl ("particle-systems"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -239,7 +239,7 @@ function (ComponentInfoArray,
 		title:      "Picking sensor",
 		name:       "Picking",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -247,7 +247,7 @@ function (ComponentInfoArray,
 		title:      "Pointing device sensor",
 		name:       "PointingDeviceSensor",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -255,7 +255,7 @@ function (ComponentInfoArray,
 		title:      "Programmable shaders",
 		name:       "Shaders",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -263,7 +263,7 @@ function (ComponentInfoArray,
 		title:      "Rendering",
 		name:       "Rendering",
 		level:       5,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -271,7 +271,7 @@ function (ComponentInfoArray,
 		title:      "Rigid body physics",
 		name:       "RigidBodyPhysics",
 		level:       5,
-		providerUrl: urls .provider ("rigid-body-physics"),
+		providerUrl: urls .getProviderUrl ("rigid-body-physics"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -279,7 +279,7 @@ function (ComponentInfoArray,
 		title:      "Scripting",
 		name:       "Scripting",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -287,7 +287,7 @@ function (ComponentInfoArray,
 		title:      "Shape",
 		name:       "Shape",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -295,7 +295,7 @@ function (ComponentInfoArray,
 		title:      "Sound",
 		name:       "Sound",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -303,7 +303,7 @@ function (ComponentInfoArray,
 		title:      "Text",
 		name:       "Text",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -311,7 +311,7 @@ function (ComponentInfoArray,
 		title:      "Texturing",
 		name:       "Texturing",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -319,7 +319,7 @@ function (ComponentInfoArray,
 		title:      "Texturing3D",
 		name:       "Texturing3D",
 		level:       3,
-		providerUrl: urls .provider ("texturing-3d"),
+		providerUrl: urls .getProviderUrl ("texturing-3d"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -327,7 +327,7 @@ function (ComponentInfoArray,
 		title:      "Time",
 		name:       "Time",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -335,7 +335,7 @@ function (ComponentInfoArray,
 		title:      "Volume rendering",
 		name:       "VolumeRendering",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -343,7 +343,7 @@ function (ComponentInfoArray,
 		title:      "X_ITE",
 		name:       "X_ITE",
 		level:       1,
-		providerUrl: urls .provider ("x_ite"),
+		providerUrl: urls .getProviderUrl ("x_ite"),
 	});
 
 	return SupportedComponents;

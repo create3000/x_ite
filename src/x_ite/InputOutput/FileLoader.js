@@ -460,7 +460,7 @@ function ($,
 						data = unescape (data);
 
 					if (this .target .length && this .target !== "_self" && this .foreign)
-						return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+						return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 
 					this .callback (data);
 					return;
@@ -475,7 +475,7 @@ function ($,
 			// Handle target
 
 			if (this .target .length && this .target !== "_self" && this .foreign)
-				return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+				return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 
 			// Handle well known foreign content depending on extension or if path looks like directory.
 
@@ -483,7 +483,7 @@ function ($,
 			{
 				if (this .URL .extension .match (foreignExtensions))
 				{
-					return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+					return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 				}
 			}
 
@@ -504,7 +504,7 @@ function ($,
 						//console .log (this .getContentType (xhr));
 
 						if (foreign [this .getContentType (xhr)])
-							return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+							return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 					}
 
 					this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
@@ -575,8 +575,8 @@ function ($,
 			{
 				if (DEBUG)
 				{
-					if (! sURL .match (urls .fallbackExpression))
-						this .url .unshift (urls .fallbackUrl + URL);
+					if (! sURL .match (urls .getFallbackExpression ()))
+						this .url .unshift (urls .getFallbackUrl (URL));
 				}
 			}
 

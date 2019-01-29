@@ -106,7 +106,7 @@ function (Fields,
 		},
 		getProviderUrl: function ()
 		{
-			return urls .providerUrl;
+			return urls .getProviderUrl ();
 		},
 		getLocation: function ()
 		{

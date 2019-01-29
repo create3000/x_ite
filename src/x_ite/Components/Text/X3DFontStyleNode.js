@@ -73,22 +73,22 @@ function (Fields,
 	var Fonts =
 	{
 		SERIF: {
-			PLAIN:      "DroidSerif-Regular.ttf",
-			ITALIC:     "DroidSerif-Italic.ttf",
-			BOLD:       "DroidSerif-Bold.ttf",
-			BOLDITALIC: "DroidSerif-BoldItalic.ttf",
+			PLAIN:      urls .getFontsUrl ("DroidSerif-Regular.ttf"),
+			ITALIC:     urls .getFontsUrl ("DroidSerif-Italic.ttf"),
+			BOLD:       urls .getFontsUrl ("DroidSerif-Bold.ttf"),
+			BOLDITALIC: urls .getFontsUrl ("DroidSerif-BoldItalic.ttf"),
 		},
 		SANS: {
-			PLAIN:      "Ubuntu-R.ttf",
-			ITALIC:     "Ubuntu-RI.ttf",
-			BOLD:       "Ubuntu-B.ttf",
-			BOLDITALIC: "Ubuntu-BI.ttf",
+			PLAIN:      urls .getFontsUrl ("Ubuntu-R.ttf"),
+			ITALIC:     urls .getFontsUrl ("Ubuntu-RI.ttf"),
+			BOLD:       urls .getFontsUrl ("Ubuntu-B.ttf"),
+			BOLDITALIC: urls .getFontsUrl ("Ubuntu-BI.ttf"),
 		},
 		TYPEWRITER: {
-			PLAIN:      "UbuntuMono-R.ttf",
-			ITALIC:     "UbuntuMono-RI.ttf",
-			BOLD:       "UbuntuMono-B.ttf",
-			BOLDITALIC: "UbuntuMono-BI.ttf",
+			PLAIN:      urls .getFontsUrl ("UbuntuMono-R.ttf"),
+			ITALIC:     urls .getFontsUrl ("UbuntuMono-RI.ttf"),
+			BOLD:       urls .getFontsUrl ("UbuntuMono-B.ttf"),
+			BOLDITALIC: urls .getFontsUrl ("UbuntuMono-BI.ttf"),
 		},
 	};
 
@@ -206,7 +206,7 @@ function (Fields,
 					defaultFont = this .getDefaultFont (familyName);
 				
 				if (defaultFont)
-					this .familyStack .push (urls .fontsUrl + defaultFont);
+					this .familyStack .push (defaultFont);
 				else
 					this .familyStack .push (familyName);
 			}
