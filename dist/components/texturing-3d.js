@@ -53,6 +53,388 @@
  ******************************************************************************/
 
 
+define ('x_ite/Components/Texturing3D/X3DTexture3DNode',[
+	"x_ite/Components/Texturing/X3DTextureNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DTextureNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function X3DTexture3DNode (executionContext)
+	{
+		X3DTextureNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DTexture3DNode);
+	}
+
+	X3DTexture3DNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+	{
+		constructor: X3DTexture3DNode,
+	});
+
+	return X3DTexture3DNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Texturing3D/ComposedTexture3D',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Texturing3D/X3DTexture3DNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DTexture3DNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function ComposedTexture3D (executionContext)
+	{
+		X3DTexture3DNode .call (this, executionContext);
+
+		this .addType (X3DConstants .ComposedTexture3D);
+	}
+
+	ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+	{
+		constructor: ComposedTexture3D,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "texture",           new Fields .MFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "ComposedTexture3D";
+		},
+		getComponentName: function ()
+		{
+			return "Texturing3D";
+		},
+		getContainerField: function ()
+		{
+			return "texture";
+		},
+	});
+
+	return ComposedTexture3D;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Texturing3D/ImageTexture3D',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Texturing3D/X3DTexture3DNode",
+	"x_ite/Components/Networking/X3DUrlObject",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DTexture3DNode, 
+          X3DUrlObject, 
+          X3DConstants)
+{
+"use strict";
+
+	function ImageTexture3D (executionContext)
+	{
+		X3DTexture3DNode .call (this, executionContext);
+		X3DUrlObject .call (this, executionContext);
+
+		this .addType (X3DConstants .ImageTexture3D);
+	}
+
+	ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+		X3DUrlObject .prototype,
+	{
+		constructor: ImageTexture3D,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",               new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "ImageTexture3D";
+		},
+		getComponentName: function ()
+		{
+			return "Texturing3D";
+		},
+		getContainerField: function ()
+		{
+			return "texture";
+		},
+	});
+
+	return ImageTexture3D;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Texturing3D/PixelTexture3D',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Texturing3D/X3DTexture3DNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DTexture3DNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function PixelTexture3D (executionContext)
+	{
+		X3DTexture3DNode .call (this, executionContext);
+
+		this .addType (X3DConstants .PixelTexture3D);
+	}
+
+	PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+	{
+		constructor: PixelTexture3D,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .MFInt32 (0, 0, 0, 0)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "PixelTexture3D";
+		},
+		getComponentName: function ()
+		{
+			return "Texturing3D";
+		},
+		getContainerField: function ()
+		{
+			return "texture";
+		},
+	});
+
+	return PixelTexture3D;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Texturing3D/TextureCoordinate3D',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -622,86 +1004,11 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/Texturing3D/X3DTexture3DNode',[
-	"x_ite/Components/Texturing/X3DTextureNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (X3DTextureNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DTexture3DNode (executionContext)
-	{
-		X3DTextureNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DTexture3DNode);
-	}
-
-	X3DTexture3DNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
-	{
-		constructor: X3DTexture3DNode,
-	});
-
-	return X3DTexture3DNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ([
 	"x_ite/Components",
-//	"x_ite/Components/Texturing3D/ComposedTexture3D",
-//	"x_ite/Components/Texturing3D/ImageTexture3D",
-//	"x_ite/Components/Texturing3D/PixelTexture3D",
+	"x_ite/Components/Texturing3D/ComposedTexture3D",
+	"x_ite/Components/Texturing3D/ImageTexture3D",
+	"x_ite/Components/Texturing3D/PixelTexture3D",
 	"x_ite/Components/Texturing3D/TextureCoordinate3D",
 	"x_ite/Components/Texturing3D/TextureCoordinate4D",
 	"x_ite/Components/Texturing3D/TextureTransform3D",
@@ -709,15 +1016,14 @@ define ([
 	"x_ite/Components/Texturing3D/X3DTexture3DNode",
 ],
 function (Components,
-//          ComposedTexture3D,
-//          ImageTexture3D,
-//          PixelTexture3D,
+          ComposedTexture3D,
+          ImageTexture3D,
+          PixelTexture3D,
           TextureCoordinate3D,
           TextureCoordinate4D,
           TextureTransform3D,
-          TextureTransformMatrix3D
-//          X3DTexture3DNode
-          )
+          TextureTransformMatrix3D,
+          X3DTexture3DNode)
 {
 "use strict";
 
@@ -725,9 +1031,9 @@ function (Components,
 		name: "Texturing3D",
 		types:
 		{
-//			ComposedTexture3D:        ComposedTexture3D,
-//			ImageTexture3D:           ImageTexture3D,
-//			PixelTexture3D:           PixelTexture3D,
+			ComposedTexture3D:        ComposedTexture3D,        // Not implemented yet.
+			ImageTexture3D:           ImageTexture3D,           // Not implemented yet.
+			PixelTexture3D:           PixelTexture3D,           // Not implemented yet.
 			TextureCoordinate3D:      TextureCoordinate3D,
 			TextureCoordinate4D:      TextureCoordinate4D,
 			TextureTransform3D:       TextureTransform3D,
@@ -735,7 +1041,7 @@ function (Components,
 		},
 		abstractTypes:
 		{
-//	   	X3DTexture3DNode: X3DTexture3DNode,
+	   	X3DTexture3DNode: X3DTexture3DNode, // Not implemented yet.
 		},
 	});
 });

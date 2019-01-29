@@ -1,4 +1,4 @@
-/* X_ITE v4.2.18a-582 */
+/* X_ITE v4.2.18a-583 */
 
 (function () {
 
@@ -39561,22 +39561,40 @@ function (URI,
 {
 "use strict";
 
-	var scriptUrl = new URI (getScriptURL ())
-
-	function provider (component)
+	function URLs ()
 	{
-		var min = DEBUG ? "" : ".min";
-
-		return scriptUrl .transform ("components/" + component + min + ".js") .toString ();
+		this .scriptUrl          = new URI (getScriptURL ())
+		this .fallbackExpression = new RegExp ("^http://cors.create3000.de/");
 	}
 
-	return {
-		provider: provider,
-		fontsUrl: scriptUrl .transform ("fonts/") .toString (),
-		providerUrl: "http://create3000.de/x_ite",
-		fallbackUrl: "http://cors.create3000.de/",
-		fallbackExpression: new RegExp ("^http://cors.create3000.de/"),
+	URLs .prototype =
+	{
+		getProviderUrl: function (file)
+		{
+			if (file)
+			{
+				var min = DEBUG ? "" : ".min";
+
+				return this .scriptUrl .transform ("components/" + file + min + ".js") .toString ();
+			}
+
+			return "http://create3000.de/x_ite";
+		},
+		getFontsUrl: function (file)
+		{
+			return this .scriptUrl .transform ("fonts/" + file) .toString ();
+		},
+		getFallbackUrl: function (url)
+		{
+			return "http://cors.create3000.de/" + url;
+		},
+		getFallbackExpression: function ()
+		{
+			return this .fallbackExpression;
+		},
 	};
+
+	return new URLs ();
 });
 
 /*! sprintf-js v1.1.2 | Copyright (c) 2007-present, Alexandru Mărășteanu <hello@alexei.ro> | BSD-3-Clause */
@@ -39693,7 +39711,7 @@ function (Fields,
 		},
 		getProviderUrl: function ()
 		{
-			return urls .providerUrl;
+			return urls .getProviderUrl ();
 		},
 		getLocation: function ()
 		{
@@ -49890,7 +49908,7 @@ function ($,
 						data = unescape (data);
 
 					if (this .target .length && this .target !== "_self" && this .foreign)
-						return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+						return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 
 					this .callback (data);
 					return;
@@ -49905,7 +49923,7 @@ function ($,
 			// Handle target
 
 			if (this .target .length && this .target !== "_self" && this .foreign)
-				return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+				return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 
 			// Handle well known foreign content depending on extension or if path looks like directory.
 
@@ -49913,7 +49931,7 @@ function ($,
 			{
 				if (this .URL .extension .match (foreignExtensions))
 				{
-					return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+					return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 				}
 			}
 
@@ -49934,7 +49952,7 @@ function ($,
 						//console .log (this .getContentType (xhr));
 
 						if (foreign [this .getContentType (xhr)])
-							return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+							return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 					}
 
 					this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
@@ -50005,8 +50023,8 @@ function ($,
 			{
 				if (DEBUG)
 				{
-					if (! sURL .match (urls .fallbackExpression))
-						this .url .unshift (urls .fallbackUrl + URL);
+					if (! sURL .match (urls .getFallbackExpression ()))
+						this .url .unshift (urls .getFallbackUrl (URL));
 				}
 			}
 
@@ -69911,22 +69929,22 @@ function (Fields,
 	var Fonts =
 	{
 		SERIF: {
-			PLAIN:      "DroidSerif-Regular.ttf",
-			ITALIC:     "DroidSerif-Italic.ttf",
-			BOLD:       "DroidSerif-Bold.ttf",
-			BOLDITALIC: "DroidSerif-BoldItalic.ttf",
+			PLAIN:      urls .getFontsUrl ("DroidSerif-Regular.ttf"),
+			ITALIC:     urls .getFontsUrl ("DroidSerif-Italic.ttf"),
+			BOLD:       urls .getFontsUrl ("DroidSerif-Bold.ttf"),
+			BOLDITALIC: urls .getFontsUrl ("DroidSerif-BoldItalic.ttf"),
 		},
 		SANS: {
-			PLAIN:      "Ubuntu-R.ttf",
-			ITALIC:     "Ubuntu-RI.ttf",
-			BOLD:       "Ubuntu-B.ttf",
-			BOLDITALIC: "Ubuntu-BI.ttf",
+			PLAIN:      urls .getFontsUrl ("Ubuntu-R.ttf"),
+			ITALIC:     urls .getFontsUrl ("Ubuntu-RI.ttf"),
+			BOLD:       urls .getFontsUrl ("Ubuntu-B.ttf"),
+			BOLDITALIC: urls .getFontsUrl ("Ubuntu-BI.ttf"),
 		},
 		TYPEWRITER: {
-			PLAIN:      "UbuntuMono-R.ttf",
-			ITALIC:     "UbuntuMono-RI.ttf",
-			BOLD:       "UbuntuMono-B.ttf",
-			BOLDITALIC: "UbuntuMono-BI.ttf",
+			PLAIN:      urls .getFontsUrl ("UbuntuMono-R.ttf"),
+			ITALIC:     urls .getFontsUrl ("UbuntuMono-RI.ttf"),
+			BOLD:       urls .getFontsUrl ("UbuntuMono-B.ttf"),
+			BOLDITALIC: urls .getFontsUrl ("UbuntuMono-BI.ttf"),
 		},
 	};
 
@@ -70044,7 +70062,7 @@ function (Fields,
 					defaultFont = this .getDefaultFont (familyName);
 				
 				if (defaultFont)
-					this .familyStack .push (urls .fontsUrl + defaultFont);
+					this .familyStack .push (defaultFont);
 				else
 					this .familyStack .push (familyName);
 			}
@@ -80437,8 +80455,8 @@ function ($,
 			{
 				if (! (this .URL .isLocal () || this .URL .host === "localhost"))
 				{
-					if (! URL .match (urls .fallbackExpression))
-						this .urlStack .unshift (urls .fallbackUrl + URL);
+					if (! URL .match (urls .getFallbackExpression ()))
+						this .urlStack .unshift (urls .getFallbackUrl (URL));
 				}
 			}
 
@@ -84467,1116 +84485,6 @@ function (SupportedNodes,
 	var AbstractTypes =
 	{
 		X3DEnvironmentalSensorNode: X3DEnvironmentalSensorNode,
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-});
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/EventUtilities/BooleanFilter',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DChildNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function BooleanFilter (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-
-		this .addType (X3DConstants .BooleanFilter);
-	}
-
-	BooleanFilter .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: BooleanFilter,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "inputTrue",   new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "inputFalse",  new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "inputNegate", new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "BooleanFilter";
-		},
-		getComponentName: function ()
-		{
-			return "EventUtilities";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-
-			this .set_boolean_ .addInterest ("set_boolean__", this);
-		},
-		set_boolean__: function ()
-		{
-			var value = this .set_boolean_ .getValue ();
-
-			if (value)
-				this .inputTrue_ = true;
-		
-			else
-				this .inputFalse_ = false;
-		
-			this .inputNegate_ = ! value;
-		},
-	});
-
-	return BooleanFilter;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/EventUtilities/X3DSequencerNode',[
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
-],
-function (X3DChildNode, 
-          X3DConstants,
-          Algorithm)
-{
-"use strict";
-
-	function X3DSequencerNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DSequencerNode);
-
-		this .index = -1;
-	}
-
-	X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DSequencerNode,
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-		
-			this .set_fraction_ .addInterest ("set_fraction__", this);
-			this .previous_     .addInterest ("set_previous__", this);
-			this .next_         .addInterest ("set_next__", this);
-			this .key_          .addInterest ("set_index__", this);
-		},
-		set_fraction__: function ()
-		{
-			var
-				fraction = this .set_fraction_ .getValue (),
-				key      = this .key_,
-				length   = key .length;
-
-			if (length === 0)
-				return;
-		
-			var i = 0;
-		
-			if (length === 1 || fraction <= key [0])
-				i = 0;
-		
-			else if (fraction >= key [length - 1])
-				i = this .getSize () - 1;
-		
-			else
-			{
-				var index = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
-
-				i = index - 1;
-			}
-		
-			if (i !== this .index)
-			{
-				if (i < this .getSize ())
-				{
-					this .sequence (this .index = i);
-				}
-			}
-		},
-		set_previous__: function ()
-		{
-			if (this .previous_ .getValue ())
-			{
-				if (this .index <= 0)
-					this .index = this .getSize () - 1;
-
-				else
-					-- this .index;
-
-				if (this .index < this .getSize ())
-					this .sequence (this .index);
-			}
-		},
-		set_next__: function ()
-		{
-			if (this .next_ .getValue ())
-			{
-				if (this .index >= this .getSize () - 1)
-					this .index = 0;
-		
-				else
-					++ this .index;
-		
-				if (this .index < this .getSize ())
-					this .sequence (this .index);
-			}
-		},
-		set_index__: function ()
-		{
-			this .index = -1;
-		},
-	});
-
-	return X3DSequencerNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/EventUtilities/BooleanSequencer',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/EventUtilities/X3DSequencerNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DSequencerNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function BooleanSequencer (executionContext)
-	{
-		X3DSequencerNode .call (this, executionContext);
-
-		this .addType (X3DConstants .BooleanSequencer);
-	}
-
-	BooleanSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
-	{
-		constructor: BooleanSequencer,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",      new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "next",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "BooleanSequencer";
-		},
-		getComponentName: function ()
-		{
-			return "EventUtilities";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DSequencerNode .prototype .initialize .call (this);
-
-			this .keyValue_ .addInterest ("set_index__", this);
-		},
-		getSize: function ()
-		{
-			return this .keyValue_ .length;
-		},
-		sequence: function (index)
-		{
-			this .value_changed_ = this .keyValue_ [index];
-		},
-	});
-
-	return BooleanSequencer;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/EventUtilities/BooleanToggle',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DChildNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function BooleanToggle (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-
-		this .addType (X3DConstants .BooleanToggle);
-	}
-
-	BooleanToggle .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: BooleanToggle,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "toggle",      new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "BooleanToggle";
-		},
-		getComponentName: function ()
-		{
-			return "EventUtilities";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-
-			this .set_boolean_ .addInterest ("set_boolean__", this);
-		},
-		set_boolean__: function ()
-		{
-			if (this .set_boolean_ .getValue ())
-				this .toggle_ = ! this .toggle_ .getValue ();
-		},
-	});
-
-	return BooleanToggle;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/EventUtilities/X3DTriggerNode',[
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (X3DChildNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DTriggerNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DTriggerNode);
-	}
-
-	X3DTriggerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DTriggerNode,
-	});
-
-	return X3DTriggerNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/EventUtilities/BooleanTrigger',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/EventUtilities/X3DTriggerNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTriggerNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function BooleanTrigger (executionContext)
-	{
-		X3DTriggerNode .call (this, executionContext);
-
-		this .addType (X3DConstants .BooleanTrigger);
-	}
-
-	BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
-	{
-		constructor: BooleanTrigger,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_triggerTime", new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTrue",     new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "BooleanTrigger";
-		},
-		getComponentName: function ()
-		{
-			return "EventUtilities";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DTriggerNode .prototype .initialize .call (this);
-
-			this .set_triggerTime_ .addInterest ("set_triggerTime__", this);
-		},
-		set_triggerTime__: function ()
-		{
-			this .triggerTrue_ = true;
-		},
-	});
-
-	return BooleanTrigger;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/EventUtilities/IntegerSequencer',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/EventUtilities/X3DSequencerNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DSequencerNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function IntegerSequencer (executionContext)
-	{
-		X3DSequencerNode .call (this, executionContext);
-
-		this .addType (X3DConstants .IntegerSequencer);
-	}
-
-	IntegerSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
-	{
-		constructor: IntegerSequencer,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",      new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "next",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFInt32 ()),
-		]),
-		getTypeName: function ()
-		{
-			return "IntegerSequencer";
-		},
-		getComponentName: function ()
-		{
-			return "EventUtilities";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DSequencerNode .prototype .initialize .call (this);
-
-			this .keyValue_ .addInterest ("set_index__", this);
-		},
-		getSize: function ()
-		{
-			return this .keyValue_ .length;
-		},
-		sequence: function (index)
-		{
-			this .value_changed_ = this .keyValue_ [index];
-		},
-	});
-
-	return IntegerSequencer;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/EventUtilities/IntegerTrigger',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/EventUtilities/X3DTriggerNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTriggerNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function IntegerTrigger (executionContext)
-	{
-		X3DTriggerNode .call (this, executionContext);
-
-		this .addType (X3DConstants .IntegerTrigger);
-	}
-
-	IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
-	{
-		constructor: IntegerTrigger,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean",  new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "integerKey",   new Fields .SFInt32 (-1)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerValue", new Fields .SFInt32 ()),
-		]),
-		getTypeName: function ()
-		{
-			return "IntegerTrigger";
-		},
-		getComponentName: function ()
-		{
-			return "EventUtilities";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DTriggerNode .prototype .initialize .call (this);
-
-			this .set_boolean_ .addInterest ("set_boolean__", this);
-		},
-		set_boolean__: function ()
-		{
-			this .triggerValue_ = this .integerKey_;
-		},
-	});
-
-	return IntegerTrigger;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/EventUtilities/TimeTrigger',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/EventUtilities/X3DTriggerNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTriggerNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function TimeTrigger (executionContext)
-	{
-		X3DTriggerNode .call (this, executionContext);
-
-		this .addType (X3DConstants .TimeTrigger);
-	}
-
-	TimeTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
-	{
-		constructor: TimeTrigger,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTime", new Fields .SFTime ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TimeTrigger";
-		},
-		getComponentName: function ()
-		{
-			return "EventUtilities";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DTriggerNode .prototype .initialize .call (this);
-		
-			this .set_boolean_ .addInterest ("set_boolean__", this);
-		},
-		set_boolean__: function ()
-		{
-			this .triggerTime_ = this .getBrowser () .getCurrentTime ();
-		},
-	});
-
-	return TimeTrigger;
-});
-
-
-
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/EventUtilities',[
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/EventUtilities/BooleanFilter",
-	"x_ite/Components/EventUtilities/BooleanSequencer",
-	"x_ite/Components/EventUtilities/BooleanToggle",
-	"x_ite/Components/EventUtilities/BooleanTrigger",
-	"x_ite/Components/EventUtilities/IntegerSequencer",
-	"x_ite/Components/EventUtilities/IntegerTrigger",
-	"x_ite/Components/EventUtilities/TimeTrigger",
-	"x_ite/Components/EventUtilities/X3DSequencerNode",
-	"x_ite/Components/EventUtilities/X3DTriggerNode",
-],
-function (SupportedNodes,
-          BooleanFilter,
-          BooleanSequencer,
-          BooleanToggle,
-          BooleanTrigger,
-          IntegerSequencer,
-          IntegerTrigger,
-          TimeTrigger,
-          X3DSequencerNode,
-          X3DTriggerNode)
-{
-"use strict";
-
-	var Types =
-	{
-		BooleanFilter:    BooleanFilter,
-		BooleanSequencer: BooleanSequencer,
-		BooleanToggle:    BooleanToggle,
-		BooleanTrigger:   BooleanTrigger,
-		IntegerSequencer: IntegerSequencer,
-		IntegerTrigger:   IntegerTrigger,
-		TimeTrigger:      TimeTrigger,
-	};
-
-	var AbstractTypes =
-	{
-		X3DSequencerNode: X3DSequencerNode,
-		X3DTriggerNode:   X3DTriggerNode,
 	};
 	
 	for (var typeName in Types)
@@ -101918,915 +100826,6 @@ function (SupportedNodes,
  ******************************************************************************/
 
 
-define ('x_ite/Configuration/ProfileInfo',[],function ()
-{
-"use strict";
-
-	function ProfileInfo (name, title, providerUrl, components)
-	{
-		this .name        = name;
-		this .title       = title;
-		this .providerUrl = providerUrl;
-		this .components  = components;
-
-		Object .preventExtensions (this);
-		Object .freeze (this);
-		Object .seal (this);
-	}
-
-	Object .assign (ProfileInfo .prototype,
-	{
-		constructor: ProfileInfo,
-		toXMLStream: function (stream)
-		{ },
-	});
-
-	return ProfileInfo;
-});
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Configuration/ProfileInfoArray',[
-	"x_ite/Configuration/ComponentInfoArray",
-	"x_ite/Configuration/ProfileInfo",
-	"x_ite/Configuration/X3DInfoArray",
-],
-function (ComponentInfoArray,
-          ProfileInfo,
-          X3DInfoArray)
-{
-"use strict";
-
-	function ProfileInfoArray ()
-	{
-		return X3DInfoArray .call (this);
-	}
-
-	ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-	{
-		constructor: ProfileInfoArray,
-		addProfile: function (value)
-		{
-			this .add (value .name, new ProfileInfo (value .name, value .title, value .providerUrl, new ComponentInfoArray (value .components)));
-		},
-	});
-
-	return ProfileInfoArray;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Scripting/evaluate',[],function ()
-{
-	return function (/* __global__, __text__ */)
-	{
-		with (arguments [0])
-		{
-			return eval (arguments [1]);
-		}		
-	};
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Scripting/X3DScriptNode',[
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/Bits/X3DConstants",
-],
-function (X3DChildNode, 
-          X3DUrlObject, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DScriptNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-		X3DUrlObject .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DScriptNode);
-	}
-
-	X3DScriptNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-		X3DUrlObject .prototype,
-	{
-		constructor: X3DScriptNode,
-	});
-
-	return X3DScriptNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Scripting/Script',[
-	"jquery",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Basic/X3DField",
-	"x_ite/Basic/X3DArrayField",
-	"x_ite/Fields",
-	"x_ite/Browser/X3DBrowser",
-	"x_ite/Configuration/ComponentInfo",
-	"x_ite/Configuration/ComponentInfoArray",
-	"x_ite/Configuration/ProfileInfo",
-	"x_ite/Configuration/ProfileInfoArray",
-	"x_ite/Configuration/UnitInfo",
-	"x_ite/Configuration/UnitInfoArray",
-	"x_ite/Execution/X3DExecutionContext",
-	"x_ite/Execution/X3DScene",
-	"x_ite/Prototype/ExternProtoDeclarationArray",
-	"x_ite/Prototype/ProtoDeclarationArray",
-	"x_ite/Prototype/X3DExternProtoDeclaration",
-	"x_ite/Prototype/X3DProtoDeclaration",
-	"x_ite/Routing/RouteArray",
-	"x_ite/Routing/X3DRoute",
-	"x_ite/Browser/Scripting/evaluate",
-	"x_ite/Components/Scripting/X3DScriptNode",
-	"x_ite/InputOutput/FileLoader",
-	"x_ite/Bits/X3DConstants",
-],
-function ($,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DField,
-          X3DArrayField,
-          Fields,
-          X3DBrowser,
-          ComponentInfo,
-          ComponentInfoArray,
-          ProfileInfo,
-          ProfileInfoArray,
-          UnitInfo,
-          UnitInfoArray,
-          X3DExecutionContext,
-          X3DScene,
-          ExternProtoDeclarationArray,
-          ProtoDeclarationArray,
-          X3DExternProtoDeclaration,
-          X3DProtoDeclaration,
-          RouteArray,
-          X3DRoute,
-          evaluate,
-          X3DScriptNode, 
-          FileLoader,
-          X3DConstants)
-{
-	function Script (executionContext)
-	{
-		X3DScriptNode .call (this, executionContext);
-		
-		this .addChildObjects ("buffer", new Fields .SFTime ());
-
-		this .addType (X3DConstants .Script);
-	}
-
-	Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
-	{
-		constructor: Script,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",          new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "directOutput", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "mustEvaluate", new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Script";
-		},
-		getComponentName: function ()
-		{
-			return "Scripting";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DScriptNode .prototype .initialize .call (this);
-
-			this .url_    .addInterest ("set_url__",    this);
-			this .buffer_ .addInterest ("set_buffer__", this);
-
-			var userDefinedFields = this .getUserDefinedFields ();
-
-			for (var field of userDefinedFields .values ())
-				field .setSet (false);
-
-			this .set_url__ ();
-		},
-		set_url__: function ()
-		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-			this .requestAsyncLoad ();
-		},
-		getExtendedEventHandling: function ()
-		{
-			return false;
-		},
-		hasUserDefinedFields: function ()
-		{
-			return true;
-		},
-		getSourceText: function ()
-		{
-			return this .url_;
-		},
-		requestAsyncLoad: function ()
-		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			if (this .url_ .length === 0)
-				return;
-
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			this .buffer_ .addEvent ();
-		},
-		set_buffer__: function ()
-		{
-			new FileLoader (this) .loadScript (this .url_,
-			function (data)
-			{
-				if (data === null)
-				{
-					// No URL could be loaded.
-					this .setLoadState (X3DConstants .FAILED_STATE);
-				}
-				else
-				{
-					this .setLoadState (X3DConstants .COMPLETE_STATE);
-					this .initialize__ (data);
-				}
-			}
-			.bind (this));
-		},
-		getContext: function (text)
-		{
-			try
-			{
-				var
-					callbacks         = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"],
-					userDefinedFields = this .getUserDefinedFields ();
-
-				for (var field of userDefinedFields .values ())
-				{
-					switch (field .getAccessType ())
-					{
-						case X3DConstants .inputOnly:
-							callbacks .push (field .getName ());
-							break;
-						case X3DConstants .inputOutput:
-							callbacks .push ("set_" + field .getName ());
-							break;
-					}
-				}
-
-				text += "\n;var " + callbacks .join (",") + ";";
-				text += "\n[" + callbacks .join (",") + "];";
-
-				var
-					global  = this .getGlobal (),
-					result  = evaluate (global, text),
-					context = { };
-
-				for (var i = 0; i < callbacks .length; ++ i)
-				{
-					if (typeof result [i] === "function")
-						context [callbacks [i]] = result [i];
-					else
-						context [callbacks [i]] = null;
-				}
-
-				return context;
-			}
-			catch (error)
-			{
-				this .setError ("while evaluating script source", error);
-
-				return { };
-			}
-		},
-		getGlobal: function ()
-		{
-			var browser = this .getBrowser ();
-
-			function SFNode (vrmlSyntax)
-			{
-				var scene = browser .createX3DFromString (String (vrmlSyntax));
-
-				if (scene .getRootNodes () .length && scene .getRootNodes () [0])
-					return Fields .SFNode .call (this, scene .getRootNodes () [0] .getValue ());
-
-				throw new Error ("SFNode.new: invalid argument, must be 'string' is 'undefined'.");
-			}
-
-			SFNode .prototype = Object .create (Fields .SFNode .prototype);
-			SFNode .prototype .constructor = SFNode;
-
-			var global =
-			{
-				NULL:  { value: null },
-				FALSE: { value: false },
-				TRUE:  { value: true },
-				print: { value: function () { browser .println .apply (browser, arguments); }},
-				trace: { value: function () { browser .println .apply (browser, arguments); }},
-
-				Browser: { value: browser },
-
-				X3DConstants:                { value: X3DConstants },
-				X3DBrowser:                  { value: X3DBrowser },
-				X3DExecutionContext:         { value: X3DExecutionContext },
-				X3DScene:                    { value: X3DScene },
-				ComponentInfo:               { value: ComponentInfo },
-				ComponentInfoArray:          { value: ComponentInfoArray },
-				ProfileInfo:                 { value: ProfileInfo },
-				ProfileInfoArray:            { value: ProfileInfoArray },
-				UnitInfo:                    { value: UnitInfo },
-				UnitInfoArray:               { value: UnitInfoArray },
-				ExternProtoDeclarationArray: { value: ExternProtoDeclarationArray },
-				ProtoDeclarationArray:       { value: ProtoDeclarationArray },
-				X3DExternProtoDeclaration:   { value: X3DExternProtoDeclaration },
-				X3DProtoDeclaration:         { value: X3DProtoDeclaration },
-				RouteArray:                  { value: RouteArray },
-				X3DRoute:                    { value: X3DRoute },
-
-				X3DFieldDefinition:   { value: X3DFieldDefinition },
-				FieldDefinitionArray: { value: FieldDefinitionArray },
-
-				X3DField:      { value: X3DField },
-				X3DArrayField: { value: X3DArrayField },
-
-				SFColor:       { value: Fields .SFColor },
-				SFColorRGBA:   { value: Fields .SFColorRGBA },
-				SFImage:       { value: Fields .SFImage },
-				SFMatrix3d:    { value: Fields .SFMatrix3d },
-				SFMatrix3f:    { value: Fields .SFMatrix3f },
-				SFMatrix4d:    { value: Fields .SFMatrix4d },
-				SFMatrix4f:    { value: Fields .SFMatrix4f },
-				SFNode:        { value: SFNode },
-				SFRotation:    { value: Fields .SFRotation },
-				SFVec2d:       { value: Fields .SFVec2d },
-				SFVec2f:       { value: Fields .SFVec2f },
-				SFVec3d:       { value: Fields .SFVec3d },
-				SFVec3f:       { value: Fields .SFVec3f },
-				SFVec4d:       { value: Fields .SFVec4d },
-				SFVec4f:       { value: Fields .SFVec4f },
-				VrmlMatrix:    { value: Fields .VrmlMatrix },
-
-				MFBool:        { value: Fields .MFBool },
-				MFColor:       { value: Fields .MFColor },
-				MFColorRGBA:   { value: Fields .MFColorRGBA },
-				MFDouble:      { value: Fields .MFDouble },
-				MFFloat:       { value: Fields .MFFloat },
-				MFImage:       { value: Fields .MFImage },
-				MFInt32:       { value: Fields .MFInt32 },
-				MFMatrix3d:    { value: Fields .MFMatrix3d },
-				MFMatrix3f:    { value: Fields .MFMatrix3f },
-				MFMatrix4d:    { value: Fields .MFMatrix4d },
-				MFMatrix4f:    { value: Fields .MFMatrix4f },
-				MFNode:        { value: Fields .MFNode },
-				MFRotation:    { value: Fields .MFRotation },
-				MFString:      { value: Fields .MFString },
-				MFTime:        { value: Fields .MFTime },
-				MFVec2d:       { value: Fields .MFVec2d },
-				MFVec2f:       { value: Fields .MFVec2f },
-				MFVec3d:       { value: Fields .MFVec3d },
-				MFVec3f:       { value: Fields .MFVec3f },
-				MFVec4d:       { value: Fields .MFVec4d },
-				MFVec4f:       { value: Fields .MFVec4f },
-			};
-
-			var userDefinedFields = this .getUserDefinedFields ();
-
-			for (var field of userDefinedFields .values ())
-			{
-				var name = field .getName ();
-
-				if (field .getAccessType () === X3DConstants .inputOnly)
-					continue;
-
-				if (! (name in global))
-				{
-					global [name] =
-					{
-						get: field .valueOf .bind (field),
-						set: field .setValue .bind (field),
-					};
-				}
-
-				if (field .getAccessType () === X3DConstants .inputOutput)
-				{
-					global [name + "_changed"] =
-					{
-						get: field .valueOf .bind (field),
-						set: field .setValue .bind (field),
-					};
-				}
-			}
-
-			return Object .create (Object .prototype, global);
-		},
-		set_live__: function ()
-		{
-			var userDefinedFields = this .getUserDefinedFields ();
-
-			if (this .isLive () .getValue ())
-			{
-				if ($.isFunction (this .context .prepareEvents))
-					this .getBrowser () .prepareEvents () .addInterest ("prepareEvents__", this);
-
-				if ($.isFunction (this .context .eventsProcessed))
-					this .addInterest ("eventsProcessed__", this);
-
-				for (var field of userDefinedFields .values ())
-				{
-					switch (field .getAccessType ())
-					{
-						case X3DConstants .inputOnly:
-						{
-							var callback = this .context [field .getName ()];
-
-							if ($.isFunction (callback))
-								field .addInterest ("set_field__", this, callback);
-
-							break;
-						}
-						case X3DConstants .inputOutput:
-						{
-							var callback = this .context ["set_" + field .getName ()];
-
-							if ($.isFunction (callback))
-								field .addInterest ("set_field__", this, callback);
-
-							break;
-						}
-					}
-				}
-			}
-			else
-			{
-				if (this .context .prepareEvents)
-					this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents__", this);
-
-				if (this .context .eventsProcessed)
-					this .removeInterest ("eventsProcessed__", this);
-
-				for (var field of userDefinedFields .values ())
-				{
-					switch (field .getAccessType ())
-					{
-						case X3DConstants .inputOnly:
-						case X3DConstants .inputOutput:
-							field .removeInterest ("set_field__", this);
-							break;
-					}
-				}
-			}
-		},
-		initialize__: function (text)
-		{
-			this .context = this .getContext (text);
-
-			this .isLive () .addInterest ("set_live__", this);
-
-			this .set_live__ ();
-
-			// Call initialize function.
-
-			if (this .context .initialize)
-			{
-				var browser = this .getBrowser ();
-
-				browser .getScriptStack () .push (this);
-
-				try
-				{
-					this .context .initialize ();
-				}
-				catch (error)
-				{
-					this .setError ("in function 'initialize'", error);
-				}
-
-				browser .getScriptStack () .pop ();
-			}
-
-			// Call outstanding events.
-
-			var userDefinedFields = this .getUserDefinedFields ();
-
-			for (var field of userDefinedFields .values ())
-			{
-				if (field .getSet ())
-				{
-					var callback = this .context [field .getName ()];
-
-					if ($.isFunction (callback))
-						this .set_field__ (field, callback);
-				}
-			}
-		},
-		prepareEvents__: function ()
-		{
-			var browser = this .getBrowser ();
-
-			browser .getScriptStack () .push (this);
-
-			try
-			{
-				this .context .prepareEvents ();
-				browser .addBrowserEvent ();
-			}
-			catch (error)
-			{
-				this .setError ("in function 'prepareEvents'", error);
-			}
-
-			browser .getScriptStack () .pop ();
-		},
-		set_field__: function (field, callback)
-		{
-			var browser = this .getBrowser ();
-
-			field .setTainted (true);
-			browser .getScriptStack () .push (this);
-
-			try
-			{
-				callback (field .valueOf (), browser .getCurrentTime ());
-			}
-			catch (error)
-			{
-				this .setError ("in function '" + field .getName () + "'", error);
-			}
-
-			browser .getScriptStack () .pop ();
-			field .setTainted (false);
-		},
-		eventsProcessed__: function ()
-		{
-			var browser = this .getBrowser ();
-
-			browser .getScriptStack () .push (this);
-
-			try
-			{
-				this .context .eventsProcessed ();
-			}
-			catch (error)
-			{
-				this .setError ("in function 'eventsProcessed'", error);
-			}
-
-			browser .getScriptStack () .pop ();
-		},
-		shutdown__: function ()
-		{
-			var browser = this .getBrowser ();
-
-			browser .getScriptStack () .push (this);
-
-			try
-			{
-				this .context .shutdown ();
-			}
-			catch (error)
-			{
-				this .setError ("in function 'shutdown'", error);
-			}
-
-			browser .getScriptStack () .pop ();
-		},
-		setError: function (reason, error)
-		{
-			console .error ("JavaScript Error in Script '" + this .getName () + "', " + reason + "\nworld url is '" + this .getExecutionContext () .getURL () + "':");
-			console .error (error);
-		},
-	});
-
-	return Script;
-});
-
-
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Scripting',[
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Scripting/Script",
-	"x_ite/Components/Scripting/X3DScriptNode",
-],
-function (SupportedNodes,
-          Script,
-          X3DScriptNode)
-{
-"use strict";
-
-	var Types =
-	{
-		Script: Script,
-	};
-
-	var AbstractTypes =
-	{
-		X3DScriptNode: X3DScriptNode,
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-});
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Components/Shaders/X3DVertexAttributeNode',[
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
 	"x_ite/Bits/X3DConstants",
@@ -105102,8 +103101,8 @@ function ($,
 			{
 				if (! (this .URL .isLocal () || this .URL .host === "localhost"))
 				{
-					if (! URL .match (urls .fallbackExpression))
-						this .urlStack .unshift (urls .fallbackUrl + URL);
+					if (! URL .match (urls .getFallbackExpression ()))
+						this .urlStack .unshift (urls .getFallbackUrl (URL));
 				}
 			}
 
@@ -106082,8 +104081,8 @@ function ($,
 			{
 				if (! (this .URL .isLocal () || this .URL .host === "localhost"))
 				{
-					if (! URL .match (urls .fallbackExpression))
-						this .urlStack .unshift (urls .fallbackUrl + URL);
+					if (! URL .match (urls .getFallbackExpression ()))
+						this .urlStack .unshift (urls .getFallbackUrl (URL));
 				}
 			}
 
@@ -106767,7 +104766,6 @@ define ('x_ite/Components',[
 	"x_ite/Components/DIS",
 	"x_ite/Components/EnvironmentalEffects",
 	"x_ite/Components/EnvironmentalSensor",
-	"x_ite/Components/EventUtilities",
 	"x_ite/Components/Followers",
 	"x_ite/Components/Geometry2D",
 	"x_ite/Components/Geometry3D",
@@ -106781,7 +104779,6 @@ define ('x_ite/Components',[
 	"x_ite/Components/Picking",
 	"x_ite/Components/PointingDeviceSensor",
 	"x_ite/Components/Rendering",
-	"x_ite/Components/Scripting",
 	"x_ite/Components/Shaders",
 	"x_ite/Components/Shape",
 	"x_ite/Components/Sound",
@@ -106873,6 +104870,157 @@ function (X3DBrowserContext,
  ******************************************************************************/
 
 
+define ('x_ite/Configuration/ProfileInfo',[],function ()
+{
+"use strict";
+
+	function ProfileInfo (name, title, providerUrl, components)
+	{
+		this .name        = name;
+		this .title       = title;
+		this .providerUrl = providerUrl;
+		this .components  = components;
+
+		Object .preventExtensions (this);
+		Object .freeze (this);
+		Object .seal (this);
+	}
+
+	Object .assign (ProfileInfo .prototype,
+	{
+		constructor: ProfileInfo,
+		toXMLStream: function (stream)
+		{ },
+	});
+
+	return ProfileInfo;
+});
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Configuration/ProfileInfoArray',[
+	"x_ite/Configuration/ComponentInfoArray",
+	"x_ite/Configuration/ProfileInfo",
+	"x_ite/Configuration/X3DInfoArray",
+],
+function (ComponentInfoArray,
+          ProfileInfo,
+          X3DInfoArray)
+{
+"use strict";
+
+	function ProfileInfoArray ()
+	{
+		return X3DInfoArray .call (this);
+	}
+
+	ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+	{
+		constructor: ProfileInfoArray,
+		addProfile: function (value)
+		{
+			this .add (value .name, new ProfileInfo (value .name, value .title, value .providerUrl, new ComponentInfoArray (value .components)));
+		},
+	});
+
+	return ProfileInfoArray;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Configuration/SupportedComponents',[
 	"x_ite/Configuration/ComponentInfoArray",
 	"x_ite/Browser/Networking/urls",
@@ -106889,7 +105037,7 @@ function (ComponentInfoArray,
 		title:      "Computer-Aided Design (CAD) model geometry",
 		name:       "CADGeometry",
 		level:       2,
-		providerUrl: urls .provider ("cad-geometry"),
+		providerUrl: urls .getProviderUrl ("cad-geometry"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106897,7 +105045,7 @@ function (ComponentInfoArray,
 		title:      "Core",
 		name:       "Core",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106905,7 +105053,7 @@ function (ComponentInfoArray,
 		title:      "Cube map environmental texturing",
 		name:       "CubeMapTexturing",
 		level:       3,
-		providerUrl: urls .provider ("cube-map-texturing"),
+		providerUrl: urls .getProviderUrl ("cube-map-texturing"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106913,7 +105061,7 @@ function (ComponentInfoArray,
 		title:      "Distributed interactive simulation (DIS)",
 		name:       "DIS",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106921,7 +105069,7 @@ function (ComponentInfoArray,
 		title:      "Environmental effects",
 		name:       "EnvironmentalEffects",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106929,7 +105077,7 @@ function (ComponentInfoArray,
 		title:      "Environmental sensor",
 		name:       "EnvironmentalSensor",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106937,7 +105085,7 @@ function (ComponentInfoArray,
 		title:      "Event utilities",
 		name:       "EventUtilities",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl ("event-utilities"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106945,7 +105093,7 @@ function (ComponentInfoArray,
 		title:      "Followers",
 		name:       "Followers",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106953,7 +105101,7 @@ function (ComponentInfoArray,
 		title:      "Geometry2D",
 		name:       "Geometry2D",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106961,7 +105109,7 @@ function (ComponentInfoArray,
 		title:      "Geometry3D",
 		name:       "Geometry3D",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106969,7 +105117,7 @@ function (ComponentInfoArray,
 		title:      "Geospatial",
 		name:       "Geospatial",
 		level:       2,
-		providerUrl: urls .provider ("geospatial"),
+		providerUrl: urls .getProviderUrl ("geospatial"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106977,7 +105125,7 @@ function (ComponentInfoArray,
 		title:      "Grouping",
 		name:       "Grouping",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106985,7 +105133,7 @@ function (ComponentInfoArray,
 		title:      "Humanoid animation (H-Anim)",
 		name:       "H-Anim",
 		level:       3,
-		providerUrl: urls .provider ("h-anim"),
+		providerUrl: urls .getProviderUrl ("h-anim"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -106993,7 +105141,7 @@ function (ComponentInfoArray,
 		title:      "Interpolation",
 		name:       "Interpolation",
 		level:       5,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107001,7 +105149,7 @@ function (ComponentInfoArray,
 		title:      "Key device sensor",
 		name:       "KeyDeviceSensor",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107009,7 +105157,7 @@ function (ComponentInfoArray,
 		title:      "Layering",
 		name:       "Layering",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107017,7 +105165,7 @@ function (ComponentInfoArray,
 		title:      "Layout",
 		name:       "Layout",
 		level:       1,
-		providerUrl: urls .provider ("layout"),
+		providerUrl: urls .getProviderUrl ("layout"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107025,7 +105173,7 @@ function (ComponentInfoArray,
 		title:      "Lighting",
 		name:       "Lighting",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107033,7 +105181,7 @@ function (ComponentInfoArray,
 		title:      "Navigation",
 		name:       "Navigation",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107041,7 +105189,7 @@ function (ComponentInfoArray,
 		title:      "Networking",
 		name:       "Networking",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107049,7 +105197,7 @@ function (ComponentInfoArray,
 		title:      "Non-uniform Rational B-Spline (NURBS)",
 		name:       "NURBS",
 		level:       4,
-		providerUrl: urls .provider ("nurbs"),
+		providerUrl: urls .getProviderUrl ("nurbs"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107057,7 +105205,7 @@ function (ComponentInfoArray,
 		title:      "Particle systems",
 		name:       "ParticleSystems",
 		level:       3,
-		providerUrl: urls .provider ("particle-systems"),
+		providerUrl: urls .getProviderUrl ("particle-systems"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107065,7 +105213,7 @@ function (ComponentInfoArray,
 		title:      "Picking sensor",
 		name:       "Picking",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107073,7 +105221,7 @@ function (ComponentInfoArray,
 		title:      "Pointing device sensor",
 		name:       "PointingDeviceSensor",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107081,7 +105229,7 @@ function (ComponentInfoArray,
 		title:      "Programmable shaders",
 		name:       "Shaders",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107089,7 +105237,7 @@ function (ComponentInfoArray,
 		title:      "Rendering",
 		name:       "Rendering",
 		level:       5,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107097,7 +105245,7 @@ function (ComponentInfoArray,
 		title:      "Rigid body physics",
 		name:       "RigidBodyPhysics",
 		level:       5,
-		providerUrl: urls .provider ("rigid-body-physics"),
+		providerUrl: urls .getProviderUrl ("rigid-body-physics"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107105,7 +105253,7 @@ function (ComponentInfoArray,
 		title:      "Scripting",
 		name:       "Scripting",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl ("scripting"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107113,7 +105261,7 @@ function (ComponentInfoArray,
 		title:      "Shape",
 		name:       "Shape",
 		level:       4,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107121,7 +105269,7 @@ function (ComponentInfoArray,
 		title:      "Sound",
 		name:       "Sound",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107129,7 +105277,7 @@ function (ComponentInfoArray,
 		title:      "Text",
 		name:       "Text",
 		level:       1,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107137,7 +105285,7 @@ function (ComponentInfoArray,
 		title:      "Texturing",
 		name:       "Texturing",
 		level:       3,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107145,7 +105293,7 @@ function (ComponentInfoArray,
 		title:      "Texturing3D",
 		name:       "Texturing3D",
 		level:       3,
-		providerUrl: urls .provider ("texturing-3d"),
+		providerUrl: urls .getProviderUrl ("texturing-3d"),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107153,7 +105301,7 @@ function (ComponentInfoArray,
 		title:      "Time",
 		name:       "Time",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107161,7 +105309,7 @@ function (ComponentInfoArray,
 		title:      "Volume rendering",
 		name:       "VolumeRendering",
 		level:       2,
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 	});
 
 	SupportedComponents .addBaseComponent (
@@ -107169,7 +105317,7 @@ function (ComponentInfoArray,
 		title:      "X_ITE",
 		name:       "X_ITE",
 		level:       1,
-		providerUrl: urls .provider ("x_ite"),
+		providerUrl: urls .getProviderUrl ("x_ite"),
 	});
 
 	return SupportedComponents;
@@ -107244,7 +105392,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Computer-Aided Design (CAD) interchange",
 		name: "CADInterchange",
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Networking"],
@@ -107262,7 +105410,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Core",
 		name: "Core",
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 		components: [
 			SupportedComponents ["Core"],
 		],
@@ -107271,7 +105419,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Full",
 		name: "Full",
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -107314,7 +105462,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Immersive",
 		name: "Immersive",
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -107342,7 +105490,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Interactive",
 		name: "Interactive",
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -107366,7 +105514,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Interchange",
 		name: "Interchange",
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -107386,7 +105534,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "Medical interchange",
 		name: "MedicalInterchange",
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
@@ -107411,7 +105559,7 @@ function (ProfileInfo,
 	SupportedProfiles .addProfile ({
 		title: "MPEG-4 interactive",
 		name: "MPEG-4",
-		providerUrl: urls .providerUrl,
+		providerUrl: urls .getProviderUrl (),
 		components: [
 			SupportedComponents ["Core"],
 			SupportedComponents ["Time"],
