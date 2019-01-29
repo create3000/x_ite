@@ -363,7 +363,7 @@ function (Fields,
 
 			curves = curves .map (function (curve)
 			{
-				var normal = Triangle3 .getPolygonNormal (curve, normal);
+				Triangle3 .getPolygonNormal (curve, normal);
 
 				if (normal .dot (Vector3 .zAxis) > 0)
 					return curve;
