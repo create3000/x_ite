@@ -60,10 +60,6 @@ function (X3DGeometryNode,
 {
 "use strict";
 
-	var
-		current = new Vector3 (0, 0, 0),
-		next    = new Vector3 (0, 0, 0);
-
 	function X3DComposedGeometryNode (executionContext)
 	{
 		X3DGeometryNode .call (this, executionContext);
@@ -83,11 +79,11 @@ function (X3DGeometryNode,
 		{
 			X3DGeometryNode .prototype .initialize .call (this);
 
-			this .attrib_   .addInterest ("set_attrib__", this);
-			this .color_    .addInterest ("set_color__", this);
+			this .attrib_   .addInterest ("set_attrib__",   this);
+			this .color_    .addInterest ("set_color__",    this);
 			this .texCoord_ .addInterest ("set_texCoord__", this);
-			this .normal_   .addInterest ("set_normal__", this);
-			this .coord_    .addInterest ("set_coord__", this);
+			this .normal_   .addInterest ("set_normal__",   this);
+			this .coord_    .addInterest ("set_coord__",    this);
 
 			this .set_attrib__ ();
 			this .set_color__ ();
@@ -289,12 +285,14 @@ function (X3DGeometryNode,
 		
 				for (var i = 0; i < polygonsSize; ++ i)
 				{
-					var index = this .getPolygonIndex (i);
+					var
+						index      = this .getPolygonIndex (i),
+						pointIndex = normalIndex [index];
 
-					if (! normalIndex [index])
-						normalIndex [index] = [ ];
+					if (! pointIndex)
+						pointIndex = normalIndex [index] = [ ];
 
-					normalIndex [index] .push (i);
+					pointIndex .push (i);
 				}
 
 				return this .refineNormals (normalIndex, normals, Math .PI);
@@ -322,31 +320,37 @@ function (X3DGeometryNode,
 
 			return normals;
 		},
-		getPolygonNormal: function (index, verticesPerPolygon, coord)
+		getPolygonNormal: (function ()
 		{
+			var
+				current = new Vector3 (0, 0, 0),
+				next    = new Vector3 (0, 0, 0);
 
-			// Determine polygon normal.
-			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
-
-			var normal = new Vector3 (0, 0, 0);
-
-			coord .get1Point (this .getPolygonIndex (index), next);
-
-			for (var i = 0; i < verticesPerPolygon; ++ i)
+			return function (index, verticesPerPolygon, coord)
 			{
-				var tmp = current;
-				current = next;
-				next    = tmp;
+				// Determine polygon normal.
+				// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
+	
+				var normal = new Vector3 (0, 0, 0);
 
-				coord .get1Point (this .getPolygonIndex (index + (i + 1) % verticesPerPolygon), next);
+				coord .get1Point (this .getPolygonIndex (index), next);
 
-				normal .x += (current .y - next .y) * (current .z + next .z);
-				normal .y += (current .z - next .z) * (current .x + next .x);
-				normal .z += (current .x - next .x) * (current .y + next .y);
-			}
+				for (var i = 0; i < verticesPerPolygon; ++ i)
+				{
+					var tmp = current;
+					current = next;
+					next    = tmp;
 
-			return normal .normalize ();
-		},
+					coord .get1Point (this .getPolygonIndex (index + (i + 1) % verticesPerPolygon), next);
+
+					normal .x += (current .y - next .y) * (current .z + next .z);
+					normal .y += (current .z - next .z) * (current .x + next .x);
+					normal .z += (current .x - next .x) * (current .y + next .y);
+				}
+
+				return normal .normalize ();
+			};
+		})(),
 	});
 
 	return X3DComposedGeometryNode;
