@@ -334,25 +334,27 @@ function (Fields,
 
 			return function (vertices, triangles)
 			{
-				// Transform vertices to 2D space.
-
 				var
 					coordIndex = this .coordIndex_ .getValue (),
 					coord      = this .getCoord ();
 
 				for (var i = 0, length = vertices .length; i < length; ++ i)
 				{
-					var vertex = coord .get1Point (coordIndex [vertices [i]], polygon [i] || new Vector3 (0, 0, 0));
-	
-					vertex .index = i;
-	
-					polygon [i] = vertex;
+					var vertex = polygon [i];
+
+					if (! vertex)
+					{
+						vertex = polygon [i] = new Vector3 (0, 0, 0);
+						vertex .index = i;
+					}
+
+					coord .get1Point (coordIndex [vertices [i]], vertex);
 				}
 
 				polygon .length = length;
 	
 				Triangle3 .triangulatePolygon (polygon, triangles);
-	
+
 				for (var i = 0, length = triangles .length; i < length; ++ i)
 					triangles [i] = triangles [i] .index;
 			};
