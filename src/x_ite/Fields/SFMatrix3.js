@@ -116,7 +116,7 @@ function (X3DField,
 				},
 				set: function (value)
 				{
-					this .getValue () [i] = value;
+					this .getValue () [i] = value * 1;
 					this .addEvent ();
 				},
 				enumerable: false,
