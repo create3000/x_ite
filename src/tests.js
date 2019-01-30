@@ -237,6 +237,7 @@ var X_ITE_TESTS = [
 	{ path: "Scripting/SFNode.x3d" },
 	{ path: "Scripting/createVrmlFromString.x3d" },
 	{ path: "Scripting/createX3DFromString.x3d" },
+	{ path: "Scripting/geodome.wrl" },
 	{ path: "Scripting/load-viewpoints (Kopie).x3d" },
 	{ path: "Scripting/load-viewpoints.x3d" },
 	{ path: "Scripting/rotation.x3dv" },

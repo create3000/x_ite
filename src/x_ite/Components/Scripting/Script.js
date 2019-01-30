@@ -466,7 +466,7 @@ function ($,
 
 			try
 			{
-				this .context .prepareEvents ();
+				this .context .prepareEvents (browser .getCurrentTime ());
 				browser .addBrowserEvent ();
 			}
 			catch (error)
