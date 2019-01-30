@@ -375,7 +375,7 @@ function ($,
 				Parser = require ("x_ite/Parser/Parser"),
 				parser = new Parser (scene);
 
-			parser .setUnits (Boolean (scene));
+			parser .setUnits (!! scene);
 			parser .setInput (string);
 			parser .fieldValue (this);
 			this .addEvent ();

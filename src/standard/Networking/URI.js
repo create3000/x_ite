@@ -350,7 +350,7 @@ define (function ()
 				uri .port = result [2] ? parseInt (result [2]) : 0;
 			}
 
-			uri .absolute = Boolean (uri .slashs .length) || uri .path [0] === "/";
+			uri .absolute = !! uri .slashs .length || uri .path [0] === "/";
 			uri .local    = /^(?:file|data)$/ .test (uri .scheme) || (! uri .scheme && ! (uri .host || uri .port));
 		}
 		else
