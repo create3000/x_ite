@@ -52,11 +52,20 @@ define (function ()
 "use strict";
 
 	var
-		loadState = 0,
-		fieldType = 0;
+		browserEvent = 0,
+		loadState    = 0,
+		fieldType    = 0;
 
 	var X3DConstants =
 	{
+		// Browser event
+
+		CONNECTION_ERROR:  browserEvent ++,
+		BROWSER_EVENT:     browserEvent ++,
+		INITIALIZED_EVENT: browserEvent ++,
+		SHUTDOWN_EVENT:    browserEvent ++,
+		INITIALIZED_ERROR: browserEvent ++,
+
 		// Load state
 
 		NOT_STARTED_STATE: loadState ++,

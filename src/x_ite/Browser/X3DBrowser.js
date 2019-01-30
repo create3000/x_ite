@@ -141,7 +141,7 @@ function ($,
 			else
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
-				this .callBrowserCallbacks ("initialized");
+				this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
 				this .callBrowserEventHandler ("onload");
 			}
 
@@ -242,7 +242,7 @@ function ($,
 			{
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
-				this .callBrowserCallbacks ("shutdown");
+				this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
 				this .callBrowserEventHandler ("onshutdown");
 			}
 
@@ -303,7 +303,7 @@ function ($,
 			if (this .initialized () .getValue ())
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
-				this .callBrowserCallbacks ("initialized");
+				this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
 				this .callBrowserEventHandler ("onload");
 			}
 		},
@@ -436,7 +436,7 @@ function ($,
 				}
 				else
 				{
-					this .callBrowserCallbacks ("error", url);
+					this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
 					this .callBrowserEventHandler ("onerror");
 
 					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
@@ -485,15 +485,13 @@ function ($,
 		{
 			return this .browserCallbacks;
 		},
-		callBrowserCallbacks: function (name /* arguments */)
+		callBrowserCallbacks: function (browserEvent)
 		{
-			var args = arguments;
-
 			if (this .browserCallbacks .size)
 			{
 				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
 				{
-					browserCallback .apply (null, args);
+					browserCallback .call (null, browserEvent);
 				});
 			}
 		},
