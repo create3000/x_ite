@@ -66,7 +66,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 				if (arguments [0] instanceof Vector2)
 					return X3DField .call (this, arguments [0]);
 
-				return X3DField .call (this, new Vector2 (+x, +y));
+				return X3DField .call (this, new Vector2 (x * 1, y * 1));
 			}
 
 			return X3DField .call (this, new Vector2 (0, 0));

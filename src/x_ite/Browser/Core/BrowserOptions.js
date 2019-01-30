@@ -248,16 +248,15 @@ function (Fields,
 
 					this .primitiveQuality = PrimitiveQuality .LOW;
 
-					arc .dimension_      = 20;
+					arc      .dimension_ = 20;
 					arcClose .dimension_ = 20;
-					circle .dimension_   = 20;
-					disk .dimension_     = 20;
+					circle   .dimension_ = 20;
+					disk     .dimension_ = 20;
 
 					cone     .xDimension_ = 16;
 					cylinder .xDimension_ = 16;
-
-					sphere .xDimension_ = 20;
-					sphere .yDimension_ = 9;
+					sphere   .xDimension_ = 20;
+					sphere   .yDimension_ = 9;
 					break;
 				}
 				case "HIGH":
@@ -267,16 +266,15 @@ function (Fields,
 
 					this .primitiveQuality = PrimitiveQuality .HIGH;
 
-					arc .dimension_      = 80;
+					arc      .dimension_ = 80;
 					arcClose .dimension_ = 80;
-					circle .dimension_   = 80;
-					disk .dimension_     = 80;
+					circle   .dimension_ = 80;
+					disk     .dimension_ = 80;
 
 					cone     .xDimension_ = 32;
 					cylinder .xDimension_ = 32;
-
-					sphere .xDimension_ = 64;
-					sphere .yDimension_ = 31;
+					sphere   .xDimension_ = 64;
+					sphere   .yDimension_ = 31;
 					break;
 				}
 				default:
@@ -286,16 +284,15 @@ function (Fields,
 
 					this .primitiveQuality = PrimitiveQuality .MEDIUM;
 
-					arc .dimension_      = 40;
+					arc      .dimension_ = 40;
 					arcClose .dimension_ = 40;
-					circle .dimension_   = 40;
-					disk .dimension_     = 40;
+					circle   .dimension_ = 40;
+					disk     .dimension_ = 40;
 
 					cone     .xDimension_ = 20;
 					cylinder .xDimension_ = 20;
-
-					sphere .xDimension_ = 32;
-					sphere .yDimension_ = 15;
+					sphere   .xDimension_ = 32;
+					sphere   .yDimension_ = 15;
 					break;
 				}
 			}

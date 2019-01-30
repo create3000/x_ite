@@ -61,7 +61,7 @@ function (X3DField,
 	function SFFloat (value)
 	{
 		if (this instanceof SFFloat)
-			return X3DField .call (this, arguments .length ? +value : 0);
+			return X3DField .call (this, arguments .length ? value * 1 : 0);
 		
 		return X3DField .call (Object .create (SFFloat .prototype), arguments .length ? +value : 0);
 	}

@@ -150,7 +150,7 @@ function (X3DField,
 	   	var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
 	   
 			if (arguments .length === 4)
-				X3DField .call (this, new Image (+width, +height, +comp, array));
+				X3DField .call (this, new Image (~~width, ~~height, ~~comp, array));
 			else
 				X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
 

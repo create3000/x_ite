@@ -69,7 +69,7 @@ function (X3DField,
 				if (arguments [0] instanceof Vector4)
 					return X3DField .call (this, arguments [0]);
 
-				return X3DField .call (this, new Vector4 (+x, +y, +z, +w));
+				return X3DField .call (this, new Vector4 (x * 1, y * 1, z * 1, w * 1));
 			}
 
 			return X3DField .call (this, new Vector4 (0, 0, 0, 0));

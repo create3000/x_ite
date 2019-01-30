@@ -65,8 +65,8 @@ function (X3DField,
 	function SFString (value)
 	{
 		if (this instanceof SFString)
-			return X3DField .call (this, arguments .length ? String (value) : "");
-	
+			return X3DField .call (this, arguments .length ? "" + value : "");
+
 		return X3DField .call (Object .create (SFString .prototype), arguments .length ? String (value) : "");
 	}
 	
