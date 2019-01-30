@@ -152,7 +152,7 @@ function (Color3,
 		},
 		set: function (value)
 		{
-			this .getValue () .r = value;
+			this .getValue () .r = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -166,7 +166,7 @@ function (Color3,
 		},
 		set: function (value)
 		{
-			this .getValue () .g = value;
+			this .getValue () .g = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -180,7 +180,7 @@ function (Color3,
 		},
 		set: function (value)
 		{
-			this .getValue () .b = value;
+			this .getValue () .b = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
