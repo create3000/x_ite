@@ -65,13 +65,14 @@ function (ComposedShader,
 	function X3DEnvironmentalEffectsContext ()
 	{
 		this .backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
+		this .localFogs                   = [ ];
 	}
 
 	X3DEnvironmentalEffectsContext .prototype =
 	{
 		initialize: function ()
 		{
-			this .backgroundSphereShader = this .createShader (this, "BackgroundSphereShader", vertexShaderText, fragmentShaderText);
+			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", vertexShaderText, fragmentShaderText);
 
 			this .backgroundTextureProperties .boundaryModeS_       = "CLAMP_TO_EDGE";
 			this .backgroundTextureProperties .boundaryModeT_       = "CLAMP_TO_EDGE";
@@ -87,6 +88,10 @@ function (ComposedShader,
 		getBackgroundTextureProperties: function ()
 		{
 			return this .backgroundTextureProperties;
+		},
+		getLocalFogs: function ()
+		{
+			return this .localFogs;
 		},
 	};
 

@@ -248,7 +248,7 @@ function (Fields,
 				{
 					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
 				}
-				else if (! this .disabled)
+				else
 				{
 					this .disabled = true;
 					this .real_pause ();

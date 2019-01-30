@@ -121,7 +121,7 @@ function (Fields,
 			var attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("addNodeEvent", this);
+				attribNodes [i] .removeInterest ("requestRebuild", this);
 
 			attribNodes .length = 0;
 
@@ -134,13 +134,13 @@ function (Fields,
 			}
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("addNodeEvent", this);
+				attribNodes [i] .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("addNodeEvent", this);
+				this .colorNode .removeInterest ("requestRebuild",    this);
 				this .colorNode .removeInterest ("set_transparent__", this);
 			}
 
@@ -148,7 +148,7 @@ function (Fields,
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("addNodeEvent", this);
+				this .colorNode .addInterest ("requestRebuild",    this);
 				this .colorNode .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
@@ -163,12 +163,12 @@ function (Fields,
 		set_coord__: function ()
 		{
 			if (this .coordNode)
-				this .coordNode .removeInterest ("addNodeEvent", this);
+				this .coordNode .removeInterest ("requestRebuild", this);
 
 			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
 			if (this .coordNode)
-				this .coordNode .addInterest ("addNodeEvent", this);
+				this .coordNode .addInterest ("requestRebuild", this);
 		},
 		getColorPerVertexIndex: function (index)
 		{

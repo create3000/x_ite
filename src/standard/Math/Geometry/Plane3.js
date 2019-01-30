@@ -131,7 +131,7 @@ function (Vector3,
 			invMatrix .multDirMatrix (normal .assign (this .normal)) .normalize ();
 		
 			// Transform the point by the matrix
-			matrix .multḾatrixVec (point);
+			matrix .multMatrixVec (point);
 		
 			// The new distance is the projected distance of the vector to the
 			// transformed point onto the (unit) transformed normal. This is

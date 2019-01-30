@@ -24,7 +24,6 @@ varying float depth;
 void
 clip ()
 {
-	#pragma unroll_loop
 	for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
 	{
 		if (i == x3d_NumClipPlanes)
@@ -46,7 +45,7 @@ getFogInterpolant ()
 	if (x3d_Fog .visibilityRange <= 0.0)
 		return 0.0;
 
-	float dV = length (v);
+	float dV = length (x3d_Fog .matrix * v);
 
 	if (dV >= x3d_Fog .visibilityRange)
 		return 0.0;

@@ -402,9 +402,14 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			return new Vector3 (Algorithm .lerp (source .x, dest .x, t),
-			                    Algorithm .lerp (source .y, dest .y, t),
-			                    Algorithm .lerp (source .z, dest .z, t));
+			var
+				x = source .x,
+				y = source .y,
+				z = source .z;
+
+			return new Vector3 (x + t * (dest .x - x),
+			                    y + t * (dest .y - y),
+			                    z + t * (dest .z - z));
 		},
 		slerp: function (source, destination, t)
 		{

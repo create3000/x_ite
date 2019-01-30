@@ -58,12 +58,12 @@ function (Fields,
 {
 "use strict";
 
-	function ComponentInfo (browser, value)
+	function ComponentInfo (name, level, title, providerUrl)
 	{
-		this .name        = value .name;
-		this .level       = value .level;
-		this .title       = value .title;
-		this .providerUrl = value .providerUrl;
+		this .name        = name;
+		this .level       = level;
+		this .title       = title;
+		this .providerUrl = providerUrl;
 
 		Object .preventExtensions (this);
 		Object .freeze (this);

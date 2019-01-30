@@ -96,9 +96,9 @@ function (Fields,
 			X3DGeometryNode .prototype .set_live__ .call (this);
 		   
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getSphereOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getSphereOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getSphereOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getSphereOptions () .removeInterest ("requestRebuild", this);
 		},
 		build: function ()
 		{

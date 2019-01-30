@@ -169,11 +169,6 @@ function (X3DBindableNode,
 	X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 	{
 		constructor: X3DBackgroundNode,
-		modelViewMatrix: new Matrix4 (),
-		rotation: new Rotation4 (),
-		scale: new Vector3 (0, 0, 0),
-		textureMatrixArray: new Float32Array (new Matrix4 ()),
-		rectangleCount: 6,
 		initialize: function ()
 		{
 			X3DBindableNode .prototype .initialize .call (this);
@@ -520,8 +515,11 @@ function (X3DBindableNode,
 		display: (function ()
 		{
 			var
-				farVector         = new Vector3 (0, 0, 0),
-				projectionMatrix  = new Matrix4 ();
+				invProjectionMatrix = new Matrix4 (),
+				modelViewMatrix     = new Matrix4 (),
+				rotation            = new Rotation4 (),
+				scale               = new Vector3 (0, 0, 0),
+				farVector           = new Vector3 (0, 0, 0);
 
 			return function (gl, renderObject, viewport)
 			{
@@ -540,11 +538,9 @@ function (X3DBindableNode,
 					// Get background scale.
 	
 					var
-						viewpoint       = renderObject .getViewpoint (),
-						navigationInfo  = renderObject .getNavigationInfo (),
-						farValue        = navigationInfo .getFarValue (viewpoint) * 0.8,
-						rotation        = this .rotation,
-						modelViewMatrix = this .modelViewMatrix .assign (this .modelMatrix);
+						viewpoint      = renderObject .getViewpoint (),
+						navigationInfo = renderObject .getNavigationInfo (),
+						farValue       = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
 
 					// Get projection matrix.
 	
@@ -552,12 +548,13 @@ function (X3DBindableNode,
 	
 					// Rotate and scale background.
 	
+					modelViewMatrix .assign (this .modelMatrix);
 					modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
 					modelViewMatrix .get (null, rotation);
 					modelViewMatrix .identity ();
 					modelViewMatrix .rotate (rotation);
-					modelViewMatrix .scale (this .scale .set (farValue, farValue, farValue));
-	
+					modelViewMatrix .scale (scale .set (farValue, farValue, farValue));
+
 					this .modelViewMatrixArray .set (modelViewMatrix);
 	
 					// Draw background sphere and texture cube.
@@ -615,47 +612,52 @@ function (X3DBindableNode,
 			shaderNode .disableColorAttribute (gl);
 			shaderNode .disable (gl);
 		},
-		drawCube: function (renderObject)
+		drawCube: (function ()
 		{
-			var
-				browser    = renderObject .getBrowser (),
-				gl         = browser .getContext (),
-				shaderNode = browser .getGouraudShader ();
+			var textureMatrixArray = new Float32Array (new Matrix4 ());
 
-			shaderNode .enable (gl);
-
-			// Clip planes
-
-			shaderNode .setShaderObjects (gl, this .shaderObjects);
-
-			// Enable vertex attribute arrays.
-
-			shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-
-			// Uniforms
-
-			gl .uniform1i (shaderNode .x3d_FogType,       0);
-			gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
-			gl .uniform1i (shaderNode .x3d_Lighting,      false);
-
-			gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix,    false, this .textureMatrixArray);
-			gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-			gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
-
-			// Draw.
-
-			this .drawRectangle (gl, shaderNode, this .frontTexture,  this .frontBuffer);
-			this .drawRectangle (gl, shaderNode, this .backTexture,   this .backBuffer);
-			this .drawRectangle (gl, shaderNode, this .leftTexture,   this .leftBuffer);
-			this .drawRectangle (gl, shaderNode, this .rightTexture,  this .rightBuffer);
-			this .drawRectangle (gl, shaderNode, this .topTexture,    this .topBuffer);
-			this .drawRectangle (gl, shaderNode, this .bottomTexture, this .bottomBuffer);
-
-			// Disable vertex attribute arrays.
-
-			shaderNode .disableTexCoordAttribute (gl);
-			shaderNode .disable (gl);
-		},
+			return function (renderObject)
+			{
+				var
+					browser    = renderObject .getBrowser (),
+					gl         = browser .getContext (),
+					shaderNode = browser .getGouraudShader ();
+	
+				shaderNode .enable (gl);
+	
+				// Clip planes
+	
+				shaderNode .setShaderObjects (gl, this .shaderObjects);
+	
+				// Enable vertex attribute arrays.
+	
+				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+	
+				// Uniforms
+	
+				gl .uniform1i (shaderNode .x3d_FogType,       0);
+				gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
+				gl .uniform1i (shaderNode .x3d_Lighting,      false);
+	
+				gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix,    false, textureMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+	
+				// Draw.
+	
+				this .drawRectangle (gl, shaderNode, this .frontTexture,  this .frontBuffer);
+				this .drawRectangle (gl, shaderNode, this .backTexture,   this .backBuffer);
+				this .drawRectangle (gl, shaderNode, this .leftTexture,   this .leftBuffer);
+				this .drawRectangle (gl, shaderNode, this .rightTexture,  this .rightBuffer);
+				this .drawRectangle (gl, shaderNode, this .topTexture,    this .topBuffer);
+				this .drawRectangle (gl, shaderNode, this .bottomTexture, this .bottomBuffer);
+	
+				// Disable vertex attribute arrays.
+	
+				shaderNode .disableTexCoordAttribute (gl);
+				shaderNode .disable (gl);
+			};
+		})(),
 		drawRectangle: function (gl, shaderNode, texture, buffer)
 		{
 			if (texture && texture .checkLoadState () === X3DConstants .COMPLETE_STATE)
@@ -671,7 +673,7 @@ function (X3DBindableNode,
 
 				// Draw.
 
-				gl .drawArrays (gl .TRIANGLES, 0, this .rectangleCount);
+				gl .drawArrays (gl .TRIANGLES, 0, 6);
 			}
 		},
 	});

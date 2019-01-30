@@ -117,6 +117,7 @@ function (Fields,
 			this .shaders_          .addInterest ("set_shaders__",          this);
 			this .blendMode_        .addInterest ("set_blendMode__",        this);
 
+			this .set_live__ ();
 			this .set_lineProperties__ ();
 			this .set_material__ ();
 			this .set_texture__ ();
@@ -144,13 +145,17 @@ function (Fields,
 		{
 			if (this .isLive () .getValue ())
 			{
+				this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
+
 				if (this .shaderNode)
 					this .getBrowser () .addShader (this .shaderNode);
 			}
 			else
 			{
+				this .getBrowser () .getBrowserOptions () .Shading_ .removeInterest ("set_shading__", this);
+
 				if (this .shaderNode)
-				this .getBrowser () .removeShader (this .shaderNode);
+					this .getBrowser () .removeShader (this .shaderNode);
 			}
 		},
 		set_lineProperties__: function ()
@@ -234,6 +239,9 @@ function (Fields,
 				}
 			}
 
+			if (! this .shaderNode)
+				this .shaderNode = this .getBrowser () .getDefaultShader ();
+
 			if (this .isLive () .getValue ())
 			{
 				if (this .shaderNode)
@@ -241,6 +249,10 @@ function (Fields,
 			}
 
 			this .set_transparent__ ();
+		},
+		set_shading__: function ()
+		{
+			this .set_shader__ ();
 		},
 		set_blendMode__: function ()
 		{
@@ -259,8 +271,7 @@ function (Fields,
 			if (this .generatedCubeMapTexture)
 				this .generatedCubeMapTexture .traverse (type, renderObject);
 
-			if (this .shaderNode)
-				this .shaderNode .traverse (type, renderObject);
+			this .shaderNode .traverse (type, renderObject);
 		},
 		enable: function (gl, context)
 		{
@@ -271,12 +282,10 @@ function (Fields,
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
 
-			if (this .shaderNode)
-				context .shaderNode = this .shaderNode;
-			else if (context .shadow)
+			if (context .shadow)
 				context .shaderNode = browser .getShadowShader ();
 			else
-				context .shaderNode = browser .getDefaultShader ();
+				context .shaderNode = this .shaderNode;
 
 			if (this .blendModeNode)
 				this .blendModeNode .enable (gl);

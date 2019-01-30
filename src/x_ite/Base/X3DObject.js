@@ -48,8 +48,9 @@
 
 
 define ([
+	"x_ite/InputOutput/Generator",
 ],
-function ()
+function (Generator)
 {
 "use strict";
 
@@ -72,8 +73,7 @@ function ()
 		constructor: X3DObject,
 		_id: 0,
 		_name: "",
-		_tainted: false,
-		_interests: { },
+		_interests: new Map (),
 		getId: function ()
 		{
 			this .getId = getId;
@@ -88,33 +88,25 @@ function ()
 		{
 			return this ._name;
 		},
-		setTainted: function (value)
+		hasInterest: function (callbackName, object)
 		{
-			this ._tainted = value;
+			return this ._interests .has (object .getId () + callbackName);
 		},
-		getTainted: function ()
-		{
-			return this ._tainted;
-		},
-		hasInterest: function (callback, object)
-		{
-			return Boolean (this ._interests [object .getId () + callback]);
-		},
-		addInterest: function (callback, object)
+		addInterest: function (callbackName, object)
 		{
 			if (! this .hasOwnProperty ("_interests"))
-				this ._interests = { };
+				this ._interests = new Map ();
 
 			var args = Array .prototype .slice .call (arguments, 0);
 
-			args [0] = arguments [1];
+			args [0] = object;
 			args [1] = this;
 
-			this ._interests [object .getId () + callback] = Function .prototype .bind .apply (object [callback], args);
+			this ._interests .set (object .getId () + callbackName, Function .prototype .bind .apply (object [callbackName], args));
 		},
-		removeInterest: function (callback, object)
+		removeInterest: function (callbackName, object)
 		{
-			delete this ._interests [object .getId () + callback];
+			this ._interests .delete (object .getId () + callbackName);
 		},
 		getInterests: function ()
 		{
@@ -122,14 +114,17 @@ function ()
 		},
 		processInterests: function ()
 		{
-			var interests = this ._interests;
-
-			for (var key in interests)
-				interests [key] ();
+			this ._interests .forEach (function (interest)
+			{
+				interest ();
+			});
 		},
-		toString: function ()
+		toString: function (scene)
 		{
 			var stream = { string: "" };
+
+			if (scene)
+				Generator .Get (stream) .PushExecutionContext (scene);
 
 			this .toStream (stream);
 

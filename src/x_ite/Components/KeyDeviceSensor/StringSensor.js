@@ -92,6 +92,69 @@ function (Fields,
 		{
 			return "children";
 		},
+		keydown: function (event)
+		{
+			event .preventDefault ();
+
+			switch (event .key)
+			{
+				case "Backspace":
+				{
+					if (this .isActive_ .getValue ())
+					{
+						if (this .deletionAllowed_ .getValue ())
+						{
+							if (this .enteredText_ .length)
+								this .enteredText_  = this .enteredText_ .getValue () .substr (0, this .enteredText_ .length - 1);
+						}
+					}
+
+					break;
+				}
+				case "Enter":
+				{
+					this .finalText_ = this .enteredText_;
+
+					this .enteredText_ .set ("");
+
+					if (this .isActive_ .getValue ())
+						this .isActive_ = false;
+
+					break;
+				}
+				case "Escape":
+				{
+					this .enteredText_ .set ("");
+
+					if (this .isActive_ .getValue ())
+						this .isActive_ = false;
+
+					break;
+				}
+				case "Tab":
+				{
+					break;
+				}
+				default:
+				{
+					if (event .charCode || event .keyCode)
+					{
+						if (event .key .length === 1)
+						{
+							if (! this .isActive_ .getValue ())
+							{
+								this .isActive_    = true;
+								this .enteredText_ = "";
+							}
+	
+							this .enteredText_ = this .enteredText_ .getValue () + event .key;
+						}
+					}
+
+					break;
+				}
+			}
+		},
 	});
 
 	return StringSensor;

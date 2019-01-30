@@ -38,10 +38,48 @@
     <None Include="x_ite.min.js" />
     <None Include="images\logo.128.png" />
     <None Include="LICENSE.txt" />
-    <None Include="rigid-body-physics.js" />
-    <None Include="rigid-body-physics.min.js" />
+    <None Include="components\cad-geometry.js" />
+    <None Include="components\cad-geometry.min.js" />
+    <None Include="components\nurbs.js" />
+    <None Include="components\nurbs.min.js" />
+    <None Include="components\rigid-body-physics.js" />
+    <None Include="components\rigid-body-physics.min.js" />
+    <None Include="components\texturing-3d.js" />
+    <None Include="components\texturing-3d.min.js" />
+    <None Include="components\README" />
+    <None Include="components\geospatial.js" />
+    <None Include="components\geospatial.min.js" />
+    <None Include="components\h-anim.js" />
+    <None Include="components\h-anim.min.js" />
+    <None Include="components\particle-systems.js" />
+    <None Include="components\particle-systems.min.js" />
+    <None Include="fonts\Ubuntu-RI.ttf" />
+    <None Include="fonts\Ubuntu-R.ttf" />
+    <None Include="fonts\UbuntuMono-RI.ttf" />
+    <None Include="fonts\UbuntuMono-R.ttf" />
+    <None Include="fonts\UbuntuMono-BI.ttf" />
+    <None Include="fonts\UbuntuMono-B.ttf" />
+    <None Include="fonts\Ubuntu-BI.ttf" />
+    <None Include="fonts\Ubuntu-B.ttf" />
+    <None Include="fonts\fonts.mdproj" />
+    <None Include="fonts\DroidSerif-Regular.ttf" />
+    <None Include="fonts\DroidSerif-Italic.ttf" />
+    <None Include="fonts\DroidSerif-BoldItalic.ttf" />
+    <None Include="fonts\DroidSerif-Bold.ttf" />
+    <None Include="components\x_ite.js" />
+    <None Include="components\x_ite.min.js" />
+    <None Include="components\cube-map-texturing.js" />
+    <None Include="components\cube-map-texturing.min.js" />
+    <None Include="components\layout.js" />
+    <None Include="components\layout.min.js" />
+    <None Include="components\event-utilities.js" />
+    <None Include="components\event-utilities.min.js" />
+    <None Include="components\scripting.js" />
+    <None Include="components\scripting.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
+    <Folder Include="components\" />
+    <Folder Include="fonts\" />
   </ItemGroup>
 </Project>

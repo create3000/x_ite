@@ -62,9 +62,7 @@ function (Fields,
 {
 "use strict";
 
-	var
-		matrix3 = new Matrix3 (),
-		NULL    = new Fields .SFNode ();
+	var matrix3 = new Matrix3 ();
 
 	function X3DProgrammableShaderObject (executionContext)
 	{
@@ -82,6 +80,7 @@ function (Fields,
 		this .x3d_LightBeamWidth        = [ ];
 		this .x3d_LightCutOffAngle      = [ ];
 		this .x3d_LightRadius           = [ ];
+		this .x3d_LightMatrix           = [ ];
 		this .x3d_ShadowIntensity       = [ ];
 		this .x3d_ShadowColor           = [ ];
 		this .x3d_ShadowBias            = [ ];
@@ -99,7 +98,6 @@ function (Fields,
 	X3DProgrammableShaderObject .prototype =
 	{
 		constructor: X3DProgrammableShaderObject,
-		normalMatrixArray: new Float32Array (9),
 		initialize: function ()
 		{
 			var browser = this .getBrowser ();
@@ -148,6 +146,7 @@ function (Fields,
 			this .x3d_FogType            = this .getUniformLocation (gl, program, "x3d_Fog.type",            "x3d_FogType");
 			this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
 			this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
+			this .x3d_FogMatrix          = this .getUniformLocation (gl, program, "x3d_Fog.matrix",          "x3d_FogMatrix");
 
 			this .x3d_LinewidthScaleFactor = gl .getUniformLocation (program, "x3d_LinewidthScaleFactor");
 
@@ -167,6 +166,7 @@ function (Fields,
 				this .x3d_LightBeamWidth [i]        = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].beamWidth",        "x3d_LightBeamWidth[" + i + "]");
 				this .x3d_LightCutOffAngle [i]      = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].cutOffAngle",      "x3d_LightCutOffAngle[" + i + "]");
 				this .x3d_LightRadius [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].radius",           "x3d_LightRadius[" + i + "]");
+				this .x3d_LightMatrix [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].matrix",           "x3d_LightMatrix[" + i + "]");
 
 				this .x3d_ShadowIntensity [i] = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowIntensity");
 				this .x3d_ShadowColor [i]     = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowColor");
@@ -208,6 +208,10 @@ function (Fields,
 			this .x3d_TexCoord = gl .getAttribLocation (program, "x3d_TexCoord");
 			this .x3d_Normal   = gl .getAttribLocation (program, "x3d_Normal");
 			this .x3d_Vertex   = gl .getAttribLocation (program, "x3d_Vertex");	
+
+			this .x3d_ParticleId          = gl .getUniformLocation (program, "x3d_Particle.id");
+			this .x3d_ParticleLife        = gl .getUniformLocation (program, "x3d_Particle.life");
+			this .x3d_ParticleElapsedTime = gl .getUniformLocation (program, "x3d_Particle.elapsedTime");
 
 			// Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
@@ -289,11 +293,9 @@ function (Fields,
 
 			this .textures .clear ();
 
-			for (var name in userDefinedFields)
+			for (var field of userDefinedFields .values ())
 			{
-				var
-					field    = userDefinedFields [name],
-					location = gl .getUniformLocation (program, name);
+				var location = gl .getUniformLocation (program, field .getName ());
 
 				if (location)
 				{
@@ -400,17 +402,10 @@ function (Fields,
 		},
 		removeShaderFields: function ()
 		{
-			var
-				gl                = this .getBrowser () .getContext (),
-				program           = this .getProgram (),
-				userDefinedFields = this .getUserDefinedFields ();
+			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in userDefinedFields)
+			for (var field of userDefinedFields .values ())
 			{
-				var
-					field    = userDefinedFields [name],
-					location = gl .getUniformLocation (program, name);
-
 				field .removeInterest ("set_field__", this);
 			}
 		},
@@ -418,7 +413,6 @@ function (Fields,
 		{
 			var
 				gl       = this .getBrowser () .getContext (),
-				program  = this .getProgram (),
 				location = field ._uniformLocation;
 
 			if (location)
@@ -882,7 +876,7 @@ function (Fields,
 
 			// Fog, there is always one
 
-			context .fogNode .setShaderUniforms (gl, this, context .renderer);
+			context .fogNode .setShaderUniforms (gl, this);
 
 			// LineProperties
 
@@ -915,42 +909,14 @@ function (Fields,
 
 				// Normal matrix
 
-				try
-				{
-					// Set normal matrix.
-					var normalMatrix = this .normalMatrixArray;
-					normalMatrix [0] = modelViewMatrix [0]; normalMatrix [1] = modelViewMatrix [4]; normalMatrix [2] = modelViewMatrix [ 8];
-					normalMatrix [3] = modelViewMatrix [1]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [5] = modelViewMatrix [ 9];
-					normalMatrix [6] = modelViewMatrix [2]; normalMatrix [7] = modelViewMatrix [6]; normalMatrix [8] = modelViewMatrix [10];
-					Matrix3 .prototype .inverse .call (normalMatrix);
-					gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
-				}
-				catch (error)
-				{
-					gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, new Float32Array (Matrix3 .Identity));
-				}
+				gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
 			}
 			else
 			{
 				gl .uniform1i (this .x3d_Lighting, false);
 
 				if (this .getCustom ())
-				{
-					try
-					{
-						// Set normal matrix.
-						var normalMatrix = this .normalMatrixArray;
-						normalMatrix [0] = modelViewMatrix [0]; normalMatrix [1] = modelViewMatrix [4]; normalMatrix [2] = modelViewMatrix [ 8];
-						normalMatrix [3] = modelViewMatrix [1]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [5] = modelViewMatrix [ 9];
-						normalMatrix [6] = modelViewMatrix [2]; normalMatrix [7] = modelViewMatrix [6]; normalMatrix [8] = modelViewMatrix [10];
-						Matrix3 .prototype .inverse .call (normalMatrix);
-						gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
-					}
-					catch (error)
-					{
-						gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, new Float32Array (Matrix3 .Identity));
-					}
-				}
+					gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
 			}
 
 			if (textureNode)
@@ -971,6 +937,30 @@ function (Fields,
 
 			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 		},
+		getNormalMatrix: (function ()
+		{
+			var normalMatrix = new Float32Array (9);
+
+			return function (modelViewMatrix)
+			{
+				try
+				{
+					normalMatrix [0] = modelViewMatrix [0], normalMatrix [3] = modelViewMatrix [1], normalMatrix [6] = modelViewMatrix [ 2],
+					normalMatrix [1] = modelViewMatrix [4], normalMatrix [4] = modelViewMatrix [5], normalMatrix [7] = modelViewMatrix [ 6],
+					normalMatrix [2] = modelViewMatrix [8], normalMatrix [5] = modelViewMatrix [9], normalMatrix [8] = modelViewMatrix [10];
+
+					Matrix3 .prototype .inverse .call (normalMatrix);
+
+					return normalMatrix;
+				}
+				catch (error)
+				{
+					normalMatrix .set (Matrix3 .Identity);
+
+					return normalMatrix;
+				}
+			};
+		})(),
 		enable: function (gl)
 		{
 			var browser = this .getBrowser ();
@@ -1047,13 +1037,13 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .enableVertexAttribArray (location + 0);
+			gl .enableVertexAttribArray (location);
 			gl .enableVertexAttribArray (location + 1);
 			gl .enableVertexAttribArray (location + 2);
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
-			gl .vertexAttribPointer (location + 0, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 0);
+			gl .vertexAttribPointer (location,     3, gl .FLOAT, false, 9 * 4, 3 * 4 * 0);
 			gl .vertexAttribPointer (location + 1, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 1);
 			gl .vertexAttribPointer (location + 2, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 2);
 		},
@@ -1064,7 +1054,7 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .disableVertexAttribArray (location + 0);
+			gl .disableVertexAttribArray (location);
 			gl .disableVertexAttribArray (location + 1);
 			gl .disableVertexAttribArray (location + 2);
 		},
@@ -1075,14 +1065,14 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .enableVertexAttribArray (location + 0);
+			gl .enableVertexAttribArray (location);
 			gl .enableVertexAttribArray (location + 1);
 			gl .enableVertexAttribArray (location + 2);
 			gl .enableVertexAttribArray (location + 3);
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
-			gl .vertexAttribPointer (location + 0, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 0);
+			gl .vertexAttribPointer (location,     4, gl .FLOAT, false, 16 * 4, 4 * 4 * 0);
 			gl .vertexAttribPointer (location + 1, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 1);
 			gl .vertexAttribPointer (location + 2, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 2);
 			gl .vertexAttribPointer (location + 3, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 3);
@@ -1094,7 +1084,7 @@ function (Fields,
 			if (location === -1)
 				return;
 
-			gl .disableVertexAttribArray (location + 0);
+			gl .disableVertexAttribArray (location);
 			gl .disableVertexAttribArray (location + 1);
 			gl .disableVertexAttribArray (location + 2);
 			gl .disableVertexAttribArray (location + 3);
@@ -1138,6 +1128,17 @@ function (Fields,
 		disableVertexAttribute: function (gl)
 		{
 			gl .disableVertexAttribArray (this .x3d_Vertex);
+		},
+		setParticle: function (gl, id, particle, modelViewMatrix, normalMatrix)
+		{
+			if (normalMatrix)
+				gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
+
+			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+
+			gl .uniform1i (this .x3d_ParticleId,          id);
+			gl .uniform1i (this .x3d_ParticleLife,        particle .life);
+			gl .uniform1f (this .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
 		},
 		getProgramInfo: function ()
 		{

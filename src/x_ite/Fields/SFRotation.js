@@ -76,9 +76,9 @@ function (SFVec3,
 					if (arguments [1] instanceof SFVec3f)
 						return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
 
-					return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), +arguments [1]));
+					return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] * 1));
 				case 4:
-					return X3DField .call (this, new Rotation4 (+x, +y, +z, +angle));
+					return X3DField .call (this, new Rotation4 (x * 1, y * 1, z * 1, angle * 1));
 				default:
 					return X3DField .call (this, new Rotation4 ());
 			}
@@ -143,12 +143,12 @@ function (SFVec3,
 		{
 			var
 				generator = Generator .Get (stream),
-				r         = this .getValue () .get ();
+				rotation  = this .getValue ();
 
-			stream .string +=  r .x + " " +
-			                   r .y + " " +
-			                   r .z + " " +
-			                   generator .ToUnit ("angle", r .w);
+			stream .string +=  rotation .x + " " +
+			                   rotation .y + " " +
+			                   rotation .z + " " +
+			                   generator .ToUnit ("angle", rotation .angle);
 		},
 		toXMLStream: function (stream)
 		{
@@ -163,7 +163,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .x = value;
+			this .getValue () .x = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -177,7 +177,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .y = value;
+			this .getValue () .y = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -191,7 +191,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .z = value;
+			this .getValue () .z = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -205,7 +205,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .angle = value;
+			this .getValue () .angle = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,

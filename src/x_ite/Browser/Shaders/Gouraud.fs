@@ -36,7 +36,6 @@ varying float depth;
 void
 clip ()
 {
-	#pragma unroll_loop
 	for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
 	{
 		if (i == x3d_NumClipPlanes)
@@ -82,7 +81,7 @@ getFogInterpolant ()
 	if (x3d_Fog .visibilityRange <= 0.0)
 		return 0.0;
 
-	float dV = length (v);
+	float dV = length (x3d_Fog .matrix * v);
 
 	if (dV >= x3d_Fog .visibilityRange)
 		return 0.0;
@@ -131,5 +130,6 @@ main ()
 		gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
 	else
 		gl_FragDepthEXT = gl_FragCoord .z;
+	//gl_FragColor .rgb = vec3 (1.0, 0.0, 0.0);
 	#endif
 }

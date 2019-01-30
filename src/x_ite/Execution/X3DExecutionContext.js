@@ -88,6 +88,8 @@ function (Fields,
 
 		this .addChildObjects ("rootNodes", new Fields .MFNode ());
 
+		this .rootNodes_ .addClones (1);
+
 		this .specificationVersion = "3.3";
 		this .encoding             = "SCRIPTED";
 		this .profile              = null;
@@ -110,19 +112,24 @@ function (Fields,
 		{
 			X3DBaseNode .prototype .setup .call (this);
 
-			// Setup nodes
+			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration")
 
-			while (this .uninitializedNodes .length)
+			if (! (this instanceof X3DProtoDeclaration))
 			{
-				var uninitializedNodes = this .uninitializedNodes;
+				// Setup nodes.
 
-				this .uninitializedNodes  = this .uninitializedNodes2;
-				this .uninitializedNodes2 = uninitializedNodes;
+				while (this .uninitializedNodes .length)
+				{
+					var uninitializedNodes = this .uninitializedNodes;
 	
-				for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
-					uninitializedNodes [i] .setup ();
-
-				uninitializedNodes .length = 0;
+					this .uninitializedNodes  = this .uninitializedNodes2;
+					this .uninitializedNodes2 = uninitializedNodes;
+		
+					for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
+						uninitializedNodes [i] .setup ();
+	
+					uninitializedNodes .length = 0;
+				}
 			}
 		},
 		isMasterContext: function ()
@@ -179,12 +186,12 @@ function (Fields,
 		},
 		createNode: function (typeName, setup)
 		{
-			var interfaceDeclaration = this .getBrowser () .supportedNodes [typeName];
+			var Type = this .getBrowser () .getSupportedNode (typeName);
 
-			if (! interfaceDeclaration)
+			if (! Type)
 				throw new Error ("Unknown node type '" + typeName + "'.");
 
-			var node = interfaceDeclaration .createInstance (this);
+			var node = new Type (this);
 
 			if (setup === false)
 				return node;
@@ -535,6 +542,15 @@ function (Fields,
 		{
 			try
 			{
+				// sourceNode, sourceField, destinationNode, destinationField
+				if (arguments .length === 4)
+				{
+					route = this .getRoute .apply (this, arguments);
+
+					if (! route)
+						return;
+				}
+
 				var
 					sourceField      = route ._sourceField,
 					destinationField = route ._destinationField,
@@ -582,6 +598,8 @@ function (Fields,
 
 				if (! viewpoint)
 					throw 1;
+
+				viewpoint .setAnimate (true); // VRML
 
 				if (viewpoint .isBound_ .getValue ())
 					viewpoint .transitionStart (viewpoint);

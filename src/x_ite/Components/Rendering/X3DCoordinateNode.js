@@ -60,12 +60,6 @@ function (X3DGeometricPropertyNode,
 {
 "use strict";
 
-	var
-		point1 = new Vector3 (0, 0, 0),
-		point2 = new Vector3 (0, 0, 0),
-		point3 = new Vector3 (0, 0, 0),
-		point4 = new Vector3 (0, 0, 0);
-
 	function X3DCoordinateNode (executionContext)
 	{
 		X3DGeometricPropertyNode .call (this, executionContext);
@@ -97,7 +91,11 @@ function (X3DGeometricPropertyNode,
 		{
 			return this .length;
 		},
-		get1Point: function (index, vector)
+		set1Point: function (index, point)
+		{
+			this .point_ [index] = point;
+		},
+		get1Point: function (index, result)
 		{
 			if (index < this .length)
 			{
@@ -105,11 +103,11 @@ function (X3DGeometricPropertyNode,
 
 				index *= 3;
 
-				return vector .set (point [index + 0], point [index + 1], point [index + 2]);
+				return result .set (point [index], point [index + 1], point [index + 2]);
 			}
 			else
 			{
-				return vector .set (0, 0, 0);
+				return result .set (0, 0, 0);
 			}
 		},
 		addPoint: function (index, array)
@@ -120,46 +118,73 @@ function (X3DGeometricPropertyNode,
 
 				index *= 3;
 
-				array .push (point [index + 0], point [index + 1], point [index + 2], 1);
+				array .push (point [index], point [index + 1], point [index + 2], 1);
 			}
 			else
 			{
 				array .push (0, 0, 0, 1);
 			}
 		},
-		getNormal: function (index1, index2, index3)
+		addPoints: function (array, min)
 		{
-			// The index[1,2,3] cannot be less than 0.
+			const point = this .point;
 
-			var length = this .length;
+			for (var index = 0, length = this .length * 3; index < length; index += 3)
+				array .push (point [index], point [index + 1], point [index + 2], 1);
 
-			if (index1 < length && index2 < length && index3 < length)
-			{
-				return Triangle3 .normal (this .get1Point (index1, point1),
-				                          this .get1Point (index2, point2),
-				                          this .get1Point (index3, point3),
-				                          new Vector3 (0, 0, 0));
-			}
-
-			return new Vector3 (0, 0, 0);
+			for (var index = length, length = min * 3; index < length; index += 3)
+				array .push (0, 0, 0, 1);
 		},
-		getQuadNormal: function (index1, index2, index3, index4)
+		getNormal: (function ()
 		{
-			// The index[1,2,3,4] cannot be less than 0.
+			var
+				point1 = new Vector3 (0, 0, 0),
+				point2 = new Vector3 (0, 0, 0),
+				point3 = new Vector3 (0, 0, 0);
 
-			var length = this .length;
-
-			if (index1 < length && index2 < length && index3 < length && index4 < length)
+			return function (index1, index2, index3)
 			{
-				return Triangle3 .quadNormal (this .get1Point (index1, point1),
-				                              this .get1Point (index2, point2),
-				                              this .get1Point (index3, point3),
-				                              this .get1Point (index4, point4),
-				                              new Vector3 (0, 0, 0));
-			}
+				// The index[1,2,3] cannot be less than 0.
+	
+				var length = this .length;
+	
+				if (index1 < length && index2 < length && index3 < length)
+				{
+					return Triangle3 .normal (this .get1Point (index1, point1),
+					                          this .get1Point (index2, point2),
+					                          this .get1Point (index3, point3),
+					                          new Vector3 (0, 0, 0));
+				}
+	
+				return new Vector3 (0, 0, 0);
+			};
+		})(),
+		getQuadNormal: (function ()
+		{
+			var
+				point1 = new Vector3 (0, 0, 0),
+				point2 = new Vector3 (0, 0, 0),
+				point3 = new Vector3 (0, 0, 0),
+				point4 = new Vector3 (0, 0, 0);
 
-			return new Vector3 (0, 0, 0);
-		},
+			return function (index1, index2, index3, index4)
+			{
+				// The index[1,2,3,4] cannot be less than 0.
+	
+				var length = this .length;
+	
+				if (index1 < length && index2 < length && index3 < length && index4 < length)
+				{
+					return Triangle3 .quadNormal (this .get1Point (index1, point1),
+					                              this .get1Point (index2, point2),
+					                              this .get1Point (index3, point3),
+					                              this .get1Point (index4, point4),
+					                              new Vector3 (0, 0, 0));
+				}
+	
+				return new Vector3 (0, 0, 0);
+			};
+		})(),
 	});
 
 	return X3DCoordinateNode;

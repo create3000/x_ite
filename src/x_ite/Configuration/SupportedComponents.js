@@ -56,304 +56,295 @@ function (ComponentInfoArray,
 {
 "use strict";
 
-	return function (browser)
+	var SupportedComponents = new ComponentInfoArray ();
+
+	SupportedComponents .addBaseComponent (
 	{
-		var supportedComponents = new ComponentInfoArray (browser);
+		title:      "Computer-Aided Design (CAD) model geometry",
+		name:       "CADGeometry",
+		level:       2,
+		providerUrl: urls .getProviderUrl ("cad-geometry"),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Computer-Aided Design (CAD) model geometry",
-			name:       "CADGeometry",
-			level:       2,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Core",
+		name:       "Core",
+		level:       2,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Core",
-			name:       "Core",
-			level:       2,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Cube map environmental texturing",
+		name:       "CubeMapTexturing",
+		level:       3,
+		providerUrl: urls .getProviderUrl ("cube-map-texturing"),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Cube map environmental texturing",
-			name:       "CubeMapTexturing",
-			level:       3,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Distributed interactive simulation (DIS)",
+		name:       "DIS",
+		level:       2,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Distributed interactive simulation (DIS)",
-			name:       "DIS",
-			level:       2,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Environmental effects",
+		name:       "EnvironmentalEffects",
+		level:       4,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Environmental effects",
-			name:       "EnvironmentalEffects",
-			level:       4,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Environmental sensor",
+		name:       "EnvironmentalSensor",
+		level:       4,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Environmental sensor",
-			name:       "EnvironmentalSensor",
-			level:       4,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Event utilities",
+		name:       "EventUtilities",
+		level:       4,
+		providerUrl: urls .getProviderUrl ("event-utilities"),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Event utilities",
-			name:       "EventUtilities",
-			level:       4,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Followers",
+		name:       "Followers",
+		level:       4,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Followers",
-			name:       "Followers",
-			level:       4,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Geometry2D",
+		name:       "Geometry2D",
+		level:       2,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Geometry2D",
-			name:       "Geometry2D",
-			level:       2,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Geometry3D",
+		name:       "Geometry3D",
+		level:       4,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Geometry3D",
-			name:       "Geometry3D",
-			level:       4,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Geospatial",
+		name:       "Geospatial",
+		level:       2,
+		providerUrl: urls .getProviderUrl ("geospatial"),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Geospatial",
-			name:       "Geospatial",
-			level:       2,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Grouping",
+		name:       "Grouping",
+		level:       3,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Grouping",
-			name:       "Grouping",
-			level:       3,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Humanoid animation (H-Anim)",
+		name:       "H-Anim",
+		level:       3,
+		providerUrl: urls .getProviderUrl ("h-anim"),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Humanoid animation (H-Anim)",
-			name:       "H-Anim",
-			level:       3,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Interpolation",
+		name:       "Interpolation",
+		level:       5,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Interpolation",
-			name:       "Interpolation",
-			level:       5,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Key device sensor",
+		name:       "KeyDeviceSensor",
+		level:       2,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Key device sensor",
-			name:       "KeyDeviceSensor",
-			level:       2,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Layering",
+		name:       "Layering",
+		level:       1,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Layering",
-			name:       "Layering",
-			level:       1,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Layout",
+		name:       "Layout",
+		level:       1,
+		providerUrl: urls .getProviderUrl ("layout"),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Layout",
-			name:       "Layout",
-			level:       1,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Lighting",
+		name:       "Lighting",
+		level:       3,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Lighting",
-			name:       "Lighting",
-			level:       3,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Navigation",
+		name:       "Navigation",
+		level:       3,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Navigation",
-			name:       "Navigation",
-			level:       3,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Networking",
+		name:       "Networking",
+		level:       4,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Networking",
-			name:       "Networking",
-			level:       4,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Non-uniform Rational B-Spline (NURBS)",
+		name:       "NURBS",
+		level:       4,
+		providerUrl: urls .getProviderUrl ("nurbs"),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Non-uniform Rational B-Spline (NURBS)",
-			name:       "NURBS",
-			level:       4,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Particle systems",
+		name:       "ParticleSystems",
+		level:       3,
+		providerUrl: urls .getProviderUrl ("particle-systems"),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Particle systems",
-			name:       "ParticleSystems",
-			level:       3,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Picking sensor",
+		name:       "Picking",
+		level:       3,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Picking sensor",
-			name:       "Picking",
-			level:       3,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Pointing device sensor",
+		name:       "PointingDeviceSensor",
+		level:       1,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Pointing device sensor",
-			name:       "PointingDeviceSensor",
-			level:       1,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Programmable shaders",
+		name:       "Shaders",
+		level:       1,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Programmable shaders",
-			name:       "Shaders",
-			level:       1,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Rendering",
+		name:       "Rendering",
+		level:       5,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Rendering",
-			name:       "Rendering",
-			level:       5,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Rigid body physics",
+		name:       "RigidBodyPhysics",
+		level:       5,
+		providerUrl: urls .getProviderUrl ("rigid-body-physics"),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Rigid body physics",
-			name:       "RigidBodyPhysics",
-			level:       5,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Scripting",
+		name:       "Scripting",
+		level:       1,
+		providerUrl: urls .getProviderUrl ("scripting"),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Scripting",
-			name:       "Scripting",
-			level:       1,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Shape",
+		name:       "Shape",
+		level:       4,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Shape",
-			name:       "Shape",
-			level:       4,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Sound",
+		name:       "Sound",
+		level:       1,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Sound",
-			name:       "Sound",
-			level:       1,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Text",
+		name:       "Text",
+		level:       1,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Text",
-			name:       "Text",
-			level:       1,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Texturing",
+		name:       "Texturing",
+		level:       3,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Texturing",
-			name:       "Texturing",
-			level:       3,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Texturing3D",
+		name:       "Texturing3D",
+		level:       3,
+		providerUrl: urls .getProviderUrl ("texturing-3d"),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Texturing3D",
-			name:       "Texturing3D",
-			level:       3,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Time",
+		name:       "Time",
+		level:       2,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Time",
-			name:       "Time",
-			level:       2,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Volume rendering",
+		name:       "VolumeRendering",
+		level:       2,
+		providerUrl: urls .getProviderUrl (),
+	});
 
-		supportedComponents .addComponentInfo (
-		{
-			title:      "Volume rendering",
-			name:       "VolumeRendering",
-			level:       2,
-			providerUrl: urls .provider,
-		});
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "X_ITE",
+		name:       "X_ITE",
+		level:       1,
+		providerUrl: urls .getProviderUrl ("x_ite"),
+	});
 
-		// Custom, non-standard component.
-
-		supportedComponents .addComponentInfo (
-		{
-			title:      "X_ITE",
-			name:       "X_ITE",
-			level:       1,
-			providerUrl: urls .provider,
-		});
-
-		Object .preventExtensions (supportedComponents);
-		Object .freeze (supportedComponents);
-		Object .seal (supportedComponents);
-	
-		return supportedComponents;
-	};
+	return SupportedComponents;
 });

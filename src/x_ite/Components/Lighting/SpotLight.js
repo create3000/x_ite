@@ -61,6 +61,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Utility/MatrixStack",
 	"standard/Math/Algorithm",
@@ -79,6 +80,7 @@ function (Fields,
           Vector3,
           Vector4,
           Rotation4,
+          Matrix3,
           Matrix4,
           MatrixStack,
           Algorithm,
@@ -92,6 +94,7 @@ function (Fields,
 	{
 		this .location                      = new Vector3 (0, 0, 0);
 		this .direction                     = new Vector3 (0, 0, 0);
+		this .matrixArray                   = new Float32Array (9);
 		this .renderShadow                  = true; 
 		this .shadowBuffer                  = null;
 		this .bbox                          = new Box3 ();
@@ -127,6 +130,15 @@ function (Fields,
 			this .browser   = browser;
 			this .lightNode = lightNode;
 			this .groupNode = groupNode;
+
+			try
+			{
+				this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
+			}
+			catch (error)
+			{
+				this .matrixArray .set (Matrix3 .Identity);
+			}
 
 			this .modelViewMatrix .pushMatrix (modelViewMatrix);
 
@@ -185,7 +197,6 @@ function (Fields,
 					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
 					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
 					shadowMapSize    = lightNode .getShadowMapSize (),
-					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
 					projectionMatrix = Camera .perspective (lightNode .getCutOffAngle () * 2, 0.125, Math .max (10000, farValue), shadowMapSize, shadowMapSize, this .projectionMatrix), // Use higher far value for better precision.
@@ -234,25 +245,25 @@ function (Fields,
 		setShaderUniforms: function (gl, shaderObject)
 		{
 			var 
-				lightNode       = this .lightNode,
-				color           = lightNode .getColor (),
-				attenuation     = lightNode .getAttenuation (),
-				modelViewMatrix = this .modelViewMatrix .get (),
-				location        = this .location,
-				direction       = this .direction,
-				shadowColor     = lightNode .getShadowColor (),
-				i               = shaderObject .numLights ++;
+				lightNode   = this .lightNode,
+				color       = lightNode .getColor (),
+				attenuation = lightNode .getAttenuation (),
+				location    = this .location,
+				direction   = this .direction,
+				shadowColor = lightNode .getShadowColor (),
+				i           = shaderObject .numLights ++;
 
-			gl .uniform1i (shaderObject .x3d_LightType [i],             3);
-			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
-			gl .uniform1f (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
-			gl .uniform1f (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-			gl .uniform3f (shaderObject .x3d_LightAttenuation [i],      Math .max (0, attenuation .x), Math .max (0, attenuation .y), Math .max (0, attenuation .z));
-			gl .uniform3f (shaderObject .x3d_LightLocation [i],         location .x, location .y, location .z);
-			gl .uniform3f (shaderObject .x3d_LightDirection [i],        direction .x, direction .y, direction .z);
-			gl .uniform1f (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
-			gl .uniform1f (shaderObject .x3d_LightBeamWidth [i],        lightNode .getBeamWidth ());
-			gl .uniform1f (shaderObject .x3d_LightCutOffAngle [i],      lightNode .getCutOffAngle ());
+			gl .uniform1i        (shaderObject .x3d_LightType [i],             3);
+			gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
+			gl .uniform1f        (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
+			gl .uniform1f        (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
+			gl .uniform3f        (shaderObject .x3d_LightAttenuation [i],      Math .max (0, attenuation .x), Math .max (0, attenuation .y), Math .max (0, attenuation .z));
+			gl .uniform3f        (shaderObject .x3d_LightLocation [i],         location .x, location .y, location .z);
+			gl .uniform3f        (shaderObject .x3d_LightDirection [i],        direction .x, direction .y, direction .z);
+			gl .uniform1f        (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
+			gl .uniform1f        (shaderObject .x3d_LightBeamWidth [i],        lightNode .getBeamWidth ());
+			gl .uniform1f        (shaderObject .x3d_LightCutOffAngle [i],      lightNode .getCutOffAngle ());
+			gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
 
 			if (this .renderShadow && this .textureUnit)
 			{

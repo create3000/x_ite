@@ -73,9 +73,9 @@ function ($,
 		X3DProtoDeclarationNode .call (this, executionContext);
 		X3DExecutionContext     .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DProtoDeclaration);
-
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+
+		this .setLive (false);
 	}
 
 	X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
@@ -154,7 +154,7 @@ function ($,
 		
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			if (! $.isEmptyObject (userDefinedFields))
+			if (userDefinedFields .size !== 0)
 			{
 				generator .IncIndent ();
 
@@ -163,10 +163,8 @@ function ($,
 
 				generator .IncIndent ();
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-
 					stream .string += generator .Indent ();
 					stream .string += "<field";
 					stream .string += " ";
@@ -193,7 +191,7 @@ function ($,
 							case X3DConstants .SFNode:
 							case X3DConstants .MFNode:
 							{
-								generator .PushContainerField (null);
+								generator .PushContainerField (field);
 		
 								stream .string += ">\n";
 

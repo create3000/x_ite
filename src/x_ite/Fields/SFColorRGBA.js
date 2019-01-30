@@ -69,7 +69,7 @@ function (X3DField,
 				if (arguments [0] instanceof Color4)
 					return X3DField .call (this, arguments [0]);
 				else
-					return X3DField .call (this, new Color4 (+r, +g, +b, +a));
+					return X3DField .call (this, new Color4 (r * 1, g * 1, b * 1, a * 1));
 			}
 
 			return X3DField .call (this, new Color4 ());
@@ -143,7 +143,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			this .getValue () .r = value;
+			this .getValue () .r = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -157,7 +157,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			this .getValue () .g = value;
+			this .getValue () .g = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -171,7 +171,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			this .getValue () .b = value;
+			this .getValue () .b = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -185,7 +185,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			this .getValue () .a = value;
+			this .getValue () .a = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,

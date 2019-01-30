@@ -91,7 +91,7 @@ function ($,
 			this .enabled_ .addInterest ("set_enabled__", this);
 
 			this .localeOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-			this .type          = this .getBrowser () .getDataStorage () ["BrowserTimings.type"] || "LESS";
+			this .type          = this .getBrowser () .getLocalStorage () ["BrowserTimings.type"] || "LESS";
 			this .startTime     = 0;
 			this .frames        = 0;
 
@@ -105,7 +105,7 @@ function ($,
 
 			this .set_button__ ();
 
-			if (this .getBrowser () .getDataStorage () ["BrowserTimings.enabled"])
+			if (this .getBrowser () .getLocalStorage () ["BrowserTimings.enabled"])
 				this .enabled_ = true;
 		},
 		setEnabled: function (value)
@@ -121,7 +121,7 @@ function ($,
 			if (! this .getBrowser () .getBrowserOptions () .getTimings ())
 				return;
 
-			this .getBrowser () .getDataStorage () ["BrowserTimings.enabled"] = enabled .getValue ();
+			this .getBrowser () .getLocalStorage () ["BrowserTimings.enabled"] = enabled .getValue ();
 
 			if (enabled .getValue ())
 			{
@@ -142,7 +142,7 @@ function ($,
 			else
 				this .type = "MORE";
 
-			this .getBrowser () .getDataStorage () ["BrowserTimings.type"] = this .type;
+			this .getBrowser () .getLocalStorage () ["BrowserTimings.type"] = this .type;
 
 			this .set_button__ ();
 			this .build ();
@@ -190,8 +190,8 @@ function ($,
 					navigationTime    = activeLayer && browser .getCollisionCount () ? activeLayer .collisionTime : 0,
 					collisionTime     = browser .collisionTime + navigationTime,
 					routingTime       = browser .browserTime - (browser .cameraTime + browser .collisionTime + browser .displayTime + navigationTime),
-					prepareEvents     = Object .keys (browser .prepareEvents () .getInterests ()) .length - 1,
-					sensors           = Object .keys (browser .sensorEvents () .getInterests ()) .length,
+					prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
+					sensors           = browser .sensorEvents () .getInterests () .size,
 					opaqueShapes      = 0,
 					transparentShapes = 0;
 

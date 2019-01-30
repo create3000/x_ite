@@ -47,11 +47,16 @@
  ******************************************************************************/
 
 
-define (function ()
+define ([
+	"jquery",
+],
+function ($)
 {
 "use strict";
 
-	var namespaces = new WeakMap ();
+	var
+		storages   = new WeakMap (),
+		namespaces = new WeakMap ();
 
 	var handler =
 	{
@@ -62,22 +67,30 @@ define (function ()
 			if (value !== undefined)
 				return value;
 
-			var value = localStorage [target .getNameSpace () + key];
+			var value = target .getStorage () [target .getNameSpace () + key];
 
-			if (value === undefined)
+			if (value === undefined || value === "undefined")
 			   return undefined;
 
-			return JSON .parse (value)
+			return $ .parseJSON (value);
 		},
 		set: function (target, key, value)
 		{
-			localStorage [target .getNameSpace () + key] = JSON .stringify (value);
+			if (value === undefined)
+				target .getStorage () .removeItem (target .getNameSpace () + key);
+
+			else
+				target .getStorage () [target .getNameSpace () + key] = JSON .stringify (value);
+
 			return true;
 		},
 	};
 
-	function DataStorage (namespace)
+	function DataStorage (storage, namespace)
 	{
+		this .target  = this;
+
+		storages   .set (this, storage);
 		namespaces .set (this, namespace);
 
 		return new Proxy (this, handler);
@@ -85,17 +98,25 @@ define (function ()
 
 	DataStorage .prototype = {
 		constructor: DataStorage,
+		getStorage: function ()
+		{
+			return storages .get (this .target);
+		},
 		getNameSpace: function ()
 		{
-			return namespaces .get (this);
-		},
-		removeItem: function (key)
-		{
-			return localStorage .removeItem (this .getNameSpace () + key);
+			return namespaces .get (this .target);
 		},
 		clear: function ()
 		{
-			return localStorage .clear ();
+			var
+				storage   = this .getStorage (),
+				namespace = this .getNameSpace ();
+
+			$.each (storage, function (key)
+			{
+				if (key .substr (0, namespace .length) === namespace)
+					storage .removeItem (key);
+			});
 		},
 	}
 

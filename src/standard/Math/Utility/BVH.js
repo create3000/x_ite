@@ -110,7 +110,7 @@ function (Vector3,
 				i4       = this .i4,
 				i3       = this .i3;
 
-			v0 .x = vertices [i4 + 0]; v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+			v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 			v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 			v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
@@ -130,7 +130,7 @@ function (Vector3,
 				if (i >= intersections .length)
 					intersections .push (new Vector3 (0, 0, 0));
 
-				intersections [i] .set (t * vertices [i4 + 0] + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+				intersections [i] .set (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
 				                        t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
 				                        t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
@@ -139,7 +139,7 @@ function (Vector3,
 					if (i >= intersectionNormals .length)
 						intersectionNormals .push (new Vector3 (0, 0, 0));
 
-					intersectionNormals [i] .set (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],
+					intersectionNormals [i] .set (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
 					                              t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
 					                              t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 				}
@@ -170,7 +170,7 @@ function (Vector3,
 		{
 			t = triangles [i] * 12;
 
-			v0 .set (vertices [t + 0], vertices [t + 1], vertices [t + 2]);
+			v0 .set (vertices [t],     vertices [t + 1], vertices [t + 2]);
 			v1 .set (vertices [t + 4], vertices [t + 5], vertices [t + 6]);
 			v2 .set (vertices [t + 8], vertices [t + 9], vertices [t + 10]);
 

@@ -76,8 +76,6 @@ function ($,
 		X3DProtoDeclarationNode .call (this, executionContext);
 		X3DUrlObject            .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DExternProtoDeclaration);
-
 		this .addChildObjects ("url", new Fields .MFString ());
 
 		this .deferred = $.Deferred ();
@@ -158,7 +156,6 @@ function ($,
 				return;
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-			this .getScene () .addInitLoadCount (this);
 
 			// Don't create scene cache, due to possible default nodes in proto SFNode fields and complete scenes.
 
@@ -168,8 +165,6 @@ function ($,
 		},
 		setInternalSceneAsync: function (value)
 		{
-			this .getScene () .removeInitLoadCount (this);
-		
 			if (value)
 				this .setInternalScene (value);
 
@@ -180,17 +175,21 @@ function ($,
 		{
 			this .scene = value;
 
-			this .setLoadState (X3DConstants .COMPLETE_STATE);
+			var
+				protoName = this .scene .getURL () .fragment || 0,
+				proto     = this .scene .protos [protoName];
+
+			if (! proto)
+				throw new Error ("PROTO not found");
 
 			this .scene .setLive (this .isLive () .getValue ());
 			this .scene .setPrivate (this .getScene () .getPrivate ());
 			//this .scene .setExecutionContext (this .getExecutionContext ());
-
 			this .scene .setup ();
 
-			var protoName = this .scene .getURL () .fragment || 0;
+			this .setLoadState (X3DConstants .COMPLETE_STATE);
 
-			this .setProtoDeclaration (this .scene .protos [protoName]);
+			this .setProtoDeclaration (proto);
 
 			this .deferred .resolve ();
 		},
@@ -233,12 +232,10 @@ function ($,
 
 			generator .IncIndent ();
 
-			var fields = this .getUserDefinedFields ();
+			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in fields)
+			for (var field of userDefinedFields .values ())
 			{
-				var field = fields [name];
-
 				stream .string += generator .Indent ();
 				stream .string += "<field";
 				stream .string += " ";

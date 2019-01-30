@@ -74,8 +74,8 @@ define (function ()
 		},
 		partialsort: function (lo, hi)
 		{
-			var gap = this .last, exchanged, i, last;
-			
+			var gap = this .last, i, last;
+
 			if (gap > 1)
 				gap = Math .floor (gap * shrinkFactor);
 				

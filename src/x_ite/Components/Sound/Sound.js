@@ -55,10 +55,12 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Line3",
+	"standard/Math/Geometry/Sphere3",
+	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -67,10 +69,12 @@ function (Fields,
           X3DCast,
           TraverseType,
           X3DConstants,
-          Vector2,
           Vector3,
           Rotation4,
-          Matrix4)
+          Matrix4,
+          Line3,
+          Sphere3,
+          Algorithm)
 {
 "use strict";
 
@@ -80,14 +84,15 @@ function (Fields,
 
 		this .addType (X3DConstants .Sound);
 
+		this .addChildObjects ("traversed", new Fields .SFBool (true));
+
 		this .location_ .setUnit ("length");
 		this .minBack_  .setUnit ("length");
 		this .minFront_ .setUnit ("length");
 		this .maxBack_  .setUnit ("length");
 		this .maxFront_ .setUnit ("length");
 
-		this .min = { radius: 0, distance: 0 };
-		this .max = { radius: 0, distance: 0 };
+		this .currentTraversed = true;
 	}
 
 	Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
@@ -106,12 +111,6 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "priority",   new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "source",     new Fields .SFNode ()),
 		]),
-		modelMatrix: new Matrix4 (),
-		translation: new Vector3 (0, 0, 0),
-		rotation: new Rotation4 (),
-		scale: new Vector3 (1, 1, 1),
-		viewer: new Vector3 (0, 0, 0),
-		zAxis: new Vector3 (0, 0, 1),
 		getTypeName: function ()
 		{
 			return "Sound";
@@ -128,9 +127,43 @@ function (Fields,
 		{
 			X3DSoundNode .prototype .initialize .call (this);
 
+			this .isLive ()  .addInterest ("set_live__", this);
+			this .traversed_ .addInterest ("set_live__", this);
+
 			this .source_ .addInterest ("set_source__", this);
 
+			this .set_live__ ();
 			this .set_source__ ();
+		},
+		setTraversed: function (value)
+		{
+		   if (value)
+			{
+				if (this .traversed_ .getValue () === false)
+					this .traversed_ = true;
+			}
+			else
+			{
+				if (this .currentTraversed !== this .traversed_ .getValue ())
+					this .traversed_ = this .currentTraversed;
+			}
+
+		   this .currentTraversed = value;
+		},
+		getTraversed: function ()
+		{
+		   return this .currentTraversed;
+		},
+		set_live__: function ()
+		{
+			if (this .isLive () .getValue () && this .traversed_ .getValue ())
+			{
+				this .getBrowser () .sensorEvents () .addInterest ("update", this);
+			}
+			else
+			{
+				this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+			}
 		},
 		set_source__: function ()
 		{
@@ -139,83 +172,140 @@ function (Fields,
 
 			this .sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this .source_);
 		},
-		traverse: function (type, renderObject)
+		update: function ()
 		{
-			if (type !== TraverseType .DISPLAY)
-				return;
-
-			if (! this .sourceNode)
-				return;
-
-			if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
-				return;
-
-			try
+			if (! this .getTraversed ())
 			{
-				var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
-
-				this .getEllipsoidParameter (modelViewMatrix, this .maxBack_ .getValue (), this .maxFront_ .getValue (), this .max);
-				this .getEllipsoidParameter (modelViewMatrix, this .minBack_ .getValue (), this .minFront_ .getValue (), this .min);
-
-				if (this .max .distance < this .max .radius)
-				{
-					if (this .min .distance < this .min .radius)
-						this .sourceNode .setVolume (this .intensity_ .getValue ());
-
-					else
-					{
-						var
-							d1 = this .max .radius - this .max .distance,
-							d2 = this .max .radius - this .min .radius;
-
-						this .sourceNode .setVolume (this .intensity_ .getValue () * (d1 / d2));
-					}
-				}
-				else
+				if (this .sourceNode)
 					this .sourceNode .setVolume (0);
 			}
-			catch (error)
-			{
-			   console .log (error);
-				this .sourceNode .setVolume (0);
-			}
+
+			this .setTraversed (false);
 		},
-		getEllipsoidParameter: function (modelViewMatrix, back, front, value)
+		traverse: (function ()
 		{
-			/*
-			 * http://de.wikipedia.org/wiki/Ellipse
-			 *
-			 * The ellipsoid is transformed to a sphere for easier calculation and then the viewer position is
-			 * transformed into this coordinate system. The radius and distance can then be obtained.
-			 */
-
 			var
-				a = (back + front) / 2,
-				e = a - back,
-				b = Math .sqrt (a * a - e * e);
-			
-			this .translation .z = e;
-			this .rotation .setFromToVec (this .zAxis, this .direction_ .getValue ());
-			this .scale .z = a / b;
+				min = { distance: 0, intersection: new Vector3 (0, 0, 0) },
+				max = { distance: 0, intersection: new Vector3 (0, 0, 0) };
 
-			var modelMatrix = this .modelMatrix;
+			return function (type, renderObject)
+			{
+				try
+				{
+					if (type !== TraverseType .DISPLAY)
+						return;
+		
+					if (! this .sourceNode)
+						return;
+		
+					if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
+						return;
+		
+					this .setTraversed (true);
+	
+					var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+	
+					this .getEllipsoidParameter (modelViewMatrix,
+					                             Math .max (this .maxBack_  .getValue (), 0),
+					                             Math .max (this .maxFront_ .getValue (), 0),
+					                             max);
 
-			modelMatrix .assign (modelViewMatrix);
-			modelMatrix .translate (this .location_ .getValue ());
-			modelMatrix .rotate (this .rotation);
+					if (max .distance < 1) // Sphere radius is 1
+					{
+						this .getEllipsoidParameter (modelViewMatrix,
+						                             Math .max (this .minBack_  .getValue (), 0),
+						                             Math .max (this .minFront_ .getValue (), 0),
+						                             min);
 
-			modelMatrix .translate (this .translation);
-			modelMatrix .scale (this .scale);
+						if (min .distance < 1) // Sphere radius is 1
+						{
+							this .sourceNode .setVolume (this .intensity_ .getValue ());
+						}
+						else
+						{
+							var
+								d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
+								d2        = max .intersection .distance (min .intersection),
+								d         = Math .min (d1 / d2, 1),
+								intensity = Algorithm .clamp (this .intensity_ .getValue (), 0, 1),
+								volume    = intensity * d;
 
-			modelMatrix .inverse ();
+							//console .log (d);
 
-			this .viewer .set (modelMatrix [12],
-			                   modelMatrix [13],
-			                   modelMatrix [14]);
+							this .sourceNode .setVolume (volume);
+						}
+					}
+					else
+					{
+						this .sourceNode .setVolume (0);
+					}
+				}
+				catch (error)
+				{
+					//console .log (error);
 
-			value .radius   = b;
-			value .distance = this .viewer .abs ();
-		},
+					if (this .sourceNode)
+						this .sourceNode .setVolume (0);
+				}
+			};
+		})(),
+		getEllipsoidParameter: (function ()
+		{
+			var
+				location        = new Vector3 (0, 0, 0),
+				sphereMatrix    = new Matrix4 (),
+				invSphereMatrix = new Matrix4 (),
+				translation     = new Vector3 (0, 0, 0),
+				rotation        = new Rotation4 (),
+				scale           = new Vector3 (1, 1, 1),
+				sphere          = new Sphere3 (1, Vector3 .Zero),
+				line            = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+				intersection1   = new Vector3 (0, 0, 0),
+				intersection2   = new Vector3 (0, 0, 0);
+
+			return function (modelViewMatrix, back, front, value)
+			{
+				/*
+				 * http://de.wikipedia.org/wiki/Ellipse
+				 *
+				 * The ellipsoid is transformed to a sphere for easier calculation and then the viewer position is
+				 * transformed into this coordinate system. The radius and distance can then be obtained.
+				 * 
+				 * throws Error
+				 */
+
+				var
+					a = (back + front) / 2,
+					e = a - back,
+					b = Math .sqrt (a * a - e * e);
+				
+				location .set (0, 0, e);
+				scale    .set (b, b, a);
+
+				rotation .setFromToVec (Vector3 .zAxis, this .direction_ .getValue ());
+				sphereMatrix .assign (modelViewMatrix);
+				sphereMatrix .translate (this .location_ .getValue ());
+				sphereMatrix .rotate (rotation);
+				sphereMatrix .translate (location);
+				sphereMatrix .scale (scale);
+
+				invSphereMatrix .assign (sphereMatrix);
+				invSphereMatrix .inverse ();
+
+				var viewer = invSphereMatrix .origin;
+				location .negate () .divVec (scale);
+
+				line .set (viewer, location .subtract (viewer) .normalize ());
+				sphere .intersectsLine (line, intersection1, intersection2);
+
+				if (viewer .distance (intersection1) < viewer .distance (intersection2))
+					value .intersection .assign (sphereMatrix .multVecMatrix (intersection1));
+				else
+					value .intersection .assign (sphereMatrix .multVecMatrix (intersection2));
+
+				value .distance = viewer .abs ();
+			};
+		})(),
 	});
 
 	return Sound;

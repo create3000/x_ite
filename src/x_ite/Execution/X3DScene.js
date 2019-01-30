@@ -238,17 +238,28 @@ function (Fields,
 		},
 		addRootNode: function (node)
 		{
-			if (! (node instanceof Fields .SFNode || node === null))
+			if (node === null)
+				node = new Fields .SFNode ();
+
+			if (! (node instanceof Fields .SFNode))
 				throw new Error ("Couldn't add root node: node must be of type SFNode.");
 
-			//if (node && node .getValue () && node .getValue () .getExecutionContext () !== this)
-			//	throw new Error ("Couldn't add root node: node does not belong to this execution context.");
+			var rootNodes = this .getRootNodes ();
 
-			this .getRootNodes () .push (node);
+			for (var i = 0, length = rootNodes .length; i < length; ++ i)
+			{
+				if (rootNodes [i] .equals (node))
+					return;
+			}
+
+			rootNodes .push (node);
 		},
 		removeRootNode: function (node)
 		{
-			if (! (node instanceof Fields .SFNode || node === null))
+			if (node === null)
+				node = new Fields .SFNode ();
+
+			if (! (node instanceof Fields .SFNode))
 				throw new Error ("Couldn't remove root node: node must be of type SFNode.");
 
 			var

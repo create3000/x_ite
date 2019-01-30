@@ -1,7 +1,7 @@
 
 X3DCanvas .x_ite-private-splash-screen {
 	display: none;
-	z-index: -100;
+	z-index: 100;
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -26,7 +26,7 @@ X3DCanvas .x_ite-private-spinner {
 }
 @-moz-keyframes spinner-animation-spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+@keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
 
 X3DCanvas .x_ite-private-progress {
 	position: absolute;
@@ -48,6 +48,7 @@ X3DCanvas .x_ite-private-progressbar {
 	border-left:  2px solid rgba(255, 255, 255, 0.5);
 	border-right: 2px solid rgba(255, 255, 255, 0.5);
 	padding: 0 2px;
+	text-align: left;
 }
 
 X3DCanvas .x_ite-private-progressbar div {

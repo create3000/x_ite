@@ -67,7 +67,7 @@ function (Color3,
 				if (arguments [0] instanceof Color3)
 					return X3DField .call (this, arguments [0]);
 				else
-					return X3DField .call (this, new Color3 (+r, +g, +b));
+					return X3DField .call (this, new Color3 (r * 1, g * 1, b * 1));
 			}
 
 			return X3DField .call (this, new Color3 ());
@@ -152,7 +152,7 @@ function (Color3,
 		},
 		set: function (value)
 		{
-			this .getValue () .r = value;
+			this .getValue () .r = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -166,7 +166,7 @@ function (Color3,
 		},
 		set: function (value)
 		{
-			this .getValue () .g = value;
+			this .getValue () .g = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -180,7 +180,7 @@ function (Color3,
 		},
 		set: function (value)
 		{
-			this .getValue () .b = value;
+			this .getValue () .b = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,

@@ -47,8 +47,6 @@
  ******************************************************************************/
 
 
-// https://github.com/r3mi/poly2tri.js
-
 define ([
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -69,14 +67,6 @@ function (Fields,
           Triangle3)
 {
 "use strict";
-
-	var
-		Triangle    = [0, 1, 2],
-		Polygon     = [ ],
-		normals     = [ ],
-		normalIndex = [ ],
-		current     = new Vector3 (0, 0, 0),
-		next        = new Vector3 (0, 0, 0);
 
 	function IndexedFaceSet (executionContext)
 	{
@@ -172,7 +162,7 @@ function (Fields,
 			var
 				colorPerVertex     = this .colorPerVertex_ .getValue (),
 				normalPerVertex    = this .normalPerVertex_ .getValue (),
-				coordIndex         = this .coordIndex_,
+				coordIndex         = this .coordIndex_ .getValue (),
 				attribNodes        = this .getAttrib (),
 				numAttrib          = attribNodes .length,
 				attribs            = this .getAttribs (),
@@ -199,7 +189,7 @@ function (Fields,
 				for (var v = 0, numVertices = triangles .length; v < numVertices; ++ v)
 				{
 					var
-						i     = vertices [triangles [v]],
+						i     = triangles [v],
 						index = coordIndex [i];
 
 					for (var a = 0; a < numAttrib; ++ a)
@@ -243,8 +233,7 @@ function (Fields,
 		{
 			var
 				convex      = this .convex_ .getValue (),
-				coordIndex  = this .coordIndex_,
-				coordLength = coordIndex .length,
+				coordLength = this .coordIndex_ .length,
 				polygons    = [ ];
 
 			if (! this .getCoord ())
@@ -253,12 +242,12 @@ function (Fields,
 			if (coordLength)
 			{
 				// Add -1 (polygon end marker) to coordIndex if not present.
-				if (coordIndex [coordLength - 1] > -1)
-				{
-					coordIndex .push (-1);
+				if (this .coordIndex_ [coordLength - 1] > -1)
+					this .coordIndex_ .push (-1);
 
-					++ coordLength;
-				}
+				var
+					coordIndex  = this .coordIndex_ .getValue (),
+					coordLength = this .coordIndex_ .length;
 
 				// Construct triangle array and determine the number of used points.
 				var
@@ -281,8 +270,8 @@ function (Fields,
 						if (vertices .length)
 						{
 							// Closed polygon.
-							if (vertices [0] === vertices [vertices .length - 1])
-								vertices .pop ();
+							//if (coordIndex [vertices [0]] === coordIndex [vertices [vertices .length - 1]])
+							//	vertices .pop ();
 
 							switch (vertices .length)
 							{
@@ -296,7 +285,7 @@ function (Fields,
 								case 3:
 								{
 									// Add polygon with one triangle.
-									polygons .push ({ vertices: vertices, triangles: Triangle, face: face });
+									polygons .push ({ vertices: vertices, triangles: vertices, face: face });
 									vertices = [ ];
 									break;
 								}
@@ -308,12 +297,14 @@ function (Fields,
 										polygon   = { vertices: vertices, triangles: triangles, face: face };
 
 									if (convex)
-										this .triangulateConvexPolygon (polygon);
+										this .triangulateConvexPolygon (vertices, triangles);
 									else
-										this .triangulatePolygon (polygon);
+										this .triangulatePolygon (vertices, triangles);
 
 									if (triangles .length < 3)
+									{
 										vertices .length = 0;
+									}
 									else
 									{
 										polygons .push (polygon);
@@ -332,154 +323,172 @@ function (Fields,
 
 			return polygons;
 		},
-		triangulatePolygon: function (polygon)
+		triangulatePolygon: (function ()
 		{
-			// Transform vertices to 2D space.
+			var polygon = [ ];
 
-			var
-				vertices   = polygon .vertices,
-				triangles  = polygon .triangles,
-				coordIndex = this .coordIndex_,
-				coord      = this .getCoord ();
-
-			for (var i = 0, length = vertices .length; i < length; ++ i)
+			return function (vertices, triangles)
 			{
-				var vertex = coord .get1Point (coordIndex [vertices [i]], new Vector3 (0, 0, 0));
+				var
+					coordIndex = this .coordIndex_ .getValue (),
+					coord      = this .getCoord ();
 
-				vertex .index = i;
+				for (var v = 0, length = vertices .length; v < length; ++ v)
+				{
+					var
+						vertex = polygon [v],
+						i      = vertices [v];
 
-				Polygon [i] = vertex;
-			}
+					if (! vertex)
+						vertex = polygon [v] = new Vector3 (0, 0, 0);
 
-			Polygon .length = length;
+					vertex .index = i;
 
-			Triangle3 .triangulatePolygon (Polygon, triangles);
+					coord .get1Point (coordIndex [i], vertex);
+				}
 
-			for (var i = 0, length = triangles .length; i < length; ++ i)
-				triangles [i] = triangles [i] .index;
-		},
-		triangulateConvexPolygon: function (polygon)
+				polygon .length = length;
+	
+				Triangle3 .triangulatePolygon (polygon, triangles);
+
+				for (var i = 0, length = triangles .length; i < length; ++ i)
+					triangles [i] = triangles [i] .index;
+			};
+		})(),
+		triangulateConvexPolygon: function (vertices, triangles)
 		{
-			var
-				vertices  = polygon .vertices,
-				triangles = polygon .triangles;
-
 			// Fallback: Very simple triangulation for convex polygons.
 			for (var i = 1, length = vertices .length - 1; i < length; ++ i)
-				triangles .push (0, i, i + 1);
+				triangles .push (vertices [0], vertices [i], vertices [i + 1]);
 		},
 		buildNormals: function (polygons)
 		{
 			var
-				first       = 0,
 				normals     = this .createNormals (polygons),
 				normalArray = this .getNormals ();
 
 			for (var p = 0, pl = polygons .length; p < pl; ++ p)
 			{
-				var
-					polygon   = polygons [p],
-					vertices  = polygon .vertices,
-					triangles = polygon .triangles;
+				var triangles = polygons [p] .triangles;
 
 				for (var v = 0, tl = triangles .length; v < tl; ++ v)
 				{
-					var normal = normals [first + triangles [v]];
+					var normal = normals [triangles [v]];
 
 					normalArray .push (normal .x, normal .y, normal .z);
 				}
-
-				first += vertices .length;
 			}
 		},
-		createNormals: function (polygons)
+		createNormals: (function ()
 		{
 			var
-				cw          = ! this .ccw_ .getValue (),
-				coordIndex  = this .coordIndex_,
-				coord       = this .getCoord (),
-				normal      = null;
+				normals     = [ ],
+				normalIndex = [ ];
 
-			normals     .length = 0;
-			normalIndex .length = 0;
-
-			for (var p = 0, pl = polygons .length; p < pl; ++ p)
+			return function (polygons)
 			{
 				var
-					polygon  = polygons [p],
-					vertices = polygon .vertices,
-					length   = vertices .length;
-
-				switch (length)
+					cw          = ! this .ccw_ .getValue (),
+					coordIndex  = this .coordIndex_ .getValue (),
+					coord       = this .getCoord (),
+					normal      = null;
+	
+				normals     .length = 0;
+				normalIndex .length = 0;
+	
+				for (var p = 0, pl = polygons .length; p < pl; ++ p)
 				{
-					case 3:
+					var
+						polygon  = polygons [p],
+						vertices = polygon .vertices,
+						length   = vertices .length;
+	
+					switch (length)
 					{
-						normal = coord .getNormal (coordIndex [vertices [0]],
-						                           coordIndex [vertices [1]],
-						                           coordIndex [vertices [2]]);
-						break;
+						case 3:
+						{
+							normal = coord .getNormal (coordIndex [vertices [0]],
+							                           coordIndex [vertices [1]],
+							                           coordIndex [vertices [2]]);
+							break;
+						}
+						case 4:
+						{
+							normal = coord .getQuadNormal (coordIndex [vertices [0]],
+							                               coordIndex [vertices [1]],
+							                               coordIndex [vertices [2]],
+							                               coordIndex [vertices [3]]);
+							break;
+						}
+						default:
+						{
+							normal = this .getPolygonNormal (vertices, coordIndex, coord);
+							break;
+						}
 					}
-					case 4:
+
+					// Add a normal index for each point.
+
+					var numNormals = normals .length;
+
+					for (var i = 0; i < length; ++ i)
 					{
-						normal = coord .getQuadNormal (coordIndex [vertices [0]],
-						                               coordIndex [vertices [1]],
-						                               coordIndex [vertices [2]],
-						                               coordIndex [vertices [3]]);
-						break;
+						var
+							index        = coordIndex [vertices [i]],
+							pointNormals = normalIndex [index];
+	
+						if (! pointNormals)
+							pointNormals = normalIndex [index] = [ ];
+	
+						pointNormals .push (numNormals + i);
 					}
-					default:
-					{
-						normal = this .getPolygonNormal (vertices, coordIndex, coord);
-						break;
-					}
+	
+					if (cw)
+						normal .negate ();
+	
+					// Add this normal for each vertex.
+	
+					for (var i = 0; i < length; ++ i)
+						normals .push (normal);
+
+					// Add one more for -1.
+					normals .push (undefined);
 				}
-
-				// Add a normal index for each point.
-				for (var i = 0; i < length; ++ i)
-				{
-					var index = coordIndex [vertices [i]];
-
-					if (! normalIndex [index])
-						normalIndex [index] = [ ];
-
-					normalIndex [index] .push (normals .length + i);
-				}
-
-				if (cw)
-					normal .negate ();
-
-				// Add this normal for each vertex.
-
-				for (var i = 0, nl = length; i < nl; ++ i)
-					normals .push (normal);
-			}
-
-			return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
-		},
-		getPolygonNormal: function (vertices, coordIndex, coord)
+	
+				return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
+			};
+		})(),
+		getPolygonNormal: (function ()
 		{
-			// Determine polygon normal.
-			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
+			var
+				current = new Vector3 (0, 0, 0),
+				next    = new Vector3 (0, 0, 0);
 
-			var normal = new Vector3 (0, 0, 0);
-
-			coord .get1Point (coordIndex [vertices [0]], next);
-
-			for (var i = 0, length = vertices .length; i < length; ++ i)
+			return function (vertices, coordIndex, coord)
 			{
-				var tmp = current;
-				current = next;
-				next    = tmp;
+				// Determine polygon normal.
+				// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-				coord .get1Point (coordIndex [vertices [(i + 1) % length]], next);
+				var normal = new Vector3 (0, 0, 0);
 
-				normal .x += (current .y - next .y) * (current .z + next .z);
-				normal .y += (current .z - next .z) * (current .x + next .x);
-				normal .z += (current .x - next .x) * (current .y + next .y);
-			}
+				coord .get1Point (coordIndex [vertices [0]], next);
 
-			return normal .normalize ();
-		},
+				for (var i = 0, length = vertices .length; i < length; ++ i)
+				{
+					var tmp = current;
+					current = next;
+					next    = tmp;
+
+					coord .get1Point (coordIndex [vertices [(i + 1) % length]], next);
+
+					normal .x += (current .y - next .y) * (current .z + next .z);
+					normal .y += (current .z - next .z) * (current .x + next .x);
+					normal .z += (current .x - next .x) * (current .y + next .y);
+				}
+
+				return normal .normalize ();
+			};
+		})(),
 	});
 
 	return IndexedFaceSet;

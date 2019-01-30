@@ -82,7 +82,7 @@ function ($,
 		dataURL       = /^data\:([^]*?)(?:;([^]*?))?(;base64)?,([^]*)$/,
 		contentTypeRx = /^(?:(.*?);(.*?)$)/;
 
-	var foreignSuffixes = new RegExp ("\.(?:html|xhtml)$");
+	var foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
 
 	var foreign = {
 		"text/html":             true,
@@ -141,10 +141,17 @@ function ($,
 					},
 					function (scene, string, success, error)
 					{
+						if (success)
+						{
+							success = function (scene, success, error)
+							{
+								this .setScene (scene, success, error);
+							}
+							.bind (this, scene, success, error);
+						}
+	
 						// Try parse X3D Classic Encoding.	
-						new Parser (scene) .parseIntoScene (string);
-				
-						this .setScene (scene, success);
+						new Parser (scene) .parseIntoScene (string, success, error);
 					},
 				];
 
@@ -200,41 +207,30 @@ function ($,
 					catch (error)
 					{
 						// Try next handler.
+						console .log (error);
 					}
 				}
 
-				return null;
-			}
-		},
-		importJS: function (scene, jsobj, success, error)
-		{
-			try
-			{
-				//AP: add reference to dom for later access.
-				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj);
-
-				if (success)
-					this .setScene (scene, success);
-			}
-			catch (exception)
-			{
-				if (error)
-					error (exception);
-				else
-					throw exception;
+				throw new Error ("Couldn't parse x3d syntax.");
 			}
 		},
 		importDocument: function (scene, dom, success, error)
 		{
 			try
 			{
-				new XMLParser (scene) .parseIntoScene (dom);
-				
+				if (success)
+				{
+					success = function (scene, success, error)
+					{
+						this .setScene (scene, success, error);
+					}
+					.bind (this, scene, success, error);
+				}
+	
+				new XMLParser (scene) .parseIntoScene (dom, success, error);
+		
 				//AP: add reference to dom for later access.
 				this .node .dom = dom;
-
-				if (success)
-					this .setScene (scene, success);
 			}
 			catch (exception)
 			{
@@ -244,19 +240,53 @@ function ($,
 					throw exception;
 			}
 		},
-		setScene: function (scene, success)
+		importJS: function (scene, jsobj, success, error)
 		{
-			scene .initLoadCount_ .addInterest ("set_initLoadCount__", this, scene, success);
+			try
+			{
+				if (success)
+				{
+					success = function (scene, success, error)
+					{
+						this .setScene (scene, success, error);
+					}
+					.bind (this, scene, success, error);
+				}
+
+				//AP: add reference to dom for later access.
+				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj, success, error);
+			}
+			catch (exception)
+			{
+				if (error)
+					error (exception);
+				else
+					throw exception;
+			}
+		},
+		setScene: function (scene, success, error)
+		{
+			scene .initLoadCount_ .addInterest ("set_initLoadCount__", this, scene, success, error);
 			scene .initLoadCount_ .addEvent ();
 		},
-		set_initLoadCount__: function (field, scene, success)
+		set_initLoadCount__: function (field, scene, success, error)
 		{
 			if (field .getValue ())
 				return;
 
 			scene .initLoadCount_ .removeInterest ("set_initLoadCount__", this);
 
-			success (scene);
+			try
+			{
+				success (scene);
+			}
+			catch (exception)
+			{
+				if (error)
+					error (exception);
+				else
+					throw exception;
+			}
 
 			if (DEBUG)
 			{
@@ -295,7 +325,7 @@ function ($,
 				this .URL = this .transform (url [i]);
 
 				$.ajax ({
-					url: this .URL,
+					url: this .URL .escape (),
 					dataType: "text",
 					async: false,
 					cache: this .browser .getBrowserOptions () .getCache (),
@@ -430,7 +460,7 @@ function ($,
 						data = unescape (data);
 
 					if (this .target .length && this .target !== "_self" && this .foreign)
-						return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+						return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 
 					this .callback (data);
 					return;
@@ -445,22 +475,22 @@ function ($,
 			// Handle target
 
 			if (this .target .length && this .target !== "_self" && this .foreign)
-				return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+				return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 
-			// Handle well known foreign content depending on suffix or if path looks like directory.
+			// Handle well known foreign content depending on extension or if path looks like directory.
 
-			if (this .URL .isDirectory () || this .URL .suffix .match (foreignSuffixes))
+			if (this .foreign)
 			{
-				if (this .foreign)
+				if (this .URL .extension .match (foreignExtensions))
 				{
-					return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+					return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 				}
 			}
 
 			// Load URL async
 
 			$.ajax ({
-				url: this .URL,
+				url: this .URL .escape (),
 				dataType: "binary",
 				async: true,
 				cache: this .browser .getBrowserOptions () .getCache (),
@@ -474,18 +504,31 @@ function ($,
 						//console .log (this .getContentType (xhr));
 
 						if (foreign [this .getContentType (xhr)])
-							return this .foreign (this .URL .toString () .replace (urls .fallbackExpression, ""), this .target);
+							return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 					}
 
-					this .fileReader .onload = this .readAsText .bind (this, blob);
+					this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
 
-					this .fileReader .readAsText (blob);
+					this .fileReader .readAsArrayBuffer (blob);
 				},
 				error: function (xhr, textStatus, exception)
 				{
 					this .loadDocumentError (new Error (exception));
 				},
 			});
+		},
+		readAsArrayBuffer: function (blob)
+		{
+			try
+			{
+				this .callback (pako .ungzip (this .fileReader .result, { to: "string" }));
+			}
+			catch (exception)
+			{
+				this .fileReader .onload = this .readAsText .bind (this, blob);
+
+				this .fileReader .readAsText (blob);
+			}
 		},
 		readAsText: function (blob)
 		{
@@ -495,20 +538,7 @@ function ($,
 			}
 			catch (exception)
 			{
-				this .fileReader .onload = this .readAsArrayBuffer .bind (this, exception);
-
-				this .fileReader .readAsArrayBuffer (blob);
-			}
-		},
-		readAsArrayBuffer: function (exceptionReadAsText)
-		{
-			try
-			{
-				this .callback (pako .ungzip (this .fileReader .result, { to: "string" }));
-			}
-			catch (exception)
-			{
-				this .loadDocumentError (exceptionReadAsText);
+				this .loadDocumentError (exception);
 			}
 		},
 		loadDocumentError: function (exception)
@@ -545,8 +575,8 @@ function ($,
 			{
 				if (DEBUG)
 				{
-					if (! sURL .match (urls .fallbackExpression))
-						this .url .unshift (urls .fallbackUrl + URL);
+					if (! sURL .match (urls .getFallbackExpression ()))
+						this .url .unshift (urls .getFallbackUrl (URL));
 				}
 			}
 

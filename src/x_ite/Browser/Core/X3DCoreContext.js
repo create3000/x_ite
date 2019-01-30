@@ -174,6 +174,7 @@ function ($,
 		$("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
 
 		this .splashScreen = splashScreen;
+		this .surface      = surface;
 		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
 		this .context      = getContext (this .canvas [0]);
 		this .extensions   = { };
@@ -195,8 +196,8 @@ function ($,
 		this .browserTimings      = new BrowserTimings      (this .getPrivateScene ());
 		this .contextMenu         = new ContextMenu         (this .getPrivateScene ());
 
-		this .dataStorage = new DataStorage ("X3DBrowser(" + this .number + ").");
-		this .mobile      = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
+		this .localStorage = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this .number + ").");
+		this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
 		$(".x_ite-console") .empty ();
 	}
@@ -222,14 +223,58 @@ function ($,
 
 			// Observe Element's attributes.
 
-			this .debug    = this .getElement () .attr ("debug") == "true";
 			this .observer = new MutationObserver (this .processMutations .bind (this));
 
 			this .observer .observe (this .element [0], { attributes: true, childList: false, characterData: false, subtree: false });
+
+			// Define src and url property.
+
+			Object .defineProperty (this .getElement () .get (0), "src",
+			{
+				get: (function ()
+				{
+					return this .getExecutionContext () .getWorldURL ();
+				})
+				.bind (this),
+				set: (function (value)
+				{
+					this .loadURL (new Fields .MFString (value), new Fields .MFString ());
+				})
+				.bind (this),
+				enumerable: true,
+				configurable: false
+			});
+	
+			Object .defineProperty (this .getElement () .get (0), "url",
+			{
+				get: (function ()
+				{
+					var worldURL = this .getExecutionContext () .getWorldURL ();
+	
+					if (worldURL)
+						return new Fields .MFString (worldURL);
+					else
+						return new Fields .MFString ();
+				})
+				.bind (this),
+				set: (function (value)
+				{
+					this .loadURL (value, new Fields .MFString ());
+				})
+				.bind (this),
+				enumerable: true,
+				configurable: false
+			});
+
+			// Configure browser event handlers.
+
+			this .setBrowserEventHandler ("onload");
+			this .setBrowserEventHandler ("onshutdown");
+			this .setBrowserEventHandler ("onerror");
 		},
 		getDebug: function ()
 		{
-			return this .debug;
+			return this .getBrowserOptions () .getDebug ();
 		},
 		getNumber: function ()
 		{
@@ -242,6 +287,10 @@ function ($,
 		getElement: function ()
 		{
 			return this .element;
+		},
+		getSurface: function ()
+		{
+			return this .surface;
 		},
 		getSplashScreen: function ()
 		{
@@ -279,13 +328,17 @@ function ($,
 		{
 			return this .browserTimings;
 		},
-		getDataStorage: function ()
+		getLocalStorage: function ()
 		{
-			return this .dataStorage;
+			return this .localStorage;
 		},
 		getMobile: function ()
 		{
 			return this .mobile;
+		},
+		getPrivateScene: function ()
+		{
+			return this .privateScene;
 		},
 		processMutations: function (mutations)
 		{
@@ -312,21 +365,40 @@ function ($,
 		{
 			var attributeName = mutation .attributeName;
 
-			switch (attributeName .toLowerCase())
+			switch (attributeName .toLowerCase ())
 			{
-				case "src":
-					var urlCharacters = this .getElement () .attr ("src");
-		
-					if (urlCharacters)
-						this .load ('"' + urlCharacters + '"');
-
+				case "onerror":
+				{
+					this .setBrowserEventHandler ("onerror");
 					break;
-				case "url":
-					this .load (this .getElement () .attr ("url"));
+				}
+				case "onload":
+				{
+					this .setBrowserEventHandler ("onload");
 					break;
+				}
+				case "onshutdown":
+				{
+					this .setBrowserEventHandler ("onshutdown");
+					break;
+				}
 				case "splashscreen":
+				{
 					this .getBrowserOptions () .setAttributeSplashScreen ();
 					break;
+				}
+				case "src":
+				{
+					var urlCharacters = this .getElement () .attr ("src");
+		
+					this .load ('"' + urlCharacters + '"');
+					break;
+				}
+				case "url":
+				{
+					this .load (this .getElement () .attr ("url"));
+					break;
+				}
 			}
 		},
 		load: function (urlCharacters)
@@ -334,8 +406,8 @@ function ($,
 			if (urlCharacters)
 			{
 			   var
-			      parser    = new Parser (this .getExecutionContext (), true),
-			      url       = new Fields .MFString (),
+					parser    = new Parser (this .getExecutionContext ()),
+					url       = new Fields .MFString (),
 					parameter = new Fields .MFString ();
 
 				parser .setInput (urlCharacters);
@@ -350,9 +422,28 @@ function ($,
 					this .getCanvas () .fadeIn (0);
 			}
 		},
-		getPrivateScene: function ()
+		setBrowserEventHandler: function (name)
 		{
-			return this .privateScene;
+			var
+				element      = this .getElement () .get (0),
+				browserEvent = this .getElement () .attr (name);
+
+			if (browserEvent)
+				element [name] = new Function (browserEvent);
+			else
+				element [name] = Function .prototype;
+		},
+		callBrowserEventHandler: function (name)
+		{
+			var
+				element             = this .getElement () .get (0),
+				browserEventHandler = element [name];
+
+			if (browserEventHandler)
+				browserEventHandler .call (element);
+
+			if (window .jQuery)
+				window .jQuery (element) .trigger (name .substr (2));
 		},
 	};
 

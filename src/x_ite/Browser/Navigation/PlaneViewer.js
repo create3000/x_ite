@@ -51,14 +51,12 @@ define ([
 	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Navigation/Viewpoint",
-	"x_ite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector3",
 	"jquery-mousewheel",
 ],
 function ($,
           X3DViewer,
           Viewpoint,
-          GeoViewpoint,
           Vector3)
 {
 "use strict";
@@ -88,12 +86,12 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   canvas  = browser .getCanvas ();
+			   element = browser .getElement ();
 
-			canvas .bind ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
-			canvas .bind ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
-			canvas .bind ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
+			element .bind ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
+			element .bind ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
+			element .bind ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
+			element .bind ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
 		},
 		mousedown: function (event)
 		{
@@ -103,7 +101,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -118,7 +116,7 @@ function ($,
 
 					this .button = event .button;
 					
-					this .getBrowser () .getCanvas () .unbind ("mousemove.PlaneViewer");
+					this .getBrowser () .getElement () .unbind ("mousemove.PlaneViewer");
 					$(document) .bind ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
 					$(document) .bind ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
 		
@@ -143,14 +141,14 @@ function ($,
 			this .button = -1;
 		
 			$(document) .unbind (".PlaneViewer" + this .getId ());
-			this .getBrowser () .getCanvas () .bind ("mousemove.PlaneViewer", this .mousemove .bind (this));
+			this .getBrowser () .getElement () .bind ("mousemove.PlaneViewer", this .mousemove .bind (this));
 
 			this .getBrowser () .setCursor ("DEFAULT");
 		},
 		mousemove: function (event)
 		{
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -186,7 +184,7 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -222,7 +220,7 @@ function ($,
 		{
 			var viewpoint = this .getActiveViewpoint ();
 
-			if (viewpoint instanceof Viewpoint || viewpoint instanceof GeoViewpoint)
+			if (viewpoint instanceof Viewpoint || viewpoint .getTypeName () === "GeoViewpoint")
 			{
 				if (viewpoint .fieldOfView_ .getValue () * viewpoint .fieldOfViewScale_ .getValue () >= Math .PI)
 					viewpoint .fieldOfViewScale_ = (Math .PI - 0.001) / viewpoint .fieldOfView_ .getValue ();
@@ -230,7 +228,7 @@ function ($,
 		},
 		dispose: function ()
 		{
-			this .getBrowser () .getCanvas () .unbind (".PlaneViewer");
+			this .getBrowser () .getElement () .unbind (".PlaneViewer");
 			$(document) .unbind (".PlaneViewer" + this .getId ());
 		},
 	});

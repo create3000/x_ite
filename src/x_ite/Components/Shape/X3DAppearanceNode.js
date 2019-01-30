@@ -65,6 +65,8 @@ function (Fields,
 		this .addType (X3DConstants .X3DAppearanceNode);
 		
 		this .addChildObjects ("transparent", new Fields .SFBool ());
+
+		this .transparent_ .setAccessType (X3DConstants .outputOnly);
 	}
 
 	X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),

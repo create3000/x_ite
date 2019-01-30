@@ -6,5 +6,4 @@
 		else
 			window [key] = x_iteNoConfict [key];
 	}
-
 }());

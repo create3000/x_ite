@@ -97,17 +97,17 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   canvas  = browser .getCanvas ();
+			   element = browser .getElement ();
 
 			// Bind pointing device events.
 
-			canvas .bind ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
-			canvas .bind ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
-			canvas .bind ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
+			element .bind ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
+			element .bind ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
+			element .bind ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
+			element .bind ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
 
-			canvas .bind ("touchstart.LookAtViewer", this .touchstart .bind (this));
-			canvas .bind ("touchend.LookAtViewer",   this .touchend   .bind (this));
+			element .bind ("touchstart.LookAtViewer", this .touchstart .bind (this));
+			element .bind ("touchend.LookAtViewer",   this .touchend   .bind (this));
 
 			// Setup chaser.
 
@@ -131,7 +131,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -188,9 +188,9 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (), 
+				offset = this .getBrowser () .getElement () .offset (), 
 				x      = event .pageX - offset .left,
-				y      = this .getBrowser () .getCanvas () .height () - (event .pageY - offset .top);
+				y      = this .getBrowser () .getElement () .height () - (event .pageY - offset .top);
 
 			this .disconnect ();
 			this .lookAtPoint (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
@@ -202,7 +202,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 			
@@ -216,9 +216,7 @@ function ($,
 
 					// Look around
 
-					var
-						viewpoint = this .getActiveViewpoint (),
-						toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+					var toVector  = this .trackballProjectToSphere (x, y, this .toVector);
 
 					this .addRotation (this .fromVector, toVector);
 					this .fromVector .assign (toVector);
@@ -240,9 +238,7 @@ function ($,
 	
 				// Change viewpoint position.
 	
-				var
-					browser   = this .getBrowser (),
-					viewpoint = this .getActiveViewpoint ();
+				var viewpoint = this .getActiveViewpoint ();
 	
 				viewpoint .transitionStop ();
 
@@ -503,7 +499,7 @@ function ($,
 		},
 		dispose: function ()
 		{
-			this .getBrowser () .getCanvas () .unbind (".LookAtViewer");
+			this .getBrowser () .getElement () .unbind (".LookAtViewer");
 			$(document) .unbind (".LookAtViewer" + this .getId ());
 		},
 	});

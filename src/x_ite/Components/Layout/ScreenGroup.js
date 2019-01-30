@@ -55,6 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/ViewVolume",
@@ -66,17 +67,12 @@ function (Fields,
           X3DConstants,
           TraverseType,
           Vector3,
+          Vector4,
           Rotation4,
           Matrix4,
           ViewVolume)
 {
 "use strict";
-
-	var
-		translation = new Vector3 (0, 0, 0),
-		rotation    = new Rotation4 (0, 0, 1, 0),
-		scale       = new Vector3 (1, 1, 1),
-		screenPoint = new Vector3 (0, 0, 0);
 
 	function ScreenGroup (executionContext)
 	{
@@ -84,8 +80,7 @@ function (Fields,
 
 		this .addType (X3DConstants .ScreenGroup);
 
-		this .screenMatrix    = new Matrix4 ();
-		this .modelViewMatrix = new Matrix4 ();
+		this .screenMatrix = new Matrix4 ();
 	}
 
 	ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -126,39 +121,59 @@ function (Fields,
 
 			return this .matrix;
 		},
-		scale: function (renderObject)
+		scale: (function ()
 		{
-			// throws domain error
-			
-			this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
-			this .modelViewMatrix .get (translation, rotation, scale);
-
 			var
-				projectionMatrix = renderObject .getProjectionMatrix () .get (),
-				viewport         = renderObject .getViewVolume () .getViewport (),
-				screenScale      = renderObject .getViewpoint () .getScreenScale (translation, viewport),
-				screenMatrix     = this .screenMatrix;
-		
-			screenMatrix .set (translation, rotation, scale .set (screenScale .x * (scale .x < 0 ? -1 : 1),
-		                                                         screenScale .y * (scale .y < 0 ? -1 : 1),
-		                                                         screenScale .z * (scale .z < 0 ? -1 : 1)));
+				x            = new Vector4 (0, 0, 0, 0),
+				y            = new Vector4 (0, 0, 0, 0),
+				z            = new Vector4 (0, 0, 0, 0),
+				screenPoint  = new Vector3 (0, 0, 0);
 
-			// Snap to whole pixel
+			return function (renderObject)
+			{
+				// throws domain error
+	
+				var
+					modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
+					projectionMatrix = renderObject .getProjectionMatrix () .get (),
+					viewport         = renderObject .getViewVolume () .getViewport (),
+					screenMatrix     = this .screenMatrix;
+			
+				// Determine screenMatrix.
+				// Same as in ScreenText.
 
-			ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
+				var screenScale = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport); // in meter/pixel
 
-			screenPoint .x = Math .round (screenPoint .x);
-			screenPoint .y = Math .round (screenPoint .y);
+				x .set (modelViewMatrix [ 0], modelViewMatrix [ 1], modelViewMatrix [ 2], modelViewMatrix [ 3]);
+				y .set (modelViewMatrix [ 4], modelViewMatrix [ 5], modelViewMatrix [ 6], modelViewMatrix [ 7]);
+				z .set (modelViewMatrix [ 8], modelViewMatrix [ 9], modelViewMatrix [10], modelViewMatrix [11]);
 
-			ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
+				x .normalize () .multiply (screenScale .x);
+				y .normalize () .multiply (screenScale .y);
+				z .normalize () .multiply (screenScale .z);
 
-			screenPoint .z = 0;
-			screenMatrix .translate (screenPoint);
+				screenMatrix .set (x .x, x .y, x .z, x .w,
+				                   y .x, y .y, y .z, y .w,
+				                   z .x, z .y, z .z, z .w,
+				                   modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], modelViewMatrix [15]);
+	
+				// Snap to whole pixel.
 
-			// Return modelViewMatrix
+				ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
 
-			return screenMatrix;
-		},
+				screenPoint .x = Math .round (screenPoint .x);
+				screenPoint .y = Math .round (screenPoint .y);
+
+				ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
+
+				screenPoint .z = 0;
+				screenMatrix .translate (screenPoint);
+	
+				// Return modelViewMatrix
+	
+				return screenMatrix;
+			};
+		})(),
 		traverse: function (type, renderObject)
 		{
 			try

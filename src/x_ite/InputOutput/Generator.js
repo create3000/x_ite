@@ -93,8 +93,11 @@ function (X3DConstants)
 		{
 			this .executionContextStack .push (executionContext);
 
-			this .importedNodesIndex [executionContext .getId ()] = { };
-			this .exportedNodesIndex [executionContext .getId ()] = { };
+			if (! this .importedNodesIndex [executionContext .getId ()])
+				this .importedNodesIndex [executionContext .getId ()] = { };
+
+			if (! this .exportedNodesIndex [executionContext .getId ()])
+				this .exportedNodesIndex [executionContext .getId ()] = { };
 		},
 		PopExecutionContext: function ()
 		{

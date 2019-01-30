@@ -1,7 +1,7 @@
 {
 	"name": "x_ite",
-	"version": "4.2.1",
-	"revision": "288",
+	"version": "4.2.18a",
+	"revision": "582",
 	"description": "X_ITE X3D Browser",
 	"main": "src/x_ite.js",
 	"repository": {
@@ -13,17 +13,17 @@
 		"WebGL",
 		"browser"
 	],
-	"author": "Holger Seelig <holger.seeligyahoo.de>",
+	"author": "Holger Seelig <holger.seelig@yahoo.de>",
 	"license": "GPL-3.0",
-	"homepage": "https://github.com/create3000/x_ite#readme",
+	"homepage": "http://create3000.de/x_ite/getting-started/",
 	"contributors": [
 		{
 			"name": "Holger Seelig",
-			"email": "holger.seeligyahoo.de",
+			"email": "holger.seelig@gmail.com",
 			"url": "http://create3000.de"
 		},
 		{
-			"name": "Andreas Plesh",
+			"name": "Andreas Plesch",
 			"email": "andreasplesch@gmail.com"
 		},
 		{
@@ -35,24 +35,26 @@
 		"url": "https://github.com/create3000/x_ite/issues"
 	},
 	"devDependencies": {
-		"require": "latest",
-		"requirejs": "latest",
-		"requirejs-text": "latest",
-		"uglify-js-es6": "latest",
-		"jquery": "latest",
+		"ammojs": "latest",
+		"bezier-js": "latest",
+		"css-element-queries": "latest",
+		"jquery": "^3.3.1",
+		"jquery-contextmenu": "^2.7.1",
 		"jquery-mousewheel": "latest",
 		"jquery.fullscreen": "latest",
-		"pako": "latest",
-		"poly2tri": "latest",
-		"earcut": "latest",
+		"libtess": "latest",
 		"opentype.js": "latest",
-		"bezier-js": "latest",
-		"ammojs": "latest",
-		"sprintf-js": "latest"
+		"pako": "^1.0.7",
+		"require": "latest",
+		"requirejs": "^2.3.6",
+		"requirejs-text": "latest",
+		"sprintf-js": "latest",
+		"uglify-js-es6": "latest"
 	},
 	"scripts": {
 		"lint": "jshint **",
 		"build": "make",
 		"-prebuild:js": "npm run lint"
-	}
+	},
+	"dependencies": {}
 }

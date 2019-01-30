@@ -115,7 +115,7 @@ function (Fields,
 
 				index *= 3;
 
-				array .push (color [index + 0], color [index + 1], color [index + 2], 1);
+				array .push (color [index], color [index + 1], color [index + 2], 1);
 			}
 			else if (this .length)
 			{
@@ -123,12 +123,22 @@ function (Fields,
 
 				index = (this .length - 1) * 3;
 
-				array .push (color [index + 0], color [index + 1], color [index + 2], 1);
+				array .push (color [index], color [index + 1], color [index + 2], 1);
 			}
 			else
 			{
 				array .push (1, 1, 1, 1);
 			}
+		},
+		addColors: function (array, min)
+		{
+			const color = this .color;
+
+			for (var index = 0, length = this .length * 3; index < length; index += 3)
+				array .push (color [index], color [index + 1], color [index + 2], 1);
+
+			for (var index = length, length = min * 3; index < length; index += 3)
+				array .push (1, 1, 1, 1);
 		},
 		getVectors: function (array)
 		{

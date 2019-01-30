@@ -68,9 +68,9 @@ function (
 		this .executionContexts = [ scene ];
 		this .protoDeclarations = [ ];
 		this .parents           = [ ];
-		this .parser            = new Parser (this .scene, true);
+		this .parser            = new Parser (this .scene);
 		this .url               = new Fields .MFString ();
-		this.x3djsonNS = "http://www.web3d.org/specifications/x3d-namespace";
+		this .x3djsonNS         = "http://www.web3d.org/specifications/x3d-namespace";
 	}
 
 	JSONParser.prototype = Object.create(XMLParser.prototype);
@@ -83,11 +83,11 @@ function (
 		 * jsobj - the JavaScript object to convert to DOM.
 		 */
 	JSONParser .prototype.
-		parseJavaScript = function(jsobj) {
+		parseJavaScript = function(jsobj, success, error) {
 			var child = this.CreateElement('X3D');
 			this.ConvertToX3DOM(jsobj, "", child);
 			// call the DOM parser
-			this.parseIntoScene(child);
+			this.parseIntoScene(child, success, error);
 			return child;
 		};
 
@@ -157,7 +157,7 @@ function (
 		 */
 	JSONParser .prototype.
 		CDATACreateFunction = function(document, element, str) {
-			var y = str.replace(/\\"/g, "\\\"")
+			var y = str.trim().replace(/\\"/g, "\\\"")
 				.replace(/&lt;/g, "<")
 				.replace(/&gt;/g, ">")
 				.replace(/&amp;/g, "&");

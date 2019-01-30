@@ -46,14 +46,47 @@
  *
  ******************************************************************************/
 
-
-define (function ()
+define ([
+	"standard/Networking/URI",
+	"x_ite/DEBUG",
+],
+function (URI,
+          DEBUG)
 {
 "use strict";
 
-	return {
-		providerUrl:       "http://create3000.de/x_ite",
-		fallbackUrl:       "http://cors.create3000.de/",
-		fallbackExpression: new RegExp ("^http://cors.create3000.de/"),
+	function URLs ()
+	{
+		this .scriptUrl          = new URI (getScriptURL ())
+		this .fallbackExpression = new RegExp ("^http://cors.create3000.de/");
+	}
+
+	URLs .prototype =
+	{
+		getProviderUrl: function (file)
+		{
+			if (file)
+			{
+				var min = DEBUG ? "" : ".min";
+
+				return this .scriptUrl .transform ("components/" + file + min + ".js") .toString ();
+			}
+
+			return "http://create3000.de/x_ite";
+		},
+		getFontsUrl: function (file)
+		{
+			return this .scriptUrl .transform ("fonts/" + file) .toString ();
+		},
+		getFallbackUrl: function (url)
+		{
+			return "http://cors.create3000.de/" + url;
+		},
+		getFallbackExpression: function ()
+		{
+			return this .fallbackExpression;
+		},
 	};
+
+	return new URLs ();
 });

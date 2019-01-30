@@ -87,45 +87,25 @@ function (X3DSensorNode,
 			{
 				this .enabled_ .removeInterest ("set_enabled__", this);
 
-				if (this .enabled_ .getValue ())
-					this .disable ();
+				this .disable ();
 			}
 		},
 		set_enabled__: function ()
 		{
 			if (this .enabled_ .getValue ())
 				this .enable ();
-
 			else
 				this .disable ();
 		},
 		enable: function ()
 		{
-			if (this .isActive_ .getValue ())
-				return;
-
-			var keyDeviceSensorNode = this .getBrowser () .getKeyDeviceSensorNode ();
-
-			if (keyDeviceSensorNode)
-			{
-				keyDeviceSensorNode .enabled_  = false;
-				keyDeviceSensorNode .isActive_ = false;
-			}
-
-			this .getBrowser () .setKeyDeviceSensorNode (this);
-
-			this .isActive_ = true;
+			this .getBrowser () .addKeyDeviceSensorNode (this);
 		},
 		disable: function ()
 		{
-			if (! this .isActive_ .getValue ())
-				return;
-
-			this .getBrowser () .setKeyDeviceSensorNode (null);
+			this .getBrowser () .removeKeyDeviceSensorNode (this);
 
 			this .release ();
-
-			this .isActive_ = false;
 		},
 		keydown: function () { },
 		keyup: function () { },

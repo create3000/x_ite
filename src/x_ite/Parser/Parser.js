@@ -184,14 +184,12 @@ function (Fields,
 		DEF:         new RegExp ('DEF',         'gy'),
 		EXPORT:      new RegExp ('EXPORT',      'gy'),
 		EXTERNPROTO: new RegExp ('EXTERNPROTO', 'gy'),
-		FALSE:       new RegExp ('FALSE',       'gy'),
-		false:       new RegExp ('false',       'gy'),
+		FALSE:       new RegExp ('FALSE|false', 'gy'),
 		IMPORT:      new RegExp ('IMPORT',      'gy'),
 		IS:          new RegExp ('IS',          'gy'),
 		META:        new RegExp ('META',        'gy'),
 		NULL:        new RegExp ('NULL',        'gy'),
-		TRUE:        new RegExp ('TRUE',        'gy'),
-		true:        new RegExp ('true',        'gy'),
+		TRUE:        new RegExp ('TRUE|true',   'gy'),
 		PROFILE:     new RegExp ('PROFILE',     'gy'),
 		PROTO:       new RegExp ('PROTO',       'gy'),
 		ROUTE:       new RegExp ('ROUTE',       'gy'),
@@ -226,10 +224,10 @@ function (Fields,
 		int32:  new RegExp ('((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'gy'),
 		double: new RegExp ('([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'gy'),
 		string: new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'gy'),
-		
-		Inf:         new RegExp ('[+]?inf',  'gyi'),
-		NegativeInf: new RegExp ('-inf',     'gyi'),
-		NaN:         new RegExp ('[+-]?nan', 'gyi'),
+
+		Inf:         new RegExp ('[+]?(?:inf|Infinity)', 'gy'),
+		NegativeInf: new RegExp ('-(?:inf|Infinity)',    'gy'),
+		NaN:         new RegExp ('[+-]?(nan|NaN)',       'gy'),
 
 		// Misc
 		Break: new RegExp ('\\r?\\n', 'g'),
@@ -261,11 +259,9 @@ function (Fields,
 	 *  Parser
 	 */
 
-	function Parser (scene, isXML)
+	function Parser (scene)
 	{
 		X3DParser .call (this, scene);
-
-		this .isXML = isXML;
 	}
 
 	Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -329,6 +325,10 @@ function (Fields,
 			this .lineNumber = 1;
 			this .lastIndex  = 0;
 		},
+		getInput: function ()
+		{
+			return this .input;
+		},
 		exception: function (string)
 		{
 			if (this .getBrowser () .isStrict ())
@@ -336,10 +336,13 @@ function (Fields,
 
 			this .getBrowser () .println (string);
 		},
-		parseIntoScene: function (input)
+		parseIntoScene: function (input, success, error)
 		{
 			try
 			{
+				this .success = success;
+				this .error   = error;
+
 				this .getScene () .setEncoding ("VRML");
 				this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
@@ -468,12 +471,41 @@ function (Fields,
 			catch (error)
 			{ }
 
-			this .statements ();
+			if (this .success)
+			{
+				require (this .getProviderUrls (),
+				function ()
+				{
+					try
+					{
+						this .statements ();
+						this .popExecutionContext (this .getScene ());
 
-			this .popExecutionContext (this .getScene ());
+						if (this .lastIndex < this .input .length)
+							throw new Error ("Unknown statement.");
 
-			if (this .lastIndex < this .input .length)
-				throw new Error ("Unknown statement.");
+						this .success ();
+					}
+					catch (error)
+					{
+						this .error (new Error (this .getError (error)));
+					}
+				}
+				.bind (this),
+				function (error)
+				{
+					this .error (error);
+				}
+				.bind (this));
+			}
+			else
+			{
+				this .statements ();
+				this .popExecutionContext (this .getScene ());
+	
+				if (this .lastIndex < this .input .length)
+					throw new Error ("Unknown statement.");
+			}
 		},
 		headerStatement: function ()
 		{
@@ -1035,7 +1067,7 @@ function (Fields,
 					throw new Error ("Expected a name for field.");
 				}
 	
-				this .Id ()
+				this .Id ();
 		
 				throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
 			}
@@ -1668,8 +1700,7 @@ function (Fields,
 			{
 				this .value = Fields .SFString .unescape (this .result [1]);
 
-				if (!this .isXML)
-					this .lines (this .value);
+				this .lines (this .value);
 
 				return true;
 			}
@@ -1679,21 +1710,6 @@ function (Fields,
 		sfboolValue: function (field)
 		{
 			this .comments ();
-
-			if (this .isXML)
-			{
-				if (Grammar .true .parse (this))
-				{
-					field .set (true);
-					return true;
-				}
-
-				if (Grammar .false .parse (this))
-				{
-					field .set (false);
-					return true;
-				}
-			}
 
 			if (Grammar .TRUE .parse (this))
 			{
@@ -1736,7 +1752,7 @@ function (Fields,
 		sfboolValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfboolValue (this .SFBool))
 			{
@@ -1792,7 +1808,7 @@ function (Fields,
 		sfcolorValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfcolorValue (this .SFColor))
 			{
@@ -1853,7 +1869,7 @@ function (Fields,
 		sfcolorrgbaValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfcolorrgbaValue (this .SFColorRGBA))
 			{
@@ -1899,7 +1915,7 @@ function (Fields,
 		sfdoubleValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFDouble .setUnit (field .getUnit ());
 
@@ -1941,7 +1957,7 @@ function (Fields,
 		sffloatValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFFloat .setUnit (field .getUnit ());
 
@@ -2017,7 +2033,7 @@ function (Fields,
 		sfimageValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfimageValue (this .SFImage))
 			{
@@ -2061,7 +2077,7 @@ function (Fields,
 		sfint32Values: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfint32Value (this .SFInt32))
 			{
@@ -2149,7 +2165,7 @@ function (Fields,
 		sfmatrix3dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix3dValue (this .SFMatrix3d))
 			{
@@ -2187,7 +2203,7 @@ function (Fields,
 		sfmatrix3fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix3fValue (this .SFMatrix3f))
 			{
@@ -2311,7 +2327,7 @@ function (Fields,
 		sfmatrix4dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix4dValue (this .SFMatrix4d))
 			{
@@ -2349,7 +2365,7 @@ function (Fields,
 		sfmatrix4fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfmatrix4fValue (this .SFMatrix4f))
 			{
@@ -2459,7 +2475,7 @@ function (Fields,
 		sfrotationValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfrotationValue (this .SFRotation))
 			{
@@ -2503,7 +2519,7 @@ function (Fields,
 		sfstringValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sfstringValue (this .SFString))
 			{
@@ -2541,7 +2557,7 @@ function (Fields,
 		sftimeValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			while (this .sftimeValue (this .SFTime))
 			{
@@ -2597,7 +2613,7 @@ function (Fields,
 		sfvec2dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec2d .setUnit (field .getUnit ());
 
@@ -2639,7 +2655,7 @@ function (Fields,
 		sfvec2fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec2f .setUnit (field .getUnit ());
 
@@ -2703,7 +2719,7 @@ function (Fields,
 		sfvec3dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec3d .setUnit (field .getUnit ());
 
@@ -2745,7 +2761,7 @@ function (Fields,
 		sfvec3fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec3f .setUnit (field .getUnit ());
 
@@ -2815,7 +2831,7 @@ function (Fields,
 		sfvec4dValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec4d .setUnit (field .getUnit ());
 
@@ -2857,7 +2873,7 @@ function (Fields,
 		sfvec4fValues: function (field)
 		{
 			field .length = 0;
-			field         = field .target;
+			field         = field .getTarget ();
 
 			this .SFVec4f .setUnit (field .getUnit ());
 

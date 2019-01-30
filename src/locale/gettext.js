@@ -111,12 +111,12 @@ function (de, fr)
 
 	function gettext (string)
 	{
-		var ĺocale = locales [language];
+		var locale = locales [language];
 
-		if (ĺocale === undefined)
+		if (locale === undefined)
 			return string;
 
-		var translation = ĺocale [string];
+		var translation = locale [string];
 
 		if (translation === undefined)
 			return string;

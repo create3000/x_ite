@@ -158,7 +158,7 @@ function ($,
 	}
 
 	var
-	   initialized = false,
+		initialized = false,
 		callbacks   = $.Deferred (),
 		fallbacks   = $.Deferred ();
 
@@ -183,21 +183,8 @@ function ($,
 
 			try
 			{
-				var browsers = $.map (elements, createBrowserFromElement);
-
-				numBrowsers = browsers .length;
-
-				if (elements .length)
-				{
-					for (var i = 0; i < numBrowsers; ++ i)
-					{
-						var browser = browsers [i];
-
-						browser .initialized () .addFieldCallback ("initialized" + browser .getId (), set_initialized .bind (null, browser));
-					}
-				}
-				else
-					set_initialized (null);
+				$.map (elements, createBrowserFromElement);
+				callbacks .resolve ();
 			}
 			catch (error)
 			{
@@ -207,31 +194,16 @@ function ($,
 		});
 	}
 
-	var numBrowsers = 0;
-
-	function set_initialized (browser)
-	{
-		if (browser)
-			browser .initialized () .removeFieldCallback ("initialized" + browser .getId ());
-
-		if (-- numBrowsers > 0)
-			return;
-
-		callbacks .resolve ();
-	}
-
 	Object .assign (X3D,
-		Fields,
 	{
 		require:                     require,
 		define:                      define,
+
 		getBrowser:                  getBrowser,
 		createBrowser:               createBrowser,
+
 		X3DConstants:                X3DConstants,
-		X3DFieldDefinition:          X3DFieldDefinition,
-		FieldDefinitionArray:        FieldDefinitionArray,
-		X3DField:                    X3DField,
-		X3DArrayField:               X3DArrayField,
+		X3DBrowser:                  X3DBrowser,
 		X3DExecutionContext:         X3DExecutionContext,
 		X3DScene:                    X3DScene,
 		ComponentInfo:               ComponentInfo,
@@ -246,6 +218,51 @@ function ($,
 		X3DProtoDeclaration:         X3DProtoDeclaration,
 		RouteArray:                  RouteArray,
 		X3DRoute:                    X3DRoute,
+
+		X3DFieldDefinition:          X3DFieldDefinition,
+		FieldDefinitionArray:        FieldDefinitionArray,
+
+		X3DField:                    X3DField,
+		X3DArrayField:               X3DArrayField,
+
+		SFColor:                     Fields .SFColor,
+		SFColorRGBA:                 Fields .SFColorRGBA,
+		SFImage:                     Fields .SFImage,
+		SFMatrix3d:                  Fields .SFMatrix3d,
+		SFMatrix3f:                  Fields .SFMatrix3f,
+		SFMatrix4d:                  Fields .SFMatrix4d,
+		SFMatrix4f:                  Fields .SFMatrix4f,
+		SFNode:                      Fields .SFNode,
+		SFRotation:                  Fields .SFRotation,
+		SFVec2d:                     Fields .SFVec2d,
+		SFVec2f:                     Fields .SFVec2f,
+		SFVec3d:                     Fields .SFVec3d,
+		SFVec3f:                     Fields .SFVec3f,
+		SFVec4d:                     Fields .SFVec4d,
+		SFVec4f:                     Fields .SFVec4f,
+		VrmlMatrix:                  Fields .VrmlMatrix,
+							              
+		MFBool:                      Fields .MFBool,
+		MFColor:                     Fields .MFColor,
+		MFColorRGBA:                 Fields .MFColorRGBA,
+		MFDouble:                    Fields .MFDouble,
+		MFFloat:                     Fields .MFFloat,
+		MFImage:                     Fields .MFImage,
+		MFInt32:                     Fields .MFInt32,
+		MFMatrix3d:                  Fields .MFMatrix3d,
+		MFMatrix3f:                  Fields .MFMatrix3f,
+		MFMatrix4d:                  Fields .MFMatrix4d,
+		MFMatrix4f:                  Fields .MFMatrix4f,
+		MFNode:                      Fields .MFNode,
+		MFRotation:                  Fields .MFRotation,
+		MFString:                    Fields .MFString,
+		MFTime:                      Fields .MFTime,
+		MFVec2d:                     Fields .MFVec2d,
+		MFVec2f:                     Fields .MFVec2f,
+		MFVec3d:                     Fields .MFVec3d,
+		MFVec3f:                     Fields .MFVec3f,
+		MFVec4d:                     Fields .MFVec4d,
+		MFVec4f:                     Fields .MFVec4f,
 	});
 
 	return X3D;

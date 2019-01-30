@@ -123,18 +123,22 @@ function (Fields,
 			index1 *= 3;
 			size   *= 3;
 
-			for (var i = 0; i < size; i += 3)
+			for (var i0 = 0; i0 < size; i0 += 3)
 			{
 				try
 				{
-					keyValue0 .set (keyValue [index0 + i + 0], keyValue [index0 + i + 1], keyValue [index0 + i + 2]);
-					keyValue1 .set (keyValue [index1 + i + 0], keyValue [index1 + i + 1], keyValue [index1 + i + 2]);
+					var
+						i1 = i0 + 1,
+						i2 = i0 + 2;
+
+					keyValue0 .set (keyValue [index0 + i0], keyValue [index0 + i1], keyValue [index0 + i2]);
+					keyValue1 .set (keyValue [index1 + i0], keyValue [index1 + i1], keyValue [index1 + i2]);
 
 					var value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
 
-					value_changed [i + 0] = value [0];
-					value_changed [i + 1] = value [1];
-					value_changed [i + 2] = value [2];
+					value_changed [i0] = value [0];
+					value_changed [i1] = value [1];
+					value_changed [i2] = value [2];
 				}
 				catch (error)
 				{ }

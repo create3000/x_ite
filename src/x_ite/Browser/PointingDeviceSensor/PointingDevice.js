@@ -70,17 +70,17 @@ function ($,
 		constructor: PointingDevice,
 		initialize: function ()
 		{
-			var canvas = this .getBrowser () .getCanvas ();
+			var element = this .getBrowser () .getElement ();
 
-			//canvas .bind ("mousewheel.PointingDevice", this .mousewheel .bind (this));
-			canvas .bind ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
-			canvas .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
-			canvas .bind ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
-			canvas .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
-			canvas .bind ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
+			//element .bind ("mousewheel.PointingDevice", this .mousewheel .bind (this));
+			element .bind ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
+			element .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
+			element .bind ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
+			element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
+			element .bind ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
 
-			canvas .bind ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
-			canvas .bind ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
+			element .bind ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
+			element .bind ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
 		},
 		mousewheel: function (event)
 		{
@@ -90,7 +90,7 @@ function ($,
 		{
 			var browser = this .getBrowser ();
 
-			browser .getCanvas () .focus ();
+			browser .getElement () .focus ();
 
 			if (browser .getShiftKey () && browser .getControlKey ())
 				return;
@@ -98,12 +98,12 @@ function ($,
 			if (event .button === 0)
 			{
 				var
-					canvas = browser .getCanvas (),
-					offset = canvas .offset (), 
-					x      = event .pageX - offset .left,
-					y      = browser .getCanvas () .height () - (event .pageY - offset .top);
+					element = browser .getElement (),
+					offset  = element .offset (), 
+					x       = event .pageX - offset .left,
+					y       = element .height () - (event .pageY - offset .top);
 
-				canvas .unbind ("mousemove.PointingDevice" + this .getId ());
+				element .unbind ("mousemove.PointingDevice" + this .getId ());
 
 				$(document) .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this));
 				$(document) .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
@@ -128,13 +128,13 @@ function ($,
 			{
 				var
 					browser = this .getBrowser (),
-					canvas  = browser .getCanvas (),
-					offset  = canvas .offset (), 
+					element = browser .getElement (),
+					offset  = element .offset (), 
 					x       = event .pageX - offset .left,
-					y       = browser .getCanvas () .height () - (event .pageY - offset .top);
+					y       = element .height () - (event .pageY - offset .top);
 			
 				$(document) .unbind (".PointingDevice"   + this .getId ());
-				canvas .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+				element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
 				browser .buttonReleaseEvent ();
 				browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
@@ -161,9 +161,10 @@ function ($,
 			this .motionTime = browser .getCurrentTime ();
 
 			var
-				offset = browser .getCanvas () .offset (), 
-				x      = event .pageX - offset .left,
-				y      = browser .getCanvas () .height () - (event .pageY - offset .top);
+				element = browser .getElement (),
+				offset  = element .offset (), 
+				x       = event .pageX - offset .left,
+				y       = element .height () - (event .pageY - offset .top);
 
 			this .onmotion (x, y);
 		},

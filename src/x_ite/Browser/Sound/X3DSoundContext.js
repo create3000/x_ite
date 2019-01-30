@@ -62,26 +62,7 @@ function (Fields)
 
 	X3DSoundContext .prototype =
 	{
-		initialize: function ()
-		{
-			this .volume_ .addInterest ("set_volume__", this);
-			this .mute_   .addInterest ("set_mute__", this);
-
-			var
-				volume = this .getDataStorage () ["X3DSoundContext.volume"],
-				mute   = this .getDataStorage () ["X3DSoundContext.mute"];
-
-			if (volume !== undefined) this .volume_ = volume;
-			if (mute   !== undefined) this .mute_   = mute;
-		},
-		set_volume__: function (volume)
-		{
-			this .getDataStorage () ["X3DSoundContext.volume"] = volume .getValue ();
-		},
-		set_mute__: function (mute)
-		{
-			this .getDataStorage () ["X3DSoundContext.mute"] = mute .getValue ();
-		},
+		initialize: function () { },
 	};
 
 	return X3DSoundContext;

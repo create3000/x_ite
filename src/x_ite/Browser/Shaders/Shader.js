@@ -48,8 +48,8 @@
 
 
 define ([
-	"text!x_ite/Browser/Shaders/Inlcude/Shadow.h",
-	"text!x_ite/Browser/Shaders/Inlcude/Pack.h",
+	"text!x_ite/Browser/Shaders/Include/Shadow.h",
+	"text!x_ite/Browser/Shaders/Include/Pack.h",
 	"text!x_ite/Browser/Shaders/Types.h",
 	"x_ite/DEBUG",
 ],
@@ -65,9 +65,7 @@ function (Shadow,
 		Pack: Pack,
 	};
 
-	var
-		include  = /^#pragma\s+X3D\s+include\s+".*?([^\/]+).h"\s*$/,
-		newLines = /\n/g;
+	var include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+).h"\s*$/;
 
 	var Shader =
 	{
@@ -153,7 +151,6 @@ function (Shadow,
 			definitions += "#define x3d_DirectionalLight  1\n";
 			definitions += "#define x3d_PointLight        2\n";
 			definitions += "#define x3d_SpotLight         3\n";
-			definitions += "#define x3d_MaxShadows        4\n";
 			definitions += "#define X3D_PCF_FILTERING\n";
 
 			definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
@@ -174,7 +171,20 @@ function (Shadow,
 			depreciatedWarning (source, "x3d_NoneLight",     "x3d_NumLights");
 			depreciatedWarning (source, "x3d_NoneTexture",   "x3d_NumTextures");
 
-			return constants + match [1] + definitions + Types + match [2];
+			// Adjust precision of struct types;
+
+			var
+				sourceNoComments = source .replace (/\/\*[\s\S]*?\*\/|\/\/.*?\n/g, ""),
+				types            = Types,
+				mf               = sourceNoComments .match (/\s*precision\s+(lowp|mediump|highp)\s+float\s*;/),
+				mi               = sourceNoComments .match (/\s*precision\s+(lowp|mediump|highp)\s+int\s*;/),
+				pf               = mf ? mf [1] : "mediump",
+				pi               = mi ? mi [1] : "mediump";
+
+			types = types .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, pf + " $1");
+			types = types .replace (/mediump\s+(int)/g, pi + " $1");
+
+			return constants + match [1] + definitions + types + match [2];
 		},
 	};
 

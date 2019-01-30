@@ -62,12 +62,10 @@ function (ViewVolume,
 	{
 		var gl = browser .getContext ();
 
-		this .browser             = browser;
-		this .width               = width;
-		this .height              = height;
-		this .array               = new Uint8Array (width * height * 4);
-		this .invProjectionMatrix = new Matrix4 ();
-		this .point               = new Vector3 (0, 0, 0);
+		this .browser = browser;
+		this .width   = width;
+		this .height  = height;
+		this .array   = new Uint8Array (width * height * 4);
 
 		// The frame buffer.
 
@@ -156,46 +154,54 @@ function (ViewVolume,
 
 			return array;
 		},
-		getDepth: function (projectionMatrix, viewport)
+		getDepth: (function ()
 		{
-			try
+			var
+				invProjectionMatrix = new Matrix4 (),
+				point               = new Vector3 (0, 0, 0);
+
+			return function (projectionMatrix, viewport)
 			{
-				var
-					gl                  = this .browser .getContext (),
-					array               = this .array,
-					width               = this .width,
-					height              = this .height,
-					invProjectionMatrix = this .invProjectionMatrix .assign (projectionMatrix) .inverse (),
-					winx                = 0,
-					winy                = 0,
-					winz                = Number .POSITIVE_INFINITY;
-
-				gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
-
-				for (var wy = 0, i = 0; wy < height; ++ wy)
+				try
 				{
-					for (var wx = 0; wx < width; ++ wx, i += 4)
-					{
-						var wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
+					var
+						gl     = this .browser .getContext (),
+						array  = this .array,
+						width  = this .width,
+						height = this .height,
+						winx   = 0,
+						winy   = 0,
+						winz   = Number .POSITIVE_INFINITY;
 
-						if (wz < winz)
+					invProjectionMatrix .assign (projectionMatrix) .inverse ();
+
+					gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
+	
+					for (var wy = 0, i = 0; wy < height; ++ wy)
+					{
+						for (var wx = 0; wx < width; ++ wx, i += 4)
 						{
-							winx = wx;
-							winy = wy;
-							winz = wz;
+							var wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
+	
+							if (wz < winz)
+							{
+								winx = wx;
+								winy = wy;
+								winz = wz;
+							}
 						}
 					}
+
+					ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
+	
+					return point .z;
 				}
-
-				ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, this .point);
-
-				return this .point .z;
-			}
-			catch (error)
-			{
-				return 0;
-			}
-		},
+				catch (error)
+				{
+					return 0;
+				}
+			};
+		})(),
 		bind: function ()
 		{
 			var gl = this .browser .getContext ();

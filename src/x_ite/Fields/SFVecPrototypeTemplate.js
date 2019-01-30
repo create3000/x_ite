@@ -76,25 +76,13 @@ function (X3DField,
 			{
 				this .getValue () .assign (value);
 			},
-			negate: function ()
-			{
-				return new (this .constructor) (Type .negate (this .getValue () .copy ()));
-			},
 			add: function (vector)
 			{
 				return new (this .constructor) (Type .add (this .getValue (), vector .getValue ()));
 			},
-			subtract: function (vector)
+			distance: function (vector)
 			{
-				return new (this .constructor) (Type .subtract (this .getValue (), vector .getValue ()));
-			},
-			multiply: function (value)
-			{
-				return new (this .constructor) (Type .multiply (this .getValue (), value));
-			},
-			multVec: function (vector)
-			{
-				return new (this .constructor) (Type .multVec (this .getValue (), vector .getValue ()));
+				return this .getValue () .distance (vector .getValue ());
 			},
 			divide: function (value)
 			{
@@ -108,13 +96,33 @@ function (X3DField,
 			{
 				return this .getValue () .dot (vector .getValue ());
 			},
+			length: function ()
+			{
+				return this .getValue () .abs ();
+			},
+			lerp: function (destination, t)
+			{
+				return new (this .constructor) (Type .lerp (this .getValue (), destination, t));
+			},
+			multiply: function (value)
+			{
+				return new (this .constructor) (Type .multiply (this .getValue (), value));
+			},
+			multVec: function (vector)
+			{
+				return new (this .constructor) (Type .multVec (this .getValue (), vector .getValue ()));
+			},
+			negate: function ()
+			{
+				return new (this .constructor) (Type .negate (this .getValue () .copy ()));
+			},
 			normalize: function (vector)
 			{
 				return new (this .constructor) (Type .normalize (this .getValue ()));
 			},
-			length: function ()
+			subtract: function (vector)
 			{
-				return this .getValue () .abs ();
+				return new (this .constructor) (Type .subtract (this .getValue (), vector .getValue ()));
 			},
 			toStream: function (stream)
 			{

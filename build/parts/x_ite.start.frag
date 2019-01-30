@@ -4,4 +4,3 @@
 		sprintf:  window .sprintf,
 		vsprintf: window .vsprintf,
 	};
-

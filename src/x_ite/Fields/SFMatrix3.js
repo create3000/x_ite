@@ -74,9 +74,9 @@ function (X3DField,
 				if (arguments [0] instanceof Matrix3)
 					return X3DField .call (this, arguments [0]);
 	
-				return X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
-	                                                   +m10, +m11, +m12,
-	                                                   +m20, +m21, +m22));
+				return X3DField .call (this, new Matrix3 (m00 * 1, m01 * 1, m02 * 1,
+	                                                   m10 * 1, m11 * 1, m12 * 1,
+	                                                   m20 * 1, m21 * 1, m22 * 1));
 			}
 
 			return X3DField .call (this, new Matrix3 ());
@@ -116,7 +116,7 @@ function (X3DField,
 				},
 				set: function (value)
 				{
-					this .getValue () [i] = value;
+					this .getValue () [i] = value * 1;
 					this .addEvent ();
 				},
 				enumerable: false,

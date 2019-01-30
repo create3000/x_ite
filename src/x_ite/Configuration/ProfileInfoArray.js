@@ -48,9 +48,13 @@
 
 
 define ([
+	"x_ite/Configuration/ComponentInfoArray",
+	"x_ite/Configuration/ProfileInfo",
 	"x_ite/Configuration/X3DInfoArray",
 ],
-function (X3DInfoArray)
+function (ComponentInfoArray,
+          ProfileInfo,
+          X3DInfoArray)
 {
 "use strict";
 
@@ -62,6 +66,10 @@ function (X3DInfoArray)
 	ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ProfileInfoArray,
+		addProfile: function (value)
+		{
+			this .add (value .name, new ProfileInfo (value .name, value .title, value .providerUrl, new ComponentInfoArray (value .components)));
+		},
 	});
 
 	return ProfileInfoArray;

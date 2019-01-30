@@ -39,12 +39,11 @@ uniform float x3d_LogarithmicFarFactor1_2;
 varying float depth;
 #endif
 
-#pragma X3D include "Inlcude/Shadow.h"
+#pragma X3D include "Include/Shadow.h"
 
 void
 clip ()
 {
-	#pragma unroll_loop
 	for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
 	{
 		if (i == x3d_NumClipPlanes)
@@ -139,7 +138,6 @@ getMaterialColor (const in x3d_MaterialParameters material)
 
 		vec3 finalColor = vec3 (0.0, 0.0, 0.0);
 
-		#pragma unroll_loop
 		for (int i = 0; i < x3d_MaxLights; i ++)
 		{
 			if (i == x3d_NumLights)
@@ -148,7 +146,7 @@ getMaterialColor (const in x3d_MaterialParameters material)
 			x3d_LightSourceParameters light = x3d_LightSource [i];
 
 			vec3  vL = light .location - v; // Light to fragment
-			float dL = length (vL);
+			float dL = length (light .matrix * vL);
 			bool  di = light .type == x3d_DirectionalLight;
 
 			if (di || dL <= light .radius)
@@ -218,7 +216,7 @@ getFogInterpolant ()
 	if (x3d_Fog .visibilityRange <= 0.0)
 		return 0.0;
 
-	float dV = length (v);
+	float dV = length (x3d_Fog .matrix * v);
 
 	if (dV >= x3d_Fog .visibilityRange)
 		return 0.0;

@@ -57,6 +57,7 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
@@ -72,6 +73,7 @@ function ($,
           TraverseType,
           Vector2,
           Vector3,
+          Vector4,
           Rotation4,
           Matrix4,
           Box3,
@@ -81,14 +83,10 @@ function ($,
 "use strict";
 
 	var
-		paths       = [ ],
-		min         = new Vector3 (0, 0, 0),
-		max         = new Vector3 (1, 1, 0),
-		translation = new Vector3 (0, 0, 0),
-		rotation    = new Rotation4 (0, 0, 1, 0),
-		scale       = new Vector3 (1, 1, 1),
-		screenPoint = new Vector3 (0, 0, 0),
-		bbox        = new Box3 ();
+		paths = [ ],
+		min   = new Vector3 (0, 0, 0),
+		max   = new Vector3 (1, 1, 0),
+		bbox  = new Box3 ();
 
 	function ScreenText (text, fontStyle)
 	{
@@ -100,7 +98,6 @@ function ($,
 		this .texture       = new PixelTexture (text .getExecutionContext ());
 		this .canvas        = $("<canvas></canvas>");
 		this .context       = this .canvas [0] .getContext ("2d");
-		this .screenMatrix  = new Matrix4 ();
 		this .matrix        = new Matrix4 ();
 
 		this .texture .textureProperties_ = fontStyle .getBrowser () .getScreenTextureProperties ();
@@ -387,7 +384,7 @@ function ($,
 							cx .bezierCurveTo (command .x1, command .y1, command .x2, command .y2, command .x, command .y);
 							continue;
 						}
-						case "Q": // Cubíc
+						case "Q": // Cubic
 						{
 						   cx .quadraticCurveTo (command .x1, command .y1, command .x, command .y);
 							continue;
@@ -415,50 +412,66 @@ function ($,
 			min .set ((glyph .xMin || 0) / unitsPerEm, (glyph .yMin || 0) / unitsPerEm, 0);
 			max .set ((glyph .xMax || 0) / unitsPerEm, (glyph .yMax || 0) / unitsPerEm, 0);
 		},
-		transform: function (renderObject)
+		transform: (function ()
 		{
-			// throws an exception
-
 			var
-				text             = this .getText (),
-				projectionMatrix = renderObject .getProjectionMatrix () .get (),
-				modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
-				viewport         = renderObject .getViewVolume () .getViewport (),
-				screenMatrix     = this .screenMatrix;
+				x            = new Vector4 (0, 0, 0, 0),
+				y            = new Vector4 (0, 0, 0, 0),
+				z            = new Vector4 (0, 0, 0, 0),
+				screenPoint  = new Vector3 (0, 0, 0),
+				screenMatrix = new Matrix4 ();
 
-			// Same as in ScreenGroup.
+			return function (renderObject)
+			{
+				// throws an exception
 
-			screenMatrix .assign (modelViewMatrix);
-			screenMatrix .get (translation, rotation, scale);
+				var
+					text             = this .getText (),
+					modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
+					projectionMatrix = renderObject .getProjectionMatrix () .get (),
+					viewport         = renderObject .getViewVolume () .getViewport ();
 
-			var screenScale = renderObject .getViewpoint () .getScreenScale (translation, viewport); // in meter/pixel
+				// Determine screenMatrix.
+				// Same as in ScreenGroup.
 
-			screenMatrix .set (translation, rotation, scale .set (screenScale .x * (Algorithm .signum (scale .x) < 0 ? -1 : 1),
-		                                                         screenScale .y * (Algorithm .signum (scale .y) < 0 ? -1 : 1),
-		                                                         screenScale .z * (Algorithm .signum (scale .z) < 0 ? -1 : 1)));
+				var screenScale = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport); // in meter/pixel
 
-			// Snap to whole pixel.
+				x .set (modelViewMatrix [ 0], modelViewMatrix [ 1], modelViewMatrix [ 2], modelViewMatrix [ 3]);
+				y .set (modelViewMatrix [ 4], modelViewMatrix [ 5], modelViewMatrix [ 6], modelViewMatrix [ 7]);
+				z .set (modelViewMatrix [ 8], modelViewMatrix [ 9], modelViewMatrix [10], modelViewMatrix [11]);
 
-			ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
+				x .normalize () .multiply (screenScale .x);
+				y .normalize () .multiply (screenScale .y);
+				z .normalize () .multiply (screenScale .z);
 
-			screenPoint .x = Math .round (screenPoint .x);
-			screenPoint .y = Math .round (screenPoint .y);
+				screenMatrix .set (x .x, x .y, x .z, x .w,
+				                   y .x, y .y, y .z, y .w,
+				                   z .x, z .y, z .z, z .w,
+				                   modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], modelViewMatrix [15]);
 
-			ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
+				// Snap to whole pixel.
 
-			screenPoint .z = 0;
-			screenMatrix .translate (screenPoint);
+				ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
 
-			// Assign modelViewMatrix and calculate relative matrix.
+				screenPoint .x = Math .round (screenPoint .x);
+				screenPoint .y = Math .round (screenPoint .y);
 
-			this .matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
-				
-			// Update Text bbox.
+				ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
 
-			bbox .assign (this .getBBox ()) .multRight (this .matrix);
+				screenPoint .z = 0;
+				screenMatrix .translate (screenPoint);
 
-			text .setBBox (bbox);
-		},
+				// Assign modelViewMatrix and calculate relative matrix.
+
+				this .matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
+					
+				// Update Text bbox.
+
+				bbox .assign (this .getBBox ()) .multRight (this .matrix);
+
+				text .setBBox (bbox);
+			};
+		})(),
 		traverse: function (type, renderObject)
 		{
 			this .transform (renderObject);

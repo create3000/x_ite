@@ -9,6 +9,7 @@ X3DCanvas {
 	overflow: hidden;
 	position: relative;
 	display: inline-block;
+	outline: none;
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
@@ -84,7 +85,7 @@ X3DCanvas .x_ite-private-notification {
 
 X3DCanvas .x_ite-private-notification span {
 	padding: 0px 24px 0px 20px;
-	background: url(images/icon.bw.png) no-repeat 0px center;
+	background: url(images/icon.bw.png) no-repeat 0px 3px;
 }
 
 X3DCanvas .x_ite-private-browser-timings {
@@ -254,19 +255,19 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
  	       user-select: text;
 }
 
-.x_ite-private-menu .context-menu-item.hover {
+.x_ite-private-menu .context-menu-hover {
 	cursor: pointer;
 	background-color: #444;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 }
 
-.x_ite-private-menu .context-menu-item.disabled {
+.x_ite-private-menu .context-menu-disabled {
 	color: #666;
 }
 
-.x_ite-private-menu .context-menu-input.hover,
-.x_ite-private-menu .context-menu-item.disabled.hover {
+.x_ite-private-menu .context-menu-input.context-menu-hover,
+.x_ite-private-menu .context-menu-disabled.context-menu-hover {
 	cursor: default;
 }
 
@@ -338,7 +339,7 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 	display: none;
 }
 
-.x_ite-private-menu .context-menu-item.visible > .context-menu-list {
+.x_ite-private-menu .context-menu-item:hover > .context-menu-list {
 	display: block;
 }
 

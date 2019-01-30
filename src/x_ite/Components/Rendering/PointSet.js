@@ -125,7 +125,7 @@ function (Fields,
 			var attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("addNodeEvent", this);
+				attribNodes [i] .removeInterest ("requestRebuild", this);
 
 			attribNodes .length = 0;
 
@@ -138,27 +138,27 @@ function (Fields,
 			}
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("addNodeEvent", this);
+				attribNodes [i] .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
 			if (this .colorNode)
-				this .colorNode .removeInterest ("addNodeEvent", this);
+				this .colorNode .removeInterest ("requestRebuild", this);
 
 			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
 
 			if (this .colorNode)
-				this .colorNode .addInterest ("addNodeEvent", this);
+				this .colorNode .addInterest ("requestRebuild", this);
 		},
 		set_coord__: function ()
 		{
 			if (this .coordNode)
-				this .coordNode .removeInterest ("addNodeEvent", this);
+				this .coordNode .removeInterest ("requestRebuild", this);
 
 			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
 			if (this .coordNode)
-				this .coordNode .addInterest ("addNodeEvent", this);
+				this .coordNode .addInterest ("requestRebuild", this);
 		},
 		build: function ()
 		{
@@ -172,22 +172,19 @@ function (Fields,
 				colorNode   = this .colorNode,
 				coordNode   = this .coordNode,
 				colorArray  = this .getColors (),
-				vertexArray = this .getVertices ();
+				vertexArray = this .getVertices (),
+				numPoints   = coordNode .point_ .length;
 
 			for (var a = 0; a < numAttrib; ++ a)
 			{
-				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
+				for (var i = 0; i < numPoints; ++ i)
 					attribNodes [a] .addValue (i, attribs [a]);
 			}
-			
-			if (this .colorNode)
-			{
-				for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-					colorNode .addColor (i, colorArray);
-			}
 
-			for (var i = 0, length = coordNode .point_ .length; i < length; ++ i)
-				coordNode .addPoint (i, vertexArray);
+			if (colorNode)
+				colorNode .addColors (colorArray, numPoints);
+
+			coordNode .addPoints (vertexArray, numPoints);
 		},
 	});
 

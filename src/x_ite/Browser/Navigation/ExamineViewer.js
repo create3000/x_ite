@@ -52,7 +52,6 @@ define ([
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Followers/PositionChaser",
 	"x_ite/Components/Followers/OrientationChaser",
-	"x_ite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
@@ -62,7 +61,6 @@ function ($,
           X3DViewer,
           PositionChaser,
           OrientationChaser,
-          GeoViewpoint,
           Vector2,
           Vector3,
           Rotation4)
@@ -77,7 +75,7 @@ function ($,
 		SCROLL_FACTOR     = 1.0 / 20.0,
 		MOVE_TIME         = 0.2,
 		ROTATE_TIME       = 0.2,
-		FRAME_RATE        = 60;
+		MAX_ANGLE         = 0.97;
 
 	function ExamineViewer (executionContext)
 	{
@@ -113,19 +111,23 @@ function ($,
 			X3DViewer .prototype .initialize .call (this);
 
 			var
-			   browser   = this .getBrowser (),
-			   canvas    = browser .getCanvas (),
-				viewpoint = this .getActiveViewpoint ();
+			   browser = this .getBrowser (),
+			   element = browser .getElement ();
+
+			// Disconnect from spin.
+
+			this .getNavigationInfo () .transitionStart_ .addInterest ("disconnect", this);
+			browser .activeViewpoint_ .addInterest ("set_activeViewpoint__", this);
 
 			// Bind pointing device events.
 
-			canvas .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
-			canvas .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
-			canvas .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+			element .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
+			element .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
+			element .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
+			element .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
 
-			canvas .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
-			canvas .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
+			element .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
+			element .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
 
 			// Setup scroll chaser.
 
@@ -140,6 +142,20 @@ function ($,
 			this .rotationChaser .duration_ = ROTATE_TIME;
 			this .rotationChaser .setPrivate (true);
 			this .rotationChaser .setup ();
+
+			this .set_activeViewpoint__ ();
+		},
+		set_activeViewpoint__: function ()
+		{
+			if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+			{
+				var viewpoint = this .getActiveViewpoint ();
+
+				if (viewpoint)
+					viewpoint .orientationOffset_ = this .getOrientationOffset (Rotation4 .Identity, viewpoint .orientationOffset_ .getValue (), false);
+			}
+
+			this .disconnect ();
 		},
 		mousedown: function (event)
 		{
@@ -149,7 +165,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -223,14 +239,16 @@ function ($,
 					event .preventDefault ();
 					event .stopImmediatePropagation ();
 
+					var viewpoint = this .getActiveViewpoint ();
+
 					this .getBrowser () .setCursor ("DEFAULT");
 
 					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
-						if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
-							this .addRotate (this .rotation .pow (4));
-						else
-							this .addSpinning (this .rotation);
+						if (this .getBrowser () .getBrowserOption ("StraightenHorizon") && viewpoint .getTypeName () !== "GeoViewpoint")
+							this .rotation = this .getHorizonRotation (this .rotation);
+
+						this .addSpinning (this .rotation);
 					}
 
 					break;
@@ -255,9 +273,9 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (), 
+				offset = this .getBrowser () .getElement () .offset (), 
 				x      = event .pageX - offset .left,
-				y      = this .getBrowser () .getCanvas () .height () - (event .pageY - offset .top);
+				y      = this .getBrowser () .getElement () .height () - (event .pageY - offset .top);
 
 			this .disconnect ();
 			this .lookAtBBox (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
@@ -269,7 +287,7 @@ function ($,
 			return function (event)
 			{
 				var
-					offset = this .getBrowser () .getCanvas () .offset (),
+					offset = this .getBrowser () .getElement () .offset (),
 					x      = event .pageX - offset .left,
 					y      = event .pageY - offset .top;
 	
@@ -283,9 +301,7 @@ function ($,
 						event .preventDefault ();
 						event .stopImmediatePropagation ();
 	
-						var
-							viewpoint = this .getActiveViewpoint (),
-							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+						var toVector = this .trackballProjectToSphere (x, y, this .toVector);
 	
 						this .rotation .setFromToVec (toVector, this .fromVector);
 	
@@ -524,33 +540,68 @@ function ($,
 		set_rotation__: function (value)
 		{
 			var viewpoint = this .getActiveViewpoint ();
-
-			viewpoint .orientationOffset_ = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset);
+	
+			viewpoint .orientationOffset_ = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset, false);
 			viewpoint .positionOffset_    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint .orientationOffset_ .getValue ());
 		},
-		addRotate: function (rotationChange)
+		addRotate: (function ()
 		{
-			var viewpoint = this .getActiveViewpoint ();
+			var destination = new Rotation4 ();
 
-			if (this .rotationChaser .isActive_ .getValue () && this .rotationChaser .value_changed_ .hasInterest ("set_rotation__", this))
+			return function (rotationChange)
 			{
-				var rotation = this .rotationChaser .set_destination_ .getValue ()
-					.multLeft (rotationChange);
+				var viewpoint = this .getActiveViewpoint ();
+	
+				if (this .rotationChaser .isActive_ .getValue () && this .rotationChaser .value_changed_ .hasInterest ("set_rotation__", this))
+				{
+					try
+					{
+						destination .assign (this .rotationChaser .set_destination_ .getValue ())
+							.multLeft (rotationChange);
+	
+						// Check for critical angle.
+						this .getOrientationOffset (destination, this .initialOrientationOffset, true);
 
-				this .rotationChaser .set_destination_ = rotation;
-			}
-			else
-			{
-				this .rotationChaser .set_value_       = Rotation4 .Identity;
-				this .rotationChaser .set_destination_ = rotationChange;
+						this .rotationChaser .set_destination_ = destination;
+					}
+					catch (error)
+					{
+						// Slide along critical angle.
 
-				this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
-				this .initialPositionOffset    .assign (viewpoint .positionOffset_    .getValue ());
-			}
+						rotationChange = this .getHorizonRotation (rotationChange);
 
-			this .disconnect ();
-			this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
-		},
+						destination .assign (this .rotationChaser .set_destination_ .getValue ())
+							.multLeft (rotationChange);
+
+						this .rotationChaser .set_destination_ = destination;
+					}
+				}
+				else
+				{
+					try
+					{
+						this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
+						this .initialPositionOffset    .assign (viewpoint .positionOffset_    .getValue ());
+	
+						// Check for critical angle.
+						this .getOrientationOffset (rotationChange, this .initialOrientationOffset, true);
+	
+						this .rotationChaser .set_value_       = Rotation4 .Identity;
+						this .rotationChaser .set_destination_ = rotationChange;
+					}
+					catch (error)
+					{
+						// Slide along critical angle.
+
+						this .rotationChaser .set_value_       = Rotation4 .Identity;
+						this .rotationChaser .set_destination_ = this .getHorizonRotation (rotationChange);
+					}
+				}
+	
+				this .disconnect ();
+				this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
+			};
+		})(),
 		addSpinning: (function ()
 		{
 			var rotation = new Rotation4 (0, 0, 1, 0);
@@ -630,8 +681,6 @@ function ($,
 
 			return function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
 			{
-				var viewpoint = this .getActiveViewpoint ();
-
 				this .getDistanceToCenter (distance, positionOffsetBefore);
 	
 				return (oob
@@ -647,24 +696,60 @@ function ($,
 		{
 			var
 				userOrientation   = new Rotation4 (0, 0, 1, 0),
-				orientationOffset = new Rotation4 (0, 0, 1, 0);
+				orientationOffset = new Rotation4 (0, 0, 1, 0),
+				zAxis             = new Vector3 (0, 0, 0);
 
-			return function (rotation, orientationOffsetBefore)
+			return function (rotation, orientationOffsetBefore, _throw)
 			{
-				var viewpoint = this .getActiveViewpoint ();
+				var
+					viewpoint         = this .getActiveViewpoint (),
+					straightenHorizon = this .getBrowser () .getBrowserOption ("StraightenHorizon");
 	
 				userOrientation
 					.assign (rotation)
 					.multRight (viewpoint .getOrientation ())
 					.multRight (orientationOffsetBefore);
 	
-				if (this .getBrowser () .getBrowserOption ("StraightenHorizon") && ! (viewpoint instanceof GeoViewpoint))
+				if (straightenHorizon && viewpoint .getTypeName () !== "GeoViewpoint")
 					viewpoint .straightenHorizon (userOrientation);
 	
-				return (orientationOffset
+				var orientationOffsetAfter = orientationOffset
 					.assign (viewpoint .getOrientation ())
 					.inverse ()
-					.multRight (userOrientation));
+					.multRight (userOrientation);
+
+				if (straightenHorizon && viewpoint .getTypeName () !== "GeoViewpoint")
+				{
+					if (! _throw)
+						return orientationOffsetAfter;
+
+					var userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
+
+					if (Math .abs (viewpoint .getUpVector () .dot (userVector)) < MAX_ANGLE)
+						return orientationOffsetAfter;
+
+					throw new Error ("Critical angle");
+				}
+				else
+				{
+					return orientationOffsetAfter;
+				}
+			};
+		})(),
+		getHorizonRotation: (function ()
+		{
+			var zAxis = new Vector3 (0, 0, 0);
+
+			return function (rotation)
+			{
+				var viewpoint = this .getActiveViewpoint ();
+
+				var
+					V = rotation .multVecRot (zAxis .assign (Vector3 .zAxis)) .normalize (),
+					N = Vector3 .cross (viewpoint .getUpVector (), V) .normalize (),
+					H = Vector3 .cross (N, viewpoint .getUpVector ()) .normalize ();
+
+				return new Rotation4 (Vector3 .zAxis, H);
 			};
 		})(),
 		disconnect: function ()
@@ -679,8 +764,11 @@ function ($,
 		},
 		dispose: function ()
 		{
+			var browser = this .getBrowser ();
+
 			this .disconnect ();
-			this .getBrowser () .getCanvas () .unbind (".ExamineViewer");
+			browser .activeViewpoint_ .removeInterest ("set_activeViewpoint__", this);
+			browser .getElement () .unbind (".ExamineViewer");
 			$(document) .unbind (".ExamineViewer" + this .getId ());
 		},
 	});

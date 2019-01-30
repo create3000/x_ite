@@ -242,8 +242,8 @@ function (Vector3,
 					longitude -= RANGE2;
 		
 				return source .set (longitude,
-				                    Algorithm .lerp (source .y, destination .y, t),
-				                    Algorithm .lerp (source .z, destination .z, t));
+				                    source .y + t * (destination .y - source .y),
+				                    source .z + t * (destination .z - source .z));
 			}
 
 			var longitude = source .y < destination .y ? source .y - step : source .y + step;
@@ -254,9 +254,9 @@ function (Vector3,
 			else if (longitude > RANGE)
 				longitude -= RANGE2;
 	
-			return source .set (Algorithm .lerp (source .x, destination .x, t),
+			return source .set (source .x + t * (destination .x - source .x),
 			                    longitude,
-			                    Algorithm .lerp (source .z, destination .z, t));
+			                    source .z + t * (destination .z - source .z));
 		},
 		source: new Vector3 (0, 0, 0),
 		destination: new Vector3 (0, 0, 0),

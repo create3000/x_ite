@@ -98,7 +98,7 @@ function ($,
 	{
 		initialize: function ()
 		{
-			this .getCanvas () .attr ("tabindex", 0);
+			this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
 			this .setCursor ("DEFAULT");
 
 			this .pointingDevice .setup ();
@@ -107,7 +107,7 @@ function ($,
 		{
 			this .cursorType = value;
 
-			var div = this .getBrowser () .getElement () .find (".x_ite-private-surface");
+			var div = this .getElement () .find (".x_ite-private-surface");
 
 			switch (value)
 			{
@@ -257,7 +257,9 @@ function ($,
 		motion: function ()
 		{
 			if (this .hits .length)
+			{
 				var nearestHit = this .hits [this .hits .length - 1];
+			}
 			else
 			{
 				var hitRay = this .selectedLayer ? this .hitRay : line;
@@ -277,10 +279,15 @@ function ($,
 			// Set isOver to FALSE for appropriate nodes
 
 			if (this .hits .length)
-				var difference = Algorithm .set_difference (this .overSensors, nearestHit .sensors, { });
-
+			{
+				var difference = Algorithm .set_difference (this .overSensors, nearestHit .sensors, { }, function (lhs, rhs) {
+					return lhs .getNode () < rhs .getNode ();
+				});
+			}
 			else
+			{
 				var difference = Object .assign ({ }, this .overSensors);
+			}
 
 			for (var key in difference)
 				difference [key] .set_over__ (false, nearestHit);
@@ -295,7 +302,9 @@ function ($,
 					this .overSensors [key] .set_over__ (true, nearestHit);
 			}
 			else
+			{
 				this .overSensors = { };
+			}
 
 			// Forward motion event to active drag sensor nodes
 

@@ -102,7 +102,7 @@ function (X3DNode,
 		this .navigationInfoStack = new BindableStack (executionContext, this, this .defaultNavigationInfo);
 		this .viewpointStack      = new BindableStack (executionContext, this, this .defaultViewpoint);
 
-		this .backgrounds     = new BindableList (executionContext, this, this .defaultBackground)
+		this .backgrounds     = new BindableList (executionContext, this, this .defaultBackground);
 		this .fogs            = new BindableList (executionContext, this, this .defaultFog);
 		this .navigationInfos = new BindableList (executionContext, this, this .defaultNavigationInfo);
 		this .viewpoints      = new BindableList (executionContext, this, this .defaultViewpoint);
@@ -338,17 +338,21 @@ function (X3DNode,
 
 			this .getViewpoint () .update ();
 
-			this .getModelViewMatrix () .pop ()
+			this .getModelViewMatrix () .pop ();
 		},
 		collision: function (type, renderObject)
 		{
-			this .collisionTime = 0;
+			var navigationInfo = this .getNavigationInfo ();
+
+			if (navigationInfo .transitionActive_ .getValue ())
+				return;
 
 			var
-				navigationInfo  = this .getNavigationInfo (),
 				collisionRadius = navigationInfo .getCollisionRadius (),
 				avatarHeight    = navigationInfo .getAvatarHeight (),
 				size            = Math .max (collisionRadius * 2, avatarHeight * 2);
+
+			this .collisionTime = 0;
 
 			Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
 

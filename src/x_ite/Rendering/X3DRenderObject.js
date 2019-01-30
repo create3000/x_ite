@@ -98,7 +98,7 @@ function ($,
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
 		this .generatedCubeMapTextures = [ ];
-		this .shaders                  = [ ];
+		this .shaders                  = new Map ();
 		this .collisions               = [ ];
 		this .numOpaqueShapes          = 0;
 		this .numTransparentShapes     = 0;
@@ -174,27 +174,39 @@ function ($,
 		},
 		pushShadow: function (value)
 		{
-			this .shadow .push (value || this .shadow [this .shadow .length - 1]);
+			this .shadow .unshift (value || this .shadow [0]);
 		},
 		popShadow: function (value)
 		{
 			this .shadow .pop ();
 		},
-		setGlobalFog: function (fog)
+		setGlobalFog: (function ()
 		{
-			this .localFog = this .localFogs [0] = fog;
-		},
-		pushLocalFog: function (fog)
-		{
-			this .localFogs .push (fog);
+			var modelViewMatrix = new Matrix4 ();
 
-			this .localFog = fog;
+			return function (fog)
+			{
+				var fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
+
+				modelViewMatrix .assign (fog .getModelMatrix ()) .multRight (this .getInverseCameraSpaceMatrix () .get ());
+				fogContainer .set (fog, modelViewMatrix);
+
+				this .localFog = this .localFogs [0] = fogContainer;
+			};
+		})(),
+		pushLocalFog: function (localFog)
+		{
+			this .localFogs .push (localFog);
+
+			this .localFog = localFog;
 		},
 		popLocalFog: function ()
 		{
-			this .localFogs .pop ();
+			var localFog = this .localFogs .pop ();
 
 			this .localFog = this .localFogs [this .localFogs .length - 1];
+
+			return localFog;
 		},
 		getLayouts: function ()
 		{
@@ -542,7 +554,7 @@ function ($,
 				context .shapeNode = shapeNode;
 				context .distance  = bboxCenter .z - radius;
 				context .fogNode   = this .localFog;
-				context .shadow    = this .shadow [this .shadow .length - 1];
+				context .shadow    = this .shadow [0];
 
 				// Clip planes and local lights
 
@@ -659,9 +671,9 @@ function ($,
 					}
 					else if (this .getNavigationInfo () .getViewer () !== "WALK")
 						return;
-	
+
 					// Get NavigationInfo values
-	
+
 					var
 						navigationInfo  = this .getNavigationInfo (),
 						viewpoint       = this .getViewpoint (),
@@ -669,39 +681,39 @@ function ($,
 						nearValue       = navigationInfo .getNearValue (),
 						avatarHeight    = navigationInfo .getAvatarHeight (),
 						stepHeight      = navigationInfo .getStepHeight ();
-	
+
 					// Reshape viewpoint for gravite.
-	
+
 					Camera .ortho (-collisionRadius,
 					               collisionRadius,
 					               -collisionRadius,
 					               collisionRadius,
 					               nearValue,
 					               Math .max (collisionRadius * 2, avatarHeight * 2),
-					               projectionMatrix)
-	
+					               projectionMatrix);
+
 					// Transform viewpoint to look down the up vector
-	
+
 					var
 						upVector = viewpoint .getUpVector (),
 						down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
-	
+
 					cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
 					cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
 					cameraSpaceProjectionMatrix .rotate (down);
 					cameraSpaceProjectionMatrix .inverse ();
-	
+
 					cameraSpaceProjectionMatrix .multRight (projectionMatrix);
 					cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
-	
+
 					this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
-	
+
 					var distance = -this .getDepth (projectionMatrix);
-	
+
 					this .getProjectionMatrix () .pop ();
-	
+
 					// Gravite or step up
-	
+
 					distance -= avatarHeight;
 	
 					var up = rotation .setFromToVec (Vector3 .yAxis, upVector);
@@ -722,20 +734,20 @@ function ($,
 							translation = -distance;
 							this .speed = 0;
 						}
-	
+
 						viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .add (up .multVecRot (vector .set (0, translation, 0)));
 					}
 					else
 					{
 						this .speed = 0;
-	
+
 						distance = -distance;
 	
 						if (distance > 0.01 && distance < stepHeight)
 						{
 							// Step up
 							var translation = this .constrainTranslation (up .multVecRot (this .translation .set (0, distance, 0)), false);
-	
+
 							//if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
 							//{
 							//	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
@@ -896,13 +908,12 @@ function ($,
 				cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 				projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 	
-				browser .getPointShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getLineShader    () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getDefaultShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getShadowShader  () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getPointShader  () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getLineShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				browser .getShadowShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 	
-				for (var id in shaders)
-					shaders [id] .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				for (var shader of shaders .values ())
+					shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 	
 				// Render opaque objects first
 	
@@ -957,7 +968,8 @@ function ($,
 				// Reset GeneratedCubeMapTextures.
 	
 				generatedCubeMapTextures .length = 0;
-	
+				shaders .clear ();
+
 				if (this .isIndependent ())
 				{
 					// Recycle clip planes.
@@ -984,8 +996,17 @@ function ($,
 					   lights [i] .dispose ();
 		
 					lights .length = 0;
+		
+					// Recycle local fogs.
+
+					var fogs = this .getBrowser () .getLocalFogs ();
+		
+					for (var i = 0, length = fogs .length; i < length; ++ i)
+					   fogs [i] .dispose ();
+		
+					fogs .length = 0;
 				}
-	
+
 				this .globalLights .length = 0;
 				this .lights       .length = 0;
 			};

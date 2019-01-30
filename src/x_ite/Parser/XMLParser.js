@@ -88,7 +88,7 @@ function ($,
 
 		this .protoDeclarations = [ ];
 		this .parents           = [ ];
-		this .parser            = new Parser (scene, true);
+		this .parser            = new Parser (scene);
 		this .url               = new Fields .MFString ();
 
 		try
@@ -103,8 +103,11 @@ function ($,
 	XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 	{
 		constructor: XMLParser,
-		parseIntoScene: function (xmlElement)
+		parseIntoScene: function (xmlElement, success, error)
 		{
+			this .success = success;
+			this .error   = error;
+
 			this .getScene () .setEncoding ("XML");
 			this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
@@ -179,9 +182,39 @@ function ($,
 			var childNodes = xmlElement .childNodes;
 
 			for (var i = 0; i < childNodes .length; ++ i)
-				this .x3dElementChild (childNodes [i])
+				this .x3dElementChildHead (childNodes [i])
+
+			if (this .success)
+			{
+				require (this .getProviderUrls (),
+				function ()
+				{
+					try
+					{
+						for (var i = 0; i < childNodes .length; ++ i)
+							this .x3dElementChildScene (childNodes [i])
+
+						this .success ();
+					}
+					catch (error)
+					{
+						this .error (error);
+					}
+				}
+				.bind (this),
+				function (error)
+				{
+					this .error (error);
+				}
+				.bind (this));
+			}
+			else
+			{
+				for (var i = 0; i < childNodes .length; ++ i)
+					this .x3dElementChildScene (childNodes [i])
+			}
 		},
-		x3dElementChild: function (xmlElement)
+		x3dElementChildHead: function (xmlElement)
 		{
 			switch (xmlElement .nodeName)
 			{
@@ -189,6 +222,12 @@ function ($,
 				case "HEAD":
 					this .headElement (xmlElement);
 					return;
+			}
+		},
+		x3dElementChildScene: function (xmlElement)
+		{
+			switch (xmlElement .nodeName)
+			{
 				case "Scene":
 				case "SCENE":
 					this .sceneElement (xmlElement);
@@ -704,14 +743,14 @@ function ($,
 			{
 				var
 					inlineNodeName   = xmlElement .getAttribute ("inlineDEF"),
-					exportedNodeName = xmlElement .getAttribute ("exportedDEF"),
+					exportedNodeName = xmlElement .getAttribute ("importedDEF") || xmlElement .getAttribute ("exportedDEF"),
 					localNodeName    = xmlElement .getAttribute ("AS");
 
 				if (inlineNodeName === null)
-					throw new Error ("Bad IMPORT statement: Expected exportedDEF attribute.");
+					throw new Error ("Bad IMPORT statement: Expected inlineDEF attribute.");
 
 				if (exportedNodeName === null)
-					throw new Error ("Bad IMPORT statement: Expected exportedDEF attribute.");
+					throw new Error ("Bad IMPORT statement: Expected importedDEF attribute.");
 
 				if (! localNodeName)
 					localNodeName = exportedNodeName;
@@ -826,9 +865,12 @@ function ($,
 		{
 			try
 			{
-				var field = node .getField (this .attributeToCamelCase (xmlAttribute .name));
+				var
+					field      = node .getField (this .attributeToCamelCase (xmlAttribute .name)),
+					accessType = field .getAccessType ();
 
-				this .fieldValue (field, xmlAttribute .value);
+				if (accessType & X3DConstants .initializeOnly)
+					this .fieldValue (field, xmlAttribute .value);
 			}
 			catch (error)
 			{
@@ -985,6 +1027,107 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f]     = Parser .prototype .sfvec3fValues;
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d]     = Parser .prototype .sfvec4dValues;
 	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = Parser .prototype .sfvec4fValues;
+
+	/*
+	 * Lazy parse functions.
+	 */
+
+	var
+		infs            = /\binf\b/g,
+		nans            = /\bnan\b/g,
+		trimWhitespaces = /^[\x20\n,\t\r"]+|[\x20\n,\t\r"]+$/g,
+		whitespaces     = /[\x20\n,\t\r"]+/,
+		strings         = new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'g');
+
+   function prepareBools (string)
+	{
+		return string .replace (trimWhitespaces, "") .split (whitespaces);
+	}
+
+   function prepareFloats (string)
+	{
+		return (string
+			.replace (infs, "Infinity")
+			.replace (nans, "NaN")
+			.replace (trimWhitespaces, "")
+			.split (whitespaces));
+	}
+
+   function prepareInts (string)
+	{
+		return string .replace (trimWhitespaces, "") .split (whitespaces);
+	}
+
+   function prepareStrings (string)
+	{
+		var
+			match = null,
+			array = [ ];
+
+		while (match = strings .exec (string))
+			array .push (match [1]);
+
+		return array .map (Fields .SFString .unescape);
+	}
+
+	// Unitless fields.
+
+	XMLParser .prototype .fieldTypes [X3DConstants .MFColor] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3d] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3f] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4d] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
+	{
+		field .setValue (prepareFloats (this .getInput ()) .map (function (value)
+		{
+			return parseFloat (value);
+		}));
+	};
+
+	XMLParser .prototype .fieldTypes [X3DConstants .MFBool] = function (field)
+	{
+		field .setValue (prepareBools (this .getInput ()) .map (function (value)
+		{
+			if (value === "true" || value === "TRUE")
+				return true;
+
+			return false;
+		}));
+	};
+
+	XMLParser .prototype .fieldTypes [X3DConstants .MFInt32] = function (field)
+	{
+		field .setValue (prepareInts (this .getInput ()) .map (function (value)
+		{
+			return parseInt (value);
+		}));
+	};
+
+	// Unit fields.
+
+	XMLParser .prototype .fieldTypes [X3DConstants .MFDouble] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFFloat] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec2d] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec2f] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec3d] =
+	XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f] = function (field)
+	{
+		var category = field .getUnit ();
+
+		field .setValue (prepareFloats (this .getInput ()) .map (function (value)
+		{
+			return this .fromUnit (category, parseFloat (value));
+		},
+		this));
+	};
+
+	XMLParser .prototype .fieldTypes [X3DConstants .MFString] = function (field)
+	{
+		field .setValue (prepareStrings (this .getInput ()));
+	};
 
 	return XMLParser;
 });

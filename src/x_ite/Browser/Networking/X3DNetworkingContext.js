@@ -81,7 +81,7 @@ function (Fields,
 
 		this .loadSensor     = new LoadSensor (this .getPrivateScene ());
 		this .loadingTotal   = 0;
-		this .loadingObjects = { };
+		this .loadingObjects = new Set ();
 		this .loading        = false;
 		this .location       = getBaseURI (this .getElement () [0]);
 		this .defaultScene   = this .createScene (); // Inline node's empty scene.
@@ -106,7 +106,7 @@ function (Fields,
 		},
 		getProviderUrl: function ()
 		{
-			return urls .providerUrl;
+			return urls .getProviderUrl ();
 		},
 		getLocation: function ()
 		{
@@ -133,6 +133,10 @@ function (Fields,
 					this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
 					this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
 				}
+				else
+				{
+					this .getCanvas () .fadeOut (0);
+				}
 			}
 			else
 			{
@@ -142,7 +146,9 @@ function (Fields,
 					this .getCanvas ()       .stop (true, true) .fadeOut (0) .fadeIn  (2000);
 				}
 				else
+				{
 					this .getCanvas () .fadeIn (0);
+				}
 			}
 		},
 		getLoading: function ()
@@ -151,33 +157,33 @@ function (Fields,
 		},
 		addLoadCount: function (object)
 		{
-		   var id = object .getId ();
-
-			if (this .loadingObjects .hasOwnProperty (id))
+			if (this .loadingObjects .has (object))
 				return;
 
 			++ this .loadingTotal;
-			this .loadingObjects [id] = object;
+
+			this .loadingObjects .add (object);
 			
-			this .setLoadCount (this .loadCount_ = this .loadCount_ .getValue () + 1);
+			this .setLoadCount (this .loadingObjects .size);
 			this .setCursor ("DEFAULT");
 		},
 		removeLoadCount: function (object)
 		{
-         var id = object .getId ();
-
-			if (! this .loadingObjects .hasOwnProperty (id))
+			if (! this .loadingObjects .has (object))
 				return;
 
-			delete this .loadingObjects [id];
+			this .loadingObjects .delete (object);
 
-			this .setLoadCount (this .loadCount_ = this .loadCount_ .getValue () - 1);
+			this .setLoadCount (this .loadingObjects .size);
 		},
 		setLoadCount: function (value)
 		{
+			this .loadCount_ = value;
+
 			if (value)
+			{
 				var string = sprintf .sprintf (value == 1 ? _ ("Loading %d file") : _ ("Loading %d files"), value);
-			
+			}
 			else
 			{
 				var string = _("Loading done");
@@ -192,9 +198,10 @@ function (Fields,
 		},
 		resetLoadCount: function ()
 		{
-			this .loadCount_     = 0;
-			this .loadingTotal   = 0;
-			this .loadingObjects = { };			   
+			this .loadCount_   = 0;
+			this .loadingTotal = 0;
+
+			this .loadingObjects .clear ();			   
 		},
 	};
 

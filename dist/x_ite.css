@@ -1,9 +1,9 @@
-/* X_ITE v4.2.1-288 */
+/* X_ITE v4.2.18a-583 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
 	display: none;
-	z-index: -100;
+	z-index: 100;
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -27,7 +27,7 @@ X3DCanvas .x_ite-private-spinner {
 }
 @-moz-keyframes spinner-animation-spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+@keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
 X3DCanvas .x_ite-private-progress {
 	position: absolute;
 	top: calc(50% - 11pt);
@@ -46,6 +46,7 @@ X3DCanvas .x_ite-private-progressbar {
 	border-left:  2px solid rgba(255, 255, 255, 0.5);
 	border-right: 2px solid rgba(255, 255, 255, 0.5);
 	padding: 0 2px;
+	text-align: left;
 }
 X3DCanvas .x_ite-private-progressbar div {
 	width: 0%;
@@ -56,6 +57,7 @@ X3DCanvas {
 	overflow: hidden;
 	position: relative;
 	display: inline-block;
+	outline: none;
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
@@ -123,7 +125,7 @@ X3DCanvas .x_ite-private-notification {
 }
 X3DCanvas .x_ite-private-notification span {
 	padding: 0px 24px 0px 20px;
-	background: url(images/icon.bw.png) no-repeat 0px center;
+	background: url(images/icon.bw.png) no-repeat 0px 3px;
 }
 X3DCanvas .x_ite-private-browser-timings {
 	display: none;
@@ -271,17 +273,17 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 	    -ms-user-select: text;
  	       user-select: text;
 }
-.x_ite-private-menu .context-menu-item.hover {
+.x_ite-private-menu .context-menu-hover {
 	cursor: pointer;
 	background-color: #444;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 }
-.x_ite-private-menu .context-menu-item.disabled {
+.x_ite-private-menu .context-menu-disabled {
 	color: #666;
 }
-.x_ite-private-menu .context-menu-input.hover,
-.x_ite-private-menu .context-menu-item.disabled.hover {
+.x_ite-private-menu .context-menu-input.context-menu-hover,
+.x_ite-private-menu .context-menu-disabled.context-menu-hover {
 	cursor: default;
 }
 .x_ite-private-menu .context-menu-submenu:after {
@@ -335,7 +337,7 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 	right: -5px;
 	display: none;
 }
-.x_ite-private-menu .context-menu-item.visible > .context-menu-list {
+.x_ite-private-menu .context-menu-item:hover > .context-menu-list {
 	display: block;
 }
 .x_ite-private-menu .context-menu-accesskey {

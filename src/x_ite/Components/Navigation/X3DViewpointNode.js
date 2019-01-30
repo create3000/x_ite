@@ -219,6 +219,16 @@ function (Fields,
 		{
 			return 1;
 		},
+		setAnimate: function (value)
+		{
+			// VRML behaviour support.
+			this .animate = value;
+		},
+		getAnimate: function ()
+		{
+			// VRML behaviour support.
+			return this .animate;
+		},
 		transitionStart: (function ()
 		{
 			var
@@ -243,12 +253,26 @@ function (Fields,
 							var navigationInfo = layers [i] .getNavigationInfo ();
 	
 							navigationInfo .transitionStart_ = true;
-	
+
 							var
 								transitionType = navigationInfo .getTransitionType (),
 								transitionTime = navigationInfo .transitionTime_ .getValue ();
 						}
-	
+
+						// VRML behaviour
+
+						if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
+						{
+							if (this .getAnimate ())
+								transitionType = "LINEAR";
+							else
+								transitionType = "TELEPORT";
+						}
+
+						this .setAnimate (false); // VRML
+
+						// End VRML behaviour
+
 						switch (transitionType)
 						{
 							case "TELEPORT":
@@ -332,26 +356,6 @@ function (Fields,
 			relativePosition .subtract (this .getPosition ());
 			relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
 		},
-		straightenHorizon: (function ()
-		{
-			var
-				localXAxis = new Vector3 (0, 0, 0),
-				localZAxis = new Vector3 (0, 0, 0),
-				vector     = new Vector3 (0, 0, 0),
-				rotation   = new Rotation4 (0, 0, 1, 0);
-
-			return function (orientation)
-			{
-				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
-				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
-	
-				vector .assign (localZAxis) .cross (this .getUpVector ());
-	
-				rotation .setFromToVec (localXAxis, vector);
-	
-				return orientation .multRight (rotation);
-			};
-		})(),
 		lookAtPoint: function (point, factor, straighten)
 		{
 			try
@@ -394,8 +398,10 @@ function (Fields,
 				layers = this .getLayers (),
 				offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
-			for (var i = 0; i < layers .length; ++ i)
-				layers [i] .getNavigationInfo () .transitionStart_ = true;;
+			layers .forEach (function (layer)
+			{
+				layer .getNavigationInfo () .transitionStart_ = true;
+			});
 		
 			this .timeSensor .cycleInterval_ = 0.2;
 			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
@@ -416,10 +422,63 @@ function (Fields,
 			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
 			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
 			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
-		
+			
+			this .setInterpolators (this);
+
 			this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
 			this .set_bind_               = true;
 		},
+		straighten: function (horizon)
+		{
+			var layers = this .getLayers ();
+
+			layers .forEach (function (layer)
+			{
+				layer .getNavigationInfo () .transitionStart_ = true;
+			});
+
+			this .timeSensor .cycleInterval_ = 0.4;
+			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
+			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+			this .timeSensor .isActive_ .addInterest ("set_active__", this);
+			
+			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+		
+			var rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
+
+			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, this .positionOffset_);
+			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
+			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
+			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
+	
+			this .setInterpolators (this);
+		
+			this .set_bind_ = true;
+		},
+		straightenHorizon: (function ()
+		{
+			var
+				localXAxis = new Vector3 (0, 0, 0),
+				localZAxis = new Vector3 (0, 0, 0),
+				vector     = new Vector3 (0, 0, 0),
+				rotation   = new Rotation4 (0, 0, 1, 0);
+
+			return function (orientation)
+			{
+				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
+
+				var vector = localZAxis .cross (this .getUpVector ());
+
+				// If viewer looks along the up vector.
+				if (vector .equals (Vector3 .Zero))
+					return orientation;
+
+				rotation .setFromToVec (localXAxis, vector);
+	
+				return orientation .multRight (rotation);
+			};
+		})(),
 		set_active__: function (active)
 		{
 			if (! active .getValue () && this .timeSensor .fraction_changed_ .getValue () === 1)

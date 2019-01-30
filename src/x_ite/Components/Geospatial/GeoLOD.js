@@ -225,64 +225,73 @@ function (Fields,
 				this .childrenLoaded = false;
 			}
 		},
-		set_childLoadState__: function ()
+		set_childLoadState__: (function ()
 		{
-			if (this .level_changed_ .getValue () !== 1)
-				return;
-	
-			var loaded = 0;
+			var nodes = new Fields .MFNode ();
 
-			if (this .child1Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
+			return function ()
 			{
-				var rootNodes = this .child1Inline .getInternalScene () .getRootNodes ();
-
-				for (var i = 0, length = rootNodes .length; i < length; ++ i)
-					this .children_ .push (rootNodes [i]);
-
-				++ loaded;
-			}
-			else if (this .child1Inline .url_ .length === 0)
-				++ loaded;
+				if (this .level_changed_ .getValue () !== 1)
+					return;
 	
-			if (this .child2Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
-			{
-				var rootNodes = this .child2Inline .getInternalScene () .getRootNodes ();
-
-				for (var i = 0, length = rootNodes .length; i < length; ++ i)
-					this .children_ .push (rootNodes [i]);
-
-				++ loaded;
-			}
-			else if (this .child2Inline .url_ .length === 0)
-				++ loaded;
+				var loaded = 0;
 	
-			if (this .child3Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
-			{
-				var rootNodes = this .child3Inline .getInternalScene () .getRootNodes ();
-
-				for (var i = 0, length = rootNodes .length; i < length; ++ i)
-					this .children_ .push (rootNodes [i]);
-
-				++ loaded;
-			}
-			else if (this .child3Inline .url_ .length === 0)
-				++ loaded;
+				if (this .child1Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
+				{
+					var rootNodes = this .child1Inline .getInternalScene () .getRootNodes ();
 	
-			if (this .child4Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
-			{
-				var rootNodes = this .child4Inline .getInternalScene () .getRootNodes ();
-
-				for (var i = 0, length = rootNodes .length; i < length; ++ i)
-					this .children_ .push (rootNodes [i]);
-
-				++ loaded;
-			}
-			else if (this .child4Inline .url_ .length === 0)
-				++ loaded;
-
-			if (loaded === 4)
-				this .childrenLoaded = true;
-		},
+					for (var i = 0, length = rootNodes .length; i < length; ++ i)
+						nodes .push (rootNodes [i]);
+	
+					++ loaded;
+				}
+				else if (this .child1Inline .checkLoadState () === X3DConstants .FAILED_STATE)
+					++ loaded;
+		
+				if (this .child2Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
+				{
+					var rootNodes = this .child2Inline .getInternalScene () .getRootNodes ();
+	
+					for (var i = 0, length = rootNodes .length; i < length; ++ i)
+						nodes .push (rootNodes [i]);
+	
+					++ loaded;
+				}
+				else if (this .child2Inline .checkLoadState () === X3DConstants .FAILED_STATE)
+					++ loaded;
+		
+				if (this .child3Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
+				{
+					var rootNodes = this .child3Inline .getInternalScene () .getRootNodes ();
+	
+					for (var i = 0, length = rootNodes .length; i < length; ++ i)
+						nodes .push (rootNodes [i]);
+	
+					++ loaded;
+				}
+				else if (this .child3Inline .checkLoadState () === X3DConstants .FAILED_STATE)
+					++ loaded;
+		
+				if (this .child4Inline .checkLoadState () === X3DConstants .COMPLETE_STATE)
+				{
+					var rootNodes = this .child4Inline .getInternalScene () .getRootNodes ();
+	
+					for (var i = 0, length = rootNodes .length; i < length; ++ i)
+						nodes .push (rootNodes [i]);
+	
+					++ loaded;
+				}
+				else if (this .child4Inline .checkLoadState () === X3DConstants .FAILED_STATE)
+					++ loaded;
+	
+				if (loaded === 4)
+				{
+					this .childrenLoaded = true;
+	
+					this .children_ .assign (nodes);
+				}
+			};
+		})(),
 		getLevel: function (modelViewMatrix)
 		{
 			var distance = this .getDistance (modelViewMatrix);

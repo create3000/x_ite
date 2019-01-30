@@ -17,7 +17,7 @@ main ()
 {
 	vec4 p = x3d_ModelViewMatrix * x3d_Vertex;
 
+	C           = x3d_Color;
 	v           = p .xyz;
 	gl_Position = x3d_ProjectionMatrix * p;
-	C           = x3d_Color;
 }

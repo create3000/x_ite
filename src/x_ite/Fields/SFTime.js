@@ -59,7 +59,7 @@ function (X3DField,
 	function SFTime (value)
 	{
 		if (this instanceof SFTime)
-			return X3DField .call (this, arguments .length ? +value : 0);
+			return X3DField .call (this, arguments .length ? value * 1 : 0);
 	
 		return X3DField .call (Object .create (SFTime .prototype), arguments .length ? +value : 0);
 	}
@@ -85,7 +85,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			X3DField .prototype .set .call (this, +value);
+			X3DField .prototype .set .call (this, value * 1);
 		},
 		valueOf: X3DField .prototype .getValue,
 		toStream: function (stream)

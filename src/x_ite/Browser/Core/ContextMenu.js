@@ -49,12 +49,13 @@
 
 define ([
 	"jquery",
+	"contextMenu",
 	"x_ite/Basic/X3DBaseNode",
 	"locale/gettext",
-	"lib/jquery-contextMenu/dist/jquery.contextMenu",
 	"lib/jquery.fullscreen-min",
 ],
 function ($,
+          contextMenu,
           X3DBaseNode,
           _)
 {
@@ -86,21 +87,24 @@ function ($,
 		{
 			X3DBaseNode .prototype .initialize .call (this);
 
-			if (! this .getBrowser () .getBrowserOptions () .getContextMenu ())
+			var browser = this .getBrowser ();
+
+			if (! browser .getBrowserOptions () .getContextMenu ())
 				return;
 
 			$.contextMenu ({
-				selector: ".x_ite-private-surface-" + this .getBrowser () .getId (), 
+				selector: ".x_ite-private-surface-" + browser .getId (), 
 				build: this .build .bind (this),
 			});
 		},
 		build: function (trigger, event)
 		{
 			var
-				activeLayer      = this .getBrowser () .getActiveLayer (),
+				browser          = this .getBrowser (),
+				activeLayer      = browser .getActiveLayer (),
 				currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
-				currentViewer    = this .getBrowser () .viewer_ .getValue (),
-				fullscreen       = this .getBrowser () .getElement () .fullScreen ();
+				currentViewer    = browser .viewer_ .getValue (),
+				fullscreen       = browser .getElement () .fullScreen ();
 
 			var menu = {
 				className: "x_ite-private-menu x_ite-private-menu-title",
@@ -112,12 +116,13 @@ function ($,
 						items: this .getViewpoints (),
 						callback: function (viewpoint)
 						{
-						   if (! viewpoint)
-						      return;
+							$("body > ul.context-menu-list") .fadeOut (500);
 
-							$(".context-menu-list") .fadeOut (500);
-							this .getBrowser () .bindViewpoint (viewpoint);
-							this .getBrowser () .getCanvas () .focus ();
+							if (! viewpoint)
+								return;
+
+							browser .bindViewpoint (viewpoint);
+							browser .getElement () .focus ();
 						}
 						.bind (this, currentViewpoint),
 					},
@@ -127,16 +132,47 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
 						callback: function (viewer)
 						{
-							$(".context-menu-list") .fadeOut (500);
-							this .getBrowser () .viewer_ = viewer;
-							this .getBrowser () .getNotification () .string_ = _(this .getViewerName (viewer));
-							this .getBrowser () .getCanvas () .focus ();
+							$("body > ul.context-menu-list") .fadeOut (500);
+
+							browser .viewer_ = viewer;
+							browser .getNotification () .string_ = _(this .getViewerName (viewer));
+							browser .getElement () .focus ();
 						}
 						.bind (this, currentViewer),
 					},
 					"available-viewers": {
 						name: _("Available Viewers"),
 						items: this .getAvailableViewers (),
+					},
+					"straighten-horizon": {
+						name: _("Straighten Horizon"),
+						type: "checkbox",
+						selected: browser .getBrowserOption ("StraightenHorizon"),
+						events: {
+							click: function ()
+							{
+								$("body > ul.context-menu-list") .fadeOut (500);
+
+								var straightenHorizon = ! browser .getBrowserOption ("StraightenHorizon");
+
+								browser .setBrowserOption ("StraightenHorizon", straightenHorizon);
+
+								if (straightenHorizon)
+								{
+									browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("on");
+									
+									var activeViewpoint = browser .getActiveViewpoint ();
+
+									if (activeViewpoint)
+										activeViewpoint .straighten (true);
+								}
+								else
+								{
+									browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("off");
+								}
+							}
+							.bind (this),
+						},
 					},
 					"separator2": "--------",
 					"primitive-quality": {
@@ -147,12 +183,14 @@ function ($,
 								name: _("High"),
 								type: "radio",
 								radio: "primitive-quality",
-								selected: this .getBrowser () .getBrowserOption ("PrimitiveQuality") === "HIGH",
+								selected: browser .getBrowserOption ("PrimitiveQuality") === "HIGH",
 								events: {
 									click: function ()
 									{
-										this .getBrowser () .setBrowserOption ("PrimitiveQuality", "HIGH");
-										this .getBrowser () .getNotification () .string_ = _("Primitive Quality") + ": " + _("high");
+										$("body > ul.context-menu-list") .fadeOut (500);
+
+										browser .setBrowserOption ("PrimitiveQuality", "HIGH");
+										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("high");
 									}
 									.bind (this),
 								},
@@ -161,12 +199,14 @@ function ($,
 								name: _("Medium"),
 								type: "radio",
 								radio: "primitive-quality",
-								selected: this .getBrowser () .getBrowserOption ("PrimitiveQuality") === "MEDIUM",
+								selected: browser .getBrowserOption ("PrimitiveQuality") === "MEDIUM",
 								events: {
 									click: function ()
 									{
-										this .getBrowser () .setBrowserOption ("PrimitiveQuality", "MEDIUM");
-										this .getBrowser () .getNotification () .string_ = _("Primitive Quality") + ": " + _("medium");
+										$("body > ul.context-menu-list") .fadeOut (500);
+
+										browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
+										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("medium");
 									}
 									.bind (this),
 								},
@@ -175,12 +215,14 @@ function ($,
 								name: _("Low"),
 								type: "radio",
 								radio: "primitive-quality",
-								selected: this .getBrowser () .getBrowserOption ("PrimitiveQuality") === "LOW",
+								selected: browser .getBrowserOption ("PrimitiveQuality") === "LOW",
 								events: {
 									click: function ()
 									{
-										this .getBrowser () .setBrowserOption ("PrimitiveQuality", "LOW");
-										this .getBrowser () .getNotification () .string_ = _("Primitive Quality") + ": " + _("low");
+										$("body > ul.context-menu-list") .fadeOut (500);
+
+										browser .setBrowserOption ("PrimitiveQuality", "LOW");
+										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("low");
 									}
 									.bind (this),
 								},
@@ -195,12 +237,14 @@ function ($,
 								name: _("High"),
 								type: "radio",
 								radio: "texture-quality",
-								selected: this .getBrowser () .getBrowserOption ("TextureQuality") === "HIGH",
+								selected: browser .getBrowserOption ("TextureQuality") === "HIGH",
 								events: {
 									click: function ()
 									{
-										this .getBrowser () .setBrowserOption ("TextureQuality", "HIGH");
-										this .getBrowser () .getNotification () .string_ = _("Texture Quality") + ": " + _("high");
+										$("body > ul.context-menu-list") .fadeOut (500);
+
+										browser .setBrowserOption ("TextureQuality", "HIGH");
+										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("high");
 									}
 									.bind (this),
 								},
@@ -209,12 +253,14 @@ function ($,
 								name: _("Medium"),
 								type: "radio",
 								radio: "texture-quality",
-								selected: this .getBrowser () .getBrowserOption ("TextureQuality") === "MEDIUM",
+								selected: browser .getBrowserOption ("TextureQuality") === "MEDIUM",
 								events: {
 									click: function ()
 									{
-										this .getBrowser () .setBrowserOption ("TextureQuality", "MEDIUM");
-										this .getBrowser () .getNotification () .string_ = _("Texture Quality") + ": " + _("medium");
+										$("body > ul.context-menu-list") .fadeOut (500);
+
+										browser .setBrowserOption ("TextureQuality", "MEDIUM");
+										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("medium");
 									}
 									.bind (this),
 								},
@@ -223,12 +269,14 @@ function ($,
 								name: _("Low"),
 								type: "radio",
 								radio: "texture-quality",
-								selected: this .getBrowser () .getBrowserOption ("TextureQuality") === "LOW",
+								selected: browser .getBrowserOption ("TextureQuality") === "LOW",
 								events: {
 									click: function ()
 									{
-										this .getBrowser () .setBrowserOption ("TextureQuality", "LOW");
-										this .getBrowser () .getNotification () .string_ = _("Texture Quality") + ": " + _("low");
+										$("body > ul.context-menu-list") .fadeOut (500);
+
+										browser .setBrowserOption ("TextureQuality", "LOW");
+										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("low");
 									}
 									.bind (this),
 								},
@@ -238,55 +286,47 @@ function ($,
 					"display-rubberband": {
 						name: _("Display Rubberband"),
 						type: "checkbox",
-						selected: this .getBrowser () .getBrowserOption ("Rubberband"),
+						selected: browser .getBrowserOption ("Rubberband"),
 						events: {
 							click: function ()
 							{
-							   var rubberband = ! this .getBrowser () .getBrowserOption ("Rubberband");
+								$("body > ul.context-menu-list") .fadeOut (500);
 
-								this .getBrowser () .setBrowserOption ("Rubberband", rubberband);
+								var rubberband = ! browser .getBrowserOption ("Rubberband");
+
+								browser .setBrowserOption ("Rubberband", rubberband);
 
 								if (rubberband)
-									this .getBrowser () .getNotification () .string_ = _("Rubberband") + ": " + _("on");
+									browser .getNotification () .string_ = _("Rubberband") + ": " + _("on");
 								else
-									this .getBrowser () .getNotification () .string_ = _("Rubberband") + ": " + _("off");
+									browser .getNotification () .string_ = _("Rubberband") + ": " + _("off");
 							}
 							.bind (this),
 						},
 					},
-					"browser-timings": this .getBrowser () .getBrowserOptions () .getTimings () ? {
+					"browser-timings": browser .getBrowserOptions () .getTimings () ? {
 						name: _("Browser Timings"),
 						type: "checkbox",
-						selected: this .getBrowser () .getBrowserTimings () .getEnabled (),
+						selected: browser .getBrowserTimings () .getEnabled (),
 						events: {
 							click: function ()
 							{
-								this .getBrowser () .getBrowserTimings () .setEnabled (! this .getBrowser () .getBrowserTimings () .getEnabled ());
-								this .getBrowser () .getCanvas () .focus ();
+								$("body > ul.context-menu-list") .fadeOut (500);
+
+								browser .getBrowserTimings () .setEnabled (! browser .getBrowserTimings () .getEnabled ());
+								browser .getElement () .focus ();
 							}
 							.bind (this),
 						},
 					} : undefined,
-					"mute-browser": {
-						name: _("Mute Browser"),
-						type: "checkbox",
-						selected: this .getBrowser () .mute_ .getValue (),
-						events: {
-							click: function ()
-							{
-							   var mute = ! this .getBrowser () .mute_ .getValue ();
-								this .getBrowser () .mute_ = mute;
-								this .getBrowser () .getNotification () .string_ = mute ? _("Browser muted") : _("Browser unmuted");
-							}
-							.bind (this),
-						},
-					},
 					"fullscreen": {
 						name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
 						className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),
 						callback: function ()
 						{
-						   this .getBrowser () .getElement () .toggleFullScreen ();
+							$("body > ul.context-menu-list") .fadeOut (500);
+
+							browser .getElement () .toggleFullScreen ();
 						}
 						.bind (this),
 					},
@@ -296,7 +336,9 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-help-about",
 						callback: function ()
 						{
-						   window .open ("http://create3000.de/x_ite/");
+							$("body > ul.context-menu-list") .fadeOut (500);
+
+							window .open ("http://create3000.de/x_ite/");
 						},
 					},
 				}
@@ -304,8 +346,8 @@ function ($,
 
 			if ($.isEmptyObject (menu .items .viewpoints .items))
 			{
-				delete menu .items .separator0;
-				delete menu .items .viewpoints;
+				delete menu .items ["separator0"];
+				delete menu .items ["viewpoints"];
 			}
 
 			if (Object .keys (menu .items ["available-viewers"] .items) .length < 2)
@@ -313,19 +355,28 @@ function ($,
 				delete menu .items ["available-viewers"];
 			}
 
+			if (!(browser .getCurrentViewer () == "EXAMINE" && browser .getActiveViewpoint () .getTypeName () !== "GeoViewpoint"))
+			{
+				delete menu .items ["straighten-horizon"];
+			}
+
 			return menu;
 		},
 		getViewpoints: function ()
 		{
-			var activeLayer = this .getBrowser () .getActiveLayer ();
+			var
+				browser     = this .getBrowser (),
+				activeLayer = browser .getActiveLayer ();
 
 			if (! activeLayer)
 				return { };
 
 			var
-				viewpoints       = activeLayer .getViewpoints () .get (),
-				currentViewpoint = activeLayer .getViewpoint (),
-				menu             = { };
+				enableInlineViewpoints = browser .getBrowserOption ("EnableInlineViewpoints"),
+				currentScene           = browser .currentScene,
+				viewpoints             = activeLayer .getViewpoints () .get (),
+				currentViewpoint       = activeLayer .getViewpoint (),
+				menu                   = { };
 
 			for (var i = 0; i < viewpoints .length; ++ i)
 			{
@@ -336,13 +387,17 @@ function ($,
 				if (description === "")
 					continue;
 
+				if (! enableInlineViewpoints && viewpoint .getScene () !== currentScene)
+					continue;
+
 				var item = {
 					name: description,
 					callback: function (viewpoint)
 					{
-						$(".context-menu-list") .fadeOut (500);
-						this .getBrowser () .bindViewpoint (viewpoint);
-						this .getBrowser () .getCanvas () .focus ();
+						$("body > ul.context-menu-list") .fadeOut (500);
+
+						browser .bindViewpoint (viewpoint);
+						browser .getElement () .focus ();
 					}
 					.bind (this, viewpoint),
 				};
@@ -358,8 +413,9 @@ function ($,
 		getAvailableViewers: function ()
 		{
 			var
-				currentViewer    = this .getBrowser () .viewer_ .getValue (),
-				availableViewers = this .getBrowser () .availableViewers_,
+				browser          = this .getBrowser (),
+				currentViewer    = browser .viewer_ .getValue (),
+				availableViewers = browser .availableViewers_,
 				menu             = { };
 
 			for (var i = 0; i < availableViewers .length; ++ i)
@@ -371,10 +427,11 @@ function ($,
 					className: "context-menu-icon x_ite-private-icon-" + viewer .toLowerCase () + "-viewer",
 					callback: function (viewer)
 					{
-						$(".context-menu-list") .fadeOut (500);
-						this .getBrowser () .viewer_ = viewer;
-						this .getBrowser () .getNotification () .string_ = _(this .getViewerName (viewer));
-						this .getBrowser () .getCanvas () .focus ();
+						$("body > ul.context-menu-list") .fadeOut (500);
+						
+						browser .viewer_ = viewer;
+						browser .getNotification () .string_ = _(this .getViewerName (viewer));
+						browser .getElement () .focus ();
 					}
 					.bind (this, viewer),
 				};

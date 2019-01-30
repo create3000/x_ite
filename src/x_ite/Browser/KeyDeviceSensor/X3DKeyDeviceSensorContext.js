@@ -56,28 +56,28 @@ function (Fields)
 	
 	function X3DKeyDeviceSensorContext ()
 	{
-		this .keyDeviceSensorNode = null;
-
 		this .addChildObjects ("controlKey",  new Fields .SFBool (),
 		                       "shiftKey",    new Fields .SFBool (),
 		                       "altKey",      new Fields .SFBool (),
 		                       "altGrKey",    new Fields .SFBool ());
+
+		this .keyDeviceSensorNodes = new Set ();
 	}
 
 	X3DKeyDeviceSensorContext .prototype =
 	{
 		initialize: function ()
 		{
-			this .getCanvas () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown .bind (this));
-			this .getCanvas () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup   .bind (this));
+			this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown .bind (this));
+			this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup   .bind (this));
 		},
-		setKeyDeviceSensorNode: function (value)
+		addKeyDeviceSensorNode: function (keyDeviceSensorNode)
 		{
-			this .keyDeviceSensorNode = value;
+			this .keyDeviceSensorNodes .add (keyDeviceSensorNode);
 		},
-		getKeyDeviceSensorNode: function ()
+		removeKeyDeviceSensorNode: function (keyDeviceSensorNode)
 		{
-			return this .keyDeviceSensorNode;
+			this .keyDeviceSensorNodes .delete (keyDeviceSensorNode);
 		},
 		getShiftKey: function ()
 		{
@@ -97,15 +97,14 @@ function (Fields)
 		},
 		keydown: function (event)
 		{
-			//console .log (event .which);
+			//console .log (event .keyCode);
 
-			event .preventDefault ();
-			event .stopImmediatePropagation ();
-
-			if (this .keyDeviceSensorNode)
-			   this .keyDeviceSensorNode .keydown (event);
+			this .keyDeviceSensorNodes .forEach (function (keyDeviceSensorNode)
+			{
+				keyDeviceSensorNode .keydown (event);
+			});
 	
-			switch (event .which)
+			switch (event .keyCode)
 			{
 				case 16: // Shift
 				{
@@ -128,7 +127,8 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
-							this .setBrowserOption ("Shading", "POINTSET");
+							event .preventDefault ();
+							this .setBrowserOption ("Shading", "POINT");
 							this .getNotification () .string_ = "Shading: Pointset";
 						}
 					}
@@ -141,6 +141,7 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
+							event .preventDefault ();
 							this .setBrowserOption ("Shading", "WIREFRAME");
 							this .getNotification () .string_ = "Shading: Wireframe";
 						}
@@ -154,6 +155,7 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
+							event .preventDefault ();
 							this .setBrowserOption ("Shading", "FLAT");
 							this .getNotification () .string_ = "Shading: Flat";
 						}
@@ -167,6 +169,7 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
+							event .preventDefault ();
 							this .setBrowserOption ("Shading", "GOURAUD");
 							this .getNotification () .string_ = "Shading: Gouraud";
 						}
@@ -180,6 +183,7 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
+							event .preventDefault ();
 							this .setBrowserOption ("Shading", "PHONG");
 							this .getNotification () .string_ = "Shading: Phong";
 						}
@@ -193,6 +197,8 @@ function (Fields)
 					{
 						if (this .getControlKey ())
 						{
+							event .preventDefault ();
+
 							if (this .isLive () .getValue ())
 								this .endUpdate ();
 							else
@@ -213,26 +219,34 @@ function (Fields)
 				case 187: // Plus // Opera
 				{
 					if (this .getControlKey ())
+					{
+						event .preventDefault ();
 						this .getBrowserTimings () .setEnabled (! this .getBrowserTimings () .getEnabled ());
+					}
+
 					break;
 				}
 				case 36: // Pos 1
 				{
+					event .preventDefault ();
 					this .firstViewpoint ();
 					break;
 				}
 				case 35: // End
 				{
+					event .preventDefault ();
 					this .lastViewpoint ();
 					break;
 				}
 				case 33: // Page Up
 				{
+					event .preventDefault ();
 					this .previousViewpoint ();
 					break;
 				}
 				case 34: // Page Down
 				{
+					event .preventDefault ();
 					this .nextViewpoint ();
 					break;
 				}
@@ -245,8 +259,10 @@ function (Fields)
 			event .preventDefault ();
 			event .stopImmediatePropagation ();
 
-			if (this .keyDeviceSensorNode)
-			   this .keyDeviceSensorNode .keyup (event);
+			this .keyDeviceSensorNodes .forEach (function (keyDeviceSensorNode)
+			{
+				keyDeviceSensorNode .keyup (event);
+			});
 
 			switch (event .which)
 			{

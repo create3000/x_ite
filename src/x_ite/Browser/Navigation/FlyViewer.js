@@ -46,7 +46,7 @@
  *
  ******************************************************************************/
 
-﻿
+
 define ([
 	"x_ite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
@@ -74,21 +74,16 @@ function (X3DFlyViewer,
 		{
 			this .getBrowser () .removeCollision (this);
 		},
-		getFlyDirection: (function ()
+		getFlyDirection: function (fromVector, toVector, direction)
 		{
-			var rotation = new Rotation4 (0, 0, 1, 0);
+			direction .assign (toVector) .subtract (fromVector);
 
-			return function (fromVector, toVector, direction)
-			{
-				direction .assign (toVector) .subtract (fromVector);
+			direction .x =  direction .x / 20;
+			direction .y = -direction .z / 20;
+			direction .z = -50;
 
-				direction .x =  direction .x / 20;
-				direction .y = -direction .z / 20;
-				direction .z = -50;
-
-				return direction;
-			};
-		})(),
+			return direction;
+		},
 		getTranslationOffset: function (velocity)
 		{
 			return this .getActiveViewpoint () .getUserOrientation () .multVecRot (velocity);

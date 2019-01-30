@@ -51,6 +51,7 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Core/Shading",
 	"standard/Math/Numbers/Color3",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
@@ -64,6 +65,7 @@ define ([
 function (Fields,
           X3DNode,
           X3DConstants,
+          Shading,
           Color3,
           Vector2,
           Vector3,
@@ -101,7 +103,12 @@ function (Fields,
 		this .addType (X3DConstants .X3DGeometryNode);
 			
 		this .addChildObjects ("transparent",  new Fields .SFBool (),
-		                       "bbox_changed", new Fields .SFTime ());
+		                       "bbox_changed", new Fields .SFTime (),
+		                       "rebuild",      new Fields .SFTime ());
+
+		this .transparent_  .setAccessType (X3DConstants .outputOnly);
+		this .bbox_changed_ .setAccessType (X3DConstants .outputOnly);
+		this .rebuild_      .setAccessType (X3DConstants .outputOnly);
 
 		// Members
 
@@ -138,7 +145,7 @@ function (Fields,
 
 		var array = [ ];
 
-		array .typedArray  = new Float32Array ();
+		array .typedArray = new Float32Array ();
 
 		array .assign = function (value)
 		{
@@ -174,14 +181,12 @@ function (Fields,
 		normal: new Vector3 (0, 0, 0),
 		setup: function ()
 		{
-			this .setTainted (true);
-		
 			X3DNode .prototype .setup .call (this);
 
-			this .addInterest ("eventsProcessed", this);
-			this .eventsProcessed ();
+			this .addInterest ("requestRebuild", this);
+			this .rebuild_ .addInterest ("rebuild", this);
 
-			this .setTainted (false);
+			this .rebuild ();
 		},
 		initialize: function ()
 		{
@@ -207,10 +212,6 @@ function (Fields,
 			}
 
 			this .set_live__ ();
-		},
-		getExtendedEventHandling: function ()
-		{
-			return false;
 		},
 		setGeometryType: function (value)
 		{
@@ -462,7 +463,7 @@ function (Fields,
 					{
 						var i4 = i * 4;
 
-						v0 .x = vertices [i4 + 0]; v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+						v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
@@ -473,23 +474,23 @@ function (Fields,
 							var
 								u = uvt .u,
 								v = uvt .v,
-								t = 1 - u - v;
+								t = uvt .t;
 
 							// Determine vectors for X3DPointingDeviceSensors.
 
-							var point = new Vector3 (t * vertices [i4 + 0] + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+							var point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
 							                         t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
 							                         t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
 							if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
 								continue;
 
-							var texCoord = new Vector2 (t * texCoords [i4 + 0] + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
+							var texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
 							                            t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
 
 							var i3 = i * 3;
 
-							var normal = new Vector3 (t * normals [i3 + 0] + u * normals [i3 + 3] + v * normals [i3 + 6],
+							var normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
 							                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
 							                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
@@ -583,7 +584,7 @@ function (Fields,
 					{
 						var i4 = i * 4;
 		
-						v0 .x = vertices [i4 + 0]; v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+						v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
@@ -626,14 +627,14 @@ function (Fields,
 			if (this .geometryType < 2)
 				return;
 			
-			var flatShading = shading .getValue () === "FLAT";
+			var flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
 
 			if (flatShading === this .flatShading)
 				return;
-		   
-		   this .flatShading = flatShading;
 
-		   // Generate flat normals if needed.
+			this .flatShading = flatShading;
+
+			// Generate flat normals if needed.
 
 			var gl = this .getBrowser () .getContext ();
 
@@ -652,7 +653,7 @@ function (Fields,
 
 					for (var i = 0, length = vertices .length; i < length; i += 12)
 					{
-					   Triangle3 .normal (v0 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]),
+					   Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
 					                      v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
 					                      v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
 					                      normal);
@@ -674,10 +675,12 @@ function (Fields,
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
 			gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
 		},
-		eventsProcessed: function ()
+		requestRebuild: function ()
 		{
-			X3DNode .prototype .eventsProcessed .call (this);
-
+			this .rebuild_ .addEvent ();
+		},
+		rebuild: function ()
+		{
 			this .clear ();
 			this .build ();
 
@@ -693,7 +696,7 @@ function (Fields,
 			this .normals  .shrinkToFit ();
 			this .vertices .shrinkToFit ();
 
-			// Determine bbox and generate texCoord if needed.
+			// Determine bbox.
 
 			var
 				min      = this .min,
@@ -706,7 +709,7 @@ function (Fields,
 				{
 					for (var i = 0, length = vertices .length; i < length; i += 4)
 					{
-						point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+						point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
 	
 						min .min (point);
 						max .max (point);
@@ -721,6 +724,8 @@ function (Fields,
 			}
 
 			this .bbox_changed_ .addEvent ();
+
+			// Generate texCoord if needed.
 
 			if (this .geometryType > 1)
 			{
@@ -811,7 +816,7 @@ function (Fields,
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
 			gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .STATIC_DRAW);
-			this .colorMaterial = Boolean (this .colors .length);
+			this .colorMaterial = !! (this .colors .length);
 
 			// Transfer vertices.
 
@@ -887,7 +892,7 @@ function (Fields,
 				if (shaderNode .wireframe)
 				{
 					// Wireframes are always solid so only one drawing call is needed.
-	
+
 					for (var i = 0, length = this .vertexCount; i < length; i += 3)
 						gl .drawArrays (shaderNode .primitiveMode, i, 3);
 				}
@@ -951,13 +956,15 @@ function (Fields,
 
 			for (var p = 0; p < numParticles; ++ p)
 			{
+				var particle = particles [p];
+
 				modelViewMatrix [12] = x;
 				modelViewMatrix [13] = y;
 				modelViewMatrix [14] = z;
 
-				Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
+				Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
+				shaderNode .setParticle (gl, p, particle, modelViewMatrix, false);
 
 				gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 			}
@@ -998,8 +1005,7 @@ function (Fields,
 	
 				var
 					materialNode    = context .materialNode,
-					lighting        = materialNode || shaderNode .getCustom (),
-					normalMatrix    = shaderNode .normalMatrixArray,
+					normalMatrix    = materialNode || shaderNode .getCustom (),
 					modelViewMatrix = context .modelViewMatrix,
 					x               = modelViewMatrix [12],
 					y               = modelViewMatrix [13],
@@ -1011,23 +1017,15 @@ function (Fields,
 	
 					for (var p = 0; p < numParticles; ++ p)
 					{
+						var particle = particles [p];
+
 						modelViewMatrix [12] = x;
 						modelViewMatrix [13] = y;
 						modelViewMatrix [14] = z;
 		
-						Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
-		
-						if (lighting)
-						{
-							// Set normal matrix.
-							normalMatrix [0] = modelViewMatrix [0]; normalMatrix [1] = modelViewMatrix [4]; normalMatrix [2] = modelViewMatrix [ 8];
-							normalMatrix [3] = modelViewMatrix [1]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [5] = modelViewMatrix [ 9];
-							normalMatrix [6] = modelViewMatrix [2]; normalMatrix [7] = modelViewMatrix [6]; normalMatrix [8] = modelViewMatrix [10];
-							Matrix3 .prototype .inverse .call (normalMatrix);
-							gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, normalMatrix);
-						}
-		
-						gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
+						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+
+						shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
 		
 						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 							gl .drawArrays (shaderNode .primitiveMode, i, 3);
@@ -1043,24 +1041,16 @@ function (Fields,
 					{
 						for (var p = 0; p < numParticles; ++ p)
 						{
+							var particle = particles [p];
+
 							modelViewMatrix [12] = x;
 							modelViewMatrix [13] = y;
 							modelViewMatrix [14] = z;
 	
-							Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
+							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 	
-							if (lighting)
-							{
-								// Set normal matrix.
-								normalMatrix [0] = modelViewMatrix [0]; normalMatrix [1] = modelViewMatrix [4]; normalMatrix [2] = modelViewMatrix [ 8];
-								normalMatrix [3] = modelViewMatrix [1]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [5] = modelViewMatrix [ 9];
-								normalMatrix [6] = modelViewMatrix [2]; normalMatrix [7] = modelViewMatrix [6]; normalMatrix [8] = modelViewMatrix [10];
-								Matrix3 .prototype .inverse .call (normalMatrix);
-								gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, normalMatrix);
-							}
-	
-							gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
-	
+							shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
+
 							gl .enable (gl .CULL_FACE);
 							gl .cullFace (gl .FRONT);
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
@@ -1078,24 +1068,16 @@ function (Fields,
 	
 						for (var p = 0; p < numParticles; ++ p)
 						{
+							var particle = particles [p];
+
 							modelViewMatrix [12] = x;
 							modelViewMatrix [13] = y;
 							modelViewMatrix [14] = z;
-	
-							Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
-	
-							if (lighting)
-							{
-								// Set normal matrix.
-								normalMatrix [0] = modelViewMatrix [0]; normalMatrix [1] = modelViewMatrix [4]; normalMatrix [2] = modelViewMatrix [ 8];
-								normalMatrix [3] = modelViewMatrix [1]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [5] = modelViewMatrix [ 9];
-								normalMatrix [6] = modelViewMatrix [2]; normalMatrix [7] = modelViewMatrix [6]; normalMatrix [8] = modelViewMatrix [10];
-								Matrix3 .prototype .inverse .call (normalMatrix);
-								gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix, false, normalMatrix);
-							}
-	
-							gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
-	
+
+							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+
+							shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
+
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 						}
 					}

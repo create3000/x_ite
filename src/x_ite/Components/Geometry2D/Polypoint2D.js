@@ -117,7 +117,7 @@ function (Fields,
 
 			for (var i = 0, length = this .point_ .length * 2; i < length; i += 2)
 			{
-				vertexArray .push (point [i + 0], point [i + 1], 0, 1);
+				vertexArray .push (point [i], point [i + 1], 0, 1);
 			}
 		},
 	});

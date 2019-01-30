@@ -48,11 +48,13 @@
 
 
 define ([
+	"x_ite/Browser/Core/Shading",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 ],
-function (X3DAppearanceChildNode, 
+function (Shading,
+          X3DAppearanceChildNode, 
           X3DConstants,
           TraverseType)
 {
@@ -77,118 +79,42 @@ function (X3DAppearanceChildNode,
 		{
 			return this .custom;
 		},
-		setGeometryType: function (value)
-		{
-			this .setShading (value, this .getBrowser () .getBrowserOptions () .Shading_ .getValue ());
-		},
-		setShading: function (geometryType, shading)
+		setShading: function (shading)
 		{
 			var gl = this .getBrowser () .getContext ();
 
-			switch (geometryType)
+			switch (shading)
 			{
-				case 0:
+				case Shading .POINT:
 				{
-					switch (shading)
-					{
-						case "POINT":
-						case "POINTSET":
-						{
-							this .primitiveMode = gl .POINTS;
-							this .wireframe     = true;
-							break;
-						}
-						case "WIREFRAME":
-						{
-							this .primitiveMode = gl .POINTS;
-							this .wireframe     = true;
-							break;
-						}
-						default:
-						{
-							// case FLAT:
-							// case GOURAUD:
-							// case PHONG:
-		
-							this .primitiveMode = gl .POINTS;
-							this .wireframe     = true;
-							break;
-						}
-					}
-
+					this .primitiveMode = gl .POINTS;
+					this .wireframe     = true;
 					break;
 				}
-				case 1:
+				case Shading .WIREFRAME:
 				{
-					switch (shading)
-					{
-						case "POINT":
-						case "POINTSET":
-						{
-							this .primitiveMode = gl .POINTS;
-							this .wireframe     = true;
-							break;
-						}
-						case "WIREFRAME":
-						{
-							this .primitiveMode = gl .LINES;
-							this .wireframe     = true;
-							break;
-						}
-						default:
-						{
-							// case FLAT:
-							// case GOURAUD:
-							// case PHONG:
-
-							this .primitiveMode = gl .LINES;
-							this .wireframe     = true;
-							break;
-						}
-					}
-
+					this .primitiveMode = gl .LINE_LOOP;
+					this .wireframe     = true;
 					break;
 				}
-				case 2:
-				case 3:
+				default:
 				{
-					switch (shading)
-					{
-						case "POINT":
-						case "POINTSET":
-						{
-							this .primitiveMode = gl .POINTS;
-							this .wireframe     = true;
-							break;
-						}
-						case "WIREFRAME":
-						{
-							this .primitiveMode = gl .LINE_LOOP;
-							this .wireframe     = true;
-							break;
-						}
-						default:
-						{
-							// case FLAT:
-							// case GOURAUD:
-							// case PHONG:
-		
-							this .primitiveMode = gl .TRIANGLES;
-							this .wireframe     = false;
-							break;
-						}
-					}	
+					// case Shading .FLAT:
+					// case Shading .GOURAUD:
+					// case Shading .PHONG:
 
+					this .primitiveMode = gl .TRIANGLES;
+					this .wireframe     = false;
 					break;
 				}
-			}
+			}	
 		},
 		traverse: function (type, renderObject)
 		{
 			switch (type)
 			{
 				case TraverseType .DISPLAY:
-					renderObject .getShaders () [this .getId ()] = this;
+					renderObject .getShaders () .set (this .getId (), this);
 					break;
 				default:
 					break;

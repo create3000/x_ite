@@ -111,8 +111,6 @@ function (Fields,
 		},
 		eventsProcessed: function ()
 		{
-			X3DTextureTransformNode .prototype .eventsProcessed .call (this);
-			
 			var
 				translation = this .translation_ .getValue (),
 				rotation    = this .rotation_ .getValue (),

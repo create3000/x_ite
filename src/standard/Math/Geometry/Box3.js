@@ -264,9 +264,9 @@ function (Triangle3,
 		{
 			var m = this .matrix;
 
-			x .set (m [0], m [1], m [2]);
-			y .set (m [4], m [5], m [6]);
-			z .set (m [8], m [9], m [10]);
+			x .assign (m .xAxis);
+			y .assign (m .yAxis);
+			z .assign (m .zAxis);
 
 			r1 .assign (y) .add (z);
 
@@ -309,9 +309,9 @@ function (Triangle3,
 		
 			var m = this .matrix;
 
-			x .set (m [0], m [1], m [2]);
-			y .set (m [4], m [5], m [6]);
-			z .set (m [8], m [9], m [10]);
+			x .assign (m .xAxis);
+			y .assign (m .yAxis);
+			z .assign (m .zAxis);
 		
 			r1 .assign (y) .add (z);
 
@@ -345,22 +345,153 @@ function (Triangle3,
 		{
 			var m = this .matrix;
 
-			axes [0] .set (m [0], m [1], m [2]);
-			axes [1] .set (m [4], m [5], m [6]);
-			axes [2] .set (m [8], m [9], m [10]);
+			axes [0] .assign (m .xAxis);
+			axes [1] .assign (m .yAxis);
+			axes [2] .assign (m .zAxis);
 
 			return axes;
 		},
-		getPlanes: function (planes)
+		getNormals: (function ()
 		{
-			var m = this .matrix;
+			var
+				x = new Vector3 (0, 0, 0),
+				y = new Vector3 (0, 0, 0),
+				z = new Vector3 (0, 0, 0);
 
-			planes [0] .set (m [0], m [1], m [2])  .cross (z);
-			planes [1] .set (m [4], m [5], m [6])  .cross (x);
-			planes [2] .set (m [8], m [9], m [10]) .cross (y);
-		
-			return planes;
-		},
+			var axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
+
+			return function (planes)
+			{
+				var m = this .matrix;
+
+				x .assign (m .xAxis);
+				y .assign (m .yAxis);
+				z .assign (m .zAxis);
+
+				if (x .norm () == 0 && y .norm () == 0 && z .norm () == 0)
+				{
+					x .assign (Vector3 .xAxis);
+					y .assign (Vector3 .yAxis);
+					z .assign (Vector3 .zAxis);
+				}
+				else
+				{
+					if (x .norm () == 0)
+					{
+						x .assign (y) .cross (z);
+
+						if (x .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								x .assign (axes [i]) .cross (y);
+
+								if (x .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (x .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								x .assign (axes [i]) .cross (z);
+
+								if (x .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (x .norm () == 0)
+							x .assign (Vector3 .xAxis);
+						else
+							x .normalize ();
+					}
+
+					if (y .norm () == 0)
+					{
+						y .assign (z) .cross (x);
+
+						if (y .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								y .assign (axes [i]) .cross (z);
+
+								if (y .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (y .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								y .assign (axes [i]) .cross (x);
+
+								if (y .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (y .norm () == 0)
+							y .assign (Vector3 .yAxis);
+						else
+							y .normalize ();
+					}
+
+					if (z .norm () == 0)
+					{
+						z .assign (x) .cross (y);
+
+						if (z .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								z .assign (axes [i]) .cross (x);
+
+								if (z .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (z .norm () == 0)
+						{
+							for (var i = 0; i < 3; ++ i)
+							{
+								z .assign (axes [i]) .cross (y);
+
+								if (z .norm () == 0)
+									continue;
+
+								break;
+							}
+						}
+
+						if (z .norm () == 0)
+							z .assign (Vector3 .zAxis);
+						else
+							z .normalize ();
+					}
+				}
+
+				planes [0] .assign (y) .cross (z) .normalize ();
+				planes [1] .assign (z) .cross (x) .normalize ();
+				planes [2] .assign (x) .cross (y) .normalize ();
+			
+				return planes;
+			};
+		})(),
 		isEmpty: function ()
 		{
 			return this .matrix [15] === 0;
@@ -416,12 +547,12 @@ function (Triangle3,
 		
 			// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
 		
-			if (SAT .isSeparated (this .getPlanes (planes), points1, points2))
+			if (SAT .isSeparated (this .getNormals (planes), points1, points2))
 				return false;
 		
 			// Test the three planes spanned by the normal vectors of the faces of the second parallelepiped.
 		
-			if (SAT .isSeparated (other .getPlanes (planes), points1, points2))
+			if (SAT .isSeparated (other .getNormals (planes), points1, points2))
 				return false;
 
 			// Test the nine other planes spanned by the edges of each parallelepiped.
@@ -463,7 +594,7 @@ function (Triangle3,
 
 			// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
 
-			if (SAT .isSeparated (this .getPlanes (planes), points1, triangle))
+			if (SAT .isSeparated (this .getNormals (planes), points1, triangle))
 				return false;
 
 			// Test the normal of the triangle.

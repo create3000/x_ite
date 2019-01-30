@@ -73,15 +73,16 @@ function ($,
 	{
 		constructor: X3DField,
 		_value: null,
-		_references: { },
-		_fieldInterests: { },
-		_fieldCallbacks: { },
-		_inputRoutes: { },
-		_outputRoutes: { },
 		_accessType: X3DConstants .initializeOnly,
 		_unit: null,
 		_set: false,
 		_uniformLocation: null,
+		_references: new Map (),
+		_fieldInterests: new Map (),
+		_fieldCallbacks: new Map (),
+		_inputRoutes: new Map (),
+		_outputRoutes: new Map (),
+		_routeCallbacks: new Map (),
 		clone: function ()
 		{
 			return this .copy ();
@@ -159,7 +160,7 @@ function ($,
 		hasReferences: function ()
 		{
 			if (this .hasOwnProperty ("_references"))
-				return ! $.isEmptyObject (this ._references);
+				return this ._references .size !== 0;
 
 			return false;
 		},
@@ -171,10 +172,10 @@ function ($,
 		{
 			var references = this .getReferences ();
 
-			if (references [reference .getId ()])
-				return;
+			if (references .has (reference .getId ()))
+				return; // throw ???
 
-			references [reference .getId ()] = reference;
+			references .set (reference .getId (), reference);
 
 			// Create IS relationship
 
@@ -200,7 +201,7 @@ function ($,
 		getReferences: function ()
 		{
 			if (! this .hasOwnProperty ("_references"))
-				this ._references = { };
+				this ._references = new Map ();
 
 			return this ._references;
 		},
@@ -208,10 +209,8 @@ function ($,
 		{
 			if (this .hasOwnProperty ("_references"))
 			{
-				for (var id in this ._references)
+				for (var reference of this ._references .values ())
 				{
-					var reference = this ._references [id];
-
 					switch (this .getAccessType () & reference .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
@@ -228,13 +227,13 @@ function ($,
 		addFieldInterest: function (field)
 		{
 			if (! this .hasOwnProperty ("_fieldInterests"))
-				this ._fieldInterests = { };
+				this ._fieldInterests = new Map ();
 
-			this ._fieldInterests [field .getId ()] = field;
+			this ._fieldInterests .set (field .getId (), field);
 		},
 		removeFieldInterest: function (field)
 		{
-			delete this ._fieldInterests [field .getId ()];
+			this ._fieldInterests .delete (field .getId ());
 		},
 		getFieldInterests: function ()
 		{
@@ -243,59 +242,94 @@ function ($,
 		addFieldCallback: function (string, object)
 		{
 			if (! this .hasOwnProperty ("_fieldCallbacks"))
-				this ._fieldCallbacks = { };
+				this ._fieldCallbacks = new Map ();
 
-			this ._fieldCallbacks [string] = object;
+			this ._fieldCallbacks .set (string, object);
 		},
 		removeFieldCallback: function (string)
 		{
-			delete this ._fieldCallbacks [string];
+			this ._fieldCallbacks .delete (string);
 		},
 		getFieldCallbacks: function ()
 		{
 			return this ._fieldCallbacks;
 		},
-		addOutputRoute: function (route)
-		{
-			if (! this .hasOwnProperty ("_outputRoutes"))
-				this ._outputRoutes = { };
-
-			this ._outputRoutes [route .getId ()] = route;
-		},
-		removeOutputRoute: function (route)
-		{
-			delete this ._outputRoutes [route .getId ()];
-		},
-		getOutputRoutes: function ()
-		{
-			return this ._outputRoutes;
-		},
 		addInputRoute: function (route)
 		{
 			if (! this .hasOwnProperty ("_inputRoutes"))
-				this ._inputRoutes = { };
+				this ._inputRoutes = new Map ();
 
-			this ._inputRoutes [route .getId ()] = route;
+			this ._inputRoutes .set (route .getId (), route);
+
+			this .processRouteCallbacks ();
 		},
 		removeInputRoute: function (route)
 		{
-			delete this ._inputRoutes [route .getId ()];
+			this ._inputRoutes .delete (route .getId ());
+
+			this .processRouteCallbacks ();
 		},
 		getInputRoutes: function ()
 		{
 			return this ._inputRoutes;
 		},
+		addOutputRoute: function (route)
+		{
+			if (! this .hasOwnProperty ("_outputRoutes"))
+				this ._outputRoutes = new Map ();
+
+			this ._outputRoutes .set (route .getId (), route);
+
+			this .processRouteCallbacks ();
+		},
+		removeOutputRoute: function (route)
+		{
+			this ._outputRoutes .delete (route .getId ());
+
+			this .processRouteCallbacks ();
+		},
+		getOutputRoutes: function ()
+		{
+			return this ._outputRoutes;
+		},
+		addRouteCallback: function (string, object)
+		{
+			if (! this .hasOwnProperty ("_routeCallbacks"))
+				this ._routeCallbacks = new Map ();
+
+			this ._routeCallbacks .set (string, object);
+		},
+		removeRouteCallback: function (string)
+		{
+			this ._routeCallbacks .delete (string);
+		},
+		getRouteCallbacks: function ()
+		{
+			return this ._routeCallbacks;
+		},
+		processRouteCallbacks: function ()
+		{
+			if (this ._routeCallbacks .size)
+			{
+				(new Map (this ._routeCallbacks)) .forEach (function (routeCallback)
+				{
+					routeCallback ();
+				});
+			}
+		},
 		processEvent: function (event)
 		{
-			if (event .sources [this .getId ()])
+			if (event .has (this .getId ()))
 				return;
 
-			event .sources [this .getId ()] = true;
+			event .add (this .getId ());
 
 			this .setTainted (false);
 
-			if (event .field !== this)
-				this .set (event .field .getValue (), event .field .length);
+			var field = event .field;
+
+			if (field !== this)
+				this .set (field .getValue (), field .length);
 
 			// Process interests
 
@@ -303,34 +337,48 @@ function ($,
 
 			// Process routes
 
-			var
-				fieldInterests = this ._fieldInterests,
-				first          = true;
+			var first = true;
 
-			for (var key in fieldInterests)
+			this ._fieldInterests .forEach (function (fieldInterest)
 			{
 				if (first)
 				{
 					first = false;
-					fieldInterests [key] .addEventObject (this, event);
+					fieldInterest .addEventObject (this, event);
 				}
 				else
-					fieldInterests [key] .addEventObject (this, Events .copy (event));
-			}
+					fieldInterest .addEventObject (this, Events .copy (event));
+			},
+			this);
 
 			if (first)
 			   Events .push (event);
 
 			// Process field callbacks
 
-			var fieldCallbacks = this ._fieldCallbacks;
-
-			for (var key in fieldCallbacks)
-				fieldCallbacks [key] (this .valueOf ());
+			if (this ._fieldCallbacks .size)
+			{
+				(new Map (this ._fieldCallbacks)) .forEach (function (fieldCallback)
+				{
+					fieldCallback (this .valueOf ());
+				},
+				this);
+			}
 		},
 		valueOf: function ()
 		{
 			return this;
+		},
+		fromString: function (string, scene)
+		{
+			var
+				Parser = require ("x_ite/Parser/Parser"),
+				parser = new Parser (scene);
+
+			parser .setUnits (!! scene);
+			parser .setInput (string);
+			parser .fieldValue (this);
+			this .addEvent ();
 		},
 	});
 

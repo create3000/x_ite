@@ -103,6 +103,25 @@ function (Fields,
 			this .vector = this .vector_ .getValue ();
 			this .length = this .vector_ .length;
 		},
+		set1Vector: function (index, vector)
+		{
+			this .vector_ [index] = vector;
+		},
+		get1Vector: function (index, result)
+		{
+			if (index < this .length)
+			{
+				const vector = this .vector;
+
+				index *= 3;
+
+				return result .set (vector [index], vector [index + 1], vector [index + 2]);
+			}
+			else
+			{
+				return result .set (0, 0, 0);
+			}
+		},
 		addVector: function (index, array)
 		{
 			if (index >= 0 && index < this .length)
@@ -111,7 +130,7 @@ function (Fields,
 
 				index *= 3;
 
-				array .push (vector [index + 0], vector [index + 1], vector [index + 2]);
+				array .push (vector [index], vector [index + 1], vector [index + 2]);
 			}
 			else
 			{

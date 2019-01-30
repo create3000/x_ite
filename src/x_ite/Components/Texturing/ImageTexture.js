@@ -152,7 +152,7 @@ function ($,
 		{
 			if (this .urlStack .length === 0)
 			{
-				this .clear ();
+				this .clearTexture ();
 				this .setLoadState (X3DConstants .FAILED_STATE);
 				return;
 			}
@@ -173,8 +173,8 @@ function ($,
 			{
 				if (! (this .URL .isLocal () || this .URL .host === "localhost"))
 				{
-					if (! URL .match (urls .fallbackExpression))
-						this .urlStack .unshift (urls .fallbackUrl + URL);
+					if (! URL .match (urls .getFallbackExpression ()))
+						this .urlStack .unshift (urls .getFallbackUrl (URL));
 				}
 			}
 

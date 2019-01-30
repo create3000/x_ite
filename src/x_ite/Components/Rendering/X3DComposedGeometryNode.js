@@ -60,10 +60,6 @@ function (X3DGeometryNode,
 {
 "use strict";
 
-	var
-		current = new Vector3 (0, 0, 0),
-		next    = new Vector3 (0, 0, 0);
-
 	function X3DComposedGeometryNode (executionContext)
 	{
 		X3DGeometryNode .call (this, executionContext);
@@ -83,11 +79,11 @@ function (X3DGeometryNode,
 		{
 			X3DGeometryNode .prototype .initialize .call (this);
 
-			this .attrib_   .addInterest ("set_attrib__", this);
-			this .color_    .addInterest ("set_color__", this);
+			this .attrib_   .addInterest ("set_attrib__",   this);
+			this .color_    .addInterest ("set_color__",    this);
 			this .texCoord_ .addInterest ("set_texCoord__", this);
-			this .normal_   .addInterest ("set_normal__", this);
-			this .coord_    .addInterest ("set_coord__", this);
+			this .normal_   .addInterest ("set_normal__",   this);
+			this .coord_    .addInterest ("set_coord__",    this);
 
 			this .set_attrib__ ();
 			this .set_color__ ();
@@ -116,7 +112,7 @@ function (X3DGeometryNode,
 			var attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("addNodeEvent", this);
+				attribNodes [i] .removeInterest ("requestRebuild", this);
 
 			attribNodes .length = 0;
 
@@ -129,13 +125,13 @@ function (X3DGeometryNode,
 			}
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("addNodeEvent", this);
+				attribNodes [i] .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("addNodeEvent", this);
+				this .colorNode .removeInterest ("requestRebuild",    this);
 				this .colorNode .removeInterest ("set_transparent__", this);
 			}
 
@@ -143,7 +139,7 @@ function (X3DGeometryNode,
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("addNodeEvent", this);
+				this .colorNode .addInterest ("requestRebuild",    this);
 				this .colorNode .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
@@ -158,34 +154,34 @@ function (X3DGeometryNode,
 		set_texCoord__: function ()
 		{
 			if (this .texCoordNode)
-				this .texCoordNode .removeInterest ("addNodeEvent", this);
+				this .texCoordNode .removeInterest ("requestRebuild", this);
 
 			this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
 
 			if (this .texCoordNode)
-				this .texCoordNode .addInterest ("addNodeEvent", this);
+				this .texCoordNode .addInterest ("requestRebuild", this);
 
 			this .setCurrentTexCoord (this .texCoordNode);
 		},
 		set_normal__: function ()
 		{
 			if (this .normalNode)
-				this .normalNode .removeInterest ("addNodeEvent", this);
+				this .normalNode .removeInterest ("requestRebuild", this);
 
 			this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
 
 			if (this .normalNode)
-				this .normalNode .addInterest ("addNodeEvent", this);
+				this .normalNode .addInterest ("requestRebuild", this);
 		},
 		set_coord__: function ()
 		{
 			if (this .coordNode)
-				this .coordNode .removeInterest ("addNodeEvent", this);
+				this .coordNode .removeInterest ("requestRebuild", this);
 
 			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
 			if (this .coordNode)
-				this .coordNode .addInterest ("addNodeEvent", this);
+				this .coordNode .addInterest ("requestRebuild", this);
 		},
 		getPolygonIndex: function (index)
 		{
@@ -289,12 +285,14 @@ function (X3DGeometryNode,
 		
 				for (var i = 0; i < polygonsSize; ++ i)
 				{
-					var index = this .getPolygonIndex (i);
+					var
+						index      = this .getPolygonIndex (i),
+						pointIndex = normalIndex [index];
 
-					if (! normalIndex [index])
-						normalIndex [index] = [ ];
+					if (! pointIndex)
+						pointIndex = normalIndex [index] = [ ];
 
-					normalIndex [index] .push (i);
+					pointIndex .push (i);
 				}
 
 				return this .refineNormals (normalIndex, normals, Math .PI);
@@ -311,7 +309,7 @@ function (X3DGeometryNode,
 
 			for (var i = 0; i < polygonsSize; i += verticesPerPolygon)
 			{
-				var normal = this .getPolygonNormal (verticesPerPolygon, coord);
+				var normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
 
 				if (cw)
 					normal .negate ();
@@ -322,30 +320,37 @@ function (X3DGeometryNode,
 
 			return normals;
 		},
-		getPolygonNormal: function (verticesPerPolygon, coord)
+		getPolygonNormal: (function ()
 		{
-			// Determine polygon normal.
-			// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
+			var
+				current = new Vector3 (0, 0, 0),
+				next    = new Vector3 (0, 0, 0);
 
-			var normal = new Vector3 (0, 0, 0);
-
-			coord .get1Point (this .getPolygonIndex (0), next);
-
-			for (var i = 0; i < verticesPerPolygon; ++ i)
+			return function (index, verticesPerPolygon, coord)
 			{
-				var tmp = current;
-				current = next;
-				next    = tmp;
+				// Determine polygon normal.
+				// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
+	
+				var normal = new Vector3 (0, 0, 0);
 
-				coord .get1Point (this .getPolygonIndex ((i + 1) % verticesPerPolygon), next);
+				coord .get1Point (this .getPolygonIndex (index), next);
 
-				normal .x += (current .y - next .y) * (current .z + next .z);
-				normal .y += (current .z - next .z) * (current .x + next .x);
-				normal .z += (current .x - next .x) * (current .y + next .y);
-			}
+				for (var i = 0; i < verticesPerPolygon; ++ i)
+				{
+					var tmp = current;
+					current = next;
+					next    = tmp;
 
-			return normal .normalize ();
-		},
+					coord .get1Point (this .getPolygonIndex (index + (i + 1) % verticesPerPolygon), next);
+
+					normal .x += (current .y - next .y) * (current .z + next .z);
+					normal .y += (current .z - next .z) * (current .x + next .x);
+					normal .z += (current .x - next .x) * (current .y + next .y);
+				}
+
+				return normal .normalize ();
+			};
+		})(),
 	});
 
 	return X3DComposedGeometryNode;

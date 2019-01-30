@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Base/X3DEventObject",
 	"x_ite/Base/Events",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          X3DEventObject,
+function (X3DEventObject,
           Events,
           X3DFieldDefinition,
           FieldDefinitionArray,
@@ -82,9 +80,9 @@ function ($,
 
 		this ._executionContext  = executionContext;
 		this ._type              = [ X3DConstants .X3DBaseNode ];
-		this ._fields            = { };
-		this ._predefinedFields  = { };
-		this ._userDefinedFields = { };
+		this ._fields            = new Map ();
+		this ._predefinedFields  = new Map ();
+		this ._userDefinedFields = new Map ();
 		this ._cloneCount        = 0;
 
 		// Setup fields.
@@ -111,6 +109,10 @@ function ($,
 
 			this ._executionContext = value;
 		},
+		getExecutionContext: function ()
+		{
+			return this ._executionContext;
+		},
 		getScene: function ()
 		{
 			var executionContext = this ._executionContext;
@@ -120,9 +122,14 @@ function ($,
 
 			return executionContext;
 		},
-		getExecutionContext: function ()
+		getMasterScene: function ()
 		{
-			return this ._executionContext;
+			var scene = this ._executionContext .getScene ();
+
+			while (! scene .isMasterContext ())
+				scene = scene .getScene ();
+
+			return scene;
 		},
 		addType: function (value)
 		{
@@ -131,6 +138,18 @@ function ($,
 		getType: function ()
 		{
 			return this ._type;
+		},
+		isType: function (types)
+		{
+			var type = this ._type;
+
+			for (var i = type .length - 1; i >= 0; -- i)
+			{
+				if (types .has (type [i]))
+					return true;
+			}
+
+			return false;
 		},
 		getInnerNode: function ()
 		{
@@ -207,6 +226,10 @@ function ($,
 				}
 			}
 		},
+		setInitialized: function (value)
+		{
+			this ._initialized = value;
+		},
 		isInitialized: function ()
 		{
 			return this ._initialized;
@@ -222,7 +245,7 @@ function ($,
 
 			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
 			{
-				var field = this ._fields [fieldDefinitions [i] .name];
+				var field = this ._fields .get (fieldDefinitions [i] .name);
 				field .updateReferences ();
 				field .setTainted (false);
 			}
@@ -230,7 +253,6 @@ function ($,
 			this .initialize ();
 		},
 		initialize: function () { },
-		eventsProcessed: function () { },
 		create: function (executionContext)
 		{
 			return new (this .constructor) (executionContext);
@@ -238,6 +260,17 @@ function ($,
 		copy: function (executionContext)
 		{
 			// First try to get a named node with the node's name.
+
+			function needsName (baseNode)
+			{
+				if (baseNode .getCloneCount () > 1)
+					return true;
+
+				if (baseNode .hasRoutes ())
+					return true;
+
+				return false;
+			}
 
 			var name = this .getName ();
 		
@@ -249,6 +282,11 @@ function ($,
 				}
 				catch (error)
 				{ }
+			}
+			else
+			{
+				if (needsName (this))
+					this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), this);
 			}
 
 			// Create copy.
@@ -262,13 +300,11 @@ function ($,
 
 			var predefinedFields = this .getPredefinedFields ();
 
-			for (var name in predefinedFields)
+			for (var sourceField of predefinedFields .values ())
 			{
 				try
 				{
-					var
-						sourceField = predefinedFields [name],
-						destfield   = copy .getField (name);
+					var destfield = copy .getField (sourceField .getName ());
 
 					destfield .setSet (sourceField .getSet ());
 
@@ -280,12 +316,10 @@ function ($,
 						var references = sourceField .getReferences ();
 
 						// IS relationship
-						for (var id in references)
+						for (var originalReference of references .values ())
 						{
 							try
 							{
-								var originalReference = references [id];
-	
 								destfield .addReference (executionContext .getField (originalReference .getName ()));
 							}
 							catch (error)
@@ -321,11 +355,9 @@ function ($,
 
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in userDefinedFields)
+			for (var sourceField of userDefinedFields .values ())
 			{
-				var
-					sourceField = userDefinedFields [name],
-					destfield   = sourceField .copy (executionContext);
+				var destfield = sourceField .copy (executionContext);
 
 				copy .addUserDefinedField (sourceField .getAccessType (),
 				                           sourceField .getName (),
@@ -339,12 +371,10 @@ function ($,
 
 					var references = sourceField .getReferences ();
 
-					for (var id in references)
+					for (var originalReference of references .values ())
 					{
 						try
 						{
-							var originalReference = references [id];
-	
 							destfield .addReference (executionContext .getField (originalReference .getName ()));
 						}
 						catch (error)
@@ -356,6 +386,23 @@ function ($,
 			}
 
 			executionContext .addUninitializedNode (copy);
+			return copy;
+		},
+		flatCopy: function (executionContext)
+		{
+			var
+				copy             = this .create (executionContext || this .getExecutionContext ()),
+				fieldDefinitions = this .fieldDefinitions .getValue ();
+
+			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+			{
+				var field = this ._fields .get (fieldDefinitions [i] .name);
+
+				copy ._fields .get (fieldDefinitions [i] .name) .assign (field);
+			}
+
+			copy .setup ();
+
 			return copy;
 		},
 		addChildObjects: function (name, field)
@@ -392,24 +439,18 @@ function ($,
 		},
 		setField: function (name, field, userDefined)
 		{
-			if (field .getAccessType () === X3DConstants .inputOutput)
-			{
-				this ._fields ["set_" + name]     = field;
-				this ._fields [name + "_changed"] = field;
-			}
-
-			this ._fields [name] = field;
+			this ._fields .set (name, field);
 
 			if (! this .getPrivate ())
 				field .addClones (1);
 
 			if (userDefined)
 			{
-				this ._userDefinedFields [name] = field;
+				this ._userDefinedFields .set (name, field);
 				return;
 			}
 
-			this ._predefinedFields [name] = field;
+			this ._predefinedFields .set (name, field);
 
 			Object .defineProperty (this, name + "_",
 			{
@@ -421,18 +462,12 @@ function ($,
 		},
 		removeField: function (name)
 		{
-			var field = this ._fields [name];
+			var field = this ._fields .get (name);
 
 			if (field)
 			{
-				if (field .getAccessType () === X3DConstants .inputOutput)
-				{
-					delete this ._fields ["set_" + field .getName ()];
-					delete this ._fields [field .getName () + "_changed"];
-				}
-	
-				delete this ._fields [name];
-				delete this ._userDefinedFields [name];
+				this ._fields            .delete (name);
+				this ._userDefinedFields .delete (name);
 	
 				var fieldDefinitions = this .fieldDefinitions .getValue ();
 	
@@ -449,15 +484,42 @@ function ($,
 					field .removeClones (1);
 			}
 		},
-		getField: function (name)
+		getField: (function ()
 		{
-			var field = this ._fields [name];
-			
-			if (field)
-				return field;
+			var
+				set_re     = /^set_(.*?)$/,
+				changed_re = /^(.*?)_changed$/;
 
-			throw new Error ("Unkown field '" + name + "' in node class " + this .getTypeName () + ".");
-		},
+			return function (name)
+			{
+				var field = this ._fields .get (name);
+
+				if (field)
+					return field;
+
+				var match = name .match (set_re);
+
+				if (match)
+				{
+					field = this ._fields .get (match [1]);
+	
+					if (field && field .getAccessType () === X3DConstants .inputOutput)
+						return field;
+				}
+
+				var match = name .match (changed_re);
+
+				if (match)
+				{
+					field = this ._fields .get (match [1]);
+
+					if (field && field .getAccessType () === X3DConstants .inputOutput)
+						return field;	
+				}
+
+				throw new Error ("Unkown field '" + name + "' in node class " + this .getTypeName () + ".");
+			};
+		})(),
 		getFieldDefinitions: function ()
 		{
 			return this .fieldDefinitions;
@@ -468,7 +530,7 @@ function ($,
 		},
 		addUserDefinedField: function (accessType, name, field)
 		{
-			if (this ._fields [name])
+			if (this ._fields .has (name))
 				this .removeField (name);
 
 			field .setTainted (true);
@@ -488,17 +550,34 @@ function ($,
 		{
 			return this ._predefinedFields;
 		},
-		getChangedFields: function ()
+		getChangedFields: function (extented)
 		{
+			/* param routes: also returen fields with routes */
+
 			var
 				changedFields    = [ ],
 				predefinedFields = this .getPredefinedFields ();
-		
-			for (var name in predefinedFields)
-			{
-				var field = predefinedFields [name];
 
-				if ($.isEmptyObject (field .getReferences ()))
+			if (extented)
+			{
+				var userDefinedFields = this .getUserDefinedFields ();
+
+				for (var field of userDefinedFields .values ())
+					changedFields .push (field);
+			}
+
+			for (var field of predefinedFields .values ())
+			{
+				if (extented)
+				{
+					if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
+					{
+						changedFields .push (field);
+						continue;
+					}
+				}
+
+				if (field .getReferences () .size === 0)
 				{
 					if (! field .isInitializable ())
 						continue;
@@ -523,7 +602,16 @@ function ($,
 		},
 		getFields: function ()
 		{
-			return this ._fields;
+			var
+				fields           = [ ],
+				fieldDefinitions = this .getFieldDefinitions ();
+
+			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+			{
+				fields .push (this .getField (fieldDefinitions [i] .name));
+			}
+
+			return fields;
 		},
 		getSourceText: function ()
 		{
@@ -539,7 +627,7 @@ function ($,
 			{
 				var field = this .getField (fieldDefinitions [i] .name);
 
-				if ($.isEmptyObject (field .getInputRoutes ()) && $.isEmptyObject (field .getOutputRoutes ()))
+				if (field .getInputRoutes () .size === 0 && field .getOutputRoutes () .size === 0)
 					continue;
 
 				return true;
@@ -694,15 +782,15 @@ function ($,
 
 				if (generator .ExecutionContext ())
 				{
-					if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
+					if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 					{
 						var
 							initializableReference = false,
 							fieldReferences        = field .getReferences ();
 		
-						for (var id in fieldReferences)
+						for (var fieldReference of fieldReferences .values ())
 						{
-							initializableReference |= fieldReferences [id] .isInitializable ();
+							initializableReference |= fieldReference .isInitializable ();
 						}
 
 						if (! initializableReference)
@@ -713,7 +801,7 @@ function ($,
 				// If we have no execution context we are not in a proto and must not generate IS references the same is true
 				// if the node is a shared node as the node does not belong to the execution context.
 
-				if ($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext () || mustOutputValue)
+				if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || mustOutputValue)
 				{
 					if (mustOutputValue)
 						references .push (field);
@@ -755,7 +843,7 @@ function ($,
 			generator .DecIndent ();
 			generator .DecIndent ();
 	
-			if ((! this .hasUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && ! cdata)
+			if ((! this .hasUserDefinedFields () || userDefinedFields .size === 0) && references .length === 0 && childNodes .length === 0 && ! cdata)
 			{
 				stream .string += "/>";
 			}
@@ -767,10 +855,8 @@ function ($,
 
 				if (this .hasUserDefinedFields ())
 				{
-					for (var name in userDefinedFields)
+					for (var field of userDefinedFields .values ())
 					{
-						var field = userDefinedFields [name];
-
 						stream .string += generator .Indent ();
 						stream .string += "<field";
 						stream .string += " ";
@@ -791,22 +877,22 @@ function ($,
 
 						var mustOutputValue = false;
 
-						if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
+						if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 						{
 							var
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
-							for (var id in fieldReferences)
+							for (var fieldReference of fieldReferences .values ())
 							{
-								initializableReference |= fieldReferences [id] .isInitializable ();
+								initializableReference |= fieldReference .isInitializable ();
 							}
 
 							if (! initializableReference)
 								mustOutputValue = true;
 						}
 
-						if (($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext ()) || mustOutputValue)
+						if ((field .getReferences () .size === 0 || ! generator .ExecutionContext ()) || mustOutputValue)
 						{
 							if (mustOutputValue && generator .ExecutionContext ())
 								references .push (field);
@@ -824,7 +910,7 @@ function ($,
 									case X3DConstants .SFNode:
 									case X3DConstants .MFNode:
 									{
-										generator .PushContainerField (null);
+										generator .PushContainerField (field);
 
 										stream .string += ">\n";
 
@@ -878,12 +964,10 @@ function ($,
 					{
 						var
 							field       = references [i],
-							protoFields = field .getReferences ()
+							protoFields = field .getReferences ();
 
-						for (var id in protoFields)
+						for (var protoField of protoFields .values ())
 						{
-							var protoField = protoFields [id];
-
 							stream .string += generator .Indent ();
 							stream .string += "<connect";
 							stream .string += " ";
@@ -950,28 +1034,24 @@ function ($,
 				predefinedFields  = this .getPredefinedFields (),
 				userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in predefinedFields)
-				predefinedFields [name] .dispose ();
+			for (var predefinedField of predefinedFields .values ())
+				predefinedField .dispose ();
 
-			for (var name in userDefinedFields)
-				userDefinedFields [name] .dispose ();
+			for (var userDefinedField of userDefinedFields .values ())
+				userDefinedField .dispose ();
 
 			// Remove node from entire scene graph.
 
 			var firstParents = this .getParents ();
 
-			for (var firstId in firstParents)
+			for (var firstParent of firstParents .values ())
 			{
-				var firstParent = firstParents [firstId];
-
 				if (firstParent instanceof Fields .SFNode)
 				{
 					var secondParents = firstParent .getParents ();
 
-					for (var secondId in secondParents)
+					for (var secondParent of secondParents .values ())
 					{
-						var secondParent = secondParents [secondId];
-
 						if (secondParent instanceof Fields .MFNode)
 						{
 							var length = secondParent .length;

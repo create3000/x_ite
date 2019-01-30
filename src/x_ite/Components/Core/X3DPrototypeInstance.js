@@ -152,6 +152,10 @@ function (FieldDefinitionArray,
 							if (field .hasReferences ())
 								continue;
 
+							if (field .equals (protoField))
+								continue;
+
+							// If default value of protoField is different from field update default value for field.
 							field .setValue (protoField);
 						}
 						catch (error)
@@ -172,7 +176,9 @@ function (FieldDefinitionArray,
 
 				if (this .isInitialized ())
 				{
+					this .setInitialized (false);
 					this .setup ();
+					this .setTainted (false);
 					X3DChildObject .prototype .addEvent .call (this);
 				}
 			}
@@ -404,15 +410,15 @@ function (FieldDefinitionArray,
 
 					if (generator .ExecutionContext ())
 					{
-						if (field .getAccessType () === X3DConstants .inputOutput && ! $.isEmptyObject (field .getReferences ()))
+						if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 						{
 							var
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
-							for (var id in fieldReferences)
+							for (var fieldReference of fieldReferences .values ())
 							{
-								initializableReference |= fieldReferences [id] .isInitializable ();
+								initializableReference |= fieldReference .isInitializable ();
 							}
 
 							if (! initializableReference)
@@ -423,7 +429,7 @@ function (FieldDefinitionArray,
 					// If we have no execution context we are not in a proto and must not generate IS references the same is true
 					// if the node is a shared node as the node does not belong to the execution context.
 
-					if ($.isEmptyObject (field .getReferences ()) || ! generator .ExecutionContext () || mustOutputValue)
+					if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || mustOutputValue)
 					{
 						if (mustOutputValue)
 							references .push (field);
@@ -445,6 +451,8 @@ function (FieldDefinitionArray,
 								}
 								else
 								{
+									generator .PushContainerField (field);
+
 									stream .string += ">\n";
 
 									generator .IncIndent ();
@@ -457,6 +465,8 @@ function (FieldDefinitionArray,
 
 									stream .string += generator .Indent ();
 									stream .string += "</fieldValue>\n";
+
+									generator .PopContainerField ();
 								}
 
 								break;
@@ -465,11 +475,13 @@ function (FieldDefinitionArray,
 							{
 								if (field .getValue () !== null)
 								{
+									generator .PushContainerField (field);
+
 									stream .string += generator .Indent ();
 									stream .string += "<fieldValue";
 									stream .string += " ";
 									stream .string += "name='";
-									stream .string += generator .XMLEncode (field .getName ())
+									stream .string += generator .XMLEncode (field .getName ());
 									stream .string += "'";
 									stream .string += ">\n";
 									
@@ -482,7 +494,9 @@ function (FieldDefinitionArray,
 									generator .DecIndent ();
 
 									stream .string += generator .Indent ();
-									stream .string += "</fieldValue>\n";		
+									stream .string += "</fieldValue>\n";	
+	
+									generator .PopContainerField ();
 									break;
 								}
 		
@@ -494,7 +508,7 @@ function (FieldDefinitionArray,
 								stream .string += "<fieldValue";
 								stream .string += " ";
 								stream .string += "name='";
-								stream .string += generator .XMLEncode (field .getName ())
+								stream .string += generator .XMLEncode (field .getName ());
 								stream .string += "'";
 								stream .string += " ";
 								stream .string += "value='";
@@ -525,12 +539,10 @@ function (FieldDefinitionArray,
 					{
 						var
 							field       = references [i],
-							protoFields = field .getReferences ()
+							protoFields = field .getReferences ();
 
-						for (var id in protoFields)
+						for (var protoField of protoFields .values ())
 						{
-							var protoField = protoFields [id];
-
 							stream .string += generator .Indent ();
 							stream .string += "<connect";
 							stream .string += " ";

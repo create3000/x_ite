@@ -57,34 +57,50 @@ function (X3DObject)
 	function X3DChildObject ()
 	{
 		X3DObject .call (this);
-
-		this ._parents = { };
 	}
 
 	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: X3DChildObject,
+		_tainted: false,
+		_parents: new Map (),
+		setTainted: function (value)
+		{
+			this ._tainted = value;
+		},
+		getTainted: function ()
+		{
+			return this ._tainted;
+		},
 		addEvent: function ()
 		{
-			var parents = this ._parents;
+			if (this ._tainted)
+				return;
 
-			for (var id in parents)
-				parents [id] .addEvent (this);
+			this ._parents .forEach (function (parent)
+			{
+				parent .addEvent (this);
+			},
+			this);
 		},
 		addEventObject: function (field, event)
 		{
-			var parents = this ._parents;
-
-			for (var id in parents)
-				parents [id] .addEventObject (this, event);
+			this ._parents .forEach (function (parent)
+			{
+				parent .addEventObject (this, event);
+			},
+			this);
 		},
 		addParent: function (parent)
 		{
-			this ._parents [parent .getId ()] = parent;
+			if (! this .hasOwnProperty ("_parents"))
+				this ._parents = new Map ();
+
+			this ._parents .set (parent .getId (), parent);
 		},
 		removeParent: function (parent)
 		{
-			delete this ._parents [parent .getId ()];
+			this ._parents .delete (parent .getId ());
 		},
 		getParents: function ()
 		{
@@ -94,10 +110,7 @@ function (X3DObject)
 		removeClones: Function .prototype,
 		dispose: function ()
 		{
-//			var parents = this ._parents;
-//
-//			for (var key in parents)
-//				delete parents [key];
+			this ._parents .clear ();
 
 			X3DObject .prototype .dispose .call (this);
 		},

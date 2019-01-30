@@ -51,188 +51,84 @@ var Bookmarks = (function ()
 {
 "use strict";
 
-	var mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
-
-	function shuffle (array)
+	function Bookmarks (browser, element, filesPerPage)
 	{
-		var i = array .length;
-
-		while (i > 1)
-		{
-			var
-				a = -- i,
-				b = Math .floor (Math .random () * a),
-				t = array [a];
-
-			array [a] = array [b];
-			array [b] = t;
-		}
-
-		return array;
-	}
-
-	function Bookmarks (browser, element, bookmarks, filesPerPage)
-	{
-		var index = browser .getDataStorage () ["Bookmarks.pageIndex"];
-
-		this .browser         = browser;
-		this .element         = element;
-		this .bookmarks       = bookmarks;
-		this .filesPerPage    = filesPerPage;
-		this .index           = index || 0;
-		this .randomBookmarks = [ ];
+		this .browser = browser;
+		this .element = element;
 	}
 
 	Bookmarks .prototype =
 	{
-		setup: function ()
+		setup: function (array)
 		{
-			var
-				bookmarks    = this .bookmarks .slice (),
-				filesPerPage = this .filesPerPage,
-				index        = this .index,
-				pages        = [ ];
+			for (var a = 0; a < array .length; ++ a)
+			{
+				var
+					bookmarks = array [a],
+					server    = bookmarks .server;
 
-			if (mobile)
-				bookmarks = bookmarks .filter (function (bookmark) { return bookmark .mobile; });
+				for (var i = 0, length = bookmarks .length; i < length; ++ i)
+				{
+					var
+						bookmark  = bookmarks [i],
+						component = bookmark .component,
+						test      = bookmark .test,
+						path      = bookmark .path;
+	
+					if (test)
+					{
+						var element = $('<span/>')
+							.addClass ('example-box')
+							.attr ('title', component + ' » ' + test)
+							.append ($("<a/>")
+								.addClass ('display-example')
+								.attr ('href', server + '/' + component + '/' + test + '/' + test + '.x3d')
+								.attr ('style', 'background-image:url(' + server + '/' + component + '/' + test + '/screenshot-small.png)')
+								.click (this .loadURL .bind (this, server + '/' + component + '/' + test + '/' + test + '.x3d')));
+					}
+					else if (path)
+					{
+						if (! path .match (/\.(?:x3d|x3dz|x3dv|x3dvz|x3dj|x3djz|wrl|wrz)$/))
+							continue;
 
-			while (bookmarks .length)
-				pages .push (bookmarks .splice (0, filesPerPage || 20));
+						var basename = path .match (/([^\/]+)\.\w+$/);
+						var name     = basename [1] .replace (/([A-Z]+)/g, ' $1');
 
-			this .index = Math .min (index, pages .length - 1);
-			this .pages = pages;
+						var element = $('<span/>')
+							.addClass ('example-box')
+							.attr ('title', path)
+							.append ($("<a/>")
+								.addClass ('display-example')
+								.attr ('href', server + '/' + path)
+								.click (this .loadURL .bind (this, server + '/' + path))
+								.text (name));
+					}
+					else if (component)
+					{
+						var element = $('<span/>')
+							.addClass ('example-box')
+							.attr ('title', path)
+							.addClass ('display-component')
+							.text (component);
+					}
 
-			this .next (0);
-		},
-		setFilesPerPage: function (filesPerPage)
-		{
-			var first = this .filesPerPage * this .index;
-
-			this .filesPerPage = filesPerPage;
-			this .index = parseInt (first / this .filesPerPage);
-			this .setup ();
+					this .element .append (element);
+				}
+			}
 		},
 		restore: function (first)
 		{
-			var url = this .browser .getDataStorage () ["Bookmarks.url"];
+			var url = this .browser .getLocalStorage () ["Bookmarks.url"];
 
 			if (url)
 				this .loadURL (url);
 			else
 				this .loadURL (first);
 		},
-		loadURL: function (url, li)
+		loadURL: function (url)
 		{
-			$(this .element) .find (".bookmark-selected") .removeClass ("bookmark-selected");
-
-			if (li)
-				li .addClass ("bookmark-selected");
-
-			this .currentUrl = url;
-
-			this .browser .getDataStorage () ["Bookmarks.url"] = url;
-
+			this .browser .getLocalStorage () ["Bookmarks.url"] = url;
 			this .browser .loadURL (new X3D .MFString (url), new X3D .MFString ());
-
-			return false;
-		},
-		next: function (n)
-		{
-			this .element .empty ();
-
-			this .index = (this .index + this .pages .length + n) % this .pages .length;
-
-			this .browser .getDataStorage () ["Bookmarks.pageIndex"] = this .index;
-
-			var ul = $("<ul></ul>") .addClass ("bookmark-list") .appendTo (this .element);
-
-			var previous = $("<li></li>")
-				.addClass ("bookmark")
-				.addClass ("bookmark-previous")
-				.appendTo (ul);
-
-			$("<a></a>")
-				.attr ("href", "previous")
-				.click (this .next .bind (this, -1))
-				.html ("<span>previous</span>")
-				.appendTo (previous);
-
-			var currentUrl = this .browser .getDataStorage () ["Bookmarks.url"] ;
-
-			this .pages [this .index] .forEach (function (item)
-			{
-				var li = $("<li></li>") .addClass ("bookmark") .appendTo (ul);
-
-				if (item .url)
-				{
-					var
-						url     = item .url [0],
-						archive = item .archive;
-
-					$("<a></a>")
-						.attr ("href", url)
-						.attr ("title", url)
-						.click (this .loadURL .bind (this, item .url, li))
-						.text (item .name)
-						.addClass ("bookmark-link")
-						.appendTo (li);
-
-					if (archive)
-					{
-						$("<a></a>")
-							.attr ("href", archive)
-							.attr ("title", archive)
-							.text ("Download")
-							.addClass ("bookmark-archive")
-							.appendTo (li);
-					}
-
-					if (url == currentUrl)
-						li .addClass ("bookmark-selected");
-				}
-				else
-				{
-					li .addClass ("bookmark-section");
-
-					$("<span></span>")
-						.text (item .name)
-						.appendTo (li);
-				}
-			},
-			this);
-
-			var next = $("<li></li>")
-				.addClass ("bookmark")
-				.addClass ("bookmark-next")
-				.appendTo (ul);
-
-			$("<a></a>")
-				.attr ("href", "next")
-				.click (this .next .bind (this, 1))
-				.html ("<span>next</span>")
-				.appendTo (next);
-
-			return false;
-		},
-		random: function ()
-		{
-			if (this .randomBookmarks .length === 0)
-			{
-				for (var p = 0; p < this .pages .length; ++ p)
-				{
-					var page = this .pages [p];
-
-					for (var w = 0; w < page .length; ++ w)
-					{
-						if (page [w] .url)
-							this .randomBookmarks .push (page [w]);
-					}
-				}
-
-				shuffle (this .randomBookmarks);
-			}
-
-			this .loadURL (this .randomBookmarks .pop () .url);
 			return false;
 		},
 	};

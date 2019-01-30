@@ -46,6 +46,18 @@
  *
  ******************************************************************************/
 
+var getScriptURL = (function ()
+{
+	var
+		scripts = document .getElementsByTagName ('script'),
+		src     = scripts [scripts .length - 1] .src;
+	
+	return function ()
+	{
+		return src;
+	};
+})();
+
 (function ()
 {
 "use strict";
@@ -75,24 +87,23 @@
 	function noConflict ()
 	{
 		if (window .X3D === X_ITE)
-			window .X3D = X3D_;
+		{
+			if (X3D_ === undefined)
+				delete window .X3D;
+			else
+				window .X3D = X3D_;
+		}
 
 		return X_ITE;
 	}
-
-	require (["jquery"],
-	function ($)
-	{
-		$ .noConflict (true);
-	});
 
 	var
 		X3D_       = window .X3D,
 		PrivateX3D = null;
 
-	X_ITE .noConfict = noConflict;
-	X_ITE .require   = require;
-	X_ITE .define    = define;
+	X_ITE .noConflict = noConflict;
+	X_ITE .require    = require;
+	X_ITE .define     = define;
 
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
@@ -107,14 +118,15 @@
 		callbacks = [ ],
 		fallbacks = [ ];
 
-	require (["x_ite/X3D"],
-	function (X3D)
+	require (["jquery", "x_ite/X3D"],
+	function ($, X3D)
 	{
+		$ .noConflict (true);
+
 		// Now assign real X3D.
 		PrivateX3D = X3D;
 
-		for (var key in X3D)
-			X_ITE [key] = X3D [key];
+		Object .assign (X_ITE, X3D);
 
 		// Initialize all X3DCanvas tags.
 		X3D (); 

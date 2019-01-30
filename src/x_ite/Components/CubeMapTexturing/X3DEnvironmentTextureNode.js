@@ -115,6 +115,22 @@ function (X3DTextureNode,
 			gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
 			gl .uniform1iv (shaderObject .x3d_TextureType, shaderObject .textureTypeArray); // TODO: Put this in X3DProgramableShaderObject
 		},
+		clearTexture: (function ()
+		{
+			var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+
+			return function ()
+			{
+				var
+					gl      = this .getBrowser () .getContext (),
+					targets = this .getTargets ();
+
+				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+
+				for (var i = 0, length = targets .length; i < length; ++ i)
+					gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+			};
+		})(),
 	});
 
 	return X3DEnvironmentTextureNode;

@@ -52,46 +52,61 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Grouping/X3DGroupingNode",
+	"x_ite/Components/Grouping/X3DTransformNode",
+	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
-          X3DConstants)
+          X3DTransformNode, 
+          TraverseType, 
+          X3DConstants,
+          X3DCast,
+          Matrix4)
 {
 "use strict";
 
 	function HAnimJoint (executionContext)
 	{
-		X3DGroupingNode .call (this, executionContext);
+		X3DTransformNode .call (this, executionContext);
 
 		this .addType (X3DConstants .HAnimJoint);
+
+		this .setAllowedTypes (X3DConstants .HAnimJoint,
+		                       X3DConstants .HAnimSegment,
+		                       X3DConstants .HAnimSite);
+
+		this .displacerNodes = [ ];
+		this .modelMatrix    = new Matrix4 ();
 	}
 
-	HAnimJoint .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+	HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 	{
 		constructor: HAnimJoint,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "llimit",           new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "ulimit",           new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "limitOrientation", new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "stiffness",        new Fields .MFFloat (0, 0, 0)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoordIndex",   new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoordWeight",  new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "displacers",       new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "displacers",       new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "limitOrientation", new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "llimit",           new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoordIndex",   new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoordWeight",  new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "stiffness",        new Fields .MFFloat (0, 0, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "ulimit",           new Fields .MFFloat ()),
 		]),
 		getTypeName: function ()
 		{
@@ -105,6 +120,80 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DTransformNode .prototype .initialize .call (this);
+
+			this .displacers_ .addInterest ("set_displacers__", this);
+
+			this .set_displacers__ ();
+		},
+		setCameraObject: function (value)
+		{
+			X3DTransformNode .prototype .setCameraObject .call (this, value || !! this .skinCoordIndex_ .length);
+		},
+		getModelMatrix: function ()
+		{
+			return this .modelMatrix;
+		},
+		getDisplacers: function ()
+		{
+			return this .displacerNodes;
+		},
+		set_displacers__: function ()
+		{
+			var displacerNodes = this .displacerNodes;
+
+			displacerNodes .length = 0;
+
+			for (var i = 0, length = this .displacers_ .length; i < length; ++ i)
+			{
+				var displacerNode = X3DCast (X3DConstants .HAnimDisplacer, this .displacers_ [i]);
+
+				if (displacerNode)
+					displacerNodes .push (displacerNode);
+			}
+		},
+		getTraverse: (function ()
+		{
+			var base = X3DTransformNode .prototype .getTraverse ();
+
+			function traverse (type, renderObject)
+			{
+				if (type === TraverseType .CAMERA)
+					this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
+
+				base .call (this, type, renderObject);
+			}
+
+			return function ()
+			{
+				if (this .skinCoordIndex_ .length)
+					return traverse;
+
+				return base;
+			};
+		})(),
+		getGroupTraverse: (function ()
+		{
+			var base = X3DTransformNode .prototype .getGroupTraverse ();
+
+			function traverse (type, renderObject)
+			{
+				if (type === TraverseType .CAMERA)
+					this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+
+				base .call (this, type, renderObject);
+			}
+
+			return function ()
+			{
+				if (this .skinCoordIndex_ .length)
+					return traverse;
+
+				return base;
+			};
+		})(),
 	});
 
 	return HAnimJoint;

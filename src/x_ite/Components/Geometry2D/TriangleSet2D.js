@@ -105,7 +105,7 @@ function (Fields,
 			for (var i = 0, length = this .vertices_ .length * 2; i < length; i += 2)
 			{
 				normalArray .push (0, 0, 1);
-				vertexArray .push (vertices [i + 0], vertices [i + 1], 0, 1);
+				vertexArray .push (vertices [i], vertices [i + 1], 0, 1);
 			}
 
 			this .setSolid (this .solid_ .getValue ());

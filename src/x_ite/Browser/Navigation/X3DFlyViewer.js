@@ -46,12 +46,11 @@
  *
  ******************************************************************************/
 
-﻿
+
 define ([
 	"jquery",
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Followers/OrientationChaser",
-	"x_ite/Components/Geospatial/GeoViewpoint",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -61,7 +60,6 @@ define ([
 function ($,
           X3DViewer,
           OrientationChaser,
-          GeoViewpoint,
           Vector3,
           Rotation4,
           Matrix4,
@@ -112,16 +110,16 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   canvas  = browser .getCanvas ();
+			   element = browser .getElement ();
 
 			// Bind pointing device events.
 
-			canvas .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
-			canvas .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
-			canvas .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
+			element .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
+			element .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
+			element .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
 
-			canvas .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
-			canvas .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
+			element .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
+			element .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
 
 			browser .controlKey_ .addInterest ("set_controlKey_", this);
 
@@ -149,7 +147,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 			
@@ -251,7 +249,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getCanvas () .offset (),
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 			
@@ -267,9 +265,7 @@ function ($,
 
 						// Look around
 
-						var
-							viewpoint = this .getActiveViewpoint (),
-							toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+						var toVector = this .trackballProjectToSphere (x, y, this .toVector);
 
 						this .addRotation (this .fromVector, toVector);
 						this .fromVector .assign (toVector);
@@ -465,7 +461,7 @@ function ($,
 
 				// Straighten horizon of userOrientation.
 
-				if (! (viewpoint instanceof GeoViewpoint))
+				if (viewpoint .getTypeName () !== "GeoViewpoint")
 						viewpoint .straightenHorizon (userOrientation);
 
 				// Determine orientationOffset.
@@ -604,7 +600,7 @@ function ($,
 						.multRight (viewpoint .getOrientation ())
 						.multRight (this .orientationChaser .set_destination_ .getValue ());
 
-					if (! (viewpoint instanceof GeoViewpoint))
+					if (viewpoint .getTypeName () !== "GeoViewpoint")
 						viewpoint .straightenHorizon (userOrientation);
 	
 					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
@@ -617,7 +613,7 @@ function ($,
 						.setFromToVec (toVector, fromVector)
 						.multRight (viewpoint .getUserOrientation ());
 
-					if (! (viewpoint instanceof GeoViewpoint))
+					if (viewpoint .getTypeName () !== "GeoViewpoint")
 						viewpoint .straightenHorizon (userOrientation);
 	
 					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
@@ -744,7 +740,7 @@ function ($,
 		{
 			this .disconnect ();
 			this .getBrowser () .controlKey_ .removeInterest ("set_controlKey_", this);
-			this .getBrowser () .getCanvas () .unbind (".X3DFlyViewer");
+			this .getBrowser () .getElement () .unbind (".X3DFlyViewer");
 			$(document) .unbind (".X3DFlyViewer" + this .getId ());
 		},
 	});

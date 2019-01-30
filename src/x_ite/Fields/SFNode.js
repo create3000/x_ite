@@ -123,7 +123,9 @@ function (X3DField,
 				X3DField .call (this, value);
 			}
 			else
+			{
 				X3DField .call (this, null);
+			}
 
 			return new Proxy (this, handler);
 		}
@@ -185,7 +187,9 @@ function (X3DField,
 				X3DField .prototype .set .call (this, value);
 			}
 			else
+			{
 				X3DField .prototype .set .call (this, null);
+			}
 		},
 		getNodeTypeName: function ()
 		{

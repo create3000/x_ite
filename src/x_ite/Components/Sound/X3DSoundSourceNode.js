@@ -51,10 +51,12 @@ define ([
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Time/X3DTimeDependentNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
 ],
 function (X3DChildNode,
           X3DTimeDependentNode,
-          X3DConstants)
+          X3DConstants,
+          Algorithm)
 {
 "use strict";
 
@@ -113,23 +115,16 @@ function (X3DChildNode,
 				this .setVolume (0);
 				this .duration_changed_ = media .duration;
 
-				//this .set_loop__ ();
-
-				if (this .enabled_ .getValue ())
+				if (this .isActive_ .getValue ())
 				{
-					if (this .isActive_ .getValue ())
-					{
-						if (this .loop_ .getValue ())
-							media .currentTime = this .getElapsedTime () % media .duration;
-						else
-							media .currentTime = this .getElapsedTime ();
-
-						if (! this .isPaused_ .getValue ())
-						{							
-							if (this .speed_ .getValue ())
-								media .play ();
-						}
-					}
+					if (this .isPaused_ .getValue ())
+						this .set_pause ();
+					else
+						this .set_start ();
+				}
+				else
+				{
+					this .set_stop ();
 				}
 			}
 		},
@@ -139,14 +134,21 @@ function (X3DChildNode,
 		},
 		setVolume: function (volume)
 		{
-			this .volume = volume;
+			this .volume = Algorithm .clamp (volume, 0, 1);
 
 			this .set_volume__ ();
 		},
 		set_volume__: function ()
 		{
-			if (this .media)
-				this .media [0] .volume = (! this .getBrowser () .mute_ .getValue ()) * this .getBrowser () .volume_ .getValue () * this .volume;
+			if (! this .media)
+				return;
+
+			var
+				mute      = this .getBrowser () .mute_ .getValue (),
+				intensity = Algorithm .clamp (this .getBrowser () .volume_ .getValue (), 0, 1),
+				volume    = (! mute) * intensity * this .volume;
+
+			this .media [0] .volume = volume;
 		},
 		set_speed: function ()
 		{ },
@@ -207,7 +209,9 @@ function (X3DChildNode,
 					this .cycleTime_   = this .getBrowser () .getCurrentTime ();
 				}
 				else
+				{
 					this .stop ();
+				}
 			}
 		},
 		set_time: function ()

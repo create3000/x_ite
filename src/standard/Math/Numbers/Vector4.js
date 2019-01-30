@@ -330,6 +330,10 @@ function (Algorithm)
 	{
 		Zero: new Vector4 (0, 0, 0, 0),
 		One: new Vector4 (1, 1, 1, 1),
+		xAxis: new Vector4 (1, 0, 0, 0),
+		yAxis: new Vector4 (0, 1, 0, 0),
+		zAxis: new Vector4 (0, 0, 1, 0),
+		wAxis: new Vector4 (0, 0, 0, 1),
 		negate: function (vector)
 		{
 			var copy = Object .create (this .prototype);
@@ -426,10 +430,16 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			return new Vector4 (Algorithm .lerp (source .x, dest .x, t),
-			                    Algorithm .lerp (source .y, dest .y, t),
-			                    Algorithm .lerp (source .z, dest .z, t),
-			                    Algorithm .lerp (source .w, dest .w, t));
+			var
+				x = source .x,
+				y = source .y,
+				z = source .z,
+				w = source .w;
+
+			return new Vector4 (x + t * (dest .x - x),
+			                    y + t * (dest .y - y),
+			                    z + t * (dest .z - z),
+			                    w + t * (dest .w - w));
 		},
 		min: function (lhs, rhs)
 		{

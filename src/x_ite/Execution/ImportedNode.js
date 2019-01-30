@@ -204,7 +204,7 @@ function (Fields,
 				stream .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
 				stream .string += "'";
 				stream .string += " ";
-				stream .string += "exportedDEF='";
+				stream .string += "importedDEF='";
 				stream .string += generator .XMLEncode (this .getExportedName ());
 				stream .string += "'";
 

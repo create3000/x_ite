@@ -111,11 +111,15 @@ function (Fields,
 			index1 *= 3;
 			size   *= 3;
 
-			for (var i = 0; i < size; i += 3)
+			for (var i0 = 0; i0 < size; i0 += 3)
 			{
-				value_changed [i + 0] = Algorithm .lerp (keyValue [index0 + i + 0], keyValue [index1 + i + 0], weight);
-				value_changed [i + 1] = Algorithm .lerp (keyValue [index0 + i + 1], keyValue [index1 + i + 1], weight);
-				value_changed [i + 2] = Algorithm .lerp (keyValue [index0 + i + 2], keyValue [index1 + i + 2], weight);
+				var
+					i1 = i0 + 1,
+					i2 = i0 + 2;
+
+				value_changed [i0] = Algorithm .lerp (keyValue [index0 + i0], keyValue [index1 + i0], weight);
+				value_changed [i1] = Algorithm .lerp (keyValue [index0 + i1], keyValue [index1 + i1], weight);
+				value_changed [i2] = Algorithm .lerp (keyValue [index0 + i2], keyValue [index1 + i2], weight);
 			}
 
 			this .value_changed_ .addEvent ();

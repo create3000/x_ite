@@ -73,21 +73,23 @@ function (X3DBaseNode,
 		findParents: function (type, object)
 		{
 			var
-				parents = object .getParents (),
-				array   = [ ],
-				seen    = { };
-	
-			for (var id in parents)
-				this .findParentsImpl (type, parents [id], array, seen);
+				array = [ ],
+				seen  = new Set ();
+
+			object .getParents () .forEach (function (parent)
+			{
+				this .findParentsImpl (type, parent, array, seen);
+			},
+			this);
 	
 			return array;
 		},
 		findParentsImpl: function (type, object, array, seen)
 		{
-			if (seen .hasOwnProperty (object .getId ()))
+			if (seen .has (object .getId ()))
 				return;
 
-			seen [object .getId ()] = true;
+			seen .add (object .getId ());
 
 			if (object instanceof X3DBaseNode)
 			{
@@ -120,10 +122,11 @@ function (X3DBaseNode,
 				}
 			}
 
-			var parents = object .getParents ();
-
-			for (var id in parents)
-				this .findParentsImpl (type, parents [id], array, seen);
+			object .getParents () .forEach (function (parent)
+			{
+				this .findParentsImpl (type, parent, array, seen);
+			},
+			this);
 		},
 	});
 

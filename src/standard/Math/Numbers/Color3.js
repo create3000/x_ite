@@ -215,7 +215,7 @@ function (Algorithm)
 	{
 		HSV: function (h, s, v)
 		{
-			var color = new Color3 (0, 0, 0);
+			var color = Object .create (this .prototype);
 			color .setHSV (h, s, v);
 			return color;
 		},
@@ -224,20 +224,31 @@ function (Algorithm)
 			// Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
 			// Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
 
-			var range = Math .abs (b [0] - a [0]);
+			var
+				ha = a [0], hb = b [0],
+				sa = a [1], sb = b [1],
+				va = a [2], vb = b [2];
+
+			if (sa === 0)
+				ha = hb;
+
+			if (sb === 0)
+				hb = ha;
+
+			var range = Math .abs (hb - ha);
 
 			if (range <= Math .PI)
 			{
-				r [0] = Algorithm .lerp (a [0], b [0], t);
-				r [1] = Algorithm .lerp (a [1], b [1], t);
-				r [2] = Algorithm .lerp (a [2], b [2], t);
+				r [0] = ha + t * (hb - ha);
+				r [1] = sa + t * (sb - sa);
+				r [2] = va + t * (vb - va);
 				return r;
 			}
 
 			var
 				PI2  = Math .PI * 2,
 				step = (PI2 - range) * t,
-				h    = a [0] < b [0] ? a [0] - step : a [0] + step;
+				h    = ha < hb ? ha - step : ha + step;
 
 			if (h < 0)
 				h += PI2;
@@ -246,8 +257,8 @@ function (Algorithm)
 				h -= PI2;
 
 			r [0] = h;
-			r [1] = Algorithm .lerp (a [1], b [1], t);
-			r [2] = Algorithm .lerp (a [2], b [2], t);
+			r [1] = sa + t * (sb - sa);
+			r [2] = va + t * (vb - va);
 			return r;
 		},
 	});

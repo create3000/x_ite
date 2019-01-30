@@ -70,10 +70,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		screenScale  = new Vector3 (0, 0, 0),
-		viewportSize = new Vector2 (0, 0);
-
 	function OrthoViewpoint (executionContext)
 	{
 		X3DViewpointNode .call (this, executionContext);
@@ -166,40 +162,50 @@ function (Fields,
 		{
 			return 1e5;
 		},
-		getScreenScale: function (dummy, viewport)
+		getScreenScale: (function ()
 		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				sizeX  = this .sizeX,
-				sizeY  = this .sizeY,
-				aspect = width / height;
+			var screenScale = new Vector3 (0, 0, 0);
 
-			if (aspect > sizeX / sizeY)
+			return function (point, viewport)
 			{
-				var s = sizeY / height;
-
+				var
+					width  = viewport [2],
+					height = viewport [3],
+					sizeX  = this .sizeX,
+					sizeY  = this .sizeY,
+					aspect = width / height;
+	
+				if (aspect > sizeX / sizeY)
+				{
+					var s = sizeY / height;
+	
+					return screenScale .set (s, s, s);
+				}
+	
+				var s = sizeX / width;
+	
 				return screenScale .set (s, s, s);
-			}
-
-			var s = sizeX / width;
-
-			return screenScale .set (s, s, s);
-		},
-		getViewportSize: function (viewport)
+			};
+		})(),
+		getViewportSize: (function ()
 		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				sizeX  = this .sizeX,
-				sizeY  = this .sizeY,
-				aspect = width / height;
+			var viewportSize = new Vector2 (0, 0);
 
-			if (aspect > sizeX / sizeY)
-				return viewportSize .set (sizeY * aspect, sizeY);
-
-			return viewportSize .set (sizeX, sizeX / aspect);
-		},
+			return function (viewport, nearValue)
+			{
+				var
+					width  = viewport [2],
+					height = viewport [3],
+					sizeX  = this .sizeX,
+					sizeY  = this .sizeY,
+					aspect = width / height;
+	
+				if (aspect > sizeX / sizeY)
+					return viewportSize .set (sizeY * aspect, sizeY);
+	
+				return viewportSize .set (sizeX, sizeX / aspect);
+			};
+		})(),
 		getLookAtDistance: function (bbox)
 		{
 			return bbox .size .abs () / 2 + 10;

@@ -138,7 +138,7 @@ function (Fields,
 
 			for (var i = 0, length = vertices .length; i < length; i += 12)
 			{
-				this .triangleMesh .addTriangle (new Ammo .btVector3 (vertices [i + 0], vertices [i + 1], vertices [i + 2]),
+				this .triangleMesh .addTriangle (new Ammo .btVector3 (vertices [i],     vertices [i + 1], vertices [i + 2]),
 				                                 new Ammo .btVector3 (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
 				                                 new Ammo .btVector3 (vertices [i + 8], vertices [i + 9], vertices [i + 10]));	
 			}
@@ -176,7 +176,7 @@ function (Fields,
 		set_geometry__: function ()
 		{
 			if (this .geometryNode)
-				this .geometryNode .removeInterest ("set_collidableGeometry__", this);
+				this .geometryNode .rebuild_ .removeInterest ("set_collidableGeometry__", this);
 
 			if (this .shapeNode)
 				this .geometryNode = this .shapeNode .getGeometry ();
@@ -184,7 +184,7 @@ function (Fields,
 				this .geometryNode = null;
 
 			if (this .geometryNode)
-				this .geometryNode .addInterest ("set_collidableGeometry__", this);
+				this .geometryNode .rebuild_ .addInterest ("set_collidableGeometry__", this);
 
 			this .set_collidableGeometry__ ();
 		},

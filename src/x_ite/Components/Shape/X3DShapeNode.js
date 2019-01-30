@@ -53,12 +53,14 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Box3",
+	"standard/Math/Numbers/Vector3",
 ],
 function (X3DChildNode, 
           X3DBoundedObject,
           X3DCast,
           X3DConstants,
-          Box3)
+          Box3,
+          Vector3)
 {
 "use strict";
 
@@ -69,7 +71,9 @@ function (X3DChildNode,
 
 		this .addType (X3DConstants .X3DShapeNode);
 
-		this .bbox = new Box3 ();
+		this .bbox       = new Box3 ();
+		this .bboxSize   = new Vector3 (0, 0, 0);
+		this .bboxCenter = new Vector3 (0, 0, 0);
 	}
 
 	X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -130,18 +134,18 @@ function (X3DChildNode,
 			else
 				this .bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 			
-			this .bboxSize   = this .bbox .size;
-			this .bboxCenter = this .bbox .center;
+			this .bboxSize   .assign (this .bbox .size);
+			this .bboxCenter .assign (this .bbox .center);
 		},
 		set_apparance__: function ()
 		{
 			if (this .apparanceNode)
-				this .apparanceNode .removeInterest ("set_transparent__", this);
+				this .apparanceNode .transparent_ .removeInterest ("set_transparent__", this);
 
 			this .apparanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this .appearance_);
 
 			if (this .apparanceNode)
-				this .apparanceNode .addInterest ("set_transparent__", this);
+				this .apparanceNode .transparent_ .addInterest ("set_transparent__", this);
 
 			else
 				this .apparanceNode = this .getBrowser () .getDefaultAppearance ();

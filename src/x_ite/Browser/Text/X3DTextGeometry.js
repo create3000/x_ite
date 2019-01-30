@@ -241,7 +241,7 @@ function (TextAlignment,
 					size .x      = length / scale;
 				}
 
-				this .charSpacings [ll] = charSpacing 
+				this .charSpacings [ll] = charSpacing;
 				text .lineBounds_ [l]   = lineBound;
 
 				// Calculate line translation.
@@ -392,7 +392,7 @@ function (TextAlignment,
 					charSpacing = 0,
 					length      = text .getLength (l);
 
-				lineBound .set (l === 0 ? spacing - padding: spacing, size .y) .multiply (scale);
+				lineBound .set (l === 0 ? spacing - padding: spacing, numChars ? size .y : 0) .multiply (scale);
 
 				if (maxExtent)
 				{
@@ -427,7 +427,8 @@ function (TextAlignment,
 					case TextAlignment .END:
 					{
 						// This is needed to make maxExtend and charSpacing work.
-						this .getGlyphExtents (glyphs [topToBottom ? numChars - 1 : 0] , primitiveQuality, glyphMin, vector);
+						if (numChars)
+							this .getGlyphExtents (glyphs [topToBottom ? numChars - 1 : 0], primitiveQuality, glyphMin .assign (Vector2 .Zero), vector);
 
 						translation .set (lineNumber * spacing, (size .y - max .y + glyphMin .y));
 						break;

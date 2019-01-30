@@ -237,7 +237,7 @@ function ($,
 			}
 			else
 			{
-				this .clear ();
+				this .clearTexture ();
 				this .loadState_ = X3DConstants .FAILED_STATE;
 			}
 		},

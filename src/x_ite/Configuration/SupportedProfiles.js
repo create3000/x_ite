@@ -51,179 +51,207 @@ define ([
 	"x_ite/Configuration/ProfileInfo",
 	"x_ite/Configuration/ProfileInfoArray",
 	"x_ite/Configuration/ComponentInfoArray",
+	"x_ite/Configuration/SupportedComponents",
 	"x_ite/Browser/Networking/urls",
 ],
 function (ProfileInfo,
           ProfileInfoArray,
           ComponentInfoArray,
+          SupportedComponents,
           urls)
 {
 "use strict";
 
-	return function (browser)
-	{
-		function add (title, name, components)
-		{
-			supportedProfiles .add (name, new ProfileInfo (name, title, urls .povider, new ComponentInfoArray (browser, components)));
-		}
+	var SupportedProfiles = new ProfileInfoArray ();
 
-		var
-			supportedComponents = browser .supportedComponents,
-			supportedProfiles   = new ProfileInfoArray ();
+	SupportedProfiles .addProfile ({
+		title: "Computer-Aided Design (CAD) interchange",
+		name: "CADInterchange",
+		providerUrl: urls .getProviderUrl (),
+		components: [
+			SupportedComponents ["Core"],
+			SupportedComponents ["Networking"],
+			SupportedComponents ["Grouping"],
+			SupportedComponents ["Rendering"],
+			SupportedComponents ["Shape"],
+			SupportedComponents ["Lighting"],
+			SupportedComponents ["Texturing"],
+			SupportedComponents ["Navigation"],
+			SupportedComponents ["Shaders"],
+			SupportedComponents ["CADGeometry"],
+		],
+	});
 
-		add ("Computer-Aided Design (CAD) interchange", "CADInterchange", [
-			supportedComponents ["Core"],
-			supportedComponents ["Networking"],
-			supportedComponents ["Grouping"],
-			supportedComponents ["Rendering"],
-			supportedComponents ["Shape"],
-			supportedComponents ["Lighting"],
-			supportedComponents ["Texturing"],
-			supportedComponents ["Navigation"],
-			supportedComponents ["Shaders"],
-			supportedComponents ["CADGeometry"],
-		]);
-	
-		add ("Core", "Core", [
-			supportedComponents ["Core"],
-		]);
-	
-		add ("Full", "Full", [
-			supportedComponents ["Core"],
-			supportedComponents ["Time"],
-			supportedComponents ["Networking"],
-			supportedComponents ["Grouping"],
-			supportedComponents ["Rendering"],
-			supportedComponents ["Shape"],
-			supportedComponents ["Geometry3D"],
-			supportedComponents ["Geometry2D"],
-			supportedComponents ["Text"],
-			supportedComponents ["Sound"],
-			supportedComponents ["Lighting"],
-			supportedComponents ["Texturing"],
-			supportedComponents ["Interpolation"],
-			supportedComponents ["PointingDeviceSensor"],
-			supportedComponents ["KeyDeviceSensor"],
-			supportedComponents ["EnvironmentalSensor"],
-			supportedComponents ["Navigation"],
-			supportedComponents ["EnvironmentalEffects"],
-			supportedComponents ["Geospatial"],
-			supportedComponents ["H-Anim"],
-			supportedComponents ["NURBS"],
-			supportedComponents ["DIS"],
-			supportedComponents ["Scripting"],
-			supportedComponents ["EventUtilities"],
-			supportedComponents ["Shaders"],
-			supportedComponents ["CADGeometry"],
-			supportedComponents ["Texturing3D"],
-			supportedComponents ["CubeMapTexturing"],
-			supportedComponents ["Layering"],
-			supportedComponents ["Layout"],
-			supportedComponents ["RigidBodyPhysics"],
-			supportedComponents ["Picking"],
-			supportedComponents ["Followers"],
-			supportedComponents ["ParticleSystems"], /*,
-			supportedComponents ["VolumeRendering"], */
-		]);
-	
-		add ("Immersive", "Immersive", [
-			supportedComponents ["Core"],
-			supportedComponents ["Time"],
-			supportedComponents ["Networking"],
-			supportedComponents ["Grouping"],
-			supportedComponents ["Rendering"],
-			supportedComponents ["Shape"],
-			supportedComponents ["Geometry3D"],
-			supportedComponents ["Geometry2D"],
-			supportedComponents ["Text"],
-			supportedComponents ["Sound"],
-			supportedComponents ["Lighting"],
-			supportedComponents ["Texturing"],
-			supportedComponents ["Interpolation"],
-			supportedComponents ["PointingDeviceSensor"],
-			supportedComponents ["KeyDeviceSensor"],
-			supportedComponents ["EnvironmentalSensor"],
-			supportedComponents ["Navigation"],
-			supportedComponents ["EnvironmentalEffects"],
-			supportedComponents ["Scripting"],
-			supportedComponents ["EventUtilities"],
-		]);
-	
-		add ("Interactive", "Interactive", [
-			supportedComponents ["Core"],
-			supportedComponents ["Time"],
-			supportedComponents ["Networking"],
-			supportedComponents ["Grouping"],
-			supportedComponents ["Rendering"],
-			supportedComponents ["Shape"],
-			supportedComponents ["Geometry3D"],
-			supportedComponents ["Lighting"],
-			supportedComponents ["Texturing"],
-			supportedComponents ["Interpolation"],
-			supportedComponents ["PointingDeviceSensor"],
-			supportedComponents ["KeyDeviceSensor"],
-			supportedComponents ["EnvironmentalSensor"],
-			supportedComponents ["Navigation"],
-			supportedComponents ["EnvironmentalEffects"],
-			supportedComponents ["EventUtilities"],
-		]);
-	
-		add ("Interchange", "Interchange", [
-			supportedComponents ["Core"],
-			supportedComponents ["Time"],
-			supportedComponents ["Networking"],
-			supportedComponents ["Grouping"],
-			supportedComponents ["Rendering"],
-			supportedComponents ["Shape"],
-			supportedComponents ["Geometry3D"],
-			supportedComponents ["Lighting"],
-			supportedComponents ["Texturing"],
-			supportedComponents ["Interpolation"],
-			supportedComponents ["Navigation"],
-			supportedComponents ["EnvironmentalEffects"],
-		]);
-	
-	//	add ("Medical interchange", "MedicalInterchange", [
-	//		supportedComponents ["Core"],
-	//		supportedComponents ["Time"],
-	//		supportedComponents ["Networking"],
-	//		supportedComponents ["Grouping"],
-	//		supportedComponents ["Rendering"],
-	//		supportedComponents ["Shape"],
-	//		supportedComponents ["Geometry3D"],
-	//		supportedComponents ["Geometry2D"],
-	//		supportedComponents ["Text"],
-	//		supportedComponents ["Lighting"],
-	//		supportedComponents ["Texturing"],
-	//		supportedComponents ["Interpolation"],
-	//		supportedComponents ["Navigation"],
-	//		supportedComponents ["EnvironmentalEffects"],
-	//		supportedComponents ["EventUtilities"],
-	//		supportedComponents ["Texturing3D"],
-	//		supportedComponents ["VolumeRendering"],
-	//	]);
-	
-		add ("MPEG-4 interactive", "MPEG-4", [
-			supportedComponents ["Core"],
-			supportedComponents ["Time"],
-			supportedComponents ["Networking"],
-			supportedComponents ["Grouping"],
-			supportedComponents ["Rendering"],
-			supportedComponents ["Shape"],
-			supportedComponents ["Geometry3D"],
-			supportedComponents ["Lighting"],
-			supportedComponents ["Texturing"],
-			supportedComponents ["Interpolation"],
-			supportedComponents ["PointingDeviceSensor"],
-			supportedComponents ["EnvironmentalSensor"],
-			supportedComponents ["Navigation"],
-			supportedComponents ["EnvironmentalEffects"],
-		]);
-	
-		Object .preventExtensions (supportedProfiles);
-		Object .freeze (supportedProfiles);
-		Object .seal (supportedProfiles);
-	
-		return supportedProfiles;
-	};
+	SupportedProfiles .addProfile ({
+		title: "Core",
+		name: "Core",
+		providerUrl: urls .getProviderUrl (),
+		components: [
+			SupportedComponents ["Core"],
+		],
+	});
+
+	SupportedProfiles .addProfile ({
+		title: "Full",
+		name: "Full",
+		providerUrl: urls .getProviderUrl (),
+		components: [
+			SupportedComponents ["Core"],
+			SupportedComponents ["Time"],
+			SupportedComponents ["Networking"],
+			SupportedComponents ["Grouping"],
+			SupportedComponents ["Rendering"],
+			SupportedComponents ["Shape"],
+			SupportedComponents ["Geometry3D"],
+			SupportedComponents ["Geometry2D"],
+			SupportedComponents ["Text"],
+			SupportedComponents ["Sound"],
+			SupportedComponents ["Lighting"],
+			SupportedComponents ["Texturing"],
+			SupportedComponents ["Interpolation"],
+			SupportedComponents ["PointingDeviceSensor"],
+			SupportedComponents ["KeyDeviceSensor"],
+			SupportedComponents ["EnvironmentalSensor"],
+			SupportedComponents ["Navigation"],
+			SupportedComponents ["EnvironmentalEffects"],
+			SupportedComponents ["Geospatial"],
+			SupportedComponents ["H-Anim"],
+			SupportedComponents ["NURBS"],
+			SupportedComponents ["DIS"],
+			SupportedComponents ["Scripting"],
+			SupportedComponents ["EventUtilities"],
+			SupportedComponents ["Shaders"],
+			SupportedComponents ["CADGeometry"],
+			SupportedComponents ["Texturing3D"],
+			SupportedComponents ["CubeMapTexturing"],
+			SupportedComponents ["Layering"],
+			SupportedComponents ["Layout"],
+			SupportedComponents ["RigidBodyPhysics"],
+			SupportedComponents ["Picking"],
+			SupportedComponents ["Followers"],
+			SupportedComponents ["ParticleSystems"],
+			SupportedComponents ["VolumeRendering"],
+		],
+	});
+
+	SupportedProfiles .addProfile ({
+		title: "Immersive",
+		name: "Immersive",
+		providerUrl: urls .getProviderUrl (),
+		components: [
+			SupportedComponents ["Core"],
+			SupportedComponents ["Time"],
+			SupportedComponents ["Networking"],
+			SupportedComponents ["Grouping"],
+			SupportedComponents ["Rendering"],
+			SupportedComponents ["Shape"],
+			SupportedComponents ["Geometry3D"],
+			SupportedComponents ["Geometry2D"],
+			SupportedComponents ["Text"],
+			SupportedComponents ["Sound"],
+			SupportedComponents ["Lighting"],
+			SupportedComponents ["Texturing"],
+			SupportedComponents ["Interpolation"],
+			SupportedComponents ["PointingDeviceSensor"],
+			SupportedComponents ["KeyDeviceSensor"],
+			SupportedComponents ["EnvironmentalSensor"],
+			SupportedComponents ["Navigation"],
+			SupportedComponents ["EnvironmentalEffects"],
+			SupportedComponents ["Scripting"],
+			SupportedComponents ["EventUtilities"],
+		],
+	});
+
+	SupportedProfiles .addProfile ({
+		title: "Interactive",
+		name: "Interactive",
+		providerUrl: urls .getProviderUrl (),
+		components: [
+			SupportedComponents ["Core"],
+			SupportedComponents ["Time"],
+			SupportedComponents ["Networking"],
+			SupportedComponents ["Grouping"],
+			SupportedComponents ["Rendering"],
+			SupportedComponents ["Shape"],
+			SupportedComponents ["Geometry3D"],
+			SupportedComponents ["Lighting"],
+			SupportedComponents ["Texturing"],
+			SupportedComponents ["Interpolation"],
+			SupportedComponents ["PointingDeviceSensor"],
+			SupportedComponents ["KeyDeviceSensor"],
+			SupportedComponents ["EnvironmentalSensor"],
+			SupportedComponents ["Navigation"],
+			SupportedComponents ["EnvironmentalEffects"],
+			SupportedComponents ["EventUtilities"],
+		],
+	});
+
+	SupportedProfiles .addProfile ({
+		title: "Interchange",
+		name: "Interchange",
+		providerUrl: urls .getProviderUrl (),
+		components: [
+			SupportedComponents ["Core"],
+			SupportedComponents ["Time"],
+			SupportedComponents ["Networking"],
+			SupportedComponents ["Grouping"],
+			SupportedComponents ["Rendering"],
+			SupportedComponents ["Shape"],
+			SupportedComponents ["Geometry3D"],
+			SupportedComponents ["Lighting"],
+			SupportedComponents ["Texturing"],
+			SupportedComponents ["Interpolation"],
+			SupportedComponents ["Navigation"],
+			SupportedComponents ["EnvironmentalEffects"],
+		],
+	});
+
+	SupportedProfiles .addProfile ({
+		title: "Medical interchange",
+		name: "MedicalInterchange",
+		providerUrl: urls .getProviderUrl (),
+		components: [
+			SupportedComponents ["Core"],
+			SupportedComponents ["Time"],
+			SupportedComponents ["Networking"],
+			SupportedComponents ["Grouping"],
+			SupportedComponents ["Rendering"],
+			SupportedComponents ["Shape"],
+			SupportedComponents ["Geometry3D"],
+			SupportedComponents ["Geometry2D"],
+			SupportedComponents ["Text"],
+			SupportedComponents ["Lighting"],
+			SupportedComponents ["Texturing"],
+			SupportedComponents ["Interpolation"],
+			SupportedComponents ["Navigation"],
+			SupportedComponents ["EnvironmentalEffects"],
+			SupportedComponents ["EventUtilities"],
+			SupportedComponents ["Texturing3D"],
+			SupportedComponents ["VolumeRendering"],
+		],
+	});
+
+	SupportedProfiles .addProfile ({
+		title: "MPEG-4 interactive",
+		name: "MPEG-4",
+		providerUrl: urls .getProviderUrl (),
+		components: [
+			SupportedComponents ["Core"],
+			SupportedComponents ["Time"],
+			SupportedComponents ["Networking"],
+			SupportedComponents ["Grouping"],
+			SupportedComponents ["Rendering"],
+			SupportedComponents ["Shape"],
+			SupportedComponents ["Geometry3D"],
+			SupportedComponents ["Lighting"],
+			SupportedComponents ["Texturing"],
+			SupportedComponents ["Interpolation"],
+			SupportedComponents ["PointingDeviceSensor"],
+			SupportedComponents ["EnvironmentalSensor"],
+			SupportedComponents ["Navigation"],
+			SupportedComponents ["EnvironmentalEffects"],
+		],
+	});
+
+	return SupportedProfiles;
 });

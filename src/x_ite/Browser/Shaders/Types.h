@@ -4,6 +4,7 @@ struct x3d_FogParameters {
 	mediump int   type;
 	mediump vec3  color;
 	mediump float visibilityRange;
+	mediump mat3  matrix;
 };
 
 //uniform x3d_FogParameters x3d_Fog;
@@ -19,6 +20,7 @@ struct x3d_LightSourceParameters {
 	mediump float radius;
 	mediump float beamWidth;
 	mediump float cutOffAngle;
+	mediump mat3  matrix;
 	#ifdef X3D_SHADOWS
 	mediump vec3  shadowColor;
 	mediump float shadowIntensity;
@@ -42,3 +44,12 @@ struct x3d_MaterialParameters
 
 //uniform x3d_MaterialParameters x3d_FrontMaterial;  
 //uniform x3d_MaterialParameters x3d_BackMaterial;        
+
+struct x3d_ParticleParameters  
+{   
+	mediump int   id;
+	mediump int   life;
+	mediump float elapsedTime;
+};
+
+//uniform x3d_ParticleParameters x3d_Particle;  

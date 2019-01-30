@@ -137,6 +137,11 @@ function ($,
 			this .url_    .addInterest ("set_url__",    this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
+			var userDefinedFields = this .getUserDefinedFields ();
+
+			for (var field of userDefinedFields .values ())
+				field .setSet (false);
+
 			this .set_url__ ();
 		},
 		set_url__: function ()
@@ -171,13 +176,9 @@ function ($,
 		},
 		set_buffer__: function ()
 		{
-			this .getScene () .addInitLoadCount (this);
-
 			new FileLoader (this) .loadScript (this .url_,
 			function (data)
 			{
-				this .getScene () .removeInitLoadCount (this);
-
 				if (data === null)
 				{
 					// No URL could be loaded.
@@ -199,10 +200,8 @@ function ($,
 					callbacks         = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"],
 					userDefinedFields = this .getUserDefinedFields ();
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-
 					switch (field .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
@@ -215,7 +214,7 @@ function ($,
 				}
 
 				text += "\n;var " + callbacks .join (",") + ";";
-				text += "\n[" + callbacks .join (",") + "];"
+				text += "\n[" + callbacks .join (",") + "];";
 
 				var
 					global  = this .getGlobal (),
@@ -234,7 +233,7 @@ function ($,
 			}
 			catch (error)
 			{
-				this .setError ("preprocessing", error);
+				this .setError ("while evaluating script source", error);
 
 				return { };
 			}
@@ -261,8 +260,8 @@ function ($,
 				NULL:  { value: null },
 				FALSE: { value: false },
 				TRUE:  { value: true },
-				print: { value: function () { this .print .apply (this, arguments); } .bind (browser) },
-				trace: { value: function () { this .print .apply (this, arguments); } .bind (browser) },
+				print: { value: function () { browser .println .apply (browser, arguments); }},
+				trace: { value: function () { browser .println .apply (browser, arguments); }},
 
 				Browser: { value: browser },
 
@@ -298,9 +297,9 @@ function ($,
 				SFMatrix4f:    { value: Fields .SFMatrix4f },
 				SFNode:        { value: SFNode },
 				SFRotation:    { value: Fields .SFRotation },
-				SFVec3d:       { value: Fields .SFVec2d },
+				SFVec2d:       { value: Fields .SFVec2d },
 				SFVec2f:       { value: Fields .SFVec2f },
-				SFVec2d:       { value: Fields .SFVec3d },
+				SFVec3d:       { value: Fields .SFVec3d },
 				SFVec3f:       { value: Fields .SFVec3f },
 				SFVec4d:       { value: Fields .SFVec4d },
 				SFVec4f:       { value: Fields .SFVec4f },
@@ -331,9 +330,9 @@ function ($,
 
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var name in userDefinedFields)
+			for (var field of userDefinedFields .values ())
 			{
-				var field = userDefinedFields [name];
+				var name = field .getName ();
 
 				if (field .getAccessType () === X3DConstants .inputOnly)
 					continue;
@@ -371,10 +370,8 @@ function ($,
 				if ($.isFunction (this .context .eventsProcessed))
 					this .addInterest ("eventsProcessed__", this);
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-					
 					switch (field .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
@@ -406,10 +403,8 @@ function ($,
 				if (this .context .eventsProcessed)
 					this .removeInterest ("eventsProcessed__", this);
 
-				for (var name in userDefinedFields)
+				for (var field of userDefinedFields .values ())
 				{
-					var field = userDefinedFields [name];
-
 					switch (field .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
@@ -428,6 +423,8 @@ function ($,
 
 			this .set_live__ ();
 
+			// Call initialize function.
+
 			if (this .context .initialize)
 			{
 				var browser = this .getBrowser ();
@@ -440,10 +437,25 @@ function ($,
 				}
 				catch (error)
 				{
-					this .setError ("initialize", error);
+					this .setError ("in function 'initialize'", error);
 				}
 
 				browser .getScriptStack () .pop ();
+			}
+
+			// Call outstanding events.
+
+			var userDefinedFields = this .getUserDefinedFields ();
+
+			for (var field of userDefinedFields .values ())
+			{
+				if (field .getSet ())
+				{
+					var callback = this .context [field .getName ()];
+
+					if ($.isFunction (callback))
+						this .set_field__ (field, callback);
+				}
 			}
 		},
 		prepareEvents__: function ()
@@ -454,12 +466,12 @@ function ($,
 
 			try
 			{
-				this .context .prepareEvents ();
+				this .context .prepareEvents (browser .getCurrentTime ());
 				browser .addBrowserEvent ();
 			}
 			catch (error)
 			{
-				this .setError ("prepareEvents", error);
+				this .setError ("in function 'prepareEvents'", error);
 			}
 
 			browser .getScriptStack () .pop ();
@@ -477,7 +489,7 @@ function ($,
 			}
 			catch (error)
 			{
-				this .setError (field .getName (), error);
+				this .setError ("in function '" + field .getName () + "'", error);
 			}
 
 			browser .getScriptStack () .pop ();
@@ -495,7 +507,7 @@ function ($,
 			}
 			catch (error)
 			{
-				this .setError ("eventsProcessed", error);
+				this .setError ("in function 'eventsProcessed'", error);
 			}
 
 			browser .getScriptStack () .pop ();
@@ -512,14 +524,14 @@ function ($,
 			}
 			catch (error)
 			{
-				this .setError ("shutdown", error);
+				this .setError ("in function 'shutdown'", error);
 			}
 
 			browser .getScriptStack () .pop ();
 		},
-		setError: function (callback, error)
+		setError: function (reason, error)
 		{
-			console .error ("JavaScript Error in Script '" + this .getName () + "', function '" + callback + "'\nworld url is '" + this .getExecutionContext () .getURL () + "':");
+			console .error ("JavaScript Error in Script '" + this .getName () + "', " + reason + "\nworld url is '" + this .getExecutionContext () .getURL () + "':");
 			console .error (error);
 		},
 	});

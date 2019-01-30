@@ -71,7 +71,6 @@ getMaterialColor (const in vec3 N,
 
 	vec3 finalColor = vec3 (0.0, 0.0, 0.0);
 
-	#pragma unroll_loop
 	for (int i = 0; i < x3d_MaxLights; ++ i)
 	{
 		if (i == x3d_NumLights)
@@ -80,7 +79,7 @@ getMaterialColor (const in vec3 N,
 		x3d_LightSourceParameters light = x3d_LightSource [i];
 
 		vec3  vL = light .location - v;
-		float dL = length (vL);
+		float dL = length (light .matrix * vL);
 		bool  di = light .type == x3d_DirectionalLight;
 
 		if (di || dL <= light .radius)

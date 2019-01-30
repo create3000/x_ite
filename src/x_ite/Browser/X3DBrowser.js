@@ -52,6 +52,7 @@ define ([
 	"x_ite/Browser/VERSION",
 	"x_ite/Base/Events",
 	"x_ite/Fields",
+	"x_ite/Components",
 	"x_ite/Browser/X3DBrowserContext",
 	"x_ite/Configuration/ComponentInfo",
 	"x_ite/Configuration/SupportedProfiles",
@@ -69,6 +70,7 @@ function ($,
           VERSION,
           Events,
           Fields,
+          Components,
           X3DBrowserContext,
           ComponentInfo,
           SupportedProfiles,
@@ -91,10 +93,8 @@ function ($,
 		this .currentSpeed         = 0;
 		this .currentFrameRate     = 60;
 		this .description_         = "";
-		this .supportedNodes       = SupportedNodes;
-		this .supportedComponents  = SupportedComponents (this);
-		this .supportedProfiles    = SupportedProfiles (this);
 		this .components           = { };
+		this .browserCallbacks     = new Map ();
 
 		this .replaceWorld (this .createScene ());
 	};
@@ -125,12 +125,12 @@ function ($,
 			this .getLoadSensor () .isLoaded_ .removeInterest ("set_loaded__", this);
 			this .getLoadSensor () .enabled_ = false;
 
-			var urlCharacters = this .getElement () [0] .getAttribute ("src");
+			var urlCharacters = this .getElement () .attr ("src");
 
 			if (urlCharacters)
 				urlCharacters = '"' + urlCharacters + '"';
 			else
-				urlCharacters = this .getElement () [0] .getAttribute ("url");
+				urlCharacters = this .getElement () .attr ("url");
 
 			if (urlCharacters)
 			{
@@ -139,26 +139,30 @@ function ($,
 				this .load (urlCharacters);
 			}
 			else
+			{
 				this .initialized () .setValue (this .getCurrentTime ());
+				this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
+				this .callBrowserEventHandler ("onload");
+			}
 
 			// Print welcome message.
 
 			this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
-			                "        Current Graphics Renderer\n" +
-			                "                Name: " + this .getVendor () + " " + this .getWebGLVersion () + "\n" +
-			                "                Shading language: " + this .getShadingLanguageVersion () + "\n" +
-			                "        Rendering Properties\n" +
-			                "                Antialiased: " + this .getAntialiased () + "\n" +
-			                "                Depth size: " + this .getDepthSize () + " bits\n" +
-			                "                Color depth: " + this .getColorDepth () + " bits\n" +
-			                "                Max clip planes: 6\n" +
-			                "                Max lights: 8\n" +
-			                "                Texture units: " + this .getMaxTextureUnits () + " / " + this .getMaxCombinedTextureUnits () + "\n" +
-			                "                Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
-			                "                Texture memory: " + this .getTextureMemory () + "\n" +
-			                "                Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
-			                "                Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
-			                "                Max vertex attribs: " + this .getMaxVertexAttribs () + "\n");
+			             "        Current Graphics Renderer\n" +
+			             "                Name: " + this .getVendor () + " " + this .getWebGLVersion () + "\n" +
+			             "                Shading language: " + this .getShadingLanguageVersion () + "\n" +
+			             "        Rendering Properties\n" +
+			             "                Antialiased: " + this .getAntialiased () + "\n" +
+			             "                Depth size: " + this .getDepthSize () + " bits\n" +
+			             "                Color depth: " + this .getColorDepth () + " bits\n" +
+			             "                Max clip planes: 6\n" +
+			             "                Max lights: 8\n" +
+			             "                Texture units: " + this .getMaxTextureUnits () + " / " + this .getMaxCombinedTextureUnits () + "\n" +
+			             "                Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
+			             "                Texture memory: " + this .getTextureMemory () + "\n" +
+			             "                Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
+			             "                Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
+			             "                Max vertex attribs: " + this .getMaxVertexAttribs () + "\n");
 		},
 		getName: function ()
 		{
@@ -186,7 +190,7 @@ function ($,
 		},
 		getProfile: function (name)
 		{
-			var profile = this .supportedProfiles .get (name);
+			var profile = SupportedProfiles .get (name);
 
 			if (profile)
 				return profile;
@@ -195,23 +199,19 @@ function ($,
 		},
 		getComponent: function (name, level)
 		{
-			var component = this .supportedComponents .get (name);
+			var component = SupportedComponents .get (name);
 
 			if (component)
 			{
-				//if (level <= component .level)
-				//{
-					return new ComponentInfo (this,
-					{
-						title: component .title,
-						name:  name,
-						level: level,
-						providerUrl: this .getProviderUrl ()
-					});
-				//}
+				if (level <= component .level || true)
+					return new ComponentInfo (name, level, component .title, component. providerUrl);
 			}
 
 			throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
+		},
+		getSupportedNode: function (typeName)
+		{
+			return SupportedNodes .getType (typeName);
 		},
 		createScene: function ()
 		{
@@ -242,6 +242,8 @@ function ($,
 			{
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
+				this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
+				this .callBrowserEventHandler ("onshutdown");
 			}
 
 			// Clear event cache.
@@ -269,22 +271,18 @@ function ($,
 			// bindWorld
 			this .description = "";
 
+			this .getBrowserOptions () .configure ();
 			this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
+			this .prepareEvents () .removeInterest ("bind", this);
 	
 			for (var id in scene .getLoadingObjects ())
 				this .addLoadCount (scene .getLoadingObjects () [id]);
 
-			scene .setLive (this .isLive () .getValue ())
+			scene .setLive (this .isLive () .getValue ());
 
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
-
-			if (! this .getBrowserOption ("EnableInlineViewpoints"))
-				this .getWorld () .bind ();
-
-			if (this .initialized () .getValue ())
-				this .initialized () .setValue (this .getCurrentTime ());
 		},
 		set_loadCount__: function (loadCount)
 		{
@@ -300,10 +298,14 @@ function ($,
 		{
 			this .prepareEvents () .removeInterest ("bind", this);
 
-			if (this .getBrowserOption ("EnableInlineViewpoints"))
-				this .getWorld () .bind ();
-
 			this .setBrowserLoading (false);
+
+			if (this .initialized () .getValue ())
+			{
+				this .initialized () .setValue (this .getCurrentTime ());
+				this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
+				this .callBrowserEventHandler ("onload");
+			}
 		},
 		createVrmlFromString: function (vrmlSyntax)
 		{
@@ -429,9 +431,16 @@ function ($,
 					this .getCanvas () .fadeIn (0);
 
 				if (scene)
+				{
 					this .replaceWorld (scene);
+				}
 				else
+				{
+					this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+					this .callBrowserEventHandler ("onerror");
+
 					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+				}
 
 				// Must not remove load count, replaceWorld does a resetLoadCount when it sets setBrowserLoading to true.
 				// Don't set browser loading to false.
@@ -464,13 +473,27 @@ function ($,
 		{
 			// The string describes the name of the callback function to be called within the current ECMAScript context.
 		},
-		addBrowserCallback: function (callback, object)
+		addBrowserCallback: function (key, object)
 		{
-			// Probably to be implemented like addFieldCallback.
+			this .browserCallbacks .set (key, object);
 		},
-		removeBrowserCallback: function (callback)
-		{	
-			// Probably to be implemented like removeFieldCallback.
+		removeBrowserCallback: function (key)
+		{
+			this .browserCallbacks .delete (key);
+		},
+		getBrowserCallbacks: function ()
+		{
+			return this .browserCallbacks;
+		},
+		callBrowserCallbacks: function (browserEvent)
+		{
+			if (this .browserCallbacks .size)
+			{
+				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+				{
+					browserCallback .call (null, browserEvent);
+				});
+			}
 		},
 		importJS: function (jsobj) {
 			var
@@ -531,7 +554,7 @@ function ($,
 		},
 		getRenderingProperty: function (name)
 		{
-			this .getRenderingProperties () .getField (name) .getValue ();
+			return this .getRenderingProperties () .getField (name) .getValue ();
 		},
 		firstViewpoint: function ()
 		{
@@ -636,6 +659,8 @@ function ($,
 		},
 		bindViewpoint: function (viewpoint)
 		{
+			viewpoint .setAnimate (true); // VRML
+
 			if (viewpoint .isBound_ .getValue ())
 				viewpoint .transitionStart (viewpoint);
 

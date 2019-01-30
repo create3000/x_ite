@@ -69,7 +69,7 @@ function (X3DField,
 				if (arguments [0] instanceof Vector3)
 					return X3DField .call (this, arguments [0]);
 
-				return X3DField .call (this, new Vector3 (+x, +y, +z));
+				return X3DField .call (this, new Vector3 (x * 1, y * 1, z * 1));
 			}
 
 			return X3DField .call (this, new Vector3 (0, 0, 0));
@@ -100,7 +100,7 @@ function (X3DField,
 			},
 			set: function (value)
 			{
-				this .getValue () .x = value;
+				this .getValue () .x = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -114,7 +114,7 @@ function (X3DField,
 			},
 			set: function (value)
 			{
-				this .getValue () .y = value;
+				this .getValue () .y = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -128,7 +128,7 @@ function (X3DField,
 			},
 			set: function (value)
 			{
-				this .getValue () .z = value;
+				this .getValue () .z = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,

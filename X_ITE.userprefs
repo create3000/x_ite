@@ -1,9 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Bits/X3DConstants.js">
     <Files>
-      <File FileName="src/x_ite.html" Line="12" Column="10" />
-      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="134" Column="1" />
+      <File FileName="src/x_ite.html" Line="1" Column="1" />
+      <File FileName="src/x_ite/Bits/X3DConstants.js" Line="67" Column="20" />
+      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="496" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

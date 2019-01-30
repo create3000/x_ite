@@ -81,6 +81,7 @@ function ($,
 		
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
+		this .audio    = $("<audio></audio>");
 		this .urlStack = new Fields .MFString ();
 	}
 
@@ -126,15 +127,17 @@ function ($,
 			this .url_    .addInterest ("set_url__",    this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
-			this .audio = $("<audio></audio>");
 			this .audio .on ("error", this .setError .bind (this));
-			this .audio .bind ("abort", this .setError .bind (this));
 
 			this .audio [0] .preload     = "auto";
 			this .audio [0] .volume      = 0;
 			this .audio [0] .crossOrigin = "Anonymous";
 
 			this .set_url__ ();
+		},
+		getElement: function ()
+		{
+			return this .audio [0];
 		},
 		set_url__: function ()
 		{
@@ -162,8 +165,10 @@ function ($,
 		{
 			if (this .urlStack .length === 0)
 			{
-			   this .duration_changed_ = -1;
+				this .audio .unbind ("canplaythrough");
+				this .duration_changed_ = -1;
 				this .setLoadState (X3DConstants .FAILED_STATE);
+				this .stop ();
 				return;
 			}
 
@@ -171,7 +176,6 @@ function ($,
 
 			this .URL = new URI (this .urlStack .shift ());
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
-			// In Firefox we don't need getRelativePath if there is a file scheme, do we in Chrome???
 	
 			this .audio .attr ("src", this .URL);
 		},
@@ -183,8 +187,8 @@ function ($,
 			{
 				if (! (this .URL .isLocal () || this .URL .host === "localhost"))
 				{
-					if (! URL .match (urls .fallbackExpression))
-						this .urlStack .unshift (urls .fallbackUrl + URL);
+					if (! URL .match (urls .getFallbackExpression ()))
+						this .urlStack .unshift (urls .getFallbackUrl (URL));
 				}
 			}
 
@@ -200,7 +204,7 @@ function ($,
 				if (this .URL .scheme !== "data")
 					console .info ("Done loading audio:", this .URL .toString ());
 			}
-			
+
 			this .audio .unbind ("canplaythrough");
 			this .setMedia (this .audio);
 			this .setLoadState (X3DConstants .COMPLETE_STATE);

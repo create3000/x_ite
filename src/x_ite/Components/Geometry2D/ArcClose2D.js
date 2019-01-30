@@ -111,9 +111,9 @@ function (Fields,
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
 			if (this .isLive () .getValue ())
-				this .getBrowser () .getArcClose2DOptions () .addInterest ("eventsProcessed", this);
+				this .getBrowser () .getArcClose2DOptions () .addInterest ("requestRebuild", this);
 			else
-				this .getBrowser () .getArcClose2DOptions () .removeInterest ("eventsProcessed", this);
+				this .getBrowser () .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
 		},
 		getSweepAngle: function ()
 		{
@@ -144,7 +144,6 @@ function (Fields,
 				startAngle    = this .startAngle_ .getValue  (),
 				radius        = Math .abs (this .radius_ .getValue ()),
 				sweepAngle    = this .getSweepAngle (),
-				circle        = sweepAngle == (Math .PI * 2),
 				steps         = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
 				texCoordArray = this .getTexCoords (),
 				normalArray   = this .getNormals (),
