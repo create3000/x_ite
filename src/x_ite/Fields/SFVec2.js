@@ -93,7 +93,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 			},
 			set: function (value)
 			{
-				this .getValue () .x = value;
+				this .getValue () .x = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -107,7 +107,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 			},
 			set: function (value)
 			{
-				this .getValue () .y = value;
+				this .getValue () .y = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,

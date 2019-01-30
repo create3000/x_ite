@@ -675,7 +675,7 @@ function (Fields,
 
 			colorRamp .length = length;
 
-			this .colorMaterial = Boolean (colorKeys .length && this .colorRampNode);
+			this .colorMaterial = !! (colorKeys .length && this .colorRampNode);
 		},
 		set_texCoordRamp__: function ()
 		{
@@ -709,7 +709,7 @@ function (Fields,
 
 			texCoordRamp .length = length;
 
-			this .texCoordAnim = Boolean (texCoordKeys .length && this .texCoordRampNode);
+			this .texCoordAnim = !! (texCoordKeys .length && this .texCoordRampNode);
 		},
 		intersectsBox: function (box, clipPlanes)
 		{

@@ -816,7 +816,7 @@ function (Fields,
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
 			gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .STATIC_DRAW);
-			this .colorMaterial = Boolean (this .colors .length);
+			this .colorMaterial = !! (this .colors .length);
 
 			// Transfer vertices.
 

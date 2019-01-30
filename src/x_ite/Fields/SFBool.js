@@ -61,7 +61,7 @@ function (X3DField,
 		if (this instanceof SFBool)
 			return X3DField .call (this, !! value);
 		
-		return X3DField .call (Object .create (SFBool .prototype), Boolean (value));
+		return X3DField .call (Object .create (SFBool .prototype), !! value);
 	}
 
 	SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -77,7 +77,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			X3DField .prototype .set .call (this, Boolean (value));
+			X3DField .prototype .set .call (this, !! value);
 		},
 		getTypeName: function ()
 		{

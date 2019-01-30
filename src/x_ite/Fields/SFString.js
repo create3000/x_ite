@@ -103,7 +103,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			X3DField .prototype .set .call (this, String (value));
+			X3DField .prototype .set .call (this, "" + value);
 		},
 		valueOf: X3DField .prototype .getValue,
 		toStream: function (stream)

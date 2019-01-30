@@ -163,7 +163,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .x = value;
+			this .getValue () .x = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -177,7 +177,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .y = value;
+			this .getValue () .y = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -191,7 +191,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .z = value;
+			this .getValue () .z = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -205,7 +205,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .angle = value;
+			this .getValue () .angle = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,

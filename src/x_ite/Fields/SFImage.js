@@ -66,12 +66,12 @@ function (X3DField,
 	{
 	   var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
 	   
-		this .width  = width;
-		this .height = height;
-		this .comp   = comp;
+		this .width  = ~~width;
+		this .height = ~~height;
+		this .comp   = ~~comp;
 		this .array  = new MFInt32 ();
 		this .array .setValue (array);
-		this .array .length = width * height;
+		this .array .length = this .width * this .height;
 	}
 	
 	Image .prototype =
@@ -97,14 +97,14 @@ function (X3DField,
 		},
 		set: function (width, height, comp, array)
 		{
-			this .width  = width;
-			this .height = height;
-			this .comp   = comp;
+			this .width  = ~~width;
+			this .height = ~~height;
+			this .comp   = ~~comp;
 			this .array .assign (array);
 		},
 		setWidth: function (value)
 		{
-			this .width = value;
+			this .width = ~~value;
 			this .array .length = this .width  * this .height;	
 		},
 		getWidth: function ()
@@ -113,7 +113,7 @@ function (X3DField,
 		},
 		setHeight: function (value)
 		{
-			this .height = value;
+			this .height = ~~value;
 			this .array .length = this .width  * this .height;	
 		},
 		getHeight: function ()
@@ -122,7 +122,7 @@ function (X3DField,
 		},
 		setComp: function (value)
 		{
-			this .comp = value;
+			this .comp = ~~value;
 		},
 		getComp: function ()
 		{
@@ -150,7 +150,7 @@ function (X3DField,
 	   	var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
 	   
 			if (arguments .length === 4)
-				X3DField .call (this, new Image (~~width, ~~height, ~~comp, array));
+				X3DField .call (this, new Image (width, height, comp, array));
 			else
 				X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
 
