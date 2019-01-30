@@ -174,7 +174,7 @@ define (function ()
 			if (this .imag)
 				return this .real + " " + this .imag + "i";
 
-			return String (this .real);
+			return "" + this .real;
 		},
 	};
 

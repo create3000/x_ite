@@ -68,7 +68,7 @@ function ($,
 		{
 			try
 			{
-				var index = Number (key);
+				var index = key * 1;
 
 				if (Number .isInteger (index))
 				{

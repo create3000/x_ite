@@ -160,7 +160,7 @@ function (Fields,
 					this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
 	
 					if (size === 2)
-						return Number (this .frameRate > FRAME_RATE_MAX);
+						return (this .frameRate > FRAME_RATE_MAX) * 1;
 	
 					var fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
 
