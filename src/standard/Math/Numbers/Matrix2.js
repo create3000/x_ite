@@ -66,7 +66,9 @@ function (Vector2,
 			this [3] = arguments [3];
 		}
 		else
+		{
 			this .identity ();
+		}
 	}
 
 	Matrix2 .prototype =

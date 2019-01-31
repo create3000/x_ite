@@ -628,11 +628,11 @@ function (PointEmitter)
 	{
 		getDefaultEmitter: function ()
 		{
-			if (this .defaultEmitter === undefined)
-			{
-				this .defaultEmitter = new PointEmitter (this .getPrivateScene ());
-				this .defaultEmitter .setup ();
-			}
+			if (this .defaultEmitter !== undefined)
+				return this .defaultEmitter;
+
+			this .defaultEmitter = new PointEmitter (this .getPrivateScene ());
+			this .defaultEmitter .setup ();
 
 			return this .defaultEmitter;
 		},
@@ -2279,7 +2279,7 @@ function (Fields,
 
 			colorRamp .length = length;
 
-			this .colorMaterial = Boolean (colorKeys .length && this .colorRampNode);
+			this .colorMaterial = !! (colorKeys .length && this .colorRampNode);
 		},
 		set_texCoordRamp__: function ()
 		{
@@ -2313,7 +2313,7 @@ function (Fields,
 
 			texCoordRamp .length = length;
 
-			this .texCoordAnim = Boolean (texCoordKeys .length && this .texCoordRampNode);
+			this .texCoordAnim = !! (texCoordKeys .length && this .texCoordRampNode);
 		},
 		intersectsBox: function (box, clipPlanes)
 		{

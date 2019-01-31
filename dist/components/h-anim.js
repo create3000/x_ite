@@ -587,7 +587,7 @@ function (Fields,
 		},
 		setCameraObject: function (value)
 		{
-			X3DTransformNode .prototype .setCameraObject .call (this, value || Boolean (this .skinCoordIndex_ .length));
+			X3DTransformNode .prototype .setCameraObject .call (this, value || !! this .skinCoordIndex_ .length);
 		},
 		getModelMatrix: function ()
 		{

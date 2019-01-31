@@ -68,19 +68,19 @@ function ($,
 	{
 		getScreenTextureProperties: function ()
 		{
-			if (this .screenTextureProperties === undefined)
-			{
-				this .screenTextureProperties = new TextureProperties (this .getPrivateScene ());
+			if (this .screenTextureProperties !== undefined)
+			   return this .screenTextureProperties;
 
-				this .screenTextureProperties .boundaryModeS_       = "CLAMP";
-				this .screenTextureProperties .boundaryModeT_       = "CLAMP";
-				this .screenTextureProperties .boundaryModeR_       = "CLAMP";
-				this .screenTextureProperties .minificationFilter_  = "NEAREST";
-				this .screenTextureProperties .magnificationFilter_ = "NEAREST";
-				this .screenTextureProperties .generateMipMaps_     = false;
-	
-				this .screenTextureProperties .setup ();
-			}
+			this .screenTextureProperties = new TextureProperties (this .getPrivateScene ());
+
+			this .screenTextureProperties .boundaryModeS_       = "CLAMP";
+			this .screenTextureProperties .boundaryModeT_       = "CLAMP";
+			this .screenTextureProperties .boundaryModeR_       = "CLAMP";
+			this .screenTextureProperties .minificationFilter_  = "NEAREST";
+			this .screenTextureProperties .magnificationFilter_ = "NEAREST";
+			this .screenTextureProperties .generateMipMaps_     = false;
+
+			this .screenTextureProperties .setup ();
 
 		   return this .screenTextureProperties;
 		},

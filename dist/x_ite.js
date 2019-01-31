@@ -12852,11 +12852,20 @@ define ('x_ite/Bits/X3DConstants',[],function ()
 "use strict";
 
 	var
-		loadState = 0,
-		fieldType = 0;
+		browserEvent = 0,
+		loadState    = 0,
+		fieldType    = 0;
 
 	var X3DConstants =
 	{
+		// Browser event
+
+		CONNECTION_ERROR:  browserEvent ++,
+		BROWSER_EVENT:     browserEvent ++,
+		INITIALIZED_EVENT: browserEvent ++,
+		SHUTDOWN_EVENT:    browserEvent ++,
+		INITIALIZED_ERROR: browserEvent ++,
+
 		// Load state
 
 		NOT_STARTED_STATE: loadState ++,
@@ -14079,7 +14088,7 @@ function ($,
 				Parser = require ("x_ite/Parser/Parser"),
 				parser = new Parser (scene);
 
-			parser .setUnits (Boolean (scene));
+			parser .setUnits (!! scene);
 			parser .setInput (string);
 			parser .fieldValue (this);
 			this .addEvent ();
@@ -14219,9 +14228,9 @@ function (X3DField,
 	function SFBool (value)
 	{
 		if (this instanceof SFBool)
-			return X3DField .call (this, Boolean (value));
+			return X3DField .call (this, !! value);
 		
-		return X3DField .call (Object .create (SFBool .prototype), Boolean (value));
+		return X3DField .call (Object .create (SFBool .prototype), !! value);
 	}
 
 	SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -14237,7 +14246,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			X3DField .prototype .set .call (this, Boolean (value));
+			X3DField .prototype .set .call (this, !! value);
 		},
 		getTypeName: function ()
 		{
@@ -14860,7 +14869,7 @@ function (Color3,
 				if (arguments [0] instanceof Color3)
 					return X3DField .call (this, arguments [0]);
 				else
-					return X3DField .call (this, new Color3 (+r, +g, +b));
+					return X3DField .call (this, new Color3 (r * 1, g * 1, b * 1));
 			}
 
 			return X3DField .call (this, new Color3 ());
@@ -14945,7 +14954,7 @@ function (Color3,
 		},
 		set: function (value)
 		{
-			this .getValue () .r = value;
+			this .getValue () .r = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -14959,7 +14968,7 @@ function (Color3,
 		},
 		set: function (value)
 		{
-			this .getValue () .g = value;
+			this .getValue () .g = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -14973,7 +14982,7 @@ function (Color3,
 		},
 		set: function (value)
 		{
-			this .getValue () .b = value;
+			this .getValue () .b = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -15265,7 +15274,7 @@ function (X3DField,
 				if (arguments [0] instanceof Color4)
 					return X3DField .call (this, arguments [0]);
 				else
-					return X3DField .call (this, new Color4 (+r, +g, +b, +a));
+					return X3DField .call (this, new Color4 (r * 1, g * 1, b * 1, a * 1));
 			}
 
 			return X3DField .call (this, new Color4 ());
@@ -15339,7 +15348,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			this .getValue () .r = value;
+			this .getValue () .r = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -15353,7 +15362,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			this .getValue () .g = value;
+			this .getValue () .g = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -15367,7 +15376,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			this .getValue () .b = value;
+			this .getValue () .b = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -15381,7 +15390,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			this .getValue () .a = value;
+			this .getValue () .a = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -15469,7 +15478,7 @@ function (X3DField,
 	function SFDouble (value)
 	{
 		if (this instanceof SFDouble)
-			return X3DField .call (this, arguments .length ? +value : 0);
+			return X3DField .call (this, arguments .length ? value * 1 : 0);
 		
 		return X3DField .call (Object .create (SFDouble .prototype), arguments .length ? +value : 0);
 	}
@@ -15578,7 +15587,7 @@ function (X3DField,
 	function SFFloat (value)
 	{
 		if (this instanceof SFFloat)
-			return X3DField .call (this, arguments .length ? +value : 0);
+			return X3DField .call (this, arguments .length ? value * 1 : 0);
 		
 		return X3DField .call (Object .create (SFFloat .prototype), arguments .length ? +value : 0);
 	}
@@ -15604,7 +15613,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			X3DField .prototype .set .call (this, +value);
+			X3DField .prototype .set .call (this, value * 1);
 		},
 		valueOf: X3DField .prototype .getValue,
 		toStream: function (stream)
@@ -15795,12 +15804,12 @@ function (X3DField,
 	{
 	   var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
 	   
-		this .width  = width;
-		this .height = height;
-		this .comp   = comp;
+		this .width  = ~~width;
+		this .height = ~~height;
+		this .comp   = ~~comp;
 		this .array  = new MFInt32 ();
 		this .array .setValue (array);
-		this .array .length = width * height;
+		this .array .length = this .width * this .height;
 	}
 	
 	Image .prototype =
@@ -15826,14 +15835,14 @@ function (X3DField,
 		},
 		set: function (width, height, comp, array)
 		{
-			this .width  = width;
-			this .height = height;
-			this .comp   = comp;
+			this .width  = ~~width;
+			this .height = ~~height;
+			this .comp   = ~~comp;
 			this .array .assign (array);
 		},
 		setWidth: function (value)
 		{
-			this .width = value;
+			this .width = ~~value;
 			this .array .length = this .width  * this .height;	
 		},
 		getWidth: function ()
@@ -15842,7 +15851,7 @@ function (X3DField,
 		},
 		setHeight: function (value)
 		{
-			this .height = value;
+			this .height = ~~value;
 			this .array .length = this .width  * this .height;	
 		},
 		getHeight: function ()
@@ -15851,7 +15860,7 @@ function (X3DField,
 		},
 		setComp: function (value)
 		{
-			this .comp = value;
+			this .comp = ~~value;
 		},
 		getComp: function ()
 		{
@@ -15879,7 +15888,7 @@ function (X3DField,
 	   	var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
 	   
 			if (arguments .length === 4)
-				X3DField .call (this, new Image (+width, +height, +comp, array));
+				X3DField .call (this, new Image (width, height, comp, array));
 			else
 				X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
 
@@ -16748,7 +16757,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 				if (arguments [0] instanceof Vector2)
 					return X3DField .call (this, arguments [0]);
 
-				return X3DField .call (this, new Vector2 (+x, +y));
+				return X3DField .call (this, new Vector2 (x * 1, y * 1));
 			}
 
 			return X3DField .call (this, new Vector2 (0, 0));
@@ -16775,7 +16784,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 			},
 			set: function (value)
 			{
-				this .getValue () .x = value;
+				this .getValue () .x = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -16789,7 +16798,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 			},
 			set: function (value)
 			{
-				this .getValue () .y = value;
+				this .getValue () .y = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -18601,9 +18610,9 @@ function (X3DField,
 				if (arguments [0] instanceof Matrix3)
 					return X3DField .call (this, arguments [0]);
 	
-				return X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
-	                                                   +m10, +m11, +m12,
-	                                                   +m20, +m21, +m22));
+				return X3DField .call (this, new Matrix3 (m00 * 1, m01 * 1, m02 * 1,
+	                                                   m10 * 1, m11 * 1, m12 * 1,
+	                                                   m20 * 1, m21 * 1, m22 * 1));
 			}
 
 			return X3DField .call (this, new Matrix3 ());
@@ -18643,7 +18652,7 @@ function (X3DField,
 				},
 				set: function (value)
 				{
-					this .getValue () [i] = value;
+					this .getValue () [i] = value * 1;
 					this .addEvent ();
 				},
 				enumerable: false,
@@ -18734,7 +18743,7 @@ function (X3DField,
 				if (arguments [0] instanceof Vector3)
 					return X3DField .call (this, arguments [0]);
 
-				return X3DField .call (this, new Vector3 (+x, +y, +z));
+				return X3DField .call (this, new Vector3 (x * 1, y * 1, z * 1));
 			}
 
 			return X3DField .call (this, new Vector3 (0, 0, 0));
@@ -18765,7 +18774,7 @@ function (X3DField,
 			},
 			set: function (value)
 			{
-				this .getValue () .x = value;
+				this .getValue () .x = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -18779,7 +18788,7 @@ function (X3DField,
 			},
 			set: function (value)
 			{
-				this .getValue () .y = value;
+				this .getValue () .y = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -18793,7 +18802,7 @@ function (X3DField,
 			},
 			set: function (value)
 			{
-				this .getValue () .z = value;
+				this .getValue () .z = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -21582,10 +21591,10 @@ function (X3DField,
 				if (arguments [0] instanceof Matrix4)
 					return X3DField .call (this, arguments [0]);
 	
-				return X3DField .call (this, new Matrix4 (+m00, +m01, +m02, +m03,
-	                                                   +m10, +m11, +m12, +m13,
-	                                                   +m20, +m21, +m22, +m23,
-	                                                   +m30, +m31, +m32, +m33));
+				return X3DField .call (this, new Matrix4 (m00 * 1, m01 * 1, m02 * 1, m03 * 1,
+	                                                   m10 * 1, m11 * 1, m12 * 1, m13 * 1,
+	                                                   m20 * 1, m21 * 1, m22 * 1, m23 * 1,
+	                                                   m30 * 1, m31 * 1, m32 * 1, m33 * 1));
 			}
 
 			return X3DField .call (this, new Matrix4 ());
@@ -21761,7 +21770,9 @@ function (X3DField,
 				X3DField .call (this, value);
 			}
 			else
+			{
 				X3DField .call (this, null);
+			}
 
 			return new Proxy (this, handler);
 		}
@@ -21823,7 +21834,9 @@ function (X3DField,
 				X3DField .prototype .set .call (this, value);
 			}
 			else
+			{
 				X3DField .prototype .set .call (this, null);
+			}
 		},
 		getNodeTypeName: function ()
 		{
@@ -22021,9 +22034,9 @@ function (SFVec3,
 					if (arguments [1] instanceof SFVec3f)
 						return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
 
-					return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), +arguments [1]));
+					return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] * 1));
 				case 4:
-					return X3DField .call (this, new Rotation4 (+x, +y, +z, +angle));
+					return X3DField .call (this, new Rotation4 (x * 1, y * 1, z * 1, angle * 1));
 				default:
 					return X3DField .call (this, new Rotation4 ());
 			}
@@ -22108,7 +22121,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .x = value;
+			this .getValue () .x = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -22122,7 +22135,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .y = value;
+			this .getValue () .y = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -22136,7 +22149,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .z = value;
+			this .getValue () .z = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -22150,7 +22163,7 @@ function (SFVec3,
 		},
 		set: function (value)
 		{
-			this .getValue () .angle = value;
+			this .getValue () .angle = value * 1;
 			this .addEvent ();
 		},
 		enumerable: true,
@@ -22242,8 +22255,8 @@ function (X3DField,
 	function SFString (value)
 	{
 		if (this instanceof SFString)
-			return X3DField .call (this, arguments .length ? String (value) : "");
-	
+			return X3DField .call (this, arguments .length ? "" + value : "");
+
 		return X3DField .call (Object .create (SFString .prototype), arguments .length ? String (value) : "");
 	}
 	
@@ -22280,7 +22293,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			X3DField .prototype .set .call (this, String (value));
+			X3DField .prototype .set .call (this, "" + value);
 		},
 		valueOf: X3DField .prototype .getValue,
 		toStream: function (stream)
@@ -22367,7 +22380,7 @@ function (X3DField,
 	function SFTime (value)
 	{
 		if (this instanceof SFTime)
-			return X3DField .call (this, arguments .length ? +value : 0);
+			return X3DField .call (this, arguments .length ? value * 1 : 0);
 	
 		return X3DField .call (Object .create (SFTime .prototype), arguments .length ? +value : 0);
 	}
@@ -22393,7 +22406,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			X3DField .prototype .set .call (this, +value);
+			X3DField .prototype .set .call (this, value * 1);
 		},
 		valueOf: X3DField .prototype .getValue,
 		toStream: function (stream)
@@ -22480,7 +22493,7 @@ function (X3DField,
 				if (arguments [0] instanceof Vector4)
 					return X3DField .call (this, arguments [0]);
 
-				return X3DField .call (this, new Vector4 (+x, +y, +z, +w));
+				return X3DField .call (this, new Vector4 (x * 1, y * 1, z * 1, w * 1));
 			}
 
 			return X3DField .call (this, new Vector4 (0, 0, 0, 0));
@@ -22507,7 +22520,7 @@ function (X3DField,
 			},
 			set: function (value)
 			{
-				this .getValue () .x = value;
+				this .getValue () .x = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -22521,7 +22534,7 @@ function (X3DField,
 			},
 			set: function (value)
 			{
-				this .getValue () .y = value;
+				this .getValue () .y = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -22535,7 +22548,7 @@ function (X3DField,
 			},
 			set: function (value)
 			{
-				this .getValue () .z = value;
+				this .getValue () .z = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -22549,7 +22562,7 @@ function (X3DField,
 			},
 			set: function (value)
 			{
-				this .getValue () .w = value;
+				this .getValue () .w = value * 1;
 				this .addEvent ();
 			},
 			enumerable: true,
@@ -22650,7 +22663,7 @@ function ($,
 		{
 			try
 			{
-				var index = Number (key);
+				var index = key * 1;
 
 				if (Number .isInteger (index))
 				{
@@ -23200,7 +23213,7 @@ function (X3DArrayField,
 		{
 			try
 			{
-				var index = Number (key);
+				var index = key * 1;
 
 				if (Number .isInteger (index))
 				{
@@ -24321,15 +24334,17 @@ function (SFBool,
 		return ArrayField;
 	}
 
+	function Value (value) { return value; }
+
 	var ArrayFields =
 	{
 		MFBool:      TypedArrayTemplate ("MFBool",      X3DConstants .MFBool,      SFBool,      Boolean,     Uint8Array,   1),
 		MFColor:     TypedArrayTemplate ("MFColor",     X3DConstants .MFColor,     SFColor,     SFColor,     Float32Array, 3),
 		MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA, SFColorRGBA, Float32Array, 4),
-		MFDouble:    TypedArrayTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble,    Number,      Float64Array, 1),
-		MFFloat:     TypedArrayTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat,     Number,      Float32Array, 1),
+		MFDouble:    TypedArrayTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble,    Value,       Float64Array, 1),
+		MFFloat:     TypedArrayTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat,     Value,       Float32Array, 1),
 		MFImage:     ArrayTemplate      ("MFImage",     X3DConstants .MFImage,     SFImage,     SFImage,     Array,        1),
-		MFInt32:     TypedArrayTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32,     Number,      Int32Array,   1),
+		MFInt32:     TypedArrayTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32,     Value,       Int32Array,   1),
 		MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
 		MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f,  SFMatrix3f,  Float32Array, 9),
 		MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d,  SFMatrix4d,  Float64Array, 16),
@@ -24337,7 +24352,7 @@ function (SFBool,
 		MFNode:      MFNode,
 		MFRotation:  TypedArrayTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation,  SFRotation,  Float64Array, 4),
 		MFString:    MFString,
-		MFTime:      TypedArrayTemplate ("MFTime",      X3DConstants .MFTime,      SFTime,      Number,      Float64Array, 1),
+		MFTime:      TypedArrayTemplate ("MFTime",      X3DConstants .MFTime,      SFTime,      Value,       Float64Array, 1),
 		MFVec2d:     TypedArrayTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d,     SFVec2d,     Float64Array, 2),
 		MFVec2f:     TypedArrayTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f,     SFVec2f,     Float32Array, 2),
 		MFVec3d:     TypedArrayTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d,     SFVec3d,     Float64Array, 3),
@@ -26189,16 +26204,15 @@ function (Fields,
 
 					this .primitiveQuality = PrimitiveQuality .LOW;
 
-					arc .dimension_      = 20;
+					arc      .dimension_ = 20;
 					arcClose .dimension_ = 20;
-					circle .dimension_   = 20;
-					disk .dimension_     = 20;
+					circle   .dimension_ = 20;
+					disk     .dimension_ = 20;
 
 					cone     .xDimension_ = 16;
 					cylinder .xDimension_ = 16;
-
-					sphere .xDimension_ = 20;
-					sphere .yDimension_ = 9;
+					sphere   .xDimension_ = 20;
+					sphere   .yDimension_ = 9;
 					break;
 				}
 				case "HIGH":
@@ -26208,16 +26222,15 @@ function (Fields,
 
 					this .primitiveQuality = PrimitiveQuality .HIGH;
 
-					arc .dimension_      = 80;
+					arc      .dimension_ = 80;
 					arcClose .dimension_ = 80;
-					circle .dimension_   = 80;
-					disk .dimension_     = 80;
+					circle   .dimension_ = 80;
+					disk     .dimension_ = 80;
 
 					cone     .xDimension_ = 32;
 					cylinder .xDimension_ = 32;
-
-					sphere .xDimension_ = 64;
-					sphere .yDimension_ = 31;
+					sphere   .xDimension_ = 64;
+					sphere   .yDimension_ = 31;
 					break;
 				}
 				default:
@@ -26227,16 +26240,15 @@ function (Fields,
 
 					this .primitiveQuality = PrimitiveQuality .MEDIUM;
 
-					arc .dimension_      = 40;
+					arc      .dimension_ = 40;
 					arcClose .dimension_ = 40;
-					circle .dimension_   = 40;
-					disk .dimension_     = 40;
+					circle   .dimension_ = 40;
+					disk     .dimension_ = 40;
 
 					cone     .xDimension_ = 20;
 					cylinder .xDimension_ = 20;
-
-					sphere .xDimension_ = 32;
-					sphere .yDimension_ = 15;
+					sphere   .xDimension_ = 32;
+					sphere   .yDimension_ = 15;
 					break;
 				}
 			}
@@ -31636,7 +31648,7 @@ define ('standard/Networking/URI',[],function ()
 				uri .port = result [2] ? parseInt (result [2]) : 0;
 			}
 
-			uri .absolute = Boolean (uri .slashs .length) || uri .path [0] === "/";
+			uri .absolute = !! uri .slashs .length || uri .path [0] === "/";
 			uri .local    = /^(?:file|data)$/ .test (uri .scheme) || (! uri .scheme && ! (uri .host || uri .port));
 		}
 		else
@@ -59217,7 +59229,7 @@ function (Fields,
 
 			gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
 			gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .STATIC_DRAW);
-			this .colorMaterial = Boolean (this .colors .length);
+			this .colorMaterial = !! (this .colors .length);
 
 			// Transfer vertices.
 
@@ -59680,7 +59692,7 @@ define ('standard/Math/Numbers/Complex',[],function ()
 			if (this .imag)
 				return this .real + " " + this .imag + "i";
 
-			return String (this .real);
+			return "" + this .real;
 		},
 	};
 
@@ -95405,7 +95417,7 @@ function (Fields,
 					this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
 	
 					if (size === 2)
-						return Number (this .frameRate > FRAME_RATE_MAX);
+						return (this .frameRate > FRAME_RATE_MAX) * 1;
 	
 					var fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
 
@@ -105724,7 +105736,7 @@ function ($,
 			else
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
-				this .callBrowserCallbacks ("initialized");
+				this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
 				this .callBrowserEventHandler ("onload");
 			}
 
@@ -105825,7 +105837,7 @@ function ($,
 			{
 				this .getExecutionContext () .setLive (false);
 				this .shutdown () .processInterests ();
-				this .callBrowserCallbacks ("shutdown");
+				this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
 				this .callBrowserEventHandler ("onshutdown");
 			}
 
@@ -105886,7 +105898,7 @@ function ($,
 			if (this .initialized () .getValue ())
 			{
 				this .initialized () .setValue (this .getCurrentTime ());
-				this .callBrowserCallbacks ("initialized");
+				this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
 				this .callBrowserEventHandler ("onload");
 			}
 		},
@@ -106019,7 +106031,7 @@ function ($,
 				}
 				else
 				{
-					this .callBrowserCallbacks ("error", url);
+					this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
 					this .callBrowserEventHandler ("onerror");
 
 					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
@@ -106068,15 +106080,13 @@ function ($,
 		{
 			return this .browserCallbacks;
 		},
-		callBrowserCallbacks: function (name /* arguments */)
+		callBrowserCallbacks: function (browserEvent)
 		{
-			var args = arguments;
-
 			if (this .browserCallbacks .size)
 			{
 				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
 				{
-					browserCallback .apply (null, args);
+					browserCallback .call (null, browserEvent);
 				});
 			}
 		},
