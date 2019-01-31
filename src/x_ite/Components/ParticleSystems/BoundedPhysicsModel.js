@@ -102,12 +102,12 @@ function (Fields,
 		set_geometry__: function ()
 		{
 			if (this .geometryNode)
-				this .geometryNode .removeInterest ("addNodeEvent", this);
+				this .geometryNode .rebuild_ .removeInterest ("addNodeEvent", this);
 
 			this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
 
 			if (this .geometryNode)
-				this .geometryNode .addInterest ("addNodeEvent", this);
+				this .geometryNode .rebuild_ .addInterest ("addNodeEvent", this);
 		},
 		addGeometry: function (boundedNormals, boundedVertices)
 		{
