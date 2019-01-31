@@ -119,6 +119,8 @@ function ($,
 		X3DTexturingContext            .call (this);
 		X3DTimeContext                 .call (this);
 
+		contexts .forEach (function (context) { context .call (this); } .bind (this));
+
 		this .addChildObjects ("initialized",   new SFTime (),
 		                       "shutdown",      new SFTime (),
 		                       "prepareEvents", new SFTime (),
@@ -178,7 +180,12 @@ function ($,
 			X3DTexturingContext            .prototype .initialize .call (this);
 			X3DTimeContext                 .prototype .initialize .call (this);
 
-			contexts .forEach (function (context) { context .call (this); } .bind (this));
+			contexts .forEach (function (context)
+			{
+				if (context .prototype .initialize)
+					context .prototype .initialize .call (this);
+			}
+			.bind (this));
 		},
 		initialized: function ()
 		{
@@ -288,7 +295,12 @@ function ($,
 	
 			$("X3DCanvas") .each (function (i, canvas)
 			{
-				context .call (X3D .getBrowser (canvas));
+				var browser = X3D .getBrowser (canvas);
+
+				context .call (browser);
+
+				if (context .prototype .initialize)
+					context .prototype .initialize .call (browser);
 			});
 		},
 	});

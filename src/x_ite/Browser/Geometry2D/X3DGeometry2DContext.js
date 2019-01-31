@@ -75,15 +75,14 @@ function (Arc2DOptions,
 		return this [name];
 	}
 
-	function X3DGeometry2DContext ()
-	{
-		this .setGeometry2DPrimitiveQuality (this .getBrowserOptions () .getPrimitiveQuality ());
-	}
+	function X3DGeometry2DContext () { }
 
 	X3DGeometry2DContext .prototype =
 	{
 		initialize: function ()
-		{ },
+		{
+			this .setGeometry2DPrimitiveQuality (this .getBrowserOptions () .getPrimitiveQuality ());
+		},
 		getArc2DOptions: function ()
 		{
 			return getOptionNode .call (this, "arc2DOptions", Arc2DOptions);
