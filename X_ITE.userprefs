@@ -1,11 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="dist/components/scripting.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Bits/X3DConstants.js" Line="62" Column="1" />
-      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="439" Column="64" />
-      <File FileName="dist/components/scripting.js" Line="763" Column="1" />
+      <File FileName="src/x_ite.html" Line="14" Column="53" />
+      <File FileName="src/x_ite/Components/ParticleSystems/BoundedPhysicsModel.js" Line="74" Column="21" />
+      <File FileName="src/x_ite/Components/ParticleSystems/VolumeEmitter.js" Line="147" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -80,13 +80,6 @@ function (Fields,
 {
 "use strict";
 
-	var plane = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
-
-	function PlaneCompare (a, b)
-	{
-		return plane .getDistanceToPoint (a) < plane .getDistanceToPoint (b);
-	}
-
 	function VolumeEmitter (executionContext)
 	{
 		X3DParticleEmitterNode .call (this, executionContext);
@@ -100,8 +93,6 @@ function (Fields,
 		this .direction      = new Vector3 (0, 0, 0);
 		this .volumeNode     = new IndexedFaceSet (executionContext);
 		this .areaSoFarArray = [ 0 ];
-		this .intersections  = [ ];
-		this .sorter         = new QuickSort (this .intersections, PlaneCompare);
 	}
 
 	VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -196,10 +187,18 @@ function (Fields,
 		getRandomPosition: (function ()
 		{
 			var
-				point    = new Vector3 (0, 0, 0),
-				normal   = new Vector3 (0, 0, 0),
-				rotation = new Rotation4 (0, 0, 1, 0),
-				line     = new Line3 (Vector3 .Zero, Vector3 .zAxis);
+				point         = new Vector3 (0, 0, 0),
+				normal        = new Vector3 (0, 0, 0),
+				rotation      = new Rotation4 (0, 0, 1, 0),
+				line          = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+				plane         = new Plane3 (Vector3 .Zero, Vector3 .zAxis),
+				intersections = [ ],
+				sorter        = new QuickSort (intersections, PlaneCompare);
+
+			function PlaneCompare (a, b)
+			{
+				return plane .getDistanceToPoint (a) < plane .getDistanceToPoint (b);
+			}
 
 			return function (position)
 			{
@@ -278,9 +277,7 @@ function (Fields,
 		
 				// Find random point in volume.
 	
-				var
-					intersections    = this .intersections,
-					numIntersections = this .bvh .intersectsLine (line, intersections);
+				var numIntersections = this .bvh .intersectsLine (line, intersections);
 	
 				numIntersections -= numIntersections % 2; // We need an even count of intersections.
 	
@@ -288,7 +285,7 @@ function (Fields,
 				{
 					// Sort intersections along line with a little help from the plane.
 	
-					this .sorter .sort (0, numIntersections);
+					sorter .sort (0, numIntersections);
 	
 					// Select random intersection pair.
 	
