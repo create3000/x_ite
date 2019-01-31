@@ -73,13 +73,13 @@ function (Fields,
 	{
 		constructor: BlendedVolumeStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "voxels",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant1", new Fields .SFFloat (0.5)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant2", new Fields .SFFloat (0.5)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction1", new Fields .SFString ("CONSTANT")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle",     new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "voxels",          new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
