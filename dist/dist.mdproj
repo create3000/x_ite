@@ -80,6 +80,12 @@
     <None Include="components\geometry2d.min.js" />
     <None Include="components\key-device-sensor.js" />
     <None Include="components\key-device-sensor.min.js" />
+    <None Include="components\dis.js" />
+    <None Include="components\dis.min.js" />
+    <None Include="components\picking.js" />
+    <None Include="components\picking.min.js" />
+    <None Include="components\volume-rendering.js" />
+    <None Include="components\volume-rendering.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

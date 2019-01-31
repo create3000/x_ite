@@ -641,7 +641,6 @@
     <None Include="x_ite\Components.js" />
     <None Include="x_ite\Components\Text.js" />
     <None Include="x_ite\Components\Core.js" />
-    <None Include="x_ite\Components\DIS.js" />
     <None Include="x_ite\Components\EnvironmentalEffects.js" />
     <None Include="x_ite\Components\EnvironmentalSensor.js" />
     <None Include="x_ite\Components\Followers.js" />
@@ -652,7 +651,6 @@
     <None Include="x_ite\Components\Lighting.js" />
     <None Include="x_ite\Components\Navigation.js" />
     <None Include="x_ite\Components\Networking.js" />
-    <None Include="x_ite\Components\Picking.js" />
     <None Include="x_ite\Components\PointingDeviceSensor.js" />
     <None Include="x_ite\Components\Rendering.js" />
     <None Include="x_ite\Components\Shaders.js" />
@@ -660,7 +658,6 @@
     <None Include="x_ite\Components\Sound.js" />
     <None Include="x_ite\Components\Texturing.js" />
     <None Include="x_ite\Components\Time.js" />
-    <None Include="x_ite\Components\VolumeRendering.js" />
     <None Include="components\geospatial.js" />
     <None Include="components\h-anim.js" />
     <None Include="components\particle-systems.js" />
@@ -684,6 +681,9 @@
     <None Include="components\scripting.js" />
     <None Include="components\geometry2d.js" />
     <None Include="components\key-device-sensor.js" />
+    <None Include="components\dis.js" />
+    <None Include="components\picking.js" />
+    <None Include="components\volume-rendering.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

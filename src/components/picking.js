@@ -47,46 +47,41 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes"//,
-//	"x_ite/Components/Picking/LinePickSensor",
-//	"x_ite/Components/Picking/PickableGroup",
-//	"x_ite/Components/Picking/PointPickSensor",
-//	"x_ite/Components/Picking/PrimitivePickSensor",
-//	"x_ite/Components/Picking/VolumePickSensor",
-//	"x_ite/Components/Picking/X3DPickSensorNode",
-//	"x_ite/Components/Picking/X3DPickableObject",
+	"x_ite/Components",
+	"x_ite/Components/Picking/LinePickSensor",
+	"x_ite/Components/Picking/PickableGroup",
+	"x_ite/Components/Picking/PointPickSensor",
+	"x_ite/Components/Picking/PrimitivePickSensor",
+	"x_ite/Components/Picking/VolumePickSensor",
+	"x_ite/Components/Picking/X3DPickSensorNode",
+	"x_ite/Components/Picking/X3DPickableObject",
 ],
-function (SupportedNodes//,
-//          LinePickSensor,
-//          PickableGroup,
-//          PointPickSensor,
-//          PrimitivePickSensor,
-//          VolumePickSensor,
-//          X3DPickSensorNode,
-//          X3DPickableObject
-)
+function (Components,
+          LinePickSensor,
+          PickableGroup,
+          PointPickSensor,
+          PrimitivePickSensor,
+          VolumePickSensor,
+          X3DPickSensorNode,
+          X3DPickableObject)
 {
 "use strict";
 
-	var Types =
-	{
-//		LinePickSensor:      LinePickSensor,
-//		PickableGroup:       PickableGroup,
-//		PointPickSensor:     PointPickSensor,
-//		PrimitivePickSensor: PrimitivePickSensor,
-//		VolumePickSensor:    VolumePickSensor,
-	};
-
-	var AbstractTypes =
-	{
-//		X3DPickSensorNode: X3DPickSensorNode,
-//		X3DPickableObject: X3DPickableObject,
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	Components .addComponent ({
+		name: "Picking",
+		types:
+		{
+			LinePickSensor:      LinePickSensor,
+			PickableGroup:       PickableGroup,
+			PointPickSensor:     PointPickSensor,
+			PrimitivePickSensor: PrimitivePickSensor,
+			VolumePickSensor:    VolumePickSensor,
+		},
+		abstractTypes:
+		{
+			X3DPickSensorNode: X3DPickSensorNode,
+			X3DPickableObject: X3DPickableObject,
+		},
+	});
 });
 

@@ -66,13 +66,14 @@ function (Fields,
 
 	function ReceiverPdu (executionContext)
 	{
-		X3DSensorNode .call (this, executionContext);
+		X3DSensorNode    .call (this, executionContext);
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .ReceiverPdu);
 	}
 
-	ReceiverPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototype),new X3DBoundedObject (),
+	ReceiverPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+		X3DBoundedObject .prototype,
 	{
 		constructor: ReceiverPdu,
 		fieldDefinitions: new FieldDefinitionArray ([

@@ -66,13 +66,14 @@ function (Fields,
 
 	function TransmitterPdu (executionContext)
 	{
-		X3DSensorNode .call (this, executionContext);
+		X3DSensorNode    .call (this, executionContext);
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .TransmitterPdu);
 	}
 
-	TransmitterPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototype),new X3DBoundedObject (),
+	TransmitterPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+		X3DBoundedObject .prototype,
 	{
 		constructor: TransmitterPdu,
 		fieldDefinitions: new FieldDefinitionArray ([

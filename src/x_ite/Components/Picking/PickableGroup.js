@@ -66,13 +66,14 @@ function (Fields,
 
 	function PickableGroup (executionContext)
 	{
-		X3DGroupingNode .call (this, executionContext);
+		X3DGroupingNode   .call (this, executionContext);
 		X3DPickableObject .call (this, executionContext);
 
 		this .addType (X3DConstants .PickableGroup);
 	}
 
-	PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),new X3DPickableObject (),
+	PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+		X3DPickableObject .prototype,
 	{
 		constructor: PickableGroup,
 		fieldDefinitions: new FieldDefinitionArray ([

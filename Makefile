@@ -14,6 +14,7 @@ all:
 
 	$(call generate_component,cad-geometry,--compress)
 	$(call generate_component,cube-map-texturing,--compress)
+	$(call generate_component,dis,--compress)
 	$(call generate_component,event-utilities,--compress)
 	$(call generate_component,geometry2d,--compress)
 	$(call generate_component,geospatial,--compress)
@@ -22,9 +23,11 @@ all:
 	$(call generate_component,layout,--compress)
 	$(call generate_component,nurbs,--compress)
 	$(call generate_component,particle-systems,--compress)
+	$(call generate_component,picking,--compress)
 	$(call generate_component,rigid-body-physics)
 	$(call generate_component,scripting,--compress)
 	$(call generate_component,texturing-3d,--compress)
+	$(call generate_component,volume-rendering,--compress)
 	$(call generate_component,x_ite,--compress)
 
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js

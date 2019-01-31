@@ -73,13 +73,13 @@ function (Fields,
 	{
 		constructor: ShadedVolumeStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "lighting", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "material", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "shadows", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "phaseFunction", new Fields .SFString ("Henyey-Greenstein")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "lighting",       new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "material",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",        new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceNormals", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "phaseFunction",  new Fields .SFString ("Henyey-Greenstein")),
 		]),
 		getTypeName: function ()
 		{

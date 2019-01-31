@@ -51,7 +51,6 @@ define ([
 	"x_ite/Browser/X3DBrowserContext",
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/Core",
-	"x_ite/Components/DIS",
 	"x_ite/Components/EnvironmentalEffects",
 	"x_ite/Components/EnvironmentalSensor",
 	"x_ite/Components/Followers",
@@ -62,7 +61,6 @@ define ([
 	"x_ite/Components/Lighting",
 	"x_ite/Components/Navigation",
 	"x_ite/Components/Networking",
-	"x_ite/Components/Picking",
 	"x_ite/Components/PointingDeviceSensor",
 	"x_ite/Components/Rendering",
 	"x_ite/Components/Shaders",
@@ -71,7 +69,6 @@ define ([
 	"x_ite/Components/Text",
 	"x_ite/Components/Texturing",
 	"x_ite/Components/Time",
-	"x_ite/Components/VolumeRendering",
 ],
 function (X3DBrowserContext,
           SupportedNodes)
@@ -100,7 +97,7 @@ function (X3DBrowserContext,
 				X3DBrowserContext .addContext (component .browser);
 
 			if (component .name)
-				console .log ("Done loading component '" + component .name + "'.");
+				console .log ("Done loading external component '" + component .name + "'.");
 		},
 	};
 

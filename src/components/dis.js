@@ -47,43 +47,38 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-//	"x_ite/Components/DIS/DISEntityManager",
-//	"x_ite/Components/DIS/DISEntityTypeMapping",
-//	"x_ite/Components/DIS/EspduTransform",
-//	"x_ite/Components/DIS/ReceiverPdu",
-//	"x_ite/Components/DIS/SignalPdu",
-//	"x_ite/Components/DIS/TransmitterPdu",
+	"x_ite/Components",
+	"x_ite/Components/DIS/DISEntityManager",
+	"x_ite/Components/DIS/DISEntityTypeMapping",
+	"x_ite/Components/DIS/EspduTransform",
+	"x_ite/Components/DIS/ReceiverPdu",
+	"x_ite/Components/DIS/SignalPdu",
+	"x_ite/Components/DIS/TransmitterPdu",
 ],
-function (SupportedNodes//,
-//          DISEntityManager,
-//          DISEntityTypeMapping,
-//          EspduTransform,
-//          ReceiverPdu,
-//          SignalPdu,
-//          TransmitterPdu
-)
+function (Components,
+          DISEntityManager,
+          DISEntityTypeMapping,
+          EspduTransform,
+          ReceiverPdu,
+          SignalPdu,
+          TransmitterPdu)
 {
 "use strict";
 
-	var Types =
-	{
-//		DISEntityManager:     DISEntityManager,
-//		DISEntityTypeMapping: DISEntityTypeMapping,
-//		EspduTransform:       EspduTransform,
-//		ReceiverPdu:          ReceiverPdu,
-//		SignalPdu:            SignalPdu,
-//		TransmitterPdu:       TransmitterPdu,
-	};
-
-	var AbstractTypes =
-	{
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	Components .addComponent ({
+		name: "DIS",
+		types:
+		{
+			DISEntityManager:     DISEntityManager,
+			DISEntityTypeMapping: DISEntityTypeMapping,
+			EspduTransform:       EspduTransform,
+			ReceiverPdu:          ReceiverPdu,
+			SignalPdu:            SignalPdu,
+			TransmitterPdu:       TransmitterPdu,
+		},
+		abstractTypes:
+		{
+		},
+	});
 });
 

@@ -67,12 +67,13 @@ function (Fields,
 	function EspduTransform (executionContext)
 	{
 		X3DGroupingNode .call (this, executionContext);
-		X3DSensorNode .call (this, executionContext);
+		X3DSensorNode   .call (this, executionContext);
 
 		this .addType (X3DConstants .EspduTransform);
 	}
 
-	EspduTransform .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),new X3DSensorNode (),
+	EspduTransform .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+		X3DSensorNode .prototype,
 	{
 		constructor: EspduTransform,
 		fieldDefinitions: new FieldDefinitionArray ([
