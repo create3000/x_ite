@@ -55,7 +55,6 @@ define ([
 	"x_ite/Components/EnvironmentalEffects/X3DFogObject",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -63,8 +62,7 @@ function (Fields,
           X3DBindableNode, 
           X3DFogObject,
           TraverseType,
-		  X3DConstants,
-          Matrix4)
+          X3DConstants)
 {
 "use strict";
 
@@ -74,8 +72,6 @@ function (Fields,
 		X3DFogObject    .call (this, executionContext);
 
 		this .addType (X3DConstants .Fog);
-
-		this .modelMatrix = new Matrix4 ();
 	}
 
 	Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
@@ -108,10 +104,6 @@ function (Fields,
 			X3DBindableNode .prototype .initialize .call (this);
 			X3DFogObject    .prototype .initialize .call (this);
 		},
-		getModelMatrix: function ()
-		{
-			return this .modelMatrix;
-		},
 		bindToLayer: function (layer)
 		{
 			layer .getFogStack () .push (this);
@@ -127,8 +119,6 @@ function (Fields,
 		traverse: function (type, renderObject)
 		{
 			renderObject .getLayer () .getFogs () .push (this);
-
-			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
 		},
 	});
 

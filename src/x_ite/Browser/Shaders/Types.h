@@ -4,7 +4,6 @@ struct x3d_FogParameters {
 	mediump int   type;
 	mediump vec3  color;
 	mediump float visibilityRange;
-	mediump mat3  matrix;
 };
 
 //uniform x3d_FogParameters x3d_Fog;

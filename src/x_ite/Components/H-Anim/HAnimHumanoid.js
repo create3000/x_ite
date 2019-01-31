@@ -301,6 +301,7 @@ function (Fields,
 									index        = coordIndex [i],
 									displacement = i < displacementsLength ? point .set (displacements [i3], displacements [i3 + 1], displacements [i3 + 2]) : point .assign (Vector3 .Zero);
 
+								// skin += d * J * w
 								skinCoordNode .get1Point (index, skin);
 								jointMatrix .multDirMatrix (displacement) .multiply (weight) .add (skin);
 								skinCoordNode .set1Point (index, displacement);

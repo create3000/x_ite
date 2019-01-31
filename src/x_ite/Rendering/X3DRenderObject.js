@@ -180,20 +180,10 @@ function ($,
 		{
 			this .shadow .pop ();
 		},
-		setGlobalFog: (function ()
+		setGlobalFog: function (fog)
 		{
-			var modelViewMatrix = new Matrix4 ();
-
-			return function (fog)
-			{
-				var fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
-
-				modelViewMatrix .assign (fog .getModelMatrix ()) .multRight (this .getInverseCameraSpaceMatrix () .get ());
-				fogContainer .set (fog, modelViewMatrix);
-
-				this .localFog = this .localFogs [0] = fogContainer;
-			};
-		})(),
+			this .localFog = this .localFogs [0] = fog;
+		},
 		pushLocalFog: function (localFog)
 		{
 			this .localFogs .push (localFog);
@@ -202,11 +192,9 @@ function ($,
 		},
 		popLocalFog: function ()
 		{
-			var localFog = this .localFogs .pop ();
+			this .localFogs .pop ();
 
 			this .localFog = this .localFogs [this .localFogs .length - 1];
-
-			return localFog;
 		},
 		getLayouts: function ()
 		{
@@ -990,7 +978,7 @@ function ($,
 				{
 					// Recycle clip planes.
 	
-					var clipPlanes = this .getBrowser () .getClipPlanes ();
+					var clipPlanes = browser .getClipPlanes ();
 		
 					for (var i = 0, length = clipPlanes .length; i < length; ++ i)
 					   clipPlanes [i] .dispose ();
@@ -1006,21 +994,12 @@ function ($,
 		
 					// Recycle local lights.
 		
-					var lights = this .getBrowser () .getLocalLights ();
+					var lights = browser .getLocalLights ();
 		
 					for (var i = 0, length = lights .length; i < length; ++ i)
 					   lights [i] .dispose ();
 		
 					lights .length = 0;
-		
-					// Recycle local fogs.
-
-					var fogs = this .getBrowser () .getLocalFogs ();
-		
-					for (var i = 0, length = fogs .length; i < length; ++ i)
-					   fogs [i] .dispose ();
-		
-					fogs .length = 0;
 				}
 
 				this .globalLights .length = 0;
