@@ -408,6 +408,8 @@ function (Vector3,
 				sosi = new Matrix3 (),
 				b    = new Matrix3 ();
 
+			var eigen = { values: [ ], vectors: [[ ], [ ], [ ]] };
+
 			return function (translation, rotation, scale, scaleOrientation)
 			{
 				// (1) Get translation.
@@ -425,7 +427,7 @@ function (Vector3,
 	
 				// (4) B = A * !A  (here !A means A transpose)
 				b .assign (a) .transpose () .multLeft (a);
-				var e = eigendecomposition (b);
+				var e = eigendecomposition (b, eigen);
 	
 				// Find min / max eigenvalues and do ratio test to determine singularity.
 	

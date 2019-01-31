@@ -347,6 +347,8 @@ function (Vector2,
 				sosi = new Matrix2 (),
 				b    = new Matrix2 ();
 
+			var eigen = { values: [ ], vectors: [[ ], [ ]] };
+
 			return function (translation, rotation, scale, scaleOrientation)
 			{
 				// (1) Get translation.
@@ -364,7 +366,7 @@ function (Vector2,
 	
 				// (4) B = A * !A  (here !A means A transpose)
 				b .assign (a) .transpose () .multLeft (a);
-				var e = eigendecomposition (b);
+				var e = eigendecomposition (b, eigen);
 	
 				// Find min / max eigenvalues and do ratio test to determine singularity.
 	

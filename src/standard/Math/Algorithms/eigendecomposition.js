@@ -51,14 +51,18 @@ define (function ()
 {
 "use strict";
 
+	var a = [ ]; // more scratch
+	var b = [ ]; // more scratch
+	var z = [ ]; // more scratch
+
 	// Calculate eigenvalues and eigenvectors.
 	// This is from SGI Inventor Matrix.cpp.
-	return function (matrix)
+	return function (matrix, result)
 	{
 		var
 			ORDER   = matrix .order,
-			values  = new Array (ORDER),
-			vectors = new Array (ORDER);
+			values  = result .values,
+			vectors = result .vectors;
 
 		var sm;                // smallest entry
 		var theta;             // angle for Jacobi rotation
@@ -66,18 +70,13 @@ define (function ()
 		var tau;               // sine / (1 + cos)
 		var h, g;              // two scrap values
 		var thresh;            // threshold below which no rotation done
-		var a = new Array (ORDER);
-		var b = new Array (ORDER); // more scratch
-		var z = new Array (ORDER); // more scratch
 		var p, q, i, j;
 		var SIZE = matrix .length;
 
 		// initializations
 		for (i = 0; i < ORDER; ++i)
 		{
-			vectors [i] = new Array (ORDER);
-
-			a [i] = new Array (ORDER);
+			a [i] = a [i] || new Array (ORDER);
 			b [i] = values [i] = matrix .get1 (i, i);
 			z [i] = 0;
 
@@ -186,6 +185,6 @@ define (function ()
 			}
 		}
 
-		return { values: values, vectors: vectors };
+		return result;
 	};
 });
