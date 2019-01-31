@@ -645,7 +645,6 @@
     <None Include="x_ite\Components\EnvironmentalEffects.js" />
     <None Include="x_ite\Components\EnvironmentalSensor.js" />
     <None Include="x_ite\Components\Followers.js" />
-    <None Include="x_ite\Components\Geometry2D.js" />
     <None Include="x_ite\Components\Geometry3D.js" />
     <None Include="x_ite\Components\Grouping.js" />
     <None Include="x_ite\Components\Interpolation.js" />
@@ -684,6 +683,7 @@
     <None Include="components\layout.js" />
     <None Include="components\event-utilities.js" />
     <None Include="components\scripting.js" />
+    <None Include="components\geometry2d.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

@@ -226,18 +226,16 @@ function (Fields,
 		},
 		set_primitiveQuality__: function (value)
 		{
-			var primitiveQuality = value .getValue () .toUpperCase ();
+			var
+				browser          = this .getBrowser (),
+				primitiveQuality = value .getValue () .toUpperCase ();
 
-			this .getBrowser () .getLocalStorage () ["BrowserOptions.PrimitiveQuality"] = primitiveQuality;
+			browser .getLocalStorage () ["BrowserOptions.PrimitiveQuality"] = primitiveQuality;
 
 			var
-				arc      = this .getBrowser () .getArc2DOptions (),
-				arcClose = this .getBrowser () .getArcClose2DOptions (),
-				circle   = this .getBrowser () .getCircle2DOptions (),
-				disk     = this .getBrowser () .getDisk2DOptions (),
-				cone     = this .getBrowser () .getConeOptions (),
-				cylinder = this .getBrowser () .getCylinderOptions (),
-				sphere   = this .getBrowser () .getSphereOptions ();
+				cone     = browser .getConeOptions (),
+				cylinder = browser .getCylinderOptions (),
+				sphere   = browser .getSphereOptions ();
 
 			switch (primitiveQuality)
 			{
@@ -248,10 +246,8 @@ function (Fields,
 
 					this .primitiveQuality = PrimitiveQuality .LOW;
 
-					arc      .dimension_ = 20;
-					arcClose .dimension_ = 20;
-					circle   .dimension_ = 20;
-					disk     .dimension_ = 20;
+					if (browser .setGeometry2DPrimitiveQuality)
+						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
 					cone     .xDimension_ = 16;
 					cylinder .xDimension_ = 16;
@@ -266,10 +262,8 @@ function (Fields,
 
 					this .primitiveQuality = PrimitiveQuality .HIGH;
 
-					arc      .dimension_ = 80;
-					arcClose .dimension_ = 80;
-					circle   .dimension_ = 80;
-					disk     .dimension_ = 80;
+					if (browser .setGeometry2DPrimitiveQuality)
+						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
 					cone     .xDimension_ = 32;
 					cylinder .xDimension_ = 32;
@@ -284,10 +278,8 @@ function (Fields,
 
 					this .primitiveQuality = PrimitiveQuality .MEDIUM;
 
-					arc      .dimension_ = 40;
-					arcClose .dimension_ = 40;
-					circle   .dimension_ = 40;
-					disk     .dimension_ = 40;
+					if (browser .setGeometry2DPrimitiveQuality)
+						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
 					cone     .xDimension_ = 20;
 					cylinder .xDimension_ = 20;

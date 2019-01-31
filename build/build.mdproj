@@ -38,5 +38,6 @@
     <None Include="parts\default.end.frag" />
     <None Include="components\event-utilities.build.js" />
     <None Include="components\scripting.build.js" />
+    <None Include="components\geometry2d.build.js" />
   </ItemGroup>
 </Project>

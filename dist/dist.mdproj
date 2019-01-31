@@ -76,6 +76,8 @@
     <None Include="components\event-utilities.min.js" />
     <None Include="components\scripting.js" />
     <None Include="components\scripting.min.js" />
+    <None Include="components\geometry2d.js" />
+    <None Include="components\geometry2d.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

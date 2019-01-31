@@ -127,7 +127,7 @@ function (ComponentInfoArray,
 		title:      "Geometry2D",
 		name:       "Geometry2D",
 		level:       2,
-		providerUrl: urls .getProviderUrl (),
+		providerUrl: urls .getProviderUrl ("geometry2d"),
 	});
 
 	SupportedComponents .addBaseComponent (

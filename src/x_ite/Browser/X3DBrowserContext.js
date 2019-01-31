@@ -57,7 +57,6 @@ define ([
 	"x_ite/Browser/Shaders/X3DShadersContext",
 	"x_ite/Browser/Rendering/X3DRenderingContext",
 	"x_ite/Browser/Shape/X3DShapeContext",
-	"x_ite/Browser/Geometry2D/X3DGeometry2DContext",
 	"x_ite/Browser/Geometry3D/X3DGeometry3DContext",
 	"x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext",
 	"x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext",
@@ -81,7 +80,6 @@ function (SFTime,
           X3DShadersContext,
           X3DRenderingContext,
           X3DShapeContext,
-          X3DGeometry2DContext,
           X3DGeometry3DContext,
           X3DPointingDeviceSensorContext,
           X3DKeyDeviceSensorContext,
@@ -108,7 +106,6 @@ function (SFTime,
 		X3DShadersContext              .call (this);
 		X3DRenderingContext            .call (this);
 		X3DShapeContext                .call (this);
-		X3DGeometry2DContext           .call (this);
 		X3DGeometry3DContext           .call (this);
 		X3DPointingDeviceSensorContext .call (this);
 		X3DKeyDeviceSensorContext      .call (this);
@@ -147,7 +144,6 @@ function (SFTime,
 		X3DShadersContext .prototype,
 		X3DRenderingContext .prototype,
 		X3DShapeContext .prototype,
-		X3DGeometry2DContext .prototype,
 		X3DGeometry3DContext .prototype,
 		X3DPointingDeviceSensorContext .prototype,
 		X3DKeyDeviceSensorContext .prototype,
@@ -171,7 +167,6 @@ function (SFTime,
 			X3DShadersContext              .prototype .initialize .call (this);
 			X3DRenderingContext            .prototype .initialize .call (this);
 			X3DShapeContext                .prototype .initialize .call (this);
-			X3DGeometry2DContext           .prototype .initialize .call (this);
 			X3DGeometry3DContext           .prototype .initialize .call (this);
 			X3DPointingDeviceSensorContext .prototype .initialize .call (this);
 			X3DKeyDeviceSensorContext      .prototype .initialize .call (this);

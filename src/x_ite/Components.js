@@ -55,7 +55,6 @@ define ([
 	"x_ite/Components/EnvironmentalEffects",
 	"x_ite/Components/EnvironmentalSensor",
 	"x_ite/Components/Followers",
-	"x_ite/Components/Geometry2D",
 	"x_ite/Components/Geometry3D",
 	"x_ite/Components/Grouping",
 	"x_ite/Components/Interpolation",

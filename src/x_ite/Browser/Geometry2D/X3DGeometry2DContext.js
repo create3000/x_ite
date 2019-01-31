@@ -53,12 +53,14 @@ define ([
 	"x_ite/Browser/Geometry2D/Circle2DOptions",
 	"x_ite/Browser/Geometry2D/Disk2DOptions",
 	"x_ite/Browser/Geometry2D/Rectangle2DOptions",
+	"x_ite/Browser/Core/PrimitiveQuality",
 ],
 function (Arc2DOptions,
           ArcClose2DOptions,
           Circle2DOptions,
           Disk2DOptions,
-          Rectangle2DOptions)
+          Rectangle2DOptions,
+          PrimitiveQuality)
 {
 "use strict";
 	
@@ -98,6 +100,42 @@ function (Arc2DOptions,
 		getRectangle2DOptions: function ()
 		{
 			return getOptionNode .call (this, "rectangle2DOptions", Rectangle2DOptions);
+		},
+		setGeometry2DPrimitiveQuality: function (primitiveQuality)
+		{
+			var
+				arc      = this .getArc2DOptions (),
+				arcClose = this .getArcClose2DOptions (),
+				circle   = this .getCircle2DOptions (),
+				disk     = this .getDisk2DOptions ();
+
+			switch (primitiveQuality)
+			{
+				case PrimitiveQuality .LOW:
+				{
+					arc      .dimension_ = 20;
+					arcClose .dimension_ = 20;
+					circle   .dimension_ = 20;
+					disk     .dimension_ = 20;
+					break;
+				}
+				case PrimitiveQuality .MEDIUM:
+				{
+					arc      .dimension_ = 40;
+					arcClose .dimension_ = 40;
+					circle   .dimension_ = 40;
+					disk     .dimension_ = 40;
+					break;
+				}
+				case PrimitiveQuality .HIGH:
+				{
+					arc      .dimension_ = 80;
+					arcClose .dimension_ = 80;
+					circle   .dimension_ = 80;
+					disk     .dimension_ = 80;
+					break;
+				}
+			}
 		},
 	};
 
