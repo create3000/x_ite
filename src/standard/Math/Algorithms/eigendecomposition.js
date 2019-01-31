@@ -138,7 +138,7 @@ define (function ()
 						}
 						// End of computing tangent of rotation angle
 
-						c           = 1 / Math .sqrt (1 + t*t);
+						c           = 1 / Math .sqrt (1 + t * t);
 						s           = t * c;
 						tau         = s / (1 + c);
 						h           = t * a [p] [q];

@@ -491,7 +491,7 @@ function ($,
 			{
 				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
 				{
-					browserCallback .call (null, browserEvent);
+					browserCallback (browserEvent);
 				});
 			}
 		},
