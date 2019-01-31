@@ -48,6 +48,7 @@
 
 
 define ([
+	"x_ite/DEBUG",
 	"x_ite/Browser/X3DBrowserContext",
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/Core",
@@ -70,7 +71,8 @@ define ([
 	"x_ite/Components/Texturing",
 	"x_ite/Components/Time",
 ],
-function (X3DBrowserContext,
+function (DEBUG,
+          X3DBrowserContext,
           SupportedNodes)
 {
 "use strict";
@@ -97,7 +99,10 @@ function (X3DBrowserContext,
 				X3DBrowserContext .addContext (component .browser);
 
 			if (component .name)
-				console .log ("Done loading external component '" + component .name + "'.");
+			{
+				if (DEBUG)
+					console .log ("Done loading external component '" + component .name + "'.");
+			}
 		},
 	};
 

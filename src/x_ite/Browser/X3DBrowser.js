@@ -92,7 +92,6 @@ function ($,
 
 		this .currentSpeed         = 0;
 		this .currentFrameRate     = 60;
-		this .description_         = "";
 		this .components           = { };
 		this .browserCallbacks     = new Map ();
 
@@ -213,9 +212,17 @@ function ($,
 		{
 			return SupportedNodes .getType (typeName);
 		},
-		createScene: function ()
+		createScene: function (profile, component1 /*, ...*/)
 		{
 		   var scene = new Scene (this);
+
+			if (arguments .length)
+			{
+				scene .setProfile (profile);
+
+				for (var i = 1, length = arguments .length; i < length; ++ i)
+					scene .addComponent (arguments [i]);
+			}
 
 			scene .setup ();
 
@@ -744,10 +751,12 @@ function ($,
 
 	Object .defineProperty (X3DBrowser .prototype, "description",
 	{
-		get: function () { return this .description_; },
+		get: function ()
+		{
+			return this .getNotification () .string_ .getValue ();
+		},
 		set: function (value)
 		{
-			this .description_                = value;
 			this .getNotification () .string_ = value;
 		},
 		enumerable: true,
