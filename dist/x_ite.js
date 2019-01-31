@@ -1,4 +1,4 @@
-/* X_ITE v4.2.18a-584 */
+/* X_ITE v4.2.18a-585 */
 
 (function () {
 
@@ -81086,18 +81086,6 @@ function ($,
 		this .displayTime     = 0;
 	};
 
-	X3DBrowserContext .addContext = function (context)
-	{
-		Object .assign (X3DBrowserContext .prototype, context .prototype);
-
-		$("X3DCanvas") .each (function (i, canvas)
-		{
-			context .call (X3D .getBrowser (canvas));
-		});
-
-		contexts .push (context);
-	};
-
 	X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 		X3DRoutingContext .prototype,
 		X3DCoreContext .prototype,
@@ -81234,6 +81222,23 @@ function ($,
 			this .systemStartTime = performance .now ();
 
 			this .finished_ .processInterests ();
+		},
+	});
+
+	Object .assign (X3DBrowserContext,
+	{
+		addContext: function (context)
+		{
+			var X3D = require ("x_ite/X3D");
+
+			contexts .push (context);
+
+			Object .assign (X3DBrowserContext .prototype, context .prototype);
+	
+			$("X3DCanvas") .each (function (i, canvas)
+			{
+				context .call (X3D .getBrowser (canvas));
+			});
 		},
 	});
 
