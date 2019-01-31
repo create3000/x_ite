@@ -98,6 +98,11 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DGroupingNode   .prototype .initialize .call (this);
+			X3DPickableObject .prototype .initialize .call (this);
+		},
 	});
 
 	return PickableGroup;

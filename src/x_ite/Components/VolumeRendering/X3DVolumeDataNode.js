@@ -60,7 +60,7 @@ function (X3DChildNode,
 
 	function X3DVolumeDataNode (executionContext)
 	{
-		X3DChildNode .call (this, executionContext);
+		X3DChildNode     .call (this, executionContext);
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DVolumeDataNode);
@@ -70,6 +70,11 @@ function (X3DChildNode,
 		X3DBoundedObject .prototype,
 	{
 		constructor: X3DVolumeDataNode,
+		initialize: function ()
+		{
+			X3DChildNode     .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
+		},
 	});
 
 	return X3DVolumeDataNode;

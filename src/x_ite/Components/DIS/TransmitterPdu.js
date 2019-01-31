@@ -135,6 +135,11 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DSensorNode    .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
+		},
 	});
 
 	return TransmitterPdu;
