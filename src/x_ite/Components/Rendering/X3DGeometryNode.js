@@ -149,10 +149,10 @@ function (Fields,
 
 		array .assign = function (value)
 		{
-			this .length = 0;
-
 			for (var i = 0, length = value .length; i < length; ++ i)
-				this .push (value [i]);
+				this [i] = value [i];
+
+			this .length = length;
 		};
 
 		array .getValue = function ()
@@ -291,9 +291,10 @@ function (Fields,
 		{
 			var multiTexCoords = this .multiTexCoords;
 
-			multiTexCoords .length = 0;
+			for (var i = 0, length = value .length; i < length; ++ i)
+				multiTexCoords [i] = value [i];
 
-			Array .prototype .push .apply (multiTexCoords, value);
+			multiTexCoords .length = length;
 		},
 		getMultiTexCoords: function ()
 		{

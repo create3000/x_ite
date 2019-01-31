@@ -464,17 +464,25 @@ function ($,
 	
 				// Collisions
 
-				var collisions = context .collisions;
+				var
+					sourceCollisions      = this .collisions,
+					destinationCollisions = context .collisions;
 
-				collisions .length = 0;
-				Array .prototype .push .apply (collisions, this .collisions);
+				for (var i = 0, length = sourceCollisions .length; i < length; ++ i)
+					destinationCollisions [i] = sourceCollisions [i];
+
+				destinationCollisions .length = length;
 
 				// Clip planes
 
-				var clipPlanes = context .clipPlanes;
+				var
+					sourceClipPlanes      = this .shaderObjects,
+					destinationClipPlanes = context .clipPlanes;
 
-				clipPlanes .length = 0;
-				Array .prototype .push .apply (clipPlanes, this .shaderObjects);
+				for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
+					destinationClipPlanes [i] = sourceClipPlanes [i];
+
+				destinationClipPlanes .length = length;
 
 				return true;
 			}
@@ -505,10 +513,14 @@ function ($,
 	
 				// Clip planes
 	
-				var clipPlanes = context .clipPlanes;
+				var
+					sourceClipPlanes      = this .shaderObjects,
+					destinationClipPlanes = context .clipPlanes;
 
-				clipPlanes .length = 0;
-				Array .prototype .push .apply (clipPlanes, this .shaderObjects);
+				for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
+					destinationClipPlanes [i] = sourceClipPlanes [i];
+
+				destinationClipPlanes .length = length;
 
 				return true;
 			}
@@ -558,10 +570,14 @@ function ($,
 
 				// Clip planes and local lights
 
-				var shaderObjects = context .shaderObjects;
+				var
+					sourceShaderObjects      = this .shaderObjects,
+					destinationShaderObjects = context .shaderObjects;
 
-				shaderObjects .length = 0;
-				Array .prototype .push .apply (shaderObjects, this .shaderObjects);
+				for (var i = 0, length = sourceShaderObjects .length; i < length; ++ i)
+					destinationShaderObjects [i] = sourceShaderObjects [i];
+
+				destinationShaderObjects .length = length;
 
 				return true;
 			}
