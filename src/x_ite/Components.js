@@ -58,7 +58,6 @@ define ([
 	"x_ite/Components/Geometry3D",
 	"x_ite/Components/Grouping",
 	"x_ite/Components/Interpolation",
-	"x_ite/Components/KeyDeviceSensor",
 	"x_ite/Components/Layering",
 	"x_ite/Components/Lighting",
 	"x_ite/Components/Navigation",
@@ -98,7 +97,7 @@ function (X3DBrowserContext,
 			}
 
 			if (component .browser)
-				Object .assign (X3DBrowserContext .prototype, component .browser);
+				X3DBrowserContext .addContext (component .browser);
 
 			if (component .name)
 				console .log ("Done loading component '" + component .name + "'.");

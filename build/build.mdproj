@@ -39,5 +39,6 @@
     <None Include="components\event-utilities.build.js" />
     <None Include="components\scripting.build.js" />
     <None Include="components\geometry2d.build.js" />
+    <None Include="components\key-device-sensor.build.js" />
   </ItemGroup>
 </Project>

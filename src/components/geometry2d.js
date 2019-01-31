@@ -47,7 +47,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Components",
 	"x_ite/Browser/Geometry2D/X3DGeometry2DContext",
 	"x_ite/Components/Geometry2D/Arc2D",
@@ -59,8 +58,7 @@ define ([
 	"x_ite/Components/Geometry2D/Rectangle2D",
 	"x_ite/Components/Geometry2D/TriangleSet2D",
 ],
-function ($,
-          Components,
+function (Components,
           X3DGeometry2DContext,
           Arc2D,
           ArcClose2D,
@@ -89,14 +87,7 @@ function ($,
 		abstractTypes:
 		{
 		},
-		browser: X3DGeometry2DContext .prototype,
-	});
-
-	$("X3DCanvas") .each (function (i, canvas)
-	{
-		var browser = X3D .getBrowser (canvas);
-
-		browser .setGeometry2DPrimitiveQuality (browser .getBrowserOptions () .getPrimitiveQuality ());
+		browser: X3DGeometry2DContext,
 	});
 });
 

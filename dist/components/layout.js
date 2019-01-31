@@ -2028,7 +2028,7 @@ function (Components,
 		{
 			X3DLayoutNode: X3DLayoutNode,
 		},
-		browser: X3DLayoutContext .prototype,
+		browser: X3DLayoutContext,
 	});
 });
 

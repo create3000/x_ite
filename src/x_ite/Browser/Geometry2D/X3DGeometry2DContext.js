@@ -75,7 +75,10 @@ function (Arc2DOptions,
 		return this [name];
 	}
 
-	function X3DGeometry2DContext () { }
+	function X3DGeometry2DContext ()
+	{
+		this .setGeometry2DPrimitiveQuality (this .getBrowserOptions () .getPrimitiveQuality ());
+	}
 
 	X3DGeometry2DContext .prototype =
 	{

@@ -56,237 +56,44 @@ function (Fields)
 	
 	function X3DKeyDeviceSensorContext ()
 	{
-		this .addChildObjects ("controlKey",  new Fields .SFBool (),
-		                       "shiftKey",    new Fields .SFBool (),
-		                       "altKey",      new Fields .SFBool (),
-		                       "altGrKey",    new Fields .SFBool ());
-
-		this .keyDeviceSensorNodes = new Set ();
+		this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown_X3DKeyDeviceSensorContext .bind (this));
+		this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup_X3DKeyDeviceSensorContext   .bind (this));
 	}
 
 	X3DKeyDeviceSensorContext .prototype =
 	{
-		initialize: function ()
-		{
-			this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown .bind (this));
-			this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup   .bind (this));
-		},
 		addKeyDeviceSensorNode: function (keyDeviceSensorNode)
 		{
-			this .keyDeviceSensorNodes .add (keyDeviceSensorNode);
+			this .getKeyDeviceSensorNodes () .add (keyDeviceSensorNode);
 		},
 		removeKeyDeviceSensorNode: function (keyDeviceSensorNode)
 		{
-			this .keyDeviceSensorNodes .delete (keyDeviceSensorNode);
+			this .getKeyDeviceSensorNodes () .delete (keyDeviceSensorNode);
 		},
-		getShiftKey: function ()
+		getKeyDeviceSensorNodes: function ()
 		{
-			return this .shiftKey_ .getValue ();
+			if (this .keyDeviceSensorNodes === undefined)
+				this .keyDeviceSensorNodes = new Set ();
+
+			return this .keyDeviceSensorNodes;
 		},
-		getControlKey: function ()
-		{
-			return this .controlKey_ .getValue ();
-		},
-		getAltKey: function ()
-		{
-			return this .altKey_ .getValue ();
-		},
-		getAltGrKey: function ()
-		{
-			return this .altGrKey_ .getValue ();
-		},
-		keydown: function (event)
+		keydown_X3DKeyDeviceSensorContext: function (event)
 		{
 			//console .log (event .keyCode);
 
-			this .keyDeviceSensorNodes .forEach (function (keyDeviceSensorNode)
+			this .getKeyDeviceSensorNodes () .forEach (function (keyDeviceSensorNode)
 			{
 				keyDeviceSensorNode .keydown (event);
 			});
-	
-			switch (event .keyCode)
-			{
-				case 16: // Shift
-				{
-					this .shiftKey_ = true;
-					break;
-				}
-				case 17: // Ctrl
-				{
-					this .controlKey_ = true;
-					break;
-				}
-				case 18: // Alt
-				{
-					this .altKey_ = true;
-					break;
-				}
-				case 49: // 1
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-							this .setBrowserOption ("Shading", "POINT");
-							this .getNotification () .string_ = "Shading: Pointset";
-						}
-					}
-
-					break;
-				}
-				case 50: // 2
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-							this .setBrowserOption ("Shading", "WIREFRAME");
-							this .getNotification () .string_ = "Shading: Wireframe";
-						}
-					}
-
-					break;
-				}
-				case 51: // 3
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-							this .setBrowserOption ("Shading", "FLAT");
-							this .getNotification () .string_ = "Shading: Flat";
-						}
-					}
-
-					break;
-				}
-				case 52: // 4
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-							this .setBrowserOption ("Shading", "GOURAUD");
-							this .getNotification () .string_ = "Shading: Gouraud";
-						}
-					}
-
-					break;
-				}
-				case 53: // 5
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-							this .setBrowserOption ("Shading", "PHONG");
-							this .getNotification () .string_ = "Shading: Phong";
-						}
-					}
-
-					break;
-				}
-				case 83: // s
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-
-							if (this .isLive () .getValue ())
-								this .endUpdate ();
-							else
-								this .beginUpdate ();
-							
-							this .getNotification () .string_ = this .isLive () .getValue () ? "Begin Update" : "End Update";
-						}
-					}
-
-					break;
-				}
-				case 225: // Alt Gr
-				{
-					this .altGrKey_ = true;
-					break;
-				}
-				case 171: // Plus // Firefox
-				case 187: // Plus // Opera
-				{
-					if (this .getControlKey ())
-					{
-						event .preventDefault ();
-						this .getBrowserTimings () .setEnabled (! this .getBrowserTimings () .getEnabled ());
-					}
-
-					break;
-				}
-				case 36: // Pos 1
-				{
-					event .preventDefault ();
-					this .firstViewpoint ();
-					break;
-				}
-				case 35: // End
-				{
-					event .preventDefault ();
-					this .lastViewpoint ();
-					break;
-				}
-				case 33: // Page Up
-				{
-					event .preventDefault ();
-					this .previousViewpoint ();
-					break;
-				}
-				case 34: // Page Down
-				{
-					event .preventDefault ();
-					this .nextViewpoint ();
-					break;
-				}
-			}
 		},
-		keyup: function (event)
+		keyup_X3DKeyDeviceSensorContext: function (event)
 		{
 			//console .log (event .which);
 
-			event .preventDefault ();
-			event .stopImmediatePropagation ();
-
-			this .keyDeviceSensorNodes .forEach (function (keyDeviceSensorNode)
+			this .getKeyDeviceSensorNodes () .forEach (function (keyDeviceSensorNode)
 			{
 				keyDeviceSensorNode .keyup (event);
 			});
-
-			switch (event .which)
-			{
-				case 16: // Shift
-				{
-					this .shiftKey_ = false;
-					break;
-				}
-				case 17: // Ctrl
-				{
-					this .controlKey_ = false;
-					break;
-				}
-				case 18: // Alt
-				{
-					this .altKey_ = false;
-					break;
-				}
-				case 225: // Alt Gr
-				{
-					this .altGrKey_ = false;
-					break;
-				}
-			}
 		},
 	};
 

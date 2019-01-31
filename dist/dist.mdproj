@@ -78,6 +78,8 @@
     <None Include="components\scripting.min.js" />
     <None Include="components\geometry2d.js" />
     <None Include="components\geometry2d.min.js" />
+    <None Include="components\key-device-sensor.js" />
+    <None Include="components\key-device-sensor.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

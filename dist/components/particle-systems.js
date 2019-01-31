@@ -4179,7 +4179,7 @@ function (Components,
 			X3DParticleEmitterNode:      X3DParticleEmitterNode,
 			X3DParticlePhysicsModelNode: X3DParticlePhysicsModelNode,
 		},
-		browser: X3DParticleSystemsContext .prototype,
+		browser: X3DParticleSystemsContext,
 	});
 });
 

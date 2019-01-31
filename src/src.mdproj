@@ -648,7 +648,6 @@
     <None Include="x_ite\Components\Geometry3D.js" />
     <None Include="x_ite\Components\Grouping.js" />
     <None Include="x_ite\Components\Interpolation.js" />
-    <None Include="x_ite\Components\KeyDeviceSensor.js" />
     <None Include="x_ite\Components\Layering.js" />
     <None Include="x_ite\Components\Lighting.js" />
     <None Include="x_ite\Components\Navigation.js" />
@@ -684,6 +683,7 @@
     <None Include="components\event-utilities.js" />
     <None Include="components\scripting.js" />
     <None Include="components\geometry2d.js" />
+    <None Include="components\key-device-sensor.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

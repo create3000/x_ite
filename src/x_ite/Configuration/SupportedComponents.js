@@ -175,7 +175,7 @@ function (ComponentInfoArray,
 		title:      "Key device sensor",
 		name:       "KeyDeviceSensor",
 		level:       2,
-		providerUrl: urls .getProviderUrl (),
+		providerUrl: urls .getProviderUrl ("key-device-sensor"),
 	});
 
 	SupportedComponents .addBaseComponent (

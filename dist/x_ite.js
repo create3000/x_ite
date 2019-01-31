@@ -1,4 +1,4 @@
-/* X_ITE v4.2.18a-583 */
+/* X_ITE v4.2.18a-584 */
 
 (function () {
 
@@ -38533,6 +38533,11 @@ function ($,
 		this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
 		$(".x_ite-console") .empty ();
+
+		this .addChildObjects ("controlKey",  new Fields .SFBool (),
+		                       "shiftKey",    new Fields .SFBool (),
+		                       "altKey",      new Fields .SFBool (),
+		                       "altGrKey",    new Fields .SFBool ());
 	}
 
 	X3DCoreContext .prototype =
@@ -38604,6 +38609,9 @@ function ($,
 			this .setBrowserEventHandler ("onload");
 			this .setBrowserEventHandler ("onshutdown");
 			this .setBrowserEventHandler ("onerror");
+
+			this .getElement () .bind ("keydown.X3DCoreContext", this .keydown_X3DCoreContext .bind (this));
+			this .getElement () .bind ("keyup.X3DCoreContext",   this .keyup_X3DCoreContext   .bind (this));
 		},
 		getDebug: function ()
 		{
@@ -38777,6 +38785,202 @@ function ($,
 
 			if (window .jQuery)
 				window .jQuery (element) .trigger (name .substr (2));
+		},
+		getShiftKey: function ()
+		{
+			return this .shiftKey_ .getValue ();
+		},
+		getControlKey: function ()
+		{
+			return this .controlKey_ .getValue ();
+		},
+		getAltKey: function ()
+		{
+			return this .altKey_ .getValue ();
+		},
+		getAltGrKey: function ()
+		{
+			return this .altGrKey_ .getValue ();
+		},
+		keydown_X3DCoreContext: function (event)
+		{
+			//console .log (event .keyCode);
+	
+			switch (event .keyCode)
+			{
+				case 16: // Shift
+				{
+					this .shiftKey_ = true;
+					break;
+				}
+				case 17: // Ctrl
+				{
+					this .controlKey_ = true;
+					break;
+				}
+				case 18: // Alt
+				{
+					this .altKey_ = true;
+					break;
+				}
+				case 49: // 1
+				{
+					if (this .getDebug ())
+					{
+						if (this .getControlKey ())
+						{
+							event .preventDefault ();
+							this .setBrowserOption ("Shading", "POINT");
+							this .getNotification () .string_ = "Shading: Pointset";
+						}
+					}
+
+					break;
+				}
+				case 50: // 2
+				{
+					if (this .getDebug ())
+					{
+						if (this .getControlKey ())
+						{
+							event .preventDefault ();
+							this .setBrowserOption ("Shading", "WIREFRAME");
+							this .getNotification () .string_ = "Shading: Wireframe";
+						}
+					}
+
+					break;
+				}
+				case 51: // 3
+				{
+					if (this .getDebug ())
+					{
+						if (this .getControlKey ())
+						{
+							event .preventDefault ();
+							this .setBrowserOption ("Shading", "FLAT");
+							this .getNotification () .string_ = "Shading: Flat";
+						}
+					}
+
+					break;
+				}
+				case 52: // 4
+				{
+					if (this .getDebug ())
+					{
+						if (this .getControlKey ())
+						{
+							event .preventDefault ();
+							this .setBrowserOption ("Shading", "GOURAUD");
+							this .getNotification () .string_ = "Shading: Gouraud";
+						}
+					}
+
+					break;
+				}
+				case 53: // 5
+				{
+					if (this .getDebug ())
+					{
+						if (this .getControlKey ())
+						{
+							event .preventDefault ();
+							this .setBrowserOption ("Shading", "PHONG");
+							this .getNotification () .string_ = "Shading: Phong";
+						}
+					}
+
+					break;
+				}
+				case 83: // s
+				{
+					if (this .getDebug ())
+					{
+						if (this .getControlKey ())
+						{
+							event .preventDefault ();
+
+							if (this .isLive () .getValue ())
+								this .endUpdate ();
+							else
+								this .beginUpdate ();
+							
+							this .getNotification () .string_ = this .isLive () .getValue () ? "Begin Update" : "End Update";
+						}
+					}
+
+					break;
+				}
+				case 225: // Alt Gr
+				{
+					this .altGrKey_ = true;
+					break;
+				}
+				case 171: // Plus // Firefox
+				case 187: // Plus // Opera
+				{
+					if (this .getControlKey ())
+					{
+						event .preventDefault ();
+						this .getBrowserTimings () .setEnabled (! this .getBrowserTimings () .getEnabled ());
+					}
+
+					break;
+				}
+				case 36: // Pos 1
+				{
+					event .preventDefault ();
+					this .firstViewpoint ();
+					break;
+				}
+				case 35: // End
+				{
+					event .preventDefault ();
+					this .lastViewpoint ();
+					break;
+				}
+				case 33: // Page Up
+				{
+					event .preventDefault ();
+					this .previousViewpoint ();
+					break;
+				}
+				case 34: // Page Down
+				{
+					event .preventDefault ();
+					this .nextViewpoint ();
+					break;
+				}
+			}
+		},
+		keyup_X3DCoreContext: function (event)
+		{
+			//console .log (event .which);
+
+			switch (event .which)
+			{
+				case 16: // Shift
+				{
+					this .shiftKey_ = false;
+					break;
+				}
+				case 17: // Ctrl
+				{
+					this .controlKey_ = false;
+					break;
+				}
+				case 18: // Alt
+				{
+					this .altKey_ = false;
+					break;
+				}
+				case 225: // Alt Gr
+				{
+					this .altGrKey_ = false;
+					break;
+				}
+			}
 		},
 	};
 
@@ -62511,301 +62715,6 @@ function ($,
  ******************************************************************************/
 
 
-define ('x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext',[
-	"x_ite/Fields",
-],
-function (Fields)
-{
-"use strict";
-	
-	function X3DKeyDeviceSensorContext ()
-	{
-		this .addChildObjects ("controlKey",  new Fields .SFBool (),
-		                       "shiftKey",    new Fields .SFBool (),
-		                       "altKey",      new Fields .SFBool (),
-		                       "altGrKey",    new Fields .SFBool ());
-
-		this .keyDeviceSensorNodes = new Set ();
-	}
-
-	X3DKeyDeviceSensorContext .prototype =
-	{
-		initialize: function ()
-		{
-			this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown .bind (this));
-			this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup   .bind (this));
-		},
-		addKeyDeviceSensorNode: function (keyDeviceSensorNode)
-		{
-			this .keyDeviceSensorNodes .add (keyDeviceSensorNode);
-		},
-		removeKeyDeviceSensorNode: function (keyDeviceSensorNode)
-		{
-			this .keyDeviceSensorNodes .delete (keyDeviceSensorNode);
-		},
-		getShiftKey: function ()
-		{
-			return this .shiftKey_ .getValue ();
-		},
-		getControlKey: function ()
-		{
-			return this .controlKey_ .getValue ();
-		},
-		getAltKey: function ()
-		{
-			return this .altKey_ .getValue ();
-		},
-		getAltGrKey: function ()
-		{
-			return this .altGrKey_ .getValue ();
-		},
-		keydown: function (event)
-		{
-			//console .log (event .keyCode);
-
-			this .keyDeviceSensorNodes .forEach (function (keyDeviceSensorNode)
-			{
-				keyDeviceSensorNode .keydown (event);
-			});
-	
-			switch (event .keyCode)
-			{
-				case 16: // Shift
-				{
-					this .shiftKey_ = true;
-					break;
-				}
-				case 17: // Ctrl
-				{
-					this .controlKey_ = true;
-					break;
-				}
-				case 18: // Alt
-				{
-					this .altKey_ = true;
-					break;
-				}
-				case 49: // 1
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-							this .setBrowserOption ("Shading", "POINT");
-							this .getNotification () .string_ = "Shading: Pointset";
-						}
-					}
-
-					break;
-				}
-				case 50: // 2
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-							this .setBrowserOption ("Shading", "WIREFRAME");
-							this .getNotification () .string_ = "Shading: Wireframe";
-						}
-					}
-
-					break;
-				}
-				case 51: // 3
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-							this .setBrowserOption ("Shading", "FLAT");
-							this .getNotification () .string_ = "Shading: Flat";
-						}
-					}
-
-					break;
-				}
-				case 52: // 4
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-							this .setBrowserOption ("Shading", "GOURAUD");
-							this .getNotification () .string_ = "Shading: Gouraud";
-						}
-					}
-
-					break;
-				}
-				case 53: // 5
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-							this .setBrowserOption ("Shading", "PHONG");
-							this .getNotification () .string_ = "Shading: Phong";
-						}
-					}
-
-					break;
-				}
-				case 83: // s
-				{
-					if (this .getDebug ())
-					{
-						if (this .getControlKey ())
-						{
-							event .preventDefault ();
-
-							if (this .isLive () .getValue ())
-								this .endUpdate ();
-							else
-								this .beginUpdate ();
-							
-							this .getNotification () .string_ = this .isLive () .getValue () ? "Begin Update" : "End Update";
-						}
-					}
-
-					break;
-				}
-				case 225: // Alt Gr
-				{
-					this .altGrKey_ = true;
-					break;
-				}
-				case 171: // Plus // Firefox
-				case 187: // Plus // Opera
-				{
-					if (this .getControlKey ())
-					{
-						event .preventDefault ();
-						this .getBrowserTimings () .setEnabled (! this .getBrowserTimings () .getEnabled ());
-					}
-
-					break;
-				}
-				case 36: // Pos 1
-				{
-					event .preventDefault ();
-					this .firstViewpoint ();
-					break;
-				}
-				case 35: // End
-				{
-					event .preventDefault ();
-					this .lastViewpoint ();
-					break;
-				}
-				case 33: // Page Up
-				{
-					event .preventDefault ();
-					this .previousViewpoint ();
-					break;
-				}
-				case 34: // Page Down
-				{
-					event .preventDefault ();
-					this .nextViewpoint ();
-					break;
-				}
-			}
-		},
-		keyup: function (event)
-		{
-			//console .log (event .which);
-
-			event .preventDefault ();
-			event .stopImmediatePropagation ();
-
-			this .keyDeviceSensorNodes .forEach (function (keyDeviceSensorNode)
-			{
-				keyDeviceSensorNode .keyup (event);
-			});
-
-			switch (event .which)
-			{
-				case 16: // Shift
-				{
-					this .shiftKey_ = false;
-					break;
-				}
-				case 17: // Ctrl
-				{
-					this .controlKey_ = false;
-					break;
-				}
-				case 18: // Alt
-				{
-					this .altKey_ = false;
-					break;
-				}
-				case 225: // Alt Gr
-				{
-					this .altGrKey_ = false;
-					break;
-				}
-			}
-		},
-	};
-
-	return X3DKeyDeviceSensorContext;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Browser/Navigation/X3DViewer',[
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Navigation/OrthoViewpoint",
@@ -81088,6 +80997,7 @@ function (SFNode,
 
 
 define ('x_ite/Browser/X3DBrowserContext',[
+	"jquery",
 	"x_ite/Fields/SFTime",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Browser/Core/X3DCoreContext",
@@ -81099,7 +81009,6 @@ define ('x_ite/Browser/X3DBrowserContext',[
 	"x_ite/Browser/Shape/X3DShapeContext",
 	"x_ite/Browser/Geometry3D/X3DGeometry3DContext",
 	"x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext",
-	"x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext",
 	"x_ite/Browser/Navigation/X3DNavigationContext",
 	"x_ite/Browser/Layering/X3DLayeringContext",
 	"x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext",
@@ -81111,7 +81020,8 @@ define ('x_ite/Browser/X3DBrowserContext',[
 	"x_ite/Execution/World",
 	"x_ite/Bits/TraverseType",
 ],
-function (SFTime,
+function ($,
+          SFTime,
           X3DBaseNode,
           X3DCoreContext,
           X3DRoutingContext,
@@ -81122,7 +81032,6 @@ function (SFTime,
           X3DShapeContext,
           X3DGeometry3DContext,
           X3DPointingDeviceSensorContext,
-          X3DKeyDeviceSensorContext,
           X3DNavigationContext,
           X3DLayeringContext,
           X3DEnvironmentalEffectsContext,
@@ -81136,6 +81045,8 @@ function (SFTime,
 {
 "use strict";
 
+	var contexts = [ ];
+
 	function X3DBrowserContext (element)
 	{
 		X3DBaseNode                    .call (this, this);
@@ -81148,7 +81059,6 @@ function (SFTime,
 		X3DShapeContext                .call (this);
 		X3DGeometry3DContext           .call (this);
 		X3DPointingDeviceSensorContext .call (this);
-		X3DKeyDeviceSensorContext      .call (this);
 		X3DNavigationContext           .call (this);
 		X3DLayeringContext             .call (this);
 		X3DEnvironmentalEffectsContext .call (this);
@@ -81176,6 +81086,18 @@ function (SFTime,
 		this .displayTime     = 0;
 	};
 
+	X3DBrowserContext .addContext = function (context)
+	{
+		Object .assign (X3DBrowserContext .prototype, context .prototype);
+
+		$("X3DCanvas") .each (function (i, canvas)
+		{
+			context .call (X3D .getBrowser (canvas));
+		});
+
+		contexts .push (context);
+	};
+
 	X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 		X3DRoutingContext .prototype,
 		X3DCoreContext .prototype,
@@ -81186,7 +81108,6 @@ function (SFTime,
 		X3DShapeContext .prototype,
 		X3DGeometry3DContext .prototype,
 		X3DPointingDeviceSensorContext .prototype,
-		X3DKeyDeviceSensorContext .prototype,
 		X3DNavigationContext .prototype,
 		X3DLayeringContext .prototype,
 		X3DEnvironmentalEffectsContext .prototype,
@@ -81209,7 +81130,6 @@ function (SFTime,
 			X3DShapeContext                .prototype .initialize .call (this);
 			X3DGeometry3DContext           .prototype .initialize .call (this);
 			X3DPointingDeviceSensorContext .prototype .initialize .call (this);
-			X3DKeyDeviceSensorContext      .prototype .initialize .call (this);
 			X3DNavigationContext           .prototype .initialize .call (this);
 			X3DLayeringContext             .prototype .initialize .call (this);
 			X3DEnvironmentalEffectsContext .prototype .initialize .call (this);
@@ -81218,6 +81138,8 @@ function (SFTime,
 			X3DTextContext                 .prototype .initialize .call (this);
 			X3DTexturingContext            .prototype .initialize .call (this);
 			X3DTimeContext                 .prototype .initialize .call (this);
+
+			contexts .forEach (function (context) { context .call (this); } .bind (this));
 		},
 		initialized: function ()
 		{
@@ -90854,748 +90776,6 @@ function (SupportedNodes,
 	var AbstractTypes =
 	{
 		X3DInterpolatorNode: X3DInterpolatorNode,
-	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
-
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
-});
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode',[
-	"x_ite/Components/Core/X3DSensorNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (X3DSensorNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DKeyDeviceSensorNode (executionContext)
-	{
-		X3DSensorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DKeyDeviceSensorNode);
-	}
-
-	X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
-	{
-		constructor: X3DKeyDeviceSensorNode,
-		initialize: function ()
-		{
-			X3DSensorNode .prototype .initialize .call (this);
-
-			this .isLive () .addInterest ("set_live__", this);
-
-			this .set_live__ ();
-		},
-		set_live__: function ()
-		{
-			if (this .isLive () .getValue ())
-			{
-				this .enabled_ .addInterest ("set_enabled__", this);
-
-				if (this .enabled_ .getValue ())
-					this .enable ();
-			}
-			else
-			{
-				this .enabled_ .removeInterest ("set_enabled__", this);
-
-				this .disable ();
-			}
-		},
-		set_enabled__: function ()
-		{
-			if (this .enabled_ .getValue ())
-				this .enable ();
-			else
-				this .disable ();
-		},
-		enable: function ()
-		{
-			this .getBrowser () .addKeyDeviceSensorNode (this);
-		},
-		disable: function ()
-		{
-			this .getBrowser () .removeKeyDeviceSensorNode (this);
-
-			this .release ();
-		},
-		keydown: function () { },
-		keyup: function () { },
-		release: function () { },
-	});
-
-	return X3DKeyDeviceSensorNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/KeyDeviceSensor/KeySensor',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DKeyDeviceSensorNode, 
-          X3DConstants)
-{
-"use strict";
-
-	   var
-		KEY_F1  = 1,
-		KEY_F2  = 2,
-		KEY_F3  = 3,
-		KEY_F4  = 4,
-		KEY_F5  = 5,
-		KEY_F6  = 6,
-		KEY_F7  = 7,
-		KEY_F8  = 8,
-		KEY_F9  = 9,
-		KEY_F10 = 10,
-		KEY_F11 = 11,
-		KEY_F12 = 12,
-
-		KEY_HOME  = 13,
-		KEY_END   = 14,
-		KEY_PGUP  = 15,
-		KEY_PGDN  = 16,
-		KEY_UP    = 17,
-		KEY_DOWN  = 18,
-		KEY_LEFT  = 19,
-		KEY_RIGHT = 20;
-
-	function KeySensor (executionContext)
-	{
-		X3DKeyDeviceSensorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .KeySensor);
-	}
-
-	KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
-	{
-		constructor: KeySensor,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "controlKey",       new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "shiftKey",         new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "altKey",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "actionKeyPress",   new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "actionKeyRelease", new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "keyPress",         new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "keyRelease",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "KeySensor";
-		},
-		getComponentName: function ()
-		{
-			return "KeyDeviceSensor";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		keydown: function (event)
-		{
-			event .preventDefault ();
-
-			if (! this .isActive_ .getValue ())
-				this .isActive_ = true;
-
-			switch (event .which)
-			{
-				case 16: // Shift
-					this .shiftKey_ = true;
-					break;
-				case 17: // Ctrl
-					this .controlKey_ = true;
-					break;
-				case 18: // Alt
-					this .altKey_ = true;
-					break;
-				//////////////////////////////////
-				case 112:
-					this .actionKeyPress_ = KEY_F1;
-					break;
-				case 113:
-					this .actionKeyPress_ = KEY_F2;
-					break;
-				case 114:
-					this .actionKeyPress_ = KEY_F3;
-					break;
-				case 115:
-					this .actionKeyPress_ = KEY_F4;
-					break;
-				case 116:
-					this .actionKeyPress_ = KEY_F5;
-					break;
-				case 117:
-					this .actionKeyPress_ = KEY_F6;
-					break;
-				case 118:
-					this .actionKeyPress_ = KEY_F7;
-					break;
-				case 119:
-					this .actionKeyPress_ = KEY_F8;
-					break;
-				case 120:
-					this .actionKeyPress_ = KEY_F9;
-					break;
-				case 121:
-					this .actionKeyPress_ = KEY_F10;
-					break;
-				case 122:
-					this .actionKeyPress_ = KEY_F11;
-					break;
-				case 123:
-					this .actionKeyPress_ = KEY_F12;
-					break;
-				////////////////////////////////////
-				case 36:
-					this .actionKeyPress_ = KEY_HOME;
-					break;
-				case 35:
-					this .actionKeyPress_ = KEY_END;
-					break;
-				case 33:
-					this .actionKeyPress_ = KEY_PGUP;
-					break;
-				case 34:
-					this .actionKeyPress_ = KEY_PGDN;
-					break;
-				case 38:
-					this .actionKeyPress_ = KEY_UP;
-					break;
-				case 40:
-					this .actionKeyPress_ = KEY_DOWN;
-					break;
-				case 37:
-					this .actionKeyPress_ = KEY_LEFT;
-					break;
-				case 39:
-					this .actionKeyPress_ = KEY_RIGHT;
-					break;
-				////////////////////////////////////
-				default:
-				{
-					if (event .charCode || event .keyCode)
-					{
-						switch (event .key)
-						{
-							case "AltGraph":
-							case "CapsLock":
-							case "Insert":
-								break;
-							case "Backspace":
-						      this .keyPress_ = String .fromCharCode (8);
-								break;
-							case "Delete":
-						      this .keyPress_ = String .fromCharCode (127);
-								break;
-							case "Enter":
-						      this .keyPress_ = "\n";
-								break;
-							case "Escape":
-								this .keyPress_ = String .fromCharCode (27);
-								break;
-							case "Tab":
-						      this .keyPress_ = "\t";
-								break;
-							default:
-								if (event .key .length === 1)
-						         this .keyPress_ = event .key;
-								break;
-						}
-					}
-
-				   break;
-				}
-			}
-		},
-		keyup: function (event)
-		{
-			event .preventDefault ();
-
-			switch (event .which)
-			{
-				case 16: // Shift
-				{
-					this .shiftKey_ = false;
-					break;
-				}
-				case 17: // Ctrl
-				{
-					this .controlKey_ = false;
-					break;
-				}
-				case 18: // Alt
-				{
-					this .altKey_ = false;
-					break;
-				}
-				//////////////////////////////////
-				case 112:
-					this .actionKeyRelease_ = KEY_F1;
-					break;
-				case 113:
-					this .actionKeyRelease_ = KEY_F2;
-					break;
-				case 114:
-					this .actionKeyRelease_ = KEY_F3;
-					break;
-				case 115:
-					this .actionKeyRelease_ = KEY_F4;
-					break;
-				case 116:
-					this .actionKeyRelease_ = KEY_F5;
-					break;
-				case 117:
-					this .actionKeyRelease_ = KEY_F6;
-					break;
-				case 118:
-					this .actionKeyRelease_ = KEY_F7;
-					break;
-				case 119:
-					this .actionKeyRelease_ = KEY_F8;
-					break;
-				case 120:
-					this .actionKeyRelease_ = KEY_F9;
-					break;
-				case 121:
-					this .actionKeyRelease_ = KEY_F10;
-					break;
-				case 122:
-					this .actionKeyRelease_ = KEY_F11;
-					break;
-				case 123:
-					this .actionKeyRelease_ = KEY_F12;
-					break;
-				////////////////////////////////////
-				case 36:
-					this .actionKeyRelease_ = KEY_HOME;
-					break;
-				case 35:
-					this .actionKeyRelease_ = KEY_END;
-					break;
-				case 33:
-					this .actionKeyRelease_ = KEY_PGUP;
-					break;
-				case 34:
-					this .actionKeyRelease_ = KEY_PGDN;
-					break;
-				case 38:
-					this .actionKeyRelease_ = KEY_UP;
-					break;
-				case 40:
-					this .actionKeyRelease_ = KEY_DOWN;
-					break;
-				case 37:
-					this .actionKeyRelease_ = KEY_LEFT;
-					break;
-				case 39:
-					this .actionKeyRelease_ = KEY_RIGHT;
-					break;
-				////////////////////////////////////
-				default:
-				{
-				   if (event .charCode || event .keyCode)
-					{
-						switch (event .key)
-						{
-							case "AltGraph":
-							case "CapsLock":
-							case "Insert":
-								break;
-							case "Backspace":
-						      this .keyRelease_ = String .fromCharCode (8);
-								break;
-							case "Delete":
-						      this .keyRelease_ = String .fromCharCode (127);
-								break;
-							case "Enter":
-						      this .keyRelease_ = "\n";
-								break;
-							case "Escape":
-								this .keyRelease_ = String .fromCharCode (27);
-								break;
-							case "Tab":
-						      this .keyRelease_ = "\t";
-								break;
-							default:
-								if (event .key .length === 1)
-							      this .keyRelease_ = event .key;
-								break;
-						}
-					}
-
-				   break;
-				}
-			}
-
-			if (this .isActive_ .getValue ())
-				this .isActive_ = false;
-		},
-		release: function ()
-		{
-			if (this .shiftKey_ .getValue ())
-				this .shiftKey_ = false;
-
-			if (this .controlKey_ .getValue ())
-				this .controlKey_ = false;
-
-			if (this .altKey_ .getValue ())
-				this .altKey_ = false;
-		},
-	});
-
-	return KeySensor;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/KeyDeviceSensor/StringSensor',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DKeyDeviceSensorNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function StringSensor (executionContext)
-	{
-		X3DKeyDeviceSensorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .StringSensor);
-	}
-
-	StringSensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
-	{
-		constructor: StringSensor,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "deletionAllowed", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "enteredText",     new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "finalText",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",        new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "StringSensor";
-		},
-		getComponentName: function ()
-		{
-			return "KeyDeviceSensor";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		keydown: function (event)
-		{
-			event .preventDefault ();
-
-			switch (event .key)
-			{
-				case "Backspace":
-				{
-					if (this .isActive_ .getValue ())
-					{
-						if (this .deletionAllowed_ .getValue ())
-						{
-							if (this .enteredText_ .length)
-								this .enteredText_  = this .enteredText_ .getValue () .substr (0, this .enteredText_ .length - 1);
-						}
-					}
-
-					break;
-				}
-				case "Enter":
-				{
-					this .finalText_ = this .enteredText_;
-
-					this .enteredText_ .set ("");
-
-					if (this .isActive_ .getValue ())
-						this .isActive_ = false;
-
-					break;
-				}
-				case "Escape":
-				{
-					this .enteredText_ .set ("");
-
-					if (this .isActive_ .getValue ())
-						this .isActive_ = false;
-
-					break;
-				}
-				case "Tab":
-				{
-					break;
-				}
-				default:
-				{
-					if (event .charCode || event .keyCode)
-					{
-						if (event .key .length === 1)
-						{
-							if (! this .isActive_ .getValue ())
-							{
-								this .isActive_    = true;
-								this .enteredText_ = "";
-							}
-	
-							this .enteredText_ = this .enteredText_ .getValue () + event .key;
-						}
-					}
-
-					break;
-				}
-			}
-		},
-	});
-
-	return StringSensor;
-});
-
-
-
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/KeyDeviceSensor',[
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/KeyDeviceSensor/KeySensor",
-	"x_ite/Components/KeyDeviceSensor/StringSensor",
-	"x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
-],
-function (SupportedNodes,
-          KeySensor,
-          StringSensor,
-          X3DKeyDeviceSensorNode)
-{
-"use strict";
-
-	var Types =
-	{
-		KeySensor:    KeySensor,
-		StringSensor: StringSensor,
-	};
-
-	var AbstractTypes =
-	{
-		X3DKeyDeviceSensorNode: X3DKeyDeviceSensorNode,
 	};
 	
 	for (var typeName in Types)
@@ -102641,7 +101821,6 @@ define ('x_ite/Components',[
 	"x_ite/Components/Geometry3D",
 	"x_ite/Components/Grouping",
 	"x_ite/Components/Interpolation",
-	"x_ite/Components/KeyDeviceSensor",
 	"x_ite/Components/Layering",
 	"x_ite/Components/Lighting",
 	"x_ite/Components/Navigation",
@@ -102681,7 +101860,7 @@ function (X3DBrowserContext,
 			}
 
 			if (component .browser)
-				Object .assign (X3DBrowserContext .prototype, component .browser);
+				X3DBrowserContext .addContext (component .browser);
 
 			if (component .name)
 				console .log ("Done loading component '" + component .name + "'.");
@@ -103019,7 +102198,7 @@ function (ComponentInfoArray,
 		title:      "Key device sensor",
 		name:       "KeyDeviceSensor",
 		level:       2,
-		providerUrl: urls .getProviderUrl (),
+		providerUrl: urls .getProviderUrl ("key-device-sensor"),
 	});
 
 	SupportedComponents .addBaseComponent (
