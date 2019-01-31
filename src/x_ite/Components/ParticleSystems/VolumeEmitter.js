@@ -80,15 +80,7 @@ function (Fields,
 {
 "use strict";
 
-	var
-		vertex1  = new Vector3 (0, 0, 0),
-		vertex2  = new Vector3 (0, 0, 0),
-		vertex3  = new Vector3 (0, 0, 0),
-		point    = new Vector3 (0, 0, 0),
-		normal   = new Vector3 (0, 0, 0),
-		rotation = new Rotation4 (0, 0, 1, 0),
-		line     = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-		plane    = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+	var plane = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
 
 	function PlaneCompare (a, b)
 	{
@@ -168,140 +160,157 @@ function (Fields,
 			else
 				delete this .getRandomVelocity;
 		},
-		set_geometry__: function ()
+		set_geometry__: (function ()
 		{
 			var
-				areaSoFar      = 0,
-				areaSoFarArray = this .areaSoFarArray,
-				normals        = this .volumeNode .getNormals () .getValue (),
-				vertices       = this .volumeNode .getVertices () .getValue ();
+				vertex1 = new Vector3 (0, 0, 0),
+				vertex2 = new Vector3 (0, 0, 0),
+				vertex3 = new Vector3 (0, 0, 0);
 
-			this .normals  = normals;
-			this .vertices = vertices;
-
-			areaSoFarArray .length = 1;
-
-			for (var i = 0, length = vertices .length; i < length; i += 12)
+			return function ()
 			{
-				vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-				vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-				vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
-
-				areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
-				areaSoFarArray .push (areaSoFar);
-			}
-
-			this .bvh = new BVH (vertices, normals);
-		},
-		getRandomPosition: function (position)
-		{
-			// Get random point on surface
-
-			// Determine index0.
-
-			var
-				areaSoFarArray = this .areaSoFarArray,
-				length         = areaSoFarArray .length,
-				fraction       = Math .random () * areaSoFarArray [length - 1],
-				index0         = 0;
-
-			if (length == 1 || fraction <= areaSoFarArray [0])
-			{
-				index0 = 0;
-			}
-			else if (fraction >= areaSoFarArray [length - 1])
-			{
-				index0 = length - 2;
-			}
-			else
-			{
-				var index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
-
-				if (index < length)
+				var
+					areaSoFar      = 0,
+					areaSoFarArray = this .areaSoFarArray,
+					normals        = this .volumeNode .getNormals () .getValue (),
+					vertices       = this .volumeNode .getVertices () .getValue ();
+	
+				this .normals  = normals;
+				this .vertices = vertices;
+	
+				areaSoFarArray .length = 1;
+	
+				for (var i = 0, length = vertices .length; i < length; i += 12)
 				{
-					index0 = index - 1;
+					vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+					vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
+	
+					areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
+					areaSoFarArray .push (areaSoFar);
 				}
-				else
+	
+				this .bvh = new BVH (vertices, normals);
+			};
+		})(),
+		getRandomPosition: (function ()
+		{
+			var
+				point    = new Vector3 (0, 0, 0),
+				normal   = new Vector3 (0, 0, 0),
+				rotation = new Rotation4 (0, 0, 1, 0),
+				line     = new Line3 (Vector3 .Zero, Vector3 .zAxis);
+
+			return function (position)
+			{
+				// Get random point on surface
+	
+				// Determine index0.
+	
+				var
+					areaSoFarArray = this .areaSoFarArray,
+					length         = areaSoFarArray .length,
+					fraction       = Math .random () * areaSoFarArray [length - 1],
+					index0         = 0;
+	
+				if (length == 1 || fraction <= areaSoFarArray [0])
 				{
 					index0 = 0;
 				}
-			}
-
-			// Random barycentric coordinates.
-
-			var
-				u = Math .random (),
-				v = Math .random ();
-		
-			if (u + v > 1)
-			{
-				u = 1 - u;
-				v = 1 - v;
-			}
-
-			var t = 1 - u - v;
-
-			// Interpolate and determine random point on surface and normal.
-
-			var
-				i        = index0 * 12,
-				vertices = this .vertices;
-
-			point .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
-			point .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
-			point .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
-
-			var
-				i       = index0 * 9,
-				normals = this .normals;
-
-			normal .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
-			normal .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
-			normal .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
-
-			rotation .setFromToVec (Vector3 .zAxis, normal);
-			rotation .multVecRot (this .getRandomSurfaceNormal (normal));
-
-			// Setup random line throu volume for intersection text
-			// and a plane corresponding to the line for intersection sorting.
-
-			line  .set (point, normal);
-			plane .set (point, normal);
+				else if (fraction >= areaSoFarArray [length - 1])
+				{
+					index0 = length - 2;
+				}
+				else
+				{
+					var index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
 	
-			// Find random point in volume.
-
-			var
-				intersections    = this .intersections,
-				numIntersections = this .bvh .intersectsLine (line, intersections);
-
-			numIntersections -= numIntersections % 2; // We need an even count of intersections.
-
-			if (numIntersections)
-			{
-				// Sort intersections along line with a little help from the plane.
-
-				this .sorter .sort (0, numIntersections);
-
-				// Select random intersection pair.
-
+					if (index < length)
+					{
+						index0 = index - 1;
+					}
+					else
+					{
+						index0 = 0;
+					}
+				}
+	
+				// Random barycentric coordinates.
+	
 				var
-					index  = Math .round (this .getRandomValue (0, numIntersections / 2 - 1)) * 2,
-					point0 = intersections [index],
-					point1 = intersections [index + 1],
-					t      = Math .random ();
+					u = Math .random (),
+					v = Math .random ();
+			
+				if (u + v > 1)
+				{
+					u = 1 - u;
+					v = 1 - v;
+				}
 	
-				// lerp
-				position .x = point0 .x + (point1 .x - point0 .x) * t;
-				position .y = point0 .y + (point1 .y - point0 .y) * t;
-				position .z = point0 .z + (point1 .z - point0 .z) * t;
+				var t = 1 - u - v;
 	
-				return position;
-			}
-
-			// Discard point.
-
-			return position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
-		},
+				// Interpolate and determine random point on surface and normal.
+	
+				var
+					i        = index0 * 12,
+					vertices = this .vertices;
+	
+				point .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
+				point .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
+				point .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
+	
+				var
+					i       = index0 * 9,
+					normals = this .normals;
+	
+				normal .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
+				normal .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
+				normal .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
+	
+				rotation .setFromToVec (Vector3 .zAxis, normal);
+				rotation .multVecRot (this .getRandomSurfaceNormal (normal));
+	
+				// Setup random line throu volume for intersection text
+				// and a plane corresponding to the line for intersection sorting.
+	
+				line  .set (point, normal);
+				plane .set (point, normal);
+		
+				// Find random point in volume.
+	
+				var
+					intersections    = this .intersections,
+					numIntersections = this .bvh .intersectsLine (line, intersections);
+	
+				numIntersections -= numIntersections % 2; // We need an even count of intersections.
+	
+				if (numIntersections)
+				{
+					// Sort intersections along line with a little help from the plane.
+	
+					this .sorter .sort (0, numIntersections);
+	
+					// Select random intersection pair.
+	
+					var
+						index  = Math .round (this .getRandomValue (0, numIntersections / 2 - 1)) * 2,
+						point0 = intersections [index],
+						point1 = intersections [index + 1],
+						t      = Math .random ();
+		
+					// lerp
+					position .x = point0 .x + (point1 .x - point0 .x) * t;
+					position .y = point0 .y + (point1 .y - point0 .y) * t;
+					position .z = point0 .z + (point1 .z - point0 .z) * t;
+		
+					return position;
+				}
+	
+				// Discard point.
+	
+				return position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
+			};
+		})(),
 		getRandomVelocity: function (velocity)
 		{
 			var

@@ -70,12 +70,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		vertex1  = new Vector3 (0, 0, 0),
-		vertex2  = new Vector3 (0, 0, 0),
-		vertex3  = new Vector3 (0, 0, 0),
-		direction = new Vector3 (0, 0, 0);
-
 	function SurfaceEmitter (executionContext)
 	{
 		X3DParticleEmitterNode .call (this, executionContext);
@@ -88,6 +82,7 @@ function (Fields,
 
 		this .surfaceNode    = null;
 		this .areaSoFarArray = [ 0 ];
+		this .direction      = new Vector3 (0, 0, 0);
 	}
 
 	SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -133,41 +128,47 @@ function (Fields,
 
 			this .set_geometry__ ();
 		},
-		set_geometry__: function ()
+		set_geometry__: (function ()
 		{
-			if (this .surfaceNode)
-			{		
-				delete this .getRandomPosition;
-				delete this .getRandomVelocity;
+			var
+				vertex1  = new Vector3 (0, 0, 0),
+				vertex2  = new Vector3 (0, 0, 0),
+				vertex3  = new Vector3 (0, 0, 0);
 
-				var
-					areaSoFar      = 0,
-					areaSoFarArray = this .areaSoFarArray,
-					vertices       = this .surfaceNode .getVertices () .getValue ();
-		
-				this .normals  = this .surfaceNode .getNormals () .getValue ();
-				this .vertices = vertices;
-
-				areaSoFarArray .length = 1;
-
-				for (var i = 0, length = vertices .length; i < length; i += 12)
-				{
-					vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-					vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
-
-					areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
-					areaSoFarArray .push (areaSoFar);
-				}
-			}
-			else
+			return function ()
 			{
-				this .getRandomPosition = getPosition;
-				this .getRandomVelocity = this .getSphericalRandomVelocity;
-
-				direction .set (0, 0, 0);
-			}
-		},
+				if (this .surfaceNode)
+				{		
+					delete this .getRandomPosition;
+					delete this .getRandomVelocity;
+	
+					var
+						areaSoFar      = 0,
+						areaSoFarArray = this .areaSoFarArray,
+						vertices       = this .surfaceNode .getVertices () .getValue ();
+			
+					this .normals  = this .surfaceNode .getNormals () .getValue ();
+					this .vertices = vertices;
+	
+					areaSoFarArray .length = 1;
+	
+					for (var i = 0, length = vertices .length; i < length; i += 12)
+					{
+						vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+						vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+						vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
+	
+						areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
+						areaSoFarArray .push (areaSoFar);
+					}
+				}
+				else
+				{
+					this .getRandomPosition = getPosition;
+					this .getRandomVelocity = this .getSphericalRandomVelocity;
+				}
+			};
+		})(),
 		getRandomPosition: function (position)
 		{
 			// Determine index0.
@@ -212,21 +213,22 @@ function (Fields,
 				v = 1 - v;
 			}
 
+			var t = 1 - u - v;
+
 			// Interpolate and set position.
 
 			var
 				i        = index0 * 12,
 				vertices = this .vertices;
 
-			var t = 1 - u - v;
-
 			position .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
 			position .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
 			position .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
 
 			var
-				i       = index0 * 9,
-				normals = this .normals;
+				i         = index0 * 9,
+				normals   = this .normals,
+				direction = this .direction;
 
 			direction .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
 			direction .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
@@ -236,7 +238,9 @@ function (Fields,
 		},
 		getRandomVelocity: function (velocity)
 		{
-			var speed = this .getRandomSpeed ();
+			var
+				speed     = this .getRandomSpeed (),
+				direction = this .direction;
 
 			velocity .x = direction .x * speed;
 			velocity .y = direction .y * speed;

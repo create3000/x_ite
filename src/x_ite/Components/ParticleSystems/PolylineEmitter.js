@@ -68,10 +68,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		vertex1 = new Vector3 (0, 0, 0),
-		vertex2 = new Vector3 (0, 0, 0);
-
 	function PolylineEmitter (executionContext)
 	{
 		X3DParticleEmitterNode .call (this, executionContext);
@@ -141,34 +137,41 @@ function (Fields,
 			else
 				delete this .getRandomVelocity;
 		},
-		set_polyline: function ()
+		set_polyline: (function ()
 		{
-			var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
+			var
+				vertex1 = new Vector3 (0, 0, 0),
+				vertex2 = new Vector3 (0, 0, 0);
 
-			if (vertices .length)
+			return function ()
 			{
-				delete this .getRandomPosition;
-
-				var
-					lengthSoFar      = 0,
-					lengthSoFarArray = this .lengthSoFarArray;
-		
-				lengthSoFarArray .length = 1;
-
-				for (var i = 0, length = vertices .length; i < length; i += 8)
+				var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
+	
+				if (vertices .length)
 				{
-					vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-
-					lengthSoFar += vertex2 .subtract (vertex1) .abs ();
-					lengthSoFarArray .push (lengthSoFar);
+					delete this .getRandomPosition;
+	
+					var
+						lengthSoFar      = 0,
+						lengthSoFarArray = this .lengthSoFarArray;
+			
+					lengthSoFarArray .length = 1;
+	
+					for (var i = 0, length = vertices .length; i < length; i += 8)
+					{
+						vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+						vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+	
+						lengthSoFar += vertex2 .subtract (vertex1) .abs ();
+						lengthSoFarArray .push (lengthSoFar);
+					}
 				}
-			}
-			else
-			{
-				this .getRandomPosition = getPosition;
-			}
-		},
+				else
+				{
+					this .getRandomPosition = getPosition;
+				}
+			};
+		})(),
 		getRandomPosition: function (position)
 		{
 			// Determine index0 and weight.
@@ -218,14 +221,18 @@ function (Fields,
 			index0 *= 8;
 			index1  = index0 + 4;
 
-			var vertices = this .vertices;
+			var
+				vertices = this .vertices,
+				x1       = vertices [index0],
+				y1       = vertices [index0 + 1],
+				z1       = vertices [index0 + 2],
+				x2       = vertices [index1],
+				y2       = vertices [index1 + 1],
+				z2       = vertices [index1 + 2];
 
-			vertex1 .set (vertices [index0], vertices [index0 + 1], vertices [index0 + 2]);
-			vertex2 .set (vertices [index1], vertices [index1 + 1], vertices [index1 + 2]);
-	
-			position .x = vertex1 .x + weight * (vertex2 .x - vertex1 .x);
-			position .y = vertex1 .y + weight * (vertex2 .y - vertex1 .y);
-			position .z = vertex1 .z + weight * (vertex2 .z - vertex1 .z);
+			position .x = x1 + weight * (x2 - x1);
+			position .y = y1 + weight * (y2 - y1);
+			position .z = z1 + weight * (z2 - z1);
 
 			return position;
 		},

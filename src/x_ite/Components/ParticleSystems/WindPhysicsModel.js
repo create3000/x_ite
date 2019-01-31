@@ -66,8 +66,6 @@ function (Fields,
 {
 "use strict";
 
-	var force = new Vector3 (0, 0, 0);
-
 	function WindPhysicsModel (executionContext)
 	{
 		X3DParticlePhysicsModelNode .call (this, executionContext);
@@ -108,25 +106,30 @@ function (Fields,
 		
 			return emitterNode .getRandomValue (Math .max (0, speed - variation), speed + variation);
 		},
-		addForce: function (i, emitterNode, forces, turbulences)
+		addForce: (function ()
 		{
-			var surfaceArea = emitterNode .surfaceArea_ .getValue ()
+			var force = new Vector3 (0, 0, 0);
 
-			if (this .enabled_ .getValue ())
+			return function (i, emitterNode, forces, turbulences)
 			{
-				var
-					randomSpeed = this .getRandomSpeed (emitterNode),
-					pressure    = Math .pow (10, 2 * Math .log (randomSpeed)) * 0.64615;
-		
-				if (this .direction_ .getValue () .equals (Vector3 .Zero))
-					emitterNode .getRandomNormal (force);
-				else
-					force .assign (this .direction_ .getValue ()) .normalize ();
-
-				forces [i] .assign (force .multiply (surfaceArea * pressure));
-				turbulences [i] = Math .PI * Algorithm .clamp (this .turbulence_ .getValue (), 0, 1);
-			}
-		},
+				var surfaceArea = emitterNode .surfaceArea_ .getValue ()
+	
+				if (this .enabled_ .getValue ())
+				{
+					var
+						randomSpeed = this .getRandomSpeed (emitterNode),
+						pressure    = Math .pow (10, 2 * Math .log (randomSpeed)) * 0.64615;
+			
+					if (this .direction_ .getValue () .equals (Vector3 .Zero))
+						emitterNode .getRandomNormal (force);
+					else
+						force .assign (this .direction_ .getValue ()) .normalize ();
+	
+					forces [i] .assign (force .multiply (surfaceArea * pressure));
+					turbulences [i] = Math .PI * Algorithm .clamp (this .turbulence_ .getValue (), 0, 1);
+				}
+			};
+		})(),
 	});
 
 	return WindPhysicsModel;
