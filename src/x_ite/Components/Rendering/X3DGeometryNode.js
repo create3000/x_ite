@@ -151,7 +151,8 @@ function (Fields,
 		{
 			this .length = 0;
 
-			Array .prototype .push .apply (this, value);
+			for (var i = 0, length = value .length; i < length; ++ i)
+				this .push (value [i]);
 		};
 
 		array .getValue = function ()
