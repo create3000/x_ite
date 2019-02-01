@@ -24,7 +24,7 @@ attribute vec4  x3d_TexCoord;
 attribute vec3  x3d_Normal;
 attribute vec4  x3d_Vertex;
 
-varying float fD;         // fog depth
+varying float fogDepth;   // fog depth
 varying vec4  frontColor; // color
 varying vec4  backColor;  // color
 varying vec4  t;          // texCoord
@@ -118,9 +118,9 @@ main ()
 
 	vec4 p = x3d_ModelViewMatrix * x3d_Vertex;
 
-	fD = x3d_FogDepth;
-	t  = x3d_TextureMatrix [0] * x3d_TexCoord;
-	v  = p .xyz;
+	fogDepth = x3d_FogDepth;
+	t        = x3d_TextureMatrix [0] * x3d_TexCoord;
+	v        = p .xyz;
 
 	gl_Position = x3d_ProjectionMatrix * p;
 

@@ -15,9 +15,9 @@ attribute float x3d_FogDepth;
 attribute vec4  x3d_Color;
 attribute vec4  x3d_Vertex;
 
-varying float fD; // fog depth
-varying vec4  C;  // color
-varying vec3  v;  // point on geometry
+varying float fogDepth; // fog depth
+varying vec4  C;        // color
+varying vec3  v;        // point on geometry
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 varying float depth;
@@ -31,8 +31,8 @@ main ()
 
 	vec4 p = x3d_ModelViewMatrix * x3d_Vertex;
 
-	fD = x3d_FogDepth;
-	v  = vec3 (p);
+	fogDepth = x3d_FogDepth;
+	v        = vec3 (p);
 
 	gl_Position = x3d_ProjectionMatrix * p;
 

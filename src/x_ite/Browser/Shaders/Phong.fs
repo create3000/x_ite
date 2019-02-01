@@ -29,11 +29,11 @@ uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 
 uniform x3d_FogParameters x3d_Fog;
 
-varying float fD; // fog depth
-varying vec4  C;  // color
-varying vec4  t;  // texCoord
-varying vec3  vN; // normalized normal vector at this point on geometry
-varying vec3  v;  // point on geometry
+varying float fogDepth; // fog depth
+varying vec4  C;        // color
+varying vec4  t;        // texCoord
+varying vec3  vN;       // normalized normal vector at this point on geometry
+varying vec3  v;        // point on geometry
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
@@ -214,7 +214,7 @@ getFogInterpolant ()
 	if (x3d_Fog .type == x3d_None)
 		return 1.0;
 
-	float visibilityRange = x3d_Fog .fogCoord ? fD : x3d_Fog .visibilityRange;
+	float visibilityRange = x3d_Fog .fogCoord ? fogDepth : x3d_Fog .visibilityRange;
 
 	if (visibilityRange <= 0.0)
 		return 1.0;
