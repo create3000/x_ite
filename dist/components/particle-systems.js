@@ -822,12 +822,12 @@ function (Fields,
 		set_geometry__: function ()
 		{
 			if (this .geometryNode)
-				this .geometryNode .removeInterest ("addNodeEvent", this);
+				this .geometryNode .rebuild_ .removeInterest ("addNodeEvent", this);
 
 			this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
 
 			if (this .geometryNode)
-				this .geometryNode .addInterest ("addNodeEvent", this);
+				this .geometryNode .rebuild_ .addInterest ("addNodeEvent", this);
 		},
 		addGeometry: function (boundedNormals, boundedVertices)
 		{
@@ -3176,10 +3176,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		vertex1 = new Vector3 (0, 0, 0),
-		vertex2 = new Vector3 (0, 0, 0);
-
 	function PolylineEmitter (executionContext)
 	{
 		X3DParticleEmitterNode .call (this, executionContext);
@@ -3249,34 +3245,41 @@ function (Fields,
 			else
 				delete this .getRandomVelocity;
 		},
-		set_polyline: function ()
+		set_polyline: (function ()
 		{
-			var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
+			var
+				vertex1 = new Vector3 (0, 0, 0),
+				vertex2 = new Vector3 (0, 0, 0);
 
-			if (vertices .length)
+			return function ()
 			{
-				delete this .getRandomPosition;
-
-				var
-					lengthSoFar      = 0,
-					lengthSoFarArray = this .lengthSoFarArray;
-		
-				lengthSoFarArray .length = 1;
-
-				for (var i = 0, length = vertices .length; i < length; i += 8)
+				var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
+	
+				if (vertices .length)
 				{
-					vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-
-					lengthSoFar += vertex2 .subtract (vertex1) .abs ();
-					lengthSoFarArray .push (lengthSoFar);
+					delete this .getRandomPosition;
+	
+					var
+						lengthSoFar      = 0,
+						lengthSoFarArray = this .lengthSoFarArray;
+			
+					lengthSoFarArray .length = 1;
+	
+					for (var i = 0, length = vertices .length; i < length; i += 8)
+					{
+						vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+						vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+	
+						lengthSoFar += vertex2 .subtract (vertex1) .abs ();
+						lengthSoFarArray .push (lengthSoFar);
+					}
 				}
-			}
-			else
-			{
-				this .getRandomPosition = getPosition;
-			}
-		},
+				else
+				{
+					this .getRandomPosition = getPosition;
+				}
+			};
+		})(),
 		getRandomPosition: function (position)
 		{
 			// Determine index0 and weight.
@@ -3326,14 +3329,18 @@ function (Fields,
 			index0 *= 8;
 			index1  = index0 + 4;
 
-			var vertices = this .vertices;
+			var
+				vertices = this .vertices,
+				x1       = vertices [index0],
+				y1       = vertices [index0 + 1],
+				z1       = vertices [index0 + 2],
+				x2       = vertices [index1],
+				y2       = vertices [index1 + 1],
+				z2       = vertices [index1 + 2];
 
-			vertex1 .set (vertices [index0], vertices [index0 + 1], vertices [index0 + 2]);
-			vertex2 .set (vertices [index1], vertices [index1 + 1], vertices [index1 + 2]);
-	
-			position .x = vertex1 .x + weight * (vertex2 .x - vertex1 .x);
-			position .y = vertex1 .y + weight * (vertex2 .y - vertex1 .y);
-			position .z = vertex1 .z + weight * (vertex2 .z - vertex1 .z);
+			position .x = x1 + weight * (x2 - x1);
+			position .y = y1 + weight * (y2 - y1);
+			position .z = z1 + weight * (z2 - z1);
 
 			return position;
 		},
@@ -3433,12 +3440,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		vertex1  = new Vector3 (0, 0, 0),
-		vertex2  = new Vector3 (0, 0, 0),
-		vertex3  = new Vector3 (0, 0, 0),
-		direction = new Vector3 (0, 0, 0);
-
 	function SurfaceEmitter (executionContext)
 	{
 		X3DParticleEmitterNode .call (this, executionContext);
@@ -3451,6 +3452,7 @@ function (Fields,
 
 		this .surfaceNode    = null;
 		this .areaSoFarArray = [ 0 ];
+		this .direction      = new Vector3 (0, 0, 0);
 	}
 
 	SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -3496,41 +3498,47 @@ function (Fields,
 
 			this .set_geometry__ ();
 		},
-		set_geometry__: function ()
+		set_geometry__: (function ()
 		{
-			if (this .surfaceNode)
-			{		
-				delete this .getRandomPosition;
-				delete this .getRandomVelocity;
+			var
+				vertex1  = new Vector3 (0, 0, 0),
+				vertex2  = new Vector3 (0, 0, 0),
+				vertex3  = new Vector3 (0, 0, 0);
 
-				var
-					areaSoFar      = 0,
-					areaSoFarArray = this .areaSoFarArray,
-					vertices       = this .surfaceNode .getVertices () .getValue ();
-		
-				this .normals  = this .surfaceNode .getNormals () .getValue ();
-				this .vertices = vertices;
-
-				areaSoFarArray .length = 1;
-
-				for (var i = 0, length = vertices .length; i < length; i += 12)
-				{
-					vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-					vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
-
-					areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
-					areaSoFarArray .push (areaSoFar);
-				}
-			}
-			else
+			return function ()
 			{
-				this .getRandomPosition = getPosition;
-				this .getRandomVelocity = this .getSphericalRandomVelocity;
-
-				direction .set (0, 0, 0);
-			}
-		},
+				if (this .surfaceNode)
+				{		
+					delete this .getRandomPosition;
+					delete this .getRandomVelocity;
+	
+					var
+						areaSoFar      = 0,
+						areaSoFarArray = this .areaSoFarArray,
+						vertices       = this .surfaceNode .getVertices () .getValue ();
+			
+					this .normals  = this .surfaceNode .getNormals () .getValue ();
+					this .vertices = vertices;
+	
+					areaSoFarArray .length = 1;
+	
+					for (var i = 0, length = vertices .length; i < length; i += 12)
+					{
+						vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+						vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+						vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
+	
+						areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
+						areaSoFarArray .push (areaSoFar);
+					}
+				}
+				else
+				{
+					this .getRandomPosition = getPosition;
+					this .getRandomVelocity = this .getSphericalRandomVelocity;
+				}
+			};
+		})(),
 		getRandomPosition: function (position)
 		{
 			// Determine index0.
@@ -3575,21 +3583,22 @@ function (Fields,
 				v = 1 - v;
 			}
 
+			var t = 1 - u - v;
+
 			// Interpolate and set position.
 
 			var
 				i        = index0 * 12,
 				vertices = this .vertices;
 
-			var t = 1 - u - v;
-
 			position .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
 			position .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
 			position .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
 
 			var
-				i       = index0 * 9,
-				normals = this .normals;
+				i         = index0 * 9,
+				normals   = this .normals,
+				direction = this .direction;
 
 			direction .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
 			direction .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
@@ -3599,7 +3608,9 @@ function (Fields,
 		},
 		getRandomVelocity: function (velocity)
 		{
-			var speed = this .getRandomSpeed ();
+			var
+				speed     = this .getRandomSpeed (),
+				direction = this .direction;
 
 			velocity .x = direction .x * speed;
 			velocity .y = direction .y * speed;
@@ -3701,21 +3712,6 @@ function (Fields,
 {
 "use strict";
 
-	var
-		vertex1  = new Vector3 (0, 0, 0),
-		vertex2  = new Vector3 (0, 0, 0),
-		vertex3  = new Vector3 (0, 0, 0),
-		point    = new Vector3 (0, 0, 0),
-		normal   = new Vector3 (0, 0, 0),
-		rotation = new Rotation4 (0, 0, 1, 0),
-		line     = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-		plane    = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
-
-	function PlaneCompare (a, b)
-	{
-		return plane .getDistanceToPoint (a) < plane .getDistanceToPoint (b);
-	}
-
 	function VolumeEmitter (executionContext)
 	{
 		X3DParticleEmitterNode .call (this, executionContext);
@@ -3729,8 +3725,6 @@ function (Fields,
 		this .direction      = new Vector3 (0, 0, 0);
 		this .volumeNode     = new IndexedFaceSet (executionContext);
 		this .areaSoFarArray = [ 0 ];
-		this .intersections  = [ ];
-		this .sorter         = new QuickSort (this .intersections, PlaneCompare);
 	}
 
 	VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -3789,140 +3783,163 @@ function (Fields,
 			else
 				delete this .getRandomVelocity;
 		},
-		set_geometry__: function ()
+		set_geometry__: (function ()
 		{
 			var
-				areaSoFar      = 0,
-				areaSoFarArray = this .areaSoFarArray,
-				normals        = this .volumeNode .getNormals () .getValue (),
-				vertices       = this .volumeNode .getVertices () .getValue ();
+				vertex1 = new Vector3 (0, 0, 0),
+				vertex2 = new Vector3 (0, 0, 0),
+				vertex3 = new Vector3 (0, 0, 0);
 
-			this .normals  = normals;
-			this .vertices = vertices;
-
-			areaSoFarArray .length = 1;
-
-			for (var i = 0, length = vertices .length; i < length; i += 12)
+			return function ()
 			{
-				vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-				vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-				vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
-
-				areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
-				areaSoFarArray .push (areaSoFar);
-			}
-
-			this .bvh = new BVH (vertices, normals);
-		},
-		getRandomPosition: function (position)
-		{
-			// Get random point on surface
-
-			// Determine index0.
-
-			var
-				areaSoFarArray = this .areaSoFarArray,
-				length         = areaSoFarArray .length,
-				fraction       = Math .random () * areaSoFarArray [length - 1],
-				index0         = 0;
-
-			if (length == 1 || fraction <= areaSoFarArray [0])
-			{
-				index0 = 0;
-			}
-			else if (fraction >= areaSoFarArray [length - 1])
-			{
-				index0 = length - 2;
-			}
-			else
-			{
-				var index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
-
-				if (index < length)
+				var
+					areaSoFar      = 0,
+					areaSoFarArray = this .areaSoFarArray,
+					normals        = this .volumeNode .getNormals () .getValue (),
+					vertices       = this .volumeNode .getVertices () .getValue ();
+	
+				this .normals  = normals;
+				this .vertices = vertices;
+	
+				areaSoFarArray .length = 1;
+	
+				for (var i = 0, length = vertices .length; i < length; i += 12)
 				{
-					index0 = index - 1;
+					vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+					vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
+	
+					areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
+					areaSoFarArray .push (areaSoFar);
 				}
-				else
+	
+				this .bvh = new BVH (vertices, normals);
+			};
+		})(),
+		getRandomPosition: (function ()
+		{
+			var
+				point         = new Vector3 (0, 0, 0),
+				normal        = new Vector3 (0, 0, 0),
+				rotation      = new Rotation4 (0, 0, 1, 0),
+				line          = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+				plane         = new Plane3 (Vector3 .Zero, Vector3 .zAxis),
+				intersections = [ ],
+				sorter        = new QuickSort (intersections, PlaneCompare);
+
+			function PlaneCompare (a, b)
+			{
+				return plane .getDistanceToPoint (a) < plane .getDistanceToPoint (b);
+			}
+
+			return function (position)
+			{
+				// Get random point on surface
+	
+				// Determine index0.
+	
+				var
+					areaSoFarArray = this .areaSoFarArray,
+					length         = areaSoFarArray .length,
+					fraction       = Math .random () * areaSoFarArray [length - 1],
+					index0         = 0;
+	
+				if (length == 1 || fraction <= areaSoFarArray [0])
 				{
 					index0 = 0;
 				}
-			}
-
-			// Random barycentric coordinates.
-
-			var
-				u = Math .random (),
-				v = Math .random ();
-		
-			if (u + v > 1)
-			{
-				u = 1 - u;
-				v = 1 - v;
-			}
-
-			var t = 1 - u - v;
-
-			// Interpolate and determine random point on surface and normal.
-
-			var
-				i        = index0 * 12,
-				vertices = this .vertices;
-
-			point .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
-			point .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
-			point .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
-
-			var
-				i       = index0 * 9,
-				normals = this .normals;
-
-			normal .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
-			normal .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
-			normal .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
-
-			rotation .setFromToVec (Vector3 .zAxis, normal);
-			rotation .multVecRot (this .getRandomSurfaceNormal (normal));
-
-			// Setup random line throu volume for intersection text
-			// and a plane corresponding to the line for intersection sorting.
-
-			line  .set (point, normal);
-			plane .set (point, normal);
+				else if (fraction >= areaSoFarArray [length - 1])
+				{
+					index0 = length - 2;
+				}
+				else
+				{
+					var index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
 	
-			// Find random point in volume.
-
-			var
-				intersections    = this .intersections,
-				numIntersections = this .bvh .intersectsLine (line, intersections);
-
-			numIntersections -= numIntersections % 2; // We need an even count of intersections.
-
-			if (numIntersections)
-			{
-				// Sort intersections along line with a little help from the plane.
-
-				this .sorter .sort (0, numIntersections);
-
-				// Select random intersection pair.
-
+					if (index < length)
+					{
+						index0 = index - 1;
+					}
+					else
+					{
+						index0 = 0;
+					}
+				}
+	
+				// Random barycentric coordinates.
+	
 				var
-					index  = Math .round (this .getRandomValue (0, numIntersections / 2 - 1)) * 2,
-					point0 = intersections [index],
-					point1 = intersections [index + 1],
-					t      = Math .random ();
+					u = Math .random (),
+					v = Math .random ();
+			
+				if (u + v > 1)
+				{
+					u = 1 - u;
+					v = 1 - v;
+				}
 	
-				// lerp
-				position .x = point0 .x + (point1 .x - point0 .x) * t;
-				position .y = point0 .y + (point1 .y - point0 .y) * t;
-				position .z = point0 .z + (point1 .z - point0 .z) * t;
+				var t = 1 - u - v;
 	
-				return position;
-			}
-
-			// Discard point.
-
-			return position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
-		},
+				// Interpolate and determine random point on surface and normal.
+	
+				var
+					i        = index0 * 12,
+					vertices = this .vertices;
+	
+				point .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
+				point .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
+				point .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
+	
+				var
+					i       = index0 * 9,
+					normals = this .normals;
+	
+				normal .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
+				normal .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
+				normal .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
+	
+				rotation .setFromToVec (Vector3 .zAxis, normal);
+				rotation .multVecRot (this .getRandomSurfaceNormal (normal));
+	
+				// Setup random line throu volume for intersection text
+				// and a plane corresponding to the line for intersection sorting.
+	
+				line  .set (point, normal);
+				plane .set (point, normal);
+		
+				// Find random point in volume.
+	
+				var numIntersections = this .bvh .intersectsLine (line, intersections);
+	
+				numIntersections -= numIntersections % 2; // We need an even count of intersections.
+	
+				if (numIntersections)
+				{
+					// Sort intersections along line with a little help from the plane.
+	
+					sorter .sort (0, numIntersections);
+	
+					// Select random intersection pair.
+	
+					var
+						index  = Math .round (this .getRandomValue (0, numIntersections / 2 - 1)) * 2,
+						point0 = intersections [index],
+						point1 = intersections [index + 1],
+						t      = Math .random ();
+		
+					// lerp
+					position .x = point0 .x + (point1 .x - point0 .x) * t;
+					position .y = point0 .y + (point1 .y - point0 .y) * t;
+					position .z = point0 .z + (point1 .z - point0 .z) * t;
+		
+					return position;
+				}
+	
+				// Discard point.
+	
+				return position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
+			};
+		})(),
 		getRandomVelocity: function (velocity)
 		{
 			var
@@ -4010,8 +4027,6 @@ function (Fields,
 {
 "use strict";
 
-	var force = new Vector3 (0, 0, 0);
-
 	function WindPhysicsModel (executionContext)
 	{
 		X3DParticlePhysicsModelNode .call (this, executionContext);
@@ -4052,25 +4067,30 @@ function (Fields,
 		
 			return emitterNode .getRandomValue (Math .max (0, speed - variation), speed + variation);
 		},
-		addForce: function (i, emitterNode, forces, turbulences)
+		addForce: (function ()
 		{
-			var surfaceArea = emitterNode .surfaceArea_ .getValue ()
+			var force = new Vector3 (0, 0, 0);
 
-			if (this .enabled_ .getValue ())
+			return function (i, emitterNode, forces, turbulences)
 			{
-				var
-					randomSpeed = this .getRandomSpeed (emitterNode),
-					pressure    = Math .pow (10, 2 * Math .log (randomSpeed)) * 0.64615;
-		
-				if (this .direction_ .getValue () .equals (Vector3 .Zero))
-					emitterNode .getRandomNormal (force);
-				else
-					force .assign (this .direction_ .getValue ()) .normalize ();
-
-				forces [i] .assign (force .multiply (surfaceArea * pressure));
-				turbulences [i] = Math .PI * Algorithm .clamp (this .turbulence_ .getValue (), 0, 1);
-			}
-		},
+				var surfaceArea = emitterNode .surfaceArea_ .getValue ()
+	
+				if (this .enabled_ .getValue ())
+				{
+					var
+						randomSpeed = this .getRandomSpeed (emitterNode),
+						pressure    = Math .pow (10, 2 * Math .log (randomSpeed)) * 0.64615;
+			
+					if (this .direction_ .getValue () .equals (Vector3 .Zero))
+						emitterNode .getRandomNormal (force);
+					else
+						force .assign (this .direction_ .getValue ()) .normalize ();
+	
+					forces [i] .assign (force .multiply (surfaceArea * pressure));
+					turbulences [i] = Math .PI * Algorithm .clamp (this .turbulence_ .getValue (), 0, 1);
+				}
+			};
+		})(),
 	});
 
 	return WindPhysicsModel;

@@ -392,6 +392,11 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DGroupingNode .prototype .initialize .call (this);
+			X3DSensorNode   .prototype .initialize .call (this);
+		},
 	});
 
 	return EspduTransform;
@@ -520,6 +525,11 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DSensorNode    .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
+		},
 	});
 
 	return ReceiverPdu;
@@ -647,6 +657,11 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DSensorNode    .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
 		},
 	});
 
@@ -791,6 +806,11 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DSensorNode    .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
 		},
 	});
 

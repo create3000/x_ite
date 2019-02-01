@@ -225,13 +225,13 @@ function (Fields,
 	{
 		constructor: BlendedVolumeStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "voxels",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant1", new Fields .SFFloat (0.5)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant2", new Fields .SFFloat (0.5)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction1", new Fields .SFString ("CONSTANT")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle",     new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "voxels",          new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -703,7 +703,7 @@ function (X3DChildNode,
 
 	function X3DVolumeDataNode (executionContext)
 	{
-		X3DChildNode .call (this, executionContext);
+		X3DChildNode     .call (this, executionContext);
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DVolumeDataNode);
@@ -713,6 +713,11 @@ function (X3DChildNode,
 		X3DBoundedObject .prototype,
 	{
 		constructor: X3DVolumeDataNode,
+		initialize: function ()
+		{
+			X3DChildNode     .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
+		},
 	});
 
 	return X3DVolumeDataNode;
@@ -1388,11 +1393,11 @@ function (Fields,
 	{
 		constructor: ToneMappedVolumeStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "coolColor",      new Fields .SFColorRGBA (0, 0, 1, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",        new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "coolColor",      new Fields .SFColorRGBA (0, 0, 1, 0)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "warmColor",      new Fields .SFColorRGBA (1, 1, 0, 0)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals", new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
