@@ -96,7 +96,8 @@ function (X3DGeometryNode,
 				// Setup shader.
 	
 				context .geometryType  = this .getGeometryType ();
-				context .colorMaterial = this .getColors () .length;
+				context .fogCoords     = this .fogCoords;
+				context .colorMaterial = this .colorMaterial;
 
 				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
@@ -106,7 +107,10 @@ function (X3DGeometryNode,
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-				if (this .colors .length)
+				if (this .fogCoords)
+					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+
+				if (this .colorMaterial)
 					shaderNode .enableColorAttribute (gl, this .colorBuffer);
 	
 				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
@@ -118,7 +122,12 @@ function (X3DGeometryNode,
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .disable (gl, shaderNode);
 	
-				shaderNode .disableColorAttribute (gl);
+				if (this .fogCoords)
+					shaderNode .disableFogDepthAttribute (gl);
+
+				if (this .colorMaterial)
+					shaderNode .disableColorAttribute (gl);
+
 				shaderNode .disable (gl);
 			}
 			catch (error)
@@ -143,7 +152,8 @@ function (X3DGeometryNode,
 				// Setup shader.
 	
 				context .geometryType  = this .getGeometryType ();
-				context .colorMaterial = this .colors .length;
+				context .fogCoords     = this .fogCoords;
+				context .colorMaterial = this .colorMaterial;
 
 				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
@@ -153,7 +163,10 @@ function (X3DGeometryNode,
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-				if (this .colors .length)
+				if (this .fogCoords)
+					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+
+				if (this .colorMaterial)
 					shaderNode .enableColorAttribute (gl, this .colorBuffer);
 	
 				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
@@ -183,7 +196,12 @@ function (X3DGeometryNode,
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .disable (gl, shaderNode);
 	
-				shaderNode .disableColorAttribute (gl);
+				if (this .fogCoords)
+					shaderNode .disableFogDepthAttribute (gl);
+
+				if (this .colorMaterial)
+					shaderNode .disableColorAttribute (gl);
+
 				shaderNode .disable (gl);
 			}
 			catch (error)

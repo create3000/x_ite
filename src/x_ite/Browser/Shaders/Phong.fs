@@ -29,17 +29,18 @@ uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 
 uniform x3d_FogParameters x3d_Fog;
 
-varying vec4 C;  // color
-varying vec4 t;  // texCoord
-varying vec3 vN; // normalized normal vector at this point on geometry
-varying vec3 v;  // point on geometry
+varying float fD; // fog depth
+varying vec4  C;  // color
+varying vec4  t;  // texCoord
+varying vec3  vN; // normalized normal vector at this point on geometry
+varying vec3  v;  // point on geometry
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
 varying float depth;
 #endif
 
-#pragma X3D include "Include/Shadow.h"
+#pragma X3D include "Inlcude/Shadow.h"
 
 void
 clip ()
@@ -213,19 +214,21 @@ getFogInterpolant ()
 	if (x3d_Fog .type == x3d_None)
 		return 1.0;
 
-	if (x3d_Fog .visibilityRange <= 0.0)
+	float visibilityRange = x3d_Fog .fogCoord ? fD : x3d_Fog .visibilityRange;
+
+	if (visibilityRange <= 0.0)
 		return 0.0;
 
 	float dV = length (x3d_Fog .matrix * v);
 
-	if (dV >= x3d_Fog .visibilityRange)
+	if (dV >= visibilityRange)
 		return 0.0;
 
 	if (x3d_Fog .type == x3d_LinearFog)
-		return (x3d_Fog .visibilityRange - dV) / x3d_Fog .visibilityRange;
+		return (visibilityRange - dV) / visibilityRange;
 
 	if (x3d_Fog .type == x3d_ExponentialFog)
-		return exp (-dV / (x3d_Fog .visibilityRange - dV));
+		return exp (-dV / (visibilityRange - dV));
 
 	return 1.0;
 }

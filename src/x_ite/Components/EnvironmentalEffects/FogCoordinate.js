@@ -90,6 +90,52 @@ function (Fields,
 		{
 			return "fogCoord";
 		},
+		initialize: function ()
+		{
+			X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+			this .depth_ .addInterest ("set_depth__", this);
+
+			this .set_depth__ ();
+		},
+		set_depth__: function ()
+		{
+			this .depth  = this .depth_ .getValue ();
+			this .length = this .depth_ .length;
+		},
+		isEmpty: function ()
+		{
+			return this .length === 0;
+		},
+		getSize: function ()
+		{
+			return this .length;
+		},
+		addDepth: function (index, array)
+		{
+			if (index < this .length)
+				array .push (this .depth [index]);
+
+			else if (this .length)
+				array .push (this .depth [this .length - 1]);
+		},
+		addDepths: function (array, min)
+		{
+			var length = this .length;
+
+			if (length)
+			{
+				const depth = this .depth;
+	
+				for (var index = 0; index < length; ++ index)
+					array .push (depth [index]);
+
+				var last = depth [length - 1];
+
+				for (var index = length; index < min; ++ index)
+					array .push (last);
+			}
+		},
 	});
 
 	return FogCoordinate;

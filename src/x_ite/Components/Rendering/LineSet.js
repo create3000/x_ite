@@ -72,8 +72,9 @@ function (Fields,
 
 		this .setGeometryType (1);
 
-		this .colorNode = null;
-		this .coordNode = null;
+		this .fogCoordNode = null;
+		this .colorNode    = null;
+		this .coordNode    = null;
 	}
 
 	LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
@@ -103,14 +104,16 @@ function (Fields,
 		{
 			X3DLineGeometryNode .prototype .initialize .call (this);
 
-			this .attrib_ .addInterest ("set_attrib__", this);
-			this .color_  .addInterest ("set_color__", this);
-			this .coord_  .addInterest ("set_coord__", this);
+			this .attrib_   .addInterest ("set_attrib__",   this);
+			this .fogCoord_ .addInterest ("set_fogCoord__", this);
+			this .color_    .addInterest ("set_color__",    this);
+			this .coord_    .addInterest ("set_coord__",    this);
 
 			this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
 			this .setSolid (false);
 			
 			this .set_attrib__ ();
+			this .set_fogCoord__ ();
 			this .set_color__ ();
 			this .set_coord__ ();
 		},
@@ -133,6 +136,16 @@ function (Fields,
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
 				attribNodes [i] .addInterest ("requestRebuild", this);
+		},
+		set_fogCoord__: function ()
+		{
+			if (this .fogCoordNode)
+				this .fogCoordNode .removeInterest ("requestRebuild", this);
+
+			this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+
+			if (this .fogCoordNode)
+				this .fogCoordNode .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
@@ -176,16 +189,18 @@ function (Fields,
 			// Fill GeometryNode
 
 			var
-				vertexCount = this .vertexCount_,
-				attribNodes = this .getAttrib (),
-				numAttrib   = attribNodes .length,
-				attribs     = this .getAttribs (),
-				colorNode   = this .colorNode,
-				coordNode   = this .coordNode,
-				colorArray  = this .getColors (),
-				vertexArray = this .getVertices (),
-				size        = coordNode .getSize (),
-				index       = 0;
+				vertexCount   = this .vertexCount_,
+				attribNodes   = this .getAttrib (),
+				numAttrib     = attribNodes .length,
+				attribs       = this .getAttribs (),
+				fogCoordNode  = this .fogCoordNode,
+				colorNode     = this .colorNode,
+				coordNode     = this .coordNode,
+				fogDepthArray = this .getFogDepths (),
+				colorArray    = this .getColors (),
+				vertexArray   = this .getVertices (),
+				size          = coordNode .getSize (),
+				index         = 0;
 
 			for (var c = 0, length = vertexCount .length; c < length; ++ c)
 			{
@@ -202,6 +217,9 @@ function (Fields,
 					{
 						for (var a = 0; a < numAttrib; ++ a)
 							attribNodes [a] .addValue (index, attribs [a]);
+
+						if (fogCoordNode)
+							fogCoordNode .addDepth (index, fogDepthArray);
 
 						if (colorNode)
 							colorNode .addColor (index, colorArray);

@@ -11,11 +11,13 @@ uniform x3d_MaterialParameters x3d_FrontMaterial;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
-attribute vec4 x3d_Color;
-attribute vec4 x3d_Vertex;
+attribute float x3d_FogDepth;
+attribute vec4  x3d_Color;
+attribute vec4  x3d_Vertex;
 
-varying vec4 C; // color
-varying vec3 v; // point on geometry
+varying float fD; // fog depth
+varying vec4  C;  // color
+varying vec3  v;  // point on geometry
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 varying float depth;
@@ -29,7 +31,9 @@ main ()
 
 	vec4 p = x3d_ModelViewMatrix * x3d_Vertex;
 
-	v           = vec3 (p);
+	fD = x3d_FogDepth;
+	v  = vec3 (p);
+
 	gl_Position = x3d_ProjectionMatrix * p;
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER

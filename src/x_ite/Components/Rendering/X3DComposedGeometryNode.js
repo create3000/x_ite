@@ -66,6 +66,7 @@ function (X3DGeometryNode,
 
 		this .addType (X3DConstants .X3DComposedGeometryNode);
 
+		this .fogCoordNode = null;
 		this .colorNode    = null;
 		this .texCoordNode = null;
 		this .normalNode   = null;
@@ -80,16 +81,22 @@ function (X3DGeometryNode,
 			X3DGeometryNode .prototype .initialize .call (this);
 
 			this .attrib_   .addInterest ("set_attrib__",   this);
+			this .fogCoord_ .addInterest ("set_fogCoord__", this);
 			this .color_    .addInterest ("set_color__",    this);
 			this .texCoord_ .addInterest ("set_texCoord__", this);
 			this .normal_   .addInterest ("set_normal__",   this);
 			this .coord_    .addInterest ("set_coord__",    this);
 
 			this .set_attrib__ ();
+			this .set_fogCoord__ ();
 			this .set_color__ ();
 			this .set_texCoord__ ();
 			this .set_normal__ ();
 			this .set_coord__ ();
+		},
+		getFogCoord: function ()
+		{
+			return this .fogCoordNode;
 		},
 		getColor: function ()
 		{
@@ -126,6 +133,16 @@ function (X3DGeometryNode,
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
 				attribNodes [i] .addInterest ("requestRebuild", this);
+		},
+		set_fogCoord__: function ()
+		{
+			if (this .fogCoordNode)
+				this .fogCoordNode .removeInterest ("requestRebuild", this);
+
+			this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+
+			if (this .fogCoordNode)
+				this .fogCoordNode .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
@@ -207,10 +224,12 @@ function (X3DGeometryNode,
 				attribNodes        = this .getAttrib (),
 				numAttrib          = attribNodes .length,
 				attribs            = this .getAttribs (),
+				fogCoordNode       = this .getFogCoord (),
 				colorNode          = this .getColor (),
 				texCoordNode       = this .getTexCoord (),
 				normalNode         = this .getNormal (),
 				coordNode          = this .getCoord (),
+				fogDepthArray      = this .getFogDepths (),
 				colorArray         = this .getColors (),
 				multiTexCoordArray = this .getMultiTexCoords (),
 				normalArray        = this .getNormals (),
@@ -230,6 +249,9 @@ function (X3DGeometryNode,
 
 				for (var a = 0; a < numAttrib; ++ a)
 					attribNodes [a] .addValue (index, attribs [a]);
+
+				if (fogCoordNode)
+					fogCoordNode .addDepth (index, fogDepthArray);
 
 				if (colorNode)
 				{

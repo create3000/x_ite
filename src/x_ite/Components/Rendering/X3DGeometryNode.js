@@ -125,6 +125,7 @@ function (Fields,
 		this .texCoordParams      = { min: new Vector3 (0, 0, 0) };
 		this .multiTexCoords      = [ ];
 		this .texCoords           = X3DGeometryNode .createArray ();
+		this .fogDepths           = X3DGeometryNode .createArray ();
 		this .colors              = X3DGeometryNode .createArray ();
 		this .normals             = X3DGeometryNode .createArray ();
 		this .flatNormals         = X3DGeometryNode .createArray ();
@@ -201,6 +202,7 @@ function (Fields,
 			this .frontFace       = gl .CCW;
 			this .attribBuffers   = [ ];
 			this .texCoordBuffers = [ ];
+			this .fogDepthBuffer  = gl .createBuffer ();
 			this .colorBuffer     = gl .createBuffer ();
 			this .normalBuffer    = gl .createBuffer ();
 			this .vertexBuffer    = gl .createBuffer ();
@@ -278,6 +280,14 @@ function (Fields,
 		getAttribs: function ()
 		{
 			return this .attribs;
+		},
+		setFogDepths: function (value)
+		{
+			this .fogDepths .assign (value);
+		},
+		getFogDepths: function ()
+		{
+			return this .fogDepths;
 		},
 		setColors: function (value)
 		{
@@ -694,9 +704,10 @@ function (Fields,
 			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
 				this .multiTexCoords [i] .shrinkToFit ();
 	
-			this .colors   .shrinkToFit ();
-			this .normals  .shrinkToFit ();
-			this .vertices .shrinkToFit ();
+			this .fogDepths .shrinkToFit ();
+			this .colors    .shrinkToFit ();
+			this .normals   .shrinkToFit ();
+			this .vertices  .shrinkToFit ();
 
 			// Determine bbox.
 
@@ -773,6 +784,7 @@ function (Fields,
 
 			this .flatShading = undefined;
 
+			this .fogDepths      .length = 0;
 			this .colors         .length = 0;
 			this .multiTexCoords .length = 0;
 			this .texCoords      .length = 0;
@@ -800,6 +812,17 @@ function (Fields,
 				gl .bufferData (gl .ARRAY_BUFFER, this .attribs [i] .getValue (), gl .STATIC_DRAW);
 			}
 
+			// Transfer fog depths.
+
+			gl .bindBuffer (gl .ARRAY_BUFFER, this .fogDepthBuffer);
+			gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .STATIC_DRAW);
+			this .fogCoords = !! (this .fogDepths .length);
+			// Transfer colors.
+
+			gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
+			gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .STATIC_DRAW);
+			this .colorMaterial = !! (this .colors .length);
+
 			// Transfer multiTexCoords.
 
 			for (var i = this .texCoordBuffers .length, length = this .multiTexCoords .length; i < length; ++ i)
@@ -813,12 +836,6 @@ function (Fields,
 				gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
 				gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .STATIC_DRAW);
 			}
-
-			// Transfer colors.
-
-			gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-			gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .STATIC_DRAW);
-			this .colorMaterial = !! (this .colors .length);
 
 			// Transfer vertices.
 
@@ -872,16 +889,20 @@ function (Fields,
 				// Setup shader.
 	
 				context .geometryType  = this .geometryType;
+				context .fogCoords     = this .fogCoords;
 				context .colorMaterial = this .colorMaterial;
 
 				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
-	
+
 				// Setup vertex attributes.
-	
+
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-	
+
+				if (this .fogCoords)
+					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+
 				if (this .colorMaterial)
 					shaderNode .enableColorAttribute (gl, this .colorBuffer);
 	
@@ -927,7 +948,12 @@ function (Fields,
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .disable (gl, shaderNode);
 	
-				shaderNode .disableColorAttribute    (gl);
+				if (this .fogCoords)
+					shaderNode .disableFogDepthAttribute (gl);
+	
+				if (this .colorMaterial)
+					shaderNode .disableColorAttribute (gl);
+
 				shaderNode .disableTexCoordAttribute (gl);
 				shaderNode .disableNormalAttribute   (gl);
 				shaderNode .disable                  (gl);
@@ -986,6 +1012,7 @@ function (Fields,
 				// Setup shader.
 	
 				context .geometryType  = this .geometryType;
+				context .fogCoords     = this .fogCoords;
 				context .colorMaterial = this .colorMaterial;
 
 				shaderNode .enable (gl);
@@ -995,6 +1022,9 @@ function (Fields,
 	
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+				if (this .fogCoords)
+					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
 
 				if (this .colorMaterial)
 					shaderNode .enableColorAttribute (gl, this .colorBuffer);
@@ -1088,7 +1118,12 @@ function (Fields,
 				for (var i = 0, length = attribNodes .length; i < length; ++ i)
 					attribNodes [i] .disable (gl, shaderNode);
 	
-				shaderNode .disableColorAttribute    (gl);
+				if (this .fogCoords)
+					shaderNode .disableFogDepthAttribute (gl);
+
+				if (this .colorMaterial)
+					shaderNode .disableColorAttribute (gl);
+
 				shaderNode .disableTexCoordAttribute (gl);
 				shaderNode .disableNormalAttribute   (gl);
 				shaderNode .disable                  (gl);

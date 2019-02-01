@@ -147,6 +147,7 @@ function (Fields,
 			this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
 			this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
 			this .x3d_FogMatrix          = this .getUniformLocation (gl, program, "x3d_Fog.matrix",          "x3d_FogMatrix");
+			this .x3d_FogCoord           = this .getUniformLocation (gl, program, "x3d_Fog.fogCoord",        "x3d_FogCoord");
 
 			this .x3d_LinewidthScaleFactor = gl .getUniformLocation (program, "x3d_LinewidthScaleFactor");
 
@@ -203,7 +204,8 @@ function (Fields,
 			this .x3d_NormalMatrix      = gl .getUniformLocation (program, "x3d_NormalMatrix");
 			this .x3d_TextureMatrix     = gl .getUniformLocation (program, "x3d_TextureMatrix");
 			this .x3d_CameraSpaceMatrix = gl .getUniformLocation (program, "x3d_CameraSpaceMatrix");
-		
+
+			this .x3d_FogDepth = gl .getAttribLocation (program, "x3d_FogDepth");
 			this .x3d_Color    = gl .getAttribLocation (program, "x3d_Color");
 			this .x3d_TexCoord = gl .getAttribLocation (program, "x3d_TexCoord");
 			this .x3d_Normal   = gl .getAttribLocation (program, "x3d_Normal");
@@ -224,6 +226,17 @@ function (Fields,
 			gl .uniform1i (this .x3d_NumTextures, 1);
 
 			// Return true if valid, otherwise false.
+
+			if (this .x3d_FogDepth < 0)
+			{
+				this .enableFogDepthAttribute  = Function .prototype;
+				this .disableFogDepthAttribute = Function .prototype;
+			}
+			else
+			{
+				delete this .enableFogDepthAttribute;
+				delete this .disableFogDepthAttribute;
+			}
 
 			if (this .x3d_Color < 0)
 			{
@@ -877,6 +890,7 @@ function (Fields,
 			// Fog, there is always one
 
 			context .fogNode .setShaderUniforms (gl, this);
+			gl .uniform1i (this .x3d_FogCoord, context .fogCoords);
 
 			// LineProperties
 
@@ -1088,6 +1102,16 @@ function (Fields,
 			gl .disableVertexAttribArray (location + 1);
 			gl .disableVertexAttribArray (location + 2);
 			gl .disableVertexAttribArray (location + 3);
+		},
+		enableFogDepthAttribute: function (gl, fogDepthBuffer)
+		{
+			gl .enableVertexAttribArray (this .x3d_FogDepth);
+			gl .bindBuffer (gl .ARRAY_BUFFER, fogDepthBuffer);
+			gl .vertexAttribPointer (this .x3d_FogDepth, 1, gl .FLOAT, false, 0, 0);
+		},
+		disableFogDepthAttribute: function (gl)
+		{
+			gl .disableVertexAttribArray (this .x3d_FogDepth);
 		},
 		enableColorAttribute: function (gl, colorBuffer)
 		{

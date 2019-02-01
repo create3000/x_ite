@@ -72,6 +72,7 @@ function (Fields,
 
 		this .setGeometryType (1);
 
+		this .fogCoordNode = null;
 		this .colorNode    = null;
 		this .coordNode    = null;
 	}
@@ -105,14 +106,16 @@ function (Fields,
 		{
 			X3DLineGeometryNode .prototype .initialize .call (this);
 
-			this .attrib_ .addInterest ("set_attrib__", this);
-			this .color_  .addInterest ("set_color__", this);
-			this .coord_  .addInterest ("set_coord__", this);
+			this .attrib_   .addInterest ("set_attrib__",   this);
+			this .fogCoord_ .addInterest ("set_fogCoord__", this);
+			this .color_    .addInterest ("set_color__",    this);
+			this .coord_    .addInterest ("set_coord__",    this);
 
 			this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
 			this .setSolid (false);
 			
 			this .set_attrib__ ();
+			this .set_fogCoord__ ();
 			this .set_color__ ();
 			this .set_coord__ ();
 		},
@@ -135,6 +138,16 @@ function (Fields,
 
 			for (var i = 0; i < this .attribNodes .length; ++ i)
 				attribNodes [i] .addInterest ("requestRebuild", this);
+		},
+		set_fogCoord__: function ()
+		{
+			if (this .fogCoordNode)
+				this .fogCoordNode .removeInterest ("requestRebuild", this);
+
+			this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+
+			if (this .fogCoordNode)
+				this .fogCoordNode .addInterest ("requestRebuild", this);
 		},
 		set_color__: function ()
 		{
@@ -233,8 +246,10 @@ function (Fields,
 				attribNodes    = this .getAttrib (),
 				numAttrib      = attribNodes .length,
 				attribs        = this .getAttribs (),
+				fogCoordNode   = this .fogCoordNode,
 				colorNode      = this .colorNode,
 				coordNode      = this .coordNode,
+				fogDepthArray  = this .getFogDepths (),
 				colorArray     = this .getColors (),
 				vertexArray    = this .getVertices ();
 
@@ -242,7 +257,7 @@ function (Fields,
 
 			var face = 0;
 
-			for (var p = 0; p < polylines .length; ++ p)
+			for (var p = 0, pl = polylines .length; p < pl; ++ p)
 			{
 				var polyline = polylines [p];
 			
@@ -252,14 +267,17 @@ function (Fields,
 				{
 					for (var line = 0, l_end = polyline .length - 1; line < l_end; ++ line)
 					{
-						for (var index = line, i_end = line + 2; index < i_end; ++ index)
+						for (var l = line, i_end = line + 2; l < i_end; ++ l)
 						{
 							var
-								i  = polyline [index],
-								ci = coordIndex [i];
+								i     = polyline [l],
+								index = coordIndex [i];
 
 							for (var a = 0; a < numAttrib; ++ a)
-								attribNodes [a] .addValue (ci, attribs [a]);
+								attribNodes [a] .addValue (index, attribs [a]);
+
+							if (fogCoordNode)
+								fogCoordNode .addDepth (index, fogDepthArray);
 
 							if (colorNode)
 							{
@@ -269,7 +287,7 @@ function (Fields,
 									colorNode .addColor (this .getColorIndex (face), colorArray);
 							}
 
-							coordNode .addPoint (ci, vertexArray);
+							coordNode .addPoint (index, vertexArray);
 						}
 					}
 				}

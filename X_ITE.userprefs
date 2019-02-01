@@ -1,10 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/EnvironmentalEffects/FogCoordinate.js">
     <Files>
       <File FileName="src/x_ite.html" Line="14" Column="53" />
-      <File FileName="src/x_ite/Components/ParticleSystems/BoundedPhysicsModel.js" Line="74" Column="21" />
-      <File FileName="src/x_ite/Components/ParticleSystems/VolumeEmitter.js" Line="147" Column="30" />
+      <File FileName="src/x_ite/Components/Geometry3D/IndexedFaceSet.js" Line="175" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/IndexedLineSet.js" Line="253" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/PointSet.js" Line="199" Column="4" />
+      <File FileName="src/x_ite/Components/Rendering/X3DComposedGeometryNode.js" Line="84" Column="52" />
+      <File FileName="src/x_ite/Components/EnvironmentalEffects/FogCoordinate.js" Line="132" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -21,6 +21,7 @@ var X_ITE_TESTS = [
 	{ path: "Core/units.x3d" },
 	{ path: "Core/units.x3dv" },
 	{ component: "EnvironmentalEffects" },
+	{ path: "EnvironmentalEffects/FogCoordinate.x3d" },
 	{ path: "EnvironmentalEffects/FogScale.x3d" },
 	{ path: "EnvironmentalEffects/ImageBackground.x3d" },
 	{ path: "EnvironmentalEffects/LocalFogScale.x3d" },

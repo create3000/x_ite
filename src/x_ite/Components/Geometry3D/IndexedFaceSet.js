@@ -166,10 +166,12 @@ function (Fields,
 				attribNodes        = this .getAttrib (),
 				numAttrib          = attribNodes .length,
 				attribs            = this .getAttribs (),
+				fogCoordNode       = this .getFogCoord (),
 				colorNode          = this .getColor (),
 				texCoordNode       = this .getTexCoord (),
 				normalNode         = this .getNormal (),
 				coordNode          = this .getCoord (),
+				fogDepthArray      = this .getFogDepths (),
 				colorArray         = this .getColors (),
 				multiTexCoordArray = this .getMultiTexCoords (),
 				normalArray        = this .getNormals (),
@@ -194,6 +196,9 @@ function (Fields,
 
 					for (var a = 0; a < numAttrib; ++ a)
 						attribNodes [a] .addValue (index, attribs [a]);
+
+					if (fogCoordNode)
+						fogCoordNode .addDepth (index, fogDepthArray);
 
 					if (colorNode)
 					{
