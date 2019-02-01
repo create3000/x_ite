@@ -1,12 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Rendering/LineSet.js">
     <Files>
       <File FileName="src/x_ite.html" Line="14" Column="53" />
       <File FileName="src/x_ite/Components/Geometry3D/IndexedFaceSet.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/IndexedLineSet.js" Line="253" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/LineSet.js" Line="200" Column="1" />
-      <File FileName="src/x_ite/Components/Geometry3D/ElevationGrid.js" Line="390" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/IndexedLineSet.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/LineSet.js" Line="202" Column="29" />
+      <File FileName="src/x_ite/Components/Geometry3D/ElevationGrid.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
