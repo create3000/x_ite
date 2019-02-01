@@ -216,7 +216,7 @@ getFogInterpolant ()
 	if (x3d_Fog .visibilityRange <= 0.0)
 		return 0.0;
 
-	float dV = length (v);
+	float dV = length (x3d_Fog .matrix * v);
 
 	if (dV >= x3d_Fog .visibilityRange)
 		return 0.0;
