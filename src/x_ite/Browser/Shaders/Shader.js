@@ -136,10 +136,12 @@ function (Shadow,
 
 			var definitions = "";
 
-			definitions += "#define x3d_GeometryPoints  0\n";
-			definitions += "#define x3d_GeometryLines   1\n";
-			definitions += "#define x3d_Geometry2D      2\n";
-			definitions += "#define x3d_Geometry3D      3\n";
+			definitions += "#define x3d_None 0\n";
+
+			definitions += "#define x3d_Points      0\n";
+			definitions += "#define x3d_Lines       1\n";
+			definitions += "#define x3d_Geometry2D  2\n";
+			definitions += "#define x3d_Geometry3D  3\n";
 
 			definitions += "#define x3d_MaxClipPlanes  " + browser .getMaxClipPlanes () + "\n";
 
@@ -159,17 +161,19 @@ function (Shadow,
 			definitions += "#define x3d_TextureTypeCubeMapTexture  4\n";
 
 			// Legacy
-			definitions += "#define x3d_NoneClipPlane  vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
-			definitions += "#define x3d_NoneFog        0\n";
-			definitions += "#define x3d_NoneLight      0\n";
-			definitions += "#define x3d_NoneTexture    0\n";
+			definitions += "#define x3d_GeometryPoints  0\n";
+			definitions += "#define x3d_GeometryLines   1\n";
+			definitions += "#define x3d_NoneClipPlane   vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
+			definitions += "#define x3d_NoneFog         0\n";
+			definitions += "#define x3d_NoneLight       0\n";
+			definitions += "#define x3d_NoneTexture     0\n";
 
-			definitions += "#define x3d_None 0\n";
-
-			depreciatedWarning (source, "x3d_NoneClipPlane", "x3d_NumClipPlanes");
-			depreciatedWarning (source, "x3d_NoneFog",       "x3d_None");
-			depreciatedWarning (source, "x3d_NoneLight",     "x3d_NumLights");
-			depreciatedWarning (source, "x3d_NoneTexture",   "x3d_NumTextures");
+			depreciatedWarning (source, "x3d_GeometryPoints", "x3d_Points");
+			depreciatedWarning (source, "x3d_GeometryLines",  "x3d_Lines");
+			depreciatedWarning (source, "x3d_NoneClipPlane",  "x3d_NumClipPlanes");
+			depreciatedWarning (source, "x3d_NoneFog",        "x3d_None");
+			depreciatedWarning (source, "x3d_NoneLight",      "x3d_NumLights");
+			depreciatedWarning (source, "x3d_NoneTexture",    "x3d_NumTextures");
 
 			// Adjust precision of struct types;
 
