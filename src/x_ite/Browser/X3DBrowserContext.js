@@ -281,6 +281,10 @@ function ($,
 
 			this .finished_ .processInterests ();
 		},
+		toStream: function (stream)
+		{
+			stream .string += Object .prototype .toString .call (this);
+		},
 	});
 
 	Object .assign (X3DBrowserContext,
