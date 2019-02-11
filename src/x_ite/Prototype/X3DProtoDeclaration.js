@@ -135,6 +135,10 @@ function ($,
 		{
 			return true;
 		},
+		toStream: function (stream)
+		{
+			stream .string += Object .prototype .toString .call (this);
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);

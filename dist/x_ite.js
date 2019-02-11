@@ -31201,9 +31201,9 @@ function (Fields,
 			///  SAI
 			return this ._destinationField .getName ();
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
-			return Object .prototype .toString (this);
+			stream .string += Object .prototype .toString .call (this);
 		},
 		toXMLStream: function (stream)
 		{
@@ -33406,6 +33406,10 @@ function (Fields,
 		{
 			this .getRootNodes () .setValue (value);
 		},
+		toStream: function (stream)
+		{
+			stream .string += Object .prototype .toString .call (this);
+		},
 		toXMLStream: function (stream)
 		{
 			var
@@ -34956,6 +34960,10 @@ function ($,
 			this .deferred .resolve ();
 			this .deferred = $.Deferred ();
 		},
+		toStream: function (stream)
+		{
+			stream .string += Object .prototype .toString .call (this);
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);
@@ -35179,6 +35187,10 @@ function ($,
 		hasUserDefinedFields: function ()
 		{
 			return true;
+		},
+		toStream: function (stream)
+		{
+			stream .string += Object .prototype .toString .call (this);
 		},
 		toXMLStream: function (stream)
 		{

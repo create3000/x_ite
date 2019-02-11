@@ -142,9 +142,9 @@ function (Fields,
 			///  SAI
 			return this ._destinationField .getName ();
 		},
-		toString: function ()
+		toStream: function (stream)
 		{
-			return Object .prototype .toString (this);
+			stream .string += Object .prototype .toString .call (this);
 		},
 		toXMLStream: function (stream)
 		{

@@ -272,6 +272,10 @@ function (Fields,
 		{
 			this .getRootNodes () .setValue (value);
 		},
+		toStream: function (stream)
+		{
+			stream .string += Object .prototype .toString .call (this);
+		},
 		toXMLStream: function (stream)
 		{
 			var
