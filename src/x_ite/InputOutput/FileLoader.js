@@ -197,6 +197,8 @@ function ($,
 					},
 				];
 
+				var errors = [ ];
+
 				for (var i = 0, length = handlers .length; i < length; ++ i)
 				{
 					try
@@ -207,9 +209,11 @@ function ($,
 					catch (error)
 					{
 						// Try next handler.
-						console .log (error);
+						errors .push (error);
 					}
 				}
+
+				console .error (errors);
 
 				throw new Error ("Couldn't parse x3d syntax.");
 			}
