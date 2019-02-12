@@ -83,6 +83,11 @@ function (Fields,
 
 		this .addType (X3DConstants .HAnimHumanoid);
 
+		this .translation_ .setUnit ("length");
+		this .center_      .setUnit ("length");
+		this .bboxSize_    .setUnit ("length");
+		this .bboxCenter_  .setUnit ("length");
+
 		this .viewpointsNode = new Group (executionContext);
 		this .skeletonNode   = new Group (executionContext);
 		this .skinNode       = new Group (executionContext);

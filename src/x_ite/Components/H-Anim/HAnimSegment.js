@@ -67,6 +67,8 @@ function (Fields,
 		X3DGroupingNode .call (this, executionContext);
 
 		this .addType (X3DConstants .HAnimSegment);
+
+		this .mass_ .setUnit ("mass");
 	}
 
 	HAnimSegment .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
