@@ -128,7 +128,6 @@ function (Fields,
 		this .invLightSpaceProjectionMatrix = new Matrix4 ();
 		this .shadowMatrix                  = new Matrix4 ();
 		this .shadowMatrixArray             = new Float32Array (16);
-		this .invGroupMatrix                = new Matrix4 ();
 		this .rotation                      = new Rotation4 ();
 		this .rotationMatrix                = new Matrix4 ();
 		this .textureUnit                   = 0;
@@ -212,9 +211,7 @@ function (Fields,
 				invLightSpaceMatrix .translate (lightNode .getLocation ());
 				invLightSpaceMatrix .inverse ();
 
-				var
-					shadowMapSize  = lightNode .getShadowMapSize (),
-					invGroupMatrix = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
+				var shadowMapSize  = lightNode .getShadowMapSize ();
 
 				this .shadowBuffer .bind ();
 
@@ -229,9 +226,8 @@ function (Fields,
 					renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
 					renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
 					renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
-					renderObject .getModelViewMatrix  () .multLeft (invGroupMatrix);
 	
-					renderObject .render (TraverseType .DEPTH, this .groupNode);
+					renderObject .render (TraverseType .DEPTH, X3DGroupingNode .prototype .traverse, this .groupNode);
 	
 					renderObject .getModelViewMatrix  () .pop ();
 					renderObject .getProjectionMatrix () .pop ();

@@ -404,7 +404,7 @@ function ($,
 				return depth;
 			};
 		})(),
-		render: function (type, group)
+		render: function (type, callback, group)
 		{
 			switch (type)
 			{
@@ -413,7 +413,7 @@ function ($,
 					// Collect for collide and gravite
 					this .numCollisionShapes = 0;
 
-					group .traverse (type, this);
+					callback .call (group, type, this);
 					this .collide ();
 					this .gravite ();
 					break;
@@ -422,7 +422,7 @@ function ($,
 				{
 					this .numDepthShapes = 0;
 
-					group .traverse (type, this);
+					callback .call (group, type, this);
 					this .depth (this .depthShapes, this .numDepthShapes);
 					break;
 				}
@@ -434,7 +434,7 @@ function ($,
 
 					this .setGlobalFog (this .getFog ());
 
-					group .traverse (type, this);
+					callback .call (group, type, this);
 					this .draw (group);
 					break;
 				}

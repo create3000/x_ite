@@ -73,6 +73,8 @@ function (Fields,
 		X3DGeometricPropertyNode .call (this, executionContext);
 
 		this .addType (X3DConstants .HAnimDisplacer);
+
+		this .displacements_ .setUnit ("length");
 	}
 
 	HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
@@ -188,6 +190,11 @@ function (Fields,
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .HAnimHumanoid);
+
+		this .translation_ .setUnit ("length");
+		this .center_      .setUnit ("length");
+		this .bboxSize_    .setUnit ("length");
+		this .bboxCenter_  .setUnit ("length");
 
 		this .viewpointsNode = new Group (executionContext);
 		this .skeletonNode   = new Group (executionContext);
@@ -727,6 +734,8 @@ function (Fields,
 		X3DGroupingNode .call (this, executionContext);
 
 		this .addType (X3DConstants .HAnimSegment);
+
+		this .mass_ .setUnit ("mass");
 	}
 
 	HAnimSegment .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),

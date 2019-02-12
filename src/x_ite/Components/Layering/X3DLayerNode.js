@@ -361,7 +361,7 @@ function (X3DNode,
 	
 			// Render
 			this .currentViewport .push (this);
-			renderObject .render (type, this .groupNode);
+			renderObject .render (type, this .groupNode .traverse, this .groupNode);
 			this .currentViewport .pop (this);
 
 			this .getModelViewMatrix  () .pop ()
@@ -374,7 +374,7 @@ function (X3DNode,
 			this .getModelViewMatrix () .pushMatrix (this .getInverseCameraSpaceMatrix () .get ());
 
 			this .currentViewport .push (this);
-			renderObject .render (type, this .groupNode);
+			renderObject .render (type, this .groupNode .traverse, this .groupNode);
 			this .currentViewport .pop (this);
 
 			this .getModelViewMatrix () .pop ()

@@ -53,14 +53,12 @@ define ([
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
           X3DChildNode, 
           X3DBoundedObject, 
           TraverseType,
-          X3DConstants,
-          Matrix4)
+          X3DConstants)
 {
 "use strict";
 
@@ -120,10 +118,6 @@ function (Fields,
 				return X3DBoundedObject .prototype .getBBox .call (this, this .children_ .getValue (), bbox);
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
-		},
-		getMatrix: function ()
-		{
-			return Matrix4 .Identity;
 		},
 		setHidden: function (value)
 		{

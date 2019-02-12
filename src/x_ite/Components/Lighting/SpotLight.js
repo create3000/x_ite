@@ -107,7 +107,6 @@ function (Fields,
 		this .invLightSpaceProjectionMatrix = new Matrix4 ();
 		this .shadowMatrix                  = new Matrix4 ();
 		this .shadowMatrixArray             = new Float32Array (16);
-		this .invGroupMatrix                = new Matrix4 ();
 		this .rotation                      = new Rotation4 ();
 		this .lightBBoxMin                  = new Vector3 (0, 0, 0);
 		this .lightBBoxMax                  = new Vector3 (0, 0, 0);
@@ -199,8 +198,7 @@ function (Fields,
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
-					projectionMatrix = Camera .perspective (lightNode .getCutOffAngle () * 2, 0.125, Math .max (10000, farValue), shadowMapSize, shadowMapSize, this .projectionMatrix), // Use higher far value for better precision.
-					invGroupMatrix   = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
+					projectionMatrix = Camera .perspective (lightNode .getCutOffAngle () * 2, 0.125, Math .max (10000, farValue), shadowMapSize, shadowMapSize, this .projectionMatrix); // Use higher far value for better precision.
 
 				this .renderShadow = farValue > 0;
 
@@ -209,9 +207,8 @@ function (Fields,
 				renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
 				renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
 				renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
-				renderObject .getModelViewMatrix  () .multLeft (invGroupMatrix);
 
-				renderObject .render (TraverseType .DEPTH, this .groupNode);
+				renderObject .render (TraverseType .DEPTH, X3DGroupingNode .prototype .traverse, this .groupNode);
 
 				renderObject .getModelViewMatrix  () .pop ();
 				renderObject .getProjectionMatrix () .pop ();

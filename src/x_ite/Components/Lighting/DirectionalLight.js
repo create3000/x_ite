@@ -100,7 +100,6 @@ function (Fields,
 		this .invLightSpaceProjectionMatrix = new Matrix4 ();
 		this .shadowMatrix                  = new Matrix4 ();
 		this .shadowMatrixArray             = new Float32Array (16);
-		this .invGroupMatrix                = new Matrix4 ();
 		this .rotation                      = new Rotation4 ();
 		this .textureUnit                   = 0;
 	}
@@ -179,17 +178,15 @@ function (Fields,
 					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
-					projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix),
-					invGroupMatrix   = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
+					projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix);
 
 				this .shadowBuffer .bind ();
 
 				renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
 				renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
 				renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
-				renderObject .getModelViewMatrix  () .multLeft (invGroupMatrix);
 
-				renderObject .render (TraverseType .DEPTH, this .groupNode);
+				renderObject .render (TraverseType .DEPTH, X3DGroupingNode .prototype .traverse, this .groupNode);
 
 				renderObject .getModelViewMatrix  () .pop ();
 				renderObject .getProjectionMatrix () .pop ();

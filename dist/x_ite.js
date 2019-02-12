@@ -1,4 +1,4 @@
-/* X_ITE v4.4.0-594 */
+/* X_ITE v4.4.1a-594 */
 
 (function () {
 
@@ -81354,6 +81354,10 @@ function ($,
 			this .systemStartTime = performance .now ();
 
 			this .finished_ .processInterests ();
+		},
+		toStream: function (stream)
+		{
+			stream .string += Object .prototype .toString .call (this);
 		},
 	});
 

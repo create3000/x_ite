@@ -93,7 +93,7 @@ function (X3DGroupingNode,
 			}
 			else
 			{
-			   this .matrix .assign (matrix);
+				this .matrix .assign (matrix);
 				this .traverse = this .getTraverse ();
 			}
 		},

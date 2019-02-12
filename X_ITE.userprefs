@@ -1,13 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Time/TimeSensor.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="src/x_ite.html" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Texturing/X3DTexturingContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
-      <File FileName="package.json" Line="20" Column="4" />
-      <File FileName="src/x_ite/Browser/Time/X3DTimeContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Time/TimeSensor.js" Line="1" Column="1" />
+      <File FileName="package.json" Line="3" Column="20" />
+      <File FileName="src/x_ite/Components/Grouping/X3DGroupingNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Layering/X3DLayerNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Lighting/DirectionalLight.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
