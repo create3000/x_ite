@@ -122,12 +122,12 @@ function (Fields,
 		},
 		set_whichChoice__: function ()
 		{
+			this .child = this .getChild (this .whichChoice_ .getValue ());
+
 			this .set_cameraObjects__ ();
 		},
 		set_cameraObjects__: function ()
 		{
-			this .child = this .getChild (this .whichChoice_ .getValue ());
-
 			if (this .child && this .child .getCameraObject)
 				this .setCameraObject (this .child .getCameraObject ());
 			else
