@@ -193,6 +193,8 @@ var X_ITE_TESTS = [
 	{ path: "ParticleSystems/VolumeEmitter-U.x3d" },
 	{ path: "ParticleSystems/VolumeEmitter.x3d" },
 	{ path: "ParticleSystems/Waterfall.x3d" },
+	{ component: "Picking" },
+	{ path: "Picking/PrimitivePickSensor.x3d" },
 	{ component: "PointingDeviceSensor" },
 	{ path: "PointingDeviceSensor/ClonedSensors.x3d" },
 	{ path: "PointingDeviceSensor/LineSensor.x3d" },

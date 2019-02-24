@@ -1,4 +1,4 @@
-/* X_ITE v4.4.1a-594 */
+/* X_ITE v4.4.1-594 */
 
 (function () {
 
@@ -24569,7 +24569,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.4.0";
+	return "4.4.1";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -67068,14 +67068,12 @@ define ('x_ite/Components/Grouping/X3DGroupingNode',[
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
           X3DChildNode, 
           X3DBoundedObject, 
           TraverseType,
-          X3DConstants,
-          Matrix4)
+          X3DConstants)
 {
 "use strict";
 
@@ -67135,10 +67133,6 @@ function (Fields,
 				return X3DBoundedObject .prototype .getBBox .call (this, this .children_ .getValue (), bbox);
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
-		},
-		getMatrix: function ()
-		{
-			return Matrix4 .Identity;
 		},
 		setHidden: function (value)
 		{
@@ -67884,7 +67878,6 @@ function (Fields,
 		this .invLightSpaceProjectionMatrix = new Matrix4 ();
 		this .shadowMatrix                  = new Matrix4 ();
 		this .shadowMatrixArray             = new Float32Array (16);
-		this .invGroupMatrix                = new Matrix4 ();
 		this .rotation                      = new Rotation4 ();
 		this .textureUnit                   = 0;
 	}
@@ -67963,17 +67956,15 @@ function (Fields,
 					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
-					projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix),
-					invGroupMatrix   = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
+					projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix);
 
 				this .shadowBuffer .bind ();
 
 				renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
 				renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
 				renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
-				renderObject .getModelViewMatrix  () .multLeft (invGroupMatrix);
 
-				renderObject .render (TraverseType .DEPTH, this .groupNode);
+				renderObject .render (TraverseType .DEPTH, X3DGroupingNode .prototype .traverse, this .groupNode);
 
 				renderObject .getModelViewMatrix  () .pop ();
 				renderObject .getProjectionMatrix () .pop ();
@@ -76915,7 +76906,7 @@ function ($,
 				return depth;
 			};
 		})(),
-		render: function (type, group)
+		render: function (type, callback, group)
 		{
 			switch (type)
 			{
@@ -76924,7 +76915,7 @@ function ($,
 					// Collect for collide and gravite
 					this .numCollisionShapes = 0;
 
-					group .traverse (type, this);
+					callback .call (group, type, this);
 					this .collide ();
 					this .gravite ();
 					break;
@@ -76933,7 +76924,7 @@ function ($,
 				{
 					this .numDepthShapes = 0;
 
-					group .traverse (type, this);
+					callback .call (group, type, this);
 					this .depth (this .depthShapes, this .numDepthShapes);
 					break;
 				}
@@ -76945,7 +76936,7 @@ function ($,
 
 					this .setGlobalFog (this .getFog ());
 
-					group .traverse (type, this);
+					callback .call (group, type, this);
 					this .draw (group);
 					break;
 				}
@@ -80451,7 +80442,7 @@ function (X3DNode,
 	
 			// Render
 			this .currentViewport .push (this);
-			renderObject .render (type, this .groupNode);
+			renderObject .render (type, this .groupNode .traverse, this .groupNode);
 			this .currentViewport .pop (this);
 
 			this .getModelViewMatrix  () .pop ()
@@ -80464,7 +80455,7 @@ function (X3DNode,
 			this .getModelViewMatrix () .pushMatrix (this .getInverseCameraSpaceMatrix () .get ());
 
 			this .currentViewport .push (this);
-			renderObject .render (type, this .groupNode);
+			renderObject .render (type, this .groupNode .traverse, this .groupNode);
 			this .currentViewport .pop (this);
 
 			this .getModelViewMatrix () .pop ()
@@ -88105,6 +88096,8 @@ function (Fields,
 			this .group .isCameraObject_ .addFieldInterest (this .isCameraObject_);
 			this .group .children_       .addInterest ("set_children__", this);
 
+			this .setCameraObject (this .group .getCameraObject ());
+
 			this .set_children__ ();
 		},
 		getBBox: function (bbox)
@@ -88421,12 +88414,12 @@ function (Fields,
 		},
 		set_whichChoice__: function ()
 		{
+			this .child = this .getChild (this .whichChoice_ .getValue ());
+
 			this .set_cameraObjects__ ();
 		},
 		set_cameraObjects__: function ()
 		{
-			this .child = this .getChild (this .whichChoice_ .getValue ());
-
 			if (this .child && this .child .getCameraObject)
 				this .setCameraObject (this .child .getCameraObject ());
 			else
@@ -88539,7 +88532,7 @@ function (X3DGroupingNode,
 			}
 			else
 			{
-			   this .matrix .assign (matrix);
+				this .matrix .assign (matrix);
 				this .traverse = this .getTraverse ();
 			}
 		},
@@ -91122,7 +91115,6 @@ function (Fields,
 		this .invLightSpaceProjectionMatrix = new Matrix4 ();
 		this .shadowMatrix                  = new Matrix4 ();
 		this .shadowMatrixArray             = new Float32Array (16);
-		this .invGroupMatrix                = new Matrix4 ();
 		this .rotation                      = new Rotation4 ();
 		this .rotationMatrix                = new Matrix4 ();
 		this .textureUnit                   = 0;
@@ -91206,9 +91198,7 @@ function (Fields,
 				invLightSpaceMatrix .translate (lightNode .getLocation ());
 				invLightSpaceMatrix .inverse ();
 
-				var
-					shadowMapSize  = lightNode .getShadowMapSize (),
-					invGroupMatrix = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
+				var shadowMapSize  = lightNode .getShadowMapSize ();
 
 				this .shadowBuffer .bind ();
 
@@ -91223,9 +91213,8 @@ function (Fields,
 					renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
 					renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
 					renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
-					renderObject .getModelViewMatrix  () .multLeft (invGroupMatrix);
 	
-					renderObject .render (TraverseType .DEPTH, this .groupNode);
+					renderObject .render (TraverseType .DEPTH, X3DGroupingNode .prototype .traverse, this .groupNode);
 	
 					renderObject .getModelViewMatrix  () .pop ();
 					renderObject .getProjectionMatrix () .pop ();
@@ -91480,7 +91469,6 @@ function (Fields,
 		this .invLightSpaceProjectionMatrix = new Matrix4 ();
 		this .shadowMatrix                  = new Matrix4 ();
 		this .shadowMatrixArray             = new Float32Array (16);
-		this .invGroupMatrix                = new Matrix4 ();
 		this .rotation                      = new Rotation4 ();
 		this .lightBBoxMin                  = new Vector3 (0, 0, 0);
 		this .lightBBoxMax                  = new Vector3 (0, 0, 0);
@@ -91572,8 +91560,7 @@ function (Fields,
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
-					projectionMatrix = Camera .perspective (lightNode .getCutOffAngle () * 2, 0.125, Math .max (10000, farValue), shadowMapSize, shadowMapSize, this .projectionMatrix), // Use higher far value for better precision.
-					invGroupMatrix   = this .invGroupMatrix .assign (this .groupNode .getMatrix ()) .inverse ();
+					projectionMatrix = Camera .perspective (lightNode .getCutOffAngle () * 2, 0.125, Math .max (10000, farValue), shadowMapSize, shadowMapSize, this .projectionMatrix); // Use higher far value for better precision.
 
 				this .renderShadow = farValue > 0;
 
@@ -91582,9 +91569,8 @@ function (Fields,
 				renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
 				renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
 				renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
-				renderObject .getModelViewMatrix  () .multLeft (invGroupMatrix);
 
-				renderObject .render (TraverseType .DEPTH, this .groupNode);
+				renderObject .render (TraverseType .DEPTH, X3DGroupingNode .prototype .traverse, this .groupNode);
 
 				renderObject .getModelViewMatrix  () .pop ();
 				renderObject .getProjectionMatrix () .pop ();

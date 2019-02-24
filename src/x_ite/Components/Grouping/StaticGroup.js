@@ -130,6 +130,8 @@ function (Fields,
 			this .group .isCameraObject_ .addFieldInterest (this .isCameraObject_);
 			this .group .children_       .addInterest ("set_children__", this);
 
+			this .setCameraObject (this .group .getCameraObject ());
+
 			this .set_children__ ();
 		},
 		getBBox: function (bbox)
