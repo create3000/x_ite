@@ -229,9 +229,9 @@ function (Fields,
 							active = true;
 
 							targetBBox .multRight (modelMatrix .inverse ()) .getMatrix () .get (position, orientation);
-
-							TargetBBoxCache .push (targetBBox);
 						}
+
+						TargetBBoxCache .push (targetBBox);
 					}
 
 					ModelMatrixCache .push (modelMatrix);
