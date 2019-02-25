@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-598 */
+/* X_ITE v4.4.2a-599 */
 
 (function () {
 
@@ -67043,7 +67043,6 @@ function (Fields,
 		},
 	};
 
-
 	return X3DBoundedObject;
 });
 
@@ -67602,7 +67601,7 @@ function (Fields,
 							for (var transformSensorNode of this .getTransformSensors ())
 								transformSensorNode .collect (bbox);
 						}
-	
+
 						if (false)
 						{
 							var childNodes = this .childNodes;
@@ -88726,7 +88725,9 @@ function (Fields,
 		},
 		set_pickableObjects__: function ()
 		{
-			if (this .child && this .child .getPickableObject)
+			if (this .getTransformSensors () .size)
+				this .setPickableObject (true);
+			else if (this .child && this .child .getPickableObject)
 				this .setPickableObject (this .child .getPickableObject ());
 			else
 				this .setPickableObject (false);
@@ -92676,7 +92677,9 @@ function (Fields,
 		},
 		set_pickableObjects__: function ()
 		{
-			if (this .child && this .child .getPickableObject)
+			if (this .getTransformSensors () .size)
+				this .setPickableObject (true);
+			else if (this .child && this .child .getPickableObject)
 				this .setPickableObject (this .child .getPickableObject ());
 			else
 				this .setPickableObject (false);
