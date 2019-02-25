@@ -201,42 +201,48 @@ function (Fields,
 
 			return function (type, renderObject)
 			{
-				if (! this .keepCurrentLevel)
+				switch (type)
 				{
-					if (type === TraverseType .DISPLAY)
+					case TraverseType .PICKING:
 					{
-						var
-							level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-							currentLevel = this .level_changed_ .getValue ();
+						if (this .getTransformSensors () .size)
+						{
+							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+			
+							for (var transformSensorNode of this .getTransformSensors ())
+								transformSensorNode .collect (bbox);
+						}
 
-						if (this .forceTransitions_ .getValue ())
-						{
-							if (level > currentLevel)
-								level = currentLevel + 1;
-		
-							else if (level < currentLevel)
-								level = currentLevel - 1;
-						}
-	
-						if (level !== currentLevel)
-						{
-							this .level_changed_ = level;
-					
-							this .child = this .getChild (Math .min (level, this .children_ .length - 1));
-	
-							this .set_cameraObjects__ ();
-						}
+						break;
 					}
-				}
-
-				if (type === TraverseType .PICKING)
-				{
-					if (this .getTransformSensors () .size)
+					case TraverseType .DISPLAY:
 					{
-						this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+						if (! this .keepCurrentLevel)
+						{
+							var
+								level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
+								currentLevel = this .level_changed_ .getValue ();
+	
+							if (this .forceTransitions_ .getValue ())
+							{
+								if (level > currentLevel)
+									level = currentLevel + 1;
+			
+								else if (level < currentLevel)
+									level = currentLevel - 1;
+							}
 		
-						for (var transformSensorNode of this .getTransformSensors ())
-							transformSensorNode .collect (bbox);
+							if (level !== currentLevel)
+							{
+								this .level_changed_ = level;
+						
+								this .child = this .getChild (Math .min (level, this .children_ .length - 1));
+		
+								this .set_cameraObjects__ ();
+							}
+						}
+
+						break;
 					}
 				}
 

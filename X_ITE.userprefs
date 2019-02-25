@@ -1,12 +1,14 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Grouping/Switch.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Grouping/X3DGroupingNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Picking/X3DPickingContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/X3DBrowserContext.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Picking/X3DPickingContext.js" Line="94" Column="1" />
+      <File FileName="src/x_ite/Browser/X3DBrowserContext.js" Line="138" Column="29" />
+      <File FileName="src/x_ite/Browser/Core/BrowserTimings.js" Line="206" Column="1" />
+      <File FileName="src/x_ite/Components/Grouping/Switch.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
