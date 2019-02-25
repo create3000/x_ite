@@ -149,7 +149,9 @@ function (Fields,
 		},
 		set_pickableObjects__: function ()
 		{
-			if (this .child && this .child .getPickableObject)
+			if (this .getTransformSensors () .size)
+				this .setPickableObject (true);
+			else if (this .child && this .child .getPickableObject)
 				this .setPickableObject (this .child .getPickableObject ());
 			else
 				this .setPickableObject (false);
