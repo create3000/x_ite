@@ -197,14 +197,13 @@ function (Fields,
 						}
 						else
 						{
-							this .isActive_  = true;
-							this .enterTime_ = this .getBrowser () .getCurrentTime ();
-	
+							this .isActive_                 = true;
+							this .enterTime_                = this .getBrowser () .getCurrentTime ();
 							this .position_changed_         = position;
 							this .orientation_changed_      = orientation;
 							this .centerOfRotation_changed_ = centerOfRotation;
 						}
-	
+
 						this .inside = false;
 					}
 					else

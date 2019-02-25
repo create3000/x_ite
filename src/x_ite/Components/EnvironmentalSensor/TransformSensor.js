@@ -150,7 +150,7 @@ function (Fields,
 		set_targetObject__: function ()
 		{
 			this .targetObjectNode = X3DCast (X3DConstants .X3DBoundedObject, this .targetObject_);
-		
+
 			this .set_enabled__ ();
 		},
 		update: (function ()
@@ -179,9 +179,8 @@ function (Fields,
 					}
 					else
 					{
-						this .isActive_  = true;
-						this .enterTime_ = this .getBrowser () .getCurrentTime ();
-	
+						this .isActive_            = true;
+						this .enterTime_           = this .getBrowser () .getCurrentTime ();
 						this .position_changed_    = position;
 						this .orientation_changed_ = orientation;
 					}
