@@ -63,7 +63,7 @@ msgid "Routing"
 msgstr "Routen"
 
 #: Browser/Core/BrowserTimings.js:153
-msgid "Picking"
+msgid "Pointer"
 msgstr "Zeigegerät"
 
 #: Browser/Core/BrowserTimings.js:154

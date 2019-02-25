@@ -136,7 +136,6 @@ function ($,
 		this .systemTime      = 0;
 		this .systemStartTime = 0;
 		this .browserTime     = 0;
-		this .pickingTime     = 0;
 		this .cameraTime      = 0;
 		this .collisionTime   = 0;
 		this .displayTime     = 0;

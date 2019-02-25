@@ -64,7 +64,7 @@ msgid "Routing"
 msgstr "Routes"
 
 #: Browser/Core/BrowserTimings.js:153
-msgid "Picking"
+msgid "Pointer"
 msgstr "Pointeur"
 
 #: Browser/Core/BrowserTimings.js:154

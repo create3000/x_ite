@@ -207,8 +207,9 @@ function ($,
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser")   + ":")) .append ($("<td></td>") .text (f2(systemTime)           .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D")       + ":")) .append ($("<td></td>") .text (f2(browser .browserTime) .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Routing")   + ":")) .append ($("<td></td>") .text (f2(routingTime)          .toLocaleString (language, fixed) + " " + _("ms")));
-				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .pickingTime) .toLocaleString (language, fixed) + " " + _("ms")));
+				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .pointerTime) .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera")    + ":")) .append ($("<td></td>") .text (f2(browser .cameraTime)  .toLocaleString (language, fixed) + " " + _("ms")));
+				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .pickingTime) .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Collision") + ":")) .append ($("<td></td>") .text (f2(collisionTime)        .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Display")   + ":")) .append ($("<td></td>") .text (f2(browser .displayTime) .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Shapes")    + ":")) .append ($("<td></td>") .text (opaqueShapes + " + " + transparentShapes));

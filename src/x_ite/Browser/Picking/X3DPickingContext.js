@@ -57,6 +57,7 @@ function (TraverseType)
 	function X3DPickingContext ()
 	{
 		this .transformSensorNodes = new Set ();
+		this .pickingTime          = 0;
 	}
 
 	X3DPickingContext .prototype =
@@ -84,10 +85,14 @@ function (TraverseType)
 		},
 		picking: function ()
 		{
+			var t0 = performance .now ();
+		
 			this .getWorld () .traverse (TraverseType .PICKING, null);
 
 			for (var transformSensorNode of this .transformSensorNodes)
 				transformSensorNode .process ();
+
+			this .pickingTime = performance .now () - t0;
 		},
 	};
 
