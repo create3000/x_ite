@@ -127,6 +127,13 @@ function (Fields,
 			else
 				this .setCameraObject (false);
 		},
+		set_pickableObjects__: function ()
+		{
+			if (this .child && this .child .getPickableObject)
+				this .setPickableObject (this .child .getPickableObject ());
+			else
+				this .setPickableObject (false);
+		},
 		getBBox: function (bbox) 
 		{
 			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))

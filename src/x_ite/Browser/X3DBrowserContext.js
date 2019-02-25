@@ -64,6 +64,7 @@ define ([
 	"x_ite/Browser/Layering/X3DLayeringContext",
 	"x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext",
 	"x_ite/Browser/Lighting/X3DLightingContext",
+	"x_ite/Browser/Picking/X3DPickingContext",
 	"x_ite/Browser/Sound/X3DSoundContext",
 	"x_ite/Browser/Text/X3DTextContext",
 	"x_ite/Browser/Texturing/X3DTexturingContext",
@@ -87,6 +88,7 @@ function ($,
           X3DLayeringContext,
           X3DEnvironmentalEffectsContext,
           X3DLightingContext,
+          X3DPickingContext,
           X3DSoundContext,
           X3DTextContext,
           X3DTexturingContext,
@@ -114,6 +116,7 @@ function ($,
 		X3DLayeringContext             .call (this);
 		X3DEnvironmentalEffectsContext .call (this);
 		X3DLightingContext             .call (this);
+		X3DPickingContext              .call (this);
 		X3DSoundContext                .call (this);
 		X3DTextContext                 .call (this);
 		X3DTexturingContext            .call (this);
@@ -153,6 +156,7 @@ function ($,
 		X3DLayeringContext .prototype,
 		X3DEnvironmentalEffectsContext .prototype,
 		X3DLightingContext .prototype,
+		X3DPickingContext .prototype,
 		X3DSoundContext .prototype,
 		X3DTextContext .prototype,
 		X3DTexturingContext .prototype,
@@ -175,6 +179,7 @@ function ($,
 			X3DLayeringContext             .prototype .initialize .call (this);
 			X3DEnvironmentalEffectsContext .prototype .initialize .call (this);
 			X3DLightingContext             .prototype .initialize .call (this);
+			X3DPickingContext              .prototype .initialize .call (this);
 			X3DSoundContext                .prototype .initialize .call (this);
 			X3DTextContext                 .prototype .initialize .call (this);
 			X3DTexturingContext            .prototype .initialize .call (this);

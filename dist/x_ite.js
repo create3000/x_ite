@@ -1,4 +1,4 @@
-/* X_ITE v4.4.1-594 */
+/* X_ITE v4.4.2a-595 */
 
 (function () {
 
@@ -24569,7 +24569,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.4.1";
+	return "4.4.2a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -39324,7 +39324,8 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DChildNode);
 
-		this .addChildObjects ("isCameraObject", new Fields .SFBool ());
+		this .addChildObjects ("isCameraObject",   new Fields .SFBool ());
+		this .addChildObjects ("isPickableObject", new Fields .SFBool ());
 	}
 
 	X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -39338,6 +39339,15 @@ function (Fields,
 		getCameraObject: function ()
 		{
 			return this .isCameraObject_ .getValue ();
+		},
+		setPickableObject: function (value)
+		{
+			if (value !== this .isPickableObject_ .getValue ())
+				this .isPickableObject_ = value;
+		},
+		getPickableObject: function ()
+		{
+			return this .isPickableObject_ .getValue ();
 		},
 	});
 
@@ -40196,6 +40206,7 @@ define ('x_ite/Bits/TraverseType',[],function ()
 	{
 		POINTER:   i ++,
 		CAMERA:    i ++,
+		PICKING:   i ++,
 		COLLISION: i ++,
 		DEPTH:     i ++,
 		DISPLAY:   i ++,
@@ -66962,12 +66973,14 @@ function (X3DChildNode,
 
 
 define ('x_ite/Components/Grouping/X3DBoundedObject',[
+	"x_ite/Fields",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Geometry/Box3",
 ],
-function (X3DCast,
+function (Fields,
+          X3DCast,
           X3DConstants,
           Vector3,
           Box3)
@@ -66978,10 +66991,12 @@ function (X3DCast,
 	{
 		this .addType (X3DConstants .X3DBoundedObject);
 
+		this .addChildObjects ("transformSensors_changed", new Fields .SFTime ());
+
 		this .bboxSize_   .setUnit ("length");
 		this .bboxCenter_ .setUnit ("length");
 
-		this .childBBox = new Box3 ();
+		this .transformSensorNodes = new Set ();
 	}
 
 	X3DBoundedObject .prototype =
@@ -66989,21 +67004,42 @@ function (X3DCast,
 		constructor: X3DBoundedObject,
 		defaultBBoxSize: new Vector3 (-1, -1, -1),
 		initialize: function () { },
-		getBBox: function (nodes, bbox)
+		getBBox: (function ()
 		{
-			bbox .set ();
-	
-			// Add bounding boxes
-	
-			for (var i = 0, length = nodes .length; i < length; ++ i)
+			var childBBox = new Box3 ();
+
+			return function (nodes, bbox)
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
-	
-				if (boundedObject)
-					bbox .add (boundedObject .getBBox (this .childBBox));
-			}
-	
-			return bbox;
+				bbox .set ();
+		
+				// Add bounding boxes
+		
+				for (var node of nodes)
+				{
+					var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, node);
+
+					if (boundedObject)
+						bbox .add (boundedObject .getBBox (childBBox));
+				}
+		
+				return bbox;
+			};
+		})(),
+		addTransformSensor: function (transformSensorNode)
+		{
+			this .transformSensorNodes .add (transformSensorNode);
+
+			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+		},
+		getTransformSensors: function ()
+		{
+			return this .transformSensorNodes;
+		},
+		removeTransformSensor: function (transformSensorNode)
+		{
+			this .transformSensorNodes .delete (transformSensorNode);
+
+			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
 		},
 	};
 
@@ -67068,12 +67104,14 @@ define ('x_ite/Components/Grouping/X3DGroupingNode',[
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
           X3DChildNode, 
           X3DBoundedObject, 
           TraverseType,
-          X3DConstants)
+          X3DConstants,
+          Box3)
 {
 "use strict";
 
@@ -67100,16 +67138,17 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DGroupingNode);
 	               
-		this .hidden                = false;
-		this .allowedTypes          = new Set ();
-		this .pointingDeviceSensors = [ ];
-		this .maybeCameraObjects    = [ ];
-		this .cameraObjects         = [ ];
-		this .clipPlanes            = [ ];
-		this .localFogs             = [ ];
-		this .lights                = [ ];
-		this .displayNodes          = [ ];
-		this .childNodes            = [ ];
+		this .hidden                    = false;
+		this .allowedTypes              = new Set ();
+		this .pointingDeviceSensorNodes = [ ];
+		this .maybeCameraObjects        = [ ];
+		this .cameraObjects             = [ ];
+		this .pickableObjects           = [ ];
+		this .clipPlaneNodes            = [ ];
+		this .localFogNodes             = [ ];
+		this .lightNodes                = [ ];
+		this .displayNodes              = [ ];
+		this .childNodes                = [ ];
 	}
 
 	X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -67121,6 +67160,8 @@ function (Fields,
 			X3DChildNode     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
 
+			this .transformSensors_changed_ .addInterest ("set_pickableObjects__", this);
+
 			this .addChildren_    .addInterest ("set_addChildren__",    this);
 			this .removeChildren_ .addInterest ("set_removeChildren__", this);
 			this .children_       .addInterest ("set_children__",       this);
@@ -67130,9 +67171,13 @@ function (Fields,
 		getBBox: function (bbox)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
-				return X3DBoundedObject .prototype .getBBox .call (this, this .children_ .getValue (), bbox);
+				return X3DBoundedObject .prototype .getBBox .call (this, this .childNodes, bbox);
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+		},
+		getSubBBox: function (bbox)
+		{
+			return X3DGroupingNode .prototype .getBBox .call (this, bbox);
 		},
 		setHidden: function (value)
 		{
@@ -67264,22 +67309,22 @@ function (Fields,
 							{
 								case X3DConstants .X3DPointingDeviceSensorNode:
 								{
-									this .pointingDeviceSensors .push (innerNode);
+									this .pointingDeviceSensorNodes .push (innerNode);
 									break;
 								}
 								case X3DConstants .ClipPlane:
 								{
-									this .clipPlanes .push (innerNode);
+									this .clipPlaneNodes .push (innerNode);
 									break;
 								}
 								case X3DConstants .LocalFog:
 								{
-									this .localFogs .push (innerNode);
+									this .localFogNodes .push (innerNode);
 									break;
 								}
 								case X3DConstants .X3DLightNode:
 								{
-									this .lights .push (innerNode);
+									this .lightNodes .push (innerNode);
 									break;
 								}
 								case X3DConstants .X3DBindableNode:
@@ -67290,7 +67335,8 @@ function (Fields,
 								case X3DConstants .X3DBackgroundNode:
 								case X3DConstants .X3DChildNode:
 								{
-									innerNode .isCameraObject_ .addInterest ("set_cameraObjects__", this);
+									innerNode .isCameraObject_   .addInterest ("set_cameraObjects__",   this);
+									innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
 
 									this .maybeCameraObjects .push (innerNode);
 									this .childNodes .push (innerNode);
@@ -67323,6 +67369,7 @@ function (Fields,
 			}
 
 			this .set_cameraObjects__ ();
+			this .set_pickableObjects__ ();
 			this .set_display_nodes ();
 		},
 		remove: function (children)
@@ -67345,37 +67392,37 @@ function (Fields,
 							{
 								case X3DConstants .X3DPointingDeviceSensorNode:
 								{
-									var index = this .pointingDeviceSensors .indexOf (innerNode);
+									var index = this .pointingDeviceSensorNodes .indexOf (innerNode);
 
 									if (index >= 0)
-										this .pointingDeviceSensors .splice (index, 1);
+										this .pointingDeviceSensorNodes .splice (index, 1);
 
 									break;
 								}
 								case X3DConstants .ClipPlane:
 								{
-									var index = this .clipPlanes .indexOf (innerNode);
+									var index = this .clipPlaneNodes .indexOf (innerNode);
 
 									if (index >= 0)
-										this .clipPlanes .splice (index, 1);
+										this .clipPlaneNodes .splice (index, 1);
 
 									break;
 								}
 								case X3DConstants .LocalFog:
 								{
-									var index = this .localFogs .indexOf (innerNode);
+									var index = this .localFogNodes .indexOf (innerNode);
 
 									if (index >= 0)
-										this .localFogs .splice (index, 1);
+										this .localFogNodes .splice (index, 1);
 
 									break;
 								}
 								case X3DConstants .X3DLightNode:
 								{
-									var index = this .lights .indexOf (innerNode);
+									var index = this .lightNodes .indexOf (innerNode);
 
 									if (index >= 0)
-										this .lights .splice (index, 1);
+										this .lightNodes .splice (index, 1);
 
 									break;
 								}
@@ -67391,7 +67438,8 @@ function (Fields,
 								case X3DConstants .X3DBackgroundNode:
 								case X3DConstants .X3DChildNode:
 								{
-									innerNode .isCameraObject_ .removeInterest ("set_cameraObjects__", this);
+									innerNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
+									innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
 
 									var index = this .maybeCameraObjects .indexOf (innerNode);
 
@@ -67432,20 +67480,23 @@ function (Fields,
 			}
 
 			this .set_cameraObjects__ ();
+			this .set_pickableObjects__ ();
 			this .set_display_nodes ();
 		},
 		clear: function ()
 		{
 			for (var i = 0, length = this .childNodes .length; i < length; ++ i)
-				this .childNodes [i] .isCameraObject_ .removeInterest ("set_cameraObjects__", this);
-			
-			this .pointingDeviceSensors .length = 0;
-			this .maybeCameraObjects    .length = 0;
-			this .cameraObjects         .length = 0;
-			this .clipPlanes            .length = 0;
-			this .localFogs             .length = 0;
-			this .lights                .length = 0;
-			this .childNodes            .length = 0;
+			{
+				this .childNodes [i] .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
+				this .childNodes [i] .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+			}
+
+			this .pointingDeviceSensorNodes .length = 0;
+			this .maybeCameraObjects        .length = 0;
+			this .clipPlaneNodes            .length = 0;
+			this .localFogNodes             .length = 0;
+			this .lightNodes                .length = 0;
+			this .childNodes                .length = 0;
 		},
 		set_cameraObjects__: function ()
 		{
@@ -67461,24 +67512,38 @@ function (Fields,
 
 			this .setCameraObject (this .cameraObjects .length);
 		},
+		set_pickableObjects__: function ()
+		{
+			this .pickableObjects .length = 0;
+
+			for (var i = 0, length = this .childNodes .length; i < length; ++ i)
+			{
+				var childNode = this .childNodes [i];
+
+				if (childNode .getPickableObject ())
+					this .pickableObjects .push (childNode);
+			}
+
+			this .setPickableObject (this .pickableObjects .length || this .getTransformSensors () .size);
+		},
 		set_display_nodes: function ()
 		{
 			var
-				clipPlanes   = this .clipPlanes,
-				localFogs    = this .localFogs,
-				lights       = this .lights,
-				displayNodes = this .displayNodes;
+				clipPlaneNodes = this .clipPlaneNodes,
+				localFogNodes  = this .localFogNodes,
+				lightNodes     = this .lightNodes,
+				displayNodes   = this .displayNodes;
 
 			displayNodes .length = 0;
 
-			for (var i = 0, length = clipPlanes .length; i < length; ++ i)
-				displayNodes .push (clipPlanes [i]);
+			for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
+				displayNodes .push (clipPlaneNodes [i]);
 
-			for (var i = 0, length = localFogs .length; i < length; ++ i)
-				displayNodes .push (localFogs [i]);
+			for (var i = 0, length = localFogNodes .length; i < length; ++ i)
+				displayNodes .push (localFogNodes [i]);
 
-			for (var i = 0, length = lights .length; i < length; ++ i)
-				displayNodes .push (lights [i]);
+			for (var i = 0, length = lightNodes .length; i < length; ++ i)
+				displayNodes .push (lightNodes [i]);
 		},
 		traverse: function (type, renderObject)
 		{
@@ -67487,30 +67552,30 @@ function (Fields,
 				case TraverseType .POINTER:
 				{
 					var
-						pointingDeviceSensors = this .pointingDeviceSensors,
-						clipPlanes            = this .clipPlanes,
-						childNodes            = this .childNodes;
+						pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
+						clipPlaneNodes            = this .clipPlaneNodes,
+						childNodes                = this .childNodes;
 
-					if (pointingDeviceSensors .length)
+					if (pointingDeviceSensorNodes .length)
 					{
 						var sensors = { };
 						
 						renderObject .getBrowser () .getSensors () .push (sensors);
 					
-						for (var i = 0, length = pointingDeviceSensors .length; i < length; ++ i)
-							pointingDeviceSensors [i] .push (renderObject, sensors);
+						for (var i = 0, length = pointingDeviceSensorNodes .length; i < length; ++ i)
+							pointingDeviceSensorNodes [i] .push (renderObject, sensors);
 					}
 
-					for (var i = 0, length = clipPlanes .length; i < length; ++ i)
-						clipPlanes [i] .push (renderObject);
+					for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
+						clipPlaneNodes [i] .push (renderObject);
 
 					for (var i = 0, length = childNodes .length; i < length; ++ i)
 						childNodes [i] .traverse (type, renderObject);
 
-					for (var i = clipPlanes .length - 1; i >= 0; -- i)
-						clipPlanes [i] .pop (renderObject);
+					for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
+						clipPlaneNodes [i] .pop (renderObject);
 
-					if (pointingDeviceSensors .length)
+					if (pointingDeviceSensorNodes .length)
 						renderObject .getBrowser () .getSensors () .pop ();
 
 					return;
@@ -67524,21 +67589,48 @@ function (Fields,
 
 					return;
 				}
+				case TraverseType .PICKING:
+				{
+					if (this .getTransformSensors () .size)
+					{
+						var bbox = this .getSubBBox (new Box3 ()) .multRight (renderObject .getModelViewMatrix () .get ());
+
+						for (var transformSensorNode of this .getTransformSensors ())
+							transformSensorNode .collect (bbox);
+					}
+
+					if (false)
+					{
+						var childNodes = this .childNodes;
+
+						for (var i = 0, length = childNodes .length; i < length; ++ i)
+							childNodes [i] .traverse (type, renderObject);
+					}
+					else
+					{
+						var pickableObjects = this .pickableObjects;
+	
+						for (var i = 0, length = pickableObjects .length; i < length; ++ i)
+							pickableObjects [i] .traverse (type, renderObject);
+					}
+
+					return;
+				}
 				case TraverseType .COLLISION:
 				case TraverseType .DEPTH:
 				{					
 					var
-						clipPlanes = this .clipPlanes,
-						childNodes = this .childNodes;
+						clipPlaneNodes = this .clipPlaneNodes,
+						childNodes     = this .childNodes;
 
-					for (var i = 0, length = clipPlanes .length; i < length; ++ i)
-						clipPlanes [i] .push (renderObject);
+					for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
+						clipPlaneNodes [i] .push (renderObject);
 
 					for (var i = 0, length = childNodes .length; i < length; ++ i)
 						childNodes [i] .traverse (type, renderObject);
 
-					for (var i = clipPlanes .length - 1; i >= 0; -- i)
-						clipPlanes [i] .pop (renderObject);
+					for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
+						clipPlaneNodes [i] .pop (renderObject);
 					
 					return;
 				}
@@ -69060,6 +69152,102 @@ function (TextureBuffer)
 	};
 
 	return X3DLightingContext;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Picking/X3DPickingContext',[
+	"x_ite/Bits/TraverseType",
+],
+function (TraverseType)
+{
+"use strict";
+
+	function X3DPickingContext ()
+	{
+		this .transformSensorNodes = new Set ();
+	}
+
+	X3DPickingContext .prototype =
+	{
+		initialize: function ()
+		{
+
+		},
+		addTransformSensor: function (transformSensorNode)
+		{
+			this .transformSensorNodes .add (transformSensorNode);
+			this .enablePicking ();
+		},
+		removeTransformSensor: function (transformSensorNode)
+		{
+			this .transformSensorNodes .delete (transformSensorNode);
+			this .enablePicking ();
+		},
+		enablePicking: function ()
+		{
+			if (this .transformSensorNodes .size)
+				this .sensorEvents_ .addInterest ("picking", this);
+			else
+				this .sensorEvents_ .removeInterest ("picking", this);
+		},
+		picking: function ()
+		{
+			this .getWorld () .traverse (TraverseType .PICKING, null);
+
+			for (var transformSensorNode of this .transformSensorNodes)
+				transformSensorNode .process ();
+		},
+	};
+
+	return X3DPickingContext;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -80362,6 +80550,9 @@ function (X3DNode,
 				case TraverseType .CAMERA:
 					this .camera (type, renderObject);
 					break;
+				case TraverseType .PICKING:
+					this .picking (type, renderObject);
+					break;
 				case TraverseType .COLLISION:
 					this .collision (type, renderObject);
 					break;
@@ -80418,6 +80609,14 @@ function (X3DNode,
 			this .viewpoints      .update ();
 
 			this .getViewpoint () .update ();
+
+			this .getModelViewMatrix () .pop ();
+		},
+		picking: function (type, renderObject)
+		{
+			this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
+	
+			this .groupNode .traverse (type, renderObject);
 
 			this .getModelViewMatrix () .pop ();
 		},
@@ -81129,6 +81328,7 @@ define ('x_ite/Browser/X3DBrowserContext',[
 	"x_ite/Browser/Layering/X3DLayeringContext",
 	"x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext",
 	"x_ite/Browser/Lighting/X3DLightingContext",
+	"x_ite/Browser/Picking/X3DPickingContext",
 	"x_ite/Browser/Sound/X3DSoundContext",
 	"x_ite/Browser/Text/X3DTextContext",
 	"x_ite/Browser/Texturing/X3DTexturingContext",
@@ -81152,6 +81352,7 @@ function ($,
           X3DLayeringContext,
           X3DEnvironmentalEffectsContext,
           X3DLightingContext,
+          X3DPickingContext,
           X3DSoundContext,
           X3DTextContext,
           X3DTexturingContext,
@@ -81179,6 +81380,7 @@ function ($,
 		X3DLayeringContext             .call (this);
 		X3DEnvironmentalEffectsContext .call (this);
 		X3DLightingContext             .call (this);
+		X3DPickingContext              .call (this);
 		X3DSoundContext                .call (this);
 		X3DTextContext                 .call (this);
 		X3DTexturingContext            .call (this);
@@ -81218,6 +81420,7 @@ function ($,
 		X3DLayeringContext .prototype,
 		X3DEnvironmentalEffectsContext .prototype,
 		X3DLightingContext .prototype,
+		X3DPickingContext .prototype,
 		X3DSoundContext .prototype,
 		X3DTextContext .prototype,
 		X3DTexturingContext .prototype,
@@ -81240,6 +81443,7 @@ function ($,
 			X3DLayeringContext             .prototype .initialize .call (this);
 			X3DEnvironmentalEffectsContext .prototype .initialize .call (this);
 			X3DLightingContext             .prototype .initialize .call (this);
+			X3DPickingContext              .prototype .initialize .call (this);
 			X3DSoundContext                .prototype .initialize .call (this);
 			X3DTextContext                 .prototype .initialize .call (this);
 			X3DTexturingContext            .prototype .initialize .call (this);
@@ -83163,8 +83367,6 @@ function (Fields,
 {
 "use strict";
 
-	var infinity = new Vector3 (-1, -1, -1);
-	
 	function ProximitySensor (executionContext)
 	{
 		X3DEnvironmentalSensorNode .call (this, executionContext);
@@ -83176,15 +83378,9 @@ function (Fields,
 		this .centerOfRotation_changed_ .setUnit ("length");
 		this .position_changed_         .setUnit ("length");
 
-		this .viewpoint              = null;
-		this .modelViewMatrix        = new Matrix4 ();
-		this .invModelViewMatrix     = new Matrix4 ();
-		this .centerOfRotationMatrix = new Matrix4 ();
-		this .position               = new Vector3 (0, 0, 0);
-		this .orientation            = new Rotation4 (0, 0, 1, 0);
-		this .centerOfRotation       = new Vector3 (0, 0, 0);
-		this .viewer                 = new Vector3 (0, 0, 0);
-		this .inside                 = false;
+		this .viewpoint   = null;
+		this .modelMatrix = new Matrix4 ();
+		this .inside      = false;
 	}
 
 	ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
@@ -83233,11 +83429,11 @@ function (Fields,
 		set_enabled__: function ()
 		{
 			this .setCameraObject (this .enabled_ .getValue ());
-			
+
 			if (this .enabled_ .getValue ())
-				this .traverse = traverse;
-			else
 				delete this .traverse;
+			else
+				this .traverse = Function .prototype;
 		},
 		set_extents__: function ()
 		{
@@ -83254,75 +83450,125 @@ function (Fields,
 			this .min .set (cx - sx, cy - sy, cz - sz);
 			this .max .set (cx + sx, cy + sy, cz + sz);
 		},
-		update: function ()
+		update: (function ()
 		{
-			try
+			var
+				invModelMatrix         = new Matrix4 (),
+				centerOfRotationMatrix = new Matrix4 (),
+				position               = new Vector3 (0, 0, 0),
+				orientation            = new Rotation4 (0, 0, 1, 0),
+				centerOfRotation       = new Vector3 (0, 0, 0);
+
+			return function ()
 			{
-				if (this .inside && this .getTraversed ())
+				try
 				{
-				   var
-				      modelViewMatrix        = this .modelViewMatrix,
-				      centerOfRotationMatrix = this .centerOfRotationMatrix;
-
-					centerOfRotationMatrix .assign (this .viewpoint .getModelMatrix ());
-					centerOfRotationMatrix .translate (this .viewpoint .getUserCenterOfRotation ());
-					centerOfRotationMatrix .multRight (this .invModelViewMatrix .assign (modelViewMatrix) .inverse ());
-
-					modelViewMatrix .multRight (this .viewpoint .getInverseCameraSpaceMatrix ());
-					modelViewMatrix .get (null, this .orientation);
-					modelViewMatrix .inverse ();
-
-					this .position .set (modelViewMatrix [12],
-					                     modelViewMatrix [13],
-					                     modelViewMatrix [14]);
-
-					this .orientation .inverse ();
-
-					this .centerOfRotation .set (centerOfRotationMatrix [12],
-					                             centerOfRotationMatrix [13],
-					                             centerOfRotationMatrix [14]);
-
-					if (this .isActive_ .getValue ())
+					if (this .inside && this .getTraversed ())
 					{
-						if (! this .position_changed_ .getValue () .equals (this .position))
-							this .position_changed_ = this .position;
+					   var modelMatrix = this .modelMatrix;
+	
+						centerOfRotationMatrix .assign (this .viewpoint .getModelMatrix ());
+						centerOfRotationMatrix .translate (this .viewpoint .getUserCenterOfRotation ());
+						centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
+	
+						modelMatrix .multRight (this .viewpoint .getInverseCameraSpaceMatrix ());
+						modelMatrix .get (null, orientation);
+						modelMatrix .inverse ();
+	
+						position .set (modelMatrix [12], modelMatrix [13], modelMatrix [14]);
+	
+						orientation .inverse ();
+	
+						centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
+	
+						if (this .isActive_ .getValue ())
+						{
+							if (! this .position_changed_ .getValue () .equals (position))
+								this .position_changed_ = position;
+	
+							if (! this .orientation_changed_ .getValue () .equals (orientation))
+								this .orientation_changed_ = orientation;
+	
+							if (! this .centerOfRotation_changed_ .getValue () .equals (centerOfRotation))
+								this .centerOfRotation_changed_ = centerOfRotation;
+						}
+						else
+						{
+							this .isActive_                 = true;
+							this .enterTime_                = this .getBrowser () .getCurrentTime ();
+							this .position_changed_         = position;
+							this .orientation_changed_      = orientation;
+							this .centerOfRotation_changed_ = centerOfRotation;
+						}
 
-						if (! this .orientation_changed_ .getValue () .equals (this .orientation))
-							this .orientation_changed_ = this .orientation;
-
-						if (! this .centerOfRotation_changed_ .getValue () .equals (this .centerOfRotation))
-							this .centerOfRotation_changed_ = this .centerOfRotation;
+						this .inside = false;
 					}
 					else
 					{
-						this .isActive_  = true;
-						this .enterTime_ = this .getBrowser () .getCurrentTime ();
-
-						this .position_changed_         = this .position;
-						this .orientation_changed_      = this .orientation;
-						this .centerOfRotation_changed_ = this .centerOfRotation;
+						if (this .isActive_ .getValue ())
+						{
+							this .isActive_ = false;
+							this .exitTime_ = this .getBrowser () .getCurrentTime ();
+						}
 					}
-
-					this .inside = false;
 				}
-				else
+				catch (error)
 				{
-					if (this .isActive_ .getValue ())
+					//console .log (error .message);
+				}
+	
+				this .setTraversed (false);
+			};
+		})(),
+		traverse: (function ()
+		{
+			var 
+				invModelViewMatrix = new Matrix4 (),
+				viewer             = new Vector3 (0, 0, 0),
+				infinity           = new Vector3 (-1, -1, -1);
+
+			return function (type, renderObject)
+			{
+				try
+				{
+					switch (type)
 					{
-						this .isActive_ = false;
-						this .exitTime_ = this .getBrowser () .getCurrentTime ();
+						case TraverseType .CAMERA:
+						{
+							this .viewpoint = renderObject .getViewpoint ();
+							this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+							return;
+						}
+						case TraverseType .DISPLAY:
+						{
+						   this .setTraversed (true);
+		
+							if (this .inside)
+								return;
+
+							if (this .size_ .getValue () .equals (infinity))
+							{
+								this .inside = true;
+							}
+							else
+							{
+							   invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
+		
+								viewer .set (invModelViewMatrix [12], invModelViewMatrix [13], invModelViewMatrix [14]);
+		
+								this .inside = this .intersectsPoint (viewer);
+							}
+		
+							return;
+						}
 					}
 				}
-			}
-			catch (error)
-			{
-				//console .log (error .message);
-			}
-
-			this .setTraversed (false);
-		},
-		traverse: function ()
-		{ },
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		})(),
 		intersectsPoint: function (point)
 		{
 			var
@@ -83338,49 +83584,6 @@ function (Fields,
 		},
 	});
 		
-	function traverse (type, renderObject)
-	{
-		try
-		{
-			switch (type)
-			{
-				case TraverseType .CAMERA:
-				{
-					this .viewpoint = renderObject .getViewpoint ();
-					this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
-					return;
-				}
-				case TraverseType .DISPLAY:
-				{
-				   this .setTraversed (true);
-
-					if (this .inside)
-						return;
-
-					if (this .size_ .getValue () .equals (infinity))
-						this .inside = true;
-
-					else
-					{
-					   var invModelViewMatrix = this .invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
-
-						this .viewer .set (invModelViewMatrix [12],
-				                         invModelViewMatrix [13],
-				                         invModelViewMatrix [14]);
-
-						this .inside = this .intersectsPoint (this .viewer);
-					}
-
-					return;
-				}
-			}
-		}
-		catch (error)
-		{
-			//console .log (error);
-		}
-	}
-
 	return ProximitySensor;
 });
 
@@ -83440,6 +83643,7 @@ define ('x_ite/Components/EnvironmentalSensor/TransformSensor',[
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
+	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
@@ -83450,6 +83654,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentalSensorNode, 
+          TraverseType,
           X3DConstants,
           X3DCast,
           Vector3,
@@ -83457,12 +83662,6 @@ function (Fields,
           Box3)
 {
 "use strict";
-
-	var
-		targetBox   = new Box3 (),
-		position    = new Vector3 (0, 0, 0),
-		orientation = new Rotation4 (0, 0, 1, 0),
-		infinity    = new Vector3 (-1, -1, -1);
 	
 	function TransformSensor (executionContext)
 	{
@@ -83474,6 +83673,8 @@ function (Fields,
 
 		this .bbox             = new Box3 ();
 		this .targetObjectNode = null;
+		this .modelMatrices    = [ ];
+		this .targetBBoxes     = [ ];
 	}
 
 	TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
@@ -83509,10 +83710,10 @@ function (Fields,
 		
 			this .isLive () .addInterest ("set_enabled__", this);
 
-			this .enabled_      .addInterest ("set_enabled__", this);
-			this .size_         .addInterest ("set_enabled__", this);
-			this .size_         .addInterest ("set_bbox__", this);
-			this .center_       .addInterest ("set_bbox__", this);
+			this .enabled_      .addInterest ("set_enabled__",      this);
+			this .size_         .addInterest ("set_enabled__",      this);
+			this .size_         .addInterest ("set_bbox__",         this);
+			this .center_       .addInterest ("set_bbox__",         this);
 			this .targetObject_ .addInterest ("set_targetObject__", this);
 
 			this .set_bbox__ ();
@@ -83524,12 +83725,18 @@ function (Fields,
 		{
 			if (this .isLive () .getValue () && this .targetObjectNode && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
 			{
-				this .getBrowser () .sensorEvents () .addInterest ("update", this);
+				this .setPickableObject (true);
+				this .getBrowser () .addTransformSensor (this);
+				this .targetObjectNode .addTransformSensor (this);
 			}
 			else
 			{
-				this .getBrowser () .sensorEvents () .removeInterest ("update", this);
-					
+				this .setPickableObject (false);
+				this .getBrowser () .removeTransformSensor (this);
+
+				if (this .targetObjectNode)
+					this .targetObjectNode .removeTransformSensor (this);
+
 				if (this .isActive_ .getValue ())
 				{
 					this .isActive_ = false;
@@ -83544,43 +83751,78 @@ function (Fields,
 		set_targetObject__: function ()
 		{
 			this .targetObjectNode = X3DCast (X3DConstants .X3DBoundedObject, this .targetObject_);
-		
+
 			this .set_enabled__ ();
 		},
-		update: function ()
+		traverse: function (type, renderObject)
 		{
-			this .targetObjectNode .getBBox (targetBox);
-		
-			if (this .size_. getValue () .equals (infinity) || this .bbox .intersectsBox (targetBox))
+			if (type !== TraverseType .PICKING)
+				return;
+
+			this .modelMatrices .push (renderObject .getModelViewMatrix () .get () .copy ());
+		},
+		collect: function (targetBBox)
+		{
+			this .targetBBoxes .push (targetBBox);
+		},
+		process: (function ()
+		{
+			var
+				bbox        = new Box3 (),
+				position    = new Vector3 (0, 0, 0),
+				orientation = new Rotation4 (0, 0, 1, 0),
+				infinity    = new Vector3 (-1, -1, -1);
+
+			return function ()
 			{
-				targetBox .getMatrix () .get (position, orientation);
-		
-				if (this .isActive_ .getValue ())
+				var active = false;
+
+				for (var modelMatrix of this .modelMatrices)
 				{
-					if (! this .position_changed_ .getValue () .equals (position))
-						this .position_changed_ = position;
-	
-					if (! this .orientation_changed_ .getValue () .equals (orientation))
+					bbox .assign (this .bbox) .multRight (modelMatrix);
+
+					for (var targetBBox of this .targetBBoxes)
+					{
+						if (this .size_ .getValue () .equals (infinity) || bbox .intersectsBox (targetBBox))
+						{
+							active = true;
+
+							targetBBox .multRight (modelMatrix .inverse ()) .getMatrix () .get (position, orientation);
+						}
+					}
+				}
+
+				if (active)
+				{
+					if (this .isActive_ .getValue ())
+					{
+						if (! this .position_changed_ .getValue () .equals (position))
+							this .position_changed_ = position;
+		
+						if (! this .orientation_changed_ .getValue () .equals (orientation))
+							this .orientation_changed_ = orientation;
+					}
+					else
+					{
+						this .isActive_            = true;
+						this .enterTime_           = this .getBrowser () .getCurrentTime ();
+						this .position_changed_    = position;
 						this .orientation_changed_ = orientation;
+					}
 				}
 				else
 				{
-					this .isActive_  = true;
-					this .enterTime_ = this .getBrowser () .getCurrentTime ();
+					if (this .isActive_ .getValue ())
+					{
+						this .isActive_ = false;
+						this .exitTime_ = this .getBrowser () .getCurrentTime ();
+					}
+				}
 
-					this .position_changed_         = position;
-					this .orientation_changed_      = orientation;
-				}
-			}
-			else
-			{
-				if (this .isActive_ .getValue ())
-				{
-					this .isActive_ = false;
-					this .exitTime_ = this .getBrowser () .getCurrentTime ();
-				}
-			}
-		},
+				this .modelMatrices .length = 0;
+				this .targetBBoxes  .length = 0;
+			};
+		})(),
 	});
 
 	return TransformSensor;
@@ -83656,8 +83898,6 @@ function (Fields,
 {
 "use strict";
 
-	var infinity = new Vector3 (-1, -1, -1);
-	
 	function VisibilitySensor (executionContext)
 	{
 		X3DEnvironmentalSensorNode .call (this, executionContext);
@@ -83679,8 +83919,6 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "exitTime",  new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",  new Fields .SFBool ()),
 		]),
-		size: new Vector3 (0, 0, 0),
-		center: new Vector3 (0, 0, 0),
 		getTypeName: function ()
 		{
 			return "VisibilitySensor";
@@ -83731,30 +83969,40 @@ function (Fields,
 				
 			this .setTraversed (false);
 		},
-		traverse: function (type, renderObject)
+		traverse: (function ()
 		{
-			if (type !== TraverseType .DISPLAY)
-				return;
+			var
+				size     = new Vector3 (0, 0, 0),
+				center   = new Vector3 (0, 0, 0),
+				infinity = new Vector3 (-1, -1, -1);
 
-			this .setTraversed (true);
-
-			if (this .visible)
-				return;
-
-			if (this .size_ .getValue () .equals (infinity))
-				this .visible = true;
-
-			else
+			return function (type, renderObject)
 			{
-				var
-					viewVolume      = renderObject .getViewVolume (),
-					modelViewMatrix = renderObject .getModelViewMatrix () .get (),
-					size            = modelViewMatrix .multDirMatrix (this .size   .assign (this .size_   .getValue ())),
-					center          = modelViewMatrix .multVecMatrix (this .center .assign (this .center_ .getValue ()));
+				if (type !== TraverseType .DISPLAY)
+					return;
+	
+				this .setTraversed (true);
+	
+				if (this .visible)
+					return;
+	
+				if (this .size_ .getValue () .equals (infinity))
+				{
+					this .visible = true;
+				}
+				else
+				{
+					var
+						viewVolume      = renderObject .getViewVolume (),
+						modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 
-				this .visible = viewVolume .intersectsSphere (size .abs () / 2, center);
-			}
-		},
+					modelViewMatrix .multDirMatrix (size   .assign (this .size_   .getValue ())),
+					modelViewMatrix .multVecMatrix (center .assign (this .center_ .getValue ()));
+
+					this .visible = viewVolume .intersectsSphere (size .abs () / 2, center);
+				}
+			};
+		})(),
 	});
 		
 	return VisibilitySensor;
@@ -88093,10 +88341,12 @@ function (Fields,
 			this .group .setup ();
 
 			// Connect after Group setup.
-			this .group .isCameraObject_ .addFieldInterest (this .isCameraObject_);
-			this .group .children_       .addInterest ("set_children__", this);
+			this .group .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+			this .group .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+			this .group .children_         .addInterest ("set_children__", this);
 
-			this .setCameraObject (this .group .getCameraObject ());
+			this .setCameraObject   (this .group .getCameraObject ());
+			this .setPickableObject (this .group .getPickableObject ());
 
 			this .set_children__ ();
 		},
@@ -88425,6 +88675,13 @@ function (Fields,
 			else
 				this .setCameraObject (false);
 		},
+		set_pickableObjects__: function ()
+		{
+			if (this .child && this .child .getPickableObject)
+				this .setPickableObject (this .child .getPickableObject ());
+			else
+				this .setPickableObject (false);
+		},
 		traverse: function (type, renderObject)
 		{
 			if (this .child)
@@ -88522,6 +88779,10 @@ function (X3DGroupingNode,
 				return bbox;
 
 			return bbox .multRight (this .matrix);
+		},
+		getSubBBox: function (bbox)
+		{
+			return X3DGroupingNode .prototype .getBBox .call (this, bbox);
 		},
 		setMatrix: function (matrix)
 		{
@@ -92328,6 +92589,13 @@ function (Fields,
 			else
 				this .setCameraObject (false);
 		},
+		set_pickableObjects__: function ()
+		{
+			if (this .child && this .child .getPickableObject)
+				this .setPickableObject (this .child .getPickableObject ());
+			else
+				this .setPickableObject (false);
+		},
 		getBBox: function (bbox) 
 		{
 			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
@@ -92565,14 +92833,21 @@ function (Fields,
 
 			if (displayed && proxy)
 			{
-				this .proximitySensor .isCameraObject_ .addFieldInterest (this .isCameraObject_);
-				this .setCameraObject (this .proximitySensor .getCameraObject ());
+				this .proximitySensor .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+				this .proximitySensor .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+
+				this .setCameraObject   (this .proximitySensor .getCameraObject ());
+				this .setPickableObject (this .proximitySensor .getPickableObject ());
+
 				this .traverse = traverseWithProximitySensor;
 			}
 			else
 			{
-				this .proximitySensor .isCameraObject_ .removeFieldInterest (this .isCameraObject_);
-				this .setCameraObject (displayed);
+				this .proximitySensor .isCameraObject_    .removeFieldInterest (this .isCameraObject_);
+				this .proximitySensor .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+
+				this .setCameraObject   (displayed);
+				this .setPickableObject (false);
 
 				if (displayed)
 					this .traverse = traverse;
@@ -93458,6 +93733,7 @@ define ('x_ite/Components/Networking/Inline',[
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Components/Grouping/Group",
+	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/FileLoader",
 ],
@@ -93468,6 +93744,7 @@ function (Fields,
           X3DUrlObject,
           X3DBoundedObject,
           Group,
+          TraverseType,
           X3DConstants,
           FileLoader)
 {
@@ -93483,10 +93760,9 @@ function (Fields,
 		
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
-		this .scene    = this .getBrowser () .getDefaultScene ();
-		this .group    = new Group (executionContext);
-		this .getBBox  = this .group .getBBox  .bind (this .group);
-		this .traverse = this .group .traverse  .bind (this .group);
+		this .scene   = this .getBrowser () .getDefaultScene ();
+		this .group   = new Group (executionContext);
+		this .getBBox = this .group .getBBox  .bind (this .group);
 
 		this .group .addParent (this);
 	}
@@ -93525,7 +93801,9 @@ function (Fields,
 
 			this .group .setPrivate (true);
 			this .group .setup ();
-			this .group .isCameraObject_ .addFieldInterest (this .isCameraObject_);
+
+			this .group .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+			this .group .isPickableObject_ .addFieldInterest (this .isPickableObject_);
 
 			this .load_   .addInterest ("set_load__",   this);
 			this .url_    .addInterest ("set_url__",    this);
@@ -93638,6 +93916,22 @@ function (Fields,
 			///  nodes (due to performance reasons).
 
 			return this .scene;
+		},
+		traverse: function (type, renderObject)
+		{
+			switch (type)
+			{
+				case TraverseType .PICKING:
+				{
+					this .group .traverse  (type, renderObject);
+					break;
+				}
+				default:
+				{
+					this .group .traverse  (type, renderObject);
+					break;
+				}
+			}
 		},
 	});
 
@@ -99325,6 +99619,10 @@ function (Fields,
 					this .pointer (renderObject);
 					break;
 
+				case TraverseType .PICKING:
+					this .picking (renderObject);
+					break;
+
 				case TraverseType .COLLISION:
 					renderObject .addCollisionShape (this);
 					break;
@@ -99407,6 +99705,9 @@ function (Fields,
 				}
 			};
 		})(),
+		picking: function (renderObject)
+		{
+		},
 		depth: function (gl, context, shaderNode)
 		{
 			this .getGeometry () .depth (gl, context, shaderNode);

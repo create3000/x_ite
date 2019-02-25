@@ -254,7 +254,7 @@ function (Fields,
 					break;
 				}
 			}
-		};
+		},
 	});
 
 	return Inline;

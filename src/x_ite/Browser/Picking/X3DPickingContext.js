@@ -48,78 +48,48 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Geometry/Box3",
+	"x_ite/Bits/TraverseType",
 ],
-function (Fields,
-          X3DCast,
-          X3DConstants,
-          Vector3,
-          Box3)
+function (TraverseType)
 {
 "use strict";
 
-	function X3DBoundedObject (executionContext)
+	function X3DPickingContext ()
 	{
-		this .addType (X3DConstants .X3DBoundedObject);
-
-		this .addChildObjects ("transformSensors_changed", new Fields .SFTime ());
-
-		this .bboxSize_   .setUnit ("length");
-		this .bboxCenter_ .setUnit ("length");
-
 		this .transformSensorNodes = new Set ();
 	}
 
-	X3DBoundedObject .prototype =
+	X3DPickingContext .prototype =
 	{
-		constructor: X3DBoundedObject,
-		defaultBBoxSize: new Vector3 (-1, -1, -1),
-		initialize: function () { },
-		getBBox: (function ()
+		initialize: function ()
 		{
-			var childBBox = new Box3 ();
 
-			return function (nodes, bbox)
-			{
-				bbox .set ();
-		
-				// Add bounding boxes
-		
-				for (var node of nodes)
-				{
-					var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, node);
-
-					if (boundedObject)
-						bbox .add (boundedObject .getBBox (childBBox));
-				}
-		
-				return bbox;
-			};
-		})(),
+		},
 		addTransformSensor: function (transformSensorNode)
 		{
 			this .transformSensorNodes .add (transformSensorNode);
-
-			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
-		},
-		getTransformSensors: function ()
-		{
-			return this .transformSensorNodes;
+			this .enablePicking ();
 		},
 		removeTransformSensor: function (transformSensorNode)
 		{
 			this .transformSensorNodes .delete (transformSensorNode);
+			this .enablePicking ();
+		},
+		enablePicking: function ()
+		{
+			if (this .transformSensorNodes .size)
+				this .sensorEvents_ .addInterest ("picking", this);
+			else
+				this .sensorEvents_ .removeInterest ("picking", this);
+		},
+		picking: function ()
+		{
+			this .getWorld () .traverse (TraverseType .PICKING, null);
 
-			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+			for (var transformSensorNode of this .transformSensorNodes)
+				transformSensorNode .process ();
 		},
 	};
 
-
-	return X3DBoundedObject;
+	return X3DPickingContext;
 });
-
-

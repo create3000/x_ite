@@ -771,7 +771,8 @@ function (Fields,
 			if (this .collidableNode)
 			{
 				this .collidableNode .removeInterest ("addNodeEvent", this);
-				this .collidableNode .isCameraObject_ .removeFieldInterest (this .isCameraObject_);
+				this .collidableNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
+				this .collidableNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
 			}
 		
 			this .collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidable_);
@@ -779,15 +780,18 @@ function (Fields,
 			if (this .collidableNode)
 			{
 				this .collidableNode .addInterest ("addNodeEvent", this);
-				this .collidableNode .isCameraObject_ .addFieldInterest (this .isCameraObject_);
+				this .collidableNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+				this .collidableNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
 
-				this .setCameraObject (this .collidableNode .getCameraObject ());
+				this .setCameraObject   (this .collidableNode .getCameraObject ());
+				this .setPickableObject (this .collidableNode .getPickableObject ());
 
 				delete this .traverse;
 			}
 			else
 			{
-				this .setCameraObject (false);
+				this .setCameraObject   (false);
+				this .setPickableObject (false);
 
 				this .traverse = Function .prototype;
 			}
@@ -971,7 +975,8 @@ function (Fields,
 		{
 			if (this .shapeNode)
 			{
-				this .shapeNode .isCameraObject_ .removeFieldInterest (this .isCameraObject_);
+				this .shapeNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
+				this .shapeNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
 				this .shapeNode .geometry_ .removeInterest ("set_geometry__", this);
 			}
 
@@ -979,16 +984,19 @@ function (Fields,
 
 			if (this .shapeNode)
 			{
-				this .shapeNode .isCameraObject_ .addFieldInterest (this .isCameraObject_);
+				this .shapeNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+				this .shapeNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
 				this .shapeNode .geometry_ .addInterest ("set_geometry__", this);
 
-				this .setCameraObject (this .shapeNode .getCameraObject ());
+				this .setCameraObject   (this .shapeNode .getCameraObject ());
+				this .setPickableObject (this .shapeNode .getPickableObject ());
 
 				delete this .traverse;
 			}
 			else
 			{
-				this .setCameraObject (false);
+				this .setCameraObject   (false);
+				this .setPickableObject (false);
 
 				this .traverse = Function .prototype;
 			}

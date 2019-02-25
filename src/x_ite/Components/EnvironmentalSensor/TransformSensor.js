@@ -52,6 +52,7 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
+	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
@@ -62,6 +63,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentalSensorNode, 
+          TraverseType,
           X3DConstants,
           X3DCast,
           Vector3,
@@ -80,6 +82,8 @@ function (Fields,
 
 		this .bbox             = new Box3 ();
 		this .targetObjectNode = null;
+		this .modelMatrices    = [ ];
+		this .targetBBoxes     = [ ];
 	}
 
 	TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
@@ -130,12 +134,18 @@ function (Fields,
 		{
 			if (this .isLive () .getValue () && this .targetObjectNode && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
 			{
-				this .getBrowser () .sensorEvents () .addInterest ("update", this);
+				this .setPickableObject (true);
+				this .getBrowser () .addTransformSensor (this);
+				this .targetObjectNode .addTransformSensor (this);
 			}
 			else
 			{
-				this .getBrowser () .sensorEvents () .removeInterest ("update", this);
-					
+				this .setPickableObject (false);
+				this .getBrowser () .removeTransformSensor (this);
+
+				if (this .targetObjectNode)
+					this .targetObjectNode .removeTransformSensor (this);
+
 				if (this .isActive_ .getValue ())
 				{
 					this .isActive_ = false;
@@ -153,22 +163,46 @@ function (Fields,
 
 			this .set_enabled__ ();
 		},
-		update: (function ()
+		traverse: function (type, renderObject)
+		{
+			if (type !== TraverseType .PICKING)
+				return;
+
+			this .modelMatrices .push (renderObject .getModelViewMatrix () .get () .copy ());
+		},
+		collect: function (targetBBox)
+		{
+			this .targetBBoxes .push (targetBBox);
+		},
+		process: (function ()
 		{
 			var
-				targetBBox  = new Box3 (),
+				bbox        = new Box3 (),
 				position    = new Vector3 (0, 0, 0),
 				orientation = new Rotation4 (0, 0, 1, 0),
 				infinity    = new Vector3 (-1, -1, -1);
 
 			return function ()
 			{
-				this .targetObjectNode .getBBox (targetBBox);
-			
-				if (this .size_ .getValue () .equals (infinity) || this .bbox .intersectsBox (targetBBox))
+				var active = false;
+
+				for (var modelMatrix of this .modelMatrices)
 				{
-					targetBBox .getMatrix () .get (position, orientation);
-			
+					bbox .assign (this .bbox) .multRight (modelMatrix);
+
+					for (var targetBBox of this .targetBBoxes)
+					{
+						if (this .size_ .getValue () .equals (infinity) || bbox .intersectsBox (targetBBox))
+						{
+							active = true;
+
+							targetBBox .multRight (modelMatrix .inverse ()) .getMatrix () .get (position, orientation);
+						}
+					}
+				}
+
+				if (active)
+				{
 					if (this .isActive_ .getValue ())
 					{
 						if (! this .position_changed_ .getValue () .equals (position))
@@ -193,6 +227,9 @@ function (Fields,
 						this .exitTime_ = this .getBrowser () .getCurrentTime ();
 					}
 				}
+
+				this .modelMatrices .length = 0;
+				this .targetBBoxes  .length = 0;
 			};
 		})(),
 	});

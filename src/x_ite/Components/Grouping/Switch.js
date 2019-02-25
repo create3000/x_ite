@@ -133,6 +133,13 @@ function (Fields,
 			else
 				this .setCameraObject (false);
 		},
+		set_pickableObjects__: function ()
+		{
+			if (this .child && this .child .getPickableObject)
+				this .setPickableObject (this .child .getPickableObject ());
+			else
+				this .setPickableObject (false);
+		},
 		traverse: function (type, renderObject)
 		{
 			if (this .child)

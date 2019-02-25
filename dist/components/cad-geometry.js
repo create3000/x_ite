@@ -313,7 +313,10 @@ function (Fields,
 		set_shape__: function ()
 		{
 			if (this .shapeNode)
-				this .shapeNode .isCameraObject_ .removeFieldInterest (this .isCameraObject_);
+			{
+				this .shapeNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
+				this .shapeNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+			}
 
 			this .shapeNode = null;
 
@@ -331,8 +334,12 @@ function (Fields,
 						case X3DConstants .Transform:
 						case X3DConstants .X3DShapeNode:
 						{
-							node .isCameraObject_ .addFieldInterest (this .isCameraObject_);
-							this .setCameraObject (node .getCameraObject ());
+							node .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+							node .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+
+							this .setCameraObject   (node .getCameraObject ());
+							this .setPickableObject (node .getPickableObject ());
+
 							this .shapeNode = node;
 							break;
 						}
