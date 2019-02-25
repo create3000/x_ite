@@ -105,6 +105,14 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DShapeNode .prototype .initialize .call (this);
+
+			this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
+
+			this .set_transformSensors__ ();
+		},
 		set_geometry__: function ()
 		{
 			X3DShapeNode .prototype .set_geometry__ .call (this);
@@ -113,6 +121,10 @@ function (Fields,
 				delete this .traverse;
 			else
 				this .traverse = Function .prototype;
+		},
+		set_transformSensors__: function ()
+		{
+			this .setPickableObject (this .getTransformSensors () .size);
 		},
 		intersectsBox: function (box, clipPlanes, modelViewMatrix)
 		{
