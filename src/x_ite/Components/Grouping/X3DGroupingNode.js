@@ -494,114 +494,119 @@ function (Fields,
 			for (var i = 0, length = lightNodes .length; i < length; ++ i)
 				displayNodes .push (lightNodes [i]);
 		},
-		traverse: function (type, renderObject)
+		traverse: (function ()
 		{
-			switch (type)
+			var bbox = new Box3 ();
+
+			return function (type, renderObject)
 			{
-				case TraverseType .POINTER:
+				switch (type)
 				{
-					var
-						pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
-						clipPlaneNodes            = this .clipPlaneNodes,
-						childNodes                = this .childNodes;
-
-					if (pointingDeviceSensorNodes .length)
+					case TraverseType .POINTER:
 					{
-						var sensors = { };
+						var
+							pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
+							clipPlaneNodes            = this .clipPlaneNodes,
+							childNodes                = this .childNodes;
+	
+						if (pointingDeviceSensorNodes .length)
+						{
+							var sensors = { };
+							
+							renderObject .getBrowser () .getSensors () .push (sensors);
 						
-						renderObject .getBrowser () .getSensors () .push (sensors);
-					
-						for (var i = 0, length = pointingDeviceSensorNodes .length; i < length; ++ i)
-							pointingDeviceSensorNodes [i] .push (renderObject, sensors);
-					}
-
-					for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
-						clipPlaneNodes [i] .push (renderObject);
-
-					for (var i = 0, length = childNodes .length; i < length; ++ i)
-						childNodes [i] .traverse (type, renderObject);
-
-					for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
-						clipPlaneNodes [i] .pop (renderObject);
-
-					if (pointingDeviceSensorNodes .length)
-						renderObject .getBrowser () .getSensors () .pop ();
-
-					return;
-				}
-				case TraverseType .CAMERA:
-				{
-					var cameraObjects = this .cameraObjects;
-
-					for (var i = 0, length = cameraObjects .length; i < length; ++ i)
-						cameraObjects [i] .traverse (type, renderObject);
-
-					return;
-				}
-				case TraverseType .PICKING:
-				{
-					if (this .getTransformSensors () .size)
-					{
-						var bbox = this .getSubBBox (new Box3 ()) .multRight (renderObject .getModelViewMatrix () .get ());
-
-						for (var transformSensorNode of this .getTransformSensors ())
-							transformSensorNode .collect (bbox);
-					}
-
-					if (false)
-					{
-						var childNodes = this .childNodes;
-
+							for (var i = 0, length = pointingDeviceSensorNodes .length; i < length; ++ i)
+								pointingDeviceSensorNodes [i] .push (renderObject, sensors);
+						}
+	
+						for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
+							clipPlaneNodes [i] .push (renderObject);
+	
 						for (var i = 0, length = childNodes .length; i < length; ++ i)
 							childNodes [i] .traverse (type, renderObject);
-					}
-					else
-					{
-						var pickableObjects = this .pickableObjects;
 	
-						for (var i = 0, length = pickableObjects .length; i < length; ++ i)
-							pickableObjects [i] .traverse (type, renderObject);
+						for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
+							clipPlaneNodes [i] .pop (renderObject);
+	
+						if (pointingDeviceSensorNodes .length)
+							renderObject .getBrowser () .getSensors () .pop ();
+	
+						return;
 					}
-
-					return;
+					case TraverseType .CAMERA:
+					{
+						var cameraObjects = this .cameraObjects;
+	
+						for (var i = 0, length = cameraObjects .length; i < length; ++ i)
+							cameraObjects [i] .traverse (type, renderObject);
+	
+						return;
+					}
+					case TraverseType .PICKING:
+					{
+						if (this .getTransformSensors () .size)
+						{
+							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+	
+							for (var transformSensorNode of this .getTransformSensors ())
+								transformSensorNode .collect (bbox);
+						}
+	
+						if (false)
+						{
+							var childNodes = this .childNodes;
+	
+							for (var i = 0, length = childNodes .length; i < length; ++ i)
+								childNodes [i] .traverse (type, renderObject);
+						}
+						else
+						{
+							var pickableObjects = this .pickableObjects;
+		
+							for (var i = 0, length = pickableObjects .length; i < length; ++ i)
+								pickableObjects [i] .traverse (type, renderObject);
+						}
+	
+						return;
+					}
+					case TraverseType .COLLISION:
+					case TraverseType .DEPTH:
+					{					
+						var
+							clipPlaneNodes = this .clipPlaneNodes,
+							childNodes     = this .childNodes;
+	
+						for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
+							clipPlaneNodes [i] .push (renderObject);
+	
+						for (var i = 0, length = childNodes .length; i < length; ++ i)
+							childNodes [i] .traverse (type, renderObject);
+	
+						for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
+							clipPlaneNodes [i] .pop (renderObject);
+						
+						return;
+					}
+					case TraverseType .DISPLAY:
+					{
+						var
+							displayNodes = this .displayNodes,
+							childNodes   = this .childNodes;
+	
+						for (var i = 0, length = displayNodes .length; i < length; ++ i)
+							displayNodes [i] .push (renderObject, this);
+	
+						for (var i = 0, length = childNodes .length; i < length; ++ i)
+							childNodes [i] .traverse (type, renderObject);
+	
+						for (var i = displayNodes .length - 1; i >= 0; -- i)
+							displayNodes [i] .pop (renderObject);
+	
+						return;
+					}
 				}
-				case TraverseType .COLLISION:
-				case TraverseType .DEPTH:
-				{					
-					var
-						clipPlaneNodes = this .clipPlaneNodes,
-						childNodes     = this .childNodes;
-
-					for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
-						clipPlaneNodes [i] .push (renderObject);
-
-					for (var i = 0, length = childNodes .length; i < length; ++ i)
-						childNodes [i] .traverse (type, renderObject);
-
-					for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
-						clipPlaneNodes [i] .pop (renderObject);
-					
-					return;
-				}
-				case TraverseType .DISPLAY:
-				{
-					var
-						displayNodes = this .displayNodes,
-						childNodes   = this .childNodes;
-
-					for (var i = 0, length = displayNodes .length; i < length; ++ i)
-						displayNodes [i] .push (renderObject, this);
-
-					for (var i = 0, length = childNodes .length; i < length; ++ i)
-						childNodes [i] .traverse (type, renderObject);
-
-					for (var i = displayNodes .length - 1; i >= 0; -- i)
-						displayNodes [i] .pop (renderObject);
-
-					return;
-				}
-			}
-		},
+			};
+		})(),
 	});
 
 	return X3DGroupingNode;

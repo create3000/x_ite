@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-595 */
+/* X_ITE v4.4.2a-596 */
 
 (function () {
 
@@ -67545,114 +67545,119 @@ function (Fields,
 			for (var i = 0, length = lightNodes .length; i < length; ++ i)
 				displayNodes .push (lightNodes [i]);
 		},
-		traverse: function (type, renderObject)
+		traverse: (function ()
 		{
-			switch (type)
+			var bbox = new Box3 ();
+
+			return function (type, renderObject)
 			{
-				case TraverseType .POINTER:
+				switch (type)
 				{
-					var
-						pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
-						clipPlaneNodes            = this .clipPlaneNodes,
-						childNodes                = this .childNodes;
-
-					if (pointingDeviceSensorNodes .length)
+					case TraverseType .POINTER:
 					{
-						var sensors = { };
+						var
+							pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
+							clipPlaneNodes            = this .clipPlaneNodes,
+							childNodes                = this .childNodes;
+	
+						if (pointingDeviceSensorNodes .length)
+						{
+							var sensors = { };
+							
+							renderObject .getBrowser () .getSensors () .push (sensors);
 						
-						renderObject .getBrowser () .getSensors () .push (sensors);
-					
-						for (var i = 0, length = pointingDeviceSensorNodes .length; i < length; ++ i)
-							pointingDeviceSensorNodes [i] .push (renderObject, sensors);
-					}
-
-					for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
-						clipPlaneNodes [i] .push (renderObject);
-
-					for (var i = 0, length = childNodes .length; i < length; ++ i)
-						childNodes [i] .traverse (type, renderObject);
-
-					for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
-						clipPlaneNodes [i] .pop (renderObject);
-
-					if (pointingDeviceSensorNodes .length)
-						renderObject .getBrowser () .getSensors () .pop ();
-
-					return;
-				}
-				case TraverseType .CAMERA:
-				{
-					var cameraObjects = this .cameraObjects;
-
-					for (var i = 0, length = cameraObjects .length; i < length; ++ i)
-						cameraObjects [i] .traverse (type, renderObject);
-
-					return;
-				}
-				case TraverseType .PICKING:
-				{
-					if (this .getTransformSensors () .size)
-					{
-						var bbox = this .getSubBBox (new Box3 ()) .multRight (renderObject .getModelViewMatrix () .get ());
-
-						for (var transformSensorNode of this .getTransformSensors ())
-							transformSensorNode .collect (bbox);
-					}
-
-					if (false)
-					{
-						var childNodes = this .childNodes;
-
+							for (var i = 0, length = pointingDeviceSensorNodes .length; i < length; ++ i)
+								pointingDeviceSensorNodes [i] .push (renderObject, sensors);
+						}
+	
+						for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
+							clipPlaneNodes [i] .push (renderObject);
+	
 						for (var i = 0, length = childNodes .length; i < length; ++ i)
 							childNodes [i] .traverse (type, renderObject);
-					}
-					else
-					{
-						var pickableObjects = this .pickableObjects;
 	
-						for (var i = 0, length = pickableObjects .length; i < length; ++ i)
-							pickableObjects [i] .traverse (type, renderObject);
+						for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
+							clipPlaneNodes [i] .pop (renderObject);
+	
+						if (pointingDeviceSensorNodes .length)
+							renderObject .getBrowser () .getSensors () .pop ();
+	
+						return;
 					}
-
-					return;
+					case TraverseType .CAMERA:
+					{
+						var cameraObjects = this .cameraObjects;
+	
+						for (var i = 0, length = cameraObjects .length; i < length; ++ i)
+							cameraObjects [i] .traverse (type, renderObject);
+	
+						return;
+					}
+					case TraverseType .PICKING:
+					{
+						if (this .getTransformSensors () .size)
+						{
+							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+	
+							for (var transformSensorNode of this .getTransformSensors ())
+								transformSensorNode .collect (bbox);
+						}
+	
+						if (false)
+						{
+							var childNodes = this .childNodes;
+	
+							for (var i = 0, length = childNodes .length; i < length; ++ i)
+								childNodes [i] .traverse (type, renderObject);
+						}
+						else
+						{
+							var pickableObjects = this .pickableObjects;
+		
+							for (var i = 0, length = pickableObjects .length; i < length; ++ i)
+								pickableObjects [i] .traverse (type, renderObject);
+						}
+	
+						return;
+					}
+					case TraverseType .COLLISION:
+					case TraverseType .DEPTH:
+					{					
+						var
+							clipPlaneNodes = this .clipPlaneNodes,
+							childNodes     = this .childNodes;
+	
+						for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
+							clipPlaneNodes [i] .push (renderObject);
+	
+						for (var i = 0, length = childNodes .length; i < length; ++ i)
+							childNodes [i] .traverse (type, renderObject);
+	
+						for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
+							clipPlaneNodes [i] .pop (renderObject);
+						
+						return;
+					}
+					case TraverseType .DISPLAY:
+					{
+						var
+							displayNodes = this .displayNodes,
+							childNodes   = this .childNodes;
+	
+						for (var i = 0, length = displayNodes .length; i < length; ++ i)
+							displayNodes [i] .push (renderObject, this);
+	
+						for (var i = 0, length = childNodes .length; i < length; ++ i)
+							childNodes [i] .traverse (type, renderObject);
+	
+						for (var i = displayNodes .length - 1; i >= 0; -- i)
+							displayNodes [i] .pop (renderObject);
+	
+						return;
+					}
 				}
-				case TraverseType .COLLISION:
-				case TraverseType .DEPTH:
-				{					
-					var
-						clipPlaneNodes = this .clipPlaneNodes,
-						childNodes     = this .childNodes;
-
-					for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
-						clipPlaneNodes [i] .push (renderObject);
-
-					for (var i = 0, length = childNodes .length; i < length; ++ i)
-						childNodes [i] .traverse (type, renderObject);
-
-					for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
-						clipPlaneNodes [i] .pop (renderObject);
-					
-					return;
-				}
-				case TraverseType .DISPLAY:
-				{
-					var
-						displayNodes = this .displayNodes,
-						childNodes   = this .childNodes;
-
-					for (var i = 0, length = displayNodes .length; i < length; ++ i)
-						displayNodes [i] .push (renderObject, this);
-
-					for (var i = 0, length = childNodes .length; i < length; ++ i)
-						childNodes [i] .traverse (type, renderObject);
-
-					for (var i = displayNodes .length - 1; i >= 0; -- i)
-						displayNodes [i] .pop (renderObject);
-
-					return;
-				}
-			}
-		},
+			};
+		})(),
 	});
 
 	return X3DGroupingNode;
@@ -83648,7 +83653,9 @@ define ('x_ite/Components/EnvironmentalSensor/TransformSensor',[
 	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
+	"standard/Utility/ObjectCache",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -83659,10 +83666,16 @@ function (Fields,
           X3DCast,
           Vector3,
           Rotation4,
-          Box3)
+          Matrix4,
+          Box3,
+          ObjectCache)
 {
 "use strict";
-	
+
+	var
+		ModelMatrixCache = ObjectCache (Matrix4),
+		TargetBBoxCache  = ObjectCache (Box3);
+
 	function TransformSensor (executionContext)
 	{
 		X3DEnvironmentalSensorNode .call (this, executionContext);
@@ -83750,7 +83763,31 @@ function (Fields,
 		},
 		set_targetObject__: function ()
 		{
-			this .targetObjectNode = X3DCast (X3DConstants .X3DBoundedObject, this .targetObject_);
+			this .targetObjectNode = null;
+
+			try
+			{
+				var
+					node = this .targetObject_ .getValue () .getInnerNode (),
+					type = node .getType ();
+	
+				for (var t = type .length - 1; t >= 0; -- t)
+				{
+					switch (type [t])
+					{
+						case X3DConstants .X3DGroupingNode:
+						case X3DConstants .X3DShapeNode:
+						{
+							this .targetObjectNode = node;
+							break;
+						}
+						default:
+							continue;
+					}
+				}
+			}
+			catch (error)
+			{ }
 
 			this .set_enabled__ ();
 		},
@@ -83759,11 +83796,11 @@ function (Fields,
 			if (type !== TraverseType .PICKING)
 				return;
 
-			this .modelMatrices .push (renderObject .getModelViewMatrix () .get () .copy ());
+			this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
 		collect: function (targetBBox)
 		{
-			this .targetBBoxes .push (targetBBox);
+			this .targetBBoxes .push (TargetBBoxCache .pop () .assign (targetBBox));
 		},
 		process: (function ()
 		{
@@ -83788,8 +83825,12 @@ function (Fields,
 							active = true;
 
 							targetBBox .multRight (modelMatrix .inverse ()) .getMatrix () .get (position, orientation);
+
+							TargetBBoxCache .push (targetBBox);
 						}
 					}
+
+					ModelMatrixCache .push (modelMatrix);
 				}
 
 				if (active)
@@ -99548,9 +99589,10 @@ define ('x_ite/Components/Shape/Shape',[
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
-	"standard/Math/Geometry/Line3",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Box3",
+	"standard/Math/Geometry/Line3",
 	"standard/Math/Algorithms/QuickSort",
 ],
 function (Fields,
@@ -99560,9 +99602,10 @@ function (Fields,
           TraverseType,
           X3DConstants,
           Algorithm,
-          Line3,
           Vector3,
           Matrix4,
+          Box3,
+          Line3,
           QuickSort)
 {
 "use strict";
@@ -99705,9 +99748,21 @@ function (Fields,
 				}
 			};
 		})(),
-		picking: function (renderObject)
+		picking: (function ()
 		{
-		},
+			var bbox = new Box3 ();
+
+			return function (renderObject)
+			{
+				if (this .getTransformSensors () .size)
+				{
+					this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+
+					for (var transformSensorNode of this .getTransformSensors ())
+						transformSensorNode .collect (bbox);
+				}
+			};
+		})(),
 		depth: function (gl, context, shaderNode)
 		{
 			this .getGeometry () .depth (gl, context, shaderNode);

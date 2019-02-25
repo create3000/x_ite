@@ -57,7 +57,9 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
+	"standard/Utility/ObjectCache",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -68,10 +70,16 @@ function (Fields,
           X3DCast,
           Vector3,
           Rotation4,
-          Box3)
+          Matrix4,
+          Box3,
+          ObjectCache)
 {
 "use strict";
-	
+
+	var
+		ModelMatrixCache = ObjectCache (Matrix4),
+		TargetBBoxCache  = ObjectCache (Box3);
+
 	function TransformSensor (executionContext)
 	{
 		X3DEnvironmentalSensorNode .call (this, executionContext);
@@ -159,7 +167,31 @@ function (Fields,
 		},
 		set_targetObject__: function ()
 		{
-			this .targetObjectNode = X3DCast (X3DConstants .X3DBoundedObject, this .targetObject_);
+			this .targetObjectNode = null;
+
+			try
+			{
+				var
+					node = this .targetObject_ .getValue () .getInnerNode (),
+					type = node .getType ();
+	
+				for (var t = type .length - 1; t >= 0; -- t)
+				{
+					switch (type [t])
+					{
+						case X3DConstants .X3DGroupingNode:
+						case X3DConstants .X3DShapeNode:
+						{
+							this .targetObjectNode = node;
+							break;
+						}
+						default:
+							continue;
+					}
+				}
+			}
+			catch (error)
+			{ }
 
 			this .set_enabled__ ();
 		},
@@ -168,11 +200,11 @@ function (Fields,
 			if (type !== TraverseType .PICKING)
 				return;
 
-			this .modelMatrices .push (renderObject .getModelViewMatrix () .get () .copy ());
+			this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
 		collect: function (targetBBox)
 		{
-			this .targetBBoxes .push (targetBBox);
+			this .targetBBoxes .push (TargetBBoxCache .pop () .assign (targetBBox));
 		},
 		process: (function ()
 		{
@@ -197,8 +229,12 @@ function (Fields,
 							active = true;
 
 							targetBBox .multRight (modelMatrix .inverse ()) .getMatrix () .get (position, orientation);
+
+							TargetBBoxCache .push (targetBBox);
 						}
 					}
+
+					ModelMatrixCache .push (modelMatrix);
 				}
 
 				if (active)

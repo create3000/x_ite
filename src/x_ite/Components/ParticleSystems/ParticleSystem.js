@@ -1301,6 +1301,10 @@ function (Fields,
 				{
 					break;
 				}
+				case TraverseType .PICKING:
+				{
+					break;
+				}
 				case TraverseType .COLLISION:
 				{
 					// TODO: to be implemented.

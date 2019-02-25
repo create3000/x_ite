@@ -55,9 +55,10 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
-	"standard/Math/Geometry/Line3",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Box3",
+	"standard/Math/Geometry/Line3",
 	"standard/Math/Algorithms/QuickSort",
 ],
 function (Fields,
@@ -67,9 +68,10 @@ function (Fields,
           TraverseType,
           X3DConstants,
           Algorithm,
-          Line3,
           Vector3,
           Matrix4,
+          Box3,
+          Line3,
           QuickSort)
 {
 "use strict";
@@ -212,9 +214,21 @@ function (Fields,
 				}
 			};
 		})(),
-		picking: function (renderObject)
+		picking: (function ()
 		{
-		},
+			var bbox = new Box3 ();
+
+			return function (renderObject)
+			{
+				if (this .getTransformSensors () .size)
+				{
+					this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+
+					for (var transformSensorNode of this .getTransformSensors ())
+						transformSensorNode .collect (bbox);
+				}
+			};
+		})(),
 		depth: function (gl, context, shaderNode)
 		{
 			this .getGeometry () .depth (gl, context, shaderNode);
