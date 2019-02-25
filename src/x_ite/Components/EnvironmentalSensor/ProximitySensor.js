@@ -70,8 +70,6 @@ function (Fields,
 {
 "use strict";
 
-	var infinity = new Vector3 (-1, -1, -1);
-	
 	function ProximitySensor (executionContext)
 	{
 		X3DEnvironmentalSensorNode .call (this, executionContext);
@@ -83,15 +81,9 @@ function (Fields,
 		this .centerOfRotation_changed_ .setUnit ("length");
 		this .position_changed_         .setUnit ("length");
 
-		this .viewpoint              = null;
-		this .modelViewMatrix        = new Matrix4 ();
-		this .invModelViewMatrix     = new Matrix4 ();
-		this .centerOfRotationMatrix = new Matrix4 ();
-		this .position               = new Vector3 (0, 0, 0);
-		this .orientation            = new Rotation4 (0, 0, 1, 0);
-		this .centerOfRotation       = new Vector3 (0, 0, 0);
-		this .viewer                 = new Vector3 (0, 0, 0);
-		this .inside                 = false;
+		this .viewpoint   = null;
+		this .modelMatrix = new Matrix4 ();
+		this .inside      = false;
 	}
 
 	ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
@@ -140,11 +132,11 @@ function (Fields,
 		set_enabled__: function ()
 		{
 			this .setCameraObject (this .enabled_ .getValue ());
-			
+
 			if (this .enabled_ .getValue ())
-				this .traverse = traverse;
-			else
 				delete this .traverse;
+			else
+				this .traverse = Function .prototype;
 		},
 		set_extents__: function ()
 		{
@@ -161,75 +153,126 @@ function (Fields,
 			this .min .set (cx - sx, cy - sy, cz - sz);
 			this .max .set (cx + sx, cy + sy, cz + sz);
 		},
-		update: function ()
+		update: (function ()
 		{
-			try
+			var
+				invModelMatrix         = new Matrix4 (),
+				centerOfRotationMatrix = new Matrix4 (),
+				position               = new Vector3 (0, 0, 0),
+				orientation            = new Rotation4 (0, 0, 1, 0),
+				centerOfRotation       = new Vector3 (0, 0, 0);
+
+			return function ()
 			{
-				if (this .inside && this .getTraversed ())
+				try
 				{
-				   var
-				      modelViewMatrix        = this .modelViewMatrix,
-				      centerOfRotationMatrix = this .centerOfRotationMatrix;
-
-					centerOfRotationMatrix .assign (this .viewpoint .getModelMatrix ());
-					centerOfRotationMatrix .translate (this .viewpoint .getUserCenterOfRotation ());
-					centerOfRotationMatrix .multRight (this .invModelViewMatrix .assign (modelViewMatrix) .inverse ());
-
-					modelViewMatrix .multRight (this .viewpoint .getInverseCameraSpaceMatrix ());
-					modelViewMatrix .get (null, this .orientation);
-					modelViewMatrix .inverse ();
-
-					this .position .set (modelViewMatrix [12],
-					                     modelViewMatrix [13],
-					                     modelViewMatrix [14]);
-
-					this .orientation .inverse ();
-
-					this .centerOfRotation .set (centerOfRotationMatrix [12],
-					                             centerOfRotationMatrix [13],
-					                             centerOfRotationMatrix [14]);
-
-					if (this .isActive_ .getValue ())
+					if (this .inside && this .getTraversed ())
 					{
-						if (! this .position_changed_ .getValue () .equals (this .position))
-							this .position_changed_ = this .position;
-
-						if (! this .orientation_changed_ .getValue () .equals (this .orientation))
-							this .orientation_changed_ = this .orientation;
-
-						if (! this .centerOfRotation_changed_ .getValue () .equals (this .centerOfRotation))
-							this .centerOfRotation_changed_ = this .centerOfRotation;
+					   var modelMatrix = this .modelMatrix;
+	
+						centerOfRotationMatrix .assign (this .viewpoint .getModelMatrix ());
+						centerOfRotationMatrix .translate (this .viewpoint .getUserCenterOfRotation ());
+						centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
+	
+						modelMatrix .multRight (this .viewpoint .getInverseCameraSpaceMatrix ());
+						modelMatrix .get (null, orientation);
+						modelMatrix .inverse ();
+	
+						position .set (modelMatrix [12], modelMatrix [13], modelMatrix [14]);
+	
+						orientation .inverse ();
+	
+						centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
+	
+						if (this .isActive_ .getValue ())
+						{
+							if (! this .position_changed_ .getValue () .equals (position))
+								this .position_changed_ = position;
+	
+							if (! this .orientation_changed_ .getValue () .equals (orientation))
+								this .orientation_changed_ = orientation;
+	
+							if (! this .centerOfRotation_changed_ .getValue () .equals (centerOfRotation))
+								this .centerOfRotation_changed_ = centerOfRotation;
+						}
+						else
+						{
+							this .isActive_  = true;
+							this .enterTime_ = this .getBrowser () .getCurrentTime ();
+	
+							this .position_changed_         = position;
+							this .orientation_changed_      = orientation;
+							this .centerOfRotation_changed_ = centerOfRotation;
+						}
+	
+						this .inside = false;
 					}
 					else
 					{
-						this .isActive_  = true;
-						this .enterTime_ = this .getBrowser () .getCurrentTime ();
-
-						this .position_changed_         = this .position;
-						this .orientation_changed_      = this .orientation;
-						this .centerOfRotation_changed_ = this .centerOfRotation;
+						if (this .isActive_ .getValue ())
+						{
+							this .isActive_ = false;
+							this .exitTime_ = this .getBrowser () .getCurrentTime ();
+						}
 					}
-
-					this .inside = false;
 				}
-				else
+				catch (error)
 				{
-					if (this .isActive_ .getValue ())
+					//console .log (error .message);
+				}
+	
+				this .setTraversed (false);
+			};
+		})(),
+		traverse: (function ()
+		{
+			var 
+				invModelMatrix = new Matrix4 (),
+				viewer         = new Vector3 (0, 0, 0),
+				infinity       = new Vector3 (-1, -1, -1);
+	
+			return function (type, renderObject)
+			{
+				try
+				{
+					switch (type)
 					{
-						this .isActive_ = false;
-						this .exitTime_ = this .getBrowser () .getCurrentTime ();
+						case TraverseType .CAMERA:
+						{
+							this .viewpoint = renderObject .getViewpoint ();
+							this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+							return;
+						}
+						case TraverseType .DISPLAY:
+						{
+						   this .setTraversed (true);
+		
+							if (this .inside)
+								return;
+
+							if (this .size_ .getValue () .equals (infinity))
+							{
+								this .inside = true;
+							}
+							else
+							{
+							   invModelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
+		
+								viewer .set (invModelMatrix [12], invModelMatrix [13], invModelMatrix [14]);
+		
+								this .inside = this .intersectsPoint (viewer);
+							}
+		
+							return;
+						}
 					}
 				}
-			}
-			catch (error)
-			{
-				//console .log (error .message);
-			}
-
-			this .setTraversed (false);
-		},
-		traverse: function ()
-		{ },
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		})(),
 		intersectsPoint: function (point)
 		{
 			var
@@ -245,49 +288,6 @@ function (Fields,
 		},
 	});
 		
-	function traverse (type, renderObject)
-	{
-		try
-		{
-			switch (type)
-			{
-				case TraverseType .CAMERA:
-				{
-					this .viewpoint = renderObject .getViewpoint ();
-					this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
-					return;
-				}
-				case TraverseType .DISPLAY:
-				{
-				   this .setTraversed (true);
-
-					if (this .inside)
-						return;
-
-					if (this .size_ .getValue () .equals (infinity))
-						this .inside = true;
-
-					else
-					{
-					   var invModelViewMatrix = this .invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
-
-						this .viewer .set (invModelViewMatrix [12],
-				                         invModelViewMatrix [13],
-				                         invModelViewMatrix [14]);
-
-						this .inside = this .intersectsPoint (this .viewer);
-					}
-
-					return;
-				}
-			}
-		}
-		catch (error)
-		{
-			//console .log (error);
-		}
-	}
-
 	return ProximitySensor;
 });
 

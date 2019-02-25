@@ -66,8 +66,6 @@ function (Fields,
 {
 "use strict";
 
-	var infinity = new Vector3 (-1, -1, -1);
-	
 	function VisibilitySensor (executionContext)
 	{
 		X3DEnvironmentalSensorNode .call (this, executionContext);
@@ -141,30 +139,36 @@ function (Fields,
 				
 			this .setTraversed (false);
 		},
-		traverse: function (type, renderObject)
+		traverse: (function ()
 		{
-			if (type !== TraverseType .DISPLAY)
-				return;
+			var infinity = new Vector3 (-1, -1, -1);
 
-			this .setTraversed (true);
-
-			if (this .visible)
-				return;
-
-			if (this .size_ .getValue () .equals (infinity))
-				this .visible = true;
-
-			else
+			return function (type, renderObject)
 			{
-				var
-					viewVolume      = renderObject .getViewVolume (),
-					modelViewMatrix = renderObject .getModelViewMatrix () .get (),
-					size            = modelViewMatrix .multDirMatrix (this .size   .assign (this .size_   .getValue ())),
-					center          = modelViewMatrix .multVecMatrix (this .center .assign (this .center_ .getValue ()));
-
-				this .visible = viewVolume .intersectsSphere (size .abs () / 2, center);
-			}
-		},
+				if (type !== TraverseType .DISPLAY)
+					return;
+	
+				this .setTraversed (true);
+	
+				if (this .visible)
+					return;
+	
+				if (this .size_ .getValue () .equals (infinity))
+				{
+					this .visible = true;
+				}
+				else
+				{
+					var
+						viewVolume      = renderObject .getViewVolume (),
+						modelViewMatrix = renderObject .getModelViewMatrix () .get (),
+						size            = modelViewMatrix .multDirMatrix (this .size   .assign (this .size_   .getValue ())),
+						center          = modelViewMatrix .multVecMatrix (this .center .assign (this .center_ .getValue ()));
+	
+					this .visible = viewVolume .intersectsSphere (size .abs () / 2, center);
+				}
+			};
+		})(),
 	});
 		
 	return VisibilitySensor;

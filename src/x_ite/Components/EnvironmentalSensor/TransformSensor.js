@@ -69,12 +69,6 @@ function (Fields,
           Box3)
 {
 "use strict";
-
-	var
-		targetBox   = new Box3 (),
-		position    = new Vector3 (0, 0, 0),
-		orientation = new Rotation4 (0, 0, 1, 0),
-		infinity    = new Vector3 (-1, -1, -1);
 	
 	function TransformSensor (executionContext)
 	{
@@ -159,40 +153,49 @@ function (Fields,
 		
 			this .set_enabled__ ();
 		},
-		update: function ()
+		update: (function ()
 		{
-			this .targetObjectNode .getBBox (targetBox);
-		
-			if (this .size_. getValue () .equals (infinity) || this .bbox .intersectsBox (targetBox))
+			var
+				targetBox   = new Box3 (),
+				position    = new Vector3 (0, 0, 0),
+				orientation = new Rotation4 (0, 0, 1, 0),
+				infinity    = new Vector3 (-1, -1, -1);
+
+			return function ()
 			{
-				targetBox .getMatrix () .get (position, orientation);
-		
-				if (this .isActive_ .getValue ())
+				this .targetObjectNode .getBBox (targetBox);
+			
+				if (this .size_. getValue () .equals (infinity) || this .bbox .intersectsBox (targetBox))
 				{
-					if (! this .position_changed_ .getValue () .equals (position))
-						this .position_changed_ = position;
+					targetBox .getMatrix () .get (position, orientation);
+			
+					if (this .isActive_ .getValue ())
+					{
+						if (! this .position_changed_ .getValue () .equals (position))
+							this .position_changed_ = position;
+		
+						if (! this .orientation_changed_ .getValue () .equals (orientation))
+							this .orientation_changed_ = orientation;
+					}
+					else
+					{
+						this .isActive_  = true;
+						this .enterTime_ = this .getBrowser () .getCurrentTime ();
 	
-					if (! this .orientation_changed_ .getValue () .equals (orientation))
+						this .position_changed_    = position;
 						this .orientation_changed_ = orientation;
+					}
 				}
 				else
 				{
-					this .isActive_  = true;
-					this .enterTime_ = this .getBrowser () .getCurrentTime ();
-
-					this .position_changed_         = position;
-					this .orientation_changed_      = orientation;
+					if (this .isActive_ .getValue ())
+					{
+						this .isActive_ = false;
+						this .exitTime_ = this .getBrowser () .getCurrentTime ();
+					}
 				}
-			}
-			else
-			{
-				if (this .isActive_ .getValue ())
-				{
-					this .isActive_ = false;
-					this .exitTime_ = this .getBrowser () .getCurrentTime ();
-				}
-			}
-		},
+			};
+		})(),
 	});
 
 	return TransformSensor;

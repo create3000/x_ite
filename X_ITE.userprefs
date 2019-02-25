@@ -1,12 +1,9 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="package.json">
     <Files>
-      <File FileName="package.json" Line="3" Column="20" />
-      <File FileName="src/x_ite/Components/Grouping/X3DGroupingNode.js" Line="122" Column="1" />
-      <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Layering/X3DLayerNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js" Line="1" Column="1" />
+      <File FileName="package.json" Line="3" Column="19" />
+      <File FileName="src/x_ite/Components/Grouping/StaticGroup.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
