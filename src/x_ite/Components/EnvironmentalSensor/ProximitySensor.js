@@ -226,10 +226,10 @@ function (Fields,
 		traverse: (function ()
 		{
 			var 
-				invModelMatrix = new Matrix4 (),
-				viewer         = new Vector3 (0, 0, 0),
-				infinity       = new Vector3 (-1, -1, -1);
-	
+				invModelViewMatrix = new Matrix4 (),
+				viewer             = new Vector3 (0, 0, 0),
+				infinity           = new Vector3 (-1, -1, -1);
+
 			return function (type, renderObject)
 			{
 				try
@@ -255,9 +255,9 @@ function (Fields,
 							}
 							else
 							{
-							   invModelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
+							   invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
 		
-								viewer .set (invModelMatrix [12], invModelMatrix [13], invModelMatrix [14]);
+								viewer .set (invModelViewMatrix [12], invModelViewMatrix [13], invModelViewMatrix [14]);
 		
 								this .inside = this .intersectsPoint (viewer);
 							}
