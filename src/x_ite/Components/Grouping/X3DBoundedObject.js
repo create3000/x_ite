@@ -89,14 +89,14 @@ function (Fields,
 		
 				// Add bounding boxes
 		
-				for (var node of nodes)
+				for (var i = 0, length = nodes .length; i < length; ++ i)
 				{
-					var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, node);
-
+					var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
+		
 					if (boundedObject)
 						bbox .add (boundedObject .getBBox (childBBox));
 				}
-		
+
 				return bbox;
 			};
 		})(),
@@ -117,7 +117,6 @@ function (Fields,
 			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
 		},
 	};
-
 
 	return X3DBoundedObject;
 });

@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-597 */
+/* X_ITE v4.4.2a-598 */
 
 (function () {
 
@@ -67014,14 +67014,14 @@ function (Fields,
 		
 				// Add bounding boxes
 		
-				for (var node of nodes)
+				for (var i = 0, length = nodes .length; i < length; ++ i)
 				{
-					var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, node);
-
+					var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
+		
 					if (boundedObject)
 						bbox .add (boundedObject .getBBox (childBBox));
 				}
-		
+
 				return bbox;
 			};
 		})(),
@@ -88635,15 +88635,19 @@ define ('x_ite/Components/Grouping/Switch',[
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Grouping/X3DGroupingNode",
+	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
+          TraverseType,
           X3DCast,
-          X3DConstants)
+          X3DConstants,
+          Box3)
 {
 "use strict";
 
@@ -88703,6 +88707,10 @@ function (Fields,
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
+		getSubBBox: function (bbox)
+		{
+			return this .getBBox (bbox);
+		},
 		set_whichChoice__: function ()
 		{
 			this .child = this .getChild (this .whichChoice_ .getValue ());
@@ -88723,11 +88731,27 @@ function (Fields,
 			else
 				this .setPickableObject (false);
 		},
-		traverse: function (type, renderObject)
+		traverse: (function ()
 		{
-			if (this .child)
-				this .child .traverse (type, renderObject);
-		},
+			var bbox = new Box3 ();
+
+			return function (type, renderObject)
+			{
+				if (type === TraverseType .PICKING)
+				{
+					if (this .getTransformSensors () .size)
+					{
+						this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+		
+						for (var transformSensorNode of this .getTransformSensors ())
+							transformSensorNode .collect (bbox);
+					}
+				}
+
+				if (this .child)
+					this .child .traverse (type, renderObject);
+			};
+		})(),
 	});
 
 	return Switch;
@@ -92559,6 +92583,7 @@ define ('x_ite/Components/Navigation/LOD',[
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Box3",
 	"standard/Math/Algorithm",
 ],
 function (Fields,
@@ -92569,6 +92594,7 @@ function (Fields,
           TraverseType,
           X3DConstants,
           Matrix4,
+          Box3,
           Algorithm)
 {
 "use strict";
@@ -92623,20 +92649,6 @@ function (Fields,
 			this .child = this .getChild (this .level_changed_ .getValue ());
 			this .set_cameraObjects__ ();
 		},
-		set_cameraObjects__: function ()
-		{
-			if (this .child && this .child .getCameraObject)
-				this .setCameraObject (this .child .getCameraObject ());
-			else
-				this .setCameraObject (false);
-		},
-		set_pickableObjects__: function ()
-		{
-			if (this .child && this .child .getPickableObject)
-				this .setPickableObject (this .child .getPickableObject ());
-			else
-				this .setPickableObject (false);
-		},
 		getBBox: function (bbox) 
 		{
 			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
@@ -92650,6 +92662,24 @@ function (Fields,
 			}
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+		},
+		getSubBBox: function (bbox)
+		{
+			return this .getBBox (bbox);
+		},
+		set_cameraObjects__: function ()
+		{
+			if (this .child && this .child .getCameraObject)
+				this .setCameraObject (this .child .getCameraObject ());
+			else
+				this .setCameraObject (false);
+		},
+		set_pickableObjects__: function ()
+		{
+			if (this .child && this .child .getPickableObject)
+				this .setPickableObject (this .child .getPickableObject ());
+			else
+				this .setPickableObject (false);
 		},
 		getLevel: (function ()
 		{
@@ -92690,7 +92720,9 @@ function (Fields,
 		},
 		traverse: (function ()
 		{
-			var modelViewMatrix = new Matrix4 ();
+			var
+				modelViewMatrix = new Matrix4 (),
+				bbox            = new Box3 ();
 
 			return function (type, renderObject)
 			{
@@ -92721,7 +92753,18 @@ function (Fields,
 						}
 					}
 				}
-	
+
+				if (type === TraverseType .PICKING)
+				{
+					if (this .getTransformSensors () .size)
+					{
+						this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+		
+						for (var transformSensorNode of this .getTransformSensors ())
+							transformSensorNode .collect (bbox);
+					}
+				}
+
 				if (this .child)
 					this .child .traverse (type, renderObject);
 			};

@@ -551,7 +551,7 @@ function (Fields,
 							for (var transformSensorNode of this .getTransformSensors ())
 								transformSensorNode .collect (bbox);
 						}
-	
+
 						if (false)
 						{
 							var childNodes = this .childNodes;
