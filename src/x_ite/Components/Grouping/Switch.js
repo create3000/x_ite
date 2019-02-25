@@ -52,15 +52,19 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Grouping/X3DGroupingNode",
+	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
+          TraverseType,
           X3DCast,
-          X3DConstants)
+          X3DConstants,
+          Box3)
 {
 "use strict";
 
@@ -144,11 +148,27 @@ function (Fields,
 			else
 				this .setPickableObject (false);
 		},
-		traverse: function (type, renderObject)
+		traverse: (function ()
 		{
-			if (this .child)
-				this .child .traverse (type, renderObject);
-		},
+			var bbox = new Box3 ();
+
+			return function (type, renderObject)
+			{
+				if (type === TraverseType .PICKING)
+				{
+					if (this .getTransformSensors () .size)
+					{
+						this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+		
+						for (var transformSensorNode of this .getTransformSensors ())
+							transformSensorNode .collect (bbox);
+					}
+				}
+
+				if (this .child)
+					this .child .traverse (type, renderObject);
+			};
+		})(),
 	});
 
 	return Switch;

@@ -56,6 +56,7 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Box3",
 	"standard/Math/Algorithm",
 ],
 function (Fields,
@@ -66,6 +67,7 @@ function (Fields,
           TraverseType,
           X3DConstants,
           Matrix4,
+          Box3,
           Algorithm)
 {
 "use strict";
@@ -191,7 +193,9 @@ function (Fields,
 		},
 		traverse: (function ()
 		{
-			var modelViewMatrix = new Matrix4 ();
+			var
+				modelViewMatrix = new Matrix4 (),
+				bbox            = new Box3 ();
 
 			return function (type, renderObject)
 			{
@@ -222,7 +226,18 @@ function (Fields,
 						}
 					}
 				}
-	
+
+				if (type === TraverseType .PICKING)
+				{
+					if (this .getTransformSensors () .size)
+					{
+						this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+		
+						for (var transformSensorNode of this .getTransformSensors ())
+							transformSensorNode .collect (bbox);
+					}
+				}
+
 				if (this .child)
 					this .child .traverse (type, renderObject);
 			};
