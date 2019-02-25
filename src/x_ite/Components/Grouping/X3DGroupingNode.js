@@ -90,6 +90,7 @@ function (Fields,
 		this .pointingDeviceSensors = [ ];
 		this .maybeCameraObjects    = [ ];
 		this .cameraObjects         = [ ];
+		this .pickableObjects       = [ ];
 		this .clipPlanes            = [ ];
 		this .localFogs             = [ ];
 		this .lights                = [ ];
@@ -275,7 +276,8 @@ function (Fields,
 								case X3DConstants .X3DBackgroundNode:
 								case X3DConstants .X3DChildNode:
 								{
-									innerNode .isCameraObject_ .addInterest ("set_cameraObjects__", this);
+									innerNode .isCameraObject_   .addInterest ("set_cameraObjects__",   this);
+									innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
 
 									this .maybeCameraObjects .push (innerNode);
 									this .childNodes .push (innerNode);
@@ -308,6 +310,7 @@ function (Fields,
 			}
 
 			this .set_cameraObjects__ ();
+			this .set_pickableObjects__ ();
 			this .set_display_nodes ();
 		},
 		remove: function (children)
@@ -376,7 +379,8 @@ function (Fields,
 								case X3DConstants .X3DBackgroundNode:
 								case X3DConstants .X3DChildNode:
 								{
-									innerNode .isCameraObject_ .removeInterest ("set_cameraObjects__", this);
+									innerNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
+									innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
 
 									var index = this .maybeCameraObjects .indexOf (innerNode);
 
@@ -417,13 +421,17 @@ function (Fields,
 			}
 
 			this .set_cameraObjects__ ();
+			this .set_pickableObjects__ ();
 			this .set_display_nodes ();
 		},
 		clear: function ()
 		{
 			for (var i = 0, length = this .childNodes .length; i < length; ++ i)
-				this .childNodes [i] .isCameraObject_ .removeInterest ("set_cameraObjects__", this);
-			
+			{
+				this .childNodes [i] .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
+				this .childNodes [i] .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+			}
+
 			this .pointingDeviceSensors .length = 0;
 			this .maybeCameraObjects    .length = 0;
 			this .cameraObjects         .length = 0;
@@ -445,6 +453,20 @@ function (Fields,
 			}
 
 			this .setCameraObject (this .cameraObjects .length);
+		},
+		set_pickableObjects__: function ()
+		{
+			this .pickableObjects .length = 0;
+
+			for (var i = 0, length = this .childNodes .length; i < length; ++ i)
+			{
+				var childNode = this .childNodes [i];
+
+				if (childNode .getPickableObject ())
+					this .pickableObjects .push (childNode);
+			}
+
+			this .setPickableObject (this .pickableObjects .length);
 		},
 		set_display_nodes: function ()
 		{
@@ -506,6 +528,15 @@ function (Fields,
 
 					for (var i = 0, length = cameraObjects .length; i < length; ++ i)
 						cameraObjects [i] .traverse (type, renderObject);
+
+					return;
+				}
+				case TraverseType .PICKING:
+				{
+					var pickableObjects = this .pickableObjects;
+
+					for (var i = 0, length = pickableObjects .length; i < length; ++ i)
+						pickableObjects [i] .traverse (type, renderObject);
 
 					return;
 				}

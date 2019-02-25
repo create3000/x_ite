@@ -281,6 +281,9 @@ function (X3DNode,
 				case TraverseType .CAMERA:
 					this .camera (type, renderObject);
 					break;
+				case TraverseType .PICKING:
+					this .picking (type, renderObject);
+					break;
 				case TraverseType .COLLISION:
 					this .collision (type, renderObject);
 					break;
@@ -337,6 +340,14 @@ function (X3DNode,
 			this .viewpoints      .update ();
 
 			this .getViewpoint () .update ();
+
+			this .getModelViewMatrix () .pop ();
+		},
+		picking: function (type, renderObject)
+		{
+			this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
+	
+			this .groupNode .traverse (type, renderObject);
 
 			this .getModelViewMatrix () .pop ();
 		},

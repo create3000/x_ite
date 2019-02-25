@@ -126,6 +126,10 @@ function (Fields,
 					this .pointer (renderObject);
 					break;
 
+				case TraverseType .PICKING:
+					this .picking (renderObject);
+					break;
+
 				case TraverseType .COLLISION:
 					renderObject .addCollisionShape (this);
 					break;
@@ -208,6 +212,9 @@ function (Fields,
 				}
 			};
 		})(),
+		picking: function (renderObject)
+		{
+		},
 		depth: function (gl, context, shaderNode)
 		{
 			this .getGeometry () .depth (gl, context, shaderNode);

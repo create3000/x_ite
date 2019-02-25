@@ -55,6 +55,7 @@ define ([
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Components/Grouping/Group",
+	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/FileLoader",
 ],
@@ -65,6 +66,7 @@ function (Fields,
           X3DUrlObject,
           X3DBoundedObject,
           Group,
+          TraverseType,
           X3DConstants,
           FileLoader)
 {
@@ -80,10 +82,9 @@ function (Fields,
 		
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
-		this .scene    = this .getBrowser () .getDefaultScene ();
-		this .group    = new Group (executionContext);
-		this .getBBox  = this .group .getBBox  .bind (this .group);
-		this .traverse = this .group .traverse  .bind (this .group);
+		this .scene   = this .getBrowser () .getDefaultScene ();
+		this .group   = new Group (executionContext);
+		this .getBBox = this .group .getBBox  .bind (this .group);
 
 		this .group .addParent (this);
 	}
@@ -238,6 +239,22 @@ function (Fields,
 
 			return this .scene;
 		},
+		traverse: function (type, renderObject)
+		{
+			switch (type)
+			{
+				case TraverseType .PICKING:
+				{
+					this .group .traverse  (type, renderObject);
+					break;
+				}
+				default:
+				{
+					this .group .traverse  (type, renderObject);
+					break;
+				}
+			}
+		};
 	});
 
 	return Inline;

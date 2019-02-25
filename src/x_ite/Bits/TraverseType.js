@@ -57,6 +57,7 @@ define (function ()
 	{
 		POINTER:   i ++,
 		CAMERA:    i ++,
+		PICKING:   i ++,
 		COLLISION: i ++,
 		DEPTH:     i ++,
 		DISPLAY:   i ++,
