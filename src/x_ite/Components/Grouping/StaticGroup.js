@@ -127,10 +127,12 @@ function (Fields,
 			this .group .setup ();
 
 			// Connect after Group setup.
-			this .group .isCameraObject_ .addFieldInterest (this .isCameraObject_);
-			this .group .children_       .addInterest ("set_children__", this);
+			this .group .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+			this .group .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+			this .group .children_         .addInterest ("set_children__", this);
 
-			this .setCameraObject (this .group .getCameraObject ());
+			this .setCameraObject   (this .group .getCameraObject ());
+			this .setPickableObject (this .group .getPickableObject ());
 
 			this .set_children__ ();
 		},

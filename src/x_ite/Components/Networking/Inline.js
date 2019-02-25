@@ -122,7 +122,9 @@ function (Fields,
 
 			this .group .setPrivate (true);
 			this .group .setup ();
-			this .group .isCameraObject_ .addFieldInterest (this .isCameraObject_);
+
+			this .group .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+			this .group .isPickableObject_ .addFieldInterest (this .isPickableObject_);
 
 			this .load_   .addInterest ("set_load__",   this);
 			this .url_    .addInterest ("set_url__",    this);

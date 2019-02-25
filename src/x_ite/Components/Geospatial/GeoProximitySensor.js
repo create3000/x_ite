@@ -82,7 +82,8 @@ function (Fields,
 
 		this .proximitySensor = new ProximitySensor (executionContext);
 
-		this .setCameraObject (this .proximitySensor .getCameraObject ());
+		this .setCameraObject   (this .proximitySensor .getCameraObject ());
+		this .setPickableObject (this .proximitySensor .getPickableObject ());
 	}
 
 	GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
@@ -125,8 +126,9 @@ function (Fields,
 			this .size_    .addFieldInterest (this .proximitySensor .size_);
 			this .center_  .addFieldInterest (this .proximitySensor .center_);
 		
-			this .proximitySensor .isCameraObject_ .addFieldInterest (this .isCameraObject_);
-		
+			this .proximitySensor .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+			this .proximitySensor .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+
 			this .proximitySensor .isActive_                 .addFieldInterest (this .isActive_);
 			this .proximitySensor .enterTime_                .addFieldInterest (this .enterTime_);
 			this .proximitySensor .exitTime_                 .addFieldInterest (this .exitTime_);

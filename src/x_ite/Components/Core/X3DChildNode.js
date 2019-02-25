@@ -67,7 +67,8 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DChildNode);
 
-		this .addChildObjects ("isCameraObject", new Fields .SFBool ());
+		this .addChildObjects ("isCameraObject",   new Fields .SFBool ());
+		this .addChildObjects ("isPickableObject", new Fields .SFBool ());
 	}
 
 	X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -81,6 +82,15 @@ function (Fields,
 		getCameraObject: function ()
 		{
 			return this .isCameraObject_ .getValue ();
+		},
+		setPickableObject: function (value)
+		{
+			if (value !== this .isPickableObject_ .getValue ())
+				this .isPickableObject_ = value;
+		},
+		getPickableObject: function ()
+		{
+			return this .isPickableObject_ .getValue ();
 		},
 	});
 

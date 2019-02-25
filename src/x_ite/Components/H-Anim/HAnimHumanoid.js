@@ -179,7 +179,8 @@ function (Fields,
 			this .transformNode .bboxCenter_       = this .bboxCenter_;
 			this .transformNode .children_         = [ this .viewpointsNode, this .skeletonNode, this .skinNode ];
 
-			this .transformNode .isCameraObject_ .addFieldInterest (this .isCameraObject_);
+			this .transformNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+			this .transformNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
 
 			// Setup
 
@@ -188,7 +189,8 @@ function (Fields,
 			this .skinNode       .setup ();
 			this .transformNode  .setup ();
 
-			this .setCameraObject (this .transformNode .getCameraObject ());
+			this .setCameraObject   (this .transformNode .getCameraObject ());
+			this .setPickableObject (this .transformNode .getPickableObject ());
 
 			// Skinning
 

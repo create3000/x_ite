@@ -139,14 +139,21 @@ function (Fields,
 
 			if (displayed && proxy)
 			{
-				this .proximitySensor .isCameraObject_ .addFieldInterest (this .isCameraObject_);
-				this .setCameraObject (this .proximitySensor .getCameraObject ());
+				this .proximitySensor .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+				this .proximitySensor .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+
+				this .setCameraObject   (this .proximitySensor .getCameraObject ());
+				this .setPickableObject (this .proximitySensor .getPickableObject ());
+
 				this .traverse = traverseWithProximitySensor;
 			}
 			else
 			{
-				this .proximitySensor .isCameraObject_ .removeFieldInterest (this .isCameraObject_);
-				this .setCameraObject (displayed);
+				this .proximitySensor .isCameraObject_    .removeFieldInterest (this .isCameraObject_);
+				this .proximitySensor .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+
+				this .setCameraObject   (displayed);
+				this .setPickableObject (false);
 
 				if (displayed)
 					this .traverse = traverse;

@@ -125,7 +125,8 @@ function (Fields,
 			if (this .collidableNode)
 			{
 				this .collidableNode .removeInterest ("addNodeEvent", this);
-				this .collidableNode .isCameraObject_ .removeFieldInterest (this .isCameraObject_);
+				this .collidableNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
+				this .collidableNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
 			}
 		
 			this .collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidable_);
@@ -133,15 +134,18 @@ function (Fields,
 			if (this .collidableNode)
 			{
 				this .collidableNode .addInterest ("addNodeEvent", this);
-				this .collidableNode .isCameraObject_ .addFieldInterest (this .isCameraObject_);
+				this .collidableNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+				this .collidableNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
 
-				this .setCameraObject (this .collidableNode .getCameraObject ());
+				this .setCameraObject   (this .collidableNode .getCameraObject ());
+				this .setPickableObject (this .collidableNode .getPickableObject ());
 
 				delete this .traverse;
 			}
 			else
 			{
-				this .setCameraObject (false);
+				this .setCameraObject   (false);
+				this .setPickableObject (false);
 
 				this .traverse = Function .prototype;
 			}
