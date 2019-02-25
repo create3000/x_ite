@@ -120,20 +120,6 @@ function (Fields,
 			this .child = this .getChild (this .level_changed_ .getValue ());
 			this .set_cameraObjects__ ();
 		},
-		set_cameraObjects__: function ()
-		{
-			if (this .child && this .child .getCameraObject)
-				this .setCameraObject (this .child .getCameraObject ());
-			else
-				this .setCameraObject (false);
-		},
-		set_pickableObjects__: function ()
-		{
-			if (this .child && this .child .getPickableObject)
-				this .setPickableObject (this .child .getPickableObject ());
-			else
-				this .setPickableObject (false);
-		},
 		getBBox: function (bbox) 
 		{
 			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
@@ -147,6 +133,24 @@ function (Fields,
 			}
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+		},
+		getSubBBox: function (bbox)
+		{
+			return this .getBBox (bbox);
+		},
+		set_cameraObjects__: function ()
+		{
+			if (this .child && this .child .getCameraObject)
+				this .setCameraObject (this .child .getCameraObject ());
+			else
+				this .setCameraObject (false);
+		},
+		set_pickableObjects__: function ()
+		{
+			if (this .child && this .child .getPickableObject)
+				this .setPickableObject (this .child .getPickableObject ());
+			else
+				this .setPickableObject (false);
 		},
 		getLevel: (function ()
 		{

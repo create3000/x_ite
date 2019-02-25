@@ -120,6 +120,10 @@ function (Fields,
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
+		getSubBBox: function (bbox)
+		{
+			return this .getBBox (bbox);
+		},
 		set_whichChoice__: function ()
 		{
 			this .child = this .getChild (this .whichChoice_ .getValue ());
