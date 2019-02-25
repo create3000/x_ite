@@ -115,10 +115,10 @@ function (Fields,
 		
 			this .isLive () .addInterest ("set_enabled__", this);
 
-			this .enabled_      .addInterest ("set_enabled__", this);
-			this .size_         .addInterest ("set_enabled__", this);
-			this .size_         .addInterest ("set_bbox__", this);
-			this .center_       .addInterest ("set_bbox__", this);
+			this .enabled_      .addInterest ("set_enabled__",      this);
+			this .size_         .addInterest ("set_enabled__",      this);
+			this .size_         .addInterest ("set_bbox__",         this);
+			this .center_       .addInterest ("set_bbox__",         this);
 			this .targetObject_ .addInterest ("set_targetObject__", this);
 
 			this .set_bbox__ ();
@@ -156,18 +156,18 @@ function (Fields,
 		update: (function ()
 		{
 			var
-				targetBox   = new Box3 (),
+				targetBBox  = new Box3 (),
 				position    = new Vector3 (0, 0, 0),
 				orientation = new Rotation4 (0, 0, 1, 0),
 				infinity    = new Vector3 (-1, -1, -1);
 
 			return function ()
 			{
-				this .targetObjectNode .getBBox (targetBox);
+				this .targetObjectNode .getBBox (targetBBox);
 			
-				if (this .size_. getValue () .equals (infinity) || this .bbox .intersectsBox (targetBox))
+				if (this .size_ .getValue () .equals (infinity) || this .bbox .intersectsBox (targetBBox))
 				{
-					targetBox .getMatrix () .get (position, orientation);
+					targetBBox .getMatrix () .get (position, orientation);
 			
 					if (this .isActive_ .getValue ())
 					{

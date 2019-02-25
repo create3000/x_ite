@@ -87,8 +87,6 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "exitTime",  new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",  new Fields .SFBool ()),
 		]),
-		size: new Vector3 (0, 0, 0),
-		center: new Vector3 (0, 0, 0),
 		getTypeName: function ()
 		{
 			return "VisibilitySensor";
@@ -141,7 +139,10 @@ function (Fields,
 		},
 		traverse: (function ()
 		{
-			var infinity = new Vector3 (-1, -1, -1);
+			var
+				size     = new Vector3 (0, 0, 0),
+				center   = new Vector3 (0, 0, 0),
+				infinity = new Vector3 (-1, -1, -1);
 
 			return function (type, renderObject)
 			{
@@ -161,10 +162,11 @@ function (Fields,
 				{
 					var
 						viewVolume      = renderObject .getViewVolume (),
-						modelViewMatrix = renderObject .getModelViewMatrix () .get (),
-						size            = modelViewMatrix .multDirMatrix (this .size   .assign (this .size_   .getValue ())),
-						center          = modelViewMatrix .multVecMatrix (this .center .assign (this .center_ .getValue ()));
-	
+						modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+
+					modelViewMatrix .multDirMatrix (size   .assign (this .size_   .getValue ())),
+					modelViewMatrix .multVecMatrix (center .assign (this .center_ .getValue ()));
+
 					this .visible = viewVolume .intersectsSphere (size .abs () / 2, center);
 				}
 			};
