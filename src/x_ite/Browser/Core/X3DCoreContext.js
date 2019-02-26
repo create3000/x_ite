@@ -619,6 +619,41 @@ function ($,
 					this .nextViewpoint ();
 					break;
 				}
+				case 119: // F8
+				{
+					if (this .getShiftKey ())
+					{
+						event .preventDefault ();
+						
+						var viewpoint = this .getActiveViewpoint ();
+
+						if (! viewpoint)
+							break;
+
+						var text = "";
+
+						text += "Viewpoint {\n";
+						text += "  position " + viewpoint .getUserPosition () .toString () + "\n";
+						text += "  orientation " + viewpoint .getUserOrientation () .toString () + "\n";
+						text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () .toString () + "\n";
+						text += "}\n";
+
+						console .log (text);
+
+						navigator .clipboard .writeText (text) .then (function()
+						{
+							this .getNotification () .string_ = "Copied Viewpoint to clipboard.";
+						}
+						.bind (this),
+						function (error)
+						{
+							this .getNotification () .string_ = "Couldn't copy viewpoint.";
+						}
+						.bind (this));
+					}
+
+					break;
+				}
 			}
 		},
 		keyup_X3DCoreContext: function (event)
