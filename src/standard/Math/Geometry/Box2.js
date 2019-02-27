@@ -55,19 +55,6 @@ function (Matrix3, Vector2)
 {
 "use strict";
 
-	var
-		x   = new Vector2 (0, 0),
-		y   = new Vector2 (0, 0),
-		min = new Vector2 (0, 0),
-		max = new Vector2 (0, 0),
-		p1  = new Vector2 (0, 0);
-
-	var
-		lhs_min = new Vector2 (0, 0),
-		lhs_max = new Vector2 (0, 0),
-		rhs_min = new Vector2 (0, 0),
-		rhs_max = new Vector2 (0, 0);
-
 	function Box2 (size, center)
 	{
 		switch (arguments .length)
@@ -163,19 +150,28 @@ function (Matrix3, Vector2)
 		{
 			return this .matrix [8] === 0;
 		},
-		add: function (box)
+		add: (function ()
 		{
-			if (this .isEmpty ())
-				return this .assign (box);
+			var
+				lhs_min = new Vector2 (0, 0),
+				lhs_max = new Vector2 (0, 0),
+				rhs_min = new Vector2 (0, 0),
+				rhs_max = new Vector2 (0, 0);
 
-			if (box .isEmpty ())
-				return this;
-
-			this .getExtents (lhs_min, lhs_max);
-			box  .getExtents (rhs_min, rhs_max);
-
-			return this .assign (new Box2 (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true));
-		},
+			return function (box)
+			{
+				if (this .isEmpty ())
+					return this .assign (box);
+	
+				if (box .isEmpty ())
+					return this;
+	
+				this .getExtents (lhs_min, lhs_max);
+				box  .getExtents (rhs_min, rhs_max);
+	
+				return this .assign (new Box2 (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true));
+			};
+		})(),
 		multLeft: function (matrix)
 		{
 			this .matrix .multLeft (matrix);
@@ -193,35 +189,50 @@ function (Matrix3, Vector2)
 			min .add (this .center);
 			max .add (this .center);
 		},
-		getAbsoluteExtents: function (min, max)
+		getAbsoluteExtents: (function ()
 		{
-		   var m = this .matrix;
+			var
+				x  = new Vector2 (0, 0),
+				y  = new Vector2 (0, 0),
+				p1 = new Vector2 (0, 0);
 
-			x .assign (m .xAxis);
-			y .assign (m .yAxis);
-
-			p1 .assign (x) .add (y);
-
-			var p2 = y .subtract (x);
-
-			min .assign (p1) .min (p2);
-			max .assign (p1) .max (p2);
-
-			p1 .negate ();
-			p2 .negate ();
-
-			min .min (p1, p2);
-			max .max (p1, p2);
-		},
-		intersectsPoint: function (point)
+			return function (min, max)
+			{
+			   var m = this .matrix;
+	
+				x .assign (m .xAxis);
+				y .assign (m .yAxis);
+	
+				p1 .assign (x) .add (y);
+	
+				var p2 = y .subtract (x);
+	
+				min .assign (p1) .min (p2);
+				max .assign (p1) .max (p2);
+	
+				p1 .negate ();
+				p2 .negate ();
+	
+				min .min (p1, p2);
+				max .max (p1, p2);
+			};
+		})(),
+		intersectsPoint: (function ()
 		{
-			this .getExtents (min, max);
+			var
+				min = new Vector2 (0, 0),
+				max = new Vector2 (0, 0);
 
-			return min .x <= point .x &&
-			       max .x >= point .x &&
-			       min .y <= point .y &&
-			       max .y >= point .y;
-		},
+			return function (point)
+			{
+				this .getExtents (min, max);
+	
+				return min .x <= point .x &&
+				       max .x >= point .x &&
+				       min .y <= point .y &&
+				       max .y >= point .y;
+			};
+		})(),
 		toString: function ()
 		{
 			return this .size + ", " + this .center;
@@ -230,14 +241,19 @@ function (Matrix3, Vector2)
 
 	Object .defineProperty (Box2 .prototype, "size",
 	{
-		get: function ()
+		get: (function ()
 		{
-			var max = new Vector2 (0, 0);
-			
-			this .getAbsoluteExtents (min, max);
+			var
+				min = new Vector2 (0, 0),
+				max = new Vector2 (0, 0);
 
-			return max .subtract (min);
-		},
+			return function ()
+			{
+				this .getAbsoluteExtents (min, max);
+	
+				return max .subtract (min);
+			};
+		})(),
 		enumerable: true,
 		configurable: false
 	});
