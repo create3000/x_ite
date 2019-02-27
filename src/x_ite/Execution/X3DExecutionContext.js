@@ -189,7 +189,12 @@ function (Fields,
 			var Type = this .getBrowser () .getSupportedNode (typeName);
 
 			if (! Type)
-				throw new Error ("Unknown node type '" + typeName + "'.");
+			{
+				if (setup === false)
+					return null
+				else
+					throw new Error ("Unknown node type '" + typeName + "'.");
+			}
 
 			var node = new Type (this);
 
@@ -222,7 +227,10 @@ function (Fields,
 				executionContext = executionContext .getExecutionContext ();
 			}
 
-			throw new Error ("Unknown proto or externproto type '" + name + "'.");
+			if (setup === false)
+				return null
+			else
+				throw new Error ("Unknown proto or externproto type '" + name + "'.");
 		},
 		addUninitializedNode: function (node)
 		{

@@ -1330,24 +1330,18 @@ function (Fields,
 		{
 			if (this .nodeTypeId ())
 			{
-				var nodeTypeId = this .result [1];
-		
-				try
+				var
+					nodeTypeId = this .result [1],
+					baseNode   = this .getExecutionContext () .createNode (nodeTypeId, false);
+
+				if (! baseNode)
 				{
-					var baseNode = this .getExecutionContext () .createNode (nodeTypeId, false);
+					baseNode = this .getExecutionContext () .createProto (nodeTypeId, false);
+
+					if (! baseNode)
+						throw new Error ("Unkown node type or proto '" + nodeTypeId + "'.");
 				}
-				catch (error1)
-				{
-					try
-					{
-						var baseNode = this .getExecutionContext () .createProto (nodeTypeId, false);
-					}
-					catch (error2)
-					{
-						throw new Error (error1 .message + "\n" + error2 .message);
-					}
-				}
-		
+
 				if (nodeNameId .length)
 				{
 					try

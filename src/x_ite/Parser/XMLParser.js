@@ -623,6 +623,9 @@ function ($,
 				{
 					var node = this .getExecutionContext () .createProto (name, false);
 
+					if (! node)
+						throw new Error ("Unkown proto or externproto type '" + name + "'.");
+
 					//AP: attach node to DOM xmlElement for access from DOM.
 					xmlElement .x3d = node;
 
@@ -683,6 +686,9 @@ function ($,
 					return;
 
 				var node = this .getExecutionContext () .createNode (xmlElement .nodeName, false);
+
+				if (! node)
+					throw new Error ("Unkown node type '" + xmlElement .nodeName + "'.");
 
 				//AP: attach node to DOM xmlElement for access from DOM.
 				xmlElement .x3d = node;
