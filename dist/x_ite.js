@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-601 */
+/* X_ITE v4.4.2a-602 */
 
 (function () {
 
@@ -13080,11 +13080,11 @@ function (X3DConstants)
 		{
 			var index = this .importedNodesIndex [this .ExecutionContext () .getId ()];
 
-			for (var importedName in importedNodes)
+			for (var importedNode of importedNodes .values ())
 			{
 				try
 				{
-					index [importedNodes [importedName] .getInlineNode () .getId ()] = true;
+					index [importedNode .getInlineNode () .getId ()] = true;
 				}
 				catch (error)
 				{ }
@@ -25018,10 +25018,8 @@ function (X3DEventObject,
 		{
 			return new (this .constructor) (executionContext);
 		},
-		copy: function (executionContext)
+		copy: (function ()
 		{
-			// First try to get a named node with the node's name.
-
 			function needsName (baseNode)
 			{
 				if (baseNode .getCloneCount () > 1)
@@ -25033,50 +25031,104 @@ function (X3DEventObject,
 				return false;
 			}
 
-			var name = this .getName ();
-		
-			if (name .length)
+			return function (executionContext)
 			{
-				try
+				// First try to get a named node with the node's name.
+
+				var name = this .getName ();
+			
+				if (name .length)
 				{
-					return executionContext .getNamedNode (name) .getValue ();
+					var namedNode = executionContext .getNamedNodes () .get (name);
+
+					if (namedNode)
+						return namedNode .getValue ();
 				}
-				catch (error)
-				{ }
-			}
-			else
-			{
-				if (needsName (this))
-					this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), this);
-			}
-
-			// Create copy.
-
-			var copy = this .create (executionContext);
-
-			if (name .length)
-				executionContext .updateNamedNode (name, copy);
-
-			// Default fields
-
-			var predefinedFields = this .getPredefinedFields ();
-
-			for (var sourceField of predefinedFields .values ())
-			{
-				try
+				else
 				{
-					var destfield = copy .getField (sourceField .getName ());
-
+					if (needsName (this))
+						this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), this);
+				}
+	
+				// Create copy.
+	
+				var copy = this .create (executionContext);
+	
+				if (name .length)
+					executionContext .updateNamedNode (name, copy);
+	
+				// Default fields
+	
+				var predefinedFields = this .getPredefinedFields ();
+	
+				for (var sourceField of predefinedFields .values ())
+				{
+					try
+					{
+						var destfield = copy .getField (sourceField .getName ());
+	
+						destfield .setSet (sourceField .getSet ());
+	
+						if (sourceField .hasReferences ())
+						{
+							var references = sourceField .getReferences ();
+	
+							// IS relationship
+							for (var originalReference of references .values ())
+							{
+								try
+								{
+									destfield .addReference (executionContext .getField (originalReference .getName ()));
+								}
+								catch (error)
+								{
+									console .error (error .message);
+								}
+							}
+						}
+						else
+						{
+							if (sourceField .getAccessType () & X3DConstants .initializeOnly)
+							{
+								switch (sourceField .getType ())
+								{
+									case X3DConstants .SFNode:
+									case X3DConstants .MFNode:
+										destfield .setValue (sourceField .copy (executionContext));
+										break;
+									default:
+										destfield .setValue (sourceField);
+										break;
+								}
+							}
+						}
+					}
+					catch (error)
+					{
+						console .log (error .message);
+					}
+				}
+	
+				// User-defined fields
+	
+				var userDefinedFields = this .getUserDefinedFields ();
+	
+				for (var sourceField of userDefinedFields .values ())
+				{
+					var destfield = sourceField .copy (executionContext);
+	
+					copy .addUserDefinedField (sourceField .getAccessType (),
+					                           sourceField .getName (),
+					                           destfield);
+	
 					destfield .setSet (sourceField .getSet ());
-
-					//if (sourceField .getAccessType () === destfield .getAccessType () and sourceField .getType () === destfield .getType ())
-					//{
-
+	
 					if (sourceField .hasReferences ())
 					{
-						var references = sourceField .getReferences ();
-
 						// IS relationship
+	
+						var references = sourceField .getReferences ();
+	
 						for (var originalReference of references .values ())
 						{
 							try
@@ -25085,70 +25137,16 @@ function (X3DEventObject,
 							}
 							catch (error)
 							{
-								console .error (error .message);
-							}
-						}
-					}
-					else
-					{
-						if (sourceField .getAccessType () & X3DConstants .initializeOnly)
-						{
-							switch (sourceField .getType ())
-							{
-								case X3DConstants .SFNode:
-								case X3DConstants .MFNode:
-									destfield .setValue (sourceField .copy (executionContext));
-									break;
-								default:
-									destfield .setValue (sourceField);
-									break;
+								console .error ("No reference '" + originalReference .getName () + "' inside execution context " + executionContext .getTypeName () + " '" + executionContext .getName () + "'.");
 							}
 						}
 					}
 				}
-				catch (error)
-				{
-					console .log (error .message);
-				}
-			}
-
-			// User-defined fields
-
-			var userDefinedFields = this .getUserDefinedFields ();
-
-			for (var sourceField of userDefinedFields .values ())
-			{
-				var destfield = sourceField .copy (executionContext);
-
-				copy .addUserDefinedField (sourceField .getAccessType (),
-				                           sourceField .getName (),
-				                           destfield);
-
-				destfield .setSet (sourceField .getSet ());
-
-				if (sourceField .hasReferences ())
-				{
-					// IS relationship
-
-					var references = sourceField .getReferences ();
-
-					for (var originalReference of references .values ())
-					{
-						try
-						{
-							destfield .addReference (executionContext .getField (originalReference .getName ()));
-						}
-						catch (error)
-						{
-							console .error ("No reference '" + originalReference .getName () + "' inside execution context " + executionContext .getTypeName () + " '" + executionContext .getName () + "'.");
-						}
-					}
-				}
-			}
-
-			executionContext .addUninitializedNode (copy);
-			return copy;
-		},
+	
+				executionContext .addUninitializedNode (copy);
+				return copy;
+			};
+		})(),
 		flatCopy: function (executionContext)
 		{
 			var
@@ -30378,7 +30376,7 @@ define ('x_ite/Configuration/X3DInfoArray',[],function ()
 			if (value !== undefined)
 				return value;
 
-			return target .index [key];
+			return target .index .get (key);
 		},
 		set: function (target, key, value)
 		{
@@ -30386,7 +30384,7 @@ define ('x_ite/Configuration/X3DInfoArray',[],function ()
 		},
 		has: function (target, key)
 		{
-			return key in target .array || key in target .index;
+			return key in target .array || target .index .has (key);
 		},
 		enumerate: function (target)
 		{
@@ -30397,7 +30395,7 @@ define ('x_ite/Configuration/X3DInfoArray',[],function ()
 	function X3DInfoArray ()
 	{
 		this .array = [ ];
-		this .index = { };
+		this .index = new Map ();
 
 		return new Proxy (this, handler);
 	}
@@ -30408,11 +30406,11 @@ define ('x_ite/Configuration/X3DInfoArray',[],function ()
 		add: function (key, value)
 		{
 			this .array .push (value);
-			this .index [key] = value;
+			this .index .set (key, value);
 		},
 		get: function (key)
 		{
-			return this .index [key];
+			return this .index .get (key);
 		},
 		getValue: function ()
 		{
@@ -32261,12 +32259,12 @@ function (Fields,
 		this .url                  = new URI (window .location);
 		this .uninitializedNodes   = [ ];
 		this .uninitializedNodes2  = [ ];
-		this .namedNodes           = { };
-		this .importedNodes        = { };
+		this .namedNodes           = new Map ();
+		this .importedNodes        = new Map ();
 		this .protos               = new ProtoDeclarationArray ();
 		this .externprotos         = new ExternProtoDeclarationArray ();
 		this .routes               = new RouteArray ();
-		this .routeIndex           = { };
+		this .routeIndex           = new Map ();
 	}
 
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -32276,7 +32274,7 @@ function (Fields,
 		{
 			X3DBaseNode .prototype .setup .call (this);
 
-			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration")
+			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
 			if (! (this instanceof X3DProtoDeclaration))
 			{
@@ -32350,19 +32348,30 @@ function (Fields,
 		},
 		createNode: function (typeName, setup)
 		{
-			var Type = this .getBrowser () .getSupportedNode (typeName);
-
-			if (! Type)
-				throw new Error ("Unknown node type '" + typeName + "'.");
-
-			var node = new Type (this);
-
 			if (setup === false)
+			{
+				var Type = this .getBrowser () .getSupportedNode (typeName);
+	
+				if (! Type)
+					return null;
+	
+				var node = new Type (this);
+	
 				return node;
-
-			node .setup ();
-
-			return new Fields .SFNode (node);
+			}
+			else
+			{
+				var Type = this .getBrowser () .getSupportedNode (typeName);
+	
+				if (! Type)
+					throw new Error ("Unknown node type '" + typeName + "'.");
+	
+				var node = new Type (this);
+	
+				node .setup ();
+	
+				return new Fields .SFNode (node);
+			}
 		},
 		createProto: function (name, setup)
 		{
@@ -32370,12 +32379,12 @@ function (Fields,
 
 			for (;;)
 			{
-				var proto = executionContext .protos [name];
+				var proto = executionContext .protos .get (name);
 
 				if (proto)
 					return proto .createInstance (this, setup);
 
-				var externproto = executionContext .externprotos [name];
+				var externproto = executionContext .externprotos .get (name);
 
 				if (externproto)
 					return externproto .createInstance (this, setup);
@@ -32386,7 +32395,10 @@ function (Fields,
 				executionContext = executionContext .getExecutionContext ();
 			}
 
-			throw new Error ("Unknown proto or externproto type '" + name + "'.");
+			if (setup === false)
+				return null;
+			else
+				throw new Error ("Unknown proto or externproto type '" + name + "'.");
 		},
 		addUninitializedNode: function (node)
 		{
@@ -32394,7 +32406,7 @@ function (Fields,
 		},
 		addNamedNode: function (name, node)
 		{
-			if (this .namedNodes [name] !== undefined)
+			if (this .namedNodes .has (name))
 				throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
 
 			this .updateNamedNode (name, node);
@@ -32425,20 +32437,24 @@ function (Fields,
 
 			node .getValue () .setName (name);
 
-			this .namedNodes [name] = node;
+			this .namedNodes .set (name, node);
 		},
 		removeNamedNode: function (name)
 		{
-			delete this .namedNodes [name];
+			this .namedNodes .delete (name);
 		},
 		getNamedNode: function (name)
 		{
-			var node = this .namedNodes [name];
+			var node = this .namedNodes .get (name);
 
 			if (! node)
 				throw new Error ("Named node '" + name + "' not found.");
 
 			return node;
+		},
+		getNamedNodes: function ()
+		{
+			return this .namedNodes;
 		},
 		getUniqueName: function (name)
 		{
@@ -32452,7 +32468,7 @@ function (Fields,
 
 			for (; i;)
 			{
-				if (this .namedNodes [newName] || newName .length === 0)
+				if (this .namedNodes .has (newName) || newName .length === 0)
 				{
 					var
 						min = i,
@@ -32473,7 +32489,7 @@ function (Fields,
 			if (importedName === undefined)
 				importedName = exportedName;
 
-			if (this .importedNodes [importedName])
+			if (this .importedNodes .has (importedName))
 				throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
 
 			this .updateImportedNode (inlineNode, exportedName, importedName);
@@ -32498,15 +32514,15 @@ function (Fields,
 
 			// Update existing imported node.
 
-			for (var key in this .importedNodes)
+			for (var key of this .importedNodes .keys ())
 			{
-				var importedNode = this .importedNodes [key];
+				var importedNode = this .importedNodes .get (key);
 				
 				if (importedNode .getInlineNode () === inlineNode && importedNode .getExportedName () === exportedName)
 				{
-					delete this .importedNodes [key];
+					this .importedNodes .delete (key);
 					
-					this .importedNodes [importedName] = importedNode;
+					this .importedNodes .set (importedName, importedNode);
 					
 					importedNode .setImportedName (importedName);
 					return;
@@ -32517,21 +32533,24 @@ function (Fields,
 
 			this .removeImportedNode (importedName);
 
-			this .importedNodes [importedName] = new ImportedNode (this, inlineNode, exportedName, importedName);
-			this .importedNodes [importedName] .setup ();
+			var importedNode = new ImportedNode (this, inlineNode, exportedName, importedName);
+
+			this .importedNodes .set (importedName, importedNode);
+
+			importedNode .setup ();
 		},
 		removeImportedNode: function (importedName)
 		{
-			var importedNode = this .importedNodes [importedName];
+			var importedNode = this .importedNodes .get (importedName);
 
 			if (importedNode)
 				importedNode .dispose ();
 
-			delete this .importedNodes [importedName];
+			this .importedNodes .delete (importedName);
 		},
 		getImportedNode: function (importedName)
 		{
-			var importedNode = this .importedNodes [importedName];
+			var importedNode = this .importedNodes .get (importedName);
 
 			if (importedNode)
 				return importedNode .getExportedNode ();
@@ -32550,7 +32569,7 @@ function (Fields,
 			}
 			catch (error)
 			{
-				var importedNode = this .importedNodes [name];
+				var importedNode = this .importedNodes .get (name);
 
 				if (importedNode)
 					return new Fields .SFNode (importedNode);
@@ -32566,12 +32585,10 @@ function (Fields,
 			if (node .getValue () .getExecutionContext () === this)
 				return node .getValue () .getName ();
 
-			for (var key in this .importedNodes)
+			for (var importedNode of this .importedNodes .values ())
 			{
 				try
 				{
-					var importedNode = this .importedNodes [key];
-				
 					if (importedNode .getExportedNode () === node)
 						return key;
 				}
@@ -32683,17 +32700,19 @@ function (Fields,
 				if (sourceField .getType () !== destinationField .getType ())
 					throw new Error ("ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
 
-				var id = sourceField .getId () + "." + destinationField .getId ();
+				var
+					id    = sourceField .getId () + "." + destinationField .getId (),
+					route = this .routeIndex .get (id);
 
-				if (this .routeIndex [id])
-					return this .routeIndex [id];
+				if (route)
+					return route;
 
 				var route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
 				route .setup ();
 
 				this .routes .getValue () .push (route);
-				this .routeIndex [id] = route;
+				this .routeIndex .set (id, route);
 
 				return route;
 			}
@@ -32726,7 +32745,7 @@ function (Fields,
 				if (index !== -1)
 					this .routes .getValue () .splice (index, 1);
 
-				delete this .routeIndex [id];
+				this .routeIndex .delete (id);
 			}
 			catch (error)
 			{
@@ -32746,7 +32765,7 @@ function (Fields,
 				destinationField = destinationNode .getValue () .getField (destinationField),
 				id               = sourceField .getId () + "." + destinationField .getId ();
 
-			return this .routeIndex [id];
+			return this .routeIndex .get (id);
 		},
 		getRoutes: function ()
 		{
@@ -32810,11 +32829,11 @@ function (Fields,
 
 			var importedNodes = this .getImportedNodes ();
 
-			for (var importedName in importedNodes)
+			for (var importedNode of importedNodes .values ())
 			{
 				try
 				{
-					importedNodes [importedName] .toXMLStream (stream);
+					importedNode .toXMLStream (stream);
 
 					stream .string += "\n";
 				}
@@ -33091,7 +33110,7 @@ function (Fields,
 		X3DObject .call (this);
 
 		this .exportedName = exportedName;
-		this .localNode    = localNode;
+		this .localNode    = new Fields .SFNode (localNode);
 	}
 
 	ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
@@ -33103,13 +33122,13 @@ function (Fields,
 		},
 		getLocalNode: function ()
 		{
-			return new Fields .SFNode (this .localNode);
+			return this .localNode;
 		},
 		toXMLStream: function (stream)
 		{
 			var
 				generator = Generator .Get (stream),
-				localName = generator .LocalName (this .localNode);
+				localName = generator .LocalName (this .localNode .getValue ());
 
 			stream .string += generator .Indent ();
 			stream .string += "<EXPORT";
@@ -33214,8 +33233,8 @@ function (Fields,
 		this .unitArray .add ("length", new UnitInfo ("length", "metre",    1));
 		this .unitArray .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
-		this .metadata      = { };
-		this .exportedNodes = { };
+		this .metadata      = new Map ()
+		this .exportedNodes = new Map ()
 
 		this .setLive (false);
 	}
@@ -33315,23 +33334,23 @@ function (Fields,
 			if (! name .length)
 				return;
 
-			this .metadata [name] = String (value);
+			this .metadata .set (name, String (value));
 		},
 		removeMetaData: function (name)
 		{
-			delete this .metadata [name];
+			this .metadata .delete (name);
 		},
 		getMetaData: function (name)
 		{
-			return this .metadata [name];
+			return this .metadata .get (name);
 		},
 		getMetadata: function ()
 		{
-			return Object .assign ({ }, this .metadata);
+			return this .metadata;
 		},
 		addExportedNode: function (exportedName, node)
 		{
-			if (this .exportedNodes [exportedName])
+			if (this .exportedNodes .has (exportedName))
 				throw new Error ("Couldn't add exported node: exported name '" + exportedName + "' already in use.");
 
 			this .updateExportedNode (exportedName, node);
@@ -33352,15 +33371,19 @@ function (Fields,
 			//if (node .getValue () .getExecutionContext () !== this)
 			//	throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
-			this .exportedNodes [exportedName] = new ExportedNode (exportedName, node .getValue ());
+			var exportedNode = new ExportedNode (exportedName, node .getValue ());
+
+			this .exportedNodes .set (exportedName, exportedNode);
+
+			exportedNode .setup ();
 		},
 		removeExportedNode: function (exportedName)
 		{
-			delete this .exportedNodes [exportedName];
+			this .exportedNodes .delete (exportedName);
 		},
 		getExportedNode: function (exportedName)
 		{
-			var exportedNode = this .exportedNodes [exportedName];
+			var exportedNode = this .exportedNodes .get (exportedName);
 
 			if (exportedNode)
 				return exportedNode .getLocalNode ();	
@@ -33467,20 +33490,18 @@ function (Fields,
 					stream .string += "\n";
 				}
 			}
-		
-			var metaDatas = this .metadata;
 
-			for (var key in metaDatas)
+			for (var value of this .metadata)
 			{
 				stream .string += generator .Indent ();
 				stream .string += "<meta";
 				stream .string += " ";
 				stream .string += "name='";
-				stream .string += generator .XMLEncode (key);
+				stream .string += generator .XMLEncode (value [0]);
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "content='";
-				stream .string += generator .XMLEncode (metaDatas [key]);
+				stream .string += generator .XMLEncode (value [1]);
 				stream .string += "'";
 				stream .string += "/>\n";
 			}
@@ -33506,11 +33527,11 @@ function (Fields,
 
 			X3DExecutionContext .prototype .toXMLStream .call (this, stream);
 		
-			for (var exportedName in exportedNodes)
+			for (var exportedNode of exportedNodes .values ())
 			{
 				//try
 				{
-					exportedNodes [exportedName] .toXMLStream (stream);
+					exportedNode .toXMLStream (stream);
 
 					stream .string += "\n";
 				}
@@ -34152,13 +34173,18 @@ function (FieldDefinitionArray,
 		this .addType (X3DConstants .X3DPrototypeInstance);
 		this .getRootNodes () .setAccessType (X3DConstants .initializeOnly);
 
-		this .getScene () .addInitLoadCount (this);
+		var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
-		if (protoNode .isExternProto)
-			protoNode .requestAsyncLoad (this .construct .bind (this));
-
-		else
-			this .construct ();
+		if (this .getExecutionContext () .constructor !== X3DProtoDeclaration)
+		{
+			this .getScene () .addInitLoadCount (this);
+	
+			if (protoNode .isExternProto)
+				protoNode .requestAsyncLoad (this .construct .bind (this));
+	
+			else
+				this .construct ();
+		}
 	}
 
 	X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
@@ -36676,24 +36702,18 @@ function (Fields,
 		{
 			if (this .nodeTypeId ())
 			{
-				var nodeTypeId = this .result [1];
-		
-				try
+				var
+					nodeTypeId = this .result [1],
+					baseNode   = this .getExecutionContext () .createNode (nodeTypeId, false);
+
+				if (! baseNode)
 				{
-					var baseNode = this .getExecutionContext () .createNode (nodeTypeId, false);
+					baseNode = this .getExecutionContext () .createProto (nodeTypeId, false);
+
+					if (! baseNode)
+						throw new Error ("Unkown node type or proto '" + nodeTypeId + "'.");
 				}
-				catch (error1)
-				{
-					try
-					{
-						var baseNode = this .getExecutionContext () .createProto (nodeTypeId, false);
-					}
-					catch (error2)
-					{
-						throw new Error (error1 .message + "\n" + error2 .message);
-					}
-				}
-		
+
 				if (nodeNameId .length)
 				{
 					try
@@ -39021,6 +39041,41 @@ function ($,
 				{
 					event .preventDefault ();
 					this .nextViewpoint ();
+					break;
+				}
+				case 119: // F8
+				{
+					if (this .getShiftKey ())
+					{
+						event .preventDefault ();
+						
+						var viewpoint = this .getActiveViewpoint ();
+
+						if (! viewpoint)
+							break;
+
+						var text = "";
+
+						text += "Viewpoint {\n";
+						text += "  position " + viewpoint .getUserPosition () .toString () + "\n";
+						text += "  orientation " + viewpoint .getUserOrientation () .toString () + "\n";
+						text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () .toString () + "\n";
+						text += "}\n";
+
+						console .log (text);
+
+						navigator .clipboard .writeText (text) .then (function()
+						{
+							this .getNotification () .string_ = "Copied Viewpoint to clipboard.";
+						}
+						.bind (this),
+						function (error)
+						{
+							this .getNotification () .string_ = "Couldn't copy viewpoint.";
+						}
+						.bind (this));
+					}
+
 					break;
 				}
 			}
@@ -45458,6 +45513,9 @@ function ($,
 				{
 					var node = this .getExecutionContext () .createProto (name, false);
 
+					if (! node)
+						throw new Error ("Unkown proto or externproto type '" + name + "'.");
+
 					//AP: attach node to DOM xmlElement for access from DOM.
 					xmlElement .x3d = node;
 
@@ -45518,6 +45576,9 @@ function ($,
 					return;
 
 				var node = this .getExecutionContext () .createNode (xmlElement .nodeName, false);
+
+				if (! node)
+					throw new Error ("Unkown node type '" + xmlElement .nodeName + "'.");
 
 				//AP: attach node to DOM xmlElement for access from DOM.
 				xmlElement .x3d = node;
@@ -57920,89 +57981,6 @@ function (Triangle3,
 {
 "use strict";
 
-	var
-	   min = new Vector3 (0, 0, 0),
-	   max = new Vector3 (0, 0, 0),
-	   x   = new Vector3 (0, 0, 0),
-	   y   = new Vector3 (0, 0, 0),
-	   z   = new Vector3 (0, 0, 0),
-	   r1  = new Vector3 (0, 0, 0),
-	   p1  = new Vector3 (0, 0, 0),
-	   p4  = new Vector3 (0, 0, 0);
-
-	var
-		lhs_min = new Vector3 (0, 0, 0),
-		lhs_max = new Vector3 (0, 0, 0),
-		rhs_min = new Vector3 (0, 0, 0),
-		rhs_max = new Vector3 (0, 0, 0);
-
-
-	var points1 = [
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-	];
-
-	var points2 = [
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-	];
-
-	var axes1 = [
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-	];
-
-	var axes2 = [
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-	];
-
-	var axes9 = [
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-	];
-
-	var planes = [
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-	];
-
-	var triangle = [ ];
-
-	var triangleNormal = [ new Vector3 (0, 0, 0) ];
-
-	var triangleEdges = [
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0),
-		new Vector3 (0, 0, 0)
-	];
-
 	function Box3 (size, center)
 	{
 		switch (arguments .length)
@@ -58068,9 +58046,6 @@ function (Triangle3,
 		},
 		set: function (size, center)
 		{
-			if (points1 .box === this) points1 .box = null;
-			if (axes1   .box === this) axes1   .box = null;
-
 			var m = this .matrix;
 
 			switch (arguments .length)
@@ -58095,9 +58070,6 @@ function (Triangle3,
 		},
 		setExtents: function (min, max)
 		{
-			if (points1 .box === this) points1 .box = null;
-			if (axes1   .box === this) axes1   .box = null;
-
 			var
 				m  = this .matrix,
 				sx = (max .x - min .x) / 2,
@@ -58120,87 +58092,107 @@ function (Triangle3,
 			min .add (this .center);
 			max .add (this .center);
 		},
-		getAbsoluteExtents: function (min, max)
+		getAbsoluteExtents: (function ()
 		{
-			var m = this .matrix;
-
-			x .assign (m .xAxis);
-			y .assign (m .yAxis);
-			z .assign (m .zAxis);
-
-			r1 .assign (y) .add (z);
-
-			var r2 = z .subtract (y);
-
-			p1 .assign (x) .add (r1),
-			p4 .assign (x) .add (r2);
-			
 			var
-				p2 = r1 .subtract (x),
-				p3 = r2 .subtract (x);
+				x  = new Vector3 (0, 0, 0),
+				y  = new Vector3 (0, 0, 0),
+				z  = new Vector3 (0, 0, 0),
+				r1 = new Vector3 (0, 0, 0),
+				p1 = new Vector3 (0, 0, 0),
+				p4 = new Vector3 (0, 0, 0);
 
-			min .assign (p1);
-			max .assign (p1);
-
-			min .min (p2, p3, p4);
-			max .max (p2, p3, p4);
-
-			p1 .negate ();
-			p2 .negate ();
-			p3 .negate ();
-			p4 .negate ();
-
-			min .min (p1, p2, p3, p4);
-			max .max (p1, p2, p3, p4);
-		},
-		getPoints: function (points)
+			return function (min, max)
+			{
+				var m = this .matrix;
+	
+				x .assign (m .xAxis);
+				y .assign (m .yAxis);
+				z .assign (m .zAxis);
+	
+				r1 .assign (y) .add (z);
+	
+				var r2 = z .subtract (y);
+	
+				p1 .assign (x) .add (r1),
+				p4 .assign (x) .add (r2);
+				
+				var
+					p2 = r1 .subtract (x),
+					p3 = r2 .subtract (x);
+	
+				min .assign (p1);
+				max .assign (p1);
+	
+				min .min (p2, p3, p4);
+				max .max (p2, p3, p4);
+	
+				p1 .negate ();
+				p2 .negate ();
+				p3 .negate ();
+				p4 .negate ();
+	
+				min .min (p1, p2, p3, p4);
+				max .max (p1, p2, p3, p4);
+			};
+		})(),
+		getPoints: (function ()
 		{
-			/*
-			 * p6 ---------- p5
-			 * | \           | \
-			 * | p2------------ p1
-			 * |  |          |  |
-			 * |  |          |  |
-			 * p7 |_________ p8 |
-			 *  \ |           \ |
-			 *   \|            \|
-			 *    p3 ---------- p4
-			 */
-		
-			var m = this .matrix;
+			var
+				x  = new Vector3 (0, 0, 0),
+				y  = new Vector3 (0, 0, 0),
+				z  = new Vector3 (0, 0, 0),
+				r1 = new Vector3 (0, 0, 0);
 
-			x .assign (m .xAxis);
-			y .assign (m .yAxis);
-			z .assign (m .zAxis);
-		
-			r1 .assign (y) .add (z);
-
-			var r2 = z .subtract (y);
-		
-			points [0] .assign (x)  .add (r1);
-			points [1] .assign (r1) .subtract (x);
-			points [2] .assign (r2) .subtract (x);
-			points [3] .assign (x)  .add (r2);
-		
-			points [4] .assign (points [2]) .negate ();
-			points [5] .assign (points [3]) .negate ();
-			points [6] .assign (points [0]) .negate ();
-			points [7] .assign (points [1]) .negate ();
-		
-			var center = this .center;
-
-			points [0] .add (center);
-			points [1] .add (center);
-			points [2] .add (center);
-			points [3] .add (center);
-		
-			points [4] .add (center);
-			points [5] .add (center);
-			points [6] .add (center);
-			points [7] .add (center);
-		
-			return points;
-		},
+			return function (points)
+			{
+				/*
+				 * p6 ---------- p5
+				 * | \           | \
+				 * | p2------------ p1
+				 * |  |          |  |
+				 * |  |          |  |
+				 * p7 |_________ p8 |
+				 *  \ |           \ |
+				 *   \|            \|
+				 *    p3 ---------- p4
+				 */
+			
+				var m = this .matrix;
+	
+				x .assign (m .xAxis);
+				y .assign (m .yAxis);
+				z .assign (m .zAxis);
+			
+				r1 .assign (y) .add (z);
+	
+				var r2 = z .subtract (y);
+			
+				points [0] .assign (x)  .add (r1);
+				points [1] .assign (r1) .subtract (x);
+				points [2] .assign (r2) .subtract (x);
+				points [3] .assign (x)  .add (r2);
+			
+				points [4] .assign (points [2]) .negate ();
+				points [5] .assign (points [3]) .negate ();
+				points [6] .assign (points [0]) .negate ();
+				points [7] .assign (points [1]) .negate ();
+			
+				var center = this .center;
+	
+				points [0] .add (center);
+				points [1] .add (center);
+				points [2] .add (center);
+				points [3] .add (center);
+			
+				points [4] .add (center);
+				points [5] .add (center);
+				points [6] .add (center);
+				points [7] .add (center);
+			
+				return points;
+			};
+		})(),
 		getAxes: function (axes)
 		{
 			var m = this .matrix;
@@ -58356,19 +58348,28 @@ function (Triangle3,
 		{
 			return this .matrix [15] === 0;
 		},
-		add: function (box)
+		add: (function ()
 		{
-			if (this .isEmpty ())
-				return this .assign (box);
+			var
+				lhs_min = new Vector3 (0, 0, 0),
+				lhs_max = new Vector3 (0, 0, 0),
+				rhs_min = new Vector3 (0, 0, 0),
+				rhs_max = new Vector3 (0, 0, 0);
 
-			if (box .isEmpty ())
-				return this;
-
-			this .getExtents (lhs_min, lhs_max);
-			box  .getExtents (rhs_min, rhs_max);
-
-			return this .assign (new Box3 (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true));
-		},
+			return function (box)
+			{
+				if (this .isEmpty ())
+					return this .assign (box);
+	
+				if (box .isEmpty ())
+					return this;
+	
+				this .getExtents (lhs_min, lhs_max);
+				box  .getExtents (rhs_min, rhs_max);
+	
+				return this .assign (new Box3 (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true));
+			};
+		})(),
 		multLeft: function (matrix)
 		{
 			this .matrix .multLeft (matrix);
@@ -58379,116 +58380,225 @@ function (Triangle3,
 			this .matrix .multRight (matrix);
 			return this;
 		},
-		intersectsPoint: function (point)
+		intersectsPoint: (function ()
 		{
-			this .getExtents (min, max);
+			var
+				min = new Vector3 (0, 0, 0),
+				max = new Vector3 (0, 0, 0);
 
-			return min .x <= point .x &&
-			       max .x >= point .x &&
-			       min .y <= point .y &&
-			       max .y >= point .y &&
-			       min .z <= point .z &&
-			       max .z >= point .z;
-		},
-		intersectsBox: function (other)
+			return function (point)
+			{
+				this .getExtents (min, max);
+	
+				return min .x <= point .x &&
+				       max .x >= point .x &&
+				       min .y <= point .y &&
+				       max .y >= point .y &&
+				       min .z <= point .z &&
+				       max .z >= point .z;
+			};
+		})(),
+		intersectsBox: (function ()
 		{
-			// Test special cases.
+			var points1 = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
 		
-			if (this .isEmpty ())
-				return false;
-		
-			if (other .isEmpty ())
-				return false;
-		
-			// Get points.
-		
-			this  .getPoints (points1);
-			other .getPoints (points2);
-		
-			// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
-		
-			if (SAT .isSeparated (this .getNormals (planes), points1, points2))
-				return false;
-		
-			// Test the three planes spanned by the normal vectors of the faces of the second parallelepiped.
-		
-			if (SAT .isSeparated (other .getNormals (planes), points1, points2))
-				return false;
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
 
-			// Test the nine other planes spanned by the edges of each parallelepiped.
+			var points2 = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
 		
-			this  .getAxes (axes1);
-			other .getAxes (axes2);
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
 
-			for (var i1 = 0; i1 < 3; ++ i1)
+			var axes1 = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
+
+			var axes2 = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
+
+			var axes9 = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+		
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+		
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
+
+			var planes = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
+
+			return function (other)
 			{
-				for (var i2 = 0; i2 < 3; ++ i2)
-					axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (axes2 [i2]);
-			}
-		
-			if (SAT .isSeparated (axes9, points1, points2))
-				return false;
-		
-			// Both boxes intersect.
-		
-			return true;
-		},
-		intersectsTriangle: function (a, b, c)
-		{
-			// Test special cases.
-
-			if (this .isEmpty ())
-				return false;
-
-			// Get points.
-
-			if (points1 .box !== this)
-			{
-				points1 .box = this;
-				this .getPoints (points1);
-			}
-
-			triangle [0] = a;
-			triangle [1] = b;
-			triangle [2] = c;
-
-			// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
-
-			if (SAT .isSeparated (this .getNormals (planes), points1, triangle))
-				return false;
-
-			// Test the normal of the triangle.
-
-			Triangle3 .normal (a, b, c, triangleNormal [0]);
-
-			if (SAT .isSeparated (triangleNormal, points1, triangle))
-				return false;
-
-			// Test the nine other planes spanned by the edges of each parallelepiped.
-
-			if (axes1 .box !== this)
-			{
-				axes1 .box = this;
+				// Test special cases.
+			
+				if (this .isEmpty ())
+					return false;
+			
+				if (other .isEmpty ())
+					return false;
+			
+				// Get points.
+			
+				this  .getPoints (points1);
+				other .getPoints (points2);
+			
+				// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
+			
+				if (SAT .isSeparated (this .getNormals (planes), points1, points2))
+					return false;
+			
+				// Test the three planes spanned by the normal vectors of the faces of the second parallelepiped.
+			
+				if (SAT .isSeparated (other .getNormals (planes), points1, points2))
+					return false;
+	
+				// Test the nine other planes spanned by the edges of each parallelepiped.
+			
 				this  .getAxes (axes1);
-			}
+				other .getAxes (axes2);
+	
+				for (var i1 = 0; i1 < 3; ++ i1)
+				{
+					for (var i2 = 0; i2 < 3; ++ i2)
+						axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (axes2 [i2]);
+				}
+			
+				if (SAT .isSeparated (axes9, points1, points2))
+					return false;
+			
+				// Both boxes intersect.
+			
+				return true;
+			};
+		})(),
+		intersectsTriangle: (function ()
+		{
+			var points1 = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+		
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
 
-			triangleEdges [0] .assign (a) .subtract (b);
-			triangleEdges [1] .assign (b) .subtract (c);
-			triangleEdges [2] .assign (c) .subtract (a);
+			var axes1 = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
 
-			for (var i1 = 0; i1 < 3; ++ i1)
+			var axes9 = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+		
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+		
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
+
+			var planes = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
+
+			var triangle = [ ];
+
+			var triangleNormal = [ new Vector3 (0, 0, 0) ];
+
+			var triangleEdges = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0)
+			];
+
+			return function (a, b, c)
 			{
-				for (var i2 = 0; i2 < 3; ++ i2)
-					axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
-			}
-
-			if (SAT .isSeparated (axes9, points1, points2))
-				return false;
-
-			// Box and triangle intersect.
-
-			return true;
-		},
+				// Test special cases.
+	
+				if (this .isEmpty ())
+					return false;
+	
+				// Get points.
+	
+				this .getPoints (points1);
+	
+				triangle [0] = a;
+				triangle [1] = b;
+				triangle [2] = c;
+	
+				// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
+	
+				if (SAT .isSeparated (this .getNormals (planes), points1, triangle))
+					return false;
+	
+				// Test the normal of the triangle.
+	
+				Triangle3 .normal (a, b, c, triangleNormal [0]);
+	
+				if (SAT .isSeparated (triangleNormal, points1, triangle))
+					return false;
+	
+				// Test the nine other planes spanned by the edges of each parallelepiped.
+	
+				this .getAxes (axes1);
+	
+				triangleEdges [0] .assign (a) .subtract (b);
+				triangleEdges [1] .assign (b) .subtract (c);
+				triangleEdges [2] .assign (c) .subtract (a);
+	
+				for (var i1 = 0; i1 < 3; ++ i1)
+				{
+					for (var i2 = 0; i2 < 3; ++ i2)
+						axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
+				}
+	
+				if (SAT .isSeparated (axes9, points1, triangle))
+					return false;
+	
+				// Box and triangle intersect.
+	
+				return true;
+			};
+		})(),
 		toString: function ()
 		{
 			return this .size + ", " + this .center;
@@ -58497,14 +58607,19 @@ function (Triangle3,
 
 	Object .defineProperty (Box3 .prototype, "size",
 	{
-		get: function ()
+		get: (function ()
 		{
-			var max = new Vector3 (0, 0, 0);
-			
-			this .getAbsoluteExtents (min, max);
+			var
+				min = new Vector3 (0, 0, 0),
+				max = new Vector3 (0, 0, 0);
 
-			return max .subtract (min);
-		},
+			return function ()
+			{
+				this .getAbsoluteExtents (min, max);
+	
+				return max .subtract (min);
+			};
+		})(),
 		enumerable: true,
 		configurable: false
 	});
@@ -69734,19 +69849,6 @@ function (Matrix3, Vector2)
 {
 "use strict";
 
-	var
-		x   = new Vector2 (0, 0),
-		y   = new Vector2 (0, 0),
-		min = new Vector2 (0, 0),
-		max = new Vector2 (0, 0),
-		p1  = new Vector2 (0, 0);
-
-	var
-		lhs_min = new Vector2 (0, 0),
-		lhs_max = new Vector2 (0, 0),
-		rhs_min = new Vector2 (0, 0),
-		rhs_max = new Vector2 (0, 0);
-
 	function Box2 (size, center)
 	{
 		switch (arguments .length)
@@ -69842,19 +69944,28 @@ function (Matrix3, Vector2)
 		{
 			return this .matrix [8] === 0;
 		},
-		add: function (box)
+		add: (function ()
 		{
-			if (this .isEmpty ())
-				return this .assign (box);
+			var
+				lhs_min = new Vector2 (0, 0),
+				lhs_max = new Vector2 (0, 0),
+				rhs_min = new Vector2 (0, 0),
+				rhs_max = new Vector2 (0, 0);
 
-			if (box .isEmpty ())
-				return this;
-
-			this .getExtents (lhs_min, lhs_max);
-			box  .getExtents (rhs_min, rhs_max);
-
-			return this .assign (new Box2 (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true));
-		},
+			return function (box)
+			{
+				if (this .isEmpty ())
+					return this .assign (box);
+	
+				if (box .isEmpty ())
+					return this;
+	
+				this .getExtents (lhs_min, lhs_max);
+				box  .getExtents (rhs_min, rhs_max);
+	
+				return this .assign (new Box2 (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true));
+			};
+		})(),
 		multLeft: function (matrix)
 		{
 			this .matrix .multLeft (matrix);
@@ -69872,35 +69983,50 @@ function (Matrix3, Vector2)
 			min .add (this .center);
 			max .add (this .center);
 		},
-		getAbsoluteExtents: function (min, max)
+		getAbsoluteExtents: (function ()
 		{
-		   var m = this .matrix;
+			var
+				x  = new Vector2 (0, 0),
+				y  = new Vector2 (0, 0),
+				p1 = new Vector2 (0, 0);
 
-			x .assign (m .xAxis);
-			y .assign (m .yAxis);
-
-			p1 .assign (x) .add (y);
-
-			var p2 = y .subtract (x);
-
-			min .assign (p1) .min (p2);
-			max .assign (p1) .max (p2);
-
-			p1 .negate ();
-			p2 .negate ();
-
-			min .min (p1, p2);
-			max .max (p1, p2);
-		},
-		intersectsPoint: function (point)
+			return function (min, max)
+			{
+			   var m = this .matrix;
+	
+				x .assign (m .xAxis);
+				y .assign (m .yAxis);
+	
+				p1 .assign (x) .add (y);
+	
+				var p2 = y .subtract (x);
+	
+				min .assign (p1) .min (p2);
+				max .assign (p1) .max (p2);
+	
+				p1 .negate ();
+				p2 .negate ();
+	
+				min .min (p1, p2);
+				max .max (p1, p2);
+			};
+		})(),
+		intersectsPoint: (function ()
 		{
-			this .getExtents (min, max);
+			var
+				min = new Vector2 (0, 0),
+				max = new Vector2 (0, 0);
 
-			return min .x <= point .x &&
-			       max .x >= point .x &&
-			       min .y <= point .y &&
-			       max .y >= point .y;
-		},
+			return function (point)
+			{
+				this .getExtents (min, max);
+	
+				return min .x <= point .x &&
+				       max .x >= point .x &&
+				       min .y <= point .y &&
+				       max .y >= point .y;
+			};
+		})(),
 		toString: function ()
 		{
 			return this .size + ", " + this .center;
@@ -69909,14 +70035,19 @@ function (Matrix3, Vector2)
 
 	Object .defineProperty (Box2 .prototype, "size",
 	{
-		get: function ()
+		get: (function ()
 		{
-			var max = new Vector2 (0, 0);
-			
-			this .getAbsoluteExtents (min, max);
+			var
+				min = new Vector2 (0, 0),
+				max = new Vector2 (0, 0);
 
-			return max .subtract (min);
-		},
+			return function ()
+			{
+				this .getAbsoluteExtents (min, max);
+	
+				return max .subtract (min);
+			};
+		})(),
 		enumerable: true,
 		configurable: false
 	});
@@ -92734,42 +92865,48 @@ function (Fields,
 
 			return function (type, renderObject)
 			{
-				if (! this .keepCurrentLevel)
+				switch (type)
 				{
-					if (type === TraverseType .DISPLAY)
+					case TraverseType .PICKING:
 					{
-						var
-							level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-							currentLevel = this .level_changed_ .getValue ();
+						if (this .getTransformSensors () .size)
+						{
+							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+			
+							for (var transformSensorNode of this .getTransformSensors ())
+								transformSensorNode .collect (bbox);
+						}
 
-						if (this .forceTransitions_ .getValue ())
-						{
-							if (level > currentLevel)
-								level = currentLevel + 1;
-		
-							else if (level < currentLevel)
-								level = currentLevel - 1;
-						}
-	
-						if (level !== currentLevel)
-						{
-							this .level_changed_ = level;
-					
-							this .child = this .getChild (Math .min (level, this .children_ .length - 1));
-	
-							this .set_cameraObjects__ ();
-						}
+						break;
 					}
-				}
-
-				if (type === TraverseType .PICKING)
-				{
-					if (this .getTransformSensors () .size)
+					case TraverseType .DISPLAY:
 					{
-						this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+						if (! this .keepCurrentLevel)
+						{
+							var
+								level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
+								currentLevel = this .level_changed_ .getValue ();
+	
+							if (this .forceTransitions_ .getValue ())
+							{
+								if (level > currentLevel)
+									level = currentLevel + 1;
+			
+								else if (level < currentLevel)
+									level = currentLevel - 1;
+							}
 		
-						for (var transformSensorNode of this .getTransformSensors ())
-							transformSensorNode .collect (bbox);
+							if (level !== currentLevel)
+							{
+								this .level_changed_ = level;
+						
+								this .child = this .getChild (Math .min (level, this .children_ .length - 1));
+		
+								this .set_cameraObjects__ ();
+							}
+						}
+
+						break;
 					}
 				}
 
