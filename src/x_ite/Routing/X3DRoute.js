@@ -64,13 +64,14 @@ function (Fields,
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .addChildObjects ("sourceNode",      new Fields .SFNode (sourceNode),
-		                       "destinationNode", new Fields .SFNode (destinationNode));
-
+		this ._sourceNode       = new Fields .SFNode (sourceNode);
 		this ._sourceField      = sourceField;
+		this ._destinationNode  = new Fields .SFNode (destinationNode);
 		this ._destinationField = destinationField;
 
-		//if (! (this .getExecutionContext () instanceof X3DProtoDeclaration))
+		var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+
+		if (this .getExecutionContext () .constructor !== X3DProtoDeclaration)
 		{
 			sourceField .addFieldInterest (destinationField);
 
@@ -93,39 +94,10 @@ function (Fields,
 		{
 			return "routes";
 		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
-
-			this .sourceNode_      .addInterest ("set_node", this);
-			this .destinationNode_ .addInterest ("set_node", this);
-
-//			Object .preventExtensions (this);
-//			Object .freeze (this);
-//			Object .seal (this);
-		},
-		set_node: function ()
-		{
-			if (! this .sourceNode_ .getValue () || ! this .destinationNode_ .getValue ())
-				this .dispose ();
-		},
-		disconnect: function ()
-		{
-			this ._sourceField .removeFieldInterest (this ._destinationField);
-
-			this ._sourceField      .removeOutputRoute (this);
-			this ._destinationField .removeInputRoute (this);
-
-			if (this .sourceNode_ .getValue ())
-				this .sourceNode_ .removeInterest ("set_node", this);
-
-			if (this .destinationNode_ .getValue ())
-				this .destinationNode_ .removeInterest ("set_node", this);
-		},
 		getSourceNode: function ()
 		{
 			///  SAI
-			return this .sourceNode_ .getValue ();
+			return this ._sourceNode;
 		},
 		getSourceField: function ()
 		{
@@ -135,12 +107,19 @@ function (Fields,
 		getDestinationNode: function ()
 		{
 			///  SAI
-			return this .destinationNode_ .getValue ();
+			return this ._destinationNode;
 		},
 		getDestinationField: function ()
 		{
 			///  SAI
 			return this ._destinationField .getName ();
+		},
+		disconnect: function ()
+		{
+			this ._sourceField .removeFieldInterest (this ._destinationField);
+
+			this ._sourceField      .removeOutputRoute (this);
+			this ._destinationField .removeInputRoute (this);
 		},
 		toStream: function (stream)
 		{
@@ -150,8 +129,8 @@ function (Fields,
 		{
 			var
 				generator           = Generator .Get (stream),
-				sourceNodeName      = generator .LocalName (this .getSourceNode ()),
-				destinationNodeName = generator .LocalName (this .getDestinationNode ());
+				sourceNodeName      = generator .LocalName (this ._sourceNode .getValue ()),
+				destinationNodeName = generator .LocalName (this ._destinationNode .getValue ());
 
 			stream .string += generator .Indent ();
 			stream .string += "<ROUTE";
@@ -195,7 +174,7 @@ function (Fields,
 	{
 		get: function ()
 		{
-			return this .sourceNode_ .clone ();
+			return this ._sourceNode;
 		},
 		enumerable: true,
 		configurable: false
@@ -215,7 +194,7 @@ function (Fields,
 	{
 		get: function ()
 		{
-			return this .destinationNode_ .clone ();
+			return this ._destinationNode;
 		},
 		enumerable: true,
 		configurable: false

@@ -68,6 +68,10 @@ function ($,
 	PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: PointingDevice,
+		getTypeName: function ()
+		{
+			return "PointingDevice";
+		},
 		initialize: function ()
 		{
 			var element = this .getBrowser () .getElement ();

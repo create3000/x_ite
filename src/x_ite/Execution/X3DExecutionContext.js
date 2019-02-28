@@ -547,8 +547,6 @@ function (Fields,
 
 				var route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
-				route .setup ();
-
 				this .routes .getValue () .push (route);
 				this .routeIndex .set (id, route);
 

@@ -77,6 +77,10 @@ function (X3DBaseNode,
 	X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DViewer,
+		getTypeName: function ()
+		{
+			return "X3DViewer";
+		},
 		initialize: function ()
 		{
 		},
