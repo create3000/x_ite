@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-603 */
+/* X_ITE v4.4.2a-604 */
 
 (function () {
 
@@ -33375,7 +33375,8 @@ function (Fields,
 
 			this .exportedNodes .set (exportedName, exportedNode);
 
-			exportedNode .setup ();
+			// No setup because ExportedNode is only X3DObject.
+			//exportedNode .setup ();
 		},
 		removeExportedNode: function (exportedName)
 		{

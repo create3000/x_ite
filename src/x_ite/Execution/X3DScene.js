@@ -221,7 +221,8 @@ function (Fields,
 
 			this .exportedNodes .set (exportedName, exportedNode);
 
-			exportedNode .setup ();
+			// No setup, because ExportedNode is only X3DObject.
+			//exportedNode .setup ();
 		},
 		removeExportedNode: function (exportedName)
 		{
