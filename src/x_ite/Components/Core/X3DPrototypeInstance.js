@@ -48,7 +48,6 @@
 
 
 define ([
-	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Fields",
 	"x_ite/Base/X3DChildObject",
 	"x_ite/Components/Core/X3DNode",
@@ -56,8 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function (FieldDefinitionArray,
-          Fields,
+function (Fields,
           X3DChildObject,
           X3DNode,
           X3DExecutionContext,
@@ -69,7 +67,7 @@ function (FieldDefinitionArray,
 	function X3DPrototypeInstance (executionContext, protoNode)
 	{
 		this .protoNode        = protoNode;
-		this .fieldDefinitions = new FieldDefinitionArray (protoNode .getFieldDefinitions () .getValue () .slice ());
+		this .fieldDefinitions = protoNode .getFieldDefinitions ();
 
 		X3DNode             .call (this, executionContext);
 		X3DExecutionContext .call (this, executionContext);

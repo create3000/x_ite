@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-604 */
+/* X_ITE v4.4.2a-605 */
 
 (function () {
 
@@ -24827,11 +24827,6 @@ function (X3DEventObject,
 {
 "use strict";
 
-	function isLive ()
-	{
-	   return this .isLive_;
-	}
-
 	function X3DBaseNode (executionContext)
 	{
 		if (this .hasOwnProperty ("_executionContext"))
@@ -24916,30 +24911,38 @@ function (X3DEventObject,
 		{
 			return this;
 		},
-		isLive: function ()
+		isLive: (function ()
 		{
-			///  Returns the live event of this node.
+			function isLive ()
+			{
+			   return this .isLive_;
+			}
 
-			// Change function.
-
-			this .isLive = isLive;
-
-			// Add isLive event.
-
-			this .addChildObjects ("isLive", new Fields .SFBool (this .getLiveState ()));
-
-			// Event processing is done manually and immediately, so:
-			this .isLive_ .removeParent (this);
-
-			// Connect to execution context.
-
-			if (this ._executionContext !== this)
-				this ._executionContext .isLive () .addInterest ("_set_live__", this);
-
-			// Return field
-
-			return this .isLive ();
-		},
+			return function ()
+			{
+				///  Returns the live event of this node.
+	
+				// Change function.
+	
+				this .isLive = isLive;
+	
+				// Add isLive event.
+	
+				this .addChildObjects ("isLive", new Fields .SFBool (this .getLiveState ()));
+	
+				// Event processing is done manually and immediately, so:
+				this .isLive_ .removeParent (this);
+	
+				// Connect to execution context.
+	
+				if (this ._executionContext !== this)
+					this ._executionContext .isLive () .addInterest ("_set_live__", this);
+	
+				// Return field
+	
+				return this .isLive ();
+			};
+		})(),
 		setLive: function (value)
 		{
 			///  Sets the own live state of this node.  Setting the live state to false
@@ -30589,7 +30592,7 @@ function (Fields,
 		this .inlineNode   = inlineNode;
 		this .exportedName = exportedName;
 		this .importedName = importedName;
-		this .routes       = { };
+		this .routes       = new Map ();
 
 		this .inlineNode .loadState_ .addInterest ("set_loadState__", this);
 	}
@@ -30635,13 +30638,13 @@ function (Fields,
 
 			var id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
 
-			this .routes [id] =
+			this .routes .set (id,
 			{
 				sourceNode:       sourceNode,
 				sourceField:      sourceField,
 				destinationNode:  destinationNode,
 				destinationField: destinationField,
-			};
+			});
 
 			// Try to resolve source or destination node routes.
 
@@ -30653,7 +30656,7 @@ function (Fields,
 			try
 			{
 				var
-					route            = this .routes [id],
+					route            = this .routes .get (id),
 					sourceNode       = route .sourceNode,
 					sourceField      = route .sourceField,
 					destinationNode  = route .destinationNode,
@@ -30677,12 +30680,8 @@ function (Fields,
 		},
 		deleteRoutes: function ()
 		{
-			var routes = this .routes;
-
-			for (var id in routes)
+			for (var route of this .routes .values ())
 			{
-				var route = routes [id];
-
 				if (route ._route)
 				{
 					this .getExecutionContext () .deleteRoute (route ._route);
@@ -30702,11 +30701,9 @@ function (Fields,
 				}
 				case X3DConstants .COMPLETE_STATE:
 				{
-					var routes = this .routes;
-
 					this .deleteRoutes ();
 
-					for (var id in routes)
+					for (var id of this .routes .keys ())
 						this .resolveRoute (id);
 
 					break;
@@ -30749,12 +30746,9 @@ function (Fields,
 				{
 					// Output unresolved routes.
 
-					var routes = this .routes;
-
-					for (var id in routes)
+					for (var route of this .routes .values ())
 					{
 						var
-							route            = routes [id],
 							sourceNode       = route .sourceNode,
 							sourceField      = route .sourceField,
 							destinationNode  = route .destinationNode,
@@ -31107,12 +31101,12 @@ define ('x_ite/Routing/RouteArray',[],function ()
 
 define ('x_ite/Routing/X3DRoute',[
 	"x_ite/Fields",
-	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Base/X3DObject",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
 function (Fields,
-          X3DBaseNode,
+          X3DObject,
           X3DConstants,
           Generator)
 {
@@ -31120,15 +31114,17 @@ function (Fields,
 
 	function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField)
 	{
-		X3DBaseNode .call (this, executionContext);
+		X3DObject .call (this, executionContext);
 
-		this .addChildObjects ("sourceNode",      new Fields .SFNode (sourceNode),
-		                       "destinationNode", new Fields .SFNode (destinationNode));
-
+		this ._executionContext = executionContext;
+		this ._sourceNode       = new Fields .SFNode (sourceNode);
 		this ._sourceField      = sourceField;
+		this ._destinationNode  = new Fields .SFNode (destinationNode);
 		this ._destinationField = destinationField;
 
-		//if (! (this .getExecutionContext () instanceof X3DProtoDeclaration))
+		var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+
+		if (this ._executionContext .constructor !== X3DProtoDeclaration)
 		{
 			sourceField .addFieldInterest (destinationField);
 
@@ -31137,53 +31133,16 @@ function (Fields,
 		}
 	}
 
-	X3DRoute .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+	X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		getTypeName: function ()
 		{
 			return "X3DRoute";
 		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "routes";
-		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
-
-			this .sourceNode_      .addInterest ("set_node", this);
-			this .destinationNode_ .addInterest ("set_node", this);
-
-//			Object .preventExtensions (this);
-//			Object .freeze (this);
-//			Object .seal (this);
-		},
-		set_node: function ()
-		{
-			if (! this .sourceNode_ .getValue () || ! this .destinationNode_ .getValue ())
-				this .dispose ();
-		},
-		disconnect: function ()
-		{
-			this ._sourceField .removeFieldInterest (this ._destinationField);
-
-			this ._sourceField      .removeOutputRoute (this);
-			this ._destinationField .removeInputRoute (this);
-
-			if (this .sourceNode_ .getValue ())
-				this .sourceNode_ .removeInterest ("set_node", this);
-
-			if (this .destinationNode_ .getValue ())
-				this .destinationNode_ .removeInterest ("set_node", this);
-		},
 		getSourceNode: function ()
 		{
 			///  SAI
-			return this .sourceNode_ .getValue ();
+			return this ._sourceNode;
 		},
 		getSourceField: function ()
 		{
@@ -31193,12 +31152,19 @@ function (Fields,
 		getDestinationNode: function ()
 		{
 			///  SAI
-			return this .destinationNode_ .getValue ();
+			return this ._destinationNode;
 		},
 		getDestinationField: function ()
 		{
 			///  SAI
 			return this ._destinationField .getName ();
+		},
+		disconnect: function ()
+		{
+			this ._sourceField .removeFieldInterest (this ._destinationField);
+
+			this ._sourceField      .removeOutputRoute (this);
+			this ._destinationField .removeInputRoute (this);
 		},
 		toStream: function (stream)
 		{
@@ -31208,8 +31174,8 @@ function (Fields,
 		{
 			var
 				generator           = Generator .Get (stream),
-				sourceNodeName      = generator .LocalName (this .getSourceNode ()),
-				destinationNodeName = generator .LocalName (this .getDestinationNode ());
+				sourceNodeName      = generator .LocalName (this ._sourceNode .getValue ()),
+				destinationNodeName = generator .LocalName (this ._destinationNode .getValue ());
 
 			stream .string += generator .Indent ();
 			stream .string += "<ROUTE";
@@ -31243,9 +31209,9 @@ function (Fields,
 		{
 			this .disconnect ();
 
-			this .getExecutionContext () .deleteRoute (this);
+			this ._executionContext .deleteRoute (this);
 
-			X3DBaseNode .prototype .dispose .call (this);
+			X3DObject .prototype .dispose .call (this);
 		}
 	});
 
@@ -31253,7 +31219,7 @@ function (Fields,
 	{
 		get: function ()
 		{
-			return this .sourceNode_ .clone ();
+			return this ._sourceNode;
 		},
 		enumerable: true,
 		configurable: false
@@ -31273,7 +31239,7 @@ function (Fields,
 	{
 		get: function ()
 		{
-			return this .destinationNode_ .clone ();
+			return this ._destinationNode;
 		},
 		enumerable: true,
 		configurable: false
@@ -32709,8 +32675,6 @@ function (Fields,
 
 				var route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
-				route .setup ();
-
 				this .routes .getValue () .push (route);
 				this .routeIndex .set (id, route);
 
@@ -33116,6 +33080,10 @@ function (Fields,
 	ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: ExportedNode,
+		getTypeName: function ()
+		{
+			return "ExportedNode";
+		},
 		getExportedName: function ()
 		{
 			return this .exportedName;
@@ -33374,9 +33342,6 @@ function (Fields,
 			var exportedNode = new ExportedNode (exportedName, node .getValue ());
 
 			this .exportedNodes .set (exportedName, exportedNode);
-
-			// No setup because ExportedNode is only X3DObject.
-			//exportedNode .setup ();
 		},
 		removeExportedNode: function (exportedName)
 		{
@@ -34145,7 +34110,6 @@ function (X3DBaseNode,
 
 
 define ('x_ite/Components/Core/X3DPrototypeInstance',[
-	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Fields",
 	"x_ite/Base/X3DChildObject",
 	"x_ite/Components/Core/X3DNode",
@@ -34153,8 +34117,7 @@ define ('x_ite/Components/Core/X3DPrototypeInstance',[
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function (FieldDefinitionArray,
-          Fields,
+function (Fields,
           X3DChildObject,
           X3DNode,
           X3DExecutionContext,
@@ -34166,7 +34129,7 @@ function (FieldDefinitionArray,
 	function X3DPrototypeInstance (executionContext, protoNode)
 	{
 		this .protoNode        = protoNode;
-		this .fieldDefinitions = new FieldDefinitionArray (protoNode .getFieldDefinitions () .getValue () .slice ());
+		this .fieldDefinitions = protoNode .getFieldDefinitions ();
 
 		X3DNode             .call (this, executionContext);
 		X3DExecutionContext .call (this, executionContext);
@@ -45631,6 +45594,7 @@ function ($,
 			}
 			catch (error)
 			{
+				console .log (error);
 				console .warn ("XML Parser Error: " + error .message);
 			}
 		},
@@ -62281,6 +62245,10 @@ function ($,
 	PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: PointingDevice,
+		getTypeName: function ()
+		{
+			return "PointingDevice";
+		},
 		initialize: function ()
 		{
 			var element = this .getBrowser () .getElement ();
@@ -62981,6 +62949,10 @@ function (X3DBaseNode,
 	X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DViewer,
+		getTypeName: function ()
+		{
+			return "X3DViewer";
+		},
 		initialize: function ()
 		{
 		},
