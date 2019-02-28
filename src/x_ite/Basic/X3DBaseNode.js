@@ -66,11 +66,6 @@ function (X3DEventObject,
 {
 "use strict";
 
-	function isLive ()
-	{
-	   return this .isLive_;
-	}
-
 	function X3DBaseNode (executionContext)
 	{
 		if (this .hasOwnProperty ("_executionContext"))
@@ -155,30 +150,38 @@ function (X3DEventObject,
 		{
 			return this;
 		},
-		isLive: function ()
+		isLive: (function ()
 		{
-			///  Returns the live event of this node.
+			function isLive ()
+			{
+			   return this .isLive_;
+			}
 
-			// Change function.
-
-			this .isLive = isLive;
-
-			// Add isLive event.
-
-			this .addChildObjects ("isLive", new Fields .SFBool (this .getLiveState ()));
-
-			// Event processing is done manually and immediately, so:
-			this .isLive_ .removeParent (this);
-
-			// Connect to execution context.
-
-			if (this ._executionContext !== this)
-				this ._executionContext .isLive () .addInterest ("_set_live__", this);
-
-			// Return field
-
-			return this .isLive ();
-		},
+			return function ()
+			{
+				///  Returns the live event of this node.
+	
+				// Change function.
+	
+				this .isLive = isLive;
+	
+				// Add isLive event.
+	
+				this .addChildObjects ("isLive", new Fields .SFBool (this .getLiveState ()));
+	
+				// Event processing is done manually and immediately, so:
+				this .isLive_ .removeParent (this);
+	
+				// Connect to execution context.
+	
+				if (this ._executionContext !== this)
+					this ._executionContext .isLive () .addInterest ("_set_live__", this);
+	
+				// Return field
+	
+				return this .isLive ();
+			};
+		})(),
 		setLive: function (value)
 		{
 			///  Sets the own live state of this node.  Setting the live state to false
