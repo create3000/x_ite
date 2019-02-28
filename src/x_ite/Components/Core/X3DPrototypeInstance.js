@@ -201,7 +201,7 @@ function (FieldDefinitionArray,
 
 				if (proto)
 				{
-					this .copyImportedNodes (proto, proto .importedNodes);
+					this .copyImportedNodes (proto, proto .getImportedNodes ());
 					this .copyRoutes (proto, proto .routes);
 				}
 
@@ -272,15 +272,15 @@ function (FieldDefinitionArray,
 		},
 		copyImportedNodes: function (executionContext, importedNodes)
 		{
-			for (var importedName in importedNodes)
+			for (var value of importedNodes)
 			{
 				try
 				{
 					var
-						importedNode = importedNodes [importedName],
+						importedName = value [0],
+						importedNode = value [1],
 						inlineNode   = this .getNamedNode (importedNode .getInlineNode () .getName ()),
-						exportedName = importedNode .getExportedName (),
-						importedName = importedNode .getImportedName ();
+						exportedName = importedNode .getExportedName ();
 
 					this .addImportedNode (inlineNode, exportedName, importedName);
 				}
