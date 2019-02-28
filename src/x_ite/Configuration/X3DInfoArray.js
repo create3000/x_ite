@@ -65,7 +65,7 @@ define (function ()
 			if (value !== undefined)
 				return value;
 
-			return target .index [key];
+			return target .index .get (key);
 		},
 		set: function (target, key, value)
 		{
@@ -73,7 +73,7 @@ define (function ()
 		},
 		has: function (target, key)
 		{
-			return key in target .array || key in target .index;
+			return key in target .array || target .index .has (key);
 		},
 		enumerate: function (target)
 		{
@@ -84,7 +84,7 @@ define (function ()
 	function X3DInfoArray ()
 	{
 		this .array = [ ];
-		this .index = { };
+		this .index = new Map ();
 
 		return new Proxy (this, handler);
 	}
@@ -95,11 +95,11 @@ define (function ()
 		add: function (key, value)
 		{
 			this .array .push (value);
-			this .index [key] = value;
+			this .index .set (key, value);
 		},
 		get: function (key)
 		{
-			return this .index [key];
+			return this .index .get (key);
 		},
 		getValue: function ()
 		{

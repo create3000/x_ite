@@ -140,11 +140,11 @@ function (X3DConstants)
 		{
 			var index = this .importedNodesIndex [this .ExecutionContext () .getId ()];
 
-			for (var importedName in importedNodes)
+			for (var importedNode of importedNodes .values ())
 			{
 				try
 				{
-					index [importedNodes [importedName] .getInlineNode () .getId ()] = true;
+					index [importedNode .getInlineNode () .getId ()] = true;
 				}
 				catch (error)
 				{ }

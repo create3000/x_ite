@@ -97,12 +97,12 @@ function (Fields,
 		this .url                  = new URI (window .location);
 		this .uninitializedNodes   = [ ];
 		this .uninitializedNodes2  = [ ];
-		this .namedNodes           = { };
-		this .importedNodes        = { };
+		this .namedNodes           = new Map ();
+		this .importedNodes        = new Map ();
 		this .protos               = new ProtoDeclarationArray ();
 		this .externprotos         = new ExternProtoDeclarationArray ();
 		this .routes               = new RouteArray ();
-		this .routeIndex           = { };
+		this .routeIndex           = new Map ();
 	}
 
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -112,7 +112,7 @@ function (Fields,
 		{
 			X3DBaseNode .prototype .setup .call (this);
 
-			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration")
+			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
 			if (! (this instanceof X3DProtoDeclaration))
 			{
@@ -186,24 +186,30 @@ function (Fields,
 		},
 		createNode: function (typeName, setup)
 		{
-			var Type = this .getBrowser () .getSupportedNode (typeName);
-
-			if (! Type)
-			{
-				if (setup === false)
-					return null
-				else
-					throw new Error ("Unknown node type '" + typeName + "'.");
-			}
-
-			var node = new Type (this);
-
 			if (setup === false)
+			{
+				var Type = this .getBrowser () .getSupportedNode (typeName);
+	
+				if (! Type)
+					return null;
+	
+				var node = new Type (this);
+	
 				return node;
-
-			node .setup ();
-
-			return new Fields .SFNode (node);
+			}
+			else
+			{
+				var Type = this .getBrowser () .getSupportedNode (typeName);
+	
+				if (! Type)
+					throw new Error ("Unknown node type '" + typeName + "'.");
+	
+				var node = new Type (this);
+	
+				node .setup ();
+	
+				return new Fields .SFNode (node);
+			}
 		},
 		createProto: function (name, setup)
 		{
@@ -211,12 +217,12 @@ function (Fields,
 
 			for (;;)
 			{
-				var proto = executionContext .protos [name];
+				var proto = executionContext .protos .get (name);
 
 				if (proto)
 					return proto .createInstance (this, setup);
 
-				var externproto = executionContext .externprotos [name];
+				var externproto = executionContext .externprotos .get (name);
 
 				if (externproto)
 					return externproto .createInstance (this, setup);
@@ -228,7 +234,7 @@ function (Fields,
 			}
 
 			if (setup === false)
-				return null
+				return null;
 			else
 				throw new Error ("Unknown proto or externproto type '" + name + "'.");
 		},
@@ -238,7 +244,7 @@ function (Fields,
 		},
 		addNamedNode: function (name, node)
 		{
-			if (this .namedNodes [name] !== undefined)
+			if (this .namedNodes .has (name))
 				throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
 
 			this .updateNamedNode (name, node);
@@ -269,15 +275,15 @@ function (Fields,
 
 			node .getValue () .setName (name);
 
-			this .namedNodes [name] = node;
+			this .namedNodes .set (name, node);
 		},
 		removeNamedNode: function (name)
 		{
-			delete this .namedNodes [name];
+			this .namedNodes .delete (name);
 		},
 		getNamedNode: function (name)
 		{
-			var node = this .namedNodes [name];
+			var node = this .namedNodes .get (name);
 
 			if (! node)
 				throw new Error ("Named node '" + name + "' not found.");
@@ -296,7 +302,7 @@ function (Fields,
 
 			for (; i;)
 			{
-				if (this .namedNodes [newName] || newName .length === 0)
+				if (this .namedNodes .has (newName) || newName .length === 0)
 				{
 					var
 						min = i,
@@ -317,7 +323,7 @@ function (Fields,
 			if (importedName === undefined)
 				importedName = exportedName;
 
-			if (this .importedNodes [importedName])
+			if (this .importedNodes .has (importedName))
 				throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
 
 			this .updateImportedNode (inlineNode, exportedName, importedName);
@@ -342,15 +348,15 @@ function (Fields,
 
 			// Update existing imported node.
 
-			for (var key in this .importedNodes)
+			for (var key of this .importedNodes .keys ())
 			{
-				var importedNode = this .importedNodes [key];
+				var importedNode = this .importedNodes .get (key);
 				
 				if (importedNode .getInlineNode () === inlineNode && importedNode .getExportedName () === exportedName)
 				{
-					delete this .importedNodes [key];
+					this .importedNodes .delete (key);
 					
-					this .importedNodes [importedName] = importedNode;
+					this .importedNodes .set (importedName, importedNode);
 					
 					importedNode .setImportedName (importedName);
 					return;
@@ -361,21 +367,24 @@ function (Fields,
 
 			this .removeImportedNode (importedName);
 
-			this .importedNodes [importedName] = new ImportedNode (this, inlineNode, exportedName, importedName);
-			this .importedNodes [importedName] .setup ();
+			var importedNode = new ImportedNode (this, inlineNode, exportedName, importedName);
+
+			this .importedNodes .set (importedName, importedNode);
+
+			importedNode .setup ();
 		},
 		removeImportedNode: function (importedName)
 		{
-			var importedNode = this .importedNodes [importedName];
+			var importedNode = this .importedNodes .get (importedName);
 
 			if (importedNode)
 				importedNode .dispose ();
 
-			delete this .importedNodes [importedName];
+			this .importedNodes .delete (importedName);
 		},
 		getImportedNode: function (importedName)
 		{
-			var importedNode = this .importedNodes [importedName];
+			var importedNode = this .importedNodes .get (importedName);
 
 			if (importedNode)
 				return importedNode .getExportedNode ();
@@ -394,7 +403,7 @@ function (Fields,
 			}
 			catch (error)
 			{
-				var importedNode = this .importedNodes [name];
+				var importedNode = this .importedNodes .get (name);
 
 				if (importedNode)
 					return new Fields .SFNode (importedNode);
@@ -410,12 +419,10 @@ function (Fields,
 			if (node .getValue () .getExecutionContext () === this)
 				return node .getValue () .getName ();
 
-			for (var key in this .importedNodes)
+			for (var importedNode of this .importedNodes .values ())
 			{
 				try
 				{
-					var importedNode = this .importedNodes [key];
-				
 					if (importedNode .getExportedNode () === node)
 						return key;
 				}
@@ -527,17 +534,19 @@ function (Fields,
 				if (sourceField .getType () !== destinationField .getType ())
 					throw new Error ("ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
 
-				var id = sourceField .getId () + "." + destinationField .getId ();
+				var
+					id    = sourceField .getId () + "." + destinationField .getId (),
+					route = this .routeIndex .get (id);
 
-				if (this .routeIndex [id])
-					return this .routeIndex [id];
+				if (route)
+					return route;
 
 				var route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
 				route .setup ();
 
 				this .routes .getValue () .push (route);
-				this .routeIndex [id] = route;
+				this .routeIndex .set (id, route);
 
 				return route;
 			}
@@ -570,7 +579,7 @@ function (Fields,
 				if (index !== -1)
 					this .routes .getValue () .splice (index, 1);
 
-				delete this .routeIndex [id];
+				this .routeIndex .delete (id);
 			}
 			catch (error)
 			{
@@ -590,7 +599,7 @@ function (Fields,
 				destinationField = destinationNode .getValue () .getField (destinationField),
 				id               = sourceField .getId () + "." + destinationField .getId ();
 
-			return this .routeIndex [id];
+			return this .routeIndex .get (id);
 		},
 		getRoutes: function ()
 		{
@@ -654,11 +663,11 @@ function (Fields,
 
 			var importedNodes = this .getImportedNodes ();
 
-			for (var importedName in importedNodes)
+			for (var importedNode of importedNodes .values ())
 			{
 				try
 				{
-					importedNodes [importedName] .toXMLStream (stream);
+					importedNode .toXMLStream (stream);
 
 					stream .string += "\n";
 				}

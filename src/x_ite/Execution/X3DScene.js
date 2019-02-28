@@ -79,8 +79,8 @@ function (Fields,
 		this .unitArray .add ("length", new UnitInfo ("length", "metre",    1));
 		this .unitArray .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
-		this .metadata      = { };
-		this .exportedNodes = { };
+		this .metadata      = new Map ()
+		this .exportedNodes = new Map ()
 
 		this .setLive (false);
 	}
@@ -180,23 +180,23 @@ function (Fields,
 			if (! name .length)
 				return;
 
-			this .metadata [name] = String (value);
+			this .metadata .set (name, String (value));
 		},
 		removeMetaData: function (name)
 		{
-			delete this .metadata [name];
+			this .metadata .delete (name);
 		},
 		getMetaData: function (name)
 		{
-			return this .metadata [name];
+			return this .metadata .get (name);
 		},
 		getMetadata: function ()
 		{
-			return Object .assign ({ }, this .metadata);
+			return this .metadata;
 		},
 		addExportedNode: function (exportedName, node)
 		{
-			if (this .exportedNodes [exportedName])
+			if (this .exportedNodes .has (exportedName))
 				throw new Error ("Couldn't add exported node: exported name '" + exportedName + "' already in use.");
 
 			this .updateExportedNode (exportedName, node);
@@ -217,15 +217,19 @@ function (Fields,
 			//if (node .getValue () .getExecutionContext () !== this)
 			//	throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
-			this .exportedNodes [exportedName] = new ExportedNode (exportedName, node .getValue ());
+			var exportedNode = new ExportedNode (exportedName, node .getValue ());
+
+			this .exportedNodes .set (exportedName, exportedNode);
+
+			exportedNode .setup ();
 		},
 		removeExportedNode: function (exportedName)
 		{
-			delete this .exportedNodes [exportedName];
+			this .exportedNodes .delete (exportedName);
 		},
 		getExportedNode: function (exportedName)
 		{
-			var exportedNode = this .exportedNodes [exportedName];
+			var exportedNode = this .exportedNodes .get (exportedName);
 
 			if (exportedNode)
 				return exportedNode .getLocalNode ();	
@@ -332,20 +336,18 @@ function (Fields,
 					stream .string += "\n";
 				}
 			}
-		
-			var metaDatas = this .metadata;
 
-			for (var key in metaDatas)
+			for (var value of this .metadata)
 			{
 				stream .string += generator .Indent ();
 				stream .string += "<meta";
 				stream .string += " ";
 				stream .string += "name='";
-				stream .string += generator .XMLEncode (key);
+				stream .string += generator .XMLEncode (value [0]);
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "content='";
-				stream .string += generator .XMLEncode (metaDatas [key]);
+				stream .string += generator .XMLEncode (value [1]);
 				stream .string += "'";
 				stream .string += "/>\n";
 			}
@@ -371,11 +373,11 @@ function (Fields,
 
 			X3DExecutionContext .prototype .toXMLStream .call (this, stream);
 		
-			for (var exportedName in exportedNodes)
+			for (var exportedNode of exportedNodes .values ())
 			{
 				//try
 				{
-					exportedNodes [exportedName] .toXMLStream (stream);
+					exportedNode .toXMLStream (stream);
 
 					stream .string += "\n";
 				}
