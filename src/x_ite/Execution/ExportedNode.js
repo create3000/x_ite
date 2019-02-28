@@ -69,6 +69,10 @@ function (Fields,
 	ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: ExportedNode,
+		getTypeName: function ()
+		{
+			return "ExportedNode";
+		},
 		getExportedName: function ()
 		{
 			return this .exportedName;

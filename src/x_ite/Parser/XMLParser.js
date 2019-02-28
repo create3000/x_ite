@@ -740,6 +740,7 @@ function ($,
 			}
 			catch (error)
 			{
+				console .log (error);
 				console .warn ("XML Parser Error: " + error .message);
 			}
 		},

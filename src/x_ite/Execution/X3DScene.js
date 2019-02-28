@@ -220,9 +220,6 @@ function (Fields,
 			var exportedNode = new ExportedNode (exportedName, node .getValue ());
 
 			this .exportedNodes .set (exportedName, exportedNode);
-
-			// No setup, because ExportedNode is only X3DObject.
-			//exportedNode .setup ();
 		},
 		removeExportedNode: function (exportedName)
 		{

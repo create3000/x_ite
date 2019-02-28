@@ -67,7 +67,7 @@ function (Fields,
 		this .inlineNode   = inlineNode;
 		this .exportedName = exportedName;
 		this .importedName = importedName;
-		this .routes       = { };
+		this .routes       = new Map ();
 
 		this .inlineNode .loadState_ .addInterest ("set_loadState__", this);
 	}
@@ -113,13 +113,13 @@ function (Fields,
 
 			var id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
 
-			this .routes [id] =
+			this .routes .set (id,
 			{
 				sourceNode:       sourceNode,
 				sourceField:      sourceField,
 				destinationNode:  destinationNode,
 				destinationField: destinationField,
-			};
+			});
 
 			// Try to resolve source or destination node routes.
 
@@ -131,7 +131,7 @@ function (Fields,
 			try
 			{
 				var
-					route            = this .routes [id],
+					route            = this .routes .get (id),
 					sourceNode       = route .sourceNode,
 					sourceField      = route .sourceField,
 					destinationNode  = route .destinationNode,
@@ -155,12 +155,8 @@ function (Fields,
 		},
 		deleteRoutes: function ()
 		{
-			var routes = this .routes;
-
-			for (var id in routes)
+			for (var route of this .routes .values ())
 			{
-				var route = routes [id];
-
 				if (route ._route)
 				{
 					this .getExecutionContext () .deleteRoute (route ._route);
@@ -180,11 +176,9 @@ function (Fields,
 				}
 				case X3DConstants .COMPLETE_STATE:
 				{
-					var routes = this .routes;
-
 					this .deleteRoutes ();
 
-					for (var id in routes)
+					for (var id of this .routes .keys ())
 						this .resolveRoute (id);
 
 					break;
@@ -227,12 +221,9 @@ function (Fields,
 				{
 					// Output unresolved routes.
 
-					var routes = this .routes;
-
-					for (var id in routes)
+					for (var route of this .routes .values ())
 					{
 						var
-							route            = routes [id],
 							sourceNode       = route .sourceNode,
 							sourceField      = route .sourceField,
 							destinationNode  = route .destinationNode,
