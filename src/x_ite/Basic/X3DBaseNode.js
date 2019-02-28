@@ -257,10 +257,8 @@ function (X3DEventObject,
 		{
 			return new (this .constructor) (executionContext);
 		},
-		copy: function (executionContext)
+		copy: (function ()
 		{
-			// First try to get a named node with the node's name.
-
 			function needsName (baseNode)
 			{
 				if (baseNode .getCloneCount () > 1)
@@ -272,50 +270,104 @@ function (X3DEventObject,
 				return false;
 			}
 
-			var name = this .getName ();
-		
-			if (name .length)
+			return function (executionContext)
 			{
-				try
+				// First try to get a named node with the node's name.
+
+				var name = this .getName ();
+			
+				if (name .length)
 				{
-					return executionContext .getNamedNode (name) .getValue ();
+					var namedNode = executionContext .getNamedNodes () .get (name);
+
+					if (namedNode)
+						return namedNode .getValue ();
 				}
-				catch (error)
-				{ }
-			}
-			else
-			{
-				if (needsName (this))
-					this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), this);
-			}
-
-			// Create copy.
-
-			var copy = this .create (executionContext);
-
-			if (name .length)
-				executionContext .updateNamedNode (name, copy);
-
-			// Default fields
-
-			var predefinedFields = this .getPredefinedFields ();
-
-			for (var sourceField of predefinedFields .values ())
-			{
-				try
+				else
 				{
-					var destfield = copy .getField (sourceField .getName ());
-
+					if (needsName (this))
+						this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), this);
+				}
+	
+				// Create copy.
+	
+				var copy = this .create (executionContext);
+	
+				if (name .length)
+					executionContext .updateNamedNode (name, copy);
+	
+				// Default fields
+	
+				var predefinedFields = this .getPredefinedFields ();
+	
+				for (var sourceField of predefinedFields .values ())
+				{
+					try
+					{
+						var destfield = copy .getField (sourceField .getName ());
+	
+						destfield .setSet (sourceField .getSet ());
+	
+						if (sourceField .hasReferences ())
+						{
+							var references = sourceField .getReferences ();
+	
+							// IS relationship
+							for (var originalReference of references .values ())
+							{
+								try
+								{
+									destfield .addReference (executionContext .getField (originalReference .getName ()));
+								}
+								catch (error)
+								{
+									console .error (error .message);
+								}
+							}
+						}
+						else
+						{
+							if (sourceField .getAccessType () & X3DConstants .initializeOnly)
+							{
+								switch (sourceField .getType ())
+								{
+									case X3DConstants .SFNode:
+									case X3DConstants .MFNode:
+										destfield .setValue (sourceField .copy (executionContext));
+										break;
+									default:
+										destfield .setValue (sourceField);
+										break;
+								}
+							}
+						}
+					}
+					catch (error)
+					{
+						console .log (error .message);
+					}
+				}
+	
+				// User-defined fields
+	
+				var userDefinedFields = this .getUserDefinedFields ();
+	
+				for (var sourceField of userDefinedFields .values ())
+				{
+					var destfield = sourceField .copy (executionContext);
+	
+					copy .addUserDefinedField (sourceField .getAccessType (),
+					                           sourceField .getName (),
+					                           destfield);
+	
 					destfield .setSet (sourceField .getSet ());
-
-					//if (sourceField .getAccessType () === destfield .getAccessType () and sourceField .getType () === destfield .getType ())
-					//{
-
+	
 					if (sourceField .hasReferences ())
 					{
-						var references = sourceField .getReferences ();
-
 						// IS relationship
+	
+						var references = sourceField .getReferences ();
+	
 						for (var originalReference of references .values ())
 						{
 							try
@@ -324,70 +376,16 @@ function (X3DEventObject,
 							}
 							catch (error)
 							{
-								console .error (error .message);
-							}
-						}
-					}
-					else
-					{
-						if (sourceField .getAccessType () & X3DConstants .initializeOnly)
-						{
-							switch (sourceField .getType ())
-							{
-								case X3DConstants .SFNode:
-								case X3DConstants .MFNode:
-									destfield .setValue (sourceField .copy (executionContext));
-									break;
-								default:
-									destfield .setValue (sourceField);
-									break;
+								console .error ("No reference '" + originalReference .getName () + "' inside execution context " + executionContext .getTypeName () + " '" + executionContext .getName () + "'.");
 							}
 						}
 					}
 				}
-				catch (error)
-				{
-					console .log (error .message);
-				}
-			}
-
-			// User-defined fields
-
-			var userDefinedFields = this .getUserDefinedFields ();
-
-			for (var sourceField of userDefinedFields .values ())
-			{
-				var destfield = sourceField .copy (executionContext);
-
-				copy .addUserDefinedField (sourceField .getAccessType (),
-				                           sourceField .getName (),
-				                           destfield);
-
-				destfield .setSet (sourceField .getSet ());
-
-				if (sourceField .hasReferences ())
-				{
-					// IS relationship
-
-					var references = sourceField .getReferences ();
-
-					for (var originalReference of references .values ())
-					{
-						try
-						{
-							destfield .addReference (executionContext .getField (originalReference .getName ()));
-						}
-						catch (error)
-						{
-							console .error ("No reference '" + originalReference .getName () + "' inside execution context " + executionContext .getTypeName () + " '" + executionContext .getName () + "'.");
-						}
-					}
-				}
-			}
-
-			executionContext .addUninitializedNode (copy);
-			return copy;
-		},
+	
+				executionContext .addUninitializedNode (copy);
+				return copy;
+			};
+		})(),
 		flatCopy: function (executionContext)
 		{
 			var

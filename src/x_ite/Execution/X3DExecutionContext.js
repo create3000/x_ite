@@ -290,6 +290,10 @@ function (Fields,
 
 			return node;
 		},
+		getNamedNodes: function ()
+		{
+			return this .namedNodes;
+		},
 		getUniqueName: function (name)
 		{
 			var _TrailingNumbers = /(_\d+$)/;
