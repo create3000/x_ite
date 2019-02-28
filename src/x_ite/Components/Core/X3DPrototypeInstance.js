@@ -77,13 +77,18 @@ function (FieldDefinitionArray,
 		this .addType (X3DConstants .X3DPrototypeInstance);
 		this .getRootNodes () .setAccessType (X3DConstants .initializeOnly);
 
-		this .getScene () .addInitLoadCount (this);
+		var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
-		if (protoNode .isExternProto)
-			protoNode .requestAsyncLoad (this .construct .bind (this));
-
-		else
-			this .construct ();
+		if (this .getExecutionContext () .constructor !== X3DProtoDeclaration)
+		{
+			this .getScene () .addInitLoadCount (this);
+	
+			if (protoNode .isExternProto)
+				protoNode .requestAsyncLoad (this .construct .bind (this));
+	
+			else
+				this .construct ();
+		}
 	}
 
 	X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
