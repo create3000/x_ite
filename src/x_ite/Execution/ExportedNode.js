@@ -63,7 +63,7 @@ function (Fields,
 		X3DObject .call (this);
 
 		this .exportedName = exportedName;
-		this .localNode    = localNode;
+		this .localNode    = new Fields .SFNode (localNode);
 	}
 
 	ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
@@ -75,13 +75,13 @@ function (Fields,
 		},
 		getLocalNode: function ()
 		{
-			return new Fields .SFNode (this .localNode);
+			return this .localNode;
 		},
 		toXMLStream: function (stream)
 		{
 			var
 				generator = Generator .Get (stream),
-				localName = generator .LocalName (this .localNode);
+				localName = generator .LocalName (this .localNode .getValue ());
 
 			stream .string += generator .Indent ();
 			stream .string += "<EXPORT";
