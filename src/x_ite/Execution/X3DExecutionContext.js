@@ -114,7 +114,7 @@ function (Fields,
 
 			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
-			if (! (this instanceof X3DProtoDeclaration))
+			if (this .constructor !== X3DProtoDeclaration)
 			{
 				// Setup nodes.
 
