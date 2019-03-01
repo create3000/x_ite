@@ -82,9 +82,8 @@ function (Fields,
 		
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
-		this .scene   = this .getBrowser () .getDefaultScene ();
-		this .group   = new Group (executionContext);
-		this .getBBox = this .group .getBBox  .bind (this .group);
+		this .scene = this .getBrowser () .getDefaultScene ();
+		this .group = new Group (executionContext);
 
 		this .group .addParent (this);
 	}
@@ -132,6 +131,10 @@ function (Fields,
 			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .set_url__ ();
+		},
+		getBBox: function (bbox)
+		{
+			return this .group .getBBox (bbox);
 		},
 		set_live__: function ()
 		{

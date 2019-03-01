@@ -97,8 +97,6 @@ function (Fields,
 		this .skinCoordNode  = null;
 		this .restNormalNode = null;
 		this .restCoordNode  = null;
-
-		this .getBBox = this .transformNode .getBBox  .bind (this .transformNode);
 	}
 
 	HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -201,6 +199,10 @@ function (Fields,
 			this .set_joints__ ();
 			this .set_skinNormal__ ();
 			this .set_skinCoord__ ();
+		},
+		getBBox: function (bbox)
+		{
+			return this .transformNode .getBBox (bbox);
 		},
 		set_joints__: function ()
 		{
