@@ -54,18 +54,6 @@ function (Generator)
 {
 "use strict";
 
-	/*
-	 *  Id
-	 */
-
-	var id = 0;
-	
-	function getId () { return this ._id; }
-
-	/*
-	 *  X3DObject
-	 */
-
 	function X3DObject () { }
 
 	X3DObject .prototype =
@@ -74,12 +62,19 @@ function (Generator)
 		_id: 0,
 		_name: "",
 		_interests: new Map (),
-		getId: function ()
+		getId: (function ()
 		{
-			this .getId = getId;
+			var id = 0;
+			
+			function getId () { return this ._id; }
 
-			return this ._id = ++ id;
-		},
+			return function ()
+			{
+				this .getId = getId;
+	
+				return this ._id = ++ id;
+			};
+		})(),
 		setName: function (value)
 		{
 			this ._name = value;
