@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-606 */
+/* X_ITE v4.4.2a-607 */
 
 (function () {
 
@@ -32237,7 +32237,7 @@ function (Fields,
 
 			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
-			if (! (this instanceof X3DProtoDeclaration))
+			if (this .constructor !== X3DProtoDeclaration)
 			{
 				// Setup nodes.
 
@@ -33196,8 +33196,8 @@ function (Fields,
 		this .unitArray .add ("length", new UnitInfo ("length", "metre",    1));
 		this .unitArray .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
-		this .metadata      = new Map ()
-		this .exportedNodes = new Map ()
+		this .metadata      = new Map ();
+		this .exportedNodes = new Map ();
 
 		this .setLive (false);
 	}
@@ -101122,7 +101122,6 @@ function (Fields,
 				location        = new Vector3 (0, 0, 0),
 				sphereMatrix    = new Matrix4 (),
 				invSphereMatrix = new Matrix4 (),
-				translation     = new Vector3 (0, 0, 0),
 				rotation        = new Rotation4 (),
 				scale           = new Vector3 (1, 1, 1),
 				sphere          = new Sphere3 (1, Vector3 .Zero),

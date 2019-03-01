@@ -79,8 +79,8 @@ function (Fields,
 		this .unitArray .add ("length", new UnitInfo ("length", "metre",    1));
 		this .unitArray .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
-		this .metadata      = new Map ()
-		this .exportedNodes = new Map ()
+		this .metadata      = new Map ();
+		this .exportedNodes = new Map ();
 
 		this .setLive (false);
 	}
