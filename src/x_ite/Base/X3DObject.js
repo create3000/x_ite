@@ -92,12 +92,23 @@ function (Generator)
 			if (! this .hasOwnProperty ("_interests"))
 				this ._interests = new Map ();
 
-			var args = Array .prototype .slice .call (arguments, 0);
+			var callback = object [callbackName];
 
-			args [0] = object;
-			args [1] = this;
+			if (arguments .length > 2)
+			{
+				var args = Array .prototype .slice .call (arguments, 0);
+	
+				args [0] = object;
+				args [1] = this;
+	
+				this ._interests .set (object .getId () + callbackName, Function .prototype .bind .apply (callback, args));
+			}
+			else
+			{
+				var self = this;
 
-			this ._interests .set (object .getId () + callbackName, Function .prototype .bind .apply (object [callbackName], args));
+				this ._interests .set (object .getId () + callbackName, function () { callback .call (object, self); });
+			}
 		},
 		removeInterest: function (callbackName, object)
 		{
