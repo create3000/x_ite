@@ -168,6 +168,7 @@ var X_ITE_TESTS = [
 	{ path: "PROTO/NestedProtos.x3d" },
 	{ path: "PROTO/Rotor.wrl" },
 	{ path: "PROTO/cbx.wrl" },
+	{ path: "PROTO/cbx.wrl.gz" },
 	{ path: "PROTO/test.x3d" },
 	{ path: "PROTO/test.x3dv" },
 	{ component: "ParticleSystems" },

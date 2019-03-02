@@ -1,11 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Geospatial/GeoLOD.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Picking/X3DPickingContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Networking/Inline.js" Line="256" Column="28" />
+      <File FileName="src/x_ite/Components/Networking/Inline.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Geospatial/GeoLOD.js" Line="326" Column="1" />
       <File FileName="src/x_ite/Basic/X3DField.js" Line="1" Column="1" />
     </Files>

@@ -28,6 +28,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Geometry3D", test: "IndexedFaceSet" },
 	{ component: "Geometry3D", test: "Sphere" },
 	{ component: "Geospatial", test: "GeoElevationGrid" },
+	{ component: "Geospatial", test: "GeoLOD" },
 	{ component: "Geospatial", test: "GeoViewpoint" },
 	{ component: "Grouping", test: "Group" },
 	{ component: "Grouping", test: "Switch" },

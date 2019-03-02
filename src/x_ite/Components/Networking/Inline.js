@@ -218,7 +218,7 @@ function (Fields,
 		setInternalScene: function (scene)
 		{
 			this .scene .setLive (false);
-			this .scene .rootNodes .removeInterest ("setValue", this .group .children_);
+			this .scene .rootNodes .removeFieldInterest (this .group .children_);
 
 			// Set new scene.
 
@@ -227,7 +227,7 @@ function (Fields,
 			this .scene .setPrivate (this .getExecutionContext () .getPrivate ());
 			this .scene .setup ();
 
-			this .scene .rootNodes .addInterest ("setValue", this .group .children_);
+			this .scene .rootNodes .addFieldInterest (this .group .children_);
 			this .group .children_ = this .scene .rootNodes;
 
 			this .set_live__ ();
