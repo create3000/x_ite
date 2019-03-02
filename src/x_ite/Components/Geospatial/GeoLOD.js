@@ -376,11 +376,11 @@ function (Fields,
 										this .childrenLoaded = false;
 									}
 								}
-				
-								this .child1Inline .load_ = false;
-								this .child2Inline .load_ = false;
-								this .child3Inline .load_ = false;
-								this .child4Inline .load_ = false;
+
+								//this .child1Inline .load_ = false;
+								//this .child2Inline .load_ = false;
+								//this .child3Inline .load_ = false;
+								//this .child4Inline .load_ = false;
 								break;
 							}
 							case 1:
@@ -407,11 +407,19 @@ function (Fields,
 	
 								this .set_childCameraObject__ ();
 								this .set_childPickableObject__ ();
-	
-								this .child1Inline .load_ = true;
-								this .child2Inline .load_ = true;
-								this .child3Inline .load_ = true;
-								this .child4Inline .load_ = true;
+
+								if (this .child1Inline .load_ .getValue ())
+								{
+									this .set_childLoadState__ ();
+								}
+								else
+								{
+									this .child1Inline .load_ = true;
+									this .child2Inline .load_ = true;
+									this .child3Inline .load_ = true;
+									this .child4Inline .load_ = true;
+								}
+
 								break;
 							}
 						}
