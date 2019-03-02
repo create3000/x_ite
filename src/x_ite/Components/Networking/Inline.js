@@ -248,12 +248,12 @@ function (Fields,
 			{
 				case TraverseType .PICKING:
 				{
-					this .group .traverse  (type, renderObject);
+					this .group .traverse (type, renderObject);
 					break;
 				}
 				default:
 				{
-					this .group .traverse  (type, renderObject);
+					this .group .traverse (type, renderObject);
 					break;
 				}
 			}
