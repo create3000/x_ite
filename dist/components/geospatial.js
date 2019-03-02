@@ -2061,7 +2061,7 @@ function (Fields,
 
 		this .range_ .setUnit ("length");
 
-		this .unload           = false;
+		this .unload           = true;
 		this .rootGroup        = new Group (this .getBrowser () .getPrivateScene ());
 		this .rootInline       = new Inline (executionContext);
 		this .child1Inline     = new Inline (executionContext);
