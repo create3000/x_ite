@@ -2061,6 +2061,7 @@ function (Fields,
 
 		this .range_ .setUnit ("length");
 
+		this .unload           = false;
 		this .rootGroup        = new Group (this .getBrowser () .getPrivateScene ());
 		this .rootInline       = new Inline (executionContext);
 		this .child1Inline     = new Inline (executionContext);
@@ -2348,10 +2349,14 @@ function (Fields,
 									}
 								}
 
-								//this .child1Inline .load_ = false;
-								//this .child2Inline .load_ = false;
-								//this .child3Inline .load_ = false;
-								//this .child4Inline .load_ = false;
+								if (this .unload)
+								{
+									this .child1Inline .load_ = false;
+									this .child2Inline .load_ = false;
+									this .child3Inline .load_ = false;
+									this .child4Inline .load_ = false;
+								}
+
 								break;
 							}
 							case 1:
