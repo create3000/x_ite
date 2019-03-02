@@ -2262,6 +2262,8 @@ function (Fields,
 	
 					this .children_ .assign (nodes);
 				}
+
+				nodes .length = 0;
 			};
 		})(),
 		set_childCameraObject__: function ()
