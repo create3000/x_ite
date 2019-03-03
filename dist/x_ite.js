@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-621 */
+/* X_ITE v4.4.2a-622 */
 
 (function () {
 
@@ -60661,13 +60661,14 @@ function (Fields,
 					for (var i = 0; i < length; ++ i)
 					{
 						var
-							index        = coordIndex [vertices [i]],
-							pointNormals = normalIndex [index];
+							index        = vertices [i],
+							point        = coordIndex [index],
+							pointNormals = normalIndex [point];
 	
 						if (! pointNormals)
-							pointNormals = normalIndex [index] = [ ];
+							pointNormals = normalIndex [point] = [ ];
 	
-						pointNormals .push (numNormals + i);
+						pointNormals .push (index);
 					}
 	
 					if (cw)
@@ -60676,10 +60677,7 @@ function (Fields,
 					// Add this normal for each vertex.
 	
 					for (var i = 0; i < length; ++ i)
-						normals .push (normal);
-
-					// Add one more for -1.
-					normals .push (undefined);
+						normals [vertices [i]] = normal;
 				}
 	
 				return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());

@@ -456,9 +456,6 @@ function (Fields,
 	
 					for (var i = 0; i < length; ++ i)
 						normals [vertices [i]] = normal;
-
-					// Add one more for -1.
-					normals .push (undefined);
 				}
 	
 				return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
