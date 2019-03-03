@@ -218,6 +218,7 @@ define ('x_ite/Components/Scripting/Script',[
 	"x_ite/Components/Scripting/X3DScriptNode",
 	"x_ite/InputOutput/FileLoader",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Fields/SFNodeCache",
 ],
 function ($,
           X3DFieldDefinition,
@@ -243,7 +244,8 @@ function ($,
           evaluate,
           X3DScriptNode, 
           FileLoader,
-          X3DConstants)
+          X3DConstants,
+          SFNodeCache)
 {
 	function Script (executionContext)
 	{
@@ -392,7 +394,13 @@ function ($,
 				var scene = browser .createX3DFromString (String (vrmlSyntax));
 
 				if (scene .getRootNodes () .length && scene .getRootNodes () [0])
-					return Fields .SFNode .call (this, scene .getRootNodes () [0] .getValue ());
+				{
+					var node = Fields .SFNode .call (this, scene .getRootNodes () [0] .getValue ());
+
+					SFNodeCache .set (node .getValue (), node);
+
+					return node;
+				}
 
 				throw new Error ("SFNode.new: invalid argument, must be 'string' is 'undefined'.");
 			}

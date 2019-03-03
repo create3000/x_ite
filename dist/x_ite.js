@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-620 */
+/* X_ITE v4.4.2a-621 */
 
 (function () {
 
@@ -21729,14 +21729,72 @@ function (X3DField,
  ******************************************************************************/
 
 
+define ('x_ite/Fields/SFNodeCache',[],function ()
+{
+"use strict";
+
+	return new WeakMap ();
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Fields/SFNode',[
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
+	"x_ite/Fields/SFNodeCache",
 ],
 function (X3DField,
           X3DConstants,
-          Generator)
+          Generator,
+          SFNodeCache)
 {
 "use strict";
 
@@ -21927,32 +21985,27 @@ function (X3DField,
 			if (value)
 				value .removeClones (count);
 		},
-		valueOf: (function ()
+		valueOf: function ()
 		{
-			var cache = new WeakMap ();
+			var value = this .getValue ();
 
-			return function ()
+			if (value)
 			{
-				var value = this .getValue ();
+				var field = SFNodeCache .get (value);
 
-				if (value)
-				{
-					var field = cache .get (value);
-
-					if (field)
-						return field;
-
-					// Always create new instance!
-					field = new SFNode (value);
-
-					cache .set (value, field);
-
+				if (field)
 					return field;
-				}
 
-				return null;	
-			};
-		})(),
+				// Always create new instance!
+				field = new SFNode (value);
+
+				SFNodeCache .set (value, field);
+
+				return field;
+			}
+
+			return null;	
+		},
 		toStream: function (stream)
 		{
 			var node = this .getValue ();
@@ -32213,9 +32266,10 @@ define ('x_ite/Execution/X3DExecutionContext',[
 	"x_ite/Routing/X3DRoute",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
+	"x_ite/Fields/SFNodeCache",
 	"standard/Networking/URI",
 	"standard/Math/Algorithm",
-	"x_ite/InputOutput/Generator",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -32229,9 +32283,10 @@ function (Fields,
           X3DRoute,
           X3DCast,
           X3DConstants,
+          Generator,
+          SFNodeCache,
           URI,
-          Algorithm,
-          Generator)
+          Algorithm)
 {
 "use strict";
 
@@ -32339,8 +32394,6 @@ function (Fields,
 		},
 		createNode: function (typeName, setup)
 		{
-			// return same instance (.valueOf)
-
 			if (setup === false)
 			{
 				var Type = this .getBrowser () .getSupportedNode (typeName);
@@ -32348,9 +32401,9 @@ function (Fields,
 				if (! Type)
 					return null;
 	
-				var node = new Type (this);
+				var baseNode = new Type (this);
 	
-				return node;
+				return baseNode;
 			}
 			else
 			{
@@ -32359,11 +32412,15 @@ function (Fields,
 				if (! Type)
 					throw new Error ("Unknown node type '" + typeName + "'.");
 	
-				var node = new Type (this);
+				var baseNode = new Type (this);
 	
-				node .setup ();
+				baseNode .setup ();
 	
-				return new Fields .SFNode (node);
+				var node = new Fields .SFNode (baseNode);
+
+				SFNodeCache .set (baseNode, node);
+
+				return node;
 			}
 		},
 		createProto: function (name, setup)
@@ -34724,11 +34781,13 @@ define ('x_ite/Prototype/X3DProtoDeclarationNode',[
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Fields/SFNodeCache",
 ],
 function (Fields,
           X3DNode,
           X3DPrototypeInstance,
-          X3DConstants)
+          X3DConstants,
+          SFNodeCache)
 {
 "use strict";
 
@@ -34746,16 +34805,22 @@ function (Fields,
 		},
 		createInstance: function (executionContext, setup)
 		{
-			// return same instance (.valueOf)
-
-			var instance = new X3DPrototypeInstance (executionContext, this);
-			
 			if (setup === false)
-				return instance;
+			{
+				return new X3DPrototypeInstance (executionContext, this);
+			}
+			else
+			{
+				var instance = new X3DPrototypeInstance (executionContext, this);
+	
+				instance .setup ();
+	
+				var node = new Fields .SFNode (instance);
 
-			instance .setup ();
+				SFNodeCache .set (instance, node);
 
-			return new Fields .SFNode (instance);
+				return node;
+			}
 		},
 		newInstance: function ()
 		{
