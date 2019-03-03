@@ -439,13 +439,14 @@ function (Fields,
 					for (var i = 0; i < length; ++ i)
 					{
 						var
-							index        = coordIndex [vertices [i]],
-							pointNormals = normalIndex [index];
+							index        = vertices [i],
+							point        = coordIndex [index],
+							pointNormals = normalIndex [point];
 	
 						if (! pointNormals)
-							pointNormals = normalIndex [index] = [ ];
+							pointNormals = normalIndex [point] = [ ];
 	
-						pointNormals .push (numNormals + i);
+						pointNormals .push (index);
 					}
 	
 					if (cw)
@@ -454,7 +455,7 @@ function (Fields,
 					// Add this normal for each vertex.
 	
 					for (var i = 0; i < length; ++ i)
-						normals .push (normal);
+						normals [vertices [i]] = normal;
 
 					// Add one more for -1.
 					normals .push (undefined);

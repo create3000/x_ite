@@ -1,13 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Geospatial/GeoLOD.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Geometry3D/IndexedFaceSet.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Picking/X3DPickingContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Geospatial/GeoLOD.js" Line="276" Column="2" />
-      <File FileName="src/x_ite/Components/Networking/Inline.js" Line="230" Column="70" />
-      <File FileName="src/x_ite/Components/Shape/Appearance.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Geospatial/GeoLOD.js" Line="243" Column="1" />
+      <File FileName="src/x_ite/Components/Geometry3D/IndexedFaceSet.js" Line="443" Column="13" />
+      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="187" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
