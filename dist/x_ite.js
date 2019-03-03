@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-619 */
+/* X_ITE v4.4.2a-620 */
 
 (function () {
 
@@ -15895,8 +15895,6 @@ function (X3DField,
 	   
 			if (arguments .length === 4)
 				X3DField .call (this, new Image (width, height, comp, array));
-			else if (arguments .length === 1)
-				X3DField .call (this, arguments [0]);
 			else
 				X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
 
@@ -15942,27 +15940,6 @@ function (X3DField,
 		{
 			return X3DConstants .SFImage;
 		},
-		valueOf: (function ()
-		{
-			var cache = new WeakMap ();
-
-			return function ()
-			{
-				var
-					value = this .getValue (),
-					field = cache .get (value);
-
-				if (field)
-					return field;
-
-				// Always create new instance!
-				field = new SFImage (value);
-
-				cache .set (value, field);
-
-				return field;
-			};
-		})(),
 		toStream: function (stream)
 		{
 		   var
