@@ -51,10 +51,12 @@ define ([
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
+	"x_ite/Fields/SFNodeCache",
 ],
 function (X3DField,
           X3DConstants,
-          Generator)
+          Generator,
+          SFNodeCache)
 {
 "use strict";
 
@@ -245,32 +247,27 @@ function (X3DField,
 			if (value)
 				value .removeClones (count);
 		},
-		valueOf: (function ()
+		valueOf: function ()
 		{
-			var cache = new WeakMap ();
+			var value = this .getValue ();
 
-			return function ()
+			if (value)
 			{
-				var value = this .getValue ();
+				var field = SFNodeCache .get (value);
 
-				if (value)
-				{
-					var field = cache .get (value);
-
-					if (field)
-						return field;
-
-					// Always create new instance!
-					field = new SFNode (value);
-
-					cache .set (value, field);
-
+				if (field)
 					return field;
-				}
 
-				return null;	
-			};
-		})(),
+				// Always create new instance!
+				field = new SFNode (value);
+
+				SFNodeCache .set (value, field);
+
+				return field;
+			}
+
+			return null;	
+		},
 		toStream: function (stream)
 		{
 			var node = this .getValue ();

@@ -60,9 +60,10 @@ define ([
 	"x_ite/Routing/X3DRoute",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
+	"x_ite/Fields/SFNodeCache",
 	"standard/Networking/URI",
 	"standard/Math/Algorithm",
-	"x_ite/InputOutput/Generator",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -76,9 +77,10 @@ function (Fields,
           X3DRoute,
           X3DCast,
           X3DConstants,
+          Generator,
+          SFNodeCache,
           URI,
-          Algorithm,
-          Generator)
+          Algorithm)
 {
 "use strict";
 
@@ -186,8 +188,6 @@ function (Fields,
 		},
 		createNode: function (typeName, setup)
 		{
-			// return same instance (.valueOf)
-
 			if (setup === false)
 			{
 				var Type = this .getBrowser () .getSupportedNode (typeName);
@@ -195,9 +195,9 @@ function (Fields,
 				if (! Type)
 					return null;
 	
-				var node = new Type (this);
+				var baseNode = new Type (this);
 	
-				return node;
+				return baseNode;
 			}
 			else
 			{
@@ -206,11 +206,15 @@ function (Fields,
 				if (! Type)
 					throw new Error ("Unknown node type '" + typeName + "'.");
 	
-				var node = new Type (this);
+				var baseNode = new Type (this);
 	
-				node .setup ();
+				baseNode .setup ();
 	
-				return new Fields .SFNode (node);
+				var node = new Fields .SFNode (baseNode);
+
+				SFNodeCache .set (baseNode, node);
+
+				return node;
 			}
 		},
 		createProto: function (name, setup)

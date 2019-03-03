@@ -47,57 +47,9 @@
  ******************************************************************************/
 
 
-define ([
-	"x_ite/Fields",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Components/Core/X3DPrototypeInstance",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Fields/SFNodeCache",
-],
-function (Fields,
-          X3DNode,
-          X3DPrototypeInstance,
-          X3DConstants,
-          SFNodeCache)
+define (function ()
 {
 "use strict";
 
-	function X3DProtoDeclarationNode (executionContext)
-	{
-		X3DNode .call (this, executionContext);
-	}
-
-	X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: X3DProtoDeclarationNode,
-		hasUserDefinedFields: function ()
-		{
-			return true;
-		},
-		createInstance: function (executionContext, setup)
-		{
-			if (setup === false)
-			{
-				return new X3DPrototypeInstance (executionContext, this);
-			}
-			else
-			{
-				var instance = new X3DPrototypeInstance (executionContext, this);
-	
-				instance .setup ();
-	
-				var node = new Fields .SFNode (instance);
-
-				SFNodeCache .set (instance, node);
-
-				return node;
-			}
-		},
-		newInstance: function ()
-		{
-			return this .createInstance (this .getExecutionContext ());
-		},
-	});
-
-	return X3DProtoDeclarationNode;
+	return new WeakMap ();
 });
