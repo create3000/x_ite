@@ -257,13 +257,13 @@ function (X3DField,
 				{
 					var field = cache .get (value);
 
-					if (! field)
-					{
-						// Always create new instance!
-						field = new SFNode (value);
+					if (field)
+						return field;
 
-						cache .set (value, field);
-					}
+					// Always create new instance!
+					field = new SFNode (value);
+
+					cache .set (value, field);
 
 					return field;
 				}

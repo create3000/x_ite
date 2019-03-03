@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-618 */
+/* X_ITE v4.4.2a-619 */
 
 (function () {
 
@@ -15952,12 +15952,13 @@ function (X3DField,
 					value = this .getValue (),
 					field = cache .get (value);
 
-				if (! field)
-				{
-					field = new SFImage (value);
+				if (field)
+					return field;
 
-					cache .set (value, field);
-				}
+				// Always create new instance!
+				field = new SFImage (value);
+
+				cache .set (value, field);
 
 				return field;
 			};
@@ -21961,13 +21962,13 @@ function (X3DField,
 				{
 					var field = cache .get (value);
 
-					if (! field)
-					{
-						// Always create new instance!
-						field = new SFNode (value);
+					if (field)
+						return field;
 
-						cache .set (value, field);
-					}
+					// Always create new instance!
+					field = new SFNode (value);
+
+					cache .set (value, field);
 
 					return field;
 				}

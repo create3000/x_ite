@@ -208,12 +208,13 @@ function (X3DField,
 					value = this .getValue (),
 					field = cache .get (value);
 
-				if (! field)
-				{
-					field = new SFImage (value);
+				if (field)
+					return field;
 
-					cache .set (value, field);
-				}
+				// Always create new instance!
+				field = new SFImage (value);
+
+				cache .set (value, field);
 
 				return field;
 			};
