@@ -230,7 +230,7 @@ function (Fields,
 			var exportedNode = this .exportedNodes .get (exportedName);
 
 			if (exportedNode)
-				return exportedNode .getLocalNode ();	
+				return exportedNode .getLocalNode () .valueOf ();
 
 			throw new Error ("Exported node '" + exportedName + "' not found.");
 		},

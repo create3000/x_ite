@@ -288,7 +288,7 @@ function (Fields,
 			if (! node)
 				throw new Error ("Named node '" + name + "' not found.");
 
-			return node;
+			return node .valueOf ();
 		},
 		getNamedNodes: function ()
 		{
@@ -391,7 +391,7 @@ function (Fields,
 			var importedNode = this .importedNodes .get (importedName);
 
 			if (importedNode)
-				return importedNode .getExportedNode ();
+				return importedNode .getExportedNode () .valueOf ();
 
 			throw new Error ("Imported node '" + importedName + "' not found.");
 		},

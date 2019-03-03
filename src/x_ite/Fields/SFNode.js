@@ -245,13 +245,31 @@ function (X3DField,
 			if (value)
 				value .removeClones (count);
 		},
-		valueOf: function ()
+		valueOf: (function ()
 		{
-			if (this .getValue ())
-				return this;
+			var cache = new WeakMap ();
 
-			return null;	
-		},
+			return function ()
+			{
+				var value = this .getValue ();
+
+				if (value)
+				{
+					var field = cache .get (value);
+
+					if (! field)
+					{
+						field = new SFNode (value);
+
+						cache .set (value, field);
+					}
+
+					return field;
+				}
+
+				return null;	
+			};
+		})(),
 		toStream: function (stream)
 		{
 			var node = this .getValue ();

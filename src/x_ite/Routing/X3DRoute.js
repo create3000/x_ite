@@ -90,7 +90,7 @@ function (Fields,
 		getSourceNode: function ()
 		{
 			///  SAI
-			return this ._sourceNode;
+			return this ._sourceNode .valueOf ();
 		},
 		getSourceField: function ()
 		{
@@ -100,7 +100,7 @@ function (Fields,
 		getDestinationNode: function ()
 		{
 			///  SAI
-			return this ._destinationNode;
+			return this ._destinationNode .valueOf ();
 		},
 		getDestinationField: function ()
 		{
@@ -167,7 +167,7 @@ function (Fields,
 	{
 		get: function ()
 		{
-			return this ._sourceNode;
+			return this ._sourceNode .valueOf ();
 		},
 		enumerable: true,
 		configurable: false
@@ -187,7 +187,7 @@ function (Fields,
 	{
 		get: function ()
 		{
-			return this ._destinationNode;
+			return this ._destinationNode .valueOf ();
 		},
 		enumerable: true,
 		configurable: false

@@ -196,6 +196,26 @@ function (X3DField,
 		{
 			return X3DConstants .SFImage;
 		},
+		valueOf: (function ()
+		{
+			var cache = new WeakMap ();
+
+			return function ()
+			{
+				var
+					value = this .getValue (),
+					field = cache .get (value);
+
+				if (! field)
+				{
+					field = new SFNode (value);
+
+					cache .set (value, field);
+				}
+
+				return field;
+			};
+		})(),
 		toStream: function (stream)
 		{
 		   var
