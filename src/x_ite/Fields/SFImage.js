@@ -151,6 +151,8 @@ function (X3DField,
 	   
 			if (arguments .length === 4)
 				X3DField .call (this, new Image (width, height, comp, array));
+			else if (arguments .length === 1)
+				X3DField .call (this, arguments [0]);
 			else
 				X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
 
@@ -208,7 +210,7 @@ function (X3DField,
 
 				if (! field)
 				{
-					field = new SFNode (value);
+					field = new SFImage (value);
 
 					cache .set (value, field);
 				}

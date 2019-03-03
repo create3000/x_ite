@@ -259,6 +259,7 @@ function (X3DField,
 
 					if (! field)
 					{
+						// Always create new instance!
 						field = new SFNode (value);
 
 						cache .set (value, field);
