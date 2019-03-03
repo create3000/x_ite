@@ -434,8 +434,6 @@ function (Fields,
 
 					// Add a normal index for each point.
 
-					var numNormals = normals .length;
-
 					for (var i = 0; i < length; ++ i)
 					{
 						var

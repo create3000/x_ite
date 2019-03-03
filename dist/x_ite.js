@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-622 */
+/* X_ITE v4.4.2a-623 */
 
 (function () {
 
@@ -60655,8 +60655,6 @@ function (Fields,
 					}
 
 					// Add a normal index for each point.
-
-					var numNormals = normals .length;
 
 					for (var i = 0; i < length; ++ i)
 					{
