@@ -186,6 +186,8 @@ function (Fields,
 		},
 		createNode: function (typeName, setup)
 		{
+			// return same instance (.valueOf)
+
 			if (setup === false)
 			{
 				var Type = this .getBrowser () .getSupportedNode (typeName);

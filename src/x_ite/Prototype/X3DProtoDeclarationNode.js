@@ -74,6 +74,8 @@ function (Fields,
 		},
 		createInstance: function (executionContext, setup)
 		{
+			// return same instance (.valueOf)
+
 			var instance = new X3DPrototypeInstance (executionContext, this);
 			
 			if (setup === false)

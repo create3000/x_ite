@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2a-616 */
+/* X_ITE v4.4.2a-617 */
 
 (function () {
 
@@ -32358,6 +32358,8 @@ function (Fields,
 		},
 		createNode: function (typeName, setup)
 		{
+			// return same instance (.valueOf)
+
 			if (setup === false)
 			{
 				var Type = this .getBrowser () .getSupportedNode (typeName);
@@ -34763,6 +34765,8 @@ function (Fields,
 		},
 		createInstance: function (executionContext, setup)
 		{
+			// return same instance (.valueOf)
+
 			var instance = new X3DPrototypeInstance (executionContext, this);
 			
 			if (setup === false)
