@@ -15940,6 +15940,26 @@ function (X3DField,
 		{
 			return X3DConstants .SFImage;
 		},
+		valueOf: (function ()
+		{
+			var cache = new WeakMap ();
+
+			return function ()
+			{
+				var
+					value = this .getValue (),
+					field = cache .get (value);
+
+				if (! field)
+				{
+					field = new SFNode (value);
+
+					cache .set (value, field);
+				}
+
+				return field;
+			};
+		})(),
 		toStream: function (stream)
 		{
 		   var
@@ -21927,13 +21947,31 @@ function (X3DField,
 			if (value)
 				value .removeClones (count);
 		},
-		valueOf: function ()
+		valueOf: (function ()
 		{
-			if (this .getValue ())
-				return this;
+			var cache = new WeakMap ();
 
-			return null;	
-		},
+			return function ()
+			{
+				var value = this .getValue ();
+
+				if (value)
+				{
+					var field = cache .get (value);
+
+					if (! field)
+					{
+						field = new SFNode (value);
+
+						cache .set (value, field);
+					}
+
+					return field;
+				}
+
+				return null;	
+			};
+		})(),
 		toStream: function (stream)
 		{
 			var node = this .getValue ();
@@ -31148,7 +31186,7 @@ function (Fields,
 		getSourceNode: function ()
 		{
 			///  SAI
-			return this ._sourceNode;
+			return this ._sourceNode .valueOf ();
 		},
 		getSourceField: function ()
 		{
@@ -31158,7 +31196,7 @@ function (Fields,
 		getDestinationNode: function ()
 		{
 			///  SAI
-			return this ._destinationNode;
+			return this ._destinationNode .valueOf ();
 		},
 		getDestinationField: function ()
 		{
@@ -31225,7 +31263,7 @@ function (Fields,
 	{
 		get: function ()
 		{
-			return this ._sourceNode;
+			return this ._sourceNode .valueOf ();
 		},
 		enumerable: true,
 		configurable: false
@@ -31245,7 +31283,7 @@ function (Fields,
 	{
 		get: function ()
 		{
-			return this ._destinationNode;
+			return this ._destinationNode .valueOf ();
 		},
 		enumerable: true,
 		configurable: false
@@ -32422,7 +32460,7 @@ function (Fields,
 			if (! node)
 				throw new Error ("Named node '" + name + "' not found.");
 
-			return node;
+			return node .valueOf ();
 		},
 		getNamedNodes: function ()
 		{
@@ -32525,7 +32563,7 @@ function (Fields,
 			var importedNode = this .importedNodes .get (importedName);
 
 			if (importedNode)
-				return importedNode .getExportedNode ();
+				return importedNode .getExportedNode () .valueOf ();
 
 			throw new Error ("Imported node '" + importedName + "' not found.");
 		},
@@ -33358,7 +33396,7 @@ function (Fields,
 			var exportedNode = this .exportedNodes .get (exportedName);
 
 			if (exportedNode)
-				return exportedNode .getLocalNode ();	
+				return exportedNode .getLocalNode () .valueOf ();
 
 			throw new Error ("Exported node '" + exportedName + "' not found.");
 		},

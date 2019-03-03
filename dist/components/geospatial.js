@@ -2213,7 +2213,7 @@ function (Fields,
 				++ loaded;
 
 			if (this .child3Inline .checkLoadState () === X3DConstants .COMPLETE_STATE ||
-			   this .child3Inline .checkLoadState () === X3DConstants .FAILED_STATE)
+			    this .child3Inline .checkLoadState () === X3DConstants .FAILED_STATE)
 				++ loaded;
 
 			if (this .child4Inline .checkLoadState () === X3DConstants .COMPLETE_STATE ||
