@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2-625 */
+/* X_ITE v4.4.2-626 */
 
 (function () {
 
@@ -12757,6 +12757,22 @@ define ('x_ite/Basic/FieldDefinitionArray',[],function ()
 		{
 			return false;
 		},
+		has: function (target, key)
+		{
+			if (Number .isInteger (+key))
+				return key < target .array .length;
+
+			return key in target;
+		},
+		enumerate: function (target)
+		{
+			var indices = [ ];
+
+			for (var i = 0, length = target .array .length; i < length; ++ i)
+				array .push (i);
+
+			return indices [Symbol .iterator] ();
+		},
 	};
 
 	function FieldDefinitionArray (value)
@@ -21850,6 +21866,31 @@ function (X3DField,
 				return false;
 			}
 		},
+		has: function (target, key)
+		{
+			try
+			{
+				return Boolean (target .getValue () .getField (key));
+			}
+			catch (error)
+			{
+				return key in target;
+			}
+		},
+		enumerate: function (target)
+		{
+			if (! target .getValue ())
+				return [ ] [Symbol .iterator] ();
+
+			var
+				indices          = [ ],
+				fieldDefinitions = target .getValue () .getFieldDefinitions ();
+
+			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+				array .push (fieldDefinitions [i] .name);
+
+			return indices [Symbol .iterator] ();
+		},
 	};
 
 	function SFNode (value)
@@ -22825,11 +22866,21 @@ function ($,
 		},
 		has: function (target, key)
 		{
-			return key in target .getValue ();
+			if (Number .isInteger (+key))
+				return key < target .getValue () .length;
+
+			return key in target;
 		},
 		enumerate: function (target)
 		{
-			return Object .keys (target .getValue ()) [Symbol.iterator] ();
+			var
+				indices = [ ],
+				array   = target .getValue ();
+
+			for (var i = 0, length = array .length; i < length; ++ i)
+				array .push (i);
+
+			return indices [Symbol .iterator] ();
 		},
 	};
 
@@ -23410,11 +23461,19 @@ function (X3DArrayField,
 		},
 		has: function (target, key)
 		{
-			return key in target .getValue ();
+			if (Number .isInteger (+key))
+				return key < target ._length;
+
+			return key in target;
 		},
 		enumerate: function (target)
 		{
-			return Object .keys (target .getValue ()) [Symbol.iterator] ();
+			var indices = [ ];
+
+			for (var i = 0, length = target ._length; i < length; ++ i)
+				array .push (i);
+
+			return indices [Symbol .iterator] ();
 		},
 	};
 
@@ -30465,11 +30524,19 @@ define ('x_ite/Configuration/X3DInfoArray',[],function ()
 		},
 		has: function (target, key)
 		{
-			return key in target .array || target .index .has (key);
+			if (Number .isInteger (+key))
+				return key < target .array .length;
+
+			return key in target;
 		},
 		enumerate: function (target)
 		{
-			return Object .keys (target .array) [Symbol.iterator] ();
+			var indices = [ ];
+
+			for (var i = 0, length = target .array .length; i < length; ++ i)
+				array .push (i);
+
+			return indices [Symbol .iterator] ();
 		},
 	};
 
@@ -31090,6 +31157,22 @@ define ('x_ite/Routing/RouteArray',[],function ()
 		set: function (target, key, value)
 		{
 			return false;
+		},
+		has: function (target, key)
+		{
+			if (Number .isInteger (+key))
+				return key < target .array .length;
+
+			return key in target;
+		},
+		enumerate: function (target)
+		{
+			var indices = [ ];
+
+			for (var i = 0, length = target .array .length; i < length; ++ i)
+				array .push (i);
+
+			return indices [Symbol .iterator] ();
 		},
 	};
 
