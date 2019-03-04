@@ -66,6 +66,22 @@ define (function ()
 		{
 			return false;
 		},
+		has: function (target, key)
+		{
+			if (Number .isInteger (key))
+				return key < target .array .length;
+
+			return key in target;
+		},
+		enumerate: function (target)
+		{
+			var indices = [ ];
+
+			for (var i = 0, length = target .array .length; i < length; ++ i)
+				array .push (i);
+
+			return indices [Symbol .iterator] ();
+		},
 	};
 
 	function RouteArray ()

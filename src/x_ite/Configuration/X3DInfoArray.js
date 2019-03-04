@@ -73,11 +73,19 @@ define (function ()
 		},
 		has: function (target, key)
 		{
-			return key in target .array || target .index .has (key);
+			if (Number .isInteger (key))
+				return key < target .array .length;
+
+			return key in target;
 		},
 		enumerate: function (target)
 		{
-			return Object .keys (target .array) [Symbol.iterator] ();
+			var indices = [ ];
+
+			for (var i = 0, length = target .array .length; i < length; ++ i)
+				array .push (i);
+
+			return indices [Symbol .iterator] ();
 		},
 	};
 

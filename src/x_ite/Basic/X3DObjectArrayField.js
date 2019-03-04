@@ -123,11 +123,21 @@ function ($,
 		},
 		has: function (target, key)
 		{
-			return key in target .getValue ();
+			if (Number .isInteger (key))
+				return key < target .getValue () .length;
+
+			return key in target;
 		},
 		enumerate: function (target)
 		{
-			return Object .keys (target .getValue ()) [Symbol.iterator] ();
+			var
+				indices = [ ],
+				array   = target .getValue ();
+
+			for (var i = 0, length = array .length; i < length; ++ i)
+				array .push (i);
+
+			return indices [Symbol .iterator] ();
 		},
 	};
 

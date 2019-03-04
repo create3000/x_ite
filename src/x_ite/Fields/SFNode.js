@@ -112,6 +112,31 @@ function (X3DField,
 				return false;
 			}
 		},
+		has: function (target, key)
+		{
+			try
+			{
+				return Boolean (target .getValue () .getField (key));
+			}
+			catch (error)
+			{
+				return key in target;
+			}
+		},
+		enumerate: function (target)
+		{
+			if (! target .getValue ())
+				return [ ] [Symbol .iterator] ();
+
+			var
+				indices          = [ ],
+				fieldDefinitions = target .getValue () .getFieldDefinitions ();
+
+			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+				array .push (fieldDefinitions [i] .name);
+
+			return indices [Symbol .iterator] ();
+		},
 	};
 
 	function SFNode (value)

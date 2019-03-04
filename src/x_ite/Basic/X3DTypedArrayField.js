@@ -156,11 +156,19 @@ function (X3DArrayField,
 		},
 		has: function (target, key)
 		{
-			return key in target .getValue ();
+			if (Number .isInteger (key))
+				return key < target ._length;
+
+			return key in target;
 		},
 		enumerate: function (target)
 		{
-			return Object .keys (target .getValue ()) [Symbol.iterator] ();
+			var indices = [ ];
+
+			for (var i = 0, length = target ._length; i < length; ++ i)
+				array .push (i);
+
+			return indices [Symbol .iterator] ();
 		},
 	};
 
