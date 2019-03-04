@@ -123,7 +123,7 @@ function ($,
 		},
 		has: function (target, key)
 		{
-			if (Number .isInteger (key))
+			if (Number .isInteger (+key))
 				return key < target .getValue () .length;
 
 			return key in target;
