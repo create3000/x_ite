@@ -2,11 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="package.json">
     <Files>
-      <File FileName="package.json" Line="15" Column="4" />
+      <File FileName="package.json" Line="15" Column="3" />
       <File FileName="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Picking/X3DPickingContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Geospatial/GeoLOD.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Geometry3D/IndexedFaceSet.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

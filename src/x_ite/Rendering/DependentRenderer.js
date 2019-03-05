@@ -111,25 +111,25 @@ function (X3DBaseNode,
 		{
 			return this .renderObject .getLights () [this .lightIndex ++];
 		},
-		render: function (type, group)
+		render: function (type, callback, group)
 		{
 			switch (type)
 			{
 				case TraverseType .COLLISION:
 				{
-					X3DRenderObject .prototype .render .call (this, type, group);
+					X3DRenderObject .prototype .render .call (this, type, callback, group);
 					break;
 				}
 				case TraverseType .DEPTH:
 				{
-					X3DRenderObject .prototype .render .call (this, type, group);
+					X3DRenderObject .prototype .render .call (this, type, callback, group);
 					break;
 				}
 				case TraverseType .DISPLAY:
 				{
 					this .lightIndex = 0;
 
-					X3DRenderObject .prototype .render .call (this, type, group);
+					X3DRenderObject .prototype .render .call (this, type, callback, group);
 
 					var lights = this .renderObject .getLights ();
 

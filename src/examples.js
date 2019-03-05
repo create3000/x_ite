@@ -1,6 +1,7 @@
 var X_ITE_EXAMPLES = [
 	{ component: "CADGeometry", test: "QuadSet" },
 	{ component: "CubeMapTexturing", test: "ComposedCubeMapTexture" },
+	{ component: "CubeMapTexturing", test: "GeneratedCubeMapTexture" },
 	{ component: "EnvironmentalEffects", test: "Background" },
 	{ component: "EnvironmentalEffects", test: "Fog" },
 	{ component: "EnvironmentalEffects", test: "LocalFog" },
