@@ -254,6 +254,24 @@ function (X3DField,
 
 			throw new Error ("SFNode.getFieldDefinitions: node is null.");
 		},
+		addFieldCallback: function (name, string, object)
+		{
+			var value = this .getValue ();
+
+			if (value)
+				return value .getField (name) .addFieldCallback (string, object);
+
+			throw new Error ("SFNode.addFieldCallback: node is null.");
+		},
+		removeFieldCallback: function (name, string)
+		{
+			var value = this .getValue ();
+
+			if (value)
+				return value .getField (name) .removeFieldCallback (string);
+
+			throw new Error ("SFNode.removeFieldCallback: node is null.");
+		},
 		addClones: function (count)
 		{
 			var value = this .getValue ();

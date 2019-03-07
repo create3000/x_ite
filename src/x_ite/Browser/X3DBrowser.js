@@ -496,7 +496,7 @@ function ($,
 		{
 			if (this .browserCallbacks .size)
 			{
-				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+				this .browserCallbacks .forEach (function (browserCallback)
 				{
 					browserCallback (browserEvent);
 				});

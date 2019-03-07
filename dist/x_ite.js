@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2-627 */
+/* X_ITE v4.4.2-628 */
 
 (function () {
 
@@ -14046,7 +14046,7 @@ function ($,
 		{
 			if (this ._routeCallbacks .size)
 			{
-				(new Map (this ._routeCallbacks)) .forEach (function (routeCallback)
+				this ._routeCallbacks .forEach (function (routeCallback)
 				{
 					routeCallback ();
 				});
@@ -14093,7 +14093,7 @@ function ($,
 
 			if (this ._fieldCallbacks .size)
 			{
-				(new Map (this ._fieldCallbacks)) .forEach (function (fieldCallback)
+				this ._fieldCallbacks .forEach (function (fieldCallback)
 				{
 					fieldCallback (this .valueOf ());
 				},
@@ -22007,6 +22007,24 @@ function (X3DField,
 				return value .getFieldDefinitions ();
 
 			throw new Error ("SFNode.getFieldDefinitions: node is null.");
+		},
+		addFieldCallback: function (name, string, object)
+		{
+			var value = this .getValue ();
+
+			if (value)
+				return value .getField (name) .addFieldCallback (string, object);
+
+			throw new Error ("SFNode.addFieldCallback: node is null.");
+		},
+		removeFieldCallback: function (name, string)
+		{
+			var value = this .getValue ();
+
+			if (value)
+				return value .getField (name) .removeFieldCallback (string);
+
+			throw new Error ("SFNode.removeFieldCallback: node is null.");
 		},
 		addClones: function (count)
 		{
@@ -103799,7 +103817,7 @@ function ($,
 		{
 			if (this .browserCallbacks .size)
 			{
-				(new Map (this .browserCallbacks)) .forEach (function (browserCallback)
+				this .browserCallbacks .forEach (function (browserCallback)
 				{
 					browserCallback (browserEvent);
 				});

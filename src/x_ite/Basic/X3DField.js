@@ -311,7 +311,7 @@ function ($,
 		{
 			if (this ._routeCallbacks .size)
 			{
-				(new Map (this ._routeCallbacks)) .forEach (function (routeCallback)
+				this ._routeCallbacks .forEach (function (routeCallback)
 				{
 					routeCallback ();
 				});
@@ -358,7 +358,7 @@ function ($,
 
 			if (this ._fieldCallbacks .size)
 			{
-				(new Map (this ._fieldCallbacks)) .forEach (function (fieldCallback)
+				this ._fieldCallbacks .forEach (function (fieldCallback)
 				{
 					fieldCallback (this .valueOf ());
 				},
