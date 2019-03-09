@@ -49,12 +49,12 @@
 
 define ([
 	"x_ite/Fields",
-	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Base/X3DObject",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
 function (Fields,
-          X3DBaseNode,
+          X3DObject,
           X3DConstants,
           Generator)
 {
@@ -62,9 +62,9 @@ function (Fields,
 
 	function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField)
 	{
-		// Must be X3DBaseNode for x_ite-dom.
-		X3DBaseNode .call (this, executionContext);
+		X3DObject .call (this, executionContext);
 
+		this ._executionContext = executionContext;
 		this ._sourceNode       = new Fields .SFNode (sourceNode);
 		this ._sourceField      = sourceField;
 		this ._destinationNode  = new Fields .SFNode (destinationNode);
@@ -72,30 +72,24 @@ function (Fields,
 
 		var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
-		if (this .getExecutionContext () .constructor !== X3DProtoDeclaration)
+		if (this ._executionContext .constructor !== X3DProtoDeclaration)
 		{
 			sourceField .addFieldInterest (destinationField);
 
 			sourceField      .addOutputRoute (this);
 			destinationField .addInputRoute (this);
 		}
-
-		this .setup ();
 	}
 
-	X3DRoute .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+	X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		getTypeName: function ()
 		{
 			return "X3DRoute";
 		},
-		getComponentName: function ()
+		getExecutionContext: function ()
 		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "routes";
+			return this ._executionContext;
 		},
 		getSourceNode: function ()
 		{
@@ -167,9 +161,9 @@ function (Fields,
 		{
 			this .disconnect ();
 
-			this .getExecutionContext () .deleteRoute (this);
+			this ._executionContext .deleteRoute (this);
 
-			X3DBaseNode .prototype .dispose .call (this);
+			X3DObject .prototype .dispose .call (this);
 		}
 	});
 
