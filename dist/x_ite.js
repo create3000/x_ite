@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2-629 */
+/* X_ITE v4.4.2-630 */
 
 (function () {
 
@@ -31300,12 +31300,12 @@ define ('x_ite/Routing/RouteArray',[],function ()
 
 define ('x_ite/Routing/X3DRoute',[
 	"x_ite/Fields",
-	"x_ite/Base/X3DObject",
+	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
 function (Fields,
-          X3DObject,
+          X3DBaseNode,
           X3DConstants,
           Generator)
 {
@@ -31313,9 +31313,9 @@ function (Fields,
 
 	function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField)
 	{
-		X3DObject .call (this, executionContext);
+		// Must be X3DBaseNode for x_ite-dom.
+		X3DBaseNode .call (this, executionContext);
 
-		this ._executionContext = executionContext;
 		this ._sourceNode       = new Fields .SFNode (sourceNode);
 		this ._sourceField      = sourceField;
 		this ._destinationNode  = new Fields .SFNode (destinationNode);
@@ -31323,24 +31323,30 @@ function (Fields,
 
 		var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
-		if (this ._executionContext .constructor !== X3DProtoDeclaration)
+		if (this .getExecutionContext () .constructor !== X3DProtoDeclaration)
 		{
 			sourceField .addFieldInterest (destinationField);
 
 			sourceField      .addOutputRoute (this);
 			destinationField .addInputRoute (this);
 		}
+
+		this .setup ();
 	}
 
-	X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
+	X3DRoute .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		getTypeName: function ()
 		{
 			return "X3DRoute";
 		},
-		getExecutionContext: function ()
+		getComponentName: function ()
 		{
-			return this ._executionContext;
+			return "X_ITE";
+		},
+		getContainerField: function ()
+		{
+			return "routes";
 		},
 		getSourceNode: function ()
 		{
@@ -31412,9 +31418,9 @@ function (Fields,
 		{
 			this .disconnect ();
 
-			this ._executionContext .deleteRoute (this);
+			this .getExecutionContext () .deleteRoute (this);
 
-			X3DObject .prototype .dispose .call (this);
+			X3DBaseNode .prototype .dispose .call (this);
 		}
 	});
 
