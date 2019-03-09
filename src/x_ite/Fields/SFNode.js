@@ -256,21 +256,41 @@ function (X3DField,
 		},
 		addFieldCallback: function (name, string, object)
 		{
-			var value = this .getValue ();
+			switch (arguments .length)
+			{
+				case 2:
+				{
+					return X3DField .prototype .addFieldCallback .apply (this, arguments);
+				}
+				case 3:
+				{
+					var value = this .getValue ();
+		
+					if (value)
+						return value .getField (name) .addFieldCallback (string, object);
 
-			if (value)
-				return value .getField (name) .addFieldCallback (string, object);
-
-			throw new Error ("SFNode.addFieldCallback: node is null.");
+					throw new Error ("SFNode.addFieldCallback: node is null.");
+				}
+			}
 		},
 		removeFieldCallback: function (name, string)
 		{
-			var value = this .getValue ();
-
-			if (value)
-				return value .getField (name) .removeFieldCallback (string);
-
-			throw new Error ("SFNode.removeFieldCallback: node is null.");
+			switch (arguments .length)
+			{
+				case 1:
+				{
+					return X3DField .prototype .removeFieldCallback .apply (this, arguments);
+				}
+				case 2:
+				{
+					var value = this .getValue ();
+		
+					if (value)
+						return value .getField (name) .removeFieldCallback (string);
+		
+					throw new Error ("SFNode.removeFieldCallback: node is null.");
+				}
+			}
 		},
 		addClones: function (count)
 		{

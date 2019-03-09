@@ -87,6 +87,10 @@ function (Fields,
 		{
 			return "X3DRoute";
 		},
+		getExecutionContext: function ()
+		{
+			return this ._executionContext;
+		},
 		getSourceNode: function ()
 		{
 			///  SAI
