@@ -133,7 +133,7 @@ function (X3DChildNode,
 			}
 			else
 				this .bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
-			
+
 			this .bboxSize   .assign (this .bbox .size);
 			this .bboxCenter .assign (this .bbox .center);
 		},

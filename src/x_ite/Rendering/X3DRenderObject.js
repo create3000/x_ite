@@ -127,9 +127,6 @@ function ($,
 	X3DRenderObject .prototype =
 	{
 		constructor: X3DRenderObject,
-		bboxSize: new Vector3 (0, 0, 0),
-		bboxCenter: new Vector3 (0, 0, 0),
-		translation: new Vector3 (0, 0, 0),
 		initialize: function ()
 		{ },
 		isIndependent: function ()
@@ -440,150 +437,177 @@ function ($,
 				}
 			}
 		},
-		addCollisionShape: function (shapeNode)
+		addCollisionShape: (function ()
 		{
 			var
-				modelViewMatrix = this .getModelViewMatrix () .get (),
-				bboxSize        = modelViewMatrix .multDirMatrix (this .bboxSize   .assign (shapeNode .getBBoxSize ())),
-				bboxCenter      = modelViewMatrix .multVecMatrix (this .bboxCenter .assign (shapeNode .getBBoxCenter ())),
-				radius          = bboxSize .abs () / 2,
-				viewVolume      = this .viewVolumes [this .viewVolumes .length - 1];
+				bboxSize   = new Vector3 (0, 0, 0),
+				bboxCenter = new Vector3 (0, 0, 0);
 
-			if (viewVolume .intersectsSphere (radius, bboxCenter))
+			return function (shapeNode)
 			{
-				if (this .numCollisionShapes === this .collisionShapes .length)
-					this .collisionShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
-	
-				var context = this .collisionShapes [this .numCollisionShapes];
-	
-				++ this .numCollisionShapes;
-	
-				context .modelViewMatrix .set (modelViewMatrix);
-				context .shapeNode = shapeNode;
-				context .scissor   = viewVolume .getScissor ();
-	
-				// Collisions
+				var modelViewMatrix = this .getModelViewMatrix () .get ();
+
+				modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
+				modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
 				var
-					sourceCollisions      = this .collisions,
-					destinationCollisions = context .collisions;
-
-				for (var i = 0, length = sourceCollisions .length; i < length; ++ i)
-					destinationCollisions [i] = sourceCollisions [i];
-
-				destinationCollisions .length = length;
-
-				// Clip planes
-
-				var
-					sourceClipPlanes      = this .shaderObjects,
-					destinationClipPlanes = context .clipPlanes;
-
-				for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
-					destinationClipPlanes [i] = sourceClipPlanes [i];
-
-				destinationClipPlanes .length = length;
-
-				return true;
-			}
-
-			return false;
-		},
-		addDepthShape: function (shapeNode)
-		{
-			var
-				modelViewMatrix = this .getModelViewMatrix () .get (),
-				bboxSize        = modelViewMatrix .multDirMatrix (this .bboxSize   .assign (shapeNode .getBBoxSize ())),
-				bboxCenter      = modelViewMatrix .multVecMatrix (this .bboxCenter .assign (shapeNode .getBBoxCenter ())),
-				radius          = bboxSize .abs () / 2,
-				viewVolume      = this .viewVolumes [this .viewVolumes .length - 1];
-
-			if (viewVolume .intersectsSphere (radius, bboxCenter))
-			{
-				if (this .numDepthShapes === this .depthShapes .length)
-					this .depthShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
+					radius     = bboxSize .abs () / 2,
+					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
 	
-				var context = this .depthShapes [this .numDepthShapes];
-	
-				++ this .numDepthShapes;
-	
-				context .modelViewMatrix .set (modelViewMatrix);
-				context .shapeNode = shapeNode;
-				context .scissor   = viewVolume .getScissor ();
-	
-				// Clip planes
-	
-				var
-					sourceClipPlanes      = this .shaderObjects,
-					destinationClipPlanes = context .clipPlanes;
-
-				for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
-					destinationClipPlanes [i] = sourceClipPlanes [i];
-
-				destinationClipPlanes .length = length;
-
-				return true;
-			}
-
-			return false;
-		},
-		addDisplayShape: function (shapeNode)
-		{
-			var
-				modelViewMatrix = this .getModelViewMatrix () .get (),
-				bboxSize        = modelViewMatrix .multDirMatrix (this .bboxSize   .assign (shapeNode .getBBoxSize ())),
-				bboxCenter      = modelViewMatrix .multVecMatrix (this .bboxCenter .assign (shapeNode .getBBoxCenter ())),
-				radius          = bboxSize .abs () / 2,
-				viewVolume      = this .viewVolumes [this .viewVolumes .length - 1];
-
-			if (viewVolume .intersectsSphere (radius, bboxCenter))
-			{
-				if (shapeNode .getTransparent ())
+				if (viewVolume .intersectsSphere (radius, bboxCenter))
 				{
-					var num = this .numTransparentShapes;
-
-					if (num === this .transparentShapes .length)
-						this .transparentShapes .push (this .createShapeContext (true));
-
-					var context = this .transparentShapes [num];
-
-					++ this .numTransparentShapes;
+					if (this .numCollisionShapes === this .collisionShapes .length)
+						this .collisionShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
+		
+					var context = this .collisionShapes [this .numCollisionShapes];
+		
+					++ this .numCollisionShapes;
+		
+					context .modelViewMatrix .set (modelViewMatrix);
+					context .shapeNode = shapeNode;
+					context .scissor   = viewVolume .getScissor ();
+		
+					// Collisions
+	
+					var
+						sourceCollisions      = this .collisions,
+						destinationCollisions = context .collisions;
+	
+					for (var i = 0, length = sourceCollisions .length; i < length; ++ i)
+						destinationCollisions [i] = sourceCollisions [i];
+	
+					destinationCollisions .length = length;
+	
+					// Clip planes
+	
+					var
+						sourceClipPlanes      = this .shaderObjects,
+						destinationClipPlanes = context .clipPlanes;
+	
+					for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
+						destinationClipPlanes [i] = sourceClipPlanes [i];
+	
+					destinationClipPlanes .length = length;
+	
+					return true;
 				}
-				else
-				{
-					var num = this .numOpaqueShapes;
+	
+				return false;
+			};
+		})(),
+		addDepthShape: (function ()
+		{
+			var
+				bboxSize   = new Vector3 (0, 0, 0),
+				bboxCenter = new Vector3 (0, 0, 0);
 
-					if (num === this .opaqueShapes .length)
-						this .opaqueShapes .push (this .createShapeContext (false));
+			return function (shapeNode)
+			{
+				var modelViewMatrix = this .getModelViewMatrix () .get ();
 
-					var context = this .opaqueShapes [num];
-
-					++ this .numOpaqueShapes;
-				}
-
-				context .modelViewMatrix .set (modelViewMatrix);
-				context .scissor .assign (viewVolume .getScissor ());
-				context .shapeNode = shapeNode;
-				context .distance  = bboxCenter .z - radius;
-				context .fogNode   = this .localFog;
-				context .shadow    = this .shadow [0];
-
-				// Clip planes and local lights
+				modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
+				modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
 				var
-					sourceShaderObjects      = this .shaderObjects,
-					destinationShaderObjects = context .shaderObjects;
+					radius     = bboxSize .abs () / 2,
+					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
+	
+				if (viewVolume .intersectsSphere (radius, bboxCenter))
+				{
+					if (this .numDepthShapes === this .depthShapes .length)
+						this .depthShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
+		
+					var context = this .depthShapes [this .numDepthShapes];
+		
+					++ this .numDepthShapes;
+		
+					context .modelViewMatrix .set (modelViewMatrix);
+					context .shapeNode = shapeNode;
+					context .scissor   = viewVolume .getScissor ();
+		
+					// Clip planes
+		
+					var
+						sourceClipPlanes      = this .shaderObjects,
+						destinationClipPlanes = context .clipPlanes;
+	
+					for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
+						destinationClipPlanes [i] = sourceClipPlanes [i];
+	
+					destinationClipPlanes .length = length;
+	
+					return true;
+				}
+	
+				return false;
+			};
+		})(),
+		addDisplayShape: (function ()
+		{
+			var
+				bboxSize   = new Vector3 (0, 0, 0),
+				bboxCenter = new Vector3 (0, 0, 0);
 
-				for (var i = 0, length = sourceShaderObjects .length; i < length; ++ i)
-					destinationShaderObjects [i] = sourceShaderObjects [i];
+			return function (shapeNode)
+			{
+				var modelViewMatrix = this .getModelViewMatrix () .get ();
 
-				destinationShaderObjects .length = length;
+				modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
+				modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
-				return true;
-			}
-
-			return false;
-		},
+				var
+					radius     = bboxSize .abs () / 2,
+					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
+	
+				if (viewVolume .intersectsSphere (radius, bboxCenter))
+				{
+					if (shapeNode .getTransparent ())
+					{
+						var num = this .numTransparentShapes;
+	
+						if (num === this .transparentShapes .length)
+							this .transparentShapes .push (this .createShapeContext (true));
+	
+						var context = this .transparentShapes [num];
+	
+						++ this .numTransparentShapes;
+					}
+					else
+					{
+						var num = this .numOpaqueShapes;
+	
+						if (num === this .opaqueShapes .length)
+							this .opaqueShapes .push (this .createShapeContext (false));
+	
+						var context = this .opaqueShapes [num];
+	
+						++ this .numOpaqueShapes;
+					}
+	
+					context .modelViewMatrix .set (modelViewMatrix);
+					context .scissor .assign (viewVolume .getScissor ());
+					context .shapeNode = shapeNode;
+					context .distance  = bboxCenter .z - radius;
+					context .fogNode   = this .localFog;
+					context .shadow    = this .shadow [0];
+	
+					// Clip planes and local lights
+	
+					var
+						sourceShaderObjects      = this .shaderObjects,
+						destinationShaderObjects = context .shaderObjects;
+	
+					for (var i = 0, length = sourceShaderObjects .length; i < length; ++ i)
+						destinationShaderObjects [i] = sourceShaderObjects [i];
+	
+					destinationShaderObjects .length = length;
+	
+					return true;
+				}
+	
+				return false;
+			};
+		})(),
 		createShapeContext: function (transparent)
 		{
 			return {
@@ -672,7 +696,7 @@ function ($,
 			var
 				projectionMatrix            = new Matrix4 (),
 				cameraSpaceProjectionMatrix = new Matrix4 (),
-				vector                      = new Vector3 (0, 0, 0),
+				translation                 = new Vector3 (0, 0, 0),
 				rotation                    = new Rotation4 (0, 0, 1, 0);
 
 			return function ()
@@ -743,16 +767,16 @@ function ($,
 	
 						this .speed -= this .getBrowser () .getBrowserOptions () .Gravity_ .getValue () / currentFrameRate;
 	
-						var translation = this .speed / currentFrameRate;
+						var y = this .speed / currentFrameRate;
 	
-						if (translation < -distance)
+						if (y < -distance)
 						{
 							// The ground is reached.
-							translation = -distance;
+							y = -distance;
 							this .speed = 0;
 						}
 
-						viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .add (up .multVecRot (vector .set (0, translation, 0)));
+						viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
 					}
 					else
 					{
@@ -763,7 +787,7 @@ function ($,
 						if (distance > 0.01 && distance < stepHeight)
 						{
 							// Step up
-							var translation = this .constrainTranslation (up .multVecRot (this .translation .set (0, distance, 0)), false);
+							this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
 
 							//if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
 							//{
