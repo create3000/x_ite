@@ -1,6 +1,6 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/X_ITE/BlendMode.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Fields/SFColor.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Fields/SFNode.js" Line="1" Column="1" />
@@ -8,8 +8,8 @@
       <File FileName="src/x_ite/Fields/SFColorRGBA.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Basic/X3DField.js" Line="1" Column="1" />
       <File FileName="src/standard/Math/Numbers/Color3.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/X_ITE/BlendMode.js" Line="145" Column="5" />
-      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="139" Column="1" />
+      <File FileName="src/x_ite/Components/X_ITE/BlendMode.js" Line="185" Column="46" />
+      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
