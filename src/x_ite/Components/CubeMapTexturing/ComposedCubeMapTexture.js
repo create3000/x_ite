@@ -258,8 +258,7 @@ function (Fields,
 				}
 			}
 
-			if (transparent !== this .transparent_ .getValue ())
-				this .transparent_ = transparent;
+			this .setTransparent (transparent);
 		},
 	});
 

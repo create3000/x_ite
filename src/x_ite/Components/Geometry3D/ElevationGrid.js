@@ -189,7 +189,7 @@ function (Fields,
 		},
 		set_transparent__: function ()
 		{
-			this .setTransparent (this .colorNode .isTransparent ());
+			this .setTransparent (this .colorNode .getTransparent ());
 		},
 		set_texCoord__: function ()
 		{

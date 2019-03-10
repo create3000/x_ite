@@ -262,9 +262,9 @@ function (Fields,
 		},
 		set_transparent__: function ()
 		{
-			this .transparent_ = (this .materialNode && this .materialNode .transparent_ .getValue ()) ||
-			                     (this .textureNode  && this .textureNode  .transparent_ .getValue () ||
-			                      this .blendModeNode);
+			this .setTransparent ((this .materialNode && this .materialNode .getTransparent ()) ||
+			                      (this .textureNode  && this .textureNode  .getTransparent () ||
+			                      this .blendModeNode));
 		},
 		traverse: function (type, renderObject)
 		{

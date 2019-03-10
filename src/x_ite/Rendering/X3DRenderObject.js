@@ -538,7 +538,7 @@ function ($,
 
 			if (viewVolume .intersectsSphere (radius, bboxCenter))
 			{
-				if (shapeNode .isTransparent ())
+				if (shapeNode .getTransparent ())
 				{
 					var num = this .numTransparentShapes;
 

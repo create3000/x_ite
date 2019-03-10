@@ -103,7 +103,7 @@ function (Fields,
 			this .color  = this .color_ .getValue ();
 			this .length = this .color_ .length;
 		},
-		isTransparent: function ()
+		getTransparent: function ()
 		{
 			return true;
 		},

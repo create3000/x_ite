@@ -264,7 +264,7 @@ function (X3DBindableNode,
 		{
 			return this .hidden;
 		},
-		isTransparent: function ()
+		getTransparent: function ()
 		{
 			if (this .hidden)
 				return true;

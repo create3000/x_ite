@@ -277,10 +277,7 @@ function ($,
 
 				// Update transparent field.
 
-				var transparent = ! opaque;
-
-				if (transparent !== this .transparent_ .getValue ())
-					this .transparent_ = transparent;
+				this .setTransparent (! opaque);
 
 				// Update load state.
 

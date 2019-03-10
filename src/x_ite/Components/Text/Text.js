@@ -145,7 +145,7 @@ function (Fields,
 
 		   this .textGeometry = this .fontStyleNode .getTextGeometry (this);
 
-		   this .transparent_ = this .textGeometry .getTransparent ();
+		   this .setTransparent (this .textGeometry .getTransparent ());
 		},
 		build: function ()
 		{

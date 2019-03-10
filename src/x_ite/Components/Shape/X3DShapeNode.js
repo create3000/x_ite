@@ -117,7 +117,7 @@ function (X3DChildNode,
 		{
 			this .transparent = value;
 		},
-		isTransparent: function ()
+		getTransparent: function ()
 		{
 			return this .transparent;
 		},

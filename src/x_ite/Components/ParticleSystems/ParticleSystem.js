@@ -269,9 +269,9 @@ function (Fields,
 				}
 				default:
 				{
-					this .setTransparent ((this .getAppearance () && this .getAppearance () .transparent_ .getValue ()) ||
-					                      (this .colorRampNode && this .colorRampNode .isTransparent ()) ||
-					                      (this .geometryType === GEOMETRY && this .geometryNode && this .geometryNode .transparent_ .getValue ()));
+					this .setTransparent ((this .getAppearance () && this .getAppearance () .getTransparent ()) ||
+					                      (this .colorRampNode && this .colorRampNode .getTransparent ()) ||
+					                      (this .geometryType === GEOMETRY && this .geometryNode && this .geometryNode .getTransparent ()));
 					break;
 				}
 			}
