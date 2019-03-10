@@ -1,4 +1,4 @@
-/* X_ITE v4.4.2-634 */
+/* X_ITE v4.4.3a-635 */
 
 (function () {
 
@@ -24744,7 +24744,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.4.2";
+	return "4.4.3a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -39565,6 +39565,9 @@ function (Fields,
 
 		this .addChildObjects ("isCameraObject",   new Fields .SFBool ());
 		this .addChildObjects ("isPickableObject", new Fields .SFBool ());
+
+		this .isCameraObject_   .setAccessType (X3DConstants .outputOnly);
+		this .isPickableObject_ .setAccessType (X3DConstants .outputOnly);
 	}
 
 	X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -57595,6 +57598,15 @@ function (Fields,
 		{
 			X3DNode .prototype .initialize .call (this);
 		},
+		setTransparent: function (value)
+		{
+			if (value !== this .transparent_ .getValue ())
+				this .transparent_ = value;
+		},
+		getTransparent: function ()
+		{
+			return this .transparent_ .getValue ();
+		},
 	});
 
 	return X3DAppearanceNode;
@@ -57866,9 +57878,9 @@ function (Fields,
 		},
 		set_transparent__: function ()
 		{
-			this .transparent_ = (this .materialNode && this .materialNode .transparent_ .getValue ()) ||
-			                     (this .textureNode  && this .textureNode  .transparent_ .getValue () ||
-			                      this .blendModeNode);
+			this .setTransparent ((this .materialNode && this .materialNode .getTransparent ()) ||
+			                      (this .textureNode  && this .textureNode  .getTransparent () ||
+			                      this .blendModeNode));
 		},
 		traverse: function (type, renderObject)
 		{
@@ -59047,6 +59059,15 @@ function (Fields,
 		{
 			return this .geometryType;
 		},
+		setTransparent: function (value)
+		{
+			if (value !== this .transparent_ .getValue ())
+				this .transparent_ = value;
+		},
+		getTransparent: function ()
+		{
+			return this .transparent_ .getValue ();
+		},
 		getBBox: function ()
 		{
 			// With screen matrix applied.
@@ -60127,11 +60148,11 @@ function (X3DGeometryNode,
 				this .set_transparent__ ();
 			}
 			else
-				this .transparent_ = false;
+				this .setTransparent (false);
 		},
 		set_transparent__: function ()
 		{
-			this .transparent_ = this .colorNode .isTransparent ();
+			this .setTransparent (this .colorNode .getTransparent ());
 		},
 		set_texCoord__: function ()
 		{
@@ -70993,6 +71014,10 @@ function (Fields,
 	PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
 	{
 		constructor: PolygonText,
+		getTransparent: function ()
+		{
+			return false;
+		},
 		getMatrix: function ()
 		{
 			return Matrix4 .Identity;
@@ -77557,7 +77582,7 @@ function ($,
 
 			if (viewVolume .intersectsSphere (radius, bboxCenter))
 			{
-				if (shapeNode .isTransparent ())
+				if (shapeNode .getTransparent ())
 				{
 					var num = this .numTransparentShapes;
 
@@ -79359,7 +79384,7 @@ function (X3DBindableNode,
 		{
 			return this .hidden;
 		},
-		isTransparent: function ()
+		getTransparent: function ()
 		{
 			if (this .hidden)
 				return true;
@@ -79868,6 +79893,15 @@ function (Fields,
 
 			this .texture = gl .createTexture ();
 		},
+		setTransparent: function (value)
+		{
+			if (value !== this .transparent_ .getValue ())
+				this .transparent_ = value;
+		},
+		getTransparent: function ()
+		{
+			return this .transparent_ .getValue ();
+		},
 		getTexture: function ()
 		{
 			return this .texture;
@@ -80061,12 +80095,11 @@ function (Fields,
 		{
 			try
 			{
-				this .transparent_ = transparent;
-				this .width        = width;
-				this .height       = height;
-				this .flipY        = flipY;
-				this .data         = data;
-	
+				this .width  = width;
+				this .height = height;
+				this .flipY  = flipY;
+				this .data   = data;
+
 				var gl = this .getBrowser () .getContext ();
 	
 				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
@@ -80074,6 +80107,7 @@ function (Fields,
 				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
 				gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 	
+				this .setTransparent (transparent);
 				this .updateTextureProperties ();
 				this .addNodeEvent ();
 			}
@@ -87379,11 +87413,11 @@ function (Fields,
 				this .set_transparent__ ();
 			}
 			else
-				this .transparent_ = false;
+				this .setTransparent (false);
 		},
 		set_transparent__: function ()
 		{
-			this .transparent_ = this .colorNode .isTransparent ();
+			this .setTransparent (this .colorNode .getTransparent ());
 		},
 		set_texCoord__: function ()
 		{
@@ -96212,7 +96246,7 @@ function (Fields,
 			this .color  = this .color_ .getValue ();
 			this .length = this .color_ .length;
 		},
-		isTransparent: function ()
+		getTransparent: function ()
 		{
 			return false;
 		},
@@ -96376,7 +96410,7 @@ function (Fields,
 			this .color  = this .color_ .getValue ();
 			this .length = this .color_ .length;
 		},
-		isTransparent: function ()
+		getTransparent: function ()
 		{
 			return true;
 		},
@@ -96823,11 +96857,11 @@ function (Fields,
 				this .set_transparent__ ();
 			}
 			else
-				this .transparent_ = false;
+				this .setTransparent (false);
 		},
 		set_transparent__: function ()
 		{
-			this .transparent_ = this .colorNode .isTransparent ();
+			this .setTransparent (this .colorNode .getTransparent ());
 		},
 		set_coord__: function ()
 		{
@@ -97571,11 +97605,11 @@ function (Fields,
 				this .set_transparent__ ();
 			}
 			else
-				this .transparent_ = false;
+				this .setTransparent (false);
 		},
 		set_transparent__: function ()
 		{
-			this .transparent_ = this .colorNode .isTransparent ();
+			this .setTransparent (this .colorNode .getTransparent ());
 		},
 		set_coord__: function ()
 		{
@@ -97940,11 +97974,11 @@ function (Fields,
 		this .addType (X3DConstants .PointSet);
 
 		this .setGeometryType (0);
+		this .setTransparent (true);
 
 		this .fogCoordNode = null;
 		this .colorNode    = null;
 		this .coordNode    = null;
-		this .transparent_ = true;
 	}
 
 	PointSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
@@ -99391,10 +99425,12 @@ function (Fields,
 
 
 define ('x_ite/Components/Shape/X3DMaterialNode',[
+	"x_ite/Fields",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DAppearanceChildNode, 
+function (Fields,
+          X3DAppearanceChildNode, 
           X3DConstants)
 {
 "use strict";
@@ -99404,11 +99440,24 @@ function (X3DAppearanceChildNode,
 		X3DAppearanceChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DMaterialNode);
+
+		this .addChildObjects ("transparent", new Fields .SFBool ());
+
+		this .transparent_ .setAccessType (X3DConstants .outputOnly);
 	}
 
 	X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DMaterialNode,
+		setTransparent: function (value)
+		{
+			if (value !== this .transparent_ .getValue ())
+				this .transparent_ = value;
+		},
+		getTransparent: function ()
+		{
+			return this .transparent_ .getValue ();
+		},
 	});
 
 	return X3DMaterialNode;
@@ -99488,10 +99537,6 @@ function (Fields,
 
 		this .addType (X3DConstants .Material);
 
-		this .addChildObjects ("transparent", new Fields .SFBool ());
-
-		this .transparent_ .setAccessType (X3DConstants .outputOnly);
-
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
 		this .emissiveColor = new Float32Array (3);
@@ -99526,11 +99571,11 @@ function (Fields,
 			X3DMaterialNode .prototype .initialize .call (this);
 
 			this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
-			this .diffuseColor_     .addInterest ("set_diffuseColor__", this);
-			this .specularColor_    .addInterest ("set_specularColor__", this);
-			this .emissiveColor_    .addInterest ("set_emissiveColor__", this);
-			this .shininess_        .addInterest ("set_shininess__", this);
-			this .transparency_     .addInterest ("set_transparency__", this);
+			this .diffuseColor_     .addInterest ("set_diffuseColor__",     this);
+			this .specularColor_    .addInterest ("set_specularColor__",    this);
+			this .emissiveColor_    .addInterest ("set_emissiveColor__",    this);
+			this .shininess_        .addInterest ("set_shininess__",        this);
+			this .transparency_     .addInterest ("set_transparency__",     this);
 	
 			this .set_ambientIntensity__ ();
 			this .set_diffuseColor__ ();
@@ -99592,8 +99637,7 @@ function (Fields,
 
 			this .transparency = transparency;
 
-			if (transparency != this .transparent_ .getValue ())
-				this .transparent_ = transparency;
+			this .setTransparent (transparency);
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
@@ -99731,7 +99775,7 @@ function (X3DChildNode,
 		{
 			this .transparent = value;
 		},
-		isTransparent: function ()
+		getTransparent: function ()
 		{
 			return this .transparent;
 		},
@@ -99787,8 +99831,8 @@ function (X3DChildNode,
 		},
 		set_transparent__: function ()
 		{
-			this .transparent = (this .apparanceNode && this .apparanceNode .transparent_ .getValue ()) ||
-			                    (this .geometryNode && this .geometryNode .transparent_ .getValue ());
+			this .transparent = (this .apparanceNode && this .apparanceNode .getTransparent ()) ||
+			                    (this .geometryNode  && this .geometryNode  .getTransparent ());
 		},
 	});
 
@@ -100242,10 +100286,6 @@ function (Fields,
 		X3DMaterialNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TwoSidedMaterial);
-			
-		this .addChildObjects ("transparent", new Fields .SFBool ());
-
-		this .transparent_ .setAccessType (X3DConstants .outputOnly);
 
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
@@ -100292,18 +100332,18 @@ function (Fields,
 			X3DMaterialNode . prototype .initialize .call (this);
 
 			this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
-			this .diffuseColor_     .addInterest ("set_diffuseColor__", this);
-			this .specularColor_    .addInterest ("set_specularColor__", this);
-			this .emissiveColor_    .addInterest ("set_emissiveColor__", this);
-			this .shininess_        .addInterest ("set_shininess__", this);
-			this .transparency_     .addInterest ("set_transparency__", this);
+			this .diffuseColor_     .addInterest ("set_diffuseColor__",     this);
+			this .specularColor_    .addInterest ("set_specularColor__",    this);
+			this .emissiveColor_    .addInterest ("set_emissiveColor__",    this);
+			this .shininess_        .addInterest ("set_shininess__",        this);
+			this .transparency_     .addInterest ("set_transparency__",     this);
 	
 			this .backAmbientIntensity_ .addInterest ("set_backAmbientIntensity__", this);
-			this .backDiffuseColor_     .addInterest ("set_backDiffuseColor__", this);
-			this .backSpecularColor_    .addInterest ("set_backSpecularColor__", this);
-			this .backEmissiveColor_    .addInterest ("set_backEmissiveColor__", this);
-			this .backShininess_        .addInterest ("set_backShininess__", this);
-			this .backTransparency_     .addInterest ("set_backTransparency__", this);
+			this .backDiffuseColor_     .addInterest ("set_backDiffuseColor__",     this);
+			this .backSpecularColor_    .addInterest ("set_backSpecularColor__",    this);
+			this .backEmissiveColor_    .addInterest ("set_backEmissiveColor__",    this);
+			this .backShininess_        .addInterest ("set_backShininess__",        this);
+			this .backTransparency_     .addInterest ("set_backTransparency__",     this);
 	
 			this .set_ambientIntensity__ ();
 			this .set_diffuseColor__ ();
@@ -100430,10 +100470,7 @@ function (Fields,
 		},
 		set_transparent__: function ()
 		{
-			var transparent = this .transparency_ .getValue () || this .backTransparency_ .getValue ();
-
-			if (transparent != this .transparent_ .getValue ())
-				this .transparent_ = transparent;
+			this .setTransparent (this .transparency_ .getValue () || (this .separateBackColor_ .getValue () && this .backTransparency_ .getValue ()));
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
@@ -101592,9 +101629,9 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-		   X3DGeometryNode .prototype .initialize .call (this);
+			X3DGeometryNode .prototype .initialize .call (this);
 
-		   this .fontStyle_ .addInterest ("set_fontStyle__", this);
+			this .fontStyle_ .addInterest ("set_fontStyle__", this);
 	
 			this .set_fontStyle__ ();
 		},
@@ -101631,6 +101668,8 @@ function (Fields,
 		   this .fontStyleNode .addInterest ("requestRebuild", this);
 
 		   this .textGeometry = this .fontStyleNode .getTextGeometry (this);
+
+		   this .setTransparent (this .textGeometry .getTransparent ());
 		},
 		build: function ()
 		{

@@ -1232,6 +1232,10 @@ function ($,
 	{
 		constructor: ScreenText,
 		modelViewMatrix: new Matrix4 (),
+		getTransparent: function ()
+		{
+			return true;
+		},
 		getMatrix: function ()
 		{
 			return this .matrix;

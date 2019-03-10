@@ -1771,7 +1771,7 @@ function (Fields,
 
 		this .point_ .setUnit ("length");
 
-		this .transparent_ = true;
+		this .setTransparent (true);
 	}
 
 	Polypoint2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
