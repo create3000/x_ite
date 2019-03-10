@@ -224,6 +224,15 @@ function (Fields,
 		{
 			return this .geometryType;
 		},
+		setTransparent: function (value)
+		{
+			if (value !== this .transparent_ .getValue ())
+				this .transparent_ = value;
+		},
+		getTransparent: function ()
+		{
+			return this .transparent_ .getValue ();
+		},
 		getBBox: function ()
 		{
 			// With screen matrix applied.

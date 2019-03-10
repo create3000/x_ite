@@ -71,11 +71,11 @@ function (Fields,
 		this .addType (X3DConstants .PointSet);
 
 		this .setGeometryType (0);
+		this .setTransparent (true);
 
 		this .fogCoordNode = null;
 		this .colorNode    = null;
 		this .coordNode    = null;
-		this .transparent_ = true;
 	}
 
 	PointSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),

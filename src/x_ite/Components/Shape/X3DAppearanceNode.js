@@ -76,6 +76,15 @@ function (Fields,
 		{
 			X3DNode .prototype .initialize .call (this);
 		},
+		setTransparent: function (value)
+		{
+			if (value !== this .transparent_ .getValue ())
+				this .transparent_ = value;
+		},
+		getTransparent: function ()
+		{
+			return this .transparent_ .getValue ();
+		},
 	});
 
 	return X3DAppearanceNode;

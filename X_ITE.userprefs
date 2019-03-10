@@ -1,12 +1,27 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Rendering/X3DComposedGeometryNode.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Fields/SFNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/X_ITE/BlendMode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Rendering/X3DRenderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shape/Appearance.js" Line="268" Column="5" />
+      <File FileName="src/x_ite/Components/Shape/Appearance.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Shape/X3DAppearanceNode.js" Line="88" Column="1" />
+      <File FileName="src/x_ite/Components/Shape/X3DShapeNode.js" Line="180" Column="1" />
+      <File FileName="src/x_ite/Components/Shape/TwoSidedMaterial.js" Line="196" Column="26" />
+      <File FileName="src/x_ite/Components/Shape/Material.js" Line="172" Column="1" />
+      <File FileName="src/x_ite/Components/Shape/X3DMaterialNode.js" Line="84" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/X3DTexture2DNode.js" Line="139" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/X3DTextureNode.js" Line="98" Column="17" />
+      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="226" Column="5" />
+      <File FileName="src/x_ite/Components/Geometry2D/Polypoint2D.js" Line="77" Column="30" />
+      <File FileName="src/x_ite/Components/Geometry3D/ElevationGrid.js" Line="186" Column="5" />
+      <File FileName="src/x_ite/Components/Geospatial/GeoElevationGrid.js" Line="161" Column="10" />
+      <File FileName="src/x_ite/Components/Rendering/IndexedLineSet.js" Line="174" Column="60" />
+      <File FileName="src/x_ite/Components/Rendering/LineSet.js" Line="172" Column="60" />
+      <File FileName="src/x_ite/Components/Rendering/PointSet.js" Line="75" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/X3DComposedGeometryNode.js" Line="177" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

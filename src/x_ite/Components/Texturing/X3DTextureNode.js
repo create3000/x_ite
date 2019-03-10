@@ -88,6 +88,15 @@ function (Fields,
 
 			this .texture = gl .createTexture ();
 		},
+		setTransparent: function (value)
+		{
+			if (value !== this .transparent_ .getValue ())
+				this .transparent_ = value;
+		},
+		getTransparent: function ()
+		{
+			return this .transparent_ .getValue ();
+		},
 		getTexture: function ()
 		{
 			return this .texture;

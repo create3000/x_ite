@@ -69,10 +69,6 @@ function (Fields,
 		X3DMaterialNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TwoSidedMaterial);
-			
-		this .addChildObjects ("transparent", new Fields .SFBool ());
-
-		this .transparent_ .setAccessType (X3DConstants .outputOnly);
 
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
@@ -257,10 +253,7 @@ function (Fields,
 		},
 		set_transparent__: function ()
 		{
-			var transparent = this .transparency_ .getValue () || (this .separateBackColor_ .getValue () && this .backTransparency_ .getValue ());
-
-			if (transparent != this .transparent_ .getValue ())
-				this .transparent_ = transparent;
+			this .setTransparent (this .transparency_ .getValue () || (this .separateBackColor_ .getValue () && this .backTransparency_ .getValue ()));
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{

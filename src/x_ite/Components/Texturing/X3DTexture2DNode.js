@@ -132,12 +132,11 @@ function (Fields,
 		{
 			try
 			{
-				this .transparent_ = transparent;
-				this .width        = width;
-				this .height       = height;
-				this .flipY        = flipY;
-				this .data         = data;
-	
+				this .width  = width;
+				this .height = height;
+				this .flipY  = flipY;
+				this .data   = data;
+
 				var gl = this .getBrowser () .getContext ();
 	
 				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
@@ -145,6 +144,7 @@ function (Fields,
 				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
 				gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 	
+				this .setTransparent (transparent);
 				this .updateTextureProperties ();
 				this .addNodeEvent ();
 			}

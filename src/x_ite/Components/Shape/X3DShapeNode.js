@@ -173,8 +173,8 @@ function (X3DChildNode,
 		},
 		set_transparent__: function ()
 		{
-			this .transparent = (this .apparanceNode && this .apparanceNode .transparent_ .getValue ()) ||
-			                    (this .geometryNode && this .geometryNode .transparent_ .getValue ());
+			this .transparent = (this .apparanceNode && this .apparanceNode .getTransparent ()) ||
+			                    (this .geometryNode  && this .geometryNode  .getTransparent ());
 		},
 	});
 

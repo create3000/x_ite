@@ -185,11 +185,11 @@ function (Fields,
 				this .set_transparent__ ();
 			}
 			else
-				this .transparent_ = false;
+				this .setTransparent (false);
 		},
 		set_transparent__: function ()
 		{
-			this .transparent_ = this .colorNode .isTransparent ();
+			this .setTransparent (this .colorNode .isTransparent ());
 		},
 		set_texCoord__: function ()
 		{
