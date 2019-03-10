@@ -170,7 +170,7 @@ function (Fields,
 
 			this .transparency = transparency;
 
-			this .setTransparent (transparency);
+			this .setTransparent (Boolean (transparency));
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{

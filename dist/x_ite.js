@@ -1,4 +1,4 @@
-/* X_ITE v4.4.3a-636 */
+/* X_ITE v4.4.3a-637 */
 
 (function () {
 
@@ -99661,7 +99661,7 @@ function (Fields,
 
 			this .transparency = transparency;
 
-			this .setTransparent (transparency);
+			this .setTransparent (Boolean (transparency));
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
@@ -100494,7 +100494,7 @@ function (Fields,
 		},
 		set_transparent__: function ()
 		{
-			this .setTransparent (this .transparency_ .getValue () || (this .separateBackColor_ .getValue () && this .backTransparency_ .getValue ()));
+			this .setTransparent (Boolean (this .transparency_ .getValue () || (this .separateBackColor_ .getValue () && this .backTransparency_ .getValue ())));
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{

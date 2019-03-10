@@ -253,7 +253,7 @@ function (Fields,
 		},
 		set_transparent__: function ()
 		{
-			this .setTransparent (this .transparency_ .getValue () || (this .separateBackColor_ .getValue () && this .backTransparency_ .getValue ()));
+			this .setTransparent (Boolean (this .transparency_ .getValue () || (this .separateBackColor_ .getValue () && this .backTransparency_ .getValue ())));
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
