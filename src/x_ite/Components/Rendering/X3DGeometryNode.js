@@ -240,17 +240,17 @@ function (Fields,
 		},
 		setBBox: function (bbox)
 		{
-			if (! bbox .equals (this .bbox))
-			{
-			   bbox .getExtents (this .min, this .max);
-	
-				this .bbox .assign (bbox);
-	
-				for (var i = 0; i < 5; ++ i)
-					this .planes [i] .set (i % 2 ? this .min : this .max, boxNormals [i]);
-	
-				this .bbox_changed_ .addEvent ();
-			}
+			if (bbox .equals (this .bbox))
+				return;
+
+		   bbox .getExtents (this .min, this .max);
+
+			this .bbox .assign (bbox);
+
+			for (var i = 0; i < 5; ++ i)
+				this .planes [i] .set (i % 2 ? this .min : this .max, boxNormals [i]);
+
+			this .bbox_changed_ .addEvent ();
 		},
 		getMin: function ()
 		{
