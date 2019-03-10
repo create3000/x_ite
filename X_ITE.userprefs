@@ -1,15 +1,17 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Basic/X3DField.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Routing/X3DRoute.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Picking/X3DPickingContext.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Grouping/X3DGroupingNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Rendering/DependentRenderer.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Fields/SFNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Fields/SFNode.js" Line="282" Column="53" />
       <File FileName="src/x_ite/Basic/X3DField.js" Line="309" Column="5" />
       <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Routing/X3DRoute.js" Line="52" Column="13" />
+      <File FileName="src/x_ite/Components/CADGeometry/CADAssembly.js" Line="100" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

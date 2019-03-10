@@ -129,12 +129,12 @@ function (Fields,
 			this .blendModes ["MIN"]                   = gl .MIN || ext .MIN_EXT;
 			this .blendModes ["MAX"]                   = gl .MAX || ext .MAX_EXT;
 
-			this .sourceColorFactor_      .addInterest ("set_sourceColorFactor__", this);
-			this .sourceAlphaFactor_      .addInterest ("set_sourceAlphaFactor__", this);
+			this .sourceColorFactor_      .addInterest ("set_sourceColorFactor__",       this);
+			this .sourceAlphaFactor_      .addInterest ("set_sourceAlphaFactor__",       this);
 			this .destinationColorFactor_ .addInterest ("set_destinationColorFactor__",  this);
 			this .destinationAlphaFactor_ .addInterest ("set_destinationAlphaFactor__",  this);
-			this .colorEquation_          .addInterest ("set_colorEquation__",     this);
-			this .alphaEquation_          .addInterest ("set_alphaEquation__",     this);
+			this .colorEquation_          .addInterest ("set_colorEquation__",           this);
+			this .alphaEquation_          .addInterest ("set_alphaEquation__",           this);
 
 			this .set_sourceColorFactor__ ();
 			this .set_sourceAlphaFactor__ ();
