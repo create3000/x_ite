@@ -587,10 +587,10 @@ function ($,
 					context .modelViewMatrix .set (modelViewMatrix);
 					context .scissor .assign (viewVolume .getScissor ());
 					context .shapeNode = shapeNode;
-					context .distance  = bboxCenter .z - radius;
+					context .distance  = bboxCenter .z;
 					context .fogNode   = this .localFog;
 					context .shadow    = this .shadow [0];
-	
+
 					// Clip planes and local lights
 	
 					var
