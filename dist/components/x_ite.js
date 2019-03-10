@@ -153,42 +153,42 @@ function (Fields,
 		{
 			this .sourceColorFactorType = this .blendTypes .get (this .sourceColorFactor_ .getValue ());
 
-			if (! this .sourceColorFactorType)
+			if (this .sourceColorFactorType === undefined)
 				this .sourceColorFactorType = this .blendTypes .get ("SRC_ALPHA");
 		},
 		set_sourceAlphaFactor__: function ()
 		{
 			this .sourceAlphaFactorType = this .blendTypes .get (this .sourceAlphaFactor_ .getValue ());
 
-			if (! this .sourceAlphaFactorType)
+			if (this .sourceAlphaFactorType === undefined)
 				this .sourceAlphaFactorType = this .blendTypes .get ("ONE");
 		},
 		set_destinationColorFactor__: function ()
 		{
 			this .destinationColorFactorType = this .blendTypes .get (this .destinationColorFactor_ .getValue ());
 
-			if (! this .destinationColorFactorType)
+			if (this .destinationColorFactorType === undefined)
 				this .destinationColorFactorType = this .blendTypes .get ("ONE_MINUS_SRC_ALPHA");
 		},
 		set_destinationAlphaFactor__: function ()
 		{
 			this .destinationAlphaFactorType = this .blendTypes .get (this .destinationAlphaFactor_ .getValue ());
 
-			if (! this .destinationAlphaFactorType)
+			if (this .destinationAlphaFactorType === undefined)
 				this .destinationAlphaFactorType = this .blendTypes .get ("ONE_MINUS_SRC_ALPHA");
 		},
 		set_colorEquation__: function ()
 		{
 			this .colorEquationType = this .blendModes .get (this .colorEquation_ .getValue ());
 
-			if (! this .colorEquationType)
+			if (this .colorEquationType === undefined)
 				this .colorEquationType = this .blendModes .get ("FUNC_ADD");
 		},
 		set_alphaEquation__: function ()
 		{
 			this .alphaEquationType = this .blendModes .get (this .alphaEquation_ .getValue ());
 
-			if (! this .alphaEquationType)
+			if (this .alphaEquationType === undefined)
 				this .alphaEquationType = this .blendModes .get ("FUNC_ADD");
 		},
 		enable: function (gl)
