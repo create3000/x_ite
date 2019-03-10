@@ -105,9 +105,9 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-		   X3DGeometryNode .prototype .initialize .call (this);
+			X3DGeometryNode .prototype .initialize .call (this);
 
-		   this .fontStyle_ .addInterest ("set_fontStyle__", this);
+			this .fontStyle_ .addInterest ("set_fontStyle__", this);
 	
 			this .set_fontStyle__ ();
 		},
@@ -144,6 +144,8 @@ function (Fields,
 		   this .fontStyleNode .addInterest ("requestRebuild", this);
 
 		   this .textGeometry = this .fontStyleNode .getTextGeometry (this);
+
+		   this .transparent_ = this .textGeometry .getTransparent ();
 		},
 		build: function ()
 		{

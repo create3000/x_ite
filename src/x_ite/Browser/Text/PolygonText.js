@@ -80,6 +80,10 @@ function (Fields,
 	PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
 	{
 		constructor: PolygonText,
+		getTransparent: function ()
+		{
+			return false;
+		},
 		getMatrix: function ()
 		{
 			return Matrix4 .Identity;

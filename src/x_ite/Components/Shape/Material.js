@@ -108,11 +108,11 @@ function (Fields,
 			X3DMaterialNode .prototype .initialize .call (this);
 
 			this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
-			this .diffuseColor_     .addInterest ("set_diffuseColor__", this);
-			this .specularColor_    .addInterest ("set_specularColor__", this);
-			this .emissiveColor_    .addInterest ("set_emissiveColor__", this);
-			this .shininess_        .addInterest ("set_shininess__", this);
-			this .transparency_     .addInterest ("set_transparency__", this);
+			this .diffuseColor_     .addInterest ("set_diffuseColor__",     this);
+			this .specularColor_    .addInterest ("set_specularColor__",    this);
+			this .emissiveColor_    .addInterest ("set_emissiveColor__",    this);
+			this .shininess_        .addInterest ("set_shininess__",        this);
+			this .transparency_     .addInterest ("set_transparency__",     this);
 	
 			this .set_ambientIntensity__ ();
 			this .set_diffuseColor__ ();
