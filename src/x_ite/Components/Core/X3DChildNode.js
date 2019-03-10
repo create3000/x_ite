@@ -69,6 +69,9 @@ function (Fields,
 
 		this .addChildObjects ("isCameraObject",   new Fields .SFBool ());
 		this .addChildObjects ("isPickableObject", new Fields .SFBool ());
+
+		this .isCameraObject_   .setAccessType (X3DConstants .outputOnly);
+		this .isPickableObject_ .setAccessType (X3DConstants .outputOnly);
 	}
 
 	X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
