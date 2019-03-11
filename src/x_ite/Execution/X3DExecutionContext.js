@@ -389,8 +389,10 @@ function (Fields,
 		{
 			var importedNode = this .importedNodes .get (importedName);
 
-			if (importedNode)
-				importedNode .dispose ();
+			if (! importedNode)
+				return;
+
+			importedNode .dispose ();
 
 			this .importedNodes .delete (importedName);
 		},

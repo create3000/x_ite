@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-645 */
+/* X_ITE v4.4.4a-646 */
 
 (function () {
 
@@ -32732,8 +32732,10 @@ function (Fields,
 		{
 			var importedNode = this .importedNodes .get (importedName);
 
-			if (importedNode)
-				importedNode .dispose ();
+			if (! importedNode)
+				return;
+
+			importedNode .dispose ();
 
 			this .importedNodes .delete (importedName);
 		},
