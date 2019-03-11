@@ -71,6 +71,7 @@ function (Fields,
 		this .bboxSize_   .setUnit ("length");
 		this .bboxCenter_ .setUnit ("length");
 
+		this .childBBox            = new Box3 (); // Must be unique for each X3DBoundedObject.
 		this .transformSensorNodes = new Set ();
 	}
 
@@ -79,27 +80,22 @@ function (Fields,
 		constructor: X3DBoundedObject,
 		defaultBBoxSize: new Vector3 (-1, -1, -1),
 		initialize: function () { },
-		getBBox: (function ()
+		getBBox: function (nodes, bbox)
 		{
-			var childBBox = new Box3 ();
+			bbox .set ();
+	
+			// Add bounding boxes
 
-			return function (nodes, bbox)
+			for (var i = 0, length = nodes .length; i < length; ++ i)
 			{
-				bbox .set ();
-		
-				// Add bounding boxes
-		
-				for (var i = 0, length = nodes .length; i < length; ++ i)
-				{
-					var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
-		
-					if (boundedObject)
-						bbox .add (boundedObject .getBBox (childBBox));
-				}
+				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
 
-				return bbox;
-			};
-		})(),
+				if (boundedObject)
+					bbox .add (boundedObject .getBBox (this .childBBox));
+			}
+
+			return bbox;
+		},
 		addTransformSensor: function (transformSensorNode)
 		{
 			this .transformSensorNodes .add (transformSensorNode);

@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-643 */
+/* X_ITE v4.4.4a-644 */
 
 (function () {
 
@@ -42422,10 +42422,6 @@ function (Vector3)
 {
 "use strict";
 
-	var
-		min = new Vector3 (0, 0, 0),
-		max = new Vector3 (0, 0, 0);
-
 	return {
 		frustum: function (l, r, b, t, n, f, matrix)
 		{
@@ -42487,12 +42483,19 @@ function (Vector3)
 			                    0, 0, C, 0,
 			                    D, E, F, 1);
 		},
-		orthoBox: function (box, matrix)
+		orthoBox: (function ()
 		{
-			box .getExtents (min, max);
+			var
+				min = new Vector3 (0, 0, 0),
+				max = new Vector3 (0, 0, 0);
 
-			return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
-		},
+			return function (box, matrix)
+			{
+				box .getExtents (min, max);
+	
+				return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
+			};
+		})(),
 	};
 });
 
@@ -58275,6 +58278,24 @@ function (Triangle3,
 					m [12] = center .x;   m [13] = center .y;   m [14] = center .z;   m [15] = 1;
 					return this;
 				}
+				case 3:
+				{
+					var
+						min = arguments [0],
+						max = arguments [1],
+						sx  = (max .x - min .x) / 2,
+						sy  = (max .y - min .y) / 2,
+						sz  = (max .z - min .z) / 2,
+						cx  = (max .x + min .x) / 2,
+						cy  = (max .y + min .y) / 2,
+						cz  = (max .z + min .z) / 2;
+	
+					this .matrix .set (sx, 0,  0,  0,
+					                   0,  sy, 0,  0,
+					                   0,  0,  sz, 0,
+					                   cx, cy, cz, 1);
+					return this;
+				}
 			}
 		},
 		setExtents: function (min, max)
@@ -58304,20 +58325,17 @@ function (Triangle3,
 		getAbsoluteExtents: (function ()
 		{
 			var
-				x  = new Vector3 (0, 0, 0),
-				y  = new Vector3 (0, 0, 0),
-				z  = new Vector3 (0, 0, 0),
 				r1 = new Vector3 (0, 0, 0),
 				p1 = new Vector3 (0, 0, 0),
 				p4 = new Vector3 (0, 0, 0);
 
 			return function (min, max)
 			{
-				var m = this .matrix;
-	
-				x .assign (m .xAxis);
-				y .assign (m .yAxis);
-				z .assign (m .zAxis);
+				var
+					m = this .matrix,
+					x = m .xAxis,
+					y = m .yAxis,
+					z = m .zAxis;
 	
 				r1 .assign (y) .add (z);
 	
@@ -58575,8 +58593,8 @@ function (Triangle3,
 	
 				this .getExtents (lhs_min, lhs_max);
 				box  .getExtents (rhs_min, rhs_max);
-	
-				return this .assign (new Box3 (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true));
+
+				return this .set (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true);
 			};
 		})(),
 		multLeft: function (matrix)
@@ -67334,6 +67352,7 @@ function (Fields,
 		this .bboxSize_   .setUnit ("length");
 		this .bboxCenter_ .setUnit ("length");
 
+		this .childBBox            = new Box3 (); // Must be unique for each X3DBoundedObject.
 		this .transformSensorNodes = new Set ();
 	}
 
@@ -67342,27 +67361,22 @@ function (Fields,
 		constructor: X3DBoundedObject,
 		defaultBBoxSize: new Vector3 (-1, -1, -1),
 		initialize: function () { },
-		getBBox: (function ()
+		getBBox: function (nodes, bbox)
 		{
-			var childBBox = new Box3 ();
+			bbox .set ();
+	
+			// Add bounding boxes
 
-			return function (nodes, bbox)
+			for (var i = 0, length = nodes .length; i < length; ++ i)
 			{
-				bbox .set ();
-		
-				// Add bounding boxes
-		
-				for (var i = 0, length = nodes .length; i < length; ++ i)
-				{
-					var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
-		
-					if (boundedObject)
-						bbox .add (boundedObject .getBBox (childBBox));
-				}
+				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
 
-				return bbox;
-			};
-		})(),
+				if (boundedObject)
+					bbox .add (boundedObject .getBBox (this .childBBox));
+			}
+
+			return bbox;
+		},
 		addTransformSensor: function (transformSensorNode)
 		{
 			this .transformSensorNodes .add (transformSensorNode);
@@ -68388,7 +68402,11 @@ function (Fields,
 				invLightSpaceMatrix .inverse ();
 
 				var
-					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
+					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox); // Group bbox.
+
+//console .log (groupBBox .toString ());
+
+				var
 					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
@@ -70150,6 +70168,21 @@ function (Matrix3, Vector2)
 					m [6] = center .x;   m [7] = center .y;   m [8] = 1;
 					return this;
 				}
+				case 3:
+				{
+					var
+						min = arguments [0],
+						max = arguments [1],
+						sx  = (max .x - min .x) / 2,
+						sy  = (max .y - min .y) / 2,
+						cx  = (max .x + min .x) / 2,
+						cy  = (max .y + min .y) / 2;
+	
+					this .matrix .set (sx, 0,  0,
+					                   0,  sy, 0,
+					                   cx, cy, 1);
+					return this;
+				}
 			}
 		},
 		setExtents: function (min, max)
@@ -70189,7 +70222,7 @@ function (Matrix3, Vector2)
 				this .getExtents (lhs_min, lhs_max);
 				box  .getExtents (rhs_min, rhs_max);
 	
-				return this .assign (new Box2 (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true));
+				return this .set (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true);
 			};
 		})(),
 		multLeft: function (matrix)
@@ -70211,17 +70244,14 @@ function (Matrix3, Vector2)
 		},
 		getAbsoluteExtents: (function ()
 		{
-			var
-				x  = new Vector2 (0, 0),
-				y  = new Vector2 (0, 0),
-				p1 = new Vector2 (0, 0);
+			var p1 = new Vector2 (0, 0);
 
 			return function (min, max)
 			{
-			   var m = this .matrix;
-	
-				x .assign (m .xAxis);
-				y .assign (m .yAxis);
+			   var
+					m = this .matrix,
+					x = m .xAxis,
+					y = m .yAxis;
 	
 				p1 .assign (x) .add (y);
 	

@@ -130,6 +130,21 @@ function (Matrix3, Vector2)
 					m [6] = center .x;   m [7] = center .y;   m [8] = 1;
 					return this;
 				}
+				case 3:
+				{
+					var
+						min = arguments [0],
+						max = arguments [1],
+						sx  = (max .x - min .x) / 2,
+						sy  = (max .y - min .y) / 2,
+						cx  = (max .x + min .x) / 2,
+						cy  = (max .y + min .y) / 2;
+	
+					this .matrix .set (sx, 0,  0,
+					                   0,  sy, 0,
+					                   cx, cy, 1);
+					return this;
+				}
 			}
 		},
 		setExtents: function (min, max)
@@ -169,7 +184,7 @@ function (Matrix3, Vector2)
 				this .getExtents (lhs_min, lhs_max);
 				box  .getExtents (rhs_min, rhs_max);
 	
-				return this .assign (new Box2 (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true));
+				return this .set (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true);
 			};
 		})(),
 		multLeft: function (matrix)
@@ -191,17 +206,14 @@ function (Matrix3, Vector2)
 		},
 		getAbsoluteExtents: (function ()
 		{
-			var
-				x  = new Vector2 (0, 0),
-				y  = new Vector2 (0, 0),
-				p1 = new Vector2 (0, 0);
+			var p1 = new Vector2 (0, 0);
 
 			return function (min, max)
 			{
-			   var m = this .matrix;
-	
-				x .assign (m .xAxis);
-				y .assign (m .yAxis);
+			   var
+					m = this .matrix,
+					x = m .xAxis,
+					y = m .yAxis;
 	
 				p1 .assign (x) .add (y);
 	
