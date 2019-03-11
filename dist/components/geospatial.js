@@ -1664,16 +1664,16 @@ function (Fields,
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("requestRebuild",    this);
-				this .colorNode .removeInterest ("set_transparent__", this);
+				this .colorNode .removeInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
 			}
 
 			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("requestRebuild",    this);
-				this .colorNode .addInterest ("set_transparent__", this);
+				this .colorNode .addInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
 			}

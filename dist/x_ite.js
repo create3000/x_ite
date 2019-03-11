@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-639 */
+/* X_ITE v4.4.3-639 */
 
 (function () {
 
@@ -25979,13 +25979,13 @@ function (X3DEventObject,
 
 			// Remove node from entire scene graph.
 
-			var firstParents = this .getParents ();
+			var firstParents = new Map (this .getParents ());
 
 			for (var firstParent of firstParents .values ())
 			{
 				if (firstParent instanceof Fields .SFNode)
 				{
-					var secondParents = firstParent .getParents ();
+					var secondParents = new Map (firstParent .getParents ());
 
 					for (var secondParent of secondParents .values ())
 					{
@@ -60134,16 +60134,16 @@ function (X3DGeometryNode,
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("requestRebuild",    this);
-				this .colorNode .removeInterest ("set_transparent__", this);
+				this .colorNode .removeInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
 			}
 
 			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("requestRebuild",    this);
-				this .colorNode .addInterest ("set_transparent__", this);
+				this .colorNode .addInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
 			}
@@ -87423,16 +87423,16 @@ function (Fields,
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("requestRebuild",    this);
-				this .colorNode .removeInterest ("set_transparent__", this);
+				this .colorNode .removeInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
 			}
 
 			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("requestRebuild",    this);
-				this .colorNode .addInterest ("set_transparent__", this);
+				this .colorNode .addInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
 			}
@@ -96140,10 +96140,12 @@ function (Fields,
 
 
 define ('x_ite/Components/Rendering/X3DColorNode',[
+	"x_ite/Fields",
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DGeometricPropertyNode, 
+function (Fields,
+          X3DGeometricPropertyNode, 
           X3DConstants)
 {
 "use strict";
@@ -96153,11 +96155,24 @@ function (X3DGeometricPropertyNode,
 		X3DGeometricPropertyNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DColorNode);
+
+		this .addChildObjects ("transparent", new Fields .SFBool ());
+
+		this .transparent_ .setAccessType (X3DConstants .outputOnly);
 	}
 
 	X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: X3DColorNode,
+		setTransparent: function (value)
+		{
+			if (value !== this .transparent_ .getValue ())
+				this .transparent_ = value;
+		},
+		getTransparent: function ()
+		{
+			return this .transparent_ .getValue ();
+		},
 	});
 
 	return X3DColorNode;
@@ -96269,10 +96284,6 @@ function (Fields,
 		{
 			this .color  = this .color_ .getValue ();
 			this .length = this .color_ .length;
-		},
-		getTransparent: function ()
-		{
-			return false;
 		},
 		addColor: function (index, array)
 		{
@@ -96400,6 +96411,8 @@ function (Fields,
 		X3DColorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .ColorRGBA);
+
+		this .setTransparent (true);
 	}
 
 	ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
@@ -96433,10 +96446,6 @@ function (Fields,
 		{
 			this .color  = this .color_ .getValue ();
 			this .length = this .color_ .length;
-		},
-		getTransparent: function ()
-		{
-			return true;
 		},
 		addColor: function (index, array)
 		{
@@ -96867,16 +96876,16 @@ function (Fields,
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("requestRebuild",    this);
-				this .colorNode .removeInterest ("set_transparent__", this);
+				this .colorNode .removeInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
 			}
 
 			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("requestRebuild",    this);
-				this .colorNode .addInterest ("set_transparent__", this);
+				this .colorNode .addInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
 			}
@@ -97615,16 +97624,16 @@ function (Fields,
 		{
 			if (this .colorNode)
 			{
-				this .colorNode .removeInterest ("requestRebuild",    this);
-				this .colorNode .removeInterest ("set_transparent__", this);
+				this .colorNode .removeInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
 			}
 
 			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
 
 			if (this .colorNode)
 			{
-				this .colorNode .addInterest ("requestRebuild",    this);
-				this .colorNode .addInterest ("set_transparent__", this);
+				this .colorNode .addInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .addInterest ("set_transparent__", this);
 
 				this .set_transparent__ ();
 			}

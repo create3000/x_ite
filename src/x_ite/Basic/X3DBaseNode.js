@@ -1043,13 +1043,13 @@ function (X3DEventObject,
 
 			// Remove node from entire scene graph.
 
-			var firstParents = this .getParents ();
+			var firstParents = new Map (this .getParents ());
 
 			for (var firstParent of firstParents .values ())
 			{
 				if (firstParent instanceof Fields .SFNode)
 				{
-					var secondParents = firstParent .getParents ();
+					var secondParents = new Map (firstParent .getParents ());
 
 					for (var secondParent of secondParents .values ())
 					{
