@@ -754,7 +754,7 @@ function (Fields,
 		},
 		getBBox: function (bbox)
 		{
-			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
 				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .collidable_);
 		
@@ -941,7 +941,7 @@ function (Fields,
 		},
 		getBBox: function (bbox)
 		{
-			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
 				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .shape_);
 		

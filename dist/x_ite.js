@@ -67359,8 +67359,16 @@ function (Fields,
 	X3DBoundedObject .prototype =
 	{
 		constructor: X3DBoundedObject,
-		defaultBBoxSize: new Vector3 (-1, -1, -1),
 		initialize: function () { },
+		getDefaultBBoxSize: (function ()
+		{
+			var defaultBBoxSize = new Vector3 (-1, -1, -1);
+
+			return function ()
+			{
+				return defaultBBoxSize;
+			};
+		})(),
 		getBBox: function (nodes, bbox)
 		{
 			bbox .set ();
@@ -67521,7 +67529,7 @@ function (Fields,
 		},
 		getBBox: function (bbox)
 		{
-			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 				return X3DBoundedObject .prototype .getBBox .call (this, this .childNodes, bbox);
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
@@ -68402,11 +68410,7 @@ function (Fields,
 				invLightSpaceMatrix .inverse ();
 
 				var
-					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox); // Group bbox.
-
-//console .log (groupBBox .toString ());
-
-				var
+					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
 					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
@@ -89128,7 +89132,7 @@ function (Fields,
 		},
 		getBBox: function (bbox) 
 		{
-			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
 				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .child);
 
@@ -93088,7 +93092,7 @@ function (Fields,
 		},
 		getBBox: function (bbox) 
 		{
-			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
 				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .child);
 
@@ -99870,7 +99874,7 @@ function (X3DChildNode,
 		},
 		set_bbox__: function ()
 		{
-			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
 				if (this .getGeometry ())
 					this .bbox .assign (this .getGeometry () .getBBox ());
