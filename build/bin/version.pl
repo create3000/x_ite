@@ -49,12 +49,17 @@ sub publish
 sub rsync
 {
 	my $release = shift;
-	my $ftp      = "/run/user/1000/gvfs/ftp:host=create3000.de/html/create3000.de/code/htdocs/x_ite";
+	my $ftp     = "/html/create3000.de/code/htdocs/x_ite";
+	my $HOST    = "alfa3008.alfahosting-server.de";
+	my $USER    = "web839";
 
 	say "Uploading $release";
 
-	system "mkdir", "-p", "$ftp/$release/dist/";
-	system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$release/dist/";
+	#system "mkdir", "-p", "$ftp/$release/dist/";
+	#system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "/home/holger/Projekte/X_ITE/dist/", "$ftp/$release/dist/";
+
+	system "lftp", "-e", "mkdir -p $ftp/$release/dist; bye", "ftp://$USER\@$HOST";
+	system "lftp", "-e", "mirror --reverse --delete --use-cache --verbose /home/holger/Projekte/X_ITE/dist $ftp/$release/dist; bye", "ftp://$USER\@$HOST";
 }
 
 my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
