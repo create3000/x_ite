@@ -1858,9 +1858,9 @@ function (Fields,
 				this .bbox .set ();
 			else
 				this .bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
-			
-			this .bboxSize   = this .bbox .size;
-			this .bboxCenter = this .bbox .center;
+
+			this .bboxSize   .assign (this .bbox .size);
+			this .bboxCenter .assign (this .bbox .center);
 		},
 		set_transparent__: function ()
 		{
@@ -3062,7 +3062,7 @@ function (Fields,
 
 						gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
 					}
-		
+
 					shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
 					shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
 					shaderNode .disableFloatAttrib (gl, "x3d_ParticleElapsedTime");
