@@ -69,6 +69,8 @@ function (Fields,
 		X3DColorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .ColorRGBA);
+
+		this .setTransparent (true);
 	}
 
 	ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
@@ -102,10 +104,6 @@ function (Fields,
 		{
 			this .color  = this .color_ .getValue ();
 			this .length = this .color_ .length;
-		},
-		getTransparent: function ()
-		{
-			return true;
 		},
 		addColor: function (index, array)
 		{
