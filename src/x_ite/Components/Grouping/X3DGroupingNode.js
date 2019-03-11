@@ -119,7 +119,7 @@ function (Fields,
 		},
 		getBBox: function (bbox)
 		{
-			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 				return X3DBoundedObject .prototype .getBBox .call (this, this .childNodes, bbox);
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());

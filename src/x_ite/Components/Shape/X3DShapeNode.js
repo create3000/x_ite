@@ -123,7 +123,7 @@ function (X3DChildNode,
 		},
 		set_bbox__: function ()
 		{
-			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
 				if (this .getGeometry ())
 					this .bbox .assign (this .getGeometry () .getBBox ());

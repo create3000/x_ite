@@ -78,8 +78,16 @@ function (Fields,
 	X3DBoundedObject .prototype =
 	{
 		constructor: X3DBoundedObject,
-		defaultBBoxSize: new Vector3 (-1, -1, -1),
 		initialize: function () { },
+		getDefaultBBoxSize: (function ()
+		{
+			var defaultBBoxSize = new Vector3 (-1, -1, -1);
+
+			return function ()
+			{
+				return defaultBBoxSize;
+			};
+		})(),
 		getBBox: function (nodes, bbox)
 		{
 			bbox .set ();

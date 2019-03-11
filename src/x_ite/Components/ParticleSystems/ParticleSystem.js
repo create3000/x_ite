@@ -250,7 +250,7 @@ function (Fields,
 		},
 		set_bbox__: function ()
 		{
-			if (this .bboxSize_ .getValue () .equals (this .defaultBBoxSize))
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 				this .bbox .set ();
 			else
 				this .bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
