@@ -140,7 +140,7 @@ function (X3DConstants)
 		{
 			var index = this .importedNodesIndex [this .ExecutionContext () .getId ()];
 
-			for (var importedNode of importedNodes .values ())
+			importedNodes .forEach (function (importedNode)
 			{
 				try
 				{
@@ -148,7 +148,7 @@ function (X3DConstants)
 				}
 				catch (error)
 				{ }
-			}
+			});
 		},
 		AddImportedNode: function (exportedNode, importedName)
 		{

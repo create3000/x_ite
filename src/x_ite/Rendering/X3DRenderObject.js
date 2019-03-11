@@ -953,9 +953,12 @@ function ($,
 				browser .getLineShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 				browser .getShadowShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 	
-				for (var shader of shaders .values ())
+				shaders .forEach (function (shader)
+				{
 					shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-	
+				},
+				this);
+
 				// Render opaque objects first
 	
 				gl .enable (gl .DEPTH_TEST);

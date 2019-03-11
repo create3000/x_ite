@@ -303,7 +303,7 @@ function (X3DEventObject,
 	
 				var predefinedFields = this .getPredefinedFields ();
 	
-				for (var sourceField of predefinedFields .values ())
+				predefinedFields .forEach (function (sourceField)
 				{
 					try
 					{
@@ -316,7 +316,7 @@ function (X3DEventObject,
 							var references = sourceField .getReferences ();
 	
 							// IS relationship
-							for (var originalReference of references .values ())
+							references .forEach (function (originalReference)
 							{
 								try
 								{
@@ -326,7 +326,7 @@ function (X3DEventObject,
 								{
 									console .error (error .message);
 								}
-							}
+							});
 						}
 						else
 						{
@@ -349,13 +349,13 @@ function (X3DEventObject,
 					{
 						console .log (error .message);
 					}
-				}
+				});
 	
 				// User-defined fields
 	
 				var userDefinedFields = this .getUserDefinedFields ();
 	
-				for (var sourceField of userDefinedFields .values ())
+				userDefinedFields .forEach (function (sourceField)
 				{
 					var destfield = sourceField .copy (executionContext);
 	
@@ -371,7 +371,7 @@ function (X3DEventObject,
 	
 						var references = sourceField .getReferences ();
 	
-						for (var originalReference of references .values ())
+						references .forEach (function (originalReference)
 						{
 							try
 							{
@@ -381,9 +381,9 @@ function (X3DEventObject,
 							{
 								console .error ("No reference '" + originalReference .getName () + "' inside execution context " + executionContext .getTypeName () + " '" + executionContext .getName () + "'.");
 							}
-						}
+						});
 					}
-				}
+				});
 	
 				executionContext .addUninitializedNode (copy);
 				return copy;
@@ -563,32 +563,35 @@ function (X3DEventObject,
 			{
 				var userDefinedFields = this .getUserDefinedFields ();
 
-				for (var field of userDefinedFields .values ())
+				userDefinedFields .forEach (function (field)
+				{
 					changedFields .push (field);
+				});
 			}
 
-			for (var field of predefinedFields .values ())
+			predefinedFields .forEach (function (field)
 			{
 				if (extented)
 				{
 					if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
 					{
 						changedFields .push (field);
-						continue;
+						return;
 					}
 				}
 
 				if (field .getReferences () .size === 0)
 				{
 					if (! field .isInitializable ())
-						continue;
+						return;
 
 					if (this .isDefaultValue (field))
-						continue;
+						return;
 				}
 
 				changedFields .push (field);
-			}
+			},
+			this);
 
 			return changedFields;
 		},
@@ -789,10 +792,10 @@ function (X3DEventObject,
 							initializableReference = false,
 							fieldReferences        = field .getReferences ();
 		
-						for (var fieldReference of fieldReferences .values ())
+						fieldReferences .forEach (function (fieldReference)
 						{
 							initializableReference |= fieldReference .isInitializable ();
-						}
+						});
 
 						if (! initializableReference)
 							mustOutputValue = true;
@@ -856,7 +859,7 @@ function (X3DEventObject,
 
 				if (this .hasUserDefinedFields ())
 				{
-					for (var field of userDefinedFields .values ())
+					userDefinedFields .forEach (function (field)
 					{
 						stream .string += generator .Indent ();
 						stream .string += "<field";
@@ -884,10 +887,10 @@ function (X3DEventObject,
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
-							for (var fieldReference of fieldReferences .values ())
+							fieldReferences .forEach (function (fieldReference)
 							{
 								initializableReference |= fieldReference .isInitializable ();
-							}
+							});
 
 							if (! initializableReference)
 								mustOutputValue = true;
@@ -950,7 +953,7 @@ function (X3DEventObject,
 
 							stream .string += "/>\n";
 						}
-					}
+					});
 				}
 		
 				if (references .length)
@@ -967,7 +970,7 @@ function (X3DEventObject,
 							field       = references [i],
 							protoFields = field .getReferences ();
 
-						for (var protoField of protoFields .values ())
+						protoFields .forEach (function (protoField)
 						{
 							stream .string += generator .Indent ();
 							stream .string += "<connect";
@@ -980,7 +983,7 @@ function (X3DEventObject,
 							stream .string += generator .XMLEncode (protoField .getName ());
 							stream .string += "'";
 							stream .string += "/>\n";
-						}
+						});
 					}
 
 					generator .DecIndent ();
@@ -1035,23 +1038,27 @@ function (X3DEventObject,
 				predefinedFields  = this .getPredefinedFields (),
 				userDefinedFields = this .getUserDefinedFields ();
 
-			for (var predefinedField of predefinedFields .values ())
+			predefinedFields .forEach (function (predefinedField)
+			{
 				predefinedField .dispose ();
+			});
 
-			for (var userDefinedField of userDefinedFields .values ())
+			userDefinedFields .forEach (function (userDefinedField)
+			{
 				userDefinedField .dispose ();
+			});
 
 			// Remove node from entire scene graph.
 
 			var firstParents = new Set (this .getParents ());
 
-			for (var firstParent of firstParents)
+			firstParents .forEach (function (firstParent)
 			{
 				if (firstParent instanceof Fields .SFNode)
 				{
 					var secondParents = new Set (firstParent .getParents ());
 
-					for (var secondParent of secondParents)
+					secondParents .forEach (function (secondParent)
 					{
 						if (secondParent instanceof Fields .MFNode)
 						{
@@ -1059,11 +1066,11 @@ function (X3DEventObject,
 
 							secondParent .erase (secondParent .remove (0, length, firstParent), length);
 						}
-					}
+					});
 
 					firstParent .setValue (null);
 				}
-			}
+			});
 		},
 	});
 

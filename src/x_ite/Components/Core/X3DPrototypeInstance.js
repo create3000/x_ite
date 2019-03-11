@@ -270,13 +270,11 @@ function (Fields,
 		},
 		copyImportedNodes: function (executionContext, importedNodes)
 		{
-			for (var value of importedNodes)
+			importedNodes .forEach (function (importedNode, importedName)
 			{
 				try
 				{
 					var
-						importedName = value [0],
-						importedNode = value [1],
 						inlineNode   = this .getNamedNode (importedNode .getInlineNode () .getName ()),
 						exportedName = importedNode .getExportedName ();
 
@@ -286,7 +284,8 @@ function (Fields,
 				{
 					console .error ("Bad IMPORT specification in copy: ", error);
 				}
-			}
+			},
+			this);
 		},
 		copyRoutes: function (executionContext, routes)
 		{
@@ -419,10 +418,10 @@ function (Fields,
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
-							for (var fieldReference of fieldReferences .values ())
+							fieldReferences .forEach (function (fieldReference)
 							{
 								initializableReference |= fieldReference .isInitializable ();
-							}
+							});
 
 							if (! initializableReference)
 								mustOutputValue = true;
@@ -544,7 +543,7 @@ function (Fields,
 							field       = references [i],
 							protoFields = field .getReferences ();
 
-						for (var protoField of protoFields .values ())
+						protoFields .forEach (function (protoField)
 						{
 							stream .string += generator .Indent ();
 							stream .string += "<connect";
@@ -557,7 +556,7 @@ function (Fields,
 							stream .string += generator .XMLEncode (protoField .getName ());
 							stream .string += "'";
 							stream .string += "/>\n";
-						}
+						});
 					}
 
 					generator .DecIndent ();

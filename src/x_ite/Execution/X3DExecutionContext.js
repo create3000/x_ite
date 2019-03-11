@@ -358,10 +358,12 @@ function (Fields,
 
 			// Update existing imported node.
 
-			for (var key of this .importedNodes .keys ())
+			for (var item of this .importedNodes)
 			{
-				var importedNode = this .importedNodes .get (key);
-				
+				var
+					key          = item [0],
+					importedNode = item [1];
+
 				if (importedNode .getInlineNode () === inlineNode && importedNode .getExportedName () === exportedName)
 				{
 					this .importedNodes .delete (key);
@@ -671,7 +673,7 @@ function (Fields,
 
 			var importedNodes = this .getImportedNodes ();
 
-			for (var importedNode of importedNodes .values ())
+			importedNodes .forEach (function (importedNode)
 			{
 				try
 				{
@@ -681,8 +683,8 @@ function (Fields,
 				}
 				catch (error)
 				{ }
-			}
-		
+			});
+
 			// Output routes
 
 			this .getRoutes () .toXMLStream (stream);

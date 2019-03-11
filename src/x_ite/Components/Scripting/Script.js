@@ -141,8 +141,10 @@ function ($,
 
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var field of userDefinedFields .values ())
+			userDefinedFields .forEach (function (field)
+			{
 				field .setSet (false);
+			});
 
 			this .set_url__ ();
 		},
@@ -202,7 +204,7 @@ function ($,
 					callbacks         = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"],
 					userDefinedFields = this .getUserDefinedFields ();
 
-				for (var field of userDefinedFields .values ())
+				userDefinedFields .forEach (function (field)
 				{
 					switch (field .getAccessType ())
 					{
@@ -213,7 +215,7 @@ function ($,
 							callbacks .push ("set_" + field .getName ());
 							break;
 					}
-				}
+				});
 
 				text += "\n;var " + callbacks .join (",") + ";";
 				text += "\n[" + callbacks .join (",") + "];";
@@ -338,12 +340,12 @@ function ($,
 
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var field of userDefinedFields .values ())
+			userDefinedFields .forEach (function (field)
 			{
 				var name = field .getName ();
 
 				if (field .getAccessType () === X3DConstants .inputOnly)
-					continue;
+					return;
 
 				if (! (name in global))
 				{
@@ -362,7 +364,7 @@ function ($,
 						set: field .setValue .bind (field),
 					};
 				}
-			}
+			});
 
 			return Object .create (Object .prototype, global);
 		},
@@ -378,7 +380,7 @@ function ($,
 				if ($.isFunction (this .context .eventsProcessed))
 					this .addInterest ("eventsProcessed__", this);
 
-				for (var field of userDefinedFields .values ())
+				userDefinedFields .forEach (function (field)
 				{
 					switch (field .getAccessType ())
 					{
@@ -401,7 +403,8 @@ function ($,
 							break;
 						}
 					}
-				}
+				},
+				this);
 			}
 			else
 			{
@@ -411,7 +414,7 @@ function ($,
 				if (this .context .eventsProcessed)
 					this .removeInterest ("eventsProcessed__", this);
 
-				for (var field of userDefinedFields .values ())
+				userDefinedFields .forEach (function (field)
 				{
 					switch (field .getAccessType ())
 					{
@@ -420,7 +423,8 @@ function ($,
 							field .removeInterest ("set_field__", this);
 							break;
 					}
-				}
+				},
+				this);
 			}
 		},
 		initialize__: function (text)
@@ -455,7 +459,7 @@ function ($,
 
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var field of userDefinedFields .values ())
+			userDefinedFields .forEach (function (field)
 			{
 				if (field .getSet ())
 				{
@@ -464,7 +468,8 @@ function ($,
 					if ($.isFunction (callback))
 						this .set_field__ (field, callback);
 				}
-			}
+			},
+			this);
 		},
 		prepareEvents__: function ()
 		{

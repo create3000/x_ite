@@ -335,20 +335,20 @@ function (Fields,
 				}
 			}
 
-			for (var value of this .metadata)
+			this .metadata .forEach (function (value, key)
 			{
 				stream .string += generator .Indent ();
 				stream .string += "<meta";
 				stream .string += " ";
 				stream .string += "name='";
-				stream .string += generator .XMLEncode (value [0]);
+				stream .string += generator .XMLEncode (key);
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "content='";
-				stream .string += generator .XMLEncode (value [1]);
+				stream .string += generator .XMLEncode (value);
 				stream .string += "'";
 				stream .string += "/>\n";
-			}
+			});
 		
 			// </head>
 
@@ -371,7 +371,7 @@ function (Fields,
 
 			X3DExecutionContext .prototype .toXMLStream .call (this, stream);
 		
-			for (var exportedNode of exportedNodes .values ())
+			exportedNodes .forEach (function (exportedNode)
 			{
 				//try
 				{
@@ -381,7 +381,7 @@ function (Fields,
 				}
 				//catch (const X3DError &)
 				{ }
-			}
+			});
 
 			generator .LeaveScope ();
 			generator .PopExecutionContext ();

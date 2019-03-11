@@ -209,19 +209,20 @@ function ($,
 		{
 			if (this .hasOwnProperty ("_references"))
 			{
-				for (var reference of this ._references .values ())
+				this ._references .forEach (function (reference)
 				{
 					switch (this .getAccessType () & reference .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
 						case X3DConstants .outputOnly:
-							continue;
+							break;
 						case X3DConstants .initializeOnly:
 						case X3DConstants .inputOutput:
 							this .set (reference .getValue (), reference .length);
-							continue;
+							break;
 					}
-				}
+				},
+				this);
 			}
 		},
 		addFieldInterest: function (field)

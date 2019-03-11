@@ -81,8 +81,10 @@ function (Fields,
 			{
 				var scene = this .getScene ();
 
-				for (var object of this .loadingObjects)
+				this .loadingObjects .forEach (function (object)
+				{
 					scene .removeLoadCount (object);
+				});
 			}
 
 			X3DScene .prototype .setExecutionContext .call (this, value);

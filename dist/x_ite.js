@@ -1,4 +1,4 @@
-/* X_ITE v4.4.3-640 */
+/* X_ITE v4.4.4a-641 */
 
 (function () {
 
@@ -13096,7 +13096,7 @@ function (X3DConstants)
 		{
 			var index = this .importedNodesIndex [this .ExecutionContext () .getId ()];
 
-			for (var importedNode of importedNodes .values ())
+			importedNodes .forEach (function (importedNode)
 			{
 				try
 				{
@@ -13104,7 +13104,7 @@ function (X3DConstants)
 				}
 				catch (error)
 				{ }
-			}
+			});
 		},
 		AddImportedNode: function (exportedNode, importedName)
 		{
@@ -13944,19 +13944,20 @@ function ($,
 		{
 			if (this .hasOwnProperty ("_references"))
 			{
-				for (var reference of this ._references .values ())
+				this ._references .forEach (function (reference)
 				{
 					switch (this .getAccessType () & reference .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
 						case X3DConstants .outputOnly:
-							continue;
+							break;
 						case X3DConstants .initializeOnly:
 						case X3DConstants .inputOutput:
 							this .set (reference .getValue (), reference .length);
-							continue;
+							break;
 					}
-				}
+				},
+				this);
 			}
 		},
 		addFieldInterest: function (field)
@@ -25239,7 +25240,7 @@ function (X3DEventObject,
 	
 				var predefinedFields = this .getPredefinedFields ();
 	
-				for (var sourceField of predefinedFields .values ())
+				predefinedFields .forEach (function (sourceField)
 				{
 					try
 					{
@@ -25252,7 +25253,7 @@ function (X3DEventObject,
 							var references = sourceField .getReferences ();
 	
 							// IS relationship
-							for (var originalReference of references .values ())
+							references .forEach (function (originalReference)
 							{
 								try
 								{
@@ -25262,7 +25263,7 @@ function (X3DEventObject,
 								{
 									console .error (error .message);
 								}
-							}
+							});
 						}
 						else
 						{
@@ -25285,13 +25286,13 @@ function (X3DEventObject,
 					{
 						console .log (error .message);
 					}
-				}
+				});
 	
 				// User-defined fields
 	
 				var userDefinedFields = this .getUserDefinedFields ();
 	
-				for (var sourceField of userDefinedFields .values ())
+				userDefinedFields .forEach (function (sourceField)
 				{
 					var destfield = sourceField .copy (executionContext);
 	
@@ -25307,7 +25308,7 @@ function (X3DEventObject,
 	
 						var references = sourceField .getReferences ();
 	
-						for (var originalReference of references .values ())
+						references .forEach (function (originalReference)
 						{
 							try
 							{
@@ -25317,9 +25318,9 @@ function (X3DEventObject,
 							{
 								console .error ("No reference '" + originalReference .getName () + "' inside execution context " + executionContext .getTypeName () + " '" + executionContext .getName () + "'.");
 							}
-						}
+						});
 					}
-				}
+				});
 	
 				executionContext .addUninitializedNode (copy);
 				return copy;
@@ -25499,32 +25500,35 @@ function (X3DEventObject,
 			{
 				var userDefinedFields = this .getUserDefinedFields ();
 
-				for (var field of userDefinedFields .values ())
+				userDefinedFields .forEach (function (field)
+				{
 					changedFields .push (field);
+				});
 			}
 
-			for (var field of predefinedFields .values ())
+			predefinedFields .forEach (function (field)
 			{
 				if (extented)
 				{
 					if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
 					{
 						changedFields .push (field);
-						continue;
+						return;
 					}
 				}
 
 				if (field .getReferences () .size === 0)
 				{
 					if (! field .isInitializable ())
-						continue;
+						return;
 
 					if (this .isDefaultValue (field))
-						continue;
+						return;
 				}
 
 				changedFields .push (field);
-			}
+			},
+			this);
 
 			return changedFields;
 		},
@@ -25725,10 +25729,10 @@ function (X3DEventObject,
 							initializableReference = false,
 							fieldReferences        = field .getReferences ();
 		
-						for (var fieldReference of fieldReferences .values ())
+						fieldReferences .forEach (function (fieldReference)
 						{
 							initializableReference |= fieldReference .isInitializable ();
-						}
+						});
 
 						if (! initializableReference)
 							mustOutputValue = true;
@@ -25792,7 +25796,7 @@ function (X3DEventObject,
 
 				if (this .hasUserDefinedFields ())
 				{
-					for (var field of userDefinedFields .values ())
+					userDefinedFields .forEach (function (field)
 					{
 						stream .string += generator .Indent ();
 						stream .string += "<field";
@@ -25820,10 +25824,10 @@ function (X3DEventObject,
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
-							for (var fieldReference of fieldReferences .values ())
+							fieldReferences .forEach (function (fieldReference)
 							{
 								initializableReference |= fieldReference .isInitializable ();
-							}
+							});
 
 							if (! initializableReference)
 								mustOutputValue = true;
@@ -25886,7 +25890,7 @@ function (X3DEventObject,
 
 							stream .string += "/>\n";
 						}
-					}
+					});
 				}
 		
 				if (references .length)
@@ -25903,7 +25907,7 @@ function (X3DEventObject,
 							field       = references [i],
 							protoFields = field .getReferences ();
 
-						for (var protoField of protoFields .values ())
+						protoFields .forEach (function (protoField)
 						{
 							stream .string += generator .Indent ();
 							stream .string += "<connect";
@@ -25916,7 +25920,7 @@ function (X3DEventObject,
 							stream .string += generator .XMLEncode (protoField .getName ());
 							stream .string += "'";
 							stream .string += "/>\n";
-						}
+						});
 					}
 
 					generator .DecIndent ();
@@ -25971,23 +25975,27 @@ function (X3DEventObject,
 				predefinedFields  = this .getPredefinedFields (),
 				userDefinedFields = this .getUserDefinedFields ();
 
-			for (var predefinedField of predefinedFields .values ())
+			predefinedFields .forEach (function (predefinedField)
+			{
 				predefinedField .dispose ();
+			});
 
-			for (var userDefinedField of userDefinedFields .values ())
+			userDefinedFields .forEach (function (userDefinedField)
+			{
 				userDefinedField .dispose ();
+			});
 
 			// Remove node from entire scene graph.
 
 			var firstParents = new Set (this .getParents ());
 
-			for (var firstParent of firstParents)
+			firstParents .forEach (function (firstParent)
 			{
 				if (firstParent instanceof Fields .SFNode)
 				{
 					var secondParents = new Set (firstParent .getParents ());
 
-					for (var secondParent of secondParents)
+					secondParents .forEach (function (secondParent)
 					{
 						if (secondParent instanceof Fields .MFNode)
 						{
@@ -25995,11 +26003,11 @@ function (X3DEventObject,
 
 							secondParent .erase (secondParent .remove (0, length, firstParent), length);
 						}
-					}
+					});
 
 					firstParent .setValue (null);
 				}
-			}
+			});
 		},
 	});
 
@@ -30863,14 +30871,15 @@ function (Fields,
 		},
 		deleteRoutes: function ()
 		{
-			for (var route of this .routes .values ())
+			this .routes .forEach (function (route)
 			{
 				if (route ._route)
 				{
 					this .getExecutionContext () .deleteRoute (route ._route);
 					delete route ._route;
 				}
-			}
+			},
+			this);
 		},
 		set_loadState__: function ()
 		{
@@ -30886,8 +30895,11 @@ function (Fields,
 				{
 					this .deleteRoutes ();
 
-					for (var id of this .routes .keys ())
+					this .routes .forEach (function (route, id)
+					{
 						this .resolveRoute (id);
+					},
+					this);
 
 					break;
 				}
@@ -30929,7 +30941,7 @@ function (Fields,
 				{
 					// Output unresolved routes.
 
-					for (var route of this .routes .values ())
+					this .routes .forEach (function (route)
 					{
 						var
 							sourceNode       = route .sourceNode,
@@ -30971,7 +30983,7 @@ function (Fields,
 							stream .string += "'";
 							stream .string += "/>";
 						}
-					}
+					});
 				}
 			}
 			else
@@ -32689,10 +32701,12 @@ function (Fields,
 
 			// Update existing imported node.
 
-			for (var key of this .importedNodes .keys ())
+			for (var item of this .importedNodes)
 			{
-				var importedNode = this .importedNodes .get (key);
-				
+				var
+					key          = item [0],
+					importedNode = item [1];
+
 				if (importedNode .getInlineNode () === inlineNode && importedNode .getExportedName () === exportedName)
 				{
 					this .importedNodes .delete (key);
@@ -33002,7 +33016,7 @@ function (Fields,
 
 			var importedNodes = this .getImportedNodes ();
 
-			for (var importedNode of importedNodes .values ())
+			importedNodes .forEach (function (importedNode)
 			{
 				try
 				{
@@ -33012,8 +33026,8 @@ function (Fields,
 				}
 				catch (error)
 				{ }
-			}
-		
+			});
+
 			// Output routes
 
 			this .getRoutes () .toXMLStream (stream);
@@ -33666,20 +33680,20 @@ function (Fields,
 				}
 			}
 
-			for (var value of this .metadata)
+			this .metadata .forEach (function (value, key)
 			{
 				stream .string += generator .Indent ();
 				stream .string += "<meta";
 				stream .string += " ";
 				stream .string += "name='";
-				stream .string += generator .XMLEncode (value [0]);
+				stream .string += generator .XMLEncode (key);
 				stream .string += "'";
 				stream .string += " ";
 				stream .string += "content='";
-				stream .string += generator .XMLEncode (value [1]);
+				stream .string += generator .XMLEncode (value);
 				stream .string += "'";
 				stream .string += "/>\n";
-			}
+			});
 		
 			// </head>
 
@@ -33702,7 +33716,7 @@ function (Fields,
 
 			X3DExecutionContext .prototype .toXMLStream .call (this, stream);
 		
-			for (var exportedNode of exportedNodes .values ())
+			exportedNodes .forEach (function (exportedNode)
 			{
 				//try
 				{
@@ -33712,7 +33726,7 @@ function (Fields,
 				}
 				//catch (const X3DError &)
 				{ }
-			}
+			});
 
 			generator .LeaveScope ();
 			generator .PopExecutionContext ();
@@ -33816,8 +33830,10 @@ function (Fields,
 			{
 				var scene = this .getScene ();
 
-				for (var object of this .loadingObjects)
+				this .loadingObjects .forEach (function (object)
+				{
 					scene .removeLoadCount (object);
+				});
 			}
 
 			X3DScene .prototype .setExecutionContext .call (this, value);
@@ -34541,13 +34557,11 @@ function (Fields,
 		},
 		copyImportedNodes: function (executionContext, importedNodes)
 		{
-			for (var value of importedNodes)
+			importedNodes .forEach (function (importedNode, importedName)
 			{
 				try
 				{
 					var
-						importedName = value [0],
-						importedNode = value [1],
 						inlineNode   = this .getNamedNode (importedNode .getInlineNode () .getName ()),
 						exportedName = importedNode .getExportedName ();
 
@@ -34557,7 +34571,8 @@ function (Fields,
 				{
 					console .error ("Bad IMPORT specification in copy: ", error);
 				}
-			}
+			},
+			this);
 		},
 		copyRoutes: function (executionContext, routes)
 		{
@@ -34690,10 +34705,10 @@ function (Fields,
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
-							for (var fieldReference of fieldReferences .values ())
+							fieldReferences .forEach (function (fieldReference)
 							{
 								initializableReference |= fieldReference .isInitializable ();
-							}
+							});
 
 							if (! initializableReference)
 								mustOutputValue = true;
@@ -34815,7 +34830,7 @@ function (Fields,
 							field       = references [i],
 							protoFields = field .getReferences ();
 
-						for (var protoField of protoFields .values ())
+						protoFields .forEach (function (protoField)
 						{
 							stream .string += generator .Indent ();
 							stream .string += "<connect";
@@ -34828,7 +34843,7 @@ function (Fields,
 							stream .string += generator .XMLEncode (protoField .getName ());
 							stream .string += "'";
 							stream .string += "/>\n";
-						}
+						});
 					}
 
 					generator .DecIndent ();
@@ -35196,7 +35211,7 @@ function ($,
 
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var field of userDefinedFields .values ())
+			userDefinedFields .forEach (function (field)
 			{
 				stream .string += generator .Indent ();
 				stream .string += "<field";
@@ -35213,7 +35228,7 @@ function ($,
 				stream .string += generator .XMLEncode (field .getName ());
 				stream .string += "'";
 				stream .string += "/>\n";
-			}
+			});
 
 			generator .DecIndent ();
 
@@ -35430,7 +35445,7 @@ function ($,
 
 				generator .IncIndent ();
 
-				for (var field of userDefinedFields .values ())
+				userDefinedFields .forEach (function (field)
 				{
 					stream .string += generator .Indent ();
 					stream .string += "<field";
@@ -35489,7 +35504,7 @@ function ($,
 							}
 						}
 					}
-				}
+				});
 		
 				generator .DecIndent ();
 
@@ -43032,7 +43047,7 @@ function (Fields,
 
 			this .textures .clear ();
 
-			for (var field of userDefinedFields .values ())
+			userDefinedFields .forEach (function (field)
 			{
 				var location = gl .getUniformLocation (program, field .getName ());
 
@@ -43137,16 +43152,18 @@ function (Fields,
 
 					this .set_field__ (field);
 				}
-			}
+			},
+			this);
 		},
 		removeShaderFields: function ()
 		{
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var field of userDefinedFields .values ())
+			userDefinedFields .forEach (function (field)
 			{
 				field .removeInterest ("set_field__", this);
-			}
+			},
+			this);
 		},
 		set_field__: function (field)
 		{
@@ -43708,18 +43725,16 @@ function (Fields,
 			//console .log (this .getName ());
 			//console .log (browser .getCombinedTextureUnits () .length);
 
-			for (let item of this .textures)
+			this .textures .forEach (function (object, location)
 			{
 				var
-					location = item [0],
-					object   = item [1],
-					name     = object .name,
-					texture  = object .texture;
+					name    = object .name,
+					texture = object .texture;
 
 				if (! browser .getCombinedTextureUnits () .length)
 				{
 					console .warn ("Not enough combined texture units for uniform variable '" + name + "' available.");
-					continue;
+					return;
 				}
 
 				var textureUnit = object .textureUnit = browser .getCombinedTextureUnits () .pop ();
@@ -43727,7 +43742,7 @@ function (Fields,
 				gl .uniform1i (location, textureUnit);
 				gl .activeTexture (gl .TEXTURE0 + textureUnit);
 				gl .bindTexture (texture .getTarget (), texture .getTexture ());
-			}
+			});
 
 			gl .activeTexture (gl .TEXTURE0);
 		},
@@ -43735,17 +43750,15 @@ function (Fields,
 		{
 			var browser = this .getBrowser ();
 
-			for (let item of this .textures)
+			this .textures .forEach (function (object)
 			{
-				var
-					object      = item [1],
-					textureUnit = object .textureUnit;
+				var textureUnit = object .textureUnit;
 
 				if (textureUnit !== undefined)
 					browser .getCombinedTextureUnits () .push (textureUnit);
 
 				object .textureUnit = undefined;
-			}		
+			});
 
 			//console .log (browser .getCombinedTextureUnits () .length);
 		},
@@ -67923,8 +67936,10 @@ function (Fields,
 						{
 							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
 	
-							for (var transformSensorNode of this .getTransformSensors ())
+							this .getTransformSensors () .forEach (function (transformSensorNode)
+							{
 								transformSensorNode .collect (bbox);
+							});
 						}
 
 						if (false)
@@ -69574,8 +69589,10 @@ function (TraverseType)
 		
 			this .getWorld () .traverse (TraverseType .PICKING, null);
 
-			for (var transformSensorNode of this .transformSensorNodes)
+			this .transformSensorNodes .forEach (function (transformSensorNode)
+			{
 				transformSensorNode .process ();
+			});
 
 			this .pickingTime = performance .now () - t0;
 		},
@@ -77997,9 +78014,12 @@ function ($,
 				browser .getLineShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 				browser .getShadowShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 	
-				for (var shader of shaders .values ())
+				shaders .forEach (function (shader)
+				{
 					shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-	
+				},
+				this);
+
 				// Render opaque objects first
 	
 				gl .enable (gl .DEPTH_TEST);
@@ -84195,11 +84215,11 @@ function (Fields,
 			{
 				var active = false;
 
-				for (var modelMatrix of this .modelMatrices)
+				this .modelMatrices .forEach (function (modelMatrix)
 				{
 					bbox .assign (this .bbox) .multRight (modelMatrix);
 
-					for (var targetBBox of this .targetBBoxes)
+					this .targetBBoxes .forEach (function (targetBBox)
 					{
 						if (this .size_ .getValue () .equals (infinity) || bbox .intersectsBox (targetBBox))
 						{
@@ -84209,10 +84229,12 @@ function (Fields,
 						}
 
 						TargetBBoxCache .push (targetBBox);
-					}
+					},
+					this);
 
 					ModelMatrixCache .push (modelMatrix);
-				}
+				},
+				this);
 
 				if (active)
 				{
@@ -89126,8 +89148,10 @@ function (Fields,
 					{
 						this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
 		
-						for (var transformSensorNode of this .getTransformSensors ())
+						this .getTransformSensors () .forEach (function (transformSensorNode)
+						{
 							transformSensorNode .collect (bbox);
+						});
 					}
 				}
 
@@ -93119,8 +93143,10 @@ function (Fields,
 						{
 							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
 			
-							for (var transformSensorNode of this .getTransformSensors ())
+							this .getTransformSensors () .forEach (function (transformSensorNode)
+							{
 								transformSensorNode .collect (bbox);
+							});
 						}
 
 						break;
@@ -100226,8 +100252,10 @@ function (Fields,
 				{
 					this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
 
-					for (var transformSensorNode of this .getTransformSensors ())
+					this .getTransformSensors () .forEach (function (transformSensorNode)
+					{
 						transformSensorNode .collect (bbox);
+					});
 				}
 			};
 		})(),

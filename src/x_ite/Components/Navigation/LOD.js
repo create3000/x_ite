@@ -209,8 +209,10 @@ function (Fields,
 						{
 							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
 			
-							for (var transformSensorNode of this .getTransformSensors ())
+							this .getTransformSensors () .forEach (function (transformSensorNode)
+							{
 								transformSensorNode .collect (bbox);
+							});
 						}
 
 						break;

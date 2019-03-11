@@ -167,7 +167,7 @@ function ($,
 
 				generator .IncIndent ();
 
-				for (var field of userDefinedFields .values ())
+				userDefinedFields .forEach (function (field)
 				{
 					stream .string += generator .Indent ();
 					stream .string += "<field";
@@ -226,7 +226,7 @@ function ($,
 							}
 						}
 					}
-				}
+				});
 		
 				generator .DecIndent ();
 

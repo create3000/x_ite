@@ -89,8 +89,10 @@ function (TraverseType)
 		
 			this .getWorld () .traverse (TraverseType .PICKING, null);
 
-			for (var transformSensorNode of this .transformSensorNodes)
+			this .transformSensorNodes .forEach (function (transformSensorNode)
+			{
 				transformSensorNode .process ();
+			});
 
 			this .pickingTime = performance .now () - t0;
 		},

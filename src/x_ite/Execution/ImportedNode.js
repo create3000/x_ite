@@ -155,14 +155,15 @@ function (Fields,
 		},
 		deleteRoutes: function ()
 		{
-			for (var route of this .routes .values ())
+			this .routes .forEach (function (route)
 			{
 				if (route ._route)
 				{
 					this .getExecutionContext () .deleteRoute (route ._route);
 					delete route ._route;
 				}
-			}
+			},
+			this);
 		},
 		set_loadState__: function ()
 		{
@@ -178,8 +179,11 @@ function (Fields,
 				{
 					this .deleteRoutes ();
 
-					for (var id of this .routes .keys ())
+					this .routes .forEach (function (route, id)
+					{
 						this .resolveRoute (id);
+					},
+					this);
 
 					break;
 				}
@@ -221,7 +225,7 @@ function (Fields,
 				{
 					// Output unresolved routes.
 
-					for (var route of this .routes .values ())
+					this .routes .forEach (function (route)
 					{
 						var
 							sourceNode       = route .sourceNode,
@@ -263,7 +267,7 @@ function (Fields,
 							stream .string += "'";
 							stream .string += "/>";
 						}
-					}
+					});
 				}
 			}
 			else

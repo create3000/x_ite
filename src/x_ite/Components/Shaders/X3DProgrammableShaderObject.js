@@ -306,7 +306,7 @@ function (Fields,
 
 			this .textures .clear ();
 
-			for (var field of userDefinedFields .values ())
+			userDefinedFields .forEach (function (field)
 			{
 				var location = gl .getUniformLocation (program, field .getName ());
 
@@ -411,16 +411,18 @@ function (Fields,
 
 					this .set_field__ (field);
 				}
-			}
+			},
+			this);
 		},
 		removeShaderFields: function ()
 		{
 			var userDefinedFields = this .getUserDefinedFields ();
 
-			for (var field of userDefinedFields .values ())
+			userDefinedFields .forEach (function (field)
 			{
 				field .removeInterest ("set_field__", this);
-			}
+			},
+			this);
 		},
 		set_field__: function (field)
 		{
@@ -982,18 +984,16 @@ function (Fields,
 			//console .log (this .getName ());
 			//console .log (browser .getCombinedTextureUnits () .length);
 
-			for (let item of this .textures)
+			this .textures .forEach (function (object, location)
 			{
 				var
-					location = item [0],
-					object   = item [1],
-					name     = object .name,
-					texture  = object .texture;
+					name    = object .name,
+					texture = object .texture;
 
 				if (! browser .getCombinedTextureUnits () .length)
 				{
 					console .warn ("Not enough combined texture units for uniform variable '" + name + "' available.");
-					continue;
+					return;
 				}
 
 				var textureUnit = object .textureUnit = browser .getCombinedTextureUnits () .pop ();
@@ -1001,7 +1001,7 @@ function (Fields,
 				gl .uniform1i (location, textureUnit);
 				gl .activeTexture (gl .TEXTURE0 + textureUnit);
 				gl .bindTexture (texture .getTarget (), texture .getTexture ());
-			}
+			});
 
 			gl .activeTexture (gl .TEXTURE0);
 		},
@@ -1009,17 +1009,15 @@ function (Fields,
 		{
 			var browser = this .getBrowser ();
 
-			for (let item of this .textures)
+			this .textures .forEach (function (object)
 			{
-				var
-					object      = item [1],
-					textureUnit = object .textureUnit;
+				var textureUnit = object .textureUnit;
 
 				if (textureUnit !== undefined)
 					browser .getCombinedTextureUnits () .push (textureUnit);
 
 				object .textureUnit = undefined;
-			}		
+			});
 
 			//console .log (browser .getCombinedTextureUnits () .length);
 		},
