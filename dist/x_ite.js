@@ -1,4 +1,4 @@
-/* X_ITE v4.4.3-639 */
+/* X_ITE v4.4.3-640 */
 
 (function () {
 
@@ -13566,7 +13566,7 @@ function (X3DObject)
 	{
 		constructor: X3DChildObject,
 		_tainted: false,
-		_parents: new Map (),
+		_parents: new Set (),
 		setTainted: function (value)
 		{
 			this ._tainted = value;
@@ -13597,13 +13597,13 @@ function (X3DObject)
 		addParent: function (parent)
 		{
 			if (! this .hasOwnProperty ("_parents"))
-				this ._parents = new Map ();
+				this ._parents = new Set ();
 
-			this ._parents .set (parent .getId (), parent);
+			this ._parents .add (parent);
 		},
 		removeParent: function (parent)
 		{
-			this ._parents .delete (parent .getId ());
+			this ._parents .delete (parent);
 		},
 		getParents: function ()
 		{
@@ -25979,15 +25979,15 @@ function (X3DEventObject,
 
 			// Remove node from entire scene graph.
 
-			var firstParents = new Map (this .getParents ());
+			var firstParents = new Set (this .getParents ());
 
-			for (var firstParent of firstParents .values ())
+			for (var firstParent of firstParents)
 			{
 				if (firstParent instanceof Fields .SFNode)
 				{
-					var secondParents = new Map (firstParent .getParents ());
+					var secondParents = new Set (firstParent .getParents ());
 
-					for (var secondParent of secondParents .values ())
+					for (var secondParent of secondParents)
 					{
 						if (secondParent instanceof Fields .MFNode)
 						{
