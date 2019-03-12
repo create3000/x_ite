@@ -257,16 +257,16 @@ function (SFBool,
 				}
 				case 1:
 				{
-					generator .PushUnitCategory (target .getUnit ());
+					generator .EnterScope ();
 
 					array [0] .toVRMLStream (stream);
 
-					generator .PopUnitCategory ();
+					generator .LeaveScope ();
 					break;
 				}
 				default:
 				{
-					generator .PushUnitCategory (target .getUnit ());
+					generator .EnterScope ();
 
 					stream .string += "[\n";
 					generator .IncIndent ();
@@ -286,7 +286,7 @@ function (SFBool,
 					stream .string += generator .Indent ();
 					stream .string += "]";
 
-					generator .PopUnitCategory ();
+					generator .LeaveScope ();
 					break;
 				}
 			}
