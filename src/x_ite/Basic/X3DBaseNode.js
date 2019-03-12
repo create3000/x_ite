@@ -759,7 +759,7 @@ function (X3DEventObject,
 
 			var fields = this .getChangedFields ();
 
-			if (fields .size === 0)
+			if (fields .length === 0)
 			{
 				if (userDefinedFields .size)
 					stream .string += generator .Indent ();

@@ -191,6 +191,106 @@ function (SFBool,
 
 			value .removeClones (this ._cloneCount);
 		},
+		toStream: function (stream)
+		{
+			var
+				target    = this ._target,
+				array     = target .getValue (),
+				generator = Generator .Get (stream);
+
+			switch (array .length)
+			{
+				case 0:
+				{
+					stream .string += "[ ]";
+					break;
+				}
+				case 1:
+				{
+					generator .PushUnitCategory (target .getUnit ());
+
+					array [0] .toStream (stream);
+
+					generator .PopUnitCategory ();
+					break;
+				}
+				default:
+				{
+					generator .PushUnitCategory (target .getUnit ());
+
+					stream .string += "[\n";
+					generator .IncIndent ();
+				
+					for (var i = 0, length = array .length - 1; i < length; ++ i)
+					{
+						stream .string += generator .Indent ();
+						array [i] .toStream (stream);
+						stream .string += "\n";
+					}
+
+					stream .string += generator .Indent ();
+					array [length] .toStream (stream);
+					stream .string += "\n";
+
+					generator .DecIndent ();
+					stream .string += generator .Indent ();
+					stream .string += "]";
+
+					generator .PopUnitCategory ();
+					break;
+				}
+			}
+		},
+		toVRMLStream: function (stream)
+		{
+			var
+				target    = this ._target,
+				array     = target .getValue (),
+				generator = Generator .Get (stream);
+
+			switch (array .length)
+			{
+				case 0:
+				{
+					stream .string += "[ ]";
+					break;
+				}
+				case 1:
+				{
+					generator .PushUnitCategory (target .getUnit ());
+
+					array [0] .toVRMLStream (stream);
+
+					generator .PopUnitCategory ();
+					break;
+				}
+				default:
+				{
+					generator .PushUnitCategory (target .getUnit ());
+
+					stream .string += "[\n";
+					generator .IncIndent ();
+				
+					for (var i = 0, length = array .length - 1; i < length; ++ i)
+					{
+						stream .string += generator .Indent ();
+						array [i] .toVRMLStream (stream);
+						stream .string += "\n";
+					}
+
+					stream .string += generator .Indent ();
+					array [length] .toVRMLStream (stream);
+					stream .string += "\n";
+
+					generator .DecIndent ();
+					stream .string += generator .Indent ();
+					stream .string += "]";
+
+					generator .PopUnitCategory ();
+					break;
+				}
+			}
+		},
 		toXMLStream: function (stream)
 		{
 			var
