@@ -289,7 +289,7 @@ function (Fields,
 			var baseNode = this .namedNodes .get (name);
 
 			if (baseNode)
-				return SFNodeCache .cache (baseNode);
+				return SFNodeCache .get (baseNode);
 
 			throw new Error ("Named node '" + name + "' not found.");
 		},
@@ -417,7 +417,7 @@ function (Fields,
 				var importedNode = this .importedNodes .get (name);
 
 				if (importedNode)
-					return SFNodeCache .cache (importedNode);
+					return SFNodeCache .get (importedNode);
 
 				throw new Error ("Unknown named or imported node '" + name + "'.");
 			}

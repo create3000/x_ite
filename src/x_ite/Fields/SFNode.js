@@ -315,7 +315,7 @@ function (X3DField,
 			var value = this .getValue ();
 
 			if (value)
-				return SFNodeCache .cache (value);
+				return SFNodeCache .get (value);
 
 			return null;	
 		},

@@ -232,7 +232,7 @@ function (Fields,
 			var exportedNode = this .exportedNodes .get (exportedName);
 
 			if (exportedNode)
-				return SFNodeCache .cache (exportedNode .getLocalNode ());
+				return SFNodeCache .get (exportedNode .getLocalNode ());
 
 			throw new Error ("Exported node '" + exportedName + "' not found.");
 		},

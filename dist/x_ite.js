@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-648 */
+/* X_ITE v4.4.4a-649 */
 
 (function () {
 
@@ -21807,37 +21807,41 @@ define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode','x_ite/Fields/SFNode']
 {
 "use strict";
 
-	var SFNodeCache = new WeakMap ();
+	var cache = new WeakMap ();
 
-	SFNodeCache .add = function (baseNode)
+	function SFNodeCache () { }
+
+	SFNodeCache .prototype =
 	{
-		var SFNode = require ("x_ite/Fields/SFNode");
+		add: function (baseNode)
+		{
+			var SFNode = require ("x_ite/Fields/SFNode");
 
-		var node = new SFNode (baseNode);
+			var node = new SFNode (baseNode);
 
-		this .set (baseNode, node);
+			cache .set (baseNode, node);
 
-		return node;
-	};
-
-	SFNodeCache .cache = function (baseNode)
-	{
-		var node = this .get (baseNode);
-
-		if (node)
 			return node;
+		},
+		get: function (baseNode)
+		{
+			var node = cache .get (baseNode);
 
-		var SFNode = require ("x_ite/Fields/SFNode");
+			if (node)
+				return node;
 
-		// Always create new instance!
-		node = new SFNode (baseNode);
+			var SFNode = require ("x_ite/Fields/SFNode");
 
-		this .set (baseNode, node);
+			// Always create new instance!
+			node = new SFNode (baseNode);
 
-		return node;
+			cache .set (baseNode, node);
+
+			return node;
+		},
 	};
 
-	return SFNodeCache;
+	return new SFNodeCache ();
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -22157,7 +22161,7 @@ function (X3DField,
 			var value = this .getValue ();
 
 			if (value)
-				return SFNodeCache .cache (value);
+				return SFNodeCache .get (value);
 
 			return null;	
 		},
@@ -33192,7 +33196,7 @@ function (Fields,
 			var baseNode = this .namedNodes .get (name);
 
 			if (baseNode)
-				return SFNodeCache .cache (baseNode);
+				return SFNodeCache .get (baseNode);
 
 			throw new Error ("Named node '" + name + "' not found.");
 		},
@@ -33320,7 +33324,7 @@ function (Fields,
 				var importedNode = this .importedNodes .get (name);
 
 				if (importedNode)
-					return SFNodeCache .cache (importedNode);
+					return SFNodeCache .get (importedNode);
 
 				throw new Error ("Unknown named or imported node '" + name + "'.");
 			}
@@ -34234,7 +34238,7 @@ function (Fields,
 			var exportedNode = this .exportedNodes .get (exportedName);
 
 			if (exportedNode)
-				return SFNodeCache .cache (exportedNode .getLocalNode ());
+				return SFNodeCache .get (exportedNode .getLocalNode ());
 
 			throw new Error ("Exported node '" + exportedName + "' not found.");
 		},
