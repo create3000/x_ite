@@ -340,10 +340,6 @@ function (X3DField,
 			else
 				stream .string += "NULL";
 		},
-		toVRMLString: function ()
-		{
-			
-		},
 		toVRMLStream: function (stream)
 		{
 			var node = this .getValue ();

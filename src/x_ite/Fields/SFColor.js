@@ -139,6 +139,10 @@ function (Color3,
 		{
 			stream .string += this .getValue () .toString ();
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			this .toStream (stream);

@@ -150,6 +150,10 @@ function (SFVec3,
 			                   rotation .z + " " +
 			                   generator .ToUnit ("angle", rotation .angle);
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			this .toStream (stream);

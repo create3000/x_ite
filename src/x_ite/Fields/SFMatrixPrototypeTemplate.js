@@ -130,6 +130,10 @@ function (X3DField)
 			{
 				stream .string += this .getValue () .toString ();
 			},
+			toVRMLStream: function (stream)
+			{
+				this .toStream (stream);
+			},
 			toXMLStream: function (stream)
 			{
 				this .toStream (stream);

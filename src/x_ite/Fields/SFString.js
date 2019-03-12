@@ -110,6 +110,10 @@ function (X3DField,
 		{
 			stream .string += '"'+ SFString .escape (this .getValue ()) + '"';
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			stream .string += Generator .Get (stream) .XMLEncode (this .getValue ());

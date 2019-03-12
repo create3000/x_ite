@@ -89,6 +89,13 @@ function (X3DConstants)
 		{
 			this .indent = this .indent .substr (0, this .indent .length - this .indentChar .length);
 		},
+		PadRight: function (string, pad)
+		{
+			for (var i = 0, length = pad - string .length; i < length; ++ i)
+				string += " ";
+
+			return string;
+		},
 		PushExecutionContext: function (executionContext)
 		{
 			this .executionContextStack .push (executionContext);

@@ -68,7 +68,7 @@ function (X3DField,
 			{
 				return this .getValue () .equals (vector .getValue ());
 			},
-			isDefaultValue: function (vector)
+			isDefaultValue: function ()
 			{
 				return this .getValue () .equals (Type .Zero);
 			},
@@ -138,6 +138,10 @@ function (X3DField,
 				}
 
 				stream .string += String (generator .ToUnit (category, value [i]));
+			},
+			toVRMLStream: function (stream)
+			{
+				this .toStream (stream);
 			},
 			toXMLStream: function (stream)
 			{

@@ -212,6 +212,10 @@ function (X3DField,
 				int .toXMLStream (stream);
 			}
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			this .toStream (stream);

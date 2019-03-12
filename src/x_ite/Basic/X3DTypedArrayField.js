@@ -721,6 +721,10 @@ function (X3DArrayField,
 				}
 			}
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			var

@@ -137,7 +137,13 @@ function (Generator)
 			return stream .string;
 		},
 		toVRMLString: function ()
-		{ },
+		{
+			var stream = { string: "" };
+
+			this .toVRMLStream (stream);
+
+			return stream .string;
+		},
 		toXMLString: function ()
 		{
 			var stream = { string: "" };

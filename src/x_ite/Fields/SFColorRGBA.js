@@ -133,6 +133,7 @@ function (X3DField,
 			};
 		})(),
 		toStream: SFColor .prototype .toStream,
+		toVRMLStream: SFColor .prototype .toVRMLStream,
 		toXMLStream: SFColor .prototype .toXMLStream,
 	});
 

@@ -98,6 +98,10 @@ function (X3DField,
 
 			stream .string += String (generator .ToUnit (category, this .getValue ()));
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			this .toStream (stream);

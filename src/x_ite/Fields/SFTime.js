@@ -92,6 +92,10 @@ function (X3DField,
 		{
 			stream .string += String (this .getValue ());
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			this .toStream (stream);
