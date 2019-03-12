@@ -51,5 +51,35 @@ define (function ()
 {
 "use strict";
 
-	return new WeakMap ();
+	var SFNodeCache = new WeakMap ();
+
+	SFNodeCache .add = function (baseNode)
+	{
+		var SFNode = require ("x_ite/Fields/SFNode");
+
+		var node = new SFNode (baseNode);
+
+		this .set (baseNode, node);
+
+		return node;
+	};
+
+	SFNodeCache .cache = function (baseNode)
+	{
+		var node = this .get (baseNode);
+
+		if (node)
+			return node;
+
+		var SFNode = require ("x_ite/Fields/SFNode");
+
+		// Always create new instance!
+		node = new SFNode (baseNode);
+
+		this .set (baseNode, node);
+
+		return node;
+	};
+
+	return SFNodeCache;
 });

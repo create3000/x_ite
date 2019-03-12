@@ -315,19 +315,7 @@ function (X3DField,
 			var baseNode = this .getValue ();
 
 			if (baseNode)
-			{
-				var node = SFNodeCache .get (baseNode);
-
-				if (node)
-					return node;
-
-				// Always create new instance!
-				node = new SFNode (baseNode);
-
-				SFNodeCache .set (baseNode, node);
-
-				return node;
-			}
+				return SFNodeCache .cache (baseNode);
 
 			return null;	
 		},

@@ -209,12 +209,8 @@ function (Fields,
 				var baseNode = new Type (this);
 	
 				baseNode .setup ();
-	
-				var node = new Fields .SFNode (baseNode);
 
-				SFNodeCache .set (baseNode, node);
-
-				return node;
+				return SFNodeCache .add (baseNode);
 			}
 		},
 		createProto: function (name, setup)
@@ -293,18 +289,7 @@ function (Fields,
 			var baseNode = this .namedNodes .get (name);
 
 			if (baseNode)
-			{
-				var node = SFNodeCache .get (baseNode);
-
-				if (node)
-					return node;
-
-				node = new Fields .SFNode (baseNode);
-
-				SFNodeCache .set (baseNode, node);
-
-				return node;
-			}
+				return SFNodeCache .cache (baseNode);
 
 			throw new Error ("Named node '" + name + "' not found.");
 		},
@@ -432,7 +417,7 @@ function (Fields,
 				var importedNode = this .importedNodes .get (name);
 
 				if (importedNode)
-					return new Fields .SFNode (importedNode);
+					return SFNodeCache .cache (importedNode);
 
 				throw new Error ("Unknown named or imported node '" + name + "'.");
 			}

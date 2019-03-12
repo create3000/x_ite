@@ -86,11 +86,7 @@ function (Fields,
 	
 				instance .setup ();
 	
-				var node = new Fields .SFNode (instance);
-
-				SFNodeCache .set (instance, node);
-
-				return node;
+				return SFNodeCache .add (instance);
 			}
 		},
 		newInstance: function ()
