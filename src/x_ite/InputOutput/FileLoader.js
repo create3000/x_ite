@@ -79,7 +79,7 @@ function ($,
 	var
 		TIMEOUT       = 17,
 		ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:([^]*)$/,
-		dataURL       = /^data\:([^]*?)(?:;([^]*?))?(;base64)?,([^]*)$/,
+		dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/,
 		contentTypeRx = /^(?:(.*?);(.*?)$)/;
 
 	var foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
@@ -458,7 +458,7 @@ function ($,
 
 					var data = result [4];
 
-					if (result [3] === ";base64")
+					if (result [3] === "base64")
 						data = atob (data);
 					else
 						data = unescape (data);

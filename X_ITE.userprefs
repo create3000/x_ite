@@ -1,11 +1,10 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="package.json">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="package.json" Line="14" Column="12" />
-      <File FileName="src/x_ite/Components/X_ITE/BlendMode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Text/Text.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Execution/X3DExecutionContext.js" Line="1" Column="1" />
+      <File FileName="package.json" Line="1" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DBaseNode.js" Line="285" Column="1" />
+      <File FileName="src/x_ite/Parser/Parser.js" Line="2924" Column="90" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
