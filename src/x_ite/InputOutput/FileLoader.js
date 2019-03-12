@@ -79,7 +79,7 @@ function ($,
 	var
 		TIMEOUT       = 17,
 		ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:([^]*)$/,
-		dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/,
+		dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,([^]*)$/,
 		contentTypeRx = /^(?:(.*?);(.*?)$)/;
 
 	var foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
