@@ -2886,8 +2886,8 @@ function (Fields,
 	Parser .prototype .fieldTypes [X3DConstants .SFFloat]     = Parser .prototype .sffloatValue;
 	Parser .prototype .fieldTypes [X3DConstants .SFImage]     = Parser .prototype .sfimageValue;
 	Parser .prototype .fieldTypes [X3DConstants .SFInt32]     = Parser .prototype .sfint32Value;
-	Parser .prototype .fieldTypes [X3DConstants .SFMatrix3f]  = Parser .prototype .sfmatrix4dValue;
-	Parser .prototype .fieldTypes [X3DConstants .SFMatrix3d]  = Parser .prototype .sfmatrix4fValue;
+	Parser .prototype .fieldTypes [X3DConstants .SFMatrix3f]  = Parser .prototype .sfmatrix3dValue;
+	Parser .prototype .fieldTypes [X3DConstants .SFMatrix3d]  = Parser .prototype .sfmatrix3fValue;
 	Parser .prototype .fieldTypes [X3DConstants .SFMatrix4f]  = Parser .prototype .sfmatrix4dValue;
 	Parser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = Parser .prototype .sfmatrix4fValue;
 	Parser .prototype .fieldTypes [X3DConstants .SFNode]      = Parser .prototype .sfnodeValue;
