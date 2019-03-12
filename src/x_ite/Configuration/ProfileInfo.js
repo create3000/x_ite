@@ -66,8 +66,16 @@ define (function ()
 	Object .assign (ProfileInfo .prototype,
 	{
 		constructor: ProfileInfo,
+		toVRMLStream: function (stream)
+		{
+			stream .string += "PROFILE";
+			stream .string += " ";
+			stream .string += this .name;
+		},
 		toXMLStream: function (stream)
-		{ },
+		{
+			stream .string += this .name;
+		},
 	});
 
 	return ProfileInfo;

@@ -113,21 +113,38 @@ define (function ()
 		{
 			return this .array;
 		},
-		toXMLStream: function (stream)
+		toVRMLStream: function (stream)
 		{
-			var array = this .array;
-
-			for (var i = 0, length = array .length; i < length; ++ i)
+			this .array .forEach (function (value)
 			{
 				try
 				{
-					array [i] .toXMLStream (stream);
+					value .toVRMLStream (stream);
+	
+					stream .string += "\n";
+					stream .string += "\n";
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			});
+		},
+		toXMLStream: function (stream)
+		{
+			this .array .forEach (function (value)
+			{
+				try
+				{
+					value .toXMLStream (stream);
 	
 					stream .string += "\n";
 				}
 				catch (error)
-				{ }
-			}
+				{
+					console .log (error);
+				}
+			});
 		},
 	});
 

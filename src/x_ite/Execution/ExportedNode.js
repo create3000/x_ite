@@ -81,6 +81,25 @@ function (Fields,
 		{
 			return this .localNode;
 		},
+		toVRMLStream: function (stream)
+		{
+			var
+				generator = Generator .Get (stream),
+				localName = generator .LocalName (this .localNode .getValue ());
+
+			stream .string += generator .Indent ();
+			stream .string += "EXPORT";
+			stream .string += " ";
+			stream .string += localName;
+
+			if (this .exportedName !== localName)
+			{
+				stream .string += " ";
+				stream .string += "AS";
+				stream .string += " ";
+				stream .string += this .exportedName;
+			}
+		},
 		toXMLStream: function (stream)
 		{
 			var

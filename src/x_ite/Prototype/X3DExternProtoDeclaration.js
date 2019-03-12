@@ -216,6 +216,68 @@ function ($,
 		{
 			stream .string += Object .prototype .toString .call (this);
 		},
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
+			stream .string += "EXTERNPROTO";
+			stream .string += " ";
+			stream .string += this .getName ();
+			stream .string += " ";
+			stream .string += "[";
+
+			var
+				fieldTypeLength   = 0,
+				accessTypeLength  = 0,
+				userDefinedFields = this .getUserDefinedFields ();
+
+			if (userDefinedFields .size === 0)
+			{
+				stream .string += " ";
+			}
+			else
+			{
+				userDefinedFields .forEach (function (field)
+				{
+					fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
+					accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
+				});
+
+				stream .string += "\n";
+
+				generator .IncIndent ();
+
+				userDefinedFields .forEach (function (field)
+				{
+					this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
+					stream .string += "\n";
+				},
+				this);
+
+				generator .DecIndent ();
+
+				stream .string += generator .Indent ();
+			}
+
+			stream .string += "]";
+			stream .string += "\n";
+
+			stream .string += generator .Indent ();
+
+			this .url_ .toVRMLStream (stream);
+		},
+		toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
+			stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+			stream .string += " ";
+			stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+			stream .string += " ";
+			stream .string += field .getName ();
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);

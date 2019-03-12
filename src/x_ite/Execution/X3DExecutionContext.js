@@ -644,6 +644,73 @@ function (Fields,
 					throw new Error ("Viewpoint named '" + name + "' not found.");
 			}
 		},
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			generator .PushExecutionContext (this);
+			generator .EnterScope ();
+			generator .ImportedNodes (this .getImportedNodes ());
+
+			// Output extern protos
+
+			this .getExternProtoDeclarations () .toVRMLStream (stream);
+
+			// Output protos
+
+			this .getProtoDeclarations () .toVRMLStream (stream);
+
+			// Output root nodes
+
+			var rootNodes = this .getRootNodes ();
+
+			for (var i = 0, length = rootNodes .length; i < length; ++ i)
+			{
+				stream .string += generator .Indent ();
+
+				rootNodes [i] .toVRMLStream (stream);
+
+				stream .string += "\n";
+
+				if (i !== length - 1)
+					stream .string += "\n";
+			}
+		
+			// Output imported nodes
+
+			var importedNodes = this .getImportedNodes ();
+
+			if (importedNodes .size)
+			{
+				stream .string += "\n";
+
+				importedNodes .forEach (function (importedNode)
+				{
+					try
+					{
+						importedNode .toVRMLStream (stream);
+	
+						stream .string += "\n";
+					}
+					catch (error)
+					{ }
+				});
+			}
+
+			// Output routes
+
+			var routes = this .getRoutes ();
+
+			if (routes .length)
+			{
+				stream .string += "\n";
+
+				routes .toVRMLStream (stream);
+			}
+
+			generator .LeaveScope ();
+			generator .PopExecutionContext ();
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);

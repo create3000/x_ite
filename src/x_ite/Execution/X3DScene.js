@@ -190,7 +190,7 @@ function (Fields,
 		{
 			return this .metadata .get (name);
 		},
-		getMetadata: function ()
+		getMetaDatas: function ()
 		{
 			return this .metadata;
 		},
@@ -278,6 +278,120 @@ function (Fields,
 		{
 			stream .string += Object .prototype .toString .call (this);
 		},
+		toVRMLStream: function (stream)
+		{
+			var
+				generator            = Generator .Get (stream),
+				specificationVersion = this .getSpecificationVersion ();
+
+			if (specificationVersion === "2.0")
+				specificationVersion = "3.3";
+		
+			stream .string += "#X3D V";
+			stream .string += specificationVersion;
+			stream .string += " ";
+			stream .string += "utf8";
+			stream .string += " ";
+			stream .string += this .getBrowser () .name;
+			stream .string += " ";
+			stream .string += "V";
+			stream .string += this .getBrowser () .version;
+			stream .string += "\n";
+			stream .string += "\n";
+
+			var profile = this .getProfile ();
+
+			if (profile)
+			{
+				profile .toVRMLStream (stream);
+
+				stream .string += "\n";
+				stream .string += "\n";
+			}
+
+			var components = this .getComponents ();
+
+			if (components .length)
+			{
+				components .forEach (function (component)
+				{
+					component .toVRMLStream (stream);
+
+					stream .string += "\n";
+				});
+
+				stream .string += "\n";
+			}
+
+			// Units
+			{
+				var
+					empty = true,
+					units = this .getUnits ();
+
+				units .forEach (function (unit)
+				{
+					if (unit .conversionFactor !== 1)
+					{
+						empty = false;
+
+						unit .toVRMLStream (stream);
+	
+						stream .string += "\n";
+					}
+				});
+
+				if (! empty)
+					stream .string += "\n";
+			}
+
+			var metadata = this .getMetaDatas ();
+
+			if (metadata .size)
+			{
+				metadata .forEach (function (value, key)
+				{
+					stream .string += "META";
+					stream .string += " ";
+					stream .string += new Fields .SFString (key) .toString ();
+					stream .string += " ";
+					stream .string += new Fields .SFString (value) .toString ();
+					stream .string += "\n";
+				});
+
+				stream .string += "\n";
+			}
+
+			var exportedNodes = this .getExportedNodes ();
+
+			generator .PushExecutionContext (this);
+			generator .EnterScope ();
+			generator .ExportedNodes (exportedNodes);
+
+			X3DExecutionContext .prototype .toVRMLStream .call (this, stream);
+		
+			if (exportedNodes .size)
+			{
+				stream .string += "\n";
+
+				exportedNodes .forEach (function (exportedNode)
+				{
+					try
+					{
+						exportedNode .toVRMLStream (stream);
+	
+						stream .string += "\n";
+					}
+					catch (error)
+					{
+						console .log (error);
+					}
+				});
+			}
+
+			generator .LeaveScope ();
+			generator .PopExecutionContext ();
+		},
 		toXMLStream: function (stream)
 		{
 			var
@@ -335,7 +449,7 @@ function (Fields,
 				}
 			}
 
-			this .metadata .forEach (function (value, key)
+			this .getMetaDatas () .forEach (function (value, key)
 			{
 				stream .string += generator .Indent ();
 				stream .string += "<meta";
@@ -373,14 +487,16 @@ function (Fields,
 		
 			exportedNodes .forEach (function (exportedNode)
 			{
-				//try
+				try
 				{
 					exportedNode .toXMLStream (stream);
 
 					stream .string += "\n";
 				}
-				//catch (const X3DError &)
-				{ }
+				catch (error)
+				{
+					console .log (error);
+				}
 			});
 
 			generator .LeaveScope ();

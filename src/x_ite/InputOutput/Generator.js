@@ -142,6 +142,17 @@ function (X3DConstants)
 		},
 		ExportedNodes: function (exportedNodes)
 		{
+			var index = this .exportedNodesIndex [this .ExecutionContext () .getId ()];
+
+			exportedNodes .forEach (function (exportedNode)
+			{
+				try
+				{
+					index [exportedNode .getLocalNode () .getValue () .getId ()] = true;
+				}
+				catch (error)
+				{ }
+			});
 		},
 		ImportedNodes: function (importedNodes)
 		{

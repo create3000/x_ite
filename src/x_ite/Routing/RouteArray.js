@@ -98,21 +98,33 @@ define (function ()
 		{
 			return this .array;
 		},
-		toXMLStream: function (stream)
+		toVRMLStream: function (stream)
 		{
-			var array = this .array;
-
-			for (var i = 0, length = array .length; i < length; ++ i)
+			this .array .forEach (function (route)
 			{
 				try
 				{
-					array [i] .toXMLStream (stream);
+					route .toVRMLStream (stream);
 	
 					stream .string += "\n";
 				}
 				catch (error)
 				{ }
-			}
+			});
+		},
+		toXMLStream: function (stream)
+		{
+			this .array .forEach (function (route)
+			{
+				try
+				{
+					route .toXMLStream (stream);
+	
+					stream .string += "\n";
+				}
+				catch (error)
+				{ }
+			});
 		},
 	});
 

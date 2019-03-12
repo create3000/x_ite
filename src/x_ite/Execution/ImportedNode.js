@@ -189,6 +189,77 @@ function (Fields,
 				}
 			}
 		},
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			if (generator .ExistsNode (this .getInlineNode ()))
+			{
+				stream .string += generator .Indent ();
+				stream .string += "IMPORT";
+				stream .string += " ";
+				stream .string += generator .Name (this .getInlineNode ());
+				stream .string += ".";
+				stream .string += this .getExportedName ();
+
+				if (this .getImportedName () !== this .getExportedName ())
+				{
+					stream .string += " ";
+					stream .string += "AS";
+					stream .string += " ";
+					stream .string += this .getImportedName ();
+				}
+
+				try
+				{
+					generator .AddRouteNode (this);
+					generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
+				}
+				catch (error)
+				{
+					// Output unresolved routes.
+
+					this .routes .forEach (function (route)
+					{
+						var
+							sourceNode       = route .sourceNode,
+							sourceField      = route .sourceField,
+							destinationNode  = route .destinationNode,
+							destinationField = route .destinationField;
+
+						if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
+						{
+							if (sourceNode instanceof ImportedNode)
+								var sourceNodeName = sourceNode .getImportedName ();
+							else
+								var sourceNodeName = generator .Name (sourceNode);
+	
+							if (destinationNode instanceof ImportedNode)
+								var destinationNodeName = destinationNode .getImportedName ();
+							else
+								var destinationNodeName = generator .Name (destinationNode);
+	
+							stream .string += "\n";
+							stream .string += "\n";
+							stream .string += generator .Indent ();
+							stream .string += "ROUTE";
+							stream .string += " ";
+							stream .string += sourceNodeName;
+							stream .string += ".";
+							stream .string += sourceField;
+							stream .string += " ";
+							stream .string += "TO";
+							stream .string += " ";
+							stream .string += destinationNodeName;
+							stream .string += ".";
+							stream .string += destinationField;
+						}
+					});
+				}
+			}
+			else
+				throw new Error ("ImportedNode.toXMLStream: Inline node does not exist.");
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);

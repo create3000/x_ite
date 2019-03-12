@@ -122,6 +122,32 @@ function (Fields,
 		{
 			stream .string += Object .prototype .toString .call (this);
 		},
+		toVRMLStream: function (stream)
+		{
+			var
+				generator           = Generator .Get (stream),
+				sourceNodeName      = generator .LocalName (this ._sourceNode .getValue ()),
+				destinationNodeName = generator .LocalName (this ._destinationNode .getValue ());
+
+			stream .string += generator .Indent ();
+			stream .string += "ROUTE";
+			stream .string += " ";
+			stream .string += sourceNodeName;
+			stream .string += ".";
+			stream .string += this ._sourceField .getName ();
+
+			if (this ._sourceField .getAccessType () === X3DConstants .inputOutput)
+				stream .string += "_changed";
+
+			stream .string += " ";
+			stream .string += destinationNodeName;
+			stream .string += ".";
+
+			if (this ._destinationField .getAccessType () === X3DConstants .inputOutput)
+				stream .string += "set_";
+
+			stream .string += this ._destinationField .getName ();
+		},
 		toXMLStream: function (stream)
 		{
 			var
