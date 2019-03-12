@@ -140,6 +140,8 @@ function (Fields,
 				stream .string += "_changed";
 
 			stream .string += " ";
+			stream .string += "TO";
+			stream .string += " ";
 			stream .string += destinationNodeName;
 			stream .string += ".";
 

@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-646 */
+/* X_ITE v4.4.4a-647 */
 
 (function () {
 
@@ -13045,6 +13045,13 @@ function (X3DConstants)
 		{
 			this .indent = this .indent .substr (0, this .indent .length - this .indentChar .length);
 		},
+		PadRight: function (string, pad)
+		{
+			for (var i = 0, length = pad - string .length; i < length; ++ i)
+				string += " ";
+
+			return string;
+		},
 		PushExecutionContext: function (executionContext)
 		{
 			this .executionContextStack .push (executionContext);
@@ -13091,6 +13098,17 @@ function (X3DConstants)
 		},
 		ExportedNodes: function (exportedNodes)
 		{
+			var index = this .exportedNodesIndex [this .ExecutionContext () .getId ()];
+
+			exportedNodes .forEach (function (exportedNode)
+			{
+				try
+				{
+					index [exportedNode .getLocalNode () .getId ()] = true;
+				}
+				catch (error)
+				{ }
+			});
 		},
 		ImportedNodes: function (importedNodes)
 		{
@@ -13486,7 +13504,13 @@ function (Generator)
 			return stream .string;
 		},
 		toVRMLString: function ()
-		{ },
+		{
+			var stream = { string: "" };
+
+			this .toVRMLStream (stream);
+
+			return stream .string;
+		},
 		toXMLString: function ()
 		{
 			var stream = { string: "" };
@@ -14287,6 +14311,10 @@ function (X3DField,
 		{
 			stream .string += this .getValue () ? "TRUE" : "FALSE";
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			stream .string += this .getValue () ? "true" : "false";
@@ -14964,6 +14992,10 @@ function (Color3,
 		{
 			stream .string += this .getValue () .toString ();
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			this .toStream (stream);
@@ -15361,6 +15393,7 @@ function (X3DField,
 			};
 		})(),
 		toStream: SFColor .prototype .toStream,
+		toVRMLStream: SFColor .prototype .toVRMLStream,
 		toXMLStream: SFColor .prototype .toXMLStream,
 	});
 
@@ -15538,6 +15571,10 @@ function (X3DField,
 
 			stream .string += String (generator .ToUnit (category, this .getValue ()));
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			this .toStream (stream);
@@ -15647,6 +15684,10 @@ function (X3DField,
 
 			stream .string += String (generator .ToUnit (category, this .getValue ()));
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			this .toStream (stream);
@@ -15749,6 +15790,10 @@ function (X3DField,
 		toStream: function (stream, base)
 		{
 			stream .string += this .getValue () .toString (base);
+		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
 		},
 		toXMLStream: function (stream)
 		{
@@ -15973,6 +16018,10 @@ function (X3DField,
 				int .toXMLStream (stream);
 			}
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			this .toStream (stream);
@@ -16181,6 +16230,10 @@ function (X3DField)
 			{
 				stream .string += this .getValue () .toString ();
 			},
+			toVRMLStream: function (stream)
+			{
+				this .toStream (stream);
+			},
 			toXMLStream: function (stream)
 			{
 				this .toStream (stream);
@@ -16259,7 +16312,7 @@ function (X3DField,
 			{
 				return this .getValue () .equals (vector .getValue ());
 			},
-			isDefaultValue: function (vector)
+			isDefaultValue: function ()
 			{
 				return this .getValue () .equals (Type .Zero);
 			},
@@ -16329,6 +16382,10 @@ function (X3DField,
 				}
 
 				stream .string += String (generator .ToUnit (category, value [i]));
+			},
+			toVRMLStream: function (stream)
+			{
+				this .toStream (stream);
 			},
 			toXMLStream: function (stream)
 			{
@@ -21746,11 +21803,41 @@ function (X3DField,
  ******************************************************************************/
 
 
-define ('x_ite/Fields/SFNodeCache',[],function ()
+define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode','x_ite/Fields/SFNode'],function ()
 {
 "use strict";
 
-	return new WeakMap ();
+	var SFNodeCache = new WeakMap ();
+
+	SFNodeCache .add = function (baseNode)
+	{
+		var SFNode = require ("x_ite/Fields/SFNode");
+
+		var node = new SFNode (baseNode);
+
+		this .set (baseNode, node);
+
+		return node;
+	};
+
+	SFNodeCache .cache = function (baseNode)
+	{
+		var node = this .get (baseNode);
+
+		if (node)
+			return node;
+
+		var SFNode = require ("x_ite/Fields/SFNode");
+
+		// Always create new instance!
+		node = new SFNode (baseNode);
+
+		this .set (baseNode, node);
+
+		return node;
+	};
+
+	return SFNodeCache;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -22070,41 +22157,25 @@ function (X3DField,
 			var value = this .getValue ();
 
 			if (value)
-			{
-				var field = SFNodeCache .get (value);
-
-				if (field)
-					return field;
-
-				// Always create new instance!
-				field = new SFNode (value);
-
-				SFNodeCache .set (value, field);
-
-				return field;
-			}
+				return SFNodeCache .cache (value);
 
 			return null;	
 		},
 		toStream: function (stream)
 		{
-			var node = this .getValue ();
+			var value = this .getValue ();
 
-			if (node)
-				node .toStream (stream);
+			if (value)
+				value .toStream (stream);
 			else
 				stream .string += "NULL";
 		},
-		toVRMLString: function ()
-		{
-			
-		},
 		toVRMLStream: function (stream)
 		{
-			var node = this .getValue ();
+			var value = this .getValue ();
 
-			if (node)
-				node .toVRMLStream (stream);
+			if (value)
+				value .toVRMLStream (stream);
 			else
 				stream .string += "NULL";
 		},
@@ -22113,9 +22184,9 @@ function (X3DField,
 			var
 				stream    = { string: "" },
 				generator = Generator .Get (stream),
-				node      = this .getValue ();
+				value     = this .getValue ();
 
-			generator .PushExecutionContext (node .getExecutionContext ());
+			generator .PushExecutionContext (value .getExecutionContext ());
 
 			this .toXMLStream (stream);
 
@@ -22125,10 +22196,10 @@ function (X3DField,
 		},
 		toXMLStream: function (stream)
 		{
-			var node = this .getValue ();
+			var value = this .getValue ();
 
-			if (node)
-				node .toXMLStream (stream);
+			if (value)
+				value .toXMLStream (stream);
 			else
 				stream .string += "NULL";
 		},
@@ -22294,6 +22365,10 @@ function (SFVec3,
 			                   rotation .y + " " +
 			                   rotation .z + " " +
 			                   generator .ToUnit ("angle", rotation .angle);
+		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
 		},
 		toXMLStream: function (stream)
 		{
@@ -22487,6 +22562,10 @@ function (X3DField,
 		{
 			stream .string += '"'+ SFString .escape (this .getValue ()) + '"';
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			stream .string += Generator .Get (stream) .XMLEncode (this .getValue ());
@@ -22599,6 +22678,10 @@ function (X3DField,
 		toStream: function (stream)
 		{
 			stream .string += String (this .getValue ());
+		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
 		},
 		toXMLStream: function (stream)
 		{
@@ -23290,6 +23373,10 @@ function ($,
 					break;
 				}
 			}
+		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
 		},
 		toXMLStream: function (stream)
 		{
@@ -24065,6 +24152,10 @@ function (X3DArrayField,
 				}
 			}
 		},
+		toVRMLStream: function (stream)
+		{
+			this .toStream (stream);
+		},
 		toXMLStream: function (stream)
 		{
 			var
@@ -24351,6 +24442,106 @@ function (SFBool,
 			X3DObjectArrayField .prototype .removeChildObject .call (this, value);
 
 			value .removeClones (this ._cloneCount);
+		},
+		toStream: function (stream)
+		{
+			var
+				target    = this ._target,
+				array     = target .getValue (),
+				generator = Generator .Get (stream);
+
+			switch (array .length)
+			{
+				case 0:
+				{
+					stream .string += "[ ]";
+					break;
+				}
+				case 1:
+				{
+					generator .PushUnitCategory (target .getUnit ());
+
+					array [0] .toStream (stream);
+
+					generator .PopUnitCategory ();
+					break;
+				}
+				default:
+				{
+					generator .PushUnitCategory (target .getUnit ());
+
+					stream .string += "[\n";
+					generator .IncIndent ();
+				
+					for (var i = 0, length = array .length - 1; i < length; ++ i)
+					{
+						stream .string += generator .Indent ();
+						array [i] .toStream (stream);
+						stream .string += "\n";
+					}
+
+					stream .string += generator .Indent ();
+					array [length] .toStream (stream);
+					stream .string += "\n";
+
+					generator .DecIndent ();
+					stream .string += generator .Indent ();
+					stream .string += "]";
+
+					generator .PopUnitCategory ();
+					break;
+				}
+			}
+		},
+		toVRMLStream: function (stream)
+		{
+			var
+				target    = this ._target,
+				array     = target .getValue (),
+				generator = Generator .Get (stream);
+
+			switch (array .length)
+			{
+				case 0:
+				{
+					stream .string += "[ ]";
+					break;
+				}
+				case 1:
+				{
+					generator .EnterScope ();
+
+					array [0] .toVRMLStream (stream);
+
+					generator .LeaveScope ();
+					break;
+				}
+				default:
+				{
+					generator .EnterScope ();
+
+					stream .string += "[\n";
+					generator .IncIndent ();
+				
+					for (var i = 0, length = array .length - 1; i < length; ++ i)
+					{
+						stream .string += generator .Indent ();
+						array [i] .toVRMLStream (stream);
+						stream .string += "\n";
+					}
+
+					stream .string += generator .Indent ();
+					array [length] .toVRMLStream (stream);
+					stream .string += "\n";
+
+					generator .DecIndent ();
+					stream .string += generator .Indent ();
+					stream .string += "]";
+
+					generator .LeaveScope ();
+					break;
+				}
+			}
 		},
 		toXMLStream: function (stream)
 		{
@@ -25221,7 +25412,7 @@ function (X3DEventObject,
 					var namedNode = executionContext .getNamedNodes () .get (name);
 
 					if (namedNode)
-						return namedNode .getValue ();
+						return namedNode;
 				}
 				else
 				{
@@ -25621,6 +25812,231 @@ function (X3DEventObject,
 		toStream: function (stream)
 		{
 			stream .string += this .getTypeName () + " { }";
+		},
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			if (generator .IsSharedNode (this))
+			{
+				stream .string += "NULL";		
+				return;
+			}
+
+			generator .EnterScope ();
+
+			var name = generator .Name (this);
+
+			if (name .length)
+			{
+				if (generator .ExistsNode (this))
+				{
+					stream .string += "USE";
+					stream .string += " ";
+					stream .string += name;
+
+					generator .LeaveScope ();
+					return;
+				}
+			}
+
+			if (name .length)
+			{
+				generator .AddNode (this);
+
+				stream .string += "DEF";
+				stream .string += " ";
+				stream .string += name;
+				stream .string += " ";
+			}
+
+			stream .string += this .getTypeName ();
+			stream .string += " ";
+			stream .string += "{";
+
+			var
+				fieldTypeLength   = 0,
+				accessTypeLength  = 0,
+				userDefinedFields = this .getUserDefinedFields ();
+
+			if (this .hasUserDefinedFields ())
+			{
+				userDefinedFields .forEach (function (field)
+				{
+					fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
+					accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
+				});
+
+				if (userDefinedFields .size)
+				{
+					stream .string += "\n";
+					generator .IncIndent ();
+
+					userDefinedFields .forEach (function (field)
+					{
+						this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
+
+						stream .string += "\n";
+					},
+					this);
+
+					generator .DecIndent ();
+					stream .string += "\n";
+				}
+			}
+
+			var fields = this .getChangedFields ();
+
+			if (fields .length === 0)
+			{
+				if (userDefinedFields .size)
+					stream .string += generator .Indent ();
+				else
+					stream .string += " ";
+			}
+			else
+			{
+				if (userDefinedFields .size === 0)
+					stream .string += "\n";
+
+				generator .IncIndent ();
+
+				fields .forEach (function (field)
+				{
+					this .toVRMLStreamField (stream, field, fieldTypeLength, accessTypeLength);
+
+					stream .string += "\n";
+				},
+				this);
+
+				generator .DecIndent ();
+				stream .string += generator .Indent ();
+			}
+
+			stream .string += "}";
+
+			generator .LeaveScope ();
+		},
+		toVRMLStreamField: function (stream, field, fieldTypeLength, accessTypeLength)
+		{
+			var generator = Generator .Get (stream);
+
+			if (field .getReferences () .size === 0 || ! generator .ExecutionContext ())
+			{
+				if (field .isInitializable ())
+				{
+					stream .string += generator .Indent ();
+					stream .string += field .getName ();
+					stream .string += " ";
+
+					field .toVRMLStream (stream);
+				}
+			}
+			else
+			{
+				var
+					index                  = 0,
+					initializableReference = false;
+
+				field .getReferences () .forEach (function (reference)
+				{
+					initializableReference |= reference .isInitializable ();
+
+					// Output build in reference field
+
+					stream .string += generator .Indent ();
+					stream .string += field .getName ();
+					stream .string += " ";
+					stream .string += "IS";
+					stream .string += " ";
+					stream .string += reference .getName ();
+
+					++ index;
+
+					if (index !== field .getReferences () .size)
+						stream .string += "\n";
+				});
+
+				if (field .getAccessType () === X3DConstants .inputOutput && ! initializableReference && ! field .isDefaultValue ())
+				{
+					// Output build in field
+
+					stream .string += "\n";
+					stream .string += generator .Indent ();
+					stream .string += field .getName ();
+					stream .string += " ";
+
+					field .toVRMLStream (stream);				
+				}
+			}
+		},
+		toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+		{
+			var generator = Generator .Get (stream);
+
+			if (field .getReferences () .size === 0 || ! generator .ExecutionContext ())
+			{
+				stream .string += generator .Indent ();
+				stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+				stream .string += " ";
+				stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+				stream .string += " ";
+				stream .string += field .getName ();
+				
+				if (field .isInitializable ())
+				{
+					stream .string += " ";
+
+					field .toVRMLStream (stream);
+				}
+			}
+			else
+			{
+				var
+					index                  = 0,
+					initializableReference = false;
+
+				field .getReferences () .forEach (function (reference)
+				{
+					initializableReference |= reference .isInitializable ();
+
+					// Output user defined reference field
+
+					stream .string += generator .Indent ();
+					stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+					stream .string += " ";
+					stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+					stream .string += " ";
+					stream .string += field .getName ();
+					stream .string += " ";
+					stream .string += "IS";
+					stream .string += " ";
+					stream .string += reference .getName ();
+
+					++ index;
+
+					if (index !== field .getReferences () .size)
+						stream .string += "\n";
+				});
+
+				if (field .getAccessType () === X3DConstants .inputOutput && ! initializableReference && ! field .isDefaultValue ())
+				{
+					stream .string += "\n";
+					stream .string += generator .Indent ();
+					stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+					stream .string += " ";
+					stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+					stream .string += " ";
+					stream .string += field .getName ();
+
+					if (field .isInitializable ())
+					{
+						stream .string += " ";
+
+						field .toVRMLStream (stream);
+					}				
+				}
+			}
 		},
 		toXMLStream: function (stream)
 		{
@@ -30475,6 +30891,18 @@ function (Fields,
 	Object .assign (ComponentInfo .prototype,
 	{
 		constructor: ComponentInfo,
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += "COMPONENT";
+			stream .string += " ";
+			stream .string += this .name;
+			stream .string += " ";
+			stream .string += ":";
+			stream .string += " ";
+			stream .string += this .level;
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);
@@ -30610,21 +31038,38 @@ define ('x_ite/Configuration/X3DInfoArray',[],function ()
 		{
 			return this .array;
 		},
-		toXMLStream: function (stream)
+		toVRMLStream: function (stream)
 		{
-			var array = this .array;
-
-			for (var i = 0, length = array .length; i < length; ++ i)
+			this .array .forEach (function (value)
 			{
 				try
 				{
-					array [i] .toXMLStream (stream);
+					value .toVRMLStream (stream);
+	
+					stream .string += "\n";
+					stream .string += "\n";
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			});
+		},
+		toXMLStream: function (stream)
+		{
+			this .array .forEach (function (value)
+			{
+				try
+				{
+					value .toXMLStream (stream);
 	
 					stream .string += "\n";
 				}
 				catch (error)
-				{ }
-			}
+				{
+					console .log (error);
+				}
+			});
 		},
 	});
 
@@ -30905,6 +31350,77 @@ function (Fields,
 				}
 			}
 		},
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			if (generator .ExistsNode (this .getInlineNode ()))
+			{
+				stream .string += generator .Indent ();
+				stream .string += "IMPORT";
+				stream .string += " ";
+				stream .string += generator .Name (this .getInlineNode ());
+				stream .string += ".";
+				stream .string += this .getExportedName ();
+
+				if (this .getImportedName () !== this .getExportedName ())
+				{
+					stream .string += " ";
+					stream .string += "AS";
+					stream .string += " ";
+					stream .string += this .getImportedName ();
+				}
+
+				try
+				{
+					generator .AddRouteNode (this);
+					generator .AddImportedNode (this .getExportedNode () .getValue  (), this .getImportedName ());
+				}
+				catch (error)
+				{
+					// Output unresolved routes.
+
+					this .routes .forEach (function (route)
+					{
+						var
+							sourceNode       = route .sourceNode,
+							sourceField      = route .sourceField,
+							destinationNode  = route .destinationNode,
+							destinationField = route .destinationField;
+
+						if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
+						{
+							if (sourceNode instanceof ImportedNode)
+								var sourceNodeName = sourceNode .getImportedName ();
+							else
+								var sourceNodeName = generator .Name (sourceNode);
+	
+							if (destinationNode instanceof ImportedNode)
+								var destinationNodeName = destinationNode .getImportedName ();
+							else
+								var destinationNodeName = generator .Name (destinationNode);
+	
+							stream .string += "\n";
+							stream .string += "\n";
+							stream .string += generator .Indent ();
+							stream .string += "ROUTE";
+							stream .string += " ";
+							stream .string += sourceNodeName;
+							stream .string += ".";
+							stream .string += sourceField;
+							stream .string += " ";
+							stream .string += "TO";
+							stream .string += " ";
+							stream .string += destinationNodeName;
+							stream .string += ".";
+							stream .string += destinationField;
+						}
+					});
+				}
+			}
+			else
+				throw new Error ("ImportedNode.toXMLStream: Inline node does not exist.");
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);
@@ -30935,7 +31451,7 @@ function (Fields,
 				try
 				{
 					generator .AddRouteNode (this);
-					generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
+					generator .AddImportedNode (this .getExportedNode () .getValue (), this .getImportedName ());
 				}
 				catch (error)
 				{
@@ -31240,21 +31756,37 @@ define ('x_ite/Routing/RouteArray',[],function ()
 		{
 			return this .array;
 		},
-		toXMLStream: function (stream)
+		toVRMLStream: function (stream)
 		{
-			var array = this .array;
-
-			for (var i = 0, length = array .length; i < length; ++ i)
+			this .array .forEach (function (route)
 			{
 				try
 				{
-					array [i] .toXMLStream (stream);
+					route .toVRMLStream (stream);
 	
 					stream .string += "\n";
 				}
 				catch (error)
-				{ }
-			}
+				{
+					console .log (error);
+				}
+			});
+		},
+		toXMLStream: function (stream)
+		{
+			this .array .forEach (function (route)
+			{
+				try
+				{
+					route .toXMLStream (stream);
+	
+					stream .string += "\n";
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			});
 		},
 	});
 
@@ -31384,6 +31916,32 @@ function (Fields,
 		toStream: function (stream)
 		{
 			stream .string += Object .prototype .toString .call (this);
+		},
+		toVRMLStream: function (stream)
+		{
+			var
+				generator           = Generator .Get (stream),
+				sourceNodeName      = generator .LocalName (this ._sourceNode .getValue ()),
+				destinationNodeName = generator .LocalName (this ._destinationNode .getValue ());
+
+			stream .string += generator .Indent ();
+			stream .string += "ROUTE";
+			stream .string += " ";
+			stream .string += sourceNodeName;
+			stream .string += ".";
+			stream .string += this ._sourceField .getName ();
+
+			if (this ._sourceField .getAccessType () === X3DConstants .inputOutput)
+				stream .string += "_changed";
+
+			stream .string += " ";
+			stream .string += destinationNodeName;
+			stream .string += ".";
+
+			if (this ._destinationField .getAccessType () === X3DConstants .inputOutput)
+				stream .string += "set_";
+
+			stream .string += this ._destinationField .getName ();
 		},
 		toXMLStream: function (stream)
 		{
@@ -32552,12 +33110,8 @@ function (Fields,
 				var baseNode = new Type (this);
 	
 				baseNode .setup ();
-	
-				var node = new Fields .SFNode (baseNode);
 
-				SFNodeCache .set (baseNode, node);
-
-				return node;
+				return SFNodeCache .add (baseNode);
 			}
 		},
 		createProto: function (name, setup)
@@ -32604,12 +33158,13 @@ function (Fields,
 				throw new Error ("Couldn't update named node: node must be of type SFNode.");
 
 			name = String (name);
-			node = new Fields .SFNode (node instanceof Fields .SFNode ? node .getValue () : node);
 
-			if (! node .getValue ())
+			var baseNode = node instanceof Fields .SFNode ? node .getValue () : node;
+
+			if (! baseNode)
 				throw new Error ("Couldn't update named node: node IS NULL.");
 
-			if (node .getValue () .getExecutionContext () !== this)
+			if (baseNode .getExecutionContext () !== this)
 				throw new Error ("Couldn't update named node: node does not belong to this execution context.");
 
 			if (name .length === 0)
@@ -32617,14 +33172,14 @@ function (Fields,
 
 			// Remove named node.
 
-			this .removeNamedNode (node .getValue () .getName ());
+			this .removeNamedNode (baseNode .getName ());
 			this .removeNamedNode (name);
 
 			// Update named node.
 
-			node .getValue () .setName (name);
+			baseNode .setName (name);
 
-			this .namedNodes .set (name, node);
+			this .namedNodes .set (name, baseNode);
 		},
 		removeNamedNode: function (name)
 		{
@@ -32632,12 +33187,12 @@ function (Fields,
 		},
 		getNamedNode: function (name)
 		{
-			var node = this .namedNodes .get (name);
+			var baseNode = this .namedNodes .get (name);
 
-			if (! node)
-				throw new Error ("Named node '" + name + "' not found.");
+			if (baseNode)
+				return SFNodeCache .cache (baseNode);
 
-			return node .valueOf ();
+			throw new Error ("Named node '" + name + "' not found.");
 		},
 		getNamedNodes: function ()
 		{
@@ -32763,7 +33318,7 @@ function (Fields,
 				var importedNode = this .importedNodes .get (name);
 
 				if (importedNode)
-					return new Fields .SFNode (importedNode);
+					return SFNodeCache .cache (importedNode);
 
 				throw new Error ("Unknown named or imported node '" + name + "'.");
 			}
@@ -32987,6 +33542,73 @@ function (Fields,
 					throw new Error ("Viewpoint named '" + name + "' not found.");
 			}
 		},
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			generator .PushExecutionContext (this);
+			generator .EnterScope ();
+			generator .ImportedNodes (this .getImportedNodes ());
+
+			// Output extern protos
+
+			this .getExternProtoDeclarations () .toVRMLStream (stream);
+
+			// Output protos
+
+			this .getProtoDeclarations () .toVRMLStream (stream);
+
+			// Output root nodes
+
+			var rootNodes = this .getRootNodes ();
+
+			for (var i = 0, length = rootNodes .length; i < length; ++ i)
+			{
+				stream .string += generator .Indent ();
+
+				rootNodes [i] .toVRMLStream (stream);
+
+				stream .string += "\n";
+
+				if (i !== length - 1)
+					stream .string += "\n";
+			}
+
+			// Output imported nodes
+
+			var importedNodes = this .getImportedNodes ();
+
+			if (importedNodes .size)
+			{
+				stream .string += "\n";
+
+				importedNodes .forEach (function (importedNode)
+				{
+					try
+					{
+						importedNode .toVRMLStream (stream);
+	
+						stream .string += "\n";
+					}
+					catch (error)
+					{ }
+				});
+			}
+
+			// Output routes
+
+			var routes = this .getRoutes ();
+
+			if (routes .length)
+			{
+				stream .string += "\n";
+
+				routes .toVRMLStream (stream);
+			}
+
+			generator .LeaveScope ();
+			generator .PopExecutionContext ();
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);
@@ -33134,6 +33756,18 @@ function (Generator)
 	Object .assign (UnitInfo .prototype,
 	{
 		constructor: UnitInfo,
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += "UNIT";
+			stream .string += " ";
+			stream .string += this .category;
+			stream .string += " ";
+			stream .string += this .name;
+			stream .string += " ";
+			stream .string += this .conversionFactor;
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);
@@ -33299,7 +33933,7 @@ function (Fields,
 		X3DObject .call (this);
 
 		this .exportedName = exportedName;
-		this .localNode    = new Fields .SFNode (localNode);
+		this .localNode    = localNode;
 	}
 
 	ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
@@ -33317,11 +33951,30 @@ function (Fields,
 		{
 			return this .localNode;
 		},
+		toVRMLStream: function (stream)
+		{
+			var
+				generator = Generator .Get (stream),
+				localName = generator .LocalName (this .localNode);
+
+			stream .string += generator .Indent ();
+			stream .string += "EXPORT";
+			stream .string += " ";
+			stream .string += localName;
+
+			if (this .exportedName !== localName)
+			{
+				stream .string += " ";
+				stream .string += "AS";
+				stream .string += " ";
+				stream .string += this .exportedName;
+			}
+		},
 		toXMLStream: function (stream)
 		{
 			var
 				generator = Generator .Get (stream),
-				localName = generator .LocalName (this .localNode .getValue ());
+				localName = generator .LocalName (this .localNode);
 
 			stream .string += generator .Indent ();
 			stream .string += "<EXPORT";
@@ -33402,6 +34055,7 @@ define ('x_ite/Execution/X3DScene',[
 	"x_ite/Execution/ExportedNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
+	"x_ite/Fields/SFNodeCache",
 ],
 function (Fields,
           X3DExecutionContext,
@@ -33409,7 +34063,8 @@ function (Fields,
           UnitInfoArray,
           ExportedNode,
           X3DConstants,
-          Generator)
+          Generator,
+          SFNodeCache)
 {
 "use strict";
 
@@ -33537,7 +34192,7 @@ function (Fields,
 		{
 			return this .metadata .get (name);
 		},
-		getMetadata: function ()
+		getMetaDatas: function ()
 		{
 			return this .metadata;
 		},
@@ -33577,7 +34232,7 @@ function (Fields,
 			var exportedNode = this .exportedNodes .get (exportedName);
 
 			if (exportedNode)
-				return exportedNode .getLocalNode () .valueOf ();
+				return SFNodeCache .cache (exportedNode .getLocalNode ());
 
 			throw new Error ("Exported node '" + exportedName + "' not found.");
 		},
@@ -33624,6 +34279,110 @@ function (Fields,
 		toStream: function (stream)
 		{
 			stream .string += Object .prototype .toString .call (this);
+		},
+		toVRMLStream: function (stream)
+		{
+			var
+				generator            = Generator .Get (stream),
+				specificationVersion = this .getSpecificationVersion ();
+
+			if (specificationVersion === "2.0")
+				specificationVersion = "3.3";
+		
+			stream .string += "#X3D V";
+			stream .string += specificationVersion;
+			stream .string += " ";
+			stream .string += "utf8";
+			stream .string += " ";
+			stream .string += this .getBrowser () .name;
+			stream .string += " ";
+			stream .string += "V";
+			stream .string += this .getBrowser () .version;
+			stream .string += "\n";
+			stream .string += "\n";
+
+			var profile = this .getProfile ();
+
+			if (profile)
+			{
+				profile .toVRMLStream (stream);
+
+				stream .string += "\n";
+				stream .string += "\n";
+			}
+
+			this .getComponents () .toVRMLStream (stream);
+
+			// Units
+			{
+				var
+					empty = true,
+					units = this .getUnits ();
+
+				for (var i = 0, length = units .length; i < length; ++ i)
+				{
+					var unit = units [i];
+
+					if (unit .conversionFactor !== 1)
+					{
+						empty = false;
+
+						unit .toVRMLStream (stream);
+	
+						stream .string += "\n";
+					}
+				}
+
+				if (! empty)
+					stream .string += "\n";
+			}
+
+			var metadata = this .getMetaDatas ();
+
+			if (metadata .size)
+			{
+				metadata .forEach (function (value, key)
+				{
+					stream .string += "META";
+					stream .string += " ";
+					stream .string += new Fields .SFString (key) .toString ();
+					stream .string += " ";
+					stream .string += new Fields .SFString (value) .toString ();
+					stream .string += "\n";
+				});
+
+				stream .string += "\n";
+			}
+
+			var exportedNodes = this .getExportedNodes ();
+
+			generator .PushExecutionContext (this);
+			generator .EnterScope ();
+			generator .ExportedNodes (exportedNodes);
+
+			X3DExecutionContext .prototype .toVRMLStream .call (this, stream);
+		
+			if (exportedNodes .size)
+			{
+				stream .string += "\n";
+
+				exportedNodes .forEach (function (exportedNode)
+				{
+					try
+					{
+						exportedNode .toVRMLStream (stream);
+	
+						stream .string += "\n";
+					}
+					catch (error)
+					{
+						console .log (error);
+					}
+				});
+			}
+
+			generator .LeaveScope ();
+			generator .PopExecutionContext ();
 		},
 		toXMLStream: function (stream)
 		{
@@ -33682,7 +34441,7 @@ function (Fields,
 				}
 			}
 
-			this .metadata .forEach (function (value, key)
+			this .getMetaDatas () .forEach (function (value, key)
 			{
 				stream .string += generator .Indent ();
 				stream .string += "<meta";
@@ -33720,14 +34479,16 @@ function (Fields,
 		
 			exportedNodes .forEach (function (exportedNode)
 			{
-				//try
+				try
 				{
 					exportedNode .toXMLStream (stream);
 
 					stream .string += "\n";
 				}
-				//catch (const X3DError &)
-				{ }
+				catch (error)
+				{
+					console .log (error);
+				}
 			});
 
 			generator .LeaveScope ();
@@ -34596,6 +35357,10 @@ function (Fields,
 				}
 			}
 		},
+		toVRMLStream: function (stream)
+		{
+			X3DNode .prototype .toVRMLStream .call (this, stream);
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);
@@ -34919,14 +35684,12 @@ function (Fields,
 
 
 define ('x_ite/Prototype/X3DProtoDeclarationNode',[
-	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Fields/SFNodeCache",
 ],
-function (Fields,
-          X3DNode,
+function (X3DNode,
           X3DPrototypeInstance,
           X3DConstants,
           SFNodeCache)
@@ -34957,11 +35720,7 @@ function (Fields,
 	
 				instance .setup ();
 	
-				var node = new Fields .SFNode (instance);
-
-				SFNodeCache .set (instance, node);
-
-				return node;
+				return SFNodeCache .add (instance);
 			}
 		},
 		newInstance: function ()
@@ -35191,6 +35950,68 @@ function ($,
 		{
 			stream .string += Object .prototype .toString .call (this);
 		},
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
+			stream .string += "EXTERNPROTO";
+			stream .string += " ";
+			stream .string += this .getName ();
+			stream .string += " ";
+			stream .string += "[";
+
+			var
+				fieldTypeLength   = 0,
+				accessTypeLength  = 0,
+				userDefinedFields = this .getUserDefinedFields ();
+
+			if (userDefinedFields .size === 0)
+			{
+				stream .string += " ";
+			}
+			else
+			{
+				userDefinedFields .forEach (function (field)
+				{
+					fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
+					accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
+				});
+
+				stream .string += "\n";
+
+				generator .IncIndent ();
+
+				userDefinedFields .forEach (function (field)
+				{
+					this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
+					stream .string += "\n";
+				},
+				this);
+
+				generator .DecIndent ();
+
+				stream .string += generator .Indent ();
+			}
+
+			stream .string += "]";
+			stream .string += "\n";
+
+			stream .string += generator .Indent ();
+
+			this .url_ .toVRMLStream (stream);
+		},
+		toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
+			stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+			stream .string += " ";
+			stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+			stream .string += " ";
+			stream .string += field .getName ();
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);
@@ -35418,6 +36239,88 @@ function ($,
 		toStream: function (stream)
 		{
 			stream .string += Object .prototype .toString .call (this);
+		},
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
+			stream .string += "PROTO";
+			stream .string += " ";
+			stream .string += this .getName ();
+			stream .string += " ";
+			stream .string += "[";
+
+			generator .EnterScope ();
+
+			var
+				fieldTypeLength   = 0,
+				accessTypeLength  = 0,
+				userDefinedFields = this .getUserDefinedFields ();
+
+			if (userDefinedFields .size === 0)
+			{
+				stream .string += " ";
+			}
+			else
+			{
+				userDefinedFields .forEach (function (field)
+				{
+					fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
+					accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
+				});
+
+				stream .string += "\n";
+
+				generator .IncIndent ();
+
+				userDefinedFields .forEach (function (field)
+				{
+					this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
+					stream .string += "\n";
+				},
+				this);
+
+				generator .DecIndent ();
+
+				stream .string += generator .Indent ();
+			}
+
+			generator .LeaveScope ();
+
+			stream .string += "]";
+			stream .string += "\n";
+
+			stream .string += generator .Indent ();
+			stream .string += "{";
+			stream .string += "\n";
+
+			generator .IncIndent ();
+
+			X3DExecutionContext .prototype .toVRMLStream .call (this, stream);
+
+			generator .DecIndent ();
+
+			stream .string += generator .Indent ();
+			stream .string += "}";
+		},
+		toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
+			stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+			stream .string += " ";
+			stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+			stream .string += " ";
+			stream .string += field .getName ();
+
+			if (field .isInitializable ())
+			{
+				stream .string += " ";
+
+				field .toVRMLStream (stream);
+			}
 		},
 		toXMLStream: function (stream)
 		{
@@ -102787,8 +103690,16 @@ define ('x_ite/Configuration/ProfileInfo',[],function ()
 	Object .assign (ProfileInfo .prototype,
 	{
 		constructor: ProfileInfo,
+		toVRMLStream: function (stream)
+		{
+			stream .string += "PROFILE";
+			stream .string += " ";
+			stream .string += this .name;
+		},
 		toXMLStream: function (stream)
-		{ },
+		{
+			stream .string += this .name;
+		},
 	});
 
 	return ProfileInfo;

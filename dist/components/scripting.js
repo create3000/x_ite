@@ -393,15 +393,13 @@ function ($,
 
 			function SFNode (vrmlSyntax)
 			{
-				var scene = browser .createX3DFromString (String (vrmlSyntax));
+				var
+					scene     = browser .createX3DFromString (String (vrmlSyntax)),
+					rootNodes = scene .getRootNodes ();
 
-				if (scene .getRootNodes () .length && scene .getRootNodes () [0])
+				if (rootNodes .length && rootNodes [0])
 				{
-					var node = Fields .SFNode .call (this, scene .getRootNodes () [0] .getValue ());
-
-					SFNodeCache .set (node .getValue (), node);
-
-					return node;
+					return SFNodeCache .add (rootNodes [0] .getValue ());
 				}
 
 				throw new Error ("SFNode.new: invalid argument, must be 'string' is 'undefined'.");

@@ -251,6 +251,11 @@ X3D (function ()
 		console .log (X3D .getBrowser ("#browser") .currentScene .toXMLString ());
 	}
 
+	function toVRMLString ()
+	{
+		console .log (X3D .getBrowser ("#browser") .currentScene .toVRMLString ());
+	}
+
 	var
 		Browser   = X3D .getBrowser ("#browser"),
 		bookmarks = new Bookmarks (Browser, $(".examples-box"));
@@ -261,7 +266,8 @@ X3D (function ()
 	$(".version") .text (Browser .name + " v" + Browser .version);
 	$(".location-entry") .keydown (function (event) { if (event .key == "Enter") loadURL (); });
 	$(".location-go") .click (loadURL);
-	$(".print-button") .click (toXMLString);
+	$(".print-xml") .click (toXMLString);
+	$(".print-vrml") .click (toVRMLString);
 },
 function (error)
 {
@@ -293,7 +299,7 @@ function (error)
 					<button class="location-go">Load URL</button>
 				</div>
 				<div class="buttons">
-					<a class="print-button" href="#">print</a>
+					<a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a>
 				</div>
 				<div class="links min-links">
 					<a href="src/x_ite.html">src/x_ite.html</a><a href="http://rawgit.com/create3000/x_ite/master/x_ite.min.html">github</a>
