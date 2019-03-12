@@ -284,7 +284,7 @@ function (X3DEventObject,
 					var namedNode = executionContext .getNamedNodes () .get (name);
 
 					if (namedNode)
-						return namedNode .getValue ();
+						return namedNode;
 				}
 				else
 				{

@@ -109,7 +109,9 @@ define (function ()
 					stream .string += "\n";
 				}
 				catch (error)
-				{ }
+				{
+					console .log (error);
+				}
 			});
 		},
 		toXMLStream: function (stream)
@@ -123,7 +125,9 @@ define (function ()
 					stream .string += "\n";
 				}
 				catch (error)
-				{ }
+				{
+					console .log (error);
+				}
 			});
 		},
 	});

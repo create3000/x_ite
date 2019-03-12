@@ -213,7 +213,7 @@ function (Fields,
 				try
 				{
 					generator .AddRouteNode (this);
-					generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
+					generator .AddImportedNode (this .getExportedNode () .getValue  (), this .getImportedName ());
 				}
 				catch (error)
 				{
@@ -290,7 +290,7 @@ function (Fields,
 				try
 				{
 					generator .AddRouteNode (this);
-					generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
+					generator .AddImportedNode (this .getExportedNode () .getValue (), this .getImportedName ());
 				}
 				catch (error)
 				{

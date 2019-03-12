@@ -324,19 +324,7 @@ function (Fields,
 				stream .string += "\n";
 			}
 
-			var components = this .getComponents ();
-
-			if (components .length)
-			{
-				components .forEach (function (component)
-				{
-					component .toVRMLStream (stream);
-
-					stream .string += "\n";
-				});
-
-				stream .string += "\n";
-			}
+			this .getComponents () .toVRMLStream (stream);
 
 			// Units
 			{
@@ -344,8 +332,10 @@ function (Fields,
 					empty = true,
 					units = this .getUnits ();
 
-				units .forEach (function (unit)
+				for (var i = 0, length = units .length; i < length; ++ i)
 				{
+					var unit = units [i];
+
 					if (unit .conversionFactor !== 1)
 					{
 						empty = false;
@@ -354,7 +344,7 @@ function (Fields,
 	
 						stream .string += "\n";
 					}
-				});
+				}
 
 				if (! empty)
 					stream .string += "\n";
