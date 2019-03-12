@@ -307,6 +307,10 @@ function (Fields,
 				}
 			}
 		},
+		toVRMLStream: function (stream)
+		{
+			X3DNode .prototype .toVRMLStream .call (this, stream);
+		},
 		toXMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);

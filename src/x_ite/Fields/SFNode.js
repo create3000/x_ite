@@ -312,28 +312,28 @@ function (X3DField,
 		},
 		valueOf: function ()
 		{
-			var baseNode = this .getValue ();
+			var value = this .getValue ();
 
-			if (baseNode)
-				return SFNodeCache .cache (baseNode);
+			if (value)
+				return SFNodeCache .cache (value);
 
 			return null;	
 		},
 		toStream: function (stream)
 		{
-			var node = this .getValue ();
+			var value = this .getValue ();
 
-			if (node)
-				node .toStream (stream);
+			if (value)
+				value .toStream (stream);
 			else
 				stream .string += "NULL";
 		},
 		toVRMLStream: function (stream)
 		{
-			var node = this .getValue ();
+			var value = this .getValue ();
 
-			if (node)
-				node .toVRMLStream (stream);
+			if (value)
+				value .toVRMLStream (stream);
 			else
 				stream .string += "NULL";
 		},
@@ -342,9 +342,9 @@ function (X3DField,
 			var
 				stream    = { string: "" },
 				generator = Generator .Get (stream),
-				node      = this .getValue ();
+				value     = this .getValue ();
 
-			generator .PushExecutionContext (node .getExecutionContext ());
+			generator .PushExecutionContext (value .getExecutionContext ());
 
 			this .toXMLStream (stream);
 
@@ -354,10 +354,10 @@ function (X3DField,
 		},
 		toXMLStream: function (stream)
 		{
-			var node = this .getValue ();
+			var value = this .getValue ();
 
-			if (node)
-				node .toXMLStream (stream);
+			if (value)
+				value .toXMLStream (stream);
 			else
 				stream .string += "NULL";
 		},

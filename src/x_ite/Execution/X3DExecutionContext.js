@@ -672,7 +672,7 @@ function (Fields,
 				if (i !== length - 1)
 					stream .string += "\n";
 			}
-		
+
 			// Output imported nodes
 
 			var importedNodes = this .getImportedNodes ();
