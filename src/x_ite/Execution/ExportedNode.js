@@ -63,7 +63,7 @@ function (Fields,
 		X3DObject .call (this);
 
 		this .exportedName = exportedName;
-		this .localNode    = new Fields .SFNode (localNode);
+		this .localNode    = localNode;
 	}
 
 	ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
@@ -85,7 +85,7 @@ function (Fields,
 		{
 			var
 				generator = Generator .Get (stream),
-				localName = generator .LocalName (this .localNode .getValue ());
+				localName = generator .LocalName (this .localNode);
 
 			stream .string += generator .Indent ();
 			stream .string += "EXPORT";
@@ -104,7 +104,7 @@ function (Fields,
 		{
 			var
 				generator = Generator .Get (stream),
-				localName = generator .LocalName (this .localNode .getValue ());
+				localName = generator .LocalName (this .localNode);
 
 			stream .string += generator .Indent ();
 			stream .string += "<EXPORT";

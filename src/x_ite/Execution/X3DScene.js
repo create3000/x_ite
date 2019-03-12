@@ -55,6 +55,7 @@ define ([
 	"x_ite/Execution/ExportedNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
+	"x_ite/Fields/SFNodeCache",
 ],
 function (Fields,
           X3DExecutionContext,
@@ -62,7 +63,8 @@ function (Fields,
           UnitInfoArray,
           ExportedNode,
           X3DConstants,
-          Generator)
+          Generator,
+          SFNodeCache)
 {
 "use strict";
 
@@ -230,7 +232,20 @@ function (Fields,
 			var exportedNode = this .exportedNodes .get (exportedName);
 
 			if (exportedNode)
-				return exportedNode .getLocalNode () .valueOf ();
+			{
+				var
+					baseNode = exportedNode .getLocalNode (),
+					node     = SFNodeCache .get (baseNode);
+
+				if (node)
+					return node;
+
+				node = new Fields .SFNode (baseNode);
+
+				SFNodeCache .set (baseNode, node);
+
+				return node;
+			}
 
 			throw new Error ("Exported node '" + exportedName + "' not found.");
 		},

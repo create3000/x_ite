@@ -261,12 +261,13 @@ function (Fields,
 				throw new Error ("Couldn't update named node: node must be of type SFNode.");
 
 			name = String (name);
-			node = new Fields .SFNode (node instanceof Fields .SFNode ? node .getValue () : node);
 
-			if (! node .getValue ())
+			var baseNode = node instanceof Fields .SFNode ? node .getValue () : node;
+
+			if (! baseNode)
 				throw new Error ("Couldn't update named node: node IS NULL.");
 
-			if (node .getValue () .getExecutionContext () !== this)
+			if (baseNode .getExecutionContext () !== this)
 				throw new Error ("Couldn't update named node: node does not belong to this execution context.");
 
 			if (name .length === 0)
@@ -274,14 +275,14 @@ function (Fields,
 
 			// Remove named node.
 
-			this .removeNamedNode (node .getValue () .getName ());
+			this .removeNamedNode (baseNode .getName ());
 			this .removeNamedNode (name);
 
 			// Update named node.
 
-			node .getValue () .setName (name);
+			baseNode .setName (name);
 
-			this .namedNodes .set (name, node);
+			this .namedNodes .set (name, baseNode);
 		},
 		removeNamedNode: function (name)
 		{
@@ -289,12 +290,23 @@ function (Fields,
 		},
 		getNamedNode: function (name)
 		{
-			var node = this .namedNodes .get (name);
+			var baseNode = this .namedNodes .get (name);
 
-			if (! node)
-				throw new Error ("Named node '" + name + "' not found.");
+			if (baseNode)
+			{
+				var node = SFNodeCache .get (baseNode);
 
-			return node .valueOf ();
+				if (node)
+					return node;
+
+				node = new Fields .SFNode (baseNode);
+
+				SFNodeCache .set (baseNode, node);
+
+				return node;
+			}
+
+			throw new Error ("Named node '" + name + "' not found.");
 		},
 		getNamedNodes: function ()
 		{

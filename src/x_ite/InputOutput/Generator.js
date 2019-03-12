@@ -148,7 +148,7 @@ function (X3DConstants)
 			{
 				try
 				{
-					index [exportedNode .getLocalNode () .getValue () .getId ()] = true;
+					index [exportedNode .getLocalNode () .getId ()] = true;
 				}
 				catch (error)
 				{ }
