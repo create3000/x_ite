@@ -289,6 +289,7 @@ function (Fields,
 			}
 			else
 			{
+				// Must be set to zero in case of multiple lights.
 				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
 			}
 		},

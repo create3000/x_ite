@@ -195,7 +195,7 @@ function (Fields,
 				var
 					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
 					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
-					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),
+					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),          // Result not used, but arguments.
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
@@ -275,6 +275,7 @@ function (Fields,
 			}
 			else
 			{
+				// Must be set to zero in case of multiple lights.
 				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
 			}
 		},
