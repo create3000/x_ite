@@ -78,17 +78,17 @@ function (Fields,
 
 		this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
-		this .specificationVersion = "3.3";
-		this .encoding             = "SCRIPTED";
-		this .profile              = null;
-		this .components           = new ComponentInfoArray (this .getBrowser ());
-		this .url                  = new URI (window .location);
-		this .unitArray            = new UnitInfoArray ();
+		this ._specificationVersion = "3.3";
+		this ._encoding             = "SCRIPTED";
+		this ._profile              = null;
+		this ._components           = new ComponentInfoArray (this .getBrowser ());
+		this ._url                  = new URI (window .location);
+		this ._units                = new UnitInfoArray ();
 
-		this .unitArray .add ("angle",  new UnitInfo ("angle",  "radian",   1));
-		this .unitArray .add ("force",  new UnitInfo ("force",  "newton",   1));
-		this .unitArray .add ("length", new UnitInfo ("length", "metre",    1));
-		this .unitArray .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
+		this ._units .add ("angle",  new UnitInfo ("angle",  "radian",   1));
+		this ._units .add ("force",  new UnitInfo ("force",  "newton",   1));
+		this ._units .add ("length", new UnitInfo ("length", "metre",    1));
+		this ._units .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
 		this .metadata      = new Map ();
 		this .exportedNodes = new Map ();
@@ -114,41 +114,45 @@ function (Fields,
 
 			return this .getExecutionContext () .getScene ();
 		},
+		setSpecificationVersion: function (specificationVersion)
+		{
+			this ._specificationVersion = specificationVersion;
+		},
 		getSpecificationVersion: function ()
 		{
-			return this .specificationVersion;
+			return this ._specificationVersion;
 		},
-		setEncoding: function (value)
+		setEncoding: function (encoding)
 		{
-			this .encoding = value;
+			this ._encoding = encoding;
 		},
 		getEncoding: function ()
 		{
-			return this .encoding;
+			return this ._encoding;
 		},
 		setURL: function (url)
 		{
-			this .url = url;
+			this ._url = url;
 		},
 		getURL: function ()
 		{
-			return this .url;
+			return this ._url;
 		},
 		setProfile: function (profile)
 		{
-			this .profile = profile;
+			this ._profile = profile;
 		},
 		getProfile: function ()
 		{
-			return this .profile;
+			return this ._profile;
 		},
 		addComponent: function (component)
 		{
-			this .components .add (component .name, component);
+			this ._components .add (component .name, component);
 		},
 		getComponents: function ()
 		{
-			return this .components;
+			return this ._components;
 		},
 		getProviderUrls: (function ()
 		{
@@ -185,7 +189,7 @@ function (Fields,
 		{
 			// Private function.
 
-			var unit = this .unitArray .get (category);
+			var unit = this ._units .get (category);
 
 			if (! unit)
 				return;
@@ -195,7 +199,7 @@ function (Fields,
 		},
 		getUnits: function ()
 		{
-			return this .unitArray;
+			return this ._units;
 		},
 		fromUnit: function (category, value)
 		{

@@ -111,14 +111,6 @@ function ($,
 		{
 			return this .loadState_ .getValue ();
 		},
-		fromUnit: function (category, value)
-		{
-			return this .getExecutionContext () .fromUnit (category, value);
-		},
-		toUnit: function (category, value)
-		{
-			return this .getExecutionContext () .toUnit (category, value);
-		},
 		hasUserDefinedFields: function ()
 		{
 			return true;

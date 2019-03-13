@@ -175,7 +175,7 @@ function ($,
 			var specificationVersion = xmlElement .getAttribute ("version");
 
 			if (specificationVersion)
-				this .getScene () .specificationVersion = specificationVersion;
+				this .getScene () .setSpecificationVersion (specificationVersion);
 
 			// Process child nodes
 

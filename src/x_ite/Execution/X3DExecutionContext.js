@@ -137,10 +137,6 @@ function (Fields,
 		{
 			return this .getExecutionContext () .getSpecificationVersion ();
 		},
-		setEncoding: function (value)
-		{
-			this .getExecutionContext () .setEncoding (value);
-		},
 		getEncoding: function ()
 		{
 			return this .getExecutionContext () .getEncoding ();
@@ -149,29 +145,25 @@ function (Fields,
 		{
 			return this .getURL () .location;
 		},
-		setURL: function (url)
-		{
-			this .getExecutionContext () .setURL (url);
-		},
 		getURL: function ()
 		{
 			return this .getExecutionContext () .getURL ();
-		},
-		setProfile: function (profile)
-		{
-			this .getExecutionContext () .setProfile (profile);
 		},
 		getProfile: function ()
 		{
 			return this .getExecutionContext () .getProfile ();
 		},
-		addComponent: function (component)
-		{
-			this .getExecutionContext () .addComponent (component);
-		},
 		getComponents: function ()
 		{
 			return this .getExecutionContext () .getComponents ();
+		},
+		fromUnit: function (category, value)
+		{
+			return this .getExecutionContext () .fromUnit (category, value);
+		},
+		toUnit: function (category, value)
+		{
+			return this .getExecutionContext () .toUnit (category, value);
 		},
 		getUnits: function ()
 		{
@@ -749,6 +741,34 @@ function (Fields,
 			generator .LeaveScope ();
 			generator .PopExecutionContext ();
 		},
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",
+	{
+		get: function () { return this .getSpecificationVersion (); },
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "encoding",
+	{
+		get: function () { return this .getEncoding (); },
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "profile",
+	{
+		get: function () { return this .getProfile (); },
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "components",
+	{
+		get: function () { return this .getComponents (); },
+		enumerable: true,
+		configurable: false
 	});
 
 	Object .defineProperty (X3DExecutionContext .prototype, "worldURL",

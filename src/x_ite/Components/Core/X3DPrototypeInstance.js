@@ -225,13 +225,17 @@ function (Fields,
 		{
 			return this .protoNode .getProtoDeclaration () .getEncoding ();
 		},
-		setURL: function (url)
-		{
-			return this .protoNode .getProtoDeclaration () .setURL (url);
-		},
 		getURL: function ()
 		{
 			return this .protoNode .getProtoDeclaration () .getURL ();
+		},
+		getProfile: function ()
+		{
+			return this .protoNode .getProtoDeclaration () .getProfile ();
+		},
+		getComponents: function ()
+		{
+			return this .protoNode .getProtoDeclaration () .getComponents ();
 		},
 		fromUnit: function (category, value)
 		{
@@ -240,6 +244,10 @@ function (Fields,
 		toUnit: function (category, value)
 		{
 			return this .protoNode .getProtoDeclaration () .toUnit (category, value);
+		},
+		getUnits: function ()
+		{
+			return this .protoNode .getProtoDeclaration () .getUnits ();
 		},
 		getInnerNode: function ()
 		{

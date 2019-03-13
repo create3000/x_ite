@@ -515,8 +515,8 @@ function (Fields,
 
 			if (result)
 			{
-				this .getScene () .specificationVersion = result [2];
-				this .getScene () .encoding             = "VRML";
+				this .getScene () .setSpecificationVersion (result [2]);
+				this .getScene () .setEncoding             ("VRML");
 				return true;
 			}
 
