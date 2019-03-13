@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-653 */
+/* X_ITE v4.4.4a-654 */
 
 (function () {
 
@@ -30865,348 +30865,6 @@ function ($,
  ******************************************************************************/
 
 
-define ('x_ite/Configuration/ComponentInfo',[
-	"x_ite/Fields",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/InputOutput/Generator",
-],
-function (Fields,
-          X3DConstants,
-          Generator)
-{
-"use strict";
-
-	function ComponentInfo (name, level, title, providerUrl)
-	{
-		this .name        = name;
-		this .level       = level;
-		this .title       = title;
-		this .providerUrl = providerUrl;
-
-		Object .preventExtensions (this);
-		Object .freeze (this);
-		Object .seal (this);
-	}
-
-	Object .assign (ComponentInfo .prototype,
-	{
-		constructor: ComponentInfo,
-		toVRMLStream: function (stream)
-		{
-			var generator = Generator .Get (stream);
-
-			stream .string += "COMPONENT";
-			stream .string += " ";
-			stream .string += this .name;
-			stream .string += " ";
-			stream .string += ":";
-			stream .string += " ";
-			stream .string += this .level;
-		},
-		toXMLStream: function (stream)
-		{
-			var generator = Generator .Get (stream);
-
-			stream .string += generator .Indent ();
-			stream .string += "<component";
-			stream .string += " ";
-			stream .string += "name='";
-			stream .string += this .name;
-			stream .string += "'";
-			stream .string += " ";
-			stream .string += "level='";
-			stream .string += this .level;
-			stream .string += "'";
-			stream .string += "/>";
-		},
-	});
-
-	return ComponentInfo;
-});
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Configuration/X3DInfoArray',[],function ()
-{
-"use strict";
-
-	var handler =
-	{
-		get: function (target, key)
-		{
-			var value = target [key];
-
-			if (value !== undefined)
-				return value;
-
-			value = target .array [key];
-
-			if (value !== undefined)
-				return value;
-
-			return target .index .get (key);
-		},
-		set: function (target, key, value)
-		{
-			return false;
-		},
-		has: function (target, key)
-		{
-			if (Number .isInteger (+key))
-				return key < target .array .length;
-
-			return key in target;
-		},
-		enumerate: function (target)
-		{
-			var indices = [ ];
-
-			for (var i = 0, length = target .array .length; i < length; ++ i)
-				array .push (i);
-
-			return indices [Symbol .iterator] ();
-		},
-	};
-
-	function X3DInfoArray ()
-	{
-		this .array = [ ];
-		this .index = new Map ();
-
-		return new Proxy (this, handler);
-	}
-
-	Object .assign (X3DInfoArray .prototype,
-	{
-		constructor: X3DInfoArray,
-		add: function (key, value)
-		{
-			this .array .push (value);
-			this .index .set (key, value);
-		},
-		get: function (key)
-		{
-			return this .index .get (key);
-		},
-		getValue: function ()
-		{
-			return this .array;
-		},
-		toVRMLStream: function (stream)
-		{
-			this .array .forEach (function (value)
-			{
-				try
-				{
-					value .toVRMLStream (stream);
-	
-					stream .string += "\n";
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			});
-		},
-		toXMLStream: function (stream)
-		{
-			this .array .forEach (function (value)
-			{
-				try
-				{
-					value .toXMLStream (stream);
-	
-					stream .string += "\n";
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			});
-		},
-	});
-
-	return X3DInfoArray;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Configuration/ComponentInfoArray',[
-	"x_ite/Configuration/ComponentInfo",
-	"x_ite/Configuration/X3DInfoArray",
-],
-function (ComponentInfo,
-          X3DInfoArray)
-{
-"use strict";
-
-	function ComponentInfoArray (array)
-	{
-		var proxy = X3DInfoArray .call (this);
-	
-		if (array)
-		{
-			for (var i = 0, length = array .length; i < length; ++ i)
-				this .add (array [i] .name, array [i]);
-		}
-
-		return proxy;
-	}
-
-	ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-	{
-		constructor: ComponentInfoArray,
-		addBaseComponent: function (value)
-		{
-			this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
-		},
-	});
-
-	return ComponentInfoArray;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Execution/ImportedNode',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
@@ -31515,6 +31173,158 @@ function (Fields,
 	});
 
 	return ImportedNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Configuration/X3DInfoArray',[],function ()
+{
+"use strict";
+
+	var handler =
+	{
+		get: function (target, key)
+		{
+			var value = target [key];
+
+			if (value !== undefined)
+				return value;
+
+			value = target .array [key];
+
+			if (value !== undefined)
+				return value;
+
+			return target .index .get (key);
+		},
+		set: function (target, key, value)
+		{
+			return false;
+		},
+		has: function (target, key)
+		{
+			if (Number .isInteger (+key))
+				return key < target .array .length;
+
+			return key in target;
+		},
+		enumerate: function (target)
+		{
+			var indices = [ ];
+
+			for (var i = 0, length = target .array .length; i < length; ++ i)
+				array .push (i);
+
+			return indices [Symbol .iterator] ();
+		},
+	};
+
+	function X3DInfoArray ()
+	{
+		this .array = [ ];
+		this .index = new Map ();
+
+		return new Proxy (this, handler);
+	}
+
+	Object .assign (X3DInfoArray .prototype,
+	{
+		constructor: X3DInfoArray,
+		add: function (key, value)
+		{
+			this .array .push (value);
+			this .index .set (key, value);
+		},
+		get: function (key)
+		{
+			return this .index .get (key);
+		},
+		getValue: function ()
+		{
+			return this .array;
+		},
+		toVRMLStream: function (stream)
+		{
+			this .array .forEach (function (value)
+			{
+				try
+				{
+					value .toVRMLStream (stream);
+	
+					stream .string += "\n";
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			});
+		},
+		toXMLStream: function (stream)
+		{
+			this .array .forEach (function (value)
+			{
+				try
+				{
+					value .toXMLStream (stream);
+	
+					stream .string += "\n";
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			});
+		},
+	});
+
+	return X3DInfoArray;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -32146,6 +31956,1286 @@ function (Fields)
 
 		return null;
 	};
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Execution/X3DExecutionContext',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Execution/ImportedNode",
+	"x_ite/Prototype/ExternProtoDeclarationArray",
+	"x_ite/Prototype/ProtoDeclarationArray",
+	"x_ite/Routing/RouteArray",
+	"x_ite/Routing/X3DRoute",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
+	"x_ite/Fields/SFNodeCache",
+	"standard/Math/Algorithm",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DBaseNode,
+          ImportedNode,
+          ExternProtoDeclarationArray,
+          ProtoDeclarationArray,
+          RouteArray,
+          X3DRoute,
+          X3DCast,
+          X3DConstants,
+          Generator,
+          SFNodeCache,
+          Algorithm)
+{
+"use strict";
+
+	function X3DExecutionContext (executionContext)
+	{
+		X3DBaseNode .call (this, executionContext);
+
+		this .addChildObjects ("rootNodes", new Fields .MFNode ());
+
+		this .rootNodes_ .addClones (1);
+
+		this .uninitializedNodes   = [ ];
+		this .uninitializedNodes2  = [ ];
+		this .namedNodes           = new Map ();
+		this .importedNodes        = new Map ();
+		this .protos               = new ProtoDeclarationArray ();
+		this .externprotos         = new ExternProtoDeclarationArray ();
+		this .routes               = new RouteArray ();
+		this .routeIndex           = new Map ();
+	}
+
+	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+	{
+		constructor: X3DExecutionContext,
+		setup: function ()
+		{
+			X3DBaseNode .prototype .setup .call (this);
+
+			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+
+			if (this .constructor !== X3DProtoDeclaration)
+			{
+				// Setup nodes.
+
+				while (this .uninitializedNodes .length)
+				{
+					var uninitializedNodes = this .uninitializedNodes;
+	
+					this .uninitializedNodes  = this .uninitializedNodes2;
+					this .uninitializedNodes2 = uninitializedNodes;
+		
+					for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
+						uninitializedNodes [i] .setup ();
+	
+					uninitializedNodes .length = 0;
+				}
+			}
+		},
+		isMasterContext: function ()
+		{
+			return false;
+		},
+		isRootContext: function ()
+		{
+			return false;
+		},
+		getSpecificationVersion: function ()
+		{
+			return this .getExecutionContext () .getSpecificationVersion ();
+		},
+		setEncoding: function (value)
+		{
+			this .getExecutionContext () .setEncoding (value);
+		},
+		getEncoding: function ()
+		{
+			return this .getExecutionContext () .getEncoding ();
+		},
+		getWorldURL: function ()
+		{
+			return this .getURL () .location;
+		},
+		setURL: function (url)
+		{
+			this .getExecutionContext () .setURL (url);
+		},
+		getURL: function ()
+		{
+			return this .getExecutionContext () .getURL ();
+		},
+		setProfile: function (profile)
+		{
+			this .getExecutionContext () .setProfile (profile);
+		},
+		getProfile: function ()
+		{
+			return this .getExecutionContext () .getProfile ();
+		},
+		addComponent: function (component)
+		{
+			this .getExecutionContext () .addComponent (component);
+		},
+		getComponents: function ()
+		{
+			return this .getExecutionContext () .getComponents ();
+		},
+		getUnits: function ()
+		{
+			return this .getExecutionContext () .getUnits ();
+		},
+		createNode: function (typeName, setup)
+		{
+			if (setup === false)
+			{
+				var Type = this .getBrowser () .getSupportedNode (typeName);
+	
+				if (! Type)
+					return null;
+	
+				var baseNode = new Type (this);
+	
+				return baseNode;
+			}
+			else
+			{
+				var Type = this .getBrowser () .getSupportedNode (typeName);
+	
+				if (! Type)
+					throw new Error ("Unknown node type '" + typeName + "'.");
+	
+				var baseNode = new Type (this);
+	
+				baseNode .setup ();
+
+				return SFNodeCache .add (baseNode);
+			}
+		},
+		createProto: function (name, setup)
+		{
+			var executionContext = this;
+
+			for (;;)
+			{
+				var proto = executionContext .protos .get (name);
+
+				if (proto)
+					return proto .createInstance (this, setup);
+
+				var externproto = executionContext .externprotos .get (name);
+
+				if (externproto)
+					return externproto .createInstance (this, setup);
+
+				if (executionContext .isRootContext ())
+					break;
+
+				executionContext = executionContext .getExecutionContext ();
+			}
+
+			if (setup === false)
+				return null;
+			else
+				throw new Error ("Unknown proto or externproto type '" + name + "'.");
+		},
+		addUninitializedNode: function (node)
+		{
+			this .uninitializedNodes .push (node);
+		},
+		addNamedNode: function (name, node)
+		{
+			if (this .namedNodes .has (name))
+				throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
+
+			this .updateNamedNode (name, node);
+		},
+		updateNamedNode: function (name, node)
+		{
+			if (! (node instanceof Fields .SFNode || node instanceof X3DBaseNode))
+				throw new Error ("Couldn't update named node: node must be of type SFNode.");
+
+			name = String (name);
+
+			var baseNode = node instanceof Fields .SFNode ? node .getValue () : node;
+
+			if (! baseNode)
+				throw new Error ("Couldn't update named node: node IS NULL.");
+
+			if (baseNode .getExecutionContext () !== this)
+				throw new Error ("Couldn't update named node: node does not belong to this execution context.");
+
+			if (name .length === 0)
+				throw new Error ("Couldn't update named node: node name is empty.");
+
+			// Remove named node.
+
+			this .removeNamedNode (baseNode .getName ());
+			this .removeNamedNode (name);
+
+			// Update named node.
+
+			baseNode .setName (name);
+
+			this .namedNodes .set (name, baseNode);
+		},
+		removeNamedNode: function (name)
+		{
+			this .namedNodes .delete (name);
+		},
+		getNamedNode: function (name)
+		{
+			var baseNode = this .namedNodes .get (name);
+
+			if (baseNode)
+				return SFNodeCache .get (baseNode);
+
+			throw new Error ("Named node '" + name + "' not found.");
+		},
+		getNamedNodes: function ()
+		{
+			return this .namedNodes;
+		},
+		getUniqueName: function (name)
+		{
+			var _TrailingNumbers = /(_\d+$)/;
+
+			name = name .replace (_TrailingNumbers, "");
+
+			var
+				newName = name,
+				i       = 64;
+
+			for (; i;)
+			{
+				if (this .namedNodes .has (newName) || newName .length === 0)
+				{
+					var
+						min = i,
+						max = i <<= 1;
+		
+					newName  = name;
+					newName += '_';
+					newName += Math .round (Algorithm .random (min, max));
+				}
+				else
+					break;
+			}
+		
+			return newName;
+		},
+		addImportedNode: function (inlineNode, exportedName, importedName)
+		{
+			if (importedName === undefined)
+				importedName = exportedName;
+
+			if (this .importedNodes .has (importedName))
+				throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
+
+			this .updateImportedNode (inlineNode, exportedName, importedName);
+		},
+		updateImportedNode: function (inlineNode, exportedName, importedName)
+		{
+			inlineNode   = X3DCast (X3DConstants .Inline, inlineNode);
+			exportedName = String (exportedName);
+			importedName = importedName === undefined ? exportedName : String (importedName);
+
+			if (! inlineNode)
+				throw new Error ("Node named is not an Inline node.");
+
+			if (inlineNode .getExecutionContext () !== this)
+				throw new Error ("Couldn't update imported node: Inline node does not belong to this execution context.");
+
+			if (exportedName .length === 0)
+				throw new Error ("Couldn't update imported node: exported name is empty.");
+
+			if (importedName .length === 0)
+				throw new Error ("Couldn't update imported node: imported name is empty.");
+
+			// Update existing imported node.
+
+			for (var item of this .importedNodes)
+			{
+				var
+					key          = item [0],
+					importedNode = item [1];
+
+				if (importedNode .getInlineNode () === inlineNode && importedNode .getExportedName () === exportedName)
+				{
+					this .importedNodes .delete (key);
+					
+					this .importedNodes .set (importedName, importedNode);
+					
+					importedNode .setImportedName (importedName);
+					return;
+				}
+			}
+
+			// Add new imported node.
+
+			this .removeImportedNode (importedName);
+
+			var importedNode = new ImportedNode (this, inlineNode, exportedName, importedName);
+
+			this .importedNodes .set (importedName, importedNode);
+
+			importedNode .setup ();
+		},
+		removeImportedNode: function (importedName)
+		{
+			var importedNode = this .importedNodes .get (importedName);
+
+			if (! importedNode)
+				return;
+
+			importedNode .dispose ();
+
+			this .importedNodes .delete (importedName);
+		},
+		getImportedNode: function (importedName)
+		{
+			var importedNode = this .importedNodes .get (importedName);
+
+			if (importedNode)
+				return importedNode .getExportedNode () .valueOf ();
+
+			throw new Error ("Imported node '" + importedName + "' not found.");
+		},
+		getImportedNodes: function ()
+		{
+			return this .importedNodes;
+		},
+		getLocalNode: function (name)
+		{
+			try
+			{
+				return this .getNamedNode (name);
+			}
+			catch (error)
+			{
+				var importedNode = this .importedNodes .get (name);
+
+				if (importedNode)
+					return SFNodeCache .get (importedNode);
+
+				throw new Error ("Unknown named or imported node '" + name + "'.");
+			}
+		},
+		getLocalName: function (node)
+		{
+			if (! (node instanceof Fields .SFNode))
+				throw new Error ("Couldn't get local name: node is NULL.");
+				
+			if (node .getValue () .getExecutionContext () === this)
+				return node .getValue () .getName ();
+
+			for (var importedNode of this .importedNodes .values ())
+			{
+				try
+				{
+					if (importedNode .getExportedNode () === node)
+						return key;
+				}
+				catch (error)
+				{ }
+			}
+
+			throw new Error ("Couldn't get local name: node is shared.");
+		},
+		setRootNodes: function () { },
+		getRootNodes: function ()
+		{
+			return this .rootNodes_;
+		},
+		getProtoDeclaration: function (name)
+		{
+			return this .protos .get (name);
+		},
+		getProtoDeclarations: function ()
+		{
+			return this .protos;
+		},
+		getExternProtoDeclaration: function (name)
+		{
+			return this .externprotos .get (name);
+		},
+		getExternProtoDeclarations: function ()
+		{
+			return this .externprotos;
+		},
+		addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+		{
+			sourceField      = String (sourceField);
+			destinationField = String (destinationField);
+
+			if (! (sourceNode instanceof Fields .SFNode))
+				throw new Error ("Bad ROUTE specification: source node must be of type SFNode.");
+
+			if (! (destinationNode instanceof Fields .SFNode))
+				throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
+
+			sourceNode      = sourceNode      .getValue ();
+			destinationNode = destinationNode .getValue ();
+
+			if (! sourceNode)
+				throw new Error ("Bad ROUTE specification: source node is NULL.");
+
+			if (! destinationNode)
+				throw new Error ("Bad ROUTE specification: destination node is NULL.");
+
+			// Imported nodes handling.
+
+			var
+				importedSourceNode      = sourceNode      instanceof ImportedNode ? sourceNode      : null,
+				importedDestinationNode = destinationNode instanceof ImportedNode ? destinationNode : null;
+
+			try
+			{
+				// If sourceNode is shared node try to find the corresponding ImportedNode.
+				if (sourceNode .getExecutionContext () !== this)
+					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
+			}
+			catch (error)
+			{
+				// Source node is shared but not imported.
+			}
+
+			try
+			{
+				// If destinationNode is shared node try to find the corresponding ImportedNode.
+				if (destinationNode .getExecutionContext () !== this)
+					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
+			}
+			catch (error)
+			{
+				// Destination node is shared but not imported.
+			}
+
+			if (importedSourceNode instanceof ImportedNode)
+				importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
+
+			if (importedDestinationNode instanceof ImportedNode)
+				importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
+
+			// If either sourceNode or destinationNode is an ImportedNode return here without value.
+			if (importedSourceNode === sourceNode || importedDestinationNode === destinationNode)
+				return;
+
+			// Create route and return.
+
+			return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+		},
+		addSimpleRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+		{
+			try
+			{
+				// Private function.
+				// Create route and return.
+
+				sourceField      = sourceNode      .getField (sourceField),
+				destinationField = destinationNode .getField (destinationField);
+
+				if (! sourceField .isOutput ())
+					throw new Error ("Field named '" + sourceField .getName () + "' in node named '" + sourceNode .getName () + "' of type " + sourceNode .getTypeName () + " is not an output field.");
+
+				if (! destinationField .isInput ())
+					throw new Error ("Field named '" + destinationField .getName () + "' in node named '" + destinationNode .getName () + "' of type " + destinationNode .getTypeName () + " is not an input field.");
+
+				if (sourceField .getType () !== destinationField .getType ())
+					throw new Error ("ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
+
+				var
+					id    = sourceField .getId () + "." + destinationField .getId (),
+					route = this .routeIndex .get (id);
+
+				if (route)
+					return route;
+
+				var route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
+
+				this .routes .getValue () .push (route);
+				this .routeIndex .set (id, route);
+
+				return route;
+			}
+			catch (error)
+			{
+				throw new Error ("Bad ROUTE specification: " + error .message); 
+			}
+		},
+		deleteRoute: function (route)
+		{
+			try
+			{
+				// sourceNode, sourceField, destinationNode, destinationField
+				if (arguments .length === 4)
+				{
+					route = this .getRoute .apply (this, arguments);
+
+					if (! route)
+						return;
+				}
+
+				var
+					sourceField      = route ._sourceField,
+					destinationField = route ._destinationField,
+					id               = sourceField .getId () + "." + destinationField .getId (),
+					index            = this .routes .getValue () .indexOf (route);
+
+				route .disconnect ();
+
+				if (index !== -1)
+					this .routes .getValue () .splice (index, 1);
+
+				this .routeIndex .delete (id);
+			}
+			catch (error)
+			{
+				console .log (error);
+			}
+		},
+		getRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+		{
+			if (! sourceNode .getValue ())
+				throw new Error ("Bad ROUTE specification: sourceNode is NULL.");
+
+			if (! destinationNode .getValue ())
+				throw new Error ("Bad ROUTE specification: destinationNode is NULL.");
+
+			var
+				sourceField      = sourceNode .getValue () .getField (sourceField),
+				destinationField = destinationNode .getValue () .getField (destinationField),
+				id               = sourceField .getId () + "." + destinationField .getId ();
+
+			return this .routeIndex .get (id);
+		},
+		getRoutes: function ()
+		{
+			return this .routes;
+		},
+		changeViewpoint: function (name)
+		{
+			try
+			{
+				var
+					namedNode = this .getNamedNode (name),
+					viewpoint = X3DCast (X3DConstants .X3DViewpointNode, namedNode);
+
+				if (! viewpoint)
+					throw 1;
+
+				viewpoint .setAnimate (true); // VRML
+
+				if (viewpoint .isBound_ .getValue ())
+					viewpoint .transitionStart (viewpoint);
+
+				else
+					viewpoint .set_bind_ = true;
+			}
+			catch (error)
+			{
+				if (! this .isRootContext ())
+					this .getExecutionContext () .changeViewpoint (name);
+				else
+					throw new Error ("Viewpoint named '" + name + "' not found.");
+			}
+		},
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			generator .PushExecutionContext (this);
+			generator .EnterScope ();
+			generator .ImportedNodes (this .getImportedNodes ());
+
+			// Output extern protos
+
+			this .getExternProtoDeclarations () .toVRMLStream (stream);
+
+			// Output protos
+
+			this .getProtoDeclarations () .toVRMLStream (stream);
+
+			// Output root nodes
+
+			var rootNodes = this .getRootNodes ();
+
+			for (var i = 0, length = rootNodes .length; i < length; ++ i)
+			{
+				stream .string += generator .Indent ();
+
+				rootNodes [i] .toVRMLStream (stream);
+
+				stream .string += "\n";
+
+				if (i !== length - 1)
+					stream .string += "\n";
+			}
+
+			// Output imported nodes
+
+			var importedNodes = this .getImportedNodes ();
+
+			if (importedNodes .size)
+			{
+				stream .string += "\n";
+
+				importedNodes .forEach (function (importedNode)
+				{
+					try
+					{
+						importedNode .toVRMLStream (stream);
+	
+						stream .string += "\n";
+					}
+					catch (error)
+					{ }
+				});
+			}
+
+			// Output routes
+
+			var routes = this .getRoutes ();
+
+			if (routes .length)
+			{
+				stream .string += "\n";
+
+				routes .toVRMLStream (stream);
+			}
+
+			generator .LeaveScope ();
+			generator .PopExecutionContext ();
+		},
+		toXMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			generator .PushExecutionContext (this);
+			generator .EnterScope ();
+			generator .ImportedNodes (this .getImportedNodes ());
+
+			// Output extern protos
+
+			this .getExternProtoDeclarations () .toXMLStream (stream);
+
+			// Output protos
+
+			this .getProtoDeclarations () .toXMLStream (stream);
+		
+			// Output root nodes
+
+			var rootNodes = this .getRootNodes ();
+
+			if (rootNodes .length)
+			{
+				rootNodes .toXMLStream (stream);
+
+				stream .string += "\n";
+			}
+		
+			// Output imported nodes
+
+			var importedNodes = this .getImportedNodes ();
+
+			importedNodes .forEach (function (importedNode)
+			{
+				try
+				{
+					importedNode .toXMLStream (stream);
+
+					stream .string += "\n";
+				}
+				catch (error)
+				{ }
+			});
+
+			// Output routes
+
+			this .getRoutes () .toXMLStream (stream);
+
+			generator .LeaveScope ();
+			generator .PopExecutionContext ();
+		},
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "worldURL",
+	{
+		get: function () { return this .getWorldURL (); },
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "units",
+	{
+		get: function () { return this .getUnits (); },
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "rootNodes",
+	{
+		get: function () { return this .getRootNodes (); },
+		set: function (value) { this .setRootNodes (value); },
+		enumerable: true,
+		configurable: false
+	});
+
+	return X3DExecutionContext;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Configuration/ComponentInfo',[
+	"x_ite/Fields",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
+],
+function (Fields,
+          X3DConstants,
+          Generator)
+{
+"use strict";
+
+	function ComponentInfo (name, level, title, providerUrl)
+	{
+		this .name        = name;
+		this .level       = level;
+		this .title       = title;
+		this .providerUrl = providerUrl;
+
+		Object .preventExtensions (this);
+		Object .freeze (this);
+		Object .seal (this);
+	}
+
+	Object .assign (ComponentInfo .prototype,
+	{
+		constructor: ComponentInfo,
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += "COMPONENT";
+			stream .string += " ";
+			stream .string += this .name;
+			stream .string += " ";
+			stream .string += ":";
+			stream .string += " ";
+			stream .string += this .level;
+		},
+		toXMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
+			stream .string += "<component";
+			stream .string += " ";
+			stream .string += "name='";
+			stream .string += this .name;
+			stream .string += "'";
+			stream .string += " ";
+			stream .string += "level='";
+			stream .string += this .level;
+			stream .string += "'";
+			stream .string += "/>";
+		},
+	});
+
+	return ComponentInfo;
+});
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Configuration/ComponentInfoArray',[
+	"x_ite/Configuration/ComponentInfo",
+	"x_ite/Configuration/X3DInfoArray",
+],
+function (ComponentInfo,
+          X3DInfoArray)
+{
+"use strict";
+
+	function ComponentInfoArray (array)
+	{
+		var proxy = X3DInfoArray .call (this);
+	
+		if (array)
+		{
+			for (var i = 0, length = array .length; i < length; ++ i)
+				this .add (array [i] .name, array [i]);
+		}
+
+		return proxy;
+	}
+
+	ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+	{
+		constructor: ComponentInfoArray,
+		addBaseComponent: function (value)
+		{
+			this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
+		},
+	});
+
+	return ComponentInfoArray;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Configuration/UnitInfo',[
+	"x_ite/InputOutput/Generator",
+],
+function (Generator)
+{
+"use strict";
+
+	function UnitInfo (category, name, conversionFactor)
+	{
+		Object .defineProperty (this, "category", {
+		    value: category,
+		    writable: false,
+		});
+
+		this .name             = name;
+		this .conversionFactor = conversionFactor;
+	}
+
+	Object .assign (UnitInfo .prototype,
+	{
+		constructor: UnitInfo,
+		toVRMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += "UNIT";
+			stream .string += " ";
+			stream .string += this .category;
+			stream .string += " ";
+			stream .string += this .name;
+			stream .string += " ";
+			stream .string += this .conversionFactor;
+		},
+		toXMLStream: function (stream)
+		{
+			var generator = Generator .Get (stream);
+
+			stream .string += generator .Indent ();
+			stream .string += "<unit";
+			stream .string += " ";
+			stream .string += "category='";
+			stream .string += this .category;
+			stream .string += "'";
+			stream .string += " ";
+			stream .string += "name='";
+			stream .string += generator .XMLEncode (this .name);
+			stream .string += "'";
+			stream .string += " ";
+			stream .string += "conversionFactor='";
+			stream .string += this .conversionFactor;
+			stream .string += "'";
+			stream .string += "/>";
+		},
+	});
+
+	Object .defineProperty (UnitInfo .prototype, "conversion_factor",
+	{
+		get: function () { return this .conversionFactor; },
+		enumerable: true,
+		configurable: false
+	});
+
+	return UnitInfo;
+});
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Configuration/UnitInfoArray',[
+	"x_ite/Configuration/X3DInfoArray",
+],
+function (X3DInfoArray)
+{
+"use strict";
+
+	function UnitInfoArray ()
+	{
+		return X3DInfoArray .call (this);
+	}
+
+	UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+	{
+		constructor: UnitInfoArray,
+	});
+
+	return UnitInfoArray;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Execution/ExportedNode',[
+	"x_ite/Fields",
+	"x_ite/Base/X3DObject",
+	"x_ite/InputOutput/Generator",
+],
+function (Fields,
+          X3DObject,
+          Generator)
+{
+"use strict";
+
+	function ExportedNode (exportedName, localNode)
+	{
+		X3DObject .call (this);
+
+		this .exportedName = exportedName;
+		this .localNode    = localNode;
+	}
+
+	ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
+	{
+		constructor: ExportedNode,
+		getTypeName: function ()
+		{
+			return "ExportedNode";
+		},
+		getExportedName: function ()
+		{
+			return this .exportedName;
+		},
+		getLocalNode: function ()
+		{
+			return this .localNode;
+		},
+		toVRMLStream: function (stream)
+		{
+			var
+				generator = Generator .Get (stream),
+				localName = generator .LocalName (this .localNode);
+
+			stream .string += generator .Indent ();
+			stream .string += "EXPORT";
+			stream .string += " ";
+			stream .string += localName;
+
+			if (this .exportedName !== localName)
+			{
+				stream .string += " ";
+				stream .string += "AS";
+				stream .string += " ";
+				stream .string += this .exportedName;
+			}
+		},
+		toXMLStream: function (stream)
+		{
+			var
+				generator = Generator .Get (stream),
+				localName = generator .LocalName (this .localNode);
+
+			stream .string += generator .Indent ();
+			stream .string += "<EXPORT";
+			stream .string += " ";
+			stream .string += "localDEF='";
+			stream .string += generator .XMLEncode (localName);
+			stream .string += "'";
+
+			if (this .exportedName !== localName)
+			{
+				stream .string += " ";
+				stream .string += "AS='";
+				stream .string += generator .XMLEncode (this .exportedName);
+				stream .string += "'";
+			}
+
+			stream .string += "/>";
+		},
+	});
+
+	return ExportedNode;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -32983,1123 +34073,28 @@ define ('standard/Networking/URI',[],function ()
  ******************************************************************************/
 
 
-define ('x_ite/Execution/X3DExecutionContext',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Configuration/ComponentInfoArray",
-	"x_ite/Execution/ImportedNode",
-	"x_ite/Prototype/ExternProtoDeclarationArray",
-	"x_ite/Prototype/ProtoDeclarationArray",
-	"x_ite/Routing/RouteArray",
-	"x_ite/Routing/X3DRoute",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/InputOutput/Generator",
-	"x_ite/Fields/SFNodeCache",
-	"standard/Networking/URI",
-	"standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DBaseNode,
-          ComponentInfoArray,
-          ImportedNode,
-          ExternProtoDeclarationArray,
-          ProtoDeclarationArray,
-          RouteArray,
-          X3DRoute,
-          X3DCast,
-          X3DConstants,
-          Generator,
-          SFNodeCache,
-          URI,
-          Algorithm)
-{
-"use strict";
-
-	function X3DExecutionContext (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-
-		this .addChildObjects ("rootNodes", new Fields .MFNode ());
-
-		this .rootNodes_ .addClones (1);
-
-		this .specificationVersion = "3.3";
-		this .encoding             = "SCRIPTED";
-		this .profile              = null;
-		this .components           = new ComponentInfoArray (this .getBrowser ());
-		this .url                  = new URI (window .location);
-		this .uninitializedNodes   = [ ];
-		this .uninitializedNodes2  = [ ];
-		this .namedNodes           = new Map ();
-		this .importedNodes        = new Map ();
-		this .protos               = new ProtoDeclarationArray ();
-		this .externprotos         = new ExternProtoDeclarationArray ();
-		this .routes               = new RouteArray ();
-		this .routeIndex           = new Map ();
-	}
-
-	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: X3DExecutionContext,
-		setup: function ()
-		{
-			X3DBaseNode .prototype .setup .call (this);
-
-			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
-
-			if (this .constructor !== X3DProtoDeclaration)
-			{
-				// Setup nodes.
-
-				while (this .uninitializedNodes .length)
-				{
-					var uninitializedNodes = this .uninitializedNodes;
-	
-					this .uninitializedNodes  = this .uninitializedNodes2;
-					this .uninitializedNodes2 = uninitializedNodes;
-		
-					for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
-						uninitializedNodes [i] .setup ();
-	
-					uninitializedNodes .length = 0;
-				}
-			}
-		},
-		isMasterContext: function ()
-		{
-			return false;
-		},
-		isRootContext: function ()
-		{
-			return false;
-		},
-		getSpecificationVersion: function ()
-		{
-			return this .specificationVersion;
-		},
-		setEncoding: function (value)
-		{
-			this .encoding = value;
-		},
-		getEncoding: function ()
-		{
-			return this .encoding;
-		},
-		getWorldURL: function ()
-		{
-			return this .getURL () .location;
-		},
-		setURL: function (url)
-		{
-			this .url = url;
-		},
-		getURL: function ()
-		{
-			return this .url;
-		},
-		setProfile: function (profile)
-		{
-			this .profile = profile;
-		},
-		getProfile: function (profile)
-		{
-			return this .profile;
-		},
-		addComponent: function (component)
-		{
-			this .components .add (component .name, component);
-		},
-		getComponents: function ()
-		{
-			return this .components;
-		},
-		getUnits: function ()
-		{
-			return this .getExecutionContext () .getUnits ();
-		},
-		createNode: function (typeName, setup)
-		{
-			if (setup === false)
-			{
-				var Type = this .getBrowser () .getSupportedNode (typeName);
-	
-				if (! Type)
-					return null;
-	
-				var baseNode = new Type (this);
-	
-				return baseNode;
-			}
-			else
-			{
-				var Type = this .getBrowser () .getSupportedNode (typeName);
-	
-				if (! Type)
-					throw new Error ("Unknown node type '" + typeName + "'.");
-	
-				var baseNode = new Type (this);
-	
-				baseNode .setup ();
-
-				return SFNodeCache .add (baseNode);
-			}
-		},
-		createProto: function (name, setup)
-		{
-			var executionContext = this;
-
-			for (;;)
-			{
-				var proto = executionContext .protos .get (name);
-
-				if (proto)
-					return proto .createInstance (this, setup);
-
-				var externproto = executionContext .externprotos .get (name);
-
-				if (externproto)
-					return externproto .createInstance (this, setup);
-
-				if (executionContext .isRootContext ())
-					break;
-
-				executionContext = executionContext .getExecutionContext ();
-			}
-
-			if (setup === false)
-				return null;
-			else
-				throw new Error ("Unknown proto or externproto type '" + name + "'.");
-		},
-		addUninitializedNode: function (node)
-		{
-			this .uninitializedNodes .push (node);
-		},
-		addNamedNode: function (name, node)
-		{
-			if (this .namedNodes .has (name))
-				throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
-
-			this .updateNamedNode (name, node);
-		},
-		updateNamedNode: function (name, node)
-		{
-			if (! (node instanceof Fields .SFNode || node instanceof X3DBaseNode))
-				throw new Error ("Couldn't update named node: node must be of type SFNode.");
-
-			name = String (name);
-
-			var baseNode = node instanceof Fields .SFNode ? node .getValue () : node;
-
-			if (! baseNode)
-				throw new Error ("Couldn't update named node: node IS NULL.");
-
-			if (baseNode .getExecutionContext () !== this)
-				throw new Error ("Couldn't update named node: node does not belong to this execution context.");
-
-			if (name .length === 0)
-				throw new Error ("Couldn't update named node: node name is empty.");
-
-			// Remove named node.
-
-			this .removeNamedNode (baseNode .getName ());
-			this .removeNamedNode (name);
-
-			// Update named node.
-
-			baseNode .setName (name);
-
-			this .namedNodes .set (name, baseNode);
-		},
-		removeNamedNode: function (name)
-		{
-			this .namedNodes .delete (name);
-		},
-		getNamedNode: function (name)
-		{
-			var baseNode = this .namedNodes .get (name);
-
-			if (baseNode)
-				return SFNodeCache .get (baseNode);
-
-			throw new Error ("Named node '" + name + "' not found.");
-		},
-		getNamedNodes: function ()
-		{
-			return this .namedNodes;
-		},
-		getUniqueName: function (name)
-		{
-			var _TrailingNumbers = /(_\d+$)/;
-
-			name = name .replace (_TrailingNumbers, "");
-
-			var
-				newName = name,
-				i       = 64;
-
-			for (; i;)
-			{
-				if (this .namedNodes .has (newName) || newName .length === 0)
-				{
-					var
-						min = i,
-						max = i <<= 1;
-		
-					newName  = name;
-					newName += '_';
-					newName += Math .round (Algorithm .random (min, max));
-				}
-				else
-					break;
-			}
-		
-			return newName;
-		},
-		addImportedNode: function (inlineNode, exportedName, importedName)
-		{
-			if (importedName === undefined)
-				importedName = exportedName;
-
-			if (this .importedNodes .has (importedName))
-				throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
-
-			this .updateImportedNode (inlineNode, exportedName, importedName);
-		},
-		updateImportedNode: function (inlineNode, exportedName, importedName)
-		{
-			inlineNode   = X3DCast (X3DConstants .Inline, inlineNode);
-			exportedName = String (exportedName);
-			importedName = importedName === undefined ? exportedName : String (importedName);
-
-			if (! inlineNode)
-				throw new Error ("Node named is not an Inline node.");
-
-			if (inlineNode .getExecutionContext () !== this)
-				throw new Error ("Couldn't update imported node: Inline node does not belong to this execution context.");
-
-			if (exportedName .length === 0)
-				throw new Error ("Couldn't update imported node: exported name is empty.");
-
-			if (importedName .length === 0)
-				throw new Error ("Couldn't update imported node: imported name is empty.");
-
-			// Update existing imported node.
-
-			for (var item of this .importedNodes)
-			{
-				var
-					key          = item [0],
-					importedNode = item [1];
-
-				if (importedNode .getInlineNode () === inlineNode && importedNode .getExportedName () === exportedName)
-				{
-					this .importedNodes .delete (key);
-					
-					this .importedNodes .set (importedName, importedNode);
-					
-					importedNode .setImportedName (importedName);
-					return;
-				}
-			}
-
-			// Add new imported node.
-
-			this .removeImportedNode (importedName);
-
-			var importedNode = new ImportedNode (this, inlineNode, exportedName, importedName);
-
-			this .importedNodes .set (importedName, importedNode);
-
-			importedNode .setup ();
-		},
-		removeImportedNode: function (importedName)
-		{
-			var importedNode = this .importedNodes .get (importedName);
-
-			if (! importedNode)
-				return;
-
-			importedNode .dispose ();
-
-			this .importedNodes .delete (importedName);
-		},
-		getImportedNode: function (importedName)
-		{
-			var importedNode = this .importedNodes .get (importedName);
-
-			if (importedNode)
-				return importedNode .getExportedNode () .valueOf ();
-
-			throw new Error ("Imported node '" + importedName + "' not found.");
-		},
-		getImportedNodes: function ()
-		{
-			return this .importedNodes;
-		},
-		getLocalNode: function (name)
-		{
-			try
-			{
-				return this .getNamedNode (name);
-			}
-			catch (error)
-			{
-				var importedNode = this .importedNodes .get (name);
-
-				if (importedNode)
-					return SFNodeCache .get (importedNode);
-
-				throw new Error ("Unknown named or imported node '" + name + "'.");
-			}
-		},
-		getLocalName: function (node)
-		{
-			if (! (node instanceof Fields .SFNode))
-				throw new Error ("Couldn't get local name: node is NULL.");
-				
-			if (node .getValue () .getExecutionContext () === this)
-				return node .getValue () .getName ();
-
-			for (var importedNode of this .importedNodes .values ())
-			{
-				try
-				{
-					if (importedNode .getExportedNode () === node)
-						return key;
-				}
-				catch (error)
-				{ }
-			}
-
-			throw new Error ("Couldn't get local name: node is shared.");
-		},
-		setRootNodes: function () { },
-		getRootNodes: function ()
-		{
-			return this .rootNodes_;
-		},
-		getProtoDeclaration: function (name)
-		{
-			return this .protos .get (name);
-		},
-		getProtoDeclarations: function ()
-		{
-			return this .protos;
-		},
-		getExternProtoDeclaration: function (name)
-		{
-			return this .externprotos .get (name);
-		},
-		getExternProtoDeclarations: function ()
-		{
-			return this .externprotos;
-		},
-		addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
-		{
-			sourceField      = String (sourceField);
-			destinationField = String (destinationField);
-
-			if (! (sourceNode instanceof Fields .SFNode))
-				throw new Error ("Bad ROUTE specification: source node must be of type SFNode.");
-
-			if (! (destinationNode instanceof Fields .SFNode))
-				throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
-
-			sourceNode      = sourceNode      .getValue ();
-			destinationNode = destinationNode .getValue ();
-
-			if (! sourceNode)
-				throw new Error ("Bad ROUTE specification: source node is NULL.");
-
-			if (! destinationNode)
-				throw new Error ("Bad ROUTE specification: destination node is NULL.");
-
-			// Imported nodes handling.
-
-			var
-				importedSourceNode      = sourceNode      instanceof ImportedNode ? sourceNode      : null,
-				importedDestinationNode = destinationNode instanceof ImportedNode ? destinationNode : null;
-
-			try
-			{
-				// If sourceNode is shared node try to find the corresponding ImportedNode.
-				if (sourceNode .getExecutionContext () !== this)
-					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
-			}
-			catch (error)
-			{
-				// Source node is shared but not imported.
-			}
-
-			try
-			{
-				// If destinationNode is shared node try to find the corresponding ImportedNode.
-				if (destinationNode .getExecutionContext () !== this)
-					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
-			}
-			catch (error)
-			{
-				// Destination node is shared but not imported.
-			}
-
-			if (importedSourceNode instanceof ImportedNode)
-				importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
-
-			if (importedDestinationNode instanceof ImportedNode)
-				importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
-
-			// If either sourceNode or destinationNode is an ImportedNode return here without value.
-			if (importedSourceNode === sourceNode || importedDestinationNode === destinationNode)
-				return;
-
-			// Create route and return.
-
-			return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
-		},
-		addSimpleRoute: function (sourceNode, sourceField, destinationNode, destinationField)
-		{
-			try
-			{
-				// Private function.
-				// Create route and return.
-
-				sourceField      = sourceNode      .getField (sourceField),
-				destinationField = destinationNode .getField (destinationField);
-
-				if (! sourceField .isOutput ())
-					throw new Error ("Field named '" + sourceField .getName () + "' in node named '" + sourceNode .getName () + "' of type " + sourceNode .getTypeName () + " is not an output field.");
-
-				if (! destinationField .isInput ())
-					throw new Error ("Field named '" + destinationField .getName () + "' in node named '" + destinationNode .getName () + "' of type " + destinationNode .getTypeName () + " is not an input field.");
-
-				if (sourceField .getType () !== destinationField .getType ())
-					throw new Error ("ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
-
-				var
-					id    = sourceField .getId () + "." + destinationField .getId (),
-					route = this .routeIndex .get (id);
-
-				if (route)
-					return route;
-
-				var route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
-
-				this .routes .getValue () .push (route);
-				this .routeIndex .set (id, route);
-
-				return route;
-			}
-			catch (error)
-			{
-				throw new Error ("Bad ROUTE specification: " + error .message); 
-			}
-		},
-		deleteRoute: function (route)
-		{
-			try
-			{
-				// sourceNode, sourceField, destinationNode, destinationField
-				if (arguments .length === 4)
-				{
-					route = this .getRoute .apply (this, arguments);
-
-					if (! route)
-						return;
-				}
-
-				var
-					sourceField      = route ._sourceField,
-					destinationField = route ._destinationField,
-					id               = sourceField .getId () + "." + destinationField .getId (),
-					index            = this .routes .getValue () .indexOf (route);
-
-				route .disconnect ();
-
-				if (index !== -1)
-					this .routes .getValue () .splice (index, 1);
-
-				this .routeIndex .delete (id);
-			}
-			catch (error)
-			{
-				console .log (error);
-			}
-		},
-		getRoute: function (sourceNode, sourceField, destinationNode, destinationField)
-		{
-			if (! sourceNode .getValue ())
-				throw new Error ("Bad ROUTE specification: sourceNode is NULL.");
-
-			if (! destinationNode .getValue ())
-				throw new Error ("Bad ROUTE specification: destinationNode is NULL.");
-
-			var
-				sourceField      = sourceNode .getValue () .getField (sourceField),
-				destinationField = destinationNode .getValue () .getField (destinationField),
-				id               = sourceField .getId () + "." + destinationField .getId ();
-
-			return this .routeIndex .get (id);
-		},
-		getRoutes: function ()
-		{
-			return this .routes;
-		},
-		changeViewpoint: function (name)
-		{
-			try
-			{
-				var
-					namedNode = this .getNamedNode (name),
-					viewpoint = X3DCast (X3DConstants .X3DViewpointNode, namedNode);
-
-				if (! viewpoint)
-					throw 1;
-
-				viewpoint .setAnimate (true); // VRML
-
-				if (viewpoint .isBound_ .getValue ())
-					viewpoint .transitionStart (viewpoint);
-
-				else
-					viewpoint .set_bind_ = true;
-			}
-			catch (error)
-			{
-				if (! this .isRootContext ())
-					this .getExecutionContext () .changeViewpoint (name);
-				else
-					throw new Error ("Viewpoint named '" + name + "' not found.");
-			}
-		},
-		toVRMLStream: function (stream)
-		{
-			var generator = Generator .Get (stream);
-
-			generator .PushExecutionContext (this);
-			generator .EnterScope ();
-			generator .ImportedNodes (this .getImportedNodes ());
-
-			// Output extern protos
-
-			this .getExternProtoDeclarations () .toVRMLStream (stream);
-
-			// Output protos
-
-			this .getProtoDeclarations () .toVRMLStream (stream);
-
-			// Output root nodes
-
-			var rootNodes = this .getRootNodes ();
-
-			for (var i = 0, length = rootNodes .length; i < length; ++ i)
-			{
-				stream .string += generator .Indent ();
-
-				rootNodes [i] .toVRMLStream (stream);
-
-				stream .string += "\n";
-
-				if (i !== length - 1)
-					stream .string += "\n";
-			}
-
-			// Output imported nodes
-
-			var importedNodes = this .getImportedNodes ();
-
-			if (importedNodes .size)
-			{
-				stream .string += "\n";
-
-				importedNodes .forEach (function (importedNode)
-				{
-					try
-					{
-						importedNode .toVRMLStream (stream);
-	
-						stream .string += "\n";
-					}
-					catch (error)
-					{ }
-				});
-			}
-
-			// Output routes
-
-			var routes = this .getRoutes ();
-
-			if (routes .length)
-			{
-				stream .string += "\n";
-
-				routes .toVRMLStream (stream);
-			}
-
-			generator .LeaveScope ();
-			generator .PopExecutionContext ();
-		},
-		toXMLStream: function (stream)
-		{
-			var generator = Generator .Get (stream);
-
-			generator .PushExecutionContext (this);
-			generator .EnterScope ();
-			generator .ImportedNodes (this .getImportedNodes ());
-
-			// Output extern protos
-
-			this .getExternProtoDeclarations () .toXMLStream (stream);
-
-			// Output protos
-
-			this .getProtoDeclarations () .toXMLStream (stream);
-		
-			// Output root nodes
-
-			var rootNodes = this .getRootNodes ();
-
-			if (rootNodes .length)
-			{
-				rootNodes .toXMLStream (stream);
-
-				stream .string += "\n";
-			}
-		
-			// Output imported nodes
-
-			var importedNodes = this .getImportedNodes ();
-
-			importedNodes .forEach (function (importedNode)
-			{
-				try
-				{
-					importedNode .toXMLStream (stream);
-
-					stream .string += "\n";
-				}
-				catch (error)
-				{ }
-			});
-
-			// Output routes
-
-			this .getRoutes () .toXMLStream (stream);
-
-			generator .LeaveScope ();
-			generator .PopExecutionContext ();
-		},
-	});
-
-	Object .defineProperty (X3DExecutionContext .prototype, "worldURL",
-	{
-		get: function () { return this .getWorldURL (); },
-		enumerable: true,
-		configurable: false
-	});
-
-	Object .defineProperty (X3DExecutionContext .prototype, "units",
-	{
-		get: function () { return this .getUnits (); },
-		enumerable: true,
-		configurable: false
-	});
-
-	Object .defineProperty (X3DExecutionContext .prototype, "rootNodes",
-	{
-		get: function () { return this .getRootNodes (); },
-		set: function (value) { this .setRootNodes (value); },
-		enumerable: true,
-		configurable: false
-	});
-
-	return X3DExecutionContext;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Configuration/UnitInfo',[
-	"x_ite/InputOutput/Generator",
-],
-function (Generator)
-{
-"use strict";
-
-	function UnitInfo (category, name, conversionFactor)
-	{
-		Object .defineProperty (this, "category", {
-		    value: category,
-		    writable: false,
-		});
-
-		this .name             = name;
-		this .conversionFactor = conversionFactor;
-	}
-
-	Object .assign (UnitInfo .prototype,
-	{
-		constructor: UnitInfo,
-		toVRMLStream: function (stream)
-		{
-			var generator = Generator .Get (stream);
-
-			stream .string += "UNIT";
-			stream .string += " ";
-			stream .string += this .category;
-			stream .string += " ";
-			stream .string += this .name;
-			stream .string += " ";
-			stream .string += this .conversionFactor;
-		},
-		toXMLStream: function (stream)
-		{
-			var generator = Generator .Get (stream);
-
-			stream .string += generator .Indent ();
-			stream .string += "<unit";
-			stream .string += " ";
-			stream .string += "category='";
-			stream .string += this .category;
-			stream .string += "'";
-			stream .string += " ";
-			stream .string += "name='";
-			stream .string += generator .XMLEncode (this .name);
-			stream .string += "'";
-			stream .string += " ";
-			stream .string += "conversionFactor='";
-			stream .string += this .conversionFactor;
-			stream .string += "'";
-			stream .string += "/>";
-		},
-	});
-
-	Object .defineProperty (UnitInfo .prototype, "conversion_factor",
-	{
-		get: function () { return this .conversionFactor; },
-		enumerable: true,
-		configurable: false
-	});
-
-	return UnitInfo;
-});
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Configuration/UnitInfoArray',[
-	"x_ite/Configuration/X3DInfoArray",
-],
-function (X3DInfoArray)
-{
-"use strict";
-
-	function UnitInfoArray ()
-	{
-		return X3DInfoArray .call (this);
-	}
-
-	UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-	{
-		constructor: UnitInfoArray,
-	});
-
-	return UnitInfoArray;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Execution/ExportedNode',[
-	"x_ite/Fields",
-	"x_ite/Base/X3DObject",
-	"x_ite/InputOutput/Generator",
-],
-function (Fields,
-          X3DObject,
-          Generator)
-{
-"use strict";
-
-	function ExportedNode (exportedName, localNode)
-	{
-		X3DObject .call (this);
-
-		this .exportedName = exportedName;
-		this .localNode    = localNode;
-	}
-
-	ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
-	{
-		constructor: ExportedNode,
-		getTypeName: function ()
-		{
-			return "ExportedNode";
-		},
-		getExportedName: function ()
-		{
-			return this .exportedName;
-		},
-		getLocalNode: function ()
-		{
-			return this .localNode;
-		},
-		toVRMLStream: function (stream)
-		{
-			var
-				generator = Generator .Get (stream),
-				localName = generator .LocalName (this .localNode);
-
-			stream .string += generator .Indent ();
-			stream .string += "EXPORT";
-			stream .string += " ";
-			stream .string += localName;
-
-			if (this .exportedName !== localName)
-			{
-				stream .string += " ";
-				stream .string += "AS";
-				stream .string += " ";
-				stream .string += this .exportedName;
-			}
-		},
-		toXMLStream: function (stream)
-		{
-			var
-				generator = Generator .Get (stream),
-				localName = generator .LocalName (this .localNode);
-
-			stream .string += generator .Indent ();
-			stream .string += "<EXPORT";
-			stream .string += " ";
-			stream .string += "localDEF='";
-			stream .string += generator .XMLEncode (localName);
-			stream .string += "'";
-
-			if (this .exportedName !== localName)
-			{
-				stream .string += " ";
-				stream .string += "AS='";
-				stream .string += generator .XMLEncode (this .exportedName);
-				stream .string += "'";
-			}
-
-			stream .string += "/>";
-		},
-	});
-
-	return ExportedNode;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Execution/X3DScene',[
 	"x_ite/Fields",
 	"x_ite/Execution/X3DExecutionContext",
+	"x_ite/Configuration/ComponentInfoArray",
 	"x_ite/Configuration/UnitInfo",
 	"x_ite/Configuration/UnitInfoArray",
 	"x_ite/Execution/ExportedNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 	"x_ite/Fields/SFNodeCache",
+	"standard/Networking/URI",
 ],
 function (Fields,
           X3DExecutionContext,
+          ComponentInfoArray,
           UnitInfo,
           UnitInfoArray,
           ExportedNode,
           X3DConstants,
           Generator,
-          SFNodeCache)
+          SFNodeCache,
+          URI)
 {
 "use strict";
 
@@ -34109,7 +34104,12 @@ function (Fields,
 
 		this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
-		this .unitArray = new UnitInfoArray ();
+		this .specificationVersion = "3.3";
+		this .encoding             = "SCRIPTED";
+		this .profile              = null;
+		this .components           = new ComponentInfoArray (this .getBrowser ());
+		this .url                  = new URI (window .location);
+		this .unitArray            = new UnitInfoArray ();
 
 		this .unitArray .add ("angle",  new UnitInfo ("angle",  "radian",   1));
 		this .unitArray .add ("force",  new UnitInfo ("force",  "newton",   1));
@@ -34140,6 +34140,73 @@ function (Fields,
 
 			return this .getExecutionContext () .getScene ();
 		},
+		getSpecificationVersion: function ()
+		{
+			return this .specificationVersion;
+		},
+		setEncoding: function (value)
+		{
+			this .encoding = value;
+		},
+		getEncoding: function ()
+		{
+			return this .encoding;
+		},
+		setURL: function (url)
+		{
+			this .url = url;
+		},
+		getURL: function ()
+		{
+			return this .url;
+		},
+		setProfile: function (profile)
+		{
+			this .profile = profile;
+		},
+		getProfile: function ()
+		{
+			return this .profile;
+		},
+		addComponent: function (component)
+		{
+			this .components .add (component .name, component);
+		},
+		getComponents: function ()
+		{
+			return this .components;
+		},
+		getProviderUrls: (function ()
+		{
+			var componentsUrl = /\.js$/;
+
+			return function ()
+			{
+				var
+					profile           = this .getProfile () ? this .getProfile () : this .getBrowser () .getProfile ("Full"),
+					profileComponents = profile .components,
+					components        = this .getComponents (),
+					providerUrls      = new Set ();
+
+				for (var i = 0, length = profileComponents .length; i < length; ++ i)
+				{
+					var providerUrl = profileComponents [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .add (providerUrl);
+				}
+
+				for (var i = 0, length = components .length; i < length; ++ i)
+				{
+					var providerUrl = components [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .add (providerUrl);
+				}
+
+				return Array .from (providerUrls);
+			};
+		})(),
 		updateUnit: function (category, name, conversionFactor)
 		{
 			// Private function.
@@ -34784,36 +34851,6 @@ define ('x_ite/Parser/X3DParser',[],function ()
 		{
 			return this .executionContexts .length > 1;
 		},
-		getProviderUrls: (function ()
-		{
-			var componentsUrl = /\.js$/;
-
-			return function ()
-			{
-				var
-					profileComponents = this .getScene () .getProfile () .components,
-					components        = this .getScene () .getComponents (),
-					providerUrls      = new Set ();
-
-				for (var i = 0, length = profileComponents .length; i < length; ++ i)
-				{
-					var providerUrl = profileComponents [i] .providerUrl;
-	
-					if (providerUrl .match (componentsUrl))
-						providerUrls .add (providerUrl);
-				}
-
-				for (var i = 0, length = components .length; i < length; ++ i)
-				{
-					var providerUrl = components [i] .providerUrl;
-	
-					if (providerUrl .match (componentsUrl))
-						providerUrls .add (providerUrl);
-				}
-
-				return Array .from (providerUrls);
-			};
-		})(),
 		addRootNode: function (node)
 		{
 			this .getExecutionContext () .rootNodes .push (node);
@@ -35263,8 +35300,6 @@ function (Fields,
 
 				// Assign metadata.
 
-				this .setURL (proto .getURL ());
-
 				this .importExternProtos (proto .externprotos);
 				this .importProtos       (proto .protos);
 				this .copyRootNodes      (proto .rootNodes);
@@ -35307,13 +35342,33 @@ function (Fields,
 				console .error (error .message);
 			}
 		},
+		getExtendedEventHandling: function ()
+		{
+			return false;
+		},
 		getSpecificationVersion: function ()
 		{
-			return this .getExecutionContext () .getSpecificationVersion ();
+			return this .protoNode .getProtoDeclaration () .getSpecificationVersion ();
 		},
 		getEncoding: function ()
 		{
-			return this .getExecutionContext () .getEncoding ();
+			return this .protoNode .getProtoDeclaration () .getEncoding ();
+		},
+		setURL: function (url)
+		{
+			return this .protoNode .getProtoDeclaration () .setURL (url);
+		},
+		getURL: function ()
+		{
+			return this .protoNode .getProtoDeclaration () .getURL ();
+		},
+		fromUnit: function (category, value)
+		{
+			return this .protoNode .getProtoDeclaration () .fromUnit (category, value);
+		},
+		toUnit: function (category, value)
+		{
+			return this .protoNode .getProtoDeclaration () .toUnit (category, value);
 		},
 		getInnerNode: function ()
 		{
@@ -35328,18 +35383,6 @@ function (Fields,
 			}
 
 			throw new Error ("Root node not available.");
-		},
-		fromUnit: function (category, value)
-		{
-			return this .protoNode .getProtoDeclaration () .fromUnit (category, value);
-		},
-		toUnit: function (category, value)
-		{
-			return this .protoNode .getProtoDeclaration () .toUnit (category, value);
-		},
-		getExtendedEventHandling: function ()
-		{
-			return false;
 		},
 		importExternProtos: function (externprotos)
 		{
@@ -35960,7 +36003,7 @@ function ($,
 
 			this .scene .setLive (this .isLive () .getValue ());
 			this .scene .setPrivate (this .getScene () .getPrivate ());
-			//this .scene .setExecutionContext (this .getExecutionContext ());
+			this .scene .setExecutionContext (this .getExecutionContext ());
 			this .scene .setup ();
 
 			this .setLoadState (X3DConstants .COMPLETE_STATE);
@@ -36245,18 +36288,6 @@ function ($,
 			X3DProtoDeclarationNode .prototype .initialize .call (this);
 
 			this .loadState_ = X3DConstants .COMPLETE_STATE;
-		},
-		getSpecificationVersion: function ()
-		{
-			return this .getExecutionContext () .getSpecificationVersion ();
-		},
-		getEncoding: function ()
-		{
-			return this .getExecutionContext () .getEncoding ();
-		},
-		getURL: function ()
-		{
-			return this .getExecutionContext () .getURL ();
 		},
 		getProtoDeclaration: function ()
 		{
@@ -36990,7 +37021,7 @@ function (Fields,
 
 			if (this .success)
 			{
-				require (this .getProviderUrls (),
+				require (this .getScene () .getProviderUrls (),
 				function ()
 				{
 					try
@@ -46225,7 +46256,7 @@ function ($,
 
 			if (this .success)
 			{
-				require (this .getProviderUrls (),
+				require (this .getScene () .getProviderUrls (),
 				function ()
 				{
 					try
