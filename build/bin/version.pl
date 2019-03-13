@@ -52,7 +52,7 @@ sub rsync
 	my $local   = "/home/holger/Projekte/X_ITE/dist";
 	my $ftp     = "/html/create3000.de/code/htdocs/x_ite";
 	my $host    = "alfa3008.alfahosting-server.de";
-	my $user    = netruser ($host);
+	my $user    = netuser ($host);
 
 	say "Uploading $release";
 
