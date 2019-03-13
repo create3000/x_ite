@@ -137,7 +137,6 @@ function (X3DConstants)
 				this .names         .clear ();
 				this .namesByNode   .clear ();
 				this .importedNames .clear ();
-				this .importedNodes = { };
 			}
 		},
 		ExportedNodes: function (exportedNodes)
