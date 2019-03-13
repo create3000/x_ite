@@ -51,16 +51,26 @@ sub rsync
 	my $release = shift;
 	my $local   = "/home/holger/Projekte/X_ITE/dist";
 	my $ftp     = "/html/create3000.de/code/htdocs/x_ite";
-	my $HOST    = "alfa3008.alfahosting-server.de";
-	my $USER    = "web839";
+	my $host    = "alfa3008.alfahosting-server.de";
+	my $user    = netruser ($host);
 
 	say "Uploading $release";
 
 	#system "mkdir", "-p", "$ftp/$release/dist/";
 	#system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "$local/", "$ftp/$release/dist/";
 
-	system "lftp", "-e", "mkdir -p $ftp/$release/dist; bye", "ftp://$USER\@$HOST";
-	system "lftp", "-e", "mirror --reverse --delete --use-cache --verbose $local $ftp/$release/dist; bye", "ftp://$USER\@$HOST";
+	system "lftp", "-e", "mkdir -p $ftp/$release/dist; bye", "ftp://$user\@$host";
+	system "lftp", "-e", "mirror --reverse --delete --use-cache --verbose $local $ftp/$release/dist; bye", "ftp://$user\@$host";
+}
+
+sub netuser
+{
+	my $host  = shift;
+	my $netrc = `cat ~/.netrc`;
+
+	$netrc =~ /machine\s+$host\s+login\s+(\w+)/;
+
+	return $1;
 }
 
 my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
