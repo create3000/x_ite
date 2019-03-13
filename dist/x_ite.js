@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-657 */
+/* X_ITE v4.4.4a-658 */
 
 (function () {
 
@@ -105426,7 +105426,7 @@ function ($,
 
 	function getBrowser (dom)
 	{
-		return $(dom) .data ("browser");
+		return $(dom || "X3DCanvas") .data ("browser");
 	}
 
 	function createBrowserFromElement (dom)

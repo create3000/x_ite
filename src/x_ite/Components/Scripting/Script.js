@@ -269,8 +269,7 @@ function ($,
 				throw new Error ("SFNode.new: invalid argument, must be 'string' is 'undefined'.");
 			}
 
-			SFNode .prototype = Object .create (Fields .SFNode .prototype);
-			SFNode .prototype .constructor = SFNode;
+			SFNode .prototype = Fields .SFNode .prototype;
 
 			var global =
 			{
