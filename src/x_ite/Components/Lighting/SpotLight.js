@@ -195,6 +195,7 @@ function (Fields,
 				var
 					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
 					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
+					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
