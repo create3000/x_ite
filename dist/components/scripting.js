@@ -389,7 +389,10 @@ function ($,
 		},
 		getGlobal: function ()
 		{
-			var browser = this .getBrowser ();
+			var
+				browser          = this .getBrowser (),
+				executionContext = this .getExecutionContext (),
+				live             = this .isLive ();
 
 			function SFNode (vrmlSyntax)
 			{
@@ -397,9 +400,15 @@ function ($,
 					scene     = browser .createX3DFromString (String (vrmlSyntax)),
 					rootNodes = scene .getRootNodes ();
 
+				live .addFieldInterest (scene .isLive ());
+
+				scene .setLive (live .getValue ());
+				scene .setPrivate (executionContext .getPrivate ());
+				scene .setExecutionContext (executionContext);
+
 				if (rootNodes .length && rootNodes [0])
 				{
-					return SFNodeCache .add (rootNodes [0] .getValue ());
+					return SFNodeCache .add (rootNodes [0] .getValue (), this);
 				}
 
 				throw new Error ("SFNode.new: invalid argument, must be 'string' is 'undefined'.");

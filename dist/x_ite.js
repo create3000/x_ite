@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-656 */
+/* X_ITE v4.4.4a-657 */
 
 (function () {
 
@@ -21809,11 +21809,11 @@ define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode','x_ite/Fields/SFNode']
 
 	SFNodeCache .prototype =
 	{
-		add: function (baseNode)
+		add: function (baseNode, node)
 		{
 			var SFNode = require ("x_ite/Fields/SFNode");
 
-			var node = new SFNode (baseNode);
+			var node = node ? SFNode .call (node, baseNode) : new SFNode (baseNode);
 
 			cache .set (baseNode, node);
 
