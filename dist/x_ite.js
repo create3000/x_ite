@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-651 */
+/* X_ITE v4.4.4a-652 */
 
 (function () {
 
@@ -13016,13 +13016,13 @@ function (X3DConstants)
 		this .indent                = "";
 		this .indentChar            = "  ";
 		this .executionContextStack = [ null ];
-		this .importedNodesIndex    = { };
-		this .exportedNodesIndex    = { };
-		this .nodes                 = { };
-		this .names                 = { };
-		this .namesByNode           = { };
-		this .importedNames         = { };
-		this .routeNodes            = { };
+		this .importedNodesIndex    = new Map ();
+		this .exportedNodesIndex    = new Map ();
+		this .nodes                 = new Set ();
+		this .names                 = new Map ();
+		this .namesByNode           = new Map ();
+		this .importedNames         = new Map ();
+		this .routeNodes            = new Set ();
 		this .level                 = 0;
 		this .newName               = 0;
 		this .containerFields       = [ ];
@@ -13056,11 +13056,11 @@ function (X3DConstants)
 		{
 			this .executionContextStack .push (executionContext);
 
-			if (! this .importedNodesIndex [executionContext .getId ()])
-				this .importedNodesIndex [executionContext .getId ()] = { };
+			if (! this .importedNodesIndex .has (executionContext))
+				this .importedNodesIndex .set (executionContext, new Set ());
 
-			if (! this .exportedNodesIndex [executionContext .getId ()])
-				this .exportedNodesIndex [executionContext .getId ()] = { };
+			if (! this .exportedNodesIndex .has (executionContext))
+				this .exportedNodesIndex .set (executionContext, new Set ());
 		},
 		PopExecutionContext: function ()
 		{
@@ -13069,8 +13069,8 @@ function (X3DConstants)
 			if (this .ExecutionContext ())
 				return;
 
-			this .importedNodesIndex = { };
-			this .exportedNodesIndex = { };
+			this .importedNodesIndex .clear ();
+			this .exportedNodesIndex .clear ();
 		},
 		ExecutionContext: function ()
 		{
@@ -13089,22 +13089,21 @@ function (X3DConstants)
 		
 			if (this .level === 0)
 			{
-				this .nodes         = { };
-				this .names         = { };
-				this .namesByNode   = { };
-				this .importedNames = { };
-				this .importedNodes = { };
+				this .nodes         .clear ();
+				this .names         .clear ();
+				this .namesByNode   .clear ();
+				this .importedNames .clear ();
 			}
 		},
 		ExportedNodes: function (exportedNodes)
 		{
-			var index = this .exportedNodesIndex [this .ExecutionContext () .getId ()];
+			var index = this .exportedNodesIndex .get (this .ExecutionContext ());
 
 			exportedNodes .forEach (function (exportedNode)
 			{
 				try
 				{
-					index [exportedNode .getLocalNode () .getId ()] = true;
+					index .add (exportedNode .getLocalNode ())
 				}
 				catch (error)
 				{ }
@@ -13112,13 +13111,13 @@ function (X3DConstants)
 		},
 		ImportedNodes: function (importedNodes)
 		{
-			var index = this .importedNodesIndex [this .ExecutionContext () .getId ()];
+			var index = this .importedNodesIndex .get (this .ExecutionContext ());
 
 			importedNodes .forEach (function (importedNode)
 			{
 				try
 				{
-					index [importedNode .getInlineNode () .getId ()] = true;
+					index .add (importedNode .getInlineNode ());
 				}
 				catch (error)
 				{ }
@@ -13126,18 +13125,15 @@ function (X3DConstants)
 		},
 		AddImportedNode: function (exportedNode, importedName)
 		{
-			this .importedNames [exportedNode .getId ()] = importedName;
+			this .importedNames .set (exportedNode, importedName);
 		},
 		AddRouteNode: function (routeNode)
 		{
-			this .routeNodes [routeNode .getId ()] = true;
+			this .routeNodes .add (routeNode);
 		},
 		ExistsRouteNode: function (routeNode)
 		{
-			if (this .routeNodes [routeNode .getId ()])
-				return true;
-	
-			return false;
+			return this .routeNodes .has (routeNode);
 		},
 		IsSharedNode: function (baseNode)
 		{
@@ -13145,19 +13141,19 @@ function (X3DConstants)
 		},
 		AddNode: function (baseNode)
 		{
-			this .nodes [baseNode .getId ()] = true;
+			this .nodes .add (baseNode);
 
 			this .AddRouteNode (baseNode);
 		},
 		ExistsNode: function (baseNode)
 		{
-			return this .nodes [baseNode .getId ()] !== undefined;
+			return this .nodes .has (baseNode);
 		},
 		Name: function (baseNode)
 		{
 			// Is the node already in index
 
-			var name = this .namesByNode [baseNode .getId ()];
+			var name = this .namesByNode .get (baseNode);
 
 			if (name !== undefined)
 				return name;
@@ -13170,8 +13166,8 @@ function (X3DConstants)
 				{
 					var name = this .UniqueName ();
 		
-					this .names [name]                     = baseNode;
-					this .namesByNode [baseNode .getId ()] = name;
+					this .names .set (name, baseNode);
+					this .namesByNode .set (baseNode, name);
 
 					return name;
 				}
@@ -13204,7 +13200,7 @@ function (X3DConstants)
 					i       = 0,
 					newName = hasNumber ? name + '_' + (++ i) : name;
 
-				while (this .names [newName] !== undefined)
+				while (this .names .has (newName))
 				{
 					newName = name + '_' + (++ i);
 				}
@@ -13212,8 +13208,8 @@ function (X3DConstants)
 				name = newName;
 			}
 
-			this .names [name]                     = baseNode;
-			this .namesByNode [baseNode .getId ()] = name;
+			this .names .set (name, baseNode);
+			this .namesByNode .set (baseNode, name);
 
 			return name;
 		},
@@ -13227,19 +13223,19 @@ function (X3DConstants)
 
 			var
 				executionContext = baseNode .getExecutionContext (),
-				index            = this .importedNodesIndex [executionContext .getId ()];
+				index            = this .importedNodesIndex .get (executionContext);
 
 			if (index)
 			{
-				if (index [baseNode .getId ()])
+				if (index .has (baseNode))
 					return true;
 			}
 
-			var index = this .exportedNodesIndex [executionContext .getId ()];
+			var index = this .exportedNodesIndex .get (executionContext);
 
 			if (index)
 			{
-				if (index [baseNode .getId ()])
+				if (index .has (baseNode))
 					return true;
 			}
 
@@ -13251,7 +13247,7 @@ function (X3DConstants)
 			{
 				var name = '_' + (++ this .newName);
 		
-				if (this .names [name] !== undefined)
+				if (this .names .has (name))
 					continue;
 
 				return name;
@@ -13259,7 +13255,7 @@ function (X3DConstants)
 		},
 		LocalName: function (baseNode)
 		{
-			var importedName = this .importedNames [baseNode .getId ()];
+			var importedName = this .importedNames .get (baseNode);
 
 			if (importedName !== undefined)
 				return importedName;
@@ -31051,7 +31047,6 @@ define ('x_ite/Configuration/X3DInfoArray',[],function ()
 					value .toVRMLStream (stream);
 	
 					stream .string += "\n";
-					stream .string += "\n";
 				}
 				catch (error)
 				{
@@ -31586,6 +31581,23 @@ function (X3DInfoArray)
 	ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ExternProtoDeclarationArray,
+		toVRMLStream: function (stream)
+		{
+			this .array .forEach (function (value)
+			{
+				try
+				{
+					value .toVRMLStream (stream);
+	
+					stream .string += "\n";
+					stream .string += "\n";
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			});
+		},
 	});
 
 	return ExternProtoDeclarationArray;
@@ -31655,6 +31667,23 @@ function (X3DInfoArray)
 	ProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ProtoDeclarationArray,
+		toVRMLStream: function (stream)
+		{
+			this .array .forEach (function (value)
+			{
+				try
+				{
+					value .toVRMLStream (stream);
+	
+					stream .string += "\n";
+					stream .string += "\n";
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			});
+		},
 	});
 
 	return ProtoDeclarationArray;
@@ -34317,7 +34346,14 @@ function (Fields,
 				stream .string += "\n";
 			}
 
-			this .getComponents () .toVRMLStream (stream);
+			var components = this .getComponents ();
+
+			if (components .length)
+			{
+				components .toVRMLStream (stream);
+
+				stream .string += "\n";
+			}
 
 			// Units
 			{
@@ -36960,7 +36996,7 @@ function (Fields,
 					try
 					{
 						this .statements ();
-						this .popExecutionContext (this .getScene ());
+						this .popExecutionContext ();
 
 						if (this .lastIndex < this .input .length)
 							throw new Error ("Unknown statement.");
@@ -36982,7 +37018,7 @@ function (Fields,
 			else
 			{
 				this .statements ();
-				this .popExecutionContext (this .getScene ());
+				this .popExecutionContext ();
 	
 				if (this .lastIndex < this .input .length)
 					throw new Error ("Unknown statement.");
