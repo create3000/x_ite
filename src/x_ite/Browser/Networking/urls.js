@@ -80,7 +80,7 @@ function (URI,
 		},
 		getFallbackUrl: function (url)
 		{
-			return "http://cors.create3000.de/" + url;
+			return "http://cors.create3000.de/?url=" + url;
 		},
 		getFallbackExpression: function ()
 		{
