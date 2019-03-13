@@ -88,14 +88,14 @@ function (Fields,
 
 		this .rootNodes_ .addClones (1);
 
-		this .uninitializedNodes   = [ ];
-		this .uninitializedNodes2  = [ ];
-		this .namedNodes           = new Map ();
-		this .importedNodes        = new Map ();
-		this .protos               = new ProtoDeclarationArray ();
-		this .externprotos         = new ExternProtoDeclarationArray ();
-		this .routes               = new RouteArray ();
-		this .routeIndex           = new Map ();
+		this ._uninitializedNodes   = [ ];
+		this ._uninitializedNodes2  = [ ];
+		this ._namedNodes           = new Map ();
+		this ._importedNodes        = new Map ();
+		this ._protos               = new ProtoDeclarationArray ();
+		this ._externprotos         = new ExternProtoDeclarationArray ();
+		this ._routes               = new RouteArray ();
+		this ._routeIndex           = new Map ();
 	}
 
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -111,12 +111,12 @@ function (Fields,
 			{
 				// Setup nodes.
 
-				while (this .uninitializedNodes .length)
+				while (this ._uninitializedNodes .length)
 				{
-					var uninitializedNodes = this .uninitializedNodes;
+					var uninitializedNodes = this ._uninitializedNodes;
 	
-					this .uninitializedNodes  = this .uninitializedNodes2;
-					this .uninitializedNodes2 = uninitializedNodes;
+					this ._uninitializedNodes  = this ._uninitializedNodes2;
+					this ._uninitializedNodes2 = uninitializedNodes;
 		
 					for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
 						uninitializedNodes [i] .setup ();
@@ -225,11 +225,11 @@ function (Fields,
 		},
 		addUninitializedNode: function (node)
 		{
-			this .uninitializedNodes .push (node);
+			this ._uninitializedNodes .push (node);
 		},
 		addNamedNode: function (name, node)
 		{
-			if (this .namedNodes .has (name))
+			if (this ._namedNodes .has (name))
 				throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
 
 			this .updateNamedNode (name, node);
@@ -261,15 +261,15 @@ function (Fields,
 
 			baseNode .setName (name);
 
-			this .namedNodes .set (name, baseNode);
+			this ._namedNodes .set (name, baseNode);
 		},
 		removeNamedNode: function (name)
 		{
-			this .namedNodes .delete (name);
+			this ._namedNodes .delete (name);
 		},
 		getNamedNode: function (name)
 		{
-			var baseNode = this .namedNodes .get (name);
+			var baseNode = this ._namedNodes .get (name);
 
 			if (baseNode)
 				return SFNodeCache .get (baseNode);
@@ -278,7 +278,7 @@ function (Fields,
 		},
 		getNamedNodes: function ()
 		{
-			return this .namedNodes;
+			return this ._namedNodes;
 		},
 		getUniqueName: function (name)
 		{
@@ -292,7 +292,7 @@ function (Fields,
 
 			for (; i;)
 			{
-				if (this .namedNodes .has (newName) || newName .length === 0)
+				if (this ._namedNodes .has (newName) || newName .length === 0)
 				{
 					var
 						min = i,
@@ -313,7 +313,7 @@ function (Fields,
 			if (importedName === undefined)
 				importedName = exportedName;
 
-			if (this .importedNodes .has (importedName))
+			if (this ._importedNodes .has (importedName))
 				throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
 
 			this .updateImportedNode (inlineNode, exportedName, importedName);
@@ -338,7 +338,7 @@ function (Fields,
 
 			// Update existing imported node.
 
-			for (var item of this .importedNodes)
+			for (var item of this ._importedNodes)
 			{
 				var
 					key          = item [0],
@@ -346,9 +346,9 @@ function (Fields,
 
 				if (importedNode .getInlineNode () === inlineNode && importedNode .getExportedName () === exportedName)
 				{
-					this .importedNodes .delete (key);
+					this ._importedNodes .delete (key);
 					
-					this .importedNodes .set (importedName, importedNode);
+					this ._importedNodes .set (importedName, importedNode);
 					
 					importedNode .setImportedName (importedName);
 					return;
@@ -361,24 +361,24 @@ function (Fields,
 
 			var importedNode = new ImportedNode (this, inlineNode, exportedName, importedName);
 
-			this .importedNodes .set (importedName, importedNode);
+			this ._importedNodes .set (importedName, importedNode);
 
 			importedNode .setup ();
 		},
 		removeImportedNode: function (importedName)
 		{
-			var importedNode = this .importedNodes .get (importedName);
+			var importedNode = this ._importedNodes .get (importedName);
 
 			if (! importedNode)
 				return;
 
 			importedNode .dispose ();
 
-			this .importedNodes .delete (importedName);
+			this ._importedNodes .delete (importedName);
 		},
 		getImportedNode: function (importedName)
 		{
-			var importedNode = this .importedNodes .get (importedName);
+			var importedNode = this ._importedNodes .get (importedName);
 
 			if (importedNode)
 				return importedNode .getExportedNode () .valueOf ();
@@ -387,7 +387,7 @@ function (Fields,
 		},
 		getImportedNodes: function ()
 		{
-			return this .importedNodes;
+			return this ._importedNodes;
 		},
 		getLocalNode: function (name)
 		{
@@ -397,7 +397,7 @@ function (Fields,
 			}
 			catch (error)
 			{
-				var importedNode = this .importedNodes .get (name);
+				var importedNode = this ._importedNodes .get (name);
 
 				if (importedNode)
 					return SFNodeCache .get (importedNode);
@@ -413,7 +413,7 @@ function (Fields,
 			if (node .getValue () .getExecutionContext () === this)
 				return node .getValue () .getName ();
 
-			for (var importedNode of this .importedNodes .values ())
+			for (var importedNode of this ._importedNodes .values ())
 			{
 				try
 				{
@@ -433,19 +433,19 @@ function (Fields,
 		},
 		getProtoDeclaration: function (name)
 		{
-			return this .protos .get (name);
+			return this ._protos .get (name);
 		},
 		getProtoDeclarations: function ()
 		{
-			return this .protos;
+			return this ._protos;
 		},
 		getExternProtoDeclaration: function (name)
 		{
-			return this .externprotos .get (name);
+			return this ._externprotos .get (name);
 		},
 		getExternProtoDeclarations: function ()
 		{
-			return this .externprotos;
+			return this ._externprotos;
 		},
 		addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
 		{
@@ -530,15 +530,15 @@ function (Fields,
 
 				var
 					id    = sourceField .getId () + "." + destinationField .getId (),
-					route = this .routeIndex .get (id);
+					route = this ._routeIndex .get (id);
 
 				if (route)
 					return route;
 
 				var route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
-				this .routes .getValue () .push (route);
-				this .routeIndex .set (id, route);
+				this ._routes .getValue () .push (route);
+				this ._routeIndex .set (id, route);
 
 				return route;
 			}
@@ -564,14 +564,14 @@ function (Fields,
 					sourceField      = route ._sourceField,
 					destinationField = route ._destinationField,
 					id               = sourceField .getId () + "." + destinationField .getId (),
-					index            = this .routes .getValue () .indexOf (route);
+					index            = this ._routes .getValue () .indexOf (route);
 
 				route .disconnect ();
 
 				if (index !== -1)
-					this .routes .getValue () .splice (index, 1);
+					this ._routes .getValue () .splice (index, 1);
 
-				this .routeIndex .delete (id);
+				this ._routeIndex .delete (id);
 			}
 			catch (error)
 			{
@@ -591,11 +591,11 @@ function (Fields,
 				destinationField = destinationNode .getValue () .getField (destinationField),
 				id               = sourceField .getId () + "." + destinationField .getId ();
 
-			return this .routeIndex .get (id);
+			return this ._routeIndex .get (id);
 		},
 		getRoutes: function ()
 		{
-			return this .routes;
+			return this ._routes;
 		},
 		changeViewpoint: function (name)
 		{
@@ -789,6 +789,27 @@ function (Fields,
 	{
 		get: function () { return this .getRootNodes (); },
 		set: function (value) { this .setRootNodes (value); },
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "protos",
+	{
+		get: function () { return this .getProtoDeclarations (); },
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "externprotos",
+	{
+		get: function () { return this .getExternProtoDeclarations (); },
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DExecutionContext .prototype, "routes",
+	{
+		get: function () { return this .getRoutes (); },
 		enumerable: true,
 		configurable: false
 	});
