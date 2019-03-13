@@ -138,7 +138,7 @@ function ($,
 
 	function getBrowser (dom)
 	{
-		return $(dom) .data ("browser");
+		return $(dom || "X3DCanvas") .data ("browser");
 	}
 
 	function createBrowserFromElement (dom)
