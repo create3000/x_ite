@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-660 */
+/* X_ITE v4.4.4a-661 */
 
 (function () {
 
@@ -41125,7 +41125,7 @@ function (URI,
 		},
 		getFallbackUrl: function (url)
 		{
-			return "http://cors.create3000.de/" + url;
+			return "http://cors.create3000.de/?url=" + url;
 		},
 		getFallbackExpression: function ()
 		{
@@ -78962,7 +78962,7 @@ function ($,
 				             viewport [2],
 				             viewport [3]);
 	
-				gl .clearColor (1, 0, 0, 0);
+				gl .clearColor (1, 0, 0, 0); // Must be '1, 0, 0, 0'.
 				gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 	
 				// Render all objects
@@ -93347,6 +93347,7 @@ function (Fields,
 				var
 					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
 					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
+					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),

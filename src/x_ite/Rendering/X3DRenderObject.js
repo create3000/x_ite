@@ -844,7 +844,7 @@ function ($,
 				             viewport [2],
 				             viewport [3]);
 	
-				gl .clearColor (1, 0, 0, 0);
+				gl .clearColor (1, 0, 0, 0); // Must be '1, 0, 0, 0'.
 				gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 	
 				// Render all objects
