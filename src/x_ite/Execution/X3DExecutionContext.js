@@ -52,7 +52,6 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Configuration/ComponentInfoArray",
 	"x_ite/Execution/ImportedNode",
 	"x_ite/Prototype/ExternProtoDeclarationArray",
 	"x_ite/Prototype/ProtoDeclarationArray",
@@ -62,14 +61,12 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 	"x_ite/Fields/SFNodeCache",
-	"standard/Networking/URI",
 	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DBaseNode,
-          ComponentInfoArray,
           ImportedNode,
           ExternProtoDeclarationArray,
           ProtoDeclarationArray,
@@ -79,7 +76,6 @@ function (Fields,
           X3DConstants,
           Generator,
           SFNodeCache,
-          URI,
           Algorithm)
 {
 "use strict";
@@ -92,11 +88,6 @@ function (Fields,
 
 		this .rootNodes_ .addClones (1);
 
-		this .specificationVersion = "3.3";
-		this .encoding             = "SCRIPTED";
-		this .profile              = null;
-		this .components           = new ComponentInfoArray (this .getBrowser ());
-		this .url                  = new URI (window .location);
 		this .uninitializedNodes   = [ ];
 		this .uninitializedNodes2  = [ ];
 		this .namedNodes           = new Map ();
@@ -144,15 +135,15 @@ function (Fields,
 		},
 		getSpecificationVersion: function ()
 		{
-			return this .specificationVersion;
+			return this .getExecutionContext () .getSpecificationVersion ();
 		},
 		setEncoding: function (value)
 		{
-			this .encoding = value;
+			this .getExecutionContext () .setEncoding (value);
 		},
 		getEncoding: function ()
 		{
-			return this .encoding;
+			return this .getExecutionContext () .getEncoding ();
 		},
 		getWorldURL: function ()
 		{
@@ -160,27 +151,27 @@ function (Fields,
 		},
 		setURL: function (url)
 		{
-			this .url = url;
+			this .getExecutionContext () .setURL (url);
 		},
 		getURL: function ()
 		{
-			return this .url;
+			return this .getExecutionContext () .getURL ();
 		},
 		setProfile: function (profile)
 		{
-			this .profile = profile;
+			this .getExecutionContext () .setProfile (profile);
 		},
-		getProfile: function (profile)
+		getProfile: function ()
 		{
-			return this .profile;
+			return this .getExecutionContext () .getProfile ();
 		},
 		addComponent: function (component)
 		{
-			this .components .add (component .name, component);
+			this .getExecutionContext () .addComponent (component);
 		},
 		getComponents: function ()
 		{
-			return this .components;
+			return this .getExecutionContext () .getComponents ();
 		},
 		getUnits: function ()
 		{

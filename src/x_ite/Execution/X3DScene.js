@@ -50,21 +50,25 @@
 define ([
 	"x_ite/Fields",
 	"x_ite/Execution/X3DExecutionContext",
+	"x_ite/Configuration/ComponentInfoArray",
 	"x_ite/Configuration/UnitInfo",
 	"x_ite/Configuration/UnitInfoArray",
 	"x_ite/Execution/ExportedNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 	"x_ite/Fields/SFNodeCache",
+	"standard/Networking/URI",
 ],
 function (Fields,
           X3DExecutionContext,
+          ComponentInfoArray,
           UnitInfo,
           UnitInfoArray,
           ExportedNode,
           X3DConstants,
           Generator,
-          SFNodeCache)
+          SFNodeCache,
+          URI)
 {
 "use strict";
 
@@ -74,7 +78,12 @@ function (Fields,
 
 		this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
-		this .unitArray = new UnitInfoArray ();
+		this .specificationVersion = "3.3";
+		this .encoding             = "SCRIPTED";
+		this .profile              = null;
+		this .components           = new ComponentInfoArray (this .getBrowser ());
+		this .url                  = new URI (window .location);
+		this .unitArray            = new UnitInfoArray ();
 
 		this .unitArray .add ("angle",  new UnitInfo ("angle",  "radian",   1));
 		this .unitArray .add ("force",  new UnitInfo ("force",  "newton",   1));
@@ -105,6 +114,73 @@ function (Fields,
 
 			return this .getExecutionContext () .getScene ();
 		},
+		getSpecificationVersion: function ()
+		{
+			return this .specificationVersion;
+		},
+		setEncoding: function (value)
+		{
+			this .encoding = value;
+		},
+		getEncoding: function ()
+		{
+			return this .encoding;
+		},
+		setURL: function (url)
+		{
+			this .url = url;
+		},
+		getURL: function ()
+		{
+			return this .url;
+		},
+		setProfile: function (profile)
+		{
+			this .profile = profile;
+		},
+		getProfile: function ()
+		{
+			return this .profile;
+		},
+		addComponent: function (component)
+		{
+			this .components .add (component .name, component);
+		},
+		getComponents: function ()
+		{
+			return this .components;
+		},
+		getProviderUrls: (function ()
+		{
+			var componentsUrl = /\.js$/;
+
+			return function ()
+			{
+				var
+					profile           = this .getProfile () ? this .getProfile () : this .getBrowser () .getProfile ("Full"),
+					profileComponents = profile .components,
+					components        = this .getComponents (),
+					providerUrls      = new Set ();
+
+				for (var i = 0, length = profileComponents .length; i < length; ++ i)
+				{
+					var providerUrl = profileComponents [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .add (providerUrl);
+				}
+
+				for (var i = 0, length = components .length; i < length; ++ i)
+				{
+					var providerUrl = components [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .add (providerUrl);
+				}
+
+				return Array .from (providerUrls);
+			};
+		})(),
 		updateUnit: function (category, name, conversionFactor)
 		{
 			// Private function.

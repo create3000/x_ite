@@ -473,7 +473,7 @@ function (Fields,
 
 			if (this .success)
 			{
-				require (this .getProviderUrls (),
+				require (this .getScene () .getProviderUrls (),
 				function ()
 				{
 					try

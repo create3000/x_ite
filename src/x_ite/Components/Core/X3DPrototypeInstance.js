@@ -171,8 +171,6 @@ function (Fields,
 
 				// Assign metadata.
 
-				this .setURL (proto .getURL ());
-
 				this .importExternProtos (proto .externprotos);
 				this .importProtos       (proto .protos);
 				this .copyRootNodes      (proto .rootNodes);
@@ -215,13 +213,33 @@ function (Fields,
 				console .error (error .message);
 			}
 		},
+		getExtendedEventHandling: function ()
+		{
+			return false;
+		},
 		getSpecificationVersion: function ()
 		{
-			return this .getExecutionContext () .getSpecificationVersion ();
+			return this .protoNode .getProtoDeclaration () .getSpecificationVersion ();
 		},
 		getEncoding: function ()
 		{
-			return this .getExecutionContext () .getEncoding ();
+			return this .protoNode .getProtoDeclaration () .getEncoding ();
+		},
+		setURL: function (url)
+		{
+			return this .protoNode .getProtoDeclaration () .setURL (url);
+		},
+		getURL: function ()
+		{
+			return this .protoNode .getProtoDeclaration () .getURL ();
+		},
+		fromUnit: function (category, value)
+		{
+			return this .protoNode .getProtoDeclaration () .fromUnit (category, value);
+		},
+		toUnit: function (category, value)
+		{
+			return this .protoNode .getProtoDeclaration () .toUnit (category, value);
 		},
 		getInnerNode: function ()
 		{
@@ -236,18 +254,6 @@ function (Fields,
 			}
 
 			throw new Error ("Root node not available.");
-		},
-		fromUnit: function (category, value)
-		{
-			return this .protoNode .getProtoDeclaration () .fromUnit (category, value);
-		},
-		toUnit: function (category, value)
-		{
-			return this .protoNode .getProtoDeclaration () .toUnit (category, value);
-		},
-		getExtendedEventHandling: function ()
-		{
-			return false;
 		},
 		importExternProtos: function (externprotos)
 		{
