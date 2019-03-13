@@ -122,7 +122,6 @@ define (function ()
 					value .toVRMLStream (stream);
 	
 					stream .string += "\n";
-					stream .string += "\n";
 				}
 				catch (error)
 				{

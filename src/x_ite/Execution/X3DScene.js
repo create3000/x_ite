@@ -311,7 +311,14 @@ function (Fields,
 				stream .string += "\n";
 			}
 
-			this .getComponents () .toVRMLStream (stream);
+			var components = this .getComponents ();
+
+			if (components .length)
+			{
+				components .toVRMLStream (stream);
+
+				stream .string += "\n";
+			}
 
 			// Units
 			{
