@@ -215,11 +215,10 @@ function (Fields,
 		setShaderUniforms: function (gl, shaderObject)
 		{
 			var
-				lightNode   = this .lightNode,
-				color       = lightNode .getColor (),
-				direction   = this .direction,
-				shadowColor = lightNode .getShadowColor (),
-				i           = shaderObject .numLights ++;
+				lightNode  = this .lightNode,
+				color      = lightNode .getColor (),
+				direction  = this .direction,
+				i          = shaderObject .numLights ++;
 
 			gl .uniform1i (shaderObject .x3d_LightType [i],             1);
 			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
@@ -229,12 +228,18 @@ function (Fields,
 
 			if (this .textureUnit)
 			{
+				var shadowColor = lightNode .getShadowColor ();
+
 				gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
 				gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
 				gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
 				gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
 				gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
 				gl .uniform1i        (shaderObject .x3d_ShadowMap [i],           this .textureUnit);
+			}
+			else
+			{
+				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
 			}
 		},
 		dispose: function ()
