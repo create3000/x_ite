@@ -90,8 +90,8 @@ function (Fields,
 		this ._units .add ("length", new UnitInfo ("length", "metre",    1));
 		this ._units .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
-		this .metadata      = new Map ();
-		this .exportedNodes = new Map ();
+		this ._metadata      = new Map ();
+		this ._exportedNodes = new Map ();
 
 		this .setLive (false);
 	}
@@ -262,23 +262,23 @@ function (Fields,
 			if (! name .length)
 				return;
 
-			this .metadata .set (name, String (value));
+			this ._metadata .set (name, String (value));
 		},
 		removeMetaData: function (name)
 		{
-			this .metadata .delete (name);
+			this ._metadata .delete (name);
 		},
 		getMetaData: function (name)
 		{
-			return this .metadata .get (name);
+			return this ._metadata .get (name);
 		},
 		getMetaDatas: function ()
 		{
-			return this .metadata;
+			return this ._metadata;
 		},
 		addExportedNode: function (exportedName, node)
 		{
-			if (this .exportedNodes .has (exportedName))
+			if (this ._exportedNodes .has (exportedName))
 				throw new Error ("Couldn't add exported node: exported name '" + exportedName + "' already in use.");
 
 			this .updateExportedNode (exportedName, node);
@@ -301,15 +301,15 @@ function (Fields,
 
 			var exportedNode = new ExportedNode (exportedName, node .getValue ());
 
-			this .exportedNodes .set (exportedName, exportedNode);
+			this ._exportedNodes .set (exportedName, exportedNode);
 		},
 		removeExportedNode: function (exportedName)
 		{
-			this .exportedNodes .delete (exportedName);
+			this ._exportedNodes .delete (exportedName);
 		},
 		getExportedNode: function (exportedName)
 		{
-			var exportedNode = this .exportedNodes .get (exportedName);
+			var exportedNode = this ._exportedNodes .get (exportedName);
 
 			if (exportedNode)
 				return SFNodeCache .get (exportedNode .getLocalNode ());
@@ -318,7 +318,7 @@ function (Fields,
 		},
 		getExportedNodes: function ()
 		{
-			return this .exportedNodes;
+			return this ._exportedNodes;
 		},
 		addRootNode: function (node)
 		{
