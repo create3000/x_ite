@@ -479,7 +479,7 @@ function (Fields,
 					try
 					{
 						this .statements ();
-						this .popExecutionContext (this .getScene ());
+						this .popExecutionContext ();
 
 						if (this .lastIndex < this .input .length)
 							throw new Error ("Unknown statement.");
@@ -501,7 +501,7 @@ function (Fields,
 			else
 			{
 				this .statements ();
-				this .popExecutionContext (this .getScene ());
+				this .popExecutionContext ();
 	
 				if (this .lastIndex < this .input .length)
 					throw new Error ("Unknown statement.");

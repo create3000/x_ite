@@ -1,10 +1,14 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Parser/Parser.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DBaseNode.js" Line="285" Column="1" />
-      <File FileName="src/x_ite/Parser/Parser.js" Line="2924" Column="90" />
+      <File FileName="src/x_ite/Basic/X3DBaseNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Parser/Parser.js" Line="492" Column="7" />
+      <File FileName="src/x_ite/InputOutput/FileLoader.js" Line="76" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Background.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="214" Column="2" />
+      <File FileName="src/x_ite/Parser/X3DParser.js" Line="117" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
