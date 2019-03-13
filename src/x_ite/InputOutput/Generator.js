@@ -101,10 +101,10 @@ function (X3DConstants)
 			this .executionContextStack .push (executionContext);
 
 			if (! this .importedNodesIndex .has (executionContext))
-				this .importedNodesIndex .set (executionContext, { });
+				this .importedNodesIndex .set (executionContext, new Set ());
 
 			if (! this .exportedNodesIndex .has (executionContext))
-				this .exportedNodesIndex .set (executionContext, { });
+				this .exportedNodesIndex .set (executionContext, new Set ());
 		},
 		PopExecutionContext: function ()
 		{
@@ -148,7 +148,7 @@ function (X3DConstants)
 			{
 				try
 				{
-					index [exportedNode .getLocalNode () .getId ()] = true;
+					index .add (exportedNode .getLocalNode ())
 				}
 				catch (error)
 				{ }
@@ -162,7 +162,7 @@ function (X3DConstants)
 			{
 				try
 				{
-					index [importedNode .getInlineNode () .getId ()] = true;
+					index .add (importedNode .getInlineNode ());
 				}
 				catch (error)
 				{ }
@@ -272,7 +272,7 @@ function (X3DConstants)
 
 			if (index)
 			{
-				if (index [baseNode .getId ()])
+				if (index .has (baseNode))
 					return true;
 			}
 
@@ -280,7 +280,7 @@ function (X3DConstants)
 
 			if (index)
 			{
-				if (index [baseNode .getId ()])
+				if (index .has (baseNode))
 					return true;
 			}
 
