@@ -46296,10 +46296,10 @@ function ($,
 		},
 		x3dElement: function (xmlElement)
 		{
-			// Profile
-
 			try
 			{
+				// Profile
+	
 				var
 					profileNameId = xmlElement .getAttribute ("profile"),
 					profile       = this .getBrowser () .getProfile (profileNameId || "Full");
@@ -105099,7 +105099,6 @@ function ($,
 				{
 					setup ();
 					success (scene);
-console .log (scene);
 				},
 				function (message)
 				{

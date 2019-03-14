@@ -533,7 +533,6 @@ function ($,
 				{
 					setup ();
 					success (scene);
-console .log (scene);
 				},
 				function (message)
 				{
