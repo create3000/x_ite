@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-670 */
+/* X_ITE v4.4.4a-671 */
 
 (function () {
 
@@ -46278,20 +46278,39 @@ function ($,
 							this .x3dElement (X3D [i]);
 					}
 					else
+					{
 						this .childrenElements (xmlElement);
+
+						if (this .success)
+							this .success (this);
+					}
 
 					break;
 				}
 				case "X3D":
+				{
 					this .x3dElement (xmlElement);
 					break;
+				}
 				case "Scene":
 				case "SCENE":
+				{
 					this .sceneElement (xmlElement);
+
+					if (this .success)
+						this .success (this);
+
 					break;
+				}
 				default:
+				{
 					this .childElement (xmlElement);
+
+					if (this .success)
+						this .success (this);
+
 					break;
+				}
 			}
 		},
 		x3dElement: function (xmlElement)
@@ -46339,7 +46358,8 @@ function ($,
 					}
 					catch (error)
 					{
-						this .error (error);
+						if (this .error)
+							this .error (error);
 					}
 				}
 				.bind (this),
@@ -105068,7 +105088,7 @@ function ($,
 				});
 			}
 		},
-		importDocument: function (dom, success, error)
+		importDocument: function (dom)
 		{
 			if (! dom)
 				return;
@@ -105078,29 +105098,30 @@ function ($,
 				currentScene = this .currentScene,
 				external     = this .isExternal ();
 
-			if (success)
+			return new Promise (function (resolve, reject)
 			{
 				new XMLParser (scene) .parseIntoScene (dom,
 				function ()
 				{
-					this .setupScene (scene, currentScene, external);
-					success (scene);
+					if (! external)
+					{
+						scene .setExecutionContext (currentScene);
+						currentScene .isLive () .addInterest ("setLive", scene);
+								
+						if (currentScene .isLive () .getValue ())
+							scene .setLive (true);
+					}
+		
+					scene .setup ();
+
+					resolve (scene);
 				}
 				.bind (this),
 				function (message)
 				{
-					if (error)
-						error (message);
+					reject (message);
 				});
-			}
-			else
-			{
-				new XMLParser (scene) .parseIntoScene (dom);
-
-				this .setupScene (scene, currentScene, external);
-
-				return scene;
-			}
+			});
 		},
 		importJS: function (jsobj, success, error)
 		{
@@ -105112,42 +105133,30 @@ function ($,
 				currentScene = this .currentScene,
 				external     = this .isExternal ();
 
-			if (success)
+			return new Promise (function (resolve, reject)
 			{
 				new JSONParser (scene) .parseJavaScript (jsobj,
 				function ()
 				{
-					this .setupScene (scene, currentScene, external);
-					success (scene);
+					if (! external)
+					{
+						scene .setExecutionContext (currentScene);
+						currentScene .isLive () .addInterest ("setLive", scene);
+								
+						if (currentScene .isLive () .getValue ())
+							scene .setLive (true);
+					}
+		
+					scene .setup ();
+
+					resolve (scene);
 				}
 				.bind (this),
 				function (message)
 				{
-					if (error)
-						error (message);
+					reject (message);
 				});
-			}
-			else
-			{
-				new JSONParser (scene) .parseJavaScript (jsobj);
-
-				this .setupScene (scene, currentScene, external);
-
-				return scene;
-			}
-		},
-		setupScene: function (scene, currentScene, external)
-		{
-			if (! external)
-			{
-				scene .setExecutionContext (currentScene);
-				currentScene .isLive () .addInterest ("setLive", scene);
-						
-				if (currentScene .isLive () .getValue ())
-					scene .setLive (true);
-			}
-
-			scene .setup ();
+			});
 		},
 		getBrowserProperty: function (name)
 		{
