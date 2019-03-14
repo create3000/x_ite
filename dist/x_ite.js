@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-671 */
+/* X_ITE v4.4.4a-672 */
 
 (function () {
 
@@ -46279,10 +46279,35 @@ function ($,
 					}
 					else
 					{
-						this .childrenElements (xmlElement);
-
 						if (this .success)
-							this .success (this);
+						{
+							require (this .getProviderUrls (),
+							function ()
+							{
+								try
+								{
+									this .childrenElements (xmlElement);
+			
+									this .success (this);
+								}
+								catch (error)
+								{
+									if (this .error)
+										this .error (error);
+								}
+							}
+							.bind (this),
+							function (error)
+							{
+								if (this .error)
+									this .error (error);
+							}
+							.bind (this));
+						}
+						else
+						{
+							this .childrenElements (xmlElement);
+						}
 					}
 
 					break;
@@ -46295,19 +46320,69 @@ function ($,
 				case "Scene":
 				case "SCENE":
 				{
-					this .sceneElement (xmlElement);
-
 					if (this .success)
-						this .success (this);
+					{
+						require (this .getProviderUrls (),
+						function ()
+						{
+							try
+							{
+								this .sceneElement (xmlElement);
+		
+								this .success (this);
+							}
+							catch (error)
+							{
+								if (this .error)
+									this .error (error);
+							}
+						}
+						.bind (this),
+						function (error)
+						{
+							if (this .error)
+								this .error (error);
+						}
+						.bind (this));
+					}
+					else
+					{
+						this .sceneElement (xmlElement);
+					}
 
 					break;
 				}
 				default:
 				{
-					this .childElement (xmlElement);
-
 					if (this .success)
-						this .success (this);
+					{
+						require (this .getProviderUrls (),
+						function ()
+						{
+							try
+							{
+								this .childrenElements (xmlElement);
+		
+								this .success (this);
+							}
+							catch (error)
+							{
+								if (this .error)
+									this .error (error);
+							}
+						}
+						.bind (this),
+						function (error)
+						{
+							if (this .error)
+								this .error (error);
+						}
+						.bind (this));
+					}
+					else
+					{
+						this .childrenElements (xmlElement);
+					}
 
 					break;
 				}
@@ -46365,7 +46440,8 @@ function ($,
 				.bind (this),
 				function (error)
 				{
-					this .error (error);
+					if (this .error)
+						this .error (error);
 				}
 				.bind (this));
 			}
