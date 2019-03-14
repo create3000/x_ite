@@ -242,14 +242,13 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var
-				i         = shaderObject .numLights ++,
-				lightNode = this .lightNode;
+			var i = shaderObject .numLights ++;
 
-			if (shaderObject .hasLight (i, lightNode))
+			if (shaderObject .hasLight (i, this))
 				return;
 
 			var 
+				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
 				location    = this .location,

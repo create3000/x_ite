@@ -83,12 +83,12 @@ function (X3DConstants,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var fogNode = this .fogNode;
-
-			if (shaderObject .hasFog (fogNode))
+			if (shaderObject .hasFog (this))
 				return;
 
-			var visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
+			var
+				fogNode         = this .fogNode,
+				visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
 
 			if (fogNode .getHidden () || visibilityRange === 0)
 			{
