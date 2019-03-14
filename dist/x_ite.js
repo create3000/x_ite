@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-667 */
+/* X_ITE v4.4.4a-668 */
 
 (function () {
 
@@ -105099,6 +105099,7 @@ function ($,
 				{
 					setup ();
 					success (scene);
+console .log (scene);
 				},
 				function (message)
 				{
