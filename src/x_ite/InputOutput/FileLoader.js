@@ -137,7 +137,7 @@ function ($,
 					function (scene, string, success, error)
 					{
 						// Try parse X3D JSON Encoding.	
-						setTimeout (this .importJSON .bind (this, scene, JSON .parse (string), success, error), TIMEOUT);
+						setTimeout (this .importJS .bind (this, scene, JSON .parse (string), success, error), TIMEOUT);
 					},
 					function (scene, string, success, error)
 					{
@@ -188,7 +188,7 @@ function ($,
 					function (scene, string)
 					{
 						// Try parse X3D JSON Encoding.	
-						this .importJSON (scene, JSON.parse (string));
+						this .importJS (scene, JSON.parse (string));
 					},
 					function (scene, string)
 					{
@@ -244,7 +244,7 @@ function ($,
 					throw exception;
 			}
 		},
-		importJSON: function (scene, jsonObject, success, error)
+		importJS: function (scene, jsobj, success, error)
 		{
 			try
 			{
@@ -258,7 +258,7 @@ function ($,
 				}
 
 				//AP: add reference to dom for later access.
-				this .node .dom = new JSONParser (scene) .parseJavaScript (jsonObject, success, error);
+				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj, success, error);
 			}
 			catch (exception)
 			{

@@ -549,9 +549,9 @@ function ($,
 				return scene;
 			}
 		},
-		importJSON: function (jsonObject)
+		importJS: function (jsobj)
 		{
-			if (! jsonObject)
+			if (! jsobj)
 				return;
 
 			var
@@ -559,7 +559,7 @@ function ($,
 				external     = this .isExternal (),
 				scene        = this .createScene ();
 
-			new JSONParser (scene) .parseJavaScript (jsonObject);
+			new JSONParser (scene) .parseJavaScript (jsobj);
 
 			if (! external)
 			{

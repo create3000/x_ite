@@ -1,13 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Lighting/SpotLight.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/InputOutput/FileLoader.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Basic/X3DBaseNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Lighting/DirectionalLight.js" Line="221" Column="1" />
-      <File FileName="src/x_ite/Components/Lighting/PointLight.js" Line="261" Column="39" />
-      <File FileName="src/x_ite/Components/Lighting/SpotLight.js" Line="249" Column="1" />
-      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DFogObject.js" Line="88" Column="1" />
+      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="561" Column="1" />
+      <File FileName="src/x_ite/Parser/XMLParser.js" Line="115" Column="1" />
+      <File FileName="src/x_ite/InputOutput/FileLoader.js" Line="168" Column="7" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

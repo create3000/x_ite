@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-668 */
+/* X_ITE v4.4.4a-669 */
 
 (function () {
 
@@ -51187,7 +51187,7 @@ function ($,
 					function (scene, string, success, error)
 					{
 						// Try parse X3D JSON Encoding.	
-						setTimeout (this .importJSON .bind (this, scene, JSON .parse (string), success, error), TIMEOUT);
+						setTimeout (this .importJS .bind (this, scene, JSON .parse (string), success, error), TIMEOUT);
 					},
 					function (scene, string, success, error)
 					{
@@ -51238,7 +51238,7 @@ function ($,
 					function (scene, string)
 					{
 						// Try parse X3D JSON Encoding.	
-						this .importJSON (scene, JSON.parse (string));
+						this .importJS (scene, JSON.parse (string));
 					},
 					function (scene, string)
 					{
@@ -51294,7 +51294,7 @@ function ($,
 					throw exception;
 			}
 		},
-		importJSON: function (scene, jsonObject, success, error)
+		importJS: function (scene, jsobj, success, error)
 		{
 			try
 			{
@@ -51308,7 +51308,7 @@ function ($,
 				}
 
 				//AP: add reference to dom for later access.
-				this .node .dom = new JSONParser (scene) .parseJavaScript (jsonObject, success, error);
+				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj, success, error);
 			}
 			catch (exception)
 			{
@@ -105115,9 +105115,9 @@ function ($,
 				return scene;
 			}
 		},
-		importJSON: function (jsonObject)
+		importJS: function (jsobj)
 		{
-			if (! jsonObject)
+			if (! jsobj)
 				return;
 
 			var
@@ -105125,7 +105125,7 @@ function ($,
 				external     = this .isExternal (),
 				scene        = this .createScene ();
 
-			new JSONParser (scene) .parseJavaScript (jsonObject);
+			new JSONParser (scene) .parseJavaScript (jsobj);
 
 			if (! external)
 			{
