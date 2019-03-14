@@ -89,9 +89,10 @@ function (Fields,
 		this .x3d_ShadowMap             = [ ];
 
 		this .numClipPlanes   = 0;
+		this .fogNode         = null;
 		this .numGlobalLights = 0;
 		this .numLights       = 0;
-		this .lights          = [ ];
+		this .lightNodes      = [ ];
 		this .textures        = new Map ();
 	}
 
@@ -806,12 +807,21 @@ function (Fields,
 
 			return i;
 		},
-		hasLight: function (i, lightNode)
+		hasFog: function (fogNode)
 		{
-			if (this .lights [i] === lightNode)
+			if (this .fogNode === fogNode)
 				return true;
 
-			this .lights [i] = lightNode;
+			this .fogNode = fogNode;
+
+			return false;
+		},
+		hasLight: function (i, lightNode)
+		{
+			if (this .lightNodes [i] === lightNode)
+				return true;
+
+			this .lightNodes [i] = lightNode;
 
 			return false;
 		},
@@ -819,8 +829,9 @@ function (Fields,
 		{
 			// Clip planes and local lights
 
-			this .numClipPlanes = 0;
-			this .numLights     = 0;
+			this .numClipPlanes      = 0;
+			this .numLights          = 0;
+			this .lightNodes .length = 0;
 
 			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
@@ -848,11 +859,15 @@ function (Fields,
 			gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, projectionMatrixArray);
 			gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, cameraSpaceMatrixArray);
 
+			// Fog
+
+			this .fogNode = null;
+
 			// Set global lights
 
-			this .numGlobalLights = globalLights .length;
-			this .numLights       = 0;
-			this .lights .length  = 0;
+			this .numGlobalLights    = globalLights .length;
+			this .numLights          = 0;
+			this .lightNodes .length = 0;
 
 			for (var i = 0, length = globalLights .length; i < length; ++ i)
 				globalLights [i] .setShaderUniforms (gl, this);

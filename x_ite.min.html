@@ -268,6 +268,7 @@ X3D (function ()
 	$(".location-go") .click (loadURL);
 	$(".print-xml") .click (toXMLString);
 	$(".print-vrml") .click (toVRMLString);
+	$(".load-memo") .click (bookmarks .loadURL .bind (bookmarks, "http://memo-sig.nl/vrml/cbx.wrl"));
 },
 function (error)
 {
@@ -299,7 +300,7 @@ function (error)
 					<button class="location-go">Load URL</button>
 				</div>
 				<div class="buttons">
-					<a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a>
+					<a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a><a class="load-memo" href="#">MEMO</a>
 				</div>
 				<div class="links min-links">
 					<a href="src/x_ite.html">src/x_ite.html</a><a href="http://rawgit.com/create3000/x_ite/master/x_ite.min.html">github</a>
