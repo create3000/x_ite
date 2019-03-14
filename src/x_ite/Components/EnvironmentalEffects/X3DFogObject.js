@@ -90,7 +90,7 @@ function (X3DConstants,
 
 			var visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
 
-			if (visibilityRange === 0 || fogNode .getHidden ())
+			if (fogNode .getHidden () || visibilityRange === 0)
 			{
 				gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
 			}
