@@ -215,10 +215,15 @@ function (Fields,
 		setShaderUniforms: function (gl, shaderObject)
 		{
 			var
-				lightNode  = this .lightNode,
-				color      = lightNode .getColor (),
-				direction  = this .direction,
-				i          = shaderObject .numLights ++;
+				i         = shaderObject .numLights ++,
+				lightNode = this .lightNode;
+
+			if (shaderObject .hasLight (i, lightNode))
+				return;
+
+			var
+				color     = lightNode .getColor (),
+				direction = this .direction;
 
 			gl .uniform1i (shaderObject .x3d_LightType [i],             1);
 			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);

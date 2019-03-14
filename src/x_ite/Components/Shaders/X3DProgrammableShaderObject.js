@@ -92,6 +92,7 @@ function (Fields,
 		this .numGlobalLights = 0;
 		this .numLights       = 0;
 
+		this .lights   = [ ];
 		this .textures = new Map ();
 	}
 
@@ -806,6 +807,15 @@ function (Fields,
 
 			return i;
 		},
+		hasLight: function (i, lightNode)
+		{
+			if (this .lights [i] === lightNode)
+				return true;
+
+			this .lights [i] = lightNode;
+
+			return false;
+		},
 		setShaderObjects: function (gl, shaderObjects)
 		{
 			// Clip planes and local lights
@@ -843,6 +853,7 @@ function (Fields,
 
 			this .numGlobalLights = globalLights .length;
 			this .numLights       = 0;
+			this .lights .length  = 0;
 
 			for (var i = 0, length = globalLights .length; i < length; ++ i)
 				globalLights [i] .setShaderUniforms (gl, this);

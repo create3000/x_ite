@@ -242,13 +242,18 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
+			var
+				i         = shaderObject .numLights ++,
+				lightNode = this .lightNode;
+
+			if (shaderObject .hasLight (i, lightNode))
+				return;
+
 			var 
-				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
 				location    = this .location,
-				direction   = this .direction,
-				i           = shaderObject .numLights ++;
+				direction   = this .direction;
 
 			gl .uniform1i        (shaderObject .x3d_LightType [i],             3);
 			gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);

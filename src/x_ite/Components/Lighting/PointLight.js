@@ -256,16 +256,17 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			// For correct results the radius must be transform by the modelViewMatrix. This can only be done in the shader.
-			// distanceOfLightToFragmentInLightSpace = |(FragmentPosition - LightPosition) * inverseModelViewMatrixOfLight|
-			// distanceOfLightToFragmentInLightSpace can then be compared with radius.
+			var
+				i         = shaderObject .numLights ++,
+				lightNode = this .lightNode;
+
+			if (shaderObject .hasLight (i, lightNode))
+				return;
 
 			var 
-				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
-				location    = this .location,
-				i           = shaderObject .numLights ++;
+				location    = this .location;
 
 			gl .uniform1i        (shaderObject .x3d_LightType [i],             2);
 			gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
