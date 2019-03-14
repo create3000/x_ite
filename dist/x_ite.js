@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-669 */
+/* X_ITE v4.4.4a-670 */
 
 (function () {
 
@@ -105074,32 +105074,19 @@ function ($,
 				return;
 
 			var
+				scene        = this .createScene (),
 				currentScene = this .currentScene,
-				external     = this .isExternal (),
-				scene        = this .createScene ();
-
-			function setup ()
-			{
-				if (! external)
-				{
-					scene .setExecutionContext (currentScene);
-					currentScene .isLive () .addInterest ("setLive", scene);
-							
-					if (currentScene .isLive () .getValue ())
-						scene .setLive (true);
-				}
-	
-				scene .setup ();
-			}
+				external     = this .isExternal ();
 
 			if (success)
 			{
 				new XMLParser (scene) .parseIntoScene (dom,
 				function ()
 				{
-					setup ();
+					this .setupScene (scene, currentScene, external);
 					success (scene);
-				},
+				}
+				.bind (this),
 				function (message)
 				{
 					if (error)
@@ -105110,35 +105097,57 @@ function ($,
 			{
 				new XMLParser (scene) .parseIntoScene (dom);
 
-				setup ();
+				this .setupScene (scene, currentScene, external);
 
 				return scene;
 			}
 		},
-		importJS: function (jsobj)
+		importJS: function (jsobj, success, error)
 		{
 			if (! jsobj)
 				return;
 
 			var
+				scene        = this .createScene (),
 				currentScene = this .currentScene,
-				external     = this .isExternal (),
-				scene        = this .createScene ();
+				external     = this .isExternal ();
 
-			new JSONParser (scene) .parseJavaScript (jsobj);
+			if (success)
+			{
+				new JSONParser (scene) .parseJavaScript (jsobj,
+				function ()
+				{
+					this .setupScene (scene, currentScene, external);
+					success (scene);
+				}
+				.bind (this),
+				function (message)
+				{
+					if (error)
+						error (message);
+				});
+			}
+			else
+			{
+				new JSONParser (scene) .parseJavaScript (jsobj);
 
+				this .setupScene (scene, currentScene, external);
+
+				return scene;
+			}
+		},
+		setupScene: function (scene, currentScene, external)
+		{
 			if (! external)
 			{
 				scene .setExecutionContext (currentScene);
-				currentScene .isLive () .addInterest (scene, "setLive");
+				currentScene .isLive () .addInterest ("setLive", scene);
 						
 				if (currentScene .isLive () .getValue ())
 					scene .setLive (true);
 			}
 
 			scene .setup ();
-
-			return scene;
 		},
 		getBrowserProperty: function (name)
 		{
