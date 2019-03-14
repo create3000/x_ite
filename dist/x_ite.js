@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-666 */
+/* X_ITE v4.4.4a-667 */
 
 (function () {
 
@@ -34221,37 +34221,6 @@ function (Fields,
 		{
 			return this ._components;
 		},
-		getProviderUrls: (function ()
-		{
-			var componentsUrl = /\.js$/;
-
-			return function ()
-			{
-				var
-					profile           = this .getProfile () ? this .getProfile () : this .getBrowser () .getProfile ("Full"),
-					profileComponents = profile .components,
-					components        = this .getComponents (),
-					providerUrls      = new Set ();
-
-				for (var i = 0, length = profileComponents .length; i < length; ++ i)
-				{
-					var providerUrl = profileComponents [i] .providerUrl;
-	
-					if (providerUrl .match (componentsUrl))
-						providerUrls .add (providerUrl);
-				}
-
-				for (var i = 0, length = components .length; i < length; ++ i)
-				{
-					var providerUrl = components [i] .providerUrl;
-	
-					if (providerUrl .match (componentsUrl))
-						providerUrls .add (providerUrl);
-				}
-
-				return Array .from (providerUrls);
-			};
-		})(),
 		updateUnit: function (category, name, conversionFactor)
 		{
 			// Private function.
@@ -34900,6 +34869,38 @@ define ('x_ite/Parser/X3DParser',[],function ()
 		{
 			this .getExecutionContext () .rootNodes .push (node);
 		},
+		getProviderUrls: (function ()
+		{
+			var componentsUrl = /\.js$/;
+
+			return function ()
+			{
+				var
+					scene             = this .getScene (),
+					profile           = scene .getProfile () ? scene .getProfile () : scene .getBrowser () .getProfile ("Full"),
+					profileComponents = profile .components,
+					components        = scene .getComponents (),
+					providerUrls      = new Set ();
+
+				for (var i = 0, length = profileComponents .length; i < length; ++ i)
+				{
+					var providerUrl = profileComponents [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .add (providerUrl);
+				}
+
+				for (var i = 0, length = components .length; i < length; ++ i)
+				{
+					var providerUrl = components [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .add (providerUrl);
+				}
+
+				return Array .from (providerUrls);
+			};
+		})(),
 		setUnits: function (generator)
 		{
 			if ((typeof arguments [0]) == "boolean")
@@ -37066,7 +37067,7 @@ function (Fields,
 
 			if (this .success)
 			{
-				require (this .getScene () .getProviderUrls (),
+				require (this .getProviderUrls (),
 				function ()
 				{
 					try
@@ -37077,7 +37078,7 @@ function (Fields,
 						if (this .lastIndex < this .input .length)
 							throw new Error ("Unknown statement.");
 
-						this .success ();
+						this .success (this);
 					}
 					catch (error)
 					{
@@ -46326,7 +46327,7 @@ function ($,
 
 			if (this .success)
 			{
-				require (this .getScene () .getProviderUrls (),
+				require (this .getProviderUrls (),
 				function ()
 				{
 					try
@@ -46334,7 +46335,7 @@ function ($,
 						for (var i = 0; i < childNodes .length; ++ i)
 							this .x3dElementChildScene (childNodes [i])
 
-						this .success ();
+						this .success (this);
 					}
 					catch (error)
 					{
@@ -51186,7 +51187,7 @@ function ($,
 					function (scene, string, success, error)
 					{
 						// Try parse X3D JSON Encoding.	
-						setTimeout (this .importJS .bind (this, scene, JSON .parse (string), success, error), TIMEOUT);
+						setTimeout (this .importJSON .bind (this, scene, JSON .parse (string), success, error), TIMEOUT);
 					},
 					function (scene, string, success, error)
 					{
@@ -51237,7 +51238,7 @@ function ($,
 					function (scene, string)
 					{
 						// Try parse X3D JSON Encoding.	
-						this .importJS (scene, JSON.parse (string));
+						this .importJSON (scene, JSON.parse (string));
 					},
 					function (scene, string)
 					{
@@ -51293,7 +51294,7 @@ function ($,
 					throw exception;
 			}
 		},
-		importJS: function (scene, jsobj, success, error)
+		importJSON: function (scene, jsonObject, success, error)
 		{
 			try
 			{
@@ -51307,7 +51308,7 @@ function ($,
 				}
 
 				//AP: add reference to dom for later access.
-				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj, success, error);
+				this .node .dom = new JSONParser (scene) .parseJavaScript (jsonObject, success, error);
 			}
 			catch (exception)
 			{
@@ -105067,42 +105068,69 @@ function ($,
 				});
 			}
 		},
-		importJS: function (jsobj) {
+		importDocument: function (dom, success, error)
+		{
+			if (! dom)
+				return;
+
 			var
 				currentScene = this .currentScene,
 				external     = this .isExternal (),
 				scene        = this .createScene ();
 
-			new JSONParser (scene) .parseJavaScript (jsobj);
+			function setup ()
+			{
+				if (! external)
+				{
+					scene .setExecutionContext (currentScene);
+					currentScene .isLive () .addInterest ("setLive", scene);
+							
+					if (currentScene .isLive () .getValue ())
+						scene .setLive (true);
+				}
+	
+				scene .setup ();
+			}
+
+			if (success)
+			{
+				new XMLParser (scene) .parseIntoScene (dom,
+				function ()
+				{
+					setup ();
+					success (scene);
+				},
+				function (message)
+				{
+					if (error)
+						error (message);
+				});
+			}
+			else
+			{
+				new XMLParser (scene) .parseIntoScene (dom);
+
+				setup ();
+
+				return scene;
+			}
+		},
+		importJSON: function (jsonObject)
+		{
+			if (! jsonObject)
+				return;
+
+			var
+				currentScene = this .currentScene,
+				external     = this .isExternal (),
+				scene        = this .createScene ();
+
+			new JSONParser (scene) .parseJavaScript (jsonObject);
 
 			if (! external)
 			{
 				scene .setExecutionContext (currentScene);
 				currentScene .isLive () .addInterest (scene, "setLive");
-						
-				if (currentScene .isLive () .getValue ())
-					scene .setLive (true);
-			}
-
-			scene .setup ();
-
-			return scene;
-		},
-		importDocument: function (dom)
-		{
-			if (! dom) return;
-			
-			var
-				currentScene = this .currentScene,
-				external     = this .isExternal (),
-				scene        = this .createScene ();
-
-			new XMLParser (scene) .parseIntoScene (dom);
-
-			if (! external)
-			{
-				scene .setExecutionContext (currentScene);
-				currentScene .isLive () .addInterest ("setLive", scene);
 						
 				if (currentScene .isLive () .getValue ())
 					scene .setLive (true);
