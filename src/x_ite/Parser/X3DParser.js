@@ -88,6 +88,38 @@ define (function ()
 		{
 			this .getExecutionContext () .rootNodes .push (node);
 		},
+		getProviderUrls: (function ()
+		{
+			var componentsUrl = /\.js$/;
+
+			return function ()
+			{
+				var
+					scene             = this .getScene (),
+					profile           = scene .getProfile () ? scene .getProfile () : scene .getBrowser () .getProfile ("Full"),
+					profileComponents = profile .components,
+					components        = scene .getComponents (),
+					providerUrls      = new Set ();
+
+				for (var i = 0, length = profileComponents .length; i < length; ++ i)
+				{
+					var providerUrl = profileComponents [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .add (providerUrl);
+				}
+
+				for (var i = 0, length = components .length; i < length; ++ i)
+				{
+					var providerUrl = components [i] .providerUrl;
+	
+					if (providerUrl .match (componentsUrl))
+						providerUrls .add (providerUrl);
+				}
+
+				return Array .from (providerUrls);
+			};
+		})(),
 		setUnits: function (generator)
 		{
 			if ((typeof arguments [0]) == "boolean")

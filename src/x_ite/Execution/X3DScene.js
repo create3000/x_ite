@@ -154,37 +154,6 @@ function (Fields,
 		{
 			return this ._components;
 		},
-		getProviderUrls: (function ()
-		{
-			var componentsUrl = /\.js$/;
-
-			return function ()
-			{
-				var
-					profile           = this .getProfile () ? this .getProfile () : this .getBrowser () .getProfile ("Full"),
-					profileComponents = profile .components,
-					components        = this .getComponents (),
-					providerUrls      = new Set ();
-
-				for (var i = 0, length = profileComponents .length; i < length; ++ i)
-				{
-					var providerUrl = profileComponents [i] .providerUrl;
-	
-					if (providerUrl .match (componentsUrl))
-						providerUrls .add (providerUrl);
-				}
-
-				for (var i = 0, length = components .length; i < length; ++ i)
-				{
-					var providerUrl = components [i] .providerUrl;
-	
-					if (providerUrl .match (componentsUrl))
-						providerUrls .add (providerUrl);
-				}
-
-				return Array .from (providerUrls);
-			};
-		})(),
 		updateUnit: function (category, name, conversionFactor)
 		{
 			// Private function.

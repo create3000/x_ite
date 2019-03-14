@@ -186,7 +186,7 @@ function ($,
 
 			if (this .success)
 			{
-				require (this .getScene () .getProviderUrls (),
+				require (this .getProviderUrls (),
 				function ()
 				{
 					try
@@ -194,7 +194,7 @@ function ($,
 						for (var i = 0; i < childNodes .length; ++ i)
 							this .x3dElementChildScene (childNodes [i])
 
-						this .success ();
+						this .success (this);
 					}
 					catch (error)
 					{

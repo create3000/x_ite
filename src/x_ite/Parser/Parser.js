@@ -473,7 +473,7 @@ function (Fields,
 
 			if (this .success)
 			{
-				require (this .getScene () .getProviderUrls (),
+				require (this .getProviderUrls (),
 				function ()
 				{
 					try
@@ -484,7 +484,7 @@ function (Fields,
 						if (this .lastIndex < this .input .length)
 							throw new Error ("Unknown statement.");
 
-						this .success ();
+						this .success (this);
 					}
 					catch (error)
 					{

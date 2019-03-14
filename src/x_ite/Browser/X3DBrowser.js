@@ -502,42 +502,69 @@ function ($,
 				});
 			}
 		},
-		importJS: function (jsobj) {
+		importDocument: function (dom, success, error)
+		{
+			if (! dom)
+				return;
+
 			var
 				currentScene = this .currentScene,
 				external     = this .isExternal (),
 				scene        = this .createScene ();
 
-			new JSONParser (scene) .parseJavaScript (jsobj);
+			function setup ()
+			{
+				if (! external)
+				{
+					scene .setExecutionContext (currentScene);
+					currentScene .isLive () .addInterest ("setLive", scene);
+							
+					if (currentScene .isLive () .getValue ())
+						scene .setLive (true);
+				}
+	
+				scene .setup ();
+			}
+
+			if (success)
+			{
+				new XMLParser (scene) .parseIntoScene (dom,
+				function ()
+				{
+					setup ();
+					success (scene);
+				},
+				function (message)
+				{
+					if (error)
+						error (message);
+				});
+			}
+			else
+			{
+				new XMLParser (scene) .parseIntoScene (dom);
+
+				setup ();
+
+				return scene;
+			}
+		},
+		importJSON: function (jsonObject)
+		{
+			if (! jsonObject)
+				return;
+
+			var
+				currentScene = this .currentScene,
+				external     = this .isExternal (),
+				scene        = this .createScene ();
+
+			new JSONParser (scene) .parseJavaScript (jsonObject);
 
 			if (! external)
 			{
 				scene .setExecutionContext (currentScene);
 				currentScene .isLive () .addInterest (scene, "setLive");
-						
-				if (currentScene .isLive () .getValue ())
-					scene .setLive (true);
-			}
-
-			scene .setup ();
-
-			return scene;
-		},
-		importDocument: function (dom)
-		{
-			if (! dom) return;
-			
-			var
-				currentScene = this .currentScene,
-				external     = this .isExternal (),
-				scene        = this .createScene ();
-
-			new XMLParser (scene) .parseIntoScene (dom);
-
-			if (! external)
-			{
-				scene .setExecutionContext (currentScene);
-				currentScene .isLive () .addInterest ("setLive", scene);
 						
 				if (currentScene .isLive () .getValue ())
 					scene .setLive (true);
