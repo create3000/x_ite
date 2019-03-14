@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-665 */
+/* X_ITE v4.4.4a-666 */
 
 (function () {
 
@@ -69498,14 +69498,13 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var
-				i         = shaderObject .numLights ++,
-				lightNode = this .lightNode;
+			var i = shaderObject .numLights ++;
 
-			if (shaderObject .hasLight (i, lightNode))
+			if (shaderObject .hasLight (i, this))
 				return;
 
 			var
+				lightNode = this .lightNode,
 				color     = lightNode .getColor (),
 				direction = this .direction;
 
@@ -80036,12 +80035,12 @@ function (X3DConstants,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var fogNode = this .fogNode;
-
-			if (shaderObject .hasFog (fogNode))
+			if (shaderObject .hasFog (this))
 				return;
 
-			var visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
+			var
+				fogNode         = this .fogNode,
+				visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
 
 			if (fogNode .getHidden () || visibilityRange === 0)
 			{
@@ -93072,14 +93071,13 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var
-				i         = shaderObject .numLights ++,
-				lightNode = this .lightNode;
+			var i = shaderObject .numLights ++;
 
-			if (shaderObject .hasLight (i, lightNode))
+			if (shaderObject .hasLight (i, this))
 				return;
 
 			var 
+				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
 				location    = this .location;
@@ -93440,14 +93438,13 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var
-				i         = shaderObject .numLights ++,
-				lightNode = this .lightNode;
+			var i = shaderObject .numLights ++;
 
-			if (shaderObject .hasLight (i, lightNode))
+			if (shaderObject .hasLight (i, this))
 				return;
 
 			var 
+				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
 				location    = this .location,
