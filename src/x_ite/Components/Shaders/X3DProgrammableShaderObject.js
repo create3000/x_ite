@@ -91,9 +91,8 @@ function (Fields,
 		this .numClipPlanes   = 0;
 		this .numGlobalLights = 0;
 		this .numLights       = 0;
-
-		this .lights   = [ ];
-		this .textures = new Map ();
+		this .lights          = [ ];
+		this .textures        = new Map ();
 	}
 
 	X3DProgrammableShaderObject .prototype =

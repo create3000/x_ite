@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-662 */
+/* X_ITE v4.4.4a-663 */
 
 (function () {
 
@@ -43859,6 +43859,7 @@ function (Fields,
 		this .numGlobalLights = 0;
 		this .numLights       = 0;
 
+		this .lights   = [ ];
 		this .textures = new Map ();
 	}
 
@@ -44573,6 +44574,15 @@ function (Fields,
 
 			return i;
 		},
+		hasLight: function (i, lightNode)
+		{
+			if (this .lights [i] === lightNode)
+				return true;
+
+			this .lights [i] = lightNode;
+
+			return false;
+		},
 		setShaderObjects: function (gl, shaderObjects)
 		{
 			// Clip planes and local lights
@@ -44610,6 +44620,7 @@ function (Fields,
 
 			this .numGlobalLights = globalLights .length;
 			this .numLights       = 0;
+			this .lights .length  = 0;
 
 			for (var i = 0, length = globalLights .length; i < length; ++ i)
 				globalLights [i] .setShaderUniforms (gl, this);
@@ -69474,10 +69485,15 @@ function (Fields,
 		setShaderUniforms: function (gl, shaderObject)
 		{
 			var
-				lightNode  = this .lightNode,
-				color      = lightNode .getColor (),
-				direction  = this .direction,
-				i          = shaderObject .numLights ++;
+				i         = shaderObject .numLights ++,
+				lightNode = this .lightNode;
+
+			if (shaderObject .hasLight (i, lightNode))
+				return;
+
+			var
+				color     = lightNode .getColor (),
+				direction = this .direction;
 
 			gl .uniform1i (shaderObject .x3d_LightType [i],             1);
 			gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
@@ -69498,6 +69514,7 @@ function (Fields,
 			}
 			else
 			{
+				// Must be set to zero in case of multiple lights.
 				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
 			}
 		},
@@ -93038,16 +93055,17 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			// For correct results the radius must be transform by the modelViewMatrix. This can only be done in the shader.
-			// distanceOfLightToFragmentInLightSpace = |(FragmentPosition - LightPosition) * inverseModelViewMatrixOfLight|
-			// distanceOfLightToFragmentInLightSpace can then be compared with radius.
+			var
+				i         = shaderObject .numLights ++,
+				lightNode = this .lightNode;
+
+			if (shaderObject .hasLight (i, lightNode))
+				return;
 
 			var 
-				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
-				location    = this .location,
-				i           = shaderObject .numLights ++;
+				location    = this .location;
 
 			gl .uniform1i        (shaderObject .x3d_LightType [i],             2);
 			gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
@@ -93071,6 +93089,7 @@ function (Fields,
 			}
 			else
 			{
+				// Must be set to zero in case of multiple lights.
 				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
 			}
 		},
@@ -93357,7 +93376,7 @@ function (Fields,
 				var
 					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
 					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
-					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),
+					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),          // Result not used, but arguments.
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
@@ -93404,13 +93423,18 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
+			var
+				i         = shaderObject .numLights ++,
+				lightNode = this .lightNode;
+
+			if (shaderObject .hasLight (i, lightNode))
+				return;
+
 			var 
-				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
 				location    = this .location,
-				direction   = this .direction,
-				i           = shaderObject .numLights ++;
+				direction   = this .direction;
 
 			gl .uniform1i        (shaderObject .x3d_LightType [i],             3);
 			gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
@@ -93437,6 +93461,7 @@ function (Fields,
 			}
 			else
 			{
+				// Must be set to zero in case of multiple lights.
 				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
 			}
 		},
