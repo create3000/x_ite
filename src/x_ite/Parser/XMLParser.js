@@ -137,20 +137,39 @@ function ($,
 							this .x3dElement (X3D [i]);
 					}
 					else
+					{
 						this .childrenElements (xmlElement);
+
+						if (this .success)
+							this .success (this);
+					}
 
 					break;
 				}
 				case "X3D":
+				{
 					this .x3dElement (xmlElement);
 					break;
+				}
 				case "Scene":
 				case "SCENE":
+				{
 					this .sceneElement (xmlElement);
+
+					if (this .success)
+						this .success (this);
+
 					break;
+				}
 				default:
+				{
 					this .childElement (xmlElement);
+
+					if (this .success)
+						this .success (this);
+
 					break;
+				}
 			}
 		},
 		x3dElement: function (xmlElement)
@@ -198,7 +217,8 @@ function ($,
 					}
 					catch (error)
 					{
-						this .error (error);
+						if (this .error)
+							this .error (error);
 					}
 				}
 				.bind (this),
