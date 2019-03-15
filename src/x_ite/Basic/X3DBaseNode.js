@@ -448,18 +448,19 @@ function (X3DEventObject,
 			if (userDefined)
 			{
 				this ._userDefinedFields .set (name, field);
-				return;
 			}
-
-			this ._predefinedFields .set (name, field);
-
-			Object .defineProperty (this, name + "_",
+			else
 			{
-				get: function () { return field; },
-				set: function (value) { field .setValue (value); },
-				enumerable: true,
-				configurable: true, // false : non deleteable
-			});
+				this ._predefinedFields .set (name, field);
+	
+				Object .defineProperty (this, name + "_",
+				{
+					get: function () { return field; },
+					set: function (value) { field .setValue (value); },
+					enumerable: true,
+					configurable: true, // false : non deleteable
+				});
+			}
 		},
 		removeField: function (name)
 		{
