@@ -588,25 +588,27 @@ function ($,
 		{
 			return this .getRenderingProperties () .getField (name) .getValue ();
 		},
-		firstViewpoint: function ()
+		firstViewpoint: function (layer)
 		{
-			var activeLayer = this .getActiveLayer ();
+			if (! layer)
+				layer = this .getActiveLayer ();
 		
-			if (activeLayer)
+			if (layer)
 			{
-				var viewpoints = activeLayer .getUserViewpoints ();
+				var viewpoints = layer .getUserViewpoints ();
 
 				if (viewpoints .length)
 					this .bindViewpoint (viewpoints [0]);
 			}
 		},
-		previousViewpoint: function ()
+		previousViewpoint: function (layer)
 		{
-			var activeLayer = this .getActiveLayer ();
-
-			if (activeLayer)
+			if (! layer)
+				layer = this .getActiveLayer ();
+		
+			if (layer)
 			{
-				var viewpoints = activeLayer .getUserViewpoints ();
+				var viewpoints = layer .getUserViewpoints ();
 
 				if (viewpoints .length === 0)
 					return;
@@ -633,13 +635,14 @@ function ($,
 					this .bindViewpoint (viewpoints [viewpoints .length - 1]);
 			}
 		},
-		nextViewpoint: function ()
+		nextViewpoint: function (layer)
 		{
-			var activeLayer = this .getActiveLayer ();
-
-			if (activeLayer)
+			if (! layer)
+				layer = this .getActiveLayer ();
+		
+			if (layer)
 			{
-				var viewpoints = activeLayer .getUserViewpoints ();
+				var viewpoints = layer .getUserViewpoints ();
 
 				if (viewpoints .length === 0)
 					return;
@@ -666,13 +669,14 @@ function ($,
 					this .bindViewpoint (viewpoints [0]);
 			}
 		},
-		lastViewpoint: function ()
+		lastViewpoint: function (layer)
 		{
-			var activeLayer = this .getActiveLayer ();
-
-			if (activeLayer)
+			if (! layer)
+				layer = this .getActiveLayer ();
+		
+			if (layer)
 			{
-				var viewpoints = activeLayer .getUserViewpoints ();
+				var viewpoints = layer .getUserViewpoints ();
 
 				if (viewpoints .length)
 					this .bindViewpoint (viewpoints [viewpoints .length - 1]);
