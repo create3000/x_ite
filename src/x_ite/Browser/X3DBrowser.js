@@ -314,62 +314,10 @@ function ($,
 				this .callBrowserEventHandler ("onload");
 			}
 		},
-//		createVrmlFromString: function (vrmlSyntax)
-//		{
-//			var
-//				world        = this .getWorld (),
-//				currentScene = this .currentScene,
-//				external     = this .isExternal (),
-//				scene        = new FileLoader (world) .createX3DFromString (currentScene .getURL (), vrmlSyntax);
-//
-//			if (! external)
-//			{
-//				scene .setExecutionContext (currentScene);
-//				currentScene .isLive () .addInterest ("setLive", scene);
-//
-//				if (currentScene .isLive () .getValue ())
-//					scene .setLive (true);
-//			}
-//
-//			scene .setup ();
-//
-//		   return scene .rootNodes;
-//		},
 		createVrmlFromString: function (vrmlSyntax)
 		{
 			return this .createX3DFromString (vrmlSyntax) .rootNodes;
 		},
-//		createX3DFromString: function (x3dSyntax)
-//		{
-//			var
-//				world        = this .getWorld (),
-//				currentScene = this .currentScene,
-//				external     = this .isExternal ();
-//
-//			return new Promise (function (resolve, reject)
-//			{
-//				new FileLoader (world)
-//				.createX3DFromString (currentScene .getURL (), x3dSyntax, function (scene)
-//				{
-//					if (! external)
-//					{
-//						scene .setExecutionContext (currentScene);
-//						currentScene .isLive () .addInterest ("setLive", scene);
-//		
-//						if (currentScene .isLive () .getValue ())
-//							scene .setLive (true);
-//					}
-//		
-//					scene .setup ();
-//	
-//					resolve (scene);
-//				},
-//				function (error)
-//				{
-//					reject (error);
-//				});
-//			});
-//		},
 		createX3DFromString: function (x3dSyntax)
 		{
 			var
@@ -550,7 +498,7 @@ function ($,
 				});
 			}
 		},
-		importDocument: function (dom)
+		importDocument: function (dom, success, error)
 		{
 			if (! dom)
 				return;
@@ -560,7 +508,7 @@ function ($,
 				currentScene = this .currentScene,
 				external     = this .isExternal ();
 
-			return new Promise (function (resolve, reject)
+			if (success)
 			{
 				new XMLParser (scene) .parseIntoScene (dom,
 				function ()
@@ -573,17 +521,30 @@ function ($,
 						if (currentScene .isLive () .getValue ())
 							scene .setLive (true);
 					}
-		
-					scene .setup ();
 
-					resolve (scene);
-				}
-				.bind (this),
+					success (scene);
+				},
 				function (message)
 				{
-					reject (message);
+					if (error)
+						error (message);
 				});
-			});
+			}
+			else
+			{
+				new XMLParser (scene) .parseIntoScene (dom);
+
+				if (! external)
+				{
+					scene .setExecutionContext (currentScene);
+					currentScene .isLive () .addInterest ("setLive", scene);
+							
+					if (currentScene .isLive () .getValue ())
+						scene .setLive (true);
+				}
+
+				return scene;
+			}
 		},
 		importJS: function (jsobj, success, error)
 		{
@@ -595,7 +556,7 @@ function ($,
 				currentScene = this .currentScene,
 				external     = this .isExternal ();
 
-			return new Promise (function (resolve, reject)
+			if (success)
 			{
 				new JSONParser (scene) .parseJavaScript (jsobj,
 				function ()
@@ -608,17 +569,30 @@ function ($,
 						if (currentScene .isLive () .getValue ())
 							scene .setLive (true);
 					}
-		
-					scene .setup ();
 
-					resolve (scene);
-				}
-				.bind (this),
+					success (scene);
+				},
 				function (message)
 				{
-					reject (message);
+					if (error)
+						error (message);
 				});
-			});
+			}
+			else
+			{
+				new JSONParser (scene) .parseJavaScript (jsobj);
+
+				if (! external)
+				{
+					scene .setExecutionContext (currentScene);
+					currentScene .isLive () .addInterest ("setLive", scene);
+							
+					if (currentScene .isLive () .getValue ())
+						scene .setLive (true);
+				}
+
+				return scene;
+			}
 		},
 		getBrowserProperty: function (name)
 		{
