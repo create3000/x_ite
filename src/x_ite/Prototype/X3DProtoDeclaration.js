@@ -105,6 +105,9 @@ function ($,
 		},
 		getProtoDeclaration: function ()
 		{
+			if (arguments .length)
+				return X3DExecutionContext .prototype .getProtoDeclaration .apply (this, arguments);
+
 			return this;
 		},
 		checkLoadState: function ()

@@ -433,7 +433,12 @@ function (Fields,
 		},
 		getProtoDeclaration: function (name)
 		{
-			return this ._protos .get (name);
+			var proto = this ._protos .get (name);
+
+			if (proto)
+				return proto;
+
+			throw new Error ("Proto declaration '" + name + "' not found.");
 		},
 		getProtoDeclarations: function ()
 		{
@@ -441,7 +446,12 @@ function (Fields,
 		},
 		getExternProtoDeclaration: function (name)
 		{
-			return this ._externprotos .get (name);
+			var externproto = this ._externprotos .get (name);
+
+			if (externproto)
+				return externproto;
+
+			throw new Error ("Extern proto declaration '" + name + "' not found.");
 		},
 		getExternProtoDeclarations: function ()
 		{
