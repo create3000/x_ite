@@ -72,6 +72,8 @@ function (X3DConstants)
 		this .containerFields       = [ ];
 		this .units                 = true;
 		this .unitCategories        = [ ];
+
+		this .names .set (null, new Map ())
 	}
 
 	Generator .prototype =
@@ -99,6 +101,9 @@ function (X3DConstants)
 		PushExecutionContext: function (executionContext)
 		{
 			this .executionContextStack .push (executionContext);
+
+			if (! this .names .has (executionContext))
+				this .names .set (executionContext, new Map ());
 
 			if (! this .importedNodesIndex .has (executionContext))
 				this .importedNodesIndex .set (executionContext, new Set ());
@@ -134,7 +139,6 @@ function (X3DConstants)
 			if (this .level === 0)
 			{
 				this .nodes         .clear ();
-				this .names         .clear ();
 				this .namesByNode   .clear ();
 				this .importedNames .clear ();
 			}
@@ -202,6 +206,8 @@ function (X3DConstants)
 			if (name !== undefined)
 				return name;
 
+			var names = this .names .get (this .ExecutionContext ());
+
 			// The node has no name
 
 			if (baseNode .getName () .length === 0)
@@ -210,7 +216,7 @@ function (X3DConstants)
 				{
 					var name = this .UniqueName ();
 		
-					this .names .set (name, baseNode);
+					names .set (name, baseNode);
 					this .namesByNode .set (baseNode, name);
 
 					return name;
@@ -244,7 +250,7 @@ function (X3DConstants)
 					i       = 0,
 					newName = hasNumber ? name + '_' + (++ i) : name;
 
-				while (this .names .has (newName))
+				while (names .has (newName))
 				{
 					newName = name + '_' + (++ i);
 				}
@@ -252,7 +258,7 @@ function (X3DConstants)
 				name = newName;
 			}
 
-			this .names .set (name, baseNode);
+			names .set (name, baseNode);
 			this .namesByNode .set (baseNode, name);
 
 			return name;
@@ -287,11 +293,13 @@ function (X3DConstants)
 		},
 		UniqueName: function ()
 		{
+			var names = this .names .get (this .ExecutionContext ());
+
 			for (; ;)
 			{
 				var name = '_' + (++ this .newName);
-		
-				if (this .names .has (name))
+
+				if (names .has (name))
 					continue;
 
 				return name;
