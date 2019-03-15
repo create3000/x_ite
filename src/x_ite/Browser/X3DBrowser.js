@@ -314,6 +314,31 @@ function ($,
 				this .callBrowserEventHandler ("onload");
 			}
 		},
+//		createVrmlFromString: function (vrmlSyntax)
+//		{
+//			var
+//				world        = this .getWorld (),
+//				currentScene = this .currentScene,
+//				external     = this .isExternal (),
+//				scene        = new FileLoader (world) .createX3DFromString (currentScene .getURL (), vrmlSyntax);
+//
+//			if (! external)
+//			{
+//				scene .setExecutionContext (currentScene);
+//				currentScene .isLive () .addInterest ("setLive", scene);
+//
+//				if (currentScene .isLive () .getValue ())
+//					scene .setLive (true);
+//			}
+//
+//			scene .setup ();
+//
+//		   var rootNodes = new Fields .MFNode ();
+//
+//			rootNodes .setValue (scene .rootNodes);
+//
+//			return rootNodes;
+//		},
 		createVrmlFromString: function (vrmlSyntax)
 		{
 		   var rootNodes = new Fields .MFNode ();
@@ -322,6 +347,37 @@ function ($,
 
 			return rootNodes;
 		},
+//		createX3DFromString: function (x3dSyntax)
+//		{
+//			var
+//				world        = this .getWorld (),
+//				currentScene = this .currentScene,
+//				external     = this .isExternal ();
+//
+//			return new Promise (function (resolve, reject)
+//			{
+//				new FileLoader (world)
+//				.createX3DFromString (currentScene .getURL (), x3dSyntax, function (scene)
+//				{
+//					if (! external)
+//					{
+//						scene .setExecutionContext (currentScene);
+//						currentScene .isLive () .addInterest ("setLive", scene);
+//		
+//						if (currentScene .isLive () .getValue ())
+//							scene .setLive (true);
+//					}
+//		
+//					scene .setup ();
+//	
+//					resolve (scene);
+//				},
+//				function (error)
+//				{
+//					reject (error);
+//				});
+//			});
+//		},
 		createX3DFromString: function (x3dSyntax)
 		{
 			var
