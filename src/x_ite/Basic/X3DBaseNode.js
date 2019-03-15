@@ -610,18 +610,15 @@ function (X3DEventObject,
 		{
 			///  Returns true if there are any routes from or to fields of this node otherwise false.
 
-			var fieldDefinitions = this .getFieldDefinitions ();
-
-			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+			for (var field of this ._fields .values ())
 			{
-				var field = this .getField (fieldDefinitions [i] .name);
+				if (field .getInputRoutes () .size)
+					return true;
 
-				if (field .getInputRoutes () .size === 0 && field .getOutputRoutes () .size === 0)
-					continue;
-
-				return true;
+				if (field .getOutputRoutes () .size)
+					return true;
 			}
-		
+
 			return false;
 		},
 		getPrivate: function ()
