@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-674 */
+/* X_ITE v4.4.4a-675 */
 
 (function () {
 
@@ -13028,6 +13028,8 @@ function (X3DConstants)
 		this .containerFields       = [ ];
 		this .units                 = true;
 		this .unitCategories        = [ ];
+
+		this .names .set (null, new Map ())
 	}
 
 	Generator .prototype =
@@ -13055,6 +13057,9 @@ function (X3DConstants)
 		PushExecutionContext: function (executionContext)
 		{
 			this .executionContextStack .push (executionContext);
+
+			if (! this .names .has (executionContext))
+				this .names .set (executionContext, new Map ());
 
 			if (! this .importedNodesIndex .has (executionContext))
 				this .importedNodesIndex .set (executionContext, new Set ());
@@ -13090,7 +13095,6 @@ function (X3DConstants)
 			if (this .level === 0)
 			{
 				this .nodes         .clear ();
-				this .names         .clear ();
 				this .namesByNode   .clear ();
 				this .importedNames .clear ();
 			}
@@ -13158,6 +13162,8 @@ function (X3DConstants)
 			if (name !== undefined)
 				return name;
 
+			var names = this .names .get (this .ExecutionContext ());
+
 			// The node has no name
 
 			if (baseNode .getName () .length === 0)
@@ -13166,7 +13172,7 @@ function (X3DConstants)
 				{
 					var name = this .UniqueName ();
 		
-					this .names .set (name, baseNode);
+					names .set (name, baseNode);
 					this .namesByNode .set (baseNode, name);
 
 					return name;
@@ -13200,7 +13206,7 @@ function (X3DConstants)
 					i       = 0,
 					newName = hasNumber ? name + '_' + (++ i) : name;
 
-				while (this .names .has (newName))
+				while (names .has (newName))
 				{
 					newName = name + '_' + (++ i);
 				}
@@ -13208,7 +13214,7 @@ function (X3DConstants)
 				name = newName;
 			}
 
-			this .names .set (name, baseNode);
+			names .set (name, baseNode);
 			this .namesByNode .set (baseNode, name);
 
 			return name;
@@ -13243,11 +13249,13 @@ function (X3DConstants)
 		},
 		UniqueName: function ()
 		{
+			var names = this .names .get (this .ExecutionContext ());
+
 			for (; ;)
 			{
 				var name = '_' + (++ this .newName);
-		
-				if (this .names .has (name))
+
+				if (names .has (name))
 					continue;
 
 				return name;
@@ -25738,18 +25746,15 @@ function (X3DEventObject,
 		{
 			///  Returns true if there are any routes from or to fields of this node otherwise false.
 
-			var fieldDefinitions = this .getFieldDefinitions ();
-
-			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+			for (var field of this ._fields .values ())
 			{
-				var field = this .getField (fieldDefinitions [i] .name);
+				if (field .getInputRoutes () .size)
+					return true;
 
-				if (field .getInputRoutes () .size === 0 && field .getOutputRoutes () .size === 0)
-					continue;
-
-				return true;
+				if (field .getOutputRoutes () .size)
+					return true;
 			}
-		
+
 			return false;
 		},
 		getPrivate: function ()
@@ -32378,7 +32383,12 @@ function (Fields,
 		},
 		getProtoDeclaration: function (name)
 		{
-			return this ._protos .get (name);
+			var proto = this ._protos .get (name);
+
+			if (proto)
+				return proto;
+
+			throw new Error ("Proto declaration '" + name + "' not found.");
 		},
 		getProtoDeclarations: function ()
 		{
@@ -32386,7 +32396,12 @@ function (Fields,
 		},
 		getExternProtoDeclaration: function (name)
 		{
-			return this ._externprotos .get (name);
+			var externproto = this ._externprotos .get (name);
+
+			if (externproto)
+				return externproto;
+
+			throw new Error ("Extern proto declaration '" + name + "' not found.");
 		},
 		getExternProtoDeclarations: function ()
 		{
@@ -36330,6 +36345,9 @@ function ($,
 		},
 		getProtoDeclaration: function ()
 		{
+			if (arguments .length)
+				return X3DExecutionContext .prototype .getProtoDeclaration .apply (this, arguments);
+
 			return this;
 		},
 		checkLoadState: function ()
