@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-673 */
+/* X_ITE v4.4.4a-674 */
 
 (function () {
 
@@ -25372,14 +25372,11 @@ function (X3DEventObject,
 
 			this ._initialized = true;
 
-			var fieldDefinitions = this .fieldDefinitions .getValue ();
-
-			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+			this ._fields .forEach (function (field)
 			{
-				var field = this ._fields .get (fieldDefinitions [i] .name);
 				field .updateReferences ();
 				field .setTainted (false);
-			}
+			});
 
 			this .initialize ();
 		},
@@ -25519,16 +25516,12 @@ function (X3DEventObject,
 		})(),
 		flatCopy: function (executionContext)
 		{
-			var
-				copy             = this .create (executionContext || this .getExecutionContext ()),
-				fieldDefinitions = this .fieldDefinitions .getValue ();
+			var copy = this .create (executionContext || this .getExecutionContext ());
 
-			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+			this ._fields .forEach (function (field)
 			{
-				var field = this ._fields .get (fieldDefinitions [i] .name);
-
-				copy ._fields .get (fieldDefinitions [i] .name) .assign (field);
-			}
+				copy ._fields .get (field .getName ()) .assign (field);
+			});
 
 			copy .setup ();
 
@@ -25576,18 +25569,19 @@ function (X3DEventObject,
 			if (userDefined)
 			{
 				this ._userDefinedFields .set (name, field);
-				return;
 			}
-
-			this ._predefinedFields .set (name, field);
-
-			Object .defineProperty (this, name + "_",
+			else
 			{
-				get: function () { return field; },
-				set: function (value) { field .setValue (value); },
-				enumerable: true,
-				configurable: true, // false : non deleteable
-			});
+				this ._predefinedFields .set (name, field);
+	
+				Object .defineProperty (this, name + "_",
+				{
+					get: function () { return field; },
+					set: function (value) { field .setValue (value); },
+					enumerable: true,
+					configurable: true, // false : non deleteable
+				});
+			}
 		},
 		removeField: function (name)
 		{
@@ -25734,16 +25728,7 @@ function (X3DEventObject,
 		},
 		getFields: function ()
 		{
-			var
-				fields           = [ ],
-				fieldDefinitions = this .getFieldDefinitions ();
-
-			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
-			{
-				fields .push (this .getField (fieldDefinitions [i] .name));
-			}
-
-			return fields;
+			return this ._fields;
 		},
 		getSourceText: function ()
 		{
@@ -25777,17 +25762,17 @@ function (X3DEventObject,
 
 			if (value)
 			{
-				var fieldDefinitions = this .getFieldDefinitions ();
-
-				for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
-					this .getField (fieldDefinitions [i] .name) .removeClones (1);
+				this ._fields .forEach (function (field)
+				{
+					field .removeClones (1);
+				});
 			}
 			else
 			{
-				var fieldDefinitions = this .getFieldDefinitions ();
-
-				for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
-					this .getField (fieldDefinitions [i] .name) .addClones (1);
+				this ._fields .forEach (function (field)
+				{
+					field .addClones (1);
+				});
 			}
 		},
 		getCloneCount: function ()
@@ -77698,7 +77683,9 @@ function ($,
 			var deferred = this .fontCache [URL .filename];
 
 			if (error)
+			{
 				deferred .reject (error);
+			}
 			else
 			{
 				// Setup font.

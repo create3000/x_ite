@@ -101,7 +101,9 @@ function ($,
 			var deferred = this .fontCache [URL .filename];
 
 			if (error)
+			{
 				deferred .reject (error);
+			}
 			else
 			{
 				// Setup font.
