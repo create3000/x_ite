@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-672 */
+/* X_ITE v4.4.4a-673 */
 
 (function () {
 
@@ -104978,11 +104978,7 @@ function ($,
 		},
 		createVrmlFromString: function (vrmlSyntax)
 		{
-		   var rootNodes = new Fields .MFNode ();
-
-			rootNodes .setValue (this .createX3DFromString (vrmlSyntax) .rootNodes);
-
-			return rootNodes;
+			return this .createX3DFromString (vrmlSyntax) .rootNodes;
 		},
 		createX3DFromString: function (x3dSyntax)
 		{
@@ -105164,7 +105160,7 @@ function ($,
 				});
 			}
 		},
-		importDocument: function (dom)
+		importDocument: function (dom, success, error)
 		{
 			if (! dom)
 				return;
@@ -105174,7 +105170,7 @@ function ($,
 				currentScene = this .currentScene,
 				external     = this .isExternal ();
 
-			return new Promise (function (resolve, reject)
+			if (success)
 			{
 				new XMLParser (scene) .parseIntoScene (dom,
 				function ()
@@ -105187,17 +105183,30 @@ function ($,
 						if (currentScene .isLive () .getValue ())
 							scene .setLive (true);
 					}
-		
-					scene .setup ();
 
-					resolve (scene);
-				}
-				.bind (this),
+					success (scene);
+				},
 				function (message)
 				{
-					reject (message);
+					if (error)
+						error (message);
 				});
-			});
+			}
+			else
+			{
+				new XMLParser (scene) .parseIntoScene (dom);
+
+				if (! external)
+				{
+					scene .setExecutionContext (currentScene);
+					currentScene .isLive () .addInterest ("setLive", scene);
+							
+					if (currentScene .isLive () .getValue ())
+						scene .setLive (true);
+				}
+
+				return scene;
+			}
 		},
 		importJS: function (jsobj, success, error)
 		{
@@ -105209,7 +105218,7 @@ function ($,
 				currentScene = this .currentScene,
 				external     = this .isExternal ();
 
-			return new Promise (function (resolve, reject)
+			if (success)
 			{
 				new JSONParser (scene) .parseJavaScript (jsobj,
 				function ()
@@ -105222,17 +105231,30 @@ function ($,
 						if (currentScene .isLive () .getValue ())
 							scene .setLive (true);
 					}
-		
-					scene .setup ();
 
-					resolve (scene);
-				}
-				.bind (this),
+					success (scene);
+				},
 				function (message)
 				{
-					reject (message);
+					if (error)
+						error (message);
 				});
-			});
+			}
+			else
+			{
+				new JSONParser (scene) .parseJavaScript (jsobj);
+
+				if (! external)
+				{
+					scene .setExecutionContext (currentScene);
+					currentScene .isLive () .addInterest ("setLive", scene);
+							
+					if (currentScene .isLive () .getValue ())
+						scene .setLive (true);
+				}
+
+				return scene;
+			}
 		},
 		getBrowserProperty: function (name)
 		{
@@ -105250,25 +105272,27 @@ function ($,
 		{
 			return this .getRenderingProperties () .getField (name) .getValue ();
 		},
-		firstViewpoint: function ()
+		firstViewpoint: function (layer)
 		{
-			var activeLayer = this .getActiveLayer ();
+			if (! layer)
+				layer = this .getActiveLayer ();
 		
-			if (activeLayer)
+			if (layer)
 			{
-				var viewpoints = activeLayer .getUserViewpoints ();
+				var viewpoints = layer .getUserViewpoints ();
 
 				if (viewpoints .length)
 					this .bindViewpoint (viewpoints [0]);
 			}
 		},
-		previousViewpoint: function ()
+		previousViewpoint: function (layer)
 		{
-			var activeLayer = this .getActiveLayer ();
-
-			if (activeLayer)
+			if (! layer)
+				layer = this .getActiveLayer ();
+		
+			if (layer)
 			{
-				var viewpoints = activeLayer .getUserViewpoints ();
+				var viewpoints = layer .getUserViewpoints ();
 
 				if (viewpoints .length === 0)
 					return;
@@ -105295,13 +105319,14 @@ function ($,
 					this .bindViewpoint (viewpoints [viewpoints .length - 1]);
 			}
 		},
-		nextViewpoint: function ()
+		nextViewpoint: function (layer)
 		{
-			var activeLayer = this .getActiveLayer ();
-
-			if (activeLayer)
+			if (! layer)
+				layer = this .getActiveLayer ();
+		
+			if (layer)
 			{
-				var viewpoints = activeLayer .getUserViewpoints ();
+				var viewpoints = layer .getUserViewpoints ();
 
 				if (viewpoints .length === 0)
 					return;
@@ -105328,13 +105353,14 @@ function ($,
 					this .bindViewpoint (viewpoints [0]);
 			}
 		},
-		lastViewpoint: function ()
+		lastViewpoint: function (layer)
 		{
-			var activeLayer = this .getActiveLayer ();
-
-			if (activeLayer)
+			if (! layer)
+				layer = this .getActiveLayer ();
+		
+			if (layer)
 			{
-				var viewpoints = activeLayer .getUserViewpoints ();
+				var viewpoints = layer .getUserViewpoints ();
 
 				if (viewpoints .length)
 					this .bindViewpoint (viewpoints [viewpoints .length - 1]);
