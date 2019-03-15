@@ -333,19 +333,11 @@ function ($,
 //
 //			scene .setup ();
 //
-//		   var rootNodes = new Fields .MFNode ();
-//
-//			rootNodes .setValue (scene .rootNodes);
-//
-//			return rootNodes;
+//		   return scene .rootNodes;
 //		},
 		createVrmlFromString: function (vrmlSyntax)
 		{
-		   var rootNodes = new Fields .MFNode ();
-
-			rootNodes .setValue (this .createX3DFromString (vrmlSyntax) .rootNodes);
-
-			return rootNodes;
+			return this .createX3DFromString (vrmlSyntax) .rootNodes;
 		},
 //		createX3DFromString: function (x3dSyntax)
 //		{
