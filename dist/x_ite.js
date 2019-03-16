@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-676 */
+/* X_ITE v4.4.4a-677 */
 
 (function () {
 
@@ -81933,6 +81933,7 @@ define ('x_ite/Components/Layering/X3DLayerNode',[
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Camera",
+	"standard/Math/Geometry/Box3",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 ],
@@ -81948,6 +81949,7 @@ function (X3DNode,
           TraverseType,
           X3DConstants,
           Camera,
+          Box3,
           Vector3,
           Matrix4)
 {
@@ -82107,7 +82109,7 @@ function (X3DNode,
 		},
 		lookAt: function (factor, straighten)
 		{
-			this .getViewpoint () .lookAtBBox (this .getBBox (), factor, straighten)
+			this .getViewpoint () .lookAtBBox (this .getBBox (new Box3 ()), factor, straighten);
 		},
 		set_viewport__: function ()
 		{
