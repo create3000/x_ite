@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-675 */
+/* X_ITE v4.4.4a-676 */
 
 (function () {
 
@@ -82104,6 +82104,10 @@ function (X3DNode,
 		getBBox: function (bbox)
 		{
 			return this .groupNode .getBBox (bbox);
+		},
+		lookAt: function (factor, straighten)
+		{
+			this .getViewpoint () .lookAtBBox (this .getBBox (), factor, straighten)
 		},
 		set_viewport__: function ()
 		{

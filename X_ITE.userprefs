@@ -1,12 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/InputOutput/Generator.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Fields/SFRotation.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DBaseNode.js" Line="621" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DBaseNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Shaders/Background.fs" Line="1" Column="1" />
-      <File FileName="src/x_ite/Execution/X3DExecutionContext.js" Line="437" Column="1" />
-      <File FileName="src/x_ite/InputOutput/Generator.js" Line="208" Column="1" />
+      <File FileName="src/x_ite/Execution/X3DExecutionContext.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Fields/SFVecPrototypeTemplate.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Fields/SFRotation.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

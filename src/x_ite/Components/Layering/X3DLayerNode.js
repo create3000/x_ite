@@ -232,6 +232,10 @@ function (X3DNode,
 		{
 			return this .groupNode .getBBox (bbox);
 		},
+		lookAt: function (factor, straighten)
+		{
+			this .getViewpoint () .lookAtBBox (this .getBBox (), factor, straighten);
+		},
 		set_viewport__: function ()
 		{
 			this .currentViewport = X3DCast (X3DConstants .X3DViewportNode, this .viewport_);
