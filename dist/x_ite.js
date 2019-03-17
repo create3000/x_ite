@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4-679 */
+/* X_ITE v4.4.4-680 */
 
 (function () {
 
@@ -39781,10 +39781,10 @@ function ($,
 		"WEBGL_texture_from_depth_video",
 	];
 
-	function getContext (canvas)
+	function getContext (canvas, preserveDrawingBuffer)
 	{
-		var gl = canvas .getContext ("webgl") ||
-		         canvas .getContext ("experimental-webgl");
+		var gl = canvas .getContext ("webgl", { preserveDrawingBuffer: preserveDrawingBuffer }) ||
+		         canvas .getContext ("experimental-webgl", { preserveDrawingBuffer: preserveDrawingBuffer });
 
 		if (! gl)
 			throw new Error ("Couldn't create WebGL context.");
@@ -39825,7 +39825,7 @@ function ($,
 		this .splashScreen = splashScreen;
 		this .surface      = surface;
 		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-		this .context      = getContext (this .canvas [0]);
+		this .context      = getContext (this .canvas [0], element .attr ("preserveDrawingBuffer") === "true");
 		this .extensions   = { };
 
 		var gl = this .getContext ();
