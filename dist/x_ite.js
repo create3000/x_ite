@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4a-677 */
+/* X_ITE v4.4.4a-678 */
 
 (function () {
 
@@ -23773,14 +23773,14 @@ function (X3DArrayField,
 		{
 			var
 				target = this ._target,
-				array  = target .getValue ();
+				length = target ._length;
 
-			if (array .length)
+			if (length)
 			{
 				var
+					array      = target .getValue (),
 					components = target .getComponents (),
 					valueType  = target .getValueType (),
-					length     = target ._length,
 					newLength  = length - 1;
 
 				if (components === 1)
@@ -23845,14 +23845,14 @@ function (X3DArrayField,
 		{
 			var
 				target = this ._target,
-				array  = target .getValue ();
+				length = target ._length;
 
-			if (array .length)
+			if (length)
 			{
 				var
+					array      = target .getValue (),
 					components = target .getComponents (),
 					valueType  = target .getValueType (),
-					length     = target ._length,
 					newLength  = length - 1;
 
 				if (components === 1)
