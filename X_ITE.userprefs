@@ -3,9 +3,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Basic/X3DObjectArrayField.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="711" Column="19" />
-      <File FileName="src/x_ite/Basic/X3DTypedArrayField.js" Line="340" Column="5" />
-      <File FileName="src/x_ite/Basic/X3DObjectArrayField.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/X3DBrowser.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Basic/X3DObjectArrayField.js" Line="20" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
