@@ -258,6 +258,11 @@ function (Fields,
 							this .child .traverse (type, renderObject);
 							break;
 						}
+						default:
+						{
+							this .child .traverse (type, renderObject);
+							break;
+						}
 					}
 				}
 			};

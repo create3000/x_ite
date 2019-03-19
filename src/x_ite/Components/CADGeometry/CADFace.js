@@ -55,7 +55,7 @@ define ([
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
+	"x_ite/Bits/TraverseType",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -63,7 +63,8 @@ function (Fields,
           X3DProductStructureChildNode, 
           X3DBoundedObject,
           X3DCast,
-          X3DConstants)
+          X3DConstants,
+          TraverseType)
 {
 "use strict";
 
@@ -171,7 +172,27 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			this .shapeNode .traverse (type, renderObject);
+			switch (type)
+			{
+				case TraverseType .PICKING:
+				{
+					var
+						browser          = renderObject .getBrowser (),
+						pickingHierarchy = browser .getPickingHierarchy ();
+
+					pickingHierarchy .push (this);
+
+					this .shapeNode .traverse (type, renderObject);
+
+					pickingHierarchy .pop ();
+					break;
+				}
+				default:
+				{
+					this .shapeNode .traverse (type, renderObject);
+					break;
+				}
+			}
 		},
 	});
 
