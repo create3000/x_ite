@@ -54,13 +54,15 @@ define ([
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Components/Picking/X3DPickableObject",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/TraverseType",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGroupingNode, 
           X3DPickableObject, 
-          X3DConstants)
+          X3DConstants,
+          TraverseType)
 {
 "use strict";
 
@@ -102,7 +104,86 @@ function (Fields,
 		{
 			X3DGroupingNode   .prototype .initialize .call (this);
 			X3DPickableObject .prototype .initialize .call (this);
+
+			this .pickable_ .addInterest ("set_pickable__", this);
+
+			this .set_pickable__ ();
 		},
+		set_pickableObjects__: function ()
+		{
+			this .set_pickable__ ();
+		},
+		set_pickable__: function ()
+		{
+			this .setPickableObject (Boolean (this .pickable_ .getValue () || this .getTransformSensors () .size));
+		},
+		traverse: (function ()
+		{
+			var pickSensorNodes = new Set ();
+
+			return function (type, renderObject)
+			{
+				if (type === TraverseType .PICKING)
+				{
+					if (this .pickable_ .getValue ())
+					{
+						if (this .getObjectType () .has ("NONE"))
+							return;
+		
+						if (this .getObjectType () .has ("ALL"))
+						{
+							X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+						}
+						else
+						{
+							// Filter pick sensors.
+	
+							var
+								browser         = renderObject .getBrowser (),
+								pickSensorStack = browser .getPickSensors (),
+								pickableStack   = browser .getPickable ();
+
+							pickSensorStack [pickSensorStack .length - 1] .forEach (function (pickSensorNode)
+							{
+								if (! pickSensorNode .getObjectType () .has ("ALL"))
+								{
+									var intersection = false;
+
+									for (var objectType of this .getObjectType ())
+									{
+										if (pickSensorNode .getObjectType () .has (objectType))
+										{
+											intersection = true;
+											break;
+										}
+									}
+
+									if (! intersection)
+										return;
+								}
+
+								pickSensorNodes .add (pickSensorNode);
+							},
+							this);
+	
+							pickableStack .push (true);
+							pickSensorStack .push (pickSensorNodes);
+	
+							X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+	
+							pickSensorStack .pop ();
+							pickableStack .pop ();
+	
+							pickSensorNodes .clear ();
+						}
+					}
+				}
+				else
+				{
+					X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+				}
+			};
+		})(),
 	});
 
 	return PickableGroup;

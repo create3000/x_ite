@@ -248,7 +248,15 @@ function (Fields,
 			{
 				case TraverseType .PICKING:
 				{
+					var
+						browser          = renderObject .getBrowser (),
+						pickingHierarchy = browser .getPickingHierarchy ();
+
+					pickingHierarchy .push (this);
+
 					this .group .traverse (type, renderObject);
+
+					pickingHierarchy .pop ();
 					break;
 				}
 				default:

@@ -57,15 +57,16 @@ function (TraverseType)
 	function X3DPickingContext ()
 	{
 		this .transformSensorNodes = new Set ();
+		this .pickSensorNodes      = [ new Set () ];
+		this .pickingHierarchy     = [ ];
+		this .pickable             = [ false ];
 		this .pickingTime          = 0;
 	}
 
 	X3DPickingContext .prototype =
 	{
 		initialize: function ()
-		{
-
-		},
+		{ },
 		addTransformSensor: function (transformSensorNode)
 		{
 			this .transformSensorNodes .add (transformSensorNode);
@@ -76,9 +77,31 @@ function (TraverseType)
 			this .transformSensorNodes .delete (transformSensorNode);
 			this .enablePicking ();
 		},
+		addPickSensor: function (pickSensorNode)
+		{
+			this .pickSensorNodes [0] .add (pickSensorNode);
+			this .enablePicking ();
+		},
+		removePickSensor: function (pickSensorNode)
+		{
+			this .pickSensorNodes [0] .delete (pickSensorNode);
+			this .enablePicking ();
+		},
+		getPickSensors: function ()
+		{
+			return this .pickSensorNodes;
+		},
+		getPickingHierarchy: function ()
+		{
+			return this .pickingHierarchy;
+		},
+		getPickable: function ()
+		{
+			return this .pickable;
+		},
 		enablePicking: function ()
 		{
-			if (this .transformSensorNodes .size)
+			if (this .transformSensorNodes .size || this .pickSensorNodes [0] .size)
 				this .sensorEvents_ .addInterest ("picking", this);
 			else
 				this .sensorEvents_ .removeInterest ("picking", this);
@@ -92,6 +115,11 @@ function (TraverseType)
 			this .transformSensorNodes .forEach (function (transformSensorNode)
 			{
 				transformSensorNode .process ();
+			});
+
+			this .pickSensorNodes [0] .forEach (function (pickSensorNode)
+			{
+				pickSensorNode .process ();
 			});
 
 			this .pickingTime = performance .now () - t0;

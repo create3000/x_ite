@@ -57,12 +57,32 @@ function (X3DConstants)
 	function X3DPickableObject (executionContext)
 	{
 		this .addType (X3DConstants .X3DPickableObject);
+
+		this .objectType = new Set ();
 	}
 
 	X3DPickableObject .prototype =
 	{
 		constructor: X3DPickableObject,
-		initialize: function () { },
+		initialize: function ()
+		{
+			this .objectType_ .addInterest ("set_objectType__", this);
+
+			this .set_objectType__ ();
+		},
+		getObjectType: function ()
+		{
+			return this .objectType;
+		},
+		set_objectType__: function ()
+		{
+			this .objectType .clear ();
+
+			for (var i = 0, length = this .objectType_ .length; i < length; ++ i)
+			{
+				this .objectType .add (this .objectType_ [i]);
+			}
+		},
 	};
 
 	return X3DPickableObject;

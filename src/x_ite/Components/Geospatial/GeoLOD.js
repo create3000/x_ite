@@ -313,7 +313,15 @@ function (Fields,
 			{
 				case TraverseType .PICKING:
 				{
+					var
+						browser          = renderObject .getBrowser (),
+						pickingHierarchy = browser .getPickingHierarchy ();
+
+					pickingHierarchy .push (this);
+
 					this .traverseChildren (type, renderObject);
+
+					pickingHierarchy .pop ();
 					break;
 				}
 				case TraverseType .DISPLAY:

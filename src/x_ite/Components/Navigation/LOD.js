@@ -201,55 +201,65 @@ function (Fields,
 
 			return function (type, renderObject)
 			{
-				switch (type)
+				if (this .child)
 				{
-					case TraverseType .PICKING:
+					switch (type)
 					{
-						if (this .getTransformSensors () .size)
+						case TraverseType .PICKING:
 						{
-							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
-			
-							this .getTransformSensors () .forEach (function (transformSensorNode)
+							if (this .getTransformSensors () .size)
 							{
-								transformSensorNode .collect (bbox);
-							});
-						}
+								this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+				
+								this .getTransformSensors () .forEach (function (transformSensorNode)
+								{
+									transformSensorNode .collect (bbox);
+								});
+							}
 
-						break;
-					}
-					case TraverseType .DISPLAY:
-					{
-						if (! this .keepCurrentLevel)
-						{
 							var
-								level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-								currentLevel = this .level_changed_ .getValue ();
-	
-							if (this .forceTransitions_ .getValue ())
-							{
-								if (level > currentLevel)
-									level = currentLevel + 1;
-			
-								else if (level < currentLevel)
-									level = currentLevel - 1;
-							}
+								browser          = renderObject .getBrowser (),
+								pickingHierarchy = browser .getPickingHierarchy ();
 		
-							if (level !== currentLevel)
-							{
-								this .level_changed_ = level;
-						
-								this .child = this .getChild (Math .min (level, this .children_ .length - 1));
-		
-								this .set_cameraObjects__ ();
-							}
-						}
+							pickingHierarchy .push (this);
 
-						break;
+							this .child .traverse (type, renderObject);
+
+							pickingHierarchy .pop ();
+							break;
+						}
+						case TraverseType .DISPLAY:
+						{
+							if (! this .keepCurrentLevel)
+							{
+								var
+									level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
+									currentLevel = this .level_changed_ .getValue ();
+		
+								if (this .forceTransitions_ .getValue ())
+								{
+									if (level > currentLevel)
+										level = currentLevel + 1;
+				
+									else if (level < currentLevel)
+										level = currentLevel - 1;
+								}
+			
+								if (level !== currentLevel)
+								{
+									this .level_changed_ = level;
+							
+									this .child = this .getChild (Math .min (level, this .children_ .length - 1));
+			
+									this .set_cameraObjects__ ();
+								}
+							}
+
+							this .child .traverse (type, renderObject);
+							break;
+						}
 					}
 				}
-
-				if (this .child)
-					this .child .traverse (type, renderObject);
 			};
 		})(),
 	});

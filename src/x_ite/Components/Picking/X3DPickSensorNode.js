@@ -61,11 +61,113 @@ function (X3DSensorNode,
 		X3DSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DPickSensorNode);
+
+		this .objectType      = new Set ();
+		this .pickTargetNodes = new Set ();
 	}
 
 	X3DPickSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 	{
 		constructor: X3DPickSensorNode,
+		initialize: function ()
+		{
+			this .isLive () .addInterest ("set_live__", this);
+
+			this .enabled_          .addInterest ("set_live__",             this);
+			this .objectType_       .addInterest ("set_objectType__",       this);
+			this .intersectionType_ .addInterest ("set_intersectionType__", this);
+			this .sortOrder_        .addInterest ("set_sortOrder__",        this);
+			this .pickTarget_       .addInterest ("set_pickTarget__",       this);
+
+			this .set_objectType__ ();
+			this .set_intersectionType__ ();
+			this .set_sortOrder__ ();
+			this .set_pickTarget__ ();
+		},
+		getObjectType: function ()
+		{
+			return this .objectType;
+		},
+		set_live__: function ()
+		{
+			if (this .getLive () && this .enabled_ .getValue () && ! this .objectType .has ("NONE"))
+			{
+				this .getBrowser () .addPickSensor (this);
+				this .setPickableObject (true);
+			}
+			else
+			{
+				this .getBrowser () .removePickSensor (this);
+				this .setPickableObject (false);
+			}
+		},
+		set_objectType__: function ()
+		{
+			this .objectType .clear ();
+
+			for (var i = 0, length = this .objectType_ .length; i < length; ++ i)
+			{
+				this .objectType .add (this .objectType_ [i]);
+			}
+
+			this .set_live__ ();
+		},
+		set_intersectionType__: function ()
+		{
+		},
+		set_sortOrder__: function ()
+		{
+		},
+		set_pickTarget__: function ()
+		{
+			this .pickTargetNodes .clear ();
+
+			for (var i = 0, length = this .pickTarget_ .length; i < length; ++ i)
+			{
+				try
+				{
+					var
+						node = this .pickTarget_ [í] .getValue () .getInnerNode (),
+						type = node .getType ();
+		
+					for (var t = type .length - 1; t >= 0; -- t)
+					{
+						switch (type [t])
+						{
+							case X3DConstants .Inline:
+							case X3DConstants .Shape:
+							case X3DConstants .X3DGroupingNode:
+							{
+								this .pickTargetNodes .add (node);
+								break;
+							}
+							default:
+								continue;
+						}
+					}
+				}
+				catch (error)
+				{ }
+			}
+		},
+		collect: function (geometryNode, modelMatrix, pickingHierarchy)
+		{
+			var pickTargetNodes = this .pickTargetNodes;
+
+			var haveTarget = pickingHierarchy .some (function (node)
+			{
+				return pickTargetNodes .has (node);
+			});
+
+			if (haveTarget)
+			{
+				console .log (this .getName ());
+			}
+		},
+		process: function ()
+		{
+			console .log (this .getName ());
+		},
 	});
 
 	return X3DPickSensorNode;

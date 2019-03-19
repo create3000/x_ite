@@ -554,7 +554,14 @@ function (Fields,
 							});
 						}
 
-						if (false)
+						var
+							browser          = renderObject .getBrowser (),
+							pickingHierarchy = browser .getPickingHierarchy (),
+							pickableStack    = browser .getPickable ();
+
+						pickingHierarchy .push (this);
+
+						if (pickableStack [pickableStack .length - 1])
 						{
 							var childNodes = this .childNodes;
 	
@@ -568,7 +575,8 @@ function (Fields,
 							for (var i = 0, length = pickableObjects .length; i < length; ++ i)
 								pickableObjects [i] .traverse (type, renderObject);
 						}
-	
+
+						pickingHierarchy .pop ();
 						return;
 					}
 					case TraverseType .COLLISION:
@@ -591,6 +599,7 @@ function (Fields,
 					}
 					case TraverseType .DISPLAY:
 					{
+
 						var
 							displayNodes = this .displayNodes,
 							childNodes   = this .childNodes;

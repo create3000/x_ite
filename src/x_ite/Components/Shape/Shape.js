@@ -241,6 +241,21 @@ function (Fields,
 						transformSensorNode .collect (bbox);
 					});
 				}
+
+				var
+					browser          = renderObject .getBrowser (),
+					pickSensorStack  = browser .getPickSensors (),
+					pickingHierarchy = browser .getPickingHierarchy ();
+
+				pickingHierarchy .push (this);
+
+				pickSensorStack [pickSensorStack .length - 1] .forEach (function (pickSensor)
+				{
+					pickSensor .collect (this .getGeometry (), renderObject .getModelViewMatrix () .get (), browser .getPickingHierarchy ());
+				},
+				this);
+
+				pickingHierarchy .pop ();
 			};
 		})(),
 		depth: function (gl, context, shaderNode)
