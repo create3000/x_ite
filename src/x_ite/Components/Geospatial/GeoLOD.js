@@ -322,7 +322,7 @@ function (Fields,
 					this .traverseChildren (type, renderObject);
 
 					pickingHierarchy .pop ();
-					break;
+					return;
 				}
 				case TraverseType .DISPLAY:
 				{
@@ -424,12 +424,12 @@ function (Fields,
 					}
 
 					this .traverseChildren (type, renderObject);
-					break;
+					return;
 				}
 				default:
 				{
 					this .traverseChildren (type, renderObject);
-					break;
+					return;
 				}
 			}
 		},

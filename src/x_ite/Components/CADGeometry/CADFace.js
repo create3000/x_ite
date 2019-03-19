@@ -185,12 +185,12 @@ function (Fields,
 					this .shapeNode .traverse (type, renderObject);
 
 					pickingHierarchy .pop ();
-					break;
+					return;
 				}
 				default:
 				{
 					this .shapeNode .traverse (type, renderObject);
-					break;
+					return;
 				}
 			}
 		},

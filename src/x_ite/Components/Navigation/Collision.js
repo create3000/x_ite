@@ -162,11 +162,13 @@ function (Fields,
 						collisions .pop ();
 					}
 
-					break;
+					return;
 				}
 				default:
+				{
 					X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-					break;
+					return;
+				}
 			}
 		},
 	});

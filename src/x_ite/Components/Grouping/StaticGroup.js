@@ -161,7 +161,7 @@ function (Fields,
 				{
 					case TraverseType .CAMERA:
 					{
-						break;
+						return;
 					}
 					case TraverseType .POINTER:
 					case TraverseType .COLLISION:
@@ -208,7 +208,7 @@ function (Fields,
 							modelViewMatrix .pop ();
 						}
 
-						break;
+						return;
 					}
 					case TraverseType .DEPTH:
 					{
@@ -254,7 +254,7 @@ function (Fields,
 							modelViewMatrix .pop ();
 						}
 
-						break;
+						return;
 					}
 					case TraverseType .DISPLAY:
 					{
@@ -316,7 +316,7 @@ function (Fields,
 							modelViewMatrix .pop ();
 						}
 
-						break;
+						return;
 					}
 				}
 			};

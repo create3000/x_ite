@@ -159,6 +159,8 @@ function (X3DSensorNode,
 		},
 		traverse: function (type, renderObject)
 		{
+			// X3DPickSensorNode nodes are sorted out and only traversed during PICKING,
+
 			if (this .getPickableObject ())
 				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},

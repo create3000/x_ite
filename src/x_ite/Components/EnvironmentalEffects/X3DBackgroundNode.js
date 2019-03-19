@@ -496,7 +496,7 @@ function (X3DBindableNode,
 					renderObject .getLayer () .getBackgrounds () .push (this);
 
 					this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-					break;
+					return;
 				}
 				case TraverseType .DISPLAY:
 				{
@@ -508,7 +508,7 @@ function (X3DBindableNode,
 						destObjects [i] = sourceObjects [i];
 
 					destObjects .length = sourceObjects .length;
-					break;
+					return;
 				}
 			}
 		},

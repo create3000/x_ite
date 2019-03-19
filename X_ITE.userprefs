@@ -5,7 +5,9 @@
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Picking/X3DPickingContext.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Picking/X3DPickSensorNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js" Line="200" Column="35" />
+      <File FileName="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/CADGeometry/CADFace.js" Line="182" Column="1" />
+      <File FileName="src/x_ite/Components/Navigation/LOD.js" Line="57" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

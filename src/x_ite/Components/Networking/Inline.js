@@ -257,12 +257,12 @@ function (Fields,
 					this .group .traverse (type, renderObject);
 
 					pickingHierarchy .pop ();
-					break;
+					return;
 				}
 				default:
 				{
 					this .group .traverse (type, renderObject);
-					break;
+					return;
 				}
 			}
 		},

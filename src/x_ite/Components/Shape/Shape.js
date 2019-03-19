@@ -137,21 +137,25 @@ function (Fields,
 			switch (type)
 			{
 				case TraverseType .POINTER:
+				{
 					this .pointer (renderObject);
 					break;
-
+				}
 				case TraverseType .PICKING:
+				{
 					this .picking (renderObject);
 					break;
-
+				}
 				case TraverseType .COLLISION:
+				{
 					renderObject .addCollisionShape (this);
 					break;
-
+				}
 				case TraverseType .DEPTH:
+				{
 					renderObject .addDepthShape (this);
 					break;
-
+				}
 				case TraverseType .DISPLAY:
 				{
 					if (renderObject .addDisplayShape (this))

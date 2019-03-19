@@ -197,6 +197,8 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
+			// TransformSensor nodes are sorted out and only traversed during PICKING,
+
 			if (this .getPickableObject ())
 				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},

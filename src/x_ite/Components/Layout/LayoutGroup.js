@@ -147,6 +147,7 @@ function (Fields,
 			{
 				case TraverseType .POINTER:
 				case TraverseType .CAMERA:
+				case TraverseType .PICKING:
 				case TraverseType .DEPTH:
 				case TraverseType .DISPLAY:
 				{
@@ -174,7 +175,7 @@ function (Fields,
 					if (this .viewportNode)
 						this .viewportNode .pop ();
 		
-					break;
+					return;
 				}
 			}
 		},
