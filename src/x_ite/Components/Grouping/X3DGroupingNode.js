@@ -96,6 +96,9 @@ function (Fields,
 		this .clipPlaneNodes            = [ ];
 		this .localFogNodes             = [ ];
 		this .lightNodes                = [ ];
+		this .transformSensorNodesArray = [ ];
+		this .pickSensorNodes           = [ ];
+		this .lightNodes                = [ ];
 		this .displayNodes              = [ ];
 		this .childNodes                = [ ];
 	}
@@ -281,6 +284,16 @@ function (Fields,
 									this .maybeCameraObjects .push (innerNode);
 									break;				
 								}
+								case X3DConstants .TransformSensor:
+								{
+									this .transformSensorNodesArray .push (innerNode);
+									break;
+								}
+								case X3DConstants .X3DPickSensorNode:
+								{
+									this .pickSensorNodes .push (innerNode);
+									break;
+								}
 								case X3DConstants .X3DBackgroundNode:
 								case X3DConstants .X3DChildNode:
 								{
@@ -384,6 +397,24 @@ function (Fields,
 
 									break;				
 								}
+								case X3DConstants .TransformSensor:
+								{
+									var index = this .transformSensorNodesArray .indexOf (innerNode);
+
+									if (index >= 0)
+										this .transformSensorNodesArray .splice (index, 1);
+
+									break;
+								}
+								case X3DConstants .X3DPickSensorNode:
+								{
+									var index = this .pickSensorNodes .indexOf (innerNode);
+
+									if (index >= 0)
+										this .pickSensorNodes .splice (index, 1);
+
+									break;
+								}
 								case X3DConstants .X3DBackgroundNode:
 								case X3DConstants .X3DChildNode:
 								{
@@ -445,6 +476,8 @@ function (Fields,
 			this .clipPlaneNodes            .length = 0;
 			this .localFogNodes             .length = 0;
 			this .lightNodes                .length = 0;
+			this .transformSensorNodesArray .length = 0;
+			this .pickSensorNodes           .length = 0;
 			this .childNodes                .length = 0;
 		},
 		set_cameraObjects__: function ()
@@ -473,7 +506,7 @@ function (Fields,
 					this .pickableObjects .push (childNode);
 			}
 
-			this .setPickableObject (this .pickableObjects .length || this .getTransformSensors () .size);
+			this .setPickableObject (this .pickSensorNodes .length || this .pickableObjects .length || this .transformSensorNodesArray .length || this .getTransformSensors () .size);
 		},
 		set_display_nodes: function ()
 		{
@@ -553,6 +586,16 @@ function (Fields,
 								transformSensorNode .collect (bbox);
 							});
 						}
+
+						var
+							transformSensorNodes = this .transformSensorNodesArray,
+							pickSensorNodes      = this .pickSensorNodes;
+		
+						for (var i = 0, length = transformSensorNodes .length; i < length; ++ i)
+							transformSensorNodes [i] .traverse (type, renderObject);
+
+						for (var i = 0, length = pickSensorNodes .length; i < length; ++ i)
+							pickSensorNodes [i] .traverse (type, renderObject);
 
 						var
 							browser          = renderObject .getBrowser (),

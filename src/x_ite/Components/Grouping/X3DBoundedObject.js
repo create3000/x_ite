@@ -110,15 +110,15 @@ function (Fields,
 
 			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
 		},
-		getTransformSensors: function ()
-		{
-			return this .transformSensorNodes;
-		},
 		removeTransformSensor: function (transformSensorNode)
 		{
 			this .transformSensorNodes .delete (transformSensorNode);
 
 			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+		},
+		getTransformSensors: function ()
+		{
+			return this .transformSensorNodes;
 		},
 	};
 

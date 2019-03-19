@@ -197,9 +197,6 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			if (type !== TraverseType .PICKING)
-				return;
-
 			this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
 		collect: function (targetBBox)
