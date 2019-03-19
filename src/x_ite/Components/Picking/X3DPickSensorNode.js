@@ -159,7 +159,7 @@ function (X3DSensorNode,
 		},
 		traverse: function (type, renderObject)
 		{
-			if (this .enabled_ .getValue ())
+			if (this .getPickableObject ())
 				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
 		collect: function (geometryNode, modelMatrix, pickingHierarchy)
