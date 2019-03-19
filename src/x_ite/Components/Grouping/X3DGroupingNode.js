@@ -96,7 +96,7 @@ function (Fields,
 		this .clipPlaneNodes            = [ ];
 		this .localFogNodes             = [ ];
 		this .lightNodes                = [ ];
-		this .transformSensorNodesArray = [ ];
+		this .transformSensorNodesArray = [ ]; // Property 'transformSensorNodes' is also in X3DGroupingNode.
 		this .pickSensorNodes           = [ ];
 		this .lightNodes                = [ ];
 		this .displayNodes              = [ ];

@@ -197,7 +197,8 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
+			if (this .enabled_ .getValue ())
+				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
 		collect: function (targetBBox)
 		{

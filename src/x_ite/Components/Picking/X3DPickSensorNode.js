@@ -50,11 +50,17 @@
 define ([
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Matrix4",
+	"standard/Utility/ObjectCache",
 ],
 function (X3DSensorNode, 
-          X3DConstants)
+          X3DConstants,
+          Matrix4,
+          ObjectCache)
 {
 "use strict";
+
+	var ModelMatrixCache = ObjectCache (Matrix4);
 
 	function X3DPickSensorNode (executionContext)
 	{
@@ -64,6 +70,7 @@ function (X3DSensorNode,
 
 		this .objectType      = new Set ();
 		this .pickTargetNodes = new Set ();
+		this .modelMatrices   = [ ];
 	}
 
 	X3DPickSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
@@ -150,6 +157,11 @@ function (X3DSensorNode,
 				{ }
 			}
 		},
+		traverse: function (type, renderObject)
+		{
+			if (this .enabled_ .getValue ())
+				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
+		},
 		collect: function (geometryNode, modelMatrix, pickingHierarchy)
 		{
 			var pickTargetNodes = this .pickTargetNodes;
@@ -167,6 +179,14 @@ function (X3DSensorNode,
 		process: function ()
 		{
 			console .log (this .getName ());
+
+			this .modelMatrices .forEach (function (modelMatrix)
+			{
+				ModelMatrixCache .push (modelMatrix);
+			},
+			this);
+
+			this .modelMatrices .length = 0;
 		},
 	});
 
