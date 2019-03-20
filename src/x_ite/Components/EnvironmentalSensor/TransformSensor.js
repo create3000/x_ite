@@ -216,14 +216,21 @@ function (Fields,
 
 			return function ()
 			{
-				var active = false;
+				var
+					modelMatrices = this .modelMatrices,
+					targetBBoxes  = this .targetBBoxes,
+					active        = false;
 
-				this .modelMatrices .forEach (function (modelMatrix)
+				for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
 				{
+					var modelMatrix = modelMatrices [m];
+
 					bbox .assign (this .bbox) .multRight (modelMatrix);
 
-					this .targetBBoxes .forEach (function (targetBBox)
+					for (var t = 0, tLength = targetBBoxes .length; t < tLength; ++ t)
 					{
+						var targetBBox = targetBBoxes [t];
+
 						if (this .size_ .getValue () .equals (infinity) || bbox .intersectsBox (targetBBox))
 						{
 							active = true;
@@ -232,12 +239,10 @@ function (Fields,
 						}
 
 						TargetBBoxCache .push (targetBBox);
-					},
-					this);
+					}
 
 					ModelMatrixCache .push (modelMatrix);
-				},
-				this);
+				}
 
 				if (active)
 				{

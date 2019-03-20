@@ -95,6 +95,27 @@ function (Fields,
 		{
 			return "children";
 		},
+		process: function ()
+		{
+			var
+				modelMatrices = this .getModelMatrices (),
+				targets       = this .getTargets ();
+
+			console .log (this .getName (), targets .size, this .getModelMatrices () .length);
+
+			for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+			{
+				var modelMatrix = modelMatrices [m];
+
+				for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+				{
+					var target = targets [t];
+				}
+			},
+			this);
+
+			X3DPickSensorNode .prototype .process .call (this);
+		},
 	});
 
 	return PrimitivePickSensor;

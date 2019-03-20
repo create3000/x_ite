@@ -97,6 +97,10 @@ function (X3DSensorNode,
 		{
 			return this .objectType;
 		},
+		getModelMatrices: function ()
+		{
+			return this .modelMatrices;
+		},
 		getTargets: function ()
 		{
 			return this .targets;
@@ -181,18 +185,20 @@ function (X3DSensorNode,
 
 			if (haveTarget)
 			{
-				if (this .targets .size < this .targets .length)
+				var targets = this .targets;
+
+				if (targets .size < targets .length)
 				{
-					var target = this .targets [this .targets .size];
+					var target = targets [targets .size];
 				}
 				else
 				{
 					var target = { geometryNode: null, modelMatrix: new Matrix4 (), pickingHierarchy: [ ] };
 
-					this .targets .push (target);
+					targets .push (target);
 				}
 
-				++ this .targets .size;
+				++ targets .size;
 
 				target .geometryNode = geometryNode;
 				target .modelMatrix .assign (modelMatrix);
@@ -207,8 +213,6 @@ function (X3DSensorNode,
 		},
 		process: function ()
 		{
-			console .log (this .getName (), this .targets .size);
-
 			this .modelMatrices .forEach (function (modelMatrix)
 			{
 				ModelMatrixCache .push (modelMatrix);
