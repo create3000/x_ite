@@ -2284,8 +2284,16 @@ function (Fields,
 			{
 				case TraverseType .PICKING:
 				{
+					var
+						browser          = renderObject .getBrowser (),
+						pickingHierarchy = browser .getPickingHierarchy ();
+
+					pickingHierarchy .push (this);
+
 					this .traverseChildren (type, renderObject);
-					break;
+
+					pickingHierarchy .pop ();
+					return;
 				}
 				case TraverseType .DISPLAY:
 				{
@@ -2387,12 +2395,12 @@ function (Fields,
 					}
 
 					this .traverseChildren (type, renderObject);
-					break;
+					return;
 				}
 				default:
 				{
 					this .traverseChildren (type, renderObject);
-					break;
+					return;
 				}
 			}
 		},

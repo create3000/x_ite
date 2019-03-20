@@ -1,4 +1,4 @@
-/* X_ITE v4.4.4-680 */
+/* X_ITE v4.4.5-681 */
 
 (function () {
 
@@ -14507,6 +14507,10 @@ define ('standard/Math/Algorithm',[],function ()
 			return count-1;
 		},
 		*/
+		cmp: function (lhs, rhs)
+		{
+			return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
+		},
 		less: function (lhs, rhs)
 		{
 			return lhs < rhs;
@@ -24944,7 +24948,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.4.4";
+	return "4.4.5";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -68539,15 +68543,15 @@ function (Fields,
 
 			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
 		},
-		getTransformSensors: function ()
-		{
-			return this .transformSensorNodes;
-		},
 		removeTransformSensor: function (transformSensorNode)
 		{
 			this .transformSensorNodes .delete (transformSensorNode);
 
 			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+		},
+		getTransformSensors: function ()
+		{
+			return this .transformSensorNodes;
 		},
 	};
 
@@ -68653,6 +68657,9 @@ function (Fields,
 		this .pickableObjects           = [ ];
 		this .clipPlaneNodes            = [ ];
 		this .localFogNodes             = [ ];
+		this .lightNodes                = [ ];
+		this .transformSensorNodesArray = [ ]; // Property 'transformSensorNodes' is also in X3DGroupingNode.
+		this .pickSensorNodes           = [ ];
 		this .lightNodes                = [ ];
 		this .displayNodes              = [ ];
 		this .childNodes                = [ ];
@@ -68839,6 +68846,16 @@ function (Fields,
 									this .maybeCameraObjects .push (innerNode);
 									break;				
 								}
+								case X3DConstants .TransformSensor:
+								{
+									this .transformSensorNodesArray .push (innerNode);
+									break;
+								}
+								case X3DConstants .X3DPickSensorNode:
+								{
+									this .pickSensorNodes .push (innerNode);
+									break;
+								}
 								case X3DConstants .X3DBackgroundNode:
 								case X3DConstants .X3DChildNode:
 								{
@@ -68942,6 +68959,24 @@ function (Fields,
 
 									break;				
 								}
+								case X3DConstants .TransformSensor:
+								{
+									var index = this .transformSensorNodesArray .indexOf (innerNode);
+
+									if (index >= 0)
+										this .transformSensorNodesArray .splice (index, 1);
+
+									break;
+								}
+								case X3DConstants .X3DPickSensorNode:
+								{
+									var index = this .pickSensorNodes .indexOf (innerNode);
+
+									if (index >= 0)
+										this .pickSensorNodes .splice (index, 1);
+
+									break;
+								}
 								case X3DConstants .X3DBackgroundNode:
 								case X3DConstants .X3DChildNode:
 								{
@@ -69003,6 +69038,8 @@ function (Fields,
 			this .clipPlaneNodes            .length = 0;
 			this .localFogNodes             .length = 0;
 			this .lightNodes                .length = 0;
+			this .transformSensorNodesArray .length = 0;
+			this .pickSensorNodes           .length = 0;
 			this .childNodes                .length = 0;
 		},
 		set_cameraObjects__: function ()
@@ -69031,7 +69068,7 @@ function (Fields,
 					this .pickableObjects .push (childNode);
 			}
 
-			this .setPickableObject (this .pickableObjects .length || this .getTransformSensors () .size);
+			this .setPickableObject (this .pickSensorNodes .length || this .pickableObjects .length || this .transformSensorNodesArray .length || this .getTransformSensors () .size);
 		},
 		set_display_nodes: function ()
 		{
@@ -69112,7 +69149,24 @@ function (Fields,
 							});
 						}
 
-						if (false)
+						var
+							transformSensorNodes = this .transformSensorNodesArray,
+							pickSensorNodes      = this .pickSensorNodes;
+		
+						for (var i = 0, length = transformSensorNodes .length; i < length; ++ i)
+							transformSensorNodes [i] .traverse (type, renderObject);
+
+						for (var i = 0, length = pickSensorNodes .length; i < length; ++ i)
+							pickSensorNodes [i] .traverse (type, renderObject);
+
+						var
+							browser          = renderObject .getBrowser (),
+							pickingHierarchy = browser .getPickingHierarchy (),
+							pickableStack    = browser .getPickable ();
+
+						pickingHierarchy .push (this);
+
+						if (pickableStack [pickableStack .length - 1])
 						{
 							var childNodes = this .childNodes;
 	
@@ -69126,7 +69180,8 @@ function (Fields,
 							for (var i = 0, length = pickableObjects .length; i < length; ++ i)
 								pickableObjects [i] .traverse (type, renderObject);
 						}
-	
+
+						pickingHierarchy .pop ();
 						return;
 					}
 					case TraverseType .COLLISION:
@@ -69149,6 +69204,7 @@ function (Fields,
 					}
 					case TraverseType .DISPLAY:
 					{
+
 						var
 							displayNodes = this .displayNodes,
 							childNodes   = this .childNodes;
@@ -70737,15 +70793,16 @@ function (TraverseType)
 	function X3DPickingContext ()
 	{
 		this .transformSensorNodes = new Set ();
+		this .pickSensorNodes      = [ new Set () ];
+		this .pickingHierarchy     = [ ];
+		this .pickable             = [ false ];
 		this .pickingTime          = 0;
 	}
 
 	X3DPickingContext .prototype =
 	{
 		initialize: function ()
-		{
-
-		},
+		{ },
 		addTransformSensor: function (transformSensorNode)
 		{
 			this .transformSensorNodes .add (transformSensorNode);
@@ -70756,9 +70813,31 @@ function (TraverseType)
 			this .transformSensorNodes .delete (transformSensorNode);
 			this .enablePicking ();
 		},
+		addPickSensor: function (pickSensorNode)
+		{
+			this .pickSensorNodes [0] .add (pickSensorNode);
+			this .enablePicking ();
+		},
+		removePickSensor: function (pickSensorNode)
+		{
+			this .pickSensorNodes [0] .delete (pickSensorNode);
+			this .enablePicking ();
+		},
+		getPickSensors: function ()
+		{
+			return this .pickSensorNodes;
+		},
+		getPickingHierarchy: function ()
+		{
+			return this .pickingHierarchy;
+		},
+		getPickable: function ()
+		{
+			return this .pickable;
+		},
 		enablePicking: function ()
 		{
-			if (this .transformSensorNodes .size)
+			if (this .transformSensorNodes .size || this .pickSensorNodes [0] .size)
 				this .sensorEvents_ .addInterest ("picking", this);
 			else
 				this .sensorEvents_ .removeInterest ("picking", this);
@@ -70772,6 +70851,11 @@ function (TraverseType)
 			this .transformSensorNodes .forEach (function (transformSensorNode)
 			{
 				transformSensorNode .process ();
+			});
+
+			this .pickSensorNodes [0] .forEach (function (pickSensorNode)
+			{
+				pickSensorNode .process ();
 			});
 
 			this .pickingTime = performance .now () - t0;
@@ -80857,7 +80941,7 @@ function (X3DBindableNode,
 					renderObject .getLayer () .getBackgrounds () .push (this);
 
 					this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-					break;
+					return;
 				}
 				case TraverseType .DISPLAY:
 				{
@@ -80869,7 +80953,7 @@ function (X3DBindableNode,
 						destObjects [i] = sourceObjects [i];
 
 					destObjects .length = sourceObjects .length;
-					break;
+					return;
 				}
 			}
 		},
@@ -85397,10 +85481,10 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			if (type !== TraverseType .PICKING)
-				return;
+			// TransformSensor nodes are sorted out and only traversed during PICKING,
 
-			this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
+			if (this .getPickableObject ())
+				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
 		collect: function (targetBBox)
 		{
@@ -85416,14 +85500,21 @@ function (Fields,
 
 			return function ()
 			{
-				var active = false;
+				var
+					modelMatrices = this .modelMatrices,
+					targetBBoxes  = this .targetBBoxes,
+					active        = false;
 
-				this .modelMatrices .forEach (function (modelMatrix)
+				for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
 				{
+					var modelMatrix = modelMatrices [m];
+
 					bbox .assign (this .bbox) .multRight (modelMatrix);
 
-					this .targetBBoxes .forEach (function (targetBBox)
+					for (var t = 0, tLength = targetBBoxes .length; t < tLength; ++ t)
 					{
+						var targetBBox = targetBBoxes [t];
+
 						if (this .size_ .getValue () .equals (infinity) || bbox .intersectsBox (targetBBox))
 						{
 							active = true;
@@ -85432,12 +85523,10 @@ function (Fields,
 						}
 
 						TargetBBoxCache .push (targetBBox);
-					},
-					this);
+					}
 
 					ModelMatrixCache .push (modelMatrix);
-				},
-				this);
+				}
 
 				if (active)
 				{
@@ -90022,7 +90111,7 @@ function (Fields,
 				{
 					case TraverseType .CAMERA:
 					{
-						break;
+						return;
 					}
 					case TraverseType .POINTER:
 					case TraverseType .COLLISION:
@@ -90069,7 +90158,7 @@ function (Fields,
 							modelViewMatrix .pop ();
 						}
 
-						break;
+						return;
 					}
 					case TraverseType .DEPTH:
 					{
@@ -90115,7 +90204,7 @@ function (Fields,
 							modelViewMatrix .pop ();
 						}
 
-						break;
+						return;
 					}
 					case TraverseType .DISPLAY:
 					{
@@ -90177,7 +90266,7 @@ function (Fields,
 							modelViewMatrix .pop ();
 						}
 
-						break;
+						return;
 					}
 				}
 			};
@@ -90345,21 +90434,35 @@ function (Fields,
 
 			return function (type, renderObject)
 			{
-				if (type === TraverseType .PICKING)
+				if (this .child)
 				{
-					if (this .getTransformSensors () .size)
+					if (type === TraverseType .PICKING)
 					{
-						this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
-		
-						this .getTransformSensors () .forEach (function (transformSensorNode)
+						if (this .getTransformSensors () .size)
 						{
-							transformSensorNode .collect (bbox);
-						});
+							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+			
+							this .getTransformSensors () .forEach (function (transformSensorNode)
+							{
+								transformSensorNode .collect (bbox);
+							});
+						}
+
+						var
+							browser          = renderObject .getBrowser (),
+							pickingHierarchy = browser .getPickingHierarchy ();
+	
+						pickingHierarchy .push (this);
+
+						this .child .traverse (type, renderObject);
+
+						pickingHierarchy .pop ();
+					}
+					else
+					{
+						this .child .traverse (type, renderObject);
 					}
 				}
-
-				if (this .child)
-					this .child .traverse (type, renderObject);
 			};
 		})(),
 	});
@@ -93949,6 +94052,7 @@ function (Fields,
 				switch (type)
 				{
 					case TraverseType .CAMERA:
+					case TraverseType .PICKING:
 					case TraverseType .DEPTH:
 						// No clone support for shadow, generated cube map texture, and bbox
 						modelViewMatrix .multLeft (this .matrix);
@@ -94138,11 +94242,13 @@ function (Fields,
 						collisions .pop ();
 					}
 
-					break;
+					return;
 				}
 				default:
+				{
 					X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-					break;
+					return;
+				}
 			}
 		},
 	});
@@ -94355,55 +94461,70 @@ function (Fields,
 
 			return function (type, renderObject)
 			{
-				switch (type)
+				if (this .child)
 				{
-					case TraverseType .PICKING:
+					switch (type)
 					{
-						if (this .getTransformSensors () .size)
+						case TraverseType .PICKING:
 						{
-							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
-			
-							this .getTransformSensors () .forEach (function (transformSensorNode)
+							if (this .getTransformSensors () .size)
 							{
-								transformSensorNode .collect (bbox);
-							});
-						}
+								this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+				
+								this .getTransformSensors () .forEach (function (transformSensorNode)
+								{
+									transformSensorNode .collect (bbox);
+								});
+							}
 
-						break;
-					}
-					case TraverseType .DISPLAY:
-					{
-						if (! this .keepCurrentLevel)
-						{
 							var
-								level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-								currentLevel = this .level_changed_ .getValue ();
-	
-							if (this .forceTransitions_ .getValue ())
-							{
-								if (level > currentLevel)
-									level = currentLevel + 1;
-			
-								else if (level < currentLevel)
-									level = currentLevel - 1;
-							}
+								browser          = renderObject .getBrowser (),
+								pickingHierarchy = browser .getPickingHierarchy ();
 		
-							if (level !== currentLevel)
-							{
-								this .level_changed_ = level;
-						
-								this .child = this .getChild (Math .min (level, this .children_ .length - 1));
-		
-								this .set_cameraObjects__ ();
-							}
-						}
+							pickingHierarchy .push (this);
 
-						break;
+							this .child .traverse (type, renderObject);
+
+							pickingHierarchy .pop ();
+							return;
+						}
+						case TraverseType .DISPLAY:
+						{
+							if (! this .keepCurrentLevel)
+							{
+								var
+									level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
+									currentLevel = this .level_changed_ .getValue ();
+		
+								if (this .forceTransitions_ .getValue ())
+								{
+									if (level > currentLevel)
+										level = currentLevel + 1;
+				
+									else if (level < currentLevel)
+										level = currentLevel - 1;
+								}
+			
+								if (level !== currentLevel)
+								{
+									this .level_changed_ = level;
+							
+									this .child = this .getChild (Math .min (level, this .children_ .length - 1));
+			
+									this .set_cameraObjects__ ();
+								}
+							}
+
+							this .child .traverse (type, renderObject);
+							return;
+						}
+						default:
+						{
+							this .child .traverse (type, renderObject);
+							return;
+						}
 					}
 				}
-
-				if (this .child)
-					this .child .traverse (type, renderObject);
 			};
 		})(),
 	});
@@ -95647,13 +95768,21 @@ function (Fields,
 			{
 				case TraverseType .PICKING:
 				{
+					var
+						browser          = renderObject .getBrowser (),
+						pickingHierarchy = browser .getPickingHierarchy ();
+
+					pickingHierarchy .push (this);
+
 					this .group .traverse (type, renderObject);
-					break;
+
+					pickingHierarchy .pop ();
+					return;
 				}
 				default:
 				{
 					this .group .traverse (type, renderObject);
-					break;
+					return;
 				}
 			}
 		},
@@ -101373,21 +101502,25 @@ function (Fields,
 			switch (type)
 			{
 				case TraverseType .POINTER:
+				{
 					this .pointer (renderObject);
 					break;
-
+				}
 				case TraverseType .PICKING:
+				{
 					this .picking (renderObject);
 					break;
-
+				}
 				case TraverseType .COLLISION:
+				{
 					renderObject .addCollisionShape (this);
 					break;
-
+				}
 				case TraverseType .DEPTH:
+				{
 					renderObject .addDepthShape (this);
 					break;
-
+				}
 				case TraverseType .DISPLAY:
 				{
 					if (renderObject .addDisplayShape (this))
@@ -101477,6 +101610,21 @@ function (Fields,
 						transformSensorNode .collect (bbox);
 					});
 				}
+
+				var
+					browser          = renderObject .getBrowser (),
+					pickSensorStack  = browser .getPickSensors (),
+					pickingHierarchy = browser .getPickingHierarchy ();
+
+				pickingHierarchy .push (this);
+
+				pickSensorStack [pickSensorStack .length - 1] .forEach (function (pickSensor)
+				{
+					pickSensor .collect (this .getGeometry (), renderObject .getModelViewMatrix () .get (), browser .getPickingHierarchy ());
+				},
+				this);
+
+				pickingHierarchy .pop ();
 			};
 		})(),
 		depth: function (gl, context, shaderNode)
