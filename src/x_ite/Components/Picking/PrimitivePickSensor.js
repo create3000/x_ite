@@ -198,7 +198,6 @@ function (Fields,
 							if (! this .pickedGeometry_ .equals (pickedGeometries))
 								this .pickedGeometry_ = pickedGeometries;
 	
-							pickedGeometries .length = 0;
 							break;
 						}
 						case IntersectionType .GEOMETRY:

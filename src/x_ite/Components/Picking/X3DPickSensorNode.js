@@ -134,8 +134,9 @@ function (Fields,
 					targets    = this .targets,
 					numTargets = targets .size;
 
-				intersection     .length = 0;
-				pickedGeometries .length = 0;
+				// Filter intersecting targets.
+
+				intersection .length = 0;
 
 				for (var i = 0; i < numTargets; ++ i)
 				{
@@ -145,29 +146,39 @@ function (Fields,
 						intersection .push (target);
 				}
 
+				// No intersection, return.
 
 				if (intersection .length === 0)
+				{
+					pickedGeometries .length = 0;
+
 					return pickedGeometries;
+				}
+
+				// Return sorted intersection.
 
 				switch (this .sortOrder)
 				{
 					case SortOrder .ANY:
 					{
-						pickedGeometries .push (this .getPickedGeometry (intersection [0]));
+						pickedGeometries [0]     = this .getPickedGeometry (intersection [0]);
+						pickedGeometries .length = 1;
 						break;
 					}
 					case SortOrder .CLOSEST:
 					{
 						intersectionSorter .sort (0, intersection .length);
 
-						pickedGeometries .push (this .getPickedGeometry (intersection [0]));
+						pickedGeometries [0]     = this .getPickedGeometry (intersection [0]);
+						pickedGeometries .length = 1;
 						break;
 					}
 					case SortOrder .ALL:
 					{
 						for (var i = 0, length = intersection .length; i < length; ++ i)
-							pickedGeometries .push (this .getPickedGeometry (intersection [i]));
+							pickedGeometries [i] = this .getPickedGeometry (intersection [i]);
 
+						pickedGeometries .length = length;
 						break;
 					}
 					case SortOrder .ALL_SORTED:
@@ -175,8 +186,9 @@ function (Fields,
 						intersectionSorter .sort (0, intersection .length);
 
 						for (var i = 0, length = intersection .length; i < length; ++ i)
-							pickedGeometries .push (this .getPickedGeometry (intersection [i]));
+							pickedGeometries [i] = this .getPickedGeometry (intersection [i]);
 
+						pickedGeometries .length = length;
 						break;
 					}
 				}
