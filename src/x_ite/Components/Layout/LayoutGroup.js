@@ -145,11 +145,11 @@ function (Fields,
 		{
 			switch (type)
 			{
-				case TraverseType .POINTER:
-				case TraverseType .CAMERA:
-				case TraverseType .PICKING:
-				case TraverseType .DEPTH:
-				case TraverseType .DISPLAY:
+				case TraverseType .COLLISION:
+				{
+					return;
+				}
+				default:
 				{
 					if (this .viewportNode)
 						this .viewportNode .push ();
@@ -159,9 +159,9 @@ function (Fields,
 						var modelViewMatrix = renderObject .getModelViewMatrix ();
 
 						this .modelViewMatrix .assign (modelViewMatrix .get ());
+						this .screenMatrix .assign (this .layoutNode .transform (type, renderObject));
 
-						modelViewMatrix .push ();
-						modelViewMatrix .set (this .screenMatrix .assign (this .layoutNode .transform (type, renderObject)));
+						modelViewMatrix .pushMatrix (this .screenMatrix);
 						renderObject .getLayouts () .push (this .layoutNode);
 
 						X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
@@ -170,8 +170,10 @@ function (Fields,
 						modelViewMatrix .pop ();
 					}
 					else
+					{
 						X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-		
+					}
+
 					if (this .viewportNode)
 						this .viewportNode .pop ();
 		
