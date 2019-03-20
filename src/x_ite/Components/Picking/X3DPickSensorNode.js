@@ -83,6 +83,7 @@ function (Fields,
 		this .modelMatrices    = [ ];
 		this .targets          = [ ];
 		this .targets .size    = 0;
+		this .pickedGeometries = new Fields .MFNode (); // Must be unique for each X3DPickSensorNode.
 	}
 
 	X3DPickSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
@@ -124,15 +125,15 @@ function (Fields,
 			function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
 
 			var
-				pickedGeometries   = new Fields .MFNode (),
 				intersection       = [ ],
             intersectionSorter = new QuickSort (intersection, compareDistance);
 
 			return function ()
 			{
 				var
-					targets    = this .targets,
-					numTargets = targets .size;
+					targets          = this .targets,
+					numTargets       = targets .size,
+					pickedGeometries = this .pickedGeometries;
 
 				// Filter intersecting targets.
 
