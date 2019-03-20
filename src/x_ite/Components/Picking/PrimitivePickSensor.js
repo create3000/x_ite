@@ -101,7 +101,7 @@ function (Fields,
 				modelMatrices = this .getModelMatrices (),
 				targets       = this .getTargets ();
 
-			console .log (this .getName (), targets .size, this .getModelMatrices () .length);
+			console .log (this .getName (), targets .size, modelMatrices .length);
 
 			for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
 			{
@@ -111,8 +111,7 @@ function (Fields,
 				{
 					var target = targets [t];
 				}
-			},
-			this);
+			};
 
 			X3DPickSensorNode .prototype .process .call (this);
 		},

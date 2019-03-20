@@ -213,10 +213,10 @@ function (X3DSensorNode,
 		},
 		process: function ()
 		{
-			this .modelMatrices .forEach (function (modelMatrix)
-			{
-				ModelMatrixCache .push (modelMatrix);
-			});
+			var modelMatrices = this .modelMatrices;
+
+			for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+				ModelMatrixCache .push (modelMatrices [m]);
 
 			this .modelMatrices .length = 0;
 			this .targets .size         = 0;
