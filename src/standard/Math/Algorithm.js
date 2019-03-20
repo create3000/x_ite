@@ -177,6 +177,10 @@ define (function ()
 			return count-1;
 		},
 		*/
+		cmp: function (lhs, rhs)
+		{
+			return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
+		},
 		less: function (lhs, rhs)
 		{
 			return lhs < rhs;

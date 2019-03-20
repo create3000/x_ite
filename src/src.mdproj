@@ -686,6 +686,8 @@
     <None Include="components\volume-rendering.js" />
     <None Include="x_ite\Browser\Picking\X3DPickingContext.js" />
     <None Include="x_ite\Fields\SFNodeCache.js" />
+    <None Include="x_ite\Browser\Picking\IntersectionType.js" />
+    <None Include="x_ite\Browser\Picking\SortOrder.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

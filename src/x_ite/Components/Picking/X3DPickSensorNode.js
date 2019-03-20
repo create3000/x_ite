@@ -48,13 +48,21 @@
 
 
 define ([
+	"x_ite/Fields",
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Picking/IntersectionType",
+	"x_ite/Browser/Picking/SortOrder",
+	"standard/Math/Algorithms/QuickSort",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Utility/ObjectCache",
 ],
-function (X3DSensorNode, 
+function (Fields,
+          X3DSensorNode, 
           X3DConstants,
+          IntersectionType,
+          SortOrder,
+          QuickSort,
           Matrix4,
           ObjectCache)
 {
@@ -68,11 +76,13 @@ function (X3DSensorNode,
 
 		this .addType (X3DConstants .X3DPickSensorNode);
 
-		this .objectType      = new Set ();
-		this .pickTargetNodes = new Set ();
-		this .modelMatrices   = [ ];
-		this .targets         = [ ];
-		this .targets .size   = 0;
+		this .objectType       = new Set ();
+		this .intersectionType = IntersectionType .BOUNDS;
+		this .sortOrder        = SortOrder .CLOSEST;
+		this .pickTargetNodes  = new Set ();
+		this .modelMatrices    = [ ];
+		this .targets          = [ ];
+		this .targets .size    = 0;
 	}
 
 	X3DPickSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
@@ -97,6 +107,10 @@ function (X3DSensorNode,
 		{
 			return this .objectType;
 		},
+		getIntersectionType: function ()
+		{
+			return this .intersectionType;
+		},
 		getModelMatrices: function ()
 		{
 			return this .modelMatrices;
@@ -104,6 +118,102 @@ function (X3DSensorNode,
 		getTargets: function ()
 		{
 			return this .targets;
+		},
+		getPickedGeometries: (function ()
+		{
+			function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
+
+			var
+				pickedGeometries   = new Fields .MFNode (),
+				intersection       = [ ],
+            intersectionSorter = new QuickSort (intersection, compareDistance);
+
+			return function ()
+			{
+				var
+					targets    = this .targets,
+					numTargets = targets .size;
+
+				intersection     .length = 0;
+				pickedGeometries .length = 0;
+
+				for (var i = 0; i < numTargets; ++ i)
+				{
+					var target = targets [i];
+
+					if (target .intersected)
+						intersection .push (target);
+				}
+
+
+				if (intersection .length === 0)
+					return pickedGeometries;
+
+				switch (this .sortOrder)
+				{
+					case SortOrder .ANY:
+					{
+						pickedGeometries .push (this .getPickedGeometry (intersection [0]));
+						break;
+					}
+					case SortOrder .CLOSEST:
+					{
+						intersectionSorter .sort (0, intersection .length);
+
+						pickedGeometries .push (this .getPickedGeometry (intersection [0]));
+						break;
+					}
+					case SortOrder .ALL:
+					{
+						for (var i = 0, length = intersection .length; i < length; ++ i)
+							pickedGeometries .push (this .getPickedGeometry (intersection [i]));
+
+						break;
+					}
+					case SortOrder .ALL_SORTED:
+					{
+						intersectionSorter .sort (0, intersection .length);
+
+						for (var i = 0, length = intersection .length; i < length; ++ i)
+							pickedGeometries .push (this .getPickedGeometry (intersection [i]));
+
+						break;
+					}
+				}
+
+				return pickedGeometries;
+			};
+		})(),
+		getPickedGeometry: function (target)
+		{
+			var
+				executionContext = this .getExecutionContext (),
+				geometryNode     = target .geometryNode;
+
+			if (geometryNode .getExecutionContext () === executionContext)
+				return geometryNode;
+
+			var instance = geometryNode .getExecutionContext ();
+
+			if (instance .getType () .indexOf (X3DConstants .X3DPrototypeInstance) !== -1 && instance .getExecutionContext () === executionContext)
+				return instance;
+
+			var pickingHierarchy = target .pickingHierarchy;
+
+			for (var i = pickingHierarchy .length - 1; i >= 0; -- i)
+			{
+				var node = pickingHierarchy [i];
+
+				if (node .getExecutionContext () === executionContext)
+					return node;
+	
+				var instance = node .getExecutionContext ();
+	
+				if (instance .getType () .indexOf (X3DConstants .X3DPrototypeInstance) !== -1 && instance .getExecutionContext () === executionContext)
+					return instance;
+			}
+
+			return null;
 		},
 		set_live__: function ()
 		{
@@ -129,12 +239,38 @@ function (X3DSensorNode,
 
 			this .set_live__ ();
 		},
-		set_intersectionType__: function ()
+		set_intersectionType__: (function ()
 		{
-		},
-		set_sortOrder__: function ()
+			var intersectionTypes = new Map ([
+				["BOUNDS",   IntersectionType .BOUNDS],
+				["GEOMETRY", IntersectionType .GEOMETRY],
+			]);
+
+			return function ()
+			{
+				this .intersectionType = intersectionTypes .get (this .intersectionType_ .getValue ());
+
+				if (this .intersectionType === undefined)
+					this .intersectionType = IntersectionType .BOUNDS;
+			};
+		})(),
+		set_sortOrder__: (function ()
 		{
-		},
+			var sortOrders = new Map ([
+				["ANY",        SortOrder .ANY],
+				["CLOSEST",    SortOrder .CLOSEST],
+				["ALL",        SortOrder .ALL],
+				["ALL_SORTED", SortOrder .ALL_SORTED],
+			]);
+
+			return function ()
+			{
+				this .sortOrder = sortOrders .get (this .sortOrder_ .getValue ());
+
+				if (this .sortOrder === undefined)
+					this .sortOrder = SortOrder .CLOSEST;
+			};
+		})(),
 		set_pickTarget__: function ()
 		{
 			this .pickTargetNodes .clear ();
@@ -200,6 +336,7 @@ function (X3DSensorNode,
 
 				++ targets .size;
 
+				target .intersected  = false;
 				target .geometryNode = geometryNode;
 				target .modelMatrix .assign (modelMatrix);
 
