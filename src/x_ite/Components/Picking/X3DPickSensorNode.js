@@ -71,6 +71,8 @@ function (X3DSensorNode,
 		this .objectType      = new Set ();
 		this .pickTargetNodes = new Set ();
 		this .modelMatrices   = [ ];
+		this .targets         = [ ];
+		this .targets .size   = 0;
 	}
 
 	X3DPickSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
@@ -94,6 +96,10 @@ function (X3DSensorNode,
 		getObjectType: function ()
 		{
 			return this .objectType;
+		},
+		getTargets: function ()
+		{
+			return this .targets;
 		},
 		set_live__: function ()
 		{
@@ -134,7 +140,7 @@ function (X3DSensorNode,
 				try
 				{
 					var
-						node = this .pickTarget_ [í] .getValue () .getInnerNode (),
+						node = this .pickTarget_ [i] .getValue () .getInnerNode (),
 						type = node .getType ();
 		
 					for (var t = type .length - 1; t >= 0; -- t)
@@ -175,20 +181,41 @@ function (X3DSensorNode,
 
 			if (haveTarget)
 			{
-				console .log (this .getName ());
+				if (this .targets .size < this .targets .length)
+				{
+					var target = this .targets [this .targets .size];
+				}
+				else
+				{
+					var target = { geometryNode: null, modelMatrix: new Matrix4 (), pickingHierarchy: [ ] };
+
+					this .targets .push (target);
+				}
+
+				++ this .targets .size;
+
+				target .geometryNode = geometryNode;
+				target .modelMatrix .assign (modelMatrix);
+
+				var destPickingHierarchy = target .pickingHierarchy;
+
+				for (var i = 0, length = pickingHierarchy .length; i < length; ++ i)
+					destPickingHierarchy [i] = pickingHierarchy [i];
+
+				destPickingHierarchy .length = length;
 			}
 		},
 		process: function ()
 		{
-			console .log (this .getName ());
+			console .log (this .getName (), this .targets .size);
 
 			this .modelMatrices .forEach (function (modelMatrix)
 			{
 				ModelMatrixCache .push (modelMatrix);
-			},
-			this);
+			});
 
 			this .modelMatrices .length = 0;
+			this .targets .size         = 0;
 		},
 	});
 
