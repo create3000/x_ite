@@ -1,4 +1,4 @@
-/* X_ITE v4.4.5-681 */
+/* X_ITE v4.4.5-682 */
 
 (function () {
 
@@ -94461,22 +94461,22 @@ function (Fields,
 
 			return function (type, renderObject)
 			{
-				if (this .child)
+				switch (type)
 				{
-					switch (type)
+					case TraverseType .PICKING:
 					{
-						case TraverseType .PICKING:
+						if (this .getTransformSensors () .size)
 						{
-							if (this .getTransformSensors () .size)
+							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+			
+							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
-								this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
-				
-								this .getTransformSensors () .forEach (function (transformSensorNode)
-								{
-									transformSensorNode .collect (bbox);
-								});
-							}
+								transformSensorNode .collect (bbox);
+							});
+						}
 
+						if (this .child)
+						{
 							var
 								browser          = renderObject .getBrowser (),
 								pickingHierarchy = browser .getPickingHierarchy ();
@@ -94486,43 +94486,48 @@ function (Fields,
 							this .child .traverse (type, renderObject);
 
 							pickingHierarchy .pop ();
-							return;
 						}
-						case TraverseType .DISPLAY:
-						{
-							if (! this .keepCurrentLevel)
-							{
-								var
-									level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-									currentLevel = this .level_changed_ .getValue ();
-		
-								if (this .forceTransitions_ .getValue ())
-								{
-									if (level > currentLevel)
-										level = currentLevel + 1;
-				
-									else if (level < currentLevel)
-										level = currentLevel - 1;
-								}
-			
-								if (level !== currentLevel)
-								{
-									this .level_changed_ = level;
-							
-									this .child = this .getChild (Math .min (level, this .children_ .length - 1));
-			
-									this .set_cameraObjects__ ();
-								}
-							}
 
-							this .child .traverse (type, renderObject);
-							return;
-						}
-						default:
+						return;
+					}
+					case TraverseType .DISPLAY:
+					{
+						if (! this .keepCurrentLevel)
 						{
-							this .child .traverse (type, renderObject);
-							return;
+							var
+								level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
+								currentLevel = this .level_changed_ .getValue ();
+	
+							if (this .forceTransitions_ .getValue ())
+							{
+								if (level > currentLevel)
+									level = currentLevel + 1;
+			
+								else if (level < currentLevel)
+									level = currentLevel - 1;
+							}
+		
+							if (level !== currentLevel)
+							{
+								this .level_changed_ = level;
+						
+								this .child = this .getChild (Math .min (level, this .children_ .length - 1));
+		
+								this .set_cameraObjects__ ();
+							}
 						}
+
+						if (this .child)
+							this .child .traverse (type, renderObject);
+
+						return;
+					}
+					default:
+					{
+						if (this .child)
+							this .child .traverse (type, renderObject);
+
+						return;
 					}
 				}
 			};
