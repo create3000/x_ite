@@ -54,6 +54,7 @@ define ([
 	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
+	"x_ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector3",
 	"lib/ammojs/ammo",
 ],
@@ -63,6 +64,7 @@ function (Fields,
           X3DNBodyCollidableNode, 
           X3DConstants,
           X3DCast,
+          TraverseType,
           Vector3,
           Ammo)
 {
@@ -325,14 +327,38 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			var modelViewMatrix = renderObject .getModelViewMatrix ();
-
-			modelViewMatrix .push ();
-			modelViewMatrix .multLeft (this .getMatrix ());
-	
-			this .shapeNode .traverse (type, renderObject);
+			switch (type)
+			{
+				TraverseType .PICKING:
+				{
+					var
+						browser          = renderObject .getBrowser (),
+						pickingHierarchy = browser .getPickingHierarchy (),
+						modelViewMatrix  = renderObject .getModelViewMatrix ();
 		
-			modelViewMatrix .pop ();
+					pickingHierarchy .push (this);
+					modelViewMatrix .push ();
+					modelViewMatrix .multLeft (this .getMatrix ());
+			
+					this .shapeNode .traverse (type, renderObject);
+				
+					modelViewMatrix .pop ();
+					pickingHierarchy .pop ();
+					break;
+				}
+				default:
+				{
+					var modelViewMatrix = renderObject .getModelViewMatrix ();
+		
+					modelViewMatrix .push ();
+					modelViewMatrix .multLeft (this .getMatrix ());
+			
+					this .shapeNode .traverse (type, renderObject);
+				
+					modelViewMatrix .pop ();
+					break;
+				}
+			}
 		},
 		dispose: function ()
 		{

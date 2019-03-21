@@ -54,13 +54,15 @@ define ([
 	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
+	"x_ite/Bits/TraverseType",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNBodyCollidableNode, 
           X3DConstants,
-          X3DCast)
+          X3DCast,
+          TraverseType)
 {
 "use strict";
 
@@ -162,14 +164,38 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			var modelViewMatrix = renderObject .getModelViewMatrix ();
-
-			modelViewMatrix .push ();
-			modelViewMatrix .multLeft (this .getMatrix ());
-	
-			this .collidableNode .traverse (type, renderObject);
+			switch (type)
+			{
+				TraverseType .PICKING:
+				{
+					var
+						browser          = renderObject .getBrowser (),
+						pickingHierarchy = browser .getPickingHierarchy (),
+						modelViewMatrix  = renderObject .getModelViewMatrix ();
 		
-			modelViewMatrix .pop ();
+					pickingHierarchy .push (this);
+					modelViewMatrix .push ();
+					modelViewMatrix .multLeft (this .getMatrix ());
+
+					this .collidableNode .traverse (type, renderObject);
+
+					modelViewMatrix .pop ();
+					pickingHierarchy .pop ();
+					break;
+				}
+				default:
+				{
+					var modelViewMatrix = renderObject .getModelViewMatrix ();
+
+					modelViewMatrix .push ();
+					modelViewMatrix .multLeft (this .getMatrix ());
+
+					this .collidableNode .traverse (type, renderObject);
+
+					modelViewMatrix .pop ();
+					break;
+				}
+			}
 		},
 	});
 
