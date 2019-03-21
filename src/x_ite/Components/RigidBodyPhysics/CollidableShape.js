@@ -289,7 +289,7 @@ function (Fields,
 					}
 					default:
 					{
-						if (this .geometryNode .getGeometryType () === 3)
+						if (this .geometryNode .getGeometryType () > 1)
 							this .collisionShape = this .createConcaveGeometry ();
 
 						break;

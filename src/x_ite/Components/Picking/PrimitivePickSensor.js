@@ -205,7 +205,7 @@ function (Fields,
 						}
 						case IntersectionType .GEOMETRY:
 						{
-							// Intersect bboxes.
+							// Intersect geometry.
 	
 							var picker = this .picker;
 
