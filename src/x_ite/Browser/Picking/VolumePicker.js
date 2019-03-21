@@ -48,7 +48,7 @@
 
 
 define ([
-	require ("x_ite/Browser/Networking/urls") .getProviderUrl ("rigid-body-physics"),
+	X3D .getComponentUrl ("rigid-body-physics"),
 ],
 function (RigidBodyPhysics)
 {

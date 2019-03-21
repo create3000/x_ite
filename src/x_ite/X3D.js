@@ -71,6 +71,7 @@ define ([
 	"x_ite/Routing/RouteArray",
 	"x_ite/Routing/X3DRoute",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Networking/urls",
 ],
 function ($,
           Error,
@@ -94,7 +95,8 @@ function ($,
           X3DProtoDeclaration,
           RouteArray,
           X3DRoute,
-          X3DConstants)
+          X3DConstants,
+          urls)
 {
 "use strict";
 
@@ -194,10 +196,16 @@ function ($,
 		});
 	}
 
+	function getComponentUrl (name)
+	{
+		return urls .getProviderUrl (name);
+	}
+
 	Object .assign (X3D,
 	{
 		require:                     require,
 		define:                      define,
+		getComponentUrl:             getComponentUrl,
 
 		getBrowser:                  getBrowser,
 		createBrowser:               createBrowser,
