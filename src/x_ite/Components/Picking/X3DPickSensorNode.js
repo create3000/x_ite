@@ -349,9 +349,6 @@ function (Fields,
 		},
 		collect: function (geometryNode, modelMatrix, pickingHierarchy)
 		{
-			if (geometryNode .getGeometryType () < 2)
-				return;
-
 			var pickTargetNodes = this .pickTargetNodes;
 
 			var haveTarget = pickingHierarchy .some (function (node)
