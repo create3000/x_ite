@@ -54,7 +54,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/ammo",
+	"lib/ammojs/Ammo",
 ],
 function (Fields,
           X3DChildNode, 

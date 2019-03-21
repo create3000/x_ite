@@ -55,7 +55,7 @@ define ([
 	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
-	"lib/ammojs/ammo",
+	"lib/ammojs/Ammo",
 ],
 function ($,
           Fields,

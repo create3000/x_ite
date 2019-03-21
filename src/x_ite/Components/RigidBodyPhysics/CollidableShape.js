@@ -56,7 +56,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector3",
-	"lib/ammojs/ammo",
+	"lib/ammojs/Ammo",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -289,7 +289,9 @@ function (Fields,
 					}
 					default:
 					{
-						this .collisionShape = this .createConcaveGeometry ();
+						if (this .geometryNode .getGeometryType () === 3)
+							this .collisionShape = this .createConcaveGeometry ();
+
 						break;
 					}
 				}

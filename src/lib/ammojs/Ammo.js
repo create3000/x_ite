@@ -1,4 +1,5 @@
-/*******************************************************************************
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -45,43 +46,15 @@
  *
  ******************************************************************************/
 
+
 define ([
-	"x_ite/Components",
-	"x_ite/Components/Picking/LinePickSensor",
-	"x_ite/Components/Picking/PickableGroup",
-	"x_ite/Components/Picking/PointPickSensor",
-	"x_ite/Components/Picking/PrimitivePickSensor",
-	"x_ite/Components/Picking/VolumePickSensor",
-	"x_ite/Components/Picking/X3DPickSensorNode",
-	"x_ite/Components/Picking/X3DPickableObject",
-	require ("x_ite/Browser/Networking/urls") .getProviderUrl ("rigid-body-physics"),
+	"lib/ammojs/ammo",
 ],
-function (Components,
-          LinePickSensor,
-          PickableGroup,
-          PointPickSensor,
-          PrimitivePickSensor,
-          VolumePickSensor,
-          X3DPickSensorNode,
-          X3DPickableObject)
+function (Ammo)
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "Picking",
-		types:
-		{
-			LinePickSensor:      LinePickSensor,
-			PickableGroup:       PickableGroup,
-			PointPickSensor:     PointPickSensor,
-			PrimitivePickSensor: PrimitivePickSensor,
-			VolumePickSensor:    VolumePickSensor,
-		},
-		abstractTypes:
-		{
-			X3DPickSensorNode: X3DPickSensorNode,
-			X3DPickableObject: X3DPickableObject,
-		},
-	});
+	return new Ammo ();
 });
+
 

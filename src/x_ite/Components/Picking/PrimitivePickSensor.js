@@ -54,6 +54,7 @@ define ([
 	"x_ite/Components/Picking/X3DPickSensorNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Picking/IntersectionType",
+	"x_ite/Browser/Picking/VolumePicker",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Geometry/Box3",
 ],
@@ -63,6 +64,7 @@ function (Fields,
           X3DPickSensorNode, 
           X3DConstants,
           IntersectionType,
+          VolumePicker,
           Vector3,
           Box3)
 {
@@ -75,6 +77,7 @@ function (Fields,
 		this .addType (X3DConstants .PrimitivePickSensor);
 
 		this .pickingGeometryNode = null;
+		this .picker              = new VolumePicker ();
 	}
 
 	PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
@@ -202,6 +205,53 @@ function (Fields,
 						}
 						case IntersectionType .GEOMETRY:
 						{
+							// Intersect bboxes.
+	
+							var picker = this .picker;
+
+							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+							{
+								var
+									modelMatrix  = modelMatrices [m],
+									pickingShape = this .getPickShape (this .pickingGeometryNode);
+
+								pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
+
+								picker .setChildShape1 (modelMatrix, pickingShape .getCompoundShape ());
+
+								for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+								{
+									var
+										target      = targets [t],
+										targetShape = this .getPickShape (target .geometryNode);
+
+									targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
+
+									picker .setChildShape2 (target .modelMatrix, targetShape .getCompoundShape ());
+	
+									if (picker .contactTest ())
+									{
+										pickingCenter .assign (pickingBBox .center);
+										targetCenter  .assign (targetBBox .center);
+
+										target .intersected = true;
+										target .distance    = pickingCenter .distance (targetCenter);
+									}
+								}
+							};
+		
+							// Send events.
+	
+							var
+								pickedGeometries = this .getPickedGeometries (),
+								active           = Boolean (pickedGeometries .length);
+
+							if (active !== this .isActive_ .getValue ())
+								this .isActive_ = active;
+	
+							if (! this .pickedGeometry_ .equals (pickedGeometries))
+								this .pickedGeometry_ = pickedGeometries;
+	
 							break;
 						}
 					}

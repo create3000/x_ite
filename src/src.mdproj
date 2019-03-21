@@ -688,6 +688,8 @@
     <None Include="x_ite\Fields\SFNodeCache.js" />
     <None Include="x_ite\Browser\Picking\IntersectionType.js" />
     <None Include="x_ite\Browser\Picking\SortOrder.js" />
+    <None Include="x_ite\Browser\Picking\VolumePicker.js" />
+    <None Include="lib\ammojs\Ammo.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

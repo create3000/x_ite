@@ -1,6 +1,26 @@
 
 // Linear Math
 
+interface btIDebugDraw {
+  void drawLine([Const, Ref] btVector3 from, [Const, Ref] btVector3 to, [Const, Ref] btVector3 color);
+  void drawContactPoint([Const, Ref] btVector3 pointOnB, [Const, Ref] btVector3 normalOnB, float distance, long lifeTime, [Const, Ref] btVector3 color);
+  void reportErrorWarning([Const] DOMString warningString);
+  void draw3dText([Const, Ref] btVector3 location, [Const] DOMString textString);
+  void setDebugMode(long debugMode);
+  long getDebugMode();
+};
+
+[JSImplementation="btIDebugDraw"]
+interface DebugDrawer {
+  void DebugDrawer();
+  void drawLine([Const, Ref] btVector3 from, [Const, Ref] btVector3 to, [Const, Ref] btVector3 color);
+  void drawContactPoint([Const, Ref] btVector3 pointOnB, [Const, Ref] btVector3 normalOnB, float distance, long lifeTime, [Const, Ref] btVector3 color);
+  void reportErrorWarning([Const] DOMString warningString);
+  void draw3dText([Const, Ref] btVector3 location, [Const] DOMString textString);
+  void setDebugMode(long debugMode);
+  [Const] long getDebugMode();
+};
+
 interface btVector3 {
   void btVector3();
   void btVector3(float x, float y, float z);
@@ -81,6 +101,8 @@ interface btTransform {
   [Value] btQuaternion getRotation();
   [Ref] btMatrix3x3 getBasis();
   void setFromOpenGLMatrix(float[] m);
+  [Value] btTransform inverse();
+  [Operator="*=", Ref] btTransform op_mul([Ref] btTransform t);
 };
 
 interface btMotionState {
@@ -288,13 +310,49 @@ interface btConeShape {
 };
 btConeShape implements btCollisionShape;
 
+interface btIntArray {
+  long size();
+  long at(long n);
+};
+
+interface btFace {
+  [Value] attribute btIntArray m_indices;
+  attribute float[] m_plane;
+};
+
+interface btVector3Array {
+  long size();
+  [Const, Ref] btVector3 at(long n);
+};
+
+interface btFaceArray {
+  long size();
+  [Const, Ref] btFace at(long n);
+};
+
+interface btConvexPolyhedron {
+  [Value] attribute btVector3Array m_vertices;
+  [Value] attribute btFaceArray m_faces;
+};
+
 interface btConvexHullShape {
-  void btConvexHullShape();
+  void btConvexHullShape([Const] optional float[] points, optional long numPoints);
   void addPoint([Const, Ref] btVector3 point, optional boolean recalculateLocalAABB);
   void setMargin(float margin);
   float getMargin();
+  long getNumVertices();
+  boolean initializePolyhedralFeatures(long shiftVerticesByMargin);
+  void recalcLocalAabb();
+  [Const] btConvexPolyhedron getConvexPolyhedron();
 };
 btConvexHullShape implements btCollisionShape;
+
+interface btShapeHull {
+  void btShapeHull(btConvexShape shape);
+  boolean buildHull(float margin);
+  long numVertices();
+  [Const] btVector3 getVertexPointer();
+};
 
 interface btConeShapeX {
   void btConeShapeX(float radius, float height);
@@ -320,6 +378,7 @@ interface btCompoundShape {
 btCompoundShape implements btCollisionShape;
 
 interface btStridingMeshInterface {
+  void setScaling([Const, Ref] btVector3 scaling);
 };
 
 interface btTriangleMesh {
@@ -409,6 +468,11 @@ interface btDbvtBroadphase {
   void btDbvtBroadphase();
 };
 
+interface btBroadphaseProxy {
+  attribute long m_collisionFilterGroup;
+  attribute long m_collisionFilterMask;
+};
+
 
 // Dynamics
 
@@ -459,6 +523,7 @@ interface btRigidBody {
   void applyGravity();
   [Const, Ref] btVector3 getGravity();
   void setGravity([Const, Ref] btVector3 acceleration);
+  [Const] btBroadphaseProxy getBroadphaseProxy();
 };
 btRigidBody implements btCollisionObject;
 
@@ -585,6 +650,7 @@ interface btDispatcherInfo {
 };
 
 interface btCollisionWorld {
+  void btCollisionWorld(btDispatcher dispatcher, btBroadphaseInterface pairCache, btCollisionConfiguration collisionConfiguration);
   btDispatcher getDispatcher();
   void rayTest([Const, Ref] btVector3 rayFromWorld, [Const, Ref] btVector3 rayToWorld, [Ref] RayResultCallback resultCallback);
   btOverlappingPairCache getPairCache();
@@ -596,6 +662,11 @@ interface btCollisionWorld {
   void contactPairTest(btCollisionObject colObjA, btCollisionObject colObjB, [Ref] ContactResultCallback resultCallback);
   void contactTest(btCollisionObject colObj, [Ref] ContactResultCallback resultCallback);
   void updateSingleAabb(btCollisionObject colObj);
+  void setDebugDrawer(btIDebugDraw debugDrawer);
+  btIDebugDraw getDebugDrawer();
+  void debugDrawWorld();
+  void debugDrawObject([Const, Ref] btTransform worldTransform, [Const] btCollisionShape shape, [Const, Ref] btVector3 color);
+  void performDiscreteCollisionDetection();
 };
 
 interface btContactSolverInfo {

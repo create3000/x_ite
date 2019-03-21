@@ -1,6 +1,9 @@
 
 #https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html#installation-instructions
 
+
+# edit make.py and add -s ALLOW_MEMORY_GROWTH=1 to make.py args
+
 all: download compile
 
 download:
@@ -20,3 +23,4 @@ compile:
 	./autogen.sh
 	cd ..
 	python make.py
+

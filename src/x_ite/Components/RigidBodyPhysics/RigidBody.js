@@ -58,7 +58,7 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Quaternion",
 	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/ammo",
+	"lib/ammojs/Ammo",
 ],
 function (Fields,
           X3DFieldDefinition,

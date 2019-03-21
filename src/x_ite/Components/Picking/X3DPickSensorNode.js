@@ -120,6 +120,30 @@ function (Fields,
 		{
 			return this .targets;
 		},
+		getPickShape: (function ()
+		{
+			var pickShapes = new WeakMap ();
+
+			return function (geometryNode)
+			{
+				if (! pickShapes .has (geometryNode))
+				{
+					var
+						shapeNode           = this .getExecutionContext () .createNode ("Shape",           false),
+						collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", false);
+
+					shapeNode .geometry_        = geometryNode;
+					collidableShapeNode .shape_ = shapeNode;
+
+					shapeNode           .setup ();
+					collidableShapeNode .setup ();
+
+					pickShapes .set (geometryNode, collidableShapeNode);
+				}
+
+				return pickShapes .get (geometryNode);
+			};
+		})(),
 		getPickedGeometries: (function ()
 		{
 			function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }

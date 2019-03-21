@@ -66,6 +66,7 @@ define ([
 	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
 	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
 	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
+	"lib/ammojs/Ammo",
 ],
 function (Components,
           BallJoint,
@@ -84,7 +85,8 @@ function (Components,
           UniversalJoint,
           X3DNBodyCollidableNode,
           X3DNBodyCollisionSpaceNode,
-          X3DRigidJointNode)
+          X3DRigidJointNode,
+          Ammo)
 {
 "use strict";
 
@@ -114,5 +116,9 @@ function (Components,
 			X3DRigidJointNode:          X3DRigidJointNode,
 		},
 	});
+
+	return {
+		Ammo: Ammo,
+	};
 });
 
