@@ -199,7 +199,7 @@ function (Fields,
 			this .removeCollidableGeometry ();
 			this .setOffset (0, 0, 0);
 
-			if (this .geometryNode && this .enabled_ .getValue ())
+			if (this .geometryNode && this .enabled_ .getValue () && this .geometryNode .getGeometryType () > 1)
 			{
 				switch (this .geometryNode .getType () [this .geometryNode .getType () .length - 1])
 				{
@@ -289,9 +289,7 @@ function (Fields,
 					}
 					default:
 					{
-						if (this .geometryNode .getGeometryType () > 1)
-							this .collisionShape = this .createConcaveGeometry ();
-
+						this .collisionShape = this .createConcaveGeometry ();
 						break;
 					}
 				}
