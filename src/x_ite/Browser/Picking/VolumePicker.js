@@ -61,7 +61,7 @@ function (RigidBodyPhysics)
 		this .broadphase             = new Ammo .btDbvtBroadphase ();
 		this .collisionConfiguration = new Ammo .btDefaultCollisionConfiguration ();
 		this .dispatcher             = new Ammo .btCollisionDispatcher (this .collisionConfiguration);
-		this .collsionWorld          = new Ammo .btCollisionWorld (this .dispatcher, this .broadphase, this .collisionConfiguration);
+		this .collisionWorld         = new Ammo .btCollisionWorld (this .dispatcher, this .broadphase, this .collisionConfiguration);
 
 		this .compoundShape1         = new Ammo .btCompoundShape ();
 		this .motionState1           = new Ammo .btDefaultMotionState ();
@@ -73,8 +73,8 @@ function (RigidBodyPhysics)
 		this .constructionInfo2      = new Ammo .btRigidBodyConstructionInfo (0, this .motionState2, this .compoundShape2);
 		this .rigidBody2             = new Ammo .btRigidBody (this .constructionInfo2);
 
-		this .collsionWorld .addCollisionObject (this .rigidBody1);
-		this .collsionWorld .addCollisionObject (this .rigidBody2);
+		this .collisionWorld .addCollisionObject (this .rigidBody1);
+		this .collisionWorld .addCollisionObject (this .rigidBody2);
 	}
 
 	VolumePicker .prototype =
@@ -96,7 +96,7 @@ function (RigidBodyPhysics)
 		},
 		contactTest: function ()
 		{
-			this .collsionWorld .performDiscreteCollisionDetection ();
+			this .collisionWorld .performDiscreteCollisionDetection ();
 
 			var
 				contact      = false,
