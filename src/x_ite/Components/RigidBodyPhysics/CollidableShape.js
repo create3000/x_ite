@@ -329,7 +329,7 @@ function (Fields,
 		{
 			switch (type)
 			{
-				TraverseType .PICKING:
+				case TraverseType .PICKING:
 				{
 					var
 						browser          = renderObject .getBrowser (),
