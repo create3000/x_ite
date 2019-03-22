@@ -99,19 +99,23 @@ function (Vector3,
 			var
 				translation = new Vector3 (0, 0, 0),
 				rotation    = new Rotation4 (0, 0, 1, 0),
-				scale       = new Vector3 (0, 0, 0),
+				scale       = new Vector3 (1, 1, 1),
 				s           = new Ammo .btVector3 (0, 0, 0);
 
 			return function (compoundShape, matrix, childShape)
 			{
 				matrix .get (translation, rotation, scale);
-				s .setValue (scale .x, scale .y, scale .z);
 	
 				if (compoundShape .getNumChildShapes ())
 					compoundShape .removeChildShapeByIndex (0);
-	
-				compoundShape .addChildShape (this .getTransform (translation, rotation), childShape);
-				compoundShape .setLocalScaling (s);				
+
+				if (childShape .getNumChildShapes ())
+				{
+					s .setValue (scale .x, scale .y, scale .z);
+
+					childShape .setLocalScaling (s);				
+					compoundShape .addChildShape (this .getTransform (translation, rotation), childShape);
+				}
 			};
 		})(),
 		contactTest: function ()

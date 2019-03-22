@@ -84,7 +84,6 @@ function (Fields,
 		this .compoundShape  = new Ammo .btCompoundShape ()
 		this .offset         = new Vector3 (0, 0, 0);
 		this .matrix         = new Matrix4 ();
-		this .localTransform = new Ammo .btTransform ();
 	}
 
 	X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -104,7 +103,8 @@ function (Fields,
 		{
 			var
 				m = new Matrix4 (),
-				o = new Ammo .btVector3 (0, 0, 0);
+				o = new Ammo .btVector3 (0, 0, 0),
+				l = new Ammo .btTransform ();
 
 			return function ()
 			{
@@ -115,13 +115,13 @@ function (Fields,
 
 				o .setValue (m [12], m [13], m [14]);
 
-				this .localTransform .getBasis () .setValue (m [0], m [4], m [8],
-				                                             m [1], m [5], m [9],
-				                                             m [2], m [6], m [10]);
+				l .getBasis () .setValue (m [0], m [4], m [8],
+				                          m [1], m [5], m [9],
+				                          m [2], m [6], m [10]);
 
-				this .localTransform .setOrigin (o);
+				l .setOrigin (o);
 	
-				return this .localTransform;
+				return l;
 			};
 		})(),
 		setBody: function (value)
