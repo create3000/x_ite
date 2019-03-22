@@ -268,6 +268,10 @@ function (Fields,
 						shapeNode           = this .getExecutionContext () .createNode ("Shape",           false),
 						collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", false);
 
+					shapeNode .setPrivate (true);
+					collidableShapeNode .setPrivate (true);
+					collidableShapeNode .setConvex (true);
+
 					shapeNode .geometry_        = geometryNode;
 					collidableShapeNode .shape_ = shapeNode;
 
@@ -1085,9 +1089,15 @@ function (Fields,
 
 
 define ('x_ite/Browser/Picking/VolumePicker',[
-	require ("x_ite/Browser/Networking/urls") .getProviderUrl ("rigid-body-physics"),
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix4",
+	X3D .getComponentUrl ("rigid-body-physics"),
 ],
-function (RigidBodyPhysics)
+function (Vector3,
+          Rotation4,
+          Matrix4,
+          RigidBodyPhysics)
 {
 "use strict";
 
@@ -1098,7 +1108,7 @@ function (RigidBodyPhysics)
 		this .broadphase             = new Ammo .btDbvtBroadphase ();
 		this .collisionConfiguration = new Ammo .btDefaultCollisionConfiguration ();
 		this .dispatcher             = new Ammo .btCollisionDispatcher (this .collisionConfiguration);
-		this .collsionWorld          = new Ammo .btCollisionWorld (this .dispatcher, this .broadphase, this .collisionConfiguration);
+		this .collisionWorld         = new Ammo .btCollisionWorld (this .dispatcher, this .broadphase, this .collisionConfiguration);
 
 		this .compoundShape1         = new Ammo .btCompoundShape ();
 		this .motionState1           = new Ammo .btDefaultMotionState ();
@@ -1110,8 +1120,8 @@ function (RigidBodyPhysics)
 		this .constructionInfo2      = new Ammo .btRigidBodyConstructionInfo (0, this .motionState2, this .compoundShape2);
 		this .rigidBody2             = new Ammo .btRigidBody (this .constructionInfo2);
 
-		this .collsionWorld .addCollisionObject (this .rigidBody1);
-		this .collsionWorld .addCollisionObject (this .rigidBody2);
+		this .collisionWorld .addCollisionObject (this .rigidBody1);
+		this .collisionWorld .addCollisionObject (this .rigidBody2);
 	}
 
 	VolumePicker .prototype =
@@ -1119,21 +1129,39 @@ function (RigidBodyPhysics)
 		constuctor: VolumePicker,
 		setChildShape1: function (matrix, childShape)
 		{
-			if (this .compoundShape1 .getNumChildShapes ())
-				this .compoundShape1 .removeChildShapeByIndex (0);
-		
-			this .compoundShape1 .addChildShape (this .getTransform (matrix), childShape);
+			this .setChildShape (this .compoundShape1, matrix, childShape);
 		},
 		setChildShape2: function (matrix, childShape)
 		{
-			if (this .compoundShape2.getNumChildShapes ())
-				this .compoundShape2 .removeChildShapeByIndex (0);
-
-			this .compoundShape2 .addChildShape (this .getTransform (matrix), childShape);
+			this .setChildShape (this .compoundShape2, matrix, childShape);
 		},
+		setChildShape: (function ()
+		{
+			var
+				translation = new Vector3 (0, 0, 0),
+				rotation    = new Rotation4 (0, 0, 1, 0),
+				scale       = new Vector3 (1, 1, 1),
+				s           = new Ammo .btVector3 (0, 0, 0);
+
+			return function (compoundShape, matrix, childShape)
+			{
+				if (compoundShape .getNumChildShapes ())
+					compoundShape .removeChildShapeByIndex (0);
+
+				if (childShape .getNumChildShapes ())
+				{
+					matrix .get (translation, rotation, scale);
+	
+					s .setValue (scale .x, scale .y, scale .z);
+
+					childShape .setLocalScaling (s);				
+					compoundShape .addChildShape (this .getTransform (translation, rotation), childShape);
+				}
+			};
+		})(),
 		contactTest: function ()
 		{
-			this .collsionWorld .performDiscreteCollisionDetection ();
+			this .collisionWorld .performDiscreteCollisionDetection ();
 
 			var
 				contact      = false,
@@ -1159,10 +1187,13 @@ function (RigidBodyPhysics)
 		{
 			var
 				t = new Ammo .btTransform (),
-				o = new Ammo .btVector3 (0, 0, 0);
+				o = new Ammo .btVector3 (0, 0, 0),
+				m = new Matrix4 ();
 
-			return function (m)
+			return function (translation, rotation)
 			{
+				m .set (translation, rotation);
+
 				o .setValue (m [12], m [13], m [14]);
 
 				t .getBasis () .setValue (m [0], m [4], m [8],
@@ -1502,13 +1533,23 @@ define ('x_ite/Components/Picking/VolumePickSensor',[
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Picking/X3DPickSensorNode",
+	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Picking/IntersectionType",
+	"x_ite/Browser/Picking/VolumePicker",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DPickSensorNode, 
-          X3DConstants)
+          X3DCast,
+          X3DConstants,
+          IntersectionType,
+          VolumePicker,
+          Vector3,
+          Box3)
 {
 "use strict";
 
@@ -1517,6 +1558,9 @@ function (Fields,
 		X3DPickSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .VolumePickSensor);
+
+		this .pickingGeometryNode = null;
+		this .picker              = new VolumePicker ();
 	}
 
 	VolumePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
@@ -1545,6 +1589,134 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DPickSensorNode .prototype .initialize .call (this);
+			
+			this .pickingGeometry_ .addInterest ("set_pickingGeometry__", this);
+
+			this .set_pickingGeometry__ ();
+		},
+		set_pickingGeometry__: function ()
+		{
+			this .pickingGeometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .pickingGeometry_);
+		},
+		process: (function ()
+		{
+			var
+				pickingBBox   = new Box3 (),
+				targetBBox    = new Box3 (),
+				pickingCenter = new Vector3 (0, 0, 0),
+				targetCenter  = new Vector3 (0, 0, 0);
+
+			return function ()
+			{
+				if (this .pickingGeometryNode)
+				{
+					var
+						modelMatrices = this .getModelMatrices (),
+						targets       = this .getTargets ();
+		
+					switch (this .getIntersectionType ())
+					{
+						case IntersectionType .BOUNDS:
+						{
+							// Intersect bboxes.
+	
+							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+							{
+								var modelMatrix = modelMatrices [m];
+
+								pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
+				
+								for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+								{
+									var target = targets [t];
+
+									targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
+	
+									if (pickingBBox .intersectsBox (targetBBox))
+									{
+										pickingCenter .assign (pickingBBox .center);
+										targetCenter  .assign (targetBBox .center);
+
+										target .intersected = true;
+										target .distance    = pickingCenter .distance (targetCenter);
+									}
+								}
+							};
+		
+							// Send events.
+	
+							var
+								pickedGeometries = this .getPickedGeometries (),
+								active           = Boolean (pickedGeometries .length);
+
+							if (active !== this .isActive_ .getValue ())
+								this .isActive_ = active;
+	
+							if (! this .pickedGeometry_ .equals (pickedGeometries))
+								this .pickedGeometry_ = pickedGeometries;
+	
+							break;
+						}
+						case IntersectionType .GEOMETRY:
+						{
+							// Intersect geometry.
+	
+							var picker = this .picker;
+
+							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+							{
+								var
+									modelMatrix  = modelMatrices [m],
+									pickingShape = this .getPickShape (this .pickingGeometryNode);
+
+								pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
+
+								picker .setChildShape1 (modelMatrix, pickingShape .getCompoundShape ());
+
+								for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+								{
+									var
+										target      = targets [t],
+										targetShape = this .getPickShape (target .geometryNode);
+
+									targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
+
+									picker .setChildShape2 (target .modelMatrix, targetShape .getCompoundShape ());
+	
+									if (picker .contactTest ())
+									{
+										pickingCenter .assign (pickingBBox .center);
+										targetCenter  .assign (targetBBox .center);
+
+										target .intersected = true;
+										target .distance    = pickingCenter .distance (targetCenter);
+									}
+								}
+							};
+		
+							// Send events.
+	
+							var
+								pickedGeometries = this .getPickedGeometries (),
+								active           = Boolean (pickedGeometries .length);
+
+							if (active !== this .isActive_ .getValue ())
+								this .isActive_ = active;
+	
+							if (! this .pickedGeometry_ .equals (pickedGeometries))
+								this .pickedGeometry_ = pickedGeometries;
+	
+							break;
+						}
+					}
+				}
+
+				X3DPickSensorNode .prototype .process .call (this);
+			};
+		})(),
 	});
 
 	return VolumePickSensor;
@@ -1608,7 +1780,7 @@ define ([
 	"x_ite/Components/Picking/VolumePickSensor",
 	"x_ite/Components/Picking/X3DPickSensorNode",
 	"x_ite/Components/Picking/X3DPickableObject",
-	require ("x_ite/Browser/Networking/urls") .getProviderUrl ("rigid-body-physics"),
+	X3D .getComponentUrl ("rigid-body-physics"),
 ],
 function (Components,
           LinePickSensor,

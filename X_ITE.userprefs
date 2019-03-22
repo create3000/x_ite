@@ -6,8 +6,8 @@
       <File FileName="src/x_ite/Browser/Picking/X3DPickingContext.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Picking/X3DPickSensorNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Picking/VolumePickSensor.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableShape.js" Line="250" Column="2" />
-      <File FileName="src/x_ite/Browser/Picking/VolumePicker.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableShape.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Picking/VolumePicker.js" Line="113" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

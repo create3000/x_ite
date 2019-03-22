@@ -24948,7 +24948,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.4.5";
+	return "4.4.6a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -105726,6 +105726,7 @@ define ('x_ite/X3D',[
 	"x_ite/Routing/RouteArray",
 	"x_ite/Routing/X3DRoute",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Networking/urls",
 ],
 function ($,
           Error,
@@ -105749,7 +105750,8 @@ function ($,
           X3DProtoDeclaration,
           RouteArray,
           X3DRoute,
-          X3DConstants)
+          X3DConstants,
+          urls)
 {
 "use strict";
 
@@ -105849,10 +105851,16 @@ function ($,
 		});
 	}
 
+	function getComponentUrl (name)
+	{
+		return urls .getProviderUrl (name);
+	}
+
 	Object .assign (X3D,
 	{
 		require:                     require,
 		define:                      define,
+		getComponentUrl:             getComponentUrl,
 
 		getBrowser:                  getBrowser,
 		createBrowser:               createBrowser,
