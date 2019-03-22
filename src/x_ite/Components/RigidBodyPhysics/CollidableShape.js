@@ -154,8 +154,10 @@ function (Fields,
 				for (var i = 0, length = vertices .length; i < length; i += 4)
 				{
 					p .setValue (vertices [i], vertices [i + 1], vertices [i + 2]);
-					convexHull .addPoint (p);	
+					convexHull .addPoint (p, false);	
 				}
+
+				convexHull .recalcLocalAabb ();	
 
 				return convexHull;
 			};
