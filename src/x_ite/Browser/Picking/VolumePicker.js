@@ -104,13 +104,13 @@ function (Vector3,
 
 			return function (compoundShape, matrix, childShape)
 			{
-				matrix .get (translation, rotation, scale);
-	
 				if (compoundShape .getNumChildShapes ())
 					compoundShape .removeChildShapeByIndex (0);
 
 				if (childShape .getNumChildShapes ())
 				{
+					matrix .get (translation, rotation, scale);
+	
 					s .setValue (scale .x, scale .y, scale .z);
 
 					childShape .setLocalScaling (s);				
