@@ -138,38 +138,56 @@ function (Fields,
 		{
 			return this .convex;
 		},
-		createConvexGeometry: function ()
+		createConvexGeometry: (function ()
 		{
-			var vertices = this .geometryNode .getVertices () .getValue ();
+			var p = new Ammo .btVector3 ();
 
-			if (vertices .length === 0)
-				return null;
-
-			var convexHull = new Ammo .btConvexHullShape ();
-
-			for (var i = 0, length = vertices .length; i < length; i += 4)
-				convexHull .addPoint (new Ammo .btVector3 (vertices [i], vertices [i + 1], vertices [i + 2]));	
-
-			return convexHull;
-		},
-		createConcaveGeometry: function ()
-		{
-			var vertices = this .geometryNode .getVertices () .getValue ();
-
-			if (vertices .length === 0)
-				return null;
-
-			this .triangleMesh = new Ammo .btTriangleMesh ();
-
-			for (var i = 0, length = vertices .length; i < length; i += 12)
+			return function ()
 			{
-				this .triangleMesh .addTriangle (new Ammo .btVector3 (vertices [i],     vertices [i + 1], vertices [i + 2]),
-				                                 new Ammo .btVector3 (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
-				                                 new Ammo .btVector3 (vertices [i + 8], vertices [i + 9], vertices [i + 10]));	
-			}
+				var vertices = this .geometryNode .getVertices () .getValue ();
+	
+				if (vertices .length === 0)
+					return null;
+	
+				var convexHull = new Ammo .btConvexHullShape ();
+	
+				for (var i = 0, length = vertices .length; i < length; i += 4)
+				{
+					p .setValue (vertices [i], vertices [i + 1], vertices [i + 2]);
+					convexHull .addPoint (p);	
+				}
 
-			return new Ammo .btBvhTriangleMeshShape (this .triangleMesh, false);
-		},
+				return convexHull;
+			};
+		})(),
+		createConcaveGeometry: (function ()
+		{
+			var
+				p1 = new Ammo .btVector3 (),
+				p2 = new Ammo .btVector3 (),
+				p3 = new Ammo .btVector3 ();
+
+			return function ()
+			{
+				var vertices = this .geometryNode .getVertices () .getValue ();
+	
+				if (vertices .length === 0)
+					return null;
+	
+				this .triangleMesh = new Ammo .btTriangleMesh ();
+	
+				for (var i = 0, length = vertices .length; i < length; i += 12)
+				{
+					p1 .setValue (vertices [i],     vertices [i + 1], vertices [i + 2]);
+					p2 .setValue (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+					p3 .setValue (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
+
+					this .triangleMesh .addTriangle (p1, p2, p3);	
+				}
+	
+				return new Ammo .btBvhTriangleMeshShape (this .triangleMesh, false);
+			};
+		})(),
 		set_shape__: function ()
 		{
 			if (this .shapeNode)
