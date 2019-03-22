@@ -132,6 +132,10 @@ function (Fields,
 						shapeNode           = this .getExecutionContext () .createNode ("Shape",           false),
 						collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", false);
 
+					shapeNode .setPrivate (true);
+					collidableShapeNode .setPrivate (true);
+					collidableShapeNode .setConvex (true);
+
 					shapeNode .geometry_        = geometryNode;
 					collidableShapeNode .shape_ = shapeNode;
 

@@ -76,6 +76,7 @@ function (Fields,
 
 		this .addType (X3DConstants .CollidableShape);
 
+		this .convex         = false;
 		this .shapeNode      = null;
 		this .geometryNode   = null;
 		this .collisionShape = null;
@@ -128,6 +129,28 @@ function (Fields,
 			}
 		
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+		},
+		setConvex: function (value)
+		{
+			this .convex = value;
+		},
+		getConvex: function ()
+		{
+			return this .convex;
+		},
+		createConvexGeometry: function ()
+		{
+			var vertices = this .geometryNode .getVertices () .getValue ();
+
+			if (vertices .length === 0)
+				return null;
+
+			var convexHull = new Ammo .btConvexHullShape ();
+
+			for (var i = 0, length = vertices .length; i < length; i += 4)
+				convexHull .addPoint (new Ammo .btVector3 (vertices [i], vertices [i + 1], vertices [i + 2]));	
+
+			return convexHull;
 		},
 		createConcaveGeometry: function ()
 		{
@@ -199,7 +222,7 @@ function (Fields,
 			this .removeCollidableGeometry ();
 			this .setOffset (0, 0, 0);
 
-			if (this .geometryNode && this .enabled_ .getValue () && this .geometryNode .getGeometryType () > 1)
+			if (this .enabled_ .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
 			{
 				switch (this .geometryNode .getType () [this .geometryNode .getType () .length - 1])
 				{
@@ -289,7 +312,10 @@ function (Fields,
 					}
 					default:
 					{
-						this .collisionShape = this .createConcaveGeometry ();
+						if (this .convex)
+							this .collisionShape = this .createConvexGeometry ();
+						else
+							this .collisionShape = this .createConcaveGeometry ();
 						break;
 					}
 				}

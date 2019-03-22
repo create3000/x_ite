@@ -48,9 +48,15 @@
 
 
 define ([
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix4",
 	X3D .getComponentUrl ("rigid-body-physics"),
 ],
-function (RigidBodyPhysics)
+function (Vector3,
+          Rotation4,
+          Matrix4,
+          RigidBodyPhysics)
 {
 "use strict";
 
@@ -82,18 +88,32 @@ function (RigidBodyPhysics)
 		constuctor: VolumePicker,
 		setChildShape1: function (matrix, childShape)
 		{
-			if (this .compoundShape1 .getNumChildShapes ())
-				this .compoundShape1 .removeChildShapeByIndex (0);
-		
-			this .compoundShape1 .addChildShape (this .getTransform (matrix), childShape);
+			this .setChildShape (this .compoundShape1, matrix, childShape);
 		},
 		setChildShape2: function (matrix, childShape)
 		{
-			if (this .compoundShape2.getNumChildShapes ())
-				this .compoundShape2 .removeChildShapeByIndex (0);
-
-			this .compoundShape2 .addChildShape (this .getTransform (matrix), childShape);
+			this .setChildShape (this .compoundShape2, matrix, childShape);
 		},
+		setChildShape: (function ()
+		{
+			var
+				translation = new Vector3 (0, 0, 0),
+				rotation    = new Rotation4 (0, 0, 1, 0),
+				scale       = new Vector3 (0, 0, 0),
+				s           = new Ammo .btVector3 (0, 0, 0);
+
+			return function (compoundShape, matrix, childShape)
+			{
+				matrix .get (translation, rotation, scale);
+				s .setValue (scale .x, scale .y, scale .z);
+	
+				if (compoundShape .getNumChildShapes ())
+					compoundShape .removeChildShapeByIndex (0);
+	
+				compoundShape .addChildShape (this .getTransform (translation, rotation), childShape);
+				compoundShape .setLocalScaling (s);				
+			};
+		})(),
 		contactTest: function ()
 		{
 			this .collisionWorld .performDiscreteCollisionDetection ();
@@ -122,10 +142,13 @@ function (RigidBodyPhysics)
 		{
 			var
 				t = new Ammo .btTransform (),
-				o = new Ammo .btVector3 (0, 0, 0);
+				o = new Ammo .btVector3 (0, 0, 0),
+				m = new Matrix4 ();
 
-			return function (m)
+			return function (translation, rotation)
 			{
+				m .set (translation, rotation);
+
 				o .setValue (m [12], m [13], m [14]);
 
 				t .getBasis () .setValue (m [0], m [4], m [8],

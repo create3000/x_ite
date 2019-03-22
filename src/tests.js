@@ -201,6 +201,8 @@ var X_ITE_TESTS = [
 	{ component: "Picking" },
 	{ path: "Picking/PrimitivePickSensorBounds.x3d" },
 	{ path: "Picking/PrimitivePickSensorGeometry.x3d" },
+	{ path: "Picking/VolumePickSensorBounds.x3d" },
+	{ path: "Picking/VolumePickSensorGeometry.x3d" },
 	{ component: "PointingDeviceSensor" },
 	{ path: "PointingDeviceSensor/ClonedSensors.x3d" },
 	{ path: "PointingDeviceSensor/LineSensor.x3d" },
