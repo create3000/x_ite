@@ -139,15 +139,14 @@ function (Fields,
 		set_geometry__: (function ()
 		{
 			var
-				point = new Vector3 (0, 0, 0),
-				o     = new Ammo .btVector3 (),
-				t     = new Ammo .btTransform ();
+				point        = new Vector3 (0, 0, 0),
+				defaultScale = new Ammo .btVector3 (1, 1, 1),
+				o            = new Ammo .btVector3 (),
+				t            = new Ammo .btTransform ();
 
 			return function ()
 			{
 				var compoundShapes = this .compoundShapes;
-
-				compoundShapes .length = 0;
 
 				if (this .pickingGeometryNode)
 				{
@@ -157,20 +156,45 @@ function (Fields,
 					{
 						for (var i = 0, length = coord .getSize (); i < length; ++ i)
 						{
-							var
-								compoundShape = new Ammo .btCompoundShape (),
-								sphereShape   = new Ammo .btSphereShape (0),
-								point         = coord .get1Point (i, new Vector3 (0, 0, 0));
+							if (i < compoundShapes .length)
+							{
+								var
+									compoundShape = compoundShapes [i],
+									point         = coord .get1Point (i, compoundShape .point);
+	
+								o .setValue (point .x, point .y, point .z);
+								t .setOrigin (o);
 
-							compoundShape .point = point;
-
-							o .setValue (point .x, point .y, point .z);
-							t .setOrigin (o);
-
-							compoundShape .addChildShape (t, sphereShape);
-							compoundShapes .push (compoundShape);
+								compoundShape .setLocalScaling (defaultScale);
+								compoundShape .updateChildTransform (0, t);
+							}
+							else
+							{
+								var
+									compoundShape = new Ammo .btCompoundShape (),
+									sphereShape   = new Ammo .btSphereShape (0),
+									point         = coord .get1Point (i, new Vector3 (0, 0, 0));
+	
+								compoundShape .point = point;
+	
+								o .setValue (point .x, point .y, point .z);
+								t .setOrigin (o);
+	
+								compoundShape .addChildShape (t, sphereShape);
+								compoundShapes .push (compoundShape);
+							}
 						}
+
+						compoundShapes .length = length;
 					}
+					else
+					{
+						compoundShapes .length = 0;
+					}
+				}
+				else
+				{
+					compoundShapes .length = 0;
 				}
 			};
 		})(),
