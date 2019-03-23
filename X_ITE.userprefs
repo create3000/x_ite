@@ -1,13 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Picking/VolumePickSensor.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Picking/VolumePicker.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Picking/X3DPickingContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Picking/X3DPickSensorNode.js" Line="147" Column="1" />
-      <File FileName="src/x_ite/Components/Picking/VolumePickSensor.js" Line="175" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableShape.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DObjectArrayField.js" Line="278" Column="22" />
+      <File FileName="src/x_ite/Components/Picking/X3DPickSensorNode.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Picking/VolumePickSensor.js" Line="172" Column="33" />
+      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableShape.js" Line="159" Column="1" />
+      <File FileName="src/x_ite/Browser/Picking/VolumePicker.js" Line="136" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -122,9 +122,7 @@ function (Vector3,
 		{
 			this .collisionWorld .performDiscreteCollisionDetection ();
 
-			var
-				contact      = false,
-				numManifolds = this .dispatcher .getNumManifolds ();
+			var numManifolds = this .dispatcher .getNumManifolds ();
 
 			for (var i = 0; i < numManifolds; ++ i)
 			{
@@ -136,11 +134,12 @@ function (Vector3,
 				{
 					var pt = contactManifold .getContactPoint (j);
 	
-					contact |= pt .getDistance () < 0;
+					if (pt .getDistance () < 0)
+						return true;
 				}
 			}
 
-			return contact;
+			return false;
 		},
 		getTransform: (function ()
 		{
