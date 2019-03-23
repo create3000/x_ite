@@ -72,6 +72,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "ParticleSystems", test: "SurfaceEmitter" },
 	{ component: "ParticleSystems", test: "VolumeEmitter" },
 	{ component: "ParticleSystems", test: "WindPhysicsModel" },
+	{ component: "Picking", test: "PointPickSensor" },
 	{ component: "Picking", test: "PrimitivePickSensor" },
 	{ component: "PointingDeviceSensor", test: "CylinderSensor" },
 	{ component: "PointingDeviceSensor", test: "PlaneSensor" },

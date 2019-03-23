@@ -1070,7 +1070,7 @@ function (Fields,
 				for (var i = 0, length = vertices .length; i < length; i += 4)
 				{
 					p .setValue (vertices [i], vertices [i + 1], vertices [i + 2]);
-					convexHull .addPoint (p, false);	
+					convexHull .addPoint (p, false);
 				}
 
 				convexHull .recalcLocalAabb ();	
@@ -1170,7 +1170,9 @@ function (Fields,
 	
 				if (this .enabled_ .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
 				{
-					switch (this .geometryNode .getType () [this .geometryNode .getType () .length - 1])
+					var type = this .geometryNode .getType ();
+
+					switch (type [type .length - 1])
 					{
 						case X3DConstants .Box:
 						{
@@ -1262,6 +1264,7 @@ function (Fields,
 								this .collisionShape = this .createConvexGeometry ();
 							else
 								this .collisionShape = this .createConcaveGeometry ();
+
 							break;
 						}
 					}

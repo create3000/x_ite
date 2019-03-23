@@ -129,19 +129,22 @@ function (Fields,
 					{
 						if (this .getObjectType () .has ("NONE"))
 							return;
+
+						var
+							browser         = renderObject .getBrowser (),
+							pickableStack   = browser .getPickable ();
 		
 						if (this .getObjectType () .has ("ALL"))
 						{
+							pickableStack .push (true);
 							X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+							pickableStack .pop ();
 						}
 						else
 						{
 							// Filter pick sensors.
 	
-							var
-								browser         = renderObject .getBrowser (),
-								pickSensorStack = browser .getPickSensors (),
-								pickableStack   = browser .getPickable ();
+							var pickSensorStack = browser .getPickSensors ();
 
 							pickSensorStack [pickSensorStack .length - 1] .forEach (function (pickSensorNode)
 							{

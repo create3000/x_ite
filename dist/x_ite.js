@@ -99439,6 +99439,10 @@ function (Fields,
 		{
 			return browser .getPointShader ();
 		},
+		getCoord: function ()
+		{
+			return this .coordNode;
+		},
 		set_attrib__: function ()
 		{
 			var attribNodes = this .getAttrib ();

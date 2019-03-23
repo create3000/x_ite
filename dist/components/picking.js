@@ -262,26 +262,28 @@ function (Fields,
 
 			return function (geometryNode)
 			{
-				if (! pickShapes .has (geometryNode))
-				{
-					var
-						shapeNode           = this .getExecutionContext () .createNode ("Shape",           false),
-						collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", false);
+				var pickShape = pickShapes .get (geometryNode);
 
-					shapeNode .setPrivate (true);
-					collidableShapeNode .setPrivate (true);
-					collidableShapeNode .setConvex (true);
+				if (pickShape !== undefined)
+					return pickShape;
 
-					shapeNode .geometry_        = geometryNode;
-					collidableShapeNode .shape_ = shapeNode;
+				var
+					shapeNode           = this .getExecutionContext () .createNode ("Shape",           false),
+					collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", false);
 
-					shapeNode           .setup ();
-					collidableShapeNode .setup ();
+				shapeNode .setPrivate (true);
+				collidableShapeNode .setPrivate (true);
+				collidableShapeNode .setConvex (true);
 
-					pickShapes .set (geometryNode, collidableShapeNode);
-				}
+				shapeNode .geometry_        = geometryNode;
+				collidableShapeNode .shape_ = shapeNode;
 
-				return pickShapes .get (geometryNode);
+				shapeNode           .setup ();
+				collidableShapeNode .setup ();
+
+				pickShapes .set (geometryNode, collidableShapeNode);
+
+				return collidableShapeNode;
 			};
 		})(),
 		getPickedGeometries: (function ()
@@ -872,19 +874,22 @@ function (Fields,
 					{
 						if (this .getObjectType () .has ("NONE"))
 							return;
+
+						var
+							browser         = renderObject .getBrowser (),
+							pickableStack   = browser .getPickable ();
 		
 						if (this .getObjectType () .has ("ALL"))
 						{
+							pickableStack .push (true);
 							X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+							pickableStack .pop ();
 						}
 						else
 						{
 							// Filter pick sensors.
 	
-							var
-								browser         = renderObject .getBrowser (),
-								pickSensorStack = browser .getPickSensors (),
-								pickableStack   = browser .getPickable ();
+							var pickSensorStack = browser .getPickSensors ();
 
 							pickSensorStack [pickSensorStack .length - 1] .forEach (function (pickSensorNode)
 							{
@@ -930,111 +935,6 @@ function (Fields,
 	});
 
 	return PickableGroup;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Picking/PointPickSensor',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Picking/X3DPickSensorNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DPickSensorNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function PointPickSensor (executionContext)
-	{
-		X3DPickSensorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .PointPickSensor);
-	}
-
-	PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
-	{
-		constructor: PointPickSensor,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",       new Fields .MFString ("ALL")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType", new Fields .SFString ("BOUNDS")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",        new Fields .SFString ("CLOSEST")),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",         new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedPoint",      new Fields .MFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "pickingGeometry",  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",       new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",   new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "PointPickSensor";
-		},
-		getComponentName: function ()
-		{
-			return "Picking";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-	});
-
-	return PointPickSensor;
 });
 
 
@@ -1135,6 +1035,14 @@ function (Vector3,
 		{
 			this .setChildShape (this .compoundShape2, matrix, childShape);
 		},
+		setChildShape1Components: function (transform, localScaling, childShape)
+		{
+			this .setChildShapeComponents (this .compoundShape1, transform, localScaling, childShape);
+		},
+		setChildShape2Components: function (transform, localScaling, childShape)
+		{
+			this .setChildShapeComponents (this .compoundShape2, transform, localScaling, childShape);
+		},
 		setChildShape: (function ()
 		{
 			var
@@ -1159,39 +1067,51 @@ function (Vector3,
 				}
 			};
 		})(),
+		setChildShapeComponents: function (compoundShape, transform, localScaling, childShape)
+		{
+			if (compoundShape .getNumChildShapes ())
+				compoundShape .removeChildShapeByIndex (0);
+
+			if (childShape .getNumChildShapes ())
+			{
+				childShape .setLocalScaling (localScaling);				
+				compoundShape .addChildShape (transform, childShape);
+			}
+		},
 		contactTest: function ()
 		{
 			this .collisionWorld .performDiscreteCollisionDetection ();
 
-			var
-				contact      = false,
-				numManifolds = this .dispatcher .getNumManifolds ();
+			var numManifolds = this .dispatcher .getNumManifolds ();
 
 			for (var i = 0; i < numManifolds; ++ i)
 			{
 				var
 					contactManifold = this .dispatcher .getManifoldByIndexInternal (i),
 					numContacts     = contactManifold .getNumContacts ();
-	
+
 				for (var j = 0; j < numContacts; ++ j)
 				{
 					var pt = contactManifold .getContactPoint (j);
 	
-					contact |= pt .getDistance () < 0;
+					if (pt .getDistance () < 0)
+						return true;
 				}
 			}
 
-			return contact;
+			return false;
 		},
 		getTransform: (function ()
 		{
 			var
-				t = new Ammo .btTransform (),
+				T = new Ammo .btTransform (),
 				o = new Ammo .btVector3 (0, 0, 0),
 				m = new Matrix4 ();
 
-			return function (translation, rotation)
+			return function (translation, rotation, transform)
 			{
+				var t = transform || T;
+
 				m .set (translation, rotation);
 
 				o .setValue (m [12], m [13], m [14]);
@@ -1209,6 +1129,356 @@ function (Vector3,
 
 	return VolumePicker;
 });
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Picking/PointPickSensor',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Picking/X3DPickSensorNode",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Picking/IntersectionType",
+	"x_ite/Browser/Picking/VolumePicker",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Geometry/Box3",
+	X3D .getComponentUrl ("rigid-body-physics"),
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DPickSensorNode, 
+          X3DCast,
+          X3DConstants,
+          IntersectionType,
+          VolumePicker,
+          Vector3,
+          Rotation4,
+          Box3,
+          RigidBodyPhysics)
+{
+"use strict";
+
+	var Ammo = RigidBodyPhysics .Ammo;
+
+	function PointPickSensor (executionContext)
+	{
+		X3DPickSensorNode .call (this, executionContext);
+
+		this .addType (X3DConstants .PointPickSensor);
+
+		this .pickingGeometryNode = null;
+		this .picker              = new VolumePicker ();
+		this .compoundShapes      = [ ];
+	}
+
+	PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
+	{
+		constructor: PointPickSensor,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",       new Fields .MFString ("ALL")),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType", new Fields .SFString ("BOUNDS")),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",        new Fields .SFString ("CLOSEST")),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",         new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedPoint",      new Fields .MFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "pickingGeometry",  new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",       new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",   new Fields .MFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "PointPickSensor";
+		},
+		getComponentName: function ()
+		{
+			return "Picking";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DPickSensorNode .prototype .initialize .call (this);
+			
+			this .pickingGeometry_ .addInterest ("set_pickingGeometry__", this);
+
+			this .set_pickingGeometry__ ();
+		},
+		set_pickingGeometry__: function ()
+		{
+			if (this .pickingGeometryNode)
+				this .pickingGeometryNode .rebuild_ .removeInterest ("set_geometry__", this);
+
+			this .pickingGeometryNode = X3DCast (X3DConstants .PointSet, this .pickingGeometry_);
+
+			if (this .pickingGeometryNode)
+				this .pickingGeometryNode .rebuild_ .addInterest ("set_geometry__", this);
+
+			this .set_geometry__ ();
+		},
+		set_geometry__: (function ()
+		{
+			var
+				point        = new Vector3 (0, 0, 0),
+				defaultScale = new Ammo .btVector3 (1, 1, 1),
+				o            = new Ammo .btVector3 (),
+				t            = new Ammo .btTransform ();
+
+			return function ()
+			{
+				var compoundShapes = this .compoundShapes;
+
+				if (this .pickingGeometryNode)
+				{
+					var coord = this .pickingGeometryNode .getCoord ();
+	
+					if (coord)
+					{
+						for (var i = 0, length = coord .getSize (); i < length; ++ i)
+						{
+							if (i < compoundShapes .length)
+							{
+								var
+									compoundShape = compoundShapes [i],
+									point         = coord .get1Point (i, compoundShape .point);
+	
+								o .setValue (point .x, point .y, point .z);
+								t .setOrigin (o);
+
+								compoundShape .setLocalScaling (defaultScale);
+								compoundShape .updateChildTransform (0, t);
+							}
+							else
+							{
+								var
+									compoundShape = new Ammo .btCompoundShape (),
+									sphereShape   = new Ammo .btSphereShape (0),
+									point         = coord .get1Point (i, new Vector3 (0, 0, 0));
+	
+								compoundShape .point = point;
+	
+								o .setValue (point .x, point .y, point .z);
+								t .setOrigin (o);
+	
+								compoundShape .addChildShape (t, sphereShape);
+								compoundShapes .push (compoundShape);
+							}
+						}
+
+						compoundShapes .length = length;
+					}
+					else
+					{
+						compoundShapes .length = 0;
+					}
+				}
+				else
+				{
+					compoundShapes .length = 0;
+				}
+			};
+		})(),
+		process: (function ()
+		{
+			var
+				pickingBBox   = new Box3 (),
+				targetBBox    = new Box3 (),
+				pickingCenter = new Vector3 (0, 0, 0),
+				targetCenter  = new Vector3 (0, 0, 0),
+				transform     = new Ammo .btTransform (),
+				localScaling  = new Ammo .btVector3 (),
+				translation   = new Vector3 (0, 0, 0),
+				rotation      = new Rotation4 (0, 0, 1, 0),
+				scale         = new Vector3 (1, 1, 1),
+				pickedPoint   = new Fields .MFVec3f ();
+
+			return function ()
+			{
+				if (this .pickingGeometryNode)
+				{
+					var
+						modelMatrices = this .getModelMatrices (),
+						targets       = this .getTargets ();
+		
+					switch (this .getIntersectionType ())
+					{
+						case IntersectionType .BOUNDS:
+						{
+							// Intersect bboxes.
+	
+							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+							{
+								var modelMatrix = modelMatrices [m];
+
+								pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
+				
+								for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+								{
+									var target = targets [t];
+
+									targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
+	
+									if (pickingBBox .intersectsBox (targetBBox))
+									{
+										pickingCenter .assign (pickingBBox .center);
+										targetCenter  .assign (targetBBox .center);
+
+										target .intersected = true;
+										target .distance    = pickingCenter .distance (targetCenter);
+									}
+								}
+							};
+		
+							// Send events.
+	
+							var
+								pickedGeometries = this .getPickedGeometries (),
+								active           = Boolean (pickedGeometries .length);
+
+							pickedGeometries .remove (0, pickedGeometries .length, null);
+
+							if (active !== this .isActive_ .getValue ())
+								this .isActive_ = active;
+	
+							if (! this .pickedGeometry_ .equals (pickedGeometries))
+								this .pickedGeometry_ = pickedGeometries;
+	
+							break;
+						}
+						case IntersectionType .GEOMETRY:
+						{
+							// Intersect geometry.
+	
+							var
+								picker         = this .picker,
+								compoundShapes = this .compoundShapes;
+
+							pickedPoint .length = 0;
+
+							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+							{
+								var modelMatrix = modelMatrices [m];
+
+								pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
+
+								modelMatrix .get (translation, rotation, scale);
+
+								picker .getTransform (translation, rotation, transform);
+								localScaling .setValue (scale .x, scale .y, scale .z);
+
+								for (var c = 0, cLength = compoundShapes .length; c < cLength; ++ c)
+								{
+									var compoundShape = compoundShapes [c];
+
+									picker .setChildShape1Components (transform, localScaling, compoundShape);
+	
+									for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+									{
+										var
+											target      = targets [t],
+											targetShape = this .getPickShape (target .geometryNode);
+	
+										targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
+	
+										picker .setChildShape2 (target .modelMatrix, targetShape .getCompoundShape ());
+		
+										if (picker .contactTest ())
+										{
+											pickingCenter .assign (pickingBBox .center);
+											targetCenter  .assign (targetBBox .center);
+
+											target .intersected = true;
+											target .distance    = pickingCenter .distance (targetCenter);
+
+											pickedPoint .push (compoundShape .point);
+										}
+									}
+								}
+							};
+		
+							// Send events.
+	
+							var
+								pickedGeometries = this .getPickedGeometries (),
+								active           = Boolean (pickedGeometries .length);
+
+							pickedGeometries .remove (0, pickedGeometries .length, null);
+
+							if (active !== this .isActive_ .getValue ())
+								this .isActive_ = active;
+	
+							if (! this .pickedGeometry_ .equals (pickedGeometries))
+								this .pickedGeometry_ = pickedGeometries;
+	
+							if (! this .pickedPoint_ .equals (pickedPoint))
+								this .pickedPoint_ = pickedPoint;
+	
+							break;
+						}
+					}
+				}
+
+				X3DPickSensorNode .prototype .process .call (this);
+			};
+		})(),
+	});
+
+	return PointPickSensor;
+});
+
+
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -1407,6 +1677,8 @@ function (Fields,
 								pickedGeometries = this .getPickedGeometries (),
 								active           = Boolean (pickedGeometries .length);
 
+							pickedGeometries .remove (0, pickedGeometries .length, null);
+
 							if (active !== this .isActive_ .getValue ())
 								this .isActive_ = active;
 	
@@ -1457,6 +1729,8 @@ function (Fields,
 							var
 								pickedGeometries = this .getPickedGeometries (),
 								active           = Boolean (pickedGeometries .length);
+
+							pickedGeometries .remove (0, pickedGeometries .length, null);
 
 							if (active !== this .isActive_ .getValue ())
 								this .isActive_ = active;
@@ -1652,6 +1926,8 @@ function (Fields,
 								pickedGeometries = this .getPickedGeometries (),
 								active           = Boolean (pickedGeometries .length);
 
+							pickedGeometries .remove (0, pickedGeometries .length, null);
+
 							if (active !== this .isActive_ .getValue ())
 								this .isActive_ = active;
 	
@@ -1702,6 +1978,8 @@ function (Fields,
 							var
 								pickedGeometries = this .getPickedGeometries (),
 								active           = Boolean (pickedGeometries .length);
+
+							pickedGeometries .remove (0, pickedGeometries .length, null);
 
 							if (active !== this .isActive_ .getValue ())
 								this .isActive_ = active;
