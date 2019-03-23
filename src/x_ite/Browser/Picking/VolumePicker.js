@@ -94,6 +94,14 @@ function (Vector3,
 		{
 			this .setChildShape (this .compoundShape2, matrix, childShape);
 		},
+		setChildShape1Components: function (transform, localScaling, childShape)
+		{
+			this .setChildShapeComponents (this .compoundShape1, transform, localScaling, childShape);
+		},
+		setChildShape2Components: function (transform, localScaling, childShape)
+		{
+			this .setChildShapeComponents (this .compoundShape2, transform, localScaling, childShape);
+		},
 		setChildShape: (function ()
 		{
 			var
@@ -118,6 +126,17 @@ function (Vector3,
 				}
 			};
 		})(),
+		setChildShapeComponents: function (compoundShape, transform, localScaling, childShape)
+		{
+			if (compoundShape .getNumChildShapes ())
+				compoundShape .removeChildShapeByIndex (0);
+
+			if (childShape .getNumChildShapes ())
+			{
+				childShape .setLocalScaling (localScaling);				
+				compoundShape .addChildShape (transform, childShape);
+			}
+		},
 		contactTest: function ()
 		{
 			this .collisionWorld .performDiscreteCollisionDetection ();
@@ -129,7 +148,7 @@ function (Vector3,
 				var
 					contactManifold = this .dispatcher .getManifoldByIndexInternal (i),
 					numContacts     = contactManifold .getNumContacts ();
-	
+
 				for (var j = 0; j < numContacts; ++ j)
 				{
 					var pt = contactManifold .getContactPoint (j);
@@ -144,12 +163,14 @@ function (Vector3,
 		getTransform: (function ()
 		{
 			var
-				t = new Ammo .btTransform (),
+				T = new Ammo .btTransform (),
 				o = new Ammo .btVector3 (0, 0, 0),
 				m = new Matrix4 ();
 
-			return function (translation, rotation)
+			return function (translation, rotation, transform)
 			{
+				var t = transform || T;
+
 				m .set (translation, rotation);
 
 				o .setValue (m [12], m [13], m [14]);

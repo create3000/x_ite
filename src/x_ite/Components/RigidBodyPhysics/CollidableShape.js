@@ -254,7 +254,9 @@ function (Fields,
 	
 				if (this .enabled_ .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
 				{
-					switch (this .geometryNode .getType () [this .geometryNode .getType () .length - 1])
+					var type = this .geometryNode .getType ();
+
+					switch (type [type .length - 1])
 					{
 						case X3DConstants .Box:
 						{
@@ -346,6 +348,7 @@ function (Fields,
 								this .collisionShape = this .createConvexGeometry ();
 							else
 								this .collisionShape = this .createConcaveGeometry ();
+
 							break;
 						}
 					}
