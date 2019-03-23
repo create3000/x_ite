@@ -195,6 +195,8 @@ function (Fields,
 								pickedGeometries = this .getPickedGeometries (),
 								active           = Boolean (pickedGeometries .length);
 
+							pickedGeometries .remove (0, pickedGeometries .length, null);
+
 							if (active !== this .isActive_ .getValue ())
 								this .isActive_ = active;
 	
@@ -245,6 +247,8 @@ function (Fields,
 							var
 								pickedGeometries = this .getPickedGeometries (),
 								active           = Boolean (pickedGeometries .length);
+
+							pickedGeometries .remove (0, pickedGeometries .length, null);
 
 							if (active !== this .isActive_ .getValue ())
 								this .isActive_ = active;
