@@ -126,26 +126,28 @@ function (Fields,
 
 			return function (geometryNode)
 			{
-				if (! pickShapes .has (geometryNode))
-				{
-					var
-						shapeNode           = this .getExecutionContext () .createNode ("Shape",           false),
-						collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", false);
+				var pickShape = pickShapes .get (geometryNode);
 
-					shapeNode .setPrivate (true);
-					collidableShapeNode .setPrivate (true);
-					collidableShapeNode .setConvex (true);
+				if (pickShape !== undefined)
+					return pickShape;
 
-					shapeNode .geometry_        = geometryNode;
-					collidableShapeNode .shape_ = shapeNode;
+				var
+					shapeNode           = this .getExecutionContext () .createNode ("Shape",           false),
+					collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", false);
 
-					shapeNode           .setup ();
-					collidableShapeNode .setup ();
+				shapeNode .setPrivate (true);
+				collidableShapeNode .setPrivate (true);
+				collidableShapeNode .setConvex (true);
 
-					pickShapes .set (geometryNode, collidableShapeNode);
-				}
+				shapeNode .geometry_        = geometryNode;
+				collidableShapeNode .shape_ = shapeNode;
 
-				return pickShapes .get (geometryNode);
+				shapeNode           .setup ();
+				collidableShapeNode .setup ();
+
+				pickShapes .set (geometryNode, collidableShapeNode);
+
+				return collidableShapeNode;
 			};
 		})(),
 		getPickedGeometries: (function ()
