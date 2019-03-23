@@ -159,9 +159,8 @@ function (Fields,
 						{
 							var
 								compoundShape = new Ammo .btCompoundShape (),
-								sphereShape   = new Ammo .btSphereShape (1e-5);
-	
-							var point = coord .get1Point (i, new Vector3 (0, 0, 0));
+								sphereShape   = new Ammo .btSphereShape (0),
+								point         = coord .get1Point (i, new Vector3 (0, 0, 0));
 
 							compoundShape .point = point;
 
