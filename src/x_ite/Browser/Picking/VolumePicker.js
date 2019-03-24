@@ -152,8 +152,8 @@ function (Vector3,
 				for (var j = 0; j < numContacts; ++ j)
 				{
 					var pt = contactManifold .getContactPoint (j);
-	
-					if (pt .getDistance () < 0)
+
+					if (pt .getDistance () <= 0)
 						return true;
 				}
 			}
