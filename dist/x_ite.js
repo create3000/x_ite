@@ -1,4 +1,4 @@
-/* X_ITE v4.4.6a-687 */
+/* X_ITE v4.4.6a-688 */
 
 (function () {
 
@@ -68745,13 +68745,13 @@ function (Fields,
 		this .pointingDeviceSensorNodes = [ ];
 		this .maybeCameraObjects        = [ ];
 		this .cameraObjects             = [ ];
-		this .pickableObjects           = [ ];
 		this .clipPlaneNodes            = [ ];
 		this .localFogNodes             = [ ];
 		this .lightNodes                = [ ];
-		this .transformSensorNodesArray = [ ]; // Property 'transformSensorNodes' is also in X3DGroupingNode.
+		this .transformSensorNodesArray = [ ]; // Property 'transformSensorNodes' is also in X3DBoundedObject.
 		this .pickSensorNodes           = [ ];
-		this .lightNodes                = [ ];
+		this .pickableSensorNodes       = [ ];
+		this .pickableObjects           = [ ];
 		this .displayNodes              = [ ];
 		this .childNodes                = [ ];
 	}
@@ -68939,11 +68939,15 @@ function (Fields,
 								}
 								case X3DConstants .TransformSensor:
 								{
+									innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
+
 									this .transformSensorNodesArray .push (innerNode);
 									break;
 								}
 								case X3DConstants .X3DPickSensorNode:
 								{
+									innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
+
 									this .pickSensorNodes .push (innerNode);
 									break;
 								}
@@ -69052,6 +69056,8 @@ function (Fields,
 								}
 								case X3DConstants .TransformSensor:
 								{
+									innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
 									var index = this .transformSensorNodesArray .indexOf (innerNode);
 
 									if (index >= 0)
@@ -69061,6 +69067,8 @@ function (Fields,
 								}
 								case X3DConstants .X3DPickSensorNode:
 								{
+									innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
 									var index = this .pickSensorNodes .indexOf (innerNode);
 
 									if (index >= 0)
@@ -69118,10 +69126,23 @@ function (Fields,
 		},
 		clear: function ()
 		{
-			for (var i = 0, length = this .childNodes .length; i < length; ++ i)
+			var
+				transformSensorNodes = this .transformSensorNodesArray,
+				pickSensorNodes      = this .pickSensorNodes,
+				childNodes           = this .childNodes;
+
+			for (var i = 0, length = transformSensorNodes .length; i < length; ++ i)
+				transformSensorNodes [i] .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
+			for (var i = 0, length = pickSensorNodes .length; i < length; ++ i)
+				pickSensorNodes [i] .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
+			for (var i = 0, length = childNodes .length; i < length; ++ i)
 			{
-				this .childNodes [i] .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
-				this .childNodes [i] .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+				var childNode = childNodes [i];
+
+				childNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
+				childNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
 			}
 
 			this .pointingDeviceSensorNodes .length = 0;
@@ -69135,31 +69156,59 @@ function (Fields,
 		},
 		set_cameraObjects__: function ()
 		{
-			this .cameraObjects .length = 0;
+			var
+				maybeCameraObjects = this .maybeCameraObjects,
+				cameraObjects      = this .cameraObjects;
 
-			for (var i = 0, length = this .maybeCameraObjects .length; i < length; ++ i)
+			cameraObjects .length = 0;
+
+			for (var i = 0, length = maybeCameraObjects .length; i < length; ++ i)
 			{
-				var childNode = this .maybeCameraObjects [i];
+				var childNode = maybeCameraObjects [i];
 
 				if (childNode .getCameraObject ())
-					this .cameraObjects .push (childNode);
+					cameraObjects .push (childNode);
 			}
 
-			this .setCameraObject (this .cameraObjects .length);
+			this .setCameraObject (cameraObjects .length);
 		},
 		set_pickableObjects__: function ()
 		{
-			this .pickableObjects .length = 0;
+			var
+				transformSensorNodes = this .transformSensorNodesArray,
+				pickSensorNodes      = this .pickSensorNodes,
+				childNodes           = this .childNodes,
+				pickableSensorNodes  = this .pickableSensorNodes,
+				pickableObjects      = this .pickableObjects;
 
-			for (var i = 0, length = this .childNodes .length; i < length; ++ i)
+			pickableSensorNodes .length = 0;
+			pickableObjects     .length = 0;
+
+			for (var i = 0, length = transformSensorNodes .length; i < length; ++ i)
 			{
-				var childNode = this .childNodes [i];
+				var transformSensorNode = transformSensorNodes [i];
 
-				if (childNode .getPickableObject ())
-					this .pickableObjects .push (childNode);
+				if (transformSensorNode .getPickableObject ())
+					pickableSensorNodes .push (transformSensorNode);
 			}
 
-			this .setPickableObject (this .pickSensorNodes .length || this .pickableObjects .length || this .transformSensorNodesArray .length || this .getTransformSensors () .size);
+			for (var i = 0, length = pickSensorNodes .length; i < length; ++ i)
+			{
+				var pickSensorNode = pickSensorNodes [i];
+
+				if (pickSensorNode .getPickableObject ())
+					pickableSensorNodes .push (pickSensorNode);
+			}
+
+			for (var i = 0, length = childNodes .length; i < length; ++ i)
+			{
+				var childNode = childNodes [i];
+
+				if (childNode .getPickableObject ())
+					pickableObjects .push (childNode);
+			}
+
+			this .setPickableObject (Boolean (this .getTransformSensors () .size || pickableSensorNodes .length || pickableObjects .length));
 		},
 		set_display_nodes: function ()
 		{
@@ -69240,15 +69289,10 @@ function (Fields,
 							});
 						}
 
-						var
-							transformSensorNodes = this .transformSensorNodesArray,
-							pickSensorNodes      = this .pickSensorNodes;
-		
-						for (var i = 0, length = transformSensorNodes .length; i < length; ++ i)
-							transformSensorNodes [i] .traverse (type, renderObject);
+						var pickableSensorNodes = this .pickableSensorNodes;
 
-						for (var i = 0, length = pickSensorNodes .length; i < length; ++ i)
-							pickSensorNodes [i] .traverse (type, renderObject);
+						for (var i = 0, length = pickableSensorNodes .length; i < length; ++ i)
+							pickableSensorNodes [i] .traverse (type, renderObject);
 
 						var
 							browser          = renderObject .getBrowser (),
@@ -85579,8 +85623,7 @@ function (Fields,
 		{
 			// TransformSensor nodes are sorted out and only traversed during PICKING,
 
-			if (this .getPickableObject ())
-				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
+			this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
 		collect: function (targetBBox)
 		{
