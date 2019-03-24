@@ -93,7 +93,7 @@ function (Fields,
 		                       "viewer",               new Fields .SFString ("EXAMINE"));
 		
 		this .activeCollisions = new Set ();
-		this .viewerNode       = new ExamineViewer (this);
+		this .viewerNode       = new NoneViewer (this);
 	}
 
 	X3DNavigationContext .prototype =
