@@ -197,9 +197,10 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			// TransformSensor nodes are sorted out and only traversed during PICKING,
+			// TransformSensor nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
 
-			this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
+			if (this .getPickableObject ())
+				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
 		collect: function (targetBBox)
 		{
