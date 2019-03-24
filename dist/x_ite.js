@@ -1,4 +1,4 @@
-/* X_ITE v4.4.6a-686 */
+/* X_ITE v4.4.6a-687 */
 
 (function () {
 
@@ -64205,6 +64205,12 @@ function ($,
 		},
 		touch: function (x, y)
 		{
+			if (this .getViewer () .isActive_ .getValue ())
+			{
+				this .pointerTime = 0;
+				return;
+			}
+
 			var t0 = performance .now ();
 		
 			this .pointer .set (x, y);
@@ -65403,6 +65409,10 @@ define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (m
 
 define ('x_ite/Browser/Navigation/ExamineViewer',[
 	"jquery",
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Followers/PositionChaser",
 	"x_ite/Components/Followers/OrientationChaser",
@@ -65412,6 +65422,10 @@ define ('x_ite/Browser/Navigation/ExamineViewer',[
 	"jquery-mousewheel",
 ],
 function ($,
+          Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DConstants,
           X3DViewer,
           PositionChaser,
           OrientationChaser,
@@ -65460,6 +65474,9 @@ function ($,
 	ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: ExamineViewer,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+		]),
 		initialize: function ()
 		{
 			X3DViewer .prototype .initialize .call (this);
@@ -65548,6 +65565,8 @@ function ($,
 					this .rotation .assign (Rotation4 .Identity);
 
 					this .motionTime = 0;			
+
+					this .isActive_ = true;
 					break;
 				}
 				case 1:
@@ -65570,6 +65589,8 @@ function ($,
 					this .getBrowser () .setCursor ("MOVE");
 
 					this .getPointOnCenterPlane (x, y, this .fromPoint);
+
+					this .isActive_ = true;
 					break;
 				}
 			}
@@ -65605,6 +65626,7 @@ function ($,
 						this .addSpinning (this .rotation);
 					}
 
+					this .isActive_ = false;
 					break;
 				}
 				case 1:
@@ -65616,6 +65638,8 @@ function ($,
 					event .stopImmediatePropagation ();
 
 					this .getBrowser () .setCursor ("DEFAULT");
+
+					this .isActive_ = false;
 					break;
 				}
 			}
@@ -66325,6 +66349,7 @@ function ($,
 							this .getBrowser () .finished () .addInterest ("display", this, MOVE);
 					}
 
+					this .isActive_ = true;
 					break;
 				}
 				case 1:
@@ -66354,6 +66379,7 @@ function ($,
 					if (this .getBrowser () .getBrowserOption ("Rubberband"))
 						this .getBrowser () .finished () .addInterest ("display", this, PAN);
 					
+					this .isActive_ = true;
 					break;
 				}
 			}
@@ -66373,6 +66399,8 @@ function ($,
 			this .disconnect ();
 			this .getBrowser () .setCursor ("DEFAULT");
 			this .removeCollision ();
+
+			this .isActive_ = false;
 		},
 		mousemove: function (event)
 		{
@@ -66930,11 +66958,19 @@ function ($,
 
 
 define ('x_ite/Browser/Navigation/WalkViewer',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Browser/Navigation/X3DFlyViewer",
+	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function (X3DFlyViewer,
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DFlyViewer,
+          X3DConstants,
           Vector3,
           Rotation4)
 {
@@ -66948,6 +66984,9 @@ function (X3DFlyViewer,
 	WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 	{
 		constructor: WalkViewer,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+		]),
 		initialize: function ()
 		{
 			X3DFlyViewer .prototype .initialize .call (this);
@@ -67048,11 +67087,19 @@ function (X3DFlyViewer,
 
 
 define ('x_ite/Browser/Navigation/FlyViewer',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function (X3DFlyViewer,
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DConstants,
+          X3DFlyViewer,
           Vector3,
           Rotation4)
 {
@@ -67066,6 +67113,9 @@ function (X3DFlyViewer,
 	FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 	{
 		constructor: FlyViewer,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+		]),
 		addCollision: function ()
 		{
 			this .getBrowser () .addCollision (this);
@@ -67472,12 +67522,20 @@ function (Fields,
 
 define ('x_ite/Browser/Navigation/PlaneViewer',[
 	"jquery",
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Navigation/Viewpoint",
 	"standard/Math/Numbers/Vector3",
 	"jquery-mousewheel",
 ],
 function ($,
+          Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DConstants,
           X3DViewer,
           Viewpoint,
           Vector3)
@@ -67503,6 +67561,9 @@ function ($,
 	PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: PlaneViewer,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+		]),
 		initialize: function ()
 		{
 			X3DViewer .prototype .initialize .call (this);
@@ -67547,6 +67608,8 @@ function ($,
 					this .getBrowser () .setCursor ("MOVE");
 
 					this .getPointOnCenterPlane (x, y, this .fromPoint);
+
+					this .isActive_ = true;
 					break;
 				}
 			}
@@ -67567,6 +67630,8 @@ function ($,
 			this .getBrowser () .getElement () .bind ("mousemove.PlaneViewer", this .mousemove .bind (this));
 
 			this .getBrowser () .setCursor ("DEFAULT");
+
+			this .isActive_ = false;
 		},
 		mousemove: function (event)
 		{
@@ -67709,9 +67774,17 @@ function ($,
 
 
 define ('x_ite/Browser/Navigation/NoneViewer',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Navigation/X3DViewer",
 ],
-function (X3DViewer)
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DConstants,
+          X3DViewer)
 {
 "use strict";
 	
@@ -67723,6 +67796,9 @@ function (X3DViewer)
 	NoneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: NoneViewer,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+		]),
 	});
 
 	return NoneViewer;
@@ -67779,6 +67855,10 @@ function (X3DViewer)
 
 define ('x_ite/Browser/Navigation/LookAtViewer',[
 	"jquery",
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Followers/PositionChaser",
 	"x_ite/Components/Followers/OrientationChaser",
@@ -67787,6 +67867,10 @@ define ('x_ite/Browser/Navigation/LookAtViewer',[
 	"standard/Math/Numbers/Rotation4",
 ],
 function ($,
+          Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DConstants,
           X3DViewer,
           PositionChaser,
           OrientationChaser,
@@ -67821,6 +67905,9 @@ function ($,
 	LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: LookAtViewer,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+		]),
 		initialize: function ()
 		{
 			X3DViewer .prototype .initialize .call (this);
@@ -67886,6 +67973,8 @@ function ($,
 					// Look around.
 
 					this .trackballProjectToSphere (x, y, this .fromVector);
+
+					this .isActive_ = true;
 					break;
 				}
 			}
@@ -67906,7 +67995,9 @@ function ($,
 					// Stop event propagation.
 
 					event .preventDefault ();
-					event .stopImmediatePropagation ();					
+					event .stopImmediatePropagation ();
+
+					this .isActive_ = false;
 					break;
 				}
 			}
@@ -69853,7 +69944,7 @@ function (Fields,
 		                       "viewer",               new Fields .SFString ("EXAMINE"));
 		
 		this .activeCollisions = new Set ();
-		this .viewerNode       = null;
+		this .viewerNode       = new NoneViewer (this);
 	}
 
 	X3DNavigationContext .prototype =
@@ -69862,10 +69953,11 @@ function (Fields,
 		{
 			this .viewer_ .addInterest ("set_viewer__", this);
 
-			this .initialized () .addInterest ("set_world__", this);
+			this .initialized () .addInterest ("set_world__",    this);
 			this .shutdown ()    .addInterest ("remove_world__", this);
 
 			this .headlightContainer = getHeadLight (this);
+			this .viewerNode .setup ();
 		},
 		getHeadlight: function ()
 		{
@@ -69886,6 +69978,10 @@ function (Fields,
 		getCurrentViewer: function ()
 		{
 			return this .viewer_ .getValue ();
+		},
+		getViewer: function ()
+		{
+			return this .viewerNode;
 		},
 		addCollision: function (object)
 		{
