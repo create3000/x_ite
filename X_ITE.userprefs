@@ -6,13 +6,9 @@
       <File FileName="src/x_ite/Browser/Picking/X3DPickingContext.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Picking/PrimitivePickSensor.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Picking/LinePickSensor.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Picking/VolumePicker.js" Line="145" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/ExamineViewer.js" Line="406" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/LookAtViewer.js" Line="193" Column="1" />
-      <File FileName="src/x_ite/Browser/Navigation/PlaneViewer.js" Line="161" Column="27" />
-      <File FileName="src/x_ite/Browser/Navigation/X3DFlyViewer.js" Line="247" Column="27" />
-      <File FileName="src/x_ite/Browser/Navigation/X3DNavigationContext.js" Line="107" Column="1" />
-      <File FileName="src/x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext.js" Line="242" Column="1" />
+      <File FileName="src/x_ite/Browser/Picking/VolumePicker.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Grouping/X3DGroupingNode.js" Line="652" Column="1" />
+      <File FileName="src/x_ite/Components/EnvironmentalSensor/TransformSensor.js" Line="202" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
