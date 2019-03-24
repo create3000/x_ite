@@ -93,7 +93,7 @@ function (Fields,
 		                       "viewer",               new Fields .SFString ("EXAMINE"));
 		
 		this .activeCollisions = new Set ();
-		this .viewerNode       = null;
+		this .viewerNode       = new ExamineViewer (this);
 	}
 
 	X3DNavigationContext .prototype =
@@ -102,10 +102,11 @@ function (Fields,
 		{
 			this .viewer_ .addInterest ("set_viewer__", this);
 
-			this .initialized () .addInterest ("set_world__", this);
+			this .initialized () .addInterest ("set_world__",    this);
 			this .shutdown ()    .addInterest ("remove_world__", this);
 
 			this .headlightContainer = getHeadLight (this);
+			this .viewerNode .setup ();
 		},
 		getHeadlight: function ()
 		{
