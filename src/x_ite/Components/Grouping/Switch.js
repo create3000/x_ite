@@ -156,7 +156,9 @@ function (Fields,
 
 			return function (type, renderObject)
 			{
-				if (this .child)
+				var child = this .child;
+
+				if (child)
 				{
 					if (type === TraverseType .PICKING)
 					{
@@ -170,19 +172,22 @@ function (Fields,
 							});
 						}
 
-						var
-							browser          = renderObject .getBrowser (),
-							pickingHierarchy = browser .getPickingHierarchy ();
+						if (child)
+						{
+							var
+								browser          = renderObject .getBrowser (),
+								pickingHierarchy = browser .getPickingHierarchy ();
+		
+							pickingHierarchy .push (this);
 	
-						pickingHierarchy .push (this);
-
-						this .child .traverse (type, renderObject);
-
-						pickingHierarchy .pop ();
+							child .traverse (type, renderObject);
+	
+							pickingHierarchy .pop ();
+						}
 					}
 					else
 					{
-						this .child .traverse (type, renderObject);
+						child .traverse (type, renderObject);
 					}
 				}
 			};

@@ -201,6 +201,8 @@ function (Fields,
 
 			return function (type, renderObject)
 			{
+				var child = this .child;
+
 				switch (type)
 				{
 					case TraverseType .PICKING:
@@ -215,7 +217,7 @@ function (Fields,
 							});
 						}
 
-						if (this .child)
+						if (child)
 						{
 							var
 								browser          = renderObject .getBrowser (),
@@ -223,7 +225,7 @@ function (Fields,
 		
 							pickingHierarchy .push (this);
 
-							this .child .traverse (type, renderObject);
+							child .traverse (type, renderObject);
 
 							pickingHierarchy .pop ();
 						}
@@ -251,21 +253,21 @@ function (Fields,
 							{
 								this .level_changed_ = level;
 						
-								this .child = this .getChild (Math .min (level, this .children_ .length - 1));
+								child = this .child = this .getChild (Math .min (level, this .children_ .length - 1));
 		
 								this .set_cameraObjects__ ();
 							}
 						}
 
-						if (this .child)
-							this .child .traverse (type, renderObject);
+						if (child)
+							child .traverse (type, renderObject);
 
 						return;
 					}
 					default:
 					{
-						if (this .child)
-							this .child .traverse (type, renderObject);
+						if (child)
+							child .traverse (type, renderObject);
 
 						return;
 					}
