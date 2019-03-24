@@ -53,12 +53,18 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Picking/X3DPickSensorNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Picking/IntersectionType",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DPickSensorNode, 
-          X3DConstants)
+          X3DConstants,
+          IntersectionType,
+          Vector3,
+          Box3)
 {
 "use strict";
 
@@ -67,6 +73,8 @@ function (Fields,
 		X3DPickSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .LinePickSensor);
+
+		this .pickingGeometryNode = null;
 	}
 
 	LinePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
@@ -98,6 +106,113 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DPickSensorNode .prototype .initialize .call (this);
+			
+			this .pickingGeometry_ .addInterest ("set_pickingGeometry__", this);
+
+			this .set_pickingGeometry__ ();
+		},
+		set_pickingGeometry__: function ()
+		{
+			this .pickingGeometryNode = null;
+
+			try
+			{
+				var
+					node = this .pickingGeometry_ .getValue () .getInnerNode (),
+					type = node .getType ();
+
+				for (var t = type .length - 1; t >= 0; -- t)
+				{
+					switch (type [t])
+					{
+						case X3DConstants .IndexedLineSet:
+						case X3DConstants .LineSet:
+						{
+							this .pickingGeometryNode = node;
+							break;
+						}
+						default:
+							continue;
+					}
+				}
+			}
+			catch (error)
+			{ }
+		},
+		process: (function ()
+		{
+			var
+				pickingBBox   = new Box3 (),
+				targetBBox    = new Box3 (),
+				pickingCenter = new Vector3 (0, 0, 0),
+				targetCenter  = new Vector3 (0, 0, 0);
+
+			return function ()
+			{
+				if (this .pickingGeometryNode)
+				{
+					var
+						modelMatrices = this .getModelMatrices (),
+						targets       = this .getTargets ();
+		
+					switch (this .getIntersectionType ())
+					{
+						case IntersectionType .BOUNDS:
+						{
+							// Intersect bboxes.
+	
+							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+							{
+								var modelMatrix = modelMatrices [m];
+
+								pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
+				
+								for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+								{
+									var target = targets [t];
+
+									targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
+	
+									if (pickingBBox .intersectsBox (targetBBox))
+									{
+										pickingCenter .assign (pickingBBox .center);
+										targetCenter  .assign (targetBBox .center);
+
+										target .intersected = true;
+										target .distance    = pickingCenter .distance (targetCenter);
+									}
+								}
+							};
+		
+							// Send events.
+	
+							var
+								pickedGeometries = this .getPickedGeometries (),
+								active           = Boolean (pickedGeometries .length);
+
+							pickedGeometries .remove (0, pickedGeometries .length, null);
+
+							if (active !== this .isActive_ .getValue ())
+								this .isActive_ = active;
+	
+							if (! this .pickedGeometry_ .equals (pickedGeometries))
+								this .pickedGeometry_ = pickedGeometries;
+	
+							break;
+						}
+						case IntersectionType .GEOMETRY:
+						{
+							break;
+						}
+					}
+				}
+
+				X3DPickSensorNode .prototype .process .call (this);
+			};
+		})(),
 	});
 
 	return LinePickSensor;
