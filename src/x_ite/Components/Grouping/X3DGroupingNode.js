@@ -87,20 +87,22 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DGroupingNode);
 	               
-		this .hidden                    = false;
-		this .allowedTypes              = new Set ();
-		this .pointingDeviceSensorNodes = [ ];
-		this .maybeCameraObjects        = [ ];
-		this .cameraObjects             = [ ];
-		this .pickableObjects           = [ ];
-		this .clipPlaneNodes            = [ ];
-		this .localFogNodes             = [ ];
-		this .lightNodes                = [ ];
-		this .transformSensorNodesArray = [ ]; // Property 'transformSensorNodes' is also in X3DGroupingNode.
-		this .pickSensorNodes           = [ ];
-		this .lightNodes                = [ ];
-		this .displayNodes              = [ ];
-		this .childNodes                = [ ];
+		this .hidden                       = false;
+		this .allowedTypes                 = new Set ();
+		this .pointingDeviceSensorNodes    = [ ];
+		this .maybeCameraObjects           = [ ];
+		this .cameraObjects                = [ ];
+		this .pickableObjects              = [ ];
+		this .clipPlaneNodes               = [ ];
+		this .localFogNodes                = [ ];
+		this .lightNodes                   = [ ];
+		this .transformSensorNodesArray    = [ ]; // Property 'transformSensorNodes' is also in X3DBoundedObject.
+		this .pickableTransformSensorNodes = [ ];
+		this .pickSensorNodes              = [ ];
+		this .pickablePickSensorNodes      = [ ];
+		this .lightNodes                   = [ ];
+		this .displayNodes                 = [ ];
+		this .childNodes                   = [ ];
 	}
 
 	X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -286,11 +288,15 @@ function (Fields,
 								}
 								case X3DConstants .TransformSensor:
 								{
+									innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
+
 									this .transformSensorNodesArray .push (innerNode);
 									break;
 								}
 								case X3DConstants .X3DPickSensorNode:
 								{
+									innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
+
 									this .pickSensorNodes .push (innerNode);
 									break;
 								}
@@ -399,6 +405,8 @@ function (Fields,
 								}
 								case X3DConstants .TransformSensor:
 								{
+									innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
 									var index = this .transformSensorNodesArray .indexOf (innerNode);
 
 									if (index >= 0)
@@ -408,6 +416,8 @@ function (Fields,
 								}
 								case X3DConstants .X3DPickSensorNode:
 								{
+									innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
 									var index = this .pickSensorNodes .indexOf (innerNode);
 
 									if (index >= 0)
@@ -465,10 +475,23 @@ function (Fields,
 		},
 		clear: function ()
 		{
-			for (var i = 0, length = this .childNodes .length; i < length; ++ i)
+			var
+				transformSensorNodes = this .transformSensorNodesArray,
+				pickSensorNodes      = this .pickSensorNodes,
+				childNodes           = this .childNodes;
+
+			for (var i = 0, length = transformSensorNodes .length; i < length; ++ i)
+				transformSensorNodes [i] .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
+			for (var i = 0, length = pickSensorNodes .length; i < length; ++ i)
+				pickSensorNodes [i] .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
+			for (var i = 0, length = childNodes .length; i < length; ++ i)
 			{
-				this .childNodes [i] .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
-				this .childNodes [i] .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+				var childNode = childNodes [i];
+
+				childNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
+				childNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
 			}
 
 			this .pointingDeviceSensorNodes .length = 0;
@@ -482,31 +505,61 @@ function (Fields,
 		},
 		set_cameraObjects__: function ()
 		{
-			this .cameraObjects .length = 0;
+			var
+				maybeCameraObjects = this .maybeCameraObjects,
+				cameraObjects      = this .cameraObjects;
 
-			for (var i = 0, length = this .maybeCameraObjects .length; i < length; ++ i)
+			cameraObjects .length = 0;
+
+			for (var i = 0, length = maybeCameraObjects .length; i < length; ++ i)
 			{
-				var childNode = this .maybeCameraObjects [i];
+				var childNode = maybeCameraObjects [i];
 
 				if (childNode .getCameraObject ())
-					this .cameraObjects .push (childNode);
+					cameraObjects .push (childNode);
 			}
 
-			this .setCameraObject (this .cameraObjects .length);
+			this .setCameraObject (cameraObjects .length);
 		},
 		set_pickableObjects__: function ()
 		{
-			this .pickableObjects .length = 0;
+			var
+				transformSensorNodes         = this .transformSensorNodesArray,
+				pickSensorNodes              = this .pickSensorNodes,
+				childNodes                   = this .childNodes,
+				pickableTransformSensorNodes = this .pickableTransformSensorNodes,
+				pickablePickSensorNodes      = this .pickablePickSensorNodes,
+				pickableObjects              = this .pickableObjects;
 
-			for (var i = 0, length = this .childNodes .length; i < length; ++ i)
+			pickableTransformSensorNodes .length = 0;
+			pickablePickSensorNodes      .length = 0;
+			pickableObjects              .length = 0;
+
+			for (var i = 0, length = transformSensorNodes .length; i < length; ++ i)
 			{
-				var childNode = this .childNodes [i];
+				var transformSensorNode = transformSensorNodes [i];
 
-				if (childNode .getPickableObject ())
-					this .pickableObjects .push (childNode);
+				if (transformSensorNode .getPickableObject ())
+					pickableTransformSensorNodes .push (transformSensorNode);
 			}
 
-			this .setPickableObject (this .pickSensorNodes .length || this .pickableObjects .length || this .transformSensorNodesArray .length || this .getTransformSensors () .size);
+			for (var i = 0, length = pickSensorNodes .length; i < length; ++ i)
+			{
+				var pickSensorNode = pickSensorNodes [i];
+
+				if (pickSensorNode .getPickableObject ())
+					pickablePickSensorNodes .push (pickSensorNode);
+			}
+
+			for (var i = 0, length = childNodes .length; i < length; ++ i)
+			{
+				var childNode = childNodes [i];
+
+				if (childNode .getPickableObject ())
+					pickableObjects .push (childNode);
+			}
+
+			this .setPickableObject (Boolean (this .getTransformSensors () .size || pickableTransformSensorNodes .length || pickablePickSensorNodes .length || pickableObjects .length));
 		},
 		set_display_nodes: function ()
 		{
@@ -588,14 +641,14 @@ function (Fields,
 						}
 
 						var
-							transformSensorNodes = this .transformSensorNodesArray,
-							pickSensorNodes      = this .pickSensorNodes;
+							pickableTransformSensorNodes = this .pickableTransformSensorNodes,
+							pickablePickSensorNodes      = this .pickablePickSensorNodes;
 		
-						for (var i = 0, length = transformSensorNodes .length; i < length; ++ i)
-							transformSensorNodes [i] .traverse (type, renderObject);
+						for (var i = 0, length = pickableTransformSensorNodes .length; i < length; ++ i)
+							pickableTransformSensorNodes [i] .traverse (type, renderObject);
 
-						for (var i = 0, length = pickSensorNodes .length; i < length; ++ i)
-							pickSensorNodes [i] .traverse (type, renderObject);
+						for (var i = 0, length = pickablePickSensorNodes .length; i < length; ++ i)
+							pickablePickSensorNodes [i] .traverse (type, renderObject);
 
 						var
 							browser          = renderObject .getBrowser (),

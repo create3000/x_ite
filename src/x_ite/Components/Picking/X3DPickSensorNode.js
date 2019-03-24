@@ -350,8 +350,7 @@ function (Fields,
 		{
 			// X3DPickSensorNode nodes are sorted out and only traversed during PICKING,
 
-			if (this .getPickableObject ())
-				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
+			this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
 		collect: function (geometryNode, modelMatrix, pickingHierarchy)
 		{
