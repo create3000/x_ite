@@ -7,7 +7,7 @@
       <File FileName="src/x_ite/Components/Picking/X3DPickSensorNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Picking/VolumePickSensor.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Picking/VolumePicker.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Picking/PointPickSensor.js" Line="164" Column="2" />
+      <File FileName="src/x_ite/Components/Picking/PointPickSensor.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Picking/PrimitivePickSensor.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/RigidBodyPhysics/CollidableShape.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Picking/PickableGroup.js" Line="141" Column="12" />
