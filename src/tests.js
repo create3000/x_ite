@@ -199,6 +199,7 @@ var X_ITE_TESTS = [
 	{ path: "ParticleSystems/VolumeEmitter.x3d" },
 	{ path: "ParticleSystems/Waterfall.x3d" },
 	{ component: "Picking" },
+	{ path: "Picking/LinePickSensorGeometry.x3d" },
 	{ path: "Picking/PointPickSensorGeometry.x3d" },
 	{ path: "Picking/PrimitivePickSensorBounds.x3d" },
 	{ path: "Picking/PrimitivePickSensorGeometry.x3d" },

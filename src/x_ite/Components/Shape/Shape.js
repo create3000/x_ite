@@ -207,10 +207,10 @@ function (Fields,
 	
 						// Find first point that is not greater than near plane;
 						var index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
-						                                   function (lhs, rhs)
-						                                   {
-						                                      return lhs .point .z > rhs;
-						                                   });
+						function (lhs, rhs)
+						{
+						   return lhs .point .z > rhs;
+						});
 	
 						// Are there intersections before the camera?
 						if (index !== intersections .length)

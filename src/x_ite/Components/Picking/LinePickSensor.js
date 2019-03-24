@@ -55,7 +55,9 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Picking/IntersectionType",
 	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
+	"standard/Math/Geometry/Line3",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,7 +66,9 @@ function (Fields,
           X3DConstants,
           IntersectionType,
           Vector3,
-          Box3)
+          Matrix4,
+          Box3,
+          Line3)
 {
 "use strict";
 
@@ -145,10 +149,22 @@ function (Fields,
 		process: (function ()
 		{
 			var
-				pickingBBox   = new Box3 (),
-				targetBBox    = new Box3 (),
-				pickingCenter = new Vector3 (0, 0, 0),
-				targetCenter  = new Vector3 (0, 0, 0);
+				pickingBBox              = new Box3 (),
+				targetBBox               = new Box3 (),
+				pickingCenter            = new Vector3 (0, 0, 0),
+				targetCenter             = new Vector3 (0, 0, 0),
+				matrix                   = new Matrix4 (),
+				point1                   = new Vector3 (0, 0, 0),
+				point2                   = new Vector3 (0, 0, 0),
+				line                     = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+				a                        = new Vector3 (0, 0, 0),
+				b                        = new Vector3 (0, 0, 0),
+				pickedIntersections      = [ ],
+				intersections            = [ ],
+				texCoord                 = new Vector3 (0, 0, 0),
+				pickedTextureCoordinate  = new Fields .MFVec3f (),
+				pickedNormal             = new Fields .MFVec3f (),
+				pickedPoint              = new Fields .MFVec3f ();
 
 			return function ()
 			{
@@ -185,7 +201,7 @@ function (Fields,
 										target .distance    = pickingCenter .distance (targetCenter);
 									}
 								}
-							};
+							}
 		
 							// Send events.
 	
@@ -205,6 +221,107 @@ function (Fields,
 						}
 						case IntersectionType .GEOMETRY:
 						{
+							// Intersect geometry.
+
+							pickedIntersections .length = 0;
+		
+							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+							{
+								var modelMatrix = modelMatrices [m];
+
+								pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
+				
+								for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+								{
+									var
+										target           = targets [t],
+										geometryNode     = target .geometryNode,
+										vertices         = this .pickingGeometryNode .getVertices (),
+										numIntersections = pickedIntersections .length;
+
+									targetBBox .assign (geometryNode .getBBox ()) .multRight (target .modelMatrix);
+									matrix .assign (target .modelMatrix) .inverse () .multLeft (modelMatrix);
+
+									for (var v = 0, vLength = vertices .length; v < vLength; v += 8)
+									{
+										matrix .multVecMatrix (point1 .set (vertices [v + 0], vertices [v + 1], vertices [v + 2]));
+										matrix .multVecMatrix (point2 .set (vertices [v + 4], vertices [v + 5], vertices [v + 6]));
+										line .setPoints (point1, point2);
+
+										intersections .length = 0;
+
+										if (geometryNode .intersectsLine (line, [ ], target .modelMatrix, intersections))
+										{
+											for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
+											{
+												// Test if intersection.point is between point1 and point2.
+
+												var intersection = intersections [i];
+
+												a .assign (intersection .point) .subtract (point1);
+												b .assign (intersection .point) .subtract (point2);
+
+												var
+													c = a .add (b) .abs (),
+													s = point1 .distance (point2);
+
+												if (c <= s)
+													pickedIntersections .push (intersection);
+											}
+										}
+									}
+
+									if (numIntersections !== pickedIntersections .length)
+									{
+										pickingCenter .assign (pickingBBox .center);
+										targetCenter  .assign (targetBBox .center);
+
+										target .intersected = true;
+										target .distance    = pickingCenter .distance (targetCenter);
+									}
+								}
+							}
+		
+							// Send events.
+	
+							var
+								pickedGeometries = this .getPickedGeometries (),
+								active           = Boolean (pickedGeometries .length);
+
+							pickedGeometries .remove (0, pickedGeometries .length, null);
+
+							if (active !== this .isActive_ .getValue ())
+								this .isActive_ = active;
+	
+							if (! this .pickedGeometry_ .equals (pickedGeometries))
+								this .pickedGeometry_ = pickedGeometries;
+
+							for (var i = 0, length = pickedIntersections .length; i < length; ++ i)
+							{
+								var
+									intersection = pickedIntersections [i],
+									t            = intersection .texCoord;
+
+								texCoord .set (t .x, t .y, t .z);
+
+								pickedTextureCoordinate [i] = texCoord;
+								pickedNormal [i]            = intersection .normal;
+								pickedPoint [i]             = intersection .point;
+							}
+
+							pickedTextureCoordinate .length = length;
+							pickedNormal            .length = length;
+							pickedPoint             .length = length;
+
+							if (! this .pickedTextureCoordinate_ .equals (pickedTextureCoordinate))
+								this .pickedTextureCoordinate_ = pickedTextureCoordinate;
+
+							if (! this .pickedNormal_ .equals (pickedNormal))
+								this .pickedNormal_ = pickedNormal;
+
+							if (! this .pickedPoint_ .equals (pickedPoint))
+								this .pickedPoint_ = pickedPoint;
+
 							break;
 						}
 					}
