@@ -199,6 +199,9 @@ function (Fields,
 		{
 			// TransformSensor nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
 
+			if (type !== TraverseType .PICKING)
+				return;
+
 			if (this .getPickableObject ())
 				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
