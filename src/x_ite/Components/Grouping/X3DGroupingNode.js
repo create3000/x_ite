@@ -517,7 +517,7 @@ function (Fields,
 					cameraObjects .push (childNode);
 			}
 
-			this .setCameraObject (cameraObjects .length);
+			this .setCameraObject (Boolean (cameraObjects .length));
 		},
 		set_pickableObjects__: function ()
 		{
