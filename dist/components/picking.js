@@ -186,6 +186,7 @@ define ('x_ite/Browser/Picking/SortOrder',[],function ()
 define ('x_ite/Components/Picking/X3DPickSensorNode',[
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DSensorNode",
+	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Picking/IntersectionType",
 	"x_ite/Browser/Picking/SortOrder",
@@ -195,6 +196,7 @@ define ('x_ite/Components/Picking/X3DPickSensorNode',[
 ],
 function (Fields,
           X3DSensorNode, 
+          TraverseType,
           X3DConstants,
           IntersectionType,
           SortOrder,
@@ -485,6 +487,9 @@ function (Fields,
 		traverse: function (type, renderObject)
 		{
 			// X3DPickSensorNode nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
+
+			if (type !== TraverseType .PICKING)
+				return;
 
 			if (this .getPickableObject ())
 				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
