@@ -127,6 +127,10 @@ function (Fields,
 		{
 			return this .viewer_ .getValue ();
 		},
+		getViewer: function ()
+		{
+			return this .viewerNode;
+		},
 		addCollision: function (object)
 		{
 			this .activeCollisions .add (object);

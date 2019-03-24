@@ -49,6 +49,10 @@
 
 define ([
 	"jquery",
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Navigation/X3DViewer",
 	"x_ite/Components/Followers/PositionChaser",
 	"x_ite/Components/Followers/OrientationChaser",
@@ -57,6 +61,10 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 ],
 function ($,
+          Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DConstants,
           X3DViewer,
           PositionChaser,
           OrientationChaser,
@@ -91,6 +99,9 @@ function ($,
 	LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: LookAtViewer,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+		]),
 		initialize: function ()
 		{
 			X3DViewer .prototype .initialize .call (this);
@@ -156,6 +167,8 @@ function ($,
 					// Look around.
 
 					this .trackballProjectToSphere (x, y, this .fromVector);
+
+					this .isActive_ = true;
 					break;
 				}
 			}
@@ -176,7 +189,9 @@ function ($,
 					// Stop event propagation.
 
 					event .preventDefault ();
-					event .stopImmediatePropagation ();					
+					event .stopImmediatePropagation ();
+
+					this .isActive_ = false;
 					break;
 				}
 			}

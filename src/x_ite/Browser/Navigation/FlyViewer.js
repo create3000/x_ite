@@ -48,11 +48,19 @@
 
 
 define ([
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Navigation/X3DFlyViewer",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function (X3DFlyViewer,
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DConstants,
+          X3DFlyViewer,
           Vector3,
           Rotation4)
 {
@@ -66,6 +74,9 @@ function (X3DFlyViewer,
 	FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 	{
 		constructor: FlyViewer,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+		]),
 		addCollision: function ()
 		{
 			this .getBrowser () .addCollision (this);

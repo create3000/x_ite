@@ -48,11 +48,19 @@
 
 
 define ([
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Browser/Navigation/X3DFlyViewer",
+	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 ],
-function (X3DFlyViewer,
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DFlyViewer,
+          X3DConstants,
           Vector3,
           Rotation4)
 {
@@ -66,6 +74,9 @@ function (X3DFlyViewer,
 	WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 	{
 		constructor: WalkViewer,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+		]),
 		initialize: function ()
 		{
 			X3DFlyViewer .prototype .initialize .call (this);

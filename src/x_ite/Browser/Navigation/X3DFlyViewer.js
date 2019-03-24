@@ -193,6 +193,7 @@ function ($,
 							this .getBrowser () .finished () .addInterest ("display", this, MOVE);
 					}
 
+					this .isActive_ = true;
 					break;
 				}
 				case 1:
@@ -222,6 +223,7 @@ function ($,
 					if (this .getBrowser () .getBrowserOption ("Rubberband"))
 						this .getBrowser () .finished () .addInterest ("display", this, PAN);
 					
+					this .isActive_ = true;
 					break;
 				}
 			}
@@ -241,6 +243,8 @@ function ($,
 			this .disconnect ();
 			this .getBrowser () .setCursor ("DEFAULT");
 			this .removeCollision ();
+
+			this .isActive_ = false;
 		},
 		mousemove: function (event)
 		{

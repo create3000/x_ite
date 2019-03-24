@@ -234,6 +234,12 @@ function ($,
 		},
 		touch: function (x, y)
 		{
+			if (this .getViewer () .isActive_ .getValue ())
+			{
+				this .pointerTime = 0;
+				return;
+			}
+
 			var t0 = performance .now ();
 		
 			this .pointer .set (x, y);

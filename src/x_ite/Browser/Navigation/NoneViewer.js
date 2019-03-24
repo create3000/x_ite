@@ -48,9 +48,17 @@
 
 
 define ([
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Navigation/X3DViewer",
 ],
-function (X3DViewer)
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DConstants,
+          X3DViewer)
 {
 "use strict";
 	
@@ -62,6 +70,9 @@ function (X3DViewer)
 	NoneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 	{
 		constructor: NoneViewer,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+		]),
 	});
 
 	return NoneViewer;
