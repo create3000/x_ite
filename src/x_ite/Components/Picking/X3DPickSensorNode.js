@@ -114,6 +114,10 @@ function (Fields,
 		{
 			return this .intersectionType;
 		},
+		getSortOrder: function ()
+		{
+			return this .sortOrder;
+		},
 		getModelMatrices: function ()
 		{
 			return this .modelMatrices;
