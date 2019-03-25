@@ -247,7 +247,7 @@ function (Fields,
 										target .distance    = pickingCenter .distance (targetCenter);
 									}
 								}
-							};
+							}
 		
 							// Send events.
 	
@@ -314,7 +314,7 @@ function (Fields,
 										}
 									}
 								}
-							};
+							}
 		
 							// Send events.
 	
