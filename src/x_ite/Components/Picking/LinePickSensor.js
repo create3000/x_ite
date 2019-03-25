@@ -159,6 +159,7 @@ function (Fields,
 				line                     = new Line3 (Vector3 .Zero, Vector3 .zAxis),
 				a                        = new Vector3 (0, 0, 0),
 				b                        = new Vector3 (0, 0, 0),
+				clipPlanes               = [ ],
 				pickedIntersections      = [ ],
 				intersections            = [ ],
 				texCoord                 = new Vector3 (0, 0, 0),
@@ -250,7 +251,7 @@ function (Fields,
 
 										intersections .length = 0;
 
-										if (geometryNode .intersectsLine (line, [ ], target .modelMatrix, intersections))
+										if (geometryNode .intersectsLine (line, clipPlanes, target .modelMatrix, intersections))
 										{
 											for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
 											{
