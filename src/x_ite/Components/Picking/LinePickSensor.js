@@ -234,51 +234,59 @@ function (Fields,
 				
 								for (var t = 0, tLength = targets .size; t < tLength; ++ t)
 								{
-									var
-										target           = targets [t],
-										geometryNode     = target .geometryNode,
-										vertices         = this .pickingGeometryNode .getVertices (),
-										numIntersections = pickedIntersections .length;
-
-									targetBBox .assign (geometryNode .getBBox ()) .multRight (target .modelMatrix);
-									matrix .assign (target .modelMatrix) .inverse () .multLeft (modelMatrix);
-
-									for (var v = 0, vLength = vertices .length; v < vLength; v += 8)
+									try
 									{
-										matrix .multVecMatrix (point1 .set (vertices [v + 0], vertices [v + 1], vertices [v + 2]));
-										matrix .multVecMatrix (point2 .set (vertices [v + 4], vertices [v + 5], vertices [v + 6]));
-										line .setPoints (point1, point2);
-
-										intersections .length = 0;
-
-										if (geometryNode .intersectsLine (line, clipPlanes, target .modelMatrix, intersections))
+										var
+											target           = targets [t],
+											geometryNode     = target .geometryNode,
+											vertices         = this .pickingGeometryNode .getVertices (),
+											numIntersections = pickedIntersections .length;
+	
+										targetBBox .assign (geometryNode .getBBox ()) .multRight (target .modelMatrix);
+										matrix .assign (target .modelMatrix) .inverse () .multLeft (modelMatrix);
+	
+										for (var v = 0, vLength = vertices .length; v < vLength; v += 8)
 										{
-											for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
+											matrix .multVecMatrix (point1 .set (vertices [v + 0], vertices [v + 1], vertices [v + 2]));
+											matrix .multVecMatrix (point2 .set (vertices [v + 4], vertices [v + 5], vertices [v + 6]));
+											line .setPoints (point1, point2);
+	
+											intersections .length = 0;
+	
+											if (geometryNode .intersectsLine (line, clipPlanes, target .modelMatrix, intersections))
 											{
-												// Test if intersection.point is between point1 and point2.
-
-												var intersection = intersections [i];
-
-												a .assign (intersection .point) .subtract (point1);
-												b .assign (intersection .point) .subtract (point2);
-
-												var
-													c = a .add (b) .abs (),
-													s = point1 .distance (point2);
-
-												if (c <= s)
-													pickedIntersections .push (intersection);
+												for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
+												{
+													// Test if intersection.point is between point1 and point2.
+	
+													var intersection = intersections [i];
+	
+													a .assign (intersection .point) .subtract (point1);
+													b .assign (intersection .point) .subtract (point2);
+	
+													var
+														c = a .add (b) .abs (),
+														s = point1 .distance (point2);
+	
+													if (c <= s)
+														pickedIntersections .push (intersection);
+												}
 											}
 										}
+	
+										if (numIntersections !== pickedIntersections .length)
+										{
+											pickingCenter .assign (pickingBBox .center);
+											targetCenter  .assign (targetBBox .center);
+	
+											target .intersected = true;
+											target .distance    = pickingCenter .distance (targetCenter);
+										}
 									}
-
-									if (numIntersections !== pickedIntersections .length)
+									catch (error)
 									{
-										pickingCenter .assign (pickingBBox .center);
-										targetCenter  .assign (targetBBox .center);
-
-										target .intersected = true;
-										target .distance    = pickingCenter .distance (targetCenter);
+										// Catch inverse.
+										console .log (error);
 									}
 								}
 							}
