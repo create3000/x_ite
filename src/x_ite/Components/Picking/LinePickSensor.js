@@ -278,7 +278,11 @@ function (Fields,
 														s = point1 .distance (point2);
 	
 													if (c <= s)
+													{
+														intersection .distance = targetBBox .center .distance (modelMatrix .multVecMatrix (point .assign (intersection .point)));
+
 														pickedIntersections .push (intersection);
+													}
 												}
 											}
 										}
@@ -290,13 +294,6 @@ function (Fields,
 	
 											target .intersected = true;
 											target .distance    = pickingCenter .distance (targetCenter);
-
-											for (var i = numIntersections, iLength = pickedIntersections .length; i < iLength; ++ i)
-											{
-												var intersection = pickedIntersections [i];
-
-												intersection .distance = targetCenter .distance (modelMatrix .multVecMatrix (point .assign (intersection .point)));
-											}
 										}
 									}
 									catch (error)
@@ -325,7 +322,7 @@ function (Fields,
 								sorted           = false,
 								numIntersections = pickedIntersections .length;
 
-							switch (this .sortOrder)
+							switch (this .getSortOrder ())
 							{
 								case SortOrder .ANY:
 								{

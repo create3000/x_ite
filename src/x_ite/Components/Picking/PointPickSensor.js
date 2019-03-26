@@ -285,6 +285,9 @@ function (Fields,
 
 							pickedPoints .length = 0;
 
+							for (var c = 0, cLength = compoundShapes .length; c < cLength; ++ c)
+								compoundShapes [c] .point .distance = Number .POSITIVE_INFINITY;
+
 							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
 							{
 								var modelMatrix = modelMatrices [m];
@@ -320,9 +323,11 @@ function (Fields,
 											target .intersected = true;
 											target .distance    = pickingCenter .distance (targetCenter);
 
-											compoundShape .point .distance = targetCenter .distance (modelMatrix .multVecMatrix (point .assign (compoundShape .point)));
+											var p = compoundShape .point;
 
-											pickedPoints .push (compoundShape .point);
+											p .distance = Math .min (p .distance, targetCenter .distance (modelMatrix .multVecMatrix (point .assign (p))));
+
+											pickedPoints .push (p);
 										}
 									}
 								}
@@ -346,7 +351,7 @@ function (Fields,
 								sorted    = false,
 								numPoints = pickedPoints .length;
 
-							switch (this .sortOrder)
+							switch (this .getSortOrder ())
 							{
 								case SortOrder .ANY:
 								{

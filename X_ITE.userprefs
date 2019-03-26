@@ -1,8 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Picking/PointPickSensor.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Picking/LinePickSensor.js" Line="293" Column="1" />
+      <File FileName="src/x_ite/Components/Picking/PointPickSensor.js" Line="329" Column="1" />
+      <File FileName="src/x_ite/Components/Picking/X3DPickSensorNode.js" Line="207" Column="58" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
