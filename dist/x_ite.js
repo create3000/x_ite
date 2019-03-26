@@ -1,4 +1,4 @@
-/* X_ITE v4.4.6-697 */
+/* X_ITE v4.4.6-698 */
 
 (function () {
 
@@ -15879,7 +15879,7 @@ function (X3DField,
 	function Image (width, height, comp, array)
 	{
 	   var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
-	   
+
 		this .width  = ~~width;
 		this .height = ~~height;
 		this .comp   = ~~comp;
@@ -15963,7 +15963,9 @@ function (X3DField,
 	   {
 	   	var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
 	   
-			if (arguments .length === 4)
+			if (arguments [0] instanceof Image)
+				X3DField .call (this, arguments [0]);
+			else if (arguments .length === 4)
 				X3DField .call (this, new Image (width, height, comp, array));
 			else
 				X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
@@ -15985,7 +15987,7 @@ function (X3DField,
 		},
 		copy: function ()
 		{
-			return new SFImage (this .getValue ());
+			return new SFImage (this .getValue () .copy ());
 		},
 		equals: function (image)
 		{
