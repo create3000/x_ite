@@ -54,8 +54,8 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Picking/IntersectionType",
 	"x_ite/Browser/Picking/SortOrder",
-	"standard/Math/Algorithms/QuickSort",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Algorithms/QuickSort",
 	"standard/Utility/ObjectCache",
 ],
 function (Fields,
@@ -64,8 +64,8 @@ function (Fields,
           X3DConstants,
           IntersectionType,
           SortOrder,
-          QuickSort,
           Matrix4,
+          QuickSort,
           ObjectCache)
 {
 "use strict";

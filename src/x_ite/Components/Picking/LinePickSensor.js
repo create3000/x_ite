@@ -54,10 +54,12 @@ define ([
 	"x_ite/Components/Picking/X3DPickSensorNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Picking/IntersectionType",
+	"x_ite/Browser/Picking/SortOrder",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Geometry/Line3",
+	"standard/Math/Algorithms/QuickSort",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -65,10 +67,12 @@ function (Fields,
           X3DPickSensorNode, 
           X3DConstants,
           IntersectionType,
+          SortOrder,
           Vector3,
           Matrix4,
           Box3,
-          Line3)
+          Line3,
+          QuickSort)
 {
 "use strict";
 
@@ -149,23 +153,28 @@ function (Fields,
 		process: (function ()
 		{
 			var
-				pickingBBox              = new Box3 (),
-				targetBBox               = new Box3 (),
-				pickingCenter            = new Vector3 (0, 0, 0),
-				targetCenter             = new Vector3 (0, 0, 0),
-				matrix                   = new Matrix4 (),
-				point1                   = new Vector3 (0, 0, 0),
-				point2                   = new Vector3 (0, 0, 0),
-				line                     = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-				a                        = new Vector3 (0, 0, 0),
-				b                        = new Vector3 (0, 0, 0),
-				clipPlanes               = [ ],
-				pickedIntersections      = [ ],
-				intersections            = [ ],
-				texCoord                 = new Vector3 (0, 0, 0),
-				pickedTextureCoordinate  = new Fields .MFVec3f (),
-				pickedNormal             = new Fields .MFVec3f (),
-				pickedPoint              = new Fields .MFVec3f ();
+				pickingBBox             = new Box3 (),
+				targetBBox              = new Box3 (),
+				pickingCenter           = new Vector3 (0, 0, 0),
+				targetCenter            = new Vector3 (0, 0, 0),
+				matrix                  = new Matrix4 (),
+				point1                  = new Vector3 (0, 0, 0),
+				point2                  = new Vector3 (0, 0, 0),
+				line                    = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+				a                       = new Vector3 (0, 0, 0),
+				b                       = new Vector3 (0, 0, 0),
+				clipPlanes              = [ ],
+				pickedIntersections     = [ ],
+				intersections           = [ ],
+				point                   = new Vector3 (0, 0, 0),
+				texCoord                = new Vector3 (0, 0, 0),
+				pickedTextureCoordinate = new Fields .MFVec3f (),
+				pickedNormal            = new Fields .MFVec3f (),
+				pickedPoint             = new Fields .MFVec3f ();
+
+			function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
+
+			var intersectionSorter = new QuickSort (pickedIntersections, compareDistance);
 
 			return function ()
 			{
@@ -281,6 +290,13 @@ function (Fields,
 	
 											target .intersected = true;
 											target .distance    = pickingCenter .distance (targetCenter);
+
+											for (var i = numIntersections, iLength = pickedIntersections .length; i < iLength; ++ i)
+											{
+												var intersection = pickedIntersections [i];
+
+												intersection .distance = targetCenter .distance (modelMatrix .multVecMatrix (point .assign (intersection .point)));
+											}
 										}
 									}
 									catch (error)
@@ -305,7 +321,38 @@ function (Fields,
 							if (! this .pickedGeometry_ .equals (pickedGeometries))
 								this .pickedGeometry_ = pickedGeometries;
 
-							for (var i = 0, length = pickedIntersections .length; i < length; ++ i)
+							var
+								sorted           = false,
+								numIntersections = pickedIntersections .length;
+
+							switch (this .sortOrder)
+							{
+								case SortOrder .ANY:
+								{
+									numIntersections = Math .min (numIntersections, 1);
+									break;
+								}
+								case SortOrder .CLOSEST:
+								{
+									sorted           = true;
+									numIntersections = Math .min (numIntersections, 1);
+									break;
+								}
+								case SortOrder .ALL:
+								{
+									break;
+								}
+								case SortOrder .ALL_SORTED:
+								{
+									sorted = true;
+									break;
+								}
+							}
+
+							if (sorted)
+								intersectionSorter .sort (0, pickedIntersections .length);
+
+							for (var i = 0; i < numIntersections; ++ i)
 							{
 								var
 									intersection = pickedIntersections [i],
@@ -318,9 +365,9 @@ function (Fields,
 								pickedPoint [i]             = intersection .point;
 							}
 
-							pickedTextureCoordinate .length = length;
-							pickedNormal            .length = length;
-							pickedPoint             .length = length;
+							pickedTextureCoordinate .length = numIntersections;
+							pickedNormal            .length = numIntersections;
+							pickedPoint             .length = numIntersections;
 
 							if (! this .pickedTextureCoordinate_ .equals (pickedTextureCoordinate))
 								this .pickedTextureCoordinate_ = pickedTextureCoordinate;
