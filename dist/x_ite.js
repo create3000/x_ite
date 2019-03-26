@@ -1,4 +1,4 @@
-/* X_ITE v4.4.6-696 */
+/* X_ITE v4.4.6-697 */
 
 (function () {
 
@@ -68988,6 +68988,7 @@ function (Fields,
 								case X3DConstants .X3DFollowerNode:
 								case X3DConstants .X3DInfoNode:
 								case X3DConstants .X3DInterpolatorNode:
+								case X3DConstants .X3DKeyDeviceSensorNode:
 								case X3DConstants .X3DLayoutNode:
 								case X3DConstants .X3DScriptNode:
 								case X3DConstants .X3DSequencerNode:
@@ -69111,6 +69112,7 @@ function (Fields,
 								case X3DConstants .X3DFollowerNode:
 								case X3DConstants .X3DInfoNode:
 								case X3DConstants .X3DInterpolatorNode:
+								case X3DConstants .X3DKeyDeviceSensorNode:
 								case X3DConstants .X3DLayoutNode:
 								case X3DConstants .X3DScriptNode:
 								case X3DConstants .X3DSequencerNode:
