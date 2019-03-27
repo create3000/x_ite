@@ -1,4 +1,4 @@
-/* X_ITE v4.4.6-699 */
+/* X_ITE v4.4.6-700 */
 
 (function () {
 
@@ -47219,9 +47219,6 @@ function ($,
 		},
 		id: function (string)
 		{
-			if (string === undefined)
-				return false;
-
 			if (string === null)
 				return false;
 

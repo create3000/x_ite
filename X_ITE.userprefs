@@ -1,9 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Parser/XMLParser.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/InputOutput/FileLoader.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Parser/XMLParser.js" Line="924" Column="1" />
+      <File FileName="src/x_ite/Parser/JSONParser.js" Line="304" Column="14" />
+      <File FileName="src/standard/Math/Geometry/ViewVolume.js" Line="179" Column="80" />
+      <File FileName="src/x_ite/InputOutput/FileLoader.js" Line="175" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

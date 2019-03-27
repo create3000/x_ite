@@ -1069,9 +1069,6 @@ function ($,
 		},
 		id: function (string)
 		{
-			if (string === undefined)
-				return false;
-
 			if (string === null)
 				return false;
 
