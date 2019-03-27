@@ -53,6 +53,71 @@
  ******************************************************************************/
 
 
+define ('x_ite/Browser/Picking/MatchCriterion',[],function ()
+{
+"use strict";
+
+	var i = 0;
+
+	var MatchCriterion =
+	{
+		MATCH_ANY:      i ++,
+		MATCH_EVERY:    i ++,
+		MATCH_ONLY_ONE: i ++,
+	};
+
+	return MatchCriterion;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Browser/Picking/IntersectionType',[],function ()
 {
 "use strict";
@@ -188,6 +253,7 @@ define ('x_ite/Components/Picking/X3DPickSensorNode',[
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Picking/MatchCriterion",
 	"x_ite/Browser/Picking/IntersectionType",
 	"x_ite/Browser/Picking/SortOrder",
 	"standard/Math/Numbers/Matrix4",
@@ -198,6 +264,7 @@ function (Fields,
           X3DSensorNode, 
           TraverseType,
           X3DConstants,
+          MatchCriterion,
           IntersectionType,
           SortOrder,
           Matrix4,
@@ -237,11 +304,13 @@ function (Fields,
 
 			this .enabled_          .addInterest ("set_live__",             this);
 			this .objectType_       .addInterest ("set_objectType__",       this);
+			this .matchCriterion_   .addInterest ("set_matchCriterion__",   this);
 			this .intersectionType_ .addInterest ("set_intersectionType__", this);
 			this .sortOrder_        .addInterest ("set_sortOrder__",        this);
 			this .pickTarget_       .addInterest ("set_pickTarget__",       this);
 
 			this .set_objectType__ ();
+			this .set_matchCriterion__ ();
 			this .set_intersectionType__ ();
 			this .set_sortOrder__ ();
 			this .set_pickTarget__ ();
@@ -249,6 +318,10 @@ function (Fields,
 		getObjectType: function ()
 		{
 			return this .objectType;
+		},
+		getMatchCriterion: function ()
+		{
+			return this .matchCriterion;
 		},
 		getIntersectionType: function ()
 		{
@@ -429,6 +502,22 @@ function (Fields,
 
 			this .set_live__ ();
 		},
+		set_matchCriterion__: (function ()
+		{
+			var matchCriterions = new Map ([
+				["MATCH_ANY",      MatchCriterion .MATCH_ANY],
+				["MATCH_EVERY",    MatchCriterion .MATCH_EVERY],
+				["MATCH_ONLY_ONE", MatchCriterion .MATCH_ONLY_ONE],
+			]);
+
+			return function ()
+			{
+				this .matchCriterion = matchCriterions .get (this .matchCriterion_ .getValue ());
+
+				if (this .matchCriterion === undefined)
+					this .matchCriterion = MatchCriterionType .MATCH_ANY;
+			};
+		})(),
 		set_intersectionType__: (function ()
 		{
 			var intersectionTypes = new Map ([
@@ -650,6 +739,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",              new Fields .MFString ("ALL")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",          new Fields .SFString ("MATCH_ANY")),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType",        new Fields .SFString ("BOUNDS")),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",               new Fields .SFString ("CLOSEST")),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",                new Fields .SFBool ()),
@@ -1058,6 +1148,7 @@ define ('x_ite/Components/Picking/PickableGroup',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Components/Picking/X3DPickableObject",
+	"x_ite/Browser/Picking/MatchCriterion",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 ],
@@ -1066,6 +1157,7 @@ function (Fields,
           FieldDefinitionArray,
           X3DGroupingNode, 
           X3DPickableObject, 
+          MatchCriterion,
           X3DConstants,
           TraverseType)
 {
@@ -1155,19 +1247,41 @@ function (Fields,
 							{
 								if (! pickSensorNode .getObjectType () .has ("ALL"))
 								{
-									var intersection = false;
+									var intersection = 0;
 
 									for (var objectType of this .getObjectType ())
 									{
 										if (pickSensorNode .getObjectType () .has (objectType))
 										{
-											intersection = true;
+											++intersection;
 											break;
 										}
 									}
 
-									if (! intersection)
-										return;
+									switch (pickSensorNode .getMatchCriterion ())
+									{
+										case MatchCriterion .MATCH_ANY:
+										{
+											if (intersection === 0)
+												return;
+				
+											break;
+										}
+										case MatchCriterion .MATCH_EVERY:
+										{
+											if (intersection !== pickSensor .getObjectType () .size)
+												return;
+				
+											break;
+										}
+										case MatchCriterion .MATCH_ONLY_ONE:
+										{
+											if (intersection !== 1)
+												return;
+
+											break;
+										}
+									}
 								}
 
 								pickSensorNodes .add (pickSensorNode);
@@ -1488,6 +1602,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",       new Fields .MFString ("ALL")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",   new Fields .SFString ("MATCH_ANY")),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType", new Fields .SFString ("BOUNDS")),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",        new Fields .SFString ("CLOSEST")),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",         new Fields .SFBool ()),
@@ -1838,6 +1953,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",       new Fields .MFString ("ALL")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",   new Fields .SFString ("MATCH_ANY")),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType", new Fields .SFString ("BOUNDS")),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",        new Fields .SFString ("CLOSEST")),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",         new Fields .SFBool ()),
@@ -2113,6 +2229,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",       new Fields .MFString ("ALL")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",   new Fields .SFString ("MATCH_ANY")),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType", new Fields .SFString ("BOUNDS")),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",        new Fields .SFString ("CLOSEST")),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",         new Fields .SFBool ()),
