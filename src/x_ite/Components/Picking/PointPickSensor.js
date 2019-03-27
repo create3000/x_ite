@@ -55,12 +55,10 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Picking/IntersectionType",
-	"x_ite/Browser/Picking/SortOrder",
 	"x_ite/Browser/Picking/VolumePicker",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Geometry/Box3",
-	"standard/Math/Algorithms/QuickSort",
 	X3D .getComponentUrl ("rigid-body-physics"),
 ],
 function (Fields,
@@ -70,12 +68,10 @@ function (Fields,
           X3DCast,
           X3DConstants,
           IntersectionType,
-          SortOrder,
           VolumePicker,
           Vector3,
           Rotation4,
           Box3,
-          QuickSort,
           RigidBodyPhysics)
 {
 "use strict";
@@ -214,13 +210,7 @@ function (Fields,
 				translation   = new Vector3 (0, 0, 0),
 				rotation      = new Rotation4 (0, 0, 1, 0),
 				scale         = new Vector3 (1, 1, 1),
-				point         = new Vector3 (0, 0, 0),
-				pickedPoints  = [ ],
 				pickedPoint   = new Fields .MFVec3f ();
-
-			function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
-
-			var intersectionSorter = new QuickSort (pickedPoints, compareDistance);
 
 			return function ()
 			{
@@ -283,11 +273,6 @@ function (Fields,
 								picker         = this .picker,
 								compoundShapes = this .compoundShapes;
 
-							pickedPoints .length = 0;
-
-							for (var c = 0, cLength = compoundShapes .length; c < cLength; ++ c)
-								compoundShapes [c] .point .distance = Number .POSITIVE_INFINITY;
-
 							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
 							{
 								var modelMatrix = modelMatrices [m];
@@ -304,17 +289,17 @@ function (Fields,
 									var compoundShape = compoundShapes [c];
 
 									picker .setChildShape1Components (transform, localScaling, compoundShape);
-	
+
 									for (var t = 0, tLength = targets .size; t < tLength; ++ t)
 									{
 										var
 											target      = targets [t],
 											targetShape = this .getPickShape (target .geometryNode);
-	
+
 										targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
 
 										picker .setChildShape2 (target .modelMatrix, targetShape .getCompoundShape ());
-		
+
 										if (picker .contactTest ())
 										{
 											pickingCenter .assign (pickingBBox .center);
@@ -322,12 +307,7 @@ function (Fields,
 
 											target .intersected = true;
 											target .distance    = pickingCenter .distance (targetCenter);
-
-											var p = compoundShape .point;
-
-											p .distance = Math .min (p .distance, targetCenter .distance (modelMatrix .multVecMatrix (point .assign (p))));
-
-											pickedPoints .push (p);
+											target .pickedPoint .push (compoundShape .point);
 										}
 									}
 								}
@@ -347,41 +327,17 @@ function (Fields,
 							if (! this .pickedGeometry_ .equals (pickedGeometries))
 								this .pickedGeometry_ = pickedGeometries;
 
-							var
-								sorted    = false,
-								numPoints = pickedPoints .length;
+							var pickedTargets = this .getPickedTargets ();
 
-							switch (this .getSortOrder ())
+							pickedPoint .length = 0;
+
+							for (var t = 0, tLength = pickedTargets .length; t < tLength; ++ t)
 							{
-								case SortOrder .ANY:
-								{
-									numPoints = Math .min (numPoints, 1);
-									break;
-								}
-								case SortOrder .CLOSEST:
-								{
-									sorted    = true;
-									numPoints = Math .min (numPoints, 1);
-									break;
-								}
-								case SortOrder .ALL:
-								{
-									break;
-								}
-								case SortOrder .ALL_SORTED:
-								{
-									sorted = true;
-									break;
-								}
+								var pp = pickedTargets [t] .pickedPoint;
+
+								for (var p = 0, pLength = pp .length; p < pLength; ++ p)
+									pickedPoint .push (pp [p]);
 							}
-
-							if (sorted)
-								intersectionSorter .sort (0, pickedPoints .length);
-
-							for (var i = 0; i < numPoints; ++ i)
-								pickedPoint [i] = pickedPoints [i];
-
-							pickedPoint .length = numPoints;
 
 							if (! this .pickedPoint_ .equals (pickedPoint))
 								this .pickedPoint_ = pickedPoint;

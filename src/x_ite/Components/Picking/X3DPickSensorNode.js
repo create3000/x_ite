@@ -72,20 +72,24 @@ function (Fields,
 
 	var ModelMatrixCache = ObjectCache (Matrix4);
 
+	function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
+
 	function X3DPickSensorNode (executionContext)
 	{
 		X3DSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DPickSensorNode);
 
-		this .objectType       = new Set ();
-		this .intersectionType = IntersectionType .BOUNDS;
-		this .sortOrder        = SortOrder .CLOSEST;
-		this .pickTargetNodes  = new Set ();
-		this .modelMatrices    = [ ];
-		this .targets          = [ ];
-		this .targets .size    = 0;
-		this .pickedGeometries = new Fields .MFNode (); // Must be unique for each X3DPickSensorNode.
+		this .objectType          = new Set ();
+		this .intersectionType    = IntersectionType .BOUNDS;
+		this .sortOrder           = SortOrder .CLOSEST;
+		this .pickTargetNodes     = new Set ();
+		this .modelMatrices       = [ ];
+		this .targets             = [ ];
+		this .targets .size       = 0;
+		this .pickedTargets       = [ ];
+		this .pickedTargetsSorter = new QuickSort (this .pickedTargets, compareDistance);
+		this .pickedGeometries    = new Fields .MFNode (); // Must be unique for each X3DPickSensorNode.
 	}
 
 	X3DPickSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
@@ -158,72 +162,69 @@ function (Fields,
 		})(),
 		getPickedGeometries: (function ()
 		{
-			function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
-
-			var
-				intersection       = [ ],
-            intersectionSorter = new QuickSort (intersection, compareDistance);
-
 			return function ()
 			{
 				var
 					targets          = this .targets,
 					numTargets       = targets .size,
+					pickedTargets    = this .pickedTargets,
 					pickedGeometries = this .pickedGeometries;
 
 				// Filter intersecting targets.
 
-				intersection .length = 0;
+				pickedTargets .length = 0;
 
 				for (var i = 0; i < numTargets; ++ i)
 				{
 					var target = targets [i];
 
 					if (target .intersected)
-						intersection .push (target);
+						pickedTargets .push (target);
 				}
 
-				// No intersection, return.
+				// No pickedTargets, return.
 
-				if (intersection .length === 0)
+				if (pickedTargets .length === 0)
 				{
 					pickedGeometries .length = 0;
 
 					return pickedGeometries;
 				}
 
-				// Return sorted intersection.
+				// Return sorted pickedTargets.
 
 				switch (this .sortOrder)
 				{
 					case SortOrder .ANY:
 					{
-						pickedGeometries [0]     = this .getPickedGeometry (intersection [0]);
+						pickedTargets .length    = 1;
+						pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
 						pickedGeometries .length = 1;
 						break;
 					}
 					case SortOrder .CLOSEST:
 					{
-						intersectionSorter .sort (0, intersection .length);
+						this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-						pickedGeometries [0]     = this .getPickedGeometry (intersection [0]);
+						pickedTargets .length    = 1;
+						pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
 						pickedGeometries .length = 1;
 						break;
 					}
 					case SortOrder .ALL:
 					{
-						for (var i = 0, length = intersection .length; i < length; ++ i)
-							pickedGeometries [i] = this .getPickedGeometry (intersection [i]);
+						for (var i = 0, length = pickedTargets .length; i < length; ++ i)
+							pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
 						pickedGeometries .length = length;
 						break;
 					}
 					case SortOrder .ALL_SORTED:
 					{
-						intersectionSorter .sort (0, intersection .length);
+						this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-						for (var i = 0, length = intersection .length; i < length; ++ i)
-							pickedGeometries [i] = this .getPickedGeometry (intersection [i]);
+						for (var i = 0, length = pickedTargets .length; i < length; ++ i)
+							pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
 						pickedGeometries .length = length;
 						break;
@@ -263,6 +264,10 @@ function (Fields,
 			}
 
 			return null;
+		},
+		getPickedTargets: function ()
+		{
+			return this .pickedTargets;
 		},
 		set_live__: function ()
 		{
@@ -381,15 +386,17 @@ function (Fields,
 				}
 				else
 				{
-					var target = { geometryNode: null, modelMatrix: new Matrix4 (), pickingHierarchy: [ ] };
+					var target = { modelMatrix: new Matrix4 (), pickingHierarchy: [ ], pickedPoint: [ ], intersections: [ ] };
 
 					targets .push (target);
 				}
 
 				++ targets .size;
 
-				target .intersected  = false;
-				target .geometryNode = geometryNode;
+				target .intersected           = false;
+				target .geometryNode          = geometryNode;
+				target .pickedPoint .length   = 0;
+				target .intersections .length = 0;
 				target .modelMatrix .assign (modelMatrix);
 
 				var destPickingHierarchy = target .pickingHierarchy;
