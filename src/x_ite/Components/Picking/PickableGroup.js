@@ -53,6 +53,7 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Components/Picking/X3DPickableObject",
+	"x_ite/Browser/Picking/MatchCriterion",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 ],
@@ -61,6 +62,7 @@ function (Fields,
           FieldDefinitionArray,
           X3DGroupingNode, 
           X3DPickableObject, 
+          MatchCriterion,
           X3DConstants,
           TraverseType)
 {
@@ -150,19 +152,41 @@ function (Fields,
 							{
 								if (! pickSensorNode .getObjectType () .has ("ALL"))
 								{
-									var intersection = false;
+									var intersection = 0;
 
 									for (var objectType of this .getObjectType ())
 									{
 										if (pickSensorNode .getObjectType () .has (objectType))
 										{
-											intersection = true;
+											++intersection;
 											break;
 										}
 									}
 
-									if (! intersection)
-										return;
+									switch (pickSensorNode .getMatchCriterion ())
+									{
+										case MatchCriterion .MATCH_ANY:
+										{
+											if (intersection === 0)
+												return;
+				
+											break;
+										}
+										case MatchCriterion .MATCH_EVERY:
+										{
+											if (intersection !== pickSensor .getObjectType () .size)
+												return;
+				
+											break;
+										}
+										case MatchCriterion .MATCH_ONLY_ONE:
+										{
+											if (intersection !== 1)
+												return;
+
+											break;
+										}
+									}
 								}
 
 								pickSensorNodes .add (pickSensorNode);

@@ -52,6 +52,7 @@ define ([
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Picking/MatchCriterion",
 	"x_ite/Browser/Picking/IntersectionType",
 	"x_ite/Browser/Picking/SortOrder",
 	"standard/Math/Numbers/Matrix4",
@@ -62,6 +63,7 @@ function (Fields,
           X3DSensorNode, 
           TraverseType,
           X3DConstants,
+          MatchCriterion,
           IntersectionType,
           SortOrder,
           Matrix4,
@@ -101,11 +103,13 @@ function (Fields,
 
 			this .enabled_          .addInterest ("set_live__",             this);
 			this .objectType_       .addInterest ("set_objectType__",       this);
+			this .matchCriterion_   .addInterest ("set_matchCriterion__",   this);
 			this .intersectionType_ .addInterest ("set_intersectionType__", this);
 			this .sortOrder_        .addInterest ("set_sortOrder__",        this);
 			this .pickTarget_       .addInterest ("set_pickTarget__",       this);
 
 			this .set_objectType__ ();
+			this .set_matchCriterion__ ();
 			this .set_intersectionType__ ();
 			this .set_sortOrder__ ();
 			this .set_pickTarget__ ();
@@ -113,6 +117,10 @@ function (Fields,
 		getObjectType: function ()
 		{
 			return this .objectType;
+		},
+		getMatchCriterion: function ()
+		{
+			return this .matchCriterion;
 		},
 		getIntersectionType: function ()
 		{
@@ -293,6 +301,22 @@ function (Fields,
 
 			this .set_live__ ();
 		},
+		set_matchCriterion__: (function ()
+		{
+			var matchCriterions = new Map ([
+				["MATCH_ANY",      MatchCriterion .MATCH_ANY],
+				["MATCH_EVERY",    MatchCriterion .MATCH_EVERY],
+				["MATCH_ONLY_ONE", MatchCriterion .MATCH_ONLY_ONE],
+			]);
+
+			return function ()
+			{
+				this .matchCriterion = matchCriterions .get (this .matchCriterion_ .getValue ());
+
+				if (this .matchCriterion === undefined)
+					this .matchCriterion = MatchCriterionType .MATCH_ANY;
+			};
+		})(),
 		set_intersectionType__: (function ()
 		{
 			var intersectionTypes = new Map ([
