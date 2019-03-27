@@ -168,12 +168,17 @@ function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
 
 	Object .assign (ViewVolume,
 	{
-		unProjectPoint: function (winx, winy, winz, modelViewMatrix, projectionMatrix, viewport, point)
+		unProjectPoint: (function ()
 		{
-			matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
+			var matrix = new Matrix4 ();
 
-			return this .unProjectPointMatrix (winx, winy, winz, matrix, viewport, point);
-		},
+			return function (winx, winy, winz, modelViewMatrix, projectionMatrix, viewport, point)
+			{
+				matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
+	
+				return this .unProjectPointMatrix (winx, winy, winz, matrix, viewport, point);
+			};
+		})(),
 		unProjectPointMatrix: (function ()
 		{
 			var vin = new Vector4 (0, 0, 0, 0);
