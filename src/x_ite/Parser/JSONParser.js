@@ -302,7 +302,7 @@ function (
 					if (key === 'X3D') {
 						this.ConvertToX3DOM(object[key], key, element);
 					} else {
-						this.ConvertObject(key, object, element);
+						this.ConvertObject(key, object, element, containerField);
 					}
 				} else if (typeof object[key] === 'number') {
 					this.elementSetAttribute(element, key.substr(1),object[key]);
