@@ -691,6 +691,7 @@
     <None Include="x_ite\Browser\Picking\VolumePicker.js" />
     <None Include="lib\ammojs\Ammo.js" />
     <None Include="x_ite\Browser\Picking\MatchCriterion.js" />
+    <None Include="x_ite\Browser\RigidBodyPhysics\AppliedParametersType.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
@@ -709,5 +710,6 @@
     <Folder Include="lib\nurbs\extras\" />
     <Folder Include="fonts\" />
     <Folder Include="x_ite\Browser\Picking\" />
+    <Folder Include="x_ite\Browser\RigidBodyPhysics\" />
   </ItemGroup>
 </Project>

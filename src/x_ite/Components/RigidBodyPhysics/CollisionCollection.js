@@ -53,12 +53,16 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Browser/RigidBodyPhysics/AppliedParametersType",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DChildNode, 
-          X3DConstants)
+          X3DConstants,
+          X3DCast,
+          AppliedParametersType)
 {
 "use strict";
 
@@ -72,7 +76,8 @@ function (Fields,
 		this .surfaceSpeed_             .setUnit ("speed");
 		this .softnessConstantForceMix_ .setUnit ("force");
 
-		this .appliedParameters = { };
+		this .appliedParameters = new Set ();
+		this .collidableNodes   = [ ];
 	}
 
 	CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -108,20 +113,72 @@ function (Fields,
 			X3DChildNode .prototype .initialize .call (this);
 
 			this .appliedParameters_ .addInterest ("set_appliedParameters__", this);
+			this .collidables_       .addInterest ("set_collidables__",       this);
 
 			this .set_appliedParameters__ ();
+			this .set_collidables__ ();
 		},
 		getAppliedParameters: function ()
 		{
 			return this .appliedParameters;
 		},
-		set_appliedParameters__: function ()
+		getCollidables: function ()
 		{
-			for (var key in this .appliedParameters)
-				delete this .appliedParameters [key];
+			return this .collidableNodes;
+		},
+		set_appliedParameters__: (function ()
+		{
+			var appliedParametersIndex = new Map ([
+				["BOUNCE",                 AppliedParametersType .BOUNCE],
+				["USER_FRICTION",          AppliedParametersType .USER_FRICTION],
+				["FRICTION_COEFFICIENT-2", AppliedParametersType .FRICTION_COEFFICIENT_2],
+				["ERROR_REDUCTION",        AppliedParametersType .ERROR_REDUCTION],
+				["CONSTANT_FORCE",         AppliedParametersType .CONSTANT_FORCE],
+				["SPEED-1",                AppliedParametersType .SPEED_1],
+				["SPEED-2",                AppliedParametersType .SPEED_2],
+				["SLIP-1",                 AppliedParametersType .SLIP_1],
+				["SLIP-2",                 AppliedParametersType .SLIP_2],
+			]);
 
-			for (var i = 0, length = this .appliedParameters_ .length; i < length; ++ i)
-				this .appliedParameters [this .appliedParameters_ [i]] = true;
+			return function ()
+			{
+				this .appliedParameters .clear ();
+	
+				for (var i = 0, length = this .appliedParameters_ .length; i < length; ++ i)
+				{
+					var appliedParameter = appliedParametersIndex .get (this .appliedParameters_ [i]);
+
+					if (appliedParameter !== undefined)
+						this .appliedParameters .add (appliedParameter);
+				}
+			};
+		})(),
+		set_collidables__: function ()
+		{
+			this .collidableNodes .length = 0;
+
+			for (var i = 0, iLength = this .collidables_ .length; i < iLength; ++ i)
+			{
+				var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidables_ [i]);
+
+				if (collidableNode)
+				{
+					this .collidableNodes .push (collidableNode);
+					continue;
+				}
+
+				var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
+
+				if (collisionSpaceNode)
+				{
+					var collidableNodes = collisionSpaceNode .getCollidables ();
+
+					for (var c = 0, cLength = collidableNodes .length; c < cLength; ++ c)
+					{
+						this .collidableNodes .push (collidableNodes [c]);
+					}
+				}
+			}
 		},
 	});
 

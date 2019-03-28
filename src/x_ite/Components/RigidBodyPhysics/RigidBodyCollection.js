@@ -54,6 +54,7 @@ define ([
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
+	"x_ite/Browser/RigidBodyPhysics/AppliedParametersType",
 	"lib/ammojs/Ammo",
 ],
 function (Fields,
@@ -62,6 +63,7 @@ function (Fields,
           X3DChildNode, 
           X3DConstants,
           X3DCast,
+          AppliedParametersType,
           Ammo)
 {
 "use strict";
@@ -201,7 +203,7 @@ function (Fields,
 		{
 			if (this .colliderNode && this .colliderNode .enabled_ .getValue ())
 			{
-				if (this .colliderNode .getAppliedParameters () .BOUNCE)
+				if (this .colliderNode .getAppliedParameters () .has (AppliedParametersType .BOUNCE))
 				{
 					for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
 					{
@@ -224,7 +226,7 @@ function (Fields,
 		{
 			if (this .colliderNode && this .colliderNode .enabled_ .getValue ())
 			{
-				if (this .colliderNode .getAppliedParameters () .FRICTION_COEFFICIENT_2)
+				if (this .colliderNode .getAppliedParameters () .has (AppliedParametersType .FRICTION_COEFFICIENT_2))
 				{
 					for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
 					{

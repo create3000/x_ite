@@ -72,7 +72,7 @@ function (Fields,
 	
 		this .position_                 .setUnit ("length");
 		this .depth_                    .setUnit ("length");
-		this .minBounceSpeed_           .setUnit ("speed");
+		this .minbounceSpeed_           .setUnit ("speed");
 		this .surfaceSpeed_             .setUnit ("speed");
 		this .softnessConstantForceMix_ .setUnit ("force");
 	}
