@@ -188,17 +188,14 @@ function (Fields,
 									collidableNode1 = collidableNodesIndex .get (contactManifold .getBody0 () .ptr),
 									collidableNode2 = collidableNodesIndex .get (contactManifold .getBody1 () .ptr);
 
-								if (collidableNode1)
-									intersectionNodes .add (collidableNode1);
-
-								if (collidableNode2)
-									intersectionNodes .add (collidableNode2);
+								if (! collidableNode1 && ! collidableNode2)
+									continue;
 
 								var contactNode = this .getExecutionContext () .createNode ("Contact", false);
 
 								var
 									btPosition      = pt .getPositionWorldOnA (),
-									btContactNormal = pt .get_m_positionWorldOnA ();
+									btContactNormal = pt .get_m_normalWorldOnB ();
 
 								contactNode .position_                 = position .set (btPosition .x (), btPosition .y (), btPosition .z ());
 								contactNode .contactNormal_            = contactNormal .set (btContactNormal .x (), btContactNormal .y (), btContactNormal .z ());
@@ -215,12 +212,16 @@ function (Fields,
 
 								if (collidableNode1)
 								{
+									intersectionNodes .add (collidableNode1);
+
 									contactNode .geometry1_ = collidableNode1;
 									contactNode .body1_     = collidableNode1 .getBody ();
 								}
 
 								if (collidableNode2)
 								{
+									intersectionNodes .add (collidableNode2);
+
 									contactNode .geometry2_ = collidableNode2;
 									contactNode .body2_     = collidableNode2 .getBody ();
 								}
