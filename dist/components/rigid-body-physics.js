@@ -1695,6 +1695,7 @@ function (Fields,
 		this .addType (X3DConstants .CollisionSensor);
 
 		this .colliderNode = null;
+		this .contactCache = [ ];
 	}
 
 	CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
@@ -1813,7 +1814,7 @@ function (Fields,
 								if (! collidableNode1 && ! collidableNode2)
 									continue;
 
-								var contactNode = this .getExecutionContext () .createNode ("Contact", false);
+								var contactNode = this .getContact (contactNodes .length);
 
 								var
 									btPosition      = pt .getPositionWorldOnA (),
@@ -1847,8 +1848,6 @@ function (Fields,
 									contactNode .geometry2_ = collidableNode2;
 									contactNode .body2_     = collidableNode2 .getBody ();
 								}
-								
-								contactNode .setup ();
 
 								contactNodes .push (contactNode);
 							}
@@ -1864,27 +1863,44 @@ function (Fields,
 
 				if (intersectionNodes .size)
 				{
-					this .intersections_ .length = 0;
+					var i = 0;
 
 					intersectionNodes .forEach (function (intersectionNode)
 					{
-						this .intersections_ .push (intersectionNode);
+						this .intersections_ [i ++] = intersectionNode;
 					},
 					this);
+
+					this .intersections_ .length = i;
 				}
 
 				if (contactNodes .length)
 				{
-					this .contacts_ .length = 0;
+					var i = 0;
 
 					contactNodes .forEach (function (contactNode)
 					{
-						this .contacts_ .push (contactNode);
+						this .contacts_ [i ++] = contactNode;
 					},
 					this);
+
+					this .contacts_ .length = i;
 				}
 			};
 		})(),
+		getContact: function (index)
+		{
+			var contactNode = this .contactCache [index];
+
+			if (contactNode)
+				return contactNode;
+
+			contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
+			
+			contactNode .setup ();
+
+			return contactNode;
+		},
 	});
 
 	return CollisionSensor;
