@@ -72,7 +72,7 @@ function (Fields,
 	
 		this .position_                 .setUnit ("length");
 		this .depth_                    .setUnit ("length");
-		this .minbounceSpeed_           .setUnit ("speed");
+		this .minBounceSpeed_           .setUnit ("speed");
 		this .surfaceSpeed_             .setUnit ("speed");
 		this .softnessConstantForceMix_ .setUnit ("force");
 	}
@@ -88,7 +88,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "frictionDirection",        new Fields .SFVec3f (0, 1, 0)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "minbounceSpeed",           new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "slipCoefficients",         new Fields .SFVec2f ()),
