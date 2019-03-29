@@ -1797,7 +1797,7 @@ function (Fields,
 
 				collisionWorlds .forEach (function (collisionWorld)
 				{
-					collisionWorld .performDiscreteCollisionDetection ();
+					//collisionWorld .performDiscreteCollisionDetection ();
 		
 					var
 						dispatcher   = collisionWorld .getDispatcher (),
@@ -3416,16 +3416,20 @@ function (Fields,
 		},
 		set_bounce__: function ()
 		{
-			if (this .colliderNode && this .colliderNode .enabled_ .getValue ())
-			{
-				if (this .colliderNode .getAppliedParameters () .has (AppliedParametersType .BOUNCE))
-				{
-					for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-					{
-						var rigidBody = this .bodyNodes [i] .getRigidBody ();
+			var
+				colliderNode = this .colliderNode,
+				bodyNodes    = this .bodyNodes;
 
-						if (rigidBody .getLinearVelocity () .length () > this .colliderNode .minBounceSpeed_ .getValue ())
-							rigidBody .setRestitution (this .colliderNode .bounce_ .getValue ());
+			if (colliderNode && colliderNode .enabled_ .getValue ())
+			{
+				if (colliderNode .getAppliedParameters () .has (AppliedParametersType .BOUNCE))
+				{
+					for (var i = 0, length = bodyNodes .length; i < length; ++ i)
+					{
+						var rigidBody = bodyNodes [i] .getRigidBody ();
+
+						if (rigidBody .getLinearVelocity () .length () >= colliderNode .minBounceSpeed_ .getValue ())
+							rigidBody .setRestitution (colliderNode .bounce_ .getValue ());
 						else
 							rigidBody .setRestitution (0);
 					}
@@ -3434,8 +3438,8 @@ function (Fields,
 				}
 			}
 
-			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-				this .bodyNodes [i] .getRigidBody () .setRestitution (0);
+			for (var i = 0, length = bodyNodes .length; i < length; ++ i)
+				bodyNodes [i] .getRigidBody () .setRestitution (0);
 		},
 		set_frictionCoefficients__: function ()
 		{
