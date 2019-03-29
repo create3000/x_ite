@@ -141,23 +141,18 @@ function (X3DField,
 
 	function SFNode (value)
 	{
-	   if (this instanceof SFNode)
-	   {
-			if (value)
-			{
-				value .addParent (this);
+		if (value)
+		{
+			value .addParent (this);
 
-				X3DField .call (this, value);
-			}
-			else
-			{
-				X3DField .call (this, null);
-			}
-
-			return new Proxy (this, handler);
+			X3DField .call (this, value);
+		}
+		else
+		{
+			X3DField .call (this, null);
 		}
 
-		return SFNode .call (Object .create (SFNode .prototype), value);
+		return new Proxy (this, handler);
 	}
 
 	SFNode .prototype = Object .assign (Object .create (X3DField .prototype),

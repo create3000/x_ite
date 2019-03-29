@@ -62,20 +62,15 @@ function (X3DField,
 
 	function SFColorRGBA (r, g, b, a)
 	{
-		if (this instanceof SFColorRGBA)
+		if (arguments .length)
 		{
-			if (arguments .length)
-			{
-				if (arguments [0] instanceof Color4)
-					return X3DField .call (this, arguments [0]);
-				else
-					return X3DField .call (this, new Color4 (r * 1, g * 1, b * 1, a * 1));
-			}
-
-			return X3DField .call (this, new Color4 ());
+			if (arguments [0] instanceof Color4)
+				return X3DField .call (this, arguments [0]);
+			else
+				return X3DField .call (this, new Color4 (r * 1, g * 1, b * 1, a * 1));
 		}
 
-		return SFColorRGBA .apply (Object .create (SFColorRGBA .prototype), arguments);
+		return X3DField .call (this, new Color4 ());
 	}
 
 	SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),

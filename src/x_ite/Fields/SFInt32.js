@@ -58,10 +58,7 @@ function (X3DField,
 
 	function SFInt32 (value)
 	{
-		if (this instanceof SFInt32)
-			return X3DField .call (this, ~~value);
-		
-		return X3DField .call (Object .create (SFInt32 .prototype), ~~value);
+		return X3DField .call (this, ~~value);
 	}
 
 	SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),

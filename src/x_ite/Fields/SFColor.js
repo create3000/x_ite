@@ -60,20 +60,15 @@ function (Color3,
 
 	function SFColor (r, g, b)
 	{
-		if (this instanceof SFColor)
+		if (arguments .length)
 		{
-			if (arguments .length)
-			{
-				if (arguments [0] instanceof Color3)
-					return X3DField .call (this, arguments [0]);
-				else
-					return X3DField .call (this, new Color3 (r * 1, g * 1, b * 1));
-			}
-
-			return X3DField .call (this, new Color3 ());
+			if (arguments [0] instanceof Color3)
+				return X3DField .call (this, arguments [0]);
+			else
+				return X3DField .call (this, new Color3 (r * 1, g * 1, b * 1));
 		}
 
-		return SFColor .apply (Object .create (SFColor .prototype), arguments);
+		return X3DField .call (this, new Color3 ());
 	}
 
 	SFColor .prototype = Object .assign (Object .create (X3DField .prototype),

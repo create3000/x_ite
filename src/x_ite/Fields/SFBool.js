@@ -58,10 +58,7 @@ function (X3DField,
 
 	function SFBool (value)
 	{
-		if (this instanceof SFBool)
-			return X3DField .call (this, !! value);
-		
-		return X3DField .call (Object .create (SFBool .prototype), !! value);
+		return X3DField .call (this, !! value);
 	}
 
 	SFBool .prototype = Object .assign (Object .create (X3DField .prototype),

@@ -145,23 +145,18 @@ function (X3DField,
 
 	function SFImage (width, height, comp, array)
 	{
-	   if (this instanceof SFImage)
-	   {
-	   	var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
-	   
-			if (arguments [0] instanceof Image)
-				X3DField .call (this, arguments [0]);
-			else if (arguments .length === 4)
-				X3DField .call (this, new Image (width, height, comp, array));
-			else
-				X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
+		var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
+   
+		if (arguments [0] instanceof Image)
+			X3DField .call (this, arguments [0]);
+		else if (arguments .length === 4)
+			X3DField .call (this, new Image (width, height, comp, array));
+		else
+			X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
 
-			this .getValue () .getArray () .addParent (this);
-			this .addInterest ("set_size__", this);
-			return this;
-		}
-
-		return SFImage .apply (Object .create (SFImage .prototype), arguments);
+		this .getValue () .getArray () .addParent (this);
+		this .addInterest ("set_size__", this);
+		return this;
 	}
 
 	SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
