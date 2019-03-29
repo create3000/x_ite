@@ -88,6 +88,8 @@ function (Fields,
 
 		this .position_changed_ .setUnit ("length");
 
+		this .setZero (true);
+
 		this .bbox             = new Box3 ();
 		this .targetObjectNode = null;
 		this .modelMatrices    = [ ];
