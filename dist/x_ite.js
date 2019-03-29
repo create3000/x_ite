@@ -1,4 +1,4 @@
-/* X_ITE v4.4.7a-710 */
+/* X_ITE v4.4.7a-711 */
 
 (function () {
 
@@ -14278,10 +14278,7 @@ function (X3DField,
 
 	function SFBool (value)
 	{
-		if (this instanceof SFBool)
-			return X3DField .call (this, !! value);
-		
-		return X3DField .call (Object .create (SFBool .prototype), !! value);
+		return X3DField .call (this, !! value);
 	}
 
 	SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -14921,20 +14918,15 @@ function (Color3,
 
 	function SFColor (r, g, b)
 	{
-		if (this instanceof SFColor)
+		if (arguments .length)
 		{
-			if (arguments .length)
-			{
-				if (arguments [0] instanceof Color3)
-					return X3DField .call (this, arguments [0]);
-				else
-					return X3DField .call (this, new Color3 (r * 1, g * 1, b * 1));
-			}
-
-			return X3DField .call (this, new Color3 ());
+			if (arguments [0] instanceof Color3)
+				return X3DField .call (this, arguments [0]);
+			else
+				return X3DField .call (this, new Color3 (r * 1, g * 1, b * 1));
 		}
 
-		return SFColor .apply (Object .create (SFColor .prototype), arguments);
+		return X3DField .call (this, new Color3 ());
 	}
 
 	SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -15330,20 +15322,15 @@ function (X3DField,
 
 	function SFColorRGBA (r, g, b, a)
 	{
-		if (this instanceof SFColorRGBA)
+		if (arguments .length)
 		{
-			if (arguments .length)
-			{
-				if (arguments [0] instanceof Color4)
-					return X3DField .call (this, arguments [0]);
-				else
-					return X3DField .call (this, new Color4 (r * 1, g * 1, b * 1, a * 1));
-			}
-
-			return X3DField .call (this, new Color4 ());
+			if (arguments [0] instanceof Color4)
+				return X3DField .call (this, arguments [0]);
+			else
+				return X3DField .call (this, new Color4 (r * 1, g * 1, b * 1, a * 1));
 		}
 
-		return SFColorRGBA .apply (Object .create (SFColorRGBA .prototype), arguments);
+		return X3DField .call (this, new Color4 ());
 	}
 
 	SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -15541,10 +15528,7 @@ function (X3DField,
 
 	function SFDouble (value)
 	{
-		if (this instanceof SFDouble)
-			return X3DField .call (this, arguments .length ? value * 1 : 0);
-		
-		return X3DField .call (Object .create (SFDouble .prototype), arguments .length ? +value : 0);
+		return X3DField .call (this, arguments .length ? value * 1 : 0);
 	}
 
 	SFDouble .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -15654,10 +15638,7 @@ function (X3DField,
 
 	function SFFloat (value)
 	{
-		if (this instanceof SFFloat)
-			return X3DField .call (this, arguments .length ? value * 1 : 0);
-		
-		return X3DField .call (Object .create (SFFloat .prototype), arguments .length ? +value : 0);
+		return X3DField .call (this, arguments .length ? value * 1 : 0);
 	}
 
 	SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -15765,10 +15746,7 @@ function (X3DField,
 
 	function SFInt32 (value)
 	{
-		if (this instanceof SFInt32)
-			return X3DField .call (this, ~~value);
-		
-		return X3DField .call (Object .create (SFInt32 .prototype), ~~value);
+		return X3DField .call (this, ~~value);
 	}
 
 	SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -15959,23 +15937,18 @@ function (X3DField,
 
 	function SFImage (width, height, comp, array)
 	{
-	   if (this instanceof SFImage)
-	   {
-	   	var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
-	   
-			if (arguments [0] instanceof Image)
-				X3DField .call (this, arguments [0]);
-			else if (arguments .length === 4)
-				X3DField .call (this, new Image (width, height, comp, array));
-			else
-				X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
+		var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
+   
+		if (arguments [0] instanceof Image)
+			X3DField .call (this, arguments [0]);
+		else if (arguments .length === 4)
+			X3DField .call (this, new Image (width, height, comp, array));
+		else
+			X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
 
-			this .getValue () .getArray () .addParent (this);
-			this .addInterest ("set_size__", this);
-			return this;
-		}
-
-		return SFImage .apply (Object .create (SFImage .prototype), arguments);
+		this .getValue () .getArray () .addParent (this);
+		this .addInterest ("set_size__", this);
+		return this;
 	}
 
 	SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -21997,23 +21970,18 @@ function (X3DField,
 
 	function SFNode (value)
 	{
-	   if (this instanceof SFNode)
-	   {
-			if (value)
-			{
-				value .addParent (this);
+		if (value)
+		{
+			value .addParent (this);
 
-				X3DField .call (this, value);
-			}
-			else
-			{
-				X3DField .call (this, null);
-			}
-
-			return new Proxy (this, handler);
+			X3DField .call (this, value);
+		}
+		else
+		{
+			X3DField .call (this, null);
 		}
 
-		return SFNode .call (Object .create (SFNode .prototype), value);
+		return new Proxy (this, handler);
 	}
 
 	SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -22296,25 +22264,20 @@ function (SFVec3,
 
 	function SFRotation (x, y, z, angle)
 	{
-	   if (this instanceof SFRotation)
-	   {
-			switch (arguments .length)
-			{
-				case 1:
-					return X3DField .call (this, arguments [0]);
-				case 2:
-					if (arguments [1] instanceof SFVec3f)
-						return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
+		switch (arguments .length)
+		{
+			case 1:
+				return X3DField .call (this, arguments [0]);
+			case 2:
+				if (arguments [1] instanceof SFVec3f)
+					return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
 
-					return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] * 1));
-				case 4:
-					return X3DField .call (this, new Rotation4 (x * 1, y * 1, z * 1, angle * 1));
-				default:
-					return X3DField .call (this, new Rotation4 ());
-			}
+				return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] * 1));
+			case 4:
+				return X3DField .call (this, new Rotation4 (x * 1, y * 1, z * 1, angle * 1));
+			default:
+				return X3DField .call (this, new Rotation4 ());
 		}
-
-		return SFRotation .apply (Object .create (SFRotation .prototype), arguments);
 	}
 
 	SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -22530,10 +22493,7 @@ function (X3DField,
 
 	function SFString (value)
 	{
-		if (this instanceof SFString)
-			return X3DField .call (this, arguments .length ? "" + value : "");
-
-		return X3DField .call (Object .create (SFString .prototype), arguments .length ? String (value) : "");
+		return X3DField .call (this, arguments .length ? "" + value : "");
 	}
 	
 	Object .assign (SFString,
@@ -22659,10 +22619,7 @@ function (X3DField,
 
 	function SFTime (value)
 	{
-		if (this instanceof SFTime)
-			return X3DField .call (this, arguments .length ? value * 1 : 0);
-	
-		return X3DField .call (Object .create (SFTime .prototype), arguments .length ? +value : 0);
+		return X3DField .call (this, arguments .length ? value * 1 : 0);
 	}
 
 	SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
