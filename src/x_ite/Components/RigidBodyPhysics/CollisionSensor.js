@@ -167,7 +167,7 @@ function (Fields,
 
 				collisionWorlds .forEach (function (collisionWorld)
 				{
-					collisionWorld .performDiscreteCollisionDetection ();
+					//collisionWorld .performDiscreteCollisionDetection ();
 		
 					var
 						dispatcher   = collisionWorld .getDispatcher (),
