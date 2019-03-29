@@ -81,7 +81,7 @@ function (Fields,
 		this .centerOfRotation_changed_ .setUnit ("length");
 		this .position_changed_         .setUnit ("length");
 
-		this .setZero (true);
+		this .setZeroTest (true);
 
 		this .viewpoint   = null;
 		this .modelMatrix = new Matrix4 ();

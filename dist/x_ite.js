@@ -1,4 +1,4 @@
-/* X_ITE v4.4.7a-707 */
+/* X_ITE v4.4.7a-708 */
 
 (function () {
 
@@ -85070,7 +85070,7 @@ function (Fields,
 		this .size_   .setUnit ("length");
 		this .center_ .setUnit ("length");
 
-		this .zero             = false;
+		this .zeroTest         = false;
 		this .currentTraversed = true;
 	}
 
@@ -85091,7 +85091,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .isLive () .getValue () && this .traversed_ .getValue () && this .enabled_ .getValue () && ! (this .zero && this .size_. getValue () .equals (Vector3 .Zero)))
+			if (this .isLive () .getValue () && this .traversed_ .getValue () && this .enabled_ .getValue () && ! (this .zeroTest && this .size_. getValue () .equals (Vector3 .Zero)))
 			{
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}
@@ -85106,13 +85106,13 @@ function (Fields,
 				}
 			}
 		},
-		setZero: function (value)
+		setZeroTest: function (value)
 		{
-			this .zero = value;
+			this .zeroTest = value;
 		},
-		getZero: function ()
+		getZeroTest: function ()
 		{
-			return this .zero;
+			return this .zeroTest;
 		},
 		setTraversed: function (value)
 		{
@@ -85224,7 +85224,7 @@ function (Fields,
 		this .centerOfRotation_changed_ .setUnit ("length");
 		this .position_changed_         .setUnit ("length");
 
-		this .setZero (true);
+		this .setZeroTest (true);
 
 		this .viewpoint   = null;
 		this .modelMatrix = new Matrix4 ();
@@ -85527,7 +85527,7 @@ function (Fields,
 
 		this .position_changed_ .setUnit ("length");
 
-		this .setZero (true);
+		this .setZeroTest (true);
 
 		this .bbox             = new Box3 ();
 		this .targetObjectNode = null;
@@ -85800,7 +85800,7 @@ function (Fields,
 
 		this .addType (X3DConstants .VisibilitySensor);
 
-		this .setZero (false);
+		this .setZeroTest (false);
 
 		this .visible = false;
 	}

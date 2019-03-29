@@ -72,7 +72,7 @@ function (Fields,
 
 		this .addType (X3DConstants .VisibilitySensor);
 
-		this .setZero (false);
+		this .setZeroTest (false);
 
 		this .visible = false;
 	}
