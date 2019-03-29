@@ -110,11 +110,11 @@ function (Fields,
 		setZero: function (value)
 		{
 			this .zero = value;
-		}
+		},
 		getZero: function ()
 		{
 			return this .zero;
-		}
+		},
 		setTraversed: function (value)
 		{
 		   if (value)

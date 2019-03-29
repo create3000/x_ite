@@ -1,4 +1,4 @@
-/* X_ITE v4.4.7a-706 */
+/* X_ITE v4.4.7a-707 */
 
 (function () {
 
@@ -85070,6 +85070,7 @@ function (Fields,
 		this .size_   .setUnit ("length");
 		this .center_ .setUnit ("length");
 
+		this .zero             = false;
 		this .currentTraversed = true;
 	}
 
@@ -85090,7 +85091,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .isLive () .getValue () && this .traversed_ .getValue () && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
+			if (this .isLive () .getValue () && this .traversed_ .getValue () && this .enabled_ .getValue () && ! (this .zero && this .size_. getValue () .equals (Vector3 .Zero)))
 			{
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}
@@ -85104,6 +85105,14 @@ function (Fields,
 					this .exitTime_ = this .getBrowser () .getCurrentTime ();
 				}
 			}
+		},
+		setZero: function (value)
+		{
+			this .zero = value;
+		},
+		getZero: function ()
+		{
+			return this .zero;
 		},
 		setTraversed: function (value)
 		{
@@ -85214,6 +85223,8 @@ function (Fields,
 
 		this .centerOfRotation_changed_ .setUnit ("length");
 		this .position_changed_         .setUnit ("length");
+
+		this .setZero (true);
 
 		this .viewpoint   = null;
 		this .modelMatrix = new Matrix4 ();
@@ -85516,6 +85527,8 @@ function (Fields,
 
 		this .position_changed_ .setUnit ("length");
 
+		this .setZero (true);
+
 		this .bbox             = new Box3 ();
 		this .targetObjectNode = null;
 		this .modelMatrices    = [ ];
@@ -85786,6 +85799,8 @@ function (Fields,
 		X3DEnvironmentalSensorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .VisibilitySensor);
+
+		this .setZero (false);
 
 		this .visible = false;
 	}
