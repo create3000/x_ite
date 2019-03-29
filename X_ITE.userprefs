@@ -1,14 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/RigidBodyPhysics/CollisionCollection.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Picking/PointPickSensor.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Picking/X3DPickSensorNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Picking/PickableGroup.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollisionCollection.js" Line="163" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/CollisionSpace.js" Line="145" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/X3DTexture2DNode.js" Line="173" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

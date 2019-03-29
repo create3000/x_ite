@@ -1,4 +1,4 @@
-/* X_ITE v4.4.7a-705 */
+/* X_ITE v4.4.7a-706 */
 
 (function () {
 
@@ -63122,6 +63122,7 @@ define ('standard/Math/Numbers/Complex',[],function ()
 		{
 			this .real = radius * Math .cos (angle);
 			this .imag = radius * Math .sin (angle);
+			return this;
 		},
 		conjugate: function ()
 		{

@@ -359,8 +359,6 @@ function (X3DBaseNode,
 {
 "use strict";
 	
-	var half = new Complex (0.5, 0.5);
-
 	function Disk2DOptions (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
@@ -410,53 +408,64 @@ function (X3DBaseNode,
 		{
 			return this .diskVertices;
 		},
-		build: function ()
+		build: (function ()
 		{
 			var
-				dimension      = this .dimension_ .getValue (),
-				angle          = Math .PI * 2 / dimension,
-				circleVertices = this .circleVertices,
-				diskTexCoords  = this .diskTexCoords,
-				diskNormals    = this .diskNormals,
-				diskVertices   = this .diskVertices;
+				half      = new Complex (0.5, 0.5),
+				texCoord1 = new Complex (0, 0),
+				texCoord2 = new Complex (0, 0),
+				point1    = new Complex (0, 0),
+				point2    = new Complex (0, 0);
 
-			circleVertices .length = 0;
-			diskTexCoords  .length = 0;
-			diskNormals    .length = 0;
-			diskVertices   .length = 0;
-
-			for (var n = 0; n < dimension; ++ n)
+			return function ()
 			{
 				var
-					theta1    = angle * n,
-					theta2    = angle * (n + 1),
-					texCoord1 = Complex .Polar (0.5, theta1) .add (half),
-					texCoord2 = Complex .Polar (0.5, theta2) .add (half),
-					point1    = Complex .Polar (1, theta1),
-					point2    = Complex .Polar (1, theta2);
-		
-				// Circle
+					dimension      = this .dimension_ .getValue (),
+					angle          = Math .PI * 2 / dimension,
+					circleVertices = this .circleVertices,
+					diskTexCoords  = this .diskTexCoords,
+					diskNormals    = this .diskNormals,
+					diskVertices   = this .diskVertices;
+	
+				circleVertices .length = 0;
+				diskTexCoords  .length = 0;
+				diskNormals    .length = 0;
+				diskVertices   .length = 0;
+	
+				for (var n = 0; n < dimension; ++ n)
+				{
+					var
+						theta1 = angle * n,
+						theta2 = angle * (n + 1);
 
-				circleVertices .push (point1 .real, point1 .imag, 0, 1);
-
-				// Disk
-
-				diskTexCoords .push (0.5, 0.5, 0, 1,
-				                     texCoord1 .real, texCoord1 .imag, 0, 1,
-				                     texCoord2 .real, texCoord2 .imag, 0, 1);
-
-				diskNormals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
-
-				diskVertices .push (0, 0, 0, 1,
-				                    point1 .real, point1 .imag, 0, 1,
-				                    point2 .real, point2 .imag, 0, 1);
-			}
-
-			circleVertices .shrinkToFit ();
-			diskTexCoords  .shrinkToFit ();
-			diskNormals    .shrinkToFit ();
-			diskVertices   .shrinkToFit ();
-		},
+					texCoord1 .setPolar (0.5, theta1) .add (half);
+					texCoord2 .setPolar (0.5, theta2) .add (half);
+					point1    .setPolar (1, theta1);
+					point2    .setPolar (1, theta2);
+			
+					// Circle
+	
+					circleVertices .push (point1 .real, point1 .imag, 0, 1);
+	
+					// Disk
+	
+					diskTexCoords .push (0.5, 0.5, 0, 1,
+					                     texCoord1 .real, texCoord1 .imag, 0, 1,
+					                     texCoord2 .real, texCoord2 .imag, 0, 1);
+	
+					diskNormals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
+	
+					diskVertices .push (0, 0, 0, 1,
+					                    point1 .real, point1 .imag, 0, 1,
+					                    point2 .real, point2 .imag, 0, 1);
+				}
+	
+				circleVertices .shrinkToFit ();
+				diskTexCoords  .shrinkToFit ();
+				diskNormals    .shrinkToFit ();
+				diskVertices   .shrinkToFit ();
+			};
+		})(),
 	});
 
 	return Disk2DOptions;
@@ -987,8 +996,6 @@ function (Fields,
 {
 "use strict";
 
-	var half = new Complex (0.5, 0.5);
-
 	function ArcClose2D (executionContext)
 	{
 		X3DGeometryNode .call (this, executionContext);
@@ -1054,90 +1061,95 @@ function (Fields,
 			// We must test for NAN, as NAN to int is undefined.
 			return 0;
 		},
-		build: function ()
+		build: (function ()
 		{
-			var
-				options       = this .getBrowser () .getArcClose2DOptions (),
-				chord         = this .closureType_ .getValue () === "CHORD",
-				dimension     = options .dimension_ .getValue (),
-				startAngle    = this .startAngle_ .getValue  (),
-				radius        = Math .abs (this .radius_ .getValue ()),
-				sweepAngle    = this .getSweepAngle (),
-				steps         = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
-				texCoordArray = this .getTexCoords (),
-				normalArray   = this .getNormals (),
-				vertexArray   = this .getVertices (),
-				texCoord      = [ ],
-				points        = [ ];
+			var half = new Complex (0.5, 0.5);
 
-			this .getMultiTexCoords () .push (texCoordArray);
-
-			var steps_1 = steps - 1;
-
-			for (var n = 0; n < steps; ++ n)
+			return function ()
 			{
 				var
-					t     = n / steps_1,
-					theta = startAngle + (sweepAngle * t);
-
-				texCoord .push (Complex .Polar (0.5, theta) .add (half));
-				points   .push (Complex .Polar (radius, theta));
-			}
-
-			if (chord)
-			{
-				var
-					t0 = texCoord [0],
-					p0 = points [0];
-
-				for (var i = 1; i < steps_1; ++ i)
-				{
-					var
-						t1 = texCoord [i],
-						t2 = texCoord [i + 1],
-						p1 = points [i],
-						p2 = points [i + 1];
-
-					texCoordArray .push (t0 .real, t0 .imag, 0, 1,
-					                     t1 .real, t1 .imag, 0, 1,
-					                     t2 .real, t2 .imag, 0, 1);
-
-					normalArray .push (0, 0, 1,
-					                   0, 0, 1,
-					                   0, 0, 1);
-
-					vertexArray .push (p0 .real, p0 .imag, 0, 1,
-					                   p1 .real, p1 .imag, 0, 1,
-					                   p2 .real, p2 .imag, 0, 1);
-				}
-			}
-			else
-			{
-				for (var i = 0; i < steps_1; ++ i)
-				{
-					var
-						t1 = texCoord [i],
-						t2 = texCoord [i + 1],
-						p1 = points [i],
-						p2 = points [i + 1];
-
-					texCoordArray .push (0.5, 0.5, 0, 1,
-					                     t1 .real, t1 .imag, 0, 1,
-					                     t2 .real, t2 .imag, 0, 1);
-
-					normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
-
-					vertexArray .push (0, 0, 0, 1,
-					                   p1 .real, p1 .imag, 0, 1,
-					                   p2 .real, p2 .imag, 0, 1);
-				}
-			}
-
-			this .getMin () .set (-radius, -radius, 0);
-			this .getMax () .set ( radius,  radius, 0);	
+					options       = this .getBrowser () .getArcClose2DOptions (),
+					chord         = this .closureType_ .getValue () === "CHORD",
+					dimension     = options .dimension_ .getValue (),
+					startAngle    = this .startAngle_ .getValue  (),
+					radius        = Math .abs (this .radius_ .getValue ()),
+					sweepAngle    = this .getSweepAngle (),
+					steps         = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
+					texCoordArray = this .getTexCoords (),
+					normalArray   = this .getNormals (),
+					vertexArray   = this .getVertices (),
+					texCoords     = [ ],
+					points        = [ ];
 	
-			this .setSolid (this .solid_ .getValue ());
-		},
+				this .getMultiTexCoords () .push (texCoordArray);
+	
+				var steps_1 = steps - 1;
+	
+				for (var n = 0; n < steps; ++ n)
+				{
+					var
+						t     = n / steps_1,
+						theta = startAngle + (sweepAngle * t);
+	
+					texCoords .push (Complex .Polar (0.5, theta) .add (half));
+					points    .push (Complex .Polar (radius, theta));
+				}
+	
+				if (chord)
+				{
+					var
+						t0 = texCoords [0],
+						p0 = points [0];
+	
+					for (var i = 1; i < steps_1; ++ i)
+					{
+						var
+							t1 = texCoords [i],
+							t2 = texCoords [i + 1],
+							p1 = points [i],
+							p2 = points [i + 1];
+	
+						texCoordArray .push (t0 .real, t0 .imag, 0, 1,
+						                     t1 .real, t1 .imag, 0, 1,
+						                     t2 .real, t2 .imag, 0, 1);
+	
+						normalArray .push (0, 0, 1,
+						                   0, 0, 1,
+						                   0, 0, 1);
+	
+						vertexArray .push (p0 .real, p0 .imag, 0, 1,
+						                   p1 .real, p1 .imag, 0, 1,
+						                   p2 .real, p2 .imag, 0, 1);
+					}
+				}
+				else
+				{
+					for (var i = 0; i < steps_1; ++ i)
+					{
+						var
+							t1 = texCoords [i],
+							t2 = texCoords [i + 1],
+							p1 = points [i],
+							p2 = points [i + 1];
+	
+						texCoordArray .push (0.5, 0.5, 0, 1,
+						                     t1 .real, t1 .imag, 0, 1,
+						                     t2 .real, t2 .imag, 0, 1);
+	
+						normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
+	
+						vertexArray .push (0, 0, 0, 1,
+						                   p1 .real, p1 .imag, 0, 1,
+						                   p2 .real, p2 .imag, 0, 1);
+					}
+				}
+	
+				this .getMin () .set (-radius, -radius, 0);
+				this .getMax () .set ( radius,  radius, 0);	
+		
+				this .setSolid (this .solid_ .getValue ());
+			};
+		})(),
 	});
 
 	return ArcClose2D;

@@ -1509,8 +1509,9 @@ function (Fields,
 		this .surfaceSpeed_             .setUnit ("speed");
 		this .softnessConstantForceMix_ .setUnit ("force");
 
-		this .appliedParameters = new Set ();
-		this .collidableNodes   = [ ];
+		this .appliedParameters   = new Set ();
+		this .collidableNodes     = [ ];
+		this .collisionSpaceNodes = [ ];
 	}
 
 	CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -1588,9 +1589,15 @@ function (Fields,
 		})(),
 		set_collidables__: function ()
 		{
-			this .collidableNodes .length = 0;
+			var collisionSpaceNodes = this .collisionSpaceNodes;
 
-			for (var i = 0, iLength = this .collidables_ .length; i < iLength; ++ i)
+			for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
+				collisionSpaceNodes [i] .removeInterest ("set_collidables__", this);
+
+			this .collidableNodes .length = 0;
+			collisionSpaceNodes .length   = 0;
+
+			for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
 			{
 				var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidables_ [i]);
 
@@ -1604,14 +1611,15 @@ function (Fields,
 
 				if (collisionSpaceNode)
 				{
-					var collidableNodes = collisionSpaceNode .getCollidables ();
+					collisionSpaceNode .addInterest ("set_collidables__", this);
 
-					for (var c = 0, cLength = collidableNodes .length; c < cLength; ++ c)
-					{
-						this .collidableNodes .push (collidableNodes [c]);
-					}
+					collisionSpaceNodes .push (collisionSpaceNode);
+
+					Array .prototype .push .apply (this .collidableNodes, collisionSpaceNode .getCollidables ());
 				}
 			}
+
+			this .addNodeEvent ();
 		},
 	});
 
@@ -2059,7 +2067,8 @@ function (Fields,
 
 		this .addType (X3DConstants .CollisionSpace);
 
-		this .collidableNodes = [ ];
+		this .collidableNodes     = [ ];
+		this .collisionSpaceNodes = [ ];
 	}
 
 	CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpaceNode .prototype),
@@ -2085,11 +2094,29 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DNBodyCollisionSpaceNode .prototype .initialize .call (this);
+
+			this .collidables_ .addInterest ("set_collidables__", this);
+
+			this .set_collidables__ ();
+		},
 		getCollidables: function ()
 		{
-			this .collidableNodes .length = 0;
+			return this .collidableNodes;
+		},
+		set_collidables__: function ()
+		{
+			var collisionSpaceNodes = this .collisionSpaceNodes;
 
-			for (var i = 0, iLength = this .collidables_ .length; i < iLength; ++ i)
+			for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
+				collisionSpaceNodes [i] .removeInterest ("set_collidables__", this);
+
+			this .collidableNodes .length = 0;
+			collisionSpaceNodes .length   = 0;
+
+			for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
 			{
 				var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidables_ [i]);
 
@@ -2103,16 +2130,15 @@ function (Fields,
 
 				if (collisionSpaceNode)
 				{
-					var collidableNodes = collisionSpaceNode .getCollidables ();
+					collisionSpaceNode .addInterest ("set_collidables__", this);
 
-					for (var c = 0, cLength = collidableNodes .length; c < cLength; ++ c)
-					{
-						this .collidableNodes .push (collidableNodes [c]);
-					}
+					collisionSpaceNodes .push (collisionSpaceNode);
+
+					Array .prototype .push .apply (this .collidableNodes, collisionSpaceNode .getCollidables ());
 				}
 			}
 
-			return this .collidableNodes;
+			this .addNodeEvent ();
 		},
 	});
 
