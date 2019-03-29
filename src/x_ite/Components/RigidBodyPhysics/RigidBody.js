@@ -382,7 +382,7 @@ function (Fields,
 			}
 
 			for (var i = 0, length = this .otherGeometryNodes .length; i < length; ++ i)
-				this .otherGeometryNodes [i] .body_ .removeInterest ("set_body___", this);
+				this .otherGeometryNodes [i] .body_ .removeInterest ("set_body__", this);
 
 			geometryNodes .length = 0;
 
@@ -395,7 +395,7 @@ function (Fields,
 		
 				if (geometryNode .getBody ())
 				{
-					geometryNode .body_ .addInterest ("set_body___", this);
+					geometryNode .body_ .addInterest ("set_body__", this);
 					this .otherGeometryNodes .push (geometryNode);
 					continue;
 				}
