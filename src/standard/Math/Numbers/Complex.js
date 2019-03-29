@@ -106,6 +106,7 @@ define (function ()
 		{
 			this .real = radius * Math .cos (angle);
 			this .imag = radius * Math .sin (angle);
+			return this;
 		},
 		conjugate: function ()
 		{
