@@ -114,10 +114,32 @@ function (Fields,
 			var collisionSpaceNodes = this .collisionSpaceNodes;
 
 			for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
-				collisionSpaceNodes [i] .removeInterest ("set_collidables__", this);
+				collisionSpaceNodes [i] .removeInterest ("collect", this);
 
-			this .collidableNodes .length = 0;
-			collisionSpaceNodes .length   = 0;
+			collisionSpaceNodes .length = 0;
+
+			for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
+			{
+				var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
+
+				if (collisionSpaceNode)
+				{
+					collisionSpaceNode .addInterest ("collect", this);
+
+					collisionSpaceNodes .push (collisionSpaceNode);
+				}
+			}
+	
+			this .collect ();
+		},
+		collect: function ()
+		{
+			var
+				collidableNodes     = this .collidableNodes,
+				collisionSpaceNodes = this .collisionSpaceNodes;
+
+			collidableNodes     .length = 0;
+			collisionSpaceNodes .length = 0;
 
 			for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
 			{
@@ -125,7 +147,7 @@ function (Fields,
 
 				if (collidableNode)
 				{
-					this .collidableNodes .push (collidableNode);
+					collidableNodes .push (collidableNode);
 					continue;
 				}
 
@@ -133,11 +155,8 @@ function (Fields,
 
 				if (collisionSpaceNode)
 				{
-					collisionSpaceNode .addInterest ("set_collidables__", this);
-
-					collisionSpaceNodes .push (collisionSpaceNode);
-
-					Array .prototype .push .apply (this .collidableNodes, collisionSpaceNode .getCollidables ());
+					Array .prototype .push .apply (collidableNodes, collisionSpaceNode .getCollidables ());
+					continue;
 				}
 			}
 
