@@ -110,10 +110,7 @@ function (SFBool,
 
 	function MFNode (value)
 	{
-		if (this instanceof MFNode)
-			return X3DObjectArrayField .call (this, arguments);
-		
-		return X3DObjectArrayField .call (Object .create (MFNode .prototype), arguments);
+		return X3DObjectArrayField .call (this, arguments);
 	}
 
 	MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
@@ -338,10 +335,7 @@ function (SFBool,
 
 	function MFString (value)
 	{
-		if (this instanceof MFString)
-			return X3DObjectArrayField .call (this, arguments);
-		
-		return X3DObjectArrayField .call (Object .create (MFString .prototype), arguments);
+		return X3DObjectArrayField .call (this, arguments);
 	}
 
 	MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
@@ -398,10 +392,7 @@ function (SFBool,
 	{
 		function ArrayField (value)
 		{
-			if (this instanceof ArrayField)
-				return X3DObjectArrayField .call (this, arguments);
-			
-			return X3DObjectArrayField .call (Object .create (ArrayField .prototype), arguments);
+			return X3DObjectArrayField .call (this, arguments);
 		}
 
 		ArrayField .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
@@ -440,10 +431,7 @@ function (SFBool,
 	{
 		function ArrayField (value)
 		{
-			if (this instanceof ArrayField)
-				return X3DTypedArrayField .call (this, arguments);
-
-			return X3DTypedArrayField .call (Object .create (ArrayField .prototype), arguments);
+			return X3DTypedArrayField .call (this, arguments);
 		}
 
 		ArrayField .prototype = Object .assign (Object .create (X3DTypedArrayField .prototype),
