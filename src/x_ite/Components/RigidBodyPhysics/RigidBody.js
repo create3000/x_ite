@@ -80,8 +80,9 @@ function (Fields,
 
 		this .addType (X3DConstants .RigidBody);
 
-		this .addChildObjects ("collection", new Fields .SFNode (),
-		                       "transform",  new Fields .SFTime ());
+		this .addChildObjects ("collection",    new Fields .SFNode (),
+		                       "transform",     new Fields .SFTime (),
+		                       "otherGeometry", new Fields .MFNode ());
 
 		this .position_            .setUnit ("length");
 		this .linearVelocity_      .setUnit ("speed");
@@ -162,6 +163,7 @@ function (Fields,
 			this .disableLinearSpeed_   .addInterest ("set_disable__",            this);
 			this .disableAngularSpeed_  .addInterest ("set_disable__",            this);
 			this .geometry_             .addInterest ("set_geometry__",           this);
+			this .otherGeometry_        .addInterest ("set_geometry__",           this);
 
 			this .fixed_   .addInterest ("set_massProps__", this);
 			this .mass_    .addInterest ("set_massProps__", this);
@@ -362,9 +364,11 @@ function (Fields,
 		},
 		set_geometry__: function ()
 		{
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+			var geometryNodes = this .geometryNodes;
+
+			for (var i = 0, length = geometryNodes .length; i < length; ++ i)
 			{
-				var geometryNode = this .geometryNodes [i];
+				var geometryNode = geometryNodes [i];
 
 				geometryNode .removeInterest ("addEvent", this .transform_);
 		
@@ -378,9 +382,9 @@ function (Fields,
 			}
 
 			for (var i = 0, length = this .otherGeometryNodes .length; i < length; ++ i)
-				this .otherGeometryNodes [i] .body_ .removeInterest ("set_geometry__", this);
+				this .otherGeometryNodes [i] .body_ .removeInterest ("set_body___", this);
 
-			this .geometryNodes .length = 0;
+			geometryNodes .length = 0;
 
 			for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
 			{
@@ -391,19 +395,19 @@ function (Fields,
 		
 				if (geometryNode .getBody ())
 				{
-					geometryNode .body_ .addInterest ("set_geometry__", this);
+					geometryNode .body_ .addInterest ("set_body___", this);
 					this .otherGeometryNodes .push (geometryNode);
 					continue;
 				}
 		
 				geometryNode .setBody (this);
 		
-				this .geometryNodes .push (geometryNode);
+				geometryNodes .push (geometryNode);
 			}
 		
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+			for (var i = 0, length = geometryNodes .length; i < length; ++ i)
 			{
-				var geometryNode = this .geometryNodes [i];
+				var geometryNode = geometryNodes [i];
 
 				geometryNode .addInterest ("addEvent", this .transform_);
 
@@ -415,6 +419,10 @@ function (Fields,
 			}
 
 			this .set_compoundShape__ ();
+		},
+		set_body__: function ()
+		{
+			this .otherGeometry_ .addEvent ();
 		},
 		set_compoundShape__: (function ()
 		{
