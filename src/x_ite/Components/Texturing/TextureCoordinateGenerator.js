@@ -53,12 +53,14 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browsre/Texturing/ModeType",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureCoordinateNode, 
-          X3DConstants)
+          X3DConstants,
+          ModeType)
 {
 "use strict";
 
@@ -67,6 +69,8 @@ function (Fields,
 		X3DTextureCoordinateNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureCoordinateGenerator);
+
+		this .mode = ModeType .SPHERE;
 	}
 
 	TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
@@ -93,6 +97,38 @@ function (Fields,
 		{
 			return array;
 		},
+		initialize: function ()
+		{
+			X3DTextureCoordinateNode .prototype .initialize .call (this);
+
+			this .mode_ .addInterest ("set_mode__", this);
+
+			this .set_mode__ ();
+		},
+		set_mode__: (function ()
+		{
+			var modes = new Map ([
+				["SPHERE",                      ModeType .SPHERE],
+				["CAMERASPACENORMAL",           ModeType .CAMERASPACENORMAL],
+				["CAMERASPACEPOSITION",         ModeType .CAMERASPACEPOSITION],
+				["CAMERASPACEREFLECTIONVECTOR", ModeType .CAMERASPACEREFLECTIONVECTOR],
+				["SPHERE-LOCAL",                ModeType .SPHERE_LOCAL],
+				["COORD",                       ModeType .COORD],
+				["COORD-EYE",                   ModeType .COORD_EYE],
+				["NOISE",                       ModeType .NOISE],
+				["NOISE-EYE",                   ModeType .NOISE_EYE],
+				["SPHERE-REFLECT",              ModeType .SPHERE_REFLECT],
+				["SPHERE-REFLECT-LOCAL",        ModeType .SPHERE_REFLECT_LOCAL],
+			]);
+
+			return function ()
+			{
+				this .mode = modes .get (this .mode_ .getValue ());
+
+				if (this .mode === undefined)
+					this .mode = ModeType .SPHERE;
+			};
+		})(),
 	});
 
 	return TextureCoordinateGenerator;

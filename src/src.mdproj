@@ -692,6 +692,7 @@
     <None Include="lib\ammojs\Ammo.js" />
     <None Include="x_ite\Browser\Picking\MatchCriterion.js" />
     <None Include="x_ite\Browser\RigidBodyPhysics\AppliedParametersType.js" />
+    <None Include="x_ite\Browser\Texturing\ModeType.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
