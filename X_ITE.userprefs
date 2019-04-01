@@ -1,12 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/RigidBodyPhysics/RigidBodyCollection.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Shaders/Types.h">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Picking/PointPickSensor.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Picking/X3DPickSensorNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Picking/PickableGroup.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/RigidBodyPhysics/RigidBodyCollection.js" Line="215" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/TextureCoordinateGenerator.js" Line="76" Column="28" />
+      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="69" Column="18" />
+      <File FileName="src/x_ite/Components/Geospatial/GeoElevationGrid.js" Line="58" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Types.h" Line="41" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

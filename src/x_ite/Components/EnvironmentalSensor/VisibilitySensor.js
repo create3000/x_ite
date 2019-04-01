@@ -55,6 +55,7 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
+	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,7 +63,8 @@ function (Fields,
           X3DEnvironmentalSensorNode,
           TraverseType,
           X3DConstants,
-          Vector3)
+          Vector3,
+          Box3)
 {
 "use strict";
 
@@ -142,8 +144,7 @@ function (Fields,
 		traverse: (function ()
 		{
 			var
-				size     = new Vector3 (0, 0, 0),
-				center   = new Vector3 (0, 0, 0),
+				bbox     = new Box3 (),
 				infinity = new Vector3 (-1, -1, -1);
 
 			return function (type, renderObject)
@@ -162,14 +163,11 @@ function (Fields,
 				}
 				else
 				{
-					var
-						viewVolume      = renderObject .getViewVolume (),
-						modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+					bbox
+						.set (this .size_ .getValue (), this .center_ .getValue ()),
+						.multRight (renderObject .getModelViewMatrix () .get ());
 
-					modelViewMatrix .multDirMatrix (size   .assign (this .size_   .getValue ())),
-					modelViewMatrix .multVecMatrix (center .assign (this .center_ .getValue ()));
-
-					this .visible = viewVolume .intersectsSphere (size .abs () / 2, center);
+					this .visible = renderObject .getViewVolume () .intersectsBox (bbox);
 				}
 			};
 		})(),

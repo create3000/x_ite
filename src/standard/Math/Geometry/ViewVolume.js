@@ -54,24 +54,78 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Algorithms/SAT",
 ],
-function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
+function (Line3,
+          Plane3,
+          Triangle3,
+          Vector3,
+          Vector4,
+          Matrix4,
+          SAT)
 {
 "use strict";
 
-	function ViewVolume ()
+	/*
+	 * p7 -------- p6
+	 * | \         | \
+	 * | p3 --------- p2
+	 * |  |        |  |
+	 * |  |        |  |
+	 * p4 |______ p5  |
+	 *  \ |         \ |
+	 *   \|          \|
+	 *    p0 -------- p1
+	 */
+
+	function ViewVolume (projectionMatrix, viewport, scissor)
 	{
 		this .viewport = new Vector4 (0, 0, 0, 0);
 		this .scissor  = new Vector4 (0, 0, 0, 0);
 		
-		this .planes = [
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // front
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // left
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // right
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // top
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // bottom
-			new Plane3 (Vector3 .Zero, Vector3 .Zero),  // back
+		this .points = [
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
+
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
 		];
+
+		this .normals = [
+			new Vector3 (0, 0, 0), // front
+			new Vector3 (0, 0, 0), // left
+			new Vector3 (0, 0, 0), // right
+			new Vector3 (0, 0, 0), // top
+			new Vector3 (0, 0, 0), // bottom
+			new Vector3 (0, 0, 0), // back  
+		];
+
+		this .edges = [
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
+
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
+			new Vector3 (0, 0, 0),
+		];
+
+		this .planes = [
+			new Plane3 (Vector3 .Zero, Vector3 .Zero), // front
+			new Plane3 (Vector3 .Zero, Vector3 .Zero), // left
+			new Plane3 (Vector3 .Zero, Vector3 .Zero), // right
+			new Plane3 (Vector3 .Zero, Vector3 .Zero), // top
+			new Plane3 (Vector3 .Zero, Vector3 .Zero), // bottom
+			new Plane3 (Vector3 .Zero, Vector3 .Zero), // back  
+		];
+
+		this .set (projectionMatrix, viewport, scissor);
 	}
 
 	ViewVolume .prototype =
@@ -104,21 +158,37 @@ function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
 	
 					matrix .assign (projectionMatrix) .inverse ();
 	
-					ViewVolume .unProjectPointMatrix (x1, y2, 1, matrix, viewport, p1),
-					ViewVolume .unProjectPointMatrix (x1, y1, 1, matrix, viewport, p2),
-					ViewVolume .unProjectPointMatrix (x1, y1, 0, matrix, viewport, p3),
-					ViewVolume .unProjectPointMatrix (x2, y1, 0, matrix, viewport, p4),
-					ViewVolume .unProjectPointMatrix (x2, y2, 0, matrix, viewport, p5),
-					ViewVolume .unProjectPointMatrix (x2, y2, 1, matrix, viewport, p6);
-	
-					this .planes [0] .set (p4, Triangle3 .normal (p3, p4, p5, normal));  // front
-					this .planes [1] .set (p2, Triangle3 .normal (p1, p2, p3, normal));  // left
-					this .planes [2] .set (p5, Triangle3 .normal (p6, p5, p4, normal));  // right
-					this .planes [3] .set (p6, Triangle3 .normal (p5, p6, p1, normal));  // top
-					this .planes [4] .set (p3, Triangle3 .normal (p4, p3, p2, normal));  // bottom
-					this .planes [5] .set (p1, Triangle3 .normal (p2, p1, p6, normal));  // back  
-	
-					this .valid = true;
+					var points = this .points;
+
+					ViewVolume .unProjectPointMatrix (x1, y1, 0, matrix, viewport, points [0]),
+					ViewVolume .unProjectPointMatrix (x2, y1, 0, matrix, viewport, points [1]),
+					ViewVolume .unProjectPointMatrix (x2, y2, 0, matrix, viewport, points [2]),
+					ViewVolume .unProjectPointMatrix (x1, y2, 0, matrix, viewport, points [3]),
+					ViewVolume .unProjectPointMatrix (x1, y1, 1, matrix, viewport, points [4]),
+					ViewVolume .unProjectPointMatrix (x2, y1, 1, matrix, viewport, points [5]);
+					ViewVolume .unProjectPointMatrix (x2, y2, 1, matrix, viewport, points [6]);
+					ViewVolume .unProjectPointMatrix (x1, y2, 1, matrix, viewport, points [7]);
+
+					var normals = this .normals;
+
+					Triangle3 .normal (points [0], points [1], points [2], normals [0]); // front
+					Triangle3 .normal (points [7], points [4], points [0], normals [1]); // left
+					Triangle3 .normal (points [6], points [2], points [1], normals [2]); // right
+					Triangle3 .normal (points [2], points [6], points [7], normals [3]); // top
+					Triangle3 .normal (points [1], points [0], points [4], normals [4]); // bottom
+					Triangle3 .normal (points [4], points [7], points [6], normals [5]); // back  
+
+					var planes = this .planes;
+
+					planes [0] .set (points [1], normals [0]); // front
+					planes [1] .set (points [4], normals [1]); // left
+					planes [2] .set (points [2], normals [2]); // right
+					planes [3] .set (points [6], normals [3]); // top
+					planes [4] .set (points [0], normals [4]); // bottom
+					planes [5] .set (points [7], normals [5]); // back  
+
+					this .edges .tainted = true;
+					this .valid          = true;
 				}
 				catch (error)
 				{
@@ -136,6 +206,33 @@ function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
 		getScissor: function ()
 		{
 			return this .scissor;
+		},
+		getEdges: function ()
+		{
+			// Return suitable edges for SAT theorem.
+
+			var edges = this .edges;
+
+			if (edges .tainted)
+			{
+				var points = this .points;
+
+				edges [0] .assign (points [0]) .subtract (points [1]);
+				edges [1] .assign (points [1]) .subtract (points [2]);
+				edges [2] .assign (points [2]) .subtract (points [3]);
+				edges [3] .assign (points [3]) .subtract (points [0]);
+
+				edges [4] .assign (points [0]) .subtract (points [4]);
+				edges [5] .assign (points [1]) .subtract (points [5]);
+				edges [6] .assign (points [2]) .subtract (points [6]);
+				edges [7] .assign (points [3]) .subtract (points [7]);
+
+				// Edges 8 - 11 are equal to edges 0 - 3.
+
+				edges .tainted = false;
+			}
+
+			return edges;
 		},
 		intersectsSphere: function (radius, center)
 		{
@@ -164,6 +261,75 @@ function (Line3, Plane3, Triangle3, Vector3, Vector4, Matrix4)
 
 			return true;
 		},
+		intersectsBox: (function ()
+		{
+			var points1 = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+		
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
+
+			var normals1 = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
+
+			var axes1 = [
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+				new Vector3 (0, 0, 0),
+			];
+
+			var axes = [ ];
+
+			for (var i = 0; i < 3 * 8; ++ i)
+				axes .push (new Vector3 (0, 0, 0));
+
+			return function (box)
+			{
+				// Get points.
+			
+				box .getPoints (points1);
+
+				var points2 = this .points;
+			
+				// Test the three planes spanned by the normal vectors of the faces of the box.
+			
+				if (SAT .isSeparated (box .getNormals (normals1), points1, points2))
+					return false;
+			
+				// Test the six planes spanned by the normal vectors of the faces of the view volume.
+			
+				if (SAT .isSeparated (this .normals, points1, points2))
+					return false;
+	
+				// Test the planes spanned by the edges of each object.
+			
+				box .getAxes (axes1);
+
+				var edges = this .getEdges ();
+
+				for (var i1 = 0; i1 < 3; ++ i1)
+				{
+					for (var i2 = 0; i2 < 8; ++ i2)
+						axes [i1 * 3 + i2] .assign (axes1 [i1]) .cross (edges [i2]);
+				}
+
+				if (SAT .isSeparated (axes, points1, points2))
+					return false;
+			
+				// Both boxes intersect.
+			
+				return true;
+			};
+		})(),
 	};
 
 	Object .assign (ViewVolume,

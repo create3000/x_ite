@@ -301,6 +301,7 @@ var X_ITE_TESTS = [
 	{ path: "Texturing/ColorMaterial.x3d" },
 	{ path: "Texturing/Felulet.x3d" },
 	{ path: "Texturing/MovieTexture.x3d" },
+	{ path: "Texturing/TextureCoordinateGenerator.x3d" },
 	{ path: "Texturing/film1.mp4" },
 	{ path: "Texturing/ubuntu.x3d" },
 	{ component: "Time" },

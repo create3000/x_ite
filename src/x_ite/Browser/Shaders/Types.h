@@ -46,6 +46,14 @@ struct x3d_MaterialParameters
 //uniform x3d_MaterialParameters x3d_FrontMaterial;  
 //uniform x3d_MaterialParameters x3d_BackMaterial;        
 
+struct x3d_TextureCoordinateGeneratorParameters  
+{   
+	mediump int   mode;
+	mediump float parameter [6];
+};
+
+//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [1];  
+
 struct x3d_ParticleParameters  
 {   
 	mediump int   id;

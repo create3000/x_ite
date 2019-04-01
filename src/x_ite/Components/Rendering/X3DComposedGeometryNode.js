@@ -178,7 +178,7 @@ function (X3DGeometryNode,
 			if (this .texCoordNode)
 				this .texCoordNode .addInterest ("requestRebuild", this);
 
-			this .setCurrentTexCoord (this .texCoordNode);
+			this .setTextureCoordinateGenerator (this .texCoordNode);
 		},
 		set_normal__: function ()
 		{

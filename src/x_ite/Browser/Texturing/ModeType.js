@@ -55,6 +55,7 @@ define (function ()
 
 	var ModeType =
 	{
+		NONE:                        i ++,
 		SPHERE:                      i ++,
 		CAMERASPACENORMAL:           i ++,
 		CAMERASPACEPOSITION:         i ++,
