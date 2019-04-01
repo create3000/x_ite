@@ -164,7 +164,7 @@ function (Fields,
 				else
 				{
 					bbox
-						.set (this .size_ .getValue (), this .center_ .getValue ()),
+						.set (this .size_ .getValue (), this .center_ .getValue ())
 						.multRight (renderObject .getModelViewMatrix () .get ());
 
 					this .visible = renderObject .getViewVolume () .intersectsBox (bbox);

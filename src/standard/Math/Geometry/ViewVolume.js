@@ -48,7 +48,6 @@
 
 
 define ([
-	"standard/Math/Geometry/Line3",
 	"standard/Math/Geometry/Plane3",
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
@@ -56,8 +55,7 @@ define ([
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithms/SAT",
 ],
-function (Line3,
-          Plane3,
+function (Plane3,
           Triangle3,
           Vector3,
           Vector4,
@@ -67,7 +65,7 @@ function (Line3,
 "use strict";
 
 	/*
-	 * p7 -------- p6
+	 * p7 -------- p6  far plane
 	 * | \         | \
 	 * | p3 --------- p2
 	 * |  |        |  |
@@ -75,7 +73,7 @@ function (Line3,
 	 * p4 |______ p5  |
 	 *  \ |         \ |
 	 *   \|          \|
-	 *    p0 -------- p1
+	 *    p0 -------- p1  near plane
 	 */
 
 	function ViewVolume (projectionMatrix, viewport, scissor)
@@ -125,7 +123,8 @@ function (Line3,
 			new Plane3 (Vector3 .Zero, Vector3 .Zero), // back  
 		];
 
-		this .set (projectionMatrix, viewport, scissor);
+		if (arguments .length)
+			this .set (projectionMatrix, viewport, scissor);
 	}
 
 	ViewVolume .prototype =
@@ -133,15 +132,7 @@ function (Line3,
 		constructor: ViewVolume,
 		set: (function ()
 		{
-			var
-				p1     = new Vector3 (0, 0, 0),
-				p2     = new Vector3 (0, 0, 0),
-				p3     = new Vector3 (0, 0, 0),
-				p4     = new Vector3 (0, 0, 0),
-				p5     = new Vector3 (0, 0, 0),
-				p6     = new Vector3 (0, 0, 0),
-				matrix = new Matrix4 (),
-				normal = new Vector3 (0, 0, 0);
+			var matrix = new Matrix4 ();
 
 			return function (projectionMatrix, viewport, scissor)
 			{
@@ -150,42 +141,52 @@ function (Line3,
 					this .viewport .assign (viewport);
 					this .scissor  .assign (scissor);
 	
-					var
-						x1 = scissor [0],
-						x2 = scissor [0] + scissor [2],
-						y1 = scissor [1],
-						y2 = scissor [1] + scissor [3];
-	
-					matrix .assign (projectionMatrix) .inverse ();
-	
 					var points = this .points;
 
-					ViewVolume .unProjectPointMatrix (x1, y1, 0, matrix, viewport, points [0]),
-					ViewVolume .unProjectPointMatrix (x2, y1, 0, matrix, viewport, points [1]),
-					ViewVolume .unProjectPointMatrix (x2, y2, 0, matrix, viewport, points [2]),
-					ViewVolume .unProjectPointMatrix (x1, y2, 0, matrix, viewport, points [3]),
-					ViewVolume .unProjectPointMatrix (x1, y1, 1, matrix, viewport, points [4]),
-					ViewVolume .unProjectPointMatrix (x2, y1, 1, matrix, viewport, points [5]);
-					ViewVolume .unProjectPointMatrix (x2, y2, 1, matrix, viewport, points [6]);
-					ViewVolume .unProjectPointMatrix (x1, y2, 1, matrix, viewport, points [7]);
+					var
+						p0 = points [0],
+						p1 = points [1],
+						p2 = points [2],
+						p3 = points [3],
+						p4 = points [4],
+						p5 = points [5],
+						p6 = points [6],
+						p7 = points [7];
+
+					var
+						x1 = scissor [0],
+						x2 = x1 + scissor [2],
+						y1 = scissor [1],
+						y2 = y1 + scissor [3];
+	
+					matrix .assign (projectionMatrix) .inverse ();
+
+					ViewVolume .unProjectPointMatrix (x1, y1, 0, matrix, viewport, p0),
+					ViewVolume .unProjectPointMatrix (x2, y1, 0, matrix, viewport, p1),
+					ViewVolume .unProjectPointMatrix (x2, y2, 0, matrix, viewport, p2),
+					ViewVolume .unProjectPointMatrix (x1, y2, 0, matrix, viewport, p3),
+					ViewVolume .unProjectPointMatrix (x1, y1, 1, matrix, viewport, p4),
+					ViewVolume .unProjectPointMatrix (x2, y1, 1, matrix, viewport, p5);
+					ViewVolume .unProjectPointMatrix (x2, y2, 1, matrix, viewport, p6);
+					ViewVolume .unProjectPointMatrix (x1, y2, 1, matrix, viewport, p7);
 
 					var normals = this .normals;
 
-					Triangle3 .normal (points [0], points [1], points [2], normals [0]); // front
-					Triangle3 .normal (points [7], points [4], points [0], normals [1]); // left
-					Triangle3 .normal (points [6], points [2], points [1], normals [2]); // right
-					Triangle3 .normal (points [2], points [6], points [7], normals [3]); // top
-					Triangle3 .normal (points [1], points [0], points [4], normals [4]); // bottom
-					Triangle3 .normal (points [4], points [7], points [6], normals [5]); // back  
+					Triangle3 .normal (p0, p1, p2, normals [0]); // front
+					Triangle3 .normal (p7, p4, p0, normals [1]); // left
+					Triangle3 .normal (p6, p2, p1, normals [2]); // right
+					Triangle3 .normal (p2, p6, p7, normals [3]); // top
+					Triangle3 .normal (p1, p0, p4, normals [4]); // bottom
+					Triangle3 .normal (p4, p7, p6, normals [5]); // back  
 
 					var planes = this .planes;
 
-					planes [0] .set (points [1], normals [0]); // front
-					planes [1] .set (points [4], normals [1]); // left
-					planes [2] .set (points [2], normals [2]); // right
-					planes [3] .set (points [6], normals [3]); // top
-					planes [4] .set (points [0], normals [4]); // bottom
-					planes [5] .set (points [7], normals [5]); // back  
+					planes [0] .set (p1, normals [0]); // front
+					planes [1] .set (p4, normals [1]); // left
+					planes [2] .set (p2, normals [2]); // right
+					planes [3] .set (p6, normals [3]); // top
+					planes [4] .set (p0, normals [4]); // bottom
+					planes [5] .set (p7, normals [5]); // back  
 
 					this .edges .tainted = true;
 					this .valid          = true;
