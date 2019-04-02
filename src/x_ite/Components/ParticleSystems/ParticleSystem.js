@@ -1401,8 +1401,9 @@ function (Fields,
 		
 					// Setup shader.
 	
-					context .geometryType  = this .shaderGeometryType;
-					context .colorMaterial = this .colorMaterial;
+					context .geometryType          = this .shaderGeometryType;
+					context .colorMaterial         = this .colorMaterial;
+					context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
 
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);

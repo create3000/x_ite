@@ -82,9 +82,18 @@ function (Fields,
 		{
 			this .addTexCoordToChannel (index, multiArray [0]);
 		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			this .setShaderUniformsToChannel (gl, shaderObject, 0);
+
+			for (var i = Math .min (1, shaderObject .x3d_MaxTextures), length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+				gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
+		},
+		setShaderUniformsToChannel: function (gl, shaderObject, channel)
+		{
+			gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [channel], 0);
+		},
 	});
 
 	return X3DTextureCoordinateNode;
 });
-
-

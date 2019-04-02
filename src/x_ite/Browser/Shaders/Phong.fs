@@ -32,7 +32,7 @@ uniform x3d_FogParameters x3d_Fog;
 varying float fogDepth; // fog depth
 varying vec4  C;        // color
 varying vec4  t;        // texCoord
-varying vec3  vN;       // normalized normal vector at this point on geometry
+varying vec3  vN;       // normal vector at this point on geometry
 varying vec3  v;        // point on geometry
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER

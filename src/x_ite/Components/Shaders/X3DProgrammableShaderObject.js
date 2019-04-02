@@ -68,32 +68,35 @@ function (Fields,
 	{
 		this .addType (X3DConstants .X3DProgrammableShaderObject);
 
-		this .x3d_ClipPlane             = [ ];
-		this .x3d_LightType             = [ ];
-		this .x3d_LightOn               = [ ];
-		this .x3d_LightColor            = [ ];
-		this .x3d_LightIntensity        = [ ];
-		this .x3d_LightAmbientIntensity = [ ];
-		this .x3d_LightAttenuation      = [ ];
-		this .x3d_LightLocation         = [ ];
-		this .x3d_LightDirection        = [ ];
-		this .x3d_LightBeamWidth        = [ ];
-		this .x3d_LightCutOffAngle      = [ ];
-		this .x3d_LightRadius           = [ ];
-		this .x3d_LightMatrix           = [ ];
-		this .x3d_ShadowIntensity       = [ ];
-		this .x3d_ShadowColor           = [ ];
-		this .x3d_ShadowBias            = [ ];
-		this .x3d_ShadowMatrix          = [ ];
-		this .x3d_ShadowMapSize         = [ ];
-		this .x3d_ShadowMap             = [ ];
+		this .x3d_ClipPlane                           = [ ];
+		this .x3d_LightType                           = [ ];
+		this .x3d_LightOn                             = [ ];
+		this .x3d_LightColor                          = [ ];
+		this .x3d_LightIntensity                      = [ ];
+		this .x3d_LightAmbientIntensity               = [ ];
+		this .x3d_LightAttenuation                    = [ ];
+		this .x3d_LightLocation                       = [ ];
+		this .x3d_LightDirection                      = [ ];
+		this .x3d_LightBeamWidth                      = [ ];
+		this .x3d_LightCutOffAngle                    = [ ];
+		this .x3d_LightRadius                         = [ ];
+		this .x3d_LightMatrix                         = [ ];
+		this .x3d_ShadowIntensity                     = [ ];
+		this .x3d_ShadowColor                         = [ ];
+		this .x3d_ShadowBias                          = [ ];
+		this .x3d_ShadowMatrix                        = [ ];
+		this .x3d_ShadowMapSize                       = [ ];
+		this .x3d_ShadowMap                           = [ ];
+		this .x3d_TextureCoordinateGeneratorMode      = [ ];
+		this .x3d_TextureCoordinateGeneratorParameter = [ ];
 
-		this .numClipPlanes   = 0;
-		this .fogNode         = null;
-		this .numGlobalLights = 0;
-		this .numLights       = 0;
-		this .lightNodes      = [ ];
-		this .textures        = new Map ();
+		this .numClipPlanes                  = 0;
+		this .fogNode                        = null;
+		this .numGlobalLights                = 0;
+		this .numLights                      = 0;
+		this .lightNodes                     = [ ];
+		this .numTextureCoordinateGenerators = 0;
+		this .textures                       = new Map ();
 	}
 
 	X3DProgrammableShaderObject .prototype =
@@ -198,6 +201,12 @@ function (Fields,
 			this .x3d_TextureType    = gl .getUniformLocation (program, "x3d_TextureType");
 			this .x3d_Texture2D      = this .getUniformLocation (gl, program, "x3d_Texture2D", "x3d_Texture");
 			this .x3d_CubeMapTexture = gl .getUniformLocation (program, "x3d_CubeMapTexture");
+
+			for (var i = 0; i < this .x3d_MaxTextures; ++ i)
+			{
+				this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
+				this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
+			}
 
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
 			this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
@@ -885,12 +894,13 @@ function (Fields,
 		setLocalUniforms: function (gl, context)
 		{
 			var
-				linePropertiesNode   = context .linePropertiesNode,
-				materialNode         = context .materialNode,
-				textureNode          = context .textureNode,
-				textureTransformNode = context .textureTransformNode,
-				modelViewMatrix      = context .modelViewMatrix,
-				shaderObjects        = context .shaderObjects;
+				linePropertiesNode    = context .linePropertiesNode,
+				materialNode          = context .materialNode,
+				textureNode           = context .textureNode,
+				textureTransformNode  = context .textureTransformNode,
+				textureCoordinateNode = context .textureCoordinateNode,
+				modelViewMatrix       = context .modelViewMatrix,
+				shaderObjects         = context .shaderObjects;
 
 			// Geometry type
 
@@ -960,19 +970,24 @@ function (Fields,
 					gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
 			}
 
+			this .numTextureCoordinateGenerators = 0;
+
 			if (textureNode)
 			{
 				textureNode .setShaderUniforms (gl, this, 0);
 				textureTransformNode .setShaderUniforms (gl, this);
+				textureCoordinateNode .setShaderUniforms (gl, this);
 			}
 			else
 			{
-				this .textureTypeArray [0] = 0;
+				this .textureTypeArray .fill (0);
+
 				gl .uniform1iv (this .x3d_TextureType, this .textureTypeArray);
 
 				if (this .getCustom ())
 				{
 					textureTransformNode .setShaderUniforms (gl, this);
+					textureCoordinateNode .setShaderUniforms (gl, this);
 				}
 			}
 

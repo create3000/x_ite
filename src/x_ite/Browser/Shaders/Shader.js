@@ -51,11 +51,13 @@ define ([
 	"text!x_ite/Browser/Shaders/Include/Shadow.h",
 	"text!x_ite/Browser/Shaders/Include/Pack.h",
 	"text!x_ite/Browser/Shaders/Types.h",
+	"x_ite/Browser/Texturing/ModeType",
 	"x_ite/DEBUG",
 ],
 function (Shadow,
           Pack,
           Types,
+          ModeType,
           DEBUG)
 {
 "use strict";
@@ -159,6 +161,18 @@ function (Shadow,
 			definitions += "#define x3d_TextureType2D              2\n";
 			definitions += "#define x3d_TextureType3D              3\n";
 			definitions += "#define x3d_TextureTypeCubeMapTexture  4\n";
+
+			definitions += "#define X3D_SPHERE                      " + ModeType .SPHERE                      + "\n";
+			definitions += "#define X3D_CAMERASPACENORMAL           " + ModeType .CAMERASPACENORMAL           + "\n";
+			definitions += "#define X3D_CAMERASPACEPOSITION         " + ModeType .CAMERASPACEPOSITION         + "\n";
+			definitions += "#define X3D_CAMERASPACEREFLECTIONVECTOR " + ModeType .CAMERASPACEREFLECTIONVECTOR + "\n";
+			definitions += "#define X3D_SPHERE_LOCAL                " + ModeType .SPHERE_LOCAL                + "\n";
+			definitions += "#define X3D_COORD                       " + ModeType .COORD                       + "\n";
+			definitions += "#define X3D_COORD_EYE                   " + ModeType .COORD_EYE                   + "\n";
+			definitions += "#define X3D_NOISE                       " + ModeType .NOISE                       + "\n";
+			definitions += "#define X3D_NOISE_EYE                   " + ModeType .NOISE_EYE                   + "\n";
+			definitions += "#define X3D_SPHERE_REFLECT              " + ModeType .SPHERE_REFLECT              + "\n";
+			definitions += "#define X3D_SPHERE_REFLECT_LOCAL        " + ModeType .SPHERE_REFLECT_LOCAL        + "\n";
 
 			// Legacy
 			definitions += "#define x3d_GeometryPoints  0\n";

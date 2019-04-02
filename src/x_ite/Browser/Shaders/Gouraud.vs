@@ -28,7 +28,10 @@ varying float fogDepth;   // fog depth
 varying vec4  frontColor; // color
 varying vec4  backColor;  // color
 varying vec4  t;          // texCoord
+varying vec3  vN;         // normal vector at this point on geometry
 varying vec3  v;          // point on geometry
+varying vec3  lN;         // normal vector at this point on geometry in local coordinates
+varying vec3  lV;         // point on geometry in local coordinates
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 varying float depth;
@@ -121,6 +124,9 @@ main ()
 	fogDepth = x3d_FogDepth;
 	t        = x3d_TextureMatrix [0] * x3d_TexCoord;
 	v        = p .xyz;
+	vN       = normalize (x3d_NormalMatrix * x3d_Normal);
+	lN       = x3d_Normal;
+	lV       = vec3 (x3d_Vertex);
 
 	gl_Position = x3d_ProjectionMatrix * p;
 
@@ -130,16 +136,15 @@ main ()
 
 	if (x3d_Lighting)
 	{
-		vec3 N = normalize (x3d_NormalMatrix * x3d_Normal);
 
-		frontColor = getMaterialColor (N, v, x3d_FrontMaterial);
+		frontColor = getMaterialColor (vN, v, x3d_FrontMaterial);
 
 		x3d_MaterialParameters backMaterial = x3d_FrontMaterial;
 
 		if (x3d_SeparateBackColor)
 			backMaterial = x3d_BackMaterial;
 
-		backColor = getMaterialColor (-N, v, backMaterial);
+		backColor = getMaterialColor (-vN, v, backMaterial);
 	}
 	else
 	{

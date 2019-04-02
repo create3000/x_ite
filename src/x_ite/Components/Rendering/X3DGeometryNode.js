@@ -108,25 +108,25 @@ function (Fields,
 
 		// Members
 
-		this .min                        = new Vector3 (0, 0, 0);
-		this .max                        = new Vector3 (0, 0, 0);
-		this .bbox                       = new Box3 (this .min, this .max, true);
-		this .solid                      = true;
-		this .geometryType               = 3;
-		this .flatShading                = undefined;
-		this .colorMaterial              = false;
-		this .attribNodes                = [ ];
-		this .attribs                    = [ ];
-		this .textureCoordinateGenerator = null; // For TextureCoordinateGenerator needed.
-		this .texCoordParams             = { min: new Vector3 (0, 0, 0) };
-		this .multiTexCoords             = [ ];
-		this .texCoords                  = X3DGeometryNode .createArray ();
-		this .fogDepths                  = X3DGeometryNode .createArray ();
-		this .colors                     = X3DGeometryNode .createArray ();
-		this .normals                    = X3DGeometryNode .createArray ();
-		this .flatNormals                = X3DGeometryNode .createArray ();
-		this .vertices                   = X3DGeometryNode .createArray ();
-		this .vertexCount                = 0;
+		this .min                   = new Vector3 (0, 0, 0);
+		this .max                   = new Vector3 (0, 0, 0);
+		this .bbox                  = new Box3 (this .min, this .max, true);
+		this .solid                 = true;
+		this .geometryType          = 3;
+		this .flatShading           = undefined;
+		this .colorMaterial         = false;
+		this .attribNodes           = [ ];
+		this .attribs               = [ ];
+		this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
+		this .texCoordParams        = { min: new Vector3 (0, 0, 0) };
+		this .multiTexCoords        = [ ];
+		this .texCoords             = X3DGeometryNode .createArray ();
+		this .fogDepths             = X3DGeometryNode .createArray ();
+		this .colors                = X3DGeometryNode .createArray ();
+		this .normals               = X3DGeometryNode .createArray ();
+		this .flatNormals           = X3DGeometryNode .createArray ();
+		this .vertices              = X3DGeometryNode .createArray ();
+		this .vertexCount           = 0;
 
 		// This methods are configured in transfer.
 		this .depth            = Function .prototype;
@@ -319,9 +319,12 @@ function (Fields,
 		{
 			return this .texCoords;
 		},
-		setTextureCoordinateGenerator: function (value)
+		setTextureCoordinate: function (value)
 		{
-			this .textureCoordinateGenerator = value;
+			if (value)
+				this .textureCoordinateNode = value;
+			else
+				this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();			
 		},
 		setNormals: function (value)
 		{
@@ -893,9 +896,10 @@ function (Fields,
 
 				// Setup shader.
 	
-				context .geometryType  = this .geometryType;
-				context .fogCoords     = this .fogCoords;
-				context .colorMaterial = this .colorMaterial;
+				context .geometryType          = this .geometryType;
+				context .fogCoords             = this .fogCoords;
+				context .colorMaterial         = this .colorMaterial;
+				context .textureCoordinateNode = this .textureCoordinateNode;
 
 				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);
@@ -1016,9 +1020,10 @@ function (Fields,
 	
 				// Setup shader.
 	
-				context .geometryType  = this .geometryType;
-				context .fogCoords     = this .fogCoords;
-				context .colorMaterial = this .colorMaterial;
+				context .geometryType          = this .geometryType;
+				context .fogCoords             = this .fogCoords;
+				context .colorMaterial         = this .colorMaterial;
+				context .textureCoordinateNode = this .textureCoordinateNode;
 
 				shaderNode .enable (gl);
 				shaderNode .setLocalUniforms (gl, context);

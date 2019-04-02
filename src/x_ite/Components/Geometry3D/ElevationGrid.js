@@ -201,7 +201,7 @@ function (Fields,
 			if (this .texCoordNode)
 				this .texCoordNode .addInterest ("requestRebuild", this);
 
-			this .setTextureCoordinateGenerator (this .texCoordNode);
+			this .setTextureCoordinate (this .texCoordNode);
 		},
 		set_normal__: function ()
 		{

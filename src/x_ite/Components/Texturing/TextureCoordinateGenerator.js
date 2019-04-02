@@ -53,7 +53,7 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Browsre/Texturing/ModeType",
+	"x_ite/Browser/Texturing/ModeType",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -70,7 +70,8 @@ function (Fields,
 
 		this .addType (X3DConstants .TextureCoordinateGenerator);
 
-		this .mode = ModeType .SPHERE;
+		this .mode      = ModeType .SPHERE;
+		this .parameter = new Float32Array (6);
 	}
 
 	TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
@@ -101,9 +102,11 @@ function (Fields,
 		{
 			X3DTextureCoordinateNode .prototype .initialize .call (this);
 
-			this .mode_ .addInterest ("set_mode__", this);
+			this .mode_      .addInterest ("set_mode__",      this);
+			this .parameter_ .addInterest ("set_parameter__", this);
 
 			this .set_mode__ ();
+			this .set_parameter__ ();
 		},
 		set_mode__: (function ()
 		{
@@ -129,6 +132,26 @@ function (Fields,
 					this .mode = ModeType .SPHERE;
 			};
 		})(),
+		set_parameter__: function ()
+		{
+			for (var i = 0, length = Math .min (6, this .parameter_ .length); i < length; ++ i)
+				this .parameter [i] = this .parameter_ [i];
+
+			this .parameter .fill (0, length);
+		},
+		init: function (multiArray)
+		{ },
+		get1Point: function (index, vector)
+		{ },
+		addTexCoordToChannel: function (index, array)
+		{ },
+		getTexCoord: function (array)
+		{ },
+		setShaderUniformsToChannel: function (gl, shaderObject, channel)
+		{
+			gl .uniform1i  (shaderObject .x3d_TextureCoordinateGeneratorMode [channel],      this .mode);
+			gl .uniform1fv (shaderObject .x3d_TextureCoordinateGeneratorParameter [channel], this .parameter);
+		},
 	});
 
 	return TextureCoordinateGenerator;

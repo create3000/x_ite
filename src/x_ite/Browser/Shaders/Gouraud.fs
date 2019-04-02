@@ -21,13 +21,18 @@ uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureT
 uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 
+uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];  
+
 uniform x3d_FogParameters x3d_Fog;
 
 varying float fogDepth;   // fog depth
 varying vec4  frontColor; // color
 varying vec4  backColor;  // color
 varying vec4  t;          // texCoord
+varying vec3  vN;         // normal vector at this point on geometry
 varying vec3  v;          // point on geometry
+varying vec3  lN;         // normal vector at this point on geometry in local coordinates
+varying vec3  lV;         // point on geometry in local coordinates
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
@@ -48,24 +53,88 @@ clip ()
 }
 
 vec4
+getTextureCoordinate (in vec4 t)
+{
+	int mode = x3d_TextureCoordinateGenerator [0] .mode;
+
+	if (mode == x3d_None)
+	{
+		return t;
+	}
+	else if (mode == X3D_SPHERE)
+	{
+		return vec4 (vN .x / 2.0 + 0.5, vN .y / 2.0 + 0.5, 0.0, 1.0);
+	}
+	else if (mode == X3D_CAMERASPACENORMAL)
+	{
+		return vec4 (vN, 1.0);
+	}
+	else if (mode == X3D_CAMERASPACEPOSITION)
+	{
+		return vec4 (v, 1.0);
+	}
+	else if (mode == X3D_CAMERASPACEREFLECTIONVECTOR)
+	{
+		return vec4 (reflect (normalize (v), -vN), 1.0);
+	}
+	else if (mode == X3D_SPHERE_LOCAL)
+	{
+		return vec4 (lN .x / 2.0 + 0.5, lN .y / 2.0 + 0.5, 0.0, 1.0);
+	}
+	else if (mode == X3D_COORD)
+	{
+		return vec4 (lV, 1.0);
+	}
+	else if (mode == X3D_COORD_EYE)
+	{
+		return vec4 (v, 1.0);
+	}
+	else if (mode == X3D_NOISE)
+	{
+		// TODO
+	}
+	else if (mode == X3D_NOISE_EYE)
+	{
+		// TODO
+	}
+	else if (mode == X3D_SPHERE_REFLECT)
+	{
+		float eta = x3d_TextureCoordinateGenerator [0] .parameter [0];
+
+		return vec4 (refract (normalize (v), -vN, eta), 1.0);
+	}
+	else if (mode == X3D_SPHERE_REFLECT_LOCAL)
+	{
+		float eta = x3d_TextureCoordinateGenerator [0] .parameter [0];
+		vec3  eye = vec3 (x3d_TextureCoordinateGenerator [0] .parameter [1], x3d_TextureCoordinateGenerator [0] .parameter [2], x3d_TextureCoordinateGenerator [0] .parameter [3]);
+
+		return vec4 (refract (normalize (lV - eye), -lN, eta), 1.0);
+	}
+
+	return t;
+}
+
+vec4
 getTextureColor ()
 {
+	vec4 texCoords = getTextureCoordinate (t);
+
 	if (x3d_TextureType [0] == x3d_TextureType2D)
 	{
 		if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
-			return texture2D (x3d_Texture2D [0], vec2 (t));
+			return texture2D (x3d_Texture2D [0], vec2 (texCoords));
 
 		// If dimension is x3d_Geometry2D the texCoords must be flipped.
-		return texture2D (x3d_Texture2D [0], vec2 (1.0 - t .s, t .t));
+		return texture2D (x3d_Texture2D [0], vec2 (1.0 - texCoords .s, texCoords .t));
 	}
 
  	if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)
 	{
 		if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
-			return textureCube (x3d_CubeMapTexture [0], vec3 (t));
+			return textureCube (x3d_CubeMapTexture [0], vec3 (texCoords));
 		
 		// If dimension is x3d_Geometry2D the texCoords must be flipped.
-		return textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - t .s, t .t, t .z));
+		return textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - texCoords .s, texCoords .t, texCoords .z));
 	}
  
 	return vec4 (1.0, 1.0, 1.0, 1.0);
@@ -114,7 +183,9 @@ main ()
 	if (x3d_TextureType [0] != x3d_None)
 	{
 		if (x3d_Lighting)
+		{
 			finalColor *= getTextureColor ();
+		}
 		else
 		{
 			if (x3d_ColorMaterial)
