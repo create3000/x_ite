@@ -22,6 +22,8 @@ varying vec4  C;        // color
 varying vec4  t;        // texCoord
 varying vec3  vN;       // normalized normal vector at this point on geometry
 varying vec3  v;        // point on geometry
+varying vec3  lN;       // normal vector at this point on geometry in local coordinates
+varying vec3  lV;       // point on geometry in local coordinates
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 varying float depth;
@@ -34,13 +36,13 @@ main ()
 
 	vec4 p = x3d_ModelViewMatrix * x3d_Vertex;
 
-	if (x3d_Lighting)
-		vN = x3d_NormalMatrix * x3d_Normal;
-
 	fogDepth = x3d_FogDepth;
 	C        = x3d_Color;
 	t        = x3d_TextureMatrix [0] * x3d_TexCoord;
+	vN       = x3d_NormalMatrix * x3d_Normal;
 	v        = p .xyz;
+	lN       = x3d_Normal;
+	lV       = vec3 (x3d_Vertex);
 
 	gl_Position = x3d_ProjectionMatrix * p;
 
