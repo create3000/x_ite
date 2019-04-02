@@ -86,7 +86,7 @@ function (Fields,
 		{
 			this .setShaderUniformsToChannel (gl, shaderObject, 0);
 
-			for (var i = Math .min (1, shaderObject .x3d_MaxTextures), length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+			for (var i = 1, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
 				gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
 		},
 		setShaderUniformsToChannel: function (gl, shaderObject, channel)

@@ -2,14 +2,17 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
   <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/TextureCoordinateGenerator.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Geospatial/GeoElevationGrid.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Types.h" Line="41" Column="30" />
-      <File FileName="src/standard/Math/Geometry/ViewVolume.js" Line="161" Column="2" />
-      <File FileName="src/standard/Math/Geometry/Box3.js" Line="527" Column="1" />
-      <File FileName="src/x_ite/Components/EnvironmentalSensor/VisibilitySensor.js" Line="169" Column="1" />
+      <File FileName="package.json" Line="11" Column="15" />
+      <File FileName="src/x_ite/Components/Texturing/TextureCoordinateGenerator.js" Line="125" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="1027" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Types.h" Line="52" Column="29" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="980" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/X3DTextureCoordinateNode.js" Line="91" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="25" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.vs" Line="35" Column="1" />
+      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js" Line="642" Column="40" />
+      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="31" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Phong.vs" Line="32" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

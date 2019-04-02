@@ -90,13 +90,12 @@ function (Fields,
 		this .x3d_TextureCoordinateGeneratorMode      = [ ];
 		this .x3d_TextureCoordinateGeneratorParameter = [ ];
 
-		this .numClipPlanes                  = 0;
-		this .fogNode                        = null;
-		this .numGlobalLights                = 0;
-		this .numLights                      = 0;
-		this .lightNodes                     = [ ];
-		this .numTextureCoordinateGenerators = 0;
-		this .textures                       = new Map ();
+		this .numClipPlanes   = 0;
+		this .fogNode         = null;
+		this .numGlobalLights = 0;
+		this .numLights       = 0;
+		this .lightNodes      = [ ];
+		this .textures        = new Map ();
 	}
 
 	X3DProgrammableShaderObject .prototype =
@@ -969,8 +968,6 @@ function (Fields,
 				if (this .getCustom ())
 					gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
 			}
-
-			this .numTextureCoordinateGenerators = 0;
 
 			if (textureNode)
 			{
