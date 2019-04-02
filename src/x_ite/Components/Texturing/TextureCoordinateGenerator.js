@@ -134,7 +134,7 @@ function (Fields,
 		})(),
 		set_parameter__: function ()
 		{
-			for (var i = 0, length = Math .min (6, this .parameter_ .length); i < length; ++ i)
+			for (var i = 0, length = Math .min (this .parameter .length, this .parameter_ .length); i < length; ++ i)
 				this .parameter [i] = this .parameter_ [i];
 
 			this .parameter .fill (0, length);
