@@ -53,9 +53,9 @@ clip ()
 }
 
 vec4
-getTextureCoordinate (in vec4 t)
+getTextureCoordinate (x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, in vec4 t)
 {
-	int mode = x3d_TextureCoordinateGenerator [0] .mode;
+	int mode = textureCoordinateGenerator .mode;
 
 	if (mode == x3d_None)
 	{
@@ -99,14 +99,14 @@ getTextureCoordinate (in vec4 t)
 	}
 	else if (mode == X3D_SPHERE_REFLECT)
 	{
-		float eta = x3d_TextureCoordinateGenerator [0] .parameter [0];
+		float eta = textureCoordinateGenerator .parameter [0];
 
 		return vec4 (refract (normalize (v), -vN, eta), 1.0);
 	}
 	else if (mode == X3D_SPHERE_REFLECT_LOCAL)
 	{
-		float eta = x3d_TextureCoordinateGenerator [0] .parameter [0];
-		vec3  eye = vec3 (x3d_TextureCoordinateGenerator [0] .parameter [1], x3d_TextureCoordinateGenerator [0] .parameter [2], x3d_TextureCoordinateGenerator [0] .parameter [3]);
+		float eta = textureCoordinateGenerator .parameter [0];
+		vec3  eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
 
 		return vec4 (refract (normalize (lV - eye), -lN, eta), 1.0);
 	}
@@ -117,7 +117,7 @@ getTextureCoordinate (in vec4 t)
 vec4
 getTextureColor ()
 {
-	vec4 texCoords = getTextureCoordinate (t);
+	vec4 texCoords = getTextureCoordinate (x3d_TextureCoordinateGenerator [0], t);
 
 	if (x3d_TextureType [0] == x3d_TextureType2D)
 	{

@@ -317,6 +317,7 @@ var X_ITE_TESTS = [
 	{ path: "images/logo.4.png" },
 	{ path: "images/logo.96.png" },
 	{ path: "images/lost_valley" },
+	{ path: "images/room" },
 	{ path: "images/skybox_texture.jpg" },
 	{ path: "images/test.png" },
 	{ path: "images/test.svg" },
