@@ -50,12 +50,14 @@
 define ([
 	"text!x_ite/Browser/Shaders/Include/Shadow.h",
 	"text!x_ite/Browser/Shaders/Include/Pack.h",
+	"text!x_ite/Browser/Shaders/Include/Perlin.h",
 	"text!x_ite/Browser/Shaders/Types.h",
 	"x_ite/Browser/Texturing/ModeType",
 	"x_ite/DEBUG",
 ],
 function (Shadow,
           Pack,
+          Perlin,
           Types,
           ModeType,
           DEBUG)
@@ -65,6 +67,7 @@ function (Shadow,
 	var includes = {
 		Shadow: Shadow,
 		Pack: Pack,
+		Perlin: Perlin,
 	};
 
 	var include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+).h"\s*$/;

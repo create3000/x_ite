@@ -1,18 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Shaders/Phong.fs">
     <Files>
-      <File FileName="package.json" Line="11" Column="15" />
-      <File FileName="src/x_ite/Components/Texturing/TextureCoordinateGenerator.js" Line="125" Column="1" />
-      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="1027" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Types.h" Line="52" Column="29" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="980" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/X3DTextureCoordinateNode.js" Line="91" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="25" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.vs" Line="35" Column="1" />
-      <File FileName="src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js" Line="642" Column="40" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="31" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.vs" Line="32" Column="5" />
+      <File FileName="package.json" Line="21" Column="28" />
+      <File FileName="src/x_ite/Components/Texturing/TextureCoordinateGenerator.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="89" Column="3" />
+      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="48" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

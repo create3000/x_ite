@@ -44,7 +44,7 @@ uniform float x3d_LogarithmicFarFactor1_2;
 varying float depth;
 #endif
 
-#pragma X3D include "Inlcude/Shadow.h"
+#pragma X3D include "Include/Shadow.h"
 
 void
 clip ()

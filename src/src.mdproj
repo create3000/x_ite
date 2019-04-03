@@ -693,6 +693,7 @@
     <None Include="x_ite\Browser\Picking\MatchCriterion.js" />
     <None Include="x_ite\Browser\RigidBodyPhysics\AppliedParametersType.js" />
     <None Include="x_ite\Browser\Texturing\ModeType.js" />
+    <None Include="x_ite\Browser\Shaders\Include\Perlin.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
