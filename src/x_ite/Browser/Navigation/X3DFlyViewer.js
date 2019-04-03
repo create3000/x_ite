@@ -679,7 +679,6 @@ function ($,
 				gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
 				gl .uniform1i (shaderNode .x3d_FogType,       0);
 				gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
-				gl .uniform1i (shaderNode .x3d_Lighting,      true);
 	
 				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
 				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
