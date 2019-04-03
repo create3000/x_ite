@@ -39,6 +39,8 @@ uniform float x3d_LogarithmicFarFactor1_2;
 varying float depth;
 #endif
 
+#pragma X3D include "Include/Perlin.h"
+
 void
 clip ()
 {
@@ -91,11 +93,17 @@ getTextureCoordinate (x3d_TextureCoordinateGeneratorParameters textureCoordinate
 	}
 	else if (mode == X3D_NOISE)
 	{
-		// TODO
+		vec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
+		vec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);
+
+		return vec4 (perlin (lV * scale + translation), 1.0);
 	}
 	else if (mode == X3D_NOISE_EYE)
 	{
-		// TODO
+		vec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
+		vec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);
+
+		return vec4 (perlin (v * scale + translation), 1.0);
 	}
 	else if (mode == X3D_SPHERE_REFLECT)
 	{
