@@ -1,5 +1,7 @@
 /* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/
 
+//https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
+
 #define M_PI 3.14159265358979323846
 
 float rand (vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }

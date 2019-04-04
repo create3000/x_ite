@@ -1,12 +1,9 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Shaders/Include/Perlin.h">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Texturing/TextureCoordinateGenerator.js">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Texturing/TextureCoordinateGenerator.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="44" Column="5" />
-      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="49" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Include/Perlin.h" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
