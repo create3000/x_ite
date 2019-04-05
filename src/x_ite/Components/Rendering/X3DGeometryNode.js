@@ -113,6 +113,7 @@ function (Fields,
 		this .attribs               = [ ];
 		this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
 		this .multiTexCoords        = [ ];
+		this .texCoords             = X3DGeometryNode .createArray ();
 		this .defaultTexCoords      = X3DGeometryNode .createArray ();
 		this .fogDepths             = X3DGeometryNode .createArray ();
 		this .colors                = X3DGeometryNode .createArray ();
@@ -301,6 +302,10 @@ function (Fields,
 		getMultiTexCoords: function ()
 		{
 			return this .multiTexCoords;
+		},
+		getTexCoords: function ()
+		{
+			return this .texCoords;
 		},
 		setTextureCoordinate: function (value)
 		{
@@ -816,6 +821,7 @@ function (Fields,
 			this .fogDepths        .length = 0;
 			this .colors           .length = 0;
 			this .multiTexCoords   .length = 0;
+			this .texCoords        .length = 0;
 			this .defaultTexCoords .length = 0;
 			this .normals          .length = 0;
 			this .flatNormals      .length = 0;
@@ -857,9 +863,6 @@ function (Fields,
 			for (var i = this .texCoordBuffers .length, length = this .multiTexCoords .length; i < length; ++ i)
 				this .texCoordBuffers .push (gl .createBuffer ());
 
-			// Only grow.
-			//this .texCoordBuffers .length = length;
-			
 			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
 			{
 				gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
