@@ -267,6 +267,17 @@ function (Fields,
 				delete this .disableColorAttribute;
 			}
 
+			if (this .x3d_TexCoord .some (function (location) { return location >= 0; }))
+			{
+				delete this .enableTexCoordAttribute;
+				delete this .disableTexCoordAttribute;
+			}
+			else
+			{
+				this .enableTexCoordAttribute  = Function .prototype;
+				this .disableTexCoordAttribute = Function .prototype;
+			}
+
 			if (this .x3d_Normal < 0)
 			{
 				this .enableNormalAttribute  = Function .prototype;
