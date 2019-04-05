@@ -197,8 +197,6 @@ function ($,
 
 			// Set texCoord.
 
-			texCoordArray .length = 0;
-
 			text .getMultiTexCoords () .push (texCoordArray);
 
 			// Triangle one and two.
@@ -249,8 +247,6 @@ function ($,
 			                     0, y, 0, 1,
 			                     w, 1, 0, 1,
 			                     0, 1, 0, 1);
-
-			texCoordArray .shrinkToFit ();
 
 			// Setup canvas.
 

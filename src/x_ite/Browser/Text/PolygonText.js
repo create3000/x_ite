@@ -120,8 +120,6 @@ function (Fields,
 	
 				// Set texCoords.
 	
-				texCoordArray .length = 0;
-	
 				text .getMultiTexCoords () .push (texCoordArray);
 	
 				this .getBBox () .getExtents (min, max);
@@ -204,8 +202,6 @@ function (Fields,
 						}
 					}
 				}
-
-				texCoordArray .shrinkToFit ();
 			};
 		})(),
 		getGlyphExtents: function (glyph, primitiveQuality, min, max)
