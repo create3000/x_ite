@@ -778,7 +778,7 @@ function (Fields,
 	
 					for (var i = 0, length = this .getBrowser () .getMaxTextures (); i < length; ++ i)
 					{
-						if (this .multiTexCoords [i] && this .multiTexCoords [i] .length !== 0)
+						if (this .multiTexCoords [i])
 							continue;
 
 						this .multiTexCoords [i] = this .buildTexCoords ();
@@ -835,9 +835,6 @@ function (Fields,
 
 			for (var i = this .attribBuffers .length, length = this .attribs .length; i < length; ++ i)
 				this .attribBuffers .push (gl .createBuffer ());
-
-			// Only grow.
-			//this .attribBuffers .length = length;
 			
 			for (var i = 0, length = this .attribs .length; i < length; ++ i)
 			{

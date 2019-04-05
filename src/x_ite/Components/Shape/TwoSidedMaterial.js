@@ -114,6 +114,8 @@ function (Fields,
 		{
 			X3DMaterialNode . prototype .initialize .call (this);
 
+			this .separateBackColor_ .addInterest ("set_transparent__", this);
+
 			this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
 			this .diffuseColor_     .addInterest ("set_diffuseColor__",     this);
 			this .specularColor_    .addInterest ("set_specularColor__",    this);

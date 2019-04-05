@@ -125,15 +125,7 @@ function (Fields,
 		},
 		bindAttributeLocations: function (gl, program)
 		{
-			var i = 0;
-
-			gl .bindAttribLocation (program, i ++, "x3d_Vertex");
-			gl .bindAttribLocation (program, i ++, "x3d_Normal");
-			gl .bindAttribLocation (program, i ++, "x3d_TexCoord");
-			gl .bindAttribLocation (program, i ++, "x3d_Color");
-
-			for (var t = 0, length = this .x3d_MaxTextures; t < length; ++ t)
-				gl .bindAttribLocation (program, i ++, "x3d_TexCoord" + t);
+			gl .bindAttribLocation (program, 0, "x3d_Vertex");
 		},
 		getDefaultUniforms: function ()
 		{
