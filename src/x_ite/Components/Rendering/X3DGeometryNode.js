@@ -114,7 +114,6 @@ function (Fields,
 		this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
 		this .multiTexCoords        = [ ];
 		this .texCoords             = X3DGeometryNode .createArray ();
-		this .defaultTexCoords      = X3DGeometryNode .createArray ();
 		this .fogDepths             = X3DGeometryNode .createArray ();
 		this .colors                = X3DGeometryNode .createArray ();
 		this .normals               = X3DGeometryNode .createArray ();
@@ -332,9 +331,9 @@ function (Fields,
 		},
 		buildTexCoords: function ()
 		{
-			var defaultTexCoords = this .defaultTexCoords;
+			var texCoords = this .texCoords;
 			
-			if (defaultTexCoords .length === 0)
+			if (texCoords .length === 0)
 			{
 				var
 					p         = this .getTexCoordParams (),
@@ -348,16 +347,16 @@ function (Fields,
 	
 				for (var i = 0, length = vertices .length; i < length; i += 4)
 				{
-					defaultTexCoords .push ((vertices [i + Sindex] - S) / Ssize,
-					                        (vertices [i + Tindex] - T) / Ssize,
-					                        0,
-					                        1);
+					texCoords .push ((vertices [i + Sindex] - S) / Ssize,
+					                 (vertices [i + Tindex] - T) / Ssize,
+					                 0,
+					                 1);
 				}
 
-				defaultTexCoords .shrinkToFit ();
+				texCoords .shrinkToFit ();
 			}
 
-			return defaultTexCoords;
+			return texCoords;
 		},
 		getTexCoordParams: (function ()
 		{
@@ -818,14 +817,13 @@ function (Fields,
 
 			this .flatShading = undefined;
 
-			this .fogDepths        .length = 0;
-			this .colors           .length = 0;
-			this .multiTexCoords   .length = 0;
-			this .texCoords        .length = 0;
-			this .defaultTexCoords .length = 0;
-			this .normals          .length = 0;
-			this .flatNormals      .length = 0;
-			this .vertices         .length = 0;
+			this .fogDepths      .length = 0;
+			this .colors         .length = 0;
+			this .multiTexCoords .length = 0;
+			this .texCoords      .length = 0;
+			this .normals        .length = 0;
+			this .flatNormals    .length = 0;
+			this .vertices       .length = 0;
 		},
 		transfer: function ()
 		{
