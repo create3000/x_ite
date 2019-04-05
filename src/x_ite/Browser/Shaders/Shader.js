@@ -165,17 +165,17 @@ function (Shadow,
 			definitions += "#define x3d_TextureType3D              3\n";
 			definitions += "#define x3d_TextureTypeCubeMapTexture  4\n";
 
-			definitions += "#define X3D_SPHERE                      " + ModeType .SPHERE                      + "\n";
-			definitions += "#define X3D_CAMERASPACENORMAL           " + ModeType .CAMERASPACENORMAL           + "\n";
-			definitions += "#define X3D_CAMERASPACEPOSITION         " + ModeType .CAMERASPACEPOSITION         + "\n";
-			definitions += "#define X3D_CAMERASPACEREFLECTIONVECTOR " + ModeType .CAMERASPACEREFLECTIONVECTOR + "\n";
-			definitions += "#define X3D_SPHERE_LOCAL                " + ModeType .SPHERE_LOCAL                + "\n";
-			definitions += "#define X3D_COORD                       " + ModeType .COORD                       + "\n";
-			definitions += "#define X3D_COORD_EYE                   " + ModeType .COORD_EYE                   + "\n";
-			definitions += "#define X3D_NOISE                       " + ModeType .NOISE                       + "\n";
-			definitions += "#define X3D_NOISE_EYE                   " + ModeType .NOISE_EYE                   + "\n";
-			definitions += "#define X3D_SPHERE_REFLECT              " + ModeType .SPHERE_REFLECT              + "\n";
-			definitions += "#define X3D_SPHERE_REFLECT_LOCAL        " + ModeType .SPHERE_REFLECT_LOCAL        + "\n";
+			definitions += "#define x3d_Sphere                      " + ModeType .SPHERE                      + "\n";
+			definitions += "#define x3d_CameraSpaceNormal           " + ModeType .CAMERASPACENORMAL           + "\n";
+			definitions += "#define x3d_CameraSpacePosition         " + ModeType .CAMERASPACEPOSITION         + "\n";
+			definitions += "#define x3d_CameraSpaceReflectionVector " + ModeType .CAMERASPACEREFLECTIONVECTOR + "\n";
+			definitions += "#define x3d_SphereLocal                 " + ModeType .SPHERE_LOCAL                + "\n";
+			definitions += "#define x3d_Coord                       " + ModeType .COORD                       + "\n";
+			definitions += "#define x3d_CoordEye                    " + ModeType .COORD_EYE                   + "\n";
+			definitions += "#define x3d_Noise                       " + ModeType .NOISE                       + "\n";
+			definitions += "#define x3d_NoiseEye                    " + ModeType .NOISE_EYE                   + "\n";
+			definitions += "#define x3d_SphereReflect               " + ModeType .SPHERE_REFLECT              + "\n";
+			definitions += "#define x3d_SphereReflectLocal          " + ModeType .SPHERE_REFLECT_LOCAL        + "\n";
 
 			// Legacy
 			definitions += "#define x3d_GeometryPoints  0\n";

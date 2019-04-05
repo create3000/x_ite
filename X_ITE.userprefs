@@ -1,6 +1,6 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/Texturing/TextureCoordinateGenerator.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Texturing/TextureCoordinateGenerator.js" Line="1" Column="1" />

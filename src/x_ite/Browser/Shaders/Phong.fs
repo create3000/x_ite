@@ -82,55 +82,55 @@ getTextureCoordinate (x3d_TextureCoordinateGeneratorParameters textureCoordinate
 	{
 		return t;
 	}
-	else if (mode == X3D_SPHERE)
+	else if (mode == x3d_Sphere)
 	{
 		return vec4 (vN .x / 2.0 + 0.5, vN .y / 2.0 + 0.5, 0.0, 1.0);
 	}
-	else if (mode == X3D_CAMERASPACENORMAL)
+	else if (mode == x3d_CameraSpaceNormal)
 	{
 		return vec4 (vN, 1.0);
 	}
-	else if (mode == X3D_CAMERASPACEPOSITION)
+	else if (mode == x3d_CameraSpacePosition)
 	{
 		return vec4 (v, 1.0);
 	}
-	else if (mode == X3D_CAMERASPACEREFLECTIONVECTOR)
+	else if (mode == x3d_CameraSpaceReflectionVector)
 	{
 		return vec4 (reflect (normalize (v), -vN), 1.0);
 	}
-	else if (mode == X3D_SPHERE_LOCAL)
+	else if (mode == x3d_SphereLocal)
 	{
 		return vec4 (lN .x / 2.0 + 0.5, lN .y / 2.0 + 0.5, 0.0, 1.0);
 	}
-	else if (mode == X3D_COORD)
+	else if (mode == x3d_Coord)
 	{
 		return vec4 (lV, 1.0);
 	}
-	else if (mode == X3D_COORD_EYE)
+	else if (mode == x3d_CoordEye)
 	{
 		return vec4 (v, 1.0);
 	}
-	else if (mode == X3D_NOISE)
+	else if (mode == x3d_Noise)
 	{
 		vec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
 		vec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);
 
 		return vec4 (perlin (lV * scale + translation), 1.0);
 	}
-	else if (mode == X3D_NOISE_EYE)
+	else if (mode == x3d_NoiseEye)
 	{
 		vec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
 		vec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);
 
 		return vec4 (perlin (v * scale + translation), 1.0);
 	}
-	else if (mode == X3D_SPHERE_REFLECT)
+	else if (mode == x3d_SphereReflect)
 	{
 		float eta = textureCoordinateGenerator .parameter [0];
 
 		return vec4 (refract (normalize (v), -vN, eta), 1.0);
 	}
-	else if (mode == X3D_SPHERE_REFLECT_LOCAL)
+	else if (mode == x3d_SphereReflectLocal)
 	{
 		float eta = textureCoordinateGenerator .parameter [0];
 		vec3  eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
