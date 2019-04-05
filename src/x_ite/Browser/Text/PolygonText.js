@@ -204,6 +204,8 @@ function (Fields,
 						}
 					}
 				}
+
+				texCoordArray .shrinkToFit ();
 			};
 		})(),
 		getGlyphExtents: function (glyph, primitiveQuality, min, max)

@@ -250,6 +250,8 @@ function ($,
 			                     w, 1, 0, 1,
 			                     0, 1, 0, 1);
 
+			texCoordArray .shrinkToFit ();
+
 			// Setup canvas.
 
 			cx .fillStyle = "rgba(255,255,255,0)";

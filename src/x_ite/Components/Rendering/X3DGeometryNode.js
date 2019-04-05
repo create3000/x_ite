@@ -330,7 +330,7 @@ function (Fields,
 		{
 			return this .vertices;
 		},
-		buildTexCoords: function (channel)
+		buildTexCoords: function ()
 		{
 			var defaultTexCoords = this .defaultTexCoords;
 			
@@ -353,11 +353,11 @@ function (Fields,
 					                        0,
 					                        1);
 				}
-	
+
 				defaultTexCoords .shrinkToFit ();
 			}
 
-			this .multiTexCoords [channel] = defaultTexCoords;
+			return defaultTexCoords;
 		},
 		getTexCoordParams: (function ()
 		{
@@ -727,15 +727,15 @@ function (Fields,
 			{
 				this .clear ();
 				this .build ();
-	
+
 				// Shrink arrays before transfer to graphics card.
-	
+
 				for (var i = 0, length = this .attribs .length; i < length; ++ i)
 					this .attribs [i] .shrinkToFit ();
-	
+
 				for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
 					this .multiTexCoords [i] .shrinkToFit ();
-		
+
 				this .fogDepths .shrinkToFit ();
 				this .colors    .shrinkToFit ();
 				this .normals   .shrinkToFit ();
@@ -779,13 +779,13 @@ function (Fields,
 	
 					for (var i = 0, length = this .getBrowser () .getMaxTextures (); i < length; ++ i)
 					{
-						if (this .multiTexCoords [i])
+						if (this .multiTexCoords [i] && this .multiTexCoords [i] .length !== 0)
 							continue;
-	
-						this .buildTexCoords (i);
+
+						this .multiTexCoords [i] = this .buildTexCoords ();
 					}
 				}
-	
+
 				// Upload normals or flat normals.
 	
 				this .set_shading__ (this .getBrowser () .getBrowserOptions () .Shading_);
