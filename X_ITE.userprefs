@@ -4,6 +4,9 @@
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Texturing/TextureCoordinateGenerator.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="178" Column="50" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="124" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Phong.fs" Line="124" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

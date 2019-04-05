@@ -28,7 +28,7 @@ uniform x3d_FogParameters x3d_Fog;
 varying float fogDepth;   // fog depth
 varying vec4  frontColor; // color
 varying vec4  backColor;  // color
-varying vec4  t;          // texCoord
+varying vec4  t0;         // texCoord
 varying vec3  vN;         // normal vector at this point on geometry
 varying vec3  v;          // point on geometry
 varying vec3  lN;         // normal vector at this point on geometry in local coordinates
@@ -125,7 +125,7 @@ getTextureCoordinate (x3d_TextureCoordinateGeneratorParameters textureCoordinate
 vec4
 getTextureColor ()
 {
-	vec4 texCoords = getTextureCoordinate (x3d_TextureCoordinateGenerator [0], t);
+	vec4 texCoords = getTextureCoordinate (x3d_TextureCoordinateGenerator [0], t0);
 
 	if (x3d_TextureType [0] == x3d_TextureType2D)
 	{

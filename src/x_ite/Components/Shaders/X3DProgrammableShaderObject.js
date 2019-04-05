@@ -89,6 +89,8 @@ function (Fields,
 		this .x3d_ShadowMap                           = [ ];
 		this .x3d_TextureCoordinateGeneratorMode      = [ ];
 		this .x3d_TextureCoordinateGeneratorParameter = [ ];
+		this .x3d_TextureCoordinateGeneratorParameter = [ ];
+		this .x3d_TexCoord                            = [ ];
 
 		this .numClipPlanes   = 0;
 		this .fogNode         = null;
@@ -123,10 +125,15 @@ function (Fields,
 		},
 		bindAttributeLocations: function (gl, program)
 		{
-			gl .bindAttribLocation (program, 3, "x3d_Color");
-			gl .bindAttribLocation (program, 2, "x3d_TexCoord");
-			gl .bindAttribLocation (program, 1, "x3d_Normal");
-			gl .bindAttribLocation (program, 0, "x3d_Vertex");
+			var i = 0;
+
+			gl .bindAttribLocation (program, i ++, "x3d_Vertex");
+			gl .bindAttribLocation (program, i ++, "x3d_Normal");
+			gl .bindAttribLocation (program, i ++, "x3d_TexCoord");
+			gl .bindAttribLocation (program, i ++, "x3d_Color");
+
+			for (var t = 0, length = this .x3d_MaxTextures; t < length; ++ t)
+				gl .bindAttribLocation (program, i ++, "x3d_TexCoord" + t);
 		},
 		getDefaultUniforms: function ()
 		{
@@ -216,9 +223,11 @@ function (Fields,
 
 			this .x3d_FogDepth = gl .getAttribLocation (program, "x3d_FogDepth");
 			this .x3d_Color    = gl .getAttribLocation (program, "x3d_Color");
-			this .x3d_TexCoord = gl .getAttribLocation (program, "x3d_TexCoord");
 			this .x3d_Normal   = gl .getAttribLocation (program, "x3d_Normal");
-			this .x3d_Vertex   = gl .getAttribLocation (program, "x3d_Vertex");	
+			this .x3d_Vertex   = gl .getAttribLocation (program, "x3d_Vertex");
+
+			for (var t = 0, length = this .x3d_MaxTextures; t < length; ++ t)
+				this .x3d_TexCoord [t] = this .getAttribLocation (gl, program, "x3d_TexCoord" + t, t ? "" : "x3d_TexCoord");
 
 			this .x3d_ParticleId          = gl .getUniformLocation (program, "x3d_Particle.id");
 			this .x3d_ParticleLife        = gl .getUniformLocation (program, "x3d_Particle.life");
@@ -258,17 +267,6 @@ function (Fields,
 				delete this .disableColorAttribute;
 			}
 
-			if (this .x3d_TexCoord < 0)
-			{
-				this .enableTexCoordAttribute  = Function .prototype;
-				this .disableTexCoordAttribute = Function .prototype;
-			}
-			else
-			{
-				delete this .enableTexCoordAttribute;
-				delete this .disableTexCoordAttribute;
-			}
-
 			if (this .x3d_Normal < 0)
 			{
 				this .enableNormalAttribute  = Function .prototype;
@@ -299,12 +297,40 @@ function (Fields,
 
 			// Look for depreciated location.
 
-			location = gl .getUniformLocation (program, depreciated);
+			if (depreciated)
+			{
+				location = gl .getUniformLocation (program, depreciated);
+	
+				if (location)
+					console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated, use »" + name + "«. See http://create3000.de/x_ite/custom-shaders/.");
+	
+				return location;
+			}
 
-			if (location)
-				console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated. See http://create3000.de/x_ite/custom-shaders/.");
+			return 0;
+		},
+		getAttribLocation: function (gl, program, name, depreciated)
+		{
+			// Legacy function to get uniform location.
 
-			return location;
+			var location = gl .getAttribLocation (program, name);
+
+			if (location >= 0)
+				return location;
+
+			// Look for depreciated location.
+
+			if (depreciated)
+			{
+				location = gl .getAttribLocation (program, depreciated);
+	
+				if (location >= 0)
+					console .error (this .getTypeName (), this .getName (), "Using attribute location name »" + depreciated + "« is depreciated, use »" + name + "«. See http://create3000.de/x_ite/custom-shaders/.");
+
+				return location;
+			}
+
+			return -1;
 		},
 		addShaderFields: function ()
 		{
@@ -1160,13 +1186,29 @@ function (Fields,
 		},
 		enableTexCoordAttribute: function (gl, texCoordBuffers)
 		{
-			gl .enableVertexAttribArray (this .x3d_TexCoord);
-			gl .bindBuffer (gl .ARRAY_BUFFER, texCoordBuffers [0]);
-			gl .vertexAttribPointer (this .x3d_TexCoord, 4, gl .FLOAT, false, 0, 0);
+			for (var t = 0, length = this .x3d_MaxTextures; t < length; ++ t)
+			{
+				var x3d_TexCoord = this .x3d_TexCoord [t];
+
+				if (x3d_TexCoord === -1)
+					continue;
+
+				gl .enableVertexAttribArray (x3d_TexCoord);
+				gl .bindBuffer (gl .ARRAY_BUFFER, texCoordBuffers [t]);
+				gl .vertexAttribPointer (x3d_TexCoord, 4, gl .FLOAT, false, 0, 0);
+			}
 		},
 		disableTexCoordAttribute: function (gl)
 		{
-			gl .disableVertexAttribArray (this .x3d_TexCoord);
+			for (var t = 0, length = this .x3d_MaxTextures; t < length; ++ t)
+			{
+				var x3d_TexCoord = this .x3d_TexCoord [t];
+
+				if (x3d_TexCoord === -1)
+					continue;
+
+				gl .disableVertexAttribArray (x3d_TexCoord);
+			}
 		},
 		enableNormalAttribute: function (gl, normalBuffer)
 		{

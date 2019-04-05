@@ -13,13 +13,14 @@ uniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise
 
 attribute float x3d_FogDepth;
 attribute vec4  x3d_Color;
-attribute vec4  x3d_TexCoord;
+attribute vec4  x3d_TexCoord0;
+attribute vec4  x3d_TexCoord1;
 attribute vec3  x3d_Normal;
 attribute vec4  x3d_Vertex;
 
 varying float fogDepth; // fog depth
 varying vec4  C;        // color
-varying vec4  t;        // texCoord
+varying vec4  t0;       // texCoord
 varying vec3  vN;       // normalized normal vector at this point on geometry
 varying vec3  v;        // point on geometry
 varying vec3  lN;       // normal vector at this point on geometry in local coordinates
@@ -38,7 +39,7 @@ main ()
 
 	fogDepth = x3d_FogDepth;
 	C        = x3d_Color;
-	t        = x3d_TextureMatrix [0] * x3d_TexCoord;
+	t0       = x3d_TextureMatrix [0] * x3d_TexCoord0;
 	vN       = x3d_NormalMatrix * x3d_Normal;
 	v        = p .xyz;
 	lN       = x3d_Normal;

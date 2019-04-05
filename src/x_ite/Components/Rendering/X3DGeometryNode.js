@@ -74,16 +74,10 @@ function (Fields,
 {
 "use strict";
 
-	const ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
-
-	const
-		point           = new Vector3 (0, 0, 0),
-		clipPoint       = new Vector3 (0, 0, 0),
-		modelViewMatrix = new Matrix4 (),
-		invMatrix       = new Matrix4 ();
+	var ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
 
 	// Box normals for bbox / line intersection.
-	const boxNormals = [
+	var boxNormals = [
 		new Vector3 (0,  0,  1), // front
 		new Vector3 (0,  0, -1), // back
 		new Vector3 (0,  1,  0), // top
@@ -118,9 +112,8 @@ function (Fields,
 		this .attribNodes           = [ ];
 		this .attribs               = [ ];
 		this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
-		this .texCoordParams        = { min: new Vector3 (0, 0, 0) };
 		this .multiTexCoords        = [ ];
-		this .texCoords             = X3DGeometryNode .createArray ();
+		this .defaultTexCoords      = X3DGeometryNode .createArray ();
 		this .fogDepths             = X3DGeometryNode .createArray ();
 		this .colors                = X3DGeometryNode .createArray ();
 		this .normals               = X3DGeometryNode .createArray ();
@@ -171,12 +164,6 @@ function (Fields,
 	X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DGeometryNode,
-		intersection: new Vector3 (0, 0, 0),
-		uvt: { u: 0, v: 0, t: 0 },
-		v0: new Vector3 (0, 0, 0),
-		v1: new Vector3 (0, 0, 0),
-		v2: new Vector3 (0, 0, 0),
-		normal: new Vector3 (0, 0, 0),
 		setup: function ()
 		{
 			X3DNode .prototype .setup .call (this);
@@ -315,10 +302,6 @@ function (Fields,
 		{
 			return this .multiTexCoords;
 		},
-		getTexCoords: function ()
-		{
-			return this .texCoords;
-		},
 		setTextureCoordinate: function (value)
 		{
 			if (value)
@@ -342,74 +325,84 @@ function (Fields,
 		{
 			return this .vertices;
 		},
-		buildTexCoords: function ()
+		buildTexCoords: function (channel)
 		{
-			var
-				p         = this .getTexCoordParams (),
-				min       = p .min,
-				Sindex    = p .Sindex,
-				Tindex    = p .Tindex,
-				Ssize     = p .Ssize,
-				S         = min [Sindex],
-				T         = min [Tindex],
-				texCoords = this .texCoords,
-				vertices  = this .vertices .getValue ();
-
-			for (var i = 0, length = vertices .length; i < length; i += 4)
+			var defaultTexCoords = this .defaultTexCoords;
+			
+			if (defaultTexCoords .length === 0)
 			{
-				texCoords .push ((vertices [i + Sindex] - S) / Ssize,
-				                 (vertices [i + Tindex] - T) / Ssize,
-				                 0,
-				                 1);
+				var
+					p         = this .getTexCoordParams (),
+					min       = p .min,
+					Sindex    = p .Sindex,
+					Tindex    = p .Tindex,
+					Ssize     = p .Ssize,
+					S         = min [Sindex],
+					T         = min [Tindex],
+					vertices  = this .vertices .getValue ();
+	
+				for (var i = 0, length = vertices .length; i < length; i += 4)
+				{
+					defaultTexCoords .push ((vertices [i + Sindex] - S) / Ssize,
+					                        (vertices [i + Tindex] - T) / Ssize,
+					                        0,
+					                        1);
+				}
+	
+				defaultTexCoords .shrinkToFit ();
 			}
 
-			this .multiTexCoords .push (texCoords);
+			this .multiTexCoords [channel] = defaultTexCoords;
 		},
-		getTexCoordParams: function ()
+		getTexCoordParams: (function ()
 		{
-			var
-				p     = this .texCoordParams,
-				bbox  = this .getBBox (),
-				size  = bbox .size,
-				Xsize = size .x,
-				Ysize = size .y,
-				Zsize = size .z;
+			var texCoordParams = { min: new Vector3 (0, 0, 0) };
 
-			p .min .assign (bbox .center) .subtract (size .divide (2));
-
-			if ((Xsize >= Ysize) && (Xsize >= Zsize))
+			return function ()
 			{
-				// X size largest
-				p .Ssize = Xsize; p .Sindex = 0;
-
-				if (Ysize >= Zsize)
-					p .Tindex = 1;
+				var
+					bbox  = this .getBBox (),
+					size  = bbox .size,
+					Xsize = size .x,
+					Ysize = size .y,
+					Zsize = size .z;
+	
+				texCoordParams .min .assign (bbox .center) .subtract (size .divide (2));
+	
+				if ((Xsize >= Ysize) && (Xsize >= Zsize))
+				{
+					// X size largest
+					texCoordParams .Ssize = Xsize; texCoordParams .Sindex = 0;
+	
+					if (Ysize >= Zsize)
+						texCoordParams .Tindex = 1;
+					else
+						texCoordParams .Tindex = 2;
+				}
+				else if ((Ysize >= Xsize) && (Ysize >= Zsize))
+				{
+					// Y size largest
+					texCoordParams .Ssize = Ysize; texCoordParams .Sindex = 1;
+	
+					if (Xsize >= Zsize)
+						texCoordParams .Tindex = 0;
+					else
+						texCoordParams .Tindex = 2;
+				}
 				else
-					p .Tindex = 2;
-			}
-			else if ((Ysize >= Xsize) && (Ysize >= Zsize))
-			{
-				// Y size largest
-				p .Ssize = Ysize; p .Sindex = 1;
-
-				if (Xsize >= Zsize)
-					p .Tindex = 0;
-				else
-					p .Tindex = 2;
-			}
-			else
-			{
-				// Z is the largest
-				p .Ssize = Zsize; p .Sindex = 2;
-
-				if (Xsize >= Ysize)
-					p .Tindex = 0;
-				else
-					p .Tindex = 1;
-			}
-
-			return p;
-		},
+				{
+					// Z is the largest
+					texCoordParams .Ssize = Zsize; texCoordParams .Sindex = 2;
+	
+					if (Xsize >= Ysize)
+						texCoordParams .Tindex = 0;
+					else
+						texCoordParams .Tindex = 1;
+				}
+	
+				return texCoordParams;
+			};
+		})(),
 		refineNormals: function (normalIndex, normals, creaseAngle)
 		{
 			if (creaseAngle === 0)
@@ -459,182 +452,199 @@ function (Fields,
 		{
 			// Apply sceen nodes transformation in place here.
 		},
-		intersectsLine: function (line, clipPlanes, modelViewMatrix_, intersections)
-		{
-			try
-			{
-				var intersected = false;
-
-				if (this .intersectsBBox (line))
-				{
-					this .transformLine   (line);                                       // Apply screen transformations from screen nodes.
-					this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
-
-					var
-						texCoords  = this .multiTexCoords [0] .getValue (),
-						normals    = this .normals .getValue (),
-						vertices   = this .vertices .getValue (),
-						uvt        = this .uvt,
-						v0         = this .v0,
-						v1         = this .v1,
-						v2         = this .v2;
-
-					for (var i = 0, length = this .vertexCount; i < length; i += 3)
-					{
-						var i4 = i * 4;
-
-						v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-						if (line .intersectsTriangle (v0, v1, v2, uvt))
-						{
-							// Get barycentric coordinates.
-
-							var
-								u = uvt .u,
-								v = uvt .v,
-								t = uvt .t;
-
-							// Determine vectors for X3DPointingDeviceSensors.
-
-							var point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
-							                         t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
-							                         t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
-
-							if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-								continue;
-
-							var texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
-							                            t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
-
-							var i3 = i * 3;
-
-							var normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-							                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-							                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
-
-							intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
-							intersected = true;
-						}
-					}
-				}
-
-				return intersected;
-			}
-			catch (error)
-			{
-				console .log (error);
-				return false;
-			}
-		},
-		intersectsBBox: function (line)
+		intersectsLine: (function ()
 		{
 			var
-				planes       = this .planes,
-				min          = this .min,
-				max          = this .max,
-				minX         = min .x,
-				maxX         = max .x,
-				minY         = min .y,
-				maxY         = max .y,
-				minZ         = min .z,
-				maxZ         = max .z,
-				intersection = this .intersection;
+				modelViewMatrix = new Matrix4 (),
+				uvt             = { u: 0, v: 0, t: 0 },
+				v0              = new Vector3 (0, 0, 0),
+				v1              = new Vector3 (0, 0, 0),
+				v2              = new Vector3 (0, 0, 0),
+				clipPoint       = new Vector3 (0, 0, 0);
 
-		   // front
-			if (planes [0] .intersectsLine (line, intersection))
+			return function (line, clipPlanes, modelViewMatrix_, intersections)
 			{
-				if (intersection .x >= minX && intersection .x <= maxX &&
-				    intersection .y >= minY && intersection .y <= maxY)
-					return true;
-			}
-
-			// back
-			if (planes [1] .intersectsLine (line, intersection))
-			{
-				if (intersection .x >= minX && intersection .x <= maxX &&
-				    intersection .y >= minY && intersection .y <= maxY)
-					return true;
-			}
-
-			// top
-			if (planes [2] .intersectsLine (line, intersection))
-			{
-				if (intersection .x >= minX && intersection .x <= maxX &&
-				    intersection .z >= minZ && intersection .z <= maxZ)
-					return true;
-			}
-
-			// bottom
-			if (planes [3] .intersectsLine (line, intersection))
-			{
-				if (intersection .x >= minX && intersection .x <= maxX &&
-				    intersection .z >= minZ && intersection .z <= maxZ)
-					return true;
-			}
-
-			// right
-			if (planes [4] .intersectsLine (line, intersection))
-			{
-				if (intersection .y >= minY && intersection .y <= maxY &&
-				    intersection .z >= minZ && intersection .z <= maxZ)
-					return true;
-			}
-
-			return false;
-		},
-		intersectsBox: function (box, clipPlanes, modelViewMatrix)
-		{
-			try
-			{
-				if (box .intersectsBox (this .bbox))
+				try
 				{
-					box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
-
-					this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
-
-					var
-						vertices = this .vertices .getValue (),
-						v0       = this .v0,
-						v1       = this .v1,
-						v2       = this .v2;
-		
-					for (var i = 0, length = this .vertexCount; i < length; i += 3)
+					var intersected = false;
+	
+					if (this .intersectsBBox (line))
 					{
-						var i4 = i * 4;
-		
-						v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-						if (box .intersectsTriangle (v0, v1, v2))
+						this .transformLine   (line);                                       // Apply screen transformations from screen nodes.
+						this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
+	
+						var
+							texCoords  = this .multiTexCoords [0] .getValue (),
+							normals    = this .normals .getValue (),
+							vertices   = this .vertices .getValue ();
+	
+						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 						{
-							if (clipPlanes .length)
+							var i4 = i * 4;
+	
+							v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+							v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
+							v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
+	
+							if (line .intersectsTriangle (v0, v1, v2, uvt))
 							{
-								if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
+								// Get barycentric coordinates.
+	
+								var
+									u = uvt .u,
+									v = uvt .v,
+									t = uvt .t;
+	
+								// Determine vectors for X3DPointingDeviceSensors.
+	
+								var point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+								                         t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
+								                         t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
+	
+								if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
 									continue;
-				
-								if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
-									continue;
-				
-								if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
-									continue;
+	
+								var texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
+								                            t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
+	
+								var i3 = i * 3;
+	
+								var normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
+								                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+								                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+	
+								intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
+								intersected = true;
 							}
-		
-						   return true;
 						}
-				   }
+					}
+	
+					return intersected;
 				}
+				catch (error)
+				{
+					console .log (error);
+					return false;
+				}
+			};
+		})(),
+		intersectsBBox: (function ()
+		{
+			var intersection = new Vector3 (0, 0, 0);
 
-			   return false;
-			}
-			catch (error)
+			return function (line)
 			{
-				console .log (error);
+				var
+					planes = this .planes,
+					min    = this .min,
+					max    = this .max,
+					minX   = min .x,
+					maxX   = max .x,
+					minY   = min .y,
+					maxY   = max .y,
+					minZ   = min .z,
+					maxZ   = max .z;
+	
+			   // front
+				if (planes [0] .intersectsLine (line, intersection))
+				{
+					if (intersection .x >= minX && intersection .x <= maxX &&
+					    intersection .y >= minY && intersection .y <= maxY)
+						return true;
+				}
+	
+				// back
+				if (planes [1] .intersectsLine (line, intersection))
+				{
+					if (intersection .x >= minX && intersection .x <= maxX &&
+					    intersection .y >= minY && intersection .y <= maxY)
+						return true;
+				}
+	
+				// top
+				if (planes [2] .intersectsLine (line, intersection))
+				{
+					if (intersection .x >= minX && intersection .x <= maxX &&
+					    intersection .z >= minZ && intersection .z <= maxZ)
+						return true;
+				}
+	
+				// bottom
+				if (planes [3] .intersectsLine (line, intersection))
+				{
+					if (intersection .x >= minX && intersection .x <= maxX &&
+					    intersection .z >= minZ && intersection .z <= maxZ)
+						return true;
+				}
+	
+				// right
+				if (planes [4] .intersectsLine (line, intersection))
+				{
+					if (intersection .y >= minY && intersection .y <= maxY &&
+					    intersection .z >= minZ && intersection .z <= maxZ)
+						return true;
+				}
+	
 				return false;
-			}
-		},
+			};
+		})(),
+		intersectsBox: (function ()
+		{
+			var
+				v0        = new Vector3 (0, 0, 0),
+				v1        = new Vector3 (0, 0, 0),
+				v2        = new Vector3 (0, 0, 0),
+				invMatrix = new Matrix4 (),
+				clipPoint = new Vector3 (0, 0, 0);
+
+			return function (box, clipPlanes, modelViewMatrix)
+			{
+				try
+				{
+					if (box .intersectsBox (this .bbox))
+					{
+						box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
+	
+						this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
+	
+						var vertices = this .vertices .getValue ();
+			
+						for (var i = 0, length = this .vertexCount; i < length; i += 3)
+						{
+							var i4 = i * 4;
+			
+							v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+							v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
+							v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
+	
+							if (box .intersectsTriangle (v0, v1, v2))
+							{
+								if (clipPlanes .length)
+								{
+									if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
+										continue;
+					
+									if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
+										continue;
+					
+									if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
+										continue;
+								}
+			
+							   return true;
+							}
+					   }
+					}
+	
+				   return false;
+				}
+				catch (error)
+				{
+					console .log (error);
+					return false;
+				}
+			};
+		})(),
 		set_live__: function ()
 		{
 			if (this .isLive () .getValue ())
@@ -642,133 +652,144 @@ function (Fields,
 			else
 				this .getBrowser () .getBrowserOptions () .Shading_ .removeInterest ("set_shading__", this);
 		},
-		set_shading__: function (shading)
+		set_shading__: (function ()
 		{
-			if (this .geometryType < 2)
-				return;
-			
-			var flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
+			var
+				v0     = new Vector3 (0, 0, 0),
+				v1     = new Vector3 (0, 0, 0),
+				v2     = new Vector3 (0, 0, 0),
+				normal = new Vector3 (0, 0, 0);
 
-			if (flatShading === this .flatShading)
-				return;
-
-			this .flatShading = flatShading;
-
-			// Generate flat normals if needed.
-
-			var gl = this .getBrowser () .getContext ();
-
-			if (flatShading)
+			return function (shading)
 			{
-				if (! this .flatNormals .length)
+				if (this .geometryType < 2)
+					return;
+				
+				var flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
+	
+				if (flatShading === this .flatShading)
+					return;
+	
+				this .flatShading = flatShading;
+	
+				// Generate flat normals if needed.
+	
+				var gl = this .getBrowser () .getContext ();
+	
+				if (flatShading)
 				{
-					var
-						cw          = this .frontFace === gl .CW,
-						flatNormals = this .flatNormals,
-						vertices    = this .vertices .getValue (),
-						v0          = this .v0,
-						v1          = this .v1,
-						v2          = this .v2,
-						normal      = this .normal;
-
-					for (var i = 0, length = vertices .length; i < length; i += 12)
+					if (! this .flatNormals .length)
 					{
-					   Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
-					                      v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
-					                      v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
-					                      normal);
-					   
-						if (cw)
-							normal .negate ();
-
-						flatNormals .push (normal .x, normal .y, normal .z,
-						                   normal .x, normal .y, normal .z,
-						                   normal .x, normal .y, normal .z);
+						var
+							cw          = this .frontFace === gl .CW,
+							flatNormals = this .flatNormals,
+							vertices    = this .vertices .getValue ();
+	
+						for (var i = 0, length = vertices .length; i < length; i += 12)
+						{
+						   Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
+						                      v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
+						                      v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
+						                      normal);
+						   
+							if (cw)
+								normal .negate ();
+	
+							flatNormals .push (normal .x, normal .y, normal .z,
+							                   normal .x, normal .y, normal .z,
+							                   normal .x, normal .y, normal .z);
+						}
+	
+						flatNormals .shrinkToFit ();
 					}
-
-					flatNormals .shrinkToFit ();
 				}
-			}
-
-			// Transfer normals.
-
-			gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-			gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
-		},
+	
+				// Transfer normals.
+	
+				gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+				gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
+			};
+		})(),
 		requestRebuild: function ()
 		{
 			this .rebuild_ .addEvent ();
 		},
-		rebuild: function ()
+		rebuild: (function ()
 		{
-			this .clear ();
-			this .build ();
+			var point = new Vector3 (0, 0, 0);
 
-			// Shrink arrays before transfer to graphics card.
-
-			for (var i = 0, length = this .attribs .length; i < length; ++ i)
-				this .attribs [i] .shrinkToFit ();
-
-			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
-				this .multiTexCoords [i] .shrinkToFit ();
-	
-			this .fogDepths .shrinkToFit ();
-			this .colors    .shrinkToFit ();
-			this .normals   .shrinkToFit ();
-			this .vertices  .shrinkToFit ();
-
-			// Determine bbox.
-
-			var
-				min      = this .min,
-				max      = this .max,
-				vertices = this .vertices .getValue ();
-
-			if (vertices .length)
+			return function ()
 			{
-				if (min .x === Number .POSITIVE_INFINITY)
-				{
-					for (var i = 0, length = vertices .length; i < length; i += 4)
-					{
-						point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
+				this .clear ();
+				this .build ();
 	
-						min .min (point);
-						max .max (point);
+				// Shrink arrays before transfer to graphics card.
+	
+				for (var i = 0, length = this .attribs .length; i < length; ++ i)
+					this .attribs [i] .shrinkToFit ();
+	
+				for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
+					this .multiTexCoords [i] .shrinkToFit ();
+		
+				this .fogDepths .shrinkToFit ();
+				this .colors    .shrinkToFit ();
+				this .normals   .shrinkToFit ();
+				this .vertices  .shrinkToFit ();
+	
+				// Determine bbox.
+	
+				var
+					min      = this .min,
+					max      = this .max,
+					vertices = this .vertices .getValue ();
+	
+				if (vertices .length)
+				{
+					if (min .x === Number .POSITIVE_INFINITY)
+					{
+						for (var i = 0, length = vertices .length; i < length; i += 4)
+						{
+							point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
+		
+							min .min (point);
+							max .max (point);
+						}
+					}
+	
+					this .bbox .setExtents (min, max);
+				}
+				else
+				{
+					this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
+				}
+	
+				this .bbox_changed_ .addEvent ();
+	
+				// Generate texCoord if needed.
+	
+				if (this .geometryType > 1)
+				{
+					for (var i = 0; i < 5; ++ i)
+						this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+	
+					for (var i = 0, length = this .getBrowser () .getMaxTextures (); i < length; ++ i)
+					{
+						if (this .multiTexCoords [i])
+							continue;
+	
+						this .buildTexCoords (i);
 					}
 				}
-
-				this .bbox .setExtents (min, max);
-			}
-			else
-			{
-				this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
-			}
-
-			this .bbox_changed_ .addEvent ();
-
-			// Generate texCoord if needed.
-
-			if (this .geometryType > 1)
-			{
-				for (var i = 0; i < 5; ++ i)
-					this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-
-				if (this .multiTexCoords .length === 0)
-				{
-					this .buildTexCoords ();
 	
-					this .texCoords .shrinkToFit ();
-				}
-			}
-
-			// Upload normals or flat normals.
-
-			this .set_shading__ (this .getBrowser () .getBrowserOptions () .Shading_);
-
-			// Upload arrays.
-
-			this .transfer ();
-		},
+				// Upload normals or flat normals.
+	
+				this .set_shading__ (this .getBrowser () .getBrowserOptions () .Shading_);
+	
+				// Upload arrays.
+	
+				this .transfer ();
+			};
+		})(),
 		clear: function ()
 		{
 			// BBox
@@ -792,13 +813,13 @@ function (Fields,
 
 			this .flatShading = undefined;
 
-			this .fogDepths      .length = 0;
-			this .colors         .length = 0;
-			this .multiTexCoords .length = 0;
-			this .texCoords      .length = 0;
-			this .normals        .length = 0;
-			this .flatNormals    .length = 0;
-			this .vertices       .length = 0;
+			this .fogDepths        .length = 0;
+			this .colors           .length = 0;
+			this .multiTexCoords   .length = 0;
+			this .defaultTexCoords .length = 0;
+			this .normals          .length = 0;
+			this .flatNormals      .length = 0;
+			this .vertices         .length = 0;
 		},
 		transfer: function ()
 		{
