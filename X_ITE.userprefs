@@ -3,12 +3,12 @@
   <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="89" Column="55" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Layout/ScreenText.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Texturing/X3DTextureTransformNode.js" Line="71" Column="25" />
-      <File FileName="src/x_ite/Components/Texturing/X3DTextureCoordinateNode.js" Line="86" Column="4" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.vs" Line="10" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/X3DTextureTransformNode.js" Line="91" Column="5" />
+      <File FileName="src/x_ite/Components/Texturing/MultiTextureTransform.js" Line="134" Column="37" />
+      <File FileName="src/x_ite/Components/Texturing/MultiTextureCoordinate.js" Line="178" Column="1" />
+      <File FileName="src/x_ite/Components/Texturing/X3DTextureCoordinateNode.js" Line="90" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

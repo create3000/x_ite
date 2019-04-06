@@ -139,14 +139,18 @@ function (Fields,
 
 			this .parameter .fill (0, length);
 		},
-		init: function (multiArray)
-		{ },
 		get1Point: function (index, vector)
-		{ },
+		{
+			return vector;
+		},
 		addTexCoordToChannel: function (index, array)
-		{ },
+		{
+			array .push (0, 0, 0, 1);
+		},
 		getTexCoord: function (array)
-		{ },
+		{
+			return arrray;
+		},
 		setShaderUniformsToChannel: function (gl, shaderObject, channel)
 		{
 			gl .uniform1i  (shaderObject .x3d_TextureCoordinateGeneratorMode [channel],      this .mode);
