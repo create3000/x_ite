@@ -53,12 +53,14 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureTransformNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureTransformNode, 
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
@@ -67,6 +69,8 @@ function (Fields,
 		X3DTextureTransformNode .call (this, executionContext);
 
 		this .addType (X3DConstants .MultiTextureTransform);
+
+		this .textureTransformNodes = [ ];
 	}
 
 	MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
@@ -87,6 +91,61 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "textureTransform";
+		},
+		initialize: function ()
+		{
+			X3DTextureTransformNode .prototype .initialize .call (this);
+
+			this .textureTransform_ .addInterest ("set_textureTransform_", this);
+
+			this .set_textureTransform__ ();
+		},
+		set_textureTransform__: function ()
+		{
+			var textureTransformNodes = this .textureTransformNodes;
+
+			for (var i = 0, length = textureTransformNodes .length; i < length; ++ i)
+				textureTransformNodes [i] .removeInterest ("addNodeEvent", this);
+
+			textureTransformNodes .length = 0;
+
+			for (var i = 0, length = this .texCoord_ .length; i < length; ++ i)
+			{
+				var node = this .texCoord_ [i];
+
+				if (X3DCast (X3DConstants .MultiTextureTransform, node))
+					continue;
+
+				var textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, node);
+
+				if (textureTransformNode)
+					textureTransformNodes .push (textureTransformNode);
+			}
+
+			for (var i = 0, length = textureTransformNodes .length; i < length; ++ i)
+				textureTransformNodes [i] .addInterest ("addNodeEvent", this);
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			var
+				textureTransformNodes = this .textureTransformNodes,
+				length                = Math .min (shaderObject .x3d_MaxTextures, textureTransformNodes .length);
+
+			for (var i = 0; i < length; ++ i)
+				textureTransformNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
+
+			if (length)
+			{
+				var last = length - 1;
+
+				for (var i = length, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+					textureTransformNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
+			}
+			else
+			{
+				for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+					this .setShaderUniformsToChannel (gl, shaderObject, i);
+			}
 		},
 	});
 
