@@ -776,13 +776,15 @@ function (Fields,
 					for (var i = 0; i < 5; ++ i)
 						this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
 	
-					for (var i = 0, length = this .getBrowser () .getMaxTextures (); i < length; ++ i)
-					{
-						if (this .multiTexCoords [i])
-							continue;
+					if (this .multiTexCoords .length === 0)
+						this .multiTexCoords .push (this .buildTexCoords ());
 
-						this .multiTexCoords [i] = this .buildTexCoords ();
-					}
+					var last = this .multiTexCoords .length - 1;
+
+					for (var i = this .multiTexCoords .length, length = this .getBrowser () .getMaxTextures (); i < length; ++ i)
+						this .multiTexCoords [i] = this .multiTexCoords [last];
+
+					this .multiTexCoords .length = length;
 				}
 
 				// Upload normals or flat normals.
