@@ -3,7 +3,7 @@
 precision mediump float;
 precision mediump int;
 
-uniform mat4 x3d_TextureMatrix [1];
+uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform mat3 x3d_NormalMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;

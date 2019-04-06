@@ -81,7 +81,12 @@ function (X3DAppearanceChildNode,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix, false, this .matrixArray);
+			for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+				this .setShaderUniformsToChannel (gl, shaderObject, i);
+		},
+		setShaderUniformsToChannel: function (gl, shaderObject, i)
+		{
+			gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, this .matrixArray);
 		},
 	});
 

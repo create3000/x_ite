@@ -91,6 +91,7 @@ function (Fields,
 		this .x3d_TextureCoordinateGeneratorParameter = [ ];
 		this .x3d_TextureCoordinateGeneratorParameter = [ ];
 		this .x3d_TexCoord                            = [ ];
+		this .x3d_TextureMatrix                       = [ ];
 
 		this .numClipPlanes   = 0;
 		this .fogNode         = null;
@@ -210,8 +211,10 @@ function (Fields,
 			this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
 			this .x3d_ModelViewMatrix   = gl .getUniformLocation (program, "x3d_ModelViewMatrix");
 			this .x3d_NormalMatrix      = gl .getUniformLocation (program, "x3d_NormalMatrix");
-			this .x3d_TextureMatrix     = gl .getUniformLocation (program, "x3d_TextureMatrix");
 			this .x3d_CameraSpaceMatrix = gl .getUniformLocation (program, "x3d_CameraSpaceMatrix");
+
+			for (var i = 0; i < this .x3d_MaxTextures; ++ i)
+				this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
 
 			this .x3d_FogDepth = gl .getAttribLocation (program, "x3d_FogDepth");
 			this .x3d_Color    = gl .getAttribLocation (program, "x3d_Color");

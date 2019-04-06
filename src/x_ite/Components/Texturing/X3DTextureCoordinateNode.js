@@ -84,14 +84,12 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			this .setShaderUniformsToChannel (gl, shaderObject, 0);
-
-			for (var i = 1, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-				gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
+			for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+				this .setShaderUniformsToChannel (gl, shaderObject, i);
 		},
-		setShaderUniformsToChannel: function (gl, shaderObject, channel)
+		setShaderUniformsToChannel: function (gl, shaderObject, i)
 		{
-			gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [channel], 0);
+			gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
 		},
 	});
 
