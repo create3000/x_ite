@@ -565,7 +565,9 @@ function (X3DBindableNode,
 						this .drawCube (renderObject);
 				}
 				catch (error)
-				{ }
+				{
+					console .log (error);
+				}
 			};
 		})(),
 		drawSphere: function (renderObject)
@@ -635,16 +637,15 @@ function (X3DBindableNode,
 	
 				// Uniforms
 	
-				gl .uniform1i (shaderNode .x3d_FogType,       0);
-				gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
-				gl .uniform1i (shaderNode .x3d_Lighting,      false);
+				gl .uniform1i (shaderNode .x3d_FogType,                            0);
+				gl .uniform1i (shaderNode .x3d_ColorMaterial,                      false);
+				gl .uniform1i (shaderNode .x3d_Lighting,                           false);
+				gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
+				gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
 
-				for (var i = 0, length = shaderNode .x3d_MaxTextures; i < length; ++ i)
-					gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [i], 0);
-
-				gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix,    false, textureMatrixArray);
-				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
 	
 				// Draw.
 	
@@ -665,7 +666,7 @@ function (X3DBindableNode,
 		{
 			if (texture && texture .checkLoadState () === X3DConstants .COMPLETE_STATE)
 			{
-				texture .setShaderUniforms (gl, shaderNode, 0);
+				texture .setShaderUniforms (gl, shaderNode);
 
 				if (texture .transparent_ .getValue ())
 					gl .enable (gl .BLEND);

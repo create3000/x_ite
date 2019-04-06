@@ -197,6 +197,8 @@ function ($,
 
 			// Set texCoord.
 
+			texCoordArray .length = 0;
+
 			text .getMultiTexCoords () .push (texCoordArray);
 
 			// Triangle one and two.

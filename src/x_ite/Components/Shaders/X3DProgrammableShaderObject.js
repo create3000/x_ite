@@ -89,7 +89,9 @@ function (Fields,
 		this .x3d_ShadowMap                           = [ ];
 		this .x3d_TextureCoordinateGeneratorMode      = [ ];
 		this .x3d_TextureCoordinateGeneratorParameter = [ ];
-		this .x3d_TextureCoordinateGeneratorParameter = [ ];
+		this .x3d_TextureType                         = [ ];
+		this .x3d_Texture2D                           = [ ];
+		this .x3d_CubeMapTexture                      = [ ];
 		this .x3d_TexCoord                            = [ ];
 		this .x3d_TextureMatrix                       = [ ];
 
@@ -117,8 +119,7 @@ function (Fields,
 			for (var i = 0, length = this .x3d_MaxClipPlanes; i < length; ++ i)
 				defaultClipPlanes .push (0, 0, -1, 0);
 
-			this .defaultClipPlanesArray = new Float32Array (defaultClipPlanes);
-			this .textureTypeArray       = new Int32Array (this .x3d_MaxTextures);
+			this .defaultClipPlanesArray  = new Float32Array (defaultClipPlanes);
 		},
 		hasUserDefinedFields: function ()
 		{
@@ -133,7 +134,8 @@ function (Fields,
 			// Get uniforms and attributes.
 
 			var
-				gl      = this .getBrowser () .getContext (),
+				browser = this .getBrowser (),
+				gl      = browser .getContext (),
 				program = this .getProgram ();
 
 			this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
@@ -197,14 +199,15 @@ function (Fields,
 			this .x3d_BackTransparency     = this .getUniformLocation (gl, program, "x3d_BackMaterial.transparency",     "x3d_BackTransparency");
 
 			this .x3d_NumTextures    = gl .getUniformLocation (program, "x3d_NumTextures");
-			this .x3d_TextureType    = gl .getUniformLocation (program, "x3d_TextureType");
-			this .x3d_Texture2D      = this .getUniformLocation (gl, program, "x3d_Texture2D", "x3d_Texture");
-			this .x3d_CubeMapTexture = gl .getUniformLocation (program, "x3d_CubeMapTexture");
 
 			for (var i = 0; i < this .x3d_MaxTextures; ++ i)
 			{
 				this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
 				this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
+
+				this .x3d_TextureType [i]    = gl .getUniformLocation (program, "x3d_TextureType[" + i + "]");
+				this .x3d_Texture2D [i]      = gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]");
+				this .x3d_CubeMapTexture [i] = gl .getUniformLocation (program, "x3d_CubeMapTexture[" + i + "]");
 			}
 
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
@@ -231,12 +234,11 @@ function (Fields,
 			// Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
 			gl .uniform1f  (this .x3d_LinewidthScaleFactor, 1);
-			gl .uniform1iv (this .x3d_TextureType,          new Int32Array ([0]));
-			gl .uniform1iv (this .x3d_Texture2D,            new Int32Array ([2])); // Set texture to active texture unit 2.
-			gl .uniform1iv (this .x3d_CubeMapTexture,       new Int32Array ([4])); // Set cube map texture to active texture unit 3.
-			gl .uniform1iv (gl .getUniformLocation (program, "x3d_ShadowMap"), new Int32Array (this .x3d_MaxLights) .fill (5)); // Set cube map texture to active texture unit 5, the whole uniform must be set at once.
-			
-			gl .uniform1i (this .x3d_NumTextures, 1);
+			gl .uniform1i  (this .x3d_NumTextures,          0);
+			gl .uniform1iv (this .x3d_Texture2D [0],        browser .getTexture2DUnits ());
+			gl .uniform1iv (this .x3d_CubeMapTexture [0],   browser .getCubeMapTextureUnits ());
+			gl .uniform1iv (this .x3d_ShadowMap [0],        new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
+
 
 			// Return true if valid, otherwise false.
 
@@ -1003,19 +1005,19 @@ function (Fields,
 
 			if (textureNode)
 			{
-				textureNode .setShaderUniforms (gl, this, 0);
-				textureTransformNode .setShaderUniforms (gl, this);
+				gl .uniform1i (this .x3d_NumTextures, textureNode .getSize ());
+
+				textureNode           .setShaderUniforms (gl, this);
+				textureTransformNode  .setShaderUniforms (gl, this);
 				textureCoordinateNode .setShaderUniforms (gl, this);
 			}
 			else
 			{
-				this .textureTypeArray .fill (0);
-
-				gl .uniform1iv (this .x3d_TextureType, this .textureTypeArray);
+				gl .uniform1i (this .x3d_NumTextures, 0);
 
 				if (this .getCustom ())
 				{
-					textureTransformNode .setShaderUniforms (gl, this);
+					textureTransformNode  .setShaderUniforms (gl, this);
 					textureCoordinateNode .setShaderUniforms (gl, this);
 				}
 			}

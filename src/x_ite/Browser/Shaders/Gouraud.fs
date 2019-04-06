@@ -125,26 +125,29 @@ getTextureCoordinate (x3d_TextureCoordinateGeneratorParameters textureCoordinate
 vec4
 getTextureColor ()
 {
-	vec4 texCoords = getTextureCoordinate (x3d_TextureCoordinateGenerator [0], t0);
-
-	if (x3d_TextureType [0] == x3d_TextureType2D)
+	if (x3d_NumTextures > 0)
 	{
-		if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
-			return texture2D (x3d_Texture2D [0], vec2 (texCoords));
+		vec4 texCoords = getTextureCoordinate (x3d_TextureCoordinateGenerator [0], t0);
+	
+		if (x3d_TextureType [0] == x3d_TextureType2D)
+		{
+			if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
+				return texture2D (x3d_Texture2D [0], vec2 (texCoords));
+	
+			// If dimension is x3d_Geometry2D the texCoords must be flipped.
+			return texture2D (x3d_Texture2D [0], vec2 (1.0 - texCoords .s, texCoords .t));
+		}
+	
+	 	if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)
+		{
+			if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
+				return textureCube (x3d_CubeMapTexture [0], vec3 (texCoords));
+			
+			// If dimension is x3d_Geometry2D the texCoords must be flipped.
+			return textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - texCoords .s, texCoords .t, texCoords .z));
+		}
+   }
 
-		// If dimension is x3d_Geometry2D the texCoords must be flipped.
-		return texture2D (x3d_Texture2D [0], vec2 (1.0 - texCoords .s, texCoords .t));
-	}
-
- 	if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)
-	{
-		if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
-			return textureCube (x3d_CubeMapTexture [0], vec3 (texCoords));
-		
-		// If dimension is x3d_Geometry2D the texCoords must be flipped.
-		return textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - texCoords .s, texCoords .t, texCoords .z));
-	}
- 
 	return vec4 (1.0, 1.0, 1.0, 1.0);
 }
 

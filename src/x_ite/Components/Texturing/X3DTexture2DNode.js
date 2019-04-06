@@ -219,12 +219,11 @@ function (Fields,
 
 			return output;
 		},
-		setShaderUniforms: function (gl, shaderObject, i)
+		setShaderUniformsToChannel: function (gl, shaderObject, i)
 		{
-			shaderObject .textureTypeArray [i] = 2;
-			gl .activeTexture (gl .TEXTURE2);
+			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture2DUnits () [i]);
 			gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-			gl .uniform1iv (shaderObject .x3d_TextureType, shaderObject .textureTypeArray); // TODO: Put this in X3DProgramableShaderObject
+			gl .uniform1i (shaderObject .x3d_TextureType [i], 2);
 		},
 	});
 

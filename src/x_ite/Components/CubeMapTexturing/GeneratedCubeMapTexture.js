@@ -159,7 +159,7 @@ function (Fields,
 
 				var
 					gl          = this .getBrowser () .getContext (),
-               defaultData = new Uint8Array (size * size * 4);
+					defaultData = new Uint8Array (size * size * 4);
 	
 				gl .bindTexture (this .getTarget (), this .getTexture ());
 	

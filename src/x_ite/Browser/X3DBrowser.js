@@ -156,7 +156,7 @@ function ($,
 			             "                Color depth: " + this .getColorDepth () + " bits\n" +
 			             "                Max clip planes: 6\n" +
 			             "                Max lights: 8\n" +
-			             "                Texture units: " + this .getMaxTextureUnits () + " / " + this .getMaxCombinedTextureUnits () + "\n" +
+			             "                Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
 			             "                Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
 			             "                Texture memory: " + this .getTextureMemory () + "\n" +
 			             "                Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +

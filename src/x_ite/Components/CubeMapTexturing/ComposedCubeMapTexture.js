@@ -64,8 +64,6 @@ function (Fields,
 {
 "use strict";
 
-   var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
-
 	function ComposedCubeMapTexture (executionContext)
 	{
 		X3DEnvironmentTextureNode .call (this, executionContext);
@@ -106,12 +104,7 @@ function (Fields,
 
 			// Upload default data.
 
-			var gl = this .getBrowser () .getContext ();
-
-			gl .bindTexture (this .getTarget (), this .getTexture ());
-
-			for (var i = 0; i < 6; ++ i)
-				gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+			this .clearTexture ();
 
 			// Initialize.
 
@@ -232,10 +225,7 @@ function (Fields,
 			}
 			else
 			{
-				for (var i = 0; i < 6; ++ i)
-				{
-					gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, 1, 1, false, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-				}
+				this .clearTexture ();
 			}
 
 			this .set_transparent__ ();

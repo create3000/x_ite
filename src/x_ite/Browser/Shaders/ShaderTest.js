@@ -112,8 +112,7 @@ function (TextureBuffer,
 		gl .uniform1f (shaderNode .x3d_Shininess,         0);
 		gl .uniform1f (shaderNode .x3d_Transparency,      0);
 
-		shaderNode .textureTypeArray [0] = 0;
-		gl .uniform1iv (shaderNode .x3d_TextureType, shaderNode .textureTypeArray);
+		gl .uniform1i (shaderNode .x3d_NumTextures, 0);
 
 		gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, new Float32Array (Camera .ortho (-1, 1, -1, 1, -1, 1, new Matrix4 ())));
 		gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, new Float32Array (new Matrix4 ()));
