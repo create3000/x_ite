@@ -95,6 +95,7 @@ getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureC
 	return getTexCoord (i);
 }
 
+#ifdef X3D_MULTI_TEXTURING
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 {
@@ -107,24 +108,24 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
 		// Get texture color.
 
-		vec4 texCoords    = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
+		vec4 texCoord     = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
 		vec4 textureColor = vec4 (1.0);
 	
 		if (x3d_TextureType [i] == x3d_TextureType2D)
 		{
 			if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
-				textureColor = texture2D (x3d_Texture2D [i], vec2 (texCoords));
+				textureColor = texture2D (x3d_Texture2D [i], vec2 (texCoord));
 			else
-				// If dimension is x3d_Geometry2D the texCoords must be flipped.
-				textureColor = texture2D (x3d_Texture2D [i], vec2 (1.0 - texCoords .s, texCoords .t));
+				// If dimension is x3d_Geometry2D the texCoord must be flipped.
+				textureColor = texture2D (x3d_Texture2D [i], vec2 (1.0 - texCoord .s, texCoord .t));
 		}
 	 	else if (x3d_TextureType [i] == x3d_TextureTypeCubeMapTexture)
 		{
 			if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
-				textureColor = textureCube (x3d_CubeMapTexture [i], vec3 (texCoords));
+				textureColor = textureCube (x3d_CubeMapTexture [i], vec3 (texCoord));
 			else
-				// If dimension is x3d_Geometry2D the texCoords must be flipped.
-				textureColor = textureCube (x3d_CubeMapTexture [i], vec3 (1.0 - texCoords .s, texCoords .t, texCoords .z));
+				// If dimension is x3d_Geometry2D the texCoord must be flipped.
+				textureColor = textureCube (x3d_CubeMapTexture [i], vec3 (1.0 - texCoord .s, texCoord .t, texCoord .z));
 		}
 
 		// Multi texturing
@@ -334,3 +335,32 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
 	return currentColor;
 }
+#else
+vec4
+getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
+{
+	// Get texture color.
+
+	vec4 texCoord     = texCoord0;
+	vec4 textureColor = vec4 (1.0);
+
+	if (x3d_TextureType [0] == x3d_TextureType2D)
+	{
+		if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
+			textureColor = texture2D (x3d_Texture2D [0], vec2 (texCoord));
+		else
+			// If dimension is x3d_Geometry2D the texCoord must be flipped.
+			textureColor = texture2D (x3d_Texture2D [0], vec2 (1.0 - texCoord .s, texCoord .t));
+	}
+ 	else if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)
+	{
+		if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
+			textureColor = textureCube (x3d_CubeMapTexture [0], vec3 (texCoord));
+		else
+			// If dimension is x3d_Geometry2D the texCoord must be flipped.
+			textureColor = textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - texCoord .s, texCoord .t, texCoord .z));
+	}
+
+	return diffuseColor * textureColor;
+}
+#endif

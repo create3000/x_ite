@@ -700,6 +700,7 @@
     <None Include="x_ite\Browser\Shaders\Include\ClipPlanes.h" />
     <None Include="x_ite\Browser\Shaders\Include\Fog.h" />
     <None Include="x_ite\Browser\Shaders\Include\Texture.h" />
+    <None Include="x_ite\Browser\Shaders\SamplerTest.fs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

@@ -154,6 +154,9 @@ function (ClipPlanes,
 			if (browser .getExtension ("WEBGL_depth_texture"))
 				constants += "#define X3D_DEPTH_TEXTURE\n";
 
+			if (browser .getMultiTexturing ())
+				constants += "#define X3D_MULTI_TEXTURING\n";
+
 			var definitions = "";
 
 			definitions += "#define x3d_None 0\n";

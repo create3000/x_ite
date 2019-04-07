@@ -60,6 +60,7 @@ define ([
 	"text!x_ite/Browser/Shaders/Phong.fs",
 	"text!x_ite/Browser/Shaders/Depth.vs",
 	"text!x_ite/Browser/Shaders/Depth.fs",
+	"text!x_ite/Browser/Shaders/SamplerTest.fs",
 	"x_ite/Browser/Shaders/ShaderTest",
 ],
 function (Shading,
@@ -74,6 +75,7 @@ function (Shading,
           phongFS,
           depthVS,
           depthFS,
+          samplerTest,
           ShaderTest)
 {
 "use strict";
@@ -89,6 +91,9 @@ function (Shading,
 		{
 			// Create shaders.
 	
+			// GL_ARB_gpu_shader5
+			this .multiTexturing = ShaderTest .compile (this .getContext (), samplerTest, "FRAGMENT_SHADER");
+
 			this .depthShader   = this .createShader ("DepthShader",     depthVS,     depthFS,     false);
 			this .pointShader   = this .createShader ("PointShader",     wireframeVS, pointSetFS,  false);
 			this .lineShader    = this .createShader ("WireframeShader", wireframeVS, wireframeFS, false);
@@ -105,6 +110,10 @@ function (Shading,
 	
 			this .phongShader  .isValid_ .addInterest ("set_phong_shader_valid__",  this);
 			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
+		},
+		getMultiTexturing: function ()
+		{
+			return this .multiTexturing;
 		},
 		getShadingLanguageVersion: function ()
 		{

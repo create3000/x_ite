@@ -11,8 +11,7 @@ varying vec3 vertex; // point on geometry
 void
 main ()
 {
-	// THERE IS A BUG with x3d_NumClipPlanes AND INT UNIFORMS for the first frame in on_size_allocate.
-	//clip ();
+	clip ();
 
 	gl_FragColor = color;
 }
