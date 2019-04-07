@@ -1,4 +1,4 @@
-/* X_ITE v4.4.7-717 */
+/* X_ITE v4.4.8a-718 */
 
 (function () {
 
@@ -24895,7 +24895,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.4.7";
+	return "4.4.8a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -43809,8 +43809,17 @@ function (Fields,
 		this .x3d_ShadowMatrix                        = [ ];
 		this .x3d_ShadowMapSize                       = [ ];
 		this .x3d_ShadowMap                           = [ ];
+		this .x3d_TextureType                         = [ ];
+		this .x3d_Texture2D                           = [ ];
+		this .x3d_CubeMapTexture                      = [ ];
+		this .x3d_MultiTextureMode                    = [ ];
+		this .x3d_MultiTextureAlphaMode               = [ ];
+		this .x3d_MultiTextureSource                  = [ ];
+		this .x3d_MultiTextureFunction                = [ ];
 		this .x3d_TextureCoordinateGeneratorMode      = [ ];
 		this .x3d_TextureCoordinateGeneratorParameter = [ ];
+		this .x3d_TexCoord                            = [ ];
+		this .x3d_TextureMatrix                       = [ ];
 
 		this .numClipPlanes   = 0;
 		this .fogNode         = null;
@@ -43836,8 +43845,7 @@ function (Fields,
 			for (var i = 0, length = this .x3d_MaxClipPlanes; i < length; ++ i)
 				defaultClipPlanes .push (0, 0, -1, 0);
 
-			this .defaultClipPlanesArray = new Float32Array (defaultClipPlanes);
-			this .textureTypeArray       = new Int32Array (this .x3d_MaxTextures);
+			this .defaultClipPlanesArray  = new Float32Array (defaultClipPlanes);
 		},
 		hasUserDefinedFields: function ()
 		{
@@ -43845,9 +43853,6 @@ function (Fields,
 		},
 		bindAttributeLocations: function (gl, program)
 		{
-			gl .bindAttribLocation (program, 3, "x3d_Color");
-			gl .bindAttribLocation (program, 2, "x3d_TexCoord");
-			gl .bindAttribLocation (program, 1, "x3d_Normal");
 			gl .bindAttribLocation (program, 0, "x3d_Vertex");
 		},
 		getDefaultUniforms: function ()
@@ -43855,7 +43860,8 @@ function (Fields,
 			// Get uniforms and attributes.
 
 			var
-				gl      = this .getBrowser () .getContext (),
+				browser = this .getBrowser (),
+				gl      = browser .getContext (),
 				program = this .getProgram ();
 
 			this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
@@ -43918,13 +43924,20 @@ function (Fields,
 			this .x3d_BackShininess        = this .getUniformLocation (gl, program, "x3d_BackMaterial.shininess",        "x3d_BackShininess");
 			this .x3d_BackTransparency     = this .getUniformLocation (gl, program, "x3d_BackMaterial.transparency",     "x3d_BackTransparency");
 
-			this .x3d_NumTextures    = gl .getUniformLocation (program, "x3d_NumTextures");
-			this .x3d_TextureType    = gl .getUniformLocation (program, "x3d_TextureType");
-			this .x3d_Texture2D      = this .getUniformLocation (gl, program, "x3d_Texture2D", "x3d_Texture");
-			this .x3d_CubeMapTexture = gl .getUniformLocation (program, "x3d_CubeMapTexture");
+			this .x3d_NumTextures       = gl .getUniformLocation (program, "x3d_NumTextures");
+			this .x3d_MultiTextureColor = gl .getUniformLocation (program, "x3d_MultiTextureColor");
 
 			for (var i = 0; i < this .x3d_MaxTextures; ++ i)
 			{
+				this .x3d_TextureType [i]    = gl .getUniformLocation (program, "x3d_TextureType[" + i + "]");
+				this .x3d_Texture2D [i]      = gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]");
+				this .x3d_CubeMapTexture [i] = gl .getUniformLocation (program, "x3d_CubeMapTexture[" + i + "]");
+
+				this .x3d_MultiTextureMode [i]      = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].mode");
+				this .x3d_MultiTextureAlphaMode [i] = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].alphaMode");
+				this .x3d_MultiTextureSource [i]    = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].source");
+				this .x3d_MultiTextureFunction [i]  = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].function");
+
 				this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
 				this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
 			}
@@ -43933,14 +43946,18 @@ function (Fields,
 			this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
 			this .x3d_ModelViewMatrix   = gl .getUniformLocation (program, "x3d_ModelViewMatrix");
 			this .x3d_NormalMatrix      = gl .getUniformLocation (program, "x3d_NormalMatrix");
-			this .x3d_TextureMatrix     = gl .getUniformLocation (program, "x3d_TextureMatrix");
 			this .x3d_CameraSpaceMatrix = gl .getUniformLocation (program, "x3d_CameraSpaceMatrix");
+
+			for (var i = 0; i < this .x3d_MaxTextures; ++ i)
+				this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
 
 			this .x3d_FogDepth = gl .getAttribLocation (program, "x3d_FogDepth");
 			this .x3d_Color    = gl .getAttribLocation (program, "x3d_Color");
-			this .x3d_TexCoord = gl .getAttribLocation (program, "x3d_TexCoord");
 			this .x3d_Normal   = gl .getAttribLocation (program, "x3d_Normal");
-			this .x3d_Vertex   = gl .getAttribLocation (program, "x3d_Vertex");	
+			this .x3d_Vertex   = gl .getAttribLocation (program, "x3d_Vertex");
+
+			for (var t = 0, length = this .x3d_MaxTextures; t < length; ++ t)
+				this .x3d_TexCoord [t] = this .getAttribLocation (gl, program, "x3d_TexCoord" + t, t ? "" : "x3d_TexCoord");
 
 			this .x3d_ParticleId          = gl .getUniformLocation (program, "x3d_Particle.id");
 			this .x3d_ParticleLife        = gl .getUniformLocation (program, "x3d_Particle.life");
@@ -43949,12 +43966,10 @@ function (Fields,
 			// Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
 			gl .uniform1f  (this .x3d_LinewidthScaleFactor, 1);
-			gl .uniform1iv (this .x3d_TextureType,          new Int32Array ([0]));
-			gl .uniform1iv (this .x3d_Texture2D,            new Int32Array ([2])); // Set texture to active texture unit 2.
-			gl .uniform1iv (this .x3d_CubeMapTexture,       new Int32Array ([4])); // Set cube map texture to active texture unit 3.
-			gl .uniform1iv (gl .getUniformLocation (program, "x3d_ShadowMap"), new Int32Array (this .x3d_MaxLights) .fill (5)); // Set cube map texture to active texture unit 5, the whole uniform must be set at once.
-			
-			gl .uniform1i (this .x3d_NumTextures, 1);
+			gl .uniform1i  (this .x3d_NumTextures,          0);
+			gl .uniform1iv (this .x3d_Texture2D [0],        browser .getTexture2DUnits ());
+			gl .uniform1iv (this .x3d_CubeMapTexture [0],   browser .getCubeMapTextureUnits ());
+			gl .uniform1iv (this .x3d_ShadowMap [0],        new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
 
 			// Return true if valid, otherwise false.
 
@@ -43980,15 +43995,15 @@ function (Fields,
 				delete this .disableColorAttribute;
 			}
 
-			if (this .x3d_TexCoord < 0)
-			{
-				this .enableTexCoordAttribute  = Function .prototype;
-				this .disableTexCoordAttribute = Function .prototype;
-			}
-			else
+			if (this .x3d_TexCoord .some (function (location) { return location >= 0; }))
 			{
 				delete this .enableTexCoordAttribute;
 				delete this .disableTexCoordAttribute;
+			}
+			else
+			{
+				this .enableTexCoordAttribute  = Function .prototype;
+				this .disableTexCoordAttribute = Function .prototype;
 			}
 
 			if (this .x3d_Normal < 0)
@@ -44021,12 +44036,40 @@ function (Fields,
 
 			// Look for depreciated location.
 
-			location = gl .getUniformLocation (program, depreciated);
+			if (depreciated)
+			{
+				location = gl .getUniformLocation (program, depreciated);
+	
+				if (location)
+					console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated, use »" + name + "«. See http://create3000.de/x_ite/custom-shaders/.");
+	
+				return location;
+			}
 
-			if (location)
-				console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated. See http://create3000.de/x_ite/custom-shaders/.");
+			return 0;
+		},
+		getAttribLocation: function (gl, program, name, depreciated)
+		{
+			// Legacy function to get uniform location.
 
-			return location;
+			var location = gl .getAttribLocation (program, name);
+
+			if (location >= 0)
+				return location;
+
+			// Look for depreciated location.
+
+			if (depreciated)
+			{
+				location = gl .getAttribLocation (program, depreciated);
+	
+				if (location >= 0)
+					console .error (this .getTypeName (), this .getName (), "Using attribute location name »" + depreciated + "« is depreciated, use »" + name + "«. See http://create3000.de/x_ite/custom-shaders/.");
+
+				return location;
+			}
+
+			return -1;
 		},
 		addShaderFields: function ()
 		{
@@ -44693,19 +44736,17 @@ function (Fields,
 
 			if (textureNode)
 			{
-				textureNode .setShaderUniforms (gl, this, 0);
-				textureTransformNode .setShaderUniforms (gl, this);
+				textureNode           .setShaderUniforms (gl, this);
+				textureTransformNode  .setShaderUniforms (gl, this);
 				textureCoordinateNode .setShaderUniforms (gl, this);
 			}
 			else
 			{
-				this .textureTypeArray .fill (0);
-
-				gl .uniform1iv (this .x3d_TextureType, this .textureTypeArray);
+				gl .uniform1i (this .x3d_NumTextures, 0);
 
 				if (this .getCustom ())
 				{
-					textureTransformNode .setShaderUniforms (gl, this);
+					textureTransformNode  .setShaderUniforms (gl, this);
 					textureCoordinateNode .setShaderUniforms (gl, this);
 				}
 			}
@@ -44882,13 +44923,31 @@ function (Fields,
 		},
 		enableTexCoordAttribute: function (gl, texCoordBuffers)
 		{
-			gl .enableVertexAttribArray (this .x3d_TexCoord);
-			gl .bindBuffer (gl .ARRAY_BUFFER, texCoordBuffers [0]);
-			gl .vertexAttribPointer (this .x3d_TexCoord, 4, gl .FLOAT, false, 0, 0);
+			var length = Math .min (this .x3d_MaxTextures, texCoordBuffers .length);
+
+			for (var i = 0; i < length; ++ i)
+			{
+				var x3d_TexCoord = this .x3d_TexCoord [i];
+
+				if (x3d_TexCoord === -1)
+					continue;
+
+				gl .enableVertexAttribArray (x3d_TexCoord);
+				gl .bindBuffer (gl .ARRAY_BUFFER, texCoordBuffers [i]);
+				gl .vertexAttribPointer (x3d_TexCoord, 4, gl .FLOAT, false, 0, 0);
+			}
 		},
 		disableTexCoordAttribute: function (gl)
 		{
-			gl .disableVertexAttribArray (this .x3d_TexCoord);
+			for (var i = 0, length = this .x3d_MaxTextures; i < length; ++ i)
+			{
+				var x3d_TexCoord = this .x3d_TexCoord [i];
+
+				if (x3d_TexCoord === -1)
+					continue;
+
+				gl .disableVertexAttribArray (x3d_TexCoord);
+			}
 		},
 		enableNormalAttribute: function (gl, normalBuffer)
 		{
@@ -45252,16 +45311,25 @@ function (Fields,
 });
 
 
-define('text!x_ite/Browser/Shaders/Include/Shadow.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Pack.h"\n\n#ifdef X3D_SHADOWS\n\nuniform sampler2D x3d_ShadowMap [x3d_MaxLights];\n\nfloat\ngetShadowDepth (const in int index, const in vec2 shadowCoord)\n{\n\t#if x3d_MaxLights > 0\n\tif (index == 0)\n\t\treturn unpack (texture2D (x3d_ShadowMap [0], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 1\n\tif (index == 1)\n\t\treturn unpack (texture2D (x3d_ShadowMap [1], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 2\n\tif (index == 2)\n\t\treturn unpack (texture2D (x3d_ShadowMap [2], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 3\n\tif (index == 3)\n\t\treturn unpack (texture2D (x3d_ShadowMap [3], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 4\n\tif (index == 4)\n\t\treturn unpack (texture2D (x3d_ShadowMap [4], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 5\n\tif (index == 5)\n\t\treturn unpack (texture2D (x3d_ShadowMap [5], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 6\n\tif (index == 6)\n\t\treturn unpack (texture2D (x3d_ShadowMap [6], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 7\n\tif (index == 7)\n\t\treturn unpack (texture2D (x3d_ShadowMap [7], shadowCoord));\n\t#endif\n\n\treturn 0.0;\n}\n\nfloat\ntexture2DCompare (const in int index, const in vec2 texCoord, const in float compare)\n{\n\treturn step (getShadowDepth (index, texCoord), compare);\n}\n\nfloat\ntexture2DShadowLerp (const in int index, const in vec2 texelSize, const in float shadowMapSize, const in vec2 texCoord, const in float compare)\n{\n\tconst vec2 offset = vec2 (0.0, 1.0);\n\n\tvec2 centroidTexCoord = floor (texCoord * shadowMapSize + 0.5) / shadowMapSize;\n\n\tfloat lb = texture2DCompare (index, centroidTexCoord + texelSize * offset .xx, compare);\n\tfloat lt = texture2DCompare (index, centroidTexCoord + texelSize * offset .xy, compare);\n\tfloat rb = texture2DCompare (index, centroidTexCoord + texelSize * offset .yx, compare);\n\tfloat rt = texture2DCompare (index, centroidTexCoord + texelSize * offset .yy, compare);\n\n\tvec2 f = fract (texCoord * shadowMapSize + 0.5);\n\n\tfloat a = mix (lb, lt, f.y);\n\tfloat b = mix (rb, rt, f.y);\n\tfloat c = mix (a, b, f.x);\n\n\treturn c;\n}\n\n//https://gist.github.com/tschw/da10c43c467ce8afd0c4\nvec2\ncubeToUVCompact (in vec3 v, const float texelSizeY)\n{\n\t// Compact layout:\n\t//\n\t// xzXZ\t\tChar: Axis\n\t// yyYY\t\tCase: Sign\n\n\t// Number of texels to avoid at the edge of each square\n\n\tvec3 absV = abs (v);\n\n\t// Intersect unit cube\n\n\tfloat scaleToCube = 1.0 / max (absV .x, max (absV .y, absV .z));\n\n\tabsV *= scaleToCube;\n\n\t// Apply scale to avoid seams\n\n\t// one texel less per square (half a texel on each side)\n\tv *= scaleToCube * (1.0 - 2.0 * texelSizeY);\n\n\t// Unwrap\n\n\t// space: -1 ... 1 range for each square\n\t//\n\t// #X##\t\tdim    := ( 4 , 2 )\n\t//  # #\t\tcenter := ( 1 , 1 )\n\n\tvec2 planar = v .xy;\n\n\tfloat almostATexel = 1.5 * texelSizeY;\n\tfloat almostOne    = 1.0 - almostATexel;\n\n\tif (absV .z >= almostOne)\n\t{\n\t\t// zZ\n\n\t\tif (v.z > 0.0)\n\t\t\tplanar .x = 4.0 - v.x;\n\t}\n\telse if (absV .x >= almostOne)\n\t{\n\t\t// xX\n\n\t\tfloat signX = sign (v.x);\n\n\t\tplanar .x = v.z * signX + 2.0 * signX;\n\t}\n\telse if (absV .y >= almostOne)\n\t{\n\t\t// yY\n\n\t\tfloat signY = sign (v.y);\n\n\t\tplanar .x = (v.x + 0.5 + signY) * 2.0;\n\t\tplanar .y = v.z * signY - 2.0;\n\t}\n\n\t// Transform to UV space\n\n\t// scale := 0.5 / dim\n\t// translate := ( center + 0.5 ) / dim\n\treturn vec2 (0.125, 0.25) * planar + vec2 (0.375, 0.75);\n}\n\nmat4\ngetPointLightRotation (const in vec3 vector)\n{\n\tmat4 rotations [6];\n\trotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left\n\trotations [1] = mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1);  // right\n\trotations [2] = mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1);  // front\n\trotations [3] = mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1);  // back\n\trotations [4] = mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1);  // bottom\n\trotations [5] = mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1);  // top\n\n\tvec3 a = abs (vector .xyz);\n\n\tif (a .x > a .y)\n\t{\n\t\tif (a .x > a .z)\n\t\t\treturn vector .x > 0.0 ? rotations [1] : rotations [0];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\telse\n\t{\n\t\tif (a .y > a .z)\n\t\t\treturn vector .y > 0.0 ? rotations [5] : rotations [4];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\n\treturn rotations [3];\n}\n\n// DEBUG\n//vec4 tex;\n\nfloat\ngetShadowIntensity (const in int index, const in x3d_LightSourceParameters light)\n{\n\tif (light .type == x3d_PointLight)\n\t{\n\t\tconst mat4 biasMatrix = mat4 (0.5, 0.0, 0.0, 0.0,\n\t\t\t                           0.0, 0.5, 0.0, 0.0,\n\t\t\t                           0.0, 0.0, 0.5, 0.0,\n\t\t\t                           0.5, 0.5, 0.5, 1.0);\n\n\t\t// 90° fov, as used in PointLight shadow calculations.\n\t\tconst mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);\n\n\t\tvec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));\n\n\t\t// for point lights, the uniform @vShadowCoord is re-purposed to hold\n\t\t// the vector from the light to the world-space position of the fragment.\n\t\tvec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);\n\t\tvec3 lightToPosition = shadowCoord .xyz;\n\n\t\tshadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotation (lightToPosition) * shadowCoord));\n\t\tshadowCoord .z   -= light .shadowBias;\n\t\tshadowCoord .xyz /= shadowCoord .w;\n\n\t\t// DEBUG\n\t\t//tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));\n\n\t\t#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)\n\t\n\t\t\tvec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tfloat value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);\n\n\t\t\treturn light .shadowIntensity * value;\n\t\n\t\t#endif\n\t}\n\telse\n\t{\n\t\t#if defined (X3D_PCF_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize .x;\n\t\t\tfloat dy0 = - texelSize .y;\n\t\t\tfloat dx1 = + texelSize .x;\n\t\t\tfloat dy1 = + texelSize .y;\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#elif defined (X3D_PCF_SOFT_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize.x;\n\t\t\tfloat dy0 = - texelSize.y;\n\t\t\tfloat dx1 = + texelSize.x;\n\t\t\tfloat dy1 = + texelSize.y;\n\t\t\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * ( 1.0 / 9.0 );\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tvec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);\n\t\n\t\t\tshadowCoord .z   -= shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#endif\n\t}\n\n\treturn 0.0;\n}\n\n#endif';});
+define('text!x_ite/Browser/Shaders/Include/ClipPlanes.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n';});
+
+
+define('text!x_ite/Browser/Shaders/Include/Fog.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\nuniform x3d_FogParameters x3d_Fog;\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tfloat visibilityRange = x3d_Fog .fogCoord ? fogDepth : x3d_Fog .visibilityRange;\n\n\tif (visibilityRange <= 0.0)\n\t\treturn 1.0;\n\n\tfloat dV = length (x3d_Fog .matrix * vertex);\n\n\tif (dV >= visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (visibilityRange - dV) / visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n';});
 
 
 define('text!x_ite/Browser/Shaders/Include/Pack.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#ifdef TITANIA\n\nvec4\npack (const in float value)\n{\n\treturn vec4 (0.0, 0.0, 0.0, 0.0);\n}\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .r;\n}\n\n#endif\n\n#ifdef X_ITE\n\nvec4\npack (const in float value)\n{\n\tconst vec3 bitShifts = vec3 (255.0,\n\t                             255.0 * 255.0,\n\t                             255.0 * 255.0 * 255.0);\n\n\treturn vec4 (value, fract (value * bitShifts));\n}\n\n#ifdef X3D_DEPTH_TEXTURE\n\nfloat\nunpack (const in vec4 color)\n{\n\treturn color .r;\n}\n\n#else\n\nfloat\nunpack (const vec4 color)\n{\n\tconst vec3 bitShifts = vec3 (1.0 / 255.0,\n\t                             1.0 / (255.0 * 255.0),\n\t                             1.0 / (255.0 * 255.0 * 255.0));\n\n\treturn color .x + dot (color .gba, bitShifts);\n}\n\n#endif\n#endif\n';});
 
 
-define('text!x_ite/Browser/Shaders/Include/Perlin.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#define M_PI 3.14159265358979323846\n\nfloat rand (vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }\nfloat rand (vec2 co, float l) { return rand (vec2 (rand (co), l)); }\nfloat rand (vec2 co, float l, float t) { return rand (vec2 (rand (co, l), t)); }\n\nfloat\nperlin (vec2 p, float dim, float time)\n{\n\tvec2 pos   = floor (p * dim);\n\tvec2 posx  = pos + vec2 (1.0, 0.0);\n\tvec2 posy  = pos + vec2 (0.0, 1.0);\n\tvec2 posxy = pos + vec2 (1.0);\n\t\n\tfloat c   = rand (pos,   dim, time);\n\tfloat cx  = rand (posx,  dim, time);\n\tfloat cy  = rand (posy,  dim, time);\n\tfloat cxy = rand (posxy, dim, time);\n\t\n\tvec2 d = fract (p * dim);\n\n\td = -0.5 * cos (d * M_PI) + 0.5;\n\t\n\tfloat ccx    = mix (c,   cx,    d.x);\n\tfloat cycxy  = mix (cy,  cxy,   d.x);\n\tfloat center = mix (ccx, cycxy, d.y);\n\n\treturn center * 2.0 - 1.0;\n}\n\nvec3\nperlin (vec3 p)\n{\n\treturn vec3 (perlin (p.xy, 1.0, 0.0),\n\t             perlin (p.yz, 1.0, 0.0),\n\t             perlin (p.zx, 1.0, 0.0));\n}\n';});
+define('text!x_ite/Browser/Shaders/Include/Perlin.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n//https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83\n\n#define M_PI 3.14159265358979323846\n\nfloat rand (vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }\nfloat rand (vec2 co, float l) { return rand (vec2 (rand (co), l)); }\nfloat rand (vec2 co, float l, float t) { return rand (vec2 (rand (co, l), t)); }\n\nfloat\nperlin (vec2 p, float dim, float time)\n{\n\tvec2 pos   = floor (p * dim);\n\tvec2 posx  = pos + vec2 (1.0, 0.0);\n\tvec2 posy  = pos + vec2 (0.0, 1.0);\n\tvec2 posxy = pos + vec2 (1.0);\n\t\n\tfloat c   = rand (pos,   dim, time);\n\tfloat cx  = rand (posx,  dim, time);\n\tfloat cy  = rand (posy,  dim, time);\n\tfloat cxy = rand (posxy, dim, time);\n\t\n\tvec2 d = fract (p * dim);\n\n\td = -0.5 * cos (d * M_PI) + 0.5;\n\t\n\tfloat ccx    = mix (c,   cx,    d.x);\n\tfloat cycxy  = mix (cy,  cxy,   d.x);\n\tfloat center = mix (ccx, cycxy, d.y);\n\n\treturn center * 2.0 - 1.0;\n}\n\nvec3\nperlin (vec3 p)\n{\n\treturn vec3 (perlin (p.xy, 1.0, 0.0),\n\t             perlin (p.yz, 1.0, 0.0),\n\t             perlin (p.zx, 1.0, 0.0));\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Types.h',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nstruct x3d_FogParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float visibilityRange;\n\tmediump mat3  matrix;\n\tbool fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float intensity;\n\tmediump float ambientIntensity;\n\tmediump vec3  attenuation;\n\tmediump vec3  location;\n\tmediump vec3  direction;\n\tmediump float radius;\n\tmediump float beamWidth;\n\tmediump float cutOffAngle;\n\tmediump mat3  matrix;\n\t#ifdef X3D_SHADOWS\n\tmediump vec3  shadowColor;\n\tmediump float shadowIntensity;\n\tmediump float shadowBias;\n\tmediump mat4  shadowMatrix;\n\tmediump int   shadowMapSize;\n\t#endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_MaterialParameters  \n{   \n\tmediump float ambientIntensity;\n\tmediump vec3  diffuseColor;\n\tmediump vec3  specularColor;\n\tmediump vec3  emissiveColor;\n\tmediump float shininess;\n\tmediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_FrontMaterial;  \n//uniform x3d_MaterialParameters x3d_BackMaterial;        \n\nstruct x3d_TextureCoordinateGeneratorParameters  \n{   \n\tmediump int   mode;\n\tmediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [1];  \n\nstruct x3d_ParticleParameters  \n{   \n\tmediump int   id;\n\tmediump int   life;\n\tmediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;  \n';});
+define('text!x_ite/Browser/Shaders/Include/Shadow.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Pack.h"\n\n#ifdef X3D_SHADOWS\n\nuniform sampler2D x3d_ShadowMap [x3d_MaxLights];\n\nfloat\ngetShadowDepth (const in int index, const in vec2 shadowCoord)\n{\n\t#if x3d_MaxLights > 0\n\tif (index == 0)\n\t\treturn unpack (texture2D (x3d_ShadowMap [0], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 1\n\tif (index == 1)\n\t\treturn unpack (texture2D (x3d_ShadowMap [1], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 2\n\tif (index == 2)\n\t\treturn unpack (texture2D (x3d_ShadowMap [2], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 3\n\tif (index == 3)\n\t\treturn unpack (texture2D (x3d_ShadowMap [3], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 4\n\tif (index == 4)\n\t\treturn unpack (texture2D (x3d_ShadowMap [4], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 5\n\tif (index == 5)\n\t\treturn unpack (texture2D (x3d_ShadowMap [5], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 6\n\tif (index == 6)\n\t\treturn unpack (texture2D (x3d_ShadowMap [6], shadowCoord));\n\t#endif\n\n\t#if x3d_MaxLights > 7\n\tif (index == 7)\n\t\treturn unpack (texture2D (x3d_ShadowMap [7], shadowCoord));\n\t#endif\n\n\treturn 0.0;\n}\n\nfloat\ntexture2DCompare (const in int index, const in vec2 texCoord, const in float compare)\n{\n\treturn step (getShadowDepth (index, texCoord), compare);\n}\n\nfloat\ntexture2DShadowLerp (const in int index, const in vec2 texelSize, const in float shadowMapSize, const in vec2 texCoord, const in float compare)\n{\n\tconst vec2 offset = vec2 (0.0, 1.0);\n\n\tvec2 centroidTexCoord = floor (texCoord * shadowMapSize + 0.5) / shadowMapSize;\n\n\tfloat lb = texture2DCompare (index, centroidTexCoord + texelSize * offset .xx, compare);\n\tfloat lt = texture2DCompare (index, centroidTexCoord + texelSize * offset .xy, compare);\n\tfloat rb = texture2DCompare (index, centroidTexCoord + texelSize * offset .yx, compare);\n\tfloat rt = texture2DCompare (index, centroidTexCoord + texelSize * offset .yy, compare);\n\n\tvec2 f = fract (texCoord * shadowMapSize + 0.5);\n\n\tfloat a = mix (lb, lt, f.y);\n\tfloat b = mix (rb, rt, f.y);\n\tfloat c = mix (a, b, f.x);\n\n\treturn c;\n}\n\n//https://gist.github.com/tschw/da10c43c467ce8afd0c4\nvec2\ncubeToUVCompact (in vec3 v, const float texelSizeY)\n{\n\t// Compact layout:\n\t//\n\t// xzXZ\t\tChar: Axis\n\t// yyYY\t\tCase: Sign\n\n\t// Number of texels to avoid at the edge of each square\n\n\tvec3 absV = abs (v);\n\n\t// Intersect unit cube\n\n\tfloat scaleToCube = 1.0 / max (absV .x, max (absV .y, absV .z));\n\n\tabsV *= scaleToCube;\n\n\t// Apply scale to avoid seams\n\n\t// one texel less per square (half a texel on each side)\n\tv *= scaleToCube * (1.0 - 2.0 * texelSizeY);\n\n\t// Unwrap\n\n\t// space: -1 ... 1 range for each square\n\t//\n\t// #X##\t\tdim    := ( 4 , 2 )\n\t//  # #\t\tcenter := ( 1 , 1 )\n\n\tvec2 planar = v .xy;\n\n\tfloat almostATexel = 1.5 * texelSizeY;\n\tfloat almostOne    = 1.0 - almostATexel;\n\n\tif (absV .z >= almostOne)\n\t{\n\t\t// zZ\n\n\t\tif (v .z > 0.0)\n\t\t\tplanar .x = 4.0 - v .x;\n\t}\n\telse if (absV .x >= almostOne)\n\t{\n\t\t// xX\n\n\t\tfloat signX = sign (v .x);\n\n\t\tplanar .x = v .z * signX + 2.0 * signX;\n\t}\n\telse if (absV .y >= almostOne)\n\t{\n\t\t// yY\n\n\t\tfloat signY = sign (v .y);\n\n\t\tplanar .x = (v .x + 0.5 + signY) * 2.0;\n\t\tplanar .y = v .z * signY - 2.0;\n\t}\n\n\t// Transform to UV space\n\n\t// scale := 0.5 / dim\n\t// translate := ( center + 0.5 ) / dim\n\treturn vec2 (0.125, 0.25) * planar + vec2 (0.375, 0.75);\n}\n\nmat4\ngetPointLightRotations (const in vec3 vector)\n{\n\tmat4 rotations [6];\n\trotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left\n\trotations [1] = mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1);  // right\n\trotations [2] = mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1);  // front\n\trotations [3] = mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1);  // back\n\trotations [4] = mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1);  // bottom\n\trotations [5] = mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1);  // top\n\n\tvec3 a = abs (vector .xyz);\n\n\tif (a .x > a .y)\n\t{\n\t\tif (a .x > a .z)\n\t\t\treturn vector .x > 0.0 ? rotations [1] : rotations [0];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\telse\n\t{\n\t\tif (a .y > a .z)\n\t\t\treturn vector .y > 0.0 ? rotations [5] : rotations [4];\n\t\telse\n\t\t\treturn vector .z > 0.0 ? rotations [2] : rotations [3];\n\t}\n\n\treturn rotations [3];\n}\n\n// DEBUG\n//vec4 tex;\n\nfloat\ngetShadowIntensity (const in int index, const in x3d_LightSourceParameters light)\n{\n\tif (light .type == x3d_PointLight)\n\t{\n\t\tconst mat4 biasMatrix = mat4 (0.5, 0.0, 0.0, 0.0,\n\t\t\t                           0.0, 0.5, 0.0, 0.0,\n\t\t\t                           0.0, 0.0, 0.5, 0.0,\n\t\t\t                           0.5, 0.5, 0.5, 1.0);\n\n\t\tconst mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);\n\n\t\tvec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));\n\n\t\t// for point lights, the uniform @vShadowCoord is re-purposed to hold\n\t\t// the vector from the light to the world-space position of the fragment.\n\t\tvec4 shadowCoord     = light .shadowMatrix * vec4 (vertex, 1.0);\n\t\tvec3 lightToPosition = shadowCoord .xyz;\n\n\t\tshadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));\n\t\tshadowCoord .z   -= light .shadowBias;\n\t\tshadowCoord .xyz /= shadowCoord .w;\n\n\t\t// DEBUG\n\t\t//tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));\n\n\t\t#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)\n\t\n\t\t\tvec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tfloat value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);\n\n\t\t\treturn light .shadowIntensity * value;\n\t\n\t\t#endif\n\t}\n\telse\n\t{\n\t\t#if defined (X3D_PCF_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize .x;\n\t\t\tfloat dy0 = - texelSize .y;\n\t\t\tfloat dx1 = + texelSize .x;\n\t\t\tfloat dy1 = + texelSize .y;\n\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * (1.0 / 9.0);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#elif defined (X3D_PCF_SOFT_FILTERING)\n\n\t\t\tvec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);\n\t\t\tvec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);\n\t\n\t\t\tshadowCoord .z   -= light .shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat dx0 = - texelSize.x;\n\t\t\tfloat dy0 = - texelSize.y;\n\t\t\tfloat dx1 = + texelSize.x;\n\t\t\tfloat dy1 = + texelSize.y;\n\t\t\t\n\t\t\tfloat value = (\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +\n\t\t\t\ttexture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)\n\t\t\t) * ( 1.0 / 9.0 );\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#else // no percentage-closer filtering\n\n\t\t\tvec4 shadowCoord = shadowMatrix * vec4 (vertex, 1.0);\n\t\n\t\t\tshadowCoord .z   -= shadowBias;\n\t\t\tshadowCoord .xyz /= shadowCoord .w;\n\t\n\t\t\tfloat value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);\n\t\n\t\t\treturn light .shadowIntensity * value;\n\n\t\t#endif\n\t}\n\n\treturn 0.0;\n}\n\n#endif';});
+
+
+define('text!x_ite/Browser/Shaders/Include/Texture.h',[],function () { return '/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/\n\n#pragma X3D include "Perlin.h"\n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform vec4 x3d_MultiTextureColor;\nuniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nuniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];  \n\nvec4\ngetTexCoord (const in int i)\n{\n\tif (i == 0)\n\t{\n\t\treturn texCoord0;\n\t}\n\telse if (i == 1)\n\t{\n\t\treturn texCoord1;\n\t}\n\n\treturn texCoord1;\n}\n\nvec4\ngetTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int i)\n{\n\tint mode = textureCoordinateGenerator .mode;\n\n\tif (mode == x3d_None)\n\t{\n\t\treturn getTexCoord (i);\n\t}\n\telse if (mode == x3d_Sphere)\n\t{\n\t\treturn vec4 (normal .x / 2.0 + 0.5, normal .y / 2.0 + 0.5, 0.0, 1.0);\n\t}\n\telse if (mode == x3d_CameraSpaceNormal)\n\t{\n\t\treturn vec4 (normal, 1.0);\n\t}\n\telse if (mode == x3d_CameraSpacePosition)\n\t{\n\t\treturn vec4 (vertex, 1.0);\n\t}\n\telse if (mode == x3d_CameraSpaceReflectionVector)\n\t{\n\t\treturn vec4 (reflect (normalize (vertex), -normal), 1.0);\n\t}\n\telse if (mode == x3d_SphereLocal)\n\t{\n\t\treturn vec4 (localNormal .x / 2.0 + 0.5, localNormal .y / 2.0 + 0.5, 0.0, 1.0);\n\t}\n\telse if (mode == x3d_Coord)\n\t{\n\t\treturn vec4 (localVertex, 1.0);\n\t}\n\telse if (mode == x3d_CoordEye)\n\t{\n\t\treturn vec4 (vertex, 1.0);\n\t}\n\telse if (mode == x3d_Noise)\n\t{\n\t\tvec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);\n\t\tvec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);\n\n\t\treturn vec4 (perlin (localVertex * scale + translation), 1.0);\n\t}\n\telse if (mode == x3d_NoiseEye)\n\t{\n\t\tvec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);\n\t\tvec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);\n\n\t\treturn vec4 (perlin (vertex * scale + translation), 1.0);\n\t}\n\telse if (mode == x3d_SphereReflect)\n\t{\n\t\tfloat eta = textureCoordinateGenerator .parameter [0];\n\n\t\treturn vec4 (refract (normalize (vertex), -normal, eta), 1.0);\n\t}\n\telse if (mode == x3d_SphereReflectLocal)\n\t{\n\t\tfloat eta = textureCoordinateGenerator .parameter [0];\n\t\tvec3  eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);\n\n\t\treturn vec4 (refract (normalize (localVertex - eye), -localNormal, eta), 1.0);\n\t}\n\n\treturn getTexCoord (i);\n}\n\n#ifdef X3D_MULTI_TEXTURING\nvec4\ngetTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)\n{\n\tvec4 currentColor = diffuseColor;\n\n\tfor (int i = 0; i < x3d_MaxTextures; ++ i)\n\t{\n\t\tif (i == x3d_NumTextures)\n\t\t\tbreak;\n\n\t\t// Get texture color.\n\n\t\tvec4 texCoord     = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);\n\t\tvec4 textureColor = vec4 (1.0);\n\t\n\t\tif (x3d_TextureType [i] == x3d_TextureType2D)\n\t\t{\n\t\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\t\ttextureColor = texture2D (x3d_Texture2D [i], vec2 (texCoord));\n\t\t\telse\n\t\t\t\t// If dimension is x3d_Geometry2D the texCoord must be flipped.\n\t\t\t\ttextureColor = texture2D (x3d_Texture2D [i], vec2 (1.0 - texCoord .s, texCoord .t));\n\t\t}\n\t \telse if (x3d_TextureType [i] == x3d_TextureTypeCubeMapTexture)\n\t\t{\n\t\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\t\ttextureColor = textureCube (x3d_CubeMapTexture [i], vec3 (texCoord));\n\t\t\telse\n\t\t\t\t// If dimension is x3d_Geometry2D the texCoord must be flipped.\n\t\t\t\ttextureColor = textureCube (x3d_CubeMapTexture [i], vec3 (1.0 - texCoord .s, texCoord .t, texCoord .z));\n\t\t}\n\n\t\t// Multi texturing\n\n\t\tx3d_MultiTextureParameters multiTexture = x3d_MultiTexture [i];\n\n\t\tvec4 arg1 = textureColor;\n\t\tvec4 arg2 = currentColor;\n\n\t\t// Source\n\n\t\tint source = multiTexture .source;\n\n\t\tif (source == x3d_Diffuse)\n\t\t{\n\t\t\targ1 = diffuseColor;\n\t\t}\n\t\telse if (source == x3d_Specular)\n\t\t{\n\t\t\targ1 = specularColor;\n\t\t}\n\t\telse if (source == x3d_Factor)\n\t\t{\n\t\t\targ1 = x3d_MultiTextureColor;\n\t\t}\n\n\t\t// Function\n\n\t\tint function = multiTexture .function;\n\n\t\tif (function == x3d_Complement)\n\t\t{\n\t\t\targ1 = 1.0 - arg1;\n\t\t}\n\t\telse if (function == x3d_AlphaReplicate)\n\t\t{\n\t\t\targ1 .a = arg2 .a;\n\t\t}\n\n\t\t// Mode\n\n\t\tint mode      = multiTexture .mode;\n\t\tint alphaMode = multiTexture .alphaMode;\n\n\t\t// RGB\n\n\t\tif (mode == x3d_Replace)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb;\n\t\t}\n\t\telse if (mode == x3d_Modulate)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb * arg2 .rgb;\n\t\t}\n\t\telse if (mode == x3d_Modulate2X)\n\t\t{\n\t\t\tcurrentColor .rgb = (arg1 .rgb * arg2 .rgb) * 2.0;\n\t\t}\n\t\telse if (mode == x3d_Modulate4X)\n\t\t{\n\t\t\tcurrentColor .rgb = (arg1 .rgb * arg2 .rgb) * 4.0;\n\t\t}\n\t\telse if (mode == x3d_Add)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb + arg2 .rgb;\n\t\t}\n\t\telse if (mode == x3d_AddSigned)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb + arg2 .rgb - 0.5;\n\t\t}\n\t\telse if (mode == x3d_AddSigned2X)\n\t\t{\n\t\t\tcurrentColor .rgb = (arg1 .rgb + arg2 .rgb - 0.5) * 2.0;\n\t\t}\n\t\telse if (mode == x3d_AddSmooth)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb + (1.0 - arg1 .rgb) * arg2 .rgb;\n\t\t}\n\t\telse if (mode == x3d_Subtract)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb - arg2 .rgb;\n\t\t}\n\t\telse if (mode == x3d_BlendDiffuseAlpha)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb * diffuseColor .a + arg2 .rgb * (1.0 - diffuseColor .a);\n\t\t}\n\t\telse if (mode == x3d_BlendTextureAlpha)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb * arg1 .a + arg2 .rgb * (1.0 - arg1 .a);\n\t\t}\n\t\telse if (mode == x3d_BlendFactorAlpha)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb * x3d_MultiTextureColor .a + arg2 .rgb * (1.0 - x3d_MultiTextureColor .a);\n\t\t}\n\t\telse if (mode == x3d_BlendCurrentAlpha)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb * arg2 .a + arg2 .rgb * (1.0 - arg2 .a);\n\t\t}\n\t\telse if (mode == x3d_ModulateAlphaAddColor)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb + arg1 .a * arg2 .rgb;\n\t\t}\n\t\telse if (mode == x3d_ModulateInvAlphaAddColor)\n\t\t{\n\t\t\tcurrentColor .rgb = (1.0 - arg1 .a) * arg2 .rgb + arg1 .rgb;\n\t\t}\n\t\telse if (mode == x3d_ModulateInvColorAddAlpha)\n\t\t{\n\t\t\tcurrentColor .rgb = (1.0 - arg1 .rgb) * arg2 .rgb + arg1 .a;\n\t\t}\n\t\telse if (mode == x3d_DotProduct3)\n\t\t{\n\t\t\tcurrentColor .rgb = vec3 (dot (arg1 .rgb * 2.0 - 1.0, arg2 .rgb * 2.0 - 1.0));\n\t\t}\n\t\telse if (mode == x3d_SelectArg1)\n\t\t{\n\t\t\tcurrentColor .rgb = arg1 .rgb;\n\t\t}\n\t\telse if (mode == x3d_SelectArg2)\n\t\t{\n\t\t\tcurrentColor .rgb = arg2 .rgb;\n\t\t}\n\t\telse if (mode == x3d_Off)\n\t\t\t;\n\n\t\t// Alpha\n\n\t\tif (alphaMode == x3d_Replace)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a;\n\t\t}\n\t\telse if (alphaMode == x3d_Modulate)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a * arg2 .a;\n\t\t}\n\t\telse if (mode == x3d_Modulate2X)\n\t\t{\n\t\t\tcurrentColor .a = (arg1 .a * arg2 .a) * 2.0;\n\t\t}\n\t\telse if (mode == x3d_Modulate4X)\n\t\t{\n\t\t\tcurrentColor .a = (arg1 .a * arg2 .a) * 4.0;\n\t\t}\n\t\telse if (mode == x3d_Add)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a + arg2 .a;\n\t\t}\n\t\telse if (mode == x3d_AddSigned)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a + arg2 .a - 0.5;\n\t\t}\n\t\telse if (mode == x3d_AddSigned2X)\n\t\t{\n\t\t\tcurrentColor .a = (arg1 .a + arg2 .a - 0.5) * 2.0;\n\t\t}\n\t\telse if (mode == x3d_AddSmooth)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a + (1.0 - arg1 .a) * arg2 .a;\n\t\t}\n\t\telse if (mode == x3d_Subtract)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a - arg2 .a;\n\t\t}\n\t\telse if (mode == x3d_BlendDiffuseAlpha)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a * diffuseColor .a + arg2 .a * (1.0 - diffuseColor .a);\n\t\t}\n\t\telse if (mode == x3d_BlendTextureAlpha)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a * arg1 .a + arg2 .a * (1.0 - arg1 .a);\n\t\t}\n\t\telse if (mode == x3d_BlendFactorAlpha)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a * x3d_MultiTextureColor .a + arg2 .a * (1.0 - x3d_MultiTextureColor .a);\n\t\t}\n\t\telse if (mode == x3d_BlendCurrentAlpha)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a * arg2 .a + arg2 .a * (1.0 - arg2 .a);\n\t\t}\n\t\telse if (mode == x3d_ModulateAlphaAddColor)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a + arg1 .a * arg2 .a;\n\t\t}\n\t\telse if (mode == x3d_ModulateInvAlphaAddColor)\n\t\t{\n\t\t\tcurrentColor .a = (1.0 - arg1 .a) * arg2 .a + arg1 .a;\n\t\t}\n\t\telse if (mode == x3d_ModulateInvColorAddAlpha)\n\t\t{\n\t\t\tcurrentColor .a = (1.0 - arg1 .a) * arg2 .a + arg1 .a;\n\t\t}\n\t\telse if (mode == x3d_DotProduct3)\n\t\t{\n\t\t\tcurrentColor .a = dot (arg1 .rgb * 2.0 - 1.0, arg2 .rgb * 2.0 - 1.0);\n\t\t}\n\t\telse if (mode == x3d_SelectArg1)\n\t\t{\n\t\t\tcurrentColor .a = arg1 .a;\n\t\t}\n\t\telse if (mode == x3d_SelectArg2)\n\t\t{\n\t\t\tcurrentColor .a = arg2 .a;\n\t\t}\n\t\telse if (mode == x3d_Off)\n\t\t\t;\n\t}\n\n\treturn currentColor;\n}\n#else\nvec4\ngetTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)\n{\n\t// Get texture color.\n\n\tvec4 texCoord     = texCoord0;\n\tvec4 textureColor = vec4 (1.0);\n\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\ttextureColor = texture2D (x3d_Texture2D [0], vec2 (texCoord));\n\t\telse\n\t\t\t// If dimension is x3d_Geometry2D the texCoord must be flipped.\n\t\t\ttextureColor = texture2D (x3d_Texture2D [0], vec2 (1.0 - texCoord .s, texCoord .t));\n\t}\n \telse if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\ttextureColor = textureCube (x3d_CubeMapTexture [0], vec3 (texCoord));\n\t\telse\n\t\t\t// If dimension is x3d_Geometry2D the texCoord must be flipped.\n\t\t\ttextureColor = textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - texCoord .s, texCoord .t, texCoord .z));\n\t}\n\n\treturn diffuseColor * textureColor;\n}\n#endif\n';});
+
+
+define('text!x_ite/Browser/Shaders/Types.h',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nstruct x3d_FogParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float visibilityRange;\n\tmediump mat3  matrix;\n\tbool fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float intensity;\n\tmediump float ambientIntensity;\n\tmediump vec3  attenuation;\n\tmediump vec3  location;\n\tmediump vec3  direction;\n\tmediump float radius;\n\tmediump float beamWidth;\n\tmediump float cutOffAngle;\n\tmediump mat3  matrix;\n\t#ifdef X3D_SHADOWS\n\tmediump vec3  shadowColor;\n\tmediump float shadowIntensity;\n\tmediump float shadowBias;\n\tmediump mat4  shadowMatrix;\n\tmediump int   shadowMapSize;\n\t#endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_MaterialParameters  \n{   \n\tmediump float ambientIntensity;\n\tmediump vec3  diffuseColor;\n\tmediump vec3  specularColor;\n\tmediump vec3  emissiveColor;\n\tmediump float shininess;\n\tmediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_FrontMaterial;  \n//uniform x3d_MaterialParameters x3d_BackMaterial;    \n    \nstruct x3d_MultiTextureParameters  \n{   \n\tmediump int mode;\n\tmediump int alphaMode;\n\tmediump int source;\n\tmediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters  \n{   \n\tmediump int   mode;\n\tmediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures;  \n\nstruct x3d_ParticleParameters  \n{   \n\tmediump int   id;\n\tmediump int   life;\n\tmediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;  \n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -45312,7 +45380,220 @@ define('text!x_ite/Browser/Shaders/Types.h',[],function () { return '// -*- Mode
  ******************************************************************************/
 
 
-define ('x_ite/Browser/Texturing/ModeType',[],function ()
+define ('x_ite/Browser/Texturing/MultiTextureModeType',[],function ()
+{
+"use strict";
+
+	var i = 0;
+
+	var ModeType =
+	{
+		REPLACE:                   i ++,
+		MODULATE:                  i ++,
+		MODULATE2X:                i ++,
+		MODULATE4X:                i ++,
+		ADD:                       i ++,
+		ADDSIGNED:                 i ++,
+		ADDSIGNED2X:               i ++,
+		ADDSMOOTH:                 i ++,
+		SUBTRACT:                  i ++,
+		BLENDDIFFUSEALPHA:         i ++,
+		BLENDTEXTUREALPHA:         i ++,
+		BLENDFACTORALPHA:          i ++,
+		BLENDCURRENTALPHA:         i ++,
+		MODULATEALPHA_ADDCOLOR:    i ++,
+		MODULATEINVALPHA_ADDCOLOR: i ++,
+		MODULATEINVCOLOR_ADDALPHA: i ++,
+		DOTPRODUCT3:               i ++,
+		SELECTARG1:                i ++,
+		SELECTARG2:                i ++,
+		OFF:                       i ++,
+	};
+
+	return ModeType;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Texturing/MultiTextureSourceType',[],function ()
+{
+"use strict";
+
+	var i = 0;
+
+	var SourceType =
+	{
+		DEFAULT:  i ++,
+		DIFFUSE:  i ++,
+		SPECULAR: i ++,
+		FACTOR:   i ++,
+	};
+
+	return SourceType;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Texturing/MultiTextureFunctionType',[],function ()
+{
+"use strict";
+
+	var i = 0;
+
+	var FunctionType =
+	{
+		DEFAULT:        i ++,
+		COMPLEMENT:     i ++,
+		ALPHAREPLICATE: i ++,
+	};
+
+	return FunctionType;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType',[],function ()
 {
 "use strict";
 
@@ -45387,26 +45668,41 @@ define ('x_ite/Browser/Texturing/ModeType',[],function ()
 
 
 define ('x_ite/Browser/Shaders/Shader',[
-	"text!x_ite/Browser/Shaders/Include/Shadow.h",
+	"text!x_ite/Browser/Shaders/Include/ClipPlanes.h",
+	"text!x_ite/Browser/Shaders/Include/Fog.h",
 	"text!x_ite/Browser/Shaders/Include/Pack.h",
 	"text!x_ite/Browser/Shaders/Include/Perlin.h",
+	"text!x_ite/Browser/Shaders/Include/Shadow.h",
+	"text!x_ite/Browser/Shaders/Include/Texture.h",
 	"text!x_ite/Browser/Shaders/Types.h",
-	"x_ite/Browser/Texturing/ModeType",
+	"x_ite/Browser/Texturing/MultiTextureModeType",
+	"x_ite/Browser/Texturing/MultiTextureSourceType",
+	"x_ite/Browser/Texturing/MultiTextureFunctionType",
+	"x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType",
 	"x_ite/DEBUG",
 ],
-function (Shadow,
+function (ClipPlanes,
+          Fog,
           Pack,
           Perlin,
+          Shadow,
+          Texture,
           Types,
-          ModeType,
+          MultiTextureModeType,
+          MultiTextureSourceType,
+          MultiTextureFunctionType,
+          TextureCoordinateGeneratorModeType,
           DEBUG)
 {
 "use strict";
 
 	var includes = {
-		Shadow: Shadow,
+		ClipPlanes: ClipPlanes,
+		Fog: Fog,
 		Pack: Pack,
 		Perlin: Perlin,
+		Shadow: Shadow,
+		Texture: Texture,
 	};
 
 	var include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+).h"\s*$/;
@@ -45478,6 +45774,9 @@ function (Shadow,
 			if (browser .getExtension ("WEBGL_depth_texture"))
 				constants += "#define X3D_DEPTH_TEXTURE\n";
 
+			if (browser .getMultiTexturing ())
+				constants += "#define X3D_MULTI_TEXTURING\n";
+
 			var definitions = "";
 
 			definitions += "#define x3d_None 0\n";
@@ -45504,17 +45803,45 @@ function (Shadow,
 			definitions += "#define x3d_TextureType3D              3\n";
 			definitions += "#define x3d_TextureTypeCubeMapTexture  4\n";
 
-			definitions += "#define X3D_SPHERE                      " + ModeType .SPHERE                      + "\n";
-			definitions += "#define X3D_CAMERASPACENORMAL           " + ModeType .CAMERASPACENORMAL           + "\n";
-			definitions += "#define X3D_CAMERASPACEPOSITION         " + ModeType .CAMERASPACEPOSITION         + "\n";
-			definitions += "#define X3D_CAMERASPACEREFLECTIONVECTOR " + ModeType .CAMERASPACEREFLECTIONVECTOR + "\n";
-			definitions += "#define X3D_SPHERE_LOCAL                " + ModeType .SPHERE_LOCAL                + "\n";
-			definitions += "#define X3D_COORD                       " + ModeType .COORD                       + "\n";
-			definitions += "#define X3D_COORD_EYE                   " + ModeType .COORD_EYE                   + "\n";
-			definitions += "#define X3D_NOISE                       " + ModeType .NOISE                       + "\n";
-			definitions += "#define X3D_NOISE_EYE                   " + ModeType .NOISE_EYE                   + "\n";
-			definitions += "#define X3D_SPHERE_REFLECT              " + ModeType .SPHERE_REFLECT              + "\n";
-			definitions += "#define X3D_SPHERE_REFLECT_LOCAL        " + ModeType .SPHERE_REFLECT_LOCAL        + "\n";
+			definitions += "#define x3d_Replace                   " + MultiTextureModeType .REPLACE                   + "\n";
+			definitions += "#define x3d_Modulate                  " + MultiTextureModeType .MODULATE                  + "\n";
+			definitions += "#define x3d_Modulate2X                " + MultiTextureModeType .MODULATE2X                + "\n";
+			definitions += "#define x3d_Modulate4X                " + MultiTextureModeType .MODULATE4X                + "\n";
+			definitions += "#define x3d_Add                       " + MultiTextureModeType .ADD                       + "\n";
+			definitions += "#define x3d_AddSigned                 " + MultiTextureModeType .ADDSIGNED                 + "\n";
+			definitions += "#define x3d_AddSigned2X               " + MultiTextureModeType .ADDSIGNED2X               + "\n";
+			definitions += "#define x3d_AddSmooth                 " + MultiTextureModeType .ADDSMOOTH                 + "\n";
+			definitions += "#define x3d_Subtract                  " + MultiTextureModeType .SUBTRACT                  + "\n";
+			definitions += "#define x3d_BlendDiffuseAlpha         " + MultiTextureModeType .BLENDDIFFUSEALPHA         + "\n";
+			definitions += "#define x3d_BlendTextureAlpha         " + MultiTextureModeType .BLENDTEXTUREALPHA         + "\n";
+			definitions += "#define x3d_BlendFactorAlpha          " + MultiTextureModeType .BLENDFACTORALPHA          + "\n";
+			definitions += "#define x3d_BlendCurrentAlpha         " + MultiTextureModeType .BLENDCURRENTALPHA         + "\n";
+			definitions += "#define x3d_ModulateAlphaAddColor     " + MultiTextureModeType .MODULATEALPHA_ADDCOLOR    + "\n";
+			definitions += "#define x3d_ModulateInvAlphaAddColor  " + MultiTextureModeType .MODULATEINVALPHA_ADDCOLOR + "\n";
+			definitions += "#define x3d_ModulateInvColorAddAlpha  " + MultiTextureModeType .MODULATEINVCOLOR_ADDALPHA + "\n";
+			definitions += "#define x3d_DotProduct3               " + MultiTextureModeType .DOTPRODUCT3               + "\n";
+			definitions += "#define x3d_SelectArg1                " + MultiTextureModeType .SELECTARG1                + "\n";
+			definitions += "#define x3d_SelectArg2                " + MultiTextureModeType .SELECTARG2                + "\n";
+			definitions += "#define x3d_Off                       " + MultiTextureModeType .OFF                       + "\n";
+		
+			definitions += "#define x3d_Diffuse  " + MultiTextureSourceType .DIFFUSE  + "\n";
+			definitions += "#define x3d_Specular " + MultiTextureSourceType .SPECULAR + "\n";
+			definitions += "#define x3d_Factor   " + MultiTextureSourceType .FACTOR   + "\n";
+		
+			definitions += "#define x3d_Complement     " + MultiTextureFunctionType .COMPLEMENT     + "\n";
+			definitions += "#define x3d_AlphaReplicate " + MultiTextureFunctionType .ALPHAREPLICATE + "\n";
+
+			definitions += "#define x3d_Sphere                      " + TextureCoordinateGeneratorModeType .SPHERE                      + "\n";
+			definitions += "#define x3d_CameraSpaceNormal           " + TextureCoordinateGeneratorModeType .CAMERASPACENORMAL           + "\n";
+			definitions += "#define x3d_CameraSpacePosition         " + TextureCoordinateGeneratorModeType .CAMERASPACEPOSITION         + "\n";
+			definitions += "#define x3d_CameraSpaceReflectionVector " + TextureCoordinateGeneratorModeType .CAMERASPACEREFLECTIONVECTOR + "\n";
+			definitions += "#define x3d_SphereLocal                 " + TextureCoordinateGeneratorModeType .SPHERE_LOCAL                + "\n";
+			definitions += "#define x3d_Coord                       " + TextureCoordinateGeneratorModeType .COORD                       + "\n";
+			definitions += "#define x3d_CoordEye                    " + TextureCoordinateGeneratorModeType .COORD_EYE                   + "\n";
+			definitions += "#define x3d_Noise                       " + TextureCoordinateGeneratorModeType .NOISE                       + "\n";
+			definitions += "#define x3d_NoiseEye                    " + TextureCoordinateGeneratorModeType .NOISE_EYE                   + "\n";
+			definitions += "#define x3d_SphereReflect               " + TextureCoordinateGeneratorModeType .SPHERE_REFLECT              + "\n";
+			definitions += "#define x3d_SphereReflectLocal          " + TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL        + "\n";
 
 			// Legacy
 			definitions += "#define x3d_GeometryPoints  0\n";
@@ -52019,31 +52346,34 @@ function (Fields,
 
 
 
-define('text!x_ite/Browser/Shaders/PointSet.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform x3d_FogParameters x3d_Fog;\n\nvarying float fogDepth; // fog depth\nvarying vec4  C;        // color\nvarying vec3  v;        // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tfloat visibilityRange = x3d_Fog .fogCoord ? fogDepth : x3d_Fog .visibilityRange;\n\n\tif (visibilityRange <= 0.0)\n\t\treturn 1.0;\n\n\tfloat dV = length (x3d_Fog .matrix * v);\n\n\tif (dV >= visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (visibilityRange - dV) / visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = mix (C .a, 0.0, clamp (t, 0.0, 1.0));\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/PointSet.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform float x3d_LinewidthScaleFactor;\n\nvarying float fogDepth; // fog depth\nvarying vec4  color;    // color\nvarying vec3  vertex;   // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\n#pragma X3D include "Include/Fog.h"\n#pragma X3D include "Include/ClipPlanes.h"\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tfloat lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;\n\tfloat t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;\n\n\tgl_FragColor .rgb = getFogColor (color .rgb);\n\tgl_FragColor .a   = mix (color .a, 0.0, clamp (t, 0.0, 1.0));\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Wireframe.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute float x3d_FogDepth;\nattribute vec4  x3d_Color;\nattribute vec4  x3d_Vertex;\n\nvarying float fogDepth; // fog depth\nvarying vec4  C;        // color\nvarying vec3  v;        // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tfogDepth = x3d_FogDepth;\n\tv        = vec3 (p);\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_FrontMaterial .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tC .rgb = x3d_Color .rgb;\n\t\t\tC .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tC .rgb = x3d_FrontMaterial .emissiveColor;\n\t\t\tC .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tC = x3d_Color;\n\t\telse\n\t\t\tC = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!x_ite/Browser/Shaders/Wireframe.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false\nuniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute float x3d_FogDepth;\nattribute vec4  x3d_Color;\nattribute vec4  x3d_Vertex;\n\nvarying float fogDepth; // fog depth\nvarying vec4  color;    // color\nvarying vec3  vertex;   // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nvoid\nmain ()\n{\n\t// If we are points, make the gl_PointSize one pixel larger.\n\tgl_PointSize = x3d_LinewidthScaleFactor + 1.0;\n\n\tvec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tfogDepth = x3d_FogDepth;\n\tvertex   = position .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * position;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n\n\tif (x3d_Lighting)\n\t{\n\t\tfloat alpha = 1.0 - x3d_FrontMaterial .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tcolor .rgb = x3d_Color .rgb;\n\t\t\tcolor .a   = x3d_Color .a * alpha;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tcolor .rgb = x3d_FrontMaterial .emissiveColor;\n\t\t\tcolor .a   = alpha;\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (x3d_ColorMaterial)\n\t\t\tcolor = x3d_Color;\n\t\telse\n\t\t\tcolor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Wireframe.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying float fogDepth; // fog depth\nvarying vec4  C;        // color\nvarying vec3  v;        // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tfloat visibilityRange = x3d_Fog .fogCoord ? fogDepth : x3d_Fog .visibilityRange;\n\n\tif (visibilityRange <= 0.0)\n\t\treturn 1.0;\n\n\tfloat dV = length (x3d_Fog .matrix * v);\n\n\tif (dV >= visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (visibilityRange - dV) / visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor .rgb = getFogColor (C .rgb);\n\tgl_FragColor .a   = C .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/Wireframe.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nvarying float fogDepth; // fog depth\nvarying vec4  color;    // color\nvarying vec3  vertex;   // point on geometry\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\n#pragma X3D include "Include/Fog.h"\n#pragma X3D include "Include/ClipPlanes.h"\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor .rgb = getFogColor (color .rgb);\n\tgl_FragColor .a   = color .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Gouraud.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [1];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;\n\nattribute float x3d_FogDepth;\nattribute vec4  x3d_Color;\nattribute vec4  x3d_TexCoord;\nattribute vec3  x3d_Normal;\nattribute vec4  x3d_Vertex;\n\nvarying float fogDepth;   // fog depth\nvarying vec4  frontColor; // color\nvarying vec4  backColor;  // color\nvarying vec4  t;          // texCoord\nvarying vec3  vN;         // normal vector at this point on geometry\nvarying vec3  v;          // point on geometry\nvarying vec3  lN;         // normal vector at this point on geometry in local coordinates\nvarying vec3  lV;         // point on geometry in local coordinates\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor (const in vec3 N,\n                  const in vec3 v,\n                  const in x3d_MaterialParameters material)\n{\n\tvec3 V = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (0.0, 0.0, 0.0);\n\tfloat alpha         = 1.0 - material .transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = material .diffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tif (i == x3d_NumLights)\n\t\t\tbreak;\n\n\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\tvec3  vL = light .location - v;\n\t\tfloat dL = length (light .matrix * vL);\n\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\tif (di || dL <= light .radius)\n\t\t{\n\t\t\tvec3 d = light .direction;\n\t\t\tvec3 c = light .attenuation;\n\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\tvec3  ambientColor                = light .ambientIntensity * ambientTerm;\n\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\tfinalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);\n\t\t}\n\t}\n\n\tfinalColor += material .emissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tfogDepth = x3d_FogDepth;\n\tt        = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tv        = p .xyz;\n\tvN       = normalize (x3d_NormalMatrix * x3d_Normal);\n\tlN       = x3d_Normal;\n\tlV       = vec3 (x3d_Vertex);\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n\n\tif (x3d_Lighting)\n\t{\n\n\t\tfrontColor = getMaterialColor (vN, v, x3d_FrontMaterial);\n\n\t\tx3d_MaterialParameters backMaterial = x3d_FrontMaterial;\n\n\t\tif (x3d_SeparateBackColor)\n\t\t\tbackMaterial = x3d_BackMaterial;\n\n\t\tbackColor = getMaterialColor (-vN, v, backMaterial);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
+define('text!x_ite/Browser/Shaders/Gouraud.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;\n\nattribute float x3d_FogDepth;\nattribute vec4  x3d_Color;\nattribute vec4  x3d_TexCoord0;\nattribute vec4  x3d_TexCoord1;\nattribute vec3  x3d_Normal;\nattribute vec4  x3d_Vertex;\n\nvarying float fogDepth;    // fog depth\nvarying vec4  frontColor;  // color\nvarying vec4  backColor;   // color\nvarying vec4  texCoord0;   // texCoord0\nvarying vec4  texCoord1;   // texCoord1\nvarying vec3  normal;      // normal vector at this point on geometry\nvarying vec3  vertex;      // point on geometry\nvarying vec3  localNormal; // normal vector at this point on geometry in local coordinates\nvarying vec3  localVertex; // point on geometry in local coordinates\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor (const in vec3 N,\n                  const in vec3 vertex,\n                  const in x3d_MaterialParameters material)\n{\n\tvec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer\'s position\n\n\t// Calculate diffuseFactor & alpha\n\n\tvec3  diffuseFactor = vec3 (0.0, 0.0, 0.0);\n\tfloat alpha         = 1.0 - material .transparency;\n\n\tif (x3d_ColorMaterial)\n\t{\n\t\tdiffuseFactor  = x3d_Color .rgb;\n\t\talpha         *= x3d_Color .a;\n\t}\n\telse\n\t\tdiffuseFactor = material .diffuseColor;\n\n\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t// Apply light sources\n\n\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\tfor (int i = 0; i < x3d_MaxLights; ++ i)\n\t{\n\t\tif (i == x3d_NumLights)\n\t\t\tbreak;\n\n\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\tvec3  vL = light .location - vertex;\n\t\tfloat dL = length (light .matrix * vL);\n\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\tif (di || dL <= light .radius)\n\t\t{\n\t\t\tvec3 d = light .direction;\n\t\t\tvec3 c = light .attenuation;\n\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\tfloat attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\tfloat spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\tfloat attenuationSpotFactor       = attenuationFactor * spotFactor;\n\t\t\tvec3  ambientColor                = light .ambientIntensity * ambientTerm;\n\t\t\tvec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\tfinalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);\n\t\t}\n\t}\n\n\tfinalColor += material .emissiveColor;\n\n\treturn vec4 (clamp (finalColor, 0.0, 1.0), alpha);\n}\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tfogDepth    = x3d_FogDepth;\n\ttexCoord0   = x3d_TextureMatrix [0] * x3d_TexCoord0;\n\ttexCoord1   = x3d_TextureMatrix [1] * x3d_TexCoord1;\n\tvertex      = position .xyz;\n\tnormal      = normalize (x3d_NormalMatrix * x3d_Normal);\n\tlocalNormal = x3d_Normal;\n\tlocalVertex = vec3 (x3d_Vertex);\n\n\tgl_Position = x3d_ProjectionMatrix * position;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n\n\tif (x3d_Lighting)\n\t{\n\n\t\tfrontColor = getMaterialColor (normal, vertex, x3d_FrontMaterial);\n\n\t\tx3d_MaterialParameters backMaterial = x3d_FrontMaterial;\n\n\t\tif (x3d_SeparateBackColor)\n\t\t\tbackMaterial = x3d_BackMaterial;\n\n\t\tbackColor = getMaterialColor (-normal, vertex, backMaterial);\n\t}\n\telse\n\t{\n\t   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);\n\t}\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Gouraud.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];  \n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying float fogDepth;   // fog depth\nvarying vec4  frontColor; // color\nvarying vec4  backColor;  // color\nvarying vec4  t;          // texCoord\nvarying vec3  vN;         // normal vector at this point on geometry\nvarying vec3  v;          // point on geometry\nvarying vec3  lN;         // normal vector at this point on geometry in local coordinates\nvarying vec3  lV;         // point on geometry in local coordinates\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\n#pragma X3D include "Include/Perlin.h"\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureCoordinate (x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, in vec4 t)\n{\n\tint mode = textureCoordinateGenerator .mode;\n\n\tif (mode == x3d_None)\n\t{\n\t\treturn t;\n\t}\n\telse if (mode == X3D_SPHERE)\n\t{\n\t\treturn vec4 (vN .x / 2.0 + 0.5, vN .y / 2.0 + 0.5, 0.0, 1.0);\n\t}\n\telse if (mode == X3D_CAMERASPACENORMAL)\n\t{\n\t\treturn vec4 (vN, 1.0);\n\t}\n\telse if (mode == X3D_CAMERASPACEPOSITION)\n\t{\n\t\treturn vec4 (v, 1.0);\n\t}\n\telse if (mode == X3D_CAMERASPACEREFLECTIONVECTOR)\n\t{\n\t\treturn vec4 (reflect (normalize (v), -vN), 1.0);\n\t}\n\telse if (mode == X3D_SPHERE_LOCAL)\n\t{\n\t\treturn vec4 (lN .x / 2.0 + 0.5, lN .y / 2.0 + 0.5, 0.0, 1.0);\n\t}\n\telse if (mode == X3D_COORD)\n\t{\n\t\treturn vec4 (lV, 1.0);\n\t}\n\telse if (mode == X3D_COORD_EYE)\n\t{\n\t\treturn vec4 (v, 1.0);\n\t}\n\telse if (mode == X3D_NOISE)\n\t{\n\t\tvec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);\n\t\tvec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);\n\n\t\treturn vec4 (perlin (lV * scale + translation), 1.0);\n\t}\n\telse if (mode == X3D_NOISE_EYE)\n\t{\n\t\tvec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);\n\t\tvec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);\n\n\t\treturn vec4 (perlin (v * scale + translation), 1.0);\n\t}\n\telse if (mode == X3D_SPHERE_REFLECT)\n\t{\n\t\tfloat eta = textureCoordinateGenerator .parameter [0];\n\n\t\treturn vec4 (refract (normalize (v), -vN, eta), 1.0);\n\t}\n\telse if (mode == X3D_SPHERE_REFLECT_LOCAL)\n\t{\n\t\tfloat eta = textureCoordinateGenerator .parameter [0];\n\t\tvec3  eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);\n\n\t\treturn vec4 (refract (normalize (lV - eye), -lN, eta), 1.0);\n\t}\n\n\treturn t;\n}\n\nvec4\ngetTextureColor ()\n{\n\tvec4 texCoords = getTextureCoordinate (x3d_TextureCoordinateGenerator [0], t);\n\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (texCoords));\n\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - texCoords .s, texCoords .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (texCoords));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - texCoords .s, texCoords .t, texCoords .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tfloat visibilityRange = x3d_Fog .fogCoord ? fogDepth : x3d_Fog .visibilityRange;\n\n\tif (visibilityRange <= 0.0)\n\t\treturn 1.0;\n\n\tfloat dV = length (x3d_Fog .matrix * v);\n\n\tif (dV >= visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (visibilityRange - dV) / visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_TextureType [0] != x3d_None)\n\t{\n\t\tif (x3d_Lighting)\n\t\t{\n\t\t\tfinalColor *= getTextureColor ();\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t\tfinalColor *= getTextureColor ();\n\t\t\telse\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = getFogColor (finalColor .rgb);\n\tgl_FragColor .a   = finalColor .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/Gouraud.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nvarying float fogDepth;    // fog depth\nvarying vec4  frontColor;  // color\nvarying vec4  backColor;   // color\nvarying vec4  texCoord0;   // texCoord0\nvarying vec4  texCoord1;   // texCoord1\nvarying vec3  normal;      // normal vector at this point on geometry\nvarying vec3  vertex;      // point on geometry\nvarying vec3  localNormal; // normal vector at this point on geometry in local coordinates\nvarying vec3  localVertex; // point on geometry in local coordinates\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\n#pragma X3D include "Include/Texture.h"\n#pragma X3D include "Include/Fog.h"\n#pragma X3D include "Include/ClipPlanes.h"\n\nvoid\nmain ()\n{\n \tclip ();\n\n\tvec4 finalColor = gl_FrontFacing ? frontColor : backColor;\n\n\tif (x3d_NumTextures > 0)\n\t{\n\t\tif (x3d_Lighting)\n\t\t{\n\t\t\tfinalColor = getTextureColor (finalColor, vec4 (1.0));\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_ColorMaterial)\n\t\t\t{\n\t\t\t\tfinalColor = getTextureColor (finalColor, vec4 (1.0));\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tfinalColor = getTextureColor (vec4 (1.0), vec4 (1.0));\n\t\t\t}\n\t\t}\n\t}\n\n\tgl_FragColor .rgb = getFogColor (finalColor .rgb);\n\tgl_FragColor .a   = finalColor .a;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Phong.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute float x3d_FogDepth;\nattribute vec4  x3d_Color;\nattribute vec4  x3d_TexCoord;\nattribute vec3  x3d_Normal;\nattribute vec4  x3d_Vertex;\n\nvarying float fogDepth; // fog depth\nvarying vec4  C;        // color\nvarying vec4  t;        // texCoord\nvarying vec3  vN;       // normalized normal vector at this point on geometry\nvarying vec3  v;        // point on geometry\nvarying vec3  lN;       // normal vector at this point on geometry in local coordinates\nvarying vec3  lV;       // point on geometry in local coordinates\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tfogDepth = x3d_FogDepth;\n\tC        = x3d_Color;\n\tt        = x3d_TextureMatrix [0] * x3d_TexCoord;\n\tvN       = x3d_NormalMatrix * x3d_Normal;\n\tv        = p .xyz;\n\tlN       = x3d_Normal;\n\tlV       = vec3 (x3d_Vertex);\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/Phong.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_TextureMatrix [x3d_MaxTextures];\nuniform mat3 x3d_NormalMatrix;\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false\n\nattribute float x3d_FogDepth;\nattribute vec4  x3d_Color;\nattribute vec4  x3d_TexCoord0;\nattribute vec4  x3d_TexCoord1;\nattribute vec3  x3d_Normal;\nattribute vec4  x3d_Vertex;\n\nvarying float fogDepth;    // fog depth\nvarying vec4  color;       // color\nvarying vec4  texCoord0;   // texCoord0\nvarying vec4  texCoord1;   // texCoord1\nvarying vec3  normal;      // normalized normal vector at this point on geometry\nvarying vec3  vertex;      // point on geometry\nvarying vec3  localNormal; // normal vector at this point on geometry in local coordinates\nvarying vec3  localVertex; // point on geometry in local coordinates\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nvarying float depth;\n#endif\n\nvoid\nmain ()\n{\n\tgl_PointSize = x3d_LinewidthScaleFactor;\n\n\tvec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tfogDepth    = x3d_FogDepth;\n\tcolor       = x3d_Color;\n\ttexCoord0   = x3d_TextureMatrix [0] * x3d_TexCoord0;\n\ttexCoord1   = x3d_TextureMatrix [1] * x3d_TexCoord1;\n\tnormal      = x3d_NormalMatrix * x3d_Normal;\n\tvertex      = position .xyz;\n\tlocalNormal = x3d_Normal;\n\tlocalVertex = vec3 (x3d_Vertex);\n\n\tgl_Position = x3d_ProjectionMatrix * position;\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\tdepth = 1.0 + gl_Position .w;\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Phong.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nuniform int         x3d_NumTextures;\nuniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture\nuniform sampler2D   x3d_Texture2D [x3d_MaxTextures];\nuniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];\n\nuniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];  \n\nuniform x3d_FogParameters x3d_Fog;\n\nvarying float fogDepth; // fog depth\nvarying vec4  C;        // color\nvarying vec4  t;        // texCoord\nvarying vec3  vN;       // normal vector at this point on geometry\nvarying vec3  v;        // point on geometry\nvarying vec3  lN;       // normal vector at this point on geometry in local coordinates\nvarying vec3  lV;       // point on geometry in local coordinates\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\n#pragma X3D include "Include/Shadow.h"\n#pragma X3D include "Include/Perlin.h"\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetTextureCoordinate (x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, in vec4 t)\n{\n\tint mode = textureCoordinateGenerator .mode;\n\n\tif (mode == x3d_None)\n\t{\n\t\treturn t;\n\t}\n\telse if (mode == X3D_SPHERE)\n\t{\n\t\treturn vec4 (vN .x / 2.0 + 0.5, vN .y / 2.0 + 0.5, 0.0, 1.0);\n\t}\n\telse if (mode == X3D_CAMERASPACENORMAL)\n\t{\n\t\treturn vec4 (vN, 1.0);\n\t}\n\telse if (mode == X3D_CAMERASPACEPOSITION)\n\t{\n\t\treturn vec4 (v, 1.0);\n\t}\n\telse if (mode == X3D_CAMERASPACEREFLECTIONVECTOR)\n\t{\n\t\treturn vec4 (reflect (normalize (v), -vN), 1.0);\n\t}\n\telse if (mode == X3D_SPHERE_LOCAL)\n\t{\n\t\treturn vec4 (lN .x / 2.0 + 0.5, lN .y / 2.0 + 0.5, 0.0, 1.0);\n\t}\n\telse if (mode == X3D_COORD)\n\t{\n\t\treturn vec4 (lV, 1.0);\n\t}\n\telse if (mode == X3D_COORD_EYE)\n\t{\n\t\treturn vec4 (v, 1.0);\n\t}\n\telse if (mode == X3D_NOISE)\n\t{\n\t\tvec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);\n\t\tvec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);\n\n\t\treturn vec4 (perlin (lV * scale + translation), 1.0);\n\t}\n\telse if (mode == X3D_NOISE_EYE)\n\t{\n\t\tvec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);\n\t\tvec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);\n\n\t\treturn vec4 (perlin (v * scale + translation), 1.0);\n\t}\n\telse if (mode == X3D_SPHERE_REFLECT)\n\t{\n\t\tfloat eta = textureCoordinateGenerator .parameter [0];\n\n\t\treturn vec4 (refract (normalize (v), -vN, eta), 1.0);\n\t}\n\telse if (mode == X3D_SPHERE_REFLECT_LOCAL)\n\t{\n\t\tfloat eta = textureCoordinateGenerator .parameter [0];\n\t\tvec3  eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);\n\n\t\treturn vec4 (refract (normalize (lV - eye), -lN, eta), 1.0);\n\t}\n\n\treturn t;\n}\n\nvec4\ngetTextureColor ()\n{\n\tvec4 texCoords = getTextureCoordinate (x3d_TextureCoordinateGenerator [0], t);\n\n\tif (x3d_TextureType [0] == x3d_TextureType2D)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn texture2D (x3d_Texture2D [0], vec2 (texCoords));\n\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn texture2D (x3d_Texture2D [0], vec2 (1.0 - texCoords .s, texCoords .t));\n\t}\n\n \tif (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)\n\t{\n\t\tif (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)\n\t\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (texCoords));\n\t\t\n\t\t// If dimension is x3d_Geometry2D the texCoords must be flipped.\n\t\treturn textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - texCoords .s, texCoords .t, texCoords .z));\n\t}\n \n\treturn vec4 (1.0, 1.0, 1.0, 1.0);\n}\n\nvec4\ngetMaterialColor (const in x3d_MaterialParameters material)\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? vN : -vN);\n\t\tvec3  V  = normalize (-v); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (v);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tvec3  diffuseFactor = vec3 (1.0, 1.0, 1.0);\n\t\tfloat alpha         = 1.0 - material .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * C .rgb;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = C .rgb;\n\n\t\t\talpha *= C .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tdiffuseFactor  = T .rgb * material .diffuseColor;\n\t\t\t\talpha         *= T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = material .diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\tfor (int i = 0; i < x3d_MaxLights; i ++)\n\t\t{\n\t\t\tif (i == x3d_NumLights)\n\t\t\t\tbreak;\n\n\t\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\t\tvec3  vL = light .location - v; // Light to fragment\n\t\t\tfloat dL = length (light .matrix * vL);\n\t\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= light .radius)\n\t\t\t{\n\t\t\t\tvec3 d = light .direction;\n\t\t\t\tvec3 c = light .attenuation;\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor          = light .color * light .ambientIntensity * ambientTerm;\n\t\t\t\tvec3  diffuseSpecularColor  = light .color * light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\t\t#ifdef X3D_SHADOWS\n\t\t\t\t\tif (lightAngle > 0.0)\n\t\t\t\t\t\tdiffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));\n\t\t\t\t#endif\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (ambientColor + diffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += material .emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0, 1.0, 1.0, 1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor ();\n\n\t\t\t\tfinalColor = T * C;\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = C;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_TextureType [0] != x3d_None)\n\t\t\t\tfinalColor = getTextureColor ();\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tfloat visibilityRange = x3d_Fog .fogCoord ? fogDepth : x3d_Fog .visibilityRange;\n\n\tif (visibilityRange <= 0.0)\n\t\treturn 1.0;\n\n\tfloat dV = length (x3d_Fog .matrix * v);\n\n\tif (dV >= visibilityRange)\n\t\treturn 0.0;\n\n\tif (x3d_Fog .type == x3d_LinearFog)\n\t\treturn (visibilityRange - dV) / visibilityRange;\n\n\tif (x3d_Fog .type == x3d_ExponentialFog)\n\t\treturn exp (-dV / (visibilityRange - dV));\n\n\treturn 1.0;\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\n// DEBUG\n//uniform ivec4 x3d_Viewport;\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\tgl_FragColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n\n\t// DEBUG\n\t#ifdef X3D_SHADOWS\n\t//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;\n\t//gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);\n\t#endif\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//gl_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), gl_FragColor .rgb, 0.5);\n\t#endif\n}\n';});
+define('text!x_ite/Browser/Shaders/Phong.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n#extension GL_EXT_frag_depth : enable\n#endif\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int x3d_GeometryType;\n\nuniform float x3d_LinewidthScaleFactor;\nuniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false\nuniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\nuniform bool x3d_SeparateBackColor;\nuniform x3d_MaterialParameters x3d_FrontMaterial;  \nuniform x3d_MaterialParameters x3d_BackMaterial;        \n\nvarying float fogDepth;    // fog depth\nvarying vec4  color;       // color\nvarying vec4  texCoord0;   // texCoord0\nvarying vec4  texCoord1;   // texCoord1\nvarying vec3  normal;      // normal vector at this point on geometry\nvarying vec3  vertex;      // point on geometry\nvarying vec3  localNormal; // normal vector at this point on geometry in local coordinates\nvarying vec3  localVertex; // point on geometry in local coordinates\n\n#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\nuniform float x3d_LogarithmicFarFactor1_2;\nvarying float depth;\n#endif\n\n#pragma X3D include "Include/Shadow.h"\n#pragma X3D include "Include/Texture.h"\n#pragma X3D include "Include/Fog.h"\n#pragma X3D include "Include/ClipPlanes.h"\n\nfloat\ngetSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n{\n\tfloat spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n\t\n\tif (spotAngle >= cutOffAngle)\n\t\treturn 0.0;\n\telse if (spotAngle <= beamWidth)\n\t\treturn 1.0;\n\n\treturn (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n}\n\nvec4\ngetMaterialColor (const in x3d_MaterialParameters material)\n{\n\tif (x3d_Lighting)\n\t{\n\t\tvec3  N  = normalize (gl_FrontFacing ? normal : -normal);\n\t\tvec3  V  = normalize (-vertex); // normalized vector from point on geometry to viewer\'s position\n\t\tfloat dV = length (vertex);\n\n\t\t// Calculate diffuseFactor & alpha\n\n\t\tvec3  diffuseFactor = vec3 (1.0);\n\t\tfloat alpha         = 1.0 - material .transparency;\n\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_NumTextures > 0)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor (vec4 (color .rgb, color .a * alpha), vec4 (material .specularColor, alpha));\n\n\t\t\t\tdiffuseFactor = T .rgb;\n\t\t\t\talpha         = T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = color .rgb;\n\n\t\t\talpha *= color .a;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_NumTextures > 0)\n\t\t\t{\n\t\t\t\tvec4 T = getTextureColor (vec4 (material .diffuseColor, alpha), vec4 (material .specularColor, alpha));\n\n\t\t\t\tdiffuseFactor = T .rgb;\n\t\t\t\talpha         = T .a;\n\t\t\t}\n\t\t\telse\n\t\t\t\tdiffuseFactor = material .diffuseColor;\n\t\t}\n\n\t\tvec3 ambientTerm = diffuseFactor * material .ambientIntensity;\n\n\t\t// Apply light sources\n\n\t\tvec3 finalColor = vec3 (0.0, 0.0, 0.0);\n\n\t\tfor (int i = 0; i < x3d_MaxLights; i ++)\n\t\t{\n\t\t\tif (i == x3d_NumLights)\n\t\t\t\tbreak;\n\n\t\t\tx3d_LightSourceParameters light = x3d_LightSource [i];\n\n\t\t\tvec3  vL = light .location - vertex; // Light to fragment\n\t\t\tfloat dL = length (light .matrix * vL);\n\t\t\tbool  di = light .type == x3d_DirectionalLight;\n\n\t\t\tif (di || dL <= light .radius)\n\t\t\t{\n\t\t\t\tvec3 d = light .direction;\n\t\t\t\tvec3 c = light .attenuation;\n\t\t\t\tvec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n\t\t\t\tvec3 H = normalize (L + V);             // Specular term\n\n\t\t\t\tfloat lightAngle     = dot (N, L);      // Angle between normal and light ray.\n\t\t\t\tvec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n\t\t\t\tfloat specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;\n\t\t\t\tvec3  specularTerm   = material .specularColor * specularFactor;\n\n\t\t\t\tfloat attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n\t\t\t\tfloat spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n\t\t\t\tfloat attenuationSpotFactor = attenuationFactor * spotFactor;\n\t\t\t\tvec3  ambientColor          = light .color * light .ambientIntensity * ambientTerm;\n\t\t\t\tvec3  diffuseSpecularColor  = light .color * light .intensity * (diffuseTerm + specularTerm);\n\n\t\t\t\t#ifdef X3D_SHADOWS\n\t\t\t\t\tif (lightAngle > 0.0)\n\t\t\t\t\t\tdiffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));\n\t\t\t\t#endif\n\n\t\t\t\tfinalColor += attenuationSpotFactor * (ambientColor + diffuseSpecularColor);\n\t\t\t}\n\t\t}\n\n\t\tfinalColor += material .emissiveColor;\n\n\t\treturn vec4 (finalColor, alpha);\n\t}\n\telse\n\t{\n\t\tvec4 finalColor = vec4 (1.0);\n\t\n\t\tif (x3d_ColorMaterial)\n\t\t{\n\t\t\tif (x3d_NumTextures > 0)\n\t\t\t{\n\t\t\t\tfinalColor = getTextureColor (color, vec4 (1.0));\n\t\t\t}\n\t\t\telse\n\t\t\t\tfinalColor = color;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (x3d_NumTextures > 0)\n\t\t\t\tfinalColor = getTextureColor (vec4 (1.0), vec4 (1.0));\n\t\t}\n\n\t\treturn finalColor;\n\t}\n}\n\n// DEBUG\n//uniform ivec4 x3d_Viewport;\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tbool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;\n\n\tgl_FragColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);\n\tgl_FragColor .rgb = getFogColor (gl_FragColor .rgb);\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html\n\tif (x3d_LogarithmicFarFactor1_2 > 0.0)\n\t\tgl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;\n\telse\n\t\tgl_FragDepthEXT = gl_FragCoord .z;\n\t#endif\n\n\t// DEBUG\n\t#ifdef X3D_SHADOWS\n\t//gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;\n\t//gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);\n\t#endif\n\n\t#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER\n\t//gl_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), gl_FragColor .rgb, 0.5);\n\t#endif\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Depth.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Vertex;\n\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tv = p .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
+define('text!x_ite/Browser/Shaders/Depth.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Vertex;\n\nvarying vec3 vertex; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tvertex = position .xyz;\n\n\tgl_Position = x3d_ProjectionMatrix * position;\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Depth.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec3 v; // point on geometry\n\n#pragma X3D include "Include/Pack.h"\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
+define('text!x_ite/Browser/Shaders/Depth.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nvarying vec3 vertex; // point on geometry\n\n#pragma X3D include "Include/Pack.h"\n#pragma X3D include "Include/ClipPlanes.h"\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
+
+
+define('text!x_ite/Browser/Shaders/SamplerTest.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform sampler2D texture [2];\n\nvec4\ngetColor ()\n{\n\tvec4 textureColor = vec4 (0.0);\n\n\tfor (int i = 0; i < 2; ++ i)\n\t\ttextureColor += texture2D (texture [i], vec2 (0.0));\n\n\treturn textureColor;\n}\n\nvoid\nmain ()\n{\n\tgl_FragColor = getColor ();\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -58045,84 +58375,103 @@ function (TextureBuffer,
 {
 "use strict";
 
-	var normals = [
-		0, 0, 1,
-		0, 0, 1,
-		0, 0, 1,
-		0, 0, 1,
-		0, 0, 1,
-		0, 0, 1,
-	];
-
-	var vertices = [
-		 2,  2, 0, 1,
-		-2,  2, 0, 1,
-		-2, -2, 0, 1,
-		 2,  2, 0, 1,
-		-2, -2, 0, 1,
-		 2, -2, 0, 1,
-	];
-
-	function verifyShader (browser, shaderNode)
+	var ShaderTest =
 	{
-		var
-			gl           = browser .getContext (),
-			frameBuffer  = new TextureBuffer (browser, 16, 16),
-         normalBuffer = gl .createBuffer (),
-         vertexBuffer = gl .createBuffer ();
+		compile: function (gl, source, type)
+		{
+			var shader = gl .createShader (gl [type]);
 
-		frameBuffer .bind ();
-		shaderNode  .enable (gl);
-		gl .viewport (0, 0, 16, 16);
+			gl .shaderSource (shader, source);
+			gl .compileShader (shader);
 
-		gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
-		gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
-		gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
-		gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
+			var valid = gl .getShaderParameter (shader, gl .COMPILE_STATUS);
 
-		// Set clip planes and lights to none.
-		shaderNode .setShaderObjects (gl, [ ]);
+			if (! valid)
+				console .log (gl .getShaderInfoLog (shader));
 
-		gl .uniform1i (shaderNode .x3d_FogType,       0);
-		gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
-		gl .uniform1i (shaderNode .x3d_Lighting,      true);
+			return valid;
+		},
+		verify: (function ()
+		{
+			var normals = [
+				0, 0, 1,
+				0, 0, 1,
+				0, 0, 1,
+				0, 0, 1,
+				0, 0, 1,
+				0, 0, 1,
+			];
+		
+			var vertices = [
+				 2,  2, 0, 1,
+				-2,  2, 0, 1,
+				-2, -2, 0, 1,
+				 2,  2, 0, 1,
+				-2, -2, 0, 1,
+				 2, -2, 0, 1,
+			];
 
-		gl .uniform1i (shaderNode .x3d_SeparateBackColor, false);
-		gl .uniform1f (shaderNode .x3d_AmbientIntensity,  0);
-		gl .uniform3f (shaderNode .x3d_DiffuseColor,      1, 0, 0);
-		gl .uniform3f (shaderNode .x3d_SpecularColor,     1, 0, 0);
-		gl .uniform3f (shaderNode .x3d_EmissiveColor,     1, 0, 0);
-		gl .uniform1f (shaderNode .x3d_Shininess,         0);
-		gl .uniform1f (shaderNode .x3d_Transparency,      0);
+			return function (browser, shaderNode)
+			{
+				var
+					gl           = browser .getContext (),
+					frameBuffer  = new TextureBuffer (browser, 16, 16),
+		         normalBuffer = gl .createBuffer (),
+		         vertexBuffer = gl .createBuffer ();
+		
+				frameBuffer .bind ();
+				shaderNode  .enable (gl);
+				gl .viewport (0, 0, 16, 16);
+		
+				gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
+				gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
+				gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
+				gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
+		
+				// Set clip planes and lights to none.
+				shaderNode .setShaderObjects (gl, [ ]);
+		
+				gl .uniform1i (shaderNode .x3d_FogType,       0);
+				gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
+				gl .uniform1i (shaderNode .x3d_Lighting,      true);
+		
+				gl .uniform1i (shaderNode .x3d_SeparateBackColor, false);
+				gl .uniform1f (shaderNode .x3d_AmbientIntensity,  0);
+				gl .uniform3f (shaderNode .x3d_DiffuseColor,      1, 0, 0);
+				gl .uniform3f (shaderNode .x3d_SpecularColor,     1, 0, 0);
+				gl .uniform3f (shaderNode .x3d_EmissiveColor,     1, 0, 0);
+				gl .uniform1f (shaderNode .x3d_Shininess,         0);
+				gl .uniform1f (shaderNode .x3d_Transparency,      0);
+		
+				gl .uniform1i (shaderNode .x3d_NumTextures, 0);
+		
+				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, new Float32Array (Camera .ortho (-1, 1, -1, 1, -1, 1, new Matrix4 ())));
+				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, new Float32Array (new Matrix4 ()));
+				gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (new Matrix3 ()));
+		
+				gl .disable (gl .BLEND);
+				gl .frontFace (gl .CCW);
+				gl .enable (gl .CULL_FACE);
+				gl .cullFace (gl .BACK);
+		
+				shaderNode .enableNormalAttribute (gl, normalBuffer);
+				shaderNode .enableVertexAttribute (gl, vertexBuffer);
+		
+				gl .drawArrays (gl .TRIANGLES, 0, 6);
+		
+				var data = frameBuffer .readPixels ();
+		
+				frameBuffer .unbind ();
+		
+				shaderNode .disableNormalAttribute (gl, normalBuffer);
+				shaderNode .disable                (gl);
+		
+				return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
+			};
+		})(),
+	};
 
-		shaderNode .textureTypeArray [0] = 0;
-		gl .uniform1iv (shaderNode .x3d_TextureType, shaderNode .textureTypeArray);
-
-		gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, new Float32Array (Camera .ortho (-1, 1, -1, 1, -1, 1, new Matrix4 ())));
-		gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, new Float32Array (new Matrix4 ()));
-		gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (new Matrix3 ()));
-
-		gl .disable (gl .BLEND);
-		gl .frontFace (gl .CCW);
-		gl .enable (gl .CULL_FACE);
-		gl .cullFace (gl .BACK);
-
-		shaderNode .enableNormalAttribute (gl, normalBuffer);
-		shaderNode .enableVertexAttribute (gl, vertexBuffer);
-
-		gl .drawArrays (gl .TRIANGLES, 0, 6);
-
-		var data = frameBuffer .readPixels ();
-
-		frameBuffer .unbind ();
-
-		shaderNode .disableNormalAttribute (gl, normalBuffer);
-		shaderNode .disable                (gl);
-
-		return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
-	}
-
-	return verifyShader;
+	return ShaderTest;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -58187,6 +58536,7 @@ define ('x_ite/Browser/Shaders/X3DShadersContext',[
 	"text!x_ite/Browser/Shaders/Phong.fs",
 	"text!x_ite/Browser/Shaders/Depth.vs",
 	"text!x_ite/Browser/Shaders/Depth.fs",
+	"text!x_ite/Browser/Shaders/SamplerTest.fs",
 	"x_ite/Browser/Shaders/ShaderTest",
 ],
 function (Shading,
@@ -58201,7 +58551,8 @@ function (Shading,
           phongFS,
           depthVS,
           depthFS,
-          verifyShader)
+          samplerTest,
+          ShaderTest)
 {
 "use strict";
 
@@ -58216,6 +58567,9 @@ function (Shading,
 		{
 			// Create shaders.
 	
+			// GL_ARB_gpu_shader5
+			this .multiTexturing = ShaderTest .compile (this .getContext (), samplerTest, "FRAGMENT_SHADER");
+
 			this .depthShader   = this .createShader ("DepthShader",     depthVS,     depthFS,     false);
 			this .pointShader   = this .createShader ("PointShader",     wireframeVS, pointSetFS,  false);
 			this .lineShader    = this .createShader ("WireframeShader", wireframeVS, wireframeFS, false);
@@ -58232,6 +58586,10 @@ function (Shading,
 	
 			this .phongShader  .isValid_ .addInterest ("set_phong_shader_valid__",  this);
 			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
+		},
+		getMultiTexturing: function ()
+		{
+			return this .multiTexturing;
 		},
 		getShadingLanguageVersion: function ()
 		{
@@ -58354,7 +58712,7 @@ function (Shading,
 		},
 		set_phong_shader_valid__: function (valid)
 		{
-			if (valid .getValue () && verifyShader (this, this .phongShader))
+			if (valid .getValue () && ShaderTest .verify (this, this .phongShader))
 				return;
 
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
@@ -58363,7 +58721,7 @@ function (Shading,
 		},
 		set_shadow_shader_valid__: function (valid)
 		{
-			if (valid .getValue () && verifyShader (this, this .shadowShader))
+			if (valid .getValue () && ShaderTest .verify (this, this .shadowShader))
 				return;
 
 			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
@@ -59128,8 +59486,6 @@ function (Fields,
 			if (this .textureNode)
 				this .textureNode .transparent_ .addInterest ("set_transparent__", this);
 
-			this .generatedCubeMapTexture = X3DCast (X3DConstants .GeneratedCubeMapTexture, this .texture_);
-
 			this .set_transparent__ ();
 		},
 		set_textureTransform__: function ()
@@ -59212,8 +59568,8 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			if (this .generatedCubeMapTexture)
-				this .generatedCubeMapTexture .traverse (type, renderObject);
+			if (this .textureNode)
+				this .textureNode .traverse (type, renderObject);
 
 			this .shaderNode .traverse (type, renderObject);
 		},
@@ -60131,16 +60487,10 @@ function (Fields,
 {
 "use strict";
 
-	const ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
-
-	const
-		point           = new Vector3 (0, 0, 0),
-		clipPoint       = new Vector3 (0, 0, 0),
-		modelViewMatrix = new Matrix4 (),
-		invMatrix       = new Matrix4 ();
+	var ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
 
 	// Box normals for bbox / line intersection.
-	const boxNormals = [
+	var boxNormals = [
 		new Vector3 (0,  0,  1), // front
 		new Vector3 (0,  0, -1), // back
 		new Vector3 (0,  1,  0), // top
@@ -60175,7 +60525,6 @@ function (Fields,
 		this .attribNodes           = [ ];
 		this .attribs               = [ ];
 		this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
-		this .texCoordParams        = { min: new Vector3 (0, 0, 0) };
 		this .multiTexCoords        = [ ];
 		this .texCoords             = X3DGeometryNode .createArray ();
 		this .fogDepths             = X3DGeometryNode .createArray ();
@@ -60228,12 +60577,6 @@ function (Fields,
 	X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DGeometryNode,
-		intersection: new Vector3 (0, 0, 0),
-		uvt: { u: 0, v: 0, t: 0 },
-		v0: new Vector3 (0, 0, 0),
-		v1: new Vector3 (0, 0, 0),
-		v2: new Vector3 (0, 0, 0),
-		normal: new Vector3 (0, 0, 0),
 		setup: function ()
 		{
 			X3DNode .prototype .setup .call (this);
@@ -60401,72 +60744,82 @@ function (Fields,
 		},
 		buildTexCoords: function ()
 		{
-			var
-				p         = this .getTexCoordParams (),
-				min       = p .min,
-				Sindex    = p .Sindex,
-				Tindex    = p .Tindex,
-				Ssize     = p .Ssize,
-				S         = min [Sindex],
-				T         = min [Tindex],
-				texCoords = this .texCoords,
-				vertices  = this .vertices .getValue ();
-
-			for (var i = 0, length = vertices .length; i < length; i += 4)
+			var texCoords = this .texCoords;
+			
+			if (texCoords .length === 0)
 			{
-				texCoords .push ((vertices [i + Sindex] - S) / Ssize,
-				                 (vertices [i + Tindex] - T) / Ssize,
-				                 0,
-				                 1);
+				var
+					p         = this .getTexCoordParams (),
+					min       = p .min,
+					Sindex    = p .Sindex,
+					Tindex    = p .Tindex,
+					Ssize     = p .Ssize,
+					S         = min [Sindex],
+					T         = min [Tindex],
+					vertices  = this .vertices .getValue ();
+	
+				for (var i = 0, length = vertices .length; i < length; i += 4)
+				{
+					texCoords .push ((vertices [i + Sindex] - S) / Ssize,
+					                 (vertices [i + Tindex] - T) / Ssize,
+					                 0,
+					                 1);
+				}
+
+				texCoords .shrinkToFit ();
 			}
 
-			this .multiTexCoords .push (texCoords);
+			return texCoords;
 		},
-		getTexCoordParams: function ()
+		getTexCoordParams: (function ()
 		{
-			var
-				p     = this .texCoordParams,
-				bbox  = this .getBBox (),
-				size  = bbox .size,
-				Xsize = size .x,
-				Ysize = size .y,
-				Zsize = size .z;
+			var texCoordParams = { min: new Vector3 (0, 0, 0) };
 
-			p .min .assign (bbox .center) .subtract (size .divide (2));
-
-			if ((Xsize >= Ysize) && (Xsize >= Zsize))
+			return function ()
 			{
-				// X size largest
-				p .Ssize = Xsize; p .Sindex = 0;
-
-				if (Ysize >= Zsize)
-					p .Tindex = 1;
+				var
+					bbox  = this .getBBox (),
+					size  = bbox .size,
+					Xsize = size .x,
+					Ysize = size .y,
+					Zsize = size .z;
+	
+				texCoordParams .min .assign (bbox .center) .subtract (size .divide (2));
+	
+				if ((Xsize >= Ysize) && (Xsize >= Zsize))
+				{
+					// X size largest
+					texCoordParams .Ssize = Xsize; texCoordParams .Sindex = 0;
+	
+					if (Ysize >= Zsize)
+						texCoordParams .Tindex = 1;
+					else
+						texCoordParams .Tindex = 2;
+				}
+				else if ((Ysize >= Xsize) && (Ysize >= Zsize))
+				{
+					// Y size largest
+					texCoordParams .Ssize = Ysize; texCoordParams .Sindex = 1;
+	
+					if (Xsize >= Zsize)
+						texCoordParams .Tindex = 0;
+					else
+						texCoordParams .Tindex = 2;
+				}
 				else
-					p .Tindex = 2;
-			}
-			else if ((Ysize >= Xsize) && (Ysize >= Zsize))
-			{
-				// Y size largest
-				p .Ssize = Ysize; p .Sindex = 1;
-
-				if (Xsize >= Zsize)
-					p .Tindex = 0;
-				else
-					p .Tindex = 2;
-			}
-			else
-			{
-				// Z is the largest
-				p .Ssize = Zsize; p .Sindex = 2;
-
-				if (Xsize >= Ysize)
-					p .Tindex = 0;
-				else
-					p .Tindex = 1;
-			}
-
-			return p;
-		},
+				{
+					// Z is the largest
+					texCoordParams .Ssize = Zsize; texCoordParams .Sindex = 2;
+	
+					if (Xsize >= Ysize)
+						texCoordParams .Tindex = 0;
+					else
+						texCoordParams .Tindex = 1;
+				}
+	
+				return texCoordParams;
+			};
+		})(),
 		refineNormals: function (normalIndex, normals, creaseAngle)
 		{
 			if (creaseAngle === 0)
@@ -60516,182 +60869,199 @@ function (Fields,
 		{
 			// Apply sceen nodes transformation in place here.
 		},
-		intersectsLine: function (line, clipPlanes, modelViewMatrix_, intersections)
-		{
-			try
-			{
-				var intersected = false;
-
-				if (this .intersectsBBox (line))
-				{
-					this .transformLine   (line);                                       // Apply screen transformations from screen nodes.
-					this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
-
-					var
-						texCoords  = this .multiTexCoords [0] .getValue (),
-						normals    = this .normals .getValue (),
-						vertices   = this .vertices .getValue (),
-						uvt        = this .uvt,
-						v0         = this .v0,
-						v1         = this .v1,
-						v2         = this .v2;
-
-					for (var i = 0, length = this .vertexCount; i < length; i += 3)
-					{
-						var i4 = i * 4;
-
-						v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-						if (line .intersectsTriangle (v0, v1, v2, uvt))
-						{
-							// Get barycentric coordinates.
-
-							var
-								u = uvt .u,
-								v = uvt .v,
-								t = uvt .t;
-
-							// Determine vectors for X3DPointingDeviceSensors.
-
-							var point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
-							                         t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
-							                         t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
-
-							if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-								continue;
-
-							var texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
-							                            t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
-
-							var i3 = i * 3;
-
-							var normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-							                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-							                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
-
-							intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
-							intersected = true;
-						}
-					}
-				}
-
-				return intersected;
-			}
-			catch (error)
-			{
-				console .log (error);
-				return false;
-			}
-		},
-		intersectsBBox: function (line)
+		intersectsLine: (function ()
 		{
 			var
-				planes       = this .planes,
-				min          = this .min,
-				max          = this .max,
-				minX         = min .x,
-				maxX         = max .x,
-				minY         = min .y,
-				maxY         = max .y,
-				minZ         = min .z,
-				maxZ         = max .z,
-				intersection = this .intersection;
+				modelViewMatrix = new Matrix4 (),
+				uvt             = { u: 0, v: 0, t: 0 },
+				v0              = new Vector3 (0, 0, 0),
+				v1              = new Vector3 (0, 0, 0),
+				v2              = new Vector3 (0, 0, 0),
+				clipPoint       = new Vector3 (0, 0, 0);
 
-		   // front
-			if (planes [0] .intersectsLine (line, intersection))
+			return function (line, clipPlanes, modelViewMatrix_, intersections)
 			{
-				if (intersection .x >= minX && intersection .x <= maxX &&
-				    intersection .y >= minY && intersection .y <= maxY)
-					return true;
-			}
-
-			// back
-			if (planes [1] .intersectsLine (line, intersection))
-			{
-				if (intersection .x >= minX && intersection .x <= maxX &&
-				    intersection .y >= minY && intersection .y <= maxY)
-					return true;
-			}
-
-			// top
-			if (planes [2] .intersectsLine (line, intersection))
-			{
-				if (intersection .x >= minX && intersection .x <= maxX &&
-				    intersection .z >= minZ && intersection .z <= maxZ)
-					return true;
-			}
-
-			// bottom
-			if (planes [3] .intersectsLine (line, intersection))
-			{
-				if (intersection .x >= minX && intersection .x <= maxX &&
-				    intersection .z >= minZ && intersection .z <= maxZ)
-					return true;
-			}
-
-			// right
-			if (planes [4] .intersectsLine (line, intersection))
-			{
-				if (intersection .y >= minY && intersection .y <= maxY &&
-				    intersection .z >= minZ && intersection .z <= maxZ)
-					return true;
-			}
-
-			return false;
-		},
-		intersectsBox: function (box, clipPlanes, modelViewMatrix)
-		{
-			try
-			{
-				if (box .intersectsBox (this .bbox))
+				try
 				{
-					box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
-
-					this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
-
-					var
-						vertices = this .vertices .getValue (),
-						v0       = this .v0,
-						v1       = this .v1,
-						v2       = this .v2;
-		
-					for (var i = 0, length = this .vertexCount; i < length; i += 3)
+					var intersected = false;
+	
+					if (this .intersectsBBox (line))
 					{
-						var i4 = i * 4;
-		
-						v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-						v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-						v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-						if (box .intersectsTriangle (v0, v1, v2))
+						this .transformLine   (line);                                       // Apply screen transformations from screen nodes.
+						this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
+	
+						var
+							texCoords  = this .multiTexCoords [0] .getValue (),
+							normals    = this .normals .getValue (),
+							vertices   = this .vertices .getValue ();
+	
+						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 						{
-							if (clipPlanes .length)
+							var i4 = i * 4;
+	
+							v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+							v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
+							v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
+	
+							if (line .intersectsTriangle (v0, v1, v2, uvt))
 							{
-								if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
+								// Get barycentric coordinates.
+	
+								var
+									u = uvt .u,
+									v = uvt .v,
+									t = uvt .t;
+	
+								// Determine vectors for X3DPointingDeviceSensors.
+	
+								var point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+								                         t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
+								                         t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
+	
+								if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
 									continue;
-				
-								if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
-									continue;
-				
-								if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
-									continue;
+	
+								var texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
+								                            t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
+	
+								var i3 = i * 3;
+	
+								var normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
+								                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+								                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+	
+								intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
+								intersected = true;
 							}
-		
-						   return true;
 						}
-				   }
+					}
+	
+					return intersected;
 				}
+				catch (error)
+				{
+					console .log (error);
+					return false;
+				}
+			};
+		})(),
+		intersectsBBox: (function ()
+		{
+			var intersection = new Vector3 (0, 0, 0);
 
-			   return false;
-			}
-			catch (error)
+			return function (line)
 			{
-				console .log (error);
+				var
+					planes = this .planes,
+					min    = this .min,
+					max    = this .max,
+					minX   = min .x,
+					maxX   = max .x,
+					minY   = min .y,
+					maxY   = max .y,
+					minZ   = min .z,
+					maxZ   = max .z;
+	
+			   // front
+				if (planes [0] .intersectsLine (line, intersection))
+				{
+					if (intersection .x >= minX && intersection .x <= maxX &&
+					    intersection .y >= minY && intersection .y <= maxY)
+						return true;
+				}
+	
+				// back
+				if (planes [1] .intersectsLine (line, intersection))
+				{
+					if (intersection .x >= minX && intersection .x <= maxX &&
+					    intersection .y >= minY && intersection .y <= maxY)
+						return true;
+				}
+	
+				// top
+				if (planes [2] .intersectsLine (line, intersection))
+				{
+					if (intersection .x >= minX && intersection .x <= maxX &&
+					    intersection .z >= minZ && intersection .z <= maxZ)
+						return true;
+				}
+	
+				// bottom
+				if (planes [3] .intersectsLine (line, intersection))
+				{
+					if (intersection .x >= minX && intersection .x <= maxX &&
+					    intersection .z >= minZ && intersection .z <= maxZ)
+						return true;
+				}
+	
+				// right
+				if (planes [4] .intersectsLine (line, intersection))
+				{
+					if (intersection .y >= minY && intersection .y <= maxY &&
+					    intersection .z >= minZ && intersection .z <= maxZ)
+						return true;
+				}
+	
 				return false;
-			}
-		},
+			};
+		})(),
+		intersectsBox: (function ()
+		{
+			var
+				v0        = new Vector3 (0, 0, 0),
+				v1        = new Vector3 (0, 0, 0),
+				v2        = new Vector3 (0, 0, 0),
+				invMatrix = new Matrix4 (),
+				clipPoint = new Vector3 (0, 0, 0);
+
+			return function (box, clipPlanes, modelViewMatrix)
+			{
+				try
+				{
+					if (box .intersectsBox (this .bbox))
+					{
+						box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
+	
+						this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
+	
+						var vertices = this .vertices .getValue ();
+			
+						for (var i = 0, length = this .vertexCount; i < length; i += 3)
+						{
+							var i4 = i * 4;
+			
+							v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+							v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
+							v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
+	
+							if (box .intersectsTriangle (v0, v1, v2))
+							{
+								if (clipPlanes .length)
+								{
+									if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
+										continue;
+					
+									if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
+										continue;
+					
+									if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
+										continue;
+								}
+			
+							   return true;
+							}
+					   }
+					}
+	
+				   return false;
+				}
+				catch (error)
+				{
+					console .log (error);
+					return false;
+				}
+			};
+		})(),
 		set_live__: function ()
 		{
 			if (this .isLive () .getValue ())
@@ -60699,133 +61069,146 @@ function (Fields,
 			else
 				this .getBrowser () .getBrowserOptions () .Shading_ .removeInterest ("set_shading__", this);
 		},
-		set_shading__: function (shading)
+		set_shading__: (function ()
 		{
-			if (this .geometryType < 2)
-				return;
-			
-			var flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
+			var
+				v0     = new Vector3 (0, 0, 0),
+				v1     = new Vector3 (0, 0, 0),
+				v2     = new Vector3 (0, 0, 0),
+				normal = new Vector3 (0, 0, 0);
 
-			if (flatShading === this .flatShading)
-				return;
-
-			this .flatShading = flatShading;
-
-			// Generate flat normals if needed.
-
-			var gl = this .getBrowser () .getContext ();
-
-			if (flatShading)
+			return function (shading)
 			{
-				if (! this .flatNormals .length)
+				if (this .geometryType < 2)
+					return;
+				
+				var flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
+	
+				if (flatShading === this .flatShading)
+					return;
+	
+				this .flatShading = flatShading;
+	
+				// Generate flat normals if needed.
+	
+				var gl = this .getBrowser () .getContext ();
+	
+				if (flatShading)
 				{
-					var
-						cw          = this .frontFace === gl .CW,
-						flatNormals = this .flatNormals,
-						vertices    = this .vertices .getValue (),
-						v0          = this .v0,
-						v1          = this .v1,
-						v2          = this .v2,
-						normal      = this .normal;
-
-					for (var i = 0, length = vertices .length; i < length; i += 12)
+					if (! this .flatNormals .length)
 					{
-					   Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
-					                      v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
-					                      v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
-					                      normal);
-					   
-						if (cw)
-							normal .negate ();
-
-						flatNormals .push (normal .x, normal .y, normal .z,
-						                   normal .x, normal .y, normal .z,
-						                   normal .x, normal .y, normal .z);
+						var
+							cw          = this .frontFace === gl .CW,
+							flatNormals = this .flatNormals,
+							vertices    = this .vertices .getValue ();
+	
+						for (var i = 0, length = vertices .length; i < length; i += 12)
+						{
+						   Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
+						                      v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
+						                      v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
+						                      normal);
+						   
+							if (cw)
+								normal .negate ();
+	
+							flatNormals .push (normal .x, normal .y, normal .z,
+							                   normal .x, normal .y, normal .z,
+							                   normal .x, normal .y, normal .z);
+						}
+	
+						flatNormals .shrinkToFit ();
 					}
-
-					flatNormals .shrinkToFit ();
 				}
-			}
-
-			// Transfer normals.
-
-			gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-			gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
-		},
+	
+				// Transfer normals.
+	
+				gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+				gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
+			};
+		})(),
 		requestRebuild: function ()
 		{
 			this .rebuild_ .addEvent ();
 		},
-		rebuild: function ()
+		rebuild: (function ()
 		{
-			this .clear ();
-			this .build ();
+			var point = new Vector3 (0, 0, 0);
 
-			// Shrink arrays before transfer to graphics card.
-
-			for (var i = 0, length = this .attribs .length; i < length; ++ i)
-				this .attribs [i] .shrinkToFit ();
-
-			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
-				this .multiTexCoords [i] .shrinkToFit ();
-	
-			this .fogDepths .shrinkToFit ();
-			this .colors    .shrinkToFit ();
-			this .normals   .shrinkToFit ();
-			this .vertices  .shrinkToFit ();
-
-			// Determine bbox.
-
-			var
-				min      = this .min,
-				max      = this .max,
-				vertices = this .vertices .getValue ();
-
-			if (vertices .length)
+			return function ()
 			{
-				if (min .x === Number .POSITIVE_INFINITY)
+				this .clear ();
+				this .build ();
+
+				// Shrink arrays before transfer to graphics card.
+
+				for (var i = 0, length = this .attribs .length; i < length; ++ i)
+					this .attribs [i] .shrinkToFit ();
+
+				for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
+					this .multiTexCoords [i] .shrinkToFit ();
+
+				this .fogDepths .shrinkToFit ();
+				this .colors    .shrinkToFit ();
+				this .normals   .shrinkToFit ();
+				this .vertices  .shrinkToFit ();
+	
+				// Determine bbox.
+	
+				var
+					min      = this .min,
+					max      = this .max,
+					vertices = this .vertices .getValue ();
+	
+				if (vertices .length)
 				{
-					for (var i = 0, length = vertices .length; i < length; i += 4)
+					if (min .x === Number .POSITIVE_INFINITY)
 					{
-						point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
-	
-						min .min (point);
-						max .max (point);
+						for (var i = 0, length = vertices .length; i < length; i += 4)
+						{
+							point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
+		
+							min .min (point);
+							max .max (point);
+						}
 					}
-				}
-
-				this .bbox .setExtents (min, max);
-			}
-			else
-			{
-				this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
-			}
-
-			this .bbox_changed_ .addEvent ();
-
-			// Generate texCoord if needed.
-
-			if (this .geometryType > 1)
-			{
-				for (var i = 0; i < 5; ++ i)
-					this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-
-				if (this .multiTexCoords .length === 0)
-				{
-					this .buildTexCoords ();
 	
-					this .texCoords .shrinkToFit ();
+					this .bbox .setExtents (min, max);
 				}
-			}
+				else
+				{
+					this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
+				}
+	
+				this .bbox_changed_ .addEvent ();
+	
+				// Generate texCoord if needed.
+	
+				if (this .geometryType > 1)
+				{
+					for (var i = 0; i < 5; ++ i)
+						this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+	
+					if (this .multiTexCoords .length === 0)
+						this .multiTexCoords .push (this .buildTexCoords ());
 
-			// Upload normals or flat normals.
+					var last = this .multiTexCoords .length - 1;
 
-			this .set_shading__ (this .getBrowser () .getBrowserOptions () .Shading_);
+					for (var i = this .multiTexCoords .length, length = this .getBrowser () .getMaxTextures (); i < length; ++ i)
+						this .multiTexCoords [i] = this .multiTexCoords [last];
 
-			// Upload arrays.
+					this .multiTexCoords .length = length;
+				}
 
-			this .transfer ();
-		},
+				// Upload normals or flat normals.
+	
+				this .set_shading__ (this .getBrowser () .getBrowserOptions () .Shading_);
+	
+				// Upload arrays.
+	
+				this .transfer ();
+			};
+		})(),
 		clear: function ()
 		{
 			// BBox
@@ -60867,9 +61250,6 @@ function (Fields,
 
 			for (var i = this .attribBuffers .length, length = this .attribs .length; i < length; ++ i)
 				this .attribBuffers .push (gl .createBuffer ());
-
-			// Only grow.
-			//this .attribBuffers .length = length;
 			
 			for (var i = 0, length = this .attribs .length; i < length; ++ i)
 			{
@@ -60893,9 +61273,6 @@ function (Fields,
 			for (var i = this .texCoordBuffers .length, length = this .multiTexCoords .length; i < length; ++ i)
 				this .texCoordBuffers .push (gl .createBuffer ());
 
-			// Only grow.
-			//this .texCoordBuffers .length = length;
-			
 			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
 			{
 				gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
@@ -62542,14 +62919,12 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			this .setShaderUniformsToChannel (gl, shaderObject, 0);
-
-			for (var i = 1, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-				gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
+			for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+				this .setShaderUniformsToChannel (gl, shaderObject, i);
 		},
-		setShaderUniformsToChannel: function (gl, shaderObject, channel)
+		setShaderUniformsToChannel: function (gl, shaderObject, i)
 		{
-			gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [channel], 0);
+			gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
 		},
 	});
 
@@ -70892,10 +71267,10 @@ function (Fields,
 
 
 
-define('text!x_ite/Browser/Shaders/Background.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 p = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tC           = x3d_Color;\n\tv           = p .xyz;\n\tgl_Position = x3d_ProjectionMatrix * p;\n}\n';});
+define('text!x_ite/Browser/Shaders/Background.vs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\n\nattribute vec4 x3d_Color;\nattribute vec4 x3d_Vertex;\n\nvarying vec4 color;  // color\nvarying vec3 vertex; // point on geometry\n\nvoid\nmain ()\n{\n\tvec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tcolor       = x3d_Color;\n\tvertex      = position .xyz;\n\tgl_Position = x3d_ProjectionMatrix * position;\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/Background.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvarying vec4 C; // color\nvarying vec3 v; // point on geometry\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (v, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = C;\n}\n';});
+define('text!x_ite/Browser/Shaders/Background.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nvarying vec4 color;  // color\nvarying vec3 vertex; // point on geometry\n\n#pragma X3D include "Include/ClipPlanes.h"\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = color;\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -72717,8 +73092,6 @@ function (Fields,
 					vertexArray      = text .getVertices ();
 	
 				// Set texCoords.
-	
-				texCoordArray .length = 0;
 	
 				text .getMultiTexCoords () .push (texCoordArray);
 	
@@ -78264,7 +78637,12 @@ function (X3DAppearanceChildNode,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix, false, this .matrixArray);
+			for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+				this .setShaderUniformsToChannel (gl, shaderObject, i);
+		},
+		setShaderUniformsToChannel: function (gl, shaderObject, i)
+		{
+			gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, this .matrixArray);
 		},
 	});
 
@@ -78490,9 +78868,7 @@ function (TextureProperties,
 
 	function X3DTexturingContext ()
 	{
-		this .textureUnits             = [ ];
 		this .combinedTextureUnits     = [ ];
-		this .textureStages            = 1;
 		this .defaultTextureProperties = new TextureProperties (this .getPrivateScene ());
 		this .defaultTextureTransform  = new TextureTransform (this .getPrivateScene ());
 		this .defaultTextureCoordinate = new TextureCoordinate (this .getPrivateScene ());
@@ -78513,20 +78889,13 @@ function (TextureProperties,
 			}
 
 			this .maxTextureSize          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
-			this .maxTextureUnits         = gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS);
 			this .maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
 			this .textureMemory           = NaN;
 
-			var
-				textureUnits         = this .textureUnits,
-				combinedTextureUnits = this .combinedTextureUnits;
-
-			// For single and multi texturing
-			for (var i = this .maxTextureUnits - 1; i >= 0; -- i)
-				textureUnits .push (i);
+			var combinedTextureUnits = this .combinedTextureUnits;
 
 			// For shaders
-			for (var i = this .maxTextureUnits, length = this .maxCombinedTextureUnits; i < length; ++ i)
+			for (var i = 1, length = this .maxCombinedTextureUnits; i < length; ++ i)
 				combinedTextureUnits .push (i);
 
 			this .defaultTextureProperties .setup ();
@@ -78535,18 +78904,41 @@ function (TextureProperties,
 
 			// There must always be a texture bound to the used texture units.
 
-         var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+			this .shadowTextureUnit = this .getCombinedTextureUnits () .pop ();
 
-			this .defaultTexture2D              = gl .createTexture ();
- 			this .defaultComposedCubeMapTexture = gl .createTexture ();
-			this .defaultShadowMapTexture       = gl .createTexture ();
+			this .texture2DUnits = new Int32Array (this .getMaxTextures ());
 
-			gl .activeTexture (gl .TEXTURE2);
+			for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
+				this .texture2DUnits [i] = this .getCombinedTextureUnits () .pop ();
+
+         var defaultData = new Uint8Array ([ 0, 255, 255, 255 ]);
+
+			// Texture 2D Units
+
+			this .defaultTexture2D = gl .createTexture ();
+
 			gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
 			gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-			gl .activeTexture (gl .TEXTURE4);
-			gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .defaultComposedCubeMapTexture);
+			gl .activeTexture (gl .TEXTURE0 + this .shadowTextureUnit);
+			gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+
+			for (var i = 0, length = this .texture2DUnits .length; i < length; ++ i)
+			{
+				gl .activeTexture (gl .TEXTURE0 + this .texture2DUnits [i]);
+				gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+			}
+		
+			// Cube Map Texture Units
+
+			this .cubeMapTextureUnits = new Int32Array (this .getMaxTextures ());
+
+			for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
+				this .cubeMapTextureUnits [i] = this .getCombinedTextureUnits () .pop ();
+
+ 			this .defaultCubeMapTexture = gl .createTexture ();
+
+			gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .defaultCubeMapTexture);
 			gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 			gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 			gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
@@ -78554,15 +78946,17 @@ function (TextureProperties,
 			gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 			gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-			gl .activeTexture (gl .TEXTURE5);
-			gl .bindTexture (gl .TEXTURE_2D, this .defaultShadowMapTexture);
-			gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+			for (var i = 0, length = this .cubeMapTextureUnits .length; i < length; ++ i)
+			{
+				gl .activeTexture (gl .TEXTURE0 + this .cubeMapTextureUnits [i]);
+				gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .defaultCubeMapTexture);
+			}
 
 			gl .activeTexture (gl .TEXTURE0);
 		},
 		getMaxTextures: function ()
 		{
-			return 1;
+			return 2;
 		},
 		getMinTextureSize: function ()
 		{
@@ -78572,21 +78966,25 @@ function (TextureProperties,
 		{
 			return this .maxTextureSize;
 		},
-		getMaxTextureUnits: function ()
-		{
-			return this .maxTextureUnits;
-		},
 		getMaxCombinedTextureUnits: function ()
 		{
 			return this .maxCombinedTextureUnits;
 		},
-		getTextureUnits: function ()
-		{
-			return this .textureUnits;
-		},
 		getCombinedTextureUnits: function ()
 		{
 			return this .combinedTextureUnits;
+		},
+		getTexture2DUnits: function ()
+		{
+			return this .texture2DUnits;
+		},
+		getCubeMapTextureUnits: function ()
+		{
+			return this .cubeMapTextureUnits;
+		},
+		getShadowTextureUnit: function ()
+		{
+			return this .shadowTextureUnit;
 		},
 		getTextureMemory: function ()
 		{
@@ -81381,7 +81779,9 @@ function (X3DBindableNode,
 						this .drawCube (renderObject);
 				}
 				catch (error)
-				{ }
+				{
+					console .log (error);
+				}
 			};
 		})(),
 		drawSphere: function (renderObject)
@@ -81451,16 +81851,15 @@ function (X3DBindableNode,
 	
 				// Uniforms
 	
-				gl .uniform1i (shaderNode .x3d_FogType,       0);
-				gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
-				gl .uniform1i (shaderNode .x3d_Lighting,      false);
+				gl .uniform1i (shaderNode .x3d_FogType,                            0);
+				gl .uniform1i (shaderNode .x3d_ColorMaterial,                      false);
+				gl .uniform1i (shaderNode .x3d_Lighting,                           false);
+				gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
+				gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
 
-				for (var i = 0, length = shaderNode .x3d_MaxTextures; i < length; ++ i)
-					gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [i], 0);
-
-				gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix,    false, textureMatrixArray);
-				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
 	
 				// Draw.
 	
@@ -81481,7 +81880,7 @@ function (X3DBindableNode,
 		{
 			if (texture && texture .checkLoadState () === X3DConstants .COMPLETE_STATE)
 			{
-				texture .setShaderUniforms (gl, shaderNode, 0);
+				texture .setShaderUniforms (gl, shaderNode);
 
 				if (texture .transparent_ .getValue ())
 					gl .enable (gl .BLEND);
@@ -81555,10 +81954,16 @@ define ('x_ite/Components/Texturing/X3DTextureNode',[
 	"x_ite/Fields",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Texturing/MultiTextureModeType",
+	"x_ite/Browser/Texturing/MultiTextureSourceType",
+	"x_ite/Browser/Texturing/MultiTextureFunctionType",
 ],
 function (Fields,
           X3DAppearanceChildNode, 
-          X3DConstants)
+          X3DConstants,
+          ModeType,
+          SourceType,
+          FunctionType)
 {
 "use strict";
 
@@ -81652,6 +82057,16 @@ function (Fields,
 					break;
 				}
 			}
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			this .setShaderUniformsToChannel (gl, shaderObject, 0);
+
+			gl .uniform1i (shaderObject .x3d_NumTextures, 1);
+			gl .uniform1i (shaderObject .x3d_MultiTextureMode [0],      ModeType .MODULATE);
+			gl .uniform1i (shaderObject .x3d_MultiTextureAlphaMode [0], ModeType .MODULATE);
+			gl .uniform1i (shaderObject .x3d_MultiTextureSource [0],    SourceType .DEFAULT);
+			gl .uniform1i (shaderObject .x3d_MultiTextureFunction [0],  FunctionType .DEFAULT);
 		},
 	});
 
@@ -81881,12 +82296,11 @@ function (Fields,
 
 			return output;
 		},
-		setShaderUniforms: function (gl, shaderObject, i)
+		setShaderUniformsToChannel: function (gl, shaderObject, i)
 		{
-			shaderObject .textureTypeArray [i] = 2;
-			gl .activeTexture (gl .TEXTURE2);
+			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture2DUnits () [i]);
 			gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-			gl .uniform1iv (shaderObject .x3d_TextureType, shaderObject .textureTypeArray); // TODO: Put this in X3DProgramableShaderObject
+			gl .uniform1i (shaderObject .x3d_TextureType [i], 2);
 		},
 	});
 
@@ -102168,6 +102582,8 @@ function (Fields,
 		{
 			X3DMaterialNode . prototype .initialize .call (this);
 
+			this .separateBackColor_ .addInterest ("set_transparent__", this);
+
 			this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
 			this .diffuseColor_     .addInterest ("set_diffuseColor__",     this);
 			this .specularColor_    .addInterest ("set_specularColor__",    this);
@@ -103957,6 +104373,690 @@ function ($,
  ******************************************************************************/
 
 
+define ('x_ite/Components/Texturing/MultiTexture',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Texturing/X3DTextureNode",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Browser/Texturing/MultiTextureModeType",
+	"x_ite/Browser/Texturing/MultiTextureSourceType",
+	"x_ite/Browser/Texturing/MultiTextureFunctionType",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DTextureNode, 
+          X3DConstants,
+          X3DCast,
+          ModeType,
+          SourceType,
+          FunctionType)
+{
+"use strict";
+
+	function MultiTexture (executionContext)
+	{
+		X3DTextureNode .call (this, executionContext);
+
+		this .addType (X3DConstants .MultiTexture);
+
+		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+
+		this .color        = new Float32Array (4);
+		this .modes        = [ ];
+		this .alphaModes   = [ ];
+		this .sources      = [ ];
+		this .functions    = [ ];
+		this .textureNodes = [ ];
+
+		this .setTransparent (false);
+	}
+
+	MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+	{
+		constructor: MultiTexture,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .SFColor (1, 1, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "alpha",    new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mode",     new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "source",   new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "function", new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",  new Fields .MFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "MultiTexture";
+		},
+		getComponentName: function ()
+		{
+			return "Texturing";
+		},
+		getContainerField: function ()
+		{
+			return "texture";
+		},
+		initialize: function ()
+		{
+			X3DTextureNode .prototype .initialize .call (this);
+
+			this .color_    .addInterest ("set_color__",    this);
+			this .alpha_    .addInterest ("set_alpha__",    this);
+			this .mode_     .addInterest ("set_mode__",     this);
+			this .source_   .addInterest ("set_source__",   this);
+			this .function_ .addInterest ("set_function__", this);
+			this .texture_  .addInterest ("set_texture__",  this);
+
+			this .set_color__ ();
+			this .set_alpha__ ();
+			this .set_mode__ ();
+			this .set_source__ ();
+			this .set_function__ ();
+			this .set_texture__ ();
+
+			this .loadState_ = X3DConstants .COMPLETE_STATE;
+		},
+		getMode: function (index)
+		{
+			if (index < this .modes .length)
+				return this .modes [index];
+
+			return ModeType .MODULATE;
+		},
+		getAlphaMode: function (index)
+		{
+			if (index < this .alphaModes .length)
+				return this .alphaModes [index];
+
+			return ModeType .MODULATE;
+		},
+		getSource: function (index)
+		{
+			if (index < this .sources .length)
+				return this .sources [index];
+
+			return SourceType .DEFAULT;
+		},
+		getFunction: function (index)
+		{
+			if (index < this .functions .length)
+				return this .functions [index];
+
+			return FunctionType .DEFAULT;
+		},
+		set_color__: function ()
+		{
+			this .color [0] = this .color_ .r;
+			this .color [1] = this .color_ .g;
+			this .color [2] = this .color_ .b;
+		},
+		set_alpha__: function ()
+		{
+			this .color [3] = this .alpha_;
+		},
+		set_mode__: (function ()
+		{
+			var modeTypes = new Map ([
+				["REPLACE",                   ModeType .REPLACE],
+				["MODULATE",                  ModeType .MODULATE],
+				["MODULATE2X",                ModeType .MODULATE2X],
+				["MODULATE4X",                ModeType .MODULATE4X],
+				["ADD",                       ModeType .ADD],
+				["ADDSIGNED",                 ModeType .ADDSIGNED],
+				["ADDSIGNED2X",               ModeType .ADDSIGNED2X],
+				["ADDSMOOTH",                 ModeType .ADDSMOOTH],
+				["SUBTRACT",                  ModeType .SUBTRACT],
+				["BLENDDIFFUSEALPHA",         ModeType .BLENDDIFFUSEALPHA],
+				["BLENDTEXTUREALPHA",         ModeType .BLENDTEXTUREALPHA],
+				["BLENDFACTORALPHA",          ModeType .BLENDFACTORALPHA],
+				["BLENDCURRENTALPHA",         ModeType .BLENDCURRENTALPHA],
+				["MODULATEALPHA_ADDCOLOR",    ModeType .MODULATEALPHA_ADDCOLOR],
+				["MODULATEINVALPHA_ADDCOLOR", ModeType .MODULATEINVALPHA_ADDCOLOR],
+				["MODULATEINVCOLOR_ADDALPHA", ModeType .MODULATEINVCOLOR_ADDALPHA],
+				["DOTPRODUCT3",               ModeType .DOTPRODUCT3],
+				["SELECTARG1",                ModeType .SELECTARG1],
+				["SELECTARG2",                ModeType .SELECTARG2],
+				["OFF",                       ModeType .OFF],
+			]);
+
+			return function ()
+			{
+				this .modes      .length = 0;
+				this .alphaModes .length = 0;
+
+				for (var i = 0, length = this .mode_ .length; i < length; ++ i)
+				{
+					var mode = this .mode_ [i] .split (",");
+
+					for (var m = 0, mLength = mode .length; m < mLength; ++ m)
+						mode [m] = mode [m] .trim ();
+
+					if (mode .length === 0)
+						mode .push ("MODULATE");
+
+					if (mode .length < 2)
+						mode .push (mode [0]);
+
+					// RGB
+
+					var modeType = modeTypes .get (mode [0]);
+
+					if (modeType !== undefined)
+						this .modes .push (modeType);
+					else
+						this .modes .push (ModeType .MODULATE);
+
+					// Alpha
+
+					var modeType = modeTypes .get (mode [1]);
+
+					if (modeType !== undefined)
+						this .alphaModes .push (modeType);
+					else
+						this .alphaModes .push (ModeType .MODULATE);
+				}
+			};
+		})(),
+		set_source__: (function ()
+		{
+			var sourceTypes = new Map ([
+				["DIFFUSE",  SourceType .DIFFUSE],
+				["SPECULAR", SourceType .SPECULAR],
+				["FACTOR",   SourceType .FACTOR],
+			]);
+
+			return function ()
+			{
+				this .sources .length = 0;
+
+				for (var i = 0, length = this .source_ .length; i < length; ++ i)
+				{
+					var sourceType = sourceTypes .get (this .source_ [i]);
+
+					if (sourceType !== undefined)
+						this .sources .push (sourceType);
+					else
+						this .sources .push (SourceType .DEFAULT);
+				}
+			};
+		})(),
+		set_function__: (function ()
+		{
+			var functionsTypes = new Map ([
+				["COMPLEMENT",     FunctionType .COMPLEMENT],
+				["ALPHAREPLICATE", FunctionType .ALPHAREPLICATE],
+			]);
+
+			return function ()
+			{
+				this .functions .length = 0;
+
+				for (var i = 0, length = this .function_ .length; i < length; ++ i)
+				{
+					var functionsType = functionsTypes .get (this .function_ [i]);
+
+					if (functionsType !== undefined)
+						this .functions .push (functionsType);
+					else
+						this .functions .push (FunctionType .DEFAULT);
+				}
+			};
+		})(),
+		set_texture__: function ()
+		{
+			this .textureNodes .length = 0;
+
+			for (var i = 0, length = this .texture_ .length; i < length; ++ i)
+			{
+				var node = this .texture_ [i];
+
+				if (X3DCast (X3DConstants .MultiTexture, node))
+					continue;
+
+				var textureNode = X3DCast (X3DConstants .X3DTextureNode, node);
+
+				if (textureNode)
+					this .textureNodes .push (textureNode);
+			}	
+		},
+		traverse: function (type, renderObject)
+		{
+			var textureNodes = this .textureNodes;
+
+			for (var i = 0, length = textureNodes .length; i < length; ++ i)
+				textureNodes [i] .traverse (type, renderObject);
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			var
+				textureNodes = this .textureNodes,
+				channels     = Math .min (shaderObject .getBrowser () .getMaxTextures (), textureNodes .length);
+
+			gl .uniform1i  (shaderObject .x3d_NumTextures,       channels);
+			gl .uniform4fv (shaderObject .x3d_MultiTextureColor, this .color);
+
+			for (var i = 0; i < channels; ++ i)
+			{
+				textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
+
+				gl .uniform1i  (shaderObject .x3d_MultiTextureMode [i],      this .getMode (i));
+				gl .uniform1i  (shaderObject .x3d_MultiTextureAlphaMode [i], this .getAlphaMode (i));
+				gl .uniform1i  (shaderObject .x3d_MultiTextureSource [i],    this .getSource (i));
+				gl .uniform1i  (shaderObject .x3d_MultiTextureFunction [i],  this .getFunction (i));
+			}
+		},
+	});
+
+	return MultiTexture;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Texturing/MultiTextureCoordinate',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DTextureCoordinateNode, 
+          X3DConstants,
+          X3DCast)
+{
+"use strict";
+
+	function MultiTextureCoordinate (executionContext)
+	{
+		X3DTextureCoordinateNode .call (this, executionContext);
+
+		this .addType (X3DConstants .MultiTextureCoordinate);
+
+		this .textureCoordinateNodes = [ ];
+	}
+
+	MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+	{
+		constructor: MultiTextureCoordinate,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "texCoord", new Fields .MFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "MultiTextureCoordinate";
+		},
+		getComponentName: function ()
+		{
+			return "Texturing";
+		},
+		getContainerField: function ()
+		{
+			return "texCoord";
+		},
+		initialize: function ()
+		{
+			X3DTextureCoordinateNode .prototype .initialize .call (this);
+
+			this .texCoord_ .addInterest ("set_texCoord__", this);
+
+			this .set_texCoord__ ();
+		},
+		set_texCoord__: function ()
+		{
+			var textureCoordinateNodes = this .textureCoordinateNodes;
+
+			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
+				textureCoordinateNodes [i] .removeInterest ("addNodeEvent", this);
+
+			textureCoordinateNodes .length = 0;
+
+			for (var i = 0, length = this .texCoord_ .length; i < length; ++ i)
+			{
+				var node = this .texCoord_ [i];
+
+				if (X3DCast (X3DConstants .MultiTextureCoordinate, node))
+					continue;
+
+				var textureCoordinateNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, node);
+
+				if (textureCoordinateNode)
+					textureCoordinateNodes .push (textureCoordinateNode);
+			}
+
+			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
+				textureCoordinateNodes [i] .addInterest ("addNodeEvent", this);
+		},
+		isEmpty: function ()
+		{
+			return true;
+		},
+		getSize: function ()
+		{
+			return 0;
+		},
+		get1Point: function (index, vector)
+		{
+			var textureCoordinateNodes = this .textureCoordinateNodes;
+
+			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
+				return textureCoordinateNodes [i] .get1Point (index, vector);
+
+			return vector .set (0, 0, 0, 1);
+		},
+		init: function (multiArray)
+		{
+			var textureCoordinateNodes = this .textureCoordinateNodes;
+
+			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
+				textureCoordinateNodes [i] .init (multiArray);
+		},
+		addTexCoord: function (index, multiArray)
+		{
+			var textureCoordinateNodes = this .textureCoordinateNodes;
+
+			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
+				textureCoordinateNodes [i] .addTexCoordToChannel (index, multiArray [i]);
+		},
+		addTexCoordToChannel: function (index, array)
+		{ },
+		getTexCoord: function (array)
+		{
+			var textureCoordinateNodes = this .textureCoordinateNodes;
+
+			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
+				return textureCoordinateNodes [i] .getTexCoord (array);
+
+			return array;
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			var
+				textureCoordinateNodes = this .textureCoordinateNodes,
+				length                 = Math .min (shaderObject .x3d_MaxTextures, textureCoordinateNodes .length);
+
+			for (var i = 0; i < length; ++ i)
+				textureCoordinateNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
+
+			if (length)
+			{
+				var last = length - 1;
+	
+				for (var i = length, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+					textureCoordinateNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
+			}
+			else
+			{
+				for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+					this .setShaderUniformsToChannel (gl, shaderObject, i);
+			}
+		},
+	});
+
+	return MultiTextureCoordinate;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Texturing/MultiTextureTransform',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Texturing/X3DTextureTransformNode",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DTextureTransformNode, 
+          X3DConstants,
+          X3DCast)
+{
+"use strict";
+
+	function MultiTextureTransform (executionContext)
+	{
+		X3DTextureTransformNode .call (this, executionContext);
+
+		this .addType (X3DConstants .MultiTextureTransform);
+
+		this .textureTransformNodes = [ ];
+	}
+
+	MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+	{
+		constructor: MultiTextureTransform,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .MFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "MultiTextureTransform";
+		},
+		getComponentName: function ()
+		{
+			return "Texturing";
+		},
+		getContainerField: function ()
+		{
+			return "textureTransform";
+		},
+		initialize: function ()
+		{
+			X3DTextureTransformNode .prototype .initialize .call (this);
+
+			this .textureTransform_ .addInterest ("set_textureTransform_", this);
+
+			this .set_textureTransform__ ();
+		},
+		set_textureTransform__: function ()
+		{
+			var textureTransformNodes = this .textureTransformNodes;
+
+			for (var i = 0, length = textureTransformNodes .length; i < length; ++ i)
+				textureTransformNodes [i] .removeInterest ("addNodeEvent", this);
+
+			textureTransformNodes .length = 0;
+
+			for (var i = 0, length = this .textureTransform_ .length; i < length; ++ i)
+			{
+				var node = this .textureTransform_ [i];
+
+				if (X3DCast (X3DConstants .MultiTextureTransform, node))
+					continue;
+
+				var textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, node);
+
+				if (textureTransformNode)
+					textureTransformNodes .push (textureTransformNode);
+			}
+
+			for (var i = 0, length = textureTransformNodes .length; i < length; ++ i)
+				textureTransformNodes [i] .addInterest ("addNodeEvent", this);
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			var
+				textureTransformNodes = this .textureTransformNodes,
+				length                = Math .min (shaderObject .x3d_MaxTextures, textureTransformNodes .length);
+
+			for (var i = 0; i < length; ++ i)
+				textureTransformNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
+
+			if (length)
+			{
+				var last = length - 1;
+
+				for (var i = length, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+					textureTransformNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
+			}
+			else
+			{
+				for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+					this .setShaderUniformsToChannel (gl, shaderObject, i);
+			}
+		},
+	});
+
+	return MultiTextureTransform;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Texturing/PixelTexture',[
 	"jquery",
 	"x_ite/Fields",
@@ -104213,7 +105313,7 @@ define ('x_ite/Components/Texturing/TextureCoordinateGenerator',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Texturing/ModeType",
+	"x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -104299,14 +105399,18 @@ function (Fields,
 
 			this .parameter .fill (0, length);
 		},
-		init: function (multiArray)
-		{ },
 		get1Point: function (index, vector)
-		{ },
+		{
+			return vector;
+		},
 		addTexCoordToChannel: function (index, array)
-		{ },
+		{
+			array .push (0, 0, 0, 1);
+		},
 		getTexCoord: function (array)
-		{ },
+		{
+			return arrray;
+		},
 		setShaderUniformsToChannel: function (gl, shaderObject, channel)
 		{
 			gl .uniform1i  (shaderObject .x3d_TextureCoordinateGeneratorMode [channel],      this .mode);
@@ -104371,9 +105475,9 @@ define ('x_ite/Components/Texturing',[
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/Texturing/ImageTexture",
 	"x_ite/Components/Texturing/MovieTexture",
-//	"x_ite/Components/Texturing/MultiTexture",
-//	"x_ite/Components/Texturing/MultiTextureCoordinate",
-//	"x_ite/Components/Texturing/MultiTextureTransform",
+	"x_ite/Components/Texturing/MultiTexture",
+	"x_ite/Components/Texturing/MultiTextureCoordinate",
+	"x_ite/Components/Texturing/MultiTextureTransform",
 	"x_ite/Components/Texturing/PixelTexture",
 	"x_ite/Components/Texturing/TextureCoordinate",
 	"x_ite/Components/Texturing/TextureCoordinateGenerator",
@@ -104387,9 +105491,9 @@ define ('x_ite/Components/Texturing',[
 function (SupportedNodes,
           ImageTexture,
           MovieTexture,
-//          MultiTexture,
-//          MultiTextureCoordinate,
-//          MultiTextureTransform,
+          MultiTexture,
+          MultiTextureCoordinate,
+          MultiTextureTransform,
           PixelTexture,
           TextureCoordinate,
           TextureCoordinateGenerator,
@@ -104406,9 +105510,9 @@ function (SupportedNodes,
 	{
 		ImageTexture:               ImageTexture,
 		MovieTexture:               MovieTexture,
-//		MultiTexture:               MultiTexture,
-//		MultiTextureCoordinate:     MultiTextureCoordinate,
-//		MultiTextureTransform:      MultiTextureTransform,
+		MultiTexture:               MultiTexture,
+		MultiTextureCoordinate:     MultiTextureCoordinate,
+		MultiTextureTransform:      MultiTextureTransform,
 		PixelTexture:               PixelTexture,
 		TextureCoordinate:          TextureCoordinate,
 		TextureCoordinateGenerator: TextureCoordinateGenerator,
@@ -105546,7 +106650,7 @@ function ($,
 			             "                Color depth: " + this .getColorDepth () + " bits\n" +
 			             "                Max clip planes: 6\n" +
 			             "                Max lights: 8\n" +
-			             "                Texture units: " + this .getMaxTextureUnits () + " / " + this .getMaxCombinedTextureUnits () + "\n" +
+			             "                Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
 			             "                Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
 			             "                Texture memory: " + this .getTextureMemory () + "\n" +
 			             "                Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +

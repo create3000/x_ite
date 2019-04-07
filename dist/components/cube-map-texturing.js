@@ -114,13 +114,6 @@ function (X3DTextureNode,
 		{
 			return this .targets;
 		},
-		setShaderUniforms: function (gl, shaderObject, i)
-		{
-			shaderObject .textureTypeArray [i] = 4;
-			gl .activeTexture (gl .TEXTURE4);
-			gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
-			gl .uniform1iv (shaderObject .x3d_TextureType, shaderObject .textureTypeArray); // TODO: Put this in X3DProgramableShaderObject
-		},
 		clearTexture: (function ()
 		{
 			var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
@@ -131,12 +124,18 @@ function (X3DTextureNode,
 					gl      = this .getBrowser () .getContext (),
 					targets = this .getTargets ();
 
-				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+				gl .bindTexture (this .getTarget (), this .getTexture ());
 
 				for (var i = 0, length = targets .length; i < length; ++ i)
 					gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 			};
 		})(),
+		setShaderUniformsToChannel: function (gl, shaderObject, i)
+		{
+			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getCubeMapTextureUnits () [i]);
+			gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
+			gl .uniform1i (shaderObject .x3d_TextureType [i], 4);
+		},
 	});
 
 	return X3DEnvironmentTextureNode;
@@ -210,8 +209,6 @@ function (Fields,
 {
 "use strict";
 
-   var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
-
 	function ComposedCubeMapTexture (executionContext)
 	{
 		X3DEnvironmentTextureNode .call (this, executionContext);
@@ -252,12 +249,7 @@ function (Fields,
 
 			// Upload default data.
 
-			var gl = this .getBrowser () .getContext ();
-
-			gl .bindTexture (this .getTarget (), this .getTexture ());
-
-			for (var i = 0; i < 6; ++ i)
-				gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+			this .clearTexture ();
 
 			// Initialize.
 
@@ -378,10 +370,7 @@ function (Fields,
 			}
 			else
 			{
-				for (var i = 0; i < 6; ++ i)
-				{
-					gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, 1, 1, false, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-				}
+				this .clearTexture ();
 			}
 
 			this .set_transparent__ ();
@@ -721,7 +710,7 @@ function (Fields,
 
 				var
 					gl          = this .getBrowser () .getContext (),
-               defaultData = new Uint8Array (size * size * 4);
+					defaultData = new Uint8Array (size * size * 4);
 	
 				gl .bindTexture (this .getTarget (), this .getTexture ());
 	

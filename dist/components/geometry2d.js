@@ -2094,22 +2094,28 @@ function (Fields,
 		},
 		buildTexCoords: function ()
 		{
-			var
-				p             = this .getTexCoordParams (),
-				min           = p .min,
-				Ssize         = p .Ssize,
-				texCoordArray = this .getTexCoords (),
-				vertexArray   = this .getVertices () .getValue ();
+			var texCoordArray = this .getTexCoords ();
 
-			this .getMultiTexCoords () .push (texCoordArray);
-
-			for (var i = 0, length = vertexArray .length; i < length; i += 4)
+			if (texCoordArray .length === 0)
 			{
-				texCoordArray .push ((vertexArray [i]     - min [0]) / Ssize,
-				                     (vertexArray [i + 1] - min [1]) / Ssize,
-				                     0,
-				                     1);
+				var
+					p             = this .getTexCoordParams (),
+					min           = p .min,
+					Ssize         = p .Ssize,
+					vertexArray   = this .getVertices () .getValue ();
+	
+				for (var i = 0, length = vertexArray .length; i < length; i += 4)
+				{
+					texCoordArray .push ((vertexArray [i]     - min [0]) / Ssize,
+					                     (vertexArray [i + 1] - min [1]) / Ssize,
+					                     0,
+					                     1);
+				}
+
+				texCoordArray .shrinkToFit ();
 			}
+
+			return texCoordArray;
 		},
 	});
 
