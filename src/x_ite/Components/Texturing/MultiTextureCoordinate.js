@@ -147,14 +147,14 @@ function (Fields,
 			var textureCoordinateNodes = this .textureCoordinateNodes;
 
 			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				return textureCoordinateNodes [i] .init (multiArray);
+				textureCoordinateNodes [i] .init (multiArray);
 		},
 		addTexCoord: function (index, multiArray)
 		{
 			var textureCoordinateNodes = this .textureCoordinateNodes;
 
 			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				return textureCoordinateNodes [i] .addTexCoordToChannel (index, multiArray [i]);
+				textureCoordinateNodes [i] .addTexCoordToChannel (index, multiArray [i]);
 		},
 		addTexCoordToChannel: function (index, array)
 		{ },
