@@ -74,7 +74,7 @@ function (Shading,
           phongFS,
           depthVS,
           depthFS,
-          verifyShader)
+          ShaderTest)
 {
 "use strict";
 
@@ -227,7 +227,7 @@ function (Shading,
 		},
 		set_phong_shader_valid__: function (valid)
 		{
-			if (valid .getValue () && verifyShader (this, this .phongShader))
+			if (valid .getValue () && ShaderTest .verify (this, this .phongShader))
 				return;
 
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
@@ -236,7 +236,7 @@ function (Shading,
 		},
 		set_shadow_shader_valid__: function (valid)
 		{
-			if (valid .getValue () && verifyShader (this, this .shadowShader))
+			if (valid .getValue () && ShaderTest .verify (this, this .shadowShader))
 				return;
 
 			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");

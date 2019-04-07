@@ -62,81 +62,87 @@ function (TextureBuffer,
 {
 "use strict";
 
-	var normals = [
-		0, 0, 1,
-		0, 0, 1,
-		0, 0, 1,
-		0, 0, 1,
-		0, 0, 1,
-		0, 0, 1,
-	];
-
-	var vertices = [
-		 2,  2, 0, 1,
-		-2,  2, 0, 1,
-		-2, -2, 0, 1,
-		 2,  2, 0, 1,
-		-2, -2, 0, 1,
-		 2, -2, 0, 1,
-	];
-
-	function verifyShader (browser, shaderNode)
+	var ShaderTest =
 	{
-		var
-			gl           = browser .getContext (),
-			frameBuffer  = new TextureBuffer (browser, 16, 16),
-         normalBuffer = gl .createBuffer (),
-         vertexBuffer = gl .createBuffer ();
+		verify: (function ()
+		{
+			var normals = [
+				0, 0, 1,
+				0, 0, 1,
+				0, 0, 1,
+				0, 0, 1,
+				0, 0, 1,
+				0, 0, 1,
+			];
+		
+			var vertices = [
+				 2,  2, 0, 1,
+				-2,  2, 0, 1,
+				-2, -2, 0, 1,
+				 2,  2, 0, 1,
+				-2, -2, 0, 1,
+				 2, -2, 0, 1,
+			];
 
-		frameBuffer .bind ();
-		shaderNode  .enable (gl);
-		gl .viewport (0, 0, 16, 16);
+			return function (browser, shaderNode)
+			{
+				var
+					gl           = browser .getContext (),
+					frameBuffer  = new TextureBuffer (browser, 16, 16),
+		         normalBuffer = gl .createBuffer (),
+		         vertexBuffer = gl .createBuffer ();
+		
+				frameBuffer .bind ();
+				shaderNode  .enable (gl);
+				gl .viewport (0, 0, 16, 16);
+		
+				gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
+				gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
+				gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
+				gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
+		
+				// Set clip planes and lights to none.
+				shaderNode .setShaderObjects (gl, [ ]);
+		
+				gl .uniform1i (shaderNode .x3d_FogType,       0);
+				gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
+				gl .uniform1i (shaderNode .x3d_Lighting,      true);
+		
+				gl .uniform1i (shaderNode .x3d_SeparateBackColor, false);
+				gl .uniform1f (shaderNode .x3d_AmbientIntensity,  0);
+				gl .uniform3f (shaderNode .x3d_DiffuseColor,      1, 0, 0);
+				gl .uniform3f (shaderNode .x3d_SpecularColor,     1, 0, 0);
+				gl .uniform3f (shaderNode .x3d_EmissiveColor,     1, 0, 0);
+				gl .uniform1f (shaderNode .x3d_Shininess,         0);
+				gl .uniform1f (shaderNode .x3d_Transparency,      0);
+		
+				gl .uniform1i (shaderNode .x3d_NumTextures, 0);
+		
+				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, new Float32Array (Camera .ortho (-1, 1, -1, 1, -1, 1, new Matrix4 ())));
+				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, new Float32Array (new Matrix4 ()));
+				gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (new Matrix3 ()));
+		
+				gl .disable (gl .BLEND);
+				gl .frontFace (gl .CCW);
+				gl .enable (gl .CULL_FACE);
+				gl .cullFace (gl .BACK);
+		
+				shaderNode .enableNormalAttribute (gl, normalBuffer);
+				shaderNode .enableVertexAttribute (gl, vertexBuffer);
+		
+				gl .drawArrays (gl .TRIANGLES, 0, 6);
+		
+				var data = frameBuffer .readPixels ();
+		
+				frameBuffer .unbind ();
+		
+				shaderNode .disableNormalAttribute (gl, normalBuffer);
+				shaderNode .disable                (gl);
+		
+				return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
+			};
+		})(),
+	};
 
-		gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
-		gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
-		gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
-		gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
-
-		// Set clip planes and lights to none.
-		shaderNode .setShaderObjects (gl, [ ]);
-
-		gl .uniform1i (shaderNode .x3d_FogType,       0);
-		gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
-		gl .uniform1i (shaderNode .x3d_Lighting,      true);
-
-		gl .uniform1i (shaderNode .x3d_SeparateBackColor, false);
-		gl .uniform1f (shaderNode .x3d_AmbientIntensity,  0);
-		gl .uniform3f (shaderNode .x3d_DiffuseColor,      1, 0, 0);
-		gl .uniform3f (shaderNode .x3d_SpecularColor,     1, 0, 0);
-		gl .uniform3f (shaderNode .x3d_EmissiveColor,     1, 0, 0);
-		gl .uniform1f (shaderNode .x3d_Shininess,         0);
-		gl .uniform1f (shaderNode .x3d_Transparency,      0);
-
-		gl .uniform1i (shaderNode .x3d_NumTextures, 0);
-
-		gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, new Float32Array (Camera .ortho (-1, 1, -1, 1, -1, 1, new Matrix4 ())));
-		gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, new Float32Array (new Matrix4 ()));
-		gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (new Matrix3 ()));
-
-		gl .disable (gl .BLEND);
-		gl .frontFace (gl .CCW);
-		gl .enable (gl .CULL_FACE);
-		gl .cullFace (gl .BACK);
-
-		shaderNode .enableNormalAttribute (gl, normalBuffer);
-		shaderNode .enableVertexAttribute (gl, vertexBuffer);
-
-		gl .drawArrays (gl .TRIANGLES, 0, 6);
-
-		var data = frameBuffer .readPixels ();
-
-		frameBuffer .unbind ();
-
-		shaderNode .disableNormalAttribute (gl, normalBuffer);
-		shaderNode .disable                (gl);
-
-		return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
-	}
-
-	return verifyShader;
+	return ShaderTest;
 });

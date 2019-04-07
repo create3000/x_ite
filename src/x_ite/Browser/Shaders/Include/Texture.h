@@ -108,7 +108,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 		// Get texture color.
 
 		vec4 texCoords    = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
-		vec4 textureColor = vec4 (1.0, 1.0, 1.0, 1.0);
+		vec4 textureColor = vec4 (1.0);
 	
 		if (x3d_TextureType [i] == x3d_TextureType2D)
 		{
