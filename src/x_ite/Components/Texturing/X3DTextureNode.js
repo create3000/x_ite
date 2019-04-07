@@ -88,10 +88,6 @@ function (Fields,
 
 			this .texture = gl .createTexture ();
 		},
-		getSize: function ()
-		{
-			return 1;
-		},
 		setTransparent: function (value)
 		{
 			if (value !== this .transparent_ .getValue ())
@@ -155,6 +151,8 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
+			gl .uniform1i (shaderObject .x3d_NumTextures, 1);
+
 			this .setShaderUniformsToChannel (gl, shaderObject, 0);
 		},
 	});

@@ -53,12 +53,20 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Browser/Texturing/MultiTextureModeType",
+	"x_ite/Browser/Texturing/MultiTextureSourceType",
+	"x_ite/Browser/Texturing/MultiTextureFunctionType",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureNode, 
-          X3DConstants)
+          X3DConstants,
+          X3DCast,
+          ModeType,
+          SourceType,
+          FunctionType)
 {
 "use strict";
 
@@ -67,6 +75,17 @@ function (Fields,
 		X3DTextureNode .call (this, executionContext);
 
 		this .addType (X3DConstants .MultiTexture);
+
+		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+
+		this .color        = new Float32Array (4);
+		this .modes        = [ ];
+		this .alphaModes   = [ ];
+		this .sources      = [ ];
+		this .functions    = [ ];
+		this .textureNodes = [ ];
+
+		this .setTransparent (false);
 	}
 
 	MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
@@ -92,6 +111,215 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "texture";
+		},
+		initialize: function ()
+		{
+			X3DTextureNode .prototype .initialize .call (this);
+
+			this .color_    .addInterest ("set_color__",    this);
+			this .alpha_    .addInterest ("set_alpha__",    this);
+			this .mode_     .addInterest ("set_mode__",     this);
+			this .source_   .addInterest ("set_source__",   this);
+			this .function_ .addInterest ("set_function__", this);
+			this .texture_  .addInterest ("set_texture__",  this);
+
+			this .set_color__ ();
+			this .set_alpha__ ();
+			this .set_mode__ ();
+			this .set_source__ ();
+			this .set_function__ ();
+			this .set_texture__ ();
+
+			this .loadState_ = X3DConstants .COMPLETE_STATE;
+		},
+		getMode: function (index)
+		{
+			if (index < this .modes .length)
+				return this .modes [index];
+
+			return ModeType .MODULATE;
+		},
+		getAlphaMode: function (index)
+		{
+			if (index < this .alphaModes .length)
+				return this .alphaModes [index];
+
+			return ModeType .MODULATE;
+		},
+		getSource: function (index)
+		{
+			if (index < this .sources .length)
+				return this .sources [index];
+
+			return SourceType .DEFAULT;
+		},
+		getFunction: function (index)
+		{
+			if (index < this .functions .length)
+				return this .functions [index];
+
+			return FunctionType .DEFAULT;
+		},
+		set_color__: function ()
+		{
+			this .color [0] = this .color_ .r;
+			this .color [1] = this .color_ .g;
+			this .color [2] = this .color_ .b;
+		},
+		set_alpha__: function ()
+		{
+			this .color [3] = this .alpha_;
+		},
+		set_mode__: (function ()
+		{
+			var modeTypes = new Map ([
+				["REPLACE",                   ModeType .REPLACE],
+				["MODULATE",                  ModeType .MODULATE],
+				["MODULATE2X",                ModeType .MODULATE2X],
+				["MODULATE4X",                ModeType .MODULATE4X],
+				["ADD",                       ModeType .ADD],
+				["ADDSIGNED",                 ModeType .ADDSIGNED],
+				["ADDSIGNED2X",               ModeType .ADDSIGNED2X],
+				["ADDSMOOTH",                 ModeType .ADDSMOOTH],
+				["SUBTRACT",                  ModeType .SUBTRACT],
+				["BLENDDIFFUSEALPHA",         ModeType .BLENDDIFFUSEALPHA],
+				["BLENDTEXTUREALPHA",         ModeType .BLENDTEXTUREALPHA],
+				["BLENDFACTORALPHA",          ModeType .BLENDFACTORALPHA],
+				["BLENDCURRENTALPHA",         ModeType .BLENDCURRENTALPHA],
+				["MODULATEALPHA_ADDCOLOR",    ModeType .MODULATEALPHA_ADDCOLOR],
+				["MODULATEINVALPHA_ADDCOLOR", ModeType .MODULATEINVALPHA_ADDCOLOR],
+				["MODULATEINVCOLOR_ADDALPHA", ModeType .MODULATEINVCOLOR_ADDALPHA],
+				["DOTPRODUCT3",               ModeType .DOTPRODUCT3],
+				["SELECTARG1",                ModeType .SELECTARG1],
+				["SELECTARG2",                ModeType .SELECTARG2],
+				["OFF",                       ModeType .OFF],
+			]);
+
+			return function ()
+			{
+				this .modes      .length = 0;
+				this .alphaModes .length = 0;
+
+				for (var i = 0, length = this .mode_ .length; i < length; ++ i)
+				{
+					var mode = this .mode_ [i] .split (",");
+
+					for (var m = 0, mLength = mode .length; m < mLength; ++ m)
+						mode [m] = mode [m] .trim ();
+
+					if (mode .length === 0)
+						mode .push ("MODULATE");
+
+					if (mode .length < 2)
+						mode .push (mode [0]);
+
+					// RGB
+
+					var modeType = modeTypes .get (mode [0]);
+
+					if (modeType !== undefined)
+						this .modes .push (modeType);
+					else
+						this .modes .push (ModeType .MODULATE);
+
+					// Alpha
+
+					var modeType = modeTypes .get (mode [1]);
+
+					if (modeType !== undefined)
+						this .alphaModes .push (modeType);
+					else
+						this .alphaModes .push (ModeType .MODULATE);
+				}
+			};
+		})(),
+		set_source__: (function ()
+		{
+			var sourceTypes = new Map ([
+				["DIFFUSE",  SourceType .DIFFUSE],
+				["SPECULAR", SourceType .SPECULAR],
+				["FACTOR",   SourceType .FACTOR],
+			]);
+
+			return function ()
+			{
+				this .sources .length = 0;
+
+				for (var i = 0, length = this .source_ .length; i < length; ++ i)
+				{
+					var sourceType = sourceTypes .get (this .source_ [i]);
+
+					if (sourceType !== undefined)
+						this .sources .push (sourceType);
+					else
+						this .sources .push (SourceType .DEFAULT);
+				}
+			};
+		})(),
+		set_function__: (function ()
+		{
+			var functionsTypes = new Map ([
+				["COMPLEMENT",     FunctionType .COMPLEMENT],
+				["ALPHAREPLICATE", FunctionType .ALPHAREPLICATE],
+			]);
+
+			return function ()
+			{
+				this .functions .length = 0;
+
+				for (var i = 0, length = this .function_ .length; i < length; ++ i)
+				{
+					var functionsType = functionsTypes .get (this .function_ [i]);
+
+					if (functionsType !== undefined)
+						this .functions .push (functionsType);
+					else
+						this .functions .push (FunctionType .DEFAULT);
+				}
+			};
+		})(),
+		set_texture__: function ()
+		{
+			this .textureNodes .length = 0;
+
+			for (var i = 0, length = this .texture_ .length; i < length; ++ i)
+			{
+				var node = this .texture_ [i];
+
+				if (X3DCast (X3DConstants .MultiTexture, node))
+					continue;
+
+				var textureNode = X3DCast (X3DConstants .X3DTextureNode, node);
+
+				if (textureNode)
+					this .textureNodes .push (textureNode);
+			}	
+		},
+		traverse: function (type, renderObject)
+		{
+			var textureNodes = this .textureNodes;
+
+			for (var i = 0, length = textureNodes .length; i < length; ++ i)
+				textureNodes [i] .traverse (type, renderObject);
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			var
+				textureNodes = this .textureNodes,
+				channels     = Math .min (shaderObject .getBrowser () .getMaxTextures (), textureNodes .length);
+
+			gl .uniform1i  (shaderObject .x3d_NumTextures,       channels);
+			gl .uniform4fv (shaderObject .x3d_MultiTextureColor, this .color);
+
+			for (var i = 0; i < channels; ++ i)
+			{
+				textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
+
+				gl .uniform1i  (shaderObject .x3d_MultiTextureMode [i],      this .getMode (i));
+				gl .uniform1i  (shaderObject .x3d_MultiTextureAlphaMode [i], this .getAlphaMode (i));
+				gl .uniform1i  (shaderObject .x3d_MultiTextureSource [i],    this .getSource (i));
+				gl .uniform1i  (shaderObject .x3d_MultiTextureFunction [i],  this .getFunction (i));
+			}
 		},
 	});
 

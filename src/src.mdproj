@@ -692,8 +692,14 @@
     <None Include="lib\ammojs\Ammo.js" />
     <None Include="x_ite\Browser\Picking\MatchCriterion.js" />
     <None Include="x_ite\Browser\RigidBodyPhysics\AppliedParametersType.js" />
-    <None Include="x_ite\Browser\Texturing\ModeType.js" />
     <None Include="x_ite\Browser\Shaders\Include\Perlin.h" />
+    <None Include="x_ite\Browser\Texturing\TextureCoordinateGeneratorModeType.js" />
+    <None Include="x_ite\Browser\Texturing\MultiTextureModeType.js" />
+    <None Include="x_ite\Browser\Texturing\MultiTextureSourceType.js" />
+    <None Include="x_ite\Browser\Texturing\MultiTextureFunctionType.js" />
+    <None Include="x_ite\Browser\Shaders\Include\ClipPlanes.h" />
+    <None Include="x_ite\Browser\Shaders\Include\Fog.h" />
+    <None Include="x_ite\Browser\Shaders\Include\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

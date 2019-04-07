@@ -184,8 +184,6 @@ function (Fields,
 			if (this .textureNode)
 				this .textureNode .transparent_ .addInterest ("set_transparent__", this);
 
-			this .generatedCubeMapTexture = X3DCast (X3DConstants .GeneratedCubeMapTexture, this .texture_);
-
 			this .set_transparent__ ();
 		},
 		set_textureTransform__: function ()
@@ -268,8 +266,8 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			if (this .generatedCubeMapTexture)
-				this .generatedCubeMapTexture .traverse (type, renderObject);
+			if (this .textureNode)
+				this .textureNode .traverse (type, renderObject);
 
 			this .shaderNode .traverse (type, renderObject);
 		},

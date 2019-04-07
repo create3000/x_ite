@@ -148,7 +148,7 @@ function (TextureProperties,
 		},
 		getMaxTextures: function ()
 		{
-			return 1;
+			return 2;
 		},
 		getMinTextureSize: function ()
 		{

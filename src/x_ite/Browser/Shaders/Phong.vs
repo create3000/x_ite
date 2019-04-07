@@ -18,13 +18,14 @@ attribute vec4  x3d_TexCoord1;
 attribute vec3  x3d_Normal;
 attribute vec4  x3d_Vertex;
 
-varying float fogDepth; // fog depth
-varying vec4  C;        // color
-varying vec4  t0;       // texCoord
-varying vec3  vN;       // normalized normal vector at this point on geometry
-varying vec3  v;        // point on geometry
-varying vec3  lN;       // normal vector at this point on geometry in local coordinates
-varying vec3  lV;       // point on geometry in local coordinates
+varying float fogDepth;    // fog depth
+varying vec4  color;       // color
+varying vec4  texCoord0;   // texCoord0
+varying vec4  texCoord1;   // texCoord1
+varying vec3  normal;      // normalized normal vector at this point on geometry
+varying vec3  vertex;      // point on geometry
+varying vec3  localNormal; // normal vector at this point on geometry in local coordinates
+varying vec3  localVertex; // point on geometry in local coordinates
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 varying float depth;
@@ -35,17 +36,18 @@ main ()
 {
 	gl_PointSize = x3d_LinewidthScaleFactor;
 
-	vec4 p = x3d_ModelViewMatrix * x3d_Vertex;
+	vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-	fogDepth = x3d_FogDepth;
-	C        = x3d_Color;
-	t0       = x3d_TextureMatrix [0] * x3d_TexCoord0;
-	vN       = x3d_NormalMatrix * x3d_Normal;
-	v        = p .xyz;
-	lN       = x3d_Normal;
-	lV       = vec3 (x3d_Vertex);
+	fogDepth    = x3d_FogDepth;
+	color       = x3d_Color;
+	texCoord0   = x3d_TextureMatrix [0] * x3d_TexCoord0;
+	texCoord1   = x3d_TextureMatrix [1] * x3d_TexCoord1;
+	normal      = x3d_NormalMatrix * x3d_Normal;
+	vertex      = position .xyz;
+	localNormal = x3d_Normal;
+	localVertex = vec3 (x3d_Vertex);
 
-	gl_Position = x3d_ProjectionMatrix * p;
+	gl_Position = x3d_ProjectionMatrix * position;
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 	depth = 1.0 + gl_Position .w;

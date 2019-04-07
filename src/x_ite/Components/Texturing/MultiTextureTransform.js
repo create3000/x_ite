@@ -109,9 +109,9 @@ function (Fields,
 
 			textureTransformNodes .length = 0;
 
-			for (var i = 0, length = this .texCoord_ .length; i < length; ++ i)
+			for (var i = 0, length = this .textureTransform_ .length; i < length; ++ i)
 			{
-				var node = this .texCoord_ [i];
+				var node = this .textureTransform_ [i];
 
 				if (X3DCast (X3DConstants .MultiTextureTransform, node))
 					continue;

@@ -44,7 +44,17 @@ struct x3d_MaterialParameters
 };
 
 //uniform x3d_MaterialParameters x3d_FrontMaterial;  
-//uniform x3d_MaterialParameters x3d_BackMaterial;        
+//uniform x3d_MaterialParameters x3d_BackMaterial;    
+    
+struct x3d_MultiTextureParameters  
+{   
+	mediump int mode;
+	mediump int alphaMode;
+	mediump int source;
+	mediump int function;
+};
+
+//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
 
 struct x3d_TextureCoordinateGeneratorParameters  
 {   
@@ -52,7 +62,7 @@ struct x3d_TextureCoordinateGeneratorParameters
 	mediump float parameter [6];
 };
 
-//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [1];  
+//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures;  
 
 struct x3d_ParticleParameters  
 {   

@@ -25,14 +25,15 @@ attribute vec4  x3d_TexCoord1;
 attribute vec3  x3d_Normal;
 attribute vec4  x3d_Vertex;
 
-varying float fogDepth;   // fog depth
-varying vec4  frontColor; // color
-varying vec4  backColor;  // color
-varying vec4  t0;         // texCoord
-varying vec3  vN;         // normal vector at this point on geometry
-varying vec3  v;          // point on geometry
-varying vec3  lN;         // normal vector at this point on geometry in local coordinates
-varying vec3  lV;         // point on geometry in local coordinates
+varying float fogDepth;    // fog depth
+varying vec4  frontColor;  // color
+varying vec4  backColor;   // color
+varying vec4  texCoord0;   // texCoord0
+varying vec4  texCoord1;   // texCoord1
+varying vec3  normal;      // normal vector at this point on geometry
+varying vec3  vertex;      // point on geometry
+varying vec3  localNormal; // normal vector at this point on geometry in local coordinates
+varying vec3  localVertex; // point on geometry in local coordinates
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 varying float depth;
@@ -53,10 +54,10 @@ getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in ve
 
 vec4
 getMaterialColor (const in vec3 N,
-                  const in vec3 v,
+                  const in vec3 vertex,
                   const in x3d_MaterialParameters material)
 {
-	vec3 V = normalize (-v); // normalized vector from point on geometry to viewer's position
+	vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
 	// Calculate diffuseFactor & alpha
 
@@ -84,7 +85,7 @@ getMaterialColor (const in vec3 N,
 
 		x3d_LightSourceParameters light = x3d_LightSource [i];
 
-		vec3  vL = light .location - v;
+		vec3  vL = light .location - vertex;
 		float dL = length (light .matrix * vL);
 		bool  di = light .type == x3d_DirectionalLight;
 
@@ -120,16 +121,17 @@ main ()
 {
 	gl_PointSize = x3d_LinewidthScaleFactor;
 
-	vec4 p = x3d_ModelViewMatrix * x3d_Vertex;
+	vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-	fogDepth = x3d_FogDepth;
-	t0       = x3d_TextureMatrix [0] * x3d_TexCoord0;
-	v        = p .xyz;
-	vN       = normalize (x3d_NormalMatrix * x3d_Normal);
-	lN       = x3d_Normal;
-	lV       = vec3 (x3d_Vertex);
+	fogDepth    = x3d_FogDepth;
+	texCoord0   = x3d_TextureMatrix [0] * x3d_TexCoord0;
+	texCoord1   = x3d_TextureMatrix [1] * x3d_TexCoord1;
+	vertex      = position .xyz;
+	normal      = normalize (x3d_NormalMatrix * x3d_Normal);
+	localNormal = x3d_Normal;
+	localVertex = vec3 (x3d_Vertex);
 
-	gl_Position = x3d_ProjectionMatrix * p;
+	gl_Position = x3d_ProjectionMatrix * position;
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 	depth = 1.0 + gl_Position .w;
@@ -138,14 +140,14 @@ main ()
 	if (x3d_Lighting)
 	{
 
-		frontColor = getMaterialColor (vN, v, x3d_FrontMaterial);
+		frontColor = getMaterialColor (normal, vertex, x3d_FrontMaterial);
 
 		x3d_MaterialParameters backMaterial = x3d_FrontMaterial;
 
 		if (x3d_SeparateBackColor)
 			backMaterial = x3d_BackMaterial;
 
-		backColor = getMaterialColor (-vN, v, backMaterial);
+		backColor = getMaterialColor (-normal, vertex, backMaterial);
 	}
 	else
 	{

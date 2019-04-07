@@ -53,7 +53,7 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Texturing/ModeType",
+	"x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType",
 ],
 function (Fields,
           X3DFieldDefinition,

@@ -119,25 +119,25 @@ cubeToUVCompact (in vec3 v, const float texelSizeY)
 	{
 		// zZ
 
-		if (v.z > 0.0)
-			planar .x = 4.0 - v.x;
+		if (v .z > 0.0)
+			planar .x = 4.0 - v .x;
 	}
 	else if (absV .x >= almostOne)
 	{
 		// xX
 
-		float signX = sign (v.x);
+		float signX = sign (v .x);
 
-		planar .x = v.z * signX + 2.0 * signX;
+		planar .x = v .z * signX + 2.0 * signX;
 	}
 	else if (absV .y >= almostOne)
 	{
 		// yY
 
-		float signY = sign (v.y);
+		float signY = sign (v .y);
 
-		planar .x = (v.x + 0.5 + signY) * 2.0;
-		planar .y = v.z * signY - 2.0;
+		planar .x = (v .x + 0.5 + signY) * 2.0;
+		planar .y = v .z * signY - 2.0;
 	}
 
 	// Transform to UV space
@@ -148,7 +148,7 @@ cubeToUVCompact (in vec3 v, const float texelSizeY)
 }
 
 mat4
-getPointLightRotation (const in vec3 vector)
+getPointLightRotations (const in vec3 vector)
 {
 	mat4 rotations [6];
 	rotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left
@@ -191,17 +191,16 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 			                           0.0, 0.0, 0.5, 0.0,
 			                           0.5, 0.5, 0.5, 1.0);
 
-		// 90° fov, as used in PointLight shadow calculations.
 		const mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);
 
 		vec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));
 
 		// for point lights, the uniform @vShadowCoord is re-purposed to hold
 		// the vector from the light to the world-space position of the fragment.
-		vec4 shadowCoord     = light .shadowMatrix * vec4 (v, 1.0);
+		vec4 shadowCoord     = light .shadowMatrix * vec4 (vertex, 1.0);
 		vec3 lightToPosition = shadowCoord .xyz;
 
-		shadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotation (lightToPosition) * shadowCoord));
+		shadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));
 		shadowCoord .z   -= light .shadowBias;
 		shadowCoord .xyz /= shadowCoord .w;
 
@@ -239,7 +238,7 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 		#if defined (X3D_PCF_FILTERING)
 
 			vec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);
-			vec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);
+			vec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);
 	
 			shadowCoord .z   -= light .shadowBias;
 			shadowCoord .xyz /= shadowCoord .w;
@@ -266,7 +265,7 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 		#elif defined (X3D_PCF_SOFT_FILTERING)
 
 			vec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);
-			vec4 shadowCoord = light .shadowMatrix * vec4 (v, 1.0);
+			vec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);
 	
 			shadowCoord .z   -= light .shadowBias;
 			shadowCoord .xyz /= shadowCoord .w;
@@ -292,7 +291,7 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 
 		#else // no percentage-closer filtering
 
-			vec4 shadowCoord = shadowMatrix * vec4 (v, 1.0);
+			vec4 shadowCoord = shadowMatrix * vec4 (vertex, 1.0);
 	
 			shadowCoord .z   -= shadowBias;
 			shadowCoord .xyz /= shadowCoord .w;

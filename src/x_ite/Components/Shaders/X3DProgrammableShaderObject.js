@@ -87,11 +87,15 @@ function (Fields,
 		this .x3d_ShadowMatrix                        = [ ];
 		this .x3d_ShadowMapSize                       = [ ];
 		this .x3d_ShadowMap                           = [ ];
-		this .x3d_TextureCoordinateGeneratorMode      = [ ];
-		this .x3d_TextureCoordinateGeneratorParameter = [ ];
 		this .x3d_TextureType                         = [ ];
 		this .x3d_Texture2D                           = [ ];
 		this .x3d_CubeMapTexture                      = [ ];
+		this .x3d_MultiTextureMode                    = [ ];
+		this .x3d_MultiTextureAlphaMode               = [ ];
+		this .x3d_MultiTextureSource                  = [ ];
+		this .x3d_MultiTextureFunction                = [ ];
+		this .x3d_TextureCoordinateGeneratorMode      = [ ];
+		this .x3d_TextureCoordinateGeneratorParameter = [ ];
 		this .x3d_TexCoord                            = [ ];
 		this .x3d_TextureMatrix                       = [ ];
 
@@ -198,16 +202,22 @@ function (Fields,
 			this .x3d_BackShininess        = this .getUniformLocation (gl, program, "x3d_BackMaterial.shininess",        "x3d_BackShininess");
 			this .x3d_BackTransparency     = this .getUniformLocation (gl, program, "x3d_BackMaterial.transparency",     "x3d_BackTransparency");
 
-			this .x3d_NumTextures    = gl .getUniformLocation (program, "x3d_NumTextures");
+			this .x3d_NumTextures       = gl .getUniformLocation (program, "x3d_NumTextures");
+			this .x3d_MultiTextureColor = gl .getUniformLocation (program, "x3d_MultiTextureColor");
 
 			for (var i = 0; i < this .x3d_MaxTextures; ++ i)
 			{
-				this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
-				this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
-
 				this .x3d_TextureType [i]    = gl .getUniformLocation (program, "x3d_TextureType[" + i + "]");
 				this .x3d_Texture2D [i]      = gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]");
 				this .x3d_CubeMapTexture [i] = gl .getUniformLocation (program, "x3d_CubeMapTexture[" + i + "]");
+
+				this .x3d_MultiTextureMode [i]      = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].mode");
+				this .x3d_MultiTextureAlphaMode [i] = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].alphaMode");
+				this .x3d_MultiTextureSource [i]    = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].source");
+				this .x3d_MultiTextureFunction [i]  = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].function");
+
+				this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
+				this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
 			}
 
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
@@ -238,7 +248,6 @@ function (Fields,
 			gl .uniform1iv (this .x3d_Texture2D [0],        browser .getTexture2DUnits ());
 			gl .uniform1iv (this .x3d_CubeMapTexture [0],   browser .getCubeMapTextureUnits ());
 			gl .uniform1iv (this .x3d_ShadowMap [0],        new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
-
 
 			// Return true if valid, otherwise false.
 
@@ -1005,8 +1014,6 @@ function (Fields,
 
 			if (textureNode)
 			{
-				gl .uniform1i (this .x3d_NumTextures, textureNode .getSize ());
-
 				textureNode           .setShaderUniforms (gl, this);
 				textureTransformNode  .setShaderUniforms (gl, this);
 				textureCoordinateNode .setShaderUniforms (gl, this);
