@@ -51,10 +51,16 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Texturing/MultiTextureModeType",
+	"x_ite/Browser/Texturing/MultiTextureSourceType",
+	"x_ite/Browser/Texturing/MultiTextureFunctionType",
 ],
 function (Fields,
           X3DAppearanceChildNode, 
-          X3DConstants)
+          X3DConstants,
+          ModeType,
+          SourceType,
+          FunctionType)
 {
 "use strict";
 
@@ -151,9 +157,13 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			gl .uniform1i (shaderObject .x3d_NumTextures, 1);
-
 			this .setShaderUniformsToChannel (gl, shaderObject, 0);
+
+			gl .uniform1i (shaderObject .x3d_NumTextures, 1);
+			gl .uniform1i (shaderObject .x3d_MultiTextureMode [0],      ModeType .MODULATE);
+			gl .uniform1i (shaderObject .x3d_MultiTextureAlphaMode [0], ModeType .MODULATE);
+			gl .uniform1i (shaderObject .x3d_MultiTextureSource [0],    SourceType .DEFAULT);
+			gl .uniform1i (shaderObject .x3d_MultiTextureFunction [0],  FunctionType .DEFAULT);
 		},
 	});
 
