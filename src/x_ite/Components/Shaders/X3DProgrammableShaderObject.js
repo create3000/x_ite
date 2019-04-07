@@ -1201,23 +1201,25 @@ function (Fields,
 		},
 		enableTexCoordAttribute: function (gl, texCoordBuffers)
 		{
-			for (var t = 0, length = this .x3d_MaxTextures; t < length; ++ t)
+			var length = Math .min (this .x3d_MaxTextures, texCoordBuffers .length);
+
+			for (var i = 0; i < length; ++ i)
 			{
-				var x3d_TexCoord = this .x3d_TexCoord [t];
+				var x3d_TexCoord = this .x3d_TexCoord [i];
 
 				if (x3d_TexCoord === -1)
 					continue;
 
 				gl .enableVertexAttribArray (x3d_TexCoord);
-				gl .bindBuffer (gl .ARRAY_BUFFER, texCoordBuffers [t]);
+				gl .bindBuffer (gl .ARRAY_BUFFER, texCoordBuffers [i]);
 				gl .vertexAttribPointer (x3d_TexCoord, 4, gl .FLOAT, false, 0, 0);
 			}
 		},
 		disableTexCoordAttribute: function (gl)
 		{
-			for (var t = 0, length = this .x3d_MaxTextures; t < length; ++ t)
+			for (var i = 0, length = this .x3d_MaxTextures; i < length; ++ i)
 			{
-				var x3d_TexCoord = this .x3d_TexCoord [t];
+				var x3d_TexCoord = this .x3d_TexCoord [i];
 
 				if (x3d_TexCoord === -1)
 					continue;
