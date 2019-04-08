@@ -334,13 +334,11 @@ function ($,
 		{
 		   //console .log (glyph .name, x, y);
 
-			var components = glyph .components;
-
-			paths  .length = 0;
+			paths .length = 0;
 		
 			if (glyph .isComposite)
 			{
-				components .forEach (function (component)
+				glyph .components .forEach (function (component)
 				{
 					var glyph = font .glyphs .get (component .glyphIndex);
 

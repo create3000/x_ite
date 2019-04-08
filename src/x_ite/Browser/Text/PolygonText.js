@@ -279,7 +279,6 @@ function (Fields,
 				var
 					fontStyle  = this .getFontStyle (),
 					font       = fontStyle .getFont (),
-					components = glyph .components,
 					dimension  = this .getBezierDimension (primitiveQuality);
 	
 				paths  .length = 0;
@@ -288,7 +287,7 @@ function (Fields,
 			
 				if (glyph .isComposite)
 				{
-					components .forEach (function (component)
+					glyph .components .forEach (function (component)
 					{
 						var glyph = font .glyphs .get (component .glyphIndex);
 
