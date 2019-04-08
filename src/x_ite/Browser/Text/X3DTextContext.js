@@ -80,9 +80,6 @@ function ($,
 		},
 		getFont: function (URL)
 		{
-			if (URL .query .length !== 0)
-				error ("Font url with query not supported");
-
 			var deferred = this .fontCache .get (URL .filename);
 
 			if (deferred === undefined)
