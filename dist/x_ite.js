@@ -1,4 +1,4 @@
-/* X_ITE v4.4.8a-720 */
+/* X_ITE v4.4.8a-721 */
 
 (function () {
 
@@ -58712,7 +58712,7 @@ function (Shading,
 		},
 		createShader: function (name, vs, fs, shadow)
 		{
-			console .log (name);
+			//console .log ("Creating " + name);
 
 			if (shadow)
 			{

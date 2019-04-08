@@ -232,7 +232,7 @@ function (Shading,
 		},
 		createShader: function (name, vs, fs, shadow)
 		{
-			console .log (name);
+			//console .log ("Creating " + name);
 
 			if (shadow)
 			{
