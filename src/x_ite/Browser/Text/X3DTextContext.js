@@ -78,7 +78,7 @@ function ($,
 
 			return this .defaultFontStyle;
 		},
-		getFont: function (URL, success, error)
+		getFont: function (URL)
 		{
 			if (URL .query .length !== 0)
 				error ("Font url with query not supported");
@@ -92,8 +92,7 @@ function ($,
 				opentype .load (URL .toString (), this .setFont .bind (this, deferred));
 			}
 
-			deferred .done (success);
-			deferred .fail (error);
+			return deferred;
 		},
 		setFont: function (deferred, error, font)
 		{

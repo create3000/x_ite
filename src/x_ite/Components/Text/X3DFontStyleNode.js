@@ -243,7 +243,9 @@ function (Fields,
 				this .family = this .familyStack .shift ();
 				this .URL    = this .loader .transform (this .family);
 
-				this .getBrowser () .getFont (this .URL, this .setFont .bind (this), this .setError .bind (this));
+				this .getBrowser () .getFont (this .URL)
+					.done (this .setFont .bind (this))
+					.fail (this .setError .bind (this));
 			}
 			catch (error)
 			{
