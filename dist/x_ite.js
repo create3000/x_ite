@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-724 */
+/* X_ITE v4.5.0a-725 */
 
 (function () {
 
@@ -72062,7 +72062,9 @@ function (Fields,
 				this .family = this .familyStack .shift ();
 				this .URL    = this .loader .transform (this .family);
 
-				this .getBrowser () .getFont (this .URL, this .setFont .bind (this), this .setError .bind (this));
+				this .getBrowser () .getFont (this .URL)
+					.done (this .setFont .bind (this))
+					.fail (this .setError .bind (this));
 			}
 			catch (error)
 			{
@@ -73289,10 +73291,10 @@ function (Fields,
 				font          = fontStyle .getFont (),
 				geometryCache = this .getBrowser () .getFontGeometryCache ();
 
-			var cachedFont = geometryCache [font .fontName];
+			var cachedFont = geometryCache .get (font .fontName);
 
 			if (! cachedFont)
-				geometryCache [font .fontName] = cachedFont = [[], [], []];
+				geometryCache .set (font .fontName, cachedFont = [[ ], [ ], [ ]]);
 
 			var cachedGeometry = cachedFont [primitiveQuality] [glyph .index];
 
@@ -78554,15 +78556,14 @@ function ($,
 
 	function X3DTextContext ()
 	{
-		this .fontCache         = { };
-		this .fontGeometryCache = { }; // [fontName] [primitveQuality] [glyphIndex]
+		this .fontCache         = new Map ();
+		this .fontGeometryCache = new Map (); // [fontName] [primitveQuality] [glyphIndex]
 	}
 
 	X3DTextContext .prototype =
 	{
 		initialize: function ()
-		{
-		},
+		{ },
 		getDefaultFontStyle: function ()
 		{
 			if (! this .defaultFontStyle)
@@ -78573,27 +78574,21 @@ function ($,
 
 			return this .defaultFontStyle;
 		},
-		getFont: function (URL, success, error)
+		getFont: function (URL)
 		{
-			if (URL .query .length !== 0)
-				error ("Font url with query not supported");
+			var deferred = this .fontCache .get (URL .toString ());
 
-			var deferred = this .fontCache [URL .filename];
-
-			if (! deferred)
+			if (deferred === undefined)
 			{
-				deferred = this .fontCache [URL .filename] = $.Deferred ();
+				this .fontCache .set (URL .toString (), deferred = $.Deferred ());
 
-				opentype .load (URL .toString (), this .setFont .bind (this, URL));
+				opentype .load (URL .toString (), this .setFont .bind (this, deferred));
 			}
 
-			deferred .done (success);
-			deferred .fail (error);
+			return deferred;
 		},
-		setFont: function (URL, error, font)
+		setFont: function (deferred, error, font)
 		{
-			var deferred = this .fontCache [URL .filename];
-
 			if (error)
 			{
 				deferred .reject (error);
