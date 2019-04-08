@@ -152,7 +152,7 @@ function (Fields,
 		this .texCoordRamp             = [ ];
 		this .texCoordAnim             = false;
 		this .vertexCount              = 0;
-		this .shaderNode               = this .getBrowser () .getPointShader ();
+		this .shaderNode               = null;
 		this .rotation                 = new Matrix3 ();
 		this .particleSorter           = new QuickSort (this .particles, compareDistance);
 		this .sortParticles            = false;
