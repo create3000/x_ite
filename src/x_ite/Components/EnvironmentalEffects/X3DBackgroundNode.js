@@ -625,41 +625,44 @@ function (X3DBindableNode,
 					gl         = browser .getContext (),
 					shaderNode = browser .getGouraudShader ();
 	
-				shaderNode .enable (gl);
+				if (shaderNode .getValid ())
+				{
+					shaderNode .enable (gl);
+		
+					// Clip planes
+		
+					shaderNode .setShaderObjects (gl, this .shaderObjects);
+		
+					// Enable vertex attribute arrays.
+		
+					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+		
+					// Uniforms
+		
+					gl .uniform1i (shaderNode .x3d_FogType,                            0);
+					gl .uniform1i (shaderNode .x3d_ColorMaterial,                      false);
+					gl .uniform1i (shaderNode .x3d_Lighting,                           false);
+					gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
+					gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
 	
-				// Clip planes
-	
-				shaderNode .setShaderObjects (gl, this .shaderObjects);
-	
-				// Enable vertex attribute arrays.
-	
-				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-	
-				// Uniforms
-	
-				gl .uniform1i (shaderNode .x3d_FogType,                            0);
-				gl .uniform1i (shaderNode .x3d_ColorMaterial,                      false);
-				gl .uniform1i (shaderNode .x3d_Lighting,                           false);
-				gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
-				gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-
-				gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
-				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
-				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
-	
-				// Draw.
-	
-				this .drawRectangle (gl, shaderNode, this .frontTexture,  this .frontBuffer);
-				this .drawRectangle (gl, shaderNode, this .backTexture,   this .backBuffer);
-				this .drawRectangle (gl, shaderNode, this .leftTexture,   this .leftBuffer);
-				this .drawRectangle (gl, shaderNode, this .rightTexture,  this .rightBuffer);
-				this .drawRectangle (gl, shaderNode, this .topTexture,    this .topBuffer);
-				this .drawRectangle (gl, shaderNode, this .bottomTexture, this .bottomBuffer);
-	
-				// Disable vertex attribute arrays.
-	
-				shaderNode .disableTexCoordAttribute (gl);
-				shaderNode .disable (gl);
+					gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
+					gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
+					gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
+		
+					// Draw.
+		
+					this .drawRectangle (gl, shaderNode, this .frontTexture,  this .frontBuffer);
+					this .drawRectangle (gl, shaderNode, this .backTexture,   this .backBuffer);
+					this .drawRectangle (gl, shaderNode, this .leftTexture,   this .leftBuffer);
+					this .drawRectangle (gl, shaderNode, this .rightTexture,  this .rightBuffer);
+					this .drawRectangle (gl, shaderNode, this .topTexture,    this .topBuffer);
+					this .drawRectangle (gl, shaderNode, this .bottomTexture, this .bottomBuffer);
+		
+					// Disable vertex attribute arrays.
+		
+					shaderNode .disableTexCoordAttribute (gl);
+					shaderNode .disable (gl);
+				}
 			};
 		})(),
 		drawRectangle: function (gl, shaderNode, texture, buffer)

@@ -1,4 +1,4 @@
-/* X_ITE v4.4.8a-723 */
+/* X_ITE v4.4.8a-724 */
 
 (function () {
 
@@ -41567,14 +41567,10 @@ function (Shading,
 		},
 		traverse: function (type, renderObject)
 		{
-			switch (type)
-			{
-				case TraverseType .DISPLAY:
-					renderObject .getShaders () .add (this);
-					break;
-				default:
-					break;
-			}
+			if (type !== TraverseType .DISPLAY)
+				return;
+
+			renderObject .getShaders () .add (this);
 		},
 	});
 
@@ -45143,6 +45139,7 @@ function (Fields,
 
 		this .addType (X3DConstants .ComposedShader);
 
+		this .valid      = false;
 		this .loadSensor = new LoadSensor (executionContext);
 	}
 
@@ -45198,7 +45195,7 @@ function (Fields,
 		},
 		getValid: function ()
 		{
-			return this .isValid_ .getValue ();
+			return this .valid;
 		},
 		set_live__: function ()
 		{
@@ -45206,7 +45203,7 @@ function (Fields,
 
 			if (this .isLive () .getValue ())
 			{
-				if (this .isValid_ .getValue ())
+				if (this .valid)
 				{
 					this .enable (gl);
 					this .addShaderFields ();
@@ -45215,7 +45212,7 @@ function (Fields,
 			}
 			else
 			{
-				if (this .isValid_ .getValue ())
+				if (this .valid)
 				{
 					this .enable (gl);
 					this .removeShaderFields ();
@@ -45238,9 +45235,9 @@ function (Fields,
 					parts   = this .parts_ .getValue (),
 					valid   = 0;
 
-				if (this .isValid_ .getValue ())
+				if (this .valid)
 					this .removeShaderFields ();
-	
+
 				this .program = program;
 	
 				for (var i = 0, length = parts .length; i < length; ++ i)
@@ -45282,11 +45279,11 @@ function (Fields,
 				else
 					console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
 
-				this .isValid_ = valid;
+				this .isValid_ = this .valid = !! valid;
 			}
 			else
 			{
-				this .isValid_ = false;
+				this .isValid_ = this .valid = false;
 			}
 		},
 		set_field__: function (field)
@@ -58619,6 +58616,10 @@ function (Shading,
 		{
 			return this .defaultShader .getShadowShader ();
 		},
+		hasPointShader: function ()
+		{
+			return !! this .pointShader;
+		},
 		getPointShader: function ()
 		{
 			if (! this .pointShader)
@@ -58629,6 +58630,10 @@ function (Shading,
 			}
 
 			return this .pointShader;
+		},
+		hasLineShader: function ()
+		{
+			return !! this .lineShader;
 		},
 		getLineShader: function ()
 		{
@@ -58641,6 +58646,10 @@ function (Shading,
 
 			return this .lineShader;
 		},
+		hasGouraudShader: function ()
+		{
+			return !! this .gouraudShader;
+		},
 		getGouraudShader: function ()
 		{
 			if (! this .gouraudShader)
@@ -58651,6 +58660,10 @@ function (Shading,
 			}
 
 			return this .gouraudShader;
+		},
+		hasPhongShader: function ()
+		{
+			return !! this .phongShader;
 		},
 		getPhongShader: function ()
 		{
@@ -58665,6 +58678,10 @@ function (Shading,
 
 			return this .phongShader;
 		},
+		hasShadowShader: function ()
+		{
+			return !! this .shadowShader;
+		},
 		getShadowShader: function ()
 		{
 			if (! this .shadowShader)
@@ -58675,6 +58692,10 @@ function (Shading,
 			}
 
 			return this .shadowShader;
+		},
+		hasDepthShader: function ()
+		{
+			return !! this .depthShader;
 		},
 		getDepthShader: function ()
 		{
@@ -58708,7 +58729,7 @@ function (Shading,
 		},
 		createShader: function (name, vs, fs, shadow)
 		{
-			//console .log ("Creating " + name);
+			console .log ("Creating " + name);
 
 			if (shadow)
 			{
@@ -80105,14 +80126,9 @@ function ($,
 				cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 				projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 	
-				if (browser .pointShader)
-					shaders .add (browser .pointShader);
-
-				if (browser .lineShader)
-					shaders .add (browser .lineShader);
-	
-				if (browser .shadowShader)
-					shaders .add (browser .shadowShader);
+				if (browser .hasPointShader ())  shaders .add (browser .getPointShader ());
+				if (browser .hasLineShader ())   shaders .add (browser .getLineShader ());
+				if (browser .hasShadowShader ()) shaders .add (browser .getShadowShader ());
 
 				shaders .forEach (function (shader)
 				{
@@ -81892,41 +81908,44 @@ function (X3DBindableNode,
 					gl         = browser .getContext (),
 					shaderNode = browser .getGouraudShader ();
 	
-				shaderNode .enable (gl);
+				if (shaderNode .getValid ())
+				{
+					shaderNode .enable (gl);
+		
+					// Clip planes
+		
+					shaderNode .setShaderObjects (gl, this .shaderObjects);
+		
+					// Enable vertex attribute arrays.
+		
+					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+		
+					// Uniforms
+		
+					gl .uniform1i (shaderNode .x3d_FogType,                            0);
+					gl .uniform1i (shaderNode .x3d_ColorMaterial,                      false);
+					gl .uniform1i (shaderNode .x3d_Lighting,                           false);
+					gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
+					gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
 	
-				// Clip planes
-	
-				shaderNode .setShaderObjects (gl, this .shaderObjects);
-	
-				// Enable vertex attribute arrays.
-	
-				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-	
-				// Uniforms
-	
-				gl .uniform1i (shaderNode .x3d_FogType,                            0);
-				gl .uniform1i (shaderNode .x3d_ColorMaterial,                      false);
-				gl .uniform1i (shaderNode .x3d_Lighting,                           false);
-				gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
-				gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-
-				gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
-				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
-				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
-	
-				// Draw.
-	
-				this .drawRectangle (gl, shaderNode, this .frontTexture,  this .frontBuffer);
-				this .drawRectangle (gl, shaderNode, this .backTexture,   this .backBuffer);
-				this .drawRectangle (gl, shaderNode, this .leftTexture,   this .leftBuffer);
-				this .drawRectangle (gl, shaderNode, this .rightTexture,  this .rightBuffer);
-				this .drawRectangle (gl, shaderNode, this .topTexture,    this .topBuffer);
-				this .drawRectangle (gl, shaderNode, this .bottomTexture, this .bottomBuffer);
-	
-				// Disable vertex attribute arrays.
-	
-				shaderNode .disableTexCoordAttribute (gl);
-				shaderNode .disable (gl);
+					gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
+					gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
+					gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
+		
+					// Draw.
+		
+					this .drawRectangle (gl, shaderNode, this .frontTexture,  this .frontBuffer);
+					this .drawRectangle (gl, shaderNode, this .backTexture,   this .backBuffer);
+					this .drawRectangle (gl, shaderNode, this .leftTexture,   this .leftBuffer);
+					this .drawRectangle (gl, shaderNode, this .rightTexture,  this .rightBuffer);
+					this .drawRectangle (gl, shaderNode, this .topTexture,    this .topBuffer);
+					this .drawRectangle (gl, shaderNode, this .bottomTexture, this .bottomBuffer);
+		
+					// Disable vertex attribute arrays.
+		
+					shaderNode .disableTexCoordAttribute (gl);
+					shaderNode .disable (gl);
+				}
 			};
 		})(),
 		drawRectangle: function (gl, shaderNode, texture, buffer)
