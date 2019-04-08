@@ -1401,74 +1401,77 @@ function (Fields,
 		
 					// Setup shader.
 	
-					context .geometryType          = this .shaderGeometryType;
-					context .colorMaterial         = this .colorMaterial;
-					context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-
-					shaderNode .enable (gl);
-					shaderNode .setLocalUniforms (gl, context);
-		
-					// Setup vertex attributes.
-
-					shaderNode .enableFloatAttrib (gl, "x3d_ParticleId",          this .idBuffer,          1);
-					shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition",    this .positionBuffer,    3);
-					shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
-					shaderNode .enableFloatAttrib (gl, "x3d_ParticleLife",        this .lifeBuffer,        1);
-
-					if (this .colorMaterial)
-						shaderNode .enableColorAttribute (gl, this .colorBuffer);
-	
-					if (this .texCoordArray .length)
-						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-	
-					if (this .normalArray .length)
-						shaderNode .enableNormalAttribute (gl, this .normalBuffer);
-	
-					shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-	
-					var testWireframe = false;
-	
-					switch (this .geometryType)
+					if (shaderNode .getValid ())
 					{
-						case POINT:
-						case LINE:
-							break;
-						case TRIANGLE:
-						case QUAD:
-						case SPRITE:
-							testWireframe = true;
-							break;
-						case GEOMETRY:
-							break;
-					}
+						context .geometryType          = this .shaderGeometryType;
+						context .colorMaterial         = this .colorMaterial;
+						context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
 	
-					if (shaderNode .wireframe && testWireframe)
-					{
-						// Wireframes are always solid so only one drawing call is needed.
-		
-						for (var i = 0, length = this .numParticles * this .vertexCount; i < length; i += 3)
-							gl .drawArrays (shaderNode .primitiveMode, i, 3);
-					}
-					else
-					{
-						var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+						shaderNode .enable (gl);
+						shaderNode .setLocalUniforms (gl, context);
 			
-						gl .frontFace (positiveScale ? gl .CCW : gl .CW);
-						gl .enable (gl .CULL_FACE);
-						gl .cullFace (gl .BACK);
-
-						gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
+						// Setup vertex attributes.
+	
+						shaderNode .enableFloatAttrib (gl, "x3d_ParticleId",          this .idBuffer,          1);
+						shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition",    this .positionBuffer,    3);
+						shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
+						shaderNode .enableFloatAttrib (gl, "x3d_ParticleLife",        this .lifeBuffer,        1);
+	
+						if (this .colorMaterial)
+							shaderNode .enableColorAttribute (gl, this .colorBuffer);
+		
+						if (this .texCoordArray .length)
+							shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+		
+						if (this .normalArray .length)
+							shaderNode .enableNormalAttribute (gl, this .normalBuffer);
+		
+						shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+		
+						var testWireframe = false;
+		
+						switch (this .geometryType)
+						{
+							case POINT:
+							case LINE:
+								break;
+							case TRIANGLE:
+							case QUAD:
+							case SPRITE:
+								testWireframe = true;
+								break;
+							case GEOMETRY:
+								break;
+						}
+		
+						if (shaderNode .wireframe && testWireframe)
+						{
+							// Wireframes are always solid so only one drawing call is needed.
+			
+							for (var i = 0, length = this .numParticles * this .vertexCount; i < length; i += 3)
+								gl .drawArrays (shaderNode .primitiveMode, i, 3);
+						}
+						else
+						{
+							var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+				
+							gl .frontFace (positiveScale ? gl .CCW : gl .CW);
+							gl .enable (gl .CULL_FACE);
+							gl .cullFace (gl .BACK);
+	
+							gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
+						}
+	
+						shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
+						shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
+						shaderNode .disableFloatAttrib (gl, "x3d_ParticleElapsedTime");
+						shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
+	
+						shaderNode .disableColorAttribute    (gl);
+						shaderNode .disableTexCoordAttribute (gl);
+						shaderNode .disableNormalAttribute   (gl);
+						shaderNode .disable                  (gl);
 					}
-
-					shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
-					shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
-					shaderNode .disableFloatAttrib (gl, "x3d_ParticleElapsedTime");
-					shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
-
-					shaderNode .disableColorAttribute    (gl);
-					shaderNode .disableTexCoordAttribute (gl);
-					shaderNode .disableNormalAttribute   (gl);
-					shaderNode .disable                  (gl);
 				}
 
 				this .getAppearance () .disable (gl, context);
