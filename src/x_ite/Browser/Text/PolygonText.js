@@ -250,10 +250,10 @@ function (Fields,
 				font          = fontStyle .getFont (),
 				geometryCache = this .getBrowser () .getFontGeometryCache ();
 
-			var cachedFont = geometryCache [font .fontName];
+			var cachedFont = geometryCache .get (font .fontName);
 
 			if (! cachedFont)
-				geometryCache [font .fontName] = cachedFont = [[], [], []];
+				geometryCache .set (font .fontName, cachedFont = [[ ], [ ], [ ]]);
 
 			var cachedGeometry = cachedFont [primitiveQuality] [glyph .index];
 

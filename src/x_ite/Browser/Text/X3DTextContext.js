@@ -61,7 +61,7 @@ function ($,
 	function X3DTextContext ()
 	{
 		this .fontCache         = new Map ();
-		this .fontGeometryCache = { }; // [fontName] [primitveQuality] [glyphIndex]
+		this .fontGeometryCache = new Map (); // [fontName] [primitveQuality] [glyphIndex]
 	}
 
 	X3DTextContext .prototype =
