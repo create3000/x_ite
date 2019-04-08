@@ -348,7 +348,9 @@ function ($,
 				});
 			}
 			else
+			{
 				paths .push (glyph .getPath (x, -y, size));
+			}
 
 			// Get curves for the current glyph.
 
