@@ -111,14 +111,10 @@ function (Shading,
 		},
 		traverse: function (type, renderObject)
 		{
-			switch (type)
-			{
-				case TraverseType .DISPLAY:
-					renderObject .getShaders () .add (this);
-					break;
-				default:
-					break;
-			}
+			if (type !== TraverseType .DISPLAY)
+				return;
+
+			renderObject .getShaders () .add (this);
 		},
 	});
 
