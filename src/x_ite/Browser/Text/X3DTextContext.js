@@ -80,11 +80,11 @@ function ($,
 		},
 		getFont: function (URL)
 		{
-			var deferred = this .fontCache .get (URL .filename);
+			var deferred = this .fontCache .get (URL .toString ());
 
 			if (deferred === undefined)
 			{
-				this .fontCache .set (URL .filename, deferred = $.Deferred ());
+				this .fontCache .set (URL .toString (), deferred = $.Deferred ());
 
 				opentype .load (URL .toString (), this .setFont .bind (this, deferred));
 			}
