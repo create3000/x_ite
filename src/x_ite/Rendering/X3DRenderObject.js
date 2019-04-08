@@ -950,14 +950,9 @@ function ($,
 				cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 				projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 	
-				if (browser .pointShader)
-					shaders .add (browser .pointShader);
-
-				if (browser .lineShader)
-					shaders .add (browser .lineShader);
-	
-				if (browser .shadowShader)
-					shaders .add (browser .shadowShader);
+				if (browser .hasPointShader ())  shaders .add (browser .getPointShader ());
+				if (browser .hasLineShader ())   shaders .add (browser .getLineShader ());
+				if (browser .hasShadowShader ()) shaders .add (browser .getShadowShader ());
 
 				shaders .forEach (function (shader)
 				{

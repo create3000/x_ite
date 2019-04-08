@@ -139,6 +139,10 @@ function (Shading,
 		{
 			return this .defaultShader .getShadowShader ();
 		},
+		hasPointShader: function ()
+		{
+			return !! this .pointShader;
+		},
 		getPointShader: function ()
 		{
 			if (! this .pointShader)
@@ -149,6 +153,10 @@ function (Shading,
 			}
 
 			return this .pointShader;
+		},
+		hasLineShader: function ()
+		{
+			return !! this .lineShader;
 		},
 		getLineShader: function ()
 		{
@@ -161,6 +169,10 @@ function (Shading,
 
 			return this .lineShader;
 		},
+		hasGouraudShader: function ()
+		{
+			return !! this .gouraudShader;
+		},
 		getGouraudShader: function ()
 		{
 			if (! this .gouraudShader)
@@ -171,6 +183,10 @@ function (Shading,
 			}
 
 			return this .gouraudShader;
+		},
+		hasPhongShader: function ()
+		{
+			return !! this .phongShader;
 		},
 		getPhongShader: function ()
 		{
@@ -185,6 +201,10 @@ function (Shading,
 
 			return this .phongShader;
 		},
+		hasShadowShader: function ()
+		{
+			return !! this .shadowShader;
+		},
 		getShadowShader: function ()
 		{
 			if (! this .shadowShader)
@@ -195,6 +215,10 @@ function (Shading,
 			}
 
 			return this .shadowShader;
+		},
+		hasDepthShader: function ()
+		{
+			return !! this .depthShader;
 		},
 		getDepthShader: function ()
 		{
@@ -228,7 +252,7 @@ function (Shading,
 		},
 		createShader: function (name, vs, fs, shadow)
 		{
-			//console .log ("Creating " + name);
+			console .log ("Creating " + name);
 
 			if (shadow)
 			{
