@@ -288,16 +288,20 @@ function (Fields,
 			
 				if (glyph .isComposite)
 				{
-					for (var c = 0, cl = components .length; c < cl; ++ c)
+					components .forEach (function (component)
 					{
-						var component = components [c];
-	
-						paths .push (font .glyphs .get (component .glyphIndex) .getPath (component .dx / font .unitsPerEm, component .dy / -font .unitsPerEm, 1));
-					}
+						var glyph = font .glyphs .get (component .glyphIndex);
+
+						paths .push (glyph .getPath (component .dx / font .unitsPerEm,
+						                             component .dy / -font .unitsPerEm,
+						                             1));
+					});
 				}
 				else
+				{
 					paths .push (glyph .getPath (0, 0, 1));
-	
+				}
+
 				// Get curves for the current glyph.
 	
 				var

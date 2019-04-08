@@ -340,14 +340,14 @@ function ($,
 		
 			if (glyph .isComposite)
 			{
-				for (var c = 0, cl = components .length; c < cl; ++ c)
+				components .forEach (function (component)
 				{
-					var component = components [c];
+					var glyph = font .glyphs .get (component .glyphIndex);
 
 					paths .push (glyph .getPath (component .dx / font .unitsPerEm * size + x,
 					                             component .dy / font .unitsPerEm * size - y,
 					                             size));
-				}
+				});
 			}
 			else
 				paths .push (glyph .getPath (x, -y, size));
