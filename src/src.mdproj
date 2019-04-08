@@ -700,7 +700,7 @@
     <None Include="x_ite\Browser\Shaders\Include\ClipPlanes.h" />
     <None Include="x_ite\Browser\Shaders\Include\Fog.h" />
     <None Include="x_ite\Browser\Shaders\Include\Texture.h" />
-    <None Include="x_ite\Browser\Shaders\SamplerTest.fs" />
+    <None Include="x_ite\Browser\Shaders\Tests\SamplerTest.fs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
@@ -720,5 +720,6 @@
     <Folder Include="fonts\" />
     <Folder Include="x_ite\Browser\Picking\" />
     <Folder Include="x_ite\Browser\RigidBodyPhysics\" />
+    <Folder Include="x_ite\Browser\Shaders\Tests\" />
   </ItemGroup>
 </Project>

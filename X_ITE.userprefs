@@ -4,10 +4,10 @@
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="157" Column="34" />
-      <File FileName="src/x_ite/Browser/Shaders/Include/Texture.h" Line="128" Column="103" />
-      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="53" Column="5" />
-      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="96" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Include/Texture.h" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

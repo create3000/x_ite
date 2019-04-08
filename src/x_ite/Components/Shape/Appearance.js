@@ -281,7 +281,7 @@ function (Fields,
 			context .textureTransformNode = this .textureTransformNode;
 
 			if (context .shadow)
-				context .shaderNode = browser .getShadowShader ();
+				context .shaderNode = browser .getDefaultShadowShader ();
 			else
 				context .shaderNode = this .shaderNode;
 

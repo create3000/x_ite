@@ -104,6 +104,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Text", test: "Text" },
 	{ component: "Texturing", test: "ImageTexture" },
 	{ component: "Texturing", test: "MovieTexture" },
+	{ component: "Texturing", test: "MultiTexture" },
 	{ component: "Texturing", test: "PixelTexture" },
 	{ component: "Time", test: "TimeSensor" },
 	{ component: "X3D", test: "Appartment" },

@@ -60,7 +60,7 @@ define ([
 	"text!x_ite/Browser/Shaders/Phong.fs",
 	"text!x_ite/Browser/Shaders/Depth.vs",
 	"text!x_ite/Browser/Shaders/Depth.fs",
-	"text!x_ite/Browser/Shaders/SamplerTest.fs",
+	"text!x_ite/Browser/Shaders/Tests/SamplerTest.fs",
 	"x_ite/Browser/Shaders/ShaderTest",
 ],
 function (Shading,
@@ -93,6 +93,9 @@ function (Shading,
 	
 			// GL_ARB_gpu_shader5
 			this .multiTexturing = ShaderTest .compile (this .getContext (), samplerTest, "FRAGMENT_SHADER");
+
+			if (! this .multiTexturing)
+				console .warn ("Disabling multi-texturing.");
 
 			this .depthShader   = this .createShader ("DepthShader",     depthVS,     depthFS,     false);
 			this .pointShader   = this .createShader ("PointShader",     wireframeVS, pointSetFS,  false);
@@ -148,6 +151,10 @@ function (Shading,
 		{
 			return this .defaultShader;
 		},
+		getDefaultShadowShader: function ()
+		{
+			return this .defaultShader .shadowShader;
+		},
 		getPointShader: function ()
 		{
 			return this .pointShader;
@@ -167,7 +174,7 @@ function (Shading,
 		},
 		getShadowShader: function ()
 		{
-			return this .defaultShader .shadowShader;
+			return this .shadowShader;
 		},
 		getDepthShader: function ()
 		{
