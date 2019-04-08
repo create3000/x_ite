@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-723 */
+/* X_ITE v4.5.0a-724 */
 
 (function () {
 
@@ -67527,34 +67527,37 @@ function ($,
 					gl         = browser .getContext (),
 					shaderNode = browser .getLineShader (),
 					lineWidth  = gl .getParameter (gl .LINE_WIDTH);
-	
-				shaderNode .enable (gl);
-				shaderNode .enableVertexAttribute (gl, this .lineBuffer);
-	
-				gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
-				gl .uniform1i (shaderNode .x3d_FogType,       0);
-				gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
-	
-				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
-				
-				gl .disable (gl .DEPTH_TEST);
-	
-				// Draw a black and a white line.
-				gl .lineWidth (2);
-				gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
-				gl .uniform1f (shaderNode .x3d_Transparency,  0);
-	
-				gl .drawArrays (gl .LINES, 0, this .lineCount);
-	
-				gl .lineWidth (1);
-				gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
-	
-				gl .drawArrays (gl .LINES, 0, this .lineCount);
-				gl .enable (gl .DEPTH_TEST);
-	
-				gl .lineWidth (lineWidth);
-				shaderNode .disable (gl);
+
+				if (shaderNode .getValid ())
+				{
+					shaderNode .enable (gl);
+					shaderNode .enableVertexAttribute (gl, this .lineBuffer);
+		
+					gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
+					gl .uniform1i (shaderNode .x3d_FogType,       0);
+					gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
+		
+					gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+					gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+					
+					gl .disable (gl .DEPTH_TEST);
+		
+					// Draw a black and a white line.
+					gl .lineWidth (2);
+					gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
+					gl .uniform1f (shaderNode .x3d_Transparency,  0);
+		
+					gl .drawArrays (gl .LINES, 0, this .lineCount);
+		
+					gl .lineWidth (1);
+					gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
+		
+					gl .drawArrays (gl .LINES, 0, this .lineCount);
+					gl .enable (gl .DEPTH_TEST);
+		
+					gl .lineWidth (lineWidth);
+					shaderNode .disable (gl);
+				}
 			};
 		})(),
 		transfer: function (fromPoint, toPoint)
