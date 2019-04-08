@@ -1,4 +1,4 @@
-/* X_ITE v4.4.8a-722 */
+/* X_ITE v4.4.8a-723 */
 
 (function () {
 
@@ -58390,8 +58390,8 @@ function (TextureBuffer,
 
 			var valid = gl .getShaderParameter (shader, gl .COMPILE_STATUS);
 
-			if (! valid)
-				console .log (gl .getShaderInfoLog (shader));
+			//if (! valid)
+			//	console .log (gl .getShaderInfoLog (shader));
 
 			return valid;
 		},
@@ -58569,10 +58569,6 @@ function (Shading,
 	{
 		initialize: function ()
 		{
-			this .shaderTime = performance .now () / 1000;
-
-			// Create shaders.
-	
 			// GL_ARB_gpu_shader5
 			this .multiTexturing = ShaderTest .compile (this .getContext (), samplerTest, "FRAGMENT_SHADER");
 
@@ -58580,10 +58576,6 @@ function (Shading,
 				console .warn ("Disabling multi-texturing.");
 	
 			this .setShading (Shading .GOURAUD);
-		},
-		getMultiTexturing: function ()
-		{
-			return this .multiTexturing;
 		},
 		getShadingLanguageVersion: function ()
 		{
@@ -58600,6 +58592,10 @@ function (Shading,
 		getMaxVertexAttribs: function ()
 		{
 			return this .getContext () .getParameter (this .getContext () .MAX_VERTEX_ATTRIBS);
+		},
+		getMultiTexturing: function ()
+		{
+			return this .multiTexturing;
 		},
 		addShader: function (shader)
 		{
@@ -106643,12 +106639,14 @@ function ($,
 
 	function X3DBrowser (element)
 	{
+		//this .loadTime = performance .now () / 1000;
+
 		X3DBrowserContext .call (this, element);
 
-		this .currentSpeed         = 0;
-		this .currentFrameRate     = 60;
-		this .components           = { };
-		this .browserCallbacks     = new Map ();
+		this .currentSpeed     = 0;
+		this .currentFrameRate = 60;
+		this .components       = { };
+		this .browserCallbacks = new Map ();
 
 		this .replaceWorld (this .createScene ());
 	};
@@ -106676,7 +106674,7 @@ function ($,
 		},
 		set_loaded__: function (loaded)
 		{
-			//console .log (performance .now () / 1000 - this .shaderTime);
+			//console .log (performance .now () / 1000 - this .loadTime);
 
 			this .getLoadSensor () .isLoaded_ .removeInterest ("set_loaded__", this);
 			this .getLoadSensor () .enabled_ = false;

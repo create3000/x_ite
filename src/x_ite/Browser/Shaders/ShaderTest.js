@@ -73,8 +73,8 @@ function (TextureBuffer,
 
 			var valid = gl .getShaderParameter (shader, gl .COMPILE_STATUS);
 
-			if (! valid)
-				console .log (gl .getShaderInfoLog (shader));
+			//if (! valid)
+			//	console .log (gl .getShaderInfoLog (shader));
 
 			return valid;
 		},

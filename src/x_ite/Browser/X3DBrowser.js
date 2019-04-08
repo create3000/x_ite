@@ -88,12 +88,14 @@ function ($,
 
 	function X3DBrowser (element)
 	{
+		//this .loadTime = performance .now () / 1000;
+
 		X3DBrowserContext .call (this, element);
 
-		this .currentSpeed         = 0;
-		this .currentFrameRate     = 60;
-		this .components           = { };
-		this .browserCallbacks     = new Map ();
+		this .currentSpeed     = 0;
+		this .currentFrameRate = 60;
+		this .components       = { };
+		this .browserCallbacks = new Map ();
 
 		this .replaceWorld (this .createScene ());
 	};
@@ -121,7 +123,7 @@ function ($,
 		},
 		set_loaded__: function (loaded)
 		{
-			//console .log (performance .now () / 1000 - this .shaderTime);
+			//console .log (performance .now () / 1000 - this .loadTime);
 
 			this .getLoadSensor () .isLoaded_ .removeInterest ("set_loaded__", this);
 			this .getLoadSensor () .enabled_ = false;

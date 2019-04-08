@@ -89,10 +89,6 @@ function (Shading,
 	{
 		initialize: function ()
 		{
-			this .shaderTime = performance .now () / 1000;
-
-			// Create shaders.
-	
 			// GL_ARB_gpu_shader5
 			this .multiTexturing = ShaderTest .compile (this .getContext (), samplerTest, "FRAGMENT_SHADER");
 
@@ -100,10 +96,6 @@ function (Shading,
 				console .warn ("Disabling multi-texturing.");
 	
 			this .setShading (Shading .GOURAUD);
-		},
-		getMultiTexturing: function ()
-		{
-			return this .multiTexturing;
 		},
 		getShadingLanguageVersion: function ()
 		{
@@ -120,6 +112,10 @@ function (Shading,
 		getMaxVertexAttribs: function ()
 		{
 			return this .getContext () .getParameter (this .getContext () .MAX_VERTEX_ATTRIBS);
+		},
+		getMultiTexturing: function ()
+		{
+			return this .multiTexturing;
 		},
 		addShader: function (shader)
 		{
