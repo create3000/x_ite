@@ -891,11 +891,6 @@ function (Fields,
 
 			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
 			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
-
-			// Legacy before 4.1.4
-
-			if (this .numLights < this .x3d_MaxLights)
-				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
 		},
 		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
@@ -925,8 +920,9 @@ function (Fields,
 
 			// Logarithmic depth buffer support.
 
-			var viewpoint      = renderObject .getViewpoint ();
-			var navigationInfo = renderObject .getNavigationInfo ();
+			var
+				viewpoint      = renderObject .getViewpoint (),
+				navigationInfo = renderObject .getNavigationInfo ();
 
 			if (viewpoint instanceof OrthoViewpoint)
 				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
@@ -960,11 +956,6 @@ function (Fields,
 
 			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
 			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
-
-			// Legacy before 4.1.4
-
-			if (this .numLights < this .x3d_MaxLights)
-				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
 
 			// Fog, there is always one
 

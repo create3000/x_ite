@@ -252,7 +252,8 @@ function (Shading,
 		},
 		createShader: function (name, vs, fs, shadow)
 		{
-			console .log ("Creating " + name);
+			if (this .getDebug ())
+				console .log ("Creating " + name);
 
 			if (shadow)
 			{
