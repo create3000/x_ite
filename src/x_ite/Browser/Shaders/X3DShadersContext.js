@@ -93,8 +93,11 @@ function (Shading,
 			this .multiTexturing = ShaderTest .compile (this .getContext (), samplerTest, "FRAGMENT_SHADER");
 
 			if (! this .multiTexturing)
-				console .warn ("Disabling multi-texturing.");
-	
+			{
+				if (this .getDebug ())
+					console .warn ("Disabling multi-texturing.");
+			}
+
 			this .setShading (Shading .GOURAUD);
 		},
 		getShadingLanguageVersion: function ()
