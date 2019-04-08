@@ -1,4 +1,4 @@
-/* X_ITE v4.4.8a-721 */
+/* X_ITE v4.4.8a-722 */
 
 (function () {
 
@@ -105025,9 +105025,6 @@ function (Fields,
 		{
 			var textureTransformNodes = this .textureTransformNodes;
 
-			for (var i = 0, length = textureTransformNodes .length; i < length; ++ i)
-				textureTransformNodes [i] .removeInterest ("addNodeEvent", this);
-
 			textureTransformNodes .length = 0;
 
 			for (var i = 0, length = this .textureTransform_ .length; i < length; ++ i)
@@ -105042,9 +105039,6 @@ function (Fields,
 				if (textureTransformNode)
 					textureTransformNodes .push (textureTransformNode);
 			}
-
-			for (var i = 0, length = textureTransformNodes .length; i < length; ++ i)
-				textureTransformNodes [i] .addInterest ("addNodeEvent", this);
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
@@ -106717,8 +106711,9 @@ function ($,
 			             "                Antialiased: " + this .getAntialiased () + "\n" +
 			             "                Depth size: " + this .getDepthSize () + " bits\n" +
 			             "                Color depth: " + this .getColorDepth () + " bits\n" +
-			             "                Max clip planes: 6\n" +
-			             "                Max lights: 8\n" +
+			             "                Max clip planes: " + this .getMaxClipPlanes () + "\n" +
+			             "                Max lights: " + this .getMaxLights () + "\n" +
+			             "                Max textures: " + this .getMaxTextures () + "\n" +
 			             "                Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
 			             "                Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
 			             "                Texture memory: " + this .getTextureMemory () + "\n" +

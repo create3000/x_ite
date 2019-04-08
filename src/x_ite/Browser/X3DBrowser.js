@@ -156,8 +156,9 @@ function ($,
 			             "                Antialiased: " + this .getAntialiased () + "\n" +
 			             "                Depth size: " + this .getDepthSize () + " bits\n" +
 			             "                Color depth: " + this .getColorDepth () + " bits\n" +
-			             "                Max clip planes: 6\n" +
-			             "                Max lights: 8\n" +
+			             "                Max clip planes: " + this .getMaxClipPlanes () + "\n" +
+			             "                Max lights: " + this .getMaxLights () + "\n" +
+			             "                Max textures: " + this .getMaxTextures () + "\n" +
 			             "                Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
 			             "                Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
 			             "                Texture memory: " + this .getTextureMemory () + "\n" +

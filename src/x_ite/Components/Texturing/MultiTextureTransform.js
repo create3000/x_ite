@@ -104,9 +104,6 @@ function (Fields,
 		{
 			var textureTransformNodes = this .textureTransformNodes;
 
-			for (var i = 0, length = textureTransformNodes .length; i < length; ++ i)
-				textureTransformNodes [i] .removeInterest ("addNodeEvent", this);
-
 			textureTransformNodes .length = 0;
 
 			for (var i = 0, length = this .textureTransform_ .length; i < length; ++ i)
@@ -121,9 +118,6 @@ function (Fields,
 				if (textureTransformNode)
 					textureTransformNodes .push (textureTransformNode);
 			}
-
-			for (var i = 0, length = textureTransformNodes .length; i < length; ++ i)
-				textureTransformNodes [i] .addInterest ("addNodeEvent", this);
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
