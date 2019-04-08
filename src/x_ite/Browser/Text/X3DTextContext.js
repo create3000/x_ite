@@ -60,15 +60,14 @@ function ($,
 
 	function X3DTextContext ()
 	{
-		this .fontCache         = { };
+		this .fontCache         = new Map ();
 		this .fontGeometryCache = { }; // [fontName] [primitveQuality] [glyphIndex]
 	}
 
 	X3DTextContext .prototype =
 	{
 		initialize: function ()
-		{
-		},
+		{ },
 		getDefaultFontStyle: function ()
 		{
 			if (! this .defaultFontStyle)
@@ -84,22 +83,20 @@ function ($,
 			if (URL .query .length !== 0)
 				error ("Font url with query not supported");
 
-			var deferred = this .fontCache [URL .filename];
+			var deferred = this .fontCache .get (URL .filename);
 
-			if (! deferred)
+			if (deferred === undefined)
 			{
-				deferred = this .fontCache [URL .filename] = $.Deferred ();
+				this .fontCache .set (URL .filename, deferred = $.Deferred ());
 
-				opentype .load (URL .toString (), this .setFont .bind (this, URL));
+				opentype .load (URL .toString (), this .setFont .bind (this, deferred));
 			}
 
 			deferred .done (success);
 			deferred .fail (error);
 		},
-		setFont: function (URL, error, font)
+		setFont: function (deferred, error, font)
 		{
-			var deferred = this .fontCache [URL .filename];
-
 			if (error)
 			{
 				deferred .reject (error);
