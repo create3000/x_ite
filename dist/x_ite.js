@@ -1,4 +1,4 @@
-/* X_ITE v4.4.8a-718 */
+/* X_ITE v4.4.8a-719 */
 
 (function () {
 
@@ -52373,7 +52373,7 @@ define('text!x_ite/Browser/Shaders/Depth.vs',[],function () { return '// -*- Mod
 define('text!x_ite/Browser/Shaders/Depth.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nvarying vec3 vertex; // point on geometry\n\n#pragma X3D include "Include/Pack.h"\n#pragma X3D include "Include/ClipPlanes.h"\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tgl_FragColor = pack (gl_FragCoord .z);\n}\n';});
 
 
-define('text!x_ite/Browser/Shaders/SamplerTest.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform sampler2D texture [2];\n\nvec4\ngetColor ()\n{\n\tvec4 textureColor = vec4 (0.0);\n\n\tfor (int i = 0; i < 2; ++ i)\n\t\ttextureColor += texture2D (texture [i], vec2 (0.0));\n\n\treturn textureColor;\n}\n\nvoid\nmain ()\n{\n\tgl_FragColor = getColor ();\n}\n';});
+define('text!x_ite/Browser/Shaders/Tests/SamplerTest.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform sampler2D texture [2];\n\nvec4\ngetColor ()\n{\n\tvec4 textureColor = vec4 (0.0);\n\n\tfor (int i = 0; i < 2; ++ i)\n\t\ttextureColor += texture2D (texture [i], vec2 (0.0));\n\n\treturn textureColor;\n}\n\nvoid\nmain ()\n{\n\tgl_FragColor = getColor ();\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -58536,7 +58536,7 @@ define ('x_ite/Browser/Shaders/X3DShadersContext',[
 	"text!x_ite/Browser/Shaders/Phong.fs",
 	"text!x_ite/Browser/Shaders/Depth.vs",
 	"text!x_ite/Browser/Shaders/Depth.fs",
-	"text!x_ite/Browser/Shaders/SamplerTest.fs",
+	"text!x_ite/Browser/Shaders/Tests/SamplerTest.fs",
 	"x_ite/Browser/Shaders/ShaderTest",
 ],
 function (Shading,
@@ -58569,6 +58569,9 @@ function (Shading,
 	
 			// GL_ARB_gpu_shader5
 			this .multiTexturing = ShaderTest .compile (this .getContext (), samplerTest, "FRAGMENT_SHADER");
+
+			if (! this .multiTexturing)
+				console .warn ("Disabling multi-texturing.");
 
 			this .depthShader   = this .createShader ("DepthShader",     depthVS,     depthFS,     false);
 			this .pointShader   = this .createShader ("PointShader",     wireframeVS, pointSetFS,  false);
@@ -58624,6 +58627,10 @@ function (Shading,
 		{
 			return this .defaultShader;
 		},
+		getDefaultShadowShader: function ()
+		{
+			return this .defaultShader .shadowShader;
+		},
 		getPointShader: function ()
 		{
 			return this .pointShader;
@@ -58643,7 +58650,7 @@ function (Shading,
 		},
 		getShadowShader: function ()
 		{
-			return this .defaultShader .shadowShader;
+			return this .shadowShader;
 		},
 		getDepthShader: function ()
 		{
@@ -59583,7 +59590,7 @@ function (Fields,
 			context .textureTransformNode = this .textureTransformNode;
 
 			if (context .shadow)
-				context .shaderNode = browser .getShadowShader ();
+				context .shaderNode = browser .getDefaultShadowShader ();
 			else
 				context .shaderNode = this .shaderNode;
 
@@ -98842,7 +98849,7 @@ function (X3DGeometryNode,
 					attribNodes   = this .attribNodes,
 					attribBuffers = this .attribBuffers;
 	
-				if (shaderNode === browser .getDefaultShader () || shaderNode === browser .getShadowShader ())
+				if (shaderNode === browser .getDefaultShader () || shaderNode === browser .getDefaultShadowShader ())
 					shaderNode = this .getShader (browser);
 	
 				// Setup shader.
