@@ -1,12 +1,12 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="package.json">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="package.json" Line="3" Column="22" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1337" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="92" Column="25" />
-      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="189" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

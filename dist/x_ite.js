@@ -1,4 +1,4 @@
-/* X_ITE v4.4.8a-724 */
+/* X_ITE v4.5.0a-723 */
 
 (function () {
 
@@ -24895,7 +24895,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.4.8a";
+	return "4.5.0a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -44609,11 +44609,6 @@ function (Fields,
 
 			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
 			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
-
-			// Legacy before 4.1.4
-
-			if (this .numLights < this .x3d_MaxLights)
-				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
 		},
 		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
@@ -44643,8 +44638,9 @@ function (Fields,
 
 			// Logarithmic depth buffer support.
 
-			var viewpoint      = renderObject .getViewpoint ();
-			var navigationInfo = renderObject .getNavigationInfo ();
+			var
+				viewpoint      = renderObject .getViewpoint (),
+				navigationInfo = renderObject .getNavigationInfo ();
 
 			if (viewpoint instanceof OrthoViewpoint)
 				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
@@ -44678,11 +44674,6 @@ function (Fields,
 
 			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
 			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
-
-			// Legacy before 4.1.4
-
-			if (this .numLights < this .x3d_MaxLights)
-				gl .uniform1i (this .x3d_LightType [this .numLights], 0);
 
 			// Fog, there is always one
 
@@ -58570,8 +58561,11 @@ function (Shading,
 			this .multiTexturing = ShaderTest .compile (this .getContext (), samplerTest, "FRAGMENT_SHADER");
 
 			if (! this .multiTexturing)
-				console .warn ("Disabling multi-texturing.");
-	
+			{
+				if (this .getDebug ())
+					console .warn ("Disabling multi-texturing.");
+			}
+
 			this .setShading (Shading .GOURAUD);
 		},
 		getShadingLanguageVersion: function ()
@@ -58729,7 +58723,8 @@ function (Shading,
 		},
 		createShader: function (name, vs, fs, shadow)
 		{
-			console .log ("Creating " + name);
+			if (this .getDebug ())
+				console .log ("Creating " + name);
 
 			if (shadow)
 			{
