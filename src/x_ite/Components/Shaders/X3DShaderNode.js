@@ -114,7 +114,7 @@ function (Shading,
 			switch (type)
 			{
 				case TraverseType .DISPLAY:
-					renderObject .getShaders () .set (this .getId (), this);
+					renderObject .getShaders () .add (this);
 					break;
 				default:
 					break;

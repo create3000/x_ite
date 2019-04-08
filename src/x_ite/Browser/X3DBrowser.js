@@ -121,6 +121,8 @@ function ($,
 		},
 		set_loaded__: function (loaded)
 		{
+			//console .log (performance .now () / 1000 - this .shaderTime);
+
 			this .getLoadSensor () .isLoaded_ .removeInterest ("set_loaded__", this);
 			this .getLoadSensor () .enabled_ = false;
 

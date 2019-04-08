@@ -128,6 +128,10 @@ function (Fields,
 		{
 			return this .program;
 		},
+		getValid: function ()
+		{
+			return this .isValid_ .getValue ();
+		},
 		set_live__: function ()
 		{
 			var gl = this .getBrowser () .getContext ();

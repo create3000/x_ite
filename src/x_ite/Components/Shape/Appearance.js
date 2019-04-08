@@ -273,7 +273,7 @@ function (Fields,
 		},
 		enable: function (gl, context)
 		{
-			var browser = context .renderer .getBrowser ();
+			var browser = context .browser;
 
 			context .linePropertiesNode   = this .linePropertiesNode;
 			context .materialNode         = this .materialNode;

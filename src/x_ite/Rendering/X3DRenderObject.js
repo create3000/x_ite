@@ -98,7 +98,7 @@ function ($,
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
 		this .generatedCubeMapTextures = [ ];
-		this .shaders                  = new Map ();
+		this .shaders                  = new Set ();
 		this .collisions               = [ ];
 		this .numOpaqueShapes          = 0;
 		this .numTransparentShapes     = 0;
@@ -457,7 +457,7 @@ function ($,
 				if (viewVolume .intersectsSphere (radius, bboxCenter))
 				{
 					if (this .numCollisionShapes === this .collisionShapes .length)
-						this .collisionShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
+						this .collisionShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
 		
 					var context = this .collisionShapes [this .numCollisionShapes];
 		
@@ -515,7 +515,7 @@ function ($,
 				if (viewVolume .intersectsSphere (radius, bboxCenter))
 				{
 					if (this .numDepthShapes === this .depthShapes .length)
-						this .depthShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
+						this .depthShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
 		
 					var context = this .depthShapes [this .numDepthShapes];
 		
@@ -612,6 +612,7 @@ function ($,
 		{
 			return {
 				renderer: this,
+				browser: this .getBrowser (),
 				transparent: transparent,
 				geometryType: 3,
 				fogCoords: false,
@@ -949,10 +950,15 @@ function ($,
 				cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 				projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 	
-				browser .getPointShader  () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getLineShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getShadowShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				if (browser .pointShader)
+					shaders .add (browser .pointShader);
+
+				if (browser .lineShader)
+					shaders .add (browser .lineShader);
 	
+				if (browser .shadowShader)
+					shaders .add (browser .shadowShader);
+
 				shaders .forEach (function (shader)
 				{
 					shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
