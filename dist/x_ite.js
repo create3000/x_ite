@@ -1,4 +1,4 @@
-/* X_ITE v4.4.8a-719 */
+/* X_ITE v4.4.8a-720 */
 
 (function () {
 
@@ -41570,7 +41570,7 @@ function (Shading,
 			switch (type)
 			{
 				case TraverseType .DISPLAY:
-					renderObject .getShaders () .set (this .getId (), this);
+					renderObject .getShaders () .add (this);
 					break;
 				default:
 					break;
@@ -45195,6 +45195,10 @@ function (Fields,
 		getProgram: function ()
 		{
 			return this .program;
+		},
+		getValid: function ()
+		{
+			return this .isValid_ .getValue ();
 		},
 		set_live__: function ()
 		{
@@ -58558,13 +58562,15 @@ function (Shading,
 
 	function X3DShadersContext ()
 	{
-		this .shaders = { };
+		this .shaders = new Set ();
 	}
 
 	X3DShadersContext .prototype =
 	{
 		initialize: function ()
 		{
+			this .shaderTime = performance .now () / 1000;
+
 			// Create shaders.
 	
 			// GL_ARB_gpu_shader5
@@ -58572,23 +58578,8 @@ function (Shading,
 
 			if (! this .multiTexturing)
 				console .warn ("Disabling multi-texturing.");
-
-			this .depthShader   = this .createShader ("DepthShader",     depthVS,     depthFS,     false);
-			this .pointShader   = this .createShader ("PointShader",     wireframeVS, pointSetFS,  false);
-			this .lineShader    = this .createShader ("WireframeShader", wireframeVS, wireframeFS, false);
-			this .gouraudShader = this .createShader ("GouraudShader",   gouraudVS,   gouraudFS,   false);
-			this .phongShader   = this .createShader ("PhongShader",     phongVS,     phongFS,     false);
-			this .shadowShader  = this .createShader ("ShadowShader",    phongVS,     phongFS,     true);
-
-			this .pointShader   .shadowShader = this .pointShader;
-			this .lineShader    .shadowShader = this .lineShader;
-			this .gouraudShader .shadowShader = this .shadowShader;
-			this .phongShader   .shadowShader = this .shadowShader;
 	
 			this .setShading (Shading .GOURAUD);
-	
-			this .phongShader  .isValid_ .addInterest ("set_phong_shader_valid__",  this);
-			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
 		},
 		getMultiTexturing: function ()
 		{
@@ -58612,12 +58603,13 @@ function (Shading,
 		},
 		addShader: function (shader)
 		{
-			this .shaders [shader .getId ()] = shader;
+			this .shaders .add (shader);
+
 			shader .setShading (this .getBrowserOptions () .getShading ());
 		},
 		removeShader: function (shader)
 		{
-			delete this .shaders [shader .getId ()];
+			this .shaders .delete (shader);
 		},
 		getShaders: function ()
 		{
@@ -58629,31 +58621,72 @@ function (Shading,
 		},
 		getDefaultShadowShader: function ()
 		{
-			return this .defaultShader .shadowShader;
+			return this .defaultShader .getShadowShader ();
 		},
 		getPointShader: function ()
 		{
+			if (! this .pointShader)
+			{
+				this .pointShader = this .createShader ("PointShader", wireframeVS, pointSetFS, false);
+	
+				this .pointShader .getShadowShader = this .getPointShader .bind (this);
+			}
+
 			return this .pointShader;
 		},
 		getLineShader: function ()
 		{
+			if (! this .lineShader)
+			{
+				this .lineShader = this .createShader ("WireframeShader", wireframeVS, wireframeFS, false);
+
+				this .lineShader .getShadowShader = this .getLineShader .bind (this);
+			}
+
 			return this .lineShader;
 		},
 		getGouraudShader: function ()
 		{
-			// There must always be a gouraud shader available.
+			if (! this .gouraudShader)
+			{
+				this .gouraudShader = this .createShader ("GouraudShader", gouraudVS, gouraudFS, false);
+
+				this .gouraudShader .getShadowShader = this .getShadowShader .bind (this);
+			}
+
 			return this .gouraudShader;
 		},
 		getPhongShader: function ()
 		{
+			if (! this .phongShader)
+			{
+				this .phongShader = this .createShader ("PhongShader", phongVS, phongFS, false);
+
+				this .phongShader .getShadowShader = this .getShadowShader .bind (this);
+		
+				this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__",  this);
+			}
+
 			return this .phongShader;
 		},
 		getShadowShader: function ()
 		{
+			if (! this .shadowShader)
+			{
+				this .shadowShader = this .createShader ("ShadowShader", phongVS, phongFS, true);
+
+				this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
+			}
+
 			return this .shadowShader;
 		},
 		getDepthShader: function ()
 		{
+			if (! this .depthShader)
+			{
+				this .depthShader = this .createShader ("DepthShader", depthVS, depthFS, false);
+			}
+
 			return this .depthShader;
 		},
 		setShading: function (type)
@@ -58662,31 +58695,25 @@ function (Shading,
 			{
 				case Shading .PHONG:
 				{
-					this .defaultShader = this .phongShader;
+					this .defaultShader = this .getPhongShader ();
 					break;
 				}
 				default:
 				{
-					this .defaultShader = this .gouraudShader;
+					this .defaultShader = this .getGouraudShader ();
 					break;
 				}
 			}
-	
-			this .pointShader   .setShading (type);
-			this .lineShader    .setShading (type);
-			this .gouraudShader .setShading (type);
-			this .phongShader   .setShading (type);
-			this .shadowShader  .setShading (type);
 
-			// Configure custom shaders
+			// Configure shaders.
 
-			var shaders = this .getShaders ();
-
-			for (var id in shaders)
-				shaders [id] .setShading (type);
+			for (var shader of this .getShaders ())
+				shader .setShading (type);
 		},
 		createShader: function (name, vs, fs, shadow)
 		{
+			console .log (name);
+
 			if (shadow)
 			{
 				vs = "\n#define X3D_SHADOWS\n" + vs;
@@ -58710,7 +58737,10 @@ function (Shading,
 			shader .parts_ .push (vertexShader);
 			shader .parts_ .push (fragmentShader);
 			shader .setCustom (false);
+			shader .setShading (this .getBrowserOptions () .getShading ());
 			shader .setup ();
+
+			this .addShader (shader);
 
 			this .getLoadSensor () .watchList_ .push (vertexShader);
 			this .getLoadSensor () .watchList_ .push (fragmentShader);
@@ -58724,7 +58754,7 @@ function (Shading,
 
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
-			this .phongShader = this .gouraudShader;
+			this .phongShader = this .getGouraudShader ();
 		},
 		set_shadow_shader_valid__: function (valid)
 		{
@@ -58733,7 +58763,7 @@ function (Shading,
 
 			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
 
-			this .shadowShader = this .gouraudShader;
+			this .shadowShader = this .getGouraudShader ();
 		},
 	};
 
@@ -59582,7 +59612,7 @@ function (Fields,
 		},
 		enable: function (gl, context)
 		{
-			var browser = context .renderer .getBrowser ();
+			var browser = context .browser;
 
 			context .linePropertiesNode   = this .linePropertiesNode;
 			context .materialNode         = this .materialNode;
@@ -61313,100 +61343,107 @@ function (Fields,
 		{ },
 		depth: function (gl, context, shaderNode)
 		{
-			// Setup vertex attributes.
-
-			// Attribs in depth rendering are not supported.
-			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
-			//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-			shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-
-			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
-			//	attribNodes [i] .disable (gl, shaderNode);
-
-			gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+			if (shaderNode .getValid ())
+			{
+				// Setup vertex attributes.
+	
+				// Attribs in depth rendering are not supported.
+				//for (var i = 0, length = attribNodes .length; i < length; ++ i)
+				//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+	
+				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+	
+				//for (var i = 0, length = attribNodes .length; i < length; ++ i)
+				//	attribNodes [i] .disable (gl, shaderNode);
+	
+				gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+			}
 		},
 		display: function (gl, context)
 		{
 			try
 			{
-				var
-					shaderNode    = context .shaderNode,
-					attribNodes   = this .attribNodes,
-					attribBuffers = this .attribBuffers;
+				var shaderNode = context .shaderNode;
 
 				// Setup shader.
 	
-				context .geometryType          = this .geometryType;
-				context .fogCoords             = this .fogCoords;
-				context .colorMaterial         = this .colorMaterial;
-				context .textureCoordinateNode = this .textureCoordinateNode;
-
-				shaderNode .enable (gl);
-				shaderNode .setLocalUniforms (gl, context);
-
-				// Setup vertex attributes.
-
-				for (var i = 0, length = attribNodes .length; i < length; ++ i)
-					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-				if (this .fogCoords)
-					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-
-				if (this .colorMaterial)
-					shaderNode .enableColorAttribute (gl, this .colorBuffer);
-	
-				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-				shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
-				shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
-	
-				// Draw depending on wireframe, solid and transparent.
-	
-				if (shaderNode .wireframe)
+				if (shaderNode .getValid ())
 				{
-					// Wireframes are always solid so only one drawing call is needed.
+					var
+						attribNodes   = this .attribNodes,
+						attribBuffers = this .attribBuffers;
 
-					for (var i = 0, length = this .vertexCount; i < length; i += 3)
-						gl .drawArrays (shaderNode .primitiveMode, i, 3);
-				}
-				else
-				{
-					var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+					context .geometryType          = this .geometryType;
+					context .fogCoords             = this .fogCoords;
+					context .colorMaterial         = this .colorMaterial;
+					context .textureCoordinateNode = this .textureCoordinateNode;
 	
-					gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+					shaderNode .enable (gl);
+					shaderNode .setLocalUniforms (gl, context);
 	
-					if (context .transparent && ! this .solid)
+					// Setup vertex attributes.
+	
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+	
+					if (this .fogCoords)
+						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+	
+					if (this .colorMaterial)
+						shaderNode .enableColorAttribute (gl, this .colorBuffer);
+		
+					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+					shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
+					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+		
+					// Draw depending on wireframe, solid and transparent.
+		
+					if (shaderNode .wireframe)
 					{
-						gl .enable (gl .CULL_FACE);
-						gl .cullFace (gl .FRONT);
-						gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);		
+						// Wireframes are always solid so only one drawing call is needed.
 	
-						gl .cullFace (gl .BACK);
-						gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);		
+						for (var i = 0, length = this .vertexCount; i < length; i += 3)
+							gl .drawArrays (shaderNode .primitiveMode, i, 3);
 					}
 					else
 					{
-						if (this .solid)
+						var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+		
+						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+		
+						if (context .transparent && ! this .solid)
+						{
 							gl .enable (gl .CULL_FACE);
+							gl .cullFace (gl .FRONT);
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);		
+		
+							gl .cullFace (gl .BACK);
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);		
+						}
 						else
-							gl .disable (gl .CULL_FACE);
-	
-						gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+						{
+							if (this .solid)
+								gl .enable (gl .CULL_FACE);
+							else
+								gl .disable (gl .CULL_FACE);
+		
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+						}
 					}
+		
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .disable (gl, shaderNode);
+		
+					if (this .fogCoords)
+						shaderNode .disableFogDepthAttribute (gl);
+		
+					if (this .colorMaterial)
+						shaderNode .disableColorAttribute (gl);
+	
+					shaderNode .disableTexCoordAttribute (gl);
+					shaderNode .disableNormalAttribute   (gl);
+					shaderNode .disable                  (gl);
 				}
-	
-				for (var i = 0, length = attribNodes .length; i < length; ++ i)
-					attribNodes [i] .disable (gl, shaderNode);
-	
-				if (this .fogCoords)
-					shaderNode .disableFogDepthAttribute (gl);
-	
-				if (this .colorMaterial)
-					shaderNode .disableColorAttribute (gl);
-
-				shaderNode .disableTexCoordAttribute (gl);
-				shaderNode .disableNormalAttribute   (gl);
-				shaderNode .disable                  (gl);
 			}
 			catch (error)
 			{
@@ -61416,168 +61453,175 @@ function (Fields,
 		},
 		displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
 		{
-			var gl = context .renderer .getBrowser () .getContext ();
-
-			// Attribs in depth rendering are not supported:
-			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
-			//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-			shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-
-			// Draw depending on wireframe, solid and transparent.
-
-			var
-				modelViewMatrix = context .modelViewMatrix,
-				x               = modelViewMatrix [12],
-				y               = modelViewMatrix [13],
-				z               = modelViewMatrix [14];
-
-			for (var p = 0; p < numParticles; ++ p)
+			if (shaderNode .getValid ())
 			{
-				var particle = particles [p];
-
-				modelViewMatrix [12] = x;
-				modelViewMatrix [13] = y;
-				modelViewMatrix [14] = z;
-
-				Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-				shaderNode .setParticle (gl, p, particle, modelViewMatrix, false);
-
-				gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-			}
+				var gl = context .browser .getContext ();
 	
-			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
-			//	attribNodes [i] .disable (gl, shaderNode);
-		},
-		displayParticles: function (gl, context, particles, numParticles)
-		{
-			try
-			{
-				var
-					shaderNode    = context .shaderNode,
-					attribNodes   = this .attribNodes,
-					attribBuffers = this .attribBuffers;
+				// Attribs in depth rendering are not supported:
+				//for (var i = 0, length = attribNodes .length; i < length; ++ i)
+				//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 	
-				// Setup shader.
-	
-				context .geometryType          = this .geometryType;
-				context .fogCoords             = this .fogCoords;
-				context .colorMaterial         = this .colorMaterial;
-				context .textureCoordinateNode = this .textureCoordinateNode;
-
-				shaderNode .enable (gl);
-				shaderNode .setLocalUniforms (gl, context);
-	
-				// Setup vertex attributes.
-	
-				for (var i = 0, length = attribNodes .length; i < length; ++ i)
-					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-				if (this .fogCoords)
-					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-
-				if (this .colorMaterial)
-					shaderNode .enableColorAttribute (gl, this .colorBuffer);
-	
-				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-				shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
-				shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 	
 				// Draw depending on wireframe, solid and transparent.
 	
 				var
-					materialNode    = context .materialNode,
-					normalMatrix    = materialNode || shaderNode .getCustom (),
 					modelViewMatrix = context .modelViewMatrix,
 					x               = modelViewMatrix [12],
 					y               = modelViewMatrix [13],
 					z               = modelViewMatrix [14];
 	
-				if (shaderNode .wireframe)
+				for (var p = 0; p < numParticles; ++ p)
 				{
-					// Wireframes are always solid so only one drawing call is needed.
+					var particle = particles [p];
 	
-					for (var p = 0; p < numParticles; ++ p)
-					{
-						var particle = particles [p];
-
-						modelViewMatrix [12] = x;
-						modelViewMatrix [13] = y;
-						modelViewMatrix [14] = z;
-		
-						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-						shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
-		
-						for (var i = 0, length = this .vertexCount; i < length; i += 3)
-							gl .drawArrays (shaderNode .primitiveMode, i, 3);
-					}
+					modelViewMatrix [12] = x;
+					modelViewMatrix [13] = y;
+					modelViewMatrix [14] = z;
+	
+					Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+	
+					shaderNode .setParticle (gl, p, particle, modelViewMatrix, false);
+	
+					gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 				}
-				else
+		
+				//for (var i = 0, length = attribNodes .length; i < length; ++ i)
+				//	attribNodes [i] .disable (gl, shaderNode);
+			}
+		},
+		displayParticles: function (gl, context, particles, numParticles)
+		{
+			try
+			{
+				var shaderNode = context .shaderNode;
+
+				if (shaderNode .getValid ())
 				{
-					var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+					var
+						attribNodes   = this .attribNodes,
+						attribBuffers = this .attribBuffers;
+
+					// Setup shader.
+		
+					context .geometryType          = this .geometryType;
+					context .fogCoords             = this .fogCoords;
+					context .colorMaterial         = this .colorMaterial;
+					context .textureCoordinateNode = this .textureCoordinateNode;
 	
-					gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+					shaderNode .enable (gl);
+					shaderNode .setLocalUniforms (gl, context);
+		
+					// Setup vertex attributes.
+		
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 	
-					if (context .transparent && ! this .solid)
+					if (this .fogCoords)
+						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+	
+					if (this .colorMaterial)
+						shaderNode .enableColorAttribute (gl, this .colorBuffer);
+		
+					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+					shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
+					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+		
+					// Draw depending on wireframe, solid and transparent.
+		
+					var
+						materialNode    = context .materialNode,
+						normalMatrix    = materialNode || shaderNode .getCustom (),
+						modelViewMatrix = context .modelViewMatrix,
+						x               = modelViewMatrix [12],
+						y               = modelViewMatrix [13],
+						z               = modelViewMatrix [14];
+		
+					if (shaderNode .wireframe)
 					{
+						// Wireframes are always solid so only one drawing call is needed.
+		
 						for (var p = 0; p < numParticles; ++ p)
 						{
 							var particle = particles [p];
-
+	
 							modelViewMatrix [12] = x;
 							modelViewMatrix [13] = y;
 							modelViewMatrix [14] = z;
-	
+			
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 	
 							shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
-
-							gl .enable (gl .CULL_FACE);
-							gl .cullFace (gl .FRONT);
-							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-		
-							gl .cullFace (gl .BACK);
-							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-						}	
+			
+							for (var i = 0, length = this .vertexCount; i < length; i += 3)
+								gl .drawArrays (shaderNode .primitiveMode, i, 3);
+						}
 					}
 					else
 					{
-						if (this .solid)
-							gl .enable (gl .CULL_FACE);
-						else
-							gl .disable (gl .CULL_FACE);
-	
-						for (var p = 0; p < numParticles; ++ p)
+						var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+		
+						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+		
+						if (context .transparent && ! this .solid)
 						{
-							var particle = particles [p];
-
-							modelViewMatrix [12] = x;
-							modelViewMatrix [13] = y;
-							modelViewMatrix [14] = z;
-
-							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-							shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
-
-							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+							for (var p = 0; p < numParticles; ++ p)
+							{
+								var particle = particles [p];
+	
+								modelViewMatrix [12] = x;
+								modelViewMatrix [13] = y;
+								modelViewMatrix [14] = z;
+		
+								Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+		
+								shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
+	
+								gl .enable (gl .CULL_FACE);
+								gl .cullFace (gl .FRONT);
+								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+			
+								gl .cullFace (gl .BACK);
+								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+							}	
+						}
+						else
+						{
+							if (this .solid)
+								gl .enable (gl .CULL_FACE);
+							else
+								gl .disable (gl .CULL_FACE);
+		
+							for (var p = 0; p < numParticles; ++ p)
+							{
+								var particle = particles [p];
+	
+								modelViewMatrix [12] = x;
+								modelViewMatrix [13] = y;
+								modelViewMatrix [14] = z;
+	
+								Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+	
+								shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
+	
+								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+							}
 						}
 					}
+		
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .disable (gl, shaderNode);
+		
+					if (this .fogCoords)
+						shaderNode .disableFogDepthAttribute (gl);
+	
+					if (this .colorMaterial)
+						shaderNode .disableColorAttribute (gl);
+	
+					shaderNode .disableTexCoordAttribute (gl);
+					shaderNode .disableNormalAttribute   (gl);
+					shaderNode .disable                  (gl);
 				}
-	
-				for (var i = 0, length = attribNodes .length; i < length; ++ i)
-					attribNodes [i] .disable (gl, shaderNode);
-	
-				if (this .fogCoords)
-					shaderNode .disableFogDepthAttribute (gl);
-
-				if (this .colorMaterial)
-					shaderNode .disableColorAttribute (gl);
-
-				shaderNode .disableTexCoordAttribute (gl);
-				shaderNode .disableNormalAttribute   (gl);
-				shaderNode .disable                  (gl);
 			}
 			catch (error)
 			{
@@ -79213,7 +79257,7 @@ function ($,
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
 		this .generatedCubeMapTextures = [ ];
-		this .shaders                  = new Map ();
+		this .shaders                  = new Set ();
 		this .collisions               = [ ];
 		this .numOpaqueShapes          = 0;
 		this .numTransparentShapes     = 0;
@@ -79572,7 +79616,7 @@ function ($,
 				if (viewVolume .intersectsSphere (radius, bboxCenter))
 				{
 					if (this .numCollisionShapes === this .collisionShapes .length)
-						this .collisionShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
+						this .collisionShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
 		
 					var context = this .collisionShapes [this .numCollisionShapes];
 		
@@ -79630,7 +79674,7 @@ function ($,
 				if (viewVolume .intersectsSphere (radius, bboxCenter))
 				{
 					if (this .numDepthShapes === this .depthShapes .length)
-						this .depthShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
+						this .depthShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
 		
 					var context = this .depthShapes [this .numDepthShapes];
 		
@@ -79727,6 +79771,7 @@ function ($,
 		{
 			return {
 				renderer: this,
+				browser: this .getBrowser (),
 				transparent: transparent,
 				geometryType: 3,
 				fogCoords: false,
@@ -80064,10 +80109,15 @@ function ($,
 				cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 				projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 	
-				browser .getPointShader  () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getLineShader   () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-				browser .getShadowShader () .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+				if (browser .pointShader)
+					shaders .add (browser .pointShader);
+
+				if (browser .lineShader)
+					shaders .add (browser .lineShader);
 	
+				if (browser .shadowShader)
+					shaders .add (browser .shadowShader);
+
 				shaders .forEach (function (shader)
 				{
 					shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
@@ -98787,51 +98837,56 @@ function (X3DGeometryNode,
 			try
 			{
 				var
-					browser       = context .renderer .getBrowser (),
-					shaderNode    = context .shaderNode,
-					attribNodes   = this .attribNodes,
-					attribBuffers = this .attribBuffers;
-	
+					browser    = context .browser,
+					shaderNode = context .shaderNode;
+
 				if (shaderNode === browser .getDefaultShader ())
 					shaderNode = this .getShader (browser);
-	
-				// Setup shader.
-	
-				context .geometryType          = this .getGeometryType ();
-				context .fogCoords             = this .fogCoords;
-				context .colorMaterial         = this .colorMaterial;
-				context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
 
-				shaderNode .enable (gl);
-				shaderNode .setLocalUniforms (gl, context);
-	
-				// Setup vertex attributes.
-	
-				for (var i = 0, length = attribNodes .length; i < length; ++ i)
-					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+				if (shaderNode .getValid ())
+				{
+					var
+						attribNodes   = this .attribNodes,
+						attribBuffers = this .attribBuffers;
 
-				if (this .fogCoords)
-					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-
-				if (this .colorMaterial)
-					shaderNode .enableColorAttribute (gl, this .colorBuffer);
+					// Setup shader.
+		
+					context .geometryType          = this .getGeometryType ();
+					context .fogCoords             = this .fogCoords;
+					context .colorMaterial         = this .colorMaterial;
+					context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
 	
-				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+					shaderNode .enable (gl);
+					shaderNode .setLocalUniforms (gl, context);
+		
+					// Setup vertex attributes.
+		
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 	
-				// Wireframes are always solid so only one drawing call is needed.
-
-				gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
+					if (this .fogCoords)
+						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
 	
-				for (var i = 0, length = attribNodes .length; i < length; ++ i)
-					attribNodes [i] .disable (gl, shaderNode);
+					if (this .colorMaterial)
+						shaderNode .enableColorAttribute (gl, this .colorBuffer);
+		
+					shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+		
+					// Wireframes are always solid so only one drawing call is needed.
 	
-				if (this .fogCoords)
-					shaderNode .disableFogDepthAttribute (gl);
-
-				if (this .colorMaterial)
-					shaderNode .disableColorAttribute (gl);
-
-				shaderNode .disable (gl);
+					gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
+		
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .disable (gl, shaderNode);
+		
+					if (this .fogCoords)
+						shaderNode .disableFogDepthAttribute (gl);
+	
+					if (this .colorMaterial)
+						shaderNode .disableColorAttribute (gl);
+	
+					shaderNode .disable (gl);
+				}
 			}
 			catch (error)
 			{
@@ -98844,69 +98899,74 @@ function (X3DGeometryNode,
 			try
 			{
 				var
-					browser       = context .renderer .getBrowser (),
-					shaderNode    = context .shaderNode,
-					attribNodes   = this .attribNodes,
-					attribBuffers = this .attribBuffers;
-	
-				if (shaderNode === browser .getDefaultShader () || shaderNode === browser .getDefaultShadowShader ())
+					browser    = context .browser,
+					shaderNode = context .shaderNode;
+
+				if (shaderNode === browser .getDefaultShader ())
 					shaderNode = this .getShader (browser);
-	
-				// Setup shader.
-	
-				context .geometryType          = this .getGeometryType ();
-				context .fogCoords             = this .fogCoords;
-				context .colorMaterial         = this .colorMaterial;
-				context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
 
-				shaderNode .enable (gl);
-				shaderNode .setLocalUniforms (gl, context);
-	
-				// Setup vertex attributes.
-	
-				for (var i = 0, length = attribNodes .length; i < length; ++ i)
-					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-				if (this .fogCoords)
-					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-
-				if (this .colorMaterial)
-					shaderNode .enableColorAttribute (gl, this .colorBuffer);
-	
-				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-	
-				// Wireframes are always solid so only one drawing call is needed.
-	
-				var
-					modelViewMatrix = context .modelViewMatrix,
-					x               = modelViewMatrix [12],
-					y               = modelViewMatrix [13],
-					z               = modelViewMatrix [14],
-					primitiveMode   = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
-	
-				for (var p = 0; p < numParticles; ++ p)
+				if (shaderNode .getValid ())
 				{
-					modelViewMatrix [12] = x;
-					modelViewMatrix [13] = y;
-					modelViewMatrix [14] = z;
-	
-					Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
-	
-					gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
+					var
+						attribNodes   = this .attribNodes,
+						attribBuffers = this .attribBuffers;
+
+					// Setup shader.
 		
-					gl .drawArrays (primitiveMode, 0, this .vertexCount);
+					context .geometryType          = this .getGeometryType ();
+					context .fogCoords             = this .fogCoords;
+					context .colorMaterial         = this .colorMaterial;
+					context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
+	
+					shaderNode .enable (gl);
+					shaderNode .setLocalUniforms (gl, context);
+		
+					// Setup vertex attributes.
+		
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+	
+					if (this .fogCoords)
+						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+	
+					if (this .colorMaterial)
+						shaderNode .enableColorAttribute (gl, this .colorBuffer);
+		
+					shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+		
+					// Wireframes are always solid so only one drawing call is needed.
+		
+					var
+						modelViewMatrix = context .modelViewMatrix,
+						x               = modelViewMatrix [12],
+						y               = modelViewMatrix [13],
+						z               = modelViewMatrix [14],
+						primitiveMode   = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
+		
+					for (var p = 0; p < numParticles; ++ p)
+					{
+						modelViewMatrix [12] = x;
+						modelViewMatrix [13] = y;
+						modelViewMatrix [14] = z;
+		
+						Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
+		
+						gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
+			
+						gl .drawArrays (primitiveMode, 0, this .vertexCount);
+					}
+		
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .disable (gl, shaderNode);
+		
+					if (this .fogCoords)
+						shaderNode .disableFogDepthAttribute (gl);
+	
+					if (this .colorMaterial)
+						shaderNode .disableColorAttribute (gl);
+	
+					shaderNode .disable (gl);
 				}
-	
-				for (var i = 0, length = attribNodes .length; i < length; ++ i)
-					attribNodes [i] .disable (gl, shaderNode);
-	
-				if (this .fogCoords)
-					shaderNode .disableFogDepthAttribute (gl);
-
-				if (this .colorMaterial)
-					shaderNode .disableColorAttribute (gl);
-
-				shaderNode .disable (gl);
 			}
 			catch (error)
 			{
@@ -106622,6 +106682,8 @@ function ($,
 		},
 		set_loaded__: function (loaded)
 		{
+			//console .log (performance .now () / 1000 - this .shaderTime);
+
 			this .getLoadSensor () .isLoaded_ .removeInterest ("set_loaded__", this);
 			this .getLoadSensor () .enabled_ = false;
 

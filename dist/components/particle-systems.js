@@ -2997,7 +2997,7 @@ function (Fields,
 				else
 				{
 					var
-						browser    = context .renderer .getBrowser (),
+						browser    = context .browser,
 						shaderNode = context .shaderNode;
 	
 					if (shaderNode === browser .getDefaultShader ())
