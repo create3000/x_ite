@@ -576,11 +576,9 @@ function (TextAlignment,
 			{
 				var
 					charCode = line .charCodeAt (c),
-					glyph     = null;
-				
-				if (glyph = fontGlyphCache [charCode])
-					;
-				else
+					glyph    = fontGlyphCache [charCode];
+
+				if (glyph === undefined)
 				{
 					glyph = font .stringToGlyphs (line [c]) [0];
 
