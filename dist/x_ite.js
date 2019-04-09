@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-725 */
+/* X_ITE v4.5.0a-726 */
 
 (function () {
 
@@ -73310,103 +73310,83 @@ function (Fields,
 		createGlyphGeometry: (function ()
 		{
 			var
-				paths  = [ ],
 				points = [ ],
 				curves = [ ],
 				normal = new Vector3 (0, 0, 0);
 
 			return function (glyph, vertices, primitiveQuality)
 			{
-				var
-					fontStyle  = this .getFontStyle (),
-					font       = fontStyle .getFont (),
-					components = glyph .components,
-					dimension  = this .getBezierDimension (primitiveQuality);
-	
-				paths  .length = 0;
-				points .length = 0;
-				curves .length = 0;
-			
-				if (glyph .isComposite)
-				{
-					for (var c = 0, cl = components .length; c < cl; ++ c)
-					{
-						var component = components [c];
-	
-						paths .push (font .glyphs .get (component .glyphIndex) .getPath (component .dx / font .unitsPerEm, component .dy / -font .unitsPerEm, 1));
-					}
-				}
-				else
-					paths .push (glyph .getPath (0, 0, 1));
-	
 				// Get curves for the current glyph.
 	
 				var
-					x = 0,
-					y = 0;
-	
-				for (var p = 0, pl = paths .length; p < pl; ++ p)
+					fontStyle  = this .getFontStyle (),
+					font       = fontStyle .getFont (),
+					dimension  = this .getBezierDimension (primitiveQuality),
+					path       = glyph .getPath (0, 0, 1),
+					commands   = path .commands,
+					x          = 0,
+					y          = 0;
+
+				points .length = 0;
+				curves .length = 0;
+
+				for (var i = 0, cl = commands .length; i < cl; ++ i)
 				{
-					var commands = paths [p] .commands;
-	
-					for (var i = 0, cl = commands .length; i < cl; ++ i)
+					var command = commands [i];
+										      
+					switch (command .type)
 					{
-						var command = commands [i];
-											      
-						switch (command .type)
+						case "M": // Start
+						case "Z": // End
 						{
-							case "M": // Start
-							case "Z": // End
+							if (points .length > 2)
 							{
-								if (points .length > 2)
-								{
-									if (points [0] .x === points [points .length - 1] .x && points [0] .y === points [points .length - 1] .y)
-										points .pop ();
-	
-									curves .push (points);
-								}
-									
-								points = [ ];
-	
-								if (command .type === "M")
-									points .push (new Vector3 (command .x, -command .y, 0));
-								
-								break;
+								if (points [0] .x === points [points .length - 1] .x && points [0] .y === points [points .length - 1] .y)
+									points .pop ();
+
+								curves .push (points);
 							}
-							case "L": // Linear
-							{
+								
+							points = [ ];
+
+							if (command .type === "M")
 								points .push (new Vector3 (command .x, -command .y, 0));
-								break;
-							}
-							case "C": // Cubic
-							{
-								var
-									curve = new Bezier (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
-									lut   = curve .getLUT (dimension);
-	
-								for (var l = 1, ll = lut .length; l < ll; ++ l)
-									points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
-	
-								break;
-							}
-							case "Q": // Quadric
-							{
-								var
-									curve = new Bezier (x, -y, command .x1, -command .y1, command .x, -command .y),
-									lut   = curve .getLUT (dimension);
-	
-								for (var l = 1, ll = lut .length; l < ll; ++ l)
-									points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
-								
-								break;
-							}
-							default:
-							   continue;
+							
+							break;
 						}
-	
-						x = command .x;
-						y = command .y;
+						case "L": // Linear
+						{
+							points .push (new Vector3 (command .x, -command .y, 0));
+							break;
+						}
+						case "C": // Cubic
+						{
+							var
+								curve = new Bezier (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
+								lut   = curve .getLUT (dimension);
+
+							for (var l = 1, ll = lut .length; l < ll; ++ l)
+								points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
+
+							break;
+						}
+						case "Q": // Quadric
+						{
+							var
+								curve = new Bezier (x, -y, command .x1, -command .y1, command .x, -command .y),
+								lut   = curve .getLUT (dimension);
+
+							for (var l = 1, ll = lut .length; l < ll; ++ l)
+								points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
+							
+							break;
+						}
+						default:
+						   continue;
 					}
+
+					x = command .x;
+					y = command .y;
 				}
 	
 				// Triangulate contours.
@@ -78574,15 +78554,17 @@ function ($,
 
 			return this .defaultFontStyle;
 		},
-		getFont: function (URL)
+		getFont: function (url)
 		{
-			var deferred = this .fontCache .get (URL .toString ());
+			url = url .toString ();
+
+			var deferred = this .fontCache .get (url);
 
 			if (deferred === undefined)
 			{
-				this .fontCache .set (URL .toString (), deferred = $.Deferred ());
+				this .fontCache .set (url, deferred = $.Deferred ());
 
-				opentype .load (URL .toString (), this .setFont .bind (this, deferred));
+				opentype .load (url, this .setFont .bind (this, deferred));
 			}
 
 			return deferred;
