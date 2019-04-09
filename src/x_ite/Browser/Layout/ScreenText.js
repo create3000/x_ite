@@ -83,7 +83,6 @@ function ($,
 "use strict";
 
 	var
-		paths = [ ],
 		min   = new Vector3 (0, 0, 0),
 		max   = new Vector3 (1, 1, 0),
 		bbox  = new Box3 ();
@@ -334,76 +333,55 @@ function ($,
 		{
 		   //console .log (glyph .name, x, y);
 
-			paths .length = 0;
-		
-			if (glyph .isComposite)
-			{
-				glyph .components .forEach (function (component)
-				{
-					var glyph = font .glyphs .get (component .glyphIndex);
-
-					paths .push (glyph .getPath (component .dx / font .unitsPerEm * size + x,
-					                             component .dy / font .unitsPerEm * size - y,
-					                             size));
-				});
-			}
-			else
-			{
-				paths .push (glyph .getPath (x, -y, size));
-			}
-
 			// Get curves for the current glyph.
 
-			for (var p = 0, pl = paths .length; p < pl; ++ p)
+			var
+				path     = glyph .getPath (x, -y, size),
+				commands = path .commands;
+
+			cx .beginPath ();
+
+			for (var i = 0, cl = commands .length; i < cl; ++ i)
 			{
-				var
-				   path     = paths [p],
-					commands = path .commands;
+				var command = commands [i];
 
-				cx .beginPath ();
-
-				for (var i = 0, cl = commands .length; i < cl; ++ i)
+				switch (command .type)
 				{
-					var command = commands [i];
-
-					switch (command .type)
+					case "M": // Start
 					{
-						case "M": // Start
-						{
-							cx .moveTo (command .x, command .y);
-							continue;
-						}
-						case "Z": // End
-						{
-						   cx .closePath ();
-							continue;
-						}
-						case "L": // Linear
-						{
-							cx .lineTo (command .x, command .y);
-							continue;
-						}
-						case "C": // Bezier
-						{
-							cx .bezierCurveTo (command .x1, command .y1, command .x2, command .y2, command .x, command .y);
-							continue;
-						}
-						case "Q": // Cubic
-						{
-						   cx .quadraticCurveTo (command .x1, command .y1, command .x, command .y);
-							continue;
-						}
+						cx .moveTo (command .x, command .y);
+						continue;
+					}
+					case "Z": // End
+					{
+					   cx .closePath ();
+						continue;
+					}
+					case "L": // Linear
+					{
+						cx .lineTo (command .x, command .y);
+						continue;
+					}
+					case "C": // Bezier
+					{
+						cx .bezierCurveTo (command .x1, command .y1, command .x2, command .y2, command .x, command .y);
+						continue;
+					}
+					case "Q": // Cubic
+					{
+					   cx .quadraticCurveTo (command .x1, command .y1, command .x, command .y);
+						continue;
 					}
 				}
+			}
 
-				if (path .fill)
-					cx .fill ();
-	
-				if (path .stroke)
-				{
-					cx .lineWidth = path .strokeWidth;
-					cx .stroke ();
-				}
+			if (path .fill)
+				cx .fill ();
+
+			if (path .stroke)
+			{
+				cx .lineWidth = path .strokeWidth;
+				cx .stroke ();
 			}
 		},
 		getGlyphExtents: function (glyph, primitiveQuality, min, max)

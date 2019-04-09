@@ -290,6 +290,7 @@ var X_ITE_TESTS = [
 	{ path: "Text/ARIALUNI.TTF" },
 	{ path: "Text/CHOPS___.TTF" },
 	{ path: "Text/Poetica-ChanceryI.otf" },
+	{ path: "Text/charcodes.x3d" },
 	{ path: "Text/date.x3d" },
 	{ path: "Text/default.x3d" },
 	{ path: "Text/horizontal.x3d" },
