@@ -78,15 +78,17 @@ function ($,
 
 			return this .defaultFontStyle;
 		},
-		getFont: function (URL)
+		getFont: function (url)
 		{
-			var deferred = this .fontCache .get (URL .toString ());
+			url = url .toString ();
+
+			var deferred = this .fontCache .get (url);
 
 			if (deferred === undefined)
 			{
-				this .fontCache .set (URL .toString (), deferred = $.Deferred ());
+				this .fontCache .set (url, deferred = $.Deferred ());
 
-				opentype .load (URL .toString (), this .setFont .bind (this, deferred));
+				opentype .load (url, this .setFont .bind (this, deferred));
 			}
 
 			return deferred;
