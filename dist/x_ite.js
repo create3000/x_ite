@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-731 */
+/* X_ITE v4.5.0a-732 */
 
 (function () {
 
@@ -41554,7 +41554,7 @@ function (Shading,
 		},
 		setValid: function (value)
 		{
-			this .isValid_ = this .valid = !! value;
+			this .isValid_ = this .valid = value;
 		},
 		getValid: function ()
 		{
@@ -45292,7 +45292,7 @@ function (Fields,
 				else
 					console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
 
-				this .setValid (valid);
+				this .setValid (!! valid);
 			}
 			else
 			{

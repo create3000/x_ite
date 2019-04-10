@@ -1,11 +1,11 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Components/ParticleSystems/ParticleSystem.js">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1002" Column="24" />
-      <File FileName="src/x_ite/Components/Shaders/ComposedShader.js" Line="214" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DShaderNode.js" Line="83" Column="5" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/ComposedShader.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/X3DShaderNode.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="1430" Column="70" />
     </Files>
   </MonoDevelop.Ide.Workbench>
