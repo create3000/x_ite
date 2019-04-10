@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-730 */
+/* X_ITE v4.5.0a-731 */
 
 (function () {
 
@@ -115661,22 +115661,23 @@ function ($,
 			// Print welcome message.
 
 			this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
-			             "        Current Graphics Renderer\n" +
-			             "                Name: " + this .getVendor () + " " + this .getWebGLVersion () + "\n" +
-			             "                Shading language: " + this .getShadingLanguageVersion () + "\n" +
-			             "        Rendering Properties\n" +
-			             "                Antialiased: " + this .getAntialiased () + "\n" +
-			             "                Depth size: " + this .getDepthSize () + " bits\n" +
-			             "                Color depth: " + this .getColorDepth () + " bits\n" +
-			             "                Max clip planes: " + this .getMaxClipPlanes () + "\n" +
-			             "                Max lights: " + this .getMaxLights () + "\n" +
-			             "                Max textures: " + this .getMaxTextures () + "\n" +
-			             "                Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
-			             "                Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
-			             "                Texture memory: " + this .getTextureMemory () + "\n" +
-			             "                Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
-			             "                Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
-			             "                Max vertex attribs: " + this .getMaxVertexAttribs () + "\n");
+			             "   Current Graphics Renderer\n" +
+			             "      Name: " + this .getVendor () + " " + this .getRenderer () + "\n" +
+			             "      WebGL version: " + this .getWebGLVersion () + "\n" +
+			             "      Shading language: " + this .getShadingLanguageVersion () + "\n" +
+			             "   Rendering Properties\n" +
+			             "      Antialiased: " + this .getAntialiased () + "\n" +
+			             "      Depth size: " + this .getDepthSize () + " bits\n" +
+			             "      Color depth: " + this .getColorDepth () + " bits\n" +
+			             "      Max clip planes: " + this .getMaxClipPlanes () + "\n" +
+			             "      Max lights: " + this .getMaxLights () + "\n" +
+			             "      Max textures: " + this .getMaxTextures () + "\n" +
+			             "      Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
+			             "      Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
+			             "      Texture memory: " + this .getTextureMemory () + "\n" +
+			             "      Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
+			             "      Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
+			             "      Max vertex attribs: " + this .getMaxVertexAttribs () + "\n");
 		},
 		getName: function ()
 		{
