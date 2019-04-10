@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-728 */
+/* X_ITE v4.5.0a-729 */
 
 (function () {
 
@@ -107774,7 +107774,7 @@ function (X3DGeometryNode,
 					browser    = context .browser,
 					shaderNode = context .shaderNode;
 
-				if (shaderNode === browser .getDefaultShader ())
+				if (! shaderNode .getCustom ())
 					shaderNode = this .getShader (browser);
 
 				if (shaderNode .getValid ())
@@ -107836,7 +107836,7 @@ function (X3DGeometryNode,
 					browser    = context .browser,
 					shaderNode = context .shaderNode;
 
-				if (shaderNode === browser .getDefaultShader ())
+				if (! shaderNode .getCustom ())
 					shaderNode = this .getShader (browser);
 
 				if (shaderNode .getValid ())
