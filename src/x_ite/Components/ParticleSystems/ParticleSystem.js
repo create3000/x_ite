@@ -1398,8 +1398,8 @@ function (Fields,
 					var
 						browser    = context .browser,
 						shaderNode = context .shaderNode;
-	
-					if (shaderNode === browser .getDefaultShader ())
+
+					if (! shaderNode .getCustom ())
 						shaderNode = this .shaderNode;
 		
 					// Setup shader.
