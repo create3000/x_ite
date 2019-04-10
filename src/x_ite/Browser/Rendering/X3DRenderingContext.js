@@ -93,8 +93,22 @@ function ($,
 
 			this .reshape ();
 		},
+		getRenderer: function ()
+		{
+			var dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+
+			if (dbgRenderInfo)
+				return this .getContext () .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
+
+			return this .getContext () .getParameter (this .getContext () .RENDERER);
+		},
 		getVendor: function ()
 		{
+			var dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+
+			if (dbgRenderInfo)
+				return this .getContext () .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
+
 			return this .getContext () .getParameter (this .getContext () .VENDOR);
 		},
 		getWebGLVersion: function ()
