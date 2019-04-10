@@ -140,7 +140,7 @@ function (Fields,
 						{
 							var
 								glyph         = line [g],
-								glyphVertices = this .getGlyphGeometry (glyph, primitiveQuality);
+								glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality);
 							
 							for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
 							{
@@ -187,7 +187,7 @@ function (Fields,
 						{
 							var
 								translation   = translations [t],
-								glyphVertices = this .getGlyphGeometry (line [g], primitiveQuality);
+								glyphVertices = this .getGlyphGeometry (font, line [g], primitiveQuality);
 	
 							for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
 							{
@@ -204,9 +204,11 @@ function (Fields,
 				}
 			};
 		})(),
-		getGlyphExtents: function (glyph, primitiveQuality, min, max)
+		getGlyphExtents: function (font, glyph, primitiveQuality, min, max)
 		{
-			var extents = glyph .extents [primitiveQuality];
+			var
+				glyphCache = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
+				extents    = glyphCache .extents;
 
 			if (extents)
 			{
@@ -215,7 +217,7 @@ function (Fields,
 				return;
 			}
 
-			var vertices = this .getGlyphGeometry (glyph, primitiveQuality);
+			var vertices = this .getGlyphGeometry (font, glyph, primitiveQuality);
 
 			if (vertices .length)
 			{
@@ -238,33 +240,25 @@ function (Fields,
 				max .set (0, 0, 0);			   
 			}
 
-			var extents = glyph .extents [primitiveQuality] = { };
+			var extents = glyphCache .extents = { };
 
 			extents .min = min .copy ();
 			extents .max = max .copy ();
 		},
-		getGlyphGeometry: function (glyph, primitiveQuality)
+		getGlyphGeometry: function (font, glyph, primitiveQuality)
 		{
 			var
-				fontStyle     = this .getFontStyle (),
-				font          = fontStyle .getFont (),
-				geometryCache = this .getBrowser () .getFontGeometryCache ();
+				glyphCache    = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
+				glyphGeometry = glyphCache .geometry;
 
-			var cachedFont = geometryCache .get (font .fontName);
+			if (glyphGeometry)
+				return glyphGeometry;
 
-			if (! cachedFont)
-				geometryCache .set (font .fontName, cachedFont = [[ ], [ ], [ ]]);
+			glyphGeometry = glyphCache .geometry = [ ];
 
-			var cachedGeometry = cachedFont [primitiveQuality] [glyph .index];
+			this .createGlyphGeometry (glyph, glyphGeometry, primitiveQuality);
 
-			if (cachedGeometry)
-				return cachedGeometry;
-
-			cachedGeometry = cachedFont [primitiveQuality] [glyph .index] = [ ];
-
-			this .createGlyphGeometry (glyph, cachedGeometry, primitiveQuality);
-
-		   return cachedGeometry;
+		   return glyphGeometry;
 		},
 		createGlyphGeometry: (function ()
 		{

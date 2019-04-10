@@ -50,7 +50,7 @@
 define ([
 	"jquery",
 	"x_ite/Components/Text/FontStyle",
-	"lib/opentype.js/dist/opentype",
+	"opentype",
 ],
 function ($,
           FontStyle,
@@ -60,8 +60,8 @@ function ($,
 
 	function X3DTextContext ()
 	{
-		this .fontCache         = new Map ();
-		this .fontGeometryCache = new Map (); // [fontName] [primitveQuality] [glyphIndex]
+		this .fontCache  = new Map ();
+		this .glyphCache = new Map (); // [font] [primitveQuality] [glyphIndex]
 	}
 
 	X3DTextContext .prototype =
@@ -101,9 +101,6 @@ function ($,
 			}
 			else
 			{
-				// Setup font.
-				font .fontName = font .familyName + font .styleName;
-
 				// Workaround to initialize composite glyphs.
 				for (var i = 0, length = font .numGlyphs; i < length; ++ i)
 					font .glyphs .get (i) .getPath (0, 0, 1);
@@ -112,9 +109,24 @@ function ($,
 				deferred .resolve (font);
 			}
 		},
-		getFontGeometryCache: function ()
+		getGlyph: function (font, primitveQuality, glyphIndex)
 		{
-		   return this .fontGeometryCache;
+			var cachedFont = this .glyphCache .get (font);
+
+			if (! cachedFont)
+				this .glyphCache .set (font, cachedFont = [ ]);
+
+			var cachedQuality = cachedFont [primitveQuality];
+
+			if (! cachedQuality)
+				cachedQuality = cachedFont [primitveQuality] = [ ];
+
+			var cachedGlyph = cachedQuality [glyphIndex];
+
+			if (! cachedGlyph)
+				cachedGlyph = cachedQuality [glyphIndex] = { };
+
+		   return cachedGlyph;
 		},
 	};
 

@@ -393,12 +393,9 @@ function ($,
 				cx .stroke ();
 			}
 		},
-		getGlyphExtents: function (glyph, primitiveQuality, min, max)
+		getGlyphExtents: function (font, glyph, primitiveQuality, min, max)
 		{
-			var
-				fontStyle  = this .getFontStyle (),
-				font       = fontStyle .getFont (),
-				unitsPerEm = font .unitsPerEm;
+			var unitsPerEm = font .unitsPerEm;
 
 			min .set ((glyph .xMin || 0) / unitsPerEm, (glyph .yMin || 0) / unitsPerEm, 0);
 			max .set ((glyph .xMax || 0) / unitsPerEm, (glyph .yMax || 0) / unitsPerEm, 0);

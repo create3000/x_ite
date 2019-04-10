@@ -359,7 +359,7 @@ function (TextAlignment,
 
 					// Get glyph extents.
 
-					this .getGlyphExtents (glyph, primitiveQuality, min, max);
+					this .getGlyphExtents (font, glyph, primitiveQuality, min, max);
 		
 					size .assign (max) .subtract (min);
 					
@@ -428,7 +428,7 @@ function (TextAlignment,
 					{
 						// This is needed to make maxExtend and charSpacing work.
 						if (numChars)
-							this .getGlyphExtents (glyphs [topToBottom ? numChars - 1 : 0], primitiveQuality, glyphMin .assign (Vector2 .Zero), vector);
+							this .getGlyphExtents (font, glyphs [topToBottom ? numChars - 1 : 0], primitiveQuality, glyphMin .assign (Vector2 .Zero), vector);
 
 						translation .set (lineNumber * spacing, (size .y - max .y + glyphMin .y));
 						break;
@@ -555,12 +555,7 @@ function (TextAlignment,
 		},
 		stringToGlyphs: function (font, line, normal, lineNumber)
 		{
-			var
-				fontGlyphCache = glyphCache [font .fontName],
-				glypes         = this .glyphs [lineNumber];
-
-			if (! fontGlyphCache)
-				fontGlyphCache = glyphCache [font .fontName] = [ ];
+			var glypes = this .glyphs [lineNumber];
 
 			if (! glypes)
 				glypes = this .glyphs [lineNumber] = [ ];
@@ -573,22 +568,7 @@ function (TextAlignment,
 				step  = normal ? 1 : -1;
 
 			for (var c = first, g = 0; c !== last; c += step, ++ g)
-			{
-				var
-					charCode = line .charCodeAt (c),
-					glyph    = fontGlyphCache [charCode];
-
-				if (glyph === undefined)
-				{
-					glyph = font .stringToGlyphs (line [c]) [0];
-
-					fontGlyphCache [charCode] = glyph;
-
-					glyph .extents = { };
-				}
-
-				glypes [g] = glyph;
-			}
+				glypes [g] = font .charToGlyph (line [c]);
 
 			return glypes;
 		},
@@ -610,7 +590,7 @@ function (TextAlignment,
 					glyph   = glyphs [g],
 					kerning = g + 1 < length ? font .getKerningValue (glyph, glyphs [g + 1]) : 0;
 
-				this .getGlyphExtents (glyph, primitiveQuality, glyphMin, glyphMax);
+				this .getGlyphExtents (font, glyph, primitiveQuality, glyphMin, glyphMax);
 
 				xMax += glyph .advanceWidth + kerning;
 				yMin  = Math .min (yMin, glyphMin .y);
@@ -619,7 +599,7 @@ function (TextAlignment,
 
 			if (glyphs .length)
 			{
-				this .getGlyphExtents (glyphs [0], primitiveQuality, glyphMin, glyphMax);
+				this .getGlyphExtents (font, glyphs [0], primitiveQuality, glyphMin, glyphMax);
 
 				xMin  = glyphMin .x;
 			}
