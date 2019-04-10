@@ -101,9 +101,9 @@ function ($,
 			}
 			else
 			{
-				// Workaround to initialize composite glyphs.
-				for (var i = 0, length = font .numGlyphs; i < length; ++ i)
-					font .glyphs .get (i) .getPath (0, 0, 1);
+//				// Workaround to initialize composite glyphs.
+//				for (var i = 0, length = font .numGlyphs; i < length; ++ i)
+//					font .glyphs .get (i) .getPath (0, 0, 1);
 
 				// Resolve callbacks.
 				deferred .resolve (font);

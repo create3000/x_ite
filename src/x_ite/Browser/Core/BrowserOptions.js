@@ -404,20 +404,35 @@ function (Fields,
 
 			// There's no need to update background shader.
 
-			browser .getPointShader () .parts_ [0] .getValue () .url_ .addEvent ();
-			browser .getPointShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			if (browser .hasPointShader ())
+			{
+				browser .getPointShader () .parts_ [0] .getValue () .url_ .addEvent ();
+				browser .getPointShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			}
 
-			browser .getLineShader () .parts_ [0] .getValue () .url_ .addEvent ();
-			browser .getLineShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			if (browser .hasLineShader ())
+			{
+				browser .getLineShader () .parts_ [0] .getValue () .url_ .addEvent ();
+				browser .getLineShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			}
 
-			browser .getGouraudShader () .parts_ [0] .getValue () .url_ .addEvent ();
-			browser .getGouraudShader () .parts_ [1] .getValue () .url_ .addEvent ();
-
-			browser .getPhongShader () .parts_ [0] .getValue () .url_ .addEvent ();
-			browser .getPhongShader () .parts_ [1] .getValue () .url_ .addEvent ();
-
-			browser .getShadowShader () .parts_ [0] .getValue () .url_ .addEvent ();
-			browser .getShadowShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			if (browser .hasGouraudShader ())
+			{
+				browser .getGouraudShader () .parts_ [0] .getValue () .url_ .addEvent ();
+				browser .getGouraudShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			}
+	
+			if (browser .hasPhongShader ())
+			{
+				browser .getPhongShader () .parts_ [0] .getValue () .url_ .addEvent ();
+				browser .getPhongShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			}
+	
+			if (browser .hasShadowShader ())
+			{
+				browser .getShadowShader () .parts_ [0] .getValue () .url_ .addEvent ();
+				browser .getShadowShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			}
 		},
 	});
 
