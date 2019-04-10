@@ -269,6 +269,8 @@ X3D (function ()
 	$(".print-xml") .click (toXMLString);
 	$(".print-vrml") .click (toVRMLString);
 	$(".load-memo") .click (bookmarks .loadURL .bind (bookmarks, "http://memo-sig.nl/vrml/cbx.wrl"));
+	$(".load-i") .click (bookmarks .loadURL .bind (bookmarks, "http://media.create3000.de/components/EventUtilities/IntegerSequencer/IntegerSequencer.x3d"));
+	$(".load-b") .click (bookmarks .loadURL .bind (bookmarks, "http://media.create3000.de/components/X3D/BeyondGermany/BeyondGermany.x3d"));
 },
 function (error)
 {
@@ -300,7 +302,7 @@ function (error)
 					<button class="location-go">Load URL</button>
 				</div>
 				<div class="buttons">
-					<a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a><a class="load-memo" href="#">MEMO</a>
+					<a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a><a class="load-memo" href="#">MEMO</a><a class="load-i" href="#">I</a><a class="load-b" href="#">B</a>
 				</div>
 				<div class="links min-links">
 					<a href="src/x_ite.html">src/x_ite.html</a><a href="http://rawgit.com/create3000/x_ite/master/x_ite.min.html">github</a>

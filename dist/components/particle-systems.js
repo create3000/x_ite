@@ -2954,20 +2954,23 @@ function (Fields,
 				if (this .numParticles <= 0)
 					return;
 
-				// Setup vertex attributes.
-
-				shaderNode .enableFloatAttrib (gl, "x3d_ParticleId",          this .idBuffer,          1);
-				shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition",    this .positionBuffer,    3);
-				shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
-				shaderNode .enableFloatAttrib (gl, "x3d_ParticleLife",        this .lifeBuffer,        1);
-				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-
-				gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
-
-				shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
-				shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
-				shaderNode .disableFloatAttrib (gl, "x3d_ParticleElapsedTime");
-				shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
+				if (shaderNode .getValid ())
+				{
+					// Setup vertex attributes.
+	
+					shaderNode .enableFloatAttrib (gl, "x3d_ParticleId",          this .idBuffer,          1);
+					shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition",    this .positionBuffer,    3);
+					shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
+					shaderNode .enableFloatAttrib (gl, "x3d_ParticleLife",        this .lifeBuffer,        1);
+					shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+	
+					gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
+	
+					shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
+					shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
+					shaderNode .disableFloatAttrib (gl, "x3d_ParticleElapsedTime");
+					shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
+				}
 			}
 		},
 		display: function (gl, context)
