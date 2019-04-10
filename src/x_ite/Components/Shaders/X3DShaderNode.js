@@ -83,7 +83,7 @@ function (Shading,
 		},
 		setValid: function (value)
 		{
-			this .isValid_ = this .valid = !! value;
+			this .isValid_ = this .valid = value;
 		},
 		getValid: function ()
 		{

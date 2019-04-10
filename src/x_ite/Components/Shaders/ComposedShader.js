@@ -212,7 +212,7 @@ function (Fields,
 				else
 					console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
 
-				this .setValid (valid);
+				this .setValid (!! valid);
 			}
 			else
 			{

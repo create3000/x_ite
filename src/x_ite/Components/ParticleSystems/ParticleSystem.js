@@ -227,6 +227,9 @@ function (Fields,
 			this .normalBuffer       = gl .createBuffer ();
 			this .vertexBuffer       = gl .createBuffer ();
 
+			for (var i = 1, channels = this .getBrowser () .getMaxTextures (); i < channels; ++ i)
+				this .texCoordBuffers .push (this .texCoordBuffers [0]);
+
 			this .idArray          = new Float32Array ();
 			this .positionArray    = new Float32Array ();
 			this .elapsedTimeArray = new Float32Array ();
