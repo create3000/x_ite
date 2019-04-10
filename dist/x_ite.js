@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-729 */
+/* X_ITE v4.5.0a-730 */
 
 (function () {
 
@@ -41536,6 +41536,8 @@ function (Shading,
 		X3DAppearanceChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DShaderNode);
+
+		this .valid = false;
 	}
 
 	X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -41549,6 +41551,14 @@ function (Shading,
 		getCustom: function ()
 		{
 			return this .custom;
+		},
+		setValid: function (value)
+		{
+			this .isValid_ = this .valid = !! value;
+		},
+		getValid: function ()
+		{
+			return this .valid;
 		},
 		setShading: function (shading)
 		{
@@ -45145,7 +45155,6 @@ function (Fields,
 
 		this .addType (X3DConstants .ComposedShader);
 
-		this .valid      = false;
 		this .loadSensor = new LoadSensor (executionContext);
 	}
 
@@ -45199,17 +45208,13 @@ function (Fields,
 		{
 			return this .program;
 		},
-		getValid: function ()
-		{
-			return this .valid;
-		},
 		set_live__: function ()
 		{
 			var gl = this .getBrowser () .getContext ();
 
 			if (this .isLive () .getValue ())
 			{
-				if (this .valid)
+				if (this .getValid ())
 				{
 					this .enable (gl);
 					this .addShaderFields ();
@@ -45218,7 +45223,7 @@ function (Fields,
 			}
 			else
 			{
-				if (this .valid)
+				if (this .getValid ())
 				{
 					this .enable (gl);
 					this .removeShaderFields ();
@@ -45241,7 +45246,7 @@ function (Fields,
 					parts   = this .parts_ .getValue (),
 					valid   = 0;
 
-				if (this .valid)
+				if (this .getValid ())
 					this .removeShaderFields ();
 
 				this .program = program;
@@ -45277,7 +45282,9 @@ function (Fields,
 						this .addShaderFields ();
 					}
 					else
+					{
 						valid = false;
+					}
 
 					// Debug, print complete shader info and statistics.
 					// this .printProgramInfo ();
@@ -45285,11 +45292,11 @@ function (Fields,
 				else
 					console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
 
-				this .isValid_ = this .valid = !! valid;
+				this .setValid (valid);
 			}
 			else
 			{
-				this .isValid_ = this .valid = false;
+				this .setValid (false);
 			}
 		},
 		set_field__: function (field)
@@ -59197,8 +59204,22 @@ function ($,
 
 			this .reshape ();
 		},
+		getRenderer: function ()
+		{
+			var dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+
+			if (dbgRenderInfo)
+				return this .getContext () .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
+
+			return this .getContext () .getParameter (this .getContext () .RENDERER);
+		},
 		getVendor: function ()
 		{
+			var dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+
+			if (dbgRenderInfo)
+				return this .getContext () .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
+
 			return this .getContext () .getParameter (this .getContext () .VENDOR);
 		},
 		getWebGLVersion: function ()
