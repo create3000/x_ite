@@ -2,15 +2,10 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
   <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="package.json" Line="21" Column="28" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/ParticleSystems/ParticleSystem.js" Line="1404" Column="33" />
-      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="916" Column="22" />
-      <File FileName="src/x_ite/Browser/Navigation/X3DFlyViewer.js" Line="675" Column="1" />
+      <File FileName="package.json" Line="1" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1002" Column="24" />
+      <File FileName="src/x_ite/Components/Shaders/ComposedShader.js" Line="87" Column="95" />
+      <File FileName="src/x_ite/Components/Shaders/X3DShaderNode.js" Line="78" Column="12" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

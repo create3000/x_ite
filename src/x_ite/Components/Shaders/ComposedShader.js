@@ -75,7 +75,6 @@ function (Fields,
 
 		this .addType (X3DConstants .ComposedShader);
 
-		this .valid      = false;
 		this .loadSensor = new LoadSensor (executionContext);
 	}
 
@@ -129,17 +128,13 @@ function (Fields,
 		{
 			return this .program;
 		},
-		getValid: function ()
-		{
-			return this .valid;
-		},
 		set_live__: function ()
 		{
 			var gl = this .getBrowser () .getContext ();
 
 			if (this .isLive () .getValue ())
 			{
-				if (this .valid)
+				if (this .getValid ())
 				{
 					this .enable (gl);
 					this .addShaderFields ();
@@ -148,7 +143,7 @@ function (Fields,
 			}
 			else
 			{
-				if (this .valid)
+				if (this .getValid ())
 				{
 					this .enable (gl);
 					this .removeShaderFields ();
@@ -171,7 +166,7 @@ function (Fields,
 					parts   = this .parts_ .getValue (),
 					valid   = 0;
 
-				if (this .valid)
+				if (this .getValid ())
 					this .removeShaderFields ();
 
 				this .program = program;
@@ -207,7 +202,9 @@ function (Fields,
 						this .addShaderFields ();
 					}
 					else
+					{
 						valid = false;
+					}
 
 					// Debug, print complete shader info and statistics.
 					// this .printProgramInfo ();
@@ -215,11 +212,11 @@ function (Fields,
 				else
 					console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
 
-				this .isValid_ = this .valid = !! valid;
+				this .setValid (valid);
 			}
 			else
 			{
-				this .isValid_ = this .valid = false;
+				this .setValid (false);
 			}
 		},
 		set_field__: function (field)
