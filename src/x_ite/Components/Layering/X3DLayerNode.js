@@ -353,7 +353,9 @@ function (X3DNode,
 		{
 			this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
 	
+			this .currentViewport .push (this);
 			this .groupNode .traverse (type, renderObject);
+			this .currentViewport .pop (this);
 
 			this .getModelViewMatrix () .pop ();
 		},
