@@ -96,7 +96,7 @@ getMaterialColor (const in x3d_MaterialParameters material)
 
 		// Apply light sources
 
-		vec3 finalColor = vec3 (0.0, 0.0, 0.0);
+		vec3 finalColor = vec3 (0.0);
 
 		for (int i = 0; i < x3d_MaxLights; i ++)
 		{

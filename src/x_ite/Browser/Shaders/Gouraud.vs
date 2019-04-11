@@ -61,7 +61,7 @@ getMaterialColor (const in vec3 N,
 
 	// Calculate diffuseFactor & alpha
 
-	vec3  diffuseFactor = vec3 (0.0, 0.0, 0.0);
+	vec3  diffuseFactor = vec3 (0.0);
 	float alpha         = 1.0 - material .transparency;
 
 	if (x3d_ColorMaterial)
@@ -76,7 +76,7 @@ getMaterialColor (const in vec3 N,
 
 	// Apply light sources
 
-	vec3 finalColor = vec3 (0.0, 0.0, 0.0);
+	vec3 finalColor = vec3 (0.0);
 
 	for (int i = 0; i < x3d_MaxLights; ++ i)
 	{
@@ -129,7 +129,7 @@ main ()
 	vertex      = position .xyz;
 	normal      = normalize (x3d_NormalMatrix * x3d_Normal);
 	localNormal = x3d_Normal;
-	localVertex = vec3 (x3d_Vertex);
+	localVertex = x3d_Vertex .xyz;
 
 	gl_Position = x3d_ProjectionMatrix * position;
 
@@ -151,6 +151,6 @@ main ()
 	}
 	else
 	{
-	   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0, 1.0, 1.0, 1.0);
+	   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0);
 	}
 }

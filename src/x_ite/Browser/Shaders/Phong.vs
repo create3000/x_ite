@@ -45,7 +45,7 @@ main ()
 	normal      = x3d_NormalMatrix * x3d_Normal;
 	vertex      = position .xyz;
 	localNormal = x3d_Normal;
-	localVertex = vec3 (x3d_Vertex);
+	localVertex = x3d_Vertex .xyz;
 
 	gl_Position = x3d_ProjectionMatrix * position;
 

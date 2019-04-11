@@ -60,6 +60,6 @@ main ()
 		if (x3d_ColorMaterial)
 			color = x3d_Color;
 		else
-			color = vec4 (1.0, 1.0, 1.0, 1.0);
+			color = vec4 (1.0);
 	}
 }
