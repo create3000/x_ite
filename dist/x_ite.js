@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-737 */
+/* X_ITE v4.5.0a-738 */
 
 (function () {
 
@@ -92140,7 +92140,9 @@ function (X3DNode,
 		{
 			this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
 	
+			this .currentViewport .push (this);
 			this .groupNode .traverse (type, renderObject);
+			this .currentViewport .pop (this);
 
 			this .getModelViewMatrix () .pop ();
 		},

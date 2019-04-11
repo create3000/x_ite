@@ -480,7 +480,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .getLive () && this .enabled_ .getValue () && ! this .objectType .has ("NONE"))
+			if (this .isLive () .getValue () && this .enabled_ .getValue () && ! this .objectType .has ("NONE"))
 			{
 				this .getBrowser () .addPickSensor (this);
 				this .setPickableObject (true);
