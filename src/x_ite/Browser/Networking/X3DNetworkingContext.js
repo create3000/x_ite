@@ -113,6 +113,7 @@ function (Fields,
 				return this .defaultScene;
 
 			this .defaultScene = this .createScene ();
+
 			this .defaultScene .setPrivate (true);
 			this .defaultScene .setLive (true);
 			this .defaultScene .setup ();
