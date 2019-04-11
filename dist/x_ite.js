@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-735 */
+/* X_ITE v4.5.0a-736 */
 
 (function () {
 
@@ -39802,8 +39802,6 @@ function ($,
 		},
 		this);
 
-		this .privateScene = new Scene (this); // Scene for default nodes.
-
 		this .browserOptions      = new BrowserOptions      (this .getPrivateScene ());
 		this .browserProperties   = new BrowserProperties   (this .getPrivateScene ());
 		this .renderingProperties = new RenderingProperties (this .getPrivateScene ());
@@ -39826,12 +39824,6 @@ function ($,
 	{
 		initialize: function ()
 		{
-			// Scene for default nodes.
-
-			this .privateScene .setPrivate (true);
-			this .privateScene .setLive (true);
-			this .privateScene .setup ();
-
 			// Setup browser nodes.
 
 			this .browserOptions      .setup ()
@@ -39961,6 +39953,17 @@ function ($,
 		},
 		getPrivateScene: function ()
 		{
+			if (this .privateScene)
+				return this .privateScene;
+
+			// Scene for default nodes.
+
+			this .privateScene = new Scene (this);
+
+			this .privateScene .setPrivate (true);
+			this .privateScene .setLive (true);
+			this .privateScene .setup ();
+
 			return this .privateScene;
 		},
 		processMutations: function (mutations)
@@ -41227,6 +41230,7 @@ function (Fields,
 				return this .defaultScene;
 
 			this .defaultScene = this .createScene ();
+
 			this .defaultScene .setPrivate (true);
 			this .defaultScene .setLive (true);
 			this .defaultScene .setup ();
