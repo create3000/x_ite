@@ -69,12 +69,14 @@ function (ComposedShader,
 
 	X3DEnvironmentalEffectsContext .prototype =
 	{
-		initialize: function ()
-		{
-			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", vertexShaderText, fragmentShaderText);
-		},
+		initialize: function () { },
 		getBackgroundSphereShader: function ()
 		{
+			if (this .backgroundSphereShader)
+				return this .backgroundSphereShader;
+
+			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", vertexShaderText, fragmentShaderText);
+
 			return this .backgroundSphereShader;
 		},
 		getBackgroundTextureProperties: function ()

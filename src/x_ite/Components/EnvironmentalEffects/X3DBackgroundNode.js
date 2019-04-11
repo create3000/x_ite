@@ -582,37 +582,40 @@ function (X3DBindableNode,
 				gl         = browser .getContext (),
 				shaderNode = browser .getBackgroundSphereShader ();
 
-			shaderNode .enable (gl);
-
-			// Clip planes
-
-			shaderNode .setShaderObjects (gl, this .shaderObjects);
-
-			// Enable vertex attribute arrays.
-
-			shaderNode .enableColorAttribute  (gl, this .colorBuffer);
-			shaderNode .enableVertexAttribute (gl, this .sphereBuffer);
-
-			// Uniforms
-
-			gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-			gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
-
-			// Setup context.
+			if (shaderNode .getValid ())
+			{
+				shaderNode .enable (gl);
 	
-			if (transparency)
-				gl .enable (gl .BLEND);
-			else
-				gl .disable (gl .BLEND);
-
-			// Draw.
-
-			gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
-
-			// Disable vertex attribute arrays.
-
-			shaderNode .disableColorAttribute (gl);
-			shaderNode .disable (gl);
+				// Clip planes
+	
+				shaderNode .setShaderObjects (gl, this .shaderObjects);
+	
+				// Enable vertex attribute arrays.
+	
+				shaderNode .enableColorAttribute  (gl, this .colorBuffer);
+				shaderNode .enableVertexAttribute (gl, this .sphereBuffer);
+	
+				// Uniforms
+	
+				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
+				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+	
+				// Setup context.
+		
+				if (transparency)
+					gl .enable (gl .BLEND);
+				else
+					gl .disable (gl .BLEND);
+	
+				// Draw.
+	
+				gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
+	
+				// Disable vertex attribute arrays.
+	
+				shaderNode .disableColorAttribute (gl);
+				shaderNode .disable (gl);
+			}
 		},
 		drawCube: (function ()
 		{
