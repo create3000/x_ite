@@ -301,7 +301,7 @@ function (Fields,
 			{
 				case "LOW":
 				{
-					if (this .textureQuality === TextureQuality .HIGH)
+					if (this .textureQuality === TextureQuality .LOW)
 						break;
 
 					this .textureQuality = TextureQuality .LOW;
