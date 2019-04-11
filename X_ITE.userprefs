@@ -3,9 +3,7 @@
   <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="838" Column="7" />
-      <File FileName="src/x_ite/Components/Layout/Layout.js" Line="468" Column="70" />
-      <File FileName="src/x_ite/Components/Layering/X3DLayerNode.js" Line="359" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -304,6 +304,7 @@ var X_ITE_TESTS = [
 	{ path: "Texturing/Greek_lc_alpha.svg.png" },
 	{ path: "Texturing/MovieTexture.x3d" },
 	{ path: "Texturing/MultiTexture.x3d" },
+	{ path: "Texturing/MultiTextureParticle.x3d" },
 	{ path: "Texturing/TextureCoordinateGenerator.x3d" },
 	{ path: "Texturing/film1.mp4" },
 	{ path: "Texturing/lena.jpg" },
