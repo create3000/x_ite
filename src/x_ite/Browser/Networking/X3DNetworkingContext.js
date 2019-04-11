@@ -49,14 +49,12 @@
 
 define ([
 	"x_ite/Fields",
-	"x_ite/Components/Networking/LoadSensor",
 	"x_ite/Browser/Networking/urls",
 	"standard/Networking/URI",
 	"sprintf",
 	"locale/gettext",
 ],
 function (Fields,
-          LoadSensor,
           urls,
           URI,
           sprintf,
@@ -79,7 +77,6 @@ function (Fields,
 	{
 		this .addChildObjects ("loadCount", new Fields .SFInt32 ());
 
-		this .loadSensor     = new LoadSensor (this .getPrivateScene ());
 		this .loadingTotal   = 0;
 		this .loadingObjects = new Set ();
 		this .loading        = false;
@@ -94,9 +91,7 @@ function (Fields,
 	X3DNetworkingContext .prototype =
 	{
 		initialize: function ()
-		{
-			this .loadSensor .setup ();
-		},
+		{ },
 		getProviderUrl: function ()
 		{
 			return urls .getProviderUrl ();
@@ -119,10 +114,6 @@ function (Fields,
 			this .defaultScene .setup ();
 
 			return this .defaultScene;
-		},
-		getLoadSensor: function ()
-		{
-			return this .loadSensor;
 		},
 		setBrowserLoading: function (value)
 		{

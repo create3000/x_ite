@@ -284,9 +284,6 @@ function (Shading,
 
 			this .addShader (shader);
 
-			this .getLoadSensor () .watchList_ .push (vertexShader);
-			this .getLoadSensor () .watchList_ .push (fragmentShader);
-
 			return shader;
 		},
 		set_phong_shader_valid__: function (valid)
