@@ -84,7 +84,6 @@ function (Fields,
 		this .loadingObjects = new Set ();
 		this .loading        = false;
 		this .location       = getBaseURI (this .getElement () [0]);
-		this .defaultScene   = this .createScene (); // Inline node's empty scene.
 
 		this .getCanvas () .fadeOut (0);
 
@@ -97,12 +96,6 @@ function (Fields,
 		initialize: function ()
 		{
 			this .loadSensor .setup ();
-
-			// Inline node's empty scene.
-
-			this .defaultScene .setPrivate (true);
-			this .defaultScene .setLive (true);
-			this .defaultScene .setup ();
 		},
 		getProviderUrl: function ()
 		{
@@ -114,6 +107,16 @@ function (Fields,
 		},
 		getDefaultScene: function ()
 		{
+			// Inline node's empty scene.
+
+			if (this .defaultScene)
+				return this .defaultScene;
+
+			this .defaultScene = this .createScene ();
+			this .defaultScene .setPrivate (true);
+			this .defaultScene .setLive (true);
+			this .defaultScene .setup ();
+
 			return this .defaultScene;
 		},
 		getLoadSensor: function ()
