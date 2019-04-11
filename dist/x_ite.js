@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-739 */
+/* X_ITE v4.5.0a-740 */
 
 (function () {
 
@@ -26885,7 +26885,7 @@ function (Fields,
 			{
 				case "LOW":
 				{
-					if (this .textureQuality === TextureQuality .HIGH)
+					if (this .textureQuality === TextureQuality .LOW)
 						break;
 
 					this .textureQuality = TextureQuality .LOW;
