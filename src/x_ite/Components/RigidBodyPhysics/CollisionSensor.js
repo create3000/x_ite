@@ -111,7 +111,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .getLive () && this .enabled_ .getValue () && this .colliderNode)
+			if (this .isLive () .getValue () && this .enabled_ .getValue () && this .colliderNode)
 			{
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}
