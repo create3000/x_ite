@@ -64,8 +64,7 @@ function (ComposedShader,
 	
 	function X3DEnvironmentalEffectsContext ()
 	{
-		this .backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
-		this .localFogs                   = [ ];
+		this .localFogs = [ ];
 	}
 
 	X3DEnvironmentalEffectsContext .prototype =
@@ -73,13 +72,6 @@ function (ComposedShader,
 		initialize: function ()
 		{
 			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", vertexShaderText, fragmentShaderText);
-
-			this .backgroundTextureProperties .boundaryModeS_       = "CLAMP_TO_EDGE";
-			this .backgroundTextureProperties .boundaryModeT_       = "CLAMP_TO_EDGE";
-			this .backgroundTextureProperties .boundaryModeR_       = "CLAMP_TO_EDGE";
-			this .backgroundTextureProperties .minificationFilter_  = "NICEST";
-			this .backgroundTextureProperties .magnificationFilter_ = "NICEST";
-			this .backgroundTextureProperties .setup ();
 		},
 		getBackgroundSphereShader: function ()
 		{
@@ -87,6 +79,18 @@ function (ComposedShader,
 		},
 		getBackgroundTextureProperties: function ()
 		{
+			if (this .backgroundTextureProperties)
+				return this .backgroundTextureProperties;
+
+			this .backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
+
+			this .backgroundTextureProperties .boundaryModeS_       = "CLAMP_TO_EDGE";
+			this .backgroundTextureProperties .boundaryModeT_       = "CLAMP_TO_EDGE";
+			this .backgroundTextureProperties .boundaryModeR_       = "CLAMP_TO_EDGE";
+			this .backgroundTextureProperties .minificationFilter_  = "NICEST";
+			this .backgroundTextureProperties .magnificationFilter_ = "NICEST";
+			this .backgroundTextureProperties .setup ();
+
 			return this .backgroundTextureProperties;
 		},
 		getLocalFogs: function ()

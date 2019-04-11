@@ -135,12 +135,10 @@ function (Shading,
 			return this .shaders;
 		},
 		getDefaultShader: function ()
-		{
-			return this .defaultShader;
-		},
+		{ },
 		getDefaultShadowShader: function ()
 		{
-			return this .defaultShader .getShadowShader ();
+			return this .getDefaultShader () .getShadowShader ();
 		},
 		hasPointShader: function ()
 		{
@@ -148,12 +146,12 @@ function (Shading,
 		},
 		getPointShader: function ()
 		{
-			if (! this .pointShader)
-			{
-				this .pointShader = this .createShader ("PointShader", wireframeVS, pointSetFS, false);
+			if (this .pointShader)
+				return this .pointShader;
+
+			this .pointShader = this .createShader ("PointShader", wireframeVS, pointSetFS, false);
 	
-				this .pointShader .getShadowShader = this .getPointShader .bind (this);
-			}
+			this .pointShader .getShadowShader = this .getPointShader .bind (this);
 
 			return this .pointShader;
 		},
@@ -163,12 +161,12 @@ function (Shading,
 		},
 		getLineShader: function ()
 		{
-			if (! this .lineShader)
-			{
-				this .lineShader = this .createShader ("WireframeShader", wireframeVS, wireframeFS, false);
+			if (this .lineShader)
+				return this .lineShader;
 
-				this .lineShader .getShadowShader = this .getLineShader .bind (this);
-			}
+			this .lineShader = this .createShader ("WireframeShader", wireframeVS, wireframeFS, false);
+
+			this .lineShader .getShadowShader = this .getLineShader .bind (this);
 
 			return this .lineShader;
 		},
@@ -178,12 +176,12 @@ function (Shading,
 		},
 		getGouraudShader: function ()
 		{
-			if (! this .gouraudShader)
-			{
-				this .gouraudShader = this .createShader ("GouraudShader", gouraudVS, gouraudFS, false);
+			if (this .gouraudShader)
+				return this .gouraudShader;
 
-				this .gouraudShader .getShadowShader = this .getShadowShader .bind (this);
-			}
+			this .gouraudShader = this .createShader ("GouraudShader", gouraudVS, gouraudFS, false);
+
+			this .gouraudShader .getShadowShader = this .getShadowShader .bind (this);
 
 			return this .gouraudShader;
 		},
@@ -193,14 +191,14 @@ function (Shading,
 		},
 		getPhongShader: function ()
 		{
-			if (! this .phongShader)
-			{
-				this .phongShader = this .createShader ("PhongShader", phongVS, phongFS, false);
+			if (this .phongShader)
+				return this .phongShader;
 
-				this .phongShader .getShadowShader = this .getShadowShader .bind (this);
-		
-				this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__",  this);
-			}
+			this .phongShader = this .createShader ("PhongShader", phongVS, phongFS, false);
+
+			this .phongShader .getShadowShader = this .getShadowShader .bind (this);
+	
+			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__",  this);
 
 			return this .phongShader;
 		},
@@ -210,12 +208,12 @@ function (Shading,
 		},
 		getShadowShader: function ()
 		{
-			if (! this .shadowShader)
-			{
-				this .shadowShader = this .createShader ("ShadowShader", phongVS, phongFS, true);
+			if (this .shadowShader)
+				return this .shadowShader;
 
-				this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
-			}
+			this .shadowShader = this .createShader ("ShadowShader", phongVS, phongFS, true);
+
+			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
 
 			return this .shadowShader;
 		},
@@ -225,10 +223,10 @@ function (Shading,
 		},
 		getDepthShader: function ()
 		{
-			if (! this .depthShader)
-			{
-				this .depthShader = this .createShader ("DepthShader", depthVS, depthFS, false);
-			}
+			if (this .depthShader)
+				return this .depthShader;
+
+			this .depthShader = this .createShader ("DepthShader", depthVS, depthFS, false);
 
 			return this .depthShader;
 		},
@@ -238,12 +236,12 @@ function (Shading,
 			{
 				case Shading .PHONG:
 				{
-					this .defaultShader = this .getPhongShader ();
+					this .getDefaultShader = this .getPhongShader;
 					break;
 				}
 				default:
 				{
-					this .defaultShader = this .getGouraudShader ();
+					this .getDefaultShader = this .getGouraudShader;
 					break;
 				}
 			}

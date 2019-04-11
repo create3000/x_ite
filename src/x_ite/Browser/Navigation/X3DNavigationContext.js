@@ -72,13 +72,13 @@ function (Fields,
 	
 	function getHeadLight (browser)
 	{
-		var light = new DirectionalLight (browser .getPrivateScene ());
+		var headlight = new DirectionalLight (browser .getPrivateScene ());
 
-		light .setup ();
+		headlight .setup ();
 
-		var headlightContainer = light .getLights () .pop ();
+		var headlightContainer = headlight .getLights () .pop ();
 
-		headlightContainer .set (browser, light, null, Matrix4 .Identity);
+		headlightContainer .set (browser, headlight, null, Matrix4 .Identity);
 		headlightContainer .dispose = function () { };
 
 		return headlightContainer;

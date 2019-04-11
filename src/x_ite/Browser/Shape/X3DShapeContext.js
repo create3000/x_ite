@@ -54,19 +54,21 @@ function (Appearance)
 {
 "use strict";
 
-	function X3DShapeContext ()
-	{
-		this .defaultAppearance = new Appearance (this .getPrivateScene ());
-	}
+	function X3DShapeContext () { }
 
 	X3DShapeContext .prototype =
 	{
 		initialize: function ()
-		{
-			this .defaultAppearance .setup ();
-		},
+		{ },
 		getDefaultAppearance: function ()
 		{
+			if (this .defaultAppearance)
+				return this .defaultAppearance;
+			
+			this .defaultAppearance = new Appearance (this .getPrivateScene ());
+
+			this .defaultAppearance .setup ();
+
 			return this .defaultAppearance;
 		},
 	};

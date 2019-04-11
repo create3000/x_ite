@@ -60,10 +60,7 @@ function (TextureProperties,
 
 	function X3DTexturingContext ()
 	{
-		this .combinedTextureUnits     = [ ];
-		this .defaultTextureProperties = new TextureProperties (this .getPrivateScene ());
-		this .defaultTextureTransform  = new TextureTransform (this .getPrivateScene ());
-		this .defaultTextureCoordinate = new TextureCoordinate (this .getPrivateScene ());
+		this .combinedTextureUnits = [ ];
 	}
 
 	X3DTexturingContext .prototype =
@@ -71,14 +68,6 @@ function (TextureProperties,
 		initialize: function ()
 		{
 			var gl = this .getBrowser () .getContext ();
-
-			// BrowserOptions
-			{
-				this .defaultTextureProperties .magnificationFilter_ = "NICEST";
-				this .defaultTextureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
-				this .defaultTextureProperties .textureCompression_  = "NICEST";
-				this .defaultTextureProperties .generateMipMaps_     = true;
-			}
 
 			this .maxTextureSize          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
 			this .maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
@@ -89,10 +78,6 @@ function (TextureProperties,
 			// For shaders
 			for (var i = 1, length = this .maxCombinedTextureUnits; i < length; ++ i)
 				combinedTextureUnits .push (i);
-
-			this .defaultTextureProperties .setup ();
-			this .defaultTextureTransform  .setup ();
-			this .defaultTextureCoordinate .setup ();
 
 			// There must always be a texture bound to the used texture units.
 
@@ -184,14 +169,39 @@ function (TextureProperties,
 		},
 		getDefaultTextureProperties: function ()
 		{
+			if (this .defaultTextureProperties)
+				return this .defaultTextureProperties;
+
+			this .defaultTextureProperties = new TextureProperties (this .getPrivateScene ());
+			this .defaultTextureProperties .magnificationFilter_ = "NICEST";
+			this .defaultTextureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
+			this .defaultTextureProperties .textureCompression_  = "NICEST";
+			this .defaultTextureProperties .generateMipMaps_     = true;
+
+			this .defaultTextureProperties .setup ();
+
 			return this .defaultTextureProperties;
 		},
 		getDefaultTextureTransform: function ()
 		{
+			if (this .defaultTextureTransform)
+				return this .defaultTextureTransform;
+
+			this .defaultTextureTransform = new TextureTransform (this .getPrivateScene ());
+
+			this .defaultTextureTransform .setup ();
+
 			return this .defaultTextureTransform;
 		},
 		getDefaultTextureCoordinate: function ()
 		{
+			if (this .defaultTextureCoordinate)
+				return this .defaultTextureCoordinate;
+
+			this .defaultTextureCoordinate = new TextureCoordinate (this .getPrivateScene ());
+
+			this .defaultTextureCoordinate .setup ();
+
 			return this .defaultTextureCoordinate;
 		},
 	};
