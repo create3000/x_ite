@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-743 */
+/* X_ITE v4.5.0a-744 */
 
 (function () {
 
@@ -59954,8 +59954,6 @@ function (Fields,
 		set_hatched__: function ()
 		{
 			this .hatched = this .hatched_ .getValue ();
-
-			this .setTransparent (! this .hatched);
 		},
 		set_hatchColor__: function ()
 		{

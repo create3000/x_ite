@@ -118,8 +118,6 @@ function (Fields,
 		set_hatched__: function ()
 		{
 			this .hatched = this .hatched_ .getValue ();
-
-			this .setTransparent (! this .hatched);
 		},
 		set_hatchColor__: function ()
 		{
