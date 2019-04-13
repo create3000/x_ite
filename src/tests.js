@@ -282,6 +282,7 @@ var X_ITE_TESTS = [
 	{ path: "Shape/Connectors.x3d" },
 	{ path: "Shape/CopperGold.x3d" },
 	{ path: "Shape/FillProperties.x3d" },
+	{ path: "Shape/LineProperties.x3d" },
 	{ path: "Shape/LineProperties.x3dv" },
 	{ component: "Sound" },
 	{ path: "Sound/04. Like A Virgin.mp3" },

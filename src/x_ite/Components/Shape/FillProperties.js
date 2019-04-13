@@ -101,9 +101,24 @@ function (Fields,
 		{
 			X3DAppearanceChildNode .prototype .initialize .call (this);
 
+			this .filled_     .addInterest ("set_filled__",     this);
+			this .hatched_    .addInterest ("set_hatched__",    this);
 			this .hatchColor_ .addInterest ("set_hatchColor__", this);
 
+			this .set_filled__ ();
 			this .set_hatchColor__ ();
+		},
+		set_filled__: function ()
+		{
+			this .filled = this .filled_ .getValue ();
+
+			this .setTransparent (! this .filled);
+		},
+		set_hatched__: function ()
+		{
+			this .hatched = this .hatched_ .getValue ();
+
+			this .setTransparent (! this .hatched);
 		},
 		set_hatchColor__: function ()
 		{
@@ -122,9 +137,9 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var hatched = this .hatched_ .getValue ();
+			var hatched = this .hatched;
 
-			gl .uniform1i (shaderObject .x3d_FillPropertiesFilled,  this .filled_ .getValue ());
+			gl .uniform1i (shaderObject .x3d_FillPropertiesFilled,  this .filled);
 			gl .uniform1i (shaderObject .x3d_FillPropertiesHatched, hatched);
 
 			if (hatched)
