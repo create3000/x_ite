@@ -129,10 +129,12 @@ function (Fields,
 
 			if (hatched)
 			{
-				var texture = this .getBrowser () .getHatchStyle (this .hatchStyle_ .getValue ());
+				var
+					browser = shaderObject .getBrowser (),
+					texture = browser .getHatchStyle (this .hatchStyle_ .getValue ());
 
 				gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
-				gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getHatchStyleUnit ());
+				gl .activeTexture (gl .TEXTURE0 + browser .getHatchStyleUnit ());
 				gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
 			}
 		},

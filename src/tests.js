@@ -301,6 +301,7 @@ var X_ITE_TESTS = [
 	{ component: "Texturing" },
 	{ path: "Texturing/ColorManagement.x3d" },
 	{ path: "Texturing/ColorMaterial.x3d" },
+	{ path: "Texturing/DataURL.x3d" },
 	{ path: "Texturing/Felulet.x3d" },
 	{ path: "Texturing/Greek_lc_alpha.svg.png" },
 	{ path: "Texturing/MovieTexture.x3d" },
