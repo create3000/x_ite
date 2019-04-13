@@ -98,13 +98,22 @@ function (Fields,
 
 			this .set_linewidthScaleFactor__ ();
 		},
-		getLinewidthScaleFactor: function ()
-		{
-			return this .linewidthScaleFactor;
-		},
 		set_linewidthScaleFactor__: function ()
 		{
 			this .linewidthScaleFactor = Math .max (1, this .linewidthScaleFactor_ .getValue ());
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			if (this .applied_ .getValue ())
+			{
+				gl .lineWidth (this .linewidthScaleFactor);
+				gl .uniform1f (shaderObject .x3d_LinewidthScaleFactor, this .linewidthScaleFactor);
+			}
+			else
+			{
+				gl .lineWidth (1);
+				gl .uniform1f (shaderObject .x3d_LinewidthScaleFactor, 1);
+			}
 		},
 	});
 

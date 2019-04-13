@@ -82,6 +82,7 @@ function (TextureProperties,
 			// There must always be a texture bound to the used texture units.
 
 			this .shadowTextureUnit = this .getCombinedTextureUnits () .pop ();
+			this .hatchStyleUnit    = this .getCombinedTextureUnits () .pop ();
 
 			this .texture2DUnits = new Int32Array (this .getMaxTextures ());
 
@@ -98,6 +99,9 @@ function (TextureProperties,
 			gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
 			gl .activeTexture (gl .TEXTURE0 + this .shadowTextureUnit);
+			gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+
+			gl .activeTexture (gl .TEXTURE0 + this .hatchStyleUnit);
 			gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
 
 			for (var i = 0, length = this .texture2DUnits .length; i < length; ++ i)
@@ -162,6 +166,10 @@ function (TextureProperties,
 		getShadowTextureUnit: function ()
 		{
 			return this .shadowTextureUnit;
+		},
+		getHatchStyleUnit: function ()
+		{
+			return this .hatchStyleUnit;
 		},
 		getTextureMemory: function ()
 		{

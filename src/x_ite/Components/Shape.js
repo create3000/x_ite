@@ -49,7 +49,7 @@
 define ([
 	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Components/Shape/Appearance",
-//	"x_ite/Components/Shape/FillProperties",
+	"x_ite/Components/Shape/FillProperties",
 	"x_ite/Components/Shape/LineProperties",
 	"x_ite/Components/Shape/Material",
 	"x_ite/Components/Shape/Shape",
@@ -61,7 +61,7 @@ define ([
 ],
 function (SupportedNodes,
           Appearance,
-//          FillProperties,
+          FillProperties,
           LineProperties,
           Material,
           Shape,
@@ -76,7 +76,7 @@ function (SupportedNodes,
 	var Types =
 	{
 		Appearance:       Appearance,
-//		FillProperties:   FillProperties,
+		FillProperties:   FillProperties,
 		LineProperties:   LineProperties,
 		Material:         Material,
 		Shape:            Shape,

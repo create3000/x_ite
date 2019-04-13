@@ -29,6 +29,7 @@ varying float depth;
 #endif
 
 #pragma X3D include "Include/Texture.h"
+#pragma X3D include "Include/Hatch.h"
 #pragma X3D include "Include/Fog.h"
 #pragma X3D include "Include/ClipPlanes.h"
 
@@ -58,6 +59,7 @@ main ()
 		}
 	}
 
+	finalColor        = getHatchColor (finalColor);
 	gl_FragColor .rgb = getFogColor (finalColor .rgb);
 	gl_FragColor .a   = finalColor .a;
 

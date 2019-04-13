@@ -49,12 +49,25 @@
 
 define ([
 	"x_ite/Components/Shape/Appearance",
+	"x_ite/Components/Shape/LineProperties",
+	"x_ite/Components/Shape/FillProperties",
+	"x_ite/Components/Texturing/ImageTexture",
+	"x_ite/Components/Texturing/TextureProperties",
+	"x_ite/Browser/Networking/urls",
 ],
-function (Appearance)
+function (Appearance,
+          LineProperties,
+          FillProperties,
+          ImageTexture,
+          TextureProperties,
+          urls)
 {
 "use strict";
 
-	function X3DShapeContext () { }
+	function X3DShapeContext ()
+	{
+		this .hatchStyleTextures = [ ];
+	}
 
 	X3DShapeContext .prototype =
 	{
@@ -70,6 +83,59 @@ function (Appearance)
 			this .defaultAppearance .setup ();
 
 			return this .defaultAppearance;
+		},
+		getDefaultLineProperties: function ()
+		{
+			if (this .defaultLineProperties)
+				return this .defaultLineProperties;
+			
+			this .defaultLineProperties = new LineProperties (this .getPrivateScene ());
+
+			this .defaultLineProperties .applied_ = false;
+			this .defaultLineProperties .setup ();
+
+			return this .defaultLineProperties;
+		},
+		getDefaultFillProperties: function ()
+		{
+			if (this .defaultFillProperties)
+				return this .defaultFillProperties;
+			
+			this .defaultFillProperties = new FillProperties (this .getPrivateScene ());
+
+			this .defaultFillProperties .hatched_ = false;
+			this .defaultFillProperties .setup ();
+
+			return this .defaultFillProperties;
+		},
+		getHatchStyle: function (index)
+		{
+			if (index < 0 || index > 19)
+				index = 0;
+
+			var hatchStyleTexture = this .hatchStyleTextures [index];
+
+			if (hatchStyleTexture)
+				return hatchStyleTexture;
+
+			hatchStyleTexture = this .hatchStyleTextures [index] = new ImageTexture (this .getPrivateScene ());
+
+			hatchStyleTexture .url_ [0]           = urls .getHatchingUrl (index);
+			hatchStyleTexture .textureProperties_ = this .getHatchStyleTextureProperties ();
+			hatchStyleTexture .setup ();
+
+			return hatchStyleTexture;
+		},
+		getHatchStyleTextureProperties: function ()
+		{
+			if (this .hatchStyleTextureProperties)
+				return this .hatchStyleTextureProperties;
+			
+			this .hatchStyleTextureProperties = new TextureProperties (this .getPrivateScene ());
+
+			this .hatchStyleTextureProperties .setup ();
+
+			return this .hatchStyleTextureProperties;
 		},
 	};
 

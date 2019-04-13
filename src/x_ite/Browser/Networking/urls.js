@@ -78,6 +78,10 @@ function (URI,
 		{
 			return this .scriptUrl .transform ("fonts/" + file) .toString ();
 		},
+		getHatchingUrl: function (index)
+		{
+			return this .scriptUrl .transform ("hatching/" + index + ".png") .toString ();
+		},
 		getFallbackUrl: function (url)
 		{
 			return "http://cors.create3000.de/?url=" + url;

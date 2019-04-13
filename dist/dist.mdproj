@@ -86,10 +86,31 @@
     <None Include="components\picking.min.js" />
     <None Include="components\volume-rendering.js" />
     <None Include="components\volume-rendering.min.js" />
+    <None Include="hatching\0.png" />
+    <None Include="hatching\1.png" />
+    <None Include="hatching\10.png" />
+    <None Include="hatching\11.png" />
+    <None Include="hatching\12.png" />
+    <None Include="hatching\13.png" />
+    <None Include="hatching\14.png" />
+    <None Include="hatching\15.png" />
+    <None Include="hatching\16.png" />
+    <None Include="hatching\17.png" />
+    <None Include="hatching\18.png" />
+    <None Include="hatching\19.png" />
+    <None Include="hatching\2.png" />
+    <None Include="hatching\3.png" />
+    <None Include="hatching\4.png" />
+    <None Include="hatching\5.png" />
+    <None Include="hatching\6.png" />
+    <None Include="hatching\7.png" />
+    <None Include="hatching\8.png" />
+    <None Include="hatching\9.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
     <Folder Include="components\" />
     <Folder Include="fonts\" />
+    <Folder Include="hatching\" />
   </ItemGroup>
 </Project>

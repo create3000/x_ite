@@ -333,7 +333,7 @@ define (function ()
 	function parse (uri, string)
 	{
 		var result = address .exec (string);
-	
+
 		if (result)
 		{
 			uri .scheme    = result [1] || "";
@@ -619,25 +619,25 @@ define (function ()
 
 			if (reference .scheme)
 			{
-				T_local     = reference .isLocal ();
-				T_absolute  = reference .isAbsolute ();
-				T_scheme    = reference .scheme;
-				T_slashs    = reference .value .slashs;
-				T_host      = reference .host;
-				T_port      = reference .port;
-				T_path      = reference .path;
-				T_query     = reference .query;
+				T_local    = reference .isLocal ();
+				T_absolute = reference .isAbsolute ();
+				T_scheme   = reference .scheme;
+				T_slashs   = reference .value .slashs;
+				T_host     = reference .host;
+				T_port     = reference .port;
+				T_path     = reference .path;
+				T_query    = reference .query;
 			}
 			else
 			{
 				if (reference .authority)
 				{
-					T_local     = reference .isLocal ();
-					T_absolute  = reference .isAbsolute ();
-					T_host      = reference .host;
-					T_port      = reference .port;
-					T_path      = reference .path;
-					T_query     = reference .query;
+					T_local    = reference .isLocal ();
+					T_absolute = reference .isAbsolute ();
+					T_host     = reference .host;
+					T_port     = reference .port;
+					T_path     = reference .path;
+					T_query    = reference .query;
 				}
 				else
 				{
@@ -673,10 +673,10 @@ define (function ()
 						T_query = reference .query;
 					}
 
-					T_local     = this .isLocal ();
-					T_absolute  = this .isAbsolute () || reference .isAbsolute ();
-					T_host      = value .host;
-					T_port      = value .port;
+					T_local    = this .isLocal ();
+					T_absolute = this .isAbsolute () || reference .isAbsolute ();
+					T_host     = value .host;
+					T_port     = value .port;
 				}
 
 				T_scheme = value .scheme;
@@ -691,7 +691,7 @@ define (function ()
 			                T_slashs,
 			                T_host,
 			                T_port,
-			                removeDotSegments (T_path),
+			                T_scheme == "data" ? T_path : removeDotSegments (T_path),
 			                T_query,
 			                T_fragment);
 		},

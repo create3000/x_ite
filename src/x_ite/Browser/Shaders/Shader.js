@@ -50,6 +50,7 @@
 define ([
 	"text!x_ite/Browser/Shaders/Include/ClipPlanes.h",
 	"text!x_ite/Browser/Shaders/Include/Fog.h",
+	"text!x_ite/Browser/Shaders/Include/Hatch.h",
 	"text!x_ite/Browser/Shaders/Include/Pack.h",
 	"text!x_ite/Browser/Shaders/Include/Perlin.h",
 	"text!x_ite/Browser/Shaders/Include/Shadow.h",
@@ -63,6 +64,7 @@ define ([
 ],
 function (ClipPlanes,
           Fog,
+          Hatch,
           Pack,
           Perlin,
           Shadow,
@@ -79,6 +81,7 @@ function (ClipPlanes,
 	var includes = {
 		ClipPlanes: ClipPlanes,
 		Fog: Fog,
+		Hatch: Hatch,
 		Pack: Pack,
 		Perlin: Perlin,
 		Shadow: Shadow,

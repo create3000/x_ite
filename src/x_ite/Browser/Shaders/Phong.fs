@@ -35,6 +35,7 @@ varying float depth;
 
 #pragma X3D include "Include/Shadow.h"
 #pragma X3D include "Include/Texture.h"
+#pragma X3D include "Include/Hatch.h"
 #pragma X3D include "Include/Fog.h"
 #pragma X3D include "Include/ClipPlanes.h"
 
@@ -174,6 +175,7 @@ main ()
 	bool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;
 
 	gl_FragColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
+	gl_FragColor      = getHatchColor (gl_FragColor);
 	gl_FragColor .rgb = getFogColor (gl_FragColor .rgb);
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER

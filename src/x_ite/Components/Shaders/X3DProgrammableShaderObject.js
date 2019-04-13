@@ -218,6 +218,11 @@ function (Fields,
 				this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
 			}
 
+			this .x3d_FillPropertiesFilled     = gl .getUniformLocation (program, "x3d_FillProperties.filled");
+			this .x3d_FillPropertiesHatched    = gl .getUniformLocation (program, "x3d_FillProperties.hatched");
+			this .x3d_FillPropertiesHatchColor = gl .getUniformLocation (program, "x3d_FillProperties.hatchColor");
+			this .x3d_FillPropertiesHatchStyle = gl .getUniformLocation (program, "x3d_FillProperties.hatchStyle");
+
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
 			this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
 			this .x3d_ModelViewMatrix   = gl .getUniformLocation (program, "x3d_ModelViewMatrix");
@@ -241,11 +246,12 @@ function (Fields,
 
 			// Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
-			gl .uniform1f  (this .x3d_LinewidthScaleFactor, 1);
-			gl .uniform1i  (this .x3d_NumTextures,          0);
-			gl .uniform1iv (this .x3d_Texture2D [0],        browser .getTexture2DUnits ());
-			gl .uniform1iv (this .x3d_CubeMapTexture [0],   browser .getCubeMapTextureUnits ());
-			gl .uniform1iv (this .x3d_ShadowMap [0],        new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
+			gl .uniform1f  (this .x3d_LinewidthScaleFactor,     1);
+			gl .uniform1i  (this .x3d_NumTextures,              0);
+			gl .uniform1iv (this .x3d_Texture2D [0],            browser .getTexture2DUnits ());
+			gl .uniform1iv (this .x3d_CubeMapTexture [0],       browser .getCubeMapTextureUnits ());
+			gl .uniform1iv (this .x3d_ShadowMap [0],            new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
+			gl .uniform1i  (this .x3d_FillPropertiesHatchStyle, browser .getHatchStyleUnit ());
 
 			// Return true if valid, otherwise false.
 
@@ -936,6 +942,7 @@ function (Fields,
 		{
 			var
 				linePropertiesNode    = context .linePropertiesNode,
+				fillPropertiesNode    = context .fillPropertiesNode,
 				materialNode          = context .materialNode,
 				textureNode           = context .textureNode,
 				textureTransformNode  = context .textureTransformNode,
@@ -965,21 +972,9 @@ function (Fields,
 			context .fogNode .setShaderUniforms (gl, this);
 			gl .uniform1i (this .x3d_FogCoord, context .fogCoords);
 
-			// LineProperties
+			linePropertiesNode .setShaderUniforms (gl, this);
+			fillPropertiesNode .setShaderUniforms (gl, this);
 
-			if (linePropertiesNode && linePropertiesNode .applied_ .getValue ())
-			{
-				var linewidthScaleFactor = linePropertiesNode .getLinewidthScaleFactor ();
-
-				gl .lineWidth (linewidthScaleFactor);
-				gl .uniform1f (this .x3d_LinewidthScaleFactor, linewidthScaleFactor);
-			}
-			else
-			{
-				gl .lineWidth (1);
-				gl .uniform1f (this .x3d_LinewidthScaleFactor, 1);
-			}
-	
 			// Material
 
 			gl .uniform1i (this .x3d_ColorMaterial, context .colorMaterial);

@@ -1,0 +1,19 @@
+/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/
+
+uniform x3d_FillParameters x3d_FillProperties;
+
+vec4
+getHatchColor (vec4 color)
+{
+	vec4 finalColor = x3d_FillProperties .filled ? color : vec4 (0.0);
+
+	if (x3d_FillProperties .hatched)
+	{
+		vec4 hatch = texture2D (x3d_FillProperties .hatchStyle, gl_FragCoord .xy / 32.0);
+
+		hatch .rgb *= x3d_FillProperties .hatchColor;
+		finalColor  = mix (finalColor, hatch, hatch .a);
+	}
+
+	return finalColor;
+}
