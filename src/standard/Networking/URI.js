@@ -401,7 +401,7 @@ define (function ()
 				value .path      = arguments [6];
 				value .query     = arguments [7];
 				value .fragment  = arguments [8];
-				value .string    = this .toString ();
+				value .string    = this .createString ();
 				break;
 			}
 		}
@@ -605,6 +605,9 @@ define (function ()
 			if (! (reference instanceof URI))
 				reference = new URI (reference .toString ());
 
+			if (reference .scheme == "data")
+				return new URI (reference .toString ());
+
 			var
 				value       = this .value,
 				T_local     = false,
@@ -691,7 +694,7 @@ define (function ()
 			                T_slashs,
 			                T_host,
 			                T_port,
-			                T_scheme == "data" ? T_path : removeDotSegments (T_path),
+			                removeDotSegments (T_path),
 			                T_query,
 			                T_fragment);
 		},
@@ -761,6 +764,10 @@ define (function ()
 			                unescape (value .fragment));
 		},
 		toString: function ()
+		{
+			return this .value .string;
+		},
+		createString: function ()
 		{
 			var
 				value  = this .value,
