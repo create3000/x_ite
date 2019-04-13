@@ -33580,7 +33580,7 @@ define ('standard/Networking/URI',[],function ()
 	function parse (uri, string)
 	{
 		var result = address .exec (string);
-	
+
 		if (result)
 		{
 			uri .scheme    = result [1] || "";
@@ -33648,7 +33648,7 @@ define ('standard/Networking/URI',[],function ()
 				value .path      = arguments [6];
 				value .query     = arguments [7];
 				value .fragment  = arguments [8];
-				value .string    = this .toString ();
+				value .string    = this .createString ();
 				break;
 			}
 		}
@@ -33852,6 +33852,9 @@ define ('standard/Networking/URI',[],function ()
 			if (! (reference instanceof URI))
 				reference = new URI (reference .toString ());
 
+			if (reference .scheme == "data")
+				return new URI (reference .toString ());
+
 			var
 				value       = this .value,
 				T_local     = false,
@@ -33866,25 +33869,25 @@ define ('standard/Networking/URI',[],function ()
 
 			if (reference .scheme)
 			{
-				T_local     = reference .isLocal ();
-				T_absolute  = reference .isAbsolute ();
-				T_scheme    = reference .scheme;
-				T_slashs    = reference .value .slashs;
-				T_host      = reference .host;
-				T_port      = reference .port;
-				T_path      = reference .path;
-				T_query     = reference .query;
+				T_local    = reference .isLocal ();
+				T_absolute = reference .isAbsolute ();
+				T_scheme   = reference .scheme;
+				T_slashs   = reference .value .slashs;
+				T_host     = reference .host;
+				T_port     = reference .port;
+				T_path     = reference .path;
+				T_query    = reference .query;
 			}
 			else
 			{
 				if (reference .authority)
 				{
-					T_local     = reference .isLocal ();
-					T_absolute  = reference .isAbsolute ();
-					T_host      = reference .host;
-					T_port      = reference .port;
-					T_path      = reference .path;
-					T_query     = reference .query;
+					T_local    = reference .isLocal ();
+					T_absolute = reference .isAbsolute ();
+					T_host     = reference .host;
+					T_port     = reference .port;
+					T_path     = reference .path;
+					T_query    = reference .query;
 				}
 				else
 				{
@@ -33920,10 +33923,10 @@ define ('standard/Networking/URI',[],function ()
 						T_query = reference .query;
 					}
 
-					T_local     = this .isLocal ();
-					T_absolute  = this .isAbsolute () || reference .isAbsolute ();
-					T_host      = value .host;
-					T_port      = value .port;
+					T_local    = this .isLocal ();
+					T_absolute = this .isAbsolute () || reference .isAbsolute ();
+					T_host     = value .host;
+					T_port     = value .port;
 				}
 
 				T_scheme = value .scheme;
@@ -34008,6 +34011,10 @@ define ('standard/Networking/URI',[],function ()
 			                unescape (value .fragment));
 		},
 		toString: function ()
+		{
+			return this .value .string;
+		},
+		createString: function ()
 		{
 			var
 				value  = this .value,
@@ -59793,9 +59800,15 @@ function (Fields,
 		{
 			X3DAppearanceChildNode .prototype .initialize .call (this);
 
+			this .applied_              .addInterest ("set_applied__",              this);
 			this .linewidthScaleFactor_ .addInterest ("set_linewidthScaleFactor__", this);
 
+			this .set_applied__ ();
 			this .set_linewidthScaleFactor__ ();
+		},
+		set_applied__: function ()
+		{
+			this .applied = this .applied_ .getValue ();
 		},
 		set_linewidthScaleFactor__: function ()
 		{
@@ -59803,7 +59816,7 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			if (this .applied_ .getValue ())
+			if (this .applied)
 			{
 				gl .lineWidth (this .linewidthScaleFactor);
 				gl .uniform1f (shaderObject .x3d_LinewidthScaleFactor, this .linewidthScaleFactor);
@@ -59924,9 +59937,25 @@ function (Fields,
 		{
 			X3DAppearanceChildNode .prototype .initialize .call (this);
 
+			this .filled_     .addInterest ("set_filled__",     this);
+			this .hatched_    .addInterest ("set_hatched__",    this);
 			this .hatchColor_ .addInterest ("set_hatchColor__", this);
 
+			this .set_filled__ ();
+			this .set_hatched__ ();
 			this .set_hatchColor__ ();
+		},
+		set_filled__: function ()
+		{
+			this .filled = this .filled_ .getValue ();
+
+			this .setTransparent (! this .filled);
+		},
+		set_hatched__: function ()
+		{
+			this .hatched = this .hatched_ .getValue ();
+
+			this .setTransparent (! this .hatched);
 		},
 		set_hatchColor__: function ()
 		{
@@ -59945,17 +59974,19 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var hatched = this .hatched_ .getValue ();
+			var hatched = this .hatched;
 
-			gl .uniform1i (shaderObject .x3d_FillPropertiesFilled,  this .filled_ .getValue ());
+			gl .uniform1i (shaderObject .x3d_FillPropertiesFilled,  this .filled);
 			gl .uniform1i (shaderObject .x3d_FillPropertiesHatched, hatched);
 
 			if (hatched)
 			{
-				var texture = this .getBrowser () .getHatchStyle (this .hatchStyle_ .getValue ());
+				var
+					browser = shaderObject .getBrowser (),
+					texture = browser .getHatchStyle (this .hatchStyle_ .getValue ());
 
 				gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
-				gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getHatchStyleUnit ());
+				gl .activeTexture (gl .TEXTURE0 + browser .getHatchStyleUnit ());
 				gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
 			}
 		},
@@ -60539,7 +60570,7 @@ function ($,
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
 			// In Firefox we don't need getRelativePath if file scheme, do we in Chrome???
 
-			this .image .attr ("src", this .URL);
+			this .image .attr ("src", this .URL .toString ());
 		},
 		setError: function ()
 		{

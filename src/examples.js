@@ -97,6 +97,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Shaders", test: "FloatVertexAttribute" },
 	{ component: "Shaders", test: "ShaderPart" },
 	{ component: "Shape", test: "Appearance" },
+	{ component: "Shape", test: "FillProperties" },
 	{ component: "Shape", test: "Material" },
 	{ component: "Shape", test: "TwoSidedMaterial" },
 	{ component: "Sound", test: "AudioClip" },
