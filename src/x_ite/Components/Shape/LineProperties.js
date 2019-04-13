@@ -94,9 +94,15 @@ function (Fields,
 		{
 			X3DAppearanceChildNode .prototype .initialize .call (this);
 
+			this .applied_              .addInterest ("set_applied__",              this);
 			this .linewidthScaleFactor_ .addInterest ("set_linewidthScaleFactor__", this);
 
+			this .set_applied__ ();
 			this .set_linewidthScaleFactor__ ();
+		},
+		set_applied__: function ()
+		{
+			this .applied = this .applied_ .getValue ();
 		},
 		set_linewidthScaleFactor__: function ()
 		{
@@ -104,7 +110,7 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			if (this .applied_ .getValue ())
+			if (this .applied)
 			{
 				gl .lineWidth (this .linewidthScaleFactor);
 				gl .uniform1f (shaderObject .x3d_LinewidthScaleFactor, this .linewidthScaleFactor);

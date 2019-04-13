@@ -106,6 +106,7 @@ function (Fields,
 			this .hatchColor_ .addInterest ("set_hatchColor__", this);
 
 			this .set_filled__ ();
+			this .set_hatched__ ();
 			this .set_hatchColor__ ();
 		},
 		set_filled__: function ()
