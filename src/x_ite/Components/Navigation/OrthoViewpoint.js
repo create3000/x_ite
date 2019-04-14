@@ -52,6 +52,7 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Navigation/X3DViewpointNode",
+	"x_ite/Components/Interpolation/ScalarInterpolator",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Geometry/Camera",
 	"standard/Math/Numbers/Vector2",
@@ -62,6 +63,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DViewpointNode, 
+          ScalarInterpolator, 
           X3DConstants,
           Camera,
           Vector2,
@@ -80,7 +82,8 @@ function (Fields,
 		this .centerOfRotation_ .setUnit ("length");
 		this .fieldOfView_      .setUnit ("length");
 
-		this .projectionMatrix = new Matrix4 ();
+		this .projectionMatrix        = new Matrix4 ();
+		this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
 	}
 
 	OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
@@ -118,6 +121,12 @@ function (Fields,
 			this .fieldOfView_      .addInterest ("set_fieldOfView___", this);
 			this .fieldOfViewScale_ .addInterest ("set_fieldOfView___", this);
 
+			this .fieldOfViewInterpolator .key_ = new Fields .MFFloat (0, 1);
+			this .fieldOfViewInterpolator .setup ();
+
+			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewInterpolator .set_fraction_);
+			this .fieldOfViewInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
+
 			this .set_fieldOfView___ ();
 		},
 		set_fieldOfView___: function ()
@@ -133,6 +142,25 @@ function (Fields,
 
 			this .sizeX = this .maximumX - this .minimumX;
 			this .sizeY = this .maximumY - this .minimumY;
+		},
+		transitionStart: function (fromViewpoint)
+		{
+			this .fromFieldOfViewScale = fromViewpoint .fieldOfViewScale_ .getValue ();
+
+			X3DViewpointNode .prototype .transitionStart .call (this, fromViewpoint);
+		},
+		setInterpolators: function (fromViewpoint)
+		{
+			if (fromViewpoint .getType () .indexOf (X3DConstants .OrthoViewpoint) < 0)
+			{
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (this .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue ());
+			}
+			else
+			{
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (this .fromFieldOfViewScale, this .fieldOfViewScale_ .getValue ());
+	
+				this .fieldOfViewScale_ = this .fromFieldOfViewScale;
+			}
 		},
 		getMinimumX: function ()
 		{

@@ -211,9 +211,10 @@ function ($,
 
 			viewpoint .transitionStop ();
 
-			if (event .deltaY > 0)      // Move backwards.
+			if (event .deltaY > 0) // Move backwards.
+			{
 				viewpoint .fieldOfViewScale_ = Math .max (0.00001, viewpoint .fieldOfViewScale_ .getValue () * (1 - SCROLL_FACTOR));
-
+			}
 			else if (event .deltaY < 0) // Move forwards.
 			{
 				viewpoint .fieldOfViewScale_ = viewpoint .fieldOfViewScale_ .getValue () * (1 + SCROLL_FACTOR);
