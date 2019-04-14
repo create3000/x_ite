@@ -118,8 +118,6 @@ getMaterialColor (const in vec3 N,
 void
 main ()
 {
-	gl_PointSize = 1.0;
-
 	vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
 	fogDepth    = x3d_FogDepth;
