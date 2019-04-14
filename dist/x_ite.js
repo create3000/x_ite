@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-745 */
+/* X_ITE v4.5.0a-746 */
 
 (function () {
 
@@ -31664,15 +31664,12 @@ function (Fields,
 		this ._destinationNode  = new Fields .SFNode (destinationNode);
 		this ._destinationField = destinationField;
 
-		var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+		// Must connect in every context, to make X3DBaseNode.hasRoutes work.
 
-		if (this ._executionContext .constructor !== X3DProtoDeclaration)
-		{
-			sourceField .addFieldInterest (destinationField);
+		sourceField .addFieldInterest (destinationField);
 
-			sourceField      .addOutputRoute (this);
-			destinationField .addInputRoute (this);
-		}
+		sourceField      .addOutputRoute (this);
+		destinationField .addInputRoute (this);
 	}
 
 	X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
