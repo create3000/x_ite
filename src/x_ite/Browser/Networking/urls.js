@@ -67,9 +67,10 @@ function (URI,
 		{
 			if (file)
 			{
-				var min = DEBUG ? "" : ".min";
+				if (getScriptURL () .match (/\.min\.js$/))
+					file += ".min";
 
-				return this .scriptUrl .transform ("components/" + file + min + ".js") .toString ();
+				return this .scriptUrl .transform ("components/" + file + ".js") .toString ();
 			}
 
 			return "http://create3000.de/x_ite";

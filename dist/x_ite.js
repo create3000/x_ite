@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-748 */
+/* X_ITE v4.5.0a-749 */
 
 (function () {
 
@@ -40578,9 +40578,10 @@ function (URI,
 		{
 			if (file)
 			{
-				var min = DEBUG ? "" : ".min";
+				if (getScriptURL () .match (/\.min\.js$/))
+					file += ".min";
 
-				return this .scriptUrl .transform ("components/" + file + min + ".js") .toString ();
+				return this .scriptUrl .transform ("components/" + file + ".js") .toString ();
 			}
 
 			return "http://create3000.de/x_ite";
@@ -58907,7 +58908,7 @@ function (Shading,
 		createShader: function (name, vs, fs, shadow)
 		{
 			if (this .getDebug ())
-				console .log ("Creating " + name);
+				console .log ("Initializing " + name);
 
 			if (shadow)
 			{
