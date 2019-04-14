@@ -972,8 +972,10 @@ function (Fields,
 			context .fogNode .setShaderUniforms (gl, this);
 			gl .uniform1i (this .x3d_FogCoord, context .fogCoords);
 
-			linePropertiesNode .setShaderUniforms (gl, this);
-			fillPropertiesNode .setShaderUniforms (gl, this);
+			if (context .geometryType < 2)
+				linePropertiesNode .setShaderUniforms (gl, this);
+			else
+				fillPropertiesNode .setShaderUniforms (gl, this);
 
 			// Material
 

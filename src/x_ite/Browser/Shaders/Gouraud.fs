@@ -9,7 +9,6 @@ precision mediump int;
 
 uniform int x3d_GeometryType;
 
-uniform float x3d_LinewidthScaleFactor;
 uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 

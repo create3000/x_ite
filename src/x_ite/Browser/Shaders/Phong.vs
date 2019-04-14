@@ -8,8 +8,7 @@ uniform mat3 x3d_NormalMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
-uniform float x3d_LinewidthScaleFactor;
-uniform bool  x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false
+uniform bool x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false
 
 attribute float x3d_FogDepth;
 attribute vec4  x3d_Color;
@@ -34,7 +33,7 @@ varying float depth;
 void
 main ()
 {
-	gl_PointSize = x3d_LinewidthScaleFactor;
+	gl_PointSize = 1.0;
 
 	vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
