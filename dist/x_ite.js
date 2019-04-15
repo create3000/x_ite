@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-752 */
+/* X_ITE v4.5.0a-753 */
 
 (function () {
 
@@ -61148,8 +61148,8 @@ function (Appearance,
 		},
 		getLinetype: function (index)
 		{
-			if (index < 0 || index > 16)
-				index = 0;
+			if (index < 1 || index > 15)
+				index = 1;
 
 			var linetypeTexture = this .linetypeTextures [index];
 
@@ -61166,8 +61166,8 @@ function (Appearance,
 		},
 		getHatchStyle: function (index)
 		{
-			if (index < 0 || index > 19)
-				index = 0;
+			if (index < 1 || index > 19)
+				index = 1;
 
 			var hatchStyleTexture = this .hatchStyleTextures [index];
 
@@ -108334,8 +108334,10 @@ function (X3DGeometryNode,
 					if (this .colorMaterial)
 						shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
-					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
-					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+					if (this .getMultiTexCoords () .length)
+						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
+
+					shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 		
 					// Wireframes are always solid so only one drawing call is needed.
 	
@@ -108398,7 +108400,9 @@ function (X3DGeometryNode,
 					if (this .colorMaterial)
 						shaderNode .enableColorAttribute (gl, this .colorBuffer);
 		
-					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+					if (this .getMultiTexCoords () .length)
+						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+						
 					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
 
 					// Wireframes are always solid so only one drawing call is needed.
