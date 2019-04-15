@@ -66,6 +66,7 @@ function (Appearance,
 
 	function X3DShapeContext ()
 	{
+		this .linetypeTextures   = [ ];
 		this .hatchStyleTextures = [ ];
 	}
 
@@ -108,6 +109,24 @@ function (Appearance,
 
 			return this .defaultFillProperties;
 		},
+		getLinetype: function (index)
+		{
+			if (index < 0 || index > 16)
+				index = 0;
+
+			var linetypeTexture = this .linetypeTextures [index];
+
+			if (linetypeTexture)
+				return linetypeTexture;
+
+			linetypeTexture = this .linetypeTextures [index] = new ImageTexture (this .getPrivateScene ());
+
+			linetypeTexture .url_ [0]           = urls .getLinetypeUrl (index);
+			linetypeTexture .textureProperties_ = this .getLineFillTextureProperties ();
+			linetypeTexture .setup ();
+
+			return linetypeTexture;
+		},
 		getHatchStyle: function (index)
 		{
 			if (index < 0 || index > 19)
@@ -121,21 +140,21 @@ function (Appearance,
 			hatchStyleTexture = this .hatchStyleTextures [index] = new ImageTexture (this .getPrivateScene ());
 
 			hatchStyleTexture .url_ [0]           = urls .getHatchingUrl (index);
-			hatchStyleTexture .textureProperties_ = this .getHatchStyleTextureProperties ();
+			hatchStyleTexture .textureProperties_ = this .getLineFillTextureProperties ();
 			hatchStyleTexture .setup ();
 
 			return hatchStyleTexture;
 		},
-		getHatchStyleTextureProperties: function ()
+		getLineFillTextureProperties: function ()
 		{
-			if (this .hatchStyleTextureProperties)
-				return this .hatchStyleTextureProperties;
+			if (this .lineFillTextureProperties)
+				return this .lineFillTextureProperties;
 			
-			this .hatchStyleTextureProperties = new TextureProperties (this .getPrivateScene ());
+			this .lineFillTextureProperties = new TextureProperties (this .getPrivateScene ());
 
-			this .hatchStyleTextureProperties .setup ();
+			this .lineFillTextureProperties .setup ();
 
-			return this .hatchStyleTextureProperties;
+			return this .lineFillTextureProperties;
 		},
 	};
 

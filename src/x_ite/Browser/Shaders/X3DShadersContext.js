@@ -51,6 +51,7 @@ define ([
 	"x_ite/Browser/Core/Shading",
 	"x_ite/Components/Shaders/ComposedShader",
 	"x_ite/Components/Shaders/ShaderPart",
+	"text!x_ite/Browser/Shaders/PointSet.vs",
 	"text!x_ite/Browser/Shaders/PointSet.fs",
 	"text!x_ite/Browser/Shaders/Wireframe.vs",
 	"text!x_ite/Browser/Shaders/Wireframe.fs",
@@ -66,6 +67,7 @@ define ([
 function (Shading,
           ComposedShader,
           ShaderPart,
+          pointSetVS,
           pointSetFS,
           wireframeVS,
           wireframeFS,
@@ -149,7 +151,7 @@ function (Shading,
 			if (this .pointShader)
 				return this .pointShader;
 
-			this .pointShader = this .createShader ("PointShader", wireframeVS, pointSetFS, false);
+			this .pointShader = this .createShader ("PointShader", pointSetVS, pointSetFS, false);
 	
 			this .pointShader .getShadowShader = this .getPointShader .bind (this);
 

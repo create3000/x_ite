@@ -64,6 +64,15 @@ struct x3d_TextureCoordinateGeneratorParameters
 
 //uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures;
 
+struct x3d_LineParameters  
+{   
+	bool          applied;
+	mediump float linewidthScaleFactor;
+	sampler2D     linetype;
+};
+
+//uniform x3d_LineParameters x3d_LineProperties;
+
 struct x3d_FillParameters  
 {   
 	bool         filled;

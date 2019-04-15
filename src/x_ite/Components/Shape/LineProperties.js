@@ -112,13 +112,22 @@ function (Fields,
 		{
 			if (this .applied)
 			{
+				var
+					browser = shaderObject .getBrowser (),
+					texture = browser .getLinetype (this .linetype_ .getValue ());
+
 				gl .lineWidth (this .linewidthScaleFactor);
-				gl .uniform1f (shaderObject .x3d_LinewidthScaleFactor, this .linewidthScaleFactor);
+				gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              true);
+				gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, this .linewidthScaleFactor);
+
+				gl .activeTexture (gl .TEXTURE0 + browser .getLinetypeUnit ());
+				gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
 			}
 			else
 			{
 				gl .lineWidth (1);
-				gl .uniform1f (shaderObject .x3d_LinewidthScaleFactor, 1);
+				gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              false);
+				gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, 1);
 			}
 		},
 	});

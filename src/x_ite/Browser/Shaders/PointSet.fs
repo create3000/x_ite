@@ -7,7 +7,7 @@
 precision mediump float;
 precision mediump int;
 
-uniform float x3d_LinewidthScaleFactor;
+uniform x3d_LineParameters x3d_LineProperties;
 
 varying float fogDepth; // fog depth
 varying vec4  color;    // color
@@ -26,7 +26,7 @@ main ()
 {
 	clip ();
 
-	float lw = (x3d_LinewidthScaleFactor + 1.0) / 2.0;
+	float lw = (x3d_LineProperties .linewidthScaleFactor + 1.0) / 2.0;
 	float t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;
 
 	gl_FragColor .rgb = getFogColor (color .rgb);

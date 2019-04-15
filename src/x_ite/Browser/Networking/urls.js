@@ -79,6 +79,10 @@ function (URI,
 		{
 			return this .scriptUrl .transform ("fonts/" + file) .toString ();
 		},
+		getLinetypeUrl: function (index)
+		{
+			return this .scriptUrl .transform ("linetype/" + index + ".png") .toString ();
+		},
 		getHatchingUrl: function (index)
 		{
 			return this .scriptUrl .transform ("hatching/" + index + ".png") .toString ();

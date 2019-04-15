@@ -722,6 +722,24 @@
     <None Include="hatching\17.png" />
     <None Include="hatching\18.png" />
     <None Include="hatching\19.png" />
+    <None Include="linetype\0.png" />
+    <None Include="linetype\1.png" />
+    <None Include="linetype\2.png" />
+    <None Include="linetype\3.png" />
+    <None Include="linetype\4.png" />
+    <None Include="linetype\5.png" />
+    <None Include="linetype\6.png" />
+    <None Include="linetype\7.png" />
+    <None Include="linetype\8.png" />
+    <None Include="linetype\9.png" />
+    <None Include="linetype\10.png" />
+    <None Include="linetype\11.png" />
+    <None Include="linetype\12.png" />
+    <None Include="linetype\13.png" />
+    <None Include="linetype\14.png" />
+    <None Include="linetype\15.png" />
+    <None Include="linetype\16.png" />
+    <None Include="x_ite\Browser\Shaders\PointSet.vs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
@@ -743,5 +761,6 @@
     <Folder Include="x_ite\Browser\RigidBodyPhysics\" />
     <Folder Include="x_ite\Browser\Shaders\Tests\" />
     <Folder Include="hatching\" />
+    <Folder Include="linetype\" />
   </ItemGroup>
 </Project>

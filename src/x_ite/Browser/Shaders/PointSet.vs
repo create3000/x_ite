@@ -3,6 +3,7 @@
 precision mediump float;
 precision mediump int;
 
+uniform x3d_LineParameters x3d_LineProperties;
 uniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false
 uniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false
 uniform x3d_MaterialParameters x3d_FrontMaterial;  
@@ -12,14 +13,11 @@ uniform mat4 x3d_ModelViewMatrix;
 
 attribute float x3d_FogDepth;
 attribute vec4  x3d_Color;
-attribute vec4  x3d_TexCoord0;
 attribute vec4  x3d_Vertex;
 
-varying float fogDepth;       // fog depth
-varying vec4  color;          // color
-varying vec3  vertex;         // point on geometry
-varying vec3  startPosition;  // line stipple start
-varying vec3  vertexPosition; // current line stipple position
+varying float fogDepth; // fog depth
+varying vec4  color;    // color
+varying vec3  vertex;   // point on geometry
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 varying float depth;
@@ -28,19 +26,15 @@ varying float depth;
 void
 main ()
 {
+	// If we are points, make the gl_PointSize one pixel larger.
+	gl_PointSize = x3d_LineProperties .linewidthScaleFactor + 1.0;
+
 	vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
 	fogDepth = x3d_FogDepth;
 	vertex   = position .xyz;
 
 	gl_Position = x3d_ProjectionMatrix * position;
-
-	// Line Stipple
-
-	vec4 start = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_TexCoord0;
-
-	startPosition  = start .xyz / start .w;
-	vertexPosition = gl_Position .xyz / gl_Position .w;
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 	depth = 1.0 + gl_Position .w;

@@ -7,9 +7,14 @@
 precision mediump float;
 precision mediump int;
 
-varying float fogDepth; // fog depth
-varying vec4  color;    // color
-varying vec3  vertex;   // point on geometry
+uniform x3d_LineParameters x3d_LineProperties;
+uniform ivec4 x3d_Viewport;
+
+varying float fogDepth;       // fog depth
+varying vec4  color;          // color
+varying vec3  vertex;         // point on geometry
+varying vec3  startPosition;  // line stipple start
+varying vec3  vertexPosition; // current line stipple position
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
@@ -20,9 +25,24 @@ varying float depth;
 #pragma X3D include "Include/ClipPlanes.h"
 
 void
+stipple ()
+{
+	if (x3d_LineProperties .applied)
+	{
+		vec2  direction = (vertexPosition .xy - startPosition .xy) * vec2 (x3d_Viewport .zw) * 0.5;
+		float distance  = length (direction) / 16.0;
+		float color     = texture2D (x3d_LineProperties .linetype, vec2 (distance, distance)) .a;
+
+		if (color == 0.0)
+			discard;
+	}
+}
+
+void
 main ()
 {
 	clip ();
+	stipple ();
 
 	gl_FragColor .rgb = getFogColor (color .rgb);
 	gl_FragColor .a   = color .a;

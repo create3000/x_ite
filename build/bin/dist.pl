@@ -59,8 +59,9 @@ sub dist {
 	close CSS;
 
 	say "Copying files";
-	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/images", "dist/";
-	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/fonts", "dist/";
+	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/images",   "dist/";
+	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/fonts",    "dist/";
+	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/linetype", "dist/";
 	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/hatching", "dist/";
 	system "cp", "-v", "src/example.html",  "dist/";
 	

@@ -82,6 +82,7 @@ function (TextureProperties,
 			// There must always be a texture bound to the used texture units.
 
 			this .shadowTextureUnit = this .getCombinedTextureUnits () .pop ();
+			this .linetypeUnit      = this .getCombinedTextureUnits () .pop ();
 			this .hatchStyleUnit    = this .getCombinedTextureUnits () .pop ();
 
 			this .texture2DUnits = new Int32Array (this .getMaxTextures ());
@@ -99,6 +100,9 @@ function (TextureProperties,
 			gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
 			gl .activeTexture (gl .TEXTURE0 + this .shadowTextureUnit);
+			gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+
+			gl .activeTexture (gl .TEXTURE0 + this .linetypeUnit);
 			gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
 
 			gl .activeTexture (gl .TEXTURE0 + this .hatchStyleUnit);
@@ -166,6 +170,10 @@ function (TextureProperties,
 		getShadowTextureUnit: function ()
 		{
 			return this .shadowTextureUnit;
+		},
+		getLinetypeUnit: function ()
+		{
+			return this .linetypeUnit;
 		},
 		getHatchStyleUnit: function ()
 		{
