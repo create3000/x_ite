@@ -111,8 +111,8 @@ function (Appearance,
 		},
 		getLinetype: function (index)
 		{
-			if (index < 0 || index > 16)
-				index = 0;
+			if (index < 1 || index > 15)
+				index = 1;
 
 			var linetypeTexture = this .linetypeTextures [index];
 
@@ -129,8 +129,8 @@ function (Appearance,
 		},
 		getHatchStyle: function (index)
 		{
-			if (index < 0 || index > 19)
-				index = 0;
+			if (index < 1 || index > 19)
+				index = 1;
 
 			var hatchStyleTexture = this .hatchStyleTextures [index];
 
