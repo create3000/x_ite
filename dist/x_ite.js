@@ -1,4 +1,4 @@
-/* X_ITE v4.5.0a-751 */
+/* X_ITE v4.5.0a-752 */
 
 (function () {
 
@@ -117059,6 +117059,10 @@ function ($,
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
+require .config ({
+	"waitSeconds": 0,
+});
 
 var getScriptURL = (function ()
 {

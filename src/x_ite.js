@@ -46,6 +46,10 @@
  *
  ******************************************************************************/
 
+require .config ({
+	"waitSeconds": 0,
+});
+
 var getScriptURL = (function ()
 {
 	var
