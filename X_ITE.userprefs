@@ -3,10 +3,17 @@
   <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/InputOutput/Generator.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Basic/X3DBaseNode.js" Line="609" Column="7" />
-      <File FileName="src/x_ite/Routing/X3DRoute.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="974" Column="1" />
+      <File FileName="src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js" Line="160" Column="48" />
+      <File FileName="src/x_ite/Browser/Shaders/Types.h" Line="71" Column="24" />
+      <File FileName="src/x_ite/Browser/Shaders/Wireframe.vs" Line="6" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Wireframe.fs" Line="11" Column="1" />
+      <File FileName="src/x_ite/Components/Rendering/X3DLineGeometryNode.js" Line="92" Column="2" />
+      <File FileName="src/x_ite/Components/Shape/LineProperties.js" Line="117" Column="38" />
+      <File FileName="src/x_ite/Browser/Shape/X3DShapeContext.js" Line="156" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/PointSet.fs" Line="28" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/PointSet.vs" Line="21" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="155" Column="2" />
+      <File FileName="src/x_ite/Components/Rendering/X3DGeometryNode.js" Line="206" Column="18" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

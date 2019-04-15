@@ -740,6 +740,7 @@
     <None Include="linetype\15.png" />
     <None Include="linetype\16.png" />
     <None Include="x_ite\Browser\Shaders\PointSet.vs" />
+    <None Include="x_ite\Browser\Shape\LineStipples.xcf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
