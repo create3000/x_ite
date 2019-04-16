@@ -33,37 +33,6 @@ struct x3d_LightSourceParameters {
 
 //uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 
-struct x3d_MaterialParameters  
-{   
-	mediump float ambientIntensity;
-	mediump vec3  diffuseColor;
-	mediump vec3  specularColor;
-	mediump vec3  emissiveColor;
-	mediump float shininess;
-	mediump float transparency;
-};
-
-//uniform x3d_MaterialParameters x3d_FrontMaterial;
-//uniform x3d_MaterialParameters x3d_BackMaterial;
-    
-struct x3d_MultiTextureParameters  
-{   
-	mediump int mode;
-	mediump int alphaMode;
-	mediump int source;
-	mediump int function;
-};
-
-//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
-
-struct x3d_TextureCoordinateGeneratorParameters  
-{   
-	mediump int   mode;
-	mediump float parameter [6];
-};
-
-//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures;
-
 struct x3d_LinePropertiesParameters  
 {   
 	bool          applied;
@@ -82,6 +51,37 @@ struct x3d_FillPropertiesParameters
 };
 
 //uniform x3d_FillPropertiesParameters x3d_FillProperties;
+
+struct x3d_MaterialParameters  
+{   
+	mediump float ambientIntensity;
+	mediump vec3  diffuseColor;
+	mediump vec3  specularColor;
+	mediump vec3  emissiveColor;
+	mediump float shininess;
+	mediump float transparency;
+};
+
+//uniform x3d_MaterialParameters x3d_FrontMaterial;
+//uniform x3d_MaterialParameters x3d_BackMaterial;
+
+struct x3d_MultiTextureParameters  
+{   
+	mediump int mode;
+	mediump int alphaMode;
+	mediump int source;
+	mediump int function;
+};
+
+//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
+
+struct x3d_TextureCoordinateGeneratorParameters  
+{   
+	mediump int   mode;
+	mediump float parameter [6];
+};
+
+//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
 
 struct x3d_ParticleParameters  
 {   
