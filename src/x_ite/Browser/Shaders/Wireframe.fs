@@ -7,7 +7,7 @@
 precision mediump float;
 precision mediump int;
 
-uniform x3d_LineParameters x3d_LineProperties;
+uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform ivec4 x3d_Viewport;
 
 varying float fogDepth; // fog depth

@@ -1,6 +1,6 @@
 /* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/
 
-uniform x3d_FillParameters x3d_FillProperties;
+uniform x3d_FillPropertiesParameters x3d_FillProperties;
 
 vec4
 getHatchColor (vec4 color)

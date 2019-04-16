@@ -3,7 +3,8 @@
 precision mediump float;
 precision mediump int;
 
-uniform x3d_LineParameters x3d_LineProperties;
+uniform x3d_LinePropertiesParameters x3d_LineProperties;
+
 uniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false
 uniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false
 uniform x3d_MaterialParameters x3d_FrontMaterial;  

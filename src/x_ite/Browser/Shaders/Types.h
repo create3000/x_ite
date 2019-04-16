@@ -64,16 +64,16 @@ struct x3d_TextureCoordinateGeneratorParameters
 
 //uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures;
 
-struct x3d_LineParameters  
+struct x3d_LinePropertiesParameters  
 {   
 	bool          applied;
 	mediump float linewidthScaleFactor;
 	sampler2D     linetype;
 };
 
-//uniform x3d_LineParameters x3d_LineProperties;
+//uniform x3d_LinePropertiesParameters x3d_LineProperties;
 
-struct x3d_FillParameters  
+struct x3d_FillPropertiesParameters  
 {   
 	bool         filled;
 	bool         hatched;
@@ -81,7 +81,7 @@ struct x3d_FillParameters
 	sampler2D    hatchStyle;
 };
 
-//uniform x3d_FillParameters x3d_FillProperties;
+//uniform x3d_FillPropertiesParameters x3d_FillProperties;
 
 struct x3d_ParticleParameters  
 {   
