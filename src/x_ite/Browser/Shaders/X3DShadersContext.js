@@ -51,33 +51,55 @@ define ([
 	"x_ite/Browser/Core/Shading",
 	"x_ite/Components/Shaders/ComposedShader",
 	"x_ite/Components/Shaders/ShaderPart",
-	"text!x_ite/Browser/Shaders/PointSet.vs",
-	"text!x_ite/Browser/Shaders/PointSet.fs",
-	"text!x_ite/Browser/Shaders/Wireframe.vs",
-	"text!x_ite/Browser/Shaders/Wireframe.fs",
-	"text!x_ite/Browser/Shaders/Gouraud.vs",
-	"text!x_ite/Browser/Shaders/Gouraud.fs",
-	"text!x_ite/Browser/Shaders/Phong.vs",
-	"text!x_ite/Browser/Shaders/Phong.fs",
-	"text!x_ite/Browser/Shaders/Depth.vs",
-	"text!x_ite/Browser/Shaders/Depth.fs",
-	"text!x_ite/Browser/Shaders/Tests/SamplerTest.fs",
+	"text!x_ite/Browser/Shaders/WebGL1/PointSet.vs",
+	"text!x_ite/Browser/Shaders/WebGL1/PointSet.fs",
+	"text!x_ite/Browser/Shaders/WebGL1/Wireframe.vs",
+	"text!x_ite/Browser/Shaders/WebGL1/Wireframe.fs",
+	"text!x_ite/Browser/Shaders/WebGL1/Gouraud.vs",
+	"text!x_ite/Browser/Shaders/WebGL1/Gouraud.fs",
+	"text!x_ite/Browser/Shaders/WebGL1/Phong.vs",
+	"text!x_ite/Browser/Shaders/WebGL1/Phong.fs",
+	"text!x_ite/Browser/Shaders/WebGL1/Depth.vs",
+	"text!x_ite/Browser/Shaders/WebGL1/Depth.fs",
+	"text!x_ite/Browser/Shaders/WebGL2/PointSet.vs",
+	"text!x_ite/Browser/Shaders/WebGL2/PointSet.fs",
+	"text!x_ite/Browser/Shaders/WebGL2/Wireframe.vs",
+	"text!x_ite/Browser/Shaders/WebGL2/Wireframe.fs",
+	"text!x_ite/Browser/Shaders/WebGL2/Gouraud.vs",
+	"text!x_ite/Browser/Shaders/WebGL2/Gouraud.fs",
+	"text!x_ite/Browser/Shaders/WebGL2/Phong.vs",
+	"text!x_ite/Browser/Shaders/WebGL2/Phong.fs",
+	"text!x_ite/Browser/Shaders/WebGL2/Depth.vs",
+	"text!x_ite/Browser/Shaders/WebGL2/Depth.fs",
+	"text!x_ite/Browser/Shaders/WebGL1/Tests/SamplerTest.fs",
+	"text!x_ite/Browser/Shaders/WebGL2/Tests/SamplerTest.fs",
 	"x_ite/Browser/Shaders/ShaderTest",
 ],
 function (Shading,
           ComposedShader,
           ShaderPart,
-          pointSetVS,
-          pointSetFS,
-          wireframeVS,
-          wireframeFS,
-          gouraudVS,
-          gouraudFS,
-          phongVS,
-          phongFS,
-          depthVS,
-          depthFS,
-          samplerTest,
+          pointSetVS1,
+          pointSetFS1,
+          wireframeVS1,
+          wireframeFS1,
+          gouraudVS1,
+          gouraudFS1,
+          phongVS1,
+          phongFS1,
+          depthVS1,
+          depthFS1,
+          pointSetVS2,
+          pointSetFS2,
+          wireframeVS2,
+          wireframeFS2,
+          gouraudVS2,
+          gouraudFS2,
+          phongVS2,
+          phongFS2,
+          depthVS2,
+          depthFS2,
+          samplerTest1,
+          samplerTest2,
           ShaderTest)
 {
 "use strict";
@@ -92,7 +114,7 @@ function (Shading,
 		initialize: function ()
 		{
 			// GL_ARB_gpu_shader5
-			this .multiTexturing = ShaderTest .compile (this .getContext (), samplerTest, "FRAGMENT_SHADER");
+			this .multiTexturing = ShaderTest .compile (this .getContext (), this .selectShaderSource (samplerTest1, samplerTest2), "FRAGMENT_SHADER");
 
 			if (! this .multiTexturing)
 			{
@@ -151,7 +173,7 @@ function (Shading,
 			if (this .pointShader)
 				return this .pointShader;
 
-			this .pointShader = this .createShader ("PointShader", pointSetVS, pointSetFS, false);
+			this .pointShader = this .createShader ("PointShader", pointSetVS1, pointSetFS1, pointSetVS2, pointSetFS2, false);
 	
 			this .pointShader .getShadowShader = this .getPointShader .bind (this);
 
@@ -166,7 +188,7 @@ function (Shading,
 			if (this .lineShader)
 				return this .lineShader;
 
-			this .lineShader = this .createShader ("WireframeShader", wireframeVS, wireframeFS, false);
+			this .lineShader = this .createShader ("WireframeShader", wireframeVS1, wireframeFS1, wireframeVS2, wireframeFS2, false);
 
 			this .lineShader .getShadowShader = this .getLineShader .bind (this);
 
@@ -181,7 +203,7 @@ function (Shading,
 			if (this .gouraudShader)
 				return this .gouraudShader;
 
-			this .gouraudShader = this .createShader ("GouraudShader", gouraudVS, gouraudFS, false);
+			this .gouraudShader = this .createShader ("GouraudShader", gouraudVS1, gouraudFS1, gouraudVS2, gouraudFS2, false);
 
 			this .gouraudShader .getShadowShader = this .getShadowShader .bind (this);
 
@@ -196,7 +218,7 @@ function (Shading,
 			if (this .phongShader)
 				return this .phongShader;
 
-			this .phongShader = this .createShader ("PhongShader", phongVS, phongFS, false);
+			this .phongShader = this .createShader ("PhongShader", phongVS1, phongFS1, phongVS2, phongFS2, false);
 
 			this .phongShader .getShadowShader = this .getShadowShader .bind (this);
 	
@@ -213,7 +235,7 @@ function (Shading,
 			if (this .shadowShader)
 				return this .shadowShader;
 
-			this .shadowShader = this .createShader ("ShadowShader", phongVS, phongFS, true);
+			this .shadowShader = this .createShader ("ShadowShader", phongVS1, phongFS1, phongVS2, phongFS2, true);
 
 			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
 
@@ -228,7 +250,7 @@ function (Shading,
 			if (this .depthShader)
 				return this .depthShader;
 
-			this .depthShader = this .createShader ("DepthShader", depthVS, depthFS, false);
+			this .depthShader = this .createShader ("DepthShader", depthVS1, depthFS1, depthVS2, depthFS2, false);
 
 			return this .depthShader;
 		},
@@ -253,26 +275,22 @@ function (Shading,
 			for (var shader of this .getShaders ())
 				shader .setShading (type);
 		},
-		createShader: function (name, vs, fs, shadow)
+		createShader: function (name, vs1, fs1, vs2, fs2, shadow)
 		{
 			if (this .getDebug ())
 				console .log ("Initializing " + name);
 
-			if (shadow)
-			{
-				vs = "\n#define X3D_SHADOWS\n" + vs;
-				fs = "\n#define X3D_SHADOWS\n" + fs;
-			}
-
 			var vertexShader = new ShaderPart (this .getPrivateScene ());
 			vertexShader .setName (name + "Vertex");
-			vertexShader .url_ .push ("data:text/plain;charset=utf-8," + vs);
+			vertexShader .url_ .push ("data:text/plain;charset=utf-8," + this .selectShaderSource (vs1, vs2));
+			vertexShader .setShadow (shadow);
 			vertexShader .setup ();
 
 			var fragmentShader = new ShaderPart (this .getPrivateScene ());
 			fragmentShader .setName (name + "Fragment");
-			fragmentShader .type_ = "FRAGMENT";
-			fragmentShader .url_ .push ("data:text/plain;charset=utf-8," + fs);
+			fragmentShader .type_  = "FRAGMENT";
+			fragmentShader .url_ .push ("data:text/plain;charset=utf-8," + this .selectShaderSource (fs1, fs2));
+			fragmentShader .setShadow (shadow);
 			fragmentShader .setup ();
 	
 			var shader = new ComposedShader (this .getPrivateScene ());
@@ -287,6 +305,15 @@ function (Shading,
 			this .addShader (shader);
 
 			return shader;
+		},
+		selectShaderSource: function (source1, source2)
+		{
+			var gl = this .getContext ();
+
+			if (gl .getVersion () <= 1)
+				return source1;
+
+			return source2;
 		},
 		set_phong_shader_valid__: function (valid)
 		{
@@ -304,7 +331,7 @@ function (Shading,
 
 			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
 
-			this .shadowShader = this .getGouraudShader ();
+			//this .shadowShader = this .getGouraudShader ();
 		},
 	};
 

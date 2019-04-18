@@ -194,6 +194,7 @@ function ($,
 			try
 			{
 				var
+					gl     = this .getBrowser () .getContext (),
 				   image  = this .image [0],
 					width  = image .width,
 					height = image .height;
@@ -204,8 +205,24 @@ function ($,
 
 				// Scale image if needed and flip vertically.
 
-				if (! Algorithm .isPowerOfTwo (width) || ! Algorithm .isPowerOfTwo (height))
+				if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
 				{
+					// Flip Y
+
+					canvas .width  = width;
+					canvas .height = height;
+
+					cx .clearRect (0, 0, width, height);
+					cx .save ();
+					cx .translate (0, height);
+					cx .scale (1, -1);
+					cx .drawImage (image, 0, 0);
+					cx .restore ();
+				}
+				else
+				{
+					// Flip Y and scale image to next power of two.
+
 					width  = Algorithm .nextPowerOfTwo (width);
 					height = Algorithm .nextPowerOfTwo (height);
 
@@ -217,18 +234,6 @@ function ($,
 					cx .translate (0, height);
 					cx .scale (1, -1);
 					cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
-					cx .restore ();
-				}
-				else
-				{
-					canvas .width  = width;
-					canvas .height = height;
-
-					cx .clearRect (0, 0, width, height);
-					cx .save ();
-					cx .translate (0, height);
-					cx .scale (1, -1);
-					cx .drawImage (image, 0, 0);
 					cx .restore ();
 				}
 

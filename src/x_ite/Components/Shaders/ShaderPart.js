@@ -154,6 +154,14 @@ function (Fields,
 		{
 			return this .url_;
 		},
+		setShadow: function (value)
+		{
+			this .shadow = value;
+		},
+		getShadow: function ()
+		{
+			return this .shadow;
+		},
 		requestAsyncLoad: function ()
 		{
 			if (this .checkLoadState () == X3DConstants .COMPLETE_STATE || this .checkLoadState () == X3DConstants .IN_PROGRESS_STATE)
@@ -179,7 +187,7 @@ function (Fields,
 				{
 					var gl = this .getBrowser () .getContext ();
 
-					gl .shaderSource (this .shader, Shader .getShaderSource (this .getBrowser (), data));
+					gl .shaderSource (this .shader, Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow));
 					gl .compileShader (this .shader);
 	
 					this .valid = gl .getShaderParameter (this .shader, gl .COMPILE_STATUS);

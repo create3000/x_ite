@@ -391,9 +391,11 @@ function (Fields,
 		},
 		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
 		{
-			var browser = this .getBrowser ();
+			var
+				browser = this .getBrowser (),
+				gl      = browser .getContext ();
 
-			logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && Boolean (browser .getExtension ("EXT_frag_depth"));
+			logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || Boolean (browser .getExtension ("EXT_frag_depth")));
 
 			if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
 				return;

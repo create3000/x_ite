@@ -48,13 +48,20 @@
 
 
 define ([
-	"text!x_ite/Browser/Shaders/Include/ClipPlanes.h",
-	"text!x_ite/Browser/Shaders/Include/Fog.h",
-	"text!x_ite/Browser/Shaders/Include/Hatch.h",
-	"text!x_ite/Browser/Shaders/Include/Pack.h",
-	"text!x_ite/Browser/Shaders/Include/Perlin.h",
-	"text!x_ite/Browser/Shaders/Include/Shadow.h",
-	"text!x_ite/Browser/Shaders/Include/Texture.h",
+	"text!x_ite/Browser/Shaders/WebGL1/Include/ClipPlanes.h",
+	"text!x_ite/Browser/Shaders/WebGL1/Include/Fog.h",
+	"text!x_ite/Browser/Shaders/WebGL1/Include/Hatch.h",
+	"text!x_ite/Browser/Shaders/WebGL1/Include/Pack.h",
+	"text!x_ite/Browser/Shaders/WebGL1/Include/Perlin.h",
+	"text!x_ite/Browser/Shaders/WebGL1/Include/Shadow.h",
+	"text!x_ite/Browser/Shaders/WebGL1/Include/Texture.h",
+	"text!x_ite/Browser/Shaders/WebGL2/Include/ClipPlanes.h",
+	"text!x_ite/Browser/Shaders/WebGL2/Include/Fog.h",
+	"text!x_ite/Browser/Shaders/WebGL2/Include/Hatch.h",
+	"text!x_ite/Browser/Shaders/WebGL2/Include/Pack.h",
+	"text!x_ite/Browser/Shaders/WebGL2/Include/Perlin.h",
+	"text!x_ite/Browser/Shaders/WebGL2/Include/Shadow.h",
+	"text!x_ite/Browser/Shaders/WebGL2/Include/Texture.h",
 	"text!x_ite/Browser/Shaders/Types.h",
 	"x_ite/Browser/Texturing/MultiTextureModeType",
 	"x_ite/Browser/Texturing/MultiTextureSourceType",
@@ -62,13 +69,20 @@ define ([
 	"x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType",
 	"x_ite/DEBUG",
 ],
-function (ClipPlanes,
-          Fog,
-          Hatch,
-          Pack,
-          Perlin,
-          Shadow,
-          Texture,
+function (ClipPlanes1,
+          Fog1,
+          Hatch1,
+          Pack1,
+          Perlin1,
+          Shadow1,
+          Texture1,
+          ClipPlanes2,
+          Fog2,
+          Hatch2,
+          Pack2,
+          Perlin2,
+          Shadow2,
+          Texture2,
           Types,
           MultiTextureModeType,
           MultiTextureSourceType,
@@ -78,27 +92,17 @@ function (ClipPlanes,
 {
 "use strict";
 
-	var includes = {
-		ClipPlanes: ClipPlanes,
-		Fog: Fog,
-		Hatch: Hatch,
-		Pack: Pack,
-		Perlin: Perlin,
-		Shadow: Shadow,
-		Texture: Texture,
-	};
-
 	var include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+).h"\s*$/;
 
 	var Shader =
 	{
-		getSource: function (source)
+		getSource: function (includes, source)
 		{
 			var
 				lines = source .split ("\n"),
 				match = null;
 
-			source = "#line 1\n";
+			source = "";
 
 			for (var i = 0, length = lines .length; i < length; ++ i)
 			{
@@ -106,7 +110,8 @@ function (ClipPlanes,
 
 				if (match = line .match (include))
 				{
-					source += this .getSource (includes [match [1]]);
+					source += "#line 1\n";
+					source += this .getSource (includes, includes [match [1]]);
 					source += "\n";
 					source += "#line " + (i + 1) + "\n";
 				}
@@ -119,9 +124,36 @@ function (ClipPlanes,
 
 			return source;
 		},
-		getShaderSource: function (browser, source)
+		getShaderSource: function (browser, name, source, shadow)
 		{
-			var source = this .getSource (source);
+			var gl = browser .getContext ();
+
+			if (gl .getVersion () <= 1)
+			{
+				var includes = {
+					ClipPlanes: ClipPlanes1,
+					Fog: Fog1,
+					Hatch: Hatch1,
+					Pack: Pack1,
+					Perlin: Perlin1,
+					Shadow: Shadow1,
+					Texture: Texture1,
+				};
+			}
+			else
+			{
+				var includes = {
+					ClipPlanes: ClipPlanes2,
+					Fog: Fog2,
+					Hatch: Hatch2,
+					Pack: Pack2,
+					Perlin: Perlin2,
+					Shadow: Shadow2,
+					Texture: Texture2,
+				};
+			}
+
+			source = this .getSource (includes, source);
 
 			var
 				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
@@ -141,7 +173,7 @@ function (ClipPlanes,
 				ANY          = "[\\s\\S]*";
 
 			var
-				GLSL  = new RegExp ("^((?:" + COMMENTS + "|" + PREPROCESSOR + ")*(?:" + VERSION + ")?(?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$"),
+				GLSL  = new RegExp ("^((?:" + COMMENTS + ")*(?:" + VERSION + ")?)((?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$"),
 				match = source .match (GLSL);
 
 			if (! match)
@@ -154,11 +186,14 @@ function (ClipPlanes,
 			if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
 				constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
 
-			if (browser .getExtension ("WEBGL_depth_texture"))
+			if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
 				constants += "#define X3D_DEPTH_TEXTURE\n";
 
 			if (browser .getMultiTexturing ())
 				constants += "#define X3D_MULTI_TEXTURING\n";
+
+			if (shadow)
+				constants += "#define X3D_SHADOWS\n";
 
 			var definitions = "";
 
@@ -254,7 +289,7 @@ function (ClipPlanes,
 			types = types .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, pf + " $1");
 			types = types .replace (/mediump\s+(int)/g, pi + " $1");
 
-			return constants + match [1] + definitions + types + match [2];
+			return match [1] + constants + match [2] + definitions + types + match [3];
 		},
 	};
 

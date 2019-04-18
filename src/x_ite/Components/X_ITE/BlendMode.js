@@ -126,15 +126,15 @@ function (Fields,
 			this .equationTypes .set ("FUNC_ADD",              gl .FUNC_ADD);
 			this .equationTypes .set ("FUNC_SUBTRACT",         gl .FUNC_SUBTRACT);
 			this .equationTypes .set ("FUNC_REVERSE_SUBTRACT", gl .FUNC_REVERSE_SUBTRACT);
-			this .equationTypes .set ("MIN",                   gl .MIN || ext .MIN_EXT);
-			this .equationTypes .set ("MAX",                   gl .MAX || ext .MAX_EXT);
+			this .equationTypes .set ("MIN",                   gl .MIN || (ext && ext .MIN_EXT));
+			this .equationTypes .set ("MAX",                   gl .MAX || (ext && ext .MAX_EXT));
 
-			this .sourceColorFactor_      .addInterest ("set_sourceColorFactor__",       this);
-			this .sourceAlphaFactor_      .addInterest ("set_sourceAlphaFactor__",       this);
-			this .destinationColorFactor_ .addInterest ("set_destinationColorFactor__",  this);
-			this .destinationAlphaFactor_ .addInterest ("set_destinationAlphaFactor__",  this);
-			this .colorEquation_          .addInterest ("set_colorEquation__",           this);
-			this .alphaEquation_          .addInterest ("set_alphaEquation__",           this);
+			this .sourceColorFactor_      .addInterest ("set_sourceColorFactor__",      this);
+			this .sourceAlphaFactor_      .addInterest ("set_sourceAlphaFactor__",      this);
+			this .destinationColorFactor_ .addInterest ("set_destinationColorFactor__", this);
+			this .destinationAlphaFactor_ .addInterest ("set_destinationAlphaFactor__", this);
+			this .colorEquation_          .addInterest ("set_colorEquation__",          this);
+			this .alphaEquation_          .addInterest ("set_alphaEquation__",          this);
 
 			this .set_sourceColorFactor__ ();
 			this .set_sourceAlphaFactor__ ();

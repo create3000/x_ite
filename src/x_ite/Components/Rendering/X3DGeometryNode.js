@@ -930,7 +930,7 @@ function (Fields,
 	
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
-	
+
 					// Setup vertex attributes.
 	
 					for (var i = 0, length = attribNodes .length; i < length; ++ i)

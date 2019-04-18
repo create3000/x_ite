@@ -59,6 +59,7 @@ define ([
 	"x_ite/Execution/Scene",
 	"x_ite/Parser/Parser",
 	"standard/Utility/DataStorage",
+	"x_ite/DEBUG",
 ],
 function ($,
           Fields,
@@ -70,7 +71,8 @@ function ($,
           ContextMenu,
           Scene,
           Parser,
-          DataStorage)
+          DataStorage,
+          DEBUG)
 {
 "use strict";
 	
@@ -132,10 +134,28 @@ function ($,
 		"WEBGL_texture_from_depth_video",
 	];
 
-	function getContext (canvas, preserveDrawingBuffer)
+	function getContext (canvas, version, preserveDrawingBuffer)
 	{
-		var gl = canvas .getContext ("webgl", { preserveDrawingBuffer: preserveDrawingBuffer }) ||
-		         canvas .getContext ("experimental-webgl", { preserveDrawingBuffer: preserveDrawingBuffer });
+		var
+			options = { preserveDrawingBuffer: preserveDrawingBuffer },
+			gl      = null;
+
+		if (version >= 2 && ! gl)
+		{
+			gl = canvas .getContext ("webgl2", options);
+	
+			if (gl)
+				gl .getVersion = function () { return 2; };
+		}
+
+		if (version >= 1 && ! gl)
+		{
+			gl = canvas .getContext ("webgl",              options) ||
+			     canvas .getContext ("experimental-webgl", options);
+
+			if (gl)
+				gl .getVersion = function () { return 1; };
+		}
 
 		if (! gl)
 			throw new Error ("Couldn't create WebGL context.");
@@ -176,7 +196,7 @@ function ($,
 		this .splashScreen = splashScreen;
 		this .surface      = surface;
 		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-		this .context      = getContext (this .canvas [0], element .attr ("preserveDrawingBuffer") === "true");
+		this .context      = getContext (this .canvas [0], DEBUG ? 2 : 1, element .attr ("preserveDrawingBuffer") === "true");
 		this .extensions   = { };
 
 		var gl = this .getContext ();
