@@ -62,43 +62,6 @@ function (Fields,
 {
 "use strict";
 
-	/*
-	 *  Static members
-	 */
-
-	var boundaryModes = 
-	{
-		CLAMP:             "CLAMP_TO_EDGE", // "CLAMP"
-		CLAMP_TO_EDGE:     "CLAMP_TO_EDGE", 
-		CLAMP_TO_BOUNDARY: "CLAMP_TO_EDGE", // "CLAMP_TO_BORDER"
-		MIRRORED_REPEAT:   "MIRRORED_REPEAT",
-		REPEAT:            "REPEAT",
-	};
-
-	var minificationFilters =
-	{
-		AVG_PIXEL_AVG_MIPMAP:         "LINEAR_MIPMAP_LINEAR",
-		AVG_PIXEL:                    "LINEAR",
-		AVG_PIXEL_NEAREST_MIPMAP:     "LINEAR_MIPMAP_NEAREST",
-		NEAREST_PIXEL_AVG_MIPMAP:     "NEAREST_MIPMAP_LINEAR",
-		NEAREST_PIXEL_NEAREST_MIPMAP: "NEAREST_MIPMAP_NEAREST",
-		NEAREST_PIXEL:                "NEAREST",
-		NICEST:                       "LINEAR_MIPMAP_LINEAR",
-		FASTEST:                      "NEAREST",
-	};
-
-	var magnificationFilters =
-	{
-		AVG_PIXEL:     "LINEAR",
-		NEAREST_PIXEL: "NEAREST",
-		NICEST:        "LINEAR",
-		FASTEST:       "NEAREST",
-	};
-
-	/*
-	 *  TextureProperties
-	 */
-
 	function TextureProperties (executionContext)
 	{
 		X3DNode .call (this, executionContext);
@@ -135,15 +98,26 @@ function (Fields,
 		{
 			return "textureProperties";
 		},
-		getBoundaryMode: function (string)
+		getBoundaryMode: (function ()
 		{
-			var boundaryMode = boundaryModes [string];
-			
-			if (boundaryMode !== undefined)
-				return boundaryMode;
+			var boundaryModes = new Map ([
+				["CLAMP",             "CLAMP_TO_EDGE"], // "CLAMP"
+				["CLAMP_TO_EDGE",     "CLAMP_TO_EDGE"], 
+				["CLAMP_TO_BOUNDARY", "CLAMP_TO_EDGE"], // "CLAMP_TO_BORDER"
+				["MIRRORED_REPEAT",   "MIRRORED_REPEAT"],
+				["REPEAT",            "REPEAT"],
+			]);
 
-			return "REPEAT";
-		},
+			return function (string)
+			{
+				var boundaryMode = boundaryModes .get (string);
+				
+				if (boundaryMode !== undefined)
+					return boundaryMode;
+	
+				return "REPEAT";
+			};
+		})(),
 		getBoundaryModeS: function ()
 		{
 			return this .getBoundaryMode (this .boundaryModeS_ .getValue ());
@@ -156,30 +130,54 @@ function (Fields,
 		{
 			return this .getBoundaryMode (this .boundaryModeR_ .getValue ());
 		},
-		getMinificationFilter: function ()
+		getMinificationFilter: (function ()
 		{
-			if (this .generateMipMaps_ .getValue ())
+			var minificationFilters = new Map ([
+				["AVG_PIXEL_AVG_MIPMAP",         "LINEAR_MIPMAP_LINEAR"],
+				["AVG_PIXEL",                    "LINEAR"],
+				["AVG_PIXEL_NEAREST_MIPMAP",     "LINEAR_MIPMAP_NEAREST"],
+				["NEAREST_PIXEL_AVG_MIPMAP",     "NEAREST_MIPMAP_LINEAR"],
+				["NEAREST_PIXEL_NEAREST_MIPMAP", "NEAREST_MIPMAP_NEAREST"],
+				["NEAREST_PIXEL",                "NEAREST"],
+				["NICEST",                       "LINEAR_MIPMAP_LINEAR"],
+				["FASTEST",                      "NEAREST"],
+			]);
+
+			return function ()
 			{
-				var minificationFilter = minificationFilters [this .minificationFilter_ .getValue ()];
-			
-				if (minificationFilter !== undefined)
-					return minificationFilter;
-			
-				return this .getBrowser () .getDefaultTextureProperties () .getMinificationFilter ();
-			}
+				if (this .generateMipMaps_ .getValue ())
+				{
+					var minificationFilter = minificationFilters .get (this .minificationFilter_ .getValue ());
+				
+					if (minificationFilter !== undefined)
+						return minificationFilter;
 
-			return "LINEAR";
-		},
-		getMagnificationFilter: function ()
+					return this .getBrowser () .getDefaultTextureProperties () .getMinificationFilter ();
+				}
+	
+				return "LINEAR";
+			};
+		})(),
+		getMagnificationFilter: (function ()
 		{
-			var magnificationFilter = magnificationFilters [this .magnificationFilter_ .getValue ()];
-		
-			if (magnificationFilter !== undefined)
-				return magnificationFilter;
+			var magnificationFilters = new Map ([
+				["AVG_PIXEL",     "LINEAR"],
+				["NEAREST_PIXEL", "NEAREST"],
+				["NICEST",        "LINEAR"],
+				["FASTEST",       "NEAREST"],
+			]);
 
-			// DEFAULT
-			return this .getBrowser () .getDefaultTextureProperties () .getMagnificationFilter ();
-		},
+			return function ()
+			{
+				var magnificationFilter = magnificationFilters .get (this .magnificationFilter_ .getValue ());
+			
+				if (magnificationFilter !== undefined)
+					return magnificationFilter;
+	
+				// DEFAULT
+				return this .getBrowser () .getDefaultTextureProperties () .getMagnificationFilter ();
+			};
+		})(),
 	});
 
 	return TextureProperties;
