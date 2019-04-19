@@ -2,14 +2,16 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
   <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="package.json" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="191" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="118" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/ShaderTest.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="1" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/WebGL1/Include/Texture.h" Line="380" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/WebGL2/Include/Texture.h" Line="25" Column="2" />
+      <File FileName="package.json" Line="15" Column="4" />
+      <File FileName="src/x_ite/Parser/XMLParser.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="199" Column="1" />
+      <File FileName="src/x_ite/Browser/Rendering/X3DRenderingContext.js" Line="107" Column="30" />
+      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="153" Column="1" />
+      <File FileName="src/x_ite/Components/Lighting/DirectionalLight.js" Line="140" Column="46" />
+      <File FileName="src/x_ite/Components/Texturing/ImageTexture.js" Line="213" Column="30" />
+      <File FileName="src/x_ite/Components/Texturing/PixelTexture.js" Line="233" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Gouraud.fs" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Include/Texture.h" Line="137" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
