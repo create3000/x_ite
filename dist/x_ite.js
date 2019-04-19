@@ -1,4 +1,4 @@
-/* X_ITE v4.5.1a-759 */
+/* X_ITE v4.5.1a-760 */
 
 (function () {
 
@@ -114777,6 +114777,21 @@ function ($,
 					data = new Uint8Array (width * height * 4);
 
 					this .convert (data, comp, array .getValue (), array .length);
+				}
+				else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this .textureProperties_ .getValue ())
+				{
+					data = new Uint8Array (width * height * 4);
+
+					this .convert (data, comp, array .getValue (), array .length);
+
+					var
+						inputWidth  = width,
+						inputHeight = height;
+
+					width  = Algorithm .nextPowerOfTwo (inputWidth)  * 4;
+					height = Algorithm .nextPowerOfTwo (inputHeight) * 4;
+
+					data = this .resize (data, inputWidth, inputHeight, width, height);
 				}
 				else
 				{
