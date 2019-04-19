@@ -24895,7 +24895,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.0a";
+	return "4.5.1a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -39730,6 +39730,7 @@ function ($,
 		"WEBGL_compressed_texture_etc",
 		"WEBGL_compressed_texture_etc1",
 		"WEBGL_compressed_texture_pvrtc",
+		"WEBGL_compressed_texture_s3tc",
 		"WEBGL_compressed_texture_s3tc_srgb",
 
 		"EXT_float_blend",
@@ -45998,7 +45999,7 @@ function (ClipPlanes1,
 			source = this .getSource (includes, source);
 
 			var
-				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
+				COMMENTS     = "\\s+|/\\*[^]*?\\*/|//.*?\\n",
 				LINE         = "#line\\s+.*?\\n",
 				IF           = "#if\\s+.*?\\n",
 				ELIF         = "#elif\\s+.*?\\n",
@@ -46012,10 +46013,10 @@ function (ClipPlanes1,
 				PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
 				VERSION      = "#version\\s+.*?\\n",
 				EXTENSION    = "#extension\\s+.*?\\n",
-				ANY          = "[\\s\\S]*";
+				ANY          = "[^]*";
 
 			var
-				GLSL  = new RegExp ("^((?:" + COMMENTS + ")*(?:" + VERSION + ")?)((?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$"),
+				GLSL  = new RegExp ("^((?:" + VERSION + ")?)((?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$"),
 				match = source .match (GLSL);
 
 			if (! match)
@@ -60630,13 +60631,21 @@ function (Fields,
 				this .flipY  = flipY;
 				this .data   = data;
 
-				var gl = this .getBrowser () .getContext ();
-	
+				var
+					browser        = this .getBrowser (),
+					gl             = browser .getContext (),
+					internalFormat = this .texturePropertiesNode .getTextureCompression (),
+					borderWidth    = this .texturePropertiesNode .getBorderWidth ();
+
 				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
 				gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-				gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
-	
+
+				if (internalFormat === gl .RGBA)
+					gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, borderWidth, gl .RGBA, gl .UNSIGNED_BYTE, data);
+				else
+					gl .compressedTexImage2D (gl .TEXTURE_2D, 0, internalFormat, width, height, borderWidth, data);
+
 				this .setTransparent (transparent);
 				this .updateTextureProperties ();
 				this .addNodeEvent ();
@@ -60682,36 +60691,6 @@ function (Fields,
 			                                                          this .repeatT_ .getValue (),
 			                                                          false);
 		},
-		resize: function (input, inputWidth, inputHeight, outputWidth, outputHeight)
-		{
-		   // Nearest neighbor scaling algorithm for very small images.
-
-			var
-				output = new Uint8Array (outputWidth * outputHeight * 4),
-				scaleX = outputWidth / inputWidth,
-				scaleY = outputHeight / inputHeight;
-
-			for (var y = 0; y < outputHeight; ++ y)
-			{
-				var
-					inputW  = Math .floor (y / scaleY) * inputWidth,
-					outputW = y * outputWidth;
-
-				for (var x = 0; x < outputWidth; ++ x)
-				{
-					var
-						index       = (inputW + Math.floor (x / scaleX)) * 4,
-						indexScaled = (outputW + x) * 4;
-
-					output [indexScaled]     = input [index];
-					output [indexScaled + 1] = input [index + 1];
-					output [indexScaled + 2] = input [index + 2];
-					output [indexScaled + 3] = input [index + 3];
-				}
-			}
-
-			return output;
-		},
 		setShaderUniformsToChannel: function (gl, shaderObject, i)
 		{
 			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture2DUnits () [i]);
@@ -60722,8 +60701,6 @@ function (Fields,
 
 	return X3DTexture2DNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -60967,27 +60944,20 @@ function ($,
 				// Determine image alpha.
 
 				var
-					data   = cx .getImageData (0, 0, width, height) .data,
-					opaque = true;
-
-				canvas .width  = 1;
-				canvas .height = 1;
+					data        = cx .getImageData (0, 0, width, height) .data,
+					transparent = false;
 
 				for (var i = 3; i < data .length; i += 4)
 				{
 					if (data [i] !== 255)
 					{
-						opaque = false;
+						transparent = true;
 						break;
 					}
 				}
 
-				setTimeout (function ()
-				{
-					this .setTexture (width, height, ! opaque, new Uint8Array (data), false);
-					this .setLoadState (X3DConstants .COMPLETE_STATE);
-				}
-				.bind (this), 16);
+				this .setTexture (width, height, transparent, new Uint8Array (data), false);
+				this .setLoadState (X3DConstants .COMPLETE_STATE);
 			}
 			catch (error)
 			{
@@ -61059,51 +61029,16 @@ define ('x_ite/Components/Texturing/TextureProperties',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
-          X3DConstants)
+          X3DConstants, 
+          Algorithm)
 {
 "use strict";
-
-	/*
-	 *  Static members
-	 */
-
-	var boundaryModes = 
-	{
-		CLAMP:             "CLAMP_TO_EDGE", // "CLAMP"
-		CLAMP_TO_EDGE:     "CLAMP_TO_EDGE", 
-		CLAMP_TO_BOUNDARY: "CLAMP_TO_EDGE", // "CLAMP_TO_BORDER"
-		MIRRORED_REPEAT:   "MIRRORED_REPEAT",
-		REPEAT:            "REPEAT",
-	};
-
-	var minificationFilters =
-	{
-		AVG_PIXEL_AVG_MIPMAP:         "LINEAR_MIPMAP_LINEAR",
-		AVG_PIXEL:                    "LINEAR",
-		AVG_PIXEL_NEAREST_MIPMAP:     "LINEAR_MIPMAP_NEAREST",
-		NEAREST_PIXEL_AVG_MIPMAP:     "NEAREST_MIPMAP_LINEAR",
-		NEAREST_PIXEL_NEAREST_MIPMAP: "NEAREST_MIPMAP_NEAREST",
-		NEAREST_PIXEL:                "NEAREST",
-		NICEST:                       "LINEAR_MIPMAP_LINEAR",
-		FASTEST:                      "NEAREST",
-	};
-
-	var magnificationFilters =
-	{
-		AVG_PIXEL:     "LINEAR",
-		NEAREST_PIXEL: "NEAREST",
-		NICEST:        "LINEAR",
-		FASTEST:       "NEAREST",
-	};
-
-	/*
-	 *  TextureProperties
-	 */
 
 	function TextureProperties (executionContext)
 	{
@@ -61141,15 +61076,30 @@ function (Fields,
 		{
 			return "textureProperties";
 		},
-		getBoundaryMode: function (string)
+		getBorderWidth: function ()
 		{
-			var boundaryMode = boundaryModes [string];
-			
-			if (boundaryMode !== undefined)
-				return boundaryMode;
-
-			return "REPEAT";
+			return Algorithm .clamp (this .borderWidth_ .getValue (), 0, 1);
 		},
+		getBoundaryMode: (function ()
+		{
+			var boundaryModes = new Map ([
+				["CLAMP",             "CLAMP_TO_EDGE"], // "CLAMP"
+				["CLAMP_TO_EDGE",     "CLAMP_TO_EDGE"], 
+				["CLAMP_TO_BOUNDARY", "CLAMP_TO_EDGE"], // "CLAMP_TO_BORDER"
+				["MIRRORED_REPEAT",   "MIRRORED_REPEAT"],
+				["REPEAT",            "REPEAT"],
+			]);
+
+			return function (string)
+			{
+				var boundaryMode = boundaryModes .get (string);
+
+				if (boundaryMode !== undefined)
+					return boundaryMode;
+	
+				return "REPEAT";
+			};
+		})(),
 		getBoundaryModeS: function ()
 		{
 			return this .getBoundaryMode (this .boundaryModeS_ .getValue ());
@@ -61162,30 +61112,80 @@ function (Fields,
 		{
 			return this .getBoundaryMode (this .boundaryModeR_ .getValue ());
 		},
-		getMinificationFilter: function ()
+		getMinificationFilter: (function ()
 		{
-			if (this .generateMipMaps_ .getValue ())
+			var minificationFilters = new Map ([
+				["AVG_PIXEL_AVG_MIPMAP",         "LINEAR_MIPMAP_LINEAR"],
+				["AVG_PIXEL",                    "LINEAR"],
+				["AVG_PIXEL_NEAREST_MIPMAP",     "LINEAR_MIPMAP_NEAREST"],
+				["NEAREST_PIXEL_AVG_MIPMAP",     "NEAREST_MIPMAP_LINEAR"],
+				["NEAREST_PIXEL_NEAREST_MIPMAP", "NEAREST_MIPMAP_NEAREST"],
+				["NEAREST_PIXEL",                "NEAREST"],
+				["NICEST",                       "LINEAR_MIPMAP_LINEAR"],
+				["FASTEST",                      "NEAREST"],
+			]);
+
+			return function ()
 			{
-				var minificationFilter = minificationFilters [this .minificationFilter_ .getValue ()];
-			
-				if (minificationFilter !== undefined)
-					return minificationFilter;
-			
-				return this .getBrowser () .getDefaultTextureProperties () .getMinificationFilter ();
-			}
+				if (this .generateMipMaps_ .getValue ())
+				{
+					var minificationFilter = minificationFilters .get (this .minificationFilter_ .getValue ());
+				
+					if (minificationFilter !== undefined)
+						return minificationFilter;
 
-			return "LINEAR";
-		},
-		getMagnificationFilter: function ()
+					return this .getBrowser () .getDefaultTextureProperties () .getMinificationFilter ();
+				}
+	
+				return "LINEAR";
+			};
+		})(),
+		getMagnificationFilter: (function ()
 		{
-			var magnificationFilter = magnificationFilters [this .magnificationFilter_ .getValue ()];
-		
-			if (magnificationFilter !== undefined)
-				return magnificationFilter;
+			var magnificationFilters = new Map ([
+				["AVG_PIXEL",     "LINEAR"],
+				["NEAREST_PIXEL", "NEAREST"],
+				["NICEST",        "LINEAR"],
+				["FASTEST",       "NEAREST"],
+			]);
 
-			// DEFAULT
-			return this .getBrowser () .getDefaultTextureProperties () .getMagnificationFilter ();
-		},
+			return function ()
+			{
+				var magnificationFilter = magnificationFilters .get (this .magnificationFilter_ .getValue ());
+			
+				if (magnificationFilter !== undefined)
+					return magnificationFilter;
+	
+				// DEFAULT
+				return this .getBrowser () .getDefaultTextureProperties () .getMagnificationFilter ();
+			};
+		})(),
+		getTextureCompression: (function ()
+		{
+			var textureCompressions = new Map ([
+				["DEFAULT", "RGBA"],
+				["NICEST",  "RGBA"],
+				["FASTEST", "RGBA"],
+				["LOW",     "RGBA"],
+				["MEDIUM",  "RGBA"],
+				["HIGH",    "RGBA"],
+			]);
+
+			return function ()
+			{
+				var
+					browser            = this .getBrowser (),
+					gl                 = browser .getContext (),
+					compressedTexture  = browser .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
+					textureCompression = compressedTexture [textureCompressions .get (this .textureCompression_ .getValue ())];
+
+				if (textureCompression !== undefined)
+					return textureCompression;
+
+				// DEFAULT
+				return gl .RGBA;
+			};
+		})(),
 	});
 
 	return TextureProperties;
@@ -114714,7 +114714,7 @@ function ($,
 					{
 						var pixel = array [i];
 
-						data [index] =
+						data [index]     =
 						data [index + 1] =
 						data [index + 2] = pixel & 255;
 						data [index + 3] = 255;
@@ -114728,7 +114728,7 @@ function ($,
 					{
 						var pixel = array [i];
 
-						data [index] =
+						data [index]     =
 						data [index + 1] =
 						data [index + 2] = (pixel >>> 8) & 255;
 						data [index + 3] = pixel & 255;
@@ -114776,25 +114776,10 @@ function ($,
 				array       = this .image_ .array,
 				transparent = ! (comp % 2),
 				data        = null;
-		
+
 			if (width > 0 && height > 0 && comp > 0 && comp < 5)
 			{
-				if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this .textureProperties_ .getValue ())
-				{
-					data = new Uint8Array (width * height * 4);
-
-					this .convert (data, comp, array .getValue (), array .length);
-
-					var
-						inputWidth  = width,
-						inputHeight = height;
-
-					width  = Algorithm .nextPowerOfTwo (inputWidth)  * 4;
-					height = Algorithm .nextPowerOfTwo (inputHeight) * 4;
-
-					data = this .resize (data, inputWidth, inputHeight, width, height);
-				}
-				else if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
+				if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
 				{
 					data = new Uint8Array (width * height * 4);
 
