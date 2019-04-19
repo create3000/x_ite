@@ -252,12 +252,8 @@ function ($,
 					}
 				}
 
-				setTimeout (function ()
-				{
-					this .setTexture (width, height, transparent, new Uint8Array (data), false);
-					this .setLoadState (X3DConstants .COMPLETE_STATE);
-				}
-				.bind (this), 16);
+				this .setTexture (width, height, transparent, new Uint8Array (data), false);
+				this .setLoadState (X3DConstants .COMPLETE_STATE);
 			}
 			catch (error)
 			{
