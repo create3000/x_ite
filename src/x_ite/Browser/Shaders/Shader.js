@@ -156,7 +156,7 @@ function (ClipPlanes1,
 			source = this .getSource (includes, source);
 
 			var
-				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
+				COMMENTS     = "\\s+|/\\*[^]*?\\*/|//.*?\\n",
 				LINE         = "#line\\s+.*?\\n",
 				IF           = "#if\\s+.*?\\n",
 				ELIF         = "#elif\\s+.*?\\n",
@@ -170,10 +170,10 @@ function (ClipPlanes1,
 				PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
 				VERSION      = "#version\\s+.*?\\n",
 				EXTENSION    = "#extension\\s+.*?\\n",
-				ANY          = "[\\s\\S]*";
+				ANY          = "[^]*";
 
 			var
-				GLSL  = new RegExp ("^((?:" + COMMENTS + ")*(?:" + VERSION + ")?)((?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$"),
+				GLSL  = new RegExp ("^((?:" + VERSION + ")?)((?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$"),
 				match = source .match (GLSL);
 
 			if (! match)
