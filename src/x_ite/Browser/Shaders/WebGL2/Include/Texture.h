@@ -12,16 +12,13 @@ uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
 
 uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];  
 
+#ifdef X3D_MULTI_TEXTURING
 vec4
 getTexCoord (const in int i)
 {
 	if (i == 0)
 	{
 		return texCoord0;
-	}
-	else if (i == 1)
-	{
-		return texCoord1;
 	}
 
 	return texCoord1;
@@ -95,7 +92,24 @@ getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureC
 	return getTexCoord (i);
 }
 
-#ifdef X3D_MULTI_TEXTURING
+vec4
+getTexture2D (in int i, in vec2 texCoord)
+{
+	if (i == 0)
+		return texture (x3d_Texture2D [0], texCoord);
+
+	return texture (x3d_Texture2D [1], texCoord);
+}
+
+vec4
+getTextureCube (in int i, in vec3 texCoord)
+{
+	if (i == 0)
+		return texture (x3d_CubeMapTexture [0], texCoord);
+
+	return texture (x3d_CubeMapTexture [1], texCoord);
+}
+
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 {
@@ -111,21 +125,16 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 		vec4 texCoord     = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
 		vec4 textureColor = vec4 (1.0);
 	
+		if (x3d_GeometryType == x3d_Geometry2D && ! gl_FrontFacing)
+			texCoord .s = 1.0 - texCoord .s;
+
 		if (x3d_TextureType [i] == x3d_TextureType2D)
 		{
-			if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
-				textureColor = texture (x3d_Texture2D [i], vec2 (texCoord));
-			else
-				// If dimension is x3d_Geometry2D the texCoord must be flipped.
-				textureColor = texture (x3d_Texture2D [i], vec2 (1.0 - texCoord .s, texCoord .t));
+			textureColor = getTexture2D (i, vec2 (texCoord));
 		}
 	 	else if (x3d_TextureType [i] == x3d_TextureTypeCubeMapTexture)
 		{
-			if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
-				textureColor = texture (x3d_CubeMapTexture [i], vec3 (texCoord));
-			else
-				// If dimension is x3d_Geometry2D the texCoord must be flipped.
-				textureColor = texture (x3d_CubeMapTexture [i], vec3 (1.0 - texCoord .s, texCoord .t, texCoord .z));
+			textureColor = getTextureCube (i, vec3 (texCoord));
 		}
 
 		// Multi texturing

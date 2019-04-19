@@ -102,6 +102,7 @@ function (Fields,
 		},
 		getBorderWidth: function ()
 		{
+			// https://stackoverflow.com/questions/27760277/webgl-border-color-shader?lq=1
 			return Algorithm .clamp (this .borderWidth_ .getValue (), 0, 1);
 		},
 		getBoundaryMode: (function ()

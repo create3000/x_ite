@@ -1,13 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/x_ite/Browser/Shaders/X3DShadersContext.js">
     <Files>
-      <File FileName="package.json" Line="3" Column="20" />
-      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="174" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="331" Column="1" />
-      <File FileName="src/x_ite/Browser/Shaders/ShaderTest.js" Line="67" Column="32" />
-      <File FileName="src/x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext.js" Line="81" Column="1" />
-      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="109" Column="32" />
+      <File FileName="package.json" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="118" Column="1" />
+      <File FileName="src/x_ite/Browser/Shaders/ShaderTest.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext.js" Line="1" Column="1" />
+      <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
