@@ -240,24 +240,21 @@ function ($,
 				// Determine image alpha.
 
 				var
-					data   = cx .getImageData (0, 0, width, height) .data,
-					opaque = true;
-
-				canvas .width  = 1;
-				canvas .height = 1;
+					data        = cx .getImageData (0, 0, width, height) .data,
+					transparent = false;
 
 				for (var i = 3; i < data .length; i += 4)
 				{
 					if (data [i] !== 255)
 					{
-						opaque = false;
+						transparent = true;
 						break;
 					}
 				}
 
 				setTimeout (function ()
 				{
-					this .setTexture (width, height, ! opaque, new Uint8Array (data), false);
+					this .setTexture (width, height, transparent, new Uint8Array (data), false);
 					this .setLoadState (X3DConstants .COMPLETE_STATE);
 				}
 				.bind (this), 16);
