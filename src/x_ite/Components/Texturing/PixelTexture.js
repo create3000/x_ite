@@ -124,7 +124,7 @@ function ($,
 					{
 						var pixel = array [i];
 
-						data [index] =
+						data [index]     =
 						data [index + 1] =
 						data [index + 2] = pixel & 255;
 						data [index + 3] = 255;
@@ -138,7 +138,7 @@ function ($,
 					{
 						var pixel = array [i];
 
-						data [index] =
+						data [index]     =
 						data [index + 1] =
 						data [index + 2] = (pixel >>> 8) & 255;
 						data [index + 3] = pixel & 255;

@@ -53,12 +53,14 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DNode, 
-          X3DConstants)
+          X3DConstants, 
+          Algorithm)
 {
 "use strict";
 
@@ -98,6 +100,10 @@ function (Fields,
 		{
 			return "textureProperties";
 		},
+		getBorderWidth: function ()
+		{
+			return Algorithm .clamp (this .borderWidth_ .getValue (), 0, 1);
+		},
 		getBoundaryMode: (function ()
 		{
 			var boundaryModes = new Map ([
@@ -111,7 +117,7 @@ function (Fields,
 			return function (string)
 			{
 				var boundaryMode = boundaryModes .get (string);
-				
+
 				if (boundaryMode !== undefined)
 					return boundaryMode;
 	
@@ -176,6 +182,32 @@ function (Fields,
 	
 				// DEFAULT
 				return this .getBrowser () .getDefaultTextureProperties () .getMagnificationFilter ();
+			};
+		})(),
+		getTextureCompression: (function ()
+		{
+			var textureCompressions = new Map ([
+				["DEFAULT", "RGBA"],
+				["NICEST",  "RGBA"],
+				["FASTEST", "RGBA"],
+				["LOW",     "RGBA"],
+				["MEDIUM",  "RGBA"],
+				["HIGH",    "RGBA"],
+			]);
+
+			return function ()
+			{
+				var
+					browser            = this .getBrowser (),
+					gl                 = browser .getContext (),
+					compressedTexture  = browser .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
+					textureCompression = compressedTexture [textureCompressions .get (this .textureCompression_ .getValue ())];
+
+				if (textureCompression !== undefined)
+					return textureCompression;
+
+				// DEFAULT
+				return gl .RGBA;
 			};
 		})(),
 	});
