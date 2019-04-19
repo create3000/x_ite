@@ -186,25 +186,10 @@ function ($,
 				array       = this .image_ .array,
 				transparent = ! (comp % 2),
 				data        = null;
-		
+
 			if (width > 0 && height > 0 && comp > 0 && comp < 5)
 			{
-				if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this .textureProperties_ .getValue ())
-				{
-					data = new Uint8Array (width * height * 4);
-
-					this .convert (data, comp, array .getValue (), array .length);
-
-					var
-						inputWidth  = width,
-						inputHeight = height;
-
-					width  = Algorithm .nextPowerOfTwo (inputWidth)  * 4;
-					height = Algorithm .nextPowerOfTwo (inputHeight) * 4;
-
-					data = this .resize (data, inputWidth, inputHeight, width, height);
-				}
-				else if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
+				if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
 				{
 					data = new Uint8Array (width * height * 4);
 
