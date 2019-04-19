@@ -1,4 +1,4 @@
-/* X_ITE v4.5.1a-757 */
+/* X_ITE v4.5.1a-758 */
 
 (function () {
 
@@ -39818,7 +39818,7 @@ function ($,
 		this .splashScreen = splashScreen;
 		this .surface      = surface;
 		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-		this .context      = getContext (this .canvas [0], DEBUG ? 2 : 1, element .attr ("preserveDrawingBuffer") === "true");
+		this .context      = getContext (this .canvas [0], DEBUG ? 1 : 1, element .attr ("preserveDrawingBuffer") === "true");
 		this .extensions   = { };
 
 		var gl = this .getContext ();
@@ -60631,21 +60631,13 @@ function (Fields,
 				this .flipY  = flipY;
 				this .data   = data;
 
-				var
-					browser        = this .getBrowser (),
-					gl             = browser .getContext (),
-					internalFormat = this .texturePropertiesNode .getTextureCompression (),
-					borderWidth    = this .texturePropertiesNode .getBorderWidth ();
-
+				var gl = this .getBrowser () .getContext ();
+	
 				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
 				gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-
-				if (internalFormat === gl .RGBA)
-					gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, borderWidth, gl .RGBA, gl .UNSIGNED_BYTE, data);
-				else
-					gl .compressedTexImage2D (gl .TEXTURE_2D, 0, internalFormat, width, height, borderWidth, data);
-
+				gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+	
 				this .setTransparent (transparent);
 				this .updateTextureProperties ();
 				this .addNodeEvent ();
