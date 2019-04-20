@@ -916,7 +916,7 @@ function (Fields,
 				var shaderNode = context .shaderNode;
 
 				// Setup shader.
-	
+
 				if (shaderNode .getValid ())
 				{
 					var

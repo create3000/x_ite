@@ -1,4 +1,4 @@
-/* X_ITE v4.5.1a-760 */
+/* X_ITE v4.5.1a-761 */
 
 (function () {
 
@@ -52674,12 +52674,6 @@ define('text!x_ite/Browser/Shaders/WebGL2/Depth.vs',[],function () { return '#ve
 
 define('text!x_ite/Browser/Shaders/WebGL2/Depth.fs',[],function () { return '#version 300 es\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nin vec3 vertex; // point on geometry\n\nout vec4 x3d_FragColor;\n\n#pragma X3D include "Include/Pack.h"\n#pragma X3D include "Include/ClipPlanes.h"\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tx3d_FragColor = pack (gl_FragCoord .z);\n}\n';});
 
-
-define('text!x_ite/Browser/Shaders/WebGL1/Tests/SamplerTest.fs',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform sampler2D texture [2];\n\nvec4\ngetColor ()\n{\n\tvec4 textureColor = vec4 (0.0);\n\n\tfor (int i = 0; i < 2; ++ i)\n\t\ttextureColor += texture2D (texture [i], vec2 (0.0));\n\n\treturn textureColor;\n}\n\nvoid\nmain ()\n{\n\tgl_FragColor = getColor ();\n}\n';});
-
-
-define('text!x_ite/Browser/Shaders/WebGL2/Tests/SamplerTest.fs',[],function () { return '#version 300 es\n// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nprecision mediump float;\nprecision mediump int;\n\nuniform sampler2D tex [2];\n\nout vec4 x3d_FragColor;\n\nvec4\ngetColor ()\n{\n\tvec4 textureColor = vec4 (0.0);\n\n\tfor (int i = 0; i < 2; ++ i)\n\t\ttextureColor += texture (tex [i], vec2 (0.0));\n\n\treturn textureColor;\n}\n\nvoid\nmain ()\n{\n\tx3d_FragColor = getColor ();\n}\n';});
-
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -58685,20 +58679,6 @@ function (TextureBuffer,
 
 	var ShaderTest =
 	{
-		compile: function (gl, source, type)
-		{
-			var shader = gl .createShader (gl [type]);
-
-			gl .shaderSource (shader, source);
-			gl .compileShader (shader);
-
-			var valid = gl .getShaderParameter (shader, gl .COMPILE_STATUS);
-
-			//if (! valid)
-			//	console .log (gl .getShaderInfoLog (shader));
-
-			return valid;
-		},
 		verify: (function ()
 		{
 			var normals = [
@@ -58857,8 +58837,6 @@ define ('x_ite/Browser/Shaders/X3DShadersContext',[
 	"text!x_ite/Browser/Shaders/WebGL2/Phong.fs",
 	"text!x_ite/Browser/Shaders/WebGL2/Depth.vs",
 	"text!x_ite/Browser/Shaders/WebGL2/Depth.fs",
-	"text!x_ite/Browser/Shaders/WebGL1/Tests/SamplerTest.fs",
-	"text!x_ite/Browser/Shaders/WebGL2/Tests/SamplerTest.fs",
 	"x_ite/Browser/Shaders/ShaderTest",
 ],
 function (Shading,
@@ -58884,30 +58862,20 @@ function (Shading,
           phongFS2,
           depthVS2,
           depthFS2,
-          samplerTest1,
-          samplerTest2,
           ShaderTest)
 {
 "use strict";
 
 	function X3DShadersContext ()
 	{
-		this .shaders = new Set ();
+		this .multiTexturing = true;
+		this .shaders        = new Set ();
 	}
 
 	X3DShadersContext .prototype =
 	{
 		initialize: function ()
 		{
-			// GL_ARB_gpu_shader5
-			this .multiTexturing = ShaderTest .compile (this .getContext (), this .selectShaderSource (samplerTest1, samplerTest2), "FRAGMENT_SHADER");
-
-			if (! this .multiTexturing)
-			{
-				if (this .getDebug ())
-					console .warn ("Disabling multi-texturing.");
-			}
-
 			this .setShading (Shading .GOURAUD);
 		},
 		getShadingLanguageVersion: function ()
@@ -58992,6 +58960,8 @@ function (Shading,
 			this .gouraudShader = this .createShader ("GouraudShader", gouraudVS1, gouraudFS1, gouraudVS2, gouraudFS2, false);
 
 			this .gouraudShader .getShadowShader = this .getShadowShader .bind (this);
+	
+			this .gouraudShader .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
 
 			return this .gouraudShader;
 		},
@@ -59008,7 +58978,7 @@ function (Shading,
 
 			this .phongShader .getShadowShader = this .getShadowShader .bind (this);
 	
-			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__",  this);
+			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
 
 			return this .phongShader;
 		},
@@ -59101,23 +59071,44 @@ function (Shading,
 
 			return source2;
 		},
+		set_gouraud_shader_valid__: function (valid)
+		{
+			this .gouraudShader .isValid_ .removeInterest ("set_gouraud_shader_valid__", this);
+
+			if (valid .getValue () && ShaderTest .verify (this, this .gouraudShader))
+				return;
+
+			console .warn ("X_ITE: Disabling multi-texturing, as it might not work.");
+
+			this .multiTexturing = false;
+
+			// Recompile shader.
+			this .gouraudShader .parts_ [0] .getValue () .url_ .addEvent ();
+			this .gouraudShader .parts_ [1] .getValue () .url_ .addEvent ();
+		},
 		set_phong_shader_valid__: function (valid)
 		{
+			this .phongShader .isValid_ .removeInterest ("set_phong_shader_valid__", this);
+
 			if (valid .getValue () && ShaderTest .verify (this, this .phongShader))
 				return;
 
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
-			this .phongShader = this .getGouraudShader ();
+			this .phongShader    = undefined;
+			this .getPhongShader = this .getGouraudShader .bind (this);
 		},
 		set_shadow_shader_valid__: function (valid)
 		{
+			this .shadowShader .isValid_ .removeInterest ("set_shadow_shader_valid__", this);
+
 			if (valid .getValue () && ShaderTest .verify (this, this .shadowShader))
 				return;
 
 			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
 
-			//this .shadowShader = this .getGouraudShader ();
+			this .shadowShader    = undefined;
+			this .getShadowShader = this .getGouraudShader .bind (this);
 		},
 	};
 
@@ -59949,9 +59940,6 @@ function (Fields,
 				}
 			}
 
-			if (! this .shaderNode)
-				this .shaderNode = this .getBrowser () .getDefaultShader ();
-
 			if (this .isLive () .getValue ())
 			{
 				if (this .shaderNode)
@@ -59982,7 +59970,8 @@ function (Fields,
 			if (this .textureNode)
 				this .textureNode .traverse (type, renderObject);
 
-			this .shaderNode .traverse (type, renderObject);
+			if (this .shaderNode)
+				this .shaderNode .traverse (type, renderObject);
 		},
 		enable: function (gl, context)
 		{
@@ -59994,10 +59983,12 @@ function (Fields,
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
 
-			if (context .shadow)
+			if (this .shaderNode)
+				context .shaderNode = this .shaderNode;
+			else if (context .shadow)
 				context .shaderNode = browser .getDefaultShadowShader ();
 			else
-				context .shaderNode = this .shaderNode;
+				context .shaderNode = browser .getDefaultShader ();
 
 			if (this .blendModeNode)
 				this .blendModeNode .enable (gl);
@@ -63000,7 +62991,7 @@ function (Fields,
 				var shaderNode = context .shaderNode;
 
 				// Setup shader.
-	
+
 				if (shaderNode .getValid ())
 				{
 					var
@@ -90387,6 +90378,7 @@ function ($,
 				if (browser .hasPointShader ())  shaders .add (browser .getPointShader ());
 				if (browser .hasLineShader ())   shaders .add (browser .getLineShader ());
 				if (browser .hasShadowShader ()) shaders .add (browser .getShadowShader ());
+				shaders .add (browser .getDefaultShader ());
 
 				shaders .forEach (function (shader)
 				{

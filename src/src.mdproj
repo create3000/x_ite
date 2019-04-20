@@ -728,7 +728,6 @@
     <None Include="x_ite\Browser\Shaders\WebGL2\Include\Perlin.h" />
     <None Include="x_ite\Browser\Shaders\WebGL2\Include\Shadow.h" />
     <None Include="x_ite\Browser\Shaders\WebGL2\Include\Texture.h" />
-    <None Include="x_ite\Browser\Shaders\WebGL2\Tests\SamplerTest.fs" />
     <None Include="x_ite\Browser\Shaders\WebGL2\Background.fs" />
     <None Include="x_ite\Browser\Shaders\WebGL2\Background.vs" />
     <None Include="x_ite\Browser\Shaders\WebGL2\Depth.fs" />
@@ -748,7 +747,6 @@
     <None Include="x_ite\Browser\Shaders\WebGL1\Include\Perlin.h" />
     <None Include="x_ite\Browser\Shaders\WebGL1\Include\Shadow.h" />
     <None Include="x_ite\Browser\Shaders\WebGL1\Include\Texture.h" />
-    <None Include="x_ite\Browser\Shaders\WebGL1\Tests\SamplerTest.fs" />
     <None Include="x_ite\Browser\Shaders\WebGL1\Background.fs" />
     <None Include="x_ite\Browser\Shaders\WebGL1\Background.vs" />
     <None Include="x_ite\Browser\Shaders\WebGL1\Depth.fs" />
@@ -784,9 +782,7 @@
     <Folder Include="linetype\" />
     <Folder Include="x_ite\Browser\Shaders\WebGL2\" />
     <Folder Include="x_ite\Browser\Shaders\WebGL2\Include\" />
-    <Folder Include="x_ite\Browser\Shaders\WebGL2\Tests\" />
     <Folder Include="x_ite\Browser\Shaders\WebGL1\" />
     <Folder Include="x_ite\Browser\Shaders\WebGL1\Include\" />
-    <Folder Include="x_ite\Browser\Shaders\WebGL1\Tests\" />
   </ItemGroup>
 </Project>

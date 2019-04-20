@@ -64,20 +64,6 @@ function (TextureBuffer,
 
 	var ShaderTest =
 	{
-		compile: function (gl, source, type)
-		{
-			var shader = gl .createShader (gl [type]);
-
-			gl .shaderSource (shader, source);
-			gl .compileShader (shader);
-
-			var valid = gl .getShaderParameter (shader, gl .COMPILE_STATUS);
-
-			//if (! valid)
-			//	console .log (gl .getShaderInfoLog (shader));
-
-			return valid;
-		},
 		verify: (function ()
 		{
 			var normals = [

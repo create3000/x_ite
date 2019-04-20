@@ -242,9 +242,6 @@ function (Fields,
 				}
 			}
 
-			if (! this .shaderNode)
-				this .shaderNode = this .getBrowser () .getDefaultShader ();
-
 			if (this .isLive () .getValue ())
 			{
 				if (this .shaderNode)
@@ -275,7 +272,8 @@ function (Fields,
 			if (this .textureNode)
 				this .textureNode .traverse (type, renderObject);
 
-			this .shaderNode .traverse (type, renderObject);
+			if (this .shaderNode)
+				this .shaderNode .traverse (type, renderObject);
 		},
 		enable: function (gl, context)
 		{
@@ -287,10 +285,12 @@ function (Fields,
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
 
-			if (context .shadow)
+			if (this .shaderNode)
+				context .shaderNode = this .shaderNode;
+			else if (context .shadow)
 				context .shaderNode = browser .getDefaultShadowShader ();
 			else
-				context .shaderNode = this .shaderNode;
+				context .shaderNode = browser .getDefaultShader ();
 
 			if (this .blendModeNode)
 				this .blendModeNode .enable (gl);

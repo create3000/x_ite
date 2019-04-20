@@ -71,8 +71,6 @@ define ([
 	"text!x_ite/Browser/Shaders/WebGL2/Phong.fs",
 	"text!x_ite/Browser/Shaders/WebGL2/Depth.vs",
 	"text!x_ite/Browser/Shaders/WebGL2/Depth.fs",
-	"text!x_ite/Browser/Shaders/WebGL1/Tests/SamplerTest.fs",
-	"text!x_ite/Browser/Shaders/WebGL2/Tests/SamplerTest.fs",
 	"x_ite/Browser/Shaders/ShaderTest",
 ],
 function (Shading,
@@ -98,30 +96,20 @@ function (Shading,
           phongFS2,
           depthVS2,
           depthFS2,
-          samplerTest1,
-          samplerTest2,
           ShaderTest)
 {
 "use strict";
 
 	function X3DShadersContext ()
 	{
-		this .shaders = new Set ();
+		this .multiTexturing = true;
+		this .shaders        = new Set ();
 	}
 
 	X3DShadersContext .prototype =
 	{
 		initialize: function ()
 		{
-			// GL_ARB_gpu_shader5
-			this .multiTexturing = ShaderTest .compile (this .getContext (), this .selectShaderSource (samplerTest1, samplerTest2), "FRAGMENT_SHADER");
-
-			if (! this .multiTexturing)
-			{
-				if (this .getDebug ())
-					console .warn ("Disabling multi-texturing.");
-			}
-
 			this .setShading (Shading .GOURAUD);
 		},
 		getShadingLanguageVersion: function ()
@@ -206,6 +194,8 @@ function (Shading,
 			this .gouraudShader = this .createShader ("GouraudShader", gouraudVS1, gouraudFS1, gouraudVS2, gouraudFS2, false);
 
 			this .gouraudShader .getShadowShader = this .getShadowShader .bind (this);
+	
+			this .gouraudShader .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
 
 			return this .gouraudShader;
 		},
@@ -222,7 +212,7 @@ function (Shading,
 
 			this .phongShader .getShadowShader = this .getShadowShader .bind (this);
 	
-			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__",  this);
+			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
 
 			return this .phongShader;
 		},
@@ -315,23 +305,44 @@ function (Shading,
 
 			return source2;
 		},
+		set_gouraud_shader_valid__: function (valid)
+		{
+			this .gouraudShader .isValid_ .removeInterest ("set_gouraud_shader_valid__", this);
+
+			if (valid .getValue () && ShaderTest .verify (this, this .gouraudShader))
+				return;
+
+			console .warn ("X_ITE: Disabling multi-texturing, as it might not work.");
+
+			this .multiTexturing = false;
+
+			// Recompile shader.
+			this .gouraudShader .parts_ [0] .getValue () .url_ .addEvent ();
+			this .gouraudShader .parts_ [1] .getValue () .url_ .addEvent ();
+		},
 		set_phong_shader_valid__: function (valid)
 		{
+			this .phongShader .isValid_ .removeInterest ("set_phong_shader_valid__", this);
+
 			if (valid .getValue () && ShaderTest .verify (this, this .phongShader))
 				return;
 
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
-			this .phongShader = this .getGouraudShader ();
+			this .phongShader    = undefined;
+			this .getPhongShader = this .getGouraudShader .bind (this);
 		},
 		set_shadow_shader_valid__: function (valid)
 		{
+			this .shadowShader .isValid_ .removeInterest ("set_shadow_shader_valid__", this);
+
 			if (valid .getValue () && ShaderTest .verify (this, this .shadowShader))
 				return;
 
 			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
 
-			//this .shadowShader = this .getGouraudShader ();
+			this .shadowShader    = undefined;
+			this .getShadowShader = this .getGouraudShader .bind (this);
 		},
 	};
 
