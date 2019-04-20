@@ -1,4 +1,4 @@
-/* X_ITE v4.5.1a-764 */
+/* X_ITE v4.5.1a-765 */
 
 (function () {
 
@@ -69043,10 +69043,11 @@ function ($,
 					shaderNode .enable (gl);
 					shaderNode .enableVertexAttribute (gl, this .lineBuffer);
 		
-					gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
-					gl .uniform1i (shaderNode .x3d_FogType,       0);
-					gl .uniform1i (shaderNode .x3d_ColorMaterial, false);
-		
+					gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
+					gl .uniform1i (shaderNode .x3d_FogType,               0);
+					gl .uniform1i (shaderNode .x3d_ColorMaterial,         false);
+					gl .uniform1i (shaderNode .x3d_LinePropertiesApplied, false);
+
 					gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
 					gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
 					
