@@ -128,20 +128,19 @@ function (TextureBuffer,
 				gl .frontFace (gl .CCW);
 				gl .enable (gl .CULL_FACE);
 				gl .cullFace (gl .BACK);
-		
+
 				shaderNode .enableNormalAttribute (gl, normalBuffer);
 				shaderNode .enableVertexAttribute (gl, vertexBuffer);
-		
+
 				gl .drawArrays (gl .TRIANGLES, 0, 6);
-		
+
 				var data = frameBuffer .readPixels ();
-		
+
 				frameBuffer .unbind ();
-		
+
 				shaderNode .disableNormalAttribute (gl, normalBuffer);
 				shaderNode .disable                (gl);
 
-console .log (data);
 				return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
 			};
 		})(),

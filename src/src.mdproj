@@ -655,7 +655,6 @@
     <None Include="assets\fonts\DroidSerif-BoldItalic.ttf" />
     <None Include="assets\fonts\DroidSerif-Italic.ttf" />
     <None Include="assets\fonts\DroidSerif-Regular.ttf" />
-    <None Include="assets\fonts\fonts.mdproj" />
     <None Include="assets\fonts\Ubuntu-B.ttf" />
     <None Include="assets\fonts\Ubuntu-BI.ttf" />
     <None Include="assets\fonts\UbuntuMono-B.ttf" />
