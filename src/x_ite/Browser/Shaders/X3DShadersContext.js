@@ -329,8 +329,7 @@ function (Shading,
 
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
-			this .phongShader    = undefined;
-			this .getPhongShader = this .getGouraudShader .bind (this);
+			this .phongShader = this .getGouraudShader ();
 		},
 		set_shadow_shader_valid__: function (valid)
 		{
@@ -341,8 +340,7 @@ function (Shading,
 
 			console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
 
-			this .shadowShader    = undefined;
-			this .getShadowShader = this .getGouraudShader .bind (this);
+			this .shadowShader = this .getGouraudShader ();
 		},
 	};
 
