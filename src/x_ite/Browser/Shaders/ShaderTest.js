@@ -140,7 +140,8 @@ function (TextureBuffer,
 		
 				shaderNode .disableNormalAttribute (gl, normalBuffer);
 				shaderNode .disable                (gl);
-		
+
+console .log (data);
 				return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
 			};
 		})(),

@@ -1,4 +1,4 @@
-/* X_ITE v4.5.1a-768 */
+/* X_ITE v4.5.1-769 */
 
 (function () {
 
@@ -24895,7 +24895,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.5.1a";
+	return "4.5.1";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -58699,7 +58699,8 @@ function (TextureBuffer,
 		
 				shaderNode .disableNormalAttribute (gl, normalBuffer);
 				shaderNode .disable                (gl);
-		
+
+console .log (data);
 				return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
 			};
 		})(),
