@@ -893,21 +893,18 @@ function (Fields,
 		{ },
 		depth: function (gl, context, shaderNode)
 		{
-			if (shaderNode .getValid ())
-			{
-				// Setup vertex attributes.
-	
-				// Attribs in depth rendering are not supported.
-				//for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-	
-				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-	
-				//for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				//	attribNodes [i] .disable (gl, shaderNode);
-	
-				gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
-			}
+			// Setup vertex attributes.
+
+			// Attribs in depth rendering are not supported.
+			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
+			//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+			shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+
+			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
+			//	attribNodes [i] .disable (gl, shaderNode);
+
+			gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
 		},
 		display: function (gl, context)
 		{
@@ -1003,42 +1000,39 @@ function (Fields,
 		},
 		displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
 		{
-			if (shaderNode .getValid ())
+			var gl = context .browser .getContext ();
+
+			// Attribs in depth rendering are not supported:
+			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
+			//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+			shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+
+			// Draw depending on wireframe, solid and transparent.
+
+			var
+				modelViewMatrix = context .modelViewMatrix,
+				x               = modelViewMatrix [12],
+				y               = modelViewMatrix [13],
+				z               = modelViewMatrix [14];
+
+			for (var p = 0; p < numParticles; ++ p)
 			{
-				var gl = context .browser .getContext ();
-	
-				// Attribs in depth rendering are not supported:
-				//for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-	
-				shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-	
-				// Draw depending on wireframe, solid and transparent.
-	
-				var
-					modelViewMatrix = context .modelViewMatrix,
-					x               = modelViewMatrix [12],
-					y               = modelViewMatrix [13],
-					z               = modelViewMatrix [14];
-	
-				for (var p = 0; p < numParticles; ++ p)
-				{
-					var particle = particles [p];
-	
-					modelViewMatrix [12] = x;
-					modelViewMatrix [13] = y;
-					modelViewMatrix [14] = z;
-	
-					Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-	
-					shaderNode .setParticle (gl, p, particle, modelViewMatrix, false);
-	
-					gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-				}
-		
-				//for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				//	attribNodes [i] .disable (gl, shaderNode);
+				var particle = particles [p];
+
+				modelViewMatrix [12] = x;
+				modelViewMatrix [13] = y;
+				modelViewMatrix [14] = z;
+
+				Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+
+				shaderNode .setParticle (gl, p, particle, modelViewMatrix, false);
+
+				gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 			}
+	
+			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
+			//	attribNodes [i] .disable (gl, shaderNode);
 		},
 		displayParticles: function (gl, context, particles, numParticles)
 		{
