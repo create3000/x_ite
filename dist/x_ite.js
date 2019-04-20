@@ -1,4 +1,4 @@
-/* X_ITE v4.5.1a-767 */
+/* X_ITE v4.5.1a-768 */
 
 (function () {
 
@@ -61058,7 +61058,7 @@ function (Fields,
 					browser            = this .getBrowser (),
 					gl                 = browser .getContext (),
 					compressedTexture  = browser .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
-					textureCompression = compressedTexture [textureCompressions .get (this .textureCompression_ .getValue ())];
+					textureCompression = compressedTexture ? compressedTexture [textureCompressions .get (this .textureCompression_ .getValue ())] : undefined;
 
 				if (textureCompression !== undefined)
 					return textureCompression;
