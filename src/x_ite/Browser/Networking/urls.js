@@ -89,7 +89,7 @@ function (URI,
 		},
 		getHatchingUrl: function (index)
 		{
-			return this .scriptUrl .transform ("hatching/" + index + ".png") .toString ();
+			return this .scriptUrl .transform ("assets/hatching/" + index + ".png") .toString ();
 		},
 		getFallbackUrl: function (url)
 		{

@@ -1,4 +1,4 @@
-/* X_ITE v4.5.1a-763 */
+/* X_ITE v4.5.1a-764 */
 
 (function () {
 
@@ -40623,7 +40623,7 @@ function (URI,
 		},
 		getHatchingUrl: function (index)
 		{
-			return this .scriptUrl .transform ("hatching/" + index + ".png") .toString ();
+			return this .scriptUrl .transform ("assets/hatching/" + index + ".png") .toString ();
 		},
 		getFallbackUrl: function (url)
 		{
